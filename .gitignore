@@ -1,0 +1,12 @@
+/log/*.*
+/.bundle
+/.idea
+/db/schema.rb
+/tmp/pids/server.pid
+/config/database.yml
+/routes.txt
+/vendor/cache
+/vendor/cache/**/*
+Gemfile.lock
+/capybara*.*
+.idea
