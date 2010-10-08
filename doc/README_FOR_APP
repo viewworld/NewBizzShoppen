@@ -5,6 +5,13 @@ Run "rake doc:app" to generate API documentation for your models, controllers, h
 
 rails g rspec:install
 
+
 == Change prototype to jQuery
 
 http://webtech.union.rpi.edu/blog/2010/02/21/jquery-and-rails-3/
+
+
+== Roles implementation
+
+http://github.com/ryanb/cancan/wiki/role-based-authorization
+http://asciicasts.com/episodes/189-embedded-association

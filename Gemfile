@@ -19,6 +19,7 @@ gem 'scoped-search', '0.7.1', :require => "scoped_search"
 gem 'json_pure', '>= 1.4.6'
 gem 'gherkin', '>= 2.2.4'
 gem 'globalize3'
+gem 'role_model', :require => "role_model"
 
 group :test do
   gem 'database_cleaner'
