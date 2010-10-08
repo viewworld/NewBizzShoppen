@@ -1,11 +1,12 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.0.0'
+gem 'railties'
 
 gem 'mongrel'
 gem 'pg', '0.9.0'
 gem 'inherited_resources'
-gem 'will_paginate'
+gem 'will_paginate', '>= 3.0.pre'
 gem 'formtastic', '1.1.0'
 gem 'liquid'
 gem 'machinist', '>= 2.0.0.beta1'
@@ -21,6 +22,7 @@ gem 'gherkin', '>= 2.2.4'
 gem 'globalize3'
 gem 'role_model', :require => "role_model"
 gem 'cancan'
+gem 'tolk'
 
 group :test do
   gem 'database_cleaner'
