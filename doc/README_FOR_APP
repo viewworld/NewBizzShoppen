@@ -1,5 +1,10 @@
 Use this README file to introduce your application and point to useful places in the API for learning more.
 Run "rake doc:app" to generate API documentation for your models, controllers, helpers, and libraries.
 
+== Rspec2 Installation
 
 rails g rspec:install
+
+== Change prototype to jQuery
+
+http://webtech.union.rpi.edu/blog/2010/02/21/jquery-and-rails-3/
