@@ -24,6 +24,10 @@ gem 'role_model', :require => "role_model"
 gem 'cancan'
 gem 'tolk'
 
+group :development do
+  gem 'diff-lcs'
+end
+
 group :test do
   gem 'database_cleaner'
   gem 'capybara'
