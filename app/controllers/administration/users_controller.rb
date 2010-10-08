@@ -1,7 +1,4 @@
 class Administration::UsersController < Administration::AdministrationController
-
-  def index
-    throw current_user.class.name
-  end
-
+  inherit_resources
+  load_and_authorize_resource
 end

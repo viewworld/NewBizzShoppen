@@ -20,6 +20,7 @@ gem 'json_pure', '>= 1.4.6'
 gem 'gherkin', '>= 2.2.4'
 gem 'globalize3'
 gem 'role_model', :require => "role_model"
+gem 'cancan'
 
 group :test do
   gem 'database_cleaner'
