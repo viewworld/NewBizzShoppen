@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   # roles later, always append them at the end!
   roles :admin, :buyer, :agent, :lead_user, :priviliged_buyer, :call_enter_admin, :call_center_agent
 
-  named_scope :with_role, lambda { |role| {:conditions => "roles_mask & #{2**User.valid_roles.index(role.to_sym)} > 0 "} }
+  scope :with_role, lambda { |role| where("roles_mask & #{2**User.valid_roles.index(role.to_sym)} > 0 ") }
 
   attr_accessible :email, :password, :password_confirmation, :remember_me
 end
