@@ -22,10 +22,11 @@ gem 'gherkin', '>= 2.2.4'
 gem 'globalize3'
 gem 'role_model', :require => "role_model"
 gem 'cancan'
-gem 'tolk'
+
 
 group :development do
   gem 'diff-lcs'
+  gem 'tolk'
 end
 
 group :test do
