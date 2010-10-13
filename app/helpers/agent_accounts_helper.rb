@@ -1,0 +1,2 @@
+module AgentAccountsHelper
+end

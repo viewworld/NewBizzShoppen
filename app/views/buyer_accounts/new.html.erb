@@ -1,0 +1,24 @@
+<column-mc:>
+  <h1>Lead Buyer signup</h1>
+
+  <% semantic_form_for  @user, :url => buyer_accounts_path do |form| %>
+      <%= form.input :first_name, :required => true %>
+      <%= form.input :last_name, :required => true %>
+      <%= form.input :phone, :required => true %>
+      <%= form.input :email, :required => true %>
+      <%= form.input :screen_name, :required => true %>
+      <%= form.input :password, :as => :password, :required => true %>
+      <%= form.input :password_confirmation, :as => :password, :required => true %>
+      <%= form.input :street, :required => true %>
+      <%= form.input :city, :required => true %>
+      <%= form.input :zip_code, :required => true %>
+      <%= form.input :county, :required => true %>
+      <%= form.input :country, :as => :select, :collection => User::COUNTRIES, :required => true %>
+
+
+      <%= form.input :agreement_read, :as => :boolean, :label => "I have read and agree to Associated Content's Terms of Use and Privacy Policy" %>
+      <%= form.input :newsletter_on, :as => :boolean %>
+      <%= form.commit_button "Create my account" %>
+
+  <% end %>
+</column-mc:>

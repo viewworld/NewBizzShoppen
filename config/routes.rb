@@ -1,5 +1,7 @@
 Nbs::Application.routes.draw do
 
+
+
   get "agent_home/show"
 
   get "buyer_home/show"
@@ -71,6 +73,9 @@ Nbs::Application.routes.draw do
 
   match 'buyer_home' => 'buyer_home#show', :as => "buyer_home"
   match 'agent_home' => 'agent_home#show', :as => "agent_home"
+
+  resources :agent_accounts, :only => [:new, :create]
+  resources :buyer_accounts, :only => [:new, :create]
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
