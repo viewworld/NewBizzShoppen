@@ -1,17 +1,15 @@
 class ApplicationController < ActionController::Base
-  rescue_from CanCan::AccessDenied do |exception|
-    flash[:alert] = exception.message
-    redirect_to root_url
-  end
+
 
   protect_from_forgery
 
-  before_filter :authenticate_user!
-  before_filter :authorize_user_for_namespace!
+  def after_sign_in_path_for(resource)
+     if resource.is_a?(User)
+        self.send "#{resource.roles.first.to_s}_root_path"
+     else
+       super
+     end
+   end
 
-  private
 
-  def authorize_user_for_namespace!
-    true
-  end
 end

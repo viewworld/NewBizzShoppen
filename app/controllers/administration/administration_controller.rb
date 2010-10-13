@@ -1,4 +1,4 @@
-class Administration::AdministrationController < ApplicationController
+class Administration::AdministrationController < SecuredController
   def current_user
     #Second request is cached so only class-casting occurs
     @admin ||= ::User::Admin.find(super.id)

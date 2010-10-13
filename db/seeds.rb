@@ -5,3 +5,17 @@ unless User.find_by_email("blazejek@gmail.com")
   u.roles << :admin
   u.save
 end
+
+unless User.find_by_email("buyer@gmail2.com")
+  u = User.create!(:email => "buyer@gmail2.com", :password => "secret", :password_confirmation => "secret")
+  u.confirm!
+  u.roles << :buyer
+  u.save
+end
+
+unless User.find_by_email("agent@gmail2.com")
+  u = User.create!(:email => "agent@gmail2.com", :password => "secret", :password_confirmation => "secret")
+  u.confirm!
+  u.roles << :agent
+  u.save
+end

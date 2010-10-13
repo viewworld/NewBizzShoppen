@@ -1,5 +1,9 @@
 Nbs::Application.routes.draw do
 
+  get "agent_home/show"
+
+  get "buyer_home/show"
+
   devise_for :users do
       get "login", :to => "devise/sessions#new"
       get "logout", :to => "devise/sessions#destroy"
@@ -57,10 +61,21 @@ Nbs::Application.routes.draw do
     resources :users
   end
 
+  namespace :buyer do
+    root :to => "buyer_leads#index"
+  end
+
+  namespace :agent do
+    root :to => "agent_leads#index"
+  end
+
+  match 'buyer_home' => 'buyer_home#show', :as => "buyer_home"
+  match 'agent_home' => 'agent_home#show', :as => "agent_home"
+
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
 
-   root :to => "home#index"
+   root :to => "home#show"
 
   # See how all your routes lay out with "rake routes"
 

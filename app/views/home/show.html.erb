@@ -1,0 +1,18 @@
+<column-mc:>
+  <h1>Home</h1>
+  <%= link_to "Buyer", buyer_home_path %>
+  <%= link_to "Agent", agent_home_path %>
+
+  <% unless user_signed_in?  %>
+      <%= form_for(:user, :url => session_path(:user)) do |f| %>
+          <p><%= f.label :email %><br/>
+            <%= f.text_field :email %></p>
+
+          <p><%= f.label :password %><br/>
+            <%= f.password_field :password %></p>
+          <p><%= f.check_box :remember_me %> <%= f.label :remember_me %></p>
+
+          <p><%= f.submit "Sign in" %></p>
+      <% end %>
+  <% end %>
+</column-mc:>
