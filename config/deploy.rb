@@ -1,5 +1,6 @@
 set :application, "nbs"
 set :repository,  "git@github.com:Selleo/NewBizzShoppen.git"
+set :deploy_to, "/srv/#{application}"
 
 set :scm, :git
 
