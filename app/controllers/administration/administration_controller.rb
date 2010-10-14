@@ -7,7 +7,7 @@ class Administration::AdministrationController < SecuredController
   private
 
   def authorize_user_for_namespace!
-    raise CanCan::AccessDenied unless current_user.has_role?(:admin)
+    authorize_role(:admin)
   end
 
 end

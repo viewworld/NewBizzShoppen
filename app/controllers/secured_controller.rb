@@ -12,4 +12,8 @@ class SecuredController < ApplicationController
   def authorize_user_for_namespace!
     true
   end
+
+  def authorize_role(role)
+    raise CanCan::AccessDenied unless current_user.has_role?(role)
+  end
 end
