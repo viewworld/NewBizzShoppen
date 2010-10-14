@@ -23,7 +23,6 @@ gem 'globalize3'
 gem 'role_model', :require => "role_model"
 gem 'cancan'
 
-
 group :development do
   gem 'diff-lcs'
   gem 'tolk'

@@ -5,14 +5,9 @@ class AgentAccountsController < ApplicationController
 
   def create
     @user = User.new(params[:user])
-    @user.roles << :agent
-
-    respond_to do  |format|
-    if @user.save
-      format.html { redirect_to root_path }
-    else
-      format.html { render :action => "new" }
-    end
+    @user.roles = [:agent]
+    respond_to do |format|
+      format.html { @user.save ? redirect_to(root_path) : render("new") }
     end
   end
 
