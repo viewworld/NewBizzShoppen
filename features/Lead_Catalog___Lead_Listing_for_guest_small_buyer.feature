@@ -1,4 +1,4 @@
-Feature: Lead Catalog - Lead Listing for guest/small buyer
+Feature: Lead Listing for guest/small buyer
 
 Background:
 As a guest I go to “browse leads”
