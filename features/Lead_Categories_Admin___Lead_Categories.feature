@@ -1,0 +1,1 @@
+Feature: Lead Categories Admin - Lead Categories
