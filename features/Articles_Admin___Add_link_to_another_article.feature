@@ -1,0 +1,1 @@
+Feature: Articles Admin - Add link to another article
