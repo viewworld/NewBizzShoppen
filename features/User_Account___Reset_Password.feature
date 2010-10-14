@@ -1,4 +1,4 @@
-Feature: Feature: Reset password
+Feature: Reset password
 
  In order to sign in even if user forgot their password
  As an user
