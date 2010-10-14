@@ -1,0 +1,1 @@
+Feature: Lead Management - My bought leads for small buyer
