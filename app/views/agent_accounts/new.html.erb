@@ -1,25 +1,24 @@
 <column-mc:>
-  <h1>Freelancer Agent signup</h1>
+  <h1><%= t("agent_accounts.new.view.title") %></h1>
 
 
   <% semantic_form_for  @user, :url => agent_accounts_path do |form| %>
-      <%= form.input :first_name, :required => true %>
-      <%= form.input :last_name, :required => true %>
-      <%= form.input :phone, :required => true %>
-      <%= form.input :email, :required => true %>
-      <%= form.input :screen_name, :required => true %>
-      <%= form.input :password, :as => :password, :required => true %>
-      <%= form.input :password_confirmation, :as => :password, :required => true %>
-      <%= form.input :street, :required => true %>
-      <%= form.input :city, :required => true %>
-      <%= form.input :zip_code, :required => true %>
-      <%= form.input :county, :required => true %>
-      <%= form.input :country, :as => :select, :collection => User::COUNTRIES, :required => true %>
+      <%= form.input :first_name, :required => true, :label =>  t("agent_accounts.new.view.first_name") %>
+      <%= form.input :last_name, :required => true, :label =>  t("agent_accounts.new.view.last_name") %>
+      <%= form.input :phone, :required => true, :label =>  t("agent_accounts.new.view.phone") %>
+      <%= form.input :email, :required => true, :label =>  t("agent_accounts.new.view.email") %>
+      <%= form.input :screen_name, :required => true, :label =>  t("agent_accounts.new.view.screen_name") %>
+      <%= form.input :password, :as => :password, :required => true, :label =>  t("agent_accounts.new.view.password") %>
+      <%= form.input :password_confirmation, :as => :password, :required => true, :label =>  t("agent_accounts.new.view.password_confirmation") %>
+      <%= form.input :street, :required => true, :label =>  t("agent_accounts.new.view.street") %>
+      <%= form.input :city, :required => true, :label =>  t("agent_accounts.new.view.city") %>
+      <%= form.input :zip_code, :required => true, :label =>  t("agent_accounts.new.view.zip_code") %>
+      <%= form.input :county, :required => true, :label =>  t("agent_accounts.new.view.county") %>
+      <%= form.input :country, :as => :select, :collection => User::COUNTRIES, :required => true, :label =>  t("agent_accounts.new.view.country") %>
 
 
-      <%= form.input :agreement_read, :as => :boolean, :label => "I have read and agree to Associated Content's Terms of Use and Privacy Policy" %>
-      <%= form.input :newsletter_on, :as => :boolean %>
-      <%= form.commit_button "Create my account" %>
-
+      <%= form.input :agreement_read, :as => :boolean, :label =>  t("agent_accounts.new.view.agreement_read") %>
+      <%= form.input :newsletter_on, :as => :boolean, :label =>  t("agent_accounts.new.view.newsletter_on") %>
+      <%= form.commit_button t("agent_accounts.new.view.button_create_account") %>
   <% end %>
 </column-mc:>
