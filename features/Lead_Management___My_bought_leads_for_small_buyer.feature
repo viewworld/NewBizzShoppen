@@ -1,3 +1,4 @@
+@lead_manager
 Feature: Lead Management - My bought leads for small buyer
 
 Scenario: I can browse my lead with pagination
