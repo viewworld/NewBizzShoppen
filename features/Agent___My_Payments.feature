@@ -1,3 +1,4 @@
+@user_accounts @$_freelance_agent
 Feature: Agent - My Payments
 
 In order to earn money
