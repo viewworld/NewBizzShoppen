@@ -1,3 +1,4 @@
+@user_accounts @$_admin
 Feature: User account Admin - Edit
 
  @2
