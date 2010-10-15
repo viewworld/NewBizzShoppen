@@ -1,3 +1,4 @@
+@user_accounts 
 Feature: User Account - Resend activation link
 
   @2
