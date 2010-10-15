@@ -1,3 +1,4 @@
+@invoices @$_admin
 Feature: Invoices - Administration
 
 Scenario: I can create new invoice for user
