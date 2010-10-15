@@ -1,3 +1,4 @@
+@lead_catalog @$_lead_user @$_big_buyer @$_small_buyer
 Feature:  Lead Details
 
 Scenario: I should see created by, rating % and certification level for each lead
