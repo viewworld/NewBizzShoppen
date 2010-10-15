@@ -1,3 +1,4 @@
+@transactions @$_admin
 Feature: Transactions - As an administrator
 
 Scenario: I can see a listing of all transactions registered in system
