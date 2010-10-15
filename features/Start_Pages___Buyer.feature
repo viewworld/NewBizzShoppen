@@ -1,3 +1,4 @@
+@start_pages
 Feature: Start Pages - Buyer
 
 Scenario: I can see welcome text fetch from the database
