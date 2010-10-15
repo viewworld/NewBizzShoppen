@@ -1,4 +1,4 @@
-@comments_manage @$_call_centre
+@comments @$_call_centre
 Feature: Comments - As a call center agent
 
 Scenario: I can see the amount of comments per lead on Lead created by my agents listing
