@@ -1,4 +1,4 @@
-Feature: Comments
+Feature: Comments - Call centre
 
 Background:
    Given I am signed up and confirmed as "jon@lajoie.ca/secret"
