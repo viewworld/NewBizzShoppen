@@ -1,3 +1,4 @@
+@admin___news @$_admin
 Feature: News - Admin
 
 Background: I am logged in as a system admin
