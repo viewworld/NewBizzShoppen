@@ -1,0 +1,1 @@
+Feature: Comments - Small Buyer
