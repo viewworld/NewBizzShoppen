@@ -1,3 +1,4 @@
+@lead_manager @$_small_buyer
 Feature: Lead Management - Email selected leads
 
 Scenario: I can send selected leads by email
