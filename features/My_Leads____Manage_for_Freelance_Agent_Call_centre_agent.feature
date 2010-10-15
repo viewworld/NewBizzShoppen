@@ -1,3 +1,4 @@
+@lead_manager @$_freelance_agent
 Feature: My Leads Manage for Freelance Agent
 
 Scenario: I can browse leads with pagination
