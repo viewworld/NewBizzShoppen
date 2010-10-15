@@ -1,4 +1,4 @@
-@comments
+@comments @$_small_buyer
 Feature: Comments - Small Buyer
 
 Background:
