@@ -1,3 +1,4 @@
+@dashboard @$_small_buyer
 Feature: Dashboard - Lead Buyer
 
 Scenario: I can follow “What do you want to do today?” links and they take me to appropriate places
