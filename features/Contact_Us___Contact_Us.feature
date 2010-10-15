@@ -1,3 +1,4 @@
+@contact_us
 Feature: Contact Us - Contact Us
 
 In order to communicate with the admin
