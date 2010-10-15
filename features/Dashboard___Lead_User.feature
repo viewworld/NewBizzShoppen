@@ -1,3 +1,4 @@
+@dashboard @$_lead_user
 Feature: Dashboard - Lead User
 
 
