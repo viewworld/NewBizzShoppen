@@ -1,3 +1,4 @@
+@contact_us 
 Feature: Contact Us - As an user or guest
 
 Scenario: I can display contact us page
