@@ -1,3 +1,4 @@
+@comments @$_lead_user
 Feature: Comments - As a lead user 
 
 Scenario: I can create a comment for lead
