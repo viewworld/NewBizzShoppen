@@ -1,0 +1,1 @@
+Feature: Comments - As an administrator in comments view
