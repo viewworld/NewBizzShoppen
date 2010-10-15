@@ -1,3 +1,4 @@
+@lead_manager @$_agents
 Feature: Lead Management - Edit Lead
 
 Scenario: I can edit lead if the lead is not sold yet
