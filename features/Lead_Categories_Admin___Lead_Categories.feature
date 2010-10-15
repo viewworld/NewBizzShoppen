@@ -1,3 +1,4 @@
+@lead_catalog	@$_admin
 Feature: Lead Categories Admin - Lead Categories
 
 @3
