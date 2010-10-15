@@ -1,4 +1,5 @@
-Feature: Lead MAnagement - My requested leads for Lead User
+@lead_manager @$_lead_user
+Feature: Lead Management - My requested leads for Lead User
 
 Scenario: I should see created by, rating % and certification level for each lead
 
