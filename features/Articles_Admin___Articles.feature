@@ -1,3 +1,4 @@
+@articles @$_admin
 Feature: Articles Admin - Articles
 
 Background: I am logged in as a system admin
