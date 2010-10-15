@@ -1,3 +1,4 @@
+@dashboard @$_call_centre
 Feature: Dashboard - Call Centre
 
 Scenario: I can follow “What do you want to do today?” links and they take me to appropriate places
