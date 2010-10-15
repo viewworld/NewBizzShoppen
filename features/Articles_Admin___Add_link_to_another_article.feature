@@ -1,3 +1,4 @@
+@articles @$_admin
 Feature: Articles Admin - Add link to another article
 
   @3
