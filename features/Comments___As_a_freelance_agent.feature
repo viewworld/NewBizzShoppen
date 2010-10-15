@@ -1,3 +1,4 @@
+@comments @$_freelance_agent
 Feature: Comments - As a freelance agent
 
 Scenario: I can see the amount of comments per lead on Lead created by my agents listing
