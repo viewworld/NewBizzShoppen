@@ -1,3 +1,4 @@
+@lead_catalog @$_small_buyer
 Feature: Lead Listing for guest/small buyer
 
 Background:
