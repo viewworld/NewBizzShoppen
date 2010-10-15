@@ -1,4 +1,4 @@
-Feature: My Leads Manage for Freelance Agent/Call centre agent
+Feature: My Leads Manage for Freelance Agent
 
 Scenario: I can browse leads with pagination
 
