@@ -1,3 +1,4 @@
+@invoices @$_system
 Feature: Invoice - as system
 
 Scenario: Invoice should have invoice lines automatically generated for all non-paid leads for given user when created manually
