@@ -1,3 +1,4 @@
+@lead_manager @$_lead_user
 Feature: Lead Management My Leads for Lead User
 
 Scenario: I can browse my lead with pagination
