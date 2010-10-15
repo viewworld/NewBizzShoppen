@@ -1,3 +1,4 @@
+@user_accounts @$_call_centre
 Feature: User account Agents Account Listing (call centre)
 
 Scenario: I can browse list of my agents without pagination
