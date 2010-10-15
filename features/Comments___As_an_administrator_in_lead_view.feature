@@ -1,3 +1,4 @@
+@comments @$_admin
 Feature: Comments - As an administrator in lead view
 
 Scenario: I can see amount of lead comments for each lead on leads listing
