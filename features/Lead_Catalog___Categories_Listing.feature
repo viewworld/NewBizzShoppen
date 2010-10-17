@@ -1,3 +1,4 @@
+@lead_catalog
 Feature: Lead Catalog - Categories Listing
 
 Scenario: I can see all active categories
