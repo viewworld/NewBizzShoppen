@@ -1,3 +1,4 @@
+@comments
 Feature: Comments - Call centre
 
 Background:
