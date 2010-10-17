@@ -1,4 +1,4 @@
-@invoices
+@invoices @$_small_buyer
 Feature: Invoices - as a Buyer
 
 Scenario: I can download invoice as PDF file
