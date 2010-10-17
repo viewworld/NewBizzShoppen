@@ -1,0 +1,1 @@
+Feature: Invoices - automatic invoice from transaction
