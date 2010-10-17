@@ -1,5 +1,5 @@
-@statistics @$_big_buyer
-Feature: statistics - big buyer
+@statistics @$_small_buyer
+Feature: statistics - small buyer
 
 In order to make better decisions
 As a Agent
