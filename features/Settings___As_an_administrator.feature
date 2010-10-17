@@ -1,3 +1,4 @@
+@settings @$_admin
 Feature: Settings - As an administrator
 
 Scenario: I can see edit settings screen
