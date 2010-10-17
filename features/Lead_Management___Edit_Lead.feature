@@ -1,5 +1,5 @@
-@lead_manager @$_agents
-Feature: Lead Management - Edit Lead
+@lead_manager @$_freelance_agent
+Feature: Lead Management - freelance agent - Edit Lead
 
 Scenario: I can edit lead if the lead is not sold yet
 
