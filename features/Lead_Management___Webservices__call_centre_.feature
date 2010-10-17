@@ -1,5 +1,5 @@
-@lead_management @$_small_buyer
-Feature: Lead Management - Webservices (call centre)
+@webservices @$_call_centre
+Feature: Webservices (call centre)
 
 Scenario: I can add a webservice by selecting name, url and format
 
