@@ -38,3 +38,5 @@ Scenario: I can download invoice as PDF file
 Scenario: I can send invoice to given email address (as an attachment)
 
 Scenario: I can print out invoice (bypassing PDF)
+
+Scenario: I can credit an invoice ...
