@@ -1,4 +1,4 @@
-@lead_management
+@lead_management @$_small_buyer
 Feature: Lead Management - Requested leads for small buyer
 
 Scenario: I should see created by, rating % and certification level for each lead
