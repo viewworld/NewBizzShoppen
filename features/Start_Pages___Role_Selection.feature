@@ -1,3 +1,4 @@
+@start_pages
 Feature: Start Pages - Role Selection
 
 Scenario: I can see welcome text fetch from the database
