@@ -1,1 +1,6 @@
+@lead_catalog
 Feature: Lead Catalog - Structure
+
+Scenario: ...placeholder...
+
+Scenario: ...placeholder...
