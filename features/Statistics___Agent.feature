@@ -1,3 +1,4 @@
+@statistics @$_freelance_agent
 Feature: Statistics - Agent
 
 In order to make better decisions
