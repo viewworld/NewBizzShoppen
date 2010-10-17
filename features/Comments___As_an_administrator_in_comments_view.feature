@@ -1,4 +1,4 @@
-@comments
+@comments @$_admin
 Feature: Comments - As an administrator in comments view
 
 Scenario: I can browse all comment conversations with pagination
