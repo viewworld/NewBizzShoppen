@@ -1,3 +1,4 @@
+@lead_management
 Feature: Lead Management - Requested leads for small buyer
 
 Scenario: I should see created by, rating % and certification level for each lead
