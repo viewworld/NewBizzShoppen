@@ -1,4 +1,4 @@
-@paypal
+@paypal @$_system
 Feature: Paypal - Payments
 
 Scenario: ...placeholder...
