@@ -1,3 +1,4 @@
+@statistics @$_admin
 Feature: Statistics - Admin
 
 In order to make better decisions
