@@ -1,3 +1,4 @@
+@comments
 Feature: Comments - As CallCentre administrator 
 
 Scenario: I can see the amount of comments per lead on Lead created by my agents listing
