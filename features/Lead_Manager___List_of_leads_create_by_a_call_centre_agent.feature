@@ -1,3 +1,4 @@
+@lead_manager @$_call_centre
 Feature: Lead Manager - List of leads create by a call centre agent
 
 Scenario: I can browse leads created by one of my agents with pagination
