@@ -1,0 +1,1 @@
+Feature: System - printer friendly content
