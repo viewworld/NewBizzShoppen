@@ -1,3 +1,4 @@
+@email_templates
 Feature: Email Templates - Administration
 
 Scenario: I can list all available email templates and see following columns -  name, subject, actions
