@@ -1,4 +1,4 @@
-@comments
+@comments @$_call_centre
 Feature: Comments - Call centre
 
 Background:
