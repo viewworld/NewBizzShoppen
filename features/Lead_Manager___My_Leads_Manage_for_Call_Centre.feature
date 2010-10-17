@@ -1,3 +1,4 @@
+@lead_manager @$_call_centre
 Feature: Lead Manager - My Leads Manage for Call Centre
 
 Scenario: I can browse leads with pagination
