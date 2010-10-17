@@ -1,3 +1,4 @@
+@search
 Feature: Search - By Zip Code Denmark
 
 Scenario: ...placeholder...
