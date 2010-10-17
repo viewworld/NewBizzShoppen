@@ -1,4 +1,4 @@
-@webservice @$_admin
+@webservices @$_admin
 Feature: Webservice - Admin - Lead sources Management
 
 Scenario: I can browse all webservices with pagination
