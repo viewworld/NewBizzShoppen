@@ -1,0 +1,1 @@
+Feature: Lead Catalog - Structure
