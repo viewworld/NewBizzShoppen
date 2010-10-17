@@ -1,5 +1,5 @@
 @statistics @$_freelance_agent
-Feature: Statistics - Agent
+Feature: Statistics - freelance Agent
 
 In order to make better decisions
 As a Agent
