@@ -1,0 +1,1 @@
+Feature: Statistics - lead user
