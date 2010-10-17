@@ -55,12 +55,4 @@ Scenario: The screen name I enter have to be unique
    When I go to the sign up page
    Then I should see "must be logged out"
 
- Scenario: User can change the password only with a valid password
-   Given I am signed up and confirmed as "bob@selleo.com/password"
-   And I sign in as "bob@selleo.com/password"
-   And I am on my profile page
-   When I follow "Change password"
-   And I fill in "Password" with "newpassword"
-   And I press "Change password"
-   Then I should see "Change password"
-   And I should see error messages
+ 
