@@ -1,3 +1,4 @@
+@dashboard
 Feature: Dashboard - Admin
 
 Scenario: ...placeholder...
