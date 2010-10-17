@@ -1,0 +1,1 @@
+Feature: lead catalog - small buyer - lead details
