@@ -1,5 +1,5 @@
-@dashboard @$_call_centre_agent @$_freelance_agent @xls_was_ambigious
-Feature: Dashboard - Agent
+@dashboard  @$_freelance_agent 
+Feature: Dashboard - Freelance Agent
 
 In order to have a overall view on my account
 As a Agent
