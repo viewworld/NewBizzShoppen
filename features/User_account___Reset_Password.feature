@@ -1,3 +1,4 @@
+@user_accounts
 Feature: User account - Reset Password
  In order to sign in even if user forgot their password
  A user
