@@ -22,3 +22,5 @@ Scenario: I can go to bestsellers listing
 Scenario: I can go to latest leads listing
 
 Scenario: I can go to agent page by clicking “CLICK HERE IF YOU ARE AN AGENT”
+
+Scenario: I can go to new buyer creation page
