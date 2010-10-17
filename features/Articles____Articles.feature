@@ -1,3 +1,4 @@
+@articles
 Feature: Articles -  Articles
 
 Scenario: I can see article content by clicing on about us
