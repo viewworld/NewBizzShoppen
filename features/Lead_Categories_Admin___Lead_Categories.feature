@@ -1,4 +1,4 @@
-@lead_catalog	@$_admin
+@lead_catalog	@$_admin @m1
 Feature: Lead Categories Admin - Lead Categories
 
 Scenario: I can see categories tree
