@@ -70,6 +70,10 @@ en:
         locked: 'Locked'
         lock: 'Lock'
         unlock: 'Unlock'
+        subaccounts: 'Subaccounts'
+        edit: 'Edit'
+        subaccounts_for_user: 'Subaccounts of user'
+        show_all_users: 'Show all users'
     edit:
       view:
         button_update_user: Save

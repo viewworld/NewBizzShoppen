@@ -20,8 +20,12 @@ class User < ActiveRecord::Base
   validates_presence_of :email
   validates_uniqueness_of :email
 
+  has_many :subaccounts, :class_name => "User", :foreign_key => "parent_id"
+  belongs_to :user, :class_name => "User", :foreign_key => "parent_id", :counter_cache => :subaccounts_counter
+
   scope :with_role, lambda { |role| where("roles_mask & #{2**User.valid_roles.index(role.to_sym)} > 0 ") }
   scope :with_keyword, lambda { |q| where("lower(first_name) like ? OR lower(last_name) like ? OR lower(email) like ?", "%#{q.downcase}%", "%#{q.downcase}%", "%#{q.downcase}%") }
+  scope :with_subaccounts, lambda { |parent_id| where("parent_id = ?", parent_id) }
   scoped_order :id
   scoped_order :roles_mask
   scoped_order :first_name

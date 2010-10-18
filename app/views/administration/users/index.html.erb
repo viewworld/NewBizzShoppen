@@ -1,7 +1,11 @@
 <column-mc:>
-  <h1><%= t("administration.index.view.title") %></h1>
-
-  <%= link_to t("administration.index.view.new_user"), new_administration_user_path %>
+  <% if @search.with_subaccounts.blank? %>
+    <h1><%= t("administration.index.view.title") %></h1>
+  <% else %>
+    <% user = User.find(@search.with_subaccounts) %>
+    <h1><%= "#{t("administration.index.view.subaccounts_for_user")} #{user.first_name} #{user.last_name}" %></h1>
+    <%= link_to t("administration.index.view.show_all_users"), administration_users_path %>
+  <% end %>
 
   <%= form_tag new_administration_user_path, :method => :get do %>
     <%= select_tag "role", options_for_select(User.valid_roles.collect { |r| [r.to_s, r.to_s] }), {} %>
@@ -11,6 +15,7 @@
   <%= form_for @search, :url => administration_users_path do |f| %>
     <%= f.text_field :with_keyword %>
     <%= f.select :with_role, User.valid_roles.collect { |r| r.to_s }, :include_blank => true  %>
+    <%= f.hidden_field :with_subaccounts %>
     <%= submit_tag "Search" %>
   <% end %>
 
@@ -49,7 +54,10 @@
         <td></td>
         <td></td>
         <td>
-           <%= link_to 'Edit', edit_administration_user_path(user) %>
+           <%= link_to  t("administration.index.view.edit"), edit_administration_user_path(user) %>
+           <% unless user.subaccounts.empty? %>
+            <%= link_to t("administration.index.view.subaccounts"), administration_users_path({ :search => { :with_subaccounts => user.id }}) %>
+           <% end %>
         </td>
      </tr>
     <% end %>
