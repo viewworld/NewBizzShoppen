@@ -8,15 +8,22 @@
     <%= submit_tag  t("administration.index.view.new_user") %>
   <% end %>
 
+  <%= form_for @search, :url => administration_users_path do |f| %>
+    <%= f.text_field :with_keyword %>
+    <%= f.select :with_role, User.valid_roles.collect { |r| r.to_s }, :include_blank => true  %>
+    <%= submit_tag "Search" %>
+  <% end %>
+
+
   <table>
     <tr>
-      <td><%= t("administration.index.view.id") %></td>
-      <td><%= t("administration.index.view.roles") %></td>
+      <td><%= link_to t("administration.index.view.id"), order_for_scoped_search(:id) %></td>
+      <td><%= link_to t("administration.index.view.roles"), order_for_scoped_search(:roles_mask) %></td>
       <td><%= t("administration.index.view.locked") %></td>
-      <td><%= t("administration.index.view.first_name") %></td>
-      <td><%= t("administration.index.view.last_name") %></td>
-      <td><%= t("administration.index.view.email") %></td>
-      <td><%= t("administration.index.view.age") %></td>
+      <td><%= link_to t("administration.index.view.first_name"), order_for_scoped_search(:first_name) %></td>
+      <td><%= link_to t("administration.index.view.last_name"), order_for_scoped_search(:last_name) %></td>
+      <td><%= link_to t("administration.index.view.email"), order_for_scoped_search(:email) %></td>
+      <td><%= link_to t("administration.index.view.age"), order_for_scoped_search(:age) %></td>
       <td><%= t("administration.index.view.leads_bought") %></td>
       <td><%= t("administration.index.view.leads_sold") %></td>
       <td><%= t("administration.index.view.revenue") %></td>

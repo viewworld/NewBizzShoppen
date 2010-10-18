@@ -2,7 +2,6 @@ class Administration::UsersController < Administration::AdministrationController
   inherit_resources
   actions :all, :except => [ :create, :update ]
 
-
   def new
     @user = "User::#{params[:role].to_s.camelize}".constantize.new
   end
@@ -39,6 +38,8 @@ class Administration::UsersController < Administration::AdministrationController
 
   protected
     def collection
-      @users ||= end_of_association_chain.paginate(:page => params[:page])
+      @search = User.scoped_search(params[:search])
+      @users = @search.paginate(:page => params[:page])
+      #@users ||= end_of_association_chain.paginate(:page => params[:page])
     end
 end

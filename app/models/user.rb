@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
   include RoleModel
   require 'unsafe_writer'
   include UnsafeWriter
+  include ScopedSearch::Model
+
 
   COUNTRIES = [
           ['Poland', 0],
@@ -19,6 +21,13 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email
 
   scope :with_role, lambda { |role| where("roles_mask & #{2**User.valid_roles.index(role.to_sym)} > 0 ") }
+  scope :with_keyword, lambda { |q| where("lower(first_name) like ? OR lower(last_name) like ? OR lower(email) like ?", "%#{q.downcase}%", "%#{q.downcase}%", "%#{q.downcase}%") }
+  scoped_order :id
+  scoped_order :roles_mask
+  scoped_order :first_name
+  scoped_order :last_name
+  scoped_order :email
+  scoped_order :age
 
   attr_protected :payout, :locked
 
