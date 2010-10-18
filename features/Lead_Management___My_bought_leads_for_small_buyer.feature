@@ -1,4 +1,4 @@
-@lead_manager @$_small_buyer @m1
+@lead_manager @$_small_buyer @m2
 Feature: Lead Management - My bought leads for small buyer
 
 Scenario: I can browse my lead with pagination
