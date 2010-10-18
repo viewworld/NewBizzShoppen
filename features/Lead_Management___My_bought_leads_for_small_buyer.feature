@@ -38,3 +38,11 @@ Scenario: I can view the details of the comment by clicking on the comment icon
 Scenario: I can reply to a comment through a popup
 
 Scenario: "Assigned to" should not be visible if I do not have any lead users associated with me
+
+Scenario: I can set responce time for a given assignation
+
+Scenario: I can set responce time in bulk for assignations
+
+Scenario: I should be notified by email after responce time expires
+
+Scenario: I should see a yellow color for a lead with expiration date ending in 3 days
