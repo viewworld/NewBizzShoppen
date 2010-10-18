@@ -1,4 +1,4 @@
-@lead_manager @$_freelance_agent @$_call_centre_agent @xls_was_ambigious
+@lead_manager @$_freelance_agent @$_call_centre_agent @xls_was_ambigious @m1
 Feature:  Create Lead
 
 In order to create and manage leads I sell
@@ -28,7 +28,7 @@ And I fill in “lead_name” with “Marek Kowalski”
 And I fill in “telephone” with “123456789”
 And I fill in “email” with “my@email.com”
 And I fill in “address” with “ul.Kaminskiego 19”
-And I submit with “Create &amp; Close”
+And I submit with “Create &amp;amp; Close”
 And I should see “LEAD LIST”
 
 Scenario: I can create a new lead and continue (create another one)
