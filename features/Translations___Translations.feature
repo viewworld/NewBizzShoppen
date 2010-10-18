@@ -1,4 +1,4 @@
-@translations
+@translations @m2
 Feature: Translations 
 
 Scenario: First visit gets the user to the US language page
