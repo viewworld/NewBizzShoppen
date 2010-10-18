@@ -1,4 +1,4 @@
-@lead_catalog
+@lead_catalog @m1
 Feature: Lead Catalog - Structure
 
 Scenario: ...placeholder...
