@@ -1,4 +1,4 @@
-@lead_catalog @$_admin
+@lead_catalog @$_admin @m2
 Feature: lead catalog - admin - sold lead listing
 
 Scenario: I can browse sold leads with pagination
