@@ -1,4 +1,4 @@
-@lead_catalog @$_lead_user 
+@lead_catalog @$_lead_user @m1
 Feature:  Lead Details - lead user
 
 Scenario: I should see created by, rating % and certification level for each lead
