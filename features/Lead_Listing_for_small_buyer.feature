@@ -1,5 +1,5 @@
 @lead_catalog @$_small_buyer @m1
-Feature: Lead Listing for guest/small buyer
+Feature: Lead Listing for small buyer
 
 Background:
 As a guest I go to “browse leads”
