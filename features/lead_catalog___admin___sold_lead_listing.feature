@@ -7,4 +7,4 @@ Scenario: I can filter by columns values
 
 Scenario: I can sort by columns
 
-Scenario:I can go to lead details by clicking on the row
+Scenario: I can go to lead details by clicking on the row
