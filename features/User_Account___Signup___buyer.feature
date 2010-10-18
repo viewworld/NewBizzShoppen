@@ -1,4 +1,4 @@
-@user_accounts
+@user_accounts @m1
 Feature: User Account - Signup Buyer
 
   In order to get access to protected sections of the site
