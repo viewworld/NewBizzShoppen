@@ -8,3 +8,8 @@ Scenario: I can’t edit lead if the lead was already sold
 Scenario: I can add a language
 
 Scenario: I can delete a language
+
+Scenario: After a lead that have been bought and I update it. When I click save I should get a popup asking if I want to notify the lead buyer about the changes.
+# Generic mail edited by the administrator.
+
+Scenario: Datapicker - after selecting form the select box it should automatically fill in the date
