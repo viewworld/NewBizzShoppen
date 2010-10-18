@@ -1,5 +1,5 @@
 @comments 
-Feature: Comments - As a buyer
+Feature: Comments - As a small buyer
 
 Scenario: I can see amount of lead comments created by me or my lead users for each lead on leads listing
 
