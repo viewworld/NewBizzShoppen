@@ -79,6 +79,12 @@ Nbs::Application.routes.draw do
   resources :agent_accounts, :only => [:new, :create]
   resources :buyer_accounts, :only => [:new, :create]
 
+
+
+
+  resource :my_profile, :controller => "my_profile", :only => [:update]
+  match 'my_profile' => 'my_profile#edit', :as => "my_profile"
+
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
 
