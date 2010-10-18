@@ -1,4 +1,4 @@
-@lead_catalog @$_big_buyer
+@lead_catalog @$_big_buyer @m1
 Feature: lead catalog - big buyer - lead details
 
 Scenario: I should see created by, rating % and certification level for each lead
