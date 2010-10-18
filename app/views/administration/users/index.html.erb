@@ -12,6 +12,7 @@
     <tr>
       <td><%= t("administration.index.view.id") %></td>
       <td><%= t("administration.index.view.roles") %></td>
+      <td><%= t("administration.index.view.locked") %></td>
       <td><%= t("administration.index.view.first_name") %></td>
       <td><%= t("administration.index.view.last_name") %></td>
       <td><%= t("administration.index.view.email") %></td>
@@ -27,6 +28,11 @@
     <tr>
         <td><%= user.id %></td>
         <td><%= user.roles.collect {|r| r.to_s}.join(", ") %></td>
+        <td>
+            <% unless user.id == current_user.id %>
+                <%= link_to user.locked_at.blank? ? t("administration.index.view.lock") : t("administration.index.view.unlock"), administration_user_path(user, { "user_#{user.role.to_s}".to_sym  => {:locked =>  user.locked_at.blank? ? "lock" : "unlock"} }) , {:method => :put}  %>
+            <% end %>
+        </td>
         <td><%= user.first_name %></td>
         <td><%= user.last_name %></td>
         <td><%= user.email %></td>

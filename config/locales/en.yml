@@ -67,6 +67,9 @@ en:
         payout: 'Payout'
         actions: 'Actions'
         new_user: 'New user'
+        locked: 'Locked'
+        lock: 'Lock'
+        unlock: 'Unlock'
     edit:
       view:
         button_update_user: Save

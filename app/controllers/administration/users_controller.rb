@@ -8,13 +8,15 @@ class Administration::UsersController < Administration::AdministrationController
   end
 
   def create
-    @user = "User::#{params[:role].to_s.camelize}".constantize.new(params["user_#{params[:role].to_s}"])
+    "User::#{params[:role].to_s.camelize}".constantize.with_accessible_attributes do |klass|
+      @user = klass.new(params["user_#{params[:role].to_s}"])
 
-    if @user.save
-      flash[:notice] = "User created!"
-       redirect_to administration_users_path
-    else
-      render :action => 'new'
+      if @user.save
+        flash[:notice] = "User created!"
+         redirect_to administration_users_path
+      else
+        render :action => 'new'
+      end
     end
   end
 
@@ -24,11 +26,14 @@ class Administration::UsersController < Administration::AdministrationController
 
   def update
     @user = User.find(params[:id])
-    @user = "User::#{@user.role.to_s.camelize}".constantize.find(params[:id])
-    if @user.update_attributes(params["user_#{@user.role.to_s}".to_sym])
-      redirect_to administration_users_path
-    else
-      render :action => 'edit'
+
+    "User::#{@user.role.to_s.camelize}".constantize.with_accessible_attributes do |klass|
+      @user = klass.find(params[:id])
+      if @user.update_attributes(params["user_#{@user.role.to_s}".to_sym])
+        redirect_to administration_users_path
+      else
+        render :action => 'edit'
+      end
     end
   end
 
