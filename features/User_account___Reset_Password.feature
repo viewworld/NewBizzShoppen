@@ -42,5 +42,5 @@ Feature: User account - Reset Password
    When I request password reset link to be sent to "email@person.com"
    Then I should see "Your account is not confirmed"
 
-@1
+
 Scenario: I can request new reset password link, but the old one will be inactive
