@@ -1,7 +1,7 @@
 @user_accounts @$_admin @m1
 Feature: User account Admin - Edit
 
- @2
+ 
  Scenario: I can edit user info (no password reset!)
    When I go to user administration page    
    Then I should see "customer_ann@domain.dom" for user "customer_ann@domain.dom”
