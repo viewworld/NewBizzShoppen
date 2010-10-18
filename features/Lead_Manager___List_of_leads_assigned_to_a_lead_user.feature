@@ -1,5 +1,5 @@
 @lead_manager @$_small_buyer @m2
-Feature: Lead Manager - List of leads assigned to a lead user
+Feature: Lead Manager - List of leads assigned to a lead user - small buyer
 
 Scenario: I can browse leads assigned to one of my lead users with pagination
 
