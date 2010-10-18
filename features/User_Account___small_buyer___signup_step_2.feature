@@ -1,4 +1,4 @@
-@user_accounts @$_small_buyer
+@user_accounts @$_small_buyer @m1
 Feature: User Account - small buyer - signup step 2
 
 Scenario: I can select multiple categories that I am interested in
