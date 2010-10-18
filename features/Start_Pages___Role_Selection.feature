@@ -1,4 +1,4 @@
-@start_pages
+@start_pages @m2
 Feature: Start Pages - Role Selection
 
 Scenario: I can see welcome text fetch from the database
