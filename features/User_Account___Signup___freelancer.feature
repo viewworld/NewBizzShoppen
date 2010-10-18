@@ -14,7 +14,7 @@ Feature: User Account - Signup - freelancer
     And I press "Create"
     Then I should see error messages
 
-@2
+
   Scenario: User signs up with valid data as a freelancer
     Given Forum is configured
     When I go to the sign up page
@@ -26,7 +26,7 @@ Feature: User Account - Signup - freelancer
     Then I should see "Your account has been created"
     And a confirmation message should be sent to "user@domain.dom"
 
-@2
+
   Scenario: User signs up with valid data as a buyer
     Given Forum is configured
     When I go to the sign up page
