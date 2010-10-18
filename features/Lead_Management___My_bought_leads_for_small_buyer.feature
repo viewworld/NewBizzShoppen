@@ -11,7 +11,7 @@ Scenario: I can download a lead as csv
 
 Scenario: I can rate a lead (good, bad, fake)
 
-Scenario: I can set the status of the lead (not contacted, dontacted, meeting, signed)
+Scenario: I can set the status of the lead (...)
 
 Scenario: I can comment the lead through a popup
 
@@ -46,3 +46,5 @@ Scenario: I can set responce time in bulk for assignations
 Scenario: I should be notified by email after responce time expires
 
 Scenario: I should see a yellow color for a lead with expiration date ending in 3 days
+
+Scenario: I can print selected leads
