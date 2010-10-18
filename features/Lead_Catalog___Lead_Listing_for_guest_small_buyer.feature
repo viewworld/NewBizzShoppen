@@ -1,4 +1,4 @@
-@lead_catalog @$_small_buyer
+@lead_catalog @$_small_buyer @m1
 Feature: Lead Listing for guest/small buyer
 
 Background:
