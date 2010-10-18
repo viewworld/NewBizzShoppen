@@ -1,4 +1,4 @@
-@settings @$_admin
+@settings @$_admin @m2
 Feature: Settings - As an administrator
 
 Scenario: I can see edit settings screen
