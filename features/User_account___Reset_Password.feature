@@ -1,4 +1,4 @@
-@user_accounts
+@user_accounts @m1
 Feature: User account - Reset Password
  In order to sign in even if user forgot their password
  A user
