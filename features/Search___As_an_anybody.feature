@@ -1,4 +1,4 @@
-@search
+@search @m2
 Feature: Search - As an anybody
 
 Scenario: I can see search panel on leads listing page
