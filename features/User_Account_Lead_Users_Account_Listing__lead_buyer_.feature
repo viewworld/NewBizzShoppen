@@ -1,4 +1,4 @@
-@user_accounts 
+@user_accounts @$_lead_buyer
 Feature: User Account Lead Users Account Listing (lead buyer)
 
 Scenario: I can browse list of my lead users without pagination
