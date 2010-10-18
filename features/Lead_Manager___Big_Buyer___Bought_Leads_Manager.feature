@@ -1,4 +1,4 @@
-@lead_manager @$_big_buyer @m1
+@lead_manager @$_big_buyer @m2
 Feature: Lead Manager - Big Buyer - Bought Leads Manager
 
 Scenario: I can browse my lead with pagination
