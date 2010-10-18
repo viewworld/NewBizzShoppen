@@ -6,7 +6,6 @@ Feature: User Account - Profile edit
    And I am logged in as "user@domain.dom/secret"
    And I go to edit profile page
 
- @1
  Scenario: I can edit my profile
    Then I should see "(leave blank if you don't want to change it)"
    Then I fill in "user[password]" with "super_secret_password"
@@ -19,7 +18,6 @@ Feature: User Account - Profile edit
 
 Scenario: The screen name I enter have to be unique
 
- @0.5
  Scenario: I shouldn't be able to access other people profile
 
  Scenario: A user must be logged on to see their account information
