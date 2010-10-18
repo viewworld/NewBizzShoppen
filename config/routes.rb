@@ -60,6 +60,7 @@ Nbs::Application.routes.draw do
   #   end
 
   namespace :administration do
+    root :to => "users#index"
     resources :users
   end
 

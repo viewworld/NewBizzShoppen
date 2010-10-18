@@ -1,4 +1,48 @@
 <column-mc:>
-  <h1>Users</h1>
-  <%= render @users %>
+  <h1><%= t("administration.index.view.title") %></h1>
+
+  <%= link_to t("administration.index.view.new_user"), new_administration_user_path %>
+
+  <%= form_tag new_administration_user_path, :method => :get do %>
+    <%= select_tag "role", options_for_select(User.valid_roles.collect { |r| [r.to_s, r.to_s] }), {} %>
+    <%= submit_tag  t("administration.index.view.new_user") %>
+  <% end %>
+
+  <table>
+    <tr>
+      <td><%= t("administration.index.view.id") %></td>
+      <td><%= t("administration.index.view.roles") %></td>
+      <td><%= t("administration.index.view.first_name") %></td>
+      <td><%= t("administration.index.view.last_name") %></td>
+      <td><%= t("administration.index.view.email") %></td>
+      <td><%= t("administration.index.view.age") %></td>
+      <td><%= t("administration.index.view.leads_bought") %></td>
+      <td><%= t("administration.index.view.leads_sold") %></td>
+      <td><%= t("administration.index.view.revenue") %></td>
+      <td><%= t("administration.index.view.payout") %></td>
+      <td><%= t("administration.index.view.actions") %></td>
+    </tr>
+
+    <% @users.each do |user| %>
+    <tr>
+        <td><%= user.id %></td>
+        <td><%= user.roles.collect {|r| r.to_s}.join(", ") %></td>
+        <td><%= user.first_name %></td>
+        <td><%= user.last_name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.age %></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>
+           <%= link_to 'Edit', edit_administration_user_path(user) %>
+        </td>
+     </tr>
+    <% end %>
+
+  </table>
+
+  <%= will_paginate @users %>
+
 </column-mc:>

@@ -1,11 +1,10 @@
 class BuyerAccountsController < ApplicationController
   def new
-    @user = User.new(:newsletter_on => true)
+    @user = User::Buyer.new(:newsletter_on => true)
   end
 
   def create
-    @user = User.new(params[:user])
-    @user.roles = [:buyer]
+    @user = User::Buyer.new(params[:user_buyer])
     respond_to do  |format|
       format.html { @user.save ? redirect_to(root_path) : render("new")}
     end

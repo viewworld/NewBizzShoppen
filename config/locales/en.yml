@@ -51,30 +51,46 @@ en:
         agent_signup: 'Freelance agent signup'
         buyer_signup: 'Lead buyer signup'
 
+  administration:
+    index:
+      view:
+        title: 'Users'
+        id: 'ID'
+        roles: 'Roles'
+        first_name: 'First name'
+        last_name: 'Last name'
+        email: 'E-mail'
+        age: 'Age'
+        leads_bought: 'Leads bought'
+        leads_sold: 'Leads sold'
+        revenue: 'Revenue'
+        payout: 'Payout'
+        actions: 'Actions'
+        new_user: 'New user'
+    edit:
+      view:
+        button_update_user: Save
+
   agent_accounts:
     new:
       view:
         title: 'Freelancer Agent signup'
-        first_name: 'First name'
-        last_name: 'Last name'
-        phone: 'Phone'
-        email: 'E-mail'
-        screen_name: 'Screen name'
-        password: 'Password'
-        password_confirmation: 'Password confirmation'
-        street: 'Street'
-        city: 'City'
-        zip_code: 'Zip code'
-        county: 'County'
-        country: 'Country'
-        agreement_read: "I have read and agree to Associated Content's Terms of Use and Privacy Policy"
-        newsletter_on: 'I want to receive the newsletter'
         button_create_account: 'Create my account'
 
   buyer_accounts:
     new:
       view:
         title: 'Lead Buyer signup'
+        button_create_account: 'Create my account'
+
+  models:
+    user:
+      payout_validation_message: 'can only be between 0 and 100'
+      agreement_read_validation_message: 'You have to accept the agreement'
+
+  activerecord:
+    attributes:
+      user:
         first_name: 'First name'
         last_name: 'Last name'
         phone: 'Phone'
@@ -89,4 +105,3 @@ en:
         country: 'Country'
         agreement_read: "I have read and agree to Associated Content's Terms of Use and Privacy Policy"
         newsletter_on: 'I want to receive the newsletter'
-        button_create_account: 'Create my account'

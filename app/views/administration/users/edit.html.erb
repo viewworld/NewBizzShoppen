@@ -1,0 +1,7 @@
+<column-mc:>
+<%= semantic_form_for @user, :url => administration_user_path, :method => :put do |form| %>
+    <%= render :partial => 'form', :locals => { :form => form }  %>
+    <%= form.commit_button t("administration.edit.view.button_update_user") %>
+<% end %>
+</column-mc:>
+
