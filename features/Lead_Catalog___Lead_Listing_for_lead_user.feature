@@ -1,4 +1,4 @@
-@lead_catalog @$_lead_user
+@lead_catalog @$_lead_user @m1
 Feature: Lead Listing for lead user
 
 Scenario: Listing should only show leads that are not yet requested or assigned to another lead user withing the same lead buyer account
