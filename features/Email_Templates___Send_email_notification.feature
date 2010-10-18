@@ -1,0 +1,1 @@
+Feature: Email Templates - Send email notification
