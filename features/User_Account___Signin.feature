@@ -1,4 +1,4 @@
-@user_accounts
+@user_accounts @m1
 Feature: User Account - Signin
 
   In order to get access to protected sections of the site
@@ -20,8 +20,8 @@ Feature: User Account - Signin
   Scenario Outline: A registered user that types in the wrong password can not login
     Given I am signed up and confirmed as "bob@person.com/supersecret"
     When I go to the login page
-    And I fill in "Email" with "&amp;lt;login&amp;gt;"
-    And I fill in "Password" with "&amp;lt;password&amp;gt;"
+    And I fill in "Email" with "&amp;amp;lt;login&amp;amp;gt;"
+    And I fill in "Password" with "&amp;amp;lt;password&amp;amp;gt;"
     And I press "Login"
     Then I should see "Bad email or password"
 
@@ -43,7 +43,7 @@ Feature: User Account - Signin
 
   Scenario Outline: A guest should be shown the login page for protected pages
     Given I am not sign in
-    When I go to &amp;lt;page&amp;gt;
+    When I go to &amp;amp;lt;page&amp;amp;gt;
     Then I should see "Access denied"
 
   Examples:
