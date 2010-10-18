@@ -1,4 +1,4 @@
-@user_accounts @$_call_centre
+@user_accounts @$_call_centre @m1
 Feature: User account Admin - Listing Manage
 
  Background:
