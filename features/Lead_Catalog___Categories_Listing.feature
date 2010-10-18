@@ -1,4 +1,4 @@
-@lead_catalog
+@lead_catalog @m1
 Feature: Lead Catalog - Categories Listing
 
 Scenario: I can see all active categories
