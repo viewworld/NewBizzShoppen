@@ -1,4 +1,4 @@
-@user_accounts
+@user_accounts @m1
 Feature: User accounts - password change
 
 Scenario: I can change my password fro the account password change page
