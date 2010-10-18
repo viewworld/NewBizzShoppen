@@ -5,9 +5,9 @@ Scenario: Structure
 
 Scenario: I can edit settings from my account setting page
 
-Scenario: ...placeholder...
-
-Scenario: ...placeholder...
+Scenario: I can see settings for my specific role
+  
+Scenario: I cannot see settings not for my role
 
 Scenario: ...placeholder...
 
