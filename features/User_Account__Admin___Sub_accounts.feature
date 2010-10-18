@@ -1,4 +1,4 @@
-@user_accounts @$_admin
+@user_accounts @$_admin @m2
 Feature: User Account  Admin - Sub-accounts
 
 Background:
