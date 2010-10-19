@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
 
   # declare the valid roles -- do not change the order if you add more
   # roles later, always append them at the end!
-  roles :admin, :agent, :buyer, :call_centre, :call_centre_agent, :lead_user, :priviliged_buyer
+  roles :admin, :agent, :call_centre, :call_centre_agent, :customer, :lead_buyer, :lead_user
 
   validates_presence_of :email
   validates_uniqueness_of :email
