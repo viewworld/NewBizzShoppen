@@ -1,18 +1,18 @@
-@dashboard @$_big_buyer
-Feature: Dashboard - Big Buyer
+@dashboard @$_customer
+Feature: Home page / Dashboard
 
-Scenario: I can follow “What do you want to do today?” links and they take me to appropriate places
+Scenario: Given I do not have any users yet than we I should see message encouraging me to do so and link allowing me to do so
 
-Scenario: If that buyer do not have any users yet than we should display an information to create one and a link to do it
+Scenario: I can see statistics summaries (3-18 aggregated numbers - depends on roles collection) (TODO)
 
-Scenario: I can see statistics summaries (3-6 aggregated numbers)
+Scenario: I can see 10 latest new leads in categories that I am observing
 
-Scenario: I can see 10 latest new leads in observer categories
+Scenario: I can browse the complete list of latest new leads in categories that I am observing
 
-Scenario: I can browse the complete list of latest new leads in observer categories
+Scenario: I can see 10 recently requested leads
 
-Scenario: I can see 10 requested leads
+Scenario: I can browse the complete list of requested bought leads
 
 Scenario: I can see 10 recently bought leads
 
-Scenario: I can browse the complete list of recently bought leads
+Scenario: I can browse the complete list of bought leads
