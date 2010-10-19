@@ -1,12 +1,14 @@
-@invoices @$_small_buyer
-Feature: Invoices - as a Buyer
+@invoices @$_customer
+Feature: Invoicing
 
-Scenario: I can download invoice as PDF file
+Scenario: I can see a list of my invoices 
 
-Scenario: I can list my invoices an see following columns: number, total, payment status
+Scenario: I can see number of my invoice
 
-Scenario: I can sort invoices listing by following columns: number, total
+Scenario: I can see payment status of my invoice
 
-Scenario: I can filter invoices list by following parameters: creation range, payment status
+Scenario: I can see total value of my invoice
 
 Scenario: I can see invoice details
+
+Scenario: I can download invoice as PDF file
