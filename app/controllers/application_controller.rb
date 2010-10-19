@@ -1,6 +1,10 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  before_filter :set_locale
+
+  helper_method :locale
+
   def after_sign_in_path_for(resource)
      if resource.is_a?(User)
        if resource.has_role? :admin
@@ -11,5 +15,23 @@ class ApplicationController < ActionController::Base
      else
        super
      end
-   end
+  end
+
+  def set_locale(locale=nil)
+    if locale.nil?
+      locale_code = session[:locale_code].blank? ? I18n.locale.to_s : session[:locale_code]
+      @locale = Locale.new(locale_code)
+    else
+      @locale = locale
+      session[:locale_code] = @locale.code
+    end
+    I18n.locale = @locale.code
+    @locales = Locale.all
+    @locale
+  end
+
+  def locale
+    @locale || set_locale
+  end
+
 end

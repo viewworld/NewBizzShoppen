@@ -12,6 +12,26 @@
         <%= link_to 'My profile', my_profile_path %>
         <% end %>
 
+
+        <ul>
+          <li class="langs" id="select_lang">
+            <div>
+              <%= t "locales.#{locale.code.downcase}_locale" %>
+              <%= image_tag('/images/languages/flag_'+locale.code.downcase+'.png') %>
+            </div>
+            <ul id="langs_dropdown" style="">
+              <% @locales.each do |locale| %>
+                  <li>
+                    <%= link_to locale_path(:id => locale.code) do %>
+                        <%= t("locales.#{locale.code.downcase}_locale") %>
+                        <%= image_tag('/images/languages/flag_'+locale.code.downcase+'.png') %>
+                    <% end %>
+                  </li>
+              <% end %>
+            </ul>
+          </li>
+         </ul>
+
         <p class="notice"><%= notice %></p>
 
         <p class="alert"><%= alert %></p>

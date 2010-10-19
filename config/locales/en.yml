@@ -8,6 +8,10 @@ en:
       already_confirmed: "was already confirmed"
       not_locked: "was not locked"
 
+  locales:
+    en_locale: 'EN'
+    dk_locale: 'DK'
+
   devise:
     failure:
       unauthenticated: 'You need to sign in or sign up before continuing.'
