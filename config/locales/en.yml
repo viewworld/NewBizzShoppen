@@ -51,6 +51,14 @@ en:
         agent_signup: 'Freelance agent signup'
         buyer_signup: 'Lead buyer signup'
 
+  password:
+    controller:
+      update:
+        successful_update_notice: 'Password has been successfully changed!'
+    edit:
+      view:
+        button_update_user: 'Save'
+
   administration:
     index:
       view:
