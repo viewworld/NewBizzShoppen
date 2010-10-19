@@ -1,2 +1,10 @@
     <%= form.input :name %>
     <%= form.input :description, :as => :text %>
+
+    <%= form.semantic_fields_for :image, @category.image || Asset::CategoryImage.new do |image| %>
+         <%= image.input :asset,
+                        :as => :file,
+                        :required => false,
+                        :label => I18n.t("administration.categories.edit.view.upload_image"),
+                        :name => "category[image_attributes][asset]" %>
+    <% end %>

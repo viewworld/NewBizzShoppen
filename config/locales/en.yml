@@ -101,6 +101,7 @@ en:
           button_create: 'Create'
       edit:
         view:
+          upload_image: 'Upload image'
           button_update: 'Save'
 
   agent_accounts:

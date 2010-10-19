@@ -1,5 +1,5 @@
 <column-mc:>
-  <%= semantic_form_for [:administration, @category], :method => :put do |form| %>
+  <%= semantic_form_for [:administration, @category], :method => :put, :html => {:multipart => true} do |form| %>
     <%= render :partial => 'form', :locals => { :form => form } %>
     <%= form.commit_button t("administration.categories.new.view.button_create") %>
   <% end %>

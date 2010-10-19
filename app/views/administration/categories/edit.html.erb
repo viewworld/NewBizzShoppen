@@ -1,6 +1,9 @@
 <column-mc:>
-  <%= semantic_form_for [:administration, @category], :method => :post do |form| %>
+  <%= semantic_form_for [:administration, @category], :method => :post, :html => {:multipart => true} do |form| %>
     <%= render :partial => 'form', :locals => { :form => form } %>
+
+      <%= image_tag(@category.image.url) unless @category.image.nil? %>
+
     <%= form.commit_button t("administration.categories.edit.view.button_update") %>
-  <% end %>
+<% end %>
 </column-mc:>
