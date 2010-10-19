@@ -1,23 +1,15 @@
 <column-mc:>
   <h1><%= t("buyer_accounts.new.view.title") %></h1>
 
-  <% semantic_form_for  @user, :url => buyer_accounts_path do |form| %>
-      <%= form.input :first_name, :required => true, :label =>  t("buyer_accounts.new.view.first_name") %>
-      <%= form.input :last_name, :required => true, :label =>  t("buyer_accounts.new.view.last_name") %>
-      <%= form.input :phone, :required => true, :label =>  t("buyer_accounts.new.view.phone") %>
-      <%= form.input :email, :required => true, :label =>  t("buyer_accounts.new.view.email") %>
-      <%= form.input :screen_name, :required => true, :label =>  t("buyer_accounts.new.view.screen_name") %>
-      <%= form.input :password, :as => :password, :required => true, :label =>  t("buyer_accounts.new.view.password") %>
-      <%= form.input :password_confirmation, :as => :password, :required => true, :label =>  t("buyer_accounts.new.view.password_confirmation") %>
-      <%= form.input :street, :required => true, :label =>  t("buyer_accounts.new.view.street") %>
-      <%= form.input :city, :required => true, :label =>  t("buyer_accounts.new.view.city") %>
-      <%= form.input :zip_code, :required => true, :label =>  t("buyer_accounts.new.view.zip_code") %>
-      <%= form.input :county, :required => true, :label =>  t("buyer_accounts.new.view.county") %>
-      <%= form.input :country, :as => :select, :collection => User::COUNTRIES, :required => true, :label =>  t("buyer_accounts.new.view.country") %>
+  <%= semantic_form_for  @user, :url => buyer_accounts_path do |form| %>
+      <%= form.inputs :first_name, :last_name, :phone, :email, :screen_name, :password, :password_confirmation, :street,
+        :city, :zip_code, :county
+      %>
 
+      <%= form.input :country, :as => :select, :collection => User::COUNTRIES %>
 
-      <%= form.input :agreement_read, :as => :boolean, :label =>  t("buyer_accounts.new.view.agreement_read") %>
-      <%= form.input :newsletter_on, :as => :boolean, :label =>  t("buyer_accounts.new.view.newsletter_on") %>
+      <%= form.input :agreement_read, :as => :boolean %>
+      <%= form.input :newsletter_on, :as => :boolean %>
       <%= form.commit_button t("buyer_accounts.new.view.button_create_account") %>
 
   <% end %>

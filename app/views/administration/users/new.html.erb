@@ -1,0 +1,10 @@
+<column-mc:>
+<%   %>
+<%= semantic_form_for @user, :url => administration_users_path(:role => params[:role]) do |form| %>
+    <%= render :partial => 'form', :locals => { :form => form }  %>
+    <%= form.inputs :password, :password_confirmation %>
+    <%= form.commit_button t("administration.edit.view.button_update_user") %>
+<% end %>
+
+  <%= @user.errors %>
+</column-mc:>

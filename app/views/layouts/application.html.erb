@@ -8,7 +8,9 @@
       <%= csrf_meta_tag %>
     </head>
     <body>
-        <h3><%= current_user.class.name %></h3>
+        <% if user_signed_in? %>
+        <%= link_to 'My profile', my_profile_path %>
+        <% end %>
 
         <p class="notice"><%= notice %></p>
 

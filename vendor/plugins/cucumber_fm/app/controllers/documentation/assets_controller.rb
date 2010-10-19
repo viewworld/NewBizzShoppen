@@ -26,12 +26,14 @@ class Documentation::AssetsController < Documentation::ApplicationController
   # definitely there exist some library for that
   def file_content_type
     case file_path
-      when /javascripts/
+      when /js$/
         "application/x-javascript"
-      when /stylesheets/
+      when /(css|less|otf)$/
         "text/css"
-      when /images/
+      when /(jpg|png)$/
         "image/#{file_extension}"
+      else
+        "text"
     end
   end
 end

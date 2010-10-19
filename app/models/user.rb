@@ -1,9 +1,13 @@
 class User < ActiveRecord::Base
   include RoleModel
+  require 'unsafe_writer'
+  include UnsafeWriter
+  include ScopedSearch::Model
+
 
   COUNTRIES = [
-    ['Poland', 0],
-    ['France', 1]
+          ['Poland', 0],
+          ['France', 1]
   ].freeze
 
   devise :database_authenticatable, :registerable, :confirmable, :lockable,
@@ -11,21 +15,42 @@ class User < ActiveRecord::Base
 
   # declare the valid roles -- do not change the order if you add more
   # roles later, always append them at the end!
-  roles :admin, :buyer, :agent, :lead_user, :priviliged_buyer, :call_enter_admin, :call_center_agent
+  roles :admin, :buyer, :agent, :lead_user, :priviliged_buyer, :call_centre, :call_centre_agent
 
-  validates_presence_of :first_name, :last_name, :phone, :screen_name, :street, :city, :zip_code, :county, :country, :email
-  validate :validate_if_agreement_read, :on => :create
+  validates_presence_of :email
+  validates_uniqueness_of :email
+
+  has_many :subaccounts, :class_name => "User", :foreign_key => "parent_id"
+  belongs_to :user, :class_name => "User", :foreign_key => "parent_id", :counter_cache => :subaccounts_counter
 
   scope :with_role, lambda { |role| where("roles_mask & #{2**User.valid_roles.index(role.to_sym)} > 0 ") }
+  scope :with_keyword, lambda { |q| where("lower(first_name) like ? OR lower(last_name) like ? OR lower(email) like ?", "%#{q.downcase}%", "%#{q.downcase}%", "%#{q.downcase}%") }
+  scope :with_subaccounts, lambda { |parent_id| where("parent_id = ?", parent_id) }
+  scoped_order :id
+  scoped_order :roles_mask
+  scoped_order :first_name
+  scoped_order :last_name
+  scoped_order :email
+  scoped_order :age
 
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name, :last_name, :phone, :screen_name,
-          :street, :city, :zip_code, :county, :country, :newsletter_on, :agreement_read, :newsletter_on
+  attr_protected :payout, :locked
 
-  attr_accessor :agreement_read
+  attr_accessor :agreement_read, :locked
 
-  def validate_if_agreement_read
-    if agreement_read.to_i == 0
-      self.errors.add(:agreement_read, "You have to accept the agreement")
+  before_save :handle_locking
+
+  private
+
+  def handle_locking
+    if locked
+      self.locked_at = locked == "unlock" ? nil : Time.now
     end
   end
+
+  public
+
+  def role
+    roles.first
+  end
+
 end

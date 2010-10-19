@@ -1,15 +1,14 @@
 Nbs::Application.routes.draw do
 
 
-
   get "agent_home/show"
 
   get "buyer_home/show"
 
   devise_for :users do
-      get "login", :to => "devise/sessions#new"
-      get "logout", :to => "devise/sessions#destroy"
-    end
+    get "login", :to => "devise/sessions#new"
+    get "logout", :to => "devise/sessions#destroy"
+  end
 
 
   # The priority is based upon order of creation:
@@ -60,7 +59,10 @@ Nbs::Application.routes.draw do
   #   end
 
   namespace :administration do
-    resources :users
+    root :to => "users#index"
+    resources :users do
+      resource :password, :controller => 'password'
+    end
   end
 
   namespace :buyer do
@@ -77,10 +79,16 @@ Nbs::Application.routes.draw do
   resources :agent_accounts, :only => [:new, :create]
   resources :buyer_accounts, :only => [:new, :create]
 
+
+
+
+  resource :my_profile, :controller => "my_profile", :only => [:update]
+  match 'my_profile' => 'my_profile#edit', :as => "my_profile"
+
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
 
-   root :to => "home#show"
+  root :to => "home#show"
 
   # See how all your routes lay out with "rake routes"
 
