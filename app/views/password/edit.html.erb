@@ -1,0 +1,7 @@
+<column-mc:>
+  <%= semantic_form_for @user, :url => password_path, :method => :put do |form| %>
+      <%= form.input :current_password, :as => :password %>
+      <%= form.inputs :password, :password_confirmation %>
+        <%= form.commit_button t("password.edit.view.button_update_user") %>
+    <% end %>
+</column-mc:>

@@ -63,6 +63,7 @@ Nbs::Application.routes.draw do
     resources :users do
       resource :password, :controller => 'password'
     end
+    resources :categories
   end
 
   namespace :buyer do
@@ -84,6 +85,9 @@ Nbs::Application.routes.draw do
 
   resource :my_profile, :controller => "my_profile", :only => [:update]
   match 'my_profile' => 'my_profile#edit', :as => "my_profile"
+
+  resource :password, :controller => 'password', :only => [:update]
+  match 'password' => 'password#edit', :as => 'password'
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.

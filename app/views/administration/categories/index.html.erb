@@ -1,0 +1,11 @@
+<column-mc:>
+<h1>Categories</h1>
+
+  <%= link_to 'New category', new_administration_category_path %>
+
+  <ul>
+  <% @categories.each do |category| %>
+    <li><%= category.name  %></li>
+  <% end %>
+  </ul>
+</column-mc:>

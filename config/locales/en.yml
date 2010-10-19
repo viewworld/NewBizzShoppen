@@ -51,32 +51,47 @@ en:
         agent_signup: 'Freelance agent signup'
         buyer_signup: 'Lead buyer signup'
 
-  administration:
-    index:
-      view:
-        title: 'Users'
-        id: 'ID'
-        roles: 'Roles'
-        first_name: 'First name'
-        last_name: 'Last name'
-        email: 'E-mail'
-        age: 'Age'
-        leads_bought: 'Leads bought'
-        leads_sold: 'Leads sold'
-        revenue: 'Revenue'
-        payout: 'Payout'
-        actions: 'Actions'
-        new_user: 'New user'
-        locked: 'Locked'
-        lock: 'Lock'
-        unlock: 'Unlock'
-        subaccounts: 'Subaccounts'
-        edit: 'Edit'
-        subaccounts_for_user: 'Subaccounts of user'
-        show_all_users: 'Show all users'
+  password:
+    update:
+      controller:
+        successful_update_notice: 'Password has been successfully changed!'
     edit:
       view:
-        button_update_user: Save
+        button_update_user: 'Save'
+        change_password: 'Change password'
+
+  administration:
+    users:
+      index:
+        view:
+          title: 'Users'
+          id: 'ID'
+          roles: 'Roles'
+          first_name: 'First name'
+          last_name: 'Last name'
+          email: 'E-mail'
+          age: 'Age'
+          leads_bought: 'Leads bought'
+          leads_sold: 'Leads sold'
+          revenue: 'Revenue'
+          payout: 'Payout'
+          actions: 'Actions'
+          new_user: 'New user'
+          locked: 'Locked'
+          lock: 'Lock'
+          unlock: 'Unlock'
+          subaccounts: 'Subaccounts'
+          edit: 'Edit'
+          subaccounts_for_user: 'Subaccounts of user'
+          show_all_users: 'Show all users'
+      edit:
+        view:
+          button_update_user: Save
+    categories:
+      new:
+        view:
+          :button_create: 'Create'
+
 
   agent_accounts:
     new:
@@ -102,6 +117,9 @@ en:
 
   activerecord:
     attributes:
+      category:
+        name: 'Name'
+        description: 'Description'
       user:
         first_name: 'First name'
         last_name: 'Last name'
