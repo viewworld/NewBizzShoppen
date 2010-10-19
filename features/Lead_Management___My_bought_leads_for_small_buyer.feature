@@ -1,50 +1,46 @@
-@lead_manager @$_small_buyer @m2
-Feature: Lead Management - My bought leads for small buyer
+@lead_manager @$_customer @m2
+Feature: Lead Management 
 
-Scenario: I can browse my lead with pagination
+Scenario: I can assign any of my leads to any of lead users that belong to my account
 
-Scenario: I can narrow down the results by filters and serch box
+Scenario: I can unassing any of my leads from lead user that belong to my account and had that lead assigned to his account (possible??)
 
-Scenario: I can see lead heades, purchase value, description, contact info
+Scenario: Assignemnt should not be possible/visible if I have not lead users associated with me
 
-Scenario: I can download a lead as csv
+Scenario: I can transfer assignment of any of my leads from any of lead users that belong to my account to any other lead user that belong to my account
 
-Scenario: I can rate a lead (good, bad, fake)
+Scenario: Requested leads listing should lack pagination
 
-Scenario: I can set the status of the lead (...)
+Scenario: I should see who has requested each lead
 
-Scenario: I can comment the lead through a popup
+Scenario: I can scope down requested leads listing with filter
 
-Scenario: I can toggle select leads
+Scenario: I should see lead header, lead price, purchase value and public description for each requested lead
 
-Scenario: I can bulk download leads
+Scenario: I should see created by, rating % and certification level for each requested lead
 
-Scenario: I can bulk rate leads
+Scenario: I can delete lead requested by lead user that belong to my account
+
+Scenario: I can bulk delete leads requested by lead users that belong to my account
+
+Scenario: I can set response deadline for lead
+
+Scenario: I can bulk set response deadlines for lead
+
+Scenario: I am notified by email when dealine expires and status of lead has not changed
+
+Scenario: I can create a comment for lead that I have access for
+
+Scenario: I can email the lead if email information were provided
+
+Scenario: I can send selected lead by email
+
+Scenario: I can bulk send selected leads by email
+
+Scenario: I can rate lead that I have access for (good, bad, fake)
+
+Scenario: I can bulk rate leads that I have access for (good, bad, fake)
+
+Scenario: I can set status of lead
 
 Scenario: I can bulk set status of leads
-
-Scenario: I can bulk comment leads
-
-Scenario: I can email selected leads
-
-Scenario: I can assign a lead to one of my lead users
-
-Scenario: I can bulk assign selected leads to one of my lead users
-
-Scenario: I can see if there is a comment posted to a lead
-
-Scenario: I can view the details of the comment by clicking on the comment icon
-
-Scenario: I can reply to a comment through a popup
-
-Scenario: "Assigned to" should not be visible if I do not have any lead users associated with me
-
-Scenario: I can set responce time for a given assignation
-
-Scenario: I can set responce time in bulk for assignations
-
-Scenario: I should be notified by email after responce time expires
-
-Scenario: I should see a yellow color for a lead with expiration date ending in 3 days
-
-Scenario: I can print selected leads
