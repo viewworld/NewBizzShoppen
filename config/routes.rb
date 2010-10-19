@@ -63,6 +63,7 @@ Nbs::Application.routes.draw do
     resources :users do
       resource :password, :controller => 'password'
     end
+    resources :categories
   end
 
   namespace :buyer do
