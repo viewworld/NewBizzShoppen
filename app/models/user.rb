@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
 
   # declare the valid roles -- do not change the order if you add more
   # roles later, always append them at the end!
-  roles :admin, :buyer, :agent, :lead_user, :priviliged_buyer, :call_centre, :call_centre_agent
+  roles :admin, :agent, :buyer, :call_centre, :call_centre_agent, :lead_user, :priviliged_buyer
 
   validates_presence_of :email
   validates_uniqueness_of :email
@@ -24,14 +24,10 @@ class User < ActiveRecord::Base
   belongs_to :user, :class_name => "User", :foreign_key => "parent_id", :counter_cache => :subaccounts_counter
 
   scope :with_role, lambda { |role| where("roles_mask & #{2**User.valid_roles.index(role.to_sym)} > 0 ") }
-  scope :with_keyword, lambda { |q| where("lower(first_name) like ? OR lower(last_name) like ? OR lower(email) like ?", "%#{q.downcase}%", "%#{q.downcase}%", "%#{q.downcase}%") }
+  scope :with_keyword, lambda { |q| where("lower(first_name) like :keyword OR lower(last_name) like :keyword OR lower(email) like :keyword", {:keyword => "%#{q.downcase}%"}) }
   scope :with_subaccounts, lambda { |parent_id| where("parent_id = ?", parent_id) }
-  scoped_order :id
-  scoped_order :roles_mask
-  scoped_order :first_name
-  scoped_order :last_name
-  scoped_order :email
-  scoped_order :age
+  scoped_order :id, :roles_mask, :first_name, :last_name, :email, :age
+
 
   attr_protected :payout, :locked
 
