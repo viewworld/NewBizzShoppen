@@ -1,50 +1,30 @@
-@lead_manager @$_big_buyer @m2
-Feature: Lead Manager - Big Buyer - Bought Leads Manager
+@lead_manager @$_customer @m2
+Feature: My leads browsing
 
-Scenario: I can browse my lead with pagination
+Scenario: I can see all leads that I have access for
 
-Scenario: I can narrow down the results by filters and serch box
+Scenario: I can scope down leads listing with filter
+
+Scenario: I can see details of lead that I have access for
 
 Scenario: I can see lead heades, purchase value, description, contact info
 
-Scenario: I can download a lead as csv
+Scenario: I should see company name on leads listing
 
-Scenario: I can rate a lead (good, bad, fake)
+Scenario: I can download lead as CSV
 
-Scenario: I can set the status of the lead (...)
+Scenario: I can bulk download leads as CSV
 
-Scenario: I can comment the lead through a popup
+Scenario: I can see paginated list of leads
+
+Scenario: I can see all leads bought by lead buyers that belong to my account
+
+Scenario: I can see all leads requested by lead users that belong to my account  
+
+Scenario: I should see created by, rating % and certification level for each lead
+
+Scenario: I should see hottness, novelty, exposure, clicks
+
+Scenario: I can see company contact
 
 Scenario: I can toggle select leads
-
-Scenario: I can bulk download leads
-
-Scenario: I can bulk rate leads
-
-Scenario: I can bulk set status of leads
-
-Scenario: I can bulk comment leads
-
-Scenario: I can email selected leads
-
-Scenario: I can assign a lead to one of my lead users
-
-Scenario: I can bulk assign selected leads to one of my lead users
-
-Scenario: I can see if there is a comment posted to a lead
-
-Scenario: I can view the details of the comment by clicking on the comment icon
-
-Scenario: I can reply to a comment through a popup
-
-Scenario: "Assigned to" should not be visible if I do not have any lead users associated with me
-
-Scenario: I can set responce time for a given assignation
-
-Scenario: I can set responce time in bulk for assignations
-
-Scenario: I should be notified by email after responce time expires
-
-Scenario: I should see a yellow color for a lead with expiration date ending in 3 days
-
-Scenario: I can print selected leads
