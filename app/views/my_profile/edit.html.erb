@@ -3,4 +3,6 @@
         <%= render :partial => "form", :locals => { :form => form } %>
         <%= form.commit_button t("administration.edit.view.button_update_user") %>
     <% end %>
+
+    <%= link_to t("password.edit.view.change_password"), password_path %>
 </column-mc:>
