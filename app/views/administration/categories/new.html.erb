@@ -1,7 +1,6 @@
 <column-mc:>
   <%= semantic_form_for [:administration, @category], :method => :put do |form| %>
-    <%= form.input :name %>
-    <%= form.input :description, :as => :text %>
+    <%= render :partial => 'form', :locals => { :form => form } %>
     <%= form.commit_button t("administration.categories.new.view.button_create") %>
   <% end %>
 </column-mc:>

@@ -92,10 +92,16 @@ en:
         view:
           button_update_user: Save
     categories:
+      index:
+        view:
+          new_category: 'New category'
+          edit: 'Edit'
       new:
         view:
-          :button_create: 'Create'
-
+          button_create: 'Create'
+      edit:
+        view:
+          button_update: 'Save'
 
   agent_accounts:
     new:

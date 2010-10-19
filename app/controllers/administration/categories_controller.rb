@@ -11,4 +11,11 @@ class Administration::CategoriesController < ApplicationController
       failure.html { render 'new' }
     end
   end
+
+  def update
+    update! do |success, failure|
+      success.html { redirect_to administration_categories_path }
+      failure.html { render 'edit' }
+    end
+  end
 end

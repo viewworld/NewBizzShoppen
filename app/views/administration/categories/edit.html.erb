@@ -1,0 +1,6 @@
+<column-mc:>
+  <%= semantic_form_for [:administration, @category], :method => :post do |form| %>
+    <%= render :partial => 'form', :locals => { :form => form } %>
+    <%= form.commit_button t("administration.categories.edit.view.button_update") %>
+  <% end %>
+</column-mc:>
