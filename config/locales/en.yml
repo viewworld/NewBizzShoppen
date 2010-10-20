@@ -112,6 +112,23 @@ en:
         controller:
           successful_update_notice: 'Settings were successfully updated.'
 
+  agent:
+    leads:
+      index:
+        view:
+          new_lead: 'New lead'
+          edit: 'Edit'
+          destroy: 'Destroy'
+          destroy_confirmation: 'Are you sure?'
+      new:
+        view:
+          title: 'New lead'
+          button_create: 'Create'
+      edit:
+        view:
+          title: 'Edit lead'
+          button_update: 'Save'
+
   agent_accounts:
     new:
       view:

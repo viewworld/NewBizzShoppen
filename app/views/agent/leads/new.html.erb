@@ -1,0 +1,8 @@
+<column-mc:>
+  <h1><%= t("agent.leads.index.view.new_lead") %></h1>
+<%= semantic_form_for [:agent, @lead], :method => :post do |form| %>
+    <%= render :partial => 'form', :locals => { :form => form }  %>
+
+    <%= form.commit_button t("agent.leads.new.view.button_create") %>
+<% end %>
+</column-mc:>

@@ -1,0 +1,8 @@
+<column-mc:>
+  <h1><%= t("agent.leads.edit.view.title") %></h1>
+<%= semantic_form_for [:agent, @lead], :method => :put do |form| %>
+    <%= render :partial => 'form', :locals => { :form => form }  %>
+
+    <%= form.commit_button t("agent.leads.edit.view.button_update") %>
+<% end %>
+</column-mc:>

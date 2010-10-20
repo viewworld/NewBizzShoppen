@@ -1,0 +1,12 @@
+<column-mc:>
+  <%= link_to t("agent.leads.index.view.new_lead"), new_agent_lead_path %>
+  <ul>
+  <% @leads.each do |lead| %>
+    <li>
+      <%= lead.header %>
+      <%= link_to t("agent.leads.index.view.edit"), edit_agent_lead_path(lead) %>
+      <%= link_to t("agent.leads.index.view.destroy"), agent_lead_path(lead), :confirm => t("agent.leads.index.view.destroy_confirmation"), :method => :delete %>
+    </li>
+  <% end %>
+  </ul>
+</column-mc:>

@@ -72,7 +72,8 @@ Nbs::Application.routes.draw do
   end
 
   namespace :agent do
-    root :to => "agent_leads#index"
+    root :to => "leads#index"
+    resources :leads
   end
 
   match 'buyer_home' => 'buyer_home#show', :as => "buyer_home"
