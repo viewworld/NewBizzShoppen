@@ -1,0 +1,8 @@
+<column-mc:>
+  <h1><%= t("customer.subaccounts.new.view.title") %> <%= params[:role].humanize %></h1>
+<%= semantic_form_for [:customer, @user], :url => customer_subaccounts_path(:role => params[:role]), :method => :post do |form| %>
+    <%= render :partial => 'form', :locals => { :form => form }  %>
+    <%= form.inputs :password, :password_confirmation %>
+    <%= form.commit_button t("customer.subaccounts.new.view.button_create") %>
+<% end %>
+</column-mc:>

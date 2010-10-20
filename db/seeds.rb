@@ -9,7 +9,7 @@ end
 unless User.find_by_email("buyer@gmail2.com")
   u = User.create!(:email => "buyer@gmail2.com", :password => "secret", :password_confirmation => "secret")
   u.confirm!
-  u.roles << :buyer
+  u.roles << :customer
   u.save
 end
 
