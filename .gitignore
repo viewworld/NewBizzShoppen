@@ -10,3 +10,4 @@
 Gemfile.lock
 /capybara*.*
 .idea
+/public/system

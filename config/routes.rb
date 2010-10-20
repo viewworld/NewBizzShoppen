@@ -64,6 +64,7 @@ Nbs::Application.routes.draw do
       resource :password, :controller => 'password'
     end
     resources :categories
+    resource :setting, :only => [:edit, :update]
   end
 
   namespace :buyer do

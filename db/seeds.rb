@@ -19,3 +19,9 @@ unless User.find_by_email("agent@gmail2.com")
   u.roles << :agent
   u.save
 end
+
+#Default settings
+Settings.level_one_certification_threshold = 0
+Settings.level_two_certification_threshold = 0
+Settings.level_three_certification_threshold = 0
+Settings.default_payout_delay = 0

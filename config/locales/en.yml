@@ -103,6 +103,14 @@ en:
         view:
           upload_image: 'Upload image'
           button_update: 'Save'
+    settings:
+      edit:
+        view:
+          title: 'Settings'
+          button_update_settings: 'Save'
+      update:
+        controller:
+          successful_update_notice: 'Settings were successfully updated.'
 
   agent_accounts:
     new:

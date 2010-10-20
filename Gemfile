@@ -22,6 +22,7 @@ gem 'gherkin', '>= 2.2.4'
 gem 'globalize3'
 gem 'role_model', :require => "role_model"
 gem 'cancan'
+gem 'rails-settings', :require => "settings"
 
 group :development do
   gem 'diff-lcs'
