@@ -1,1 +1,3 @@
+<%= form.input :category_id, :as => :select, :collection => Category.all.collect { |c| [c.name, c.id] } %>
+<%= form.input :country_id, :as => :select, :collection => User::COUNTRIES %>
 <%= form.inputs :header, :description, :hidden_description, :purchase_value, :price, :company_name, :lead_name, :phone_number, :email_address, :address %>
