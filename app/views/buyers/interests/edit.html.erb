@@ -1,6 +1,6 @@
 <column-mc:>
   <h1><%= t("buyer.interests.edit.view.title") %></h1>
-  <%= form_tag buyer_interests_path, :method => :put do %>
+  <%= form_tag buyers_interests_path, :method => :put do %>
     <%= t("buyer.interests.edit.view.categories") %>
     <ul>
     <% @categories.each do |category| %>

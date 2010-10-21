@@ -1,4 +1,4 @@
-class Administration::SettingsController < ApplicationController
+class Administration::SettingsController < Administration::AdministrationController
 
   def edit
     @settings = Settings.where({})

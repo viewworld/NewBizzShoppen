@@ -67,16 +67,16 @@ Nbs::Application.routes.draw do
     resource :setting, :only => [:edit, :update]
   end
 
-  namespace :buyer do
+  namespace :buyers do
     resource :interests, :only => [:edit, :update]
   end
 
-  namespace :customer do
+  namespace :customers do
     root :to => "buyer_leads#index"
     resources :subaccounts
   end
 
-  namespace :agent do
+  namespace :agents do
     root :to => "leads#index"
     resources :leads
   end

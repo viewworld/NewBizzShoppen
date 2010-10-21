@@ -1,4 +1,4 @@
-class Buyer::InterestsController <  Buyer::BuyerController
+class Buyers::InterestsController <  Buyers::BuyerController
 
   def edit
     @categories = Category.all
@@ -15,6 +15,6 @@ class Buyer::InterestsController <  Buyer::BuyerController
     @buyer.update_attributes(params[:user])
 
     flash[:notice] = "Interests configuration has been successfully saved."
-    redirect_to edit_buyer_interests_path
+    redirect_to edit_buyers_interests_path
   end
 end

@@ -1,4 +1,4 @@
-class Customer::SubaccountsController < ApplicationController
+class Customers::SubaccountsController < Customers::CustomerController
   before_filter :check_roles_selection, :only => [:new, :create]
 
   def index
@@ -14,7 +14,7 @@ class Customer::SubaccountsController < ApplicationController
     @user.parent_id = current_user.id
     if @user.save
       flash[:notice] = "User created!"
-       redirect_to customer_subaccounts_path
+       redirect_to customers_subaccounts_path
     else
       render :action => 'new'
     end
@@ -28,7 +28,7 @@ class Customer::SubaccountsController < ApplicationController
     @user = User.find(params[:id])
     "User::#{@user.role.to_s.camelize}".constantize.find(params[:id])
       if @user.update_attributes(params["user_#{@user.role.to_s}".to_sym])
-        redirect_to customer_subaccounts_path
+        redirect_to customers_subaccounts_path
       else
         render :action => 'edit'
       end

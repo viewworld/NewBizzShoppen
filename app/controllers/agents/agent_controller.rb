@@ -1,4 +1,4 @@
-class Agent::AgentController < SecuredController
+class Agents::AgentController < SecuredController
   def current_user
     #Second request is cached so only class-casting occurs
     @agent ||= ::User::Agent.find(super.id)
