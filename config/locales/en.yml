@@ -170,7 +170,11 @@ en:
         view:
           title: 'Edit'
           button_update: 'Save'
-
+    lead_purchases:
+      index:
+        view:
+          title: 'Lead purchases'
+          button_update: 'Save'
 
   my_profile:
     update:

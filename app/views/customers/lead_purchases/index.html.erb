@@ -1,0 +1,15 @@
+<column-mc:>
+
+  <h1><%= t("customer.lead_purchases.index.view.title") %></h1>
+
+  <%= semantic_form_for @customer, :url => customers_lead_purchase_path(@customer), :method => :put do |form|  %>
+  <ul>
+      <%= form.fields_for :lead_purchases, @customer.lead_purchases  do |builder| %>
+        <%= builder.object.lead.header %>
+        <%= builder.select :assignee_id, @customer.subaccounts.collect { |s| [s.full_name, s.id] }, :include_blank => true %>
+        <br />
+      <% end %>
+  </ul>
+      <%= form.commit_button t("customer.lead_purchases.index.view.button_update") %>
+  <% end %>
+</column-mc:>
