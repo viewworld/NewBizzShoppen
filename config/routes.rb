@@ -67,6 +67,10 @@ Nbs::Application.routes.draw do
     resource :setting, :only => [:edit, :update]
   end
 
+  namespace :buyer do
+    resource :interests, :only => [:edit, :update]
+  end
+
   namespace :customer do
     root :to => "buyer_leads#index"
     resources :subaccounts

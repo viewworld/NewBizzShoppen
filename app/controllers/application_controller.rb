@@ -9,6 +9,8 @@ class ApplicationController < ActionController::Base
      if resource.is_a?(User)
        if resource.has_role? :admin
         administration_root_path
+       elsif resource.has_role? :customer or resource.has_role? :lead_buyer and resource.sign_in_count <= 1
+         edit_buyer_interests_path
        else
         self.send "#{resource.roles.first.to_s}_root_path"
        end

@@ -1,0 +1,33 @@
+<column-mc:>
+  <h1><%= t("buyer.interests.edit.view.title") %></h1>
+  <%= form_tag buyer_interests_path, :method => :put do %>
+    <%= t("buyer.interests.edit.view.categories") %>
+    <ul>
+    <% @categories.each do |category| %>
+        <li>
+          <%= check_box_tag("categories[]", category.id, @buyer.categories.include?(category)) %>
+          <%= category.name %>
+        </li>
+    <% end %>
+    </ul>
+
+
+    <br />
+    <%= t("buyer.interests.edit.view.deal_values") %><br />
+    <%= "From" %> <%= select "user", "deal_value_range_start", User::DEAL_VALUE_RANGE.collect { |d| ["$#{d}", d] }, { :selected => @buyer.deal_value_range_start.to_i.to_s } %>
+    <%= "To" %> <%= select "user", "deal_value_range_end", User::DEAL_VALUE_RANGE.collect { |d| ["$#{d}", d] }, :selected => @buyer.deal_value_range_end.to_i.to_s %>
+
+    <br /><br />
+
+    <%= t("buyer.interests.edit.view.countries") %><br />
+    <%= select_tag "countries", options_for_select(@countries.collect { |c| [c.name, c.id] }, @buyer.countries.collect { |c| c.id.to_s }), :multiple => true %>
+    <br /><br />
+
+    <%= check_box "user", "notify_about_new_leads", :checked => @buyer.notify_about_new_leads %> <%= t("buyer.interests.edit.view.notify_about_new_leads") %>
+
+    <br />
+    <%= submit_tag  t("buyer.interests.edit.view.button_update") %>
+  <% end %>
+
+  <%= t("buyer.interests.edit.view.rss_feed_url") %> <%= text_field_tag "rss_url", "http://www.newbizzshoppen.com/rss/#{@buyer.rss_token}", :size => 60 %>
+</column-mc:>
