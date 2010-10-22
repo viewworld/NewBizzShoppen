@@ -12,7 +12,7 @@ module User::RegistrationValidations
   module InstanceMethods
     private
     def validate_if_agreement_read
-      if agreement_read.to_i == 0
+      if !!agreement_read == false
         self.errors.add(:agreement_read, I18n.t("models.user.agreement_read_validation_message"))
       end
     end

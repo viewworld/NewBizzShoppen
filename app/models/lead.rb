@@ -5,4 +5,9 @@ class Lead < ActiveRecord::Base
   belongs_to :category
 
   validates_presence_of :company_name, :lead_name, :phone_number
+
+
+  def buyable?
+    true #Some more complex logic here...
+  end
 end
