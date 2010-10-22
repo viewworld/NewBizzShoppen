@@ -1,16 +1,15 @@
 class User < ActiveRecord::Base
-  include RoleModel
-  require 'unsafe_writer'
-  include UnsafeWriter
-  include ScopedSearch::Model
-
-
   COUNTRIES = [
           ['Poland', 0],
           ['France', 1]
   ].freeze
 
   DEAL_VALUE_RANGE = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000]
+
+  ROLES = []
+
+  include RoleModel
+  include ScopedSearch::Model
 
   devise :database_authenticatable, :registerable, :confirmable, :lockable,
          :recoverable, :rememberable, :trackable, :validatable, :timeoutable
@@ -29,6 +28,7 @@ class User < ActiveRecord::Base
   scope :with_role, lambda { |role| where("roles_mask & #{2**User.valid_roles.index(role.to_sym)} > 0 ") }
   scope :with_keyword, lambda { |q| where("lower(first_name) like :keyword OR lower(last_name) like :keyword OR lower(email) like :keyword", {:keyword => "%#{q.downcase}%"}) }
   scope :with_subaccounts, lambda { |parent_id| where("parent_id = ?", parent_id) }
+
   scoped_order :id, :roles_mask, :first_name, :last_name, :email, :age
 
 
@@ -37,7 +37,7 @@ class User < ActiveRecord::Base
   attr_accessor :agreement_read, :locked
 
   before_save :handle_locking
-  before_create :set_rss_token
+  before_create :set_rss_token, :set_role
 
   private
 
@@ -56,8 +56,16 @@ class User < ActiveRecord::Base
     (0...charset.size).map { charset[rand(charset.size)] }.join+id.to_s
   end
 
+  def set_role
+    self.roles = [self.class.const_get("ROLES")]
+  end
 
   public
+
+  def self.inherited(subclass)
+    super
+    subclass.send(:default_scope, with_role(subclass.name.split('::').last.tableize.singularize))
+  end
 
   def role
     roles.first
@@ -66,5 +74,4 @@ class User < ActiveRecord::Base
   def full_name
     "#{first_name} #{last_name}"
   end
-
 end

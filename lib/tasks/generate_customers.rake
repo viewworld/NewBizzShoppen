@@ -2,6 +2,8 @@ namespace :nbs do
   desc "Generate customers, leads and lead purchases"
   task :generate_customers => :environment do
 
+    #TODO - Unused local vars to remove...
+
     require "spec/support/blueprints"
 
     customer = User.make!(:email => "customer1@nodomain1.com", :roles => "customer")

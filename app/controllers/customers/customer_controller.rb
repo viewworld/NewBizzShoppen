@@ -1,6 +1,5 @@
 class Customers::CustomerController < SecuredController
   def current_user
-    #Second request is cached so only class-casting occurs
     @customer ||= ::User::Customer.find(super.id)
   end
 

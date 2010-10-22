@@ -1,5 +1,4 @@
 class Customers::LeadPurchasesController < Customers::CustomerController
-
   def index
 
   end

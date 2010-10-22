@@ -4,7 +4,7 @@ class Agents::LeadsController < Agents::AgentController
   protected
 
   def begin_of_association_chain
-    "User::#{current_user.role.to_s.camelize}".constantize.find(current_user.id)
+    current_user
   end
 
   def collection

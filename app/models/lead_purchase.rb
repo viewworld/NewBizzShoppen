@@ -1,5 +1,4 @@
 class LeadPurchase < ActiveRecord::Base
-
   belongs_to :lead
 
   #it may be necessary to cast the users objects into the appropriate subclass

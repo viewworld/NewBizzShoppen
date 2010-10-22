@@ -40,5 +40,4 @@ end
 LeadPurchase.blueprint do
   paid { false }
   accessible { false }
-
 end
