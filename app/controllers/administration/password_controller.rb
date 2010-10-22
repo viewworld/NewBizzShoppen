@@ -1,4 +1,4 @@
-class Administration::PasswordController < ApplicationController
+class Administration::PasswordController < Administration::AdministrationController
 
   def destroy
     @user = User.find(params[:user_id])

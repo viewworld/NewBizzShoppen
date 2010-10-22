@@ -1,4 +1,4 @@
-class Agent::LeadsController < ApplicationController
+class Agents::LeadsController < Agents::AgentController
   inherit_resources
 
   protected
@@ -15,13 +15,13 @@ class Agent::LeadsController < ApplicationController
 
   def create
     create! do |success, failure|
-      success.html { redirect_to agent_leads_path }
+      success.html { redirect_to agents_leads_path }
     end
   end
 
   def update
     update! do |success, failure|
-      success.html { redirect_to agent_leads_path }
+      success.html { redirect_to agents_leads_path }
     end
   end
 end

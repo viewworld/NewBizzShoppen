@@ -9,7 +9,7 @@ end
 unless User.find_by_email("buyer@gmail2.com")
   u = User.create!(:email => "buyer@gmail2.com", :password => "secret", :password_confirmation => "secret")
   u.confirm!
-  u.roles << :buyer
+  u.roles << :customer
   u.save
 end
 
@@ -25,3 +25,6 @@ Settings.level_one_certification_threshold = 0
 Settings.level_two_certification_threshold = 0
 Settings.level_three_certification_threshold = 0
 Settings.default_payout_delay = 0
+
+Country.create(:name => "Poland")
+Country.create(:name => "France")

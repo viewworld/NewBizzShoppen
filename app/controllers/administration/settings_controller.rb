@@ -1,11 +1,11 @@
-class Administration::SettingsController < ApplicationController
+class Administration::SettingsController < Administration::AdministrationController
 
   def edit
-    @settings = Settings.find(:all)
+    @settings = Settings.where({})
   end
 
   def update
-    @settings = Settings.find(:all)
+    @settings = Settings.where({})
 
     params[:settings].each_pair do |id, value|
       @settings.detect { |s| s.id ==  id.to_i}.update_attribute(:value, value)

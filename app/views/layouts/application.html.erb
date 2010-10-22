@@ -10,6 +10,7 @@
     <body>
         <% if user_signed_in? %>
         <%= link_to 'My profile', my_profile_path %>
+        <%= link_to "Logout #{current_user.email}", '/logout' %>
         <% end %>
 
 

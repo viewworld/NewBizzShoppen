@@ -1,0 +1,15 @@
+<column-mc:>
+  <h1><%= t("customer.subaccounts.index.view.title") %></h1>
+  <%= link_to t("customer.subaccounts.index.view.new_lead_buyer"), new_customers_subaccount_path(:role => "lead_buyer") %>
+  <%= link_to t("customer.subaccounts.index.view.new_lead_user"), new_customers_subaccount_path(:role => "lead_user") %>
+
+  <ul>
+  <% @users.each do |user| %>
+    <li>
+      <%= user.first_name %> <%= user.last_name %>
+      (<%= user.role.to_s %>)
+      <%= link_to t("customer.subaccounts.index.view.edit"), edit_customers_subaccount_path(user) %>
+    </li>
+  <% end %>
+  </ul>
+</column-mc:>

@@ -1,4 +1,4 @@
-class Administration::CategoriesController < ApplicationController
+class Administration::CategoriesController < Administration::AdministrationController
   inherit_resources
 
   def collection
