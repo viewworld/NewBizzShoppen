@@ -18,8 +18,8 @@ class User < ActiveRecord::Base
   # roles later, always append them at the end!
   roles :admin, :agent, :call_centre, :call_centre_agent, :customer, :lead_buyer, :lead_user
 
-  validates_presence_of :email
-  validates_uniqueness_of :email
+  validates_presence_of :email, :screen_name
+  validates_uniqueness_of :email, :screen_name
 
   has_many :subaccounts, :class_name => "User", :foreign_key => "parent_id"
   belongs_to :user, :class_name => "User", :foreign_key => "parent_id", :counter_cache => :subaccounts_counter
