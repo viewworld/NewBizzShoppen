@@ -112,6 +112,16 @@ en:
         controller:
           successful_update_notice: 'Settings were successfully updated.'
 
+    email_templates:
+      index:
+        view:
+          title: 'Email templates'
+          edit: 'Edit'
+      edit:
+        view:
+          title: 'Edit template'
+          button_update: 'Save'
+
   agent:
     leads:
       index:

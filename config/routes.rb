@@ -65,6 +65,7 @@ Nbs::Application.routes.draw do
     end
     resources :categories
     resource :setting, :only => [:edit, :update]
+    resources :email_templates
   end
 
   namespace :buyers do

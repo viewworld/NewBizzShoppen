@@ -39,6 +39,8 @@ class User < ActiveRecord::Base
   before_save :handle_locking
   before_create :set_rss_token, :set_role
 
+  liquid :email, :first_name, :last_name, :confirmation_instructions_url, :reset_password_instructions_url
+
   private
 
   def handle_locking
@@ -73,5 +75,23 @@ class User < ActiveRecord::Base
 
   def full_name
     "#{first_name} #{last_name}"
+  end
+
+  def send_confirmation_instructions
+    generate_confirmation_token if self.confirmation_token.nil?
+    ApplicationMailer.email_template(email, EmailTemplate.find_by_uniq_id("confirmation_instructions"), {:user => self}).deliver
+  end
+
+  def send_reset_password_instructions
+   generate_reset_password_token!
+    ApplicationMailer.email_template(email, EmailTemplate.find_by_uniq_id("reset_password_instructions"), {:user => self}).deliver
+  end
+
+  def confirmation_instructions_url
+    "https://#{Nbs::Application.config.action_mailer.default_url_options[:host]}/users/confirmation?confirmation_token=#{confirmation_token}"
+  end
+
+  def reset_password_instructions_url
+    "https://#{Nbs::Application.config.action_mailer.default_url_options[:host]}/users/password/edit?reset_password_token=#{reset_password_token}"
   end
 end
