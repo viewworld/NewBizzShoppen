@@ -1,0 +1,8 @@
+<column-mc:>
+<h1><%= t("administration.email_templates.edit.view.title") %></h1>
+<%= semantic_form_for [:administration, @email_template], :url => administration_email_template_path(@email_template), :method => :put do |form| %>
+    <%= render :partial => 'form', :locals => { :form => form }  %>
+
+    <%= form.commit_button t("administration.email_templates.edit.view.button_update") %>
+<% end %>
+</column-mc:>

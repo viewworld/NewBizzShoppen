@@ -18,8 +18,8 @@ class User < ActiveRecord::Base
   # roles later, always append them at the end!
   roles :admin, :agent, :call_centre, :call_centre_agent, :customer, :lead_buyer, :lead_user
 
-  validates_presence_of :email
-  validates_uniqueness_of :email
+  validates_presence_of :email, :screen_name
+  validates_uniqueness_of :email, :screen_name
 
   has_many :subaccounts, :class_name => "User", :foreign_key => "parent_id"
   belongs_to :user, :class_name => "User", :foreign_key => "parent_id", :counter_cache => :subaccounts_counter
@@ -38,6 +38,8 @@ class User < ActiveRecord::Base
 
   before_save :handle_locking
   before_create :set_rss_token, :set_role
+
+  liquid :email, :first_name, :last_name, :confirmation_instructions_url, :reset_password_instructions_url
 
   private
 
@@ -74,7 +76,22 @@ class User < ActiveRecord::Base
   def full_name
     "#{first_name} #{last_name}"
   end
+
+  def send_confirmation_instructions
+    generate_confirmation_token if self.confirmation_token.nil?
+    ApplicationMailer.email_template(email, EmailTemplate.find_by_uniq_id("confirmation_instructions"), {:user => self}).deliver
+  end
+
+  def send_reset_password_instructions
+   generate_reset_password_token!
+    ApplicationMailer.email_template(email, EmailTemplate.find_by_uniq_id("reset_password_instructions"), {:user => self}).deliver
+  end
+
+  def confirmation_instructions_url
+    "https://#{Nbs::Application.config.action_mailer.default_url_options[:host]}/users/confirmation?confirmation_token=#{confirmation_token}"
+  end
+
+  def reset_password_instructions_url
+    "https://#{Nbs::Application.config.action_mailer.default_url_options[:host]}/users/password/edit?reset_password_token=#{reset_password_token}"
+  end
 end
-
-
-

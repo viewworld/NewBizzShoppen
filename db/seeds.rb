@@ -28,3 +28,33 @@ Settings.default_payout_delay = 0
 
 Country.create(:name => "Poland")
 Country.create(:name => "France")
+
+email_templates_array = [
+  {:name => "confirmation instructions",
+  :uniq_id => "confirmation_instructions",
+  :en => {:subject => "Confirmation instructions",
+               :body => "<p>Welcome {{user.email}}!</p><p>You can confirm your account through the link below:</p><p><a href=\"{{user.confirmation_instructions_url}}\">Confirm my account</a></p>" },
+  :dk => {:subject => "[DK] Confirmation instructions",
+               :body => "<p>Welcome {{user.email}}!</p><p>You can confirm your account through the link below:</p><p><a href=\"{{user.confirmation_instructions_url}}\">Confirm my account</a></p>" }
+  },
+
+  { :name => "reset_password_instructions",
+    :uniq_id => "reset_password_instructions",
+    :en => {:subject => "Reset password instructions",
+            :body => "<p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href=\"{{ user.reset_password_instructions_url }}\">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>"},
+    :dk => {:subject => "[DK] Reset password instructions",
+            :body => "<p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href=\"{{ user.reset_password_instructions_url }}\">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>"}
+  }]
+
+email_templates_array.each do |email_template|
+  [:en, :dk].each do |locale|
+    I18n.locale = locale
+    et = EmailTemplate.find_or_initialize_by_uniq_id({:name => email_template[:name], :persist => true,
+                                                      :from => "noreply@newbizzshoppen.com",
+                                                      :uniq_id => email_template[:uniq_id]})
+    et.body = email_template[locale][:body]
+    et.subject = email_template[locale][:subject]
+    et.save!
+  end
+
+end

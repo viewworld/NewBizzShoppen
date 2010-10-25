@@ -15,7 +15,13 @@ class Agents::LeadsController < Agents::AgentController
 
   def create
     create! do |success, failure|
-      success.html { redirect_to agents_leads_path }
+      success.html {
+        unless params[:commit_continue].blank?
+          redirect_to new_agents_lead_path
+        else
+          redirect_to agents_leads_path
+        end
+      }
     end
   end
 

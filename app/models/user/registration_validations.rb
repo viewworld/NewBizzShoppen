@@ -1,7 +1,7 @@
 module User::RegistrationValidations
   def self.included(base)
     base.class_eval do
-      validates_presence_of :first_name, :last_name, :phone, :screen_name, :street, :city, :zip_code, :county, :country
+      validates_presence_of :first_name, :last_name, :phone, :street, :city, :zip_code, :county, :country
       validate :validate_if_agreement_read, :on => :create
     end
 

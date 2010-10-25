@@ -4,8 +4,8 @@
   <% @leads.each do |lead| %>
     <li>
       <%= lead.header %>
-      <%= link_to t("agent.leads.index.view.edit"), edit_agent_lead_path(lead) %>
-      <%= link_to t("agent.leads.index.view.destroy"), agent_lead_path(lead), :confirm => t("agent.leads.index.view.destroy_confirmation"), :method => :delete %>
+      <%= link_to t("agent.leads.index.view.edit"), edit_agents_lead_path(lead) %>
+      <%= link_to t("agent.leads.index.view.destroy"), agents_lead_path(lead), :confirm => t("agent.leads.index.view.destroy_confirmation"), :method => :delete %>
     </li>
   <% end %>
   </ul>

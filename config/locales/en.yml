@@ -113,6 +113,16 @@ en:
         controller:
           successful_update_notice: 'Settings were successfully updated.'
 
+    email_templates:
+      index:
+        view:
+          title: 'Email templates'
+          edit: 'Edit'
+      edit:
+        view:
+          title: 'Edit template'
+          button_update: 'Save'
+
   agent:
     leads:
       index:
@@ -125,6 +135,7 @@ en:
         view:
           title: 'New lead'
           button_create: 'Create'
+          button_create_and_continue: 'Create & continue'
       edit:
         view:
           title: 'Edit lead'
@@ -207,3 +218,5 @@ en:
         country: 'Country'
         agreement_read: "I have read and agree to Associated Content's Terms of Use and Privacy Policy"
         newsletter_on: 'I want to receive the newsletter'
+      lead:
+        purchase_decision_date: 'Purchase decision date'
