@@ -1,0 +1,11 @@
+<column-mc:>
+  <h1>Leads</h1>
+  <%= leads_listing @leads, :show_checkboxes => true do |blocks| %>
+      <% blocks.right do |lead| %>
+          <%= link_to "Link to lead", lead %>
+      <% end %>
+      <% blocks.left do |lead| %>
+          aaaaaaaaaaaa
+      <% end %>
+  <% end %>
+</column-mc:>

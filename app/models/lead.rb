@@ -1,6 +1,8 @@
 class Lead < ActiveRecord::Base
   translates :header, :description, :hidden_description
 
+  include ScopedSearch::Model
+
   belongs_to :creator, :polymorphic => true, :foreign_key => "creator_id"
   belongs_to :category
 

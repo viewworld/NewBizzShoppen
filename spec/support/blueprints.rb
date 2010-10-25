@@ -19,7 +19,7 @@ Lead.blueprint do
   email_address { Faker::Internet.email }
   address { Faker::Address.street_address }
   creator_id { ::User::Agent.make!.id }
-  creator_type { "User" }
+  creator_type { "User::Agent" }
 end
 
 LeadPurchase.blueprint do
@@ -62,7 +62,7 @@ end
 end
 
 ::User::Agent.blueprint do
- email { Faker::Internet.email }
+  email { Faker::Internet.email }
   password { "secret" }
   password_confirmation { "secret" }
   phone { Faker::PhoneNumber.phone_number }

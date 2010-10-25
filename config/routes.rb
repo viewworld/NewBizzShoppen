@@ -10,6 +10,48 @@ Nbs::Application.routes.draw do
     get "logout", :to => "devise/sessions#destroy"
   end
 
+  namespace :administration do
+    root :to => "users#index"
+    resources :users do
+      resource :password, :controller => 'password'
+    end
+    resources :categories
+    resource :setting, :only => [:edit, :update]
+  end
+
+  namespace :buyers do
+    resource :interests, :only => [:edit, :update]
+  end
+
+  namespace :customers do
+    root :to => "buyer_leads#index"
+    resources :subaccounts
+    resources :lead_purchases
+  end
+
+  namespace :agents do
+    root :to => "leads#index"
+    resources :leads
+  end
+
+  match 'buyer_home' => 'buyer_home#show', :as => "buyer_home"
+  match 'agent_home' => 'agent_home#show', :as => "agent_home"
+
+  resources :leads, :only => [:index, :show]
+
+  resources :agent_accounts, :only => [:new, :create]
+  resources :buyer_accounts, :only => [:new, :create]
+  resources :locales
+
+  resource :my_profile, :controller => "my_profile", :only => [:update]
+  match 'my_profile' => 'my_profile#edit', :as => "my_profile"
+
+  resource :password, :controller => 'password', :only => [:update]
+  match 'password' => 'password#edit', :as => 'password'
+
+
+  root :to => "home#show"
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -58,51 +100,6 @@ Nbs::Application.routes.draw do
   #     resources :products
   #   end
 
-  namespace :administration do
-    root :to => "users#index"
-    resources :users do
-      resource :password, :controller => 'password'
-    end
-    resources :categories
-    resource :setting, :only => [:edit, :update]
-  end
-
-  namespace :buyers do
-    resource :interests, :only => [:edit, :update]
-  end
-
-  namespace :customers do
-    root :to => "buyer_leads#index"
-    resources :subaccounts
-    resources :lead_purchases
-  end
-
-  namespace :agents do
-    root :to => "leads#index"
-    resources :leads
-  end
-
-  match 'buyer_home' => 'buyer_home#show', :as => "buyer_home"
-  match 'agent_home' => 'agent_home#show', :as => "agent_home"
-
-  resources :agent_accounts, :only => [:new, :create]
-  resources :buyer_accounts, :only => [:new, :create]
-
-
-
-
-  resource :my_profile, :controller => "my_profile", :only => [:update]
-  match 'my_profile' => 'my_profile#edit', :as => "my_profile"
-
-  resource :password, :controller => 'password', :only => [:update]
-  match 'password' => 'password#edit', :as => 'password'
-
-  resources :locales
-
-  # You can have the root of your site routed with "root"
-  # just remember to delete public/index.html.
-
-  root :to => "home#show"
 
   # See how all your routes lay out with "rake routes"
 

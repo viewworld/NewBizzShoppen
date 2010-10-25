@@ -14,4 +14,10 @@ class ::User::Agent < ::User
   def set_default_payout
     self.payout = 0 if payout.blank?
   end
+
+  public
+
+  def to_s
+    full_name
+  end
 end

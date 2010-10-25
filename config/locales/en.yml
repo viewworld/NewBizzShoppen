@@ -54,6 +54,7 @@ en:
         signup_message: "Don't have an account yet"
         agent_signup: 'Freelance agent signup'
         buyer_signup: 'Lead buyer signup'
+        browse_leads: Browse leads
 
   password:
     update:
