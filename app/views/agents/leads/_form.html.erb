@@ -1,3 +1,10 @@
 <%= form.input :category_id, :as => :select, :collection => Category.all.collect { |c| [c.name, c.id] } %>
 <%= form.input :country_id, :as => :select, :collection => User::COUNTRIES %>
 <%= form.inputs :header, :description, :hidden_description, :purchase_value, :price, :company_name, :lead_name, :phone_number, :email_address, :address %>
+
+<%= t("activerecord.attributes.lead.purchase_decision_date") %><%= form.text_field :purchase_decision_date, :id => "datepicker" %>
+  <script>
+  $(function() {
+      $( "#datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
+  });
+  </script>

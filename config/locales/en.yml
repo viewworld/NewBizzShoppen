@@ -217,3 +217,5 @@ en:
         country: 'Country'
         agreement_read: "I have read and agree to Associated Content's Terms of Use and Privacy Policy"
         newsletter_on: 'I want to receive the newsletter'
+      lead:
+        purchase_decision_date: 'Purchase decision date'
