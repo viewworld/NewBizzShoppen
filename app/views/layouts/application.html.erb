@@ -14,6 +14,8 @@
         <%= link_to "Logout #{current_user.email}", '/logout' %>
         <% end %>
 
+        <%= render('/layouts/cart') if current_user && current_user.has_role?(:lead_buyer) %>
+
 
         <ul>
           <li class="langs" id="select_lang">

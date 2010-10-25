@@ -8,22 +8,12 @@ body {
     font-size: 11px;
 }
 
-/* ------ [ MESSAGE BLOCK ] ------ */
-
-div#message_block ul
-{
-    display:block;
-    border: 2px solid #3F4447;
-    padding: 2px;
-    text-indent: 10px;
-}
-
-div#message_block ul.notice
+p.notice
 {
     background:#CEFF7F;
 }
 
-div#message_block ul.error
+p.error
 {
     background: #FFD86F;
 }
@@ -56,5 +46,10 @@ float:right;
 clear:both;
 }
 
+div.cart
+{
+background: peachPuff;
+width: 400px;
+}
 
 

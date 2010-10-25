@@ -64,6 +64,10 @@ class User < ActiveRecord::Base
 
   public
 
+   def cart
+    @cart ||= Cart.new(User::LeadBuyer.find(self.id))
+   end
+
   def self.inherited(subclass)
     super
     subclass.send(:default_scope, with_role(subclass.name.split('::').last.tableize.singularize))

@@ -12,9 +12,4 @@ class ::User::LeadBuyer < ::User
            :conditions => {"lead_purchases.accessible" => false, "lead_purchases.paid" => false},
            :source => :lead
 
-
-  def cart
-    @cart ||= Cart.new(self)
-  end
-
 end
