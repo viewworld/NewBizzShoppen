@@ -58,6 +58,7 @@ Feature: User account Admin - Listing Manage
     And I am logged in as "user@domain.dom/secret"
     Then I should see "Invalid email or password"
 
+@m3
 Scenario: I can invoice an account
 
 Scenario: I can toggle select/deselect accounts on active page
