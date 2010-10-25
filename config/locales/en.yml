@@ -134,6 +134,7 @@ en:
         view:
           title: 'New lead'
           button_create: 'Create'
+          button_create_and_continue: 'Create & continue'
       edit:
         view:
           title: 'Edit lead'
