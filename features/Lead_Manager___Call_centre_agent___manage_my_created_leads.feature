@@ -1,0 +1,14 @@
+@lead_manager @$_call_centre_agent 
+Feature: Lead Manager - Call centre agent - manage my created leads
+
+Scenario: I can browse leads with pagination
+
+Scenario: I can search leads with filtering by: show active (default), show all, show outdated
+
+Scenario: I can change lead status from lead list
+
+Scenario: I can delete lead if the lead is not sold yet
+
+Scenario: I can see clicks, exposure, hottness, novelty, unikness, price    per lead
+
+Scenario: clicking on the lead should take to edit page
