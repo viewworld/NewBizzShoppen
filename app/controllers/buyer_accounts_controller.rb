@@ -1,5 +1,7 @@
 #require "app/models/user/customer"
 class BuyerAccountsController < ApplicationController
+  before_filter :redirect_to_root_path_if_signed_in
+
   def new
     @user = User::Customer.new(:newsletter_on => true)
   end

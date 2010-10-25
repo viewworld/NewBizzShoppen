@@ -36,4 +36,10 @@ class ApplicationController < ActionController::Base
     @locale || set_locale
   end
 
+  def redirect_to_root_path_if_signed_in
+    if user_signed_in?
+      method_path = current_user.has_role?(:admin) ? "administration_root_path" : "#{current_user.role.to_s.pluralize}_root_path"
+      redirect_to self.send(method_path)
+    end
+  end
 end
