@@ -1,0 +1,1 @@
+Feature: Shopping cart - big buyer
