@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   include RoleModel
   include ScopedSearch::Model
 
-  devise :database_audthenticatable, :registerable, :confirmable, :lockable,
+  devise :database_authenticatable, :registerable, :confirmable, :lockable,
          :recoverable, :rememberable, :trackable, :validatable, :timeoutable
 
   # declare the valid roles -- do not change the order if you add more
