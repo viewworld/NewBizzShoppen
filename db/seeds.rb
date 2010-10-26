@@ -26,8 +26,9 @@ Settings.level_two_certification_threshold = 0
 Settings.level_three_certification_threshold = 0
 Settings.default_payout_delay = 0
 
-Country.create(:name => "Poland")
-Country.create(:name => "France")
+
+Country.find_or_create_by_name("Denmark")
+Country.find_or_create_by_name("United Kingdom")
 
 email_templates_array = [
   {:name => "confirmation instructions",
