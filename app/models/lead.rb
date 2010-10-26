@@ -6,6 +6,8 @@ class Lead < ActiveRecord::Base
 
   validates_presence_of :company_name, :lead_name, :phone_number
 
+  has_many :lead_translations
+  accepts_nested_attributes_for :lead_translations
 
   def buyable?
     true #Some more complex logic here...
