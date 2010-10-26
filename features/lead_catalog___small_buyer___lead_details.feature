@@ -1,5 +1,5 @@
-@lead_catalog @$_small_buyer @m1
-Feature: lead catalog - small buyer - lead details
+@lead_catalog @$_lead_user @m1
+Feature: lead catalog - lead user- lead details
 
 Scenario: I should see created by, rating % and certification level for each lead
 
