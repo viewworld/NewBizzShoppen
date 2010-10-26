@@ -1,5 +1,5 @@
+#Changing returning() to tap() to get rid of depracation warnings
 module Faker
-  # Based on Perl's Text::Lorem
   class Lorem
     def self.sentences(sentence_count = 3)
       [].tap do |sentences|
