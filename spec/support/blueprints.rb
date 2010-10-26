@@ -9,7 +9,7 @@ end
 
 Lead.blueprint do
   header { Faker::Lorem.words(4).to_s.capitalize }
-  description {  Faker::Lorem.sentences(2).to_s }
+  description { Faker::Lorem.sentences(2).to_s }
   hidden_description { Faker::Lorem.sentences(2).to_s }
   purchase_value { Faker.numerify("###").to_f }
   price { Faker.numerify("###").to_f }
@@ -26,6 +26,14 @@ end
 LeadPurchase.blueprint do
   paid { false }
   accessible { false }
+  lead_id { Lead.make! }
+end
+
+LeadRequest.blueprint do
+  paid { false }
+  accessible { false }
+  requested_by { User::LeadBuyer.make!.id }
+  lead_id { Lead.make! }
 end
 
 
@@ -42,7 +50,7 @@ User.blueprint do
   city { Faker::Address.city }
   zip_code { Faker::Address.zip_code }
   county { Faker::Address.uk_county }
-  country {  0 }
+  country { 0 }
 end
 
 ::User::LeadBuyer.blueprint do
@@ -58,7 +66,7 @@ end
   city { Faker::Address.city }
   zip_code { Faker::Address.zip_code }
   county { Faker::Address.uk_county }
-  country {  0 }
+  country { 0 }
   roles_mask { 96 }
 end
 
@@ -75,6 +83,6 @@ end
   city { Faker::Address.city }
   zip_code { Faker::Address.zip_code }
   county { Faker::Address.uk_county }
-  country {  0 }
+  country { 0 }
   roles_mask { 2 }
 end
