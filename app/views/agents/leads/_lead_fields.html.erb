@@ -1,0 +1,6 @@
+<br />
+<% id = f.object.new_record? ? DateTime.now : f.object.id %>
+<%= text_field_tag "[lead][lead_translations][#{id}][header]" %><br />
+<%= text_area_tag "[lead][lead_translations][#{id}][description]" %><br />
+<%= text_area_tag "[lead][lead_translations][#{id}][hidden_description]" %><br />
+<%= hidden_field_tag "[lead][lead_translations][#{id}][locale]", "LOCALE_VALUE" %><br />
