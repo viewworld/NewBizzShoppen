@@ -23,6 +23,7 @@ gem 'globalize3'
 gem 'role_model', :require => "role_model"
 gem 'cancan'
 gem 'rails-settings', :require => "settings"
+gem 'nested_set'
 
 group :development do
   gem 'diff-lcs'

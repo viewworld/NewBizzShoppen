@@ -11,7 +11,7 @@
           <b> <%= block_left && with_output_buffer { block_left.call(lead) } %></b>
         </div>
         <div class="details">
-          <span>Created by: <b><%= lead.creator %></b></span>
+          <span>Created by: <b><%= lead.creator_name %></b></span>
              <%= block_right && with_output_buffer { block_right.call(lead) } %>
         </div>
         <div class="stats">
