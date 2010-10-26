@@ -1,0 +1,11 @@
+--- 
+countries_001: 
+  name: Denmark
+  created_at: 2010-10-26 08:06:03.777943
+  updated_at: 2010-10-26 08:06:03.777943
+  id: "1"
+countries_002: 
+  name: United Kingdom
+  created_at: 2010-10-26 08:06:03.811637
+  updated_at: 2010-10-26 08:06:03.811637
+  id: "2"
