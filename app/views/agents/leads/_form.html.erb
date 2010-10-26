@@ -4,7 +4,7 @@
 
 <%= t("activerecord.attributes.lead.purchase_decision_date") %><%= form.text_field :purchase_decision_date, :id => "datepicker" %>
 
-<%= select_tag :locale, options_for_select(Locale.all.collect(&:code).select { |c| c != @locale.code }), { :id => "locale_picker", :include_blank => true, :onchange => link_to_add_fields(form)} %>
+<%= select_tag :locale, options_for_select(Locale.all.collect(&:code).select { |c| c != I18n.locale.to_s }), { :id => "locale_picker", :include_blank => true, :onchange => link_to_add_fields(form)} %>
 
 <span id="lead_translations"></span>
 

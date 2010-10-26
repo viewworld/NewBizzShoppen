@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   #Always cast default role class if outside of any namespace
   def current_user
-   super.send(:casted_class).find(super.id)
+    super.send(:casted_class).find(super.id)
   end
 
   def after_sign_in_path_for(resource)
@@ -24,21 +24,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def set_locale(locale=nil)
-    if locale.nil?
-      locale_code = session[:locale_code].blank? ? I18n.locale.to_s : session[:locale_code]
-      @locale = Locale.new(locale_code)
-    else
-      @locale = locale
-      session[:locale_code] = @locale.code
-    end
-    I18n.locale = @locale.code
+  def set_locale(locale_code=nil)
     @locales = Locale.all
-    @locale
+    session[:locale_code] = locale_code || session[:locale_code] || I18n.locale.to_s
+    I18n.locale = session[:locale_code]
   end
 
   def locale
-    @locale || set_locale
+    @locale ||= I18n.locale
   end
 
   def redirect_to_root_path_if_signed_in

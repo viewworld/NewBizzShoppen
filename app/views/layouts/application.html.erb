@@ -20,15 +20,15 @@
         <ul>
           <li class="langs" id="select_lang">
             <div>
-              <%= t "locales.#{locale.code.downcase}_locale" %>
-              <%= image_tag('/images/languages/flag_'+locale.code.downcase+'.png') %>
+              <%= t "locales.#{locale.to_s.downcase}_locale" %>
+              <%= image_tag('/images/languages/flag_'+locale.to_s.downcase+'.png') %>
             </div>
             <ul id="langs_dropdown" style="">
               <% @locales.each do |locale| %>
                   <li>
-                    <%= link_to locale_path(:id => locale.code) do %>
-                        <%= t("locales.#{locale.code.downcase}_locale") %>
-                        <%= image_tag('/images/languages/flag_'+locale.code.downcase+'.png') %>
+                    <%= link_to locale_path(:id => locale.to_s) do %>
+                        <%= t("locales.#{locale.to_s.downcase}_locale") %>
+                        <%= image_tag('/images/languages/flag_'+locale.to_s.downcase+'.png') %>
                     <% end %>
                   </li>
               <% end %>
