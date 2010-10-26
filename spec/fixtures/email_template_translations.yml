@@ -1,0 +1,33 @@
+--- 
+email_template_translations_001: 
+  created_at: 2010-10-26 08:06:03.90287
+  body: <p>Welcome {{user.email}}!</p><p>You can confirm your account through the link below:</p><p><a href="{{user.confirmation_instructions_url}}">Confirm my account</a></p>
+  updated_at: 2010-10-26 08:06:03.90287
+  subject: Confirmation instructions
+  id: "1"
+  email_template_id: "1"
+  locale: en
+email_template_translations_002: 
+  created_at: 2010-10-26 08:06:03.940949
+  body: <p>Welcome {{user.email}}!</p><p>You can confirm your account through the link below:</p><p><a href="{{user.confirmation_instructions_url}}">Confirm my account</a></p>
+  updated_at: 2010-10-26 08:06:03.940949
+  subject: "[DK] Confirmation instructions"
+  id: "2"
+  email_template_id: "1"
+  locale: dk
+email_template_translations_003: 
+  created_at: 2010-10-26 08:06:03.96635
+  body: <p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href="{{ user.reset_password_instructions_url }}">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>
+  updated_at: 2010-10-26 08:06:03.96635
+  subject: Reset password instructions
+  id: "3"
+  email_template_id: "2"
+  locale: en
+email_template_translations_004: 
+  created_at: 2010-10-26 08:06:03.989734
+  body: <p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href="{{ user.reset_password_instructions_url }}">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>
+  updated_at: 2010-10-26 08:06:03.989734
+  subject: "[DK] Reset password instructions"
+  id: "4"
+  email_template_id: "2"
+  locale: dk

@@ -8,10 +8,13 @@
       <%= csrf_meta_tag %>
     </head>
     <body>
+    <h1><%= link_to "New Bizz Shoppen", root_path %></h1>
         <% if user_signed_in? %>
         <%= link_to 'My profile', my_profile_path %>
         <%= link_to "Logout #{current_user.email}", '/logout' %>
         <% end %>
+
+        <%= render('/layouts/cart') if current_user && current_user.has_role?(:lead_buyer) %>
 
 
         <ul>

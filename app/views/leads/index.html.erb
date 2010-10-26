@@ -1,0 +1,20 @@
+<column-mc:>
+  <h1>Leads</h1>
+
+  <%= form_for @search, :url => leads_path do |f| %>
+      Keyword<%= f.text_field :with_keyword %>
+      Deal value from<%= f.text_field :deal_value_from %>
+      Deal value to <%= f.text_field :deal_value_to %>
+      <%= submit_tag "Search" %>
+  <% end %>
+
+  <%= leads_listing @leads, :show_checkboxes => true do |blocks| %>
+
+      <% blocks.right do |lead| %>
+        <!-- TODO Should not be here - should be in buyer scope! -->
+          <% if current_user &&  current_user.has_role?(:lead_buyer) %>
+              <%= link_to "Add to cart", buyers_cart_items_path(:id => lead.id), :method => :post %>
+          <% end %>
+      <% end %>
+  <% end %>
+</column-mc:>
