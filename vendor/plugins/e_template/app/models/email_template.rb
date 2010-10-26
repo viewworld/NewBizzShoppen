@@ -10,7 +10,10 @@ class EmailTemplate < ActiveRecord::Base
   #
   # Puts the parse error from Liquid on the error list if parsing failed
   #
-  def after_validation
+
+  after_validation :check_syntax
+
+  def check_syntax
     errors.add :template, @syntax_error unless @syntax_error.nil?
   end
 

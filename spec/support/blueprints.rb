@@ -1,5 +1,6 @@
 require 'machinist/active_record'
 require 'faker'
+require 'spec/support/overwrites/lorem'
 
 Category.blueprint do
   name { Faker::Lorem.words(2).to_s }
@@ -45,7 +46,7 @@ User.blueprint do
 end
 
 ::User::LeadBuyer.blueprint do
-   email { Faker::Internet.email }
+  email { Faker::Internet.email }
   password { "secret" }
   password_confirmation { "secret" }
   phone { Faker::PhoneNumber.phone_number }
