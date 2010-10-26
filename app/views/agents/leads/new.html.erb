@@ -2,9 +2,6 @@
   <h1><%= t("agent.leads.index.view.new_lead") %></h1>
 <%= semantic_form_for [:agents, @lead], :method => :post do |form| %>
     <%= render :partial => 'form', :locals => { :form => form }  %>
-      <%= f.fields_for :evaluators, @colleagues.to_a do |builder| %>
-          <%= render :partial => "lead_fields" %>
-      <% end %>
 
       <%= form.submit t("agent.leads.new.view.button_create"), :name => "commit_create" %>
       <%= form.submit t("agent.leads.new.view.button_create_and_continue"), :name => "commit_continue" %>

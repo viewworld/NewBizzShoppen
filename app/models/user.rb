@@ -1,11 +1,6 @@
 class User < ActiveRecord::Base
   self.abstract_class = true
 
-  COUNTRIES = [
-          ['Poland', 0],
-          ['France', 1]
-  ].freeze
-
   DEAL_VALUE_RANGE = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000]
 
   ROLES = []

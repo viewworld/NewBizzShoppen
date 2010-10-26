@@ -24,10 +24,10 @@ describe Lead do
   it "should accept nested translations" do
     lead = Lead.make!
 
-    nested_params = {"lead_translations_attributes"=>[ {"header"=>"sdgsdfg",
+    nested_params = {"lead_translations_attributes"=>[ {"header"=>"Fake header",
     "locale"=>"dk",
-    "description"=>"fdfgfdg",
-    "hidden_description"=>"dfgdfgdfg"}]}
+    "description"=>"Fake description",
+    "hidden_description"=>"Fake hidden description"}]}
 
     lead.update_attributes(nested_params)
     lead.valid?.should == true
