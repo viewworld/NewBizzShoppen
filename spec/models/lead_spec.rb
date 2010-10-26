@@ -14,7 +14,6 @@ describe Lead do
     lead.creator_name.should == lead.creator.name
 
     creator = lead.creator
-
     creator.update_attributes(:first_name => "John", :last_name => "Perry")
     creator.save!
 
