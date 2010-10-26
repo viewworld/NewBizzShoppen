@@ -16,6 +16,14 @@ module WithinHelpers
 end
 World(WithinHelpers)
 
+When /^I open page in browser$/ do
+save_and_open_page
+end
+
+When /^I refresh page$/ do
+reload
+end
+
 Given /^(?:|I )am on (.+)$/ do |page_name|
   visit path_to(page_name)
 end
@@ -217,3 +225,10 @@ end
 Then /^show me the page$/ do
   save_and_open_page
 end
+
+Given /^I make sure current locale is English$/ do
+  if page.body.match("dk, locales, en_locale")
+   And %{I follow "dk, locales, en_locale"}
+  end
+end
+

@@ -4,37 +4,52 @@ Feature: User Account - Signin
   In order to get access to protected sections of the site
   A registred user
   Should be able to login
-
-  Scenario: A user should be able to get to the login page
+  Background: Set English locale on the home page
     Given I am on the homepage
-    When I follow "Login"
+    And I make sure current locale is English
+
+
+  @_done
+  Scenario: A user should be able to get to the login page
     Then I should see "Email"
     And I should see "Password"
-
+   @_done
   Scenario: User is not signed up
     Given no user exists with an email of "email@person.com"
-    When I sign in as "email@person.com/password"
-    Then I should see "Bad email or password"
-    And I should be signed out
-
+     When I sign in as "email@person.com/password"
+     Then I should see "Invalid email or password"
+     And I should be signed out
+  @_done
   Scenario Outline: A registered user that types in the wrong password can not login
     Given I am signed up and confirmed as "bob@person.com/supersecret"
     When I go to the login page
-    And I fill in "Email" with "&amp;amp;lt;login&amp;amp;gt;"
-    And I fill in "Password" with "&amp;amp;lt;password&amp;amp;gt;"
-    And I press "Login"
-    Then I should see "Bad email or password"
+    And I fill in "user_email" with "<login>"
+    And I fill in "user_password" with "<password>"
+    And I press "Sign in"
+    Then I should see "Invalid email or password"
 
   Examples:
     | login | password       |
     | bob   | |
     | bbo   | supersecret    |
     | bob   | wrong-password |
+  @_done
+  Scenario Outline: A registered user can login and be directed to their home page
+    Given I am signed up and confirmed as "<login>"
+    And User "<login>" has role "<role>"
+    When I sign in as "<login>"
 
-  Scenario: A registered user can login and be directed to their home page
-    Given I am signed up and confirmed as "bob@person.com/supersecret"
-    When I sign in as "email@person.com/password"
-    And I press "Login"
+    Then I should be on "<the page>"
+    Examples:
+    | login | role | the page |
+    | bob@person.com/supersecret | admin | users#index |
+    | bob@person.com/supersecret | agent | leads#index |
+#    | bob@person.com/supersecret | call_centre | call_centres#index
+#    | bob@person.com/supersecret | call_centre_agent | call_centre_agents#index
+#    | bob@person.com/supersecret | customer |  customers#index
+#    | bob@person.com/supersecret | lead_buyer |  lead_buyers#index
+#    | bob@person.com/supersecret | lead_user | lead_users#index
+    #TODO: fill in additional namespaces for all roles when they are added later
 
   Scenario: A logged in user on the login page should just redirect to their home page
     Given I am signed up and confirmed as "bob@person.com/supersecret"

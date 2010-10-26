@@ -1,5 +1,6 @@
+
 @user_accounts @$_customer
-Features: Subaccounts management
+Feature: Subaccounts management
 
 Scenario: I do not and cannot belong to other customer
 

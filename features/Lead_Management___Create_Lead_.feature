@@ -9,7 +9,7 @@ Background:
 I log into the system as an Agent
 And I go to Agent Panel
 
-(full example of a user story including steps made by programmers during the development)
+#(full example of a user story including steps made by programmers during the development)
 Scenario: I can create a new lead and close
 
 Given I click “Create Lead”
