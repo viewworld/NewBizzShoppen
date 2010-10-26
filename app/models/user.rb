@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  self.abstract_class = true
+
   COUNTRIES = [
           ['Poland', 0],
           ['France', 1]

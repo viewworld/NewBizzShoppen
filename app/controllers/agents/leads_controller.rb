@@ -14,6 +14,9 @@ class Agents::LeadsController < Agents::AgentController
   public
 
   def create
+    @lead = Lead.new(params[:lead])
+    @lead.creator = current_user
+
     create! do |success, failure|
       success.html {
         unless params[:commit_continue].blank?
@@ -22,7 +25,7 @@ class Agents::LeadsController < Agents::AgentController
           redirect_to agents_leads_path
         end
       }
-    end
+      end
   end
 
   def update

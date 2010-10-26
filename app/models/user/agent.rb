@@ -1,12 +1,11 @@
-class ::User::Agent < ::User
+class User::Agent < ::User
   ROLES = [:agent]
 
   include User::RegistrationValidations
 
   has_many :leads,
            :as => :creator,
-           :dependent => :destroy,
-           :finder_sql => %q(SELECT "leads".* FROM "leads" WHERE ("leads".creator_id = #{id} AND "leads".creator_type = 'User::Agent'))
+           :dependent => :destroy
 
   validates_inclusion_of :payout, :in => 0..100, :message =>   I18n.t("models.user.payout_validation_message")
 

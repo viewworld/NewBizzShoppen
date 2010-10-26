@@ -22,5 +22,18 @@ describe Lead do
     lead.creator_name.should == "John Perry"
   end
 
+  it "should accept nested translations" do
+    lead = Lead.make!
+
+    nested_params = {"lead_translations_attributes"=>[ {"header"=>"sdgsdfg",
+    "locale"=>"dk",
+    "description"=>"fdfgfdg",
+    "hidden_description"=>"dfgdfgdfg"}]}
+
+    lead.update_attributes(nested_params)
+    lead.valid?.should == true
+    lead.lead_translations.detect { |lt| lt.locale.to_s == "dk" }.should_not == nil
+  end
+
 
 end
