@@ -9,7 +9,7 @@ Nbs::Application.routes.draw do
     get "logout", :to => "devise/sessions#destroy"
   end
 
-    namespace :administration do
+  namespace :administration do
     root :to => "users#index"
     resources :users do
       resource :password, :controller => 'password'
@@ -39,7 +39,7 @@ Nbs::Application.routes.draw do
   match 'agent_home' => 'agent_home#show', :as => "agent_home"
 
   resources :leads, :only => [:index, :show]
-  
+
   resources :agent_accounts, :only => [:new, :create]
   resources :buyer_accounts, :only => [:new, :create]
   resources :locales
@@ -51,7 +51,7 @@ Nbs::Application.routes.draw do
   match 'password' => 'password#edit', :as => 'password'
 
   root :to => "home#show"
-  
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -99,7 +99,6 @@ Nbs::Application.routes.draw do
   #     resources :products
   #   end
 
-  
 
   # See how all your routes lay out with "rake routes"
 

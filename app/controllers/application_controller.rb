@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   #Always cast default role class if outside of any namespace
   def current_user
-    super.send(:casted_class).find(super.id)
+    super && super.send(:casted_class).find(super.id)
   end
 
   def after_sign_in_path_for(resource)

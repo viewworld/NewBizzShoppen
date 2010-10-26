@@ -53,3 +53,25 @@ width: 400px;
 }
 
 
+ul.main_menu li
+{
+list-style:none;
+float:left;
+}
+
+ul.main_menu a
+{
+display:block;
+border: 1px solid black;
+padding: 3px 6px;
+margin: 0px 2px;
+font-size: 16px;
+text-decoration:none;
+}
+
+ul.main_menu li.active a,
+ul.main_menu a:hover
+{
+background: black;
+color:white;
+}
