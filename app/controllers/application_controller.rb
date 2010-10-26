@@ -5,6 +5,11 @@ class ApplicationController < ActionController::Base
 
   helper_method :locale
 
+  #Always cast default role class if outside of any namespace
+  def current_user
+   super.send(:casted_class).find(super.id)
+  end
+
   def after_sign_in_path_for(resource)
     if resource.is_a?(User)
       if resource.has_role? :admin
