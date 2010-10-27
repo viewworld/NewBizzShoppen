@@ -14,6 +14,7 @@
 
           <p><%= f.submit t("home.show.view.sign_in") %></p>
       <% end %>
+
   <% end %>
 
   <% unless user_signed_in? %>
@@ -21,4 +22,6 @@
     <%= link_to t("home.show.view.agent_signup"), new_agent_account_path %>
     <%= link_to t("home.show.view.buyer_signup"), new_buyer_account_path %>
   <% end %>
+
+
 </column-mc:>

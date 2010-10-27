@@ -1,9 +1,6 @@
-      <%= form.inputs :first_name, :last_name, :phone, :email, :screen_name, :street,
-        :city, :zip_code, :county
-      %>
-
-      <%= form.input :agreement_read, :as => :hidden, :value => "1" %>
-
-      <%= form.input :country, :as => :select, :collection => Country.all %>
-
-      <%= form.input :newsletter_on, :as => :boolean %>
+<%= form.inputs :first_name, :last_name, :phone, :email, :screen_name, :street,
+                :city, :zip_code, :county
+%>
+<%= form.input :agreement_read, :as => :hidden, :value => "1" %>
+<%= form.input :country, :as => :select, :collection => Country.all %>
+<%= form.input :newsletter_on, :as => :boolean %>
