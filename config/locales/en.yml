@@ -29,7 +29,7 @@ en:
     cart:
       cart_header: Cart (%{count} items)
       remove_item_link: Remove
-      total_label: Total:
+      total_label: Total
 
   errors:
     messages:
@@ -78,6 +78,12 @@ en:
         subject: 'Reset password instructions'
       unlock_instructions:
         subject: 'Unlock Instructions'
+
+
+  leads:
+    listing:
+    index:
+    show:
 
   home:
     show:
