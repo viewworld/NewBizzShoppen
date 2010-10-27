@@ -90,6 +90,7 @@ en:
       view:
         buyer: 'Buyer'
         agent: 'Agent'
+        remember_me: 'Remember me'
         sign_in: 'Sign in'
         signup_message: "Don't have an account yet"
         agent_signup: 'Freelance agent signup'

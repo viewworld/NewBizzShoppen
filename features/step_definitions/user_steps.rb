@@ -35,7 +35,7 @@ Given /^I am signed up and confirmed as "([^"]*)"$/ do |arg1|
 end
 
 Given /^User "([^"]*)" has role "([^"]*)"$/ do |login, role|
-  u = User.first(:conditions => { :email => login.split("/").first})
+  u = User::Admin.first(:conditions => { :email => login.split("/").first})
   u.roles = [role.to_sym]
   u.save
 end

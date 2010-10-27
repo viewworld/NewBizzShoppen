@@ -1,4 +1,4 @@
-class MyProfileController < ApplicationController
+class MyProfileController < SecuredController
   inherit_resources
   actions :all, :except => [:update]
 

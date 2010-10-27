@@ -4,14 +4,12 @@
   <%= link_to t("home.show.view.agent"), agent_home_path %>
 
   <% unless user_signed_in?  %>
-      <%= form_for(:user, :url => session_path(:user)) do |f| %>
-          <p><%= f.label :email %><br/>
-            <%= f.text_field :email %></p>
+      <%= semantic_form_for(:user, :url => session_path(:user)) do |f| %>
+            <%= f.input :email, :label => I18n.t("activerecord.attributes.user.email") %>
 
-          <p><%= f.label :password %><br/>
-            <%= f.password_field :password %></p>
-          <p><%= f.check_box :remember_me %> <%= f.label :remember_me %></p>
+            <%= f.input :password, :label => I18n.t("activerecord.attributes.user.password") %>
 
+            <%= f.input :remember_me, :as => :boolean, :required => false, :label => I18n.t("home.show.view.remember_me") %>
           <p><%= f.submit t("home.show.view.sign_in") %></p>
       <% end %>
 
