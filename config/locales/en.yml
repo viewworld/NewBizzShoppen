@@ -155,6 +155,8 @@ en:
         flash:
           user_creation_successful: User has been created successfuly
     categories:
+      form:
+        no_parent_category: No parent category
       index:
         view:
           new_category: 'New category'
