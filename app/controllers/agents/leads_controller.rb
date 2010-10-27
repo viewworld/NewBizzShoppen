@@ -14,8 +14,7 @@ class Agents::LeadsController < Agents::AgentController
   public
 
   def create
-    @lead = Lead.new(params[:lead])
-    @lead.creator = current_user
+    @lead = current_user.leads.build(params[:lead])
 
     create! do |success, failure|
       success.html {

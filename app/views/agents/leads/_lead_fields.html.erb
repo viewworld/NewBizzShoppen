@@ -1,6 +1,7 @@
 <br />
-<%# id = f.object.new_record? ? DateTime.now : f.object.id %>
-<%= text_field_tag "[lead][lead_translations_attributes][][header]" %><br />
-<%= text_area_tag "[lead][lead_translations_attributes][][description]" %><br />
-<%= text_area_tag "[lead][lead_translations_attributes][][hidden_description]" %><br />
-<%= hidden_field_tag "[lead][lead_translations_attributes][][locale]", "LOCALE_VALUE" %><br />
+<span class="locale_span"><%= f.object.locale if f.object.respond_to?(:locale) %></span>
+<%= f.text_field :header %><br />
+<%= f.text_area :description %><br />
+<%= f.text_area :hidden_description %><br />
+<%= f.hidden_field :locale, :class => "locale_hidden_field" %><br />
+<span class="nested_locale_span"></span>
