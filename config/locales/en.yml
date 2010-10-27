@@ -310,3 +310,10 @@ en:
         newsletter_on: 'I want to receive the newsletter'
       lead:
         purchase_decision_date: 'Purchase decision date'
+
+  flash:
+    actions:
+      create:
+        notice: 'Category was successfully created.'
+      update:
+        notice: 'Category was successfully updated.'

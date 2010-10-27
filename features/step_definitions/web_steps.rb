@@ -232,3 +232,6 @@ Given /^I make sure current locale is English$/ do
   end
 end
 
+Then /^The flash message should be set to translated "([^"]*)"$/ do |key|
+  assert page.body.match(I18n.t(key))
+end
