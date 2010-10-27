@@ -1,8 +1,11 @@
-class Buyers::CartItemsController <  Buyers::BuyerController
+class Buyers::CartItemsController < Buyers::BuyerController
 
   def create
-    current_user.cart.add_lead(Lead.find_by_id(params[:id]))
-    flash[:notice] = t("buyer.cart_items.create.flash.cart_item_creation_successful")
+    flash[:notice] =  if current_user.cart.add_lead(Lead.find_by_id(params[:id])) === true
+                        t("buyer.cart_items.create.flash.cart_item_bought_successful")
+                      else
+                        t("buyer.cart_items.create.flash.cart_item_creation_successful")
+                      end
     redirect_to :back
   end
 

@@ -11,7 +11,15 @@ class Cart
   end
 
   def add_lead(lead)
-    lead.buyable? && @buyer.lead_purchases.create(:lead_id => lead.id, :paid => false)
+    if lead.buyable?
+      purchase = @buyer.lead_purchases.create(:lead_id => lead.id, :paid => false)
+      if @buyer.big_buyer?
+        purchase.update_attribute(:accessible, true)
+        return true
+      else
+        return purchase
+      end
+    end
   end
 
   def remove_lead(*ids)

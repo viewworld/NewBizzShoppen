@@ -23,7 +23,7 @@ class Administration::UsersController < Administration::AdministrationController
   end
 
   def update
-    @user = User.find(params[:id])
+    @user = User.find(params[:id]).send(:casted_class).find(params[:id])
 
     @user.send(:attributes=, params["user_#{@user.role.to_s}"], false)
 

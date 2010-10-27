@@ -82,7 +82,21 @@ en:
 
   leads:
     listing:
+      purchase_value_label: 'Purchase value:'
+      lead_price_label: 'Lead price:'
+      description_label: 'Lead description:'
+      created_by_label: 'Created by:'
+      clicks_count_label: 'Clicks:'
     index:
+      header: Leads
+      search:
+        search_button: Search
+        keyword_label: Keyword
+        deal_value_from_label: Deal value from
+        deal_value_to_label: Deal value to
+      add_to_cart_link: Add to cart
+      buy_lead: Buy lead
+
     show:
 
   home:
@@ -214,6 +228,7 @@ en:
       create:
         flash:
           cart_item_creation_successful: Lead has been added to cart
+          cart_item_bought_successful: Lead has been bought
       destroy:
         flash:
           cart_item_destruction_successful: Lead has been removed from cart
