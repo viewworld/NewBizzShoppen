@@ -10,10 +10,31 @@ module NavigationHelpers
 
     when /the home\s?page/
       '/'
-    when /users#index/
+    when /administration root/
       '/administration'
-    when /leads#index/
+    when /agents root/
       '/agents'
+    when /administration users/
+        '/administration/users'
+    when /administration categories/
+        '/administration/categories'
+    when /administration email templates/
+        '/administration/email_templates'
+    when /administration settings/
+        '/administration/setting/edit'
+    when /agents leads/
+        '/agents/leads'
+    when /buyer cart items/
+        '/buyers/cart_items'
+    when /buyer interests/
+        '/buyers/interests/edit'
+    when /customers lead purchases/
+        '/customers/lead_purchases'
+    when /customers subaccounts/
+        '/customers/subaccounts'
+    when /my_profile/
+        '/my_profile'
+
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
