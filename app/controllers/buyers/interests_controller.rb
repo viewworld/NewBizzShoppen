@@ -14,7 +14,7 @@ class Buyers::InterestsController <  Buyers::BuyerController
     @buyer.save
     @buyer.update_attributes(params[:user])
 
-    flash[:notice] = "Interests configuration has been successfully saved."
+    flash[:notice] = t("buyer.interests.update.flash.interests_update_successful")
     redirect_to edit_buyers_interests_path
   end
 end

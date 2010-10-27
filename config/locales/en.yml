@@ -66,6 +66,10 @@ en:
         change_password: 'Change password'
 
   administration:
+    password:
+      destroy:
+        flash:
+          password_reset_successful: Password has been reset
     users:
       index:
         view:
@@ -92,6 +96,9 @@ en:
       edit:
         view:
           button_update_user: Save
+      create:
+        flash:
+          user_creation_successful: User has been created successfuly
     categories:
       index:
         view:
@@ -158,6 +165,17 @@ en:
           notify_about_new_leads: 'Notify me about new leads via email'
           button_update: 'Save'
           rss_feed_url: 'RSS Feed'
+      update:
+        flash:
+          interests_update_successful: Interest settings have been saved successfuly
+    cart_items:
+      create:
+        flash:
+          cart_item_creation_successful: Lead has been added to cart
+      destroy:
+        flash:
+          cart_item_destruction_successful: Lead has been removed from cart
+
 
 
   buyer_accounts:
@@ -174,6 +192,9 @@ en:
           new_lead_buyer: 'New lead buyer'
           new_lead_user: 'New lead user'
           edit: 'Edit'
+      create:
+        flash:
+          subaccount_creation_successful: Subaccount has been added succesfully
       new:
         view:
           title: 'New'
