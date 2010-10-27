@@ -10,11 +10,12 @@ class Lead < ActiveRecord::Base
   scope :with_keyword, lambda { |q| where("lower(header) like :keyword OR lower(description) like :keyword OR lower(creator_name) like :keyword", {:keyword => "%#{q.downcase}%"}) }
   scope :deal_value_from, lambda { |q| where(["purchase_value >= ?",q]) }
   scope :deal_value_to, lambda { |q| where(["purchase_value <= ?",q]) }
+  scope :with_category, lambda { |q| where(:category_id => Category.find_by_id(q).self_and_descendants.map(&:id)) }
 
   #TODO
   scope :skip_already_bought_or_requested_by, lambda {|user| where({})}
 
-  validates_presence_of :company_name, :lead_name, :phone_number, :sale_limit
+  validates_presence_of :company_name, :lead_name, :phone_number, :sale_limit, :category_id
   validates_inclusion_of :sale_limit, :in => 0..10
 
   

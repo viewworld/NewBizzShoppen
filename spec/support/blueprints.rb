@@ -21,6 +21,7 @@ Lead.blueprint do
   address { Faker::Address.street_address }
   creator_id { ::User::Agent.make!.id }
   creator_type { "User::Agent" }
+  category_id { Category.make!.id }
 end
 
 LeadPurchase.blueprint do
