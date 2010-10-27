@@ -13,7 +13,7 @@
       <% blocks.right do |lead| %>
         <!-- TODO Should not be here - should be in buyer scope! -->
           <% if current_user &&  current_user.has_role?(:lead_buyer) %>
-              <%= link_to t("leads.index.add_to_cart_link"), buyers_cart_items_path(:id => lead.id), :method => :post %>
+              <%= link_to current_user.big_buyer? ? t("leads.index.buy_lead") : t("leads.index.add_to_cart_link"), buyers_cart_items_path(:id => lead.id), :method => :post %>
           <% end %>
       <% end %>
   <% end %>

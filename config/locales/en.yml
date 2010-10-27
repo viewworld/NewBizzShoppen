@@ -95,6 +95,7 @@ en:
         deal_value_from_label: Deal value from
         deal_value_to_label: Deal value to
       add_to_cart_link: Add to cart
+      buy_lead: Buy lead
 
     show:
 
@@ -226,6 +227,7 @@ en:
       create:
         flash:
           cart_item_creation_successful: Lead has been added to cart
+          cart_item_bought_successful: Lead has been bought
       destroy:
         flash:
           cart_item_destruction_successful: Lead has been removed from cart
