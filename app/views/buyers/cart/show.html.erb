@@ -1,0 +1,32 @@
+<column-mc:>
+  <h1><%= t("buyer.cart.show.view.header") %></h1>
+
+  <table class="cart">
+    <thead>
+    <tr>
+      <th>#</th>
+      <th><%= t("buyer.cart.show.view.lead_name_header") %></th>
+      <th><%= t("buyer.cart.show.view.lead_price_header") %></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @cart.items.each_with_index do |lead, i| %>
+        <tr>
+          <td><%= i+1 %></td>
+          <td><%= lead.header %></td>
+          <td><%= lead.price %></td>
+          <td><%= link_to t("buyer.cart.show.view.remove_item_link"), buyers_cart_item_path(lead.id), :method => :delete %></td>
+        </tr>
+    <% end %>
+    </tbody>
+    <tfoot>
+    <tr>
+      <td></td>
+      <td><%= t("buyer.cart.show.view.total_label") %></td>
+      <td><%= @cart.total %></td>
+      <td></td>
+    </tr>
+    </tfoot>
+  </table>
+</column-mc:>

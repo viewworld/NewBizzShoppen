@@ -30,6 +30,8 @@ en:
       cart_header: Cart (%{count} items)
       remove_item_link: Remove
       total_label: Total
+      empty_cart: Empty cart
+      show_cart: Go to checkout
 
   errors:
     messages:
@@ -233,6 +235,14 @@ en:
       destroy:
         flash:
           cart_item_destruction_successful: Lead has been removed from cart
+    cart:
+      show:
+        view:
+          header: Cart
+          lead_name_header: Lead name
+          lead_price_header: Price
+          total_label: Total
+          remove_item_link: Remove item
 
 
 
