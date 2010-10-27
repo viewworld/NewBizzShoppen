@@ -1,7 +1,7 @@
 <%= form.input :category_id, :as => :select, :collection => Category.all %>
 <%= form.input :country_id, :as => :select, :collection => Country.all %>
 <%= form.inputs :header, :description, :hidden_description, :purchase_value, :price, :company_name, :lead_name, :phone_number, :email_address, :address %>
-
+<%= form.input :sale_limit, :as => :select, :collection => (0..10) %>
 <%= t("activerecord.attributes.lead.purchase_decision_date") %><%= form.text_field :purchase_decision_date, :id => "datepicker" %>
 
 <%= select_tag :locale, options_for_select(available_locales_list(@lead.lead_translations)),

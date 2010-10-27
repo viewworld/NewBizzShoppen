@@ -14,7 +14,8 @@ class Lead < ActiveRecord::Base
   #TODO
   scope :skip_already_bought_or_requested_by, lambda {|user| where({})}
 
-  validates_presence_of :company_name, :lead_name, :phone_number
+  validates_presence_of :company_name, :lead_name, :phone_number, :sale_limit
+  validates_inclusion_of :sale_limit, :in => 0..10
 
   
   accepts_nested_attributes_for :lead_translations
