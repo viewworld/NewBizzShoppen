@@ -2,7 +2,7 @@
   <h1>Home</h1>
   <%= link_to t("home.show.view.buyer"), buyer_home_path %>
   <%= link_to t("home.show.view.agent"), agent_home_path %>
-  <%= link_to t("home.show.view.browse_leads"), leads_path%>
+
   <% unless user_signed_in?  %>
       <%= form_for(:user, :url => session_path(:user)) do |f| %>
           <p><%= f.label :email %><br/>

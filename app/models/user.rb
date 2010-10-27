@@ -1,14 +1,8 @@
 class User < ActiveRecord::Base
   self.abstract_class = true
 
-  COUNTRIES = [
-          ['Poland', 0],
-          ['France', 1]
-  ].freeze
-
+  ROLES_PRIORITY = [:admin, :call_centre, :agent, :call_centre_agent, :customer, :lead_buyer, :lead_user]
   DEAL_VALUE_RANGE = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000]
-
-  ROLES = []
 
   include RoleModel
   include ScopedSearch::Model
@@ -64,11 +58,24 @@ class User < ActiveRecord::Base
     self.roles = [self.class.const_get("ROLES")]
   end
 
+  def casted_class
+    "User::#{role.to_s.camelize}".constantize
+  end
+
+  def mailer_host
+    Nbs::Application.config.action_mailer.default_url_options[:host]
+  end
+
+  def deliver_email_template(uniq_id)
+    ApplicationMailer.email_template(email, EmailTemplate.find_by_uniq_id(uniq_id), {:user => self}).deliver
+  end
+
   public
 
-   def cart
+  #TODO Manage to move to buyer :)
+  def cart
     @cart ||= Cart.new(User::LeadBuyer.find(self.id))
-   end
+  end
 
   def self.inherited(subclass)
     super
@@ -76,7 +83,7 @@ class User < ActiveRecord::Base
   end
 
   def role
-    roles.first
+    roles.sort_by { |r| User::ROLES_PRIORITY.index(r) }.first
   end
 
   def full_name
@@ -85,19 +92,19 @@ class User < ActiveRecord::Base
 
   def send_confirmation_instructions
     generate_confirmation_token if self.confirmation_token.nil?
-    ApplicationMailer.email_template(email, EmailTemplate.find_by_uniq_id("confirmation_instructions"), {:user => self}).deliver
+    deliver_email_template("confirmation_instructions")
   end
 
   def send_reset_password_instructions
-   generate_reset_password_token!
-    ApplicationMailer.email_template(email, EmailTemplate.find_by_uniq_id("reset_password_instructions"), {:user => self}).deliver
+    generate_reset_password_token!
+    deliver_email_template("reset_password_instructions")
   end
 
   def confirmation_instructions_url
-    "https://#{Nbs::Application.config.action_mailer.default_url_options[:host]}/users/confirmation?confirmation_token=#{confirmation_token}"
+    "https://#{mailer_host}/users/confirmation?confirmation_token=#{confirmation_token}"
   end
 
   def reset_password_instructions_url
-    "https://#{Nbs::Application.config.action_mailer.default_url_options[:host]}/users/password/edit?reset_password_token=#{reset_password_token}"
+    "https://#{mailer_host}/users/password/edit?reset_password_token=#{reset_password_token}"
   end
 end

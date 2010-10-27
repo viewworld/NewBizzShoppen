@@ -1,45 +1,29 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-    <head>
-      <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
-      <title>Nbs</title>
-      <%= stylesheet_link_tag :all %>
-      <%= javascript_include_tag :defaults %>
-      <%= csrf_meta_tag %>
-    </head>
-    <body>
-    <h1><%= link_to "New Bizz Shoppen", root_path %></h1>
-        <% if user_signed_in? %>
-        <%= link_to 'My profile', my_profile_path %>
-        <%= link_to "Logout #{current_user.email}", '/logout' %>
-        <% end %>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
+  <title>Nbs</title>
+  <%= stylesheet_link_tag :all %>
+  <%= javascript_include_tag :defaults %>
+  <%= csrf_meta_tag %>
+</head>
+<body>
 
-        <%= render('/layouts/cart') if current_user && current_user.has_role?(:lead_buyer) %>
+<h1><%= link_to "New Bizz Shoppen", root_path %></h1>
 
+<% if user_signed_in? %>
+    <%= link_to 'My profile', my_profile_path %>
+    <%= link_to "Logout #{current_user.email}", '/logout' %>
+<% end %>
 
-        <ul>
-          <li class="langs" id="select_lang">
-            <div>
-              <%= t "locales.#{locale.code.downcase}_locale" %>
-              <%= image_tag('/images/languages/flag_'+locale.code.downcase+'.png') %>
-            </div>
-            <ul id="langs_dropdown" style="">
-              <% @locales.each do |locale| %>
-                  <li>
-                    <%= link_to locale_path(:id => locale.code) do %>
-                        <%= t("locales.#{locale.code.downcase}_locale") %>
-                        <%= image_tag('/images/languages/flag_'+locale.code.downcase+'.png') %>
-                    <% end %>
-                  </li>
-              <% end %>
-            </ul>
-          </li>
-         </ul>
+<%= render('/layouts/cart') if current_user && current_user.has_role?(:lead_buyer) %>
+<%= render '/layouts/locale_selection' %>
 
-        <p class="notice"><%= notice %></p>
+<p class="notice"><%= notice %></p>
+<p class="alert"><%= alert %></p>
 
-        <p class="alert"><%= alert %></p>
+<%= render "layouts/main_menu" %>
 
-        <lbuilder_layout/>
-    </body>
+<lbuilder_layout/>
+</body>
 </html>

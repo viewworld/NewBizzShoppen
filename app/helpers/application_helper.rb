@@ -27,7 +27,7 @@ module ApplicationHelper
   end
 
   def available_locales_list(translations)
-    exisitng = translations.collect(&:locale)
-    Locale.all.collect(&:code).select { |c| c != @locale.code }.select { |c| !exisitng.include?(c) }
+    existing = translations.map(&:locale)
+    Locale.all.map(&:code).reject { |c| c == I18n.locale.to_s or existing.include?(c) }
   end
 end

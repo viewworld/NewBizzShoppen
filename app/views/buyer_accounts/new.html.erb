@@ -5,9 +5,7 @@
       <%= form.inputs :first_name, :last_name, :phone, :email, :screen_name, :password, :password_confirmation, :street,
         :city, :zip_code, :county
       %>
-
-      <%= form.input :country, :as => :select, :collection => User::COUNTRIES %>
-
+      <%= form.input :country, :as => :select, :collection => Country.all %>
       <%= form.input :agreement_read, :as => :boolean %>
       <%= form.input :newsletter_on, :as => :boolean %>
       <%= form.commit_button t("buyer_accounts.new.view.button_create_account") %>

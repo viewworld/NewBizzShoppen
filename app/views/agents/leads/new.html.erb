@@ -1,7 +1,7 @@
 <column-mc:>
   <h1><%= t("agent.leads.index.view.new_lead") %></h1>
 <%= semantic_form_for [:agents, @lead], :method => :post do |form| %>
-    <%= render :partial => 'form', :locals => { :form => form }  %>
+    <%= render :partial => 'form', :locals => { :form => form, :lead => @lead }  %>
 
     <%= form.submit t("agent.leads.new.view.button_create"), :name => "commit_create" %>
     <%= form.submit t("agent.leads.new.view.button_create_and_continue"), :name => "commit_continue" %>

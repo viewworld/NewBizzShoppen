@@ -36,3 +36,5 @@ Nbs::Application.configure do
                                         :enable_starttls_auto => true}
 end
 
+I18n.default_locale = :"en"
+
