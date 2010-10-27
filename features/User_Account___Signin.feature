@@ -9,19 +9,19 @@ Feature: User Account - Signin
     And I make sure current locale is English
 
 
-  @_done
+  @_tested
   Scenario: A user should be able to get to the login page
     Then I should see translated "activerecord.attributes.user.email"
     And I should see translated "activerecord.attributes.user.password"
-   @_done
+   @_tested
   Scenario: User is not signed up
-    Given no user exists with an email of "email@person.com"
-     When I sign in as "email@person.com/password"
+    Given no user exists with an email of email@person.com and role admin
+     When I sign in as email@person.com with password  password
      Then I should see translated "devise.failure.invalid"
      And I should be signed out
-  @_done
+  @_tested
   Scenario Outline: A registered user that types in the wrong password can not login
-    Given I am signed up and confirmed as "bob@person.com/supersecret"
+    Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role admin
     When I go to the login page
     And I fill in "user_email" with "<login>"
     And I fill in "user_password" with "<password>"
@@ -33,31 +33,30 @@ Feature: User Account - Signin
     | bob   | |
     | bbo   | supersecret    |
     | bob   | wrong-password |
-  @_done
+  @_tested
   Scenario Outline: A registered user can login and be directed to their home page
-    Given I am signed up and confirmed as "<login>"
-    And User "<login>" has role "<role>"
-      When I sign in as "<login>"
+    Given I am signed up and confirmed as user with email <login> and password <password> and role <role>
+    And I sign in as <login> with password <password>
 
     Then I should be on "<the page>"
     Examples:
-    | login | role | the page |
-    | bob@person.com/supersecret | admin | administration root |
-    | bob@person.com/supersecret | agent | agents root |
+    | login           | password    | role  | the page |
+    | bob@person.com  | supersecret | admin | administration root |
+    | bob2@person.com | supersecret | agent | agents root |
 #    | bob@person.com/supersecret | call_centre | call_centres#index
 #    | bob@person.com/supersecret | call_centre_agent | call_centre_agents#index
 #    | bob@person.com/supersecret | customer |  customers#index
 #    | bob@person.com/supersecret | lead_buyer |  lead_buyers#index
 #    | bob@person.com/supersecret | lead_user | lead_users#index
     #TODO: fill in additional namespaces for all roles when they are added later
-  @_done
+  @_tested
   Scenario: A logged in user on the login page should just redirect to their home page
-    Given I am signed up and confirmed as "bob@person.com/supersecret"
-    And I sign in as "bob@person.com/supersecret"
+    Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role admin
+    And I sign in as bob@person.com with password supersecret
     When I go to the login page
     Then I should be on the home page
 
-  @_done
+  @_tested
   Scenario Outline: A guest should be shown the login page for protected pages
     Given I am not sign in
     When I go to "<page>"
@@ -74,7 +73,7 @@ Feature: User Account - Signin
     | customers lead purchases       |
     | customers subaccounts          |
     | my_profile                     |
-  @_done
+  @_tested
   Scenario: A guest user should not see "My profile"
     Given I am not sign in
     When I go to "the homepage"

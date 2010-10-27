@@ -10,3 +10,6 @@ Then /^I should not see translated "([^"]*)"$/ do |key|
   Then %{I should not see "#{I18n.t(key)}"}
 end
 
+Given /^I follow translated "([^"]*)"$/ do |key|
+  Then %{I follow "#{I18n.t(key)}"}
+end

@@ -1,10 +1,12 @@
-Given /^no user exists with an email of "([^"]*)"$/ do |email|
-  assert User.first(:conditions => { :email => email }).nil?
+require "spec/support/blueprints"
+
+Given /^no user exists with an email of (.+) and role (.+)$/ do |email, role|
+  assert "User::#{role.camelize}".constantize.first(:conditions => { :email => email }).nil?
 end
 
-When /^I sign in as "([^"]*)"$/ do |login_data|
-    And %{I fill in "user_email" with "#{login_data.split("/").first}"}
-    And %{I fill in "user_password" with "#{login_data.split("/").last}"}
+When /^I sign in as (.+) with password (.+)$/ do |login, password|
+    And %{I fill in "user_email" with "#{login}"}
+    And %{I fill in "user_password" with "#{password}"}
     And %{I press "Sign in"}
 end
 
@@ -27,16 +29,9 @@ When /^session is cleared$/ do
 visit '/logout'
 end
 
-Given /^I am signed up and confirmed as "([^"]*)"$/ do |arg1|
-  u = User::Admin.create!(:email => arg1.split('/').first, :password => arg1.split('/').last, :password_confirmation => arg1.split('/').last, :screen_name => "dfsdfsdfsdf")
+Given /^I am signed up and confirmed as user with email (.+) and password (.+) and role (.+)$/ do |login, password, role|
+  u = "User::#{role.camelize}".constantize.make(:email => login, :password => password, :password_confirmation => password)
   u.confirm!
-  u.roles << :admin
-  u.save
-end
-
-Given /^User "([^"]*)" has role "([^"]*)"$/ do |login, role|
-  u = User::Admin.first(:conditions => { :email => login.split("/").first})
-  u.roles = [role.to_sym]
   u.save
 end
 
