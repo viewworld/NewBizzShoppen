@@ -4,9 +4,9 @@
 
 <%= t("activerecord.attributes.lead.purchase_decision_date") %><%= form.text_field :purchase_decision_date, :id => "datepicker" %>
 
-<%= select_tag :locale, options_for_select(Locale.all.collect(&:code).select { |c| c != @locale.code }), { :id => "locale_picker", :include_blank => true, :onchange => link_to_add_fields(form)} %>
+<%= select_tag :locale, options_for_select(available_locales_list(@lead.lead_translations)), { :id => "locale_picker", :include_blank => true, :onchange => fields_for_leads_translations(form)} %>
 
-<span id="lead_translations"></span>
+<span class="nested_locale_span"></span>
 
   <script>
   $(function() {
@@ -16,10 +16,18 @@
       if( $('#locale_picker').text() !=  null)
       {
       var new_id = new Date().getTime();
-      var regexp = new RegExp("new_lead_g");
-      content = content.replace(/LOCALE_VALUE/, $('#locale_picker').text());
-      $('#lead_translations').append(content.replace(regexp, new_id));
-      $("option[value=" + $('#locale_picker').text() + "]").remove();
+      var regexp = new RegExp("");
+      content = content.replace(/lead_lead_translations_attributes_/g, "lead_lead_translations_attributes_" + new_id.toString());
+      content = content.replace(/lead\[lead_translations_attributes\]\[0\]/g, "lead[lead_translations_attributes][" + new_id.toString() + "]");
+
+      $('.nested_locale_span:last').append(content);
+      $('.locale_hidden_field:last').val($('#locale_picker').val());
+      $('.locale_span:last').html($('#locale_picker').val());
+      $("option[value=" + $('#locale_picker').val() + "]").remove();
       }
     }
   </script>
+
+  <%= form.fields_for :lead_translations, @lead.lead_translations.select { |lt| lt.locale != @locale.code } do |builder| %>
+      <%= render :partial => "lead_fields", :locals => { :f => builder } %>
+  <% end %>
