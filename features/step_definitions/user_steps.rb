@@ -28,7 +28,7 @@ visit '/logout'
 end
 
 Given /^I am signed up and confirmed as "([^"]*)"$/ do |arg1|
-  u = User.create!(:email => arg1.split('/').first, :password => arg1.split('/').last, :password_confirmation => arg1.split('/').last, :screen_name => "dfsdfsdfsdf")
+  u = User::Admin.create!(:email => arg1.split('/').first, :password => arg1.split('/').last, :password_confirmation => arg1.split('/').last, :screen_name => "dfsdfsdfsdf")
   u.confirm!
   u.roles << :admin
   u.save

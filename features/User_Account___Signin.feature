@@ -11,13 +11,13 @@ Feature: User Account - Signin
 
   @_done
   Scenario: A user should be able to get to the login page
-    Then I should see "Email"
-    And I should see "Password"
+    Then I should see translated "Email"
+    And I should see translated "Password"
    @_done
   Scenario: User is not signed up
     Given no user exists with an email of "email@person.com"
      When I sign in as "email@person.com/password"
-     Then I should see "Invalid email or password"
+     Then I should see translated "devise.failure.invalid"
      And I should be signed out
   @_done
   Scenario Outline: A registered user that types in the wrong password can not login
@@ -25,8 +25,8 @@ Feature: User Account - Signin
     When I go to the login page
     And I fill in "user_email" with "<login>"
     And I fill in "user_password" with "<password>"
-    And I press "Sign in"
-    Then I should see "Invalid email or password"
+    And I press translated "home.show.view.sign_in"
+    Then I should see translated "devise.failure.invalid"
 
   Examples:
     | login | password       |
