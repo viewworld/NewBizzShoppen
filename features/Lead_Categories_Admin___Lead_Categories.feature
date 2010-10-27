@@ -40,7 +40,7 @@ Scenario: I can delete a category if its empty
 Scenario: I can see statistics for a selected category
 
 Scenario: I can reattach node
-@_wip
+@_tested
 Scenario: I can upload a category image
   Given Category named "New test category" already exists
   And I go to administration categories
