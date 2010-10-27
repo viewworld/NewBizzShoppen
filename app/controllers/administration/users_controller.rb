@@ -11,7 +11,7 @@ class Administration::UsersController < Administration::AdministrationController
     @user.send(:attributes=, params["user_#{params[:role].to_s}".to_sym], false)
 
     if @user.save
-      flash[:notice] = "User created!"
+      flash[:notice] = t("administration.users.create.flash.user_creation_successful")
       redirect_to administration_users_path
     else
       render :action => 'new'
@@ -40,7 +40,6 @@ class Administration::UsersController < Administration::AdministrationController
   def collection
     @search = User.scoped_search(params[:search])
     @users = @search.paginate(:page => params[:page])
-    #@users ||= end_of_association_chain.paginate(:page => params[:page])
   end
 
 end

@@ -13,7 +13,7 @@ class Customers::SubaccountsController < Customers::CustomerController
     @user = "User::#{params[:role].to_s.camelize}".constantize.new(params["user_#{params[:role].to_s}"])
     @user.parent_id = current_user.id
     if @user.save
-      flash[:notice] = "User created!"
+      flash[:notice] = t("customer.subaccounts.create.flash.subaccount_creation_successful")
        redirect_to customers_subaccounts_path
     else
       render :action => 'new'

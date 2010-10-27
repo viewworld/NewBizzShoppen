@@ -1,10 +1,10 @@
 <div class="cart">
-  <h3>Cart (<%= current_user.cart.count %> items)</h3>
+  <h3><%= t("layout.cart.cart_header", :count => current_user.cart.count) %></h3>
   <ul>
     <% current_user.cart.items.each do |lead| %>
         <li><%= lead.header %> x 1 -
-          <b><%= lead.price %></b><%= link_to "Remove", buyers_cart_item_path(lead.id), :method => :delete %></li>
+          <b><%= lead.price %></b><%= link_to t("layout.cart.remove_item_link"), buyers_cart_item_path(lead.id), :method => :delete %></li>
     <% end %>
   </ul>
-  <b>Total:</b><i><%= current_user.cart.total %></i>
+  <b><%= t("layout.cart.total_label") %></b><i><%= current_user.cart.total %></i>
 </div>

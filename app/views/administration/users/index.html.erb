@@ -16,7 +16,7 @@
     <%= f.text_field :with_keyword %>
     <%= f.select :with_role, User.valid_roles.collect { |r| r.to_s }, :include_blank => true  %>
     <%= f.hidden_field :with_subaccounts %>
-    <%= submit_tag "Search" %>
+    <%= submit_tag t("administration.users.index.view.search_button") %>
   <% end %>
 
 

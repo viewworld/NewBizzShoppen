@@ -1,6 +1,6 @@
 <ul class="main_menu">
-  <%= main_menu_link_to "Home", root_path %>
-  <%= main_menu_link_to t("home.show.view.browse_leads"), leads_path %>
+  <%= main_menu_link_to t("layout.main_menu.shared.home"), root_path %>
+  <%= main_menu_link_to t("layout.main_menu.shared.browse_leads"), leads_path %>
   <% if current_user %>
       <% current_user.roles.each do |role| %>
           <%= render "/layouts/menu_sections/#{role.to_s}" %>
