@@ -7,4 +7,6 @@
     <% end %>
   </ul>
   <b><%= t("layout.cart.total_label") %></b><i><%= current_user.cart.total %></i>
+  <%= link_to t("layout.cart.empty_cart"), buyers_cart_path, :method => :delete, :confirm => t("common.confirmation") %>
+  <%= link_to t("layout.cart.show_cart"), buyers_cart_path %>
 </div>

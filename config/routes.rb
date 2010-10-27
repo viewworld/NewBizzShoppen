@@ -22,6 +22,7 @@ Nbs::Application.routes.draw do
   namespace :buyers do
     resource :interests, :only => [:edit, :update]
     resources :cart_items
+    resource :cart, :only => [:show, :destroy], :controller => 'cart'
   end
 
   namespace :customers do
