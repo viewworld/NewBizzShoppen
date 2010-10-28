@@ -1,9 +1,4 @@
 module LeadsHelper
-
-#  def listing(collection, options={}, &block)
-#    self.send "#{collection.first.class.name.tableize}_listing", options, &block
-#  end
-
   def leads_listing(collection, options = {}, &block)
     @hb = ApplicationHelper::HelperBlocks.new(:left, :right)
     block.call(@hb)

@@ -12,6 +12,7 @@
 <h1><%= link_to "New Bizz Shoppen", root_path %></h1>
 
 <% if user_signed_in? %>
+    <div style="background:red;color:white;padding:3px;"><b>You are now: <%= current_user.class.name %> ::: (<%= current_user.roles.to_a.map(&:to_s).to_sentence %>)</b></div>
     <%= link_to t("layout.my_profile_link"), my_profile_path %>
     <%= link_to t("layout.logout_link", :user_email => current_user.email), '/logout' %>
 <% end %>

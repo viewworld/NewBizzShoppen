@@ -13,13 +13,15 @@ en:
         email_templates: Email templates
         settings: Settings
       agent:
-        leads: Leads
+        leads: My created leads
       call_centre:
       call_centre_agent:
       customer:
         subaccounts: Subaccounts
       lead_buyer:
+        lead_purchases: My owned leads
       lead_user:
+        lead_purchases: My assigned leads
       shared:
         browse_leads: Browse leads
         home: Home
@@ -81,6 +83,10 @@ en:
       unlock_instructions:
         subject: 'Unlock Instructions'
 
+  lead_purchases:
+    listing:
+      purchase_value_label: 'Purchase value:'
+      description_label: 'Description:'
 
   leads:
     listing:
@@ -277,6 +283,19 @@ en:
         view:
           title: 'Lead purchases'
           button_update: 'Save'
+
+
+  lead_user:
+    lead_purchases:
+      index:
+        view:
+          header: Leads assigned to me
+
+  lead_buyer:
+    lead_purchases:
+      index:
+        view:
+          header: My leads
 
   my_profile:
     edit:

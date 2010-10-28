@@ -20,9 +20,16 @@ Nbs::Application.routes.draw do
   end
 
   namespace :buyers do
+    root :to => "lead_purchases#index"
     resource :interests, :only => [:edit, :update]
     resources :cart_items
     resource :cart, :only => [:show, :destroy], :controller => 'cart'
+    resources :lead_purchases
+  end
+
+  namespace :lead_users do
+    root :to => "lead_purchases#index"
+    resources :lead_purchases
   end
 
   namespace :customers do
