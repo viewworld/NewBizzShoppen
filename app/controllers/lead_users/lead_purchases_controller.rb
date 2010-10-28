@@ -14,8 +14,9 @@ class LeadUsers::LeadPurchasesController < LeadUsers::LeadUserController
   public
 
   def update
-    update! do |success, failure|
+    update! do |success, _|
       success.html { redirect_to lead_users_lead_purchases_path }
+      success.js { render :nothing => true }
     end
   end
 end

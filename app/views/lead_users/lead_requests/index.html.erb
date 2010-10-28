@@ -1,0 +1,8 @@
+<column-mc:>
+   <h1><%= t("lead_user.lead_requests.index.view.header") %></h1>
+
+  <% @lead_requests.each do |lead_request| %>
+      <%= lead_request.lead.header %> <br/>
+  <% end %>
+
+</column-mc:>

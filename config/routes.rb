@@ -24,12 +24,17 @@ Nbs::Application.routes.draw do
     resource :interests, :only => [:edit, :update]
     resources :cart_items
     resource :cart, :only => [:show, :destroy], :controller => 'cart'
-    resources :lead_purchases
+    resources :lead_purchases do
+      collection do
+        put :bulk_update
+      end
+    end
   end
 
   namespace :lead_users do
     root :to => "lead_purchases#index"
     resources :lead_purchases
+    resources :lead_requests
   end
 
   namespace :customers do

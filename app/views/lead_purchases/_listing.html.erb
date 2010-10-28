@@ -3,14 +3,33 @@
   <% collection.each do |lead_purchase| %>
       <li class="lead_purchase" id="<%= dom_id(lead_purchase) %>">
         <div class="general">
-          <%= check_box_tag("lead_purchase[#{lead_purchase.id}]") if show_checkboxes  %>
+          <%= check_box_tag("lead_purchase[#{lead_purchase.id}]") if show_checkboxes %>
           <h3><%= lead_purchase.header %></h3>
-          <span><%= t("lead_purchases.listing.purchase_value_label") %> <b><%= lead_purchase.purchase_value %></b></span>
+          <span><%= t("lead_purchases.listing.purchase_value_label") %>
+            <b><%= lead_purchase.purchase_value %></b></span>
+
           <p><b><%= t("lead_purchases.listing.description_label") %></b><%= lead_purchase.description %></p>
-          <b> <%= block_left && with_output_buffer { block_left.call(lead_purchase) } %></b>
+          <% if block_general %>
+              <%= with_output_buffer { block_general.call(lead_purchase) } %>
+          <% end %>
+
         </div>
-        <div class="details">
-             <%= block_right && with_output_buffer { block_right.call(lead_purchase) } %>
+        <div class="card">
+          <div><%= t("lead_purchases.listing.company_name") %> <b><%= lead_purchase.lead.company_name %></b></div>
+          <div><%= t("lead_purchases.listing.phone_number") %> <b><%= lead_purchase.lead.phone_number %></b></div>
+          <div><%= t("lead_purchases.listing.www_address") %> <b><%= lead_purchase.lead.www_address %></b></div>
+          <div><%= t("lead_purchases.listing.email_address") %> <b><%= lead_purchase.lead.email_address %></b></div>
+          <div><%= t("lead_purchases.listing.lead_name") %> <b><%= lead_purchase.lead.lead_name %></b></div>
+          <% if block_card %>
+              <%= with_output_buffer { block_card.call(lead_purchase) } if block_card %>
+          <% end %>
+
+        </div>
+        <div class="tools">
+          <% if block_tools %>
+              <%= with_output_buffer { block_tools.call(lead_purchase) } if block_tools %>
+          <% end %>
+
         </div>
       </li>
   <% end %>

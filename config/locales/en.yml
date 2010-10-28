@@ -22,6 +22,7 @@ en:
         lead_purchases: My owned leads
       lead_user:
         lead_purchases: My assigned leads
+        lead_requests: My requested leads
       shared:
         browse_leads: Browse leads
         home: Home
@@ -87,6 +88,16 @@ en:
     listing:
       purchase_value_label: 'Purchase value:'
       description_label: 'Description:'
+      company_name: 'Company:'
+      phone_number: 'Phone number:'
+      www_address: 'Www address:'
+      email_address: 'Email:'
+      lead_name: 'Contact person:'
+    statuses:
+      not_contacted: Not contacted
+      contacted: Contacted
+      meeting: Meeting
+      signed: Signed
 
   leads:
     listing:
@@ -104,7 +115,7 @@ en:
         deal_value_to_label: Deal value to
       add_to_cart_link: Add to cart
       buy_lead: Buy lead
-
+      request_lead: Request lead
     show:
 
   home:
@@ -290,6 +301,10 @@ en:
       index:
         view:
           header: Leads assigned to me
+    lead_requests:
+      index:
+        view:
+          header: Leads I have requested pending approval
 
   lead_buyer:
     lead_purchases:

@@ -2,7 +2,16 @@
 
   <h1><%= t("lead_buyer.lead_purchases.index.view.header") %></h1>
 
-  <%= lead_purchases_listing @lead_purchases do %>
+  <%= lead_purchases_listing @lead_purchases, :show_checkboxes => true do |blocks| %>
+      <% blocks.tools do |lead_purchase| %>
+          <%= form_for [:buyers, lead_purchase], :remote => true do |form| %>
+              <%= form.select :state, LeadPurchaseBase.statuses_for_select, {}, {:onchange => "jQuery(this.form).callRemote()"} %>
+              <% if @subaccounts.present? %>
+                  <%= form.select :assignee_id, @subaccounts.map { |sa| [sa.screen_name, sa.id] }, {:include_blank => true}, {:onchange => "jQuery(this.form).callRemote()"} %>
+              <% end %>
+          <% end %>
+      <% end %>
   <% end %>
+
 
 </column-mc:>
