@@ -5,7 +5,6 @@ class ::User::LeadBuyer < ::User
   has_many :category_interests, :foreign_key => 'user_id'
   has_many :countries, :through => :country_interests
   has_many :categories, :through => :category_interests
-
   has_many :lead_purchases, :foreign_key => :owner_id
   has_many :leads_in_cart,
            :through => :lead_purchases,
