@@ -20,8 +20,7 @@ Scenario: I can create a category
   And I fill in "category_image_attributes_asset" with "/home/rb/Pictures/Nature Mountains photo.jpg"
   Then I press translated "administration.categories.new.view.button_create"
   And I should be on administration categories
-  And I should see translated "flash.actions.create.notice"
-  And I open page in browser
+  And I should see translated "flash.categories.actions.create.notice"
 
 @_tested
 Scenario: I can edit category - name and description
@@ -33,7 +32,7 @@ Scenario: I can edit category - name and description
   And I fill in "category_image_attributes_asset" with "/home/rb/Pictures/Nature Mountains photo.jpg"
   Then I press translated "administration.categories.edit.view.button_update"
   And I should be on administration categories
-  And I should see translated "flash.actions.update.notice"
+  And I should see translated "flash.categories.actions.update.notice"
 
 Scenario: I can delete a category if its empty
 
