@@ -7,7 +7,7 @@
           <%= form_for [:buyers, lead_purchase], :remote => true do |form| %>
               <%= form.select :state, LeadPurchaseBase.statuses_for_select, {}, {:onchange => "jQuery(this.form).callRemote()"} %>
               <% if @subaccounts.present? %>
-                  <%= form.select :assignee_id, @subaccounts.map { |sa| [sa.screen_name, sa.id] }, {}, {:onchange => "jQuery(this.form).callRemote()", :allow_blank => true} %>
+                  <%= form.select :assignee_id, @subaccounts.map { |sa| [sa.screen_name, sa.id] }, {:include_blank => true}, {:onchange => "jQuery(this.form).callRemote()"} %>
               <% end %>
           <% end %>
       <% end %>
