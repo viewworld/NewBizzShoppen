@@ -72,7 +72,17 @@ class User < ActiveRecord::Base
 
   public
 
-  #TODO Manage to move to buyer :)
+  #TODO =============================================================
+  def all_requested_lead_ids
+    []
+  end
+
+  #TODO =============================================================
+  def all_bought_lead_ids
+    []
+  end
+
+  #TODO Manage to move to buyer :) ... if possible
   def cart
     @cart ||= Cart.new(User::LeadBuyer.find(self.id))
   end

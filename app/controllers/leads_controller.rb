@@ -5,12 +5,12 @@ class LeadsController < ApplicationController
   protected
 
   def collection
-    @search = if current_user
-                Lead.skip_already_bought_or_requested_by(current_user)
-              else
-                Lead
-              end.scoped_search(params[:search])
+    if current_user
+      params[:search]||={}
+      params[:search][:with_ids_not_in] = current_user.all_requested_lead_ids + current_user.all_bought_lead_ids
+    end
 
+    @search = Lead.scoped_search(params[:search])
     @leads = @search.paginate(:page => params[:page], :per_page => 5)
   end
 
