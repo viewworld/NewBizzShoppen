@@ -35,3 +35,13 @@ Given /^I am signed up and confirmed as user with email (.+) and password (.+) a
   u.save
 end
 
+Then /^I have user with email (.+) and role (.+)$/ do |email, role|
+  u = "User::#{role.camelize}".constantize.make(:email => email)
+  u.confirm!
+  u.save
+end
+
+Given /^I follow "([^"]*)" within table row with value "([^"]*)"$/ do |link_name, value|
+ pending
+end
+
