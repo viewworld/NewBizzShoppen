@@ -13,7 +13,7 @@ Lead.blueprint do
   hidden_description { Faker::Lorem.sentences(2).to_s }
   purchase_value { Faker.numerify("###").to_f }
   price { Faker.numerify("###").to_f }
-  country_id { 0 }
+  country_id { 1 }
   company_name { Faker::Internet.domain_word.capitalize }
   lead_name { Faker::Name.name }
   phone_number { Faker::PhoneNumber.phone_number }
@@ -51,7 +51,7 @@ User.blueprint do
   city { Faker::Address.city }
   zip_code { Faker::Address.zip_code }
   county { Faker::Address.uk_county }
-  country { 0 }
+  country { 1 }
 end
 
 ::User::Admin.blueprint do
@@ -67,7 +67,7 @@ end
   city { Faker::Address.city }
   zip_code { Faker::Address.zip_code }
   county { Faker::Address.uk_county }
-  country { 0 }
+  country { 1 }
 end
 
 ::User::Customer.blueprint do
@@ -83,7 +83,7 @@ end
   city { Faker::Address.city }
   zip_code { Faker::Address.zip_code }
   county { Faker::Address.uk_county }
-  country { 0 }
+  country { 1 }
   roles_mask { 112 }
 end
 
@@ -100,7 +100,7 @@ end
   city { Faker::Address.city }
   zip_code { Faker::Address.zip_code }
   county { Faker::Address.uk_county }
-  country { 0 }
+  country { 1 }
   roles_mask { 64 }
 end
 
@@ -117,7 +117,7 @@ end
   city { Faker::Address.city }
   zip_code { Faker::Address.zip_code }
   county { Faker::Address.uk_county }
-  country { 0 }
+  country { 1 }
   roles_mask { 96 }
 end
 
@@ -134,6 +134,6 @@ end
   city { Faker::Address.city }
   zip_code { Faker::Address.zip_code }
   county { Faker::Address.uk_county }
-  country { 0 }
+  country { 1 }
   roles_mask { 2 }
 end
