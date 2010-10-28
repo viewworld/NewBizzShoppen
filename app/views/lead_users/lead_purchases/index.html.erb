@@ -2,7 +2,12 @@
 
   <h1><%= t("lead_user.lead_purchases.index.view.header") %></h1>
 
-  <%= lead_purchases_listing @lead_purchases do %>
+  <%= lead_purchases_listing @lead_purchases, :show_checkboxes => true do |blocks| %>
+       <% blocks.tools do |lead_purchase| %>
+          <%= form_for [:lead_users, lead_purchase], :remote => true do |form| %>
+              <%= form.select :state, LeadPurchaseBase.statuses_for_select, {}, {:onchange => "jQuery(this.form).callRemote()"} %>
+          <% end %>
+      <% end %>
   <% end %>
 
 </column-mc:>

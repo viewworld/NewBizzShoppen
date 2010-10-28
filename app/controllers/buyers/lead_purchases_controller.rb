@@ -13,9 +13,16 @@ class Buyers::LeadPurchasesController < Buyers::BuyerController
 
   public
 
+  def index
+    @subaccounts = current_user.subaccounts
+    super
+  end
+
   def update
     update! do |success, _|
       success.html { redirect_to buyers_lead_purchases_path }
+      success.js { render :nothing => true }
     end
   end
+
 end
