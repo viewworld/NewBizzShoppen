@@ -3,9 +3,9 @@
   <%= form_tag buyers_interests_path, :method => :put do %>
     <%= t("buyer.interests.edit.view.categories") %>
     <ul>
-    <% @categories.each do |category| %>
+    <% @categories.each_with_index do |category, index| %>
         <li>
-          <%= check_box_tag("categories[]", category.id, @buyer.categories.include?(category)) %>
+          <%= check_box_tag("categories[]", category.id, @buyer.categories.include?(category), :id => "category_#{index}") %>
           <%= category.name %>
         </li>
     <% end %>

@@ -10,7 +10,7 @@ module User::RegistrationValidations
   module InstanceMethods
     private
     def validate_if_agreement_read
-      if !!agreement_read == false
+      if ActiveRecord::ConnectionAdapters::Column.value_to_boolean(agreement_read) == false
         self.errors.add(:agreement_read, I18n.t("models.user.agreement_read_validation_message"))
       end
     end
