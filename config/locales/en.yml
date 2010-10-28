@@ -322,8 +322,15 @@ en:
 
 
   flash:
-    actions:
-      create:
-        notice: 'Category was successfully created.'
-      update:
-        notice: 'Category was successfully updated.'
+    categories:
+      actions:
+        create:
+          notice: 'Category was successfully created.'
+        update:
+          notice: 'Category was successfully updated.'
+    leads:
+      actions:
+        create:
+          notice: 'Lead was successfully created.'
+        update:
+          notice: 'Lead was successfully updated.'

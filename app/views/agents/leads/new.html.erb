@@ -1,5 +1,5 @@
 <column-mc:>
-  <h1><%= t("agent.leads.index.view.new_lead") %></h1>
+  <h1><%= t("agent.leads.new.view.title") %></h1>
 <%= semantic_form_for [:agents, @lead], :method => :post do |form| %>
     <%= render :partial => 'form', :locals => { :form => form, :lead => @lead }  %>
 
