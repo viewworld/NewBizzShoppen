@@ -54,7 +54,7 @@
         <td></td>
         <td></td>
         <td>
-           <%= link_to  t("administration.users.index.view.edit"), edit_administration_user_path(user) %>
+           <%= link_to  t("administration.users.index.view.edit"), edit_administration_user_path(user), :id => "edit_user_#{user.role.to_s}" %>
            <% unless user.subaccounts.empty? %>
             <%= link_to t("administration.users.index.view.subaccounts"), administration_users_path({ :search => { :with_subaccounts => user.id }}) %>
            <% end %>
