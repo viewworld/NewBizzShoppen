@@ -2,55 +2,53 @@
 Feature: User Account - Profile edit
 
   Background:
-   And I go to the homepage
-   And I am logged in as "user@domain.dom/secret"
-   And I go to edit profile page
+    Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role agent
+    And I am on the homepage
+    And I make sure current locale is English
+    Then I sign in as bob@person.com with password supersecret
+    And I go to my profile
 
- Scenario: I can edit my profile
-   Then I should see "(leave blank if you don't want to change it)"
-   Then I fill in "user[password]" with "super_secret_password"
-   Then I fill in "user[password_confirmation]" with "super_secret_password"
-   Then I press "Update"
-   Then I follow "logout_link"
-   Then I should see "Sign in"
-   And I am logged in as "user@domain.dom/secret"
-   And I should see "Signed in successfully."
+ @_tested
+  Scenario: I change my password
+    Given I follow translated "password.edit.view.change_password"
+    And I fill in "user_agent_current_password" with "supersecret"
+    And I fill in "user_agent_password" with "secret"
+    And I fill in "user_agent_password_confirmation" with "secret"
+    Then I press translated "password.edit.view.button_update_user"
+    And I should see translated "password.update.controller.successful_update_notice"
+    Given I am not sign in
+    And  I sign in as bob@person.com with password secret
+    And I should see translated "devise.sessions.signed_in"
 
-Scenario: The screen name I enter have to be unique
+  @_tested_in_rspec
+  Scenario: The screen name I enter have to be unique
 
- Scenario: I shouldn't be able to access other people profile
+  @_non_testable
+  Scenario: I shouldn't be able to access other people profile
 
- Scenario: A user must be logged on to see their account information
-   Given I am not sign in
-   When I go to my profile page
-   Then I should see "You must be logged in to access this page"
+  @_tested
+  Scenario: A user must be logged on to see their account information
+    Given I am not sign in
+    When I go to my profile page
+    Then  I should see translated "devise.failure.unauthenticated"
 
- Scenario: A user should be able to update their profile
-   Given I am signed up and confirmed as "bob@selleo.com/password"
-   When I sign in as "bob@selleo.com/password"
-   Then I should see "Login successful"
-   When I go to my profile page
-   And I follow "Edit"
-   And I fill in "Email" with "new-email@example.com"
-   And I press "Submit"
-   Then I should see "Successfully updated profile"
+  @_tested
+  Scenario: A user should be able to update their profile
+    And I fill in "user_agent_email" with "new-email@example.com"
+    And I press translated "password.edit.view.button_update_user"
+    Then I should see translated "my_profile.update.controller.successful_update_notice"
 
- Scenario: A user shouldn't be able to update their profile with bad data
-   Given I am signed up and confirmed as "bob@selleo.com/password"
-   When I sign in as "bob@selleo.com/password"
-   Then I should see "Login successful"
-   When I go to my profile page
-   And I follow "Edit"
-   And I fill in "Email" with "not-an-email"
-   And I press "Submit"
-   Then I should see "should look like an email address"
-   And I should see "Edit Account"
+  @_tested
+  Scenario: A user shouldn't be able to update their profile with bad data
+    And I fill in "user_agent_email" with "not-an-email"
+    And I press translated "password.edit.view.button_update_user"
+    And I open page in browser
+    Then I should see translated "activerecord.errors.models.user/agent.attributes.email.invalid"
 
- Scenario: A logged in user shouldn't be able to create a new account
-   Given I am signed up and confirmed as "bob@selleo.com/password"
-   When I sign in as "bob@selleo.com/password"
-   Then I should see "Login successful"
-   When I go to the sign up page
-   Then I should see "must be logged out"
-
+  @_tested
+  Scenario: A logged in user shouldn't be able to create a new account
+   When I go to agent sign up
+   Then I am on agents root
+   When I go to buyer sign up
+   Then I am on agents root
  

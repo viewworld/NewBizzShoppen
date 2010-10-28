@@ -279,6 +279,9 @@ en:
           button_update: 'Save'
 
   my_profile:
+    edit:
+      view:
+        change_password: 'Change password'
     update:
       controller:
         successful_update_notice: 'Your profile has been successfully updated!'
@@ -310,6 +313,13 @@ en:
         newsletter_on: 'I want to receive the newsletter'
       lead:
         purchase_decision_date: 'Purchase decision date'
+    errors:
+      models:
+        user/agent:
+          attributes:
+            email:
+              invalid: 'is invalid'
+
 
   flash:
     actions:

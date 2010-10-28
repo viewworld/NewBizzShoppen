@@ -32,8 +32,12 @@ module NavigationHelpers
         '/customers/lead_purchases'
     when /customers subaccounts/
         '/customers/subaccounts'
-    when /my_profile/
+    when /my profile/
         '/my_profile'
+    when /agent sign up/
+        '/agent_accounts/new'
+    when /buyer sign up/
+        '/buyer_accounts/new'
 
 
     # Add more mappings here.
