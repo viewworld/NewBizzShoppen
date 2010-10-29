@@ -7,6 +7,7 @@ class ::User::LeadBuyer < ::User
   has_many :categories, :through => :category_interests
   has_many :lead_purchases, :foreign_key => :owner_id
   has_many :leads_in_cart,
+           :class_name => "Lead",
            :through => :lead_purchases,
            :conditions => {"lead_purchases.accessible" => false, "lead_purchases.paid" => false},
            :source => :lead

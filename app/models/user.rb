@@ -72,13 +72,21 @@ class User < ActiveRecord::Base
 
   public
 
-  def all_requested_lead_ids
+  def all_requested_lead_requests
     LeadRequest.where(:requested_by => (parent ? parent.subaccounts : subaccounts).with_role(:lead_user).map(&:id))
   end
 
-  def all_purchased_lead_ids
+  def all_purchased_lead_purchases
     user = parent || self
     user.has_role?(:customer) ? LeadPurchase.where(:owner_id => user.id, :accessible => true) : []
+  end
+
+  def all_requested_lead_ids
+    all_requested_lead_requests.map(&:lead_id)
+  end
+
+  def all_purchased_lead_ids
+    all_purchased_lead_purchases.map(&:lead_id)
   end
 
 #TODO Manage to move to buyer :) ... if possible

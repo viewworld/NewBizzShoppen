@@ -1,13 +1,13 @@
 <%= form.inputs :first_name, :last_name, :phone, :email, :screen_name, :street,
                 :city, :zip_code, :county
 %>
-<% if ['agent', 'call_centre'].include?(params[:role]) or @user.has_role?(:agent) or @user.has_role?(:call_centre) %>
+<% if ['agent', 'call_centre'].include?(params[:role]) or @user.has_any_role?(:agent, :call_centre) %>
     <%= form.input :payout %>
 <% end %>
 <%= form.input :agreement_read, :as => :hidden, :value => "1" %>
 <%= form.input :country, :as => :select, :collection => Country.all %>
 <%= form.input :newsletter_on, :as => :boolean %>
 
-<% if ['lead_buyer', 'customer'].include?(params[:role]) %>
+<% if ['lead_buyer', 'customer'].include?(params[:role]) or @user.has_any_role?(:lead_buyer, :customer) %>
     <%= form.input :big_buyer, :as => :boolean %>
 <% end %>

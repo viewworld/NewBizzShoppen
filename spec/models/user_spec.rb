@@ -40,10 +40,12 @@ describe User do
         @lead_user1.lead_requests.create!(:lead_id => @lead1.id)
         @lead_user1.lead_requests.create!(:lead_id => @lead2.id)
 
-        @customer.all_requested_lead_ids.should have(2).things
-        @lead_buyer1.all_requested_lead_ids.should have(2).things
-        @lead_user1.all_requested_lead_ids.should have(2).things
-        @lead_user2.all_requested_lead_ids.should have(2).things
+        lead_ids = [@lead1, @lead2].map(&:id)
+
+        @customer.all_requested_lead_ids.sort.should == lead_ids                
+        @lead_buyer1.all_requested_lead_ids.sort.should == lead_ids
+        @lead_user1.all_requested_lead_ids.sort.should == lead_ids
+        @lead_user2.all_requested_lead_ids.sort.should == lead_ids
       end
 
       it "should be true if two lead uses has requested total of 3 leads" do
@@ -52,10 +54,12 @@ describe User do
         @lead_user2.lead_requests.create!(:lead_id => @lead3.id)
 
 
-        @customer.all_requested_lead_ids.should have(3).things
-        @lead_buyer1.all_requested_lead_ids.should have(3).things
-        @lead_user1.all_requested_lead_ids.should have(3).things
-        @lead_user2.all_requested_lead_ids.should have(3).things
+        lead_ids = [@lead1, @lead2, @lead3].map(&:id)
+
+        @customer.all_requested_lead_ids.sort.should == lead_ids
+        @lead_buyer1.all_requested_lead_ids.sort.should == lead_ids
+        @lead_user1.all_requested_lead_ids.sort.should == lead_ids
+        @lead_user2.all_requested_lead_ids.sort.should == lead_ids
       end
 
     end
@@ -75,10 +79,13 @@ describe User do
         lp = @lead_buyer1.lead_purchases.create!(:lead_id => @lead2.id)
         lp.update_attribute(:accessible, true)
 
-        @customer.all_purchased_lead_ids.should have(2).things
-        @lead_buyer1.all_purchased_lead_ids.should have(2).things
-        @lead_user1.all_purchased_lead_ids.should have(2).things
-        @lead_user2.all_purchased_lead_ids.should have(2).things
+
+        lead_ids = [@lead1, @lead2].map(&:id)
+
+        @customer.all_purchased_lead_ids.sort.should == lead_ids
+        @lead_buyer1.all_purchased_lead_ids.sort.should == lead_ids
+        @lead_user1.all_purchased_lead_ids.sort.should == lead_ids
+        @lead_user2.all_purchased_lead_ids.sort.should == lead_ids
       end
 
       it "should be true if two lead users has purchased total of 3 leads" do
@@ -90,10 +97,12 @@ describe User do
         lp.update_attribute(:accessible, true)
 
 
-        @customer.all_purchased_lead_ids.should have(3).things
-        @lead_buyer1.all_purchased_lead_ids.should have(3).things
-        @lead_user1.all_purchased_lead_ids.should have(3).things
-        @lead_user2.all_purchased_lead_ids.should have(3).things
+        lead_ids = [@lead1, @lead2, @lead3].map(&:id)
+
+        @customer.all_purchased_lead_ids.sort.should == lead_ids
+        @lead_buyer1.all_purchased_lead_ids.sort.should == lead_ids
+        @lead_user1.all_purchased_lead_ids.sort.should == lead_ids
+        @lead_user2.all_purchased_lead_ids.sort.should == lead_ids
       end
 
       it "should be true if two lead users and customer has purchased total of 3 leads" do
@@ -105,10 +114,12 @@ describe User do
         lp.update_attribute(:accessible, true)
 
 
-        @customer.all_purchased_lead_ids.should have(3).things
-        @lead_buyer1.all_purchased_lead_ids.should have(3).things
-        @lead_user1.all_purchased_lead_ids.should have(3).things
-        @lead_user2.all_purchased_lead_ids.should have(3).things
+        lead_ids = [@lead1, @lead2, @lead3].map(&:id)
+
+        @customer.all_purchased_lead_ids.sort.should == lead_ids
+        @lead_buyer1.all_purchased_lead_ids.sort.should == lead_ids
+        @lead_user1.all_purchased_lead_ids.sort.should == lead_ids
+        @lead_user2.all_purchased_lead_ids.sort.should == lead_ids
       end
     end
 
