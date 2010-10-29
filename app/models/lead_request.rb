@@ -1,5 +1,7 @@
 class LeadRequest < LeadPurchaseBase
 
+  belongs_to :requestee, :class_name => "User::LeadUser", :foreign_key => :requested_by
+
   default_scope where("requested_by IS NOT NULL")
 
   def accept!

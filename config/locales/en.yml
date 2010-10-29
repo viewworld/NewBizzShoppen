@@ -18,6 +18,7 @@ en:
       call_centre_agent:
       customer:
         subaccounts: Subaccounts
+        lead_requests: Requested leads
       lead_buyer:
         lead_purchases: My owned leads
       lead_user:
@@ -98,6 +99,12 @@ en:
       contacted: Contacted
       meeting: Meeting
       signed: Signed
+
+  lead_requests:
+    listing:
+      purchase_value_label: 'Purchase value:'
+      description_label: 'Description:'
+      requested_by: 'Requested by:'
 
   leads:
     listing:
@@ -292,9 +299,16 @@ en:
     lead_purchases:
       index:
         view:
-          title: 'Lead purchases'
-          button_update: 'Save'
-
+          header: 'Lead purchases'
+    lead_requests:
+      index:
+        view:
+          header: 'Requested leads'
+          accept_lead_request_link: Accept lead request
+          reject_lead_request_link: Reject lead request
+        flash:
+          lead_request_accepted_successfully: Lead request accepted
+          lead_request_rejected_successfully: Lead request rejected
 
   lead_user:
     lead_purchases:
