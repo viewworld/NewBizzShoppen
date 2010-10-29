@@ -22,12 +22,14 @@ Lead.blueprint do
   creator_id { ::User::Agent.make!.id }
   creator_type { "User::Agent" }
   category_id { Category.make!.id }
+  sale_limit { 1 }
 end
 
 LeadPurchase.blueprint do
   paid { false }
   accessible { false }
   lead_id { Lead.make! }
+  owner_id { User::Customer.make!.id }
 end
 
 LeadRequest.blueprint do
