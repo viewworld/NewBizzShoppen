@@ -1,6 +1,6 @@
 @system
 Feature: System - CSV Bulk lead download file format
 
-Scenario: Bulk lead download file format
+Scenario: Bulk lead download file format is specified
 
-Scenario: ...place holder...
+Scenario: I can download bulk of leads in a form of csv file
