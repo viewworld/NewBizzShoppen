@@ -10,14 +10,40 @@ I log into the system as an Admin
 And I go to Admin Panel
 And I go to Admin Statistics
 
-Scenario: ...placeholder...
+Scenario: I can see total number of leads created
 
-Scenario: ...placeholder...
+Scenario: I can see total number of views of leads
 
-Scenario: ...placeholder...
+Scenario: I can see total number of purchases of leads 
 
-Scenario: ...placeholder...
+Scenario: I can see total turnover
 
-Scenario: ...placeholder...
+Scenario: I can see total earnings (turnover - agants cut)
 
-Scenario: ...placeholder...
+Scenario: I can see distributions of ratings (amount and percentage)
+
+Scenario: I can see creditor mass (the amount that needs to be paid out)
+
+Scenario: I can see TBI (amounts to be invoiced)
+
+Scenario: I can see line chart with lead creation data plotted
+
+Scenario: I can see line chart with lead views count data plotted
+
+Scenario: I can see line chart with lead purchases data plotted
+
+Scenario: I can see line chart with earnings data plotted
+
+Scenario: I can see line chart with turnover data plotted
+
+Scenario: I can see line chart with ratings data plotted
+
+Scenario: I can see line chart with creditor mass data plotted
+
+Scenario: I can see line chart with TBI data plotted
+
+Scenario: I can select range of time for data to be calculated
+
+Scenario: I can select from preselected time ranges (today (no charts), this week (default), this month, this year)
+
+Scenario: Non traceable metrics are stored in separate statistics table and updated daily
