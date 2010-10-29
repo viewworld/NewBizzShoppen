@@ -34,4 +34,4 @@ Scenario: I can select range of time for data to be calculated
 
 Scenario: I can select from preselected time ranges (today (no charts), this week (default), this month, this year)
 
- 
+Scenario: Non traceable metrics are stored in separate statistics table and updated daily 
