@@ -9,6 +9,6 @@ Scenario: I can see settings for my specific role
   
 Scenario: I cannot see settings not for my role
 
-Scenario: ...placeholder...
+Scenario: My specific settings are prepopulated from application global settings
 
-Scenario: ...placeholder...
+Scenario: My specific settings have priority over application global settings
