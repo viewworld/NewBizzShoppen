@@ -1,4 +1,4 @@
-@lead_catalog	@$_admin @m1
+@lead_catalog @$_admin @m1
 Feature: Lead Categories Admin - Lead Categories
   Background: Set English locale and login
     Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role admin
@@ -17,7 +17,7 @@ Scenario: I can create a category
   And I follow translated "administration.categories.index.view.new_category"
   And I fill in "category_name" with "Test category"
   And I fill in "category_description" with "Description"
-  And I fill in "category_image_attributes_asset" with "/home/rb/Pictures/Nature Mountains photo.jpg"
+  And attach the file "sample image" to "category_image_attributes_asset"
   Then I press translated "administration.categories.new.view.button_create"
   And I should be on administration categories
   And I should see translated "flash.categories.actions.create.notice"
@@ -29,7 +29,7 @@ Scenario: I can edit category - name and description
   Then I follow translated "administration.categories.index.view.edit"
   And I fill in "category_name" with "Test category correction"
   And I fill in "category_description" with "Description correction"
-  And I fill in "category_image_attributes_asset" with "/home/rb/Pictures/Nature Mountains photo.jpg"
+  And attach the file "sample image" to "category_image_attributes_asset"
   Then I press translated "administration.categories.edit.view.button_update"
   And I should be on administration categories
   And I should see translated "flash.categories.actions.update.notice"
@@ -39,12 +39,13 @@ Scenario: I can delete a category if its empty
 Scenario: I can see statistics for a selected category
 
 Scenario: I can reattach node
+
 @_tested
 Scenario: I can upload a category image
   Given Category named "New test category" already exists
   And I go to administration categories
   Then I follow translated "administration.categories.index.view.edit"
-  And I fill in "category_image_attributes_asset" with "/home/rb/Pictures/Nature Mountains photo.jpg"
+  And attach the file "sample image" to "category_image_attributes_asset"
   Then I press translated "administration.categories.edit.view.button_update"
   And I should be on administration categories
-  And I should see translated "flash.actions.update.notice"
+  And I should see translated "flash.categories.actions.update.notice"
