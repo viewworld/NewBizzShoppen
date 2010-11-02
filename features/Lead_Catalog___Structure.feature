@@ -3,4 +3,4 @@ Feature: Lead Catalog - Structure
 
 Scenario: Leads should be organized in sorted tree structure
 
-Scenario: All searchable lead fields should be inexed
+Scenario: All searchable lead fields should be indexed
