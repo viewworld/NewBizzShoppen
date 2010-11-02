@@ -22,6 +22,7 @@ class CreateLeads < ActiveRecord::Migration
     add_index :leads, :category_id
     add_index :leads, :country_id
     add_index :leads, :company_name
+    add_index :leads, :header
   end
 
   def self.down
