@@ -39,7 +39,7 @@ module NavigationHelpers
     when /buyer sign up/
         '/buyer_accounts/new'
     when /sample image/
-        "#{RAILS_ROOT}/spec/fixtures/sample.jpg"
+        "#{::Rails.root.to_s}/spec/fixtures/sample.jpg"
 
 
     # Add more mappings here.

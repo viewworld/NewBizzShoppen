@@ -1,10 +1,6 @@
 class Administration::CategoriesController < Administration::AdministrationController
   inherit_resources
 
-  def collection
-    @categories ||= end_of_association_chain.paginate(:page => params[:page])
-  end
-
   def create
     create! do |success, failure|
       success.html { redirect_to administration_categories_path }
@@ -16,6 +12,17 @@ class Administration::CategoriesController < Administration::AdministrationContr
     update! do |success, failure|
       success.html { redirect_to administration_categories_path }
       failure.html { render 'edit' }
+    end
+  end
+
+  def destroy
+    destroy! do |success, failure|
+      success.html {
+        flash[:notice] = I18n.t("flash.categories.actions.destroy.notice")
+        redirect_to administration_categories_path }
+      failure.html {
+        flash[:notice] = I18n.t("flash.categories.actions.destroy.error")
+        redirect_to administration_categories_path }
     end
   end
 end

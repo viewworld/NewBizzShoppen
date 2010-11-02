@@ -187,12 +187,14 @@ en:
       index:
         view:
           new_category: 'New category'
-          edit: 'Edit'
+          edit_link: 'Edit'
+          destroy_link: 'Delete'
       new:
         view:
           button_create: 'Create'
       edit:
         view:
+          header: "Editing category: %{category_name}"
           upload_image: 'Upload image'
           button_update: 'Save'
     settings:
@@ -376,6 +378,9 @@ en:
           notice: 'Category was successfully created.'
         update:
           notice: 'Category was successfully updated.'
+        destroy:
+          notice: 'Category was successfully removed.'
+          error: 'Category cannot be removed. Did You try to remove category that is not empty?'
     leads:
       actions:
         create:

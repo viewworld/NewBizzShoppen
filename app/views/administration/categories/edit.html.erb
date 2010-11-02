@@ -1,4 +1,5 @@
 <column-mc:>
+  <h1><%= t("administration.categories.edit.view.header", :category_name => @category.name) %></h1>
   <%= semantic_form_for [:administration, @category], :method => :post, :html => {:multipart => true} do |form| %>
     <%= render :partial => 'form', :locals => { :form => form } %>
 

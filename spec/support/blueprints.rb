@@ -19,7 +19,7 @@ Lead.blueprint do
   phone_number { Faker::PhoneNumber.phone_number }
   email_address { Faker::Internet.email }
   address { Faker::Address.street_address }
-  creator_id { ::User::Agent.make!.id }
+  creator_id { User::Agent.make!.id }
   creator_type { "User::Agent" }
   category_id { Category.make!.id }
   sale_limit { 1 }
