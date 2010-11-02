@@ -6,7 +6,7 @@ gem 'railties'
 gem 'mongrel'
 gem 'pg', '0.9.0'
 gem 'inherited_resources'
-gem 'will_paginate', '>= 3.0.pre'
+gem "will_paginate", :git => "http://github.com/mislav/will_paginate.git", :branch => "rails3"
 gem 'formtastic', '1.1.0'
 gem 'liquid'
 gem 'machinist', '>= 2.0.0.beta1'
@@ -27,7 +27,7 @@ gem 'nested_set'
 
 group :development do
   gem 'diff-lcs'
-  gem 'tolk'
+  gem 'tolk', :git => "http://github.com/10to1/tolk.git", :branch => "rails3"
 end
 
 group :test do

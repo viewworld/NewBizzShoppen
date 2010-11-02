@@ -6,8 +6,14 @@ Feature: Lead Categories Admin - Lead Categories
     And I make sure current locale is English
     Then I sign in as bob@person.com with password supersecret
 
-
+@_wip
 Scenario: I can see categories tree
+  Given Category named "Sample category" already exists
+  And Category named "Another sample category" already exists
+  And I go to administration categories
+  Then I should see "Sample category"
+
+
 
 Scenario: I can navigate through the categories
 
