@@ -377,6 +377,8 @@ en:
             password:
               blank: 'is blank'
               confirmation: "doesn't match confirmation"
+            current_password:
+              invalid: 'is invalid'
         user/customer:
           attributes:
             email:
