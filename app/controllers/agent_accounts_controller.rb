@@ -8,7 +8,12 @@ class AgentAccountsController < ApplicationController
   def create
     @user = User::Agent.new(params[:user_agent])
     respond_to do |format|
-      format.html { @user.save ? redirect_to(root_path) : render("new") }
+      if @user.save
+        flash[:notice] = I18n.t("flash.agent_accounts.actions.create.notice")
+        format.html {  redirect_to(root_path) }
+      else
+        format.html {  render("new") }
+      end
     end
   end
 end

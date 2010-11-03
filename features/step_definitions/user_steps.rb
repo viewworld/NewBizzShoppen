@@ -29,8 +29,13 @@ When /^session is cleared$/ do
 visit '/logout'
 end
 
-Given /^I am signed up and confirmed as user with email (.+) and password (.+) and role (.+)$/ do |login, password, role|
-  u = "User::#{role.camelize}".constantize.make(:email => login, :password => password, :password_confirmation => password)
+Given /^I am signed up with email (.+) and password (.+) and role (.+)$/ do |email, password, role|
+  u = "User::#{role.camelize}".constantize.make(:email => email, :password => password, :password_confirmation => password)
+  u.save
+end
+
+Given /^I am signed up and confirmed as user with email (.+) and password (.+) and role (.+)$/ do |email, password, role|
+  u = "User::#{role.camelize}".constantize.make(:email => email, :password => password, :password_confirmation => password)
   u.confirm!
   u.save
 end
@@ -45,3 +50,11 @@ Given /^I follow "([^"]*)" within table row with value "([^"]*)"$/ do |link_name
  pending
 end
 
+Then /^a confirmation message should be sent to (.+)$/ do |email|
+  assert ActionMailer::Base.deliveries.size > 0
+end
+
+When /^I follow the confirmation link sent to (.+) with role (.+)$/ do |email, role|
+  user = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
+  visit "/users/confirmation?confirmation_token=#{user.confirmation_token}"
+end
