@@ -1,0 +1,5 @@
+<column-mc:>
+  <h1><%= t("categories.index.view.header") %></h1>
+    <%#= all_categories_tree(:category_label => lambda { |c| link_to_function c.name, "setCategory(#{c.id})" }) %>
+    <%= all_categories_tree(:category_label => lambda { |c| link_to c.name, leads_path(:search => {:with_category => c.id}) }) %>
+</column-mc:>

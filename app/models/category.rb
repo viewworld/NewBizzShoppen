@@ -39,4 +39,8 @@ class Category < ActiveRecord::Base
     total_leads_count.zero?
   end
 
+  def to_s
+    name
+  end
+
 end
