@@ -1,6 +1,7 @@
 class LeadsController < ApplicationController
   inherit_resources
   actions :all, :except => [:create, :update, :edit, :new]
+  set_tab "browse_leads"
 
   protected
 

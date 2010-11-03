@@ -1,6 +1,7 @@
 class Customers::LeadRequestsController < Customers::CustomerController
   inherit_resources
 
+  set_tab "requested_leads"
   protected
 
   def begin_of_association_chain
