@@ -377,6 +377,13 @@ en:
             password:
               blank: 'is blank'
               confirmation: "doesn't match confirmation"
+        user/customer:
+          attributes:
+            email:
+              invalid: 'is invalid'
+            password:
+              blank: 'is blank'
+              confirmation: "doesn't match confirmation"
 
 
   flash:
