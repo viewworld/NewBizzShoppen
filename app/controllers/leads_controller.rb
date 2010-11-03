@@ -1,7 +1,9 @@
 class LeadsController < ApplicationController
   inherit_resources
-  actions :all, :except => [:create, :update, :edit, :new]
+  actions :index, :show
   set_tab "browse_leads"
+
+  before_filter :check_search, :only => :index
 
   protected
 
@@ -13,6 +15,12 @@ class LeadsController < ApplicationController
 
     @search = Lead.scoped_search(params[:search])
     @leads = @search.paginate(:page => params[:page], :per_page => 5)
+  end
+
+  private
+
+  def check_search
+    redirect_to categories_path unless params[:search]
   end
 
 end
