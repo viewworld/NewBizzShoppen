@@ -40,6 +40,8 @@ module NavigationHelpers
         '/buyer_accounts/new'
     when /sample image/
         "#{::Rails.root.to_s}/spec/fixtures/sample.jpg"
+    when /resend confirmation instructions/
+        '/users/confirmation/new'
 
 
     # Add more mappings here.

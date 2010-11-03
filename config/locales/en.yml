@@ -367,6 +367,8 @@ en:
       models:
         user:
           attributes:
+            email:
+              already_confirmed: "was already confirmed"
             confirmation_token:
               invalid: 'is invalid'
               blank: "can't be blank"

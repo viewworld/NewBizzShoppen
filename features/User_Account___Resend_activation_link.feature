@@ -1,8 +1,23 @@
 @user_accounts @m1
 Feature: User Account - Resend activation link
 
-  
-Scenario: I can resend activation email to my email address
+Background:  Sign up user and set English locale
+  Given I am on the homepage
+  And I make sure current locale is English
 
- 
- Scenario: I can’t resend activation email to my email address once the account was activated
+@_tested
+Scenario: I can resend activation email to my email address
+  Given I am signed up with email email@person.com and password secret and role customer
+  Then I go to resend confirmation instructions
+  And I fill in "user_email" with "email@person.com"
+  Then I press translated "devise.confirmations.resend_confirmation_link"
+  And I open page in browser
+  And I should see translated "devise.confirmations.send_instructions"
+
+@_tested
+Scenario: I can't resend activation email to my email address once the account was activated
+  Given I am signed up and confirmed as user with email email@person.com and password secret and role customer
+  Then I go to resend confirmation instructions
+  And I fill in "user_email" with "email@person.com"
+  Then I press translated "devise.confirmations.resend_confirmation_link"
+  And I should see translated "activerecord.errors.models.user.attributes.email.already_confirmed"
