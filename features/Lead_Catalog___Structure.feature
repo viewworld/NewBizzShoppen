@@ -1,6 +1,9 @@
 @lead_catalog @m1
 Feature: Lead Catalog - Structure
 
+#:::info::: Actually the categories should be organized in tree structure, not the leads.
+@bk @_done @nontestable
 Scenario: Leads should be organized in sorted tree structure
 
-Scenario: All searchable lead fields should be inexed
+@bk @_done @nontestable
+Scenario: All searchable lead fields should be indexed

@@ -1,15 +1,17 @@
 @comments @$_lead_user
 Feature: Comments - As a lead user 
 
+Scenario: I can create a comment for lead owned by me (even if I am not assigned to it)
+
+Scenario: I can create a comment for a lead that is assigned to me
+
 Scenario: I can see if there is a comment created for a lead
 
 Scenario: I can see if I have already seen the comments for given lead
 
 Scenario: I can see a comment (subject, date and comment author)
 
-Scenario: I can create a comment
-
-Scenario: I can bulk create comment
+Scenario: I can bulk create comments
 
 Scenario: I can reply to comment 
 

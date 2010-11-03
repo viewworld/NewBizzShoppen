@@ -38,6 +38,8 @@ module NavigationHelpers
         '/agent_accounts/new'
     when /buyer sign up/
         '/buyer_accounts/new'
+    when /sample image/
+        "#{::Rails.root.to_s}/spec/fixtures/sample.jpg"
 
 
     # Add more mappings here.

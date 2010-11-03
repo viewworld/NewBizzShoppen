@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
 
   has_many :subaccounts, :class_name => "User", :foreign_key => "parent_id"
   belongs_to :user, :class_name => "User", :foreign_key => "parent_id", :counter_cache => :subaccounts_counter
-
+  alias_method :parent, :user
 
   scope :with_role, lambda { |role| where("roles_mask & #{2**User.valid_roles.index(role.to_sym)} > 0 ") }
   scope :with_keyword, lambda { |q| where("lower(first_name) like :keyword OR lower(last_name) like :keyword OR lower(email) like :keyword", {:keyword => "%#{q.downcase}%"}) }
@@ -72,17 +72,24 @@ class User < ActiveRecord::Base
 
   public
 
-  #TODO =============================================================
+  def all_requested_lead_requests
+    LeadRequest.where(:requested_by => (parent ? parent.subaccounts : subaccounts).with_role(:lead_user).map(&:id))
+  end
+
+  def all_purchased_lead_purchases
+    user = parent || self
+    user.has_role?(:customer) ? LeadPurchase.where(:owner_id => user.id, :accessible => true) : []
+  end
+
   def all_requested_lead_ids
-    []
+    all_requested_lead_requests.map(&:lead_id)
   end
 
-  #TODO =============================================================
-  def all_bought_lead_ids
-    []
+  def all_purchased_lead_ids
+    all_purchased_lead_purchases.map(&:lead_id)
   end
 
-  #TODO Manage to move to buyer :) ... if possible
+#TODO Manage to move to buyer :) ... if possible
   def cart
     @cart ||= Cart.new(User::LeadBuyer.find(self.id))
   end
@@ -117,4 +124,5 @@ class User < ActiveRecord::Base
   def reset_password_instructions_url
     "https://#{mailer_host}/users/password/edit?reset_password_token=#{reset_password_token}"
   end
+
 end

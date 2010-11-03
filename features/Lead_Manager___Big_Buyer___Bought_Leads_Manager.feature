@@ -1,5 +1,9 @@
-@lead_manager @$_customer @m2
+@lead_manager @$_lead_user @m2
 Feature: My leads browsing
+
+Scenario: I can see details of lead that is assigned to me
+
+Scenario: I can access leads that are assigned to me only (as lead user)
 
 Scenario: I can see all leads that I have access for
 
@@ -28,3 +32,13 @@ Scenario: I should see hottness, novelty, exposure, clicks
 Scenario: I can see company contact
 
 Scenario: I can toggle select leads
+
+Scenario: I can set status of lead (not contacted, dontacted, meeting, signed)
+
+Scenario: I can bulk set status of leads (not contacted, dontacted, meeting, signed)
+
+Scenario: I can print out lead information
+
+Scenario: I can print out multiple leads information
+
+Scenario: I should see a yellow color for a lead with expiration date ending in 3 days

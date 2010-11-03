@@ -7,7 +7,7 @@ class LeadsController < ApplicationController
   def collection
     if current_user
       params[:search]||={}
-      params[:search][:with_ids_not_in] = current_user.all_requested_lead_ids + current_user.all_bought_lead_ids
+      params[:search][:with_ids_not_in] = current_user.all_requested_lead_ids + current_user.all_purchased_lead_ids
     end
 
     @search = Lead.scoped_search(params[:search])

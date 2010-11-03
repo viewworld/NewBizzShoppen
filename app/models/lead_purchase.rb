@@ -4,4 +4,17 @@ class LeadPurchase < LeadPurchaseBase
   default_scope where(:requested_by => nil)
 
   scope :in_cart, where(:paid => false, :accessible => false)
+
+  before_save :assign_to_proper_owner_if_accessible
+
+  private
+
+  def assign_to_proper_owner_if_accessible
+    if (u = User.find(owner_id)) && u.parent
+      if (new_record? && accessible) || (changes["accessible"] == [false, true])
+        self.owner_id = u.parent_id
+      end
+    end
+  end
+
 end

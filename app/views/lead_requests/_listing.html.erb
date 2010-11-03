@@ -1,0 +1,27 @@
+<%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+<ul class="lead_requests_listing">
+  <% collection.each do |lead_request| %>
+      <li class="lead_request" id="<%= dom_id(lead_request) %>">
+        <div class="general">
+          <%= check_box_tag("lead_request[#{lead_request.id}]") if show_checkboxes %>
+          <h3><%= lead_request.header %></h3>
+          <span><%= t("lead_requests.listing.purchase_value_label") %>
+            <b><%= lead_request.purchase_value %></b></span>
+
+          <p><b><%= t("lead_requests.listing.description_label") %></b><%= lead_request.description %></p>
+
+          <b><%= t("lead_requests.listing.requested_by") %></b><%= lead_request.requestee.full_name %>
+          <% if block_general %>
+              <%= with_output_buffer { block_general.call(lead_request) } %>
+          <% end %>
+
+        </div>
+        <div class="tools">
+          <% if block_tools %>
+              <%= with_output_buffer { block_tools.call(lead_request) } if block_tools %>
+          <% end %>
+        </div>
+      </li>
+  <% end %>
+</ul>
+<%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>

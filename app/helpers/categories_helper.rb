@@ -19,6 +19,7 @@ module CategoriesHelper
        options["before_#{obj_name}".to_sym].call(obj)
      end,
 
+
      if options["#{obj_name}_label".to_sym]
        options["#{obj_name}_label".to_sym].call(obj)
      else
@@ -26,7 +27,7 @@ module CategoriesHelper
      end,
 
      if options["after_#{obj_name}".to_sym]
-       concat options["after_#{obj_name}".to_sym].call(obj)
+        options["after_#{obj_name}".to_sym].call(obj)
      end].compact.join(" ")
   end
 
@@ -38,7 +39,7 @@ module CategoriesHelper
   public
 
   def all_categories_tree(options={})
-    content_tag(:ul, Category.roots.map { |c| content_tag(:li, category_tree(c, options), :class => "categories_node") }.join.html_safe, :class => "categories_tree", :id => "categories_main_tree")
+    content_tag(:ul, Category.roots.map { |c| content_tag(:li, category_tree(c, options), :class => "categories_node", :id => dom_id(c)) }.join.html_safe, :class => "categories_tree", :id => "categories_main_tree")
 
   end
 
@@ -51,7 +52,7 @@ module CategoriesHelper
     unless category.children.empty?
       content_tag(:ul, :class => "category_children_tree") do
         category.children.map do |child|
-          content_tag(:li, :class => "category_child_node") do
+          content_tag(:li, :class => "category_child_node", :id => dom_id(child)) do
             [category_label(child, options),
              category_children(child, options)].compact.join.html_safe
           end

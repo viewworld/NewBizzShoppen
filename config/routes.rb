@@ -41,6 +41,7 @@ Nbs::Application.routes.draw do
     root :to => "buyer_leads#index"
     resources :subaccounts
     resources :lead_purchases
+    resources :lead_requests, :only => [:index, :update, :destroy]
   end
 
   namespace :agents do

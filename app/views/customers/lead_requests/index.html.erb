@@ -1,0 +1,14 @@
+<column-mc:>
+
+  <h1><%= t("customer.lead_requests.index.view.header") %></h1>
+
+  <%= lead_requests_listing @lead_requests, :show_checkboxes => true do |blocks| %>
+      <% blocks.tools do |lead_request| %>
+          <%= link_to t("customer.lead_requests.index.view.accept_lead_request_link"), customers_lead_request_path(lead_request), {:method => :put} %>
+
+          <%= link_to t("customer.lead_requests.index.view.reject_lead_request_link"),
+                      customers_lead_request_path(lead_request),
+                      {:method => :delete, :confirm => t("common.confirmation")} %>
+      <% end %>
+  <% end %>
+</column-mc:>

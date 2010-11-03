@@ -19,6 +19,18 @@ describe Cart do
       cart.empty?.should be true
       cart.total.should == 0.0
     end
+
+    it "should not contain requested leads" do
+      @lead = Lead.make!
+      @customer = User::Customer.make!
+      @lead_user = User::LeadUser.make!(:parent_id => @customer.id)
+      @lead_user.lead_requests.create!(:lead_id => @lead.id)
+
+      cart = Cart.new(User::LeadBuyer.find(@customer.id))
+
+      cart.empty?.should be true
+    end
+
   end
 
   context "Adding leads to cart" do
