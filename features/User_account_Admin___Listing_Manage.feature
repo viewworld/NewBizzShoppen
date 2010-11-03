@@ -19,7 +19,7 @@ Feature: User account Admin - Listing Manage
    Then I should see "Listing users"
    Then I follow "1"
 
-@_wip
+@_tested
  Scenario: I can sort users
   Given I follow translated "administration.users.index.view.email"
   Then I should have value "aaaaaaaagent.tom.blank@paerson22.com" in the css path "tr:nth-child(2) td:nth-child(6)"
