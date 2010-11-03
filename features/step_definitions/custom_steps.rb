@@ -17,3 +17,7 @@ print "result of: #{ruby}\n\n"
 eval ruby
 print "\n\n"
 end
+
+Then /I should have value "([^"]*)" in the css path "([^"]*)"$/ do |value, css_path|
+    assert page.find(css_path).text == value
+end

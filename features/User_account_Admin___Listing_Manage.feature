@@ -1,8 +1,15 @@
 @user_accounts @$_call_centre @m1
 Feature: User account Admin - Listing Manage
 
- Background:
-   Given I am logged in as "admin@domain.dom/secret"
+ Background: Sign in user and set English locale
+  Given I am on the homepage
+  And I make sure current locale is English
+  And I have user with email agent.jim.connor@paerson22.com and role agent
+  And I have user with email agent.tom.blank@paerson22.com and role agent
+  And I have user with email aaaaaaaagent.tom.blank@paerson22.com and role agent
+  And I have user with email zzzenon.tom.blank@paerson22.com and role agent
+  And I am signed up and confirmed as user with email bob@person.com and password supersecret and role admin
+  Then I sign in as bob@person.com with password supersecret
 
 
  Scenario: I can browse users with pagination
@@ -12,11 +19,21 @@ Feature: User account Admin - Listing Manage
    Then I should see "Listing users"
    Then I follow "1"
 
- 
+@_wip
  Scenario: I can sort users
+  Given I follow translated "administration.users.index.view.email"
+  Then I should have value "aaaaaaaagent.tom.blank@paerson22.com" in the css path "tr:nth-child(2) td:nth-child(6)"
+  Given I follow translated "administration.users.index.view.email"
+  Then I should have value "zzzenon.tom.blank@paerson22.com" in the css path "tr:nth-child(2) td:nth-child(6)"
 
-
+ @_tested
  Scenario: I can filter users [...]
+   Given I should see "agent.jim.connor@paerson22.com"
+   And I should see "agent.tom.blank@paerson22.com"
+   Then I fill in "search_with_keyword" with "agent.jim.connor@paerson22.com"
+   And I press translated "administration.users.index.view.search_button"
+   Then I should see "agent.jim.connor@paerson22.com"
+   And I should not see "agent.tom.blank@paerson22.com"
 
 
  Scenario: I can reset password for a user
