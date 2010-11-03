@@ -36,7 +36,10 @@ group :test do
   gem 'cucumber', ">= 0.9.0"
   gem 'cucumber-rails'
   gem 'test-unit'
+  gem 'pickle'
   gem 'spork'
+  gem 'mocha'
+
 
 # Added the following because rake features also complained about spec/expectations
   gem 'rspec', '=2.0.1'

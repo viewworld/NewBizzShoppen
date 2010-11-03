@@ -1,5 +1,3 @@
-require "spec/support/blueprints"
-
 And /^I wait (.*) second$/ do |n|
   sleep n.to_i
 end

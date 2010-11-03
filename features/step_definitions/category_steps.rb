@@ -1,5 +1,3 @@
-require "spec/support/blueprints"
-
 Given /^I follow translated "([^"]*)" within "([^"]*)" category$/ do |key, category_name|
   I18n.locale = :en
   Then %{I follow "#{I18n.t(key)}" within "li##{ActionController::RecordIdentifier.dom_id(Category.find_by_name(category_name).last)}"}

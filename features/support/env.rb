@@ -21,6 +21,10 @@ Spork.prefork do
   require 'capybara/rails'
   require 'capybara/cucumber'
   require 'capybara/session'
+
+  require "#{Rails.root}/spec/support/blueprints" # or wherever they live
+  require 'machinist/active_record'
+
 #  require 'cucumber/rails/capybara_javascript_emulation' # Lets you click links with onclick javascript handlers without using @culerity or @javascript
 
 # Capybara defaults to XPath selectors rather than Webrat's default of CSS3. In
@@ -62,12 +66,15 @@ Spork.prefork do
     rescue LoadError => ignore_if_database_cleaner_not_present
     end
   end
+
+
 end
 
 Spork.each_run do
   require 'cucumber/rails/world'
   Cucumber::Rails::World.use_transactional_fixtures = true
   ActionController::Base.allow_rescue               = false
+
   if defined?(ActiveRecord::Base)
     begin
       require 'database_cleaner'

@@ -14,7 +14,7 @@ class LeadsController < ApplicationController
     end
 
     @search = Lead.scoped_search(params[:search])
-    @leads = @search.paginate(:page => params[:page], :per_page => 5)
+    @leads = @search.paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)
   end
 
   private
