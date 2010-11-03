@@ -136,6 +136,6 @@ end
   city { Faker::Address.city }
   zip_code { Faker::Address.zip_code }
   county { Faker::Address.uk_county }
-  country { 1 }
+  country { Country.first.id }
   roles_mask { 2 }
 end
