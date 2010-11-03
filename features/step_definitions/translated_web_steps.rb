@@ -20,3 +20,6 @@ Given /^I follow translated "([^"]*)"$/ do |key|
   Then %{I follow "#{I18n.t(key)}"}
 end
 
+Given /^I follow translated logout link for (.+)$/ do |email|
+   Then %{I follow "#{I18n.t('layout.logout_link', :user_email => email)}"}
+end

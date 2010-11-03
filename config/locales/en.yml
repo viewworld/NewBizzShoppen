@@ -369,13 +369,38 @@ en:
         purchase_decision_date: 'Purchase decision date'
     errors:
       models:
+        user:
+          attributes:
+            confirmation_token:
+              invalid: 'is invalid'
+              blank: "can't be blank"
         user/agent:
           attributes:
             email:
               invalid: 'is invalid'
+            password:
+              blank: 'is blank'
+              confirmation: "doesn't match confirmation"
+            current_password:
+              invalid: 'is invalid'
+        user/customer:
+          attributes:
+            email:
+              invalid: 'is invalid'
+            password:
+              blank: 'is blank'
+              confirmation: "doesn't match confirmation"
 
 
   flash:
+    agent_accounts:
+      actions:
+        create:
+          notice: 'Your account has been successfully created!'
+    buyer_accounts:
+      actions:
+        create:
+          notice: 'Your account has been successfully created!'
     categories:
       actions:
         create:

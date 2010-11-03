@@ -1,15 +1,19 @@
 @user_accounts @m1
 Feature: User accounts - password change
 
+Background:
+    Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role agent
+    And I am on the homepage
+    And I make sure current locale is English
+    Then I sign in as bob@person.com with password supersecret
+    And I go to my profile
+
 Scenario: I can change my password fro the account password change page
 
+@_tested
 Scenario: User can change the password only with a valid password
-   Given I am signed up and confirmed as "bob@selleo.com/password"
-   And I sign in as "bob@selleo.com/password"
-   And I am on my profile page
-   When I follow "Change password"
-   And I fill in "Password" with "newpassword"
-   And I press "Change password"
-   Then I should see "Change password"
-   And I should see error messages
-   
+   And I am on my profile
+   Given I follow translated "password.edit.view.change_password"
+   And I fill in "user_agent_current_password" with "newpassword"
+   Then I press translated "password.edit.view.button_update_user"
+   And I should see translated "activerecord.errors.models.user/agent.attributes.current_password.invalid"
