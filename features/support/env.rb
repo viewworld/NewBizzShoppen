@@ -25,6 +25,7 @@ Spork.prefork do
   require "#{Rails.root}/spec/support/blueprints" # or wherever they live
   require 'machinist/active_record'
 
+
 #  require 'cucumber/rails/capybara_javascript_emulation' # Lets you click links with onclick javascript handlers without using @culerity or @javascript
 
 # Capybara defaults to XPath selectors rather than Webrat's default of CSS3. In
@@ -42,7 +43,7 @@ Spork.prefork do
 # pages, more or less in the same way your application would behave in the
 # default production environment. It's not recommended to do this for all
 # of your scenarios, as this makes it hard to discover errors in your application.
-  ActionController::Base.allow_rescue               = false
+#  ActionController::Base.allow_rescue               = false
 
 # If you set this to true, each scenario will run in a database transaction.
 # You can still turn off transactions on a per-scenario basis, simply tagging 
@@ -56,34 +57,17 @@ Spork.prefork do
 # after each scenario, which can lead to hard-to-debug failures in 
 # subsequent scenarios. If you do this, we recommend you create a Before
 # block that will explicitly put your database in a known state.
-  Cucumber::Rails::World.use_transactional_fixtures = true
 # How to clean your database when transactions are turned off. See
 # http://github.com/bmabey/database_cleaner for more info.
-  if defined?(ActiveRecord::Base)
-    begin
-      require 'database_cleaner'
-      DatabaseCleaner.strategy = :truncation
-    rescue LoadError => ignore_if_database_cleaner_not_present
-    end
-  end
-
-
 end
 
 Spork.each_run do
-  require 'cucumber/rails/world'
-  Cucumber::Rails::World.use_transactional_fixtures = true
   ActionController::Base.allow_rescue               = false
+  Cucumber::Rails::World.use_transactional_fixtures = true
+#  require 'database_cleaner'
+#  DatabaseCleaner.strategy                          = :truncation
+#  at_exit do
+#    DatabaseCleaner.clean
+#  end
 
-  if defined?(ActiveRecord::Base)
-    begin
-      require 'database_cleaner'
-      #DatabaseCleaner.clean_with :truncation
-      DatabaseCleaner.strategy = :truncation
-      Before do
-        #TODO
-      end
-    rescue LoadError => ignore_if_database_cleaner_not_present
-    end
-  end
 end

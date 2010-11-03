@@ -9,8 +9,6 @@ gem 'inherited_resources'
 gem "will_paginate", :git => "http://github.com/mislav/will_paginate.git", :branch => "rails3"
 gem 'formtastic', '1.1.0'
 gem 'liquid'
-gem 'machinist', '>= 2.0.0.beta1'
-gem 'faker'
 gem 'devise', '1.1.3'
 gem 'delayed_job', ' >= 2.1.0.pre2'
 gem 'hoptoad_notifier'
@@ -39,7 +37,8 @@ group :test do
   gem 'pickle'
   gem 'spork'
   gem 'mocha'
-
+  gem 'faker'
+  gem 'machinist'
 
 # Added the following because rake features also complained about spec/expectations
   gem 'rspec', '=2.0.1'

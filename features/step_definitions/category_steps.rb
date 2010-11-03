@@ -15,15 +15,9 @@ Given /^Lead named "([^"]*)" exists within "([^"]*)" category$/ do |name, catego
   category_id =  if category_name
                    Category.find_by_name(category_name).last.id
                  else
-                   c = Category.make
-                   c.save!
-                   c.id
+                   Category.make!.id
                  end
-  agent       = User::Agent.make
-  agent.save
-  Lead.make(:header => name, :category_id =>category_id, :creator_id => agent.id).tap do |c|
-    c.save!
-  end
+  Lead.make!(:header => name, :category_id =>category_id)
 end
 
 Then /^I should see category named "([^"]*)" within category named "([^"]*)"$/ do |child_category_name, parent_category_name|
