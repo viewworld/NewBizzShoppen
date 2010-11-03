@@ -11,7 +11,6 @@ Scenario: I can see categories tree
   Given Category named "Sample category" already exists
   And Category named "Another sample category" already exists within category named "Sample category"
   And I go to administration categories
-  Then show me the page
   And I should see category named "Another sample category" within category named "Sample category"
 
 @_tested @bk
@@ -63,8 +62,18 @@ Scenario: I cannot delete a category if it is not empty
 @question
 Scenario: I can see statistics for a selected category
 
-@bk @_todo
+@_tested @bk
 Scenario: I can reattach node
+  Given Category named "Parent category 1" already exists
+  And Category named "Parent category 2" already exists
+  And Category named "Child category" already exists within category named "Parent category 1"
+  And I go to administration categories
+  Then I should see category named "Child category" within category named "Parent category 1"
+  When I follow translated "administration.categories.index.view.edit_link" for category "Child category"
+  And I select "Parent category 2" from "category_parent_id"
+  And attach the file "sample image" to "category_image_attributes_asset"
+  And I press translated "administration.categories.edit.view.button_update"
+  Then I should see category named "Child category" within category named "Parent category 2"
 
 @_tested
 Scenario: I can upload a category image
