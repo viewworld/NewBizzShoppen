@@ -1,8 +1,6 @@
 <column-mc:>
   <h1><%= t("leads.index.header") %></h1>
 
-  <%= all_categories_tree(:category_label => lambda { |c| link_to_function c.name, "setCategory(#{c.id})" }) %>
-
   <%= form_for @search, :url => leads_path do |f| %>
       <%= t("leads.index.search.keyword_label") %><%= f.text_field :with_keyword %>
       <%= t("leads.index.search.deal_value_from_label") %><%= f.text_field :deal_value_from %>

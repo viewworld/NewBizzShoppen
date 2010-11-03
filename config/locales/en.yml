@@ -272,6 +272,10 @@ en:
           remove_item_link: Remove item
 
 
+  categories:
+    index:
+      view:
+        header: Categories
 
   buyer_accounts:
     new:

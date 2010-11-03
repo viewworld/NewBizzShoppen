@@ -1,6 +1,8 @@
 class Agents::LeadsController < Agents::AgentController
   inherit_resources
 
+  set_tab "created_leads"
+
   protected
 
   def begin_of_association_chain

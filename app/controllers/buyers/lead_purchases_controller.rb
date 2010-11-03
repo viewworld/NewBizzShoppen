@@ -1,6 +1,6 @@
 class Buyers::LeadPurchasesController < Buyers::BuyerController
   inherit_resources
-
+  set_tab "owned_leads"
   protected
 
   def begin_of_association_chain

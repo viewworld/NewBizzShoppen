@@ -24,7 +24,7 @@ class Lead < ActiveRecord::Base
   private
 
   def cache_creator_name
-    update_attribute(:creator_name, creator.name)
+    update_attribute(:creator_name, creator.name) unless creator_name
   end
 
   public

@@ -1,5 +1,3 @@
-require "spec/support/blueprints"
-
 Given /^no user exists with an email of (.+) and role (.+)$/ do |email, role|
   assert "User::#{role.camelize}".constantize.first(:conditions => { :email => email }).nil?
 end
