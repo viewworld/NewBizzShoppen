@@ -227,9 +227,7 @@ Then /^show me the page$/ do
 end
 
 Given /^I make sure current locale is English$/ do
-  if page.body.match("dk, locales, en_locale")
-   And %{I follow "dk, locales, en_locale"}
-  end
+  visit '/locales/en'
 end
 
 Then /^The flash message should be set to translated "([^"]*)"$/ do |key|

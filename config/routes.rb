@@ -4,6 +4,8 @@ Nbs::Application.routes.draw do
 
   get "buyer_home/show"
 
+  devise_for :users,  :controllers => { :passwords => "users/passwords" }
+
   devise_for :users do
     get "login", :to => "devise/sessions#new"
     get "logout", :to => "devise/sessions#destroy"

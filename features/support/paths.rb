@@ -42,6 +42,8 @@ module NavigationHelpers
         "#{::Rails.root.to_s}/spec/fixtures/sample.jpg"
     when /resend confirmation instructions/
         '/users/confirmation/new'
+    when /reset password/
+        '/users/password/new'
 
 
     # Add more mappings here.

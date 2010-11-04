@@ -96,7 +96,7 @@ class User < ActiveRecord::Base
 
   def self.inherited(subclass)
     super
-    subclass.send(:default_scope, with_role(subclass.name.split('::').last.tableize.singularize))
+    subclass.send(:default_scope, with_role(subclass.name.split('::').last.tableize.singularize)) unless subclass.name.split('::').last.tableize.singularize == "abstract"
   end
 
   def role

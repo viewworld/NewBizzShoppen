@@ -14,12 +14,16 @@ page.should have_content("Logout")
 end
 
 Then /^I should be signed out$/ do
-page.should have_content("Sign in")
+ assert page.should have_content("Sign in")
 end
 
 Given /^I am not sign in$/ do
 visit '/'
 When %{session is cleared}
+end
+
+When /^I sign out$/ do
+  Then %{I am not sign in}
 end
 
 
@@ -28,20 +32,17 @@ visit '/logout'
 end
 
 Given /^I am signed up with email (.+) and password (.+) and role (.+)$/ do |email, password, role|
-  u = "User::#{role.camelize}".constantize.make(:email => email, :password => password, :password_confirmation => password)
-  u.save
+  "User::#{role.camelize}".constantize.make!(:email => email, :password => password, :password_confirmation => password)
 end
 
 Given /^I am signed up and confirmed as user with email (.+) and password (.+) and role (.+)$/ do |email, password, role|
-  u = "User::#{role.camelize}".constantize.make(:email => email, :password => password, :password_confirmation => password)
+  u = "User::#{role.camelize}".constantize.make!(:email => email, :password => password, :password_confirmation => password)
   u.confirm!
-  u.save
 end
 
 Then /^I have user with email (.+) and role (.+)$/ do |email, role|
-  u = "User::#{role.camelize}".constantize.make(:email => email)
+  u = "User::#{role.camelize}".constantize.make!(:email => email)
   u.confirm!
-  u.save
 end
 
 Given /^I follow "([^"]*)" within table row with value "([^"]*)"$/ do |link_name, value|
@@ -52,7 +53,31 @@ Then /^a confirmation message should be sent to (.+)$/ do |email|
   assert ActionMailer::Base.deliveries.size > 0
 end
 
+Then /^a password reset message should be sent to (.+)$/ do |email|
+  assert ActionMailer::Base.deliveries.size > 0
+end
+
 When /^I follow the confirmation link sent to (.+) with role (.+)$/ do |email, role|
   user = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
   visit "/users/confirmation?confirmation_token=#{user.confirmation_token}"
+end
+
+When /^I follow the password reset link sent to (.+) with role (.+)$/ do |email, role|
+  user = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
+  user.send(:generate_reset_password_token!)
+  visit "/users/password/edit?reset_password_token=#{user.reset_password_token}"
+end
+
+When /^I request password reset link to be sent to (.+)$/ do |email|
+  Given %{I go to reset password}
+  And %{I fill in "user_email" with "#{email}"}
+  Then %{I press translated "devise.passwords.button_create"}
+end
+
+When /^I follow reset link after I complete reset password using link sent to (.+) and role (.+)$/ do |email, role|
+  user = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
+  user.send(:generate_reset_password_token!)
+  prev_token = user.reset_password_token
+  user.send(:generate_reset_password_token!)
+  visit "/users/password/edit?reset_password_token=#{prev_token}"
 end
