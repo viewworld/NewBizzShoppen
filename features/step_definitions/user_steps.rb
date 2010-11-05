@@ -81,3 +81,8 @@ When /^I follow reset link after I complete reset password using link sent to (.
   user.send(:generate_reset_password_token!)
   visit "/users/password/edit?reset_password_token=#{prev_token}"
 end
+
+Given /^User (.+) with role (.+) has leads$/ do |email, role|
+  user = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
+  Lead.make!(:creator => user)
+end

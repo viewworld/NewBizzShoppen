@@ -175,7 +175,9 @@ en:
           edit: 'Edit'
           subaccounts_for_user: 'Subaccounts of user'
           show_all_users: 'Show all users'
-          search_button: Search
+          search_button: 'Search'
+          delete: 'Delete'
+          delete_confirmation_message: 'Are you sure?'
       edit:
         view:
           button_update_user: Save
@@ -183,6 +185,10 @@ en:
       create:
         flash:
           user_creation_successful: User has been created successfuly
+      destroy:
+        flash:
+          user_deletion_successful: 'User was successfully deleted!'
+          user_deletion_failure: 'User could not be deleted!'
     categories:
       form:
         no_parent_category: No parent category

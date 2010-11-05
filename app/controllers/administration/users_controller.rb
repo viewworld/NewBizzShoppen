@@ -34,6 +34,16 @@ class Administration::UsersController < Administration::AdministrationController
     end
   end
 
+  def destroy
+    @user = User.find(params[:id]).send(:casted_class).find(params[:id])
+    if @user.destroy
+      flash[:notice] = I18n.t("administration.users.destroy.flash.user_deletion_successful")
+    else
+      flash[:notice] = I18n.t("administration.users.destroy.flash.user_deletion_failure")
+    end
+    redirect_to administration_users_path
+  end
+
 
   protected
 

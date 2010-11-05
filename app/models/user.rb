@@ -34,10 +34,18 @@ class User < ActiveRecord::Base
 
   before_save :handle_locking
   before_create :set_rss_token, :set_role
+  before_destroy :can_be_removed
 
   liquid :email, :first_name, :last_name, :confirmation_instructions_url, :reset_password_instructions_url
 
   private
+
+  def can_be_removed
+    casted_obj = self.send(:casted_class).find(id)
+    [:leads, :lead_purchases, :lead_requests, :leads_in_cart].detect do |method|
+      casted_obj.respond_to?(method) and !casted_obj.send(method).empty?
+    end.nil?
+  end
 
   def handle_locking
     if locked
