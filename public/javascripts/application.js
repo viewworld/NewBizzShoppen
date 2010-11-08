@@ -3,6 +3,11 @@ setCategory = function(id) {
     $('#search_new').submit();
 }
 
+mark_all_cbs_with_selector = function(val,selector) {
+    $(selector).each(function() {
+        $(this).attr('checked', val);
+    });
+}
 
 //$('select[data-remote]').live('change', function (e) {
 //    $(this).callRemote();

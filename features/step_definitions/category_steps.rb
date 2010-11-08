@@ -5,9 +5,7 @@ end
 
 Given /^Category named "([^"]*)" already exists(?: within category named "([^"]*)")?$/ do |name, parent_category_name|
   parent_category_id =  parent_category_name.present? ? Category.where(:name => parent_category_name).last.id : nil
-  Category.make(:name => name, :parent_id => parent_category_id).tap do |c|
-    c.save!
-  end
+  Category.make!(:name => name, :parent_id => parent_category_id)
 end
 
 
@@ -15,7 +13,7 @@ Given /^Lead named "([^"]*)" exists within "([^"]*)" category$/ do |name, catego
   category_id =  if category_name
                    Category.find_by_name(category_name).last.id
                  else
-                   Category.make!.id
+                   Category.make!(:name => category_name).id
                  end
   Lead.make!(:header => name, :category_id =>category_id)
 end

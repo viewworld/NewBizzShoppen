@@ -7,6 +7,16 @@
 require 'rubygems'
 require 'spork'
 
+def load_db
+DatabaseCleaner.clean
+
+backup = Rails.root.join("db", "snapshots", "cucumber.sql")
+dbname = ActiveRecord::Base.configurations[ENV["RAILS_ENV"]]["database"]
+dbuser = ActiveRecord::Base.configurations[ENV["RAILS_ENV"]]["username"]
+
+`psql -U #{dbuser} -d #{dbname} -f #{backup}`
+end
+
 Spork.prefork do
   ENV["RAILS_ENV"]                                  ||= "test"
   require File.expand_path(File.dirname(__FILE__) + '/../../config/environment')
@@ -14,7 +24,7 @@ Spork.prefork do
   require 'cucumber'
   require 'cucumber/formatter/unicode' # Remove this line if you don't want Cucumber Unicode support
   require 'cucumber/rails/rspec'
-  require 'cucumber/rails/world'
+  #require 'cucumber/rails/world'
   require 'cucumber/rails/active_record'
   require 'cucumber/web/tableish'
 
@@ -33,6 +43,17 @@ Spork.prefork do
 # prefer to use XPath just remove this line and adjust any selectors in your
 # steps to use the XPath syntax.
   Capybara.default_selector                         = :css
+
+  require 'database_cleaner'
+  DatabaseCleaner.strategy = :truncation
+
+  `rake db:test:prepare`
+  load_db
+
+  Around('@selenium') do |scenario, block|
+  block.call
+  load_db if EmailTemplate.count < 1
+  end
 
 # If you set this to false, any error raised from within your app will bubble 
 # up to your step definition and out to cucumber unless you catch it somewhere
@@ -63,9 +84,9 @@ end
 
 Spork.each_run do
   ActionController::Base.allow_rescue               = false
-  Cucumber::Rails::World.use_transactional_fixtures = true
-#  require 'database_cleaner'
-#  DatabaseCleaner.strategy                          = :truncation
+  require 'cucumber/rails/world'
+  #Cucumber::Rails::World.use_transactional_fixtures = true
+
 #  at_exit do
 #    DatabaseCleaner.clean
 #  end
