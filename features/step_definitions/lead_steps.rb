@@ -40,3 +40,11 @@ Given /^lead (.+).is created by user (.+) with role (.+)$/ do |name, email, role
   lead.save
   lead.lead_translations.each { |lt| lt.destroy if lt.locale != "en" }
 end
+
+Given /^I can see following fields: (.+) for lead (.+)$/ do |fields, lead_header|
+  I18n.locale = :en
+  lead = Lead.find_by_header(lead_header).first
+  fields.split(",").reject{|f| !lead.respond_to?(f.to_sym) }.each do |field|
+    Then %{I should see "#{lead.send(field.to_sym)}"}
+  end
+end
