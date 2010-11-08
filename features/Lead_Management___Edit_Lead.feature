@@ -18,7 +18,7 @@ Scenario: I can edit lead
   And I press translated "agent.leads.edit.view.button_update"
   Then I should see translated "flash.leads.actions.update.notice"
 
-@_wip1 @selenium
+@_tested1 @selenium
 Scenario: I can add a language - title, purchase, hidden, language
   Given I go to agents leads
   Then I follow translated "agent.leads.index.view.edit"
