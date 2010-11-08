@@ -38,7 +38,7 @@ group :test do
   gem 'spork'
   gem 'mocha'
   gem 'faker'
-  gem 'machinist'
+  gem 'machinist', '>= 2.0.0.beta1'
 
 # Added the following because rake features also complained about spec/expectations
   gem 'rspec', '=2.0.1'
