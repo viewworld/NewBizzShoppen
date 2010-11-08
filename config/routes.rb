@@ -11,6 +11,8 @@ Nbs::Application.routes.draw do
     get "logout", :to => "devise/sessions#destroy"
   end
 
+  match 'bulk_action' => 'bulk_actions#create', :as => :bulk_action
+
   namespace :administration do
     root :to => "users#index"
     resources :users do
@@ -37,6 +39,7 @@ Nbs::Application.routes.draw do
     root :to => "lead_purchases#index"
     resources :lead_purchases
     resources :lead_requests
+    resource :bulk_lead_requests, :controller => "bulk_lead_requests"
   end
 
   namespace :customers do

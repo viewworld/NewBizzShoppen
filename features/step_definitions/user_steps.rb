@@ -86,3 +86,16 @@ Given /^User (.+) with role (.+) has leads$/ do |email, role|
   user = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
   Lead.make!(:creator => user)
 end
+
+And /^an user with role (.+) and email (.+) exists as subaccount for customer (.+)$/ do |role, sub_email, customer_email|
+  customer = User::Customer.first(:conditions => { :email => customer_email })
+  if customer.nil?
+    customer = User::Customer.make!(:email => customer_email, :password => 'secret', :password_confirmation => 'secret')
+  end
+
+  sub_user = "User::#{role.camelize}".constantize.first(:conditions => { :email => sub_email })
+  sub_user.update_attribute(:parent_id, customer.id)
+  if sub_user.nil?
+    "User::#{role.camelize}".constantize.make!(:email => sub_email, :password => 'secret', :password_confirmation => 'secret', :parent_id => customer.id)
+  end
+end

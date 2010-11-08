@@ -125,6 +125,7 @@ en:
       add_to_cart_link: Add to cart
       buy_lead: Buy lead
       request_lead: Request lead
+      button_bulk_create_lead_request: 'Request leads'
     show:
 
   home:
@@ -430,3 +431,11 @@ en:
           notice: 'Lead was successfully created.'
         update:
           notice: 'Lead was successfully updated.'
+    lead_users:
+      actions:
+        create:
+          notice: 'Lead request was successfully created.'
+    bulk_lead_requests:
+      actions:
+        create:
+          notice: 'Lead requests were successfully created.'

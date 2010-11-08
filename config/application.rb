@@ -41,5 +41,10 @@ module Nbs
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters                            += [:password]
+
+    require "bulk_process"
+    config.middleware.use "BulkProcess"
+
   end
 end
+

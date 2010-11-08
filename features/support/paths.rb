@@ -24,6 +24,8 @@ module NavigationHelpers
         '/administration/setting/edit'
     when /agents leads/
         '/agents/leads'
+    when /browse leads/
+        '/categories'
     when /buyer cart items/
         '/buyers/cart_items'
     when /buyer interests/
@@ -44,6 +46,8 @@ module NavigationHelpers
         '/users/confirmation/new'
     when /reset password/
         '/users/password/new'
+    when /lead user lead requests/
+        '/lead_users/lead_requests'
 
 
     # Add more mappings here.

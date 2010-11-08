@@ -3,7 +3,7 @@ Feature: Lead Management - freelance agent - Edit Lead
 
 Background:
     Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role agent
-    And Lead New lead is created for user bob@person.com with role agent
+    And lead New lead is created by user bob@person.com with role agent
     And I am on the homepage
     And I make sure current locale is English
     Then I sign in as bob@person.com with password supersecret

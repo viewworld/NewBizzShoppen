@@ -9,18 +9,23 @@
       <%= submit_tag t("leads.index.search.search_button") %>
   <% end %>
 
-  <%= leads_listing @leads, :show_checkboxes => true do |blocks| %>
 
-      <% blocks.right do |lead| %>
-          <!-- TODO Should not be here - should be in buyer scope! ... Oh rly? -->
-          <% if current_user %>
-              <% if current_user.has_role?(:lead_buyer) %>
-                  <%= link_to current_user.big_buyer? ? t("leads.index.buy_lead") : t("leads.index.add_to_cart_link"), buyers_cart_items_path(:id => lead.id), :method => :post %>
-              <% elsif current_user.has_role?(:lead_user) %>
-                  <%= link_to  t("leads.index.request_lead"), lead_users_lead_requests_path(:lead_id => lead.id), :method => :post %>
+  <%= form_tag bulk_action_path do %>
+      <%= leads_listing @leads, :show_checkboxes => true do |blocks| %>
+
+          <% blocks.right do |lead| %>
+              <!-- TODO Should not be here - should be in buyer scope! ... Oh rly? -->
+              <% if current_user %>
+                  <% if current_user.has_role?(:lead_buyer) %>
+                      <%= link_to current_user.big_buyer? ? t("leads.index.buy_lead") : t("leads.index.add_to_cart_link"), buyers_cart_items_path(:id => lead.id), :method => :post %>
+                  <% elsif current_user.has_role?(:lead_user) %>
+                      <%= link_to t("leads.index.request_lead"), lead_users_lead_requests_path(:lead_id => lead.id), :method => :post %>
+                  <% end %>
               <% end %>
-          <% end %>
 
+          <% end %>
       <% end %>
+      <%= hidden_field_tag :route_to, "/lead_users/bulk_lead_requests" %>
+      <%= submit_tag t("leads.index.button_bulk_create_lead_request") %>
   <% end %>
 </column-mc:>

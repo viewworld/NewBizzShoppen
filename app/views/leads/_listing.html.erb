@@ -3,7 +3,7 @@
   <% collection.each do |lead| %>
       <li class="lead" id="<%= dom_id(lead) %>">
         <div class="general">
-          <%= check_box_tag("lead[#{lead.id}]") if show_checkboxes %>
+          <%= check_box_tag("lead_ids[]", lead.id) if show_checkboxes %>
           <h3><%= lead.header %></h3>
           <span><%= t("leads.listing.purchase_value_label") %> <b><%= lead.purchase_value %></b></span>
           <span><%= t("leads.listing.lead_price_label") %> <b><%= lead.price %></b></span>
