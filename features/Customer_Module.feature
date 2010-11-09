@@ -7,6 +7,7 @@ Scenario: I can follow “What do you want to do today?” links and they take m
 
 Scenario: After signup I am assigned roles of Customer, Lead Buyer and Lead user
 
+@m3
 Scenario: I can see my unique RSS feed URL
 
 Scenario: I can select if I want to be notified about new leads matching my interests criteria
