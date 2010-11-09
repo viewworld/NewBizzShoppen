@@ -27,7 +27,7 @@ Scenario: I can toggle select leads on a displayed page
   And I follow "Another sample category"
   Then I check "mark_all"
 
-@_wip @selenium @bulk
+@_tested @selenium @bulk
 Scenario: I can bulk add leads to my basket and I will get a notification “Leads were added to your basket”
   Given I go to browse leads
   And I follow "Another sample category"
