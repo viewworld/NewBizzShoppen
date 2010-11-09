@@ -1,4 +1,4 @@
-class Buyers::BulkLeadPurchaseCsvsController < Buyers::BuyerController
+class Buyers::BulkLeadPurchaseCsvController < Buyers::BuyerController
 
   def create
 

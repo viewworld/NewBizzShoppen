@@ -35,7 +35,8 @@ Nbs::Application.routes.draw do
     end
     resource :bulk_cart_items, :controller => "bulk_cart_items", :only => [:create]
   end
-  match 'buyers/bulk_lead_purchase_csvs' => 'buyers/bulk_lead_purchase_csvs#create', :as => "bulk_lead_purchase_csvs"
+  match 'buyers/bulk_lead_purchase_csv' => 'buyers/bulk_lead_purchase_csv#create', :as => "bulk_lead_purchase_csv"
+  match 'buyers/bulk_lead_purchase_update' => 'buyers/bulk_lead_purchase_update#create', :as => "bulk_lead_purchase_update"
 
 
 
@@ -48,8 +49,7 @@ Nbs::Application.routes.draw do
 
   namespace :customers do
     root :to => "buyer_leads#index"
-    resources :subaccounts
-    resources :lead_purchases
+    resources :subaccounts    
     resources :lead_requests, :only => [:index, :update, :destroy]
   end
 
