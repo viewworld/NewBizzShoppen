@@ -7,6 +7,10 @@ Category.blueprint do
   description { Faker::Lorem.sentences(2).to_s }
 end
 
+Country.blueprint do
+  name { Faker::Address.uk_country }
+end
+
 Lead.blueprint do
   header { Faker::Lorem.words(4).to_s.capitalize }
   description { Faker::Lorem.sentences(2).to_s }
@@ -136,6 +140,6 @@ end
   city { Faker::Address.city }
   zip_code { Faker::Address.zip_code }
   county { Faker::Address.uk_county }
-  country { Country.first.id }
+  country { Country.make!.id }
   roles_mask { 2 }
 end

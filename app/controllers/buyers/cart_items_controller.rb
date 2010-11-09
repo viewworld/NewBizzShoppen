@@ -10,7 +10,7 @@ class Buyers::CartItemsController < Buyers::BuyerController
   end
 
   def destroy
-    current_user.cart.remove_lead(params[:id])
+    current_user.cart.remove_leads(params[:id])
     flash[:notice] = t("buyer.cart_items.destroy.flash.cart_item_destruction_successful")
     redirect_to :back
   end

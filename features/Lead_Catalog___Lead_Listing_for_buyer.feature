@@ -21,10 +21,16 @@ Scenario: I can click add lead to my basket and I will get a notification “Lea
   And I follow translated "leads.index.add_to_cart_link" for lead "Super printers"
   Then I should see translated "buyer.cart_items.create.flash.cart_item_creation_successful"
 
-@_wip  @selenium
+@_tested  @selenium
 Scenario: I can toggle select leads on a displayed page
   Given I go to browse leads
   And I follow "Another sample category"
   Then I check "mark_all"
 
+@_tested @selenium @bulk
 Scenario: I can bulk add leads to my basket and I will get a notification “Leads were added to your basket”
+  Given I go to browse leads
+  And I follow "Another sample category"
+  Then I check "mark_all"
+  And I press translated "leads.index.button_bulk_create_cart_item"
+  Then I should see translated "buyer.bulk_cart_items.create.flash.n_cart_items_added" with options "count:2"

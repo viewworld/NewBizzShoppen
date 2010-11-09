@@ -126,7 +126,8 @@ en:
       buy_lead: Buy lead
       request_lead: Request lead
       button_bulk_create_lead_request: 'Request leads'
-    show:
+      button_bulk_create_cart_item: 'Add to cart'
+
 
   home:
     show:
@@ -279,6 +280,11 @@ en:
           lead_price_header: Price
           total_label: Total
           remove_item_link: Remove item
+    bulk_cart_items:
+      create:
+        flash:
+          n_cart_items_added: '%{count} leads has been added to cart'
+          no_cart_items_added: 'No leads added to cart'
 
 
   categories:

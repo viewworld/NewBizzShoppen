@@ -22,7 +22,12 @@ class Cart
     end
   end
 
-  def remove_lead(*ids)
+  def add_leads(*ids)
+
+    Lead.where(:id => ids.flatten).each{|lead| add_lead(lead)}
+  end
+
+  def remove_leads(*ids)
     @buyer.lead_purchases.in_cart.where(:lead_id => ids).destroy_all
   end
 

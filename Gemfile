@@ -23,7 +23,6 @@ gem 'rails-settings', :require => "settings"
 gem 'nested_set'
 gem 'fastercsv'
 
-
 group :development do
   gem 'diff-lcs'
   gem 'tolk', :git => "http://github.com/10to1/tolk.git", :branch => "rails3"
@@ -39,7 +38,7 @@ group :test do
   gem 'spork'
   gem 'mocha'
   gem 'faker'
-  gem 'machinist'
+  gem 'machinist', '>= 2.0.0.beta1'
   gem 'gherkin', '>= 2.2.4'
 
 # Added the following because rake features also complained about spec/expectations
