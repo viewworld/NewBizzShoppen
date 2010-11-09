@@ -33,13 +33,14 @@ Nbs::Application.routes.draw do
         put :bulk_update
       end
     end
+    resource :bulk_cart_items, :controller => "bulk_cart_items", :only => [:create]
   end
 
   namespace :lead_users do
     root :to => "lead_purchases#index"
     resources :lead_purchases
     resources :lead_requests
-    resource :bulk_lead_requests, :controller => "bulk_lead_requests"
+    resource :bulk_lead_requests, :controller => "bulk_lead_requests", :only => [:create]
   end
 
   namespace :customers do

@@ -1,6 +1,12 @@
-Then /^I should see translated "([^"]*)"$/ do |key|
+Then /^I should see translated "([^"]*)"(?: with options "([^"]*)")?$/ do |key, options|
+
   I18n.locale = :en
+  if options.present?
+    options = Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys
+  Then %{I should see "#{I18n.t(key, options)}"}
+    else
   Then %{I should see "#{I18n.t(key)}"}
+    end
 end
 
 When /^I press translated "([^"]*)"$/ do |key|

@@ -42,6 +42,14 @@ describe Cart do
 
       cart.empty?.should be false
       cart.items.should have(1).things
+      end
+
+    it "should add multiple leads to cart properly" do
+      lead1 = Lead.make!
+      lead2 = Lead.make!
+      cart = Cart.new(@buyer)
+      lambda { cart.add_leads(lead1.id, lead2.id) }.should change(cart, :empty?).from(true).to(false)
+      cart.items.should have(2).things
     end
 
     it "should calculate the total properly" do
@@ -57,6 +65,8 @@ describe Cart do
       cart.items.should have(2).things
       cart.total.should == 250.0
     end
+
+
   end
 
   context "Removing leads from cart" do
@@ -79,7 +89,7 @@ describe Cart do
       cart.add_lead(lead2)
       cart.add_lead(lead3)
 
-      lambda { cart.remove_lead(lead1.id, lead2.id) }.should change(cart, :count).from(3).to(1)
+      lambda { cart.remove_leads(lead1.id, lead2.id) }.should change(cart, :count).from(3).to(1)
 
       cart.items.should_not include(lead1)
       cart.items.should_not include(lead2)
