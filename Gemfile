@@ -16,12 +16,13 @@ gem "transitions", :require => ["transitions", "active_record/transitions"]
 gem 'paperclip', "2.3.3"
 gem 'scoped-search', '0.7.1', :require => "scoped_search"
 gem 'json_pure', '>= 1.4.6'
-gem 'gherkin', '>= 2.2.4'
 gem 'globalize3'
 gem 'role_model', :require => "role_model"
 gem 'cancan'
 gem 'rails-settings', :require => "settings"
 gem 'nested_set'
+gem 'fastercsv'
+
 
 group :development do
   gem 'diff-lcs'
@@ -39,6 +40,7 @@ group :test do
   gem 'mocha'
   gem 'faker'
   gem 'machinist'
+  gem 'gherkin', '>= 2.2.4'
 
 # Added the following because rake features also complained about spec/expectations
   gem 'rspec', '=2.0.1'

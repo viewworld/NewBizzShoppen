@@ -340,6 +340,7 @@ en:
       index:
         view:
           header: My leads
+          download_csv_link: CSV
 
   my_profile:
     edit:
