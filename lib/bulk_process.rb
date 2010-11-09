@@ -5,11 +5,14 @@ class BulkProcess
    end
 
   def call(env)
+    req = Rack::Request.new(env)
+    req.params["_method"] = "POST"
+
     if env['rack.request.form_hash'] && env['rack.request.form_hash']['route_to']
       new_url = env['rack.request.form_hash']['route_to']
       env['PATH_INFO'] =   new_url
       env['REQUEST_URI'] = new_url
-      env["REQUEST_PATH"] = new_url
+      env["REQUEST_PATH"] = new_url      
     end
     status, headers, response = @app.call(env)
 

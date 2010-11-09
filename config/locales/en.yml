@@ -347,6 +347,7 @@ en:
         view:
           header: My leads
           download_csv_link: CSV
+          bulk_download_csv_button: Download CSV for selected leads
 
   my_profile:
     edit:
