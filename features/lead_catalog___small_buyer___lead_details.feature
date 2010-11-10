@@ -12,14 +12,14 @@ Background: Sign in user and set English locale
   Given I go to browse leads
   And I follow "Computers"
 
-@tested
+@_tested
 Scenario: I should see created by
   Then I should see "Jim Spong"
 
 @m0
 Scenario: I should see rating % and certification level for each lead
 
-@tested
+@_tested
 Scenario: I should see lead header, lead price, purchase value and public description
   Then I should see "989.39"
   And I should see "7843.99"

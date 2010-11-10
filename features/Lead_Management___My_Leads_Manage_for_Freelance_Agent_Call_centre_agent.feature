@@ -15,13 +15,13 @@ Background:
   Then I sign in as john@doe.com with password secret
   And I go to agents leads
 
-@tested
+@_tested
 Scenario: I can browse leads with pagination
   Given pagination page size for leads is set to 3
   And I go to agents leads
   Then I follow "2"
 
-@tested
+@_tested
 Scenario: I can search leads with filtering by:skip inactive, skip outdated
   Given I fill in "search_with_keyword" with "Lead 2"
   And I press translated "agent.leads.index.view.search_button"
@@ -42,7 +42,7 @@ Scenario: I can search leads with filtering by:skip inactive, skip outdated
   And I should not see "Lead 3"
 
 
-@tested @selenium
+@_tested @selenium
 Scenario: I can change lead status from lead list
   Given I fill in "search_with_keyword" with "Lead 2"
   And I press translated "agent.leads.index.view.search_button"
@@ -53,7 +53,7 @@ Scenario: I can change lead status from lead list
   And I press translated "agent.leads.index.view.search_button"
    And "lead_published" should be selected for "0"
 
-@tested
+@_tested
 Scenario: I can delete lead if the lead is not sold yet
   Given I fill in "search_with_keyword" with "Lead 1"
   And I press translated "agent.leads.index.view.search_button"
@@ -64,7 +64,7 @@ Scenario: I can delete lead if the lead is not sold yet
   And I follow translated "agent.leads.index.view.destroy"
   Then I should see translated "agent.leads.destroy.flash.lead_deletion_failure"
 
-@tested
+@_tested
 Scenario: I can see uniqueness, price per lead
   Given lead Lead 1 exists with attributes "price:333.99,sale_limit:10"
   And I go to agents leads
@@ -77,7 +77,7 @@ Scenario: I can see uniqueness, price per lead
 Scenario: I can see clicks, exposure, hottness, novelty  per lead
 
 
-@tested
+@_tested
 Scenario: clicking on the lead should take to edit page
   Given I follow translated "agent.leads.index.view.edit"
   Then I should see translated "agent.leads.edit.view.title"
