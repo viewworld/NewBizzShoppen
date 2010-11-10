@@ -12,7 +12,6 @@ Background: Sign in user and set English locale
  Scenario: I can edit user info (no password reset!)
    Given I follow translated "administration.users.index.view.email"
    And I follow "Edit"
-   And I open page in browser
    Then I fill in "user_agent_phone" with "0000000000"
    And I fill in "user_agent_first_name" with "Confucian"
    And I fill in "user_agent_last_name" with "Kyle"
