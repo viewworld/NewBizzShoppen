@@ -70,7 +70,7 @@ Feature: User Account - Signin
     | administration settings        |
     | agents leads                   |
     | buyer interests                |
-    | customers lead purchases       |
+    | lead user lead purchases       |
     | customers subaccounts          |
     | my profile                     |
   @_tested
