@@ -55,7 +55,7 @@ Spork.prefork do
   load_db if EmailTemplate.count < 1
   end
 
-# If you set this to false, any error raised from within your app will bubble 
+# If you set this to false, any error raised from within your app will bubble
 # up to your step definition and out to cucumber unless you catch it somewhere
 # on the way. You can make Rails rescue errors and render error pages on a
 # per-scenario basis by tagging a scenario or feature with the @allow-rescue tag.

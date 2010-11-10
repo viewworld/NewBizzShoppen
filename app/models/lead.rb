@@ -5,7 +5,7 @@ class Lead < ActiveRecord::Base
 
   belongs_to :creator, :polymorphic => true, :foreign_key => "creator_id"
   belongs_to :category
-  has_many :lead_translations
+  has_many :lead_translations, :dependent => :destroy
   has_many :lead_purchases
 
   scope :with_keyword, lambda { |q| where("lower(header) like :keyword OR lower(description) like :keyword OR lower(creator_name) like :keyword", {:keyword => "%#{q.downcase}%"}) }

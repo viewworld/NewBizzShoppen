@@ -11,7 +11,7 @@
 <span class="nested_locale_span"></span>
 
   <script>
-   var nestedFormsCount = <%= @lead.lead_translations.size %>;
+   var nestedFormsCount = <%= @lead.lead_translations.reject{ |lt| lt.locale == I18n.locale.to_s }.size %>;
   $(function() {
       $( "#datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
   });
