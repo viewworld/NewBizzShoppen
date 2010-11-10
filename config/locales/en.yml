@@ -351,6 +351,7 @@ en:
           header: 'Requested leads'
           accept_lead_request_link: Accept lead request
           reject_lead_request_link: Reject lead request
+          requested_by: 'Requested by: %{user}'
         flash:
           lead_request_accepted_successfully: Lead request accepted
           lead_request_rejected_successfully: Lead request rejected
@@ -370,6 +371,11 @@ en:
       index:
         view:
           header: My leads
+          download_csv_link: CSV
+          bulk_download_csv_link: Download CSV for selected leads
+          bulk_state_field: State
+          bulk_assignee_field: Assigned to
+          bulk_update_button: Update all selected leads
 
   my_profile:
     edit:

@@ -31,7 +31,7 @@ Scenario: I can follow "What do you want to do today?" links and they take me to
 @_tested_in_rspec
 Scenario: After signup I am assigned roles of Customer, Lead Buyer and Lead user
 
-@_tested
+@m3 @tested
 Scenario: I can see my unique RSS feed URL
   Then I should see translated "buyer.interests.edit.view.rss_feed_url"
 

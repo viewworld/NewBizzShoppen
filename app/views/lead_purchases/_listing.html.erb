@@ -2,8 +2,8 @@
 <ul class="lead_purchases_listing">
   <% collection.each do |lead_purchase| %>
       <li class="lead_purchase" id="<%= dom_id(lead_purchase) %>">
-        <div class="general">
-          <%= check_box_tag("lead_purchase[#{lead_purchase.id}]") if show_checkboxes %>
+        <div class="general">          
+          <%= check_box_tag("lead_purchase_ids[]", lead_purchase.id) if show_checkboxes %>
           <h3><%= lead_purchase.header %></h3>
           <span><%= t("lead_purchases.listing.purchase_value_label") %>
             <b><%= lead_purchase.purchase_value %></b></span>

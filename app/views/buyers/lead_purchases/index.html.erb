@@ -1,17 +1,35 @@
 <column-mc:>
-
   <h1><%= t("lead_buyer.lead_purchases.index.view.header") %></h1>
 
-  <%= lead_purchases_listing @lead_purchases, :show_checkboxes => true do |blocks| %>
-      <% blocks.tools do |lead_purchase| %>
-          <%= form_for [:buyers, lead_purchase], :remote => true do |form| %>
-              <%= form.select :state, LeadPurchaseBase.statuses_for_select, {}, {:onchange => "jQuery(this.form).callRemote()"} %>
+  <%= form_tag bulk_action_path, :method => :post, :id => 'bulk_actions_form' do %>
+      <%= link_to_function t("lead_buyer.lead_purchases.index.view.bulk_download_csv_link"), "submitBulkForm('#{bulk_lead_purchase_csv_path}');" %><br/>
+
+      <%= t("lead_buyer.lead_purchases.index.view.bulk_state_field") %>
+      <%= select_tag :bulk_state, options_for_select([[nil,nil]]+LeadPurchaseBase.statuses_for_select) %><br/>
+      <%= t("lead_buyer.lead_purchases.index.view.bulk_assignee_field") %>
+      <%= select_tag :bulk_assignee_id, options_for_select([[nil,nil]]+@subaccounts.map { |sa| [sa.screen_name, sa.id] }) %>
+
+      <%= button_to_function t("lead_buyer.lead_purchases.index.view.bulk_update_button"), "submitBulkForm('#{bulk_lead_purchase_update_path}');" %><br/>
+
+      <%= hidden_field_tag :route_to %>
+
+
+      <% lead_purchases_listing @lead_purchases, :show_checkboxes => true do |blocks| %>
+          <% blocks.tools do |lead_purchase| %>
+              <%= select_tag :state,
+                             options_for_select(LeadPurchaseBase.statuses_for_select, lead_purchase.state),
+                             :onchange => "$.post('#{buyers_lead_purchase_path(lead_purchase)}', {'_method':'put', 'lead_purchase[state]':this.value} );" %>
+
               <% if @subaccounts.present? %>
-                  <%= form.select :assignee_id, @subaccounts.map { |sa| [sa.screen_name, sa.id] }, {:include_blank => true}, {:onchange => "jQuery(this.form).callRemote()"} %>
+                  <%= select_tag :assignee_id,
+                                 options_for_select([[nil,nil]]+@subaccounts.map { |sa| [sa.screen_name, sa.id] }, lead_purchase.assignee_id),
+                                 :onchange => "$.post('#{buyers_lead_purchase_path(lead_purchase)}', {'_method':'put', 'lead_purchase[assignee_id]':this.value} );" %>
               <% end %>
+
+          <% end %>
+          <% blocks.card do |lead_purchase| %>
+              <%= link_to t("lead_buyer.lead_purchases.index.view.download_csv_link"), buyers_lead_purchase_path(lead_purchase, :format => :csv) %>
           <% end %>
       <% end %>
   <% end %>
-
-
 </column-mc:>
