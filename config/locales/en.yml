@@ -263,6 +263,7 @@ en:
           title: 'New lead'
           button_create: 'Create'
           button_create_and_continue: 'Create & continue'
+          remove_language: 'Remove'
       edit:
         view:
           title: 'Edit lead'

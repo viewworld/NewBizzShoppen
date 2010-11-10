@@ -10,7 +10,7 @@
 <span class="nested_locale_span"></span>
 
   <script>
-   var nestedFormsCount = 0;
+   var nestedFormsCount = <%= @lead.lead_translations.size %>;
   $(function() {
       $( "#datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
   });
@@ -21,13 +21,28 @@
       var regexp = new RegExp("");
       content = content.replace(/lead_lead_translations_attributes_0/g, "lead_lead_translations_attributes_" + nestedFormsCount.toString());
       content = content.replace(/lead\[lead_translations_attributes\]\[0\]/g, "lead[lead_translations_attributes][" + new_id.toString() + "]");
-
+      content = content.replace(/LOCALE_LANG/, $('#locale_picker').val());
       $('.nested_locale_span:last').append(content);
       $('.locale_hidden_field:last').val($('#locale_picker').val());
       $('.locale_span:last').html($('#locale_picker').val());
       $("option[value=" + $('#locale_picker').val() + "]").remove();
       nestedFormsCount = nestedFormsCount + 1;
       }
+    }
+
+    function remove_language(span_id, locale, record_id){
+        nestedFormsCount = nestedFormsCount - 1;
+        $('#locale_picker').append($("<option></option>").attr("value", locale).text(locale));
+        if(record_id == null)
+        {
+            $('#lead_translation_form_' + span_id).remove();
+        }
+        else
+        {
+            $('#lead_translation_form_' + span_id).hide();
+            $('#destroy_hidden_field_'+ record_id.toString()).val('true')
+        }
+
     }
   </script>
 

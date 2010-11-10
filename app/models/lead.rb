@@ -21,7 +21,7 @@ class Lead < ActiveRecord::Base
   scope :without_inactive, where("lead_purchases_counter < sale_limit")
   scope :without_outdated, lambda { where("purchase_decision_date >= ?", Date.today.to_s ) }
 
-  accepts_nested_attributes_for :lead_translations
+  accepts_nested_attributes_for :lead_translations, :allow_destroy => true
 
   after_create :cache_creator_name
   before_destroy :can_be_removed
