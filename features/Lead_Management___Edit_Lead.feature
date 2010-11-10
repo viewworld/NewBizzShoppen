@@ -2,12 +2,12 @@
 Feature: Lead Management - freelance agent - Edit Lead
 
 Background:
+    Given I am on the homepage
+    And I make sure current locale is English
     Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role agent
     And lead New lead is created by user bob@person.com with role agent
-    And I am on the homepage
-    And I make sure current locale is English
+    And a lead New lead exists within category Computers and is bought by user john.buyer@person.com with role customer
     Then I sign in as bob@person.com with password supersecret
-    #And I run ruby "throw User::Agent.find_by_email('bob@person.com').valid_password?('supersecret')"
     And I go to agents leads
 
 @_tested
@@ -46,11 +46,19 @@ Scenario: I can delete a language
   And I follow translated "agent.leads.index.view.edit"
   And I should not see "DK hidden description"
 
+@_tested
+Scenario: When the lead is bought and I want to edit it then "Notify the lead buyers" checkbox is present
+  Given I go to agents leads
+  And I follow translated "agent.leads.index.view.edit"
+  And I open page in browser
+  Then I should see translated "activerecord.attributes.lead.notify_buyers_after_update"
 
 
-Scenario: After a lead that have been bought and I update it. When I click save I should get a popup asking if I want to notify the lead buyer about the changes.
+@m0
+Scenario: When the lead is bought and I update it and check "Notify the lead buyers" then email is sent to all buyers
 # Generic mail edited by the administrator.
 
+@_tested
 Scenario: Datepicker - after selecting form the select box it should automatically fill in the date
   Given I go to agents leads
   Then I follow translated "agent.leads.index.view.edit"

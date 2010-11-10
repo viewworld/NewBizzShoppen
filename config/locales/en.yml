@@ -413,6 +413,7 @@ en:
         newsletter_on: 'I want to receive the newsletter'
       lead:
         purchase_decision_date: 'Purchase decision date'
+        notify_buyers_after_update: 'Notify buyers about changes'
     errors:
       models:
         user:
