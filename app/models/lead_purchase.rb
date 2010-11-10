@@ -1,5 +1,6 @@
 class LeadPurchase < LeadPurchaseBase
   belongs_to :assignee, :class_name => "User::LeadUser", :foreign_key =>  "assignee_id"
+  belongs_to :lead, :counter_cache => :lead_purchases_counter
 
   default_scope where(:requested_by => nil)
 

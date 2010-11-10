@@ -1,12 +1,22 @@
 <column-mc:>
   <%= link_to t("agent.leads.index.view.new_lead"), new_agents_lead_path %>
-  <ul>
-  <% @leads.each do |lead| %>
-    <li>
-      <%= lead.header %>
-      <%= link_to t("agent.leads.index.view.edit"), edit_agents_lead_path(lead) %>
-      <%= link_to t("agent.leads.index.view.destroy"), agents_lead_path(lead), :confirm => t("agent.leads.index.view.destroy_confirmation"), :method => :delete %>
-    </li>
+
+  <%= form_for @search, :url => agents_leads_path do |f| %>
+    <%= f.text_field :with_keyword %>
+    <%= f.check_box :without_inactive, {}, "true", "false" %> <%= t("agent.leads.index.view.filter_with_inactive") %>
+    <%= f.check_box :without_outdated, {}, "true", "false" %> <%= t("agent.leads.index.view.filter_with_outdated") %>
+    <%= submit_tag t("agent.leads.index.view.search_button") %>
   <% end %>
-  </ul>
+
+  <%= leads_table @leads, :show_checkboxes => false do |blocks| %>
+    <% blocks.tools do |lead| %>
+        <%= link_to t("agent.leads.index.view.edit"), edit_agents_lead_path(lead) %>
+        <%= link_to t("agent.leads.index.view.destroy"), agents_lead_path(lead), :confirm => t("agent.leads.index.view.destroy_confirmation"), :method => :delete %>
+    <% end %>
+    <% blocks.status_column do |lead| %>
+        <%= form_for [:agents, lead], :method => :put do |f| %>
+            <%= f.select :published, [[t("agent.leads.index.view.option_published"), 1], [t("agent.leads.index.view.option_not_published"), 0]], {:selected => lead.published ? 1 : 0 }, {:onchange => "jQuery(this.form).callRemote()"}%>
+        <% end %>
+    <% end %>
+  <% end %>
 </column-mc:>

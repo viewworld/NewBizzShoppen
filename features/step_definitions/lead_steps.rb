@@ -13,8 +13,10 @@ end
 #  Given %{a lead exists with #{pickle_params}, category_id: #{category.id}}
 #end
 
-And /Is nice$/ do
-  throw [Category.order("id ASC").last, Lead.order("id ASC").last]
+Given /^lead (.+) exists with attributes "([^"]*)"$/ do |header, options|
+  lead = Lead.find_by_header(header).first
+  lead = Lead.make!(:header => header, :category => category) if lead.nil?
+  lead.update_attributes(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys)
 end
 
 Given /^lead (.+) exists within category (.+)$/ do |header, category_name|
@@ -29,22 +31,21 @@ Given /^a lead (.+) exists within category (.+) and is bought by user (.+) with 
   category = Category.make!(:name => category_name) if category.nil?
 
   customer = "User::#{role.camelize}".constantize.find_by_email(email)
-  lead = Lead.make!(:header => header, :category => category)
+  lead = Lead.find_by_header(header).first
+  if lead.nil?
+    lead = Lead.make!(:header => header, :category => category)
+  else
+    lead.update_attribute(:category, category)
+  end
   LeadPurchase.make!(:lead_id => lead.id, :owner => customer, :paid => true, :accessible => true)
 end
 
 Given /^lead (.+).is created by user (.+) with role (.+)$/ do |name, email, role|
   u = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
-  lead = Lead.make(:header => name, :creator_id => u.id)
-  lead.creator_id = u.id
-  lead.save
+  lead = Lead.make!(:header => name, :creator_id => u.id, :published => true)
   lead.lead_translations.each { |lt| lt.destroy if lt.locale != "en" }
 end
 
-Given /^I can see following fields: (.+) for lead (.+)$/ do |fields, lead_header|
-  I18n.locale = :en
-  lead = Lead.find_by_header(lead_header).first
-  fields.split(",").reject{|f| !lead.respond_to?(f.to_sym) }.each do |field|
-    Then %{I should see "#{lead.send(field.to_sym)}"}
-  end
+Given /^I can see following () f for lead Printers ultimate deal$/ do |fields, lead_header|
+
 end

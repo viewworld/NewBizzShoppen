@@ -15,84 +15,84 @@ SET search_path = public, pg_catalog;
 -- Name: assets_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('assets_id_seq', 5, true);
+SELECT pg_catalog.setval('assets_id_seq', 1, false);
 
 
 --
 -- Name: categories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('categories_id_seq', 1163, true);
+SELECT pg_catalog.setval('categories_id_seq', 2, true);
 
 
 --
 -- Name: category_interests_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('category_interests_id_seq', 4, true);
+SELECT pg_catalog.setval('category_interests_id_seq', 1, false);
 
 
 --
 -- Name: category_translations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('category_translations_id_seq', 1161, true);
+SELECT pg_catalog.setval('category_translations_id_seq', 2, true);
 
 
 --
 -- Name: countries_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('countries_id_seq', 21, true);
+SELECT pg_catalog.setval('countries_id_seq', 3, true);
 
 
 --
 -- Name: country_interests_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('country_interests_id_seq', 2, true);
+SELECT pg_catalog.setval('country_interests_id_seq', 1, false);
 
 
 --
 -- Name: email_template_translations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('email_template_translations_id_seq', 20, true);
+SELECT pg_catalog.setval('email_template_translations_id_seq', 4, true);
 
 
 --
 -- Name: email_templates_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('email_templates_id_seq', 10, true);
+SELECT pg_catalog.setval('email_templates_id_seq', 2, true);
 
 
 --
 -- Name: lead_purchases_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('lead_purchases_id_seq', 63, true);
+SELECT pg_catalog.setval('lead_purchases_id_seq', 1, false);
 
 
 --
 -- Name: lead_translations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('lead_translations_id_seq', 525, true);
+SELECT pg_catalog.setval('lead_translations_id_seq', 1, false);
 
 
 --
 -- Name: leads_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('leads_id_seq', 517, true);
+SELECT pg_catalog.setval('leads_id_seq', 1, false);
 
 
 --
 -- Name: settings_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('settings_id_seq', 22, true);
+SELECT pg_catalog.setval('settings_id_seq', 5, true);
 
 
 --
@@ -120,7 +120,7 @@ SELECT pg_catalog.setval('tolk_translations_id_seq', 1, false);
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('users_id_seq', 1290, true);
+SELECT pg_catalog.setval('users_id_seq', 3, true);
 
 
 --
@@ -136,8 +136,8 @@ COPY assets (id, asset_file_name, asset_content_type, asset_file_size, asset_typ
 --
 
 COPY categories (id, name, description, created_at, updated_at, parent_id, lft, rgt, depth, total_leads_count) FROM stdin;
-1162	Test category 1	\N	2010-11-08 12:11:15.395926	2010-11-08 12:11:15.395926	\N	1	2	\N	0
-1163	Test category 2	\N	2010-11-08 12:11:15.41442	2010-11-08 12:11:15.41442	\N	3	4	\N	0
+1	Test category 1	\N	2010-11-09 14:15:10.171618	2010-11-09 14:15:10.171618	\N	1	2	\N	0
+2	Test category 2	\N	2010-11-09 14:15:10.192755	2010-11-09 14:15:10.192755	\N	3	4	\N	0
 \.
 
 
@@ -154,8 +154,8 @@ COPY category_interests (id, category_id, user_id, created_at, updated_at) FROM 
 --
 
 COPY category_translations (id, category_id, locale, description, name, created_at, updated_at) FROM stdin;
-1160	1162	dk	\N	Test category 1	2010-11-08 12:11:15.40692	2010-11-08 12:11:15.40692
-1161	1163	dk	\N	Test category 2	2010-11-08 12:11:15.417704	2010-11-08 12:11:15.417704
+1	1	dk	\N	Test category 1	2010-11-09 14:15:10.1843	2010-11-09 14:15:10.1843
+2	2	dk	\N	Test category 2	2010-11-09 14:15:10.196	2010-11-09 14:15:10.196
 \.
 
 
@@ -164,8 +164,9 @@ COPY category_translations (id, category_id, locale, description, name, created_
 --
 
 COPY countries (id, name, created_at, updated_at) FROM stdin;
-20	Denmark	2010-11-08 12:11:15.4494	2010-11-08 12:11:15.4494
-21	United Kingdom	2010-11-08 12:11:15.454196	2010-11-08 12:11:15.454196
+1	Denmark	2010-11-09 14:15:10.224771	2010-11-09 14:15:10.224771
+2	United Kingdom	2010-11-09 14:15:10.229747	2010-11-09 14:15:10.229747
+3	Northern Ireland	2010-11-09 14:15:10.827148	2010-11-09 14:15:10.827148
 \.
 
 
@@ -182,10 +183,10 @@ COPY country_interests (id, country_id, user_id, created_at, updated_at) FROM st
 --
 
 COPY email_template_translations (id, email_template_id, locale, subject, body, created_at, updated_at) FROM stdin;
-17	9	en	Confirmation instructions	<p>Welcome {{user.email}}!</p><p>You can confirm your account through the link below:</p><p><a href="{{user.confirmation_instructions_url}}">Confirm my account</a></p>	2010-11-08 12:11:15.485893	2010-11-08 12:11:15.485893
-18	9	dk	[DK] Confirmation instructions	<p>Welcome {{user.email}}!</p><p>You can confirm your account through the link below:</p><p><a href="{{user.confirmation_instructions_url}}">Confirm my account</a></p>	2010-11-08 12:11:15.497858	2010-11-08 12:11:15.497858
-19	10	en	Reset password instructions	<p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href="{{ user.reset_password_instructions_url }}">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>	2010-11-08 12:11:15.507277	2010-11-08 12:11:15.507277
-20	10	dk	[DK] Reset password instructions	<p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href="{{ user.reset_password_instructions_url }}">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>	2010-11-08 12:11:15.51662	2010-11-08 12:11:15.51662
+1	1	en	Confirmation instructions	<p>Welcome {{user.email}}!</p><p>You can confirm your account through the link below:</p><p><a href="{{user.confirmation_instructions_url}}">Confirm my account</a></p>	2010-11-09 14:15:10.261757	2010-11-09 14:15:10.261757
+2	1	dk	[DK] Confirmation instructions	<p>Welcome {{user.email}}!</p><p>You can confirm your account through the link below:</p><p><a href="{{user.confirmation_instructions_url}}">Confirm my account</a></p>	2010-11-09 14:15:10.273739	2010-11-09 14:15:10.273739
+3	2	en	Reset password instructions	<p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href="{{ user.reset_password_instructions_url }}">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>	2010-11-09 14:15:10.283578	2010-11-09 14:15:10.283578
+4	2	dk	[DK] Reset password instructions	<p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href="{{ user.reset_password_instructions_url }}">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>	2010-11-09 14:15:10.293457	2010-11-09 14:15:10.293457
 \.
 
 
@@ -194,8 +195,8 @@ COPY email_template_translations (id, email_template_id, locale, subject, body, 
 --
 
 COPY email_templates (id, name, subject, "from", bcc, cc, body, template, uniq_id, persist, created_at, updated_at) FROM stdin;
-9	confirmation instructions	[DK] Confirmation instructions	noreply@newbizzshoppen.com	\N	\N	<p>Welcome {{user.email}}!</p><p>You can confirm your account through the link below:</p><p><a href="{{user.confirmation_instructions_url}}">Confirm my account</a></p>	\N	confirmation_instructions	t	2010-11-08 12:11:15.477496	2010-11-08 12:11:15.495027
-10	reset_password_instructions	[DK] Reset password instructions	noreply@newbizzshoppen.com	\N	\N	<p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href="{{ user.reset_password_instructions_url }}">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>	\N	reset_password_instructions	t	2010-11-08 12:11:15.504166	2010-11-08 12:11:15.513904
+1	confirmation instructions	[DK] Confirmation instructions	noreply@newbizzshoppen.com	\N	\N	<p>Welcome {{user.email}}!</p><p>You can confirm your account through the link below:</p><p><a href="{{user.confirmation_instructions_url}}">Confirm my account</a></p>	\N	confirmation_instructions	t	2010-11-09 14:15:10.253842	2010-11-09 14:15:10.270787
+2	reset_password_instructions	[DK] Reset password instructions	noreply@newbizzshoppen.com	\N	\N	<p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href="{{ user.reset_password_instructions_url }}">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>	\N	reset_password_instructions	t	2010-11-09 14:15:10.279794	2010-11-09 14:15:10.289675
 \.
 
 
@@ -219,7 +220,7 @@ COPY lead_translations (id, lead_id, locale, header, description, hidden_descrip
 -- Data for Name: leads; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY leads (id, header, category_id, description, hidden_description, creator_id, creator_type, clicks_count, purchase_value, price, country_id, company_name, lead_name, phone_number, email_address, address, created_at, updated_at, purchase_decision_date, creator_name, sale_limit, published, www_address) FROM stdin;
+COPY leads (id, header, category_id, description, hidden_description, creator_id, creator_type, clicks_count, purchase_value, price, country_id, company_name, lead_name, phone_number, email_address, address, created_at, updated_at, purchase_decision_date, creator_name, sale_limit, published, www_address, lead_purchases_counter) FROM stdin;
 \.
 
 
@@ -228,37 +229,38 @@ COPY leads (id, header, category_id, description, hidden_description, creator_id
 --
 
 COPY schema_migrations (version) FROM stdin;
-20101008094512
+20101109140010
 20101008111430
-20101008135557
-20101013104734
-20101014083833
-20101018111651
-20101019095223
-20101019121840
-20101019123448
-20101019124628
-20101020071754
-20101020082242
-20101020084127
-20101020102434
-20101020125814
-20101020145032
-20101021071810
-20101021072059
-20101021072155
+20101026111441
 20101021134744
 20101021134920
-20101025102840
+20101020102434
+20101027073412
 20101026091655
 20101026101449
-20101026111441
-20101027073412
+20101008094512
+20101025102840
+20101019123448
+20101019124628
 20101027080457
-20101027081714
+20101008135557
+20101018111651
+20101020071754
+20101021072155
 20101028094349
-20101028110231
+20101013104734
 20101102123151
+20101019121840
+20101021072059
+20101014083833
+20101020082242
+20101027081714
+20101020145032
+20101020084127
+20101019095223
+20101028110231
+20101020125814
+20101021071810
 \.
 
 
@@ -267,11 +269,11 @@ COPY schema_migrations (version) FROM stdin;
 --
 
 COPY settings (id, var, value, created_at, updated_at) FROM stdin;
-18	level_one_certification_threshold	--- 0\n	2010-11-08 12:11:15.426165	2010-11-08 12:11:15.426165
-19	level_two_certification_threshold	--- 0\n	2010-11-08 12:11:15.431549	2010-11-08 12:11:15.431549
-20	level_three_certification_threshold	--- 0\n	2010-11-08 12:11:15.434231	2010-11-08 12:11:15.434231
-21	default_payout_delay	--- 0\n	2010-11-08 12:11:15.437095	2010-11-08 12:11:15.437095
-22	default_leads_per_page	--- 5\n	2010-11-08 12:11:15.440181	2010-11-08 12:11:15.440181
+1	level_one_certification_threshold	--- 0\n	2010-11-09 14:15:10.204544	2010-11-09 14:15:10.204544
+2	level_two_certification_threshold	--- 0\n	2010-11-09 14:15:10.209822	2010-11-09 14:15:10.209822
+3	level_three_certification_threshold	--- 0\n	2010-11-09 14:15:10.212422	2010-11-09 14:15:10.212422
+4	default_payout_delay	--- 0\n	2010-11-09 14:15:10.215144	2010-11-09 14:15:10.215144
+5	default_leads_per_page	--- 5\n	2010-11-09 14:15:10.217642	2010-11-09 14:15:10.217642
 \.
 
 
@@ -304,9 +306,9 @@ COPY tolk_translations (id, phrase_id, locale_id, text, previous_text, primary_u
 --
 
 COPY users (id, email, encrypted_password, password_salt, reset_password_token, remember_token, remember_created_at, sign_in_count, current_sign_in_at, last_sign_in_at, current_sign_in_ip, last_sign_in_ip, confirmation_token, confirmed_at, confirmation_sent_at, locked_at, created_at, updated_at, roles_mask, first_name, last_name, phone, screen_name, street, city, zip_code, county, country, newsletter_on, payout, parent_id, age, subaccounts_counter, mobile_phone, department, deal_value_range_start, deal_value_range_end, rss_token, notify_about_new_leads, big_buyer) FROM stdin;
-1288	blazejek@gmail.com	29afdf3612297bc01c115a9aaa6ca2005f174fb8ea6cc10025148a0a00aeff7e991137b376c333bd05cfa5b598bea28bf0c23798717453b229939855917fb692	DhkkgahhGHzo2Kb8_UJ1	\N	\N	\N	0	\N	\N	\N	\N	\N	2010-11-08 12:11:15.835037	2010-11-08 12:11:15.553179	\N	2010-11-08 12:11:15.553459	2010-11-08 12:11:15.835365	1	Shaniya	Adams	168-627-1197	admin1	Schaden Point	Smithamside	73092-6950	Greater Manchester	1	\N	\N	\N	\N	0	\N	\N	\N	\N	6CtfutIgxGNTirVlXo3Bg2UAz6TksZpn95icF5aL903bj1oHQe9EDAEYw9Yu5u	f	\N
-1289	buyer@gmail2.com	6328f018e240112874329a0baf5bc6d14036a9e68dc39b8a96a83569d7ebcd4f2d9b867c9aab061ad29c6abaeb1c729916ded293f4051fec1afccd9db566742c	BZXzm9ead5UZKu7Y0rlR	\N	\N	\N	0	\N	\N	\N	\N	\N	2010-11-08 12:11:15.889715	2010-11-08 12:11:15.866034	\N	2010-11-08 12:11:15.866266	2010-11-08 12:11:15.890013	112	Micaela	Little	(302)307-4065 x5027	Tiffany Koelpin	Lang Rapids	West Modesta	54508	County Down	1	\N	\N	\N	\N	0	\N	\N	\N	\N	nsb9U8CkpPXLT9p1PhpsQxSun6aHgTDae2i8pJkAosHWLxTPpXfLf0fa0UCWY2	f	\N
-1290	agent@gmail2.com	ddc139b6abc150f6a2963c415de2244b73231a84071a0cdb86ec8e53578fa62b464c85efadfae5719da56f8d3811ed2a20664966dabf11a5c68833bac6b5f21b	aTWjA5DQEpo9iSZIhNDK	\N	\N	\N	0	\N	\N	\N	\N	\N	2010-11-08 12:11:16.071343	2010-11-08 12:11:16.047128	\N	2010-11-08 12:11:16.047357	2010-11-08 12:11:16.071675	2	Claude	Heidenreich	105-083-4327	Era Vandervort	Kertzmann Lake	Lake Jamarcus	71830	West Yorkshire	20	\N	0	\N	\N	0	\N	\N	\N	\N	5sryLLkXm6DikzZq5SjwizaiKH0cMTCD5G7v6OTMhnxFcsvq6x9Qjq9J8WyGTA	f	\N
+1	blazejek@gmail.com	e5cf8adb1bd2ca18828978d0817119771fd290d8b5787820d8a53fac3e001b5104d064457884f7ebbc10504e96624f511e2d1b9af88a6575f2de3d2733ee7b73	RNu2BNznY-WxYM1CjGPF	\N	\N	\N	0	\N	\N	\N	\N	\N	2010-11-09 14:15:10.616283	2010-11-09 14:15:10.328743	\N	2010-11-09 14:15:10.328982	2010-11-09 14:15:10.61668	1	Tate	Jones	(173)871-8670	admin1	Nicholas Bridge	South Denaburgh	87581	Durham	1	\N	\N	\N	\N	0	\N	\N	\N	\N	3DtBdycDgxcvGyckb1czODlA67uGdcl3isuhPkPnCm8dzsCmEvpi64DnNTRKYs	f	\N
+2	buyer@gmail2.com	b3a15554fb804fc6e48794bca03636ccd5486f99bfa7976fa137771cc1e4551ebc2104dfa079c8b4155cc808d00f61ab1978389051070907b79dbe9a0bde8a53	VQ3RiixTP5jqTYgE9aEF	\N	\N	\N	0	\N	\N	\N	\N	\N	2010-11-09 14:15:10.671563	2010-11-09 14:15:10.647494	\N	2010-11-09 14:15:10.647738	2010-11-09 14:15:10.671872	112	Idella	Nikolaus	272.749.4115 x358	Euna Jacobson	Itzel Way	Averytown	48332-2943	Staffordshire	1	\N	\N	\N	\N	0	\N	\N	\N	\N	Q56k7Lax1AMSZxJSr1BnhoLZo7LtheEiwOw0fl47p6lTAMmEqcS6NSnmgI0naM	f	\N
+3	agent@gmail2.com	b98b624083dc3d8e31928d1460a8d5040b39d3dc3835683a10d00469f9daa195f26c021dc5cfb338f39ae46093bf98356d105f087f8ed75dcc06cb5d3cc1342c	PL5S3UShzGZphw30MliF	\N	\N	\N	0	\N	\N	\N	\N	\N	2010-11-09 14:15:10.858667	2010-11-09 14:15:10.834049	\N	2010-11-09 14:15:10.834262	2010-11-09 14:15:10.858951	2	Bettie	Moore	(487)104-7104	Joyce Kuphal	Batz Gardens	Kendallview	95623-2540	Cheshire	3	\N	0	\N	\N	0	\N	\N	\N	\N	EiSjfYTUFB3jlI5gEyuTLdbk0JAXyKkRFev6NHfexe0clbqukUCEYA4HfyET0U	f	\N
 \.
 
 

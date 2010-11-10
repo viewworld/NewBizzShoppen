@@ -233,3 +233,7 @@ end
 Then /^The flash message should be set to translated "([^"]*)"$/ do |key|
   assert page.body.match(I18n.t(key))
 end
+
+Then /^"([^"]*)" should be selected for "([^"]*)"$/ do |field, value|
+  find_field(field).value.should =~ /#{value}/
+end

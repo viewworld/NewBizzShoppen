@@ -29,3 +29,8 @@ end
 Given /^I follow translated logout link for (.+)$/ do |email|
    Then %{I follow "#{I18n.t('layout.logout_link', :user_email => email)}"}
 end
+
+Given /^I select translated "([^"]*)" from "([^"]*)"$/ do |key, field|
+  I18n.locale = :en
+  Then %{I select "#{I18n.t(key)}" from "#{field}"}
+end

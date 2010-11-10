@@ -115,6 +115,20 @@ en:
       description_label: 'Lead description:'
       created_by_label: 'Created by:'
       clicks_count_label: 'Clicks:'
+    table:
+      id: 'ID'
+      header: 'Lead title'
+      clicks: 'Clicks'
+      exposures: 'Exposures'
+      hottness: 'Hotness'
+      novelty: 'Novelty'
+      sale_limit: 'Uniqueness'
+      price: 'Price'
+      sold: 'Sold'
+      purchase_value: 'Value'
+      paid_out: 'Paid out'
+      status: 'Status'
+      actions: 'Actions'
     index:
       header: Leads
       search:
@@ -234,6 +248,16 @@ en:
           edit: 'Edit'
           destroy: 'Destroy'
           destroy_confirmation: 'Are you sure?'
+          search_button: 'Search'
+          option_published: 'published'
+          option_not_published: 'not published'
+          filter_with_inactive: 'Skip inactive'
+          filter_with_outdated: 'Skip outdated'
+      destroy:
+        flash:
+          lead_deletion_successful: 'Lead has been deleted successfully.'
+          lead_deletion_failure: 'Lead could not be deleted'
+
       new:
         view:
           title: 'New lead'
