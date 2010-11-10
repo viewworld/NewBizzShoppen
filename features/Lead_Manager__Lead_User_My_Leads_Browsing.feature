@@ -29,7 +29,10 @@ Scenario: I should see created by, rating % and certification level for each lea
 
 Scenario: I should see hottness, novelty, exposure, clicks
 
-Scenario: I can see company contact
+Scenario: I can see company contact on lead details page
+
+Scenario: I can email the lead if email information were provided
+# popup with email form appears
 
 Scenario: I can toggle select leads
 
