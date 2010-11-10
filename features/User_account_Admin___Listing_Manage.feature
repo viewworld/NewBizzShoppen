@@ -15,7 +15,6 @@ Feature: User account Admin - Listing Manage
  Scenario: I can browse users with pagination
    Given pagination per page size in model User is set to 3
    When I go to administration users
-   And I open page in browser
    Then I should see translated "administration.users.index.view.title"
    Then I follow "2"
    Then I should see translated "administration.users.index.view.title"
