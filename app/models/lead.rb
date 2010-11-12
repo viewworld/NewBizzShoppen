@@ -1,4 +1,8 @@
 class Lead < ActiveRecord::Base
+  INFINITY             = 1.0/0
+  NOVELTY_LEVEL_RANGES = [(0..8), (9..30), (31..INFINITY)]
+  HOTNESS_LEVEL_RANGES = [(29..INFINITY), (7..28), (-INFINITY..6)]  
+
   translates :header, :description, :hidden_description
 
   include ScopedSearch::Model
@@ -13,6 +17,9 @@ class Lead < ActiveRecord::Base
   scope :deal_value_to, lambda { |q| where(["purchase_value <= ?", q]) }
   scope :with_category, lambda { |q| where(:category_id => Category.find_by_id(q).self_and_descendants.map(&:id)) }
   scope :with_ids_not_in, lambda { |q| where(["id NOT IN (?)", q]) }
+  #====================
+  scope :bestsellers, order("lead_purchases_count DESC")
+  scope :latest, order("created_at DESC")
 
   validates_presence_of :company_name, :lead_name, :phone_number, :sale_limit, :category_id
   validates_inclusion_of :sale_limit, :in => 0..10
@@ -33,8 +40,12 @@ class Lead < ActiveRecord::Base
   end
 
   def hotness_ratio
-    (purchase_decision_date - Date.today).to_i.tap do |result|
-      result < 0 ? 0 : result
+    if purchase_decision_date
+      (purchase_decision_date - Date.today).to_i.tap do |result|
+        return result < 0 ? 0 : result
+      end
+    else
+      INFINITY
     end
   end
 
@@ -43,6 +54,24 @@ class Lead < ActiveRecord::Base
   end
 
   public
+
+  def hotness_level
+    HOTNESS_LEVEL_RANGES.each_with_index { |range, i| return i if range.include?(hotness_ratio) }
+  end
+
+  def novelty_level
+    NOVELTY_LEVEL_RANGES.each_with_index { |range, i| return i if range.include?(novelty_ratio) }
+  end
+
+  def certification_level
+    if certification_level_ratio >= Settings.certification_level_2
+      2
+    elsif certification_level_ratio >= Settings.certification_level_1
+      1
+    else
+      0
+    end
+  end
 
   def buyable?
     true #Some more complex logic here...
