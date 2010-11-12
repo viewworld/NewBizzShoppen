@@ -24,6 +24,10 @@ class Buyers::LeadPurchasesController < Buyers::BuyerController
   def show
     super do |format|
       format.csv { send_data @lead_purchase.to_csv, :filename => "lead-#{@lead_purchase.lead.header.parameterize}.csv" }
+      format.print {
+        @print = @lead_purchase
+        render :file => "/printouts/index.html.erb"
+      }
     end
   end
 

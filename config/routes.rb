@@ -4,7 +4,7 @@ Nbs::Application.routes.draw do
 
   get "buyer_home/show"
 
-  devise_for :users,  :controllers => { :passwords => "users/passwords" }
+  devise_for :users, :controllers => {:passwords => "users/passwords"}
 
   devise_for :users do
     get "login", :to => "devise/sessions#new"
@@ -27,7 +27,7 @@ Nbs::Application.routes.draw do
     root :to => "lead_purchases#index"
     resource :interests, :only => [:edit, :update]
     resources :cart_items
-    resource :cart, :only => [:show, :destroy], :controller => 'cart'    
+    resource :cart, :only => [:show, :destroy], :controller => 'cart'
     resources :lead_purchases do
       collection do
         put :bulk_update
@@ -36,8 +36,8 @@ Nbs::Application.routes.draw do
     resource :bulk_cart_items, :controller => "bulk_cart_items", :only => [:create]
   end
   match 'buyers/bulk_lead_purchase_csv' => 'buyers/bulk_lead_purchase_csv#create', :as => "bulk_lead_purchase_csv"
+  match 'buyers/bulk_lead_purchase_print' => 'buyers/bulk_lead_purchase_print#create', :as => "bulk_lead_purchase_print"
   match 'buyers/bulk_lead_purchase_update' => 'buyers/bulk_lead_purchase_update#create', :as => "bulk_lead_purchase_update"
-
 
 
   namespace :lead_users do
@@ -49,7 +49,7 @@ Nbs::Application.routes.draw do
 
   namespace :customers do
     root :to => "buyer_leads#index"
-    resources :subaccounts    
+    resources :subaccounts
     resources :lead_requests, :only => [:index, :update, :destroy]
   end
 

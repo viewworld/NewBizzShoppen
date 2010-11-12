@@ -5,6 +5,19 @@ class LeadsController < ApplicationController
 
   before_filter :check_search, :only => :index
 
+  def show
+    show! do |format|
+      format.html { @lead.increment!(:clicks_count) }
+    end
+  end
+
+
+  def index
+    index! do |format| 
+      format.html { Lead.update_all("clicks_count = clicks_count+1", {:id => @leads.map(&:id)}) }
+    end
+  end
+
   protected
 
   def collection

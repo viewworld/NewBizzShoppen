@@ -115,6 +115,7 @@ en:
       description_label: 'Lead description:'
       created_by_label: 'Created by:'
       clicks_count_label: 'Clicks:'
+      sale_limit_label: 'Uniqueness:'
     index:
       header: Leads
       search:
@@ -348,7 +349,9 @@ en:
         view:
           header: My leads
           download_csv_link: CSV
+          print_link: Print
           bulk_download_csv_link: Download CSV for selected leads
+          bulk_print_link: Print all selected leads
           bulk_state_field: State
           bulk_assignee_field: Assigned to
           bulk_update_button: Update all selected leads
