@@ -5,7 +5,7 @@ Feature: Start Pages - Buyer
 @ao @_todo
 Scenario: I can see welcome text fetch from the database
 
-@ao @_todo
+@m0 @ao @_todo
 Scenario: I can see 3 latest buyer news excerpts
 
 @ao @_todo
@@ -14,7 +14,7 @@ Scenario: I can see 10 top bestsellers
 @ao @_todo
 Scenario: I can see 10 latest leads
 
-@ao @_todo
+@m0 @ao @_todo
 Scenario: I can go to details of buyer news
 
 @ao @_todo
@@ -23,7 +23,7 @@ Scenario: I can go to details of bestsellers
 @ao @_todo
 Scenario: I can go to details of latest leads
 
-@ao @_todo
+@m0 @ao @_todo
 Scenario: I can go to buyer news listing
 
 @ao @_todo
