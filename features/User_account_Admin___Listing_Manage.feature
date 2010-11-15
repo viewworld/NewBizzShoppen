@@ -79,6 +79,11 @@ Feature: User account Admin - Listing Manage
 @m3
 Scenario: I can invoice an account
 
+@m3
 Scenario: I can toggle select/deselect accounts on active page
+
+@m3
 Scenario: I can perform a bulk block action
+
+@m3
 Scenario: I can perform a bulk invoice action
