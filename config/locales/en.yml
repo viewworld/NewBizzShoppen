@@ -115,6 +115,7 @@ en:
       description_label: 'Lead description:'
       created_by_label: 'Created by:'
       clicks_count_label: 'Clicks:'
+      exposures_count_label: 'Exposures:'
       sale_limit_label: 'Uniqueness:'
       novelty_label: 'Novelty:'
       hotness_label: 'Hotness:'
@@ -143,7 +144,9 @@ en:
       add_to_cart_link: Add to cart
       buy_lead: Buy lead
       request_lead: Request lead
+      destroy_lead_request: Remove lead request
       button_bulk_create_lead_request: 'Request leads'
+      button_bulk_destroy_lead_request: 'Remove lead requests'
       button_bulk_create_cart_item: 'Add to cart'
 
 
