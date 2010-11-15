@@ -383,6 +383,7 @@ en:
           download_csv_link: CSV
           print_link: Print
           bulk_download_csv_link: Download CSV for selected leads
+          bulk_share_by_email_link: Share by email
           bulk_print_link: Print all selected leads
           bulk_state_field: State
           bulk_assignee_field: Assigned to
