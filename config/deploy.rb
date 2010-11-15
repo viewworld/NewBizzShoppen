@@ -14,6 +14,13 @@ role :db,  "nbs.selleo.com", :primary => true
 set :user, "rails"
 set :use_sudo, false
 
+namespace :deploy do
+  desc "Restarting god"
+  task :restart, :roles => :app do
+#    sudo "god restart nbs_#{stage}"
+  end
+end
+
 after "deploy:finalize_update", "copy_database_yml"
 
 task :copy_database_yml, :roles => :app do
