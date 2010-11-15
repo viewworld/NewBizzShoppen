@@ -1,0 +1,49 @@
+<%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+<table>
+    <tr>
+      <% if show_checkboxes %>
+          <td></td>
+      <% end %>
+      <td><%= t("leads.table.id") %></td>
+      <td><%= t("leads.table.header") %></td>
+      <td><%= t("leads.table.clicks") %></td>
+      <td><%= t("leads.table.exposures") %></td>
+      <td><%= t("leads.table.hottness") %></td>
+      <td><%= t("leads.table.novelty") %></td>
+      <td><%= t("leads.table.sale_limit") %></td>
+      <td><%= t("leads.table.price") %></td>
+      <td><%= t("leads.table.sold") %></td>
+      <td><%= t("leads.table.purchase_value") %></td>
+      <td><%= t("leads.table.paid_out") %></td>
+      <td><%= t("leads.table.status") %></td>
+      <td><%= t("leads.table.actions") if block_tools %></td>
+    </tr>
+
+      <% collection.each do |lead| %>
+        <tr>
+          <% if show_checkboxes %>
+            <td><%= check_box_tag("lead_ids[]", lead.id) %></td>
+          <% end %>
+          <td><%= lead.id %></td>
+          <td><%= lead.header %></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><%= lead.sale_limit %></td>
+          <td><%= lead.price %></td>
+          <td><%= lead.lead_purchases_counter %></td>
+          <td><%= lead.purchase_value %></td>
+          <td></td>
+          <td>
+            <% if block_status_column %>
+                <%= with_output_buffer { block_status_column.call(lead) } %>
+            <% else  %>
+                <%= lead.published %>
+            <% end %>
+          </td>
+          <td><%= block_tools && with_output_buffer { block_tools.call(lead) } %></td>
+        </tr>
+      <% end %>
+  </table>
+<%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>

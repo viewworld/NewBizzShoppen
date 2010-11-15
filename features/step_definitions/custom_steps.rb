@@ -19,3 +19,7 @@ end
 Then /I should have value "([^"]*)" in the css path "([^"]*)"$/ do |value, css_path|
     assert page.find(css_path).text == value
 end
+
+Given /^pagination per page size in model (.+) is set to (\d+)$/ do |model_name, n|
+  model_name.constantize.stubs(:per_page).returns(n)
+end

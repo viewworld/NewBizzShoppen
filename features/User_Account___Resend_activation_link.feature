@@ -11,7 +11,6 @@ Scenario: I can resend activation email to my email address
   Then I go to resend confirmation instructions
   And I fill in "user_email" with "email@person.com"
   Then I press translated "devise.confirmations.resend_confirmation_link"
-  And I open page in browser
   And I should see translated "devise.confirmations.send_instructions"
 
 @_tested

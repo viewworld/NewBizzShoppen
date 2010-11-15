@@ -27,6 +27,7 @@ Lead.blueprint do
   creator_type { "User::Agent" }
   category_id { Category.make!.id }
   sale_limit { 1 }
+  purchase_decision_date { (Date.today+5) }
 end
 
 LeadPurchase.blueprint do

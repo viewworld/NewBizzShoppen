@@ -11,12 +11,13 @@ Feature: User account Admin - Listing Manage
   And I am signed up and confirmed as user with email bob@person.com and password supersecret and role admin
   Then I sign in as bob@person.com with password supersecret
 
-
+ @_tested
  Scenario: I can browse users with pagination
-   When I go to user administration page
-   Then I should see "Listing users"
+   Given pagination per page size in model User is set to 3
+   When I go to administration users
+   Then I should see translated "administration.users.index.view.title"
    Then I follow "2"
-   Then I should see "Listing users"
+   Then I should see translated "administration.users.index.view.title"
    Then I follow "1"
 
 @_tested

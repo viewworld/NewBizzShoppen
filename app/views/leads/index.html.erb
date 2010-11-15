@@ -25,10 +25,10 @@
 
           <% end %>
       <% end %>
-      <% if current_user.has_role?(:customer) %>
+      <% if user_signed_in? && current_user.has_role?(:customer) %>
         <%= hidden_field_tag :route_to, "/buyers/bulk_cart_items" %>
         <%= submit_tag t("leads.index.button_bulk_create_cart_item") %>
-      <% elsif current_user.has_role?(:lead_user) %>
+      <% elsif user_signed_in? && current_user.has_role?(:lead_user) %>
         <%= hidden_field_tag :route_to, "/lead_users/bulk_lead_requests" %>
         <%= submit_tag t("leads.index.button_bulk_create_lead_request") %>
       <% end %>

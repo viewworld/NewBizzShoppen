@@ -42,7 +42,6 @@ Feature: User Account - Profile edit
   Scenario: A user shouldn't be able to update their profile with bad data
     And I fill in "user_agent_email" with "not-an-email"
     And I press translated "password.edit.view.button_update_user"
-    And I open page in browser
     Then I should see translated "activerecord.errors.models.user/agent.attributes.email.invalid"
 
   @_tested

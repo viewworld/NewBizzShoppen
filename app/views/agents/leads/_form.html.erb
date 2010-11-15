@@ -1,6 +1,7 @@
 <%= form.input :category_id, :as => :select, :collection => Category.all %>
 <%= form.input :country_id, :as => :select, :collection => Country.all %>
 <%= form.inputs :header, :description, :hidden_description, :purchase_value, :price, :company_name, :lead_name, :phone_number, :email_address, :address, :published %>
+<%= form.input :notify_buyers_after_update, :as => :boolean, :checked => true unless @lead.lead_purchases.empty? %>
 <%= form.input :sale_limit, :as => :select, :collection => (0..10) %>
 <%= form.input :purchase_decision_date, :as => :string, :input_html => {:id => "datepicker"} %>
 
@@ -9,7 +10,7 @@
 <span class="nested_locale_span"></span>
 
   <script>
-   var nestedFormsCount = 0;
+   var nestedFormsCount = <%= @lead.lead_translations.reject{ |lt| lt.locale == I18n.locale.to_s }.size %>;
   $(function() {
       $( "#datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
   });
@@ -20,13 +21,28 @@
       var regexp = new RegExp("");
       content = content.replace(/lead_lead_translations_attributes_0/g, "lead_lead_translations_attributes_" + nestedFormsCount.toString());
       content = content.replace(/lead\[lead_translations_attributes\]\[0\]/g, "lead[lead_translations_attributes][" + new_id.toString() + "]");
-
+      content = content.replace(/LOCALE_LANG/, $('#locale_picker').val());
       $('.nested_locale_span:last').append(content);
       $('.locale_hidden_field:last').val($('#locale_picker').val());
       $('.locale_span:last').html($('#locale_picker').val());
       $("option[value=" + $('#locale_picker').val() + "]").remove();
       nestedFormsCount = nestedFormsCount + 1;
       }
+    }
+
+    function remove_language(span_id, locale, record_id){
+        nestedFormsCount = nestedFormsCount - 1;
+        $('#locale_picker').append($("<option></option>").attr("value", locale).text(locale));
+        if(record_id == null)
+        {
+            $('#lead_translation_form_' + span_id).remove();
+        }
+        else
+        {
+            $('#lead_translation_form_' + span_id).hide();
+            $('#destroy_hidden_field_'+ record_id.toString()).val('true')
+        }
+
     }
   </script>
 

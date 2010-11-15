@@ -44,7 +44,6 @@ Scenario: I can select multiple lead categories that I am interested in
   And I check "category_1"
   And I press translated "buyer.interests.edit.view.button_update"
   Then I should see translated "buyer.interests.update.flash.interests_update_successful"
-  And I open page in browser
 
 @_tested
 Scenario: I can select lead purchase value range that I am interested in

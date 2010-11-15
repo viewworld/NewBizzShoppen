@@ -22,7 +22,6 @@ Scenario: I can create a new lead and close
   And I fill in "lead_price" with "100"
   And I select "3" from "lead_sale_limit"
   #And I fill in "area" with "global"
-  And I open page in browser
   And I select "Test category 1" from "lead_category_id"
   And I select "Denmark" from "lead_country_id"
   And I fill in "lead_company_name" with "Printing company"
@@ -52,7 +51,6 @@ Scenario: I can create a new lead and continue (create another one)
   And I fill in "lead_email_address" with "my@email.com"
   And I fill in "lead_address" with "ul.Kaminskiego 19"
   And I press translated "agent.leads.new.view.button_create_and_continue"
-  And I open page in browser
   And I should see translated "flash.leads.actions.create.notice"
   And I should see translated "agent.leads.new.view.title"
 
