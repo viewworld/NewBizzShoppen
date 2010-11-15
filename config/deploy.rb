@@ -17,7 +17,7 @@ set :use_sudo, false
 namespace :deploy do
   desc "Restarting god"
   task :restart, :roles => :app do
-#    sudo "god restart nbs_#{stage}"
+    sudo "/opt/rubybin/god restart nbs_#{stage}"
   end
 end
 
