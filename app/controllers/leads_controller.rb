@@ -14,7 +14,7 @@ class LeadsController < ApplicationController
 
   def index
     index! do |format| 
-      format.html { Lead.update_all("clicks_count = clicks_count+1", {:id => @leads.map(&:id)}) }
+      format.html { Lead.update_all("exposures_count = exposures_count+1", {:id => @leads.map(&:id)}) }
     end
   end
 

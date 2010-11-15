@@ -51,3 +51,9 @@ end
 Given /^I can see following () f for lead Printers ultimate deal$/ do |fields, lead_header|
 
 end
+
+Given /^lead (.+) was requested by user (.+) with role (.+)$/ do |header, email, role|
+  u = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
+  lead = Lead.find_by_header(header).last
+  LeadRequest.make!(:requestee => u, :lead => lead)
+end
