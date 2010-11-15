@@ -158,6 +158,7 @@ en:
     update:
       controller:
         successful_update_notice: 'Password has been successfully changed!'
+        locked_user_notice: "Blocked users cannot change passwords"
     edit:
       view:
         button_update_user: 'Save'

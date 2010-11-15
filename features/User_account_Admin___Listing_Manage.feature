@@ -8,6 +8,7 @@ Feature: User account Admin - Listing Manage
   And I have user with email agent.tom.blank@paerson22.com and role agent
   And I have user with email aaaaaaaagent.tom.blank@paerson22.com and role agent
   And I have user with email zzzenon.tom.blank@paerson22.com and role agent
+  And User agent.tom.blank@paerson22.com with role agent is blocked
   And I am signed up and confirmed as user with email bob@person.com and password supersecret and role admin
   Then I sign in as bob@person.com with password supersecret
 
@@ -64,7 +65,7 @@ Feature: User account Admin - Listing Manage
    And I follow translated "administration.users.index.view.delete"
    Then I should see translated "administration.users.destroy.flash.user_deletion_successful"
 
- 
+#ommitted since blocked users cannot login anyway
  Scenario: Blocked or deleted user can not ask for password in forgot password
 
  @_tested
