@@ -44,7 +44,7 @@ group :test do
 # Added the following because rake features also complained about spec/expectations
   gem 'rspec', '=2.0.1'
   gem 'launchy' # So you can do Then show me the page
-  gem "rspec-rails", ">= 2.0.0.beta.17"
+  gem "rspec-rails", "= 2.0.1"
   gem 'autotest-rails'
   gem 'autotest'
   gem 'culerity'
