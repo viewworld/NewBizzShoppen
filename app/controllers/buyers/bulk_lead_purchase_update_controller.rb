@@ -1,3 +1,4 @@
+#TODO try to refactor to skip the Update part in naming
 class Buyers::BulkLeadPurchaseUpdateController < Buyers::BuyerController
 
   def create

@@ -34,9 +34,7 @@
           <% end %>
           <% blocks.card do |lead_purchase| %>
               <%= link_to t("lead_buyer.lead_purchases.index.view.download_csv_link"), buyers_lead_purchase_path(lead_purchase, :format => :csv) %>
-              <%= link_to t("lead_buyer.lead_purchases.index.view.print_link"),
-                          buyers_lead_purchase_path(lead_purchase, :format => :print),
-                          :target => "_blank" %>
+              <%= link_to t("lead_buyer.lead_purchases.index.view.print_link"), buyers_lead_purchase_path(lead_purchase, :format => :print), :target => "_blank" %>
           <% end %>
       <% end %>
   <% end %>

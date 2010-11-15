@@ -397,7 +397,14 @@ en:
           bulk_state_field: State
           bulk_assignee_field: Assigned to
           bulk_update_button: Update all selected leads
-
+    bulk_lead_share_by_email:
+      new:
+        view:
+          header: Share leads by email
+          recipients_label: Recipients
+          body_label: Message
+          subject_label: Subject
+          send_email_button: Send
   my_profile:
     edit:
       view:
