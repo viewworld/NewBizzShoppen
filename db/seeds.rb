@@ -37,9 +37,13 @@ email_templates_array = [
 { :name => "Share leads by email message",
     :uniq_id => "share_leads_by_email_message",
     :en => {:subject => "Somebody shared leads with you",
-            :body => "a"},
+            :body => "{% for lead in leads %}
+<p>{{lead.id}}</p>
+{% endfor %}"},
     :dk => {:subject => "[DK] Somebody shared leads with you",
-            :body => "b"}
+            :body => "{% for lead in leads %}
+<p>{{lead.id}}</p>
+{% endfor %}"}
   }
 ]
 
