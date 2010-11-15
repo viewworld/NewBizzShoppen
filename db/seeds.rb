@@ -9,6 +9,9 @@ Settings.level_two_certification_threshold = 0
 Settings.level_three_certification_threshold = 0
 Settings.default_payout_delay = 0
 Settings.default_leads_per_page = 5
+Settings.certification_level_1 = 10
+Settings.certification_level_2 = 20
+
 
 
 Country.find_or_create_by_name("Denmark")

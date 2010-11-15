@@ -1,8 +1,11 @@
 class LeadPurchase < LeadPurchaseBase
   CSV_ATTRS = %w(header description company_name lead_name phone_number email_address address)
+  ACTIVE               = 0.freeze
+  ABOUT_TO_EXPIRE      = 1.freeze
+  EXPIRED              = 2.freeze
 
   belongs_to :assignee, :class_name => "User::LeadUser", :foreign_key =>  "assignee_id"
-  belongs_to :lead, :counter_cache => :lead_purchases_counter
+  belongs_to :lead, :counter_cache => true
 
   default_scope where(:requested_by => nil)
 

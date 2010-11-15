@@ -115,6 +115,10 @@ en:
       description_label: 'Lead description:'
       created_by_label: 'Created by:'
       clicks_count_label: 'Clicks:'
+      sale_limit_label: 'Uniqueness:'
+      novelty_label: 'Novelty:'
+      hotness_label: 'Hotness:'
+      certification_label: 'Certification:'
     table:
       id: 'ID'
       header: 'Lead title'
@@ -374,7 +378,9 @@ en:
         view:
           header: My leads
           download_csv_link: CSV
+          print_link: Print
           bulk_download_csv_link: Download CSV for selected leads
+          bulk_print_link: Print all selected leads
           bulk_state_field: State
           bulk_assignee_field: Assigned to
           bulk_update_button: Update all selected leads
@@ -391,6 +397,19 @@ en:
     user:
       payout_validation_message: 'can only be between 0 and 100'
       agreement_read_validation_message: 'You have to accept the agreement'
+    lead:
+      hotness:
+        lvl0: Upcoming
+        lvl1: Hot
+        lvl2: Super hot
+      novelty:
+        lvl0: New
+        lvl1: Stable
+        lvl2: Classic
+      certification:
+        lvl0: New
+        lvl1: Experienced
+        lvl2: Expert
 
   activerecord:
     attributes:

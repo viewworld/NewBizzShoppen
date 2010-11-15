@@ -8,4 +8,5 @@ class Buyers::BuyerController < SecuredController
   def authorize_user_for_namespace!
     authorize_role(:lead_buyer)
   end
+  
 end
