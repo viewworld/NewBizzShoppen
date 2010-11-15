@@ -30,4 +30,9 @@ module ApplicationHelper
     existing = translations.map(&:locale)
     Locale.all.map(&:code).reject { |c| c == I18n.locale.to_s or existing.include?(c) }
   end
+
+
+  def bulk_form(&block)
+    form_tag(bulk_action_path, {:method => :post, :id => 'bulk_actions_form'}, &block)
+  end
 end

@@ -32,7 +32,16 @@ email_templates_array = [
             :body => "<p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href=\"{{ user.reset_password_instructions_url }}\">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>"},
     :dk => {:subject => "[DK] Reset password instructions",
             :body => "<p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href=\"{{ user.reset_password_instructions_url }}\">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>"}
-  }]
+  },
+
+{ :name => "Share leads by email message",
+    :uniq_id => "share_leads_by_email_message",
+    :en => {:subject => "Somebody shared leads with you",
+            :body => "a"},
+    :dk => {:subject => "[DK] Somebody shared leads with you",
+            :body => "b"}
+  }
+]
 
 email_templates_array.each do |email_template|
   [:en, :dk].each do |locale|
