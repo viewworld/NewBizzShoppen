@@ -52,3 +52,4 @@ group :test do
 end
 
 gem 'capistrano'
+gem 'capistrano-ext', '>= 1.2.1'
