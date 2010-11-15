@@ -8,10 +8,12 @@ class LeadsController < ApplicationController
   protected
 
   def collection
+    params[:search]||={}
     if current_user
-      params[:search]||={}
       params[:search][:with_ids_not_in] = current_user.all_requested_lead_ids + current_user.all_purchased_lead_ids
     end
+
+    params[:search][:without_locked_users] = "1"
 
     @search = Lead.scoped_search(params[:search])
     @leads = @search.paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)

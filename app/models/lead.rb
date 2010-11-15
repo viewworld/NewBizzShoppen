@@ -12,7 +12,7 @@ class Lead < ActiveRecord::Base
   scope :deal_value_from, lambda { |q| where(["purchase_value >= ?", q]) }
   scope :deal_value_to, lambda { |q| where(["purchase_value <= ?", q]) }
   scope :with_category, lambda { |q| where(:category_id => Category.find_by_id(q).self_and_descendants.map(&:id)) }
-  scope :with_ids_not_in, lambda { |q| where(["id NOT IN (?)", q]) }
+  scope :with_ids_not_in, lambda { |q| where(["leads.id NOT IN (?)", q]) }
 
   validates_presence_of :company_name, :lead_name, :phone_number, :sale_limit, :category_id
   validates_inclusion_of :sale_limit, :in => 0..10
@@ -20,6 +20,7 @@ class Lead < ActiveRecord::Base
   scope :with_keyword, lambda { |q| where("lower(header) like :keyword", {:keyword => "%#{q.downcase}%"}) }
   scope :without_inactive, where("lead_purchases_counter < sale_limit")
   scope :without_outdated, lambda { where("purchase_decision_date >= ?", Date.today.to_s ) }
+  scope :without_locked_users, joins("INNER JOIN users ON users.id=leads.creator_id").where("users.locked_at is NULL")
 
   accepts_nested_attributes_for :lead_translations, :allow_destroy => true
 
