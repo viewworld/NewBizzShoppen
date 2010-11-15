@@ -28,6 +28,8 @@ class Lead < ActiveRecord::Base
   validates_inclusion_of :sale_limit, :in => 0..10
   
 
+  liquid_methods :id
+
   accepts_nested_attributes_for :lead_translations, :allow_destroy => true
 
   attr_accessor :notify_buyers_after_update
