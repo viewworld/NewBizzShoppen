@@ -5,7 +5,7 @@ When /^I follow translated "([^"]*)" for lead "([^"]*)"$/ do |link_name, lead_na
 end
 
 Given /^pagination page size for leads is set to (\d+)$/ do |n|
-  Settings.stubs(:default_leads_per_page).returns(3)
+  Settings.stubs(:default_leads_per_page).returns(n)
 end
 
 #Given /^a lead exists with #([^#]*)# within category "([^"]*)"$/ do |pickle_params,category_name|
@@ -42,7 +42,9 @@ end
 
 Given /^lead (.+).is created by user (.+) with role (.+)$/ do |name, email, role|
   u = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
-  lead = Lead.make!(:header => name, :creator_id => u.id, :published => true)
+  lead = Lead.find_by_header(name).last
+  lead.update_attributes({ :creator_id => u.id, :published => true}) unless lead.nil?
+  lead = Lead.make!(:header => name, :creator_id => u.id, :published => true) if lead.nil?
   lead.lead_translations.each { |lt| lt.destroy if lt.locale != "en" }
 end
 

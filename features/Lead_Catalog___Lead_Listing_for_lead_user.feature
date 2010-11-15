@@ -30,16 +30,16 @@ Scenario: I can click request lead and I will see a notification "You added lead
   And I follow translated "leads.index.request_lead"
   Then I should see translated "flash.lead_users.actions.create.notice"
 
-@_tested
+@_tested @selenium
 Scenario: I can click bulk request leads and I will see a notification “You added leads to your requested leads list”
   And lead Another Printers ultimate deal exists within category Computers
   Given I go to browse leads
   And I follow "Computers"
-  Then I check "lead_ids_"
+  Then I check "mark_all"
   Then I press translated "leads.index.button_bulk_create_lead_request"
   And I should see translated "flash.bulk_lead_requests.actions.create.notice"
   Then I go to browse leads
   And I follow "Computers"
-  Then I should see "Printers ultimate deal"
+  Then I should not see "Printers ultimate deal"
   And I should not see "Another Printers ultimate deal"
 

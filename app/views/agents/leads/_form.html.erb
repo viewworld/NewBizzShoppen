@@ -3,8 +3,7 @@
 <%= form.inputs :header, :description, :hidden_description, :purchase_value, :price, :company_name, :lead_name, :phone_number, :email_address, :address, :published %>
 <%= form.input :notify_buyers_after_update, :as => :boolean, :checked => true unless @lead.lead_purchases.empty? %>
 <%= form.input :sale_limit, :as => :select, :collection => (0..10) %>
-
-<%= t("activerecord.attributes.lead.purchase_decision_date") %><%= form.text_field :purchase_decision_date, :id => "datepicker" %>
+<%= form.input :purchase_decision_date, :as => :string, :input_html => {:id => "datepicker"} %>
 
 <%= select_tag :locale, options_for_select(available_locales_list(@lead.lead_translations)),
                { :id => "locale_picker", :include_blank => true, :onchange => fields_for_leads_translations(form)} %>
