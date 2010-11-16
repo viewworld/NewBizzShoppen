@@ -61,13 +61,12 @@ Scenario: I can remove a given leads from my requested leads list
   And I follow translated "lead_user.lead_requests.index.view.destroy_lead_request"
   Then I should see translated "flash.lead_users.actions.destroy.notice"
 
-@tgn @done @_wip1
+@tgn @done @_todo
 Scenario: My requested list should be without pagination
   Given pagination per page size in model LeadRequest is set to 1
   And I go to lead user lead requests
   And I should see "Printers ultimate deal"
   And I should see "Faxes ultimate deal"
-  And I open page in browser
 
 @tgn @_tested
 Scenario: I can narrow down the results by filters and search box
