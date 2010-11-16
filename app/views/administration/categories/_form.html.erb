@@ -1,5 +1,5 @@
     <%= form.input :name %>
-    <%= form.select :parent_id, nested_set_options(Category, @category) {|i| "#{'-' * i.level} #{i.name}" }, {:include_blank => t("administration.categories.form.no_parent_category")} %>
+    <%= form.select :parent_id, nested_set_options(Category, @category) {|i, lvl|  "#{'-' * lvl} #{i.name}" }, {:include_blank => t("administration.categories.form.no_parent_category")} %>
     <%= form.input :description, :as => :text %>
     <%= form.semantic_fields_for :image, @category.image || Asset::CategoryImage.new do |image| %>
          <%= image.input :asset,
