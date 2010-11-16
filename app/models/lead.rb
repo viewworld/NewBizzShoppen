@@ -9,6 +9,7 @@ class Lead < ActiveRecord::Base
 
   belongs_to :creator, :polymorphic => true, :foreign_key => "creator_id"
   belongs_to :category
+  belongs_to :country
   has_many :lead_translations, :dependent => :destroy
   has_many :lead_purchases
 

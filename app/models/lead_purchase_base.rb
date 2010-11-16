@@ -8,7 +8,7 @@ class LeadPurchaseBase < ActiveRecord::Base
 
   validates_presence_of :lead_id
 
-  delegate :header, :description, :purchase_value, :to => :lead
+  delegate :header, :description, :purchase_value, :category, :country, :clicks_count, :exposures_count, :sale_limit, :novelty_level, :hotness_level, :certification_level, :price, :to => :lead
 
   public
 

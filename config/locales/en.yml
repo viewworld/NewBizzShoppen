@@ -153,9 +153,7 @@ en:
       add_to_cart_link: Add to cart
       buy_lead: Buy lead
       request_lead: Request lead
-      destroy_lead_request: Remove lead request
       button_bulk_create_lead_request: 'Request leads'
-      button_bulk_destroy_lead_request: 'Remove lead requests'
       button_bulk_create_cart_item: 'Add to cart'
 
 
@@ -383,6 +381,11 @@ en:
       index:
         view:
           header: Leads I have requested pending approval
+          destroy_lead_request: Remove lead request
+          button_bulk_destroy_lead_request: 'Remove lead requests'
+          search:
+            keyword_label: 'Keyword'
+            search_button: 'Search'
 
   lead_buyer:
     lead_purchases:
