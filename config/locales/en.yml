@@ -242,6 +242,7 @@ en:
           title: 'Settings'
           button_update_settings: 'Save'
           button_cancel: 'Cancel'
+          confirmation_update_message: 'Are you sure?'
       update:
         controller:
           successful_update_notice: 'Settings were successfully updated.'
@@ -369,6 +370,10 @@ en:
           accept_lead_request_link: Accept lead request
           reject_lead_request_link: Reject lead request
           requested_by: 'Requested by: %{user}'
+          button_bulk_destroy_lead_request: 'Reject lead requests'
+          search:
+            keyword_label: 'Keyword'
+            search_button: 'Search'
         flash:
           lead_request_accepted_successfully: Lead request accepted
           lead_request_rejected_successfully: Lead request rejected

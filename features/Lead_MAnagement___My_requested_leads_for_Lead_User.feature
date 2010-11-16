@@ -14,11 +14,11 @@ Background: Sign in user and set English locale
   And lead Faxes ultimate deal exists with attributes "purchase_value:3291.99"
   And lead Copy machines ultimate deal exists within category Office
   And lead Copy machines ultimate deal exists with attributes "purchase_value:7080.99"
-  And lead Printers ultimate deal was requested by user lead_user2@person.com with role lead_user
-  And lead Monitors LCD deal was requested by user lead_user2@person.com with role lead_user
-  And lead Keyboards deal was requested by user lead_user2@person.com with role lead_user
-  And lead Faxes ultimate deal was requested by user lead_user2@person.com with role lead_user
-  And lead Copy machines ultimate deal was requested by user lead_user2@person.com with role lead_user
+  And lead "Printers ultimate deal" was requested by user "lead_user2@person.com" with role "lead_user"
+  And lead "Monitors LCD deal" was requested by user "lead_user2@person.com" with role "lead_user"
+  And lead "Keyboards deal" was requested by user "lead_user2@person.com" with role "lead_user"
+  And lead "Faxes ultimate deal" was requested by user "lead_user2@person.com" with role "lead_user"
+  And lead "Copy machines ultimate deal" was requested by user "lead_user2@person.com" with role "lead_user"
   Then I sign in as lead_user2@person.com with password supersecret
   And I go to lead user lead requests
 

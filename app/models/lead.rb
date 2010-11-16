@@ -76,9 +76,9 @@ class Lead < ActiveRecord::Base
   end
 
   def certification_level
-    if certification_level_ratio >= Settings.certification_level_2
+    if certification_level_ratio >= Settings.certification_level_2.to_i
       2
-    elsif certification_level_ratio >= Settings.certification_level_1
+    elsif certification_level_ratio >= Settings.certification_level_1.to_i
       1
     else
       0

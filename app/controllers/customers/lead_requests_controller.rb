@@ -9,7 +9,14 @@ class Customers::LeadRequestsController < Customers::CustomerController
   end
 
   def collection
-    @lead_requests ||= end_of_association_chain.paginate(:page => params[:page])
+    params[:search]||={}
+    params[:search][:with_leads] = "1"
+    @lead_requests = LeadRequest.scoped_search.paginate(:page => params[:page])
+    @countries = @lead_requests.map(&:country).uniq.map{|c| [c.name, c.id]}
+    @categories = @lead_requests.map(&:category).uniq.map{|c| [c.name, c.id]}
+    @requestees = @lead_requests.map(&:requestee).uniq.map{|r| [r.full_name, r.id]}
+    @search = LeadRequest.scoped_search(params[:search])
+    @lead_requests = @search.paginate(:page => params[:page])
   end
 
   public

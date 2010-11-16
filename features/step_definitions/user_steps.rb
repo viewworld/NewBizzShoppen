@@ -94,13 +94,25 @@ And /^an user with role (.+) and email (.+) exists as subaccount for customer (.
   end
 
   sub_user = "User::#{role.camelize}".constantize.first(:conditions => { :email => sub_email })
-  sub_user.update_attribute(:parent_id, customer.id)
+
   if sub_user.nil?
     "User::#{role.camelize}".constantize.make!(:email => sub_email, :password => 'secret', :password_confirmation => 'secret', :parent_id => customer.id)
+  else
+    sub_user.update_attribute(:parent_id, customer.id)
   end
 end
 
 Then /^User (.+) with role (.+) is blocked$/ do |email, role|
   user = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
   user.update_attribute(:locked, true)
+end
+
+Then /^user (.+) with role (.+) exists with attributes "([^"]*)"$/ do |email, role, options|
+  user = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
+  user.update_attributes(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys)
+end
+
+Then /^user (.+) with role (.+) has no subaccounts$/ do |email, role|
+  user = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
+  user.subaccounts.each(&:destroy)
 end

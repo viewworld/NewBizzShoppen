@@ -237,3 +237,11 @@ end
 Then /^"([^"]*)" should be selected for "([^"]*)"$/ do |field, value|
   find_field(field).value.should =~ /#{value}/
 end
+
+Then /^"([^"]*)" should be selected for value "([^"]*)"$/ do |field, value|
+  assert page.has_xpath?("//option[@selected = 'selected' and contains(string(), '#{value}')]")
+end
+
+Then /^I should not see field "([^"]*)"$/ do |field|
+  assert !page.has_xpath?("//*[(@id = '#{field}')]")
+end

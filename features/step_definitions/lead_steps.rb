@@ -52,8 +52,10 @@ Given /^I can see following () f for lead Printers ultimate deal$/ do |fields, l
 
 end
 
-Given /^lead (.+) was requested by user (.+) with role (.+)$/ do |header, email, role|
+Given /^lead "([^"]*)" was requested by user "([^"]*)" with role "([^"]*)"(?: and is owned by user "([^"]*)")?$/ do |header, email, role, owner_email|
   u = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
   lead = Lead.find_by_header(header).last
-  LeadRequest.make!(:requestee => u, :lead => lead)
+  owner = User::Customer.first(:conditions => { :email => owner_email })
+  LeadRequest.make!(:requestee => u, :lead => lead, :owner => owner)
 end
+
