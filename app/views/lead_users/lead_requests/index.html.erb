@@ -1,8 +1,23 @@
 <column-mc:>
    <h1><%= t("lead_user.lead_requests.index.view.header") %></h1>
 
-  <% @lead_requests.each do |lead_request| %>
-      <%= lead_request.lead.header %> <br/>
+  <%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this.checked,'input:checkbox')" %>
+  <%= bulk_form do %>
+      <%= lead_requests_listing @lead_requests, :show_checkboxes => true do |blocks| %>
+
+          <% blocks.tools do |lead| %>
+              <% if current_user %>
+                  <% if current_user.has_role?(:lead_user) %>
+                      <%= link_to t("leads.index.destroy_lead_request"), lead_users_lead_request_path(:id => lead.id), :method => :delete %>
+                  <% end %>
+              <% end %>
+
+          <% end %>
+      <% end %>
+      <% if user_signed_in? && current_user.has_role?(:lead_user) %>
+        <%= hidden_field_tag :route_to %>
+        <%= button_to_function t("leads.index.button_bulk_destroy_lead_request"), "submitBulkForm('#{lead_users_bulk_lead_requests_path}#DELETE');" %>
+      <% end %>
   <% end %>
 
 </column-mc:>

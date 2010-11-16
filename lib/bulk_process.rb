@@ -13,7 +13,10 @@ class BulkProcess
       env['PATH_INFO'] =   new_url
       env['REQUEST_URI'] = new_url
       env["REQUEST_PATH"] = new_url
-      req.params["_method"] = new_method if new_method
+      if new_method
+        env["REQUEST_METHOD"] = new_method
+        req.params["_method"] = new_method
+      end
     end
     status, headers, response = @app.call(env)
 
