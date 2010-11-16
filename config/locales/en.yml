@@ -241,6 +241,7 @@ en:
         view:
           title: 'Settings'
           button_update_settings: 'Save'
+          button_cancel: 'Cancel'
       update:
         controller:
           successful_update_notice: 'Settings were successfully updated.'
