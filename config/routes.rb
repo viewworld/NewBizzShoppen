@@ -1,7 +1,6 @@
 Nbs::Application.routes.draw do
 
   get "agent_home/show"
-
   get "buyer_home/show"
 
   devise_for :users, :controllers => {:passwords => "users/passwords"}
@@ -39,7 +38,7 @@ Nbs::Application.routes.draw do
   match 'buyers/bulk_lead_purchase_print' => 'buyers/bulk_lead_purchase_print#create', :as => "bulk_lead_purchase_print"
   match 'buyers/bulk_lead_purchase_update' => 'buyers/bulk_lead_purchase_update#create', :as => "bulk_lead_purchase_update"
   match 'buyers/bulk_lead_share_by_email' => 'buyers/bulk_lead_share_by_email#new', :as => "bulk_lead_share_by_email"
-  match 'buyers/bulk_lead_share_by_email' => 'buyers/bulk_lead_share_by_email#create', :as => "create_bulk_lead_share_by_email"
+  match 'buyers/create_bulk_lead_share_by_email' => 'buyers/bulk_lead_share_by_email#create', :as => "create_bulk_lead_share_by_email"
 
 
   namespace :lead_users do

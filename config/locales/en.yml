@@ -524,3 +524,7 @@ en:
           notice: 'Lead requests were successfully created.'
         destroy:
           notice: 'Lead requests were successfully removed.'
+    bulk_lead_share_by_email:
+      actions:
+        create:
+          notice: Email has been sent
