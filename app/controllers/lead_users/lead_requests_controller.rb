@@ -10,7 +10,7 @@ class LeadUsers::LeadRequestsController < LeadUsers::LeadUserController
   def collection
     params[:search]||={}
     params[:search][:with_leads] = "1"
-    @lead_requests = LeadRequest.scoped_search.paginate(:page => params[:page])
+    @lead_requests = LeadRequest.scoped_search.all
     @countries = @lead_requests.map(&:country).uniq.map{|c| [c.name, c.id]}
     @categories = @lead_requests.map(&:category).uniq.map{|c| [c.name, c.id]}
     @requestees = @lead_requests.map(&:requestee).uniq.map{|r| [r.full_name, r.id]}

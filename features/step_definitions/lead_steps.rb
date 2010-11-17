@@ -40,6 +40,16 @@ Given /^a lead (.+) exists within category (.+) and is bought by user (.+) with 
   LeadPurchase.make!(:lead_id => lead.id, :owner => customer, :paid => true, :accessible => true)
 end
 
+Given /^lead (.+) is bought by user (.+) with role (.+) and is assigned to user (.+) with role (.+)$/ do |header, email, role, assignee_email, assignee_role|
+  lead = Lead.find_by_header(header).first
+  lead = Lead.make!(:header => header) if lead.nil?
+
+  customer = "User::#{role.camelize}".constantize.find_by_email(email)
+  assignee = "User::#{assignee_role.camelize}".constantize.find_by_email(assignee_email)
+
+  LeadPurchase.make!(:lead_id => lead.id, :owner => customer, :assignee => assignee, :paid => true, :accessible => true)
+end
+
 Given /^lead (.+).is created by user (.+) with role (.+)$/ do |name, email, role|
   u = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
   lead = Lead.find_by_header(name).last

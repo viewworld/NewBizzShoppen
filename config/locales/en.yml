@@ -91,6 +91,7 @@ en:
     listing:
       purchase_value_label: 'Purchase value:'
       description_label: 'Description:'
+      hidden_description_label: 'Hidden description:'
       company_name: 'Company:'
       phone_number: 'Phone number:'
       www_address: 'Www address:'
@@ -386,6 +387,17 @@ en:
       index:
         view:
           header: Leads assigned to me
+          view_lead: 'View details'
+          search:
+            keyword_label: 'Keyword'
+            search_button: 'Search'
+            category_label: 'Category'
+            deal_value_from_label: 'From'
+            deal_value_to_label: 'To'
+            country_label: 'Country'
+      show:
+        view:
+          header: 'Lead details'
     lead_requests:
       index:
         view:
