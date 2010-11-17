@@ -59,3 +59,7 @@ Given /^lead "([^"]*)" was requested by user "([^"]*)" with role "([^"]*)"(?: an
   LeadRequest.make!(:requestee => u, :lead => lead, :owner => owner)
 end
 
+Given /^I make ajax call to save lead purchase for lead (.+)$/ do |header|
+  lead = Lead.find_by_header(header).last
+  Then %{I run javascript update_lead_response_deadline('/buyers/lead_purchases/#{lead.lead_purchases.last.id}', $('#response_deadline_datepicker_#{lead.lead_purchases.last.id}').val())}
+end

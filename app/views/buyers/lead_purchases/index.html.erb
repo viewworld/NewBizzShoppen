@@ -16,11 +16,15 @@
       <%= select_tag :bulk_assignee_id, options_for_select([[nil, nil]]+@subaccounts.map { |sa| [sa.screen_name, sa.id] }) %>
       <% end %>
 
+      <%= t("lead_buyer.lead_purchases.index.view.lead_response_date") %>
+      <%= text_field_tag :bulk_response_deadline, "", :id => "response_deadline_datepicker_bulk" %>
+
       <%= button_to_function t("lead_buyer.lead_purchases.index.view.bulk_update_button"), "submitBulkForm('#{bulk_lead_purchase_update_path}');" %>
       <br/>
 
       <%= hidden_field_tag :route_to %>
 
+      <%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this.checked,'input:checkbox')" %>
 
       <% lead_purchases_listing @lead_purchases, :show_checkboxes => true do |blocks| %>
           <% blocks.tools do |lead_purchase| %>
@@ -34,6 +38,9 @@
                                  :onchange => "$.post('#{buyers_lead_purchase_path(lead_purchase)}', {'_method':'put', 'lead_purchase[assignee_id]':this.value} );" %>
               <% end %>
 
+              <%= t("lead_buyer.lead_purchases.index.view.lead_response_date") %>
+              <%= text_field_tag :response_deadline, lead_purchase.response_deadline, :id => "response_deadline_datepicker_#{lead_purchase.id}" %>
+
           <% end %>
           <% blocks.card do |lead_purchase| %>
               <%= link_to t("lead_buyer.lead_purchases.index.view.download_csv_link"), buyers_lead_purchase_path(lead_purchase, :format => :csv) %>
@@ -41,4 +48,23 @@
           <% end %>
       <% end %>
   <% end %>
+
+  <script>
+      $(function() {
+      <% @lead_purchases.each do |lead_purchase| %>
+        $( "#response_deadline_datepicker_<%= lead_purchase.id %>" ).datepicker({ dateFormat: 'yy-mm-dd',
+            onSelect: function(dateText, inst){
+                update_lead_response_deadline('<%= buyers_lead_purchase_path(lead_purchase) %>', this.value)
+            }
+        });
+      <% end %>
+      $( "#response_deadline_datepicker_bulk" ).datepicker({ dateFormat: 'yy-mm-dd' });
+  });
+
+  function update_lead_response_deadline(url, field_value)
+  {
+
+      $.post(url, {'_method':'put', 'lead_purchase[response_deadline]':field_value} );
+  }
+  </script>
 </column-mc:>

@@ -15,7 +15,7 @@ class LeadUsers::LeadRequestsController < LeadUsers::LeadUserController
     @categories = @lead_requests.map(&:category).uniq.map{|c| [c.name, c.id]}
     @requestees = @lead_requests.map(&:requestee).uniq.map{|r| [r.full_name, r.id]}
     @search = LeadRequest.scoped_search(params[:search])
-    @lead_requests = @search.paginate(:page => params[:page])
+    @lead_requests = @search.all
   end
 
   def build_resource

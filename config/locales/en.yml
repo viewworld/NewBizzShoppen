@@ -327,7 +327,10 @@ en:
         flash:
           n_cart_items_added: '%{count} leads has been added to cart'
           no_cart_items_added: 'No leads added to cart'
-
+    bulk_lead_purchase_update:
+      create:
+        flash:
+          lead_purchases_updated_successfully: 'Leads have been updated successfully!'
 
   categories:
     index:
@@ -406,6 +409,7 @@ en:
           bulk_state_field: State
           bulk_assignee_field: Assigned to
           bulk_update_button: Update all selected leads
+          lead_response_date: 'Response date:'
     bulk_lead_share_by_email:
       new:
         view:

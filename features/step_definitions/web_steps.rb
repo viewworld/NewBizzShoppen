@@ -245,3 +245,7 @@ end
 Then /^I should not see field "([^"]*)"$/ do |field|
   assert !page.has_xpath?("//*[(@id = '#{field}')]")
 end
+
+Then /^I run javascript (.+)$/ do |js_code|
+  page.evaluate_script(js_code)
+end

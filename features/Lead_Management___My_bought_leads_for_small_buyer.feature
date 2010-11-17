@@ -53,8 +53,13 @@ Scenario: I can transfer assignment of any of my leads from any of lead users th
   And I go to buyer lead purchases
   Then "assignee_id" should be selected for value "John McCoy"
 
-@tgn @done @_to_test
+@tgn @done @_non_testable
 Scenario: Requested leads listing should lack pagination
+  Given pagination per page size in model LeadRequest is set to 1
+  Then I go to customers lead requests
+  And I should see "Mouses ultimate deal"
+  And I should see "Plotters ultimate deal"
+
 
 @tgn @done @_tested
 Scenario: I should see who has requested each lead
@@ -107,11 +112,22 @@ Scenario: I can bulk delete leads requested by lead users that belong to my acco
   And I press translated "customer.lead_requests.index.view.button_bulk_destroy_lead_request"
   Then I should see translated "flash.bulk_lead_requests.actions.destroy.notice"
 
-@tgn @_todo
+@tgn @_tested  @selenium
 Scenario: I can set response deadline for lead
+  Given I go to buyer lead purchases
+  And I fill in "response_deadline" with "2011-01-01"
+  And I make ajax call to save lead purchase for lead Printers ultimate deal
+  And I wait 3 second
+  Given I go to buyer lead purchases
+  Then "response_deadline" should be selected for "2011-01-01"
 
-@tgn @_todo
+@tgn @_tested @selenium
 Scenario: I can bulk set response deadlines for lead
+  Given I go to buyer lead purchases
+  And I check "mark_all"
+  And I fill in "bulk_response_deadline" with "2011-01-11"
+  And I press translated "lead_buyer.lead_purchases.index.view.bulk_update_button"
+  Then I should see translated "buyer.bulk_lead_purchase_update.create.flash.lead_purchases_updated_successfully"
 
 @bk @_todo
 Scenario: I am notified by email when dealine expires and status of lead has not changed

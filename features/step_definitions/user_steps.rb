@@ -114,5 +114,9 @@ end
 
 Then /^user (.+) with role (.+) has no subaccounts$/ do |email, role|
   user = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
+  user.subaccounts.each do |subaccount|
+    LeadRequest.all(:conditions => { :requested_by => subaccount.id }).each(&:destroy)
+  end
   user.subaccounts.each(&:destroy)
+  user.reload
 end
