@@ -15,7 +15,7 @@ Scenario: I should see an image and a description for each category
 @tested_elsewhere
 Scenario: I can click on a category name and see a list of leads in that category
 
-@m2
+@m2 @tgn @_to_test
 Scenario: I should not see any leads that belong to a user which is blocked
 
 @_tested @bk
@@ -28,7 +28,7 @@ Scenario: I can browse leads in a given category with pagination
   And I follow "Sample category"
   Then I follow "2"
 
-@bk @_wip
+@tgn @_to_test
 Scenario: I should see lead header, lead price, purchase value, created by and public description
   Given a category "cat1" exists with name: "One more sample category"
   And a lead exists with header: "Nice", category: category "cat1", company_name: "Google", phone_number: "0123456789"
@@ -36,8 +36,11 @@ Scenario: I should see lead header, lead price, purchase value, created by and p
   And I follow "One more sample category"
   Then I should see "Nice"
 
-@m2
-Scenario: I should see rating % and certification level for each lead
+@m0
+Scenario: I should see rating % for each lead
 
-@m2
+@m2 @tgn @_to_test
+Scenario: I should see certification level for each lead
+
+@m2 @tgn @_to_test
 Scenario: I should see hottness, novelty, exposure, clicks
