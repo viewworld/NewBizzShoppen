@@ -62,10 +62,10 @@ Scenario: I can see lead header, purchase value, description, contact info
 Scenario: I should see company name on leads listing
   Then I should see "FGH Printers"
 
-@bk @_todo
+@tgn @bk @_to_test
 Scenario: I can download lead as CSV
 
-@bk @_todo
+@tgn @bk @_to_test
 Scenario: I can bulk download leads as CSV
 
 @tgn @_tested
@@ -137,10 +137,10 @@ Scenario: I can bulk set status of leads (not contacted, dontacted, meeting, sig
   And I press translated "lead_user.lead_purchases.index.view.bulk_update_button"
   Then I should see translated "lead_user.bulk_lead_purchase_update.create.flash.lead_purchases_updated_successfully"
 
-@bk @_todo
+@tgn @bk @_to_test
 Scenario: I can print out lead information
 
-@bk @_todo
+@tgn @bk @_to_test
 Scenario: I can print out multiple leads information
 
 @bk @_todo
