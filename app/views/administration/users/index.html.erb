@@ -3,7 +3,7 @@
     <h1><%= t("administration.users.index.view.title") %></h1>
   <% else %>
     <% user = User.find(@search.with_subaccounts) %>
-    <h1><%= "#{t("administration.users.index.view.subaccounts_for_user")} #{user.first_name} #{user.last_name}" %></h1>
+    <h1><%= t("administration.users.index.view.subaccounts_for_user", :user_name => user.full_name) %></h1>
     <%= link_to t("administration.users.index.view.show_all_users"), administration_users_path %>
   <% end %>
 

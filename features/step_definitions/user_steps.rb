@@ -107,6 +107,11 @@ Then /^User (.+) with role (.+) is blocked$/ do |email, role|
   user.update_attribute(:locked, true)
 end
 
+Then /^User (.+) with role (.+) is big buyer$/ do |email, role|
+  user = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
+  user.update_attribute(:big_buyer, true)
+end
+
 Then /^user (.+) with role (.+) exists with attributes "([^"]*)"$/ do |email, role, options|
   user = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
   user.update_attributes(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys)

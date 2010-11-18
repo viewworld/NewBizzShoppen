@@ -213,7 +213,7 @@ en:
           unlock: 'Unlock'
           subaccounts: 'Subaccounts'
           edit: 'Edit'
-          subaccounts_for_user: 'Subaccounts of user'
+          subaccounts_for_user: 'Subaccounts of user %{user_name}'
           show_all_users: 'Show all users'
           search_button: 'Search'
           delete: 'Delete'
