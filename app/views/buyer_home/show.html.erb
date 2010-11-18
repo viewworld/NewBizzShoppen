@@ -1,6 +1,22 @@
 <column-mc:>
-  <h1>BuyerHome#show</h1>
 
-  <p>Find me in app/views/buyer_home/show.html.erb</p>
+  <h1>WELCOME TO OUR SITE</h1>
+
+  <block w="33%">
+    <%= render :partial => 'best_sellers' %>
+  </block>
+
+  <block w="33%">
+    <%= t("buyer_home.show.view.header_best_sellers") %>
+
+    list
+  </block>
+
+  <block w="33%">
+    <%= t("buyer_home.show.view.header_latest_leads") %>
+
+    list
+  </block>
+
 </column-mc:>
 
