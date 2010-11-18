@@ -10,8 +10,9 @@ class Customers::LeadRequestsController < Customers::CustomerController
 
   def collection
     params[:search]||={}
+    params[:search][:with_owner] = current_user.id
     params[:search][:with_leads] = "1"
-    @lead_requests = LeadRequest.scoped_search.all
+    @lead_requests = LeadRequest.with_owner(current_user.id)
     @countries = @lead_requests.map(&:country).uniq.map{|c| [c.name, c.id]}
     @categories = @lead_requests.map(&:category).uniq.map{|c| [c.name, c.id]}
     @requestees = @lead_requests.map(&:requestee).uniq.map{|r| [r.full_name, r.id]}

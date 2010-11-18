@@ -46,6 +46,7 @@ Nbs::Application.routes.draw do
     resources :lead_purchases
     resources :lead_requests
     resource :bulk_lead_requests, :controller => "bulk_lead_requests", :only => [:create, :destroy]
+    resource :bulk_lead_purchase_update, :controller => "bulk_lead_purchase_update", :only => [:create]
   end
 
   namespace :customers do

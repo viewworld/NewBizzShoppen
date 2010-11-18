@@ -8,7 +8,7 @@ Background:
   And an user with role lead_user and email lead_user2@person.com exists as subaccount for customer customer@person.com
   And an user with role lead_user and email lead_user44@person.com exists as subaccount for customer customer@person.com
   And lead Printers ultimate deal exists within category Computers
-  And lead Printers ultimate deal exists with attributes "hidden_description:Hidden description for this lead,purchase_value:3034.87"
+  And lead Printers ultimate deal exists with attributes "email_address:john.printer@fghprintesrs.noserver.com,address:London 847-387 Veilingstreet 46,clicks_count:17,exposures_count:887,company_name:FGH Printers,lead_name:John Printer,hidden_description:Hidden description for this lead,purchase_value:3034.87,description:Public desc for printers deal"
   And lead Monitors LCD deal exists within category Computers
   And lead Monitors LCD deal exists with attributes "hidden_description:Hidden description for this lead,purchase_value:2002.87"
   And lead Keyboards deal exists within category Office
@@ -37,7 +37,6 @@ Scenario: I can see all leads that I have access for
 
 @tgn @_tested
 Scenario: I can scope down leads listing with filter
-  And I open page in browser
   Given I select "Denmark" from "search_with_country"
   And I select "Computers" from "search_with_category"
   And I press translated "lead_user.lead_purchases.index.view.search.search_button"
@@ -50,13 +49,18 @@ Scenario: I can scope down leads listing with filter
   And I press translated "lead_user.lead_purchases.index.view.search.search_button"
   Then I should not see "Monitors LCD deal"
   But I should see "Printers ultimate deal"
-  And I open page in browser
 
-@tgn @_todo
+@tgn @_tested
 Scenario: I can see lead header, purchase value, description, contact info
+  Given I should see "Printers ultimate deal"
+  And I should see "3034.87"
+  And I should see "Public desc for printers deal"
+  And I should see "John Printer"
+  And I should see "john.printer@fghprintesrs.noserver.com"
 
-@tgn @_todo
+@tgn @_tested
 Scenario: I should see company name on leads listing
+  Then I should see "FGH Printers"
 
 @bk @_todo
 Scenario: I can download lead as CSV
@@ -64,8 +68,12 @@ Scenario: I can download lead as CSV
 @bk @_todo
 Scenario: I can bulk download leads as CSV
 
-@tgn @_todo
+@tgn @_tested
 Scenario: I can see paginated list of leads
+  Given pagination per page size in model LeadPurchase is set to 1
+  And I go to lead user lead purchases
+  Then I follow "2"
+  Then I follow "1"
 
 Scenario: I can see all leads bought by lead buyers that belong to my account
 
@@ -78,18 +86,37 @@ Scenario: I can see company contact on lead details page
 Scenario: I can email the lead if email information were provided
 # popup with email form appears
   
-@tgn @_done @_to_test
+@tgn @_done @_tested
 Scenario: I should see hottness, novelty, exposure, clicks
+  Then I should see translated "models.lead.hotness.lvl1"
+  And I should see translated "models.lead.novelty.lvl0"
+  And I should see "887"
+  And I should see "17"
 
-@tgn @_todo
+@tgn @_tested
 Scenario: I can see company contact
+  Then I should see "London 847-387 Veilingstreet 46"
 
-@tgn @_todo
+@tgn @_tested @selenium
 Scenario: I can toggle select leads
+  Then I check "mark_all"
 
-Scenario: I can set status of lead (not contacted, dontacted, meeting, signed)
+@tgn @_tested @selenium
+Scenario: I can set status of lead (not contacted, contacted, meeting, signed)
+  Given I fill in "search_with_keyword" with "Printers ultimate deal"
+  And I press translated "lead_user.lead_purchases.index.view.search.search_button"
+  Then I select "Signed" from "lead_purchase_state"
+  And I go to lead user lead purchases
+  Given I fill in "search_with_keyword" with "Printers ultimate deal"
+  And I press translated "lead_user.lead_purchases.index.view.search.search_button"
+  Then "lead_purchase_state" should be selected for value "Signed"
 
+@tgn @_tested @selenium
 Scenario: I can bulk set status of leads (not contacted, dontacted, meeting, signed)
+  Given I check "mark_all"
+  And I select "Signed" from "bulk_state"
+  And I press translated "lead_user.lead_purchases.index.view.bulk_update_button"
+  Then I should see translated "lead_user.bulk_lead_purchase_update.create.flash.lead_purchases_updated_successfully"
 
 @bk @_todo
 Scenario: I can print out lead information

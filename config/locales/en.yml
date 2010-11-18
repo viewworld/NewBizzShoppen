@@ -96,7 +96,14 @@ en:
       phone_number: 'Phone number:'
       www_address: 'Www address:'
       email_address: 'Email:'
+      address_label: 'Address:'
       lead_name: 'Contact person:'
+      clicks_count_label: 'Clicks:'
+      exposures_count_label: 'Exposures:'
+      sale_limit_label: 'Uniqueness:'
+      novelty_label: 'Novelty:'
+      hotness_label: 'Hotness:'
+      certification_label: 'Certification:'
     statuses:
       not_contacted: Not contacted
       contacted: Contacted
@@ -388,6 +395,8 @@ en:
         view:
           header: Leads assigned to me
           view_lead: 'View details'
+          bulk_state_field: 'State'
+          bulk_update_button: 'Update all selected leads'
           search:
             keyword_label: 'Keyword'
             search_button: 'Search'
@@ -407,6 +416,10 @@ en:
           search:
             keyword_label: 'Keyword'
             search_button: 'Search'
+    bulk_lead_purchase_update:
+      create:
+        flash:
+          lead_purchases_updated_successfully: 'Leads has been updated successfully!'
 
   lead_buyer:
     lead_purchases:

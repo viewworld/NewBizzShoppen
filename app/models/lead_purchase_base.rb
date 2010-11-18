@@ -7,6 +7,7 @@ class LeadPurchaseBase < ActiveRecord::Base
   belongs_to :owner, :class_name => "User::Customer", :foreign_key => "owner_id"
 
   include ScopedSearch::Model
+  scope :with_owner, lambda { |owner_id| where("owner_id = ?", owner_id) }
   scope :with_assignee, lambda { |assignee_id| where("assignee_id = ?", assignee_id) }
   scope :with_leads, joins("INNER JOIN leads on leads.id=lead_purchases.lead_id")
   scope :with_keyword, lambda { |q| where("lower(leads.header) like :keyword OR lower(leads.description) like :keyword OR lower(leads.creator_name) like :keyword", {:keyword => "%#{q.downcase}%"}) }

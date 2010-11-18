@@ -1,4 +1,4 @@
-@m2 @$_lead_handler @lead_handler
+@m2 @$_lead_user @lead_user
 Feature: Lead Handler
 
 @tgn @_done @_to_test

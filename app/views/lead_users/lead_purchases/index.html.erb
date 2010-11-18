@@ -11,12 +11,23 @@
       <%= submit_tag t("lead_user.lead_purchases.index.view.search.search_button") %>
   <% end %>
 
-  <%= lead_purchases_listing @lead_purchases, :show_checkboxes => true do |blocks| %>
-       <% blocks.tools do |lead_purchase| %>
-          <%= form_for [:lead_users, lead_purchase], :remote => true do |form| %>
-              <%= form.select :state, LeadPurchaseBase.statuses_for_select, {}, {:onchange => "jQuery(this.form).callRemote()"} %>
+  <%= bulk_form do %>
+
+      <%= t("lead_user.lead_purchases.index.view.bulk_state_field") %>
+      <%= select_tag :bulk_state, options_for_select([[nil, nil]]+LeadPurchaseBase.statuses_for_select) %>
+      <%= hidden_field_tag :route_to %>
+      <%= button_to_function t("lead_user.lead_purchases.index.view.bulk_update_button"), "submitBulkForm('#{lead_users_bulk_lead_purchase_update_path}#POST');" %>
+      <br />
+
+      <%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this.checked,'input:checkbox')" %>
+
+      <%= lead_purchases_listing @lead_purchases, :show_checkboxes => true do |blocks| %>
+           <% blocks.tools do |lead_purchase| %>
+              <%= form_for [:lead_users, lead_purchase], :remote => true do |form| %>
+                  <%= form.select :state, LeadPurchaseBase.statuses_for_select, {}, {:onchange => "$.post('#{lead_users_lead_purchase_path(lead_purchase)}', {'_method':'put', 'lead_purchase[state]':this.value} );"} %>
+              <% end %>
           <% end %>
       <% end %>
-  <% end %>
 
+  <% end %>
 </column-mc:>
