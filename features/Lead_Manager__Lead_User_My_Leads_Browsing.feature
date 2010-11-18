@@ -22,10 +22,10 @@ Scenario: I can see lead header, purchase value, description, contact info
 @tgn @_todo
 Scenario: I should see company name on leads listing
 
-@bk @_todo
+@tgn @bk @_to_test
 Scenario: I can download lead as CSV
 
-@bk @_todo
+@tgn @bk @_to_test
 Scenario: I can bulk download leads as CSV
 
 @tgn @_todo
@@ -55,10 +55,10 @@ Scenario: I can set status of lead (not contacted, dontacted, meeting, signed)
 
 Scenario: I can bulk set status of leads (not contacted, dontacted, meeting, signed)
 
-@bk @_todo
+@tgn @bk @_to_test
 Scenario: I can print out lead information
 
-@bk @_todo
+@tgn @bk @_to_test
 Scenario: I can print out multiple leads information
 
 @bk @_todo
