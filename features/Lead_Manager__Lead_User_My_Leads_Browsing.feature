@@ -92,7 +92,7 @@ Scenario: I should see created by and certification level for each lead
 @m3
 Scenario: I should see rating % for each lead
 
-@_tgn @_wip1
+@_tgn @_tested
 Scenario: I can see company contact on lead details page
   When I fill in "search_with_keyword" with "printers"
   And I press translated "lead_user.lead_purchases.index.view.search.search_button"
