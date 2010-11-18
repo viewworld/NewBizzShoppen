@@ -1,18 +1,18 @@
-@search @m2
+@search @m2 
 Feature: Search - Results
 
 #Duplicate
-@_deprecated
+@_deprecated @bk
 Scenario: I can see search results page
 
 #Duplicate
-@_deprecated
+@_deprecated @bk
 Scenario: I can use named search latest leads
 
 #Duplicate
-@_deprecated
+@_deprecated @bk
 Scenario: I can use named search best sellers
 
 #Duplicate
-@_deprecated
+@_deprecated @bk
 Scenario: I can use named search featured leads
