@@ -2,12 +2,37 @@
 
   <h1><%= t("lead_user.lead_purchases.index.view.header") %></h1>
 
-  <%= lead_purchases_listing @lead_purchases, :show_checkboxes => true do |blocks| %>
-       <% blocks.tools do |lead_purchase| %>
-          <%= form_for [:lead_users, lead_purchase], :remote => true do |form| %>
-              <%= form.select :state, LeadPurchaseBase.statuses_for_select, {}, {:onchange => "jQuery(this.form).callRemote()"} %>
-          <% end %>
-      <% end %>
+  <%= form_for @search, :url => lead_users_lead_purchases_path do |f| %>
+      <%= t("lead_user.lead_purchases.index.view.search.keyword_label") %><%= f.text_field :with_keyword %>
+      <%= t("lead_user.lead_purchases.index.view.search.category_label") %><%= f.select :with_category, @categories, {:include_blank => true} %>
+      <%= t("lead_user.lead_purchases.index.view.search.deal_value_from_label") %><%= f.select :with_deal_value_from, User::DEAL_VALUE_RANGE, {:include_blank => true} %>
+      <%= t("lead_user.lead_purchases.index.view.search.deal_value_to_label") %><%= f.select :with_deal_value_to, User::DEAL_VALUE_RANGE, {:include_blank => true} %>
+      <%= t("lead_user.lead_purchases.index.view.search.country_label") %><%= f.select :with_country, @countries, {:include_blank => true} %>
+      <%= submit_tag t("lead_user.lead_purchases.index.view.search.search_button") %>
   <% end %>
 
+  <%= bulk_form do %>
+
+      <%= t("lead_user.lead_purchases.index.view.bulk_state_field") %>
+      <%= select_tag :bulk_state, options_for_select([[nil, nil]]+LeadPurchaseBase.statuses_for_select) %>
+      <%= hidden_field_tag :route_to %>
+      <%= button_to_function t("lead_user.lead_purchases.index.view.bulk_update_button"), "submitBulkForm('#{lead_users_bulk_lead_purchase_update_path}#POST');" %>
+      <br />
+
+      <%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this.checked,'input:checkbox')" %>
+
+      <%= lead_purchases_listing @lead_purchases, :show_checkboxes => true do |blocks| %>
+           <% blocks.tools do |lead_purchase| %>
+              <%= form_for [:lead_users, lead_purchase], :remote => true do |form| %>
+                  <%= form.select :state, LeadPurchaseBase.statuses_for_select, {}, {:onchange => "$.post('#{lead_users_lead_purchase_path(lead_purchase)}', {'_method':'put', 'lead_purchase[state]':this.value} );"} %>
+              <% end %>
+              <% if @subaccounts.present? %>
+                  <%= select_tag :assignee_id,
+                                 options_for_select([[nil, nil]]+@subaccounts.map { |sa| [sa.screen_name, sa.id] }, lead_purchase.assignee_id),
+                                 :onchange => "$.post('#{lead_users_lead_purchase_path(lead_purchase)}', {'_method':'put', 'lead_purchase[assignee_id]':this.value} );" %>
+              <% end %>
+          <% end %>
+      <% end %>
+
+  <% end %>
 </column-mc:>

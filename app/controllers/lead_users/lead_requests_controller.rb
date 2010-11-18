@@ -8,7 +8,15 @@ class LeadUsers::LeadRequestsController < LeadUsers::LeadUserController
   end
 
   def collection
-    @lead_requests ||= end_of_association_chain.paginate(:page => params[:page])
+    params[:search]||={}
+    params[:search][:with_requested_by] = current_user.id
+    params[:search][:with_leads] = "1"
+    @lead_requests = LeadRequest.with_requested_by(current_user.id)
+    @countries = @lead_requests.map(&:country).uniq.map{|c| [c.name, c.id]}
+    @categories = @lead_requests.map(&:category).uniq.map{|c| [c.name, c.id]}
+    @requestees = @lead_requests.map(&:requestee).uniq.map{|r| [r.full_name, r.id]}
+    @search = LeadRequest.scoped_search(params[:search])
+    @lead_requests = @search.all
   end
 
   def build_resource

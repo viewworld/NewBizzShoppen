@@ -1,0 +1,17 @@
+<column-mc:>
+
+    <h1><%= t("lead_user.lead_purchases.show.view.header") %></h1>
+
+    <b><%= @lead_purchase.header %></b>
+
+    <p><b><%= t("lead_purchases.listing.description_label") %></b><%= @lead_purchase.description %></p>
+    <p><b><%= t("lead_purchases.listing.hidden_description_label") %></b><%= @lead_purchase.hidden_description %></p>
+
+    <div><%= t("lead_purchases.listing.company_name") %> <b><%= @lead_purchase.lead.company_name %></b></div>
+    <div><%= t("lead_purchases.listing.address_label") %> <b><%= @lead_purchase.lead.address %></b></div>
+    <div><%= t("lead_purchases.listing.phone_number") %> <b><%= @lead_purchase.lead.phone_number %></b></div>
+    <div><%= t("lead_purchases.listing.www_address") %> <b><%= @lead_purchase.lead.www_address %></b></div>
+    <div><%= t("lead_purchases.listing.email_address") %> <b><%= @lead_purchase.lead.email_address %></b></div>
+    <div><%= t("lead_purchases.listing.lead_name") %> <b><%= @lead_purchase.lead.lead_name %></b></div>
+
+</column-mc:>

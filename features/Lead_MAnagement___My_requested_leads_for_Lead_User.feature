@@ -10,9 +10,15 @@ Background: Sign in user and set English locale
   And lead Printers ultimate deal exists with attributes "creator_name:John McCain,clicks_count:17,exposures_count:887,price:989.78,purchase_value:3030.03,description:Lorem ipsum public desc"
   And lead Monitors LCD deal exists within category Computers
   And lead Keyboards deal exists within category Computers
-  Given lead Printers ultimate deal was requested by user lead_user2@person.com with role lead_user
-  Given lead Monitors LCD deal was requested by user lead_user2@person.com with role lead_user
-  Given lead Keyboards deal was requested by user lead_user2@person.com with role lead_user
+  And lead Faxes ultimate deal exists within category Office
+  And lead Faxes ultimate deal exists with attributes "purchase_value:3291.99"
+  And lead Copy machines ultimate deal exists within category Office
+  And lead Copy machines ultimate deal exists with attributes "purchase_value:7080.99"
+  And lead "Printers ultimate deal" was requested by user "lead_user2@person.com" with role "lead_user"
+  And lead "Monitors LCD deal" was requested by user "lead_user2@person.com" with role "lead_user"
+  And lead "Keyboards deal" was requested by user "lead_user2@person.com" with role "lead_user"
+  And lead "Faxes ultimate deal" was requested by user "lead_user2@person.com" with role "lead_user"
+  And lead "Copy machines ultimate deal" was requested by user "lead_user2@person.com" with role "lead_user"
   Then I sign in as lead_user2@person.com with password supersecret
   And I go to lead user lead requests
 
@@ -45,21 +51,38 @@ Scenario: I can toggle select leads
 @tgn @_tested @selenium @bulk
 Scenario: I can bulk remove leads from my requested leads list
   And I check "mark_all"
-  And I press translated "leads.index.button_bulk_destroy_lead_request"
+  And I press translated "lead_user.lead_requests.index.view.button_bulk_destroy_lead_request"
   Then I should see translated "flash.bulk_lead_requests.actions.destroy.notice"
   And I should not see "Printers ultimate deal"
   And I should not see "Monitors LCD deal"
 
 @tgn @done @_tested
 Scenario: I can remove a given leads from my requested leads list
-  And I follow translated "leads.index.destroy_lead_request"
+  And I follow translated "lead_user.lead_requests.index.view.destroy_lead_request"
   Then I should see translated "flash.lead_users.actions.destroy.notice"
 
-@tgn @done @_todo
+@tgn @done @_non_testable
 Scenario: My requested list should be without pagination
   Given pagination per page size in model LeadRequest is set to 1
   And I go to lead user lead requests
-  And I open page in browser
+  And I should see "Printers ultimate deal"
+  And I should see "Faxes ultimate deal"
 
-@tgn @_todo
-Scenario: I can narrow down the results by filters and serch box
+@tgn @_tested
+Scenario: I can narrow down the results by filters and search box
+  Given I select "Denmark" from "search_with_country"
+  And I press translated "lead_user.lead_requests.index.view.search.search_button"
+  Given I fill in "search_with_keyword" with "ultimate"
+  And I press translated "lead_user.lead_requests.index.view.search.search_button"
+  Then I should see "Printers ultimate deal"
+  And I should see "Copy machines ultimate deal"
+  And I should not see "Monitors LCD deal"
+  Then I select "Office" from "search_with_category"
+  And I press translated "lead_user.lead_requests.index.view.search.search_button"
+  Then I should see "Copy machines ultimate deal"
+  And I should not see "Monitors LCD deal"
+  Then I select "4000" from "search_with_deal_value_from"
+  And I select "8000" from "search_with_deal_value_to"
+  And I press translated "lead_user.lead_requests.index.view.search.search_button"
+  Then I should see "Copy machines ultimate deal"
+  And I should not see "Faxes ultimate deal"

@@ -5,6 +5,7 @@
         <div class="general">          
           <%= check_box_tag("lead_purchase_ids[]", lead_purchase.id) if show_checkboxes %>
           <h3><%= lead_purchase.header %></h3>
+          <%= link_to t("lead_user.lead_purchases.index.view.view_lead"), lead_users_lead_purchase_path(lead_purchase) %><br />
           <span><%= t("lead_purchases.listing.purchase_value_label") %>
             <b><%= lead_purchase.purchase_value %></b></span>
 
@@ -20,10 +21,21 @@
           <div><%= t("lead_purchases.listing.www_address") %> <b><%= lead_purchase.lead.www_address %></b></div>
           <div><%= t("lead_purchases.listing.email_address") %> <b><%= lead_purchase.lead.email_address %></b></div>
           <div><%= t("lead_purchases.listing.lead_name") %> <b><%= lead_purchase.lead.lead_name %></b></div>
+          <div><%= t("lead_purchases.listing.address_label") %> <b><%= lead_purchase.lead.address %></b></div>
+          <div><%= t("lead_purchases.listing.created_by_label") %> <b><%= lead_purchase.lead.creator_name %></b></div>
+
           <% if block_card %>
               <%= with_output_buffer { block_card.call(lead_purchase) } if block_card %>
           <% end %>
 
+        </div>
+        <div class="stats">
+          <span><%= t("lead_purchases.listing.clicks_count_label") %><b><%= lead_purchase.clicks_count %></b></span>
+          <span><%= t("lead_purchases.listing.exposures_count_label") %><b><%= lead_purchase.exposures_count %></b></span>
+          <span><%= t("lead_purchases.listing.sale_limit_label") %><b><%= lead_purchase.sale_limit %></b></span>
+          <span><%= t("lead_purchases.listing.novelty_label") %><b><%= t("models.lead.novelty.lvl#{lead_purchase.novelty_level}") %></b></span>
+          <span><%= t("lead_purchases.listing.hotness_label") %><b><%= t("models.lead.hotness.lvl#{lead_purchase.hotness_level}") %></b></span>
+          <span><%= t("lead_purchases.listing.certification_label") %><b><%= t("models.lead.certification.lvl#{lead_purchase.certification_level}") %></b></span>
         </div>
         <div class="tools">
           <% if block_tools %>

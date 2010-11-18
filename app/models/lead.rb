@@ -9,6 +9,7 @@ class Lead < ActiveRecord::Base
 
   belongs_to :creator, :polymorphic => true, :foreign_key => "creator_id"
   belongs_to :category
+  belongs_to :country
   has_many :lead_translations, :dependent => :destroy
   has_many :lead_purchases
 
@@ -75,9 +76,9 @@ class Lead < ActiveRecord::Base
   end
 
   def certification_level
-    if certification_level_ratio >= Settings.certification_level_2
+    if certification_level_ratio >= Settings.certification_level_2.to_i
       2
-    elsif certification_level_ratio >= Settings.certification_level_1
+    elsif certification_level_ratio >= Settings.certification_level_1.to_i
       1
     else
       0

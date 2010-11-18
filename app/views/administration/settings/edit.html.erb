@@ -4,11 +4,12 @@
 
 <%= form_tag administration_setting_path, :method => :put do %>
     <ul>
-    <% @settings.each do |setting| %>
-        <li><%= setting.var.humanize %> <%= text_field "settings", setting.id, :value => setting.value  %></li>
+    <% @settings.each_with_index do |setting, i| %>
+        <li><%= setting.var.humanize %> <%= text_field "settings", setting.id, :value => setting.value, :id => "setting_#{i}"  %></li>
     <% end %>
     </ul>
-    <%= submit_tag  t("administration.settings.edit.view.button_update_settings") %>
+    <%= submit_tag  t("administration.settings.edit.view.button_update_settings"), :onclick => "if(confirm('#{t("administration.settings.edit.view.confirmation_update_message")}')){ this.form.submit(); } else {return false;}" %>
+    <%= button_to_function t("administration.settings.edit.view.button_cancel"), "history.go(-1)" %>
   <% end %>
 
 </column-mc:>

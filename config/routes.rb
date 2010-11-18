@@ -46,12 +46,14 @@ Nbs::Application.routes.draw do
     resources :lead_purchases
     resources :lead_requests
     resource :bulk_lead_requests, :controller => "bulk_lead_requests", :only => [:create, :destroy]
+    resource :bulk_lead_purchase_update, :controller => "bulk_lead_purchase_update", :only => [:create]
   end
 
   namespace :customers do
-    root :to => "buyer_leads#index"
+    root :to => "lead_requests#index"
     resources :subaccounts
     resources :lead_requests, :only => [:index, :update, :destroy]
+    resource :bulk_lead_requests, :controller => "bulk_lead_requests", :only => [:destroy]
   end
 
   namespace :agents do

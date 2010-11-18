@@ -40,6 +40,16 @@ Given /^a lead (.+) exists within category (.+) and is bought by user (.+) with 
   LeadPurchase.make!(:lead_id => lead.id, :owner => customer, :paid => true, :accessible => true)
 end
 
+Given /^lead (.+) is bought by user (.+) with role (.+) and is assigned to user (.+) with role (.+)$/ do |header, email, role, assignee_email, assignee_role|
+  lead = Lead.find_by_header(header).first
+  lead = Lead.make!(:header => header) if lead.nil?
+
+  customer = "User::#{role.camelize}".constantize.find_by_email(email)
+  assignee = "User::#{assignee_role.camelize}".constantize.find_by_email(assignee_email)
+
+  LeadPurchase.make!(:lead_id => lead.id, :owner => customer, :assignee => assignee, :paid => true, :accessible => true)
+end
+
 Given /^lead (.+).is created by user (.+) with role (.+)$/ do |name, email, role|
   u = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
   lead = Lead.find_by_header(name).last
@@ -52,8 +62,14 @@ Given /^I can see following () f for lead Printers ultimate deal$/ do |fields, l
 
 end
 
-Given /^lead (.+) was requested by user (.+) with role (.+)$/ do |header, email, role|
+Given /^lead "([^"]*)" was requested by user "([^"]*)" with role "([^"]*)"(?: and is owned by user "([^"]*)")?$/ do |header, email, role, owner_email|
   u = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
   lead = Lead.find_by_header(header).last
-  LeadRequest.make!(:requestee => u, :lead => lead)
+  owner = User::Customer.first(:conditions => { :email => owner_email })
+  LeadRequest.make!(:requestee => u, :lead => lead, :owner => owner)
+end
+
+Given /^I make ajax call to save lead purchase for lead (.+)$/ do |header|
+  lead = Lead.find_by_header(header).last
+  Then %{I run javascript update_lead_response_deadline('/buyers/lead_purchases/#{lead.lead_purchases.last.id}', $('#response_deadline_datepicker_#{lead.lead_purchases.last.id}').val())}
 end

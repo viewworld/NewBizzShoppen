@@ -34,6 +34,10 @@ module NavigationHelpers
         '/lead_users/lead_purchases'
     when /customers subaccounts/
         '/customers/subaccounts'
+    when /customers lead requests/
+        '/customers/lead_requests'
+    when /buyer lead purchases/
+        '/buyers/lead_purchases'
     when /my profile/
         '/my_profile'
     when /agent sign up/
