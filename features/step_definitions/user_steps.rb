@@ -53,6 +53,16 @@ Then /^a confirmation message should be sent to (.+)$/ do |email|
   assert ActionMailer::Base.deliveries.size > 0
 end
 
+Then /^a confirmation message to (.+) should include confirmation link$/ do |email|
+  user = "User::Abstract".constantize.first(:conditions => { :email => email })
+  assert ActionMailer::Base.deliveries.last.body.raw_source.include?("/users/confirmation?confirmation_token=#{user.confirmation_token}")
+end
+
+Then /^confirmation link should confirm account for (.+)$/ do |email|
+  user = "User::Abstract".constantize.first(:conditions => { :email => email })
+  visit "/users/confirmation?confirmation_token=#{user.confirmation_token}"
+end
+
 Then /^a password reset message should be sent to (.+)$/ do |email|
   assert ActionMailer::Base.deliveries.size > 0
 end
@@ -124,4 +134,9 @@ Then /^user (.+) with role (.+) has no subaccounts$/ do |email, role|
   end
   user.subaccounts.each(&:destroy)
   user.reload
+end
+
+Then /^user (.+) with role (.+) should not be confirmed$/ do |email, role|
+  user = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
+  assert user.confirmed_at.blank?
 end
