@@ -9,6 +9,8 @@
       <%= submit_tag t("leads.index.search.search_button") %>
   <% end %>
 
+  <h2><%= leads_listing_header %></h2>
+
   <%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this.checked,'input:checkbox')" %>
   <%= form_tag bulk_action_path do %>
       <%= leads_listing @leads, :show_checkboxes => true do |blocks| %>

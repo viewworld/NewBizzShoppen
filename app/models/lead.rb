@@ -22,7 +22,7 @@ class Lead < ActiveRecord::Base
   scope :without_outdated, lambda { where("purchase_decision_date >= ?", Date.today.to_s ) }
   scope :without_locked_users, joins("INNER JOIN users ON users.id=leads.creator_id").where("users.locked_at is NULL")
   #====================
-  scope :bestsellers, order("lead_purchases_count DESC")
+  scope :bestsellers, order("lead_purchases_counter DESC")
   scope :latest, order("created_at DESC")
 
   validates_presence_of :company_name, :lead_name, :phone_number, :sale_limit, :category_id

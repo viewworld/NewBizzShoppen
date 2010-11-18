@@ -12,4 +12,12 @@ module LeadsHelper
     options[:show_checkboxes] ||= false
     render(:partial => '/leads/listing', :locals => options.merge({:collection => collection}.merge(@hb.results)))
   end
+
+  def leads_listing_header
+    if params[:search].is_a?(Hash)
+      header = (['bestsellers','latest','featured'] & params[:search].keys).first
+      header ? t("leads.index.#{header}_header") : nil
+    end
+  end
+
 end
