@@ -17,7 +17,7 @@ Background:
   And lead Keyboards deal is bought by user customer@person.com with role customer and is assigned to user lead_user2@person.com with role lead_user
   Then I sign in as lead_user2@person.com with password supersecret
 
-@tgn @_done @_wip1 @selenium
+@tgn @_done @_tested @selenium
 Scenario: I can transfer lead access to other lead handler that belong to the same customer (!!)
   Given I fill in "search_with_keyword" with "Printers ultimate deal"
   And I press translated "lead_user.lead_purchases.index.view.search.search_button"
