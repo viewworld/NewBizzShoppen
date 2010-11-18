@@ -24,6 +24,7 @@ class Lead < ActiveRecord::Base
   #====================
   scope :bestsellers, order("lead_purchases_counter DESC")
   scope :latest, order("created_at DESC")
+  scope :featured, where(:featured => true)
 
   validates_presence_of :company_name, :lead_name, :phone_number, :sale_limit, :category_id
   validates_inclusion_of :sale_limit, :in => 0..10

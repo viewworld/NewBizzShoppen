@@ -166,6 +166,7 @@ en:
       button_bulk_create_cart_item: 'Add to cart'
       bestsellers_header: BEST SELLERS
       latest_header: LATEST LEADS
+      featured_header: FEATURED LEADS
 
 
   home:
