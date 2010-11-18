@@ -104,6 +104,7 @@ en:
       novelty_label: 'Novelty:'
       hotness_label: 'Hotness:'
       certification_label: 'Certification:'
+      created_by_label: 'Created by:'
     statuses:
       not_contacted: Not contacted
       contacted: Contacted

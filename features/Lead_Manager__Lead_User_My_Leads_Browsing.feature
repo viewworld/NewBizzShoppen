@@ -8,7 +8,7 @@ Background:
   And an user with role lead_user and email lead_user2@person.com exists as subaccount for customer customer@person.com
   And an user with role lead_user and email lead_user44@person.com exists as subaccount for customer customer@person.com
   And lead Printers ultimate deal exists within category Computers
-  And lead Printers ultimate deal exists with attributes "email_address:john.printer@fghprintesrs.noserver.com,address:London 847-387 Veilingstreet 46,clicks_count:17,exposures_count:887,company_name:FGH Printers,lead_name:John Printer,hidden_description:Hidden description for this lead,purchase_value:3034.87,description:Public desc for printers deal"
+  And lead Printers ultimate deal exists with attributes "creator_name:Johan Printing,email_address:john.printer@fghprintesrs.noserver.com,address:London 847-387 Veilingstreet 46,clicks_count:17,exposures_count:887,company_name:FGH Printers,lead_name:John Printer,hidden_description:Hidden description for this lead,purchase_value:3034.87,description:Public desc for printers deal"
   And lead Monitors LCD deal exists within category Computers
   And lead Monitors LCD deal exists with attributes "hidden_description:Hidden description for this lead,purchase_value:2002.87"
   And lead Keyboards deal exists within category Office
@@ -75,13 +75,32 @@ Scenario: I can see paginated list of leads
   Then I follow "2"
   Then I follow "1"
 
+@tgn @_tested
 Scenario: I can see all leads bought by lead buyers that belong to my account
+  Then I should see "Printers ultimate deal"
+  Then I should see "Monitors LCD deal"
+  Then I should see "Keyboards deal"
+  Then I should not see "Mouses deal"
 
 Scenario: I can see all leads requested by lead users that belong to my account  
 
-Scenario: I should see created by, rating % and certification level for each lead
+@tgn @_tested
+Scenario: I should see created by and certification level for each lead
+  Then I should see "Johan Printing"
+  And I should see translated "models.lead.certification.lvl0"
 
+@m3
+Scenario: I should see rating % for each lead
+
+@_tgn @_wip1
 Scenario: I can see company contact on lead details page
+  When I fill in "search_with_keyword" with "printers"
+  And I press translated "lead_user.lead_purchases.index.view.search.search_button"
+  Then I follow translated "lead_user.lead_purchases.index.view.view_lead"
+  Then I should see "John Printer"
+  And I should see "john.printer@fghprintesrs.noserver.com"
+  And I should see "FGH Printers"
+  And I should see "London 847-387 Veilingstreet 46"
 
 Scenario: I can email the lead if email information were provided
 # popup with email form appears
