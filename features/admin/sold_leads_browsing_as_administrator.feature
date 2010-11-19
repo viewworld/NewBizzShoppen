@@ -22,8 +22,16 @@ Scenario: I can browse sold leads with pagination
 @ao @_todo
 Scenario: I can filter the listing (similiar to those in lead catalogue + categories)
 
-@ao @_todo
+@ao @done @_tested
 Scenario: I can sort by columns (those that do match to database columns)
+  Given pagination page size for leads is set to 100
+  And lead ZZZZZLead exists within category Test
+  And lead AAAAALead exists within category Test
+  And I follow translated "layout.main_menu.admin.leads"
+  And I follow translated "leads.table.header"
+  Then I should see AAAAALead before ZZZZZLead
+  And I follow translated "leads.table.header"
+  Then I should see ZZZZZLead before AAAAALead
 
 @ao @_todo
 Scenario: I can go to lead details by clicking on the show link
