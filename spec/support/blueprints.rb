@@ -30,6 +30,26 @@ Lead.blueprint do
   purchase_decision_date { (Date.today+5) }
 end
 
+Lead.blueprint(:featured) do
+  header { Faker::Lorem.words(4).to_s.capitalize }
+  description { Faker::Lorem.sentences(2).to_s }
+  hidden_description { Faker::Lorem.sentences(2).to_s }
+  purchase_value { Faker.numerify("###").to_f }
+  price { Faker.numerify("###").to_f }
+  country_id { 1 }
+  company_name { Faker::Internet.domain_word.capitalize }
+  lead_name { Faker::Name.name }
+  phone_number { Faker::PhoneNumber.phone_number }
+  email_address { Faker::Internet.email }
+  address { Faker::Address.street_address }
+  creator_id { User::Agent.make!.id }
+  creator_type { "User::Agent" }
+  category_id { Category.make!.id }
+  sale_limit { 1 }
+  purchase_decision_date { (Date.today+5) }
+  featured { true }
+end
+
 LeadPurchase.blueprint do
   paid { false }
   accessible { false }
