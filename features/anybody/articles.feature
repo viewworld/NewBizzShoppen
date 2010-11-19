@@ -1,7 +1,7 @@
 @articles
-Feature: Articles -  Articles
+Feature: Articles - Anybody
 
-Scenario: I can see article content by clicing on about us
+Scenario: I can see article content by clicking on about us
 
 Scenario: I can see blurb text on the sign up page
 
