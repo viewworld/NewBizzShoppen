@@ -1,5 +1,5 @@
 @user_accounts @$_call_centre @m1
-Feature: User account Admin - Listing Manage
+Feature: User accounts management
 
  Background: Sign in user and set English locale
   Given I am on the homepage

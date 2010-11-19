@@ -1,5 +1,5 @@
 @lead_manager @$_freelance_agent  @m1
-Feature: Lead Manager - Freelance agent - Create Lead
+Feature: Lead creation by freelance agent
 
 In order to create and manage leads I sell
 As an Agent

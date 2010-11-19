@@ -1,5 +1,5 @@
 @lead_catalog @$_small_buyer @m1
-Feature: Leads catalogue for small buyer
+Feature: Leads catalog for small buyer
 
 Background:
   Given I am on the homepage

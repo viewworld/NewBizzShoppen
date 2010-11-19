@@ -1,30 +1,24 @@
-@statistics @$_admin
-Feature: Statistics - Admin
+@statistics @$_call_centre
+Feature: Statistics for call centre
 
 In order to make better decisions
-As a Admin
+As a Agent
 I can see all detailed statistics
 
 Background:
-I log into the system as an Admin
-And I go to Admin Panel
-And I go to Admin Statistics
+I log into the system as an Agent
+And I go to Agent Panel
+And I go to Agent Statistics
 
-Scenario: I can see total number of leads created
+Scenario: I can see number of leads created by my agents
 
-Scenario: I can see total number of views of leads
+Scenario: I can view number of views of leads created by my agents
 
-Scenario: I can see total number of purchases of leads 
+Scenario: I can see a number of purchases of leads created by my agents
 
-Scenario: I can see total turnover
-
-Scenario: I can see total earnings (turnover - agants cut)
+Scenario: I can see my total earnings
 
 Scenario: I can see distributions of ratings (amount and percentage)
-
-Scenario: I can see creditor mass (the amount that needs to be paid out)
-
-Scenario: I can see TBI (amounts to be invoiced)
 
 Scenario: I can see line chart with lead creation data plotted
 
@@ -34,16 +28,16 @@ Scenario: I can see line chart with lead purchases data plotted
 
 Scenario: I can see line chart with earnings data plotted
 
-Scenario: I can see line chart with turnover data plotted
-
 Scenario: I can see line chart with ratings data plotted
-
-Scenario: I can see line chart with creditor mass data plotted
-
-Scenario: I can see line chart with TBI data plotted
 
 Scenario: I can select range of time for data to be calculated
 
 Scenario: I can select from preselected time ranges (today (no charts), this week (default), this month, this year)
+
+Scenario: I can see list of agents with following metrics displayed: leads created, leads viewed 
+
+Scenario: I can see list of agents with following metrics displayed: leads sold, total earnings
+
+Scenario: I can sort the list of agents metrices
 
 Scenario: Non traceable metrics are stored in separate statistics table and updated daily

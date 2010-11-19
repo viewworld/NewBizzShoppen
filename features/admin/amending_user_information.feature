@@ -1,5 +1,5 @@
 @user_accounts @$_admin @m1
-Feature: User account Admin - Edit
+Feature: Amending user information
 
 Background: Sign in user and set English locale
   Given I am on the homepage

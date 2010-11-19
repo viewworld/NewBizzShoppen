@@ -1,5 +1,5 @@
 @lead_catalog @m1
-Feature: Lead Catalog - Categories Listing
+Feature: Categories Listing
 
 Background: Set English locale
   Given I am on the homepage

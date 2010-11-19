@@ -1,5 +1,5 @@
 @lead_catalog @$_lead_buyer @m1
-Feature: Lead Listing for buyer
+Feature: Leads catalog for buyer
 
 Background:
   Given I am on the homepage

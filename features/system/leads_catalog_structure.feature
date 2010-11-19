@@ -1,5 +1,5 @@
 @lead_catalog @m1
-Feature: Lead Catalog - Structure
+Feature: Leads catalog structure
 
 #:::info::: Actually the categories should be organized in tree structure, not the leads.
 @bk @_done @nontestable
