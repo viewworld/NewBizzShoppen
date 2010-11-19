@@ -35,6 +35,8 @@ class Lead < ActiveRecord::Base
 
   accepts_nested_attributes_for :lead_translations, :allow_destroy => true
 
+  scoped_order :id, :header, :sale_limit, :price, :lead_purchases_counter, :published
+
   attr_accessor :notify_buyers_after_update
   after_create :cache_creator_name
   before_destroy :can_be_removed?

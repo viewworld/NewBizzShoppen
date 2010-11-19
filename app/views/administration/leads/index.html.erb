@@ -5,6 +5,9 @@
   <% end %>
 
   <%= leads_table @leads, :show_checkboxes => false do |blocks| %>
+      <% blocks.tools do |lead| %>
+          <%= link_to t("administration.leads.index.view.show"), lead_path(lead) %>
+      <% end %>
     <% blocks.status_column do |lead| %>
         <%= administration_lead_status(lead) %>
     <% end %>

@@ -75,7 +75,11 @@ Given /^I make ajax call to save lead purchase for lead (.+)$/ do |header|
 end
 
 Given /^there are "([^"]*)" existing leads$/ do |num|
-  num.to_i.times{Lead.make.save}
+  num.to_i.times{Lead.make!}
+end
+
+Given /^there are "([^"]*)" sold leads$/ do |num|
+  num.to_i.times{LeadPurchase.make!(:lead => Lead.make!, :owner => User::Customer.make!, :paid => true, :accessible => true)}
 end
 
 Given /^(.+) is a best seller$/ do |header|

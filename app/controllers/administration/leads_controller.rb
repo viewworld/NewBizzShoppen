@@ -6,7 +6,7 @@ class Administration::LeadsController < Administration::AdministrationController
 
   def collection
     @search = Lead.scoped_search(params[:search])
-    @leads = @search.paginate(:page => params[:page])
+    @leads = @search.paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)
   end
 
 end
