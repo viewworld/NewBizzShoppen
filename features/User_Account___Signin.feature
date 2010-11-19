@@ -73,6 +73,7 @@ Feature: User Account - Signin
     | lead user lead purchases       |
     | customers subaccounts          |
     | my profile                     |
+
   @_tested
   Scenario: A guest user should not see "My profile"
     Given I am not sign in
