@@ -33,4 +33,3 @@ Scenario: Account have to be activated through activation email
   And a confirmation message to driscoll@person.noserver.com should include confirmation link
   Then confirmation link should confirm account for driscoll@person.noserver.com
   And I should see translated "devise.confirmations.confirmed"
-  And I open page in browser

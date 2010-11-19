@@ -5,25 +5,25 @@
   <%= link_to t("buyer_home.show.view.create_new_buyer_account"), new_buyer_account_path %>
 
   <br/>
-  <block w="33%">
+  <div id="news">
     <%= t("buyer_home.show.view.header_news") %>
-  </block>
+  </div>
 
-  <block w="33%">
+  <div id="best_sellers">
     <%= t("buyer_home.show.view.header_best_sellers") %> <%= link_to t("buyer_home.show.view.complete_list_link"), leads_path(:search => {:bestsellers => true}) %>
 
     <ul>
       <%= render :partial => 'lead', :collection => @best_sellers, :as => :lead %>
     </ul>
-  </block>
+  </div>
 
-  <block w="33%">
+  <div id="latest_leads">
     <%= t("buyer_home.show.view.header_latest_leads") %> <%= link_to t("buyer_home.show.view.complete_list_link"), leads_path(:search => {:latest => true}) %>
 
     <ul>
       <%= render :partial => 'lead', :collection => @latest_leads, :as => :lead %>
     </ul>
-  </block>
+  </div>
 
 </column-mc:>
 

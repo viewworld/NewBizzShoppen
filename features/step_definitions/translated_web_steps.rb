@@ -9,18 +9,29 @@ Then /^I should see translated "([^"]*)"(?: with options "([^"]*)")?$/ do |key, 
     end
 end
 
+Then /^I should not see translated "([^"]*)"(?: with options "([^"]*)")?$/ do |key, options|
+  I18n.locale = :en
+  if options.present?
+    options = Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys
+  Then %{I should not see "#{I18n.t(key, options)}"}
+    else
+  Then %{I should not see "#{I18n.t(key)}"}
+    end
+end
+
+
 When /^I press translated "([^"]*)"$/ do |key|
   I18n.locale = :en
   Then %{I press "#{I18n.t(key)}"}
 end
 
-Then /^I should not see translated "([^"]*)"$/ do |key|
+Given /^I follow translated "([^"]*)"(?: within "([^"]*)")$/ do |key,selector|
   I18n.locale = :en
-  Then %{I should not see "#{I18n.t(key)}"}
+  with_scope(selector) do
+    Then %{I follow "#{I18n.t(key)}"}
+  end
 end
 
-
-#TODO - Add "within" capability
 Given /^I follow translated "([^"]*)"$/ do |key|
   I18n.locale = :en
   Then %{I follow "#{I18n.t(key)}"}
