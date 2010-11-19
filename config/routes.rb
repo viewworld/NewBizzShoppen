@@ -20,6 +20,7 @@ Nbs::Application.routes.draw do
     resources :categories
     resource :setting, :only => [:edit, :update]
     resources :email_templates
+    resources :leads
   end
 
   namespace :buyers do

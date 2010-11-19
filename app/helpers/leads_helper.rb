@@ -20,4 +20,11 @@ module LeadsHelper
     end
   end
 
+  def administration_lead_status(lead)
+    case lead.published
+      when false then t("administration.leads.index.view.option_not_published")
+      when true then t("administration.leads.index.view.option_published")
+    end
+  end
+
 end
