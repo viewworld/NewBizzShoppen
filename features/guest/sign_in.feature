@@ -1,5 +1,5 @@
 @user_accounts @m1
-Feature: User Account - Signin
+Feature: Sign in
 
   In order to get access to protected sections of the site
   A registred user

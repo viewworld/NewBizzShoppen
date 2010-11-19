@@ -1,5 +1,5 @@
 @paypal @$_system
-Feature: Paypal - Payments
+Feature: Paypal payments
 
 Scenario: I am redirected to paypal from cart view on checkout
 

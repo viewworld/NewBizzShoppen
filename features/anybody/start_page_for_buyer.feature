@@ -1,6 +1,6 @@
 #This is almost the same as in Agent scope
 @start_pages @m2
-Feature: Start Pages - Buyer
+Feature: Start page for buyer
 
 Background: I am a guest and I am on the home page
   Given I am on the home page

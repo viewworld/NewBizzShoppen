@@ -20,3 +20,7 @@ Scenario: I can specify if news should be displayed for buyers, agents or both(?
 Scenario: I can use WYSIWYG to edit news entry content
 
 Scenario: I can upload and embed image into news entry
+
+Scenario: I can filter agent news to articles only
+
+Scenario: I can filter buyer news to blurb only

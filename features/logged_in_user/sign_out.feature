@@ -1,5 +1,5 @@
 @user_accounts @m1
-Feature: User Account - Signout
+Feature: Sign out
 
 Background: Sign in user and set English locale
   Given I am on the homepage

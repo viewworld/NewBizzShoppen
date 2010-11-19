@@ -1,5 +1,5 @@
 @user_accounts @m1
-Feature: User Account - Resend activation link
+Feature: Resend activation link
 
 Background:  Sign up user and set English locale
   Given I am on the homepage

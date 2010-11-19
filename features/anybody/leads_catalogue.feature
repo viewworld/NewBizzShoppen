@@ -1,5 +1,5 @@
 @lead_catalog @$_guest @m1
-Feature: Lead Listing for guest
+Feature: Leads catalogue
 
 Background:
   Given I am on the homepage

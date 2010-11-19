@@ -1,5 +1,5 @@
 @search @m2
-Feature: Search - search panel
+Feature: Generic search panel
 
 @tgn @_done @_to_test
 Scenario: I can see search panel on leads listing page

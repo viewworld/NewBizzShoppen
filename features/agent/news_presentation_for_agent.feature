@@ -1,5 +1,5 @@
 @news 
-Feature: Agent news
+Feature: News presentation for agent
 
 Scenario: I can see list of news for agent 
 

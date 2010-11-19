@@ -1,5 +1,5 @@
 @user_accounts @m1
-Feature: User accounts - password change
+Feature: Password change
 
 Background:
     Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role agent

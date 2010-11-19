@@ -1,5 +1,5 @@
 @user_accounts @$_admin
-Feature: User accounts - fraud detection
+Feature: Fraud detection
 
 Scenario: No agent and customer must have the same IP address, 
 
@@ -7,7 +7,7 @@ Scenario: ...and other appropriate measures
 
 Scenario: System will mark accounts as possible fraud 
 
-Scenario: possible fraud have blocke receiving money
+Scenario: possible fraud have blocked receiving money
 
 Scenario: I can browse possible frauds with pagination 
 

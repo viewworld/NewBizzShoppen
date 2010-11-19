@@ -1,5 +1,5 @@
 @user_accounts @$_call_centre
-Feature: User Accounts - Call Centre - Create agent accounts
+Feature: Agent accounts administration for call centre
 
 Scenario: I can create call centre agent account
 

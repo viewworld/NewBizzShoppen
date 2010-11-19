@@ -1,4 +1,4 @@
 @user_accounts
-Feature: User Accounts - Call Centre Payout Info
+Feature: Call centre payout information update
 
 Scenario: I can update my payout information

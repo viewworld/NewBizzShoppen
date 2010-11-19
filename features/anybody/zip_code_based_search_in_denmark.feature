@@ -1,5 +1,5 @@
 @search
-Feature: Search - By Zip Code Denmark
+Feature: Zip code based search in Denmark
 
 Scenario: I filter leads by supplying range of zip codes that leads need to be searched within
 
