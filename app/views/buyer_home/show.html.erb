@@ -1,6 +1,29 @@
 <column-mc:>
-  <h1>BuyerHome#show</h1>
 
-  <p>Find me in app/views/buyer_home/show.html.erb</p>
+  <h1><%= t("buyer_home.show.view.header_welcome") %> <%= link_to t("buyer_home.show.view.agent_link"), agent_home_path %></h1>
+
+  <%= link_to t("buyer_home.show.view.create_new_buyer_account"), new_buyer_account_path %>
+
+  <br/>
+  <div id="news">
+    <%= t("buyer_home.show.view.header_news") %>
+  </div>
+
+  <div id="best_sellers">
+    <%= t("buyer_home.show.view.header_best_sellers") %> <%= link_to t("buyer_home.show.view.complete_list_link"), leads_path(:search => {:bestsellers => true}) %>
+
+    <ul>
+      <%= render :partial => 'lead', :collection => @best_sellers, :as => :lead %>
+    </ul>
+  </div>
+
+  <div id="latest_leads">
+    <%= t("buyer_home.show.view.header_latest_leads") %> <%= link_to t("buyer_home.show.view.complete_list_link"), leads_path(:search => {:latest => true}) %>
+
+    <ul>
+      <%= render :partial => 'lead', :collection => @latest_leads, :as => :lead %>
+    </ul>
+  </div>
+
 </column-mc:>
 

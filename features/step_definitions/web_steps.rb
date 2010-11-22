@@ -238,6 +238,10 @@ Then /^"([^"]*)" should be selected for "([^"]*)"$/ do |field, value|
   find_field(field).value.should =~ /#{value}/
 end
 
+Then /^"([^"]*)" should be selected for translated "([^"]*)"$/ do |field, key|
+  find_field(field).value.should =~ /#{I18n.t(key)}/
+end
+
 Then /^"([^"]*)" should be selected for value "([^"]*)"$/ do |field, value|
   assert page.has_xpath?("//option[@selected = 'selected' and contains(string(), '#{value}')]")
 end
@@ -249,3 +253,21 @@ end
 Then /^I run javascript (.+)$/ do |js_code|
   page.evaluate_script(js_code)
 end
+
+Then /^I should see "([^"]*)" items on a list(?: within "([^"]*)")?$/ do |number, selector|
+  with_scope(selector) do
+    page.all(:css, 'li').size.should eql(number.to_i)
+  end
+end
+
+Then /^I should see "([^"]*)" first on a list(?: within "([^"]*)")?$/ do |text, selector|
+  with_scope(selector) do
+    page.all(:css, 'li').first.text.should =~ /#{text}/
+  end
+end
+
+Then /^I should see (.+) before (.+)$/ do |first,second|
+  page.body.should =~ /#{first}.*#{second}/m
+end
+
+

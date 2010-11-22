@@ -40,3 +40,7 @@ https://github.com/aslakhellesoy/cucumber/wiki/Multiline-Step-Arguments/c0492756
 cucumber --backtrace features/Lead_Catalog___Categories_Listing.feature --format pretty
 
 http://mocha.rubyforge.org/examples/misc.html
+
+== Skip running a line of code in context of rake
+
+config.active_record.observers = :lead_observer unless File.basename($0) == "rake"

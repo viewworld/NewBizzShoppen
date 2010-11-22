@@ -24,6 +24,8 @@ class Lead < ActiveRecord::Base
   #====================
   scope :bestsellers, order("lead_purchases_counter DESC")
   scope :latest, order("created_at DESC")
+  scope :featured, where(:featured => true)
+  scope :purchased, where("lead_purchases_counter > 0")
 
   validates_presence_of :company_name, :lead_name, :phone_number, :sale_limit, :category_id
   validates_inclusion_of :sale_limit, :in => 0..10
@@ -32,6 +34,8 @@ class Lead < ActiveRecord::Base
   liquid_methods :header, :description, :company_name, :lead_name, :phone_number, :email_address, :address, :www_address
 
   accepts_nested_attributes_for :lead_translations, :allow_destroy => true
+
+  scoped_order :id, :header, :sale_limit, :price, :lead_purchases_counter, :published
 
   attr_accessor :notify_buyers_after_update
   after_create :cache_creator_name

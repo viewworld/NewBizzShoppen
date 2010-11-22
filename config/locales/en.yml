@@ -12,6 +12,7 @@ en:
         categories: Categories
         email_templates: Email templates
         settings: Settings
+        leads: Leads
       agent:
         leads: My created leads
       call_centre:
@@ -164,6 +165,9 @@ en:
       request_lead: Request lead
       button_bulk_create_lead_request: 'Request leads'
       button_bulk_create_cart_item: 'Add to cart'
+      bestsellers_header: BEST SELLERS
+      latest_header: LATEST LEADS
+      featured_header: FEATURED LEADS
 
 
   home:
@@ -266,6 +270,19 @@ en:
           title: 'Edit template'
           button_update: 'Save'
 
+    leads:
+      index:
+        view:
+          title: 'Leads'
+          search_button: 'Search'
+          edit: 'Edit'
+          destroy: 'Destroy'
+          show: 'Show'
+          destroy_confirmation: 'Are you sure?'
+          option_published: 'published'
+          option_not_published: 'not published'
+          filter_purchased: 'Purchased'
+
   agent:
     leads:
       index:
@@ -351,6 +368,37 @@ en:
       view:
         title: 'Lead Buyer signup'
         button_create_account: 'Create my account'
+
+  buyer_home:
+    show:
+      view:
+        header_welcome: 'WELCOME TO OUR SITE'
+        agent_link: 'CLICK HERE IF YOU ARE AN AGENT'
+        header_best_sellers: 'BEST SELLERS'
+        header_latest_leads: 'LATEST LEADS'
+        header_news: 'NEWS'
+        purchase_value_label: 'Purchase value:'
+        lead_price_label: 'Lead price:'
+        description_label: 'Description:'
+        read_more_link: 'read more'
+        complete_list_link: 'complete list'
+        create_new_buyer_account: 'Create new buyer account'
+
+
+  agent_home:
+    show:
+      view:
+        header_welcome: 'WELCOME TO OUR SITE AGENT'
+        buyer_link: 'CLICK HERE IF YOU ARE A BUYER'
+        header_best_sellers: 'BEST SELLERS'
+        header_latest_leads: 'LATEST LEADS'
+        header_news: 'NEWS'
+        purchase_value_label: 'Purchase value:'
+        lead_price_label: 'Lead price:'
+        description_label: 'Description:'
+        read_more_link: 'read more'
+        complete_list_link: 'complete list'
+        create_new_agent_account: 'Create new agent account'
 
   customer:
     subaccounts:

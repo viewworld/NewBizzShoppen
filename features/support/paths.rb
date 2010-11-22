@@ -52,6 +52,15 @@ module NavigationHelpers
         '/users/password/new'
     when /lead user lead requests/
         '/lead_users/lead_requests'
+    when /the (.*) lead/
+        lead_path(Lead.find_by_header($1))
+    when /leads/
+        leads_path
+    when /agent home/
+        agent_home_path
+    when /buyer home/
+        buyer_home_path
+
 
 
     # Add more mappings here.

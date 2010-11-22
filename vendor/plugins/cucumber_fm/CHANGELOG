@@ -1,4 +1,13 @@
-
+* feature - highlighting scenario estimation if this scenario isn't done
+* fix - sorting group by context in business overview
+* feature - grouping by role (@$_)
+* fix - feature delete
+* fix - correct parsing scenario|feature|background title when in title appear ':'
+* fix - syntax highlighting ( Background:, Examples:, And, But )
+* fix - &amp; &lt; &gt; reverse_html_escape
+* fix - escaping ' and " for javascript strings
+* fix sorting directory names in business overview page
+* fix parsing estimation tag in scenarios navigator
 * custom build of Mozilla SkyWriter (aka Bespin) with gherkin syntax highlighting
 * editor page
 ** layout fixes

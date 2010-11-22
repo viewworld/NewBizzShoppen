@@ -15,7 +15,8 @@ module CucumberFM
                 :bucket => /@__[^\s\d]+/,
                 :effort => /@\d/,
                 :benefit => /@_\d/,
-                :something_todo => /@:::[a-z]{2,3}\z/
+                :something_todo => /@:::[a-z]{2,3}\z/,
+                :role => /@\$_[a-z_]+/
         }
 
         TECHNICAL = [
@@ -38,6 +39,10 @@ module CucumberFM
 
         def tags= tags
           @tags = tags
+        end
+
+        def done?
+          %w(@_done @_qa @_tested @_accepted).include?(status)
         end
 
 

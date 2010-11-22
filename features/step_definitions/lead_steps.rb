@@ -73,3 +73,19 @@ Given /^I make ajax call to save lead purchase for lead (.+)$/ do |header|
   lead = Lead.find_by_header(header).last
   Then %{I run javascript update_lead_response_deadline('/buyers/lead_purchases/#{lead.lead_purchases.last.id}', $('#response_deadline_datepicker_#{lead.lead_purchases.last.id}').val())}
 end
+
+Given /^there are "([^"]*)" existing leads$/ do |num|
+  num.to_i.times{Lead.make!}
+end
+
+Given /^there are "([^"]*)" sold leads$/ do |num|
+  num.to_i.times{LeadPurchase.make!(:lead => Lead.make!, :owner => User::Customer.make!, :paid => true, :accessible => true)}
+end
+
+Given /^(.+) is a best seller$/ do |header|
+  lead = Lead.find_by_header(header).first
+  (Lead.maximum(:lead_purchases_counter)+1).times do
+    LeadPurchase.make!(:lead_id => lead.id, :owner => User::Customer.make!, :paid => true, :accessible => true)
+  end
+end
+
