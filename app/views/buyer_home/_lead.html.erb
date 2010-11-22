@@ -1,0 +1,7 @@
+<li>
+  <%= link_to lead.header, lead_path(lead) %><br/>
+  <%= t("buyer_home.show.view.purchase_value_label") %> <%= lead.purchase_value %>
+  <%= t("buyer_home.show.view.lead_price_label") %> <%= lead.price %><br/>
+  <%= t("buyer_home.show.view.description_label") %> <%= lead.description %><br/>
+  <%= link_to t("buyer_home.show.view.read_more_link"), lead_path(lead) %>
+</li>

@@ -8,7 +8,7 @@
 /vendor/cache
 /vendor/cache/**/*
 Gemfile.lock
-/capybara*.*
+/capybara/**/*
 .idea
 /public/system
 .rvmrc
