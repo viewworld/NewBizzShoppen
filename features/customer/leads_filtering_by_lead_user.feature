@@ -2,7 +2,7 @@
 Feature: Leads filtering by lead user
 
 #This is basically filtering by assignee_id - so do not create new view for that, just add dropdown with user selection to filter in Owned
-#Leads view. Probably all tests beside ther first will be possible to be marked as @tested_elsewhere 
+#Leads view. Probably all tests beside the first will be possible to be marked as @tested_elsewhere 
 @tgn @_todo 
 Scenario: I can browse leads assigned to one of my lead users with pagination
 
