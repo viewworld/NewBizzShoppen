@@ -1,4 +1,4 @@
-@lead_manager @$_lead_user @m2
+@lead_manager @$_lead_user @m2    @_xyz1
 Feature: My leads for lead user
 
 Background:
@@ -62,11 +62,19 @@ Scenario: I can see lead header, purchase value, description, contact info
 Scenario: I should see company name on leads listing
   Then I should see "FGH Printers"
 
-@tgn @bk @_to_test
+@tgn @bk @_tested
 Scenario: I can download lead as CSV
+  Given I fill in "search_with_keyword" with "Printers ultimate deal"
+  And I press translated "lead_user.lead_purchases.index.view.search.search_button"
+  Then I follow translated "lead_user.lead_purchases.index.view.download_csv_link"
+  And I should see "Printers ultimate deal"
+  And I should see "Public desc for printers deal"
 
-@tgn @bk @_to_test
+@tgn @bk @_tested @selenium
 Scenario: I can bulk download leads as CSV
+  Then I check "mark_all"
+  And I follow translated "lead_user.lead_purchases.index.view.bulk_download_csv_link"
+
 
 @tgn @_tested
 Scenario: I can see paginated list of leads
@@ -82,7 +90,7 @@ Scenario: I can see all leads bought by lead buyers that belong to my account
   Then I should see "Keyboards deal"
   Then I should not see "Mouses deal"
 
-Scenario: I can see all leads requested by lead users that belong to my account  
+Scenario: I can see all leads requested by lead users that belong to my account
 
 @tgn @_tested
 Scenario: I should see created by and certification level for each lead
@@ -137,11 +145,22 @@ Scenario: I can bulk set status of leads (not contacted, dontacted, meeting, sig
   And I press translated "lead_user.lead_purchases.index.view.bulk_update_button"
   Then I should see translated "lead_user.bulk_lead_purchase_update.create.flash.lead_purchases_updated_successfully"
 
-@tgn @bk @_to_test
+@tgn @bk @_tested
 Scenario: I can print out lead information
+  Given I fill in "search_with_keyword" with "Printers ultimate deal"
+  And I press translated "lead_user.lead_purchases.index.view.search.search_button"
+  Then I follow translated "lead_user.lead_purchases.index.view.print_link"
+  Given I should see "Printers ultimate deal"
+  And I should see "Public desc for printers deal"
+  And I should see "john.printer@fghprintesrs.noserver.com"
 
-@tgn @bk @_to_test
+@tgn @bk @selenium @_tested
 Scenario: I can print out multiple leads information
+  Given I check "mark_all"
+  And I follow translated "lead_user.lead_purchases.index.view.bulk_print_link"
+  Then I should see "Printers ultimate deal"
+  Then I should see "Keyboards deal"
+  Then I should see "Monitors LCD deal"
 
 @bk @_todo
 Scenario: I should see a yellow color for a lead with expiration date ending in 3 days
