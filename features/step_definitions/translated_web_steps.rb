@@ -45,3 +45,8 @@ Given /^I select translated "([^"]*)" from "([^"]*)"$/ do |key, field|
   I18n.locale = :en
   Then %{I select "#{I18n.t(key)}" from "#{field}"}
 end
+
+And /"([^"]*)" should be selected for value translated "([^"]*)"/ do |field, key|
+  I18n.locale = :en
+  Then %{"#{field}" should be selected for value "#{I18n.t(key)}"}
+end

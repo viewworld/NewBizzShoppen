@@ -7,6 +7,7 @@
   <%= javascript_include_tag :defaults %>
 </head>
 <body>
+<% unless @print.blank? %>
 <ul class="<%= @print.respond_to?(:each) ? 'collection' : 'object' %> <%= @print.respond_to?(:each) ? dom_class(@print.first) : dom_class(@print) %>">
   <% (@print.respond_to?(:each) ? @print : [@print]).each do |print| %>
       <li>
@@ -14,6 +15,7 @@
       </li>
   <% end %>
 </ul>
+<% end %>
 
 
 <%= javascript_tag do -%>

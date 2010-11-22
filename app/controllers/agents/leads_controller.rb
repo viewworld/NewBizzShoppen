@@ -16,6 +16,10 @@ class Agents::LeadsController < Agents::AgentController
 
   public
 
+  def new
+    @lead = Lead.new(:published => true)
+  end
+
   def create
     @lead = current_user.leads.build(params[:lead])
 

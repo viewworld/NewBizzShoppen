@@ -63,9 +63,9 @@ Scenario: I can sort by columns (those that do match to database columns)
   And lead AAAAALead exists within category Test
   And I follow translated "layout.main_menu.admin.leads"
   And I follow translated "leads.table.header"
-  Then I should see AAAAALead before ZZZZZLead
+  Then I should see "AAAAALead" before "ZZZZZLead"
   And I follow translated "leads.table.header"
-  Then I should see ZZZZZLead before AAAAALead
+  Then I should see "ZZZZZLead" before "AAAAALead"
 
 @ao @_done @_tested
 Scenario: I can go to lead details by clicking on the show link

@@ -98,7 +98,7 @@ en:
       www_address: 'Www address:'
       email_address: 'Email:'
       address_label: 'Address:'
-      lead_name: 'Contact person:'
+      contact_name: 'Contact name:'
       clicks_count_label: 'Clicks:'
       exposures_count_label: 'Exposures:'
       sale_limit_label: 'Uniqueness:'
@@ -180,6 +180,8 @@ en:
         signup_message: "Don't have an account yet"
         agent_signup: 'Freelance agent signup'
         buyer_signup: 'Lead buyer signup'
+        forgotten_password_link: "Forgot your password?"
+        resend_confirmation_instructions: "Didn't receive confirmation instructions?"
 
   password:
     update:
@@ -415,8 +417,8 @@ en:
       index:
         view:
           title: 'Manage subaccounts'
-          new_lead_buyer: 'New lead buyer'
-          new_lead_user: 'New lead user'
+          new_lead_buyer: 'Create lead user with buying permission'
+          new_lead_user: 'Create lead user'
           edit: 'Edit'
       create:
         flash:
@@ -456,6 +458,10 @@ en:
           view_lead: 'View details'
           bulk_state_field: 'State'
           bulk_update_button: 'Update all selected leads'
+          bulk_download_csv_link: 'Download CSV for selected leads'
+          download_csv_link: 'CSV'
+          print_link: 'Print'
+          bulk_print_link: 'Print all selected leads'
           search:
             keyword_label: 'Keyword'
             search_button: 'Search'

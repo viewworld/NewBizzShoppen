@@ -34,11 +34,11 @@ class Lead < ActiveRecord::Base
   scope :featured, where(:featured => true)
   scope :purchased, where("lead_purchases_counter > 0")
 
-  validates_presence_of :company_name, :lead_name, :phone_number, :sale_limit, :category_id
+  validates_presence_of :header, :description, :hidden_description, :purchase_value, :price, :company_name, :contact_name, :phone_number, :sale_limit, :category_id, :address, :purchase_decision_date, :country_id
   validates_inclusion_of :sale_limit, :in => 0..10
   
 
-  liquid_methods :header, :description, :company_name, :lead_name, :phone_number, :email_address, :address, :www_address
+  liquid_methods :header, :description, :company_name, :contact_name, :phone_number, :email_address, :address, :www_address
 
   accepts_nested_attributes_for :lead_translations, :allow_destroy => true
 

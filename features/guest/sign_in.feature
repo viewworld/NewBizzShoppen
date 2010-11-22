@@ -60,7 +60,7 @@ Feature: Sign in
   Scenario Outline: A guest should be shown the login page for protected pages
     Given I am not sign in
     When I go to "<page>"
-    Then I should see translated "devise.failure.unauthenticated"
+    Then I should see translated "devise.failure.unauthenticated" with options ""
 
   Examples:
     | page                           |
@@ -80,11 +80,7 @@ Feature: Sign in
     When I go to "the homepage"
     Then I should not see translated "layout.my_profile_link"
 
-@tgn @m1 @_todo @added  
-Scenario: Newsletter checkbox should be selected by default
-
-@tgn @m1 @_todo
+@tgn @m1 @_tested
 Scenario: Add links present on sign in page to home login page as well (forgot password and confirmation instructions)
-
-@tgn @m1 @_todo
-Scenario: Screen name has to be unique  
+  Then I should see translated "home.show.view.forgotten_password_link"
+  And I should see translated "home.show.view.resend_confirmation_instructions"
