@@ -50,6 +50,12 @@ When /^(?:|I )fill in "([^"]*)" with "([^"]*)"(?: within "([^"]*)")?$/ do |field
   end
 end
 
+When /^(?:|I )fill in translated "([^"]*)" with "([^"]*)"(?: within "([^"]*)")?$/ do |field, value, selector|
+  with_scope(selector) do
+    fill_in(I18n.t(field), :with => value)
+  end
+end
+
 When /^(?:|I )fill in "([^"]*)" for "([^"]*)"(?: within "([^"]*)")?$/ do |value, field, selector|
   with_scope(selector) do
     fill_in(field, :with => value)
@@ -87,9 +93,21 @@ When /^(?:|I )check "([^"]*)"(?: within "([^"]*)")?$/ do |field, selector|
   end
 end
 
+When /^(?:|I )check translated "([^"]*)"(?: within "([^"]*)")?$/ do |field, selector|
+  with_scope(selector) do
+    check(I18n.t(field))
+  end
+end
+
 When /^(?:|I )uncheck "([^"]*)"(?: within "([^"]*)")?$/ do |field, selector|
   with_scope(selector) do
     uncheck(field)
+  end
+end
+
+When /^(?:|I )uncheck translated "([^"]*)"(?: within "([^"]*)")?$/ do |field, selector|
+  with_scope(selector) do
+    uncheck(I18n.t(field))
   end
 end
 
@@ -268,6 +286,13 @@ end
 
 Then /^I should see "([^"]*)" before "([^"]*)"$/ do |first,second|
   page.body.should =~ /#{first}.*#{second}/m
+end
+
+Then /^I should see "([^"]*)" rows in a table(?: within "([^"]*)")?$/ do |number, selector|
+  with_scope(selector) do
+    # +1 for header
+    page.all(:css, 'tr').size.should eql(number.to_i+1)
+  end
 end
 
 

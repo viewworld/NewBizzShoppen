@@ -1,6 +1,15 @@
 <column-mc:>
   <%= form_for @search, :url => administration_leads_path do |f| %>
-    <%= f.check_box :purchased, {}, "true", "false" %> <%= t("administration.leads.index.view.filter_purchased") %>
+    <%= f.label :purchased, t("administration.leads.index.view.filter_purchased") %><%= f.check_box :purchased, {}, "true", "false" %>
+    <%= f.label :with_keyword, t("administration.leads.index.search.keyword_label") %><%= f.text_field :with_keyword %>
+    <%= f.label :with_category, t("administration.leads.index.search.category_label") %><%= f.select :with_category, categories_for_select, :include_blank => true %>
+    <%= f.label :with_status, t("administration.leads.index.search.status_label") %><%= f.select :with_status, statuses_for_select, :include_blank => true %><br/>
+    <%= f.label :price_from, t("administration.leads.index.search.price_from_label") %><%= f.text_field :price_from %>
+    <%= f.label :price_to, t("administration.leads.index.search.price_to_label") %><%= f.text_field :price_to %><br/>
+    <%= f.label :lead_purchases_counter_from, t("administration.leads.index.search.lead_purchases_counter_from_label") %><%= f.text_field :lead_purchases_counter_from %>
+    <%= f.label :lead_purchases_counter_to, t("administration.leads.index.search.lead_purchases_counter_to_label") %><%= f.text_field :lead_purchases_counter_to %><br/>
+    <%= f.label :purchase_value_from, t("administration.leads.index.search.purchase_value_from_label") %><%= f.text_field :purchase_value_from %>
+    <%= f.label :purchase_value_to, t("administration.leads.index.search.purchase_value_to_label") %><%= f.text_field :purchase_value_to %>
     <%= submit_tag t("administration.leads.index.view.search_button") %>
   <% end %>
 

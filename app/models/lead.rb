@@ -16,11 +16,18 @@ class Lead < ActiveRecord::Base
   scope :with_keyword, lambda { |q| where("lower(header) like :keyword OR lower(description) like :keyword OR lower(creator_name) like :keyword", {:keyword => "%#{q.downcase}%"}) }
   scope :deal_value_from, lambda { |q| where(["purchase_value >= ?", q]) }
   scope :deal_value_to, lambda { |q| where(["purchase_value <= ?", q]) }
+  scope :price_from, lambda { |q| where(["price >= ?", q]) }
+  scope :price_to, lambda { |q| where(["price <= ?", q]) }
+  scope :lead_purchases_counter_from, lambda { |q| where(["lead_purchases_counter >= ?", q]) }
+  scope :lead_purchases_counter_to, lambda { |q| where(["lead_purchases_counter <= ?", q]) }
+  scope :purchase_value_from, lambda { |q| where(["purchase_value >= ?", q]) }
+  scope :purchase_value_to, lambda { |q| where(["purchase_value <= ?", q]) }
   scope :with_category, lambda { |q| where(:category_id => Category.find_by_id(q).self_and_descendants.map(&:id)) }
   scope :with_ids_not_in, lambda { |q| where(["leads.id NOT IN (?)", q]) }
   scope :without_inactive, where("lead_purchases_counter < sale_limit")
   scope :without_outdated, lambda { where("purchase_decision_date >= ?", Date.today.to_s ) }
   scope :without_locked_users, joins("INNER JOIN users ON users.id=leads.creator_id").where("users.locked_at is NULL")
+  scope :with_status, lambda { |q| where(["leads.published = ?", q]) }
   #====================
   scope :bestsellers, order("lead_purchases_counter DESC")
   scope :latest, order("created_at DESC")

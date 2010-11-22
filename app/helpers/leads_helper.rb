@@ -27,4 +27,15 @@ module LeadsHelper
     end
   end
 
+  def categories_for_select
+    Category.roots.map{|c| [c.name,c.id]}
+  end
+
+  def statuses_for_select
+    [
+        [t("administration.leads.index.view.option_not_published"), 0],
+        [t("administration.leads.index.view.option_published"), 1]
+    ]
+  end
+
 end
