@@ -83,3 +83,9 @@ Scenario: I can add an extra language while creating lead. This will include lea
   Then I follow translated "agent.leads.index.view.edit"
   And I should see "DK description"
   And I should see "DK hidden description"
+
+@tgn @added @_todo @m1
+Scenario: Published checkbox should be selected by default
+
+@tgn @_todo @m1  
+Scenario: All fields for new lead have to be filled in beside email address

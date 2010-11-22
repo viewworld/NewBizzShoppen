@@ -79,3 +79,12 @@ Feature: Sign in
     Given I am not sign in
     When I go to "the homepage"
     Then I should not see translated "layout.my_profile_link"
+
+@tgn @m1 @_todo @added  
+Scenario: Newsletter checkbox should be selected by default
+
+@tgn @m1 @_todo
+Scenario: Add links present on sign in page to home login page as well (forgot password and confirmation instructions)
+
+@tgn @m1 @_todo
+Scenario: Screen name has to be unique  
