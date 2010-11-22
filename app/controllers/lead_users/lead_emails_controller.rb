@@ -1,7 +1,7 @@
-class Buyers::LeadEmailsController < Buyers::BuyerController
+class LeadUsers::LeadEmailsController < LeadUsers::LeadUserController
 
   def new
-    lead_purchase           = current_user.lead_purchases.where(:id => params[:lead_purchase_id]).first
+    lead_purchase           = LeadPurchase.with_assignee(current_user.id).where(:id => params[:lead_purchase_id]).first
     lead                    = lead_purchase.lead
     @email_template_preview = EmailTemplatePreview.new(:contact_lead_by_email_message, {:lead => lead, :lead_purchase => lead_purchase})
     @email_template_preview.recipients = lead.email_address
@@ -12,7 +12,7 @@ class Buyers::LeadEmailsController < Buyers::BuyerController
       ApplicationMailer.deliver_generic_email(email_params[:recipients], email_params[:subject], email_params[:body])
     end
     flash[:notice] = I18n.t("flash.contact_lead_by_email.actions.create.notice")
-    redirect_to buyers_lead_purchases_path
+    redirect_to lead_users_lead_purchases_path
   end
 
 end

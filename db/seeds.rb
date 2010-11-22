@@ -48,9 +48,9 @@ email_templates_array = [
 
 { :name => "Contact Lead by email message",
     :uniq_id => "contact_lead_by_email_message",
-    :en => {:subject => "Contact regarding lead \"{{lead.header}}\"",
+    :en => {:subject => "Contact regarding lead",
             :body => "<p>{{lead.id}}</p>"},
-    :dk => {:subject => "[DK] Contact regarding lead \"{{lead.header}}\"",
+    :dk => {:subject => "[DK] Contact regarding lead",
             :body => "<p>{{lead.id}}</p>"}
   }
 ]

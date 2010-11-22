@@ -462,6 +462,7 @@ en:
           download_csv_link: 'CSV'
           print_link: 'Print'
           bulk_print_link: 'Print all selected leads'
+          email_lead: Email Lead
           search:
             keyword_label: 'Keyword'
             search_button: 'Search'
@@ -485,6 +486,14 @@ en:
       create:
         flash:
           lead_purchases_updated_successfully: 'Leads has been updated successfully!'
+    contact_lead_by_email:
+      new:
+        view:
+          header: Contact Lead by email
+          recipient_label: Recipient
+          subject_label: Subject
+          body_label: Body
+          send_email_button: Send
 
   lead_buyer:
     lead_purchases:
@@ -635,6 +644,10 @@ en:
         destroy:
           notice: 'Lead requests were successfully removed.'
     bulk_lead_share_by_email:
+      actions:
+        create:
+          notice: Email has been sent
+    contact_lead_by_email:
       actions:
         create:
           notice: Email has been sent

@@ -5,4 +5,8 @@ module LeadPurchasesHelper
     options[:show_checkboxes] ||= false
     render(:partial => '/lead_purchases/listing', :locals => options.merge({:collection => collection}.merge(@hb.results)))
   end
+
+  def lead_purchase_has_email_address?(lead_purchase)
+    lead_purchase.lead.email_address.present?
+  end
 end
