@@ -282,6 +282,16 @@ en:
           option_published: 'published'
           option_not_published: 'not published'
           filter_purchased: 'Purchased'
+        search:
+          keyword_label: Keyword
+          price_from_label: Price from
+          price_to_label: Price to
+          lead_purchases_counter_from_label: Sold from
+          lead_purchases_counter_to_label: Sold to
+          purchase_value_from_label: Value from
+          purchase_value_to_label: Value to
+          category_label: Category
+          status_label: Status
 
   agent:
     leads:

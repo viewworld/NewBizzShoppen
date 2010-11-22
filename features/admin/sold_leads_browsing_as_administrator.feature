@@ -6,12 +6,12 @@ Background:
   Given I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
   And I am on the home page
   And I sign in as jon@lajoie.ca with password secret
-  And pagination page size for leads is set to 3
+
+@ao @_done @_tested
+Scenario: I can browse sold leads with pagination
+  Given pagination page size for leads is set to 3
   And there are "4" sold leads
   And there are "4" existing leads
-
-@ao @done @_tested
-Scenario: I can browse sold leads with pagination
   When I follow translated "layout.main_menu.admin.leads"
   And I check "search_purchased"
   And I press translated "administration.leads.index.view.search_button"
@@ -19,10 +19,44 @@ Scenario: I can browse sold leads with pagination
   And I should not see "3" within ".pagination"
   And I follow "2" within ".pagination"
 
-@ao @_todo
+@ao @_done @_tested
 Scenario: I can filter the listing (similiar to those in lead catalogue + categories)
+  Given pagination page size for leads is set to 10
+  And lead NotBoughtLead exists within category Test
+  And bought lead BoughtLead exists within category Test
+  And lead OtherCategoryLead exists within category Other
+  And lead ForKeywordLead exists within category Test
+  And lead Price100Lead exists within category Test
+  And lead Price100Lead has price 100
+  And lead Value500Lead exists within category Test
+  And lead Value500Lead has purchase value 500
+  And lead BestsellerLead exists within category Test
+  And BestsellerLead is a best seller
+  When I follow translated "layout.main_menu.admin.leads"
+  Then I should see "7" rows in a table within "#leads"
+  When I check translated "administration.leads.index.view.filter_purchased"
+  And I press translated "administration.leads.index.view.search_button"
+  Then I should see "2" rows in a table within "#leads"
+  When I uncheck translated "administration.leads.index.view.filter_purchased"
+  And I fill in translated "administration.leads.index.search.keyword_label" with "ForKeywordLead"
+  And I press translated "administration.leads.index.view.search_button"
+  Then I should see "1" rows in a table within "#leads"
+  And I should see "ForKeywordLead"
+  When I fill in translated "administration.leads.index.search.keyword_label" with ""
+  And I fill in translated "administration.leads.index.search.price_from_label" with "99"
+  And I fill in translated "administration.leads.index.search.price_to_label" with "101"
+  And I press translated "administration.leads.index.view.search_button"
+  Then I should see "1" rows in a table within "#leads"
+  And I should see "Price100Lead"
+  When I fill in translated "administration.leads.index.search.price_from_label" with ""
+  And I fill in translated "administration.leads.index.search.price_to_label" with ""
+  And I fill in translated "administration.leads.index.search.purchase_value_from_label" with "499"
+  And I fill in translated "administration.leads.index.search.purchase_value_to_label" with "501"
+  And I press translated "administration.leads.index.view.search_button"
+  Then I should see "1" rows in a table within "#leads"
+  And I should see "Value500Lead"
 
-@ao @done @_tested
+@ao @_done @_tested
 Scenario: I can sort by columns (those that do match to database columns)
   Given pagination page size for leads is set to 100
   And lead ZZZZZLead exists within category Test
@@ -33,5 +67,10 @@ Scenario: I can sort by columns (those that do match to database columns)
   And I follow translated "leads.table.header"
   Then I should see ZZZZZLead before AAAAALead
 
-@ao @_todo
+@ao @_done @_tested
 Scenario: I can go to lead details by clicking on the show link
+  Given pagination page size for leads is set to 1
+  And lead AwesomeLead exists within category Test
+  When I follow translated "layout.main_menu.admin.leads"
+  And I follow translated "administration.leads.index.view.show" within "#leads tr:nth-of-type(2) td:last-of-type"
+  Then I should be on the AwesomeLead lead page
