@@ -398,6 +398,10 @@ en:
           view_lead: 'View details'
           bulk_state_field: 'State'
           bulk_update_button: 'Update all selected leads'
+          bulk_download_csv_link: 'Download CSV for selected leads'
+          download_csv_link: 'CSV'
+          print_link: 'Print'
+          bulk_print_link: 'Print all selected leads'
           search:
             keyword_label: 'Keyword'
             search_button: 'Search'
