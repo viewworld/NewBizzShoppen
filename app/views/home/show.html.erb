@@ -19,6 +19,9 @@
     <%=  t("home.show.view.signup_message")  %><br />
     <%= link_to t("home.show.view.agent_signup"), new_agent_account_path %>
     <%= link_to t("home.show.view.buyer_signup"), new_buyer_account_path %>
+     <br /><br />
+    <%= link_to t("home.show.view.forgotten_password_link"), new_password_path(User) %><br />
+    <%= link_to t("home.show.view.resend_confirmation_instructions"), new_confirmation_path(User) %><br />
   <% end %>
 
 

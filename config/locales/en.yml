@@ -180,6 +180,8 @@ en:
         signup_message: "Don't have an account yet"
         agent_signup: 'Freelance agent signup'
         buyer_signup: 'Lead buyer signup'
+        forgotten_password_link: "Forgot your password?"
+        resend_confirmation_instructions: "Didn't receive confirmation instructions?"
 
   password:
     update:
