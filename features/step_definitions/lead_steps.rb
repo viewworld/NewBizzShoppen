@@ -26,6 +26,14 @@ Given /^lead (.+) exists within category (.+)$/ do |header, category_name|
   lead = Lead.make!(:header => header, :category => category)
 end
 
+Given /^bought lead (.+) exists within category (.+)$/ do |header, category_name|
+  category = Category.find_by_name(category_name).last
+  category = Category.make!(:name => category_name) if category.nil?
+
+  lead = Lead.make!(:header => header, :category => category)
+  LeadPurchase.make!(:lead_id => lead.id, :owner => User::Customer.make!, :paid => true, :accessible => true)
+end
+
 Given /^a lead (.+) exists within category (.+) and is bought by user (.+) with role (.+)$/ do |header, category_name, email, role|
   category = Category.find_by_name(category_name).last
   category = Category.make!(:name => category_name) if category.nil?
@@ -89,3 +97,12 @@ Given /^(.+) is a best seller$/ do |header|
   end
 end
 
+Given /^lead (.+) has price (.+)$/ do |header,price|
+  lead = Lead.find_by_header(header).first
+  lead.update_attribute(:price, price)
+end
+
+Given /^lead (.+) has purchase value (.+)$/ do |header,pv|
+  lead = Lead.find_by_header(header).first
+  lead.update_attribute(:purchase_value, pv)
+end
