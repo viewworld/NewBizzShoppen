@@ -19,7 +19,7 @@ Lead.blueprint do
   price { Faker.numerify("###").to_f }
   country_id { 1 }
   company_name { Faker::Internet.domain_word.capitalize }
-  lead_name { Faker::Name.name }
+  contact_name { Faker::Name.name }
   phone_number { Faker::PhoneNumber.phone_number }
   email_address { Faker::Internet.email }
   address { Faker::Address.street_address }
@@ -38,7 +38,7 @@ Lead.blueprint(:featured) do
   price { Faker.numerify("###").to_f }
   country_id { 1 }
   company_name { Faker::Internet.domain_word.capitalize }
-  lead_name { Faker::Name.name }
+  contact_name { Faker::Name.name }
   phone_number { Faker::PhoneNumber.phone_number }
   email_address { Faker::Internet.email }
   address { Faker::Address.street_address }

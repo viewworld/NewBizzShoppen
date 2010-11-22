@@ -60,7 +60,7 @@ Feature: Sign in
   Scenario Outline: A guest should be shown the login page for protected pages
     Given I am not sign in
     When I go to "<page>"
-    Then I should see translated "devise.failure.unauthenticated"
+    Then I should see translated "devise.failure.unauthenticated" with options ""
 
   Examples:
     | page                           |

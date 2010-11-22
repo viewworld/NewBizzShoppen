@@ -1,4 +1,4 @@
-@lead_manager @$_lead_user @m2    @_xyz1
+@lead_manager @$_lead_user @m2
 Feature: My leads for lead user
 
 Background:
@@ -8,7 +8,7 @@ Background:
   And an user with role lead_user and email lead_user2@person.com exists as subaccount for customer customer@person.com
   And an user with role lead_user and email lead_user44@person.com exists as subaccount for customer customer@person.com
   And lead Printers ultimate deal exists within category Computers
-  And lead Printers ultimate deal exists with attributes "creator_name:Johan Printing,email_address:john.printer@fghprintesrs.noserver.com,address:London 847-387 Veilingstreet 46,clicks_count:17,exposures_count:887,company_name:FGH Printers,lead_name:John Printer,hidden_description:Hidden description for this lead,purchase_value:3034.87,description:Public desc for printers deal"
+  And lead Printers ultimate deal exists with attributes "creator_name:Johan Printing,email_address:john.printer@fghprintesrs.noserver.com,address:London 847-387 Veilingstreet 46,clicks_count:17,exposures_count:887,company_name:FGH Printers,contact_name:John Printer,hidden_description:Hidden description for this lead,purchase_value:3034.87,description:Public desc for printers deal"
   And lead Monitors LCD deal exists within category Computers
   And lead Monitors LCD deal exists with attributes "hidden_description:Hidden description for this lead,purchase_value:2002.87"
   And lead Keyboards deal exists within category Office

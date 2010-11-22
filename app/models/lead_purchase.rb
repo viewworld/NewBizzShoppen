@@ -1,5 +1,5 @@
 class LeadPurchase < LeadPurchaseBase
-  CSV_ATTRS = %w(header description company_name lead_name phone_number email_address address)
+  CSV_ATTRS = %w(header description company_name contact_name phone_number email_address address)
   ACTIVE               = 0.freeze
   ABOUT_TO_EXPIRE      = 1.freeze
   EXPIRED              = 2.freeze

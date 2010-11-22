@@ -98,7 +98,7 @@ en:
       www_address: 'Www address:'
       email_address: 'Email:'
       address_label: 'Address:'
-      lead_name: 'Contact person:'
+      contact_name: 'Contact name:'
       clicks_count_label: 'Clicks:'
       exposures_count_label: 'Exposures:'
       sale_limit_label: 'Uniqueness:'

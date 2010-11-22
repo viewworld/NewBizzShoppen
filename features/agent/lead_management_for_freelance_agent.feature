@@ -51,7 +51,8 @@ Scenario: I can change lead status from lead list
   And I press translated "agent.leads.index.view.search_button"
   Given I fill in "search_with_keyword" with "Lead 2"
   And I press translated "agent.leads.index.view.search_button"
-   And "lead_published" should be selected for value "0"
+  And "lead_published" should be selected for value translated "agent.leads.index.view.option_not_published"
+
 
 @tgn @_tested
 Scenario: I can delete lead if the lead is not sold yet
