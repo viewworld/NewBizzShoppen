@@ -7,7 +7,7 @@ Background:
   And I am on the home page
   And I sign in as jon@lajoie.ca with password secret
 
-@ao @done @_tested
+@ao @_done @_tested
 Scenario: I can browse sold leads with pagination
   Given pagination page size for leads is set to 3
   And there are "4" sold leads
@@ -19,7 +19,7 @@ Scenario: I can browse sold leads with pagination
   And I should not see "3" within ".pagination"
   And I follow "2" within ".pagination"
 
-@ao @done @_tested
+@ao @_done @_tested
 Scenario: I can filter the listing (similiar to those in lead catalogue + categories)
   Given pagination page size for leads is set to 10
   And lead NotBoughtLead exists within category Test
@@ -56,7 +56,7 @@ Scenario: I can filter the listing (similiar to those in lead catalogue + catego
   Then I should see "1" rows in a table within "#leads"
   And I should see "Value500Lead"
 
-@ao @done @_tested
+@ao @_done @_tested
 Scenario: I can sort by columns (those that do match to database columns)
   Given pagination page size for leads is set to 100
   And lead ZZZZZLead exists within category Test
@@ -67,7 +67,7 @@ Scenario: I can sort by columns (those that do match to database columns)
   And I follow translated "leads.table.header"
   Then I should see ZZZZZLead before AAAAALead
 
-@ao @done @_tested
+@ao @_done @_tested
 Scenario: I can go to lead details by clicking on the show link
   Given pagination page size for leads is set to 1
   And lead AwesomeLead exists within category Test

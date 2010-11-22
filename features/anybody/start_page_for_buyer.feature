@@ -12,7 +12,7 @@ Scenario: I can see welcome text fetch from the database
 @m0 @ao @_todo
 Scenario: I can see 3 latest buyer news excerpts
 
-@ao @done @_tested
+@ao @_done @_tested
 Scenario: I can see 10 top bestsellers
   Given lead AwesomeLead exists within category Test
   And AwesomeLead is a best seller
@@ -21,7 +21,7 @@ Scenario: I can see 10 top bestsellers
   Then I should see "10" items on a list within "#best_sellers"
   And I should see "AwesomeLead" first on a list within "#best_sellers"
 
-@ao @done @_tested
+@ao @_done @_tested
 Scenario: I can see 10 latest leads
   Given there are "11" existing leads
   And lead AwesomeLead exists within category Test
@@ -32,14 +32,14 @@ Scenario: I can see 10 latest leads
 @m0 @ao @_todo
 Scenario: I can go to details of buyer news
 
-@ao @done @_tested
+@ao @_done @_tested
 Scenario: I can go to details of bestsellers
   Given lead AwesomeLead exists within category Test
   And I follow translated "home.show.view.buyer"
   And I follow "AwesomeLead" within "#best_sellers"
   Then I should be on the AwesomeLead lead page
 
-@ao @done @_tested
+@ao @_done @_tested
 Scenario: I can go to details of latest leads
   Given lead AwesomeLead exists within category Test
   And I follow translated "home.show.view.buyer"
@@ -49,27 +49,27 @@ Scenario: I can go to details of latest leads
 @m0 @ao @_todo
 Scenario: I can go to buyer news listing
 
-@ao @done @_tested
+@ao @_done @_tested
 Scenario: I can go to bestsellers listing
   When I follow translated "home.show.view.buyer"
   And I follow translated "buyer_home.show.view.complete_list_link" within "#best_sellers"
   Then I should be on the leads page
   And I should see translated "leads.index.bestsellers_header"
 
-@ao @done @_tested
+@ao @_done @_tested
 Scenario: I can go to latest leads listing
   When I follow translated "home.show.view.buyer"
   And I follow translated "buyer_home.show.view.complete_list_link" within "#latest_leads"
   Then I should be on the leads page
   And I should see translated "leads.index.latest_header"
 
-@ao @done @_tested
+@ao @_done @_tested
 Scenario: I can go to agent page by clicking “CLICK HERE IF YOU ARE AN AGENT”
   When I follow translated "home.show.view.buyer"
   And I follow translated "buyer_home.show.view.agent_link"
   Then I should be on the agent home page
 
-@ao @done @_tested
+@ao @_done @_tested
 Scenario: I can go to new buyer creation page
   When I follow translated "home.show.view.buyer"
   And I follow translated "buyer_home.show.view.create_new_buyer_account"
