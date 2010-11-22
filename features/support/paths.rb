@@ -26,9 +26,9 @@ module NavigationHelpers
         '/agents/leads'
     when /browse leads/
         '/categories'
-    when /lead_buyer cart items/
+    when /buyer cart items/
         '/buyers/cart_items'
-    when /lead_buyer interests/
+    when /buyer interests/
         '/buyers/interests/edit'
     when /lead user lead purchases/
         '/lead_users/lead_purchases'
@@ -36,13 +36,13 @@ module NavigationHelpers
         '/customers/subaccounts'
     when /customers lead requests/
         '/customers/lead_requests'
-    when /lead_buyer lead purchases/
+    when /buyer lead purchases/
         '/buyers/lead_purchases'
     when /my profile/
         '/my_profile'
     when /agent sign up/
         '/agent_accounts/new'
-    when /lead_buyer sign up/
+    when /buyer sign up/
         '/buyer_accounts/new'
     when /sample image/
         "#{::Rails.root.to_s}/spec/fixtures/sample.jpg"

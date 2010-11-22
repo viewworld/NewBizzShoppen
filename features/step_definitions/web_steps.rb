@@ -266,3 +266,8 @@ Then /^I should see "([^"]*)" first on a list(?: within "([^"]*)")?$/ do |text, 
   end
 end
 
+Then /^I should see (.+) before (.+)$/ do |first,second|
+  page.body.should =~ /#{first}.*#{second}/m
+end
+
+

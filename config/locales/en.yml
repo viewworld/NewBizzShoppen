@@ -12,6 +12,7 @@ en:
         categories: Categories
         email_templates: Email templates
         settings: Settings
+        leads: Leads
       agent:
         leads: My created leads
       call_centre:
@@ -268,6 +269,19 @@ en:
         view:
           title: 'Edit template'
           button_update: 'Save'
+
+    leads:
+      index:
+        view:
+          title: 'Leads'
+          search_button: 'Search'
+          edit: 'Edit'
+          destroy: 'Destroy'
+          show: 'Show'
+          destroy_confirmation: 'Are you sure?'
+          option_published: 'published'
+          option_not_published: 'not published'
+          filter_purchased: 'Purchased'
 
   agent:
     leads:

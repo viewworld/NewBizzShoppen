@@ -1,0 +1,15 @@
+<column-mc:>
+  <%= form_for @search, :url => administration_leads_path do |f| %>
+    <%= f.check_box :purchased, {}, "true", "false" %> <%= t("administration.leads.index.view.filter_purchased") %>
+    <%= submit_tag t("administration.leads.index.view.search_button") %>
+  <% end %>
+
+  <%= leads_table @leads, :show_checkboxes => false do |blocks| %>
+      <% blocks.tools do |lead| %>
+          <%= link_to t("administration.leads.index.view.show"), lead_path(lead) %>
+      <% end %>
+    <% blocks.status_column do |lead| %>
+        <%= administration_lead_status(lead) %>
+    <% end %>
+  <% end %>
+</column-mc:>
