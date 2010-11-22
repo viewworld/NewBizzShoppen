@@ -44,6 +44,14 @@ email_templates_array = [
             :body => "{% for lead in leads %}
 <p>{{lead.id}}</p>
 {% endfor %}"}
+  },
+
+{ :name => "Contact Lead by email message",
+    :uniq_id => "contact_lead_by_email_message",
+    :en => {:subject => "Contact regarding lead \"{{lead.header}}\"",
+            :body => "<p>{{lead.id}}</p>"},
+    :dk => {:subject => "[DK] Contact regarding lead \"{{lead.header}}\"",
+            :body => "<p>{{lead.id}}</p>"}
   }
 ]
 
@@ -75,6 +83,12 @@ end
 
 unless User::Agent.find_by_email("agent@gmail2.com")
   u = User::Agent.make!(:email => "agent@gmail2.com", :password => "secret", :password_confirmation => "secret")
+  u.confirm!
+  u.save
+end
+
+unless User::LeadUser.find_by_email("leaduser@gmail2.com")
+  u = User::LeadUser.make!(:email => "leaduser@gmail2.com", :password => "secret", :password_confirmation => "secret")
   u.confirm!
   u.save
 end

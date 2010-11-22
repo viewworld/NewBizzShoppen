@@ -6,6 +6,9 @@
           <%= check_box_tag("lead_purchase_ids[]", lead_purchase.id) if show_checkboxes %>
           <h3><%= lead_purchase.header %></h3>
           <%= link_to t("lead_user.lead_purchases.index.view.view_lead"), lead_users_lead_purchase_path(lead_purchase) %><br />
+          <% if block_contact %>
+              <%= with_output_buffer { block_contact.call(lead_purchase) } if block_contact %><br/>
+          <% end %>
           <span><%= t("lead_purchases.listing.purchase_value_label") %>
             <b><%= lead_purchase.purchase_value %></b></span>
 

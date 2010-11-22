@@ -1,0 +1,14 @@
+<column-mc:>
+  <h1><%= t("lead_buyer.contact_lead_by_email.new.view.header") %></h1>
+
+  <%= form_for :email_template_preview, @email_template_preview, :url => buyers_lead_purchase_lead_email_path() do |f| %>
+      <%= t("lead_buyer.contact_lead_by_email.new.view.recipient_label") %>
+      <%= f.text_field :recipients, :disabled => true %>
+      <%= t("lead_buyer.contact_lead_by_email.new.view.subject_label") %>
+      <%= f.text_field :subject %>
+      <%= t("lead_buyer.contact_lead_by_email.new.view.body_label") %>
+      <%= f.text_area :body %>
+      <%= f.submit t("lead_buyer.contact_lead_by_email.new.view.send_email_button") %>
+  <% end %>
+
+</column-mc:>

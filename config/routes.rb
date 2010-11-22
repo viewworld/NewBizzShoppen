@@ -32,6 +32,7 @@ Nbs::Application.routes.draw do
       collection do
         put :bulk_update
       end
+      resource :lead_email, :only => [:new,:create]
     end
     resource :bulk_cart_items, :controller => "bulk_cart_items", :only => [:create]
   end
