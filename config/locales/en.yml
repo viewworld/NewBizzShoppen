@@ -585,6 +585,8 @@ en:
             password:
               blank: 'is blank'
               confirmation: "doesn't match confirmation"
+            screen_name:
+              taken: 'has already been taken'
         user/abstract:
           attributes:
             reset_password_token:
