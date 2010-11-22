@@ -84,3 +84,30 @@ Feature: Freelance agent signup
     When I am not sign in
     And I follow the confirmation link sent to email@person.com with role agent
     Then I should see translated "activerecord.errors.models.user.attributes.confirmation_token.blank"
+
+@tgn @m1 @_tested @added
+Scenario: Newsletter checkbox should be selected by default
+  When I go to agent sign up
+  Then the "user_agent_newsletter_on" checkbox should be checked
+
+@tgn @m1 @_tested
+Scenario: Screen name has to be unique
+  Given I have user with email agent2jimconnor@person.com and role agent
+  Then user agent2jimconnor@person.com with role agent exists with attributes "screen_name:Jim Connor"
+  When I go to agent sign up
+  And I fill in the following:
+    | user_agent_first_name            | Bob             |
+    | user_agent_last_name             | Taker           |
+    | user_agent_phone                 | 48928217272     |
+    | user_agent_screen_name           | Jim Connor      |
+    | user_agent_email                 | user@domain.dom |
+    | user_agent_password              | secret          |
+    | user_agent_password_confirmation | secret          |
+    | user_agent_street                | Sunset Blv 32   |
+    | user_agent_city                  | London          |
+    | user_agent_zip_code              | 43-270          |
+    | user_agent_county                | Wesley          |
+  And I select "Denmark" from "user_agent_country"
+  And I check "user_agent_agreement_read"
+  And I press translated "agent_accounts.new.view.button_create_account"
+  Then I should see translated "activerecord.errors.models.user/agent.attributes.screen_name.taken"
