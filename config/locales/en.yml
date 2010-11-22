@@ -576,6 +576,8 @@ en:
               confirmation: "doesn't match confirmation"
             current_password:
               invalid: 'is invalid'
+            screen_name:
+              taken: 'has already been taken'
         user/customer:
           attributes:
             email:
