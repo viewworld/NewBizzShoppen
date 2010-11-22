@@ -102,9 +102,12 @@ Scenario: I can see company contact on lead details page
   And I should see "FGH Printers"
   And I should see "London 847-387 Veilingstreet 46"
 
+#Accessible from my (assigned) leads listing
+#Just prepare interface for sending an email (based on email template as ususal) with recipient field read-only and prepopulated
+#Have a look at bulk_lead_share_by_email_controller.rb for sume hints regarding prerendering email template
+@ao @_todo 
 Scenario: I can email the lead if email information were provided
-# popup with email form appears
-  
+
 @tgn @_done @_tested
 Scenario: I should see hottness, novelty, exposure, clicks
   Then I should see translated "models.lead.hotness.lvl1"
