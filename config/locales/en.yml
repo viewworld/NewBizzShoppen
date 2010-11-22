@@ -445,6 +445,11 @@ en:
           button_bulk_destroy_lead_request: 'Reject lead requests'
           search:
             keyword_label: 'Keyword'
+            category_label: 'Category'
+            deal_value_from_label: 'From'
+            deal_value_to_label: 'To'
+            country_label: 'Country'
+            requested_by_label: 'Requested by'
             search_button: 'Search'
         flash:
           lead_request_accepted_successfully: Lead request accepted
