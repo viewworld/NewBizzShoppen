@@ -415,8 +415,8 @@ en:
       index:
         view:
           title: 'Manage subaccounts'
-          new_lead_buyer: 'New lead buyer'
-          new_lead_user: 'New lead user'
+          new_lead_buyer: 'Create lead user with buying permission'
+          new_lead_user: 'Create lead user'
           edit: 'Edit'
       create:
         flash:
