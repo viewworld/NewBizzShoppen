@@ -156,14 +156,14 @@ Scenario: I can send selected lead by email
 @bk @_todo
 Scenario: I can bulk send selected leads by email
 
-@bk @_todo
+@ao @_todo
 Scenario: I can rate lead that I have access for (good, bad, fake)
 
-@bk @_todo
+@ao @_todo
 Scenario: I can bulk rate leads that I have access for (good, bad, fake)
 
-@bk @_todo
+@ao @_todo
 Scenario: I can set status of lead
 
-@bk @_todo
+@ao @_todo
 Scenario: I can bulk set status of leads
