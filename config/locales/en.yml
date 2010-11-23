@@ -514,8 +514,15 @@ en:
           bulk_assignee_field: Assigned to
           bulk_update_button: Update all selected leads
           lead_response_date: 'Response date:'
-          email_lead: Email Lead
-    bulk_lead_share_by_email:
+          search:
+            keyword_label: 'Keyword'
+            category_label: 'Category'
+            deal_value_from_label: 'From'
+            deal_value_to_label: 'To'
+            country_label: 'Country'
+            assignee_label: 'Assignee'
+            search_button: 'Search'
+            bulk_lead_share_by_email:
       new:
         view:
           header: Share leads by email
