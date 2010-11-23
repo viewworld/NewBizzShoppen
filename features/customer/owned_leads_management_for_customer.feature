@@ -150,10 +150,10 @@ Scenario: I can email the lead if email information were provided
   And I press translated "lead_buyer.contact_lead_by_email.new.view.send_email_button"
   Then I should see translated "flash.contact_lead_by_email.actions.create.notice"
 
-@bk @_todo
+@tgn @_todo
 Scenario: I can send selected lead by email
 
-@bk @_todo
+@tgn @_todo
 Scenario: I can bulk send selected leads by email
 
 @ao @_todo @m3
