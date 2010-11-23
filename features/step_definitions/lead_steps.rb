@@ -19,6 +19,13 @@ Given /^lead (.+) exists with attributes "([^"]*)"$/ do |header, options|
   lead.update_attributes(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys)
 end
 
+Given /^purchase for lead "([^"]*)" and user "([^"]*)" exists with attributes "([^"]*)"$/ do |header, email, options|
+  user = User::Customer.find_by_email(email)
+  lead = Lead.find_by_header(header).first
+  lead_purchase = lead.lead_purchases.detect { |lp| lp.owner == user }
+  lead_purchase.update_attributes(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys)
+end
+
 Given /^lead (.+) exists within category (.+)$/ do |header, category_name|
   category = Category.find_by_name(category_name).last
   category = Category.make!(:name => category_name) if category.nil?

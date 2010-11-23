@@ -1,6 +1,18 @@
 <column-mc:>
   <h1><%= t("lead_buyer.lead_purchases.index.view.header") %></h1>
 
+  <%= form_for @search, :url => buyers_lead_purchases_path do |f| %>
+      <%= t("lead_buyer.lead_purchases.index.view.search.keyword_label") %><%= f.text_field :with_keyword %>
+      <%= t("lead_buyer.lead_purchases.index.view.search.category_label") %><%= f.select :with_category, @categories, {:include_blank => true} %>
+      <%= t("lead_buyer.lead_purchases.index.view.search.deal_value_from_label") %><%= f.select :with_deal_value_from, User::DEAL_VALUE_RANGE, {:include_blank => true} %>
+      <%= t("lead_buyer.lead_purchases.index.view.search.deal_value_to_label") %><%= f.select :with_deal_value_to, User::DEAL_VALUE_RANGE, {:include_blank => true} %>
+      <%= t("lead_buyer.lead_purchases.index.view.search.country_label") %><%= f.select :with_country, @countries, {:include_blank => true} %>
+      <%= t("lead_buyer.lead_purchases.index.view.search.assignee_label") %><%= f.select :with_assignee, @assignees, {:include_blank => true} %>
+      <%= submit_tag t("lead_buyer.lead_purchases.index.view.search.search_button") %>
+  <% end %>
+
+  <br />
+
   <%= bulk_form do %>
       <%= link_to_function t("lead_buyer.lead_purchases.index.view.bulk_download_csv_link"), "submitBulkForm('#{bulk_lead_purchase_csv_path}');" %>
       <%= link_to_function t("lead_buyer.lead_purchases.index.view.bulk_print_link"), "submitBulkForm('#{bulk_lead_purchase_print_path}', '_blank');" %>

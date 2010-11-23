@@ -11,15 +11,18 @@ class Buyers::LeadPurchasesController < Buyers::BuyerController
   end
 
   def collection
-    @lead_purchases ||= end_of_association_chain.paginate(:page => params[:page])
+    @subaccounts = current_user.subaccounts
+    params[:search]||={}
+    params[:search][:with_leads] = "1"
+    @lead_purchases = LeadPurchase.with_owner(current_user.id)
+    @countries = @lead_purchases.map(&:country).uniq.map{|c| [c.name, c.id]}
+    @categories = @lead_purchases.map(&:category).uniq.map{|c| [c.name, c.id]}
+    @assignees = @lead_purchases.map(&:assignee).uniq.map{|c| [c.screen_name, c.id]}
+    @search = LeadPurchase.scoped_search(params[:search])
+    @lead_purchases = @search.paginate(:page => params[:page], :per_page => LeadPurchase.per_page)
   end
 
   public
-
-  def index
-    @subaccounts = current_user.subaccounts
-    super
-  end
 
   def show
     super do |format|
