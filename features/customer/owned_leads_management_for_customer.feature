@@ -129,7 +129,7 @@ Scenario: I can bulk set response deadlines for lead
   And I press translated "lead_buyer.lead_purchases.index.view.bulk_update_button"
   Then I should see translated "buyer.bulk_lead_purchase_update.create.flash.lead_purchases_updated_successfully"
 
-@bk @_todo
+@ao @_todo
 Scenario: I am notified by email when dealine expires and status of lead has not changed
 
 @m0
