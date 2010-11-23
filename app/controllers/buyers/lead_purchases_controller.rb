@@ -14,6 +14,7 @@ class Buyers::LeadPurchasesController < Buyers::BuyerController
     @subaccounts = current_user.subaccounts
     params[:search]||={}
     params[:search][:with_leads] = "1"
+    params[:search][:with_owner] = current_user.id
     @lead_purchases = LeadPurchase.with_owner(current_user.id)
     @countries = @lead_purchases.map(&:country).uniq.map{|c| [c.name, c.id]}
     @categories = @lead_purchases.map(&:category).uniq.map{|c| [c.name, c.id]}
