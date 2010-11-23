@@ -1,3 +1,4 @@
+@m3
 Feature: Lead Rating
 
   Scenario: I can rate a lead
