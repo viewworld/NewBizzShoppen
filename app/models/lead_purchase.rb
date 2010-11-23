@@ -10,6 +10,7 @@ class LeadPurchase < LeadPurchaseBase
   default_scope where(:requested_by => nil)
 
   scope :in_cart, where(:paid => false, :accessible => false)
+  scope :accessible, where(:accessible => true)
 
   before_save :assign_to_proper_owner_if_accessible
 

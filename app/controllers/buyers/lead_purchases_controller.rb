@@ -15,7 +15,8 @@ class Buyers::LeadPurchasesController < Buyers::BuyerController
     params[:search]||={}
     params[:search][:with_leads] = "1"
     params[:search][:with_owner] = current_user.id
-    @lead_purchases = LeadPurchase.with_owner(current_user.id)
+    params[:search][:accessible] = true
+    @lead_purchases = LeadPurchase.with_owner(current_user.id).accessible
     @countries = @lead_purchases.map(&:country).uniq.map{|c| [c.name, c.id]}
     @categories = @lead_purchases.map(&:category).uniq.map{|c| [c.name, c.id]}
     @assignees = @lead_purchases.map(&:assignee).uniq.compact.map{|c| [c.screen_name, c.id]}
