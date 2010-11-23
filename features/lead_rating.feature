@@ -3,6 +3,8 @@ Feature: Lead Rating
 
   Scenario: I can rate a lead
 
+  Scenario: I can bulk rate a lead
+
   # "Incorrect or missing contact information It has been impossible to get in contact with the lead ----- why?"
   # "The information provided in the lead description dos not match the information that the contact person supplied when i contacted him. --- in what way did i differ?"
   # "The lead has already chosen another suppler"
