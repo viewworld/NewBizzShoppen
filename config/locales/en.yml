@@ -175,6 +175,7 @@ en:
   home:
     show:
       view:
+        header: 'Home'
         buyer: 'Buyer'
         agent: 'Agent'
         remember_me: 'Remember me'

@@ -50,3 +50,8 @@ And /"([^"]*)" should be selected for value translated "([^"]*)"/ do |field, key
   I18n.locale = :en
   Then %{"#{field}" should be selected for value "#{I18n.t(key)}"}
 end
+
+Then /^locale is set to "([^"]*)" for translation "([^"]*)"/ do |locale_lang, key|
+  I18n.locale = locale_lang.to_sym
+  Then %{I should see "#{I18n.t(key)}"}
+end
