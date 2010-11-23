@@ -372,6 +372,10 @@ en:
       create:
         flash:
           lead_purchases_updated_successfully: 'Leads have been updated successfully!'
+    lead_purchases:
+      show:
+        view:
+          header: 'Lead details'
 
   categories:
     index:
@@ -517,6 +521,8 @@ en:
           bulk_assignee_field: Assigned to
           bulk_update_button: Update all selected leads
           lead_response_date: 'Response date:'
+          view_lead: View Details
+          email_lead: Email Lead
           search:
             keyword_label: 'Keyword'
             category_label: 'Category'
