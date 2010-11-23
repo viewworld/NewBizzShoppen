@@ -129,7 +129,7 @@ Scenario: I can bulk set response deadlines for lead
   And I press translated "lead_buyer.lead_purchases.index.view.bulk_update_button"
   Then I should see translated "buyer.bulk_lead_purchase_update.create.flash.lead_purchases_updated_successfully"
 
-@bk @_todo
+@ao @_todo
 Scenario: I am notified by email when dealine expires and status of lead has not changed
 
 @m0
@@ -138,8 +138,17 @@ Scenario: I can create a comment for lead that I have access for
 #Accessible from owned leads listing
 #Just prepare interface for sending an email (based on email template as ususal) with recipient field read-only and prepopulated
 #Have a look at bulk_lead_share_by_email_controller.rb for sume hints regarding prerendering email template
-@ao @_todo
+@ao @_done @_tested
 Scenario: I can email the lead if email information were provided
+  Given I am signed up and confirmed as user with email customer@nbs.com and password secret and role customer
+  And I sign out
+  And I am on the home page
+  And I sign in as customer@nbs.com with password secret
+  And a lead AwesomeLead exists within category Test and is bought by user customer@nbs.com with role customer
+  And I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  And I follow translated "lead_buyer.lead_purchases.index.view.email_lead" within ".lead_purchase"
+  And I press translated "lead_buyer.contact_lead_by_email.new.view.send_email_button"
+  Then I should see translated "flash.contact_lead_by_email.actions.create.notice"
 
 @bk @_todo
 Scenario: I can send selected lead by email
@@ -147,14 +156,14 @@ Scenario: I can send selected lead by email
 @bk @_todo
 Scenario: I can bulk send selected leads by email
 
-@bk @_todo
+@ao @_todo
 Scenario: I can rate lead that I have access for (good, bad, fake)
 
-@bk @_todo
+@ao @_todo
 Scenario: I can bulk rate leads that I have access for (good, bad, fake)
 
-@bk @_todo
+@ao @_todo
 Scenario: I can set status of lead
 
-@bk @_todo
+@ao @_todo
 Scenario: I can bulk set status of leads

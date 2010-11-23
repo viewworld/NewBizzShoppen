@@ -113,8 +113,17 @@ Scenario: I can see company contact on lead details page
 #Accessible from my (assigned) leads listing
 #Just prepare interface for sending an email (based on email template as ususal) with recipient field read-only and prepopulated
 #Have a look at bulk_lead_share_by_email_controller.rb for sume hints regarding prerendering email template
-@ao @_todo 
+@ao @_done @_tested
 Scenario: I can email the lead if email information were provided
+  Given I am signed up and confirmed as user with email leaduser@nbs.com and password secret and role lead_user
+  And I sign out
+  And I am on the home page
+  And I sign in as leaduser@nbs.com with password secret
+  And lead AwesomeLead is bought by user customer@nbs.com with role customer and is assigned to user leaduser@nbs.com with role lead_user
+  And I follow translated "layout.main_menu.lead_user.lead_purchases"
+  And I follow translated "lead_user.lead_purchases.index.view.email_lead" within ".lead_purchase"
+  And I press translated "lead_user.contact_lead_by_email.new.view.send_email_button"
+  Then I should see translated "flash.contact_lead_by_email.actions.create.notice"
 
 @tgn @_done @_tested
 Scenario: I should see hottness, novelty, exposure, clicks
@@ -165,5 +174,5 @@ Scenario: I can print out multiple leads information
   Then I should see "Keyboards deal"
   Then I should see "Monitors LCD deal"
 
-@bk @_todo
+@ao @_todo
 Scenario: I should see a yellow color for a lead with expiration date ending in 3 days

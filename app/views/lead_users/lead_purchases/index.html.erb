@@ -25,6 +25,10 @@
       <%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this.checked,'input:checkbox')" %>
 
       <%= lead_purchases_listing @lead_purchases, :show_checkboxes => true do |blocks| %>
+           <% blocks.contact do |lead_purchase| %>
+               <%= link_to t("lead_user.lead_purchases.index.view.email_lead"), new_lead_users_lead_purchase_lead_email_path(lead_purchase) if lead_purchase_has_email_address?(lead_purchase)%>
+           <% end %>
+
            <% blocks.tools do |lead_purchase| %>
               <%= link_to t("lead_user.lead_purchases.index.view.download_csv_link"), lead_users_lead_purchase_path(lead_purchase, :format => :csv) %>
               <%= link_to t("lead_user.lead_purchases.index.view.print_link"), lead_users_lead_purchase_path(lead_purchase, :format => :print), :target => "_blank" %>
