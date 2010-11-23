@@ -5,7 +5,8 @@ Feature: Start page for agent
 Background: I am a guest and I am on the home page
   Given I am on the home page
 
-@ao @_todo
+# this is gonna be stored as an article
+@ao @m3
 Scenario: I can see welcome text fetch from the database
 
 @m0 @ao @_todo

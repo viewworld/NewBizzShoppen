@@ -6,7 +6,7 @@ Background: I am a guest and I am on the home page
   Given I am on the home page
 
 # this is gonna be an article
-@ao @_todo
+@ao @m3
 Scenario: I can see welcome text fetch from the database
 
 @m0 @ao @_todo
