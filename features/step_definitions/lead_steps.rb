@@ -113,3 +113,11 @@ Given /^lead (.+) has purchase value (.+)$/ do |header,pv|
   lead = Lead.find_by_header(header).first
   lead.update_attribute(:purchase_value, pv)
 end
+
+
+Given /^lead "([^"]*)" has translation for lang "([^"]*)" with attributes "([^"]*)"$/ do |header, locale_lang, options|
+  lead = Lead.find_by_header(header).first
+  lead_translation = LeadTranslation.create(:lead_id => lead.id, :locale => locale_lang)
+  lead_translation.update_attributes(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys)
+
+end

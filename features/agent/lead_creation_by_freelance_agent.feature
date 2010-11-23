@@ -1,4 +1,4 @@
-@lead_manager @$_freelance_agent  @m1    @xxx
+@lead_manager @$_freelance_agent  @m1
 Feature: Lead creation by freelance agent
 
 In order to create and manage leads I sell
