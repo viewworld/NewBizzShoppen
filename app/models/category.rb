@@ -15,6 +15,8 @@ class Category < ActiveRecord::Base
     end
   end
 
+  scope :with_leads, where("total_leads_count > 0")
+
   before_destroy :check_if_category_is_empty
 
   accepts_nested_attributes_for :image

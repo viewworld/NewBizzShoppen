@@ -160,6 +160,8 @@ en:
         keyword_label: Keyword
         deal_value_from_label: Deal value from
         deal_value_to_label: Deal value to
+        category_label: 'Category'
+        country_label: 'Country'
       add_to_cart_link: Add to cart
       buy_lead: Buy lead
       request_lead: Request lead
