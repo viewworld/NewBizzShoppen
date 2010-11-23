@@ -174,5 +174,5 @@ Scenario: I can print out multiple leads information
   Then I should see "Keyboards deal"
   Then I should see "Monitors LCD deal"
 
-@bk @_todo
+@ao @_todo
 Scenario: I should see a yellow color for a lead with expiration date ending in 3 days
