@@ -3,7 +3,7 @@
   <% collection.each do |lead_purchase| %>
       <li class="lead_purchase" id="<%= dom_id(lead_purchase) %>">
         <div class="general">          
-          <%= check_box_tag("lead_purchase_ids[]", lead_purchase.id) if show_checkboxes %>
+          <%= check_box_tag("lead_purchase_ids[]", lead_purchase.id, false, { :id => "lead_purchase_checkbox_#{lead_purchase.id}" }) if show_checkboxes %>
           <h3><%= lead_purchase.header %></h3>
           <% if block_contact %>
               <%= with_output_buffer { block_contact.call(lead_purchase) } if block_contact %><br/>

@@ -150,11 +150,21 @@ Scenario: I can email the lead if email information were provided
   And I press translated "lead_buyer.contact_lead_by_email.new.view.send_email_button"
   Then I should see translated "flash.contact_lead_by_email.actions.create.notice"
 
-@tgn @_todo
+@tgn @_tested @selenium
 Scenario: I can send selected lead by email
+  When I go to buyer lead purchases
+  And I follow translated "lead_buyer.lead_purchases.index.view.share_email_link"
+  And I press translated "lead_buyer.bulk_lead_share_by_email.new.view.send_email_button"
+  Then I should see translated "flash.bulk_lead_share_by_email.actions.create.notice"
 
-@tgn @_todo
+
+@tgn @_tested @selenium
 Scenario: I can bulk send selected leads by email
+  When I go to buyer lead purchases
+  And I check "mark_all"
+  And I follow translated "lead_buyer.lead_purchases.index.view.bulk_share_by_email_link"
+  And I press translated "lead_buyer.bulk_lead_share_by_email.new.view.send_email_button"
+  Then I should see translated "flash.bulk_lead_share_by_email.actions.create.notice"
 
 @ao @_todo @m3
 Scenario: I can rate lead that I have access for (good, bad, fake)
