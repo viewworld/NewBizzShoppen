@@ -120,7 +120,7 @@ SELECT pg_catalog.setval('tolk_translations_id_seq', 1, false);
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('users_id_seq', 4, true);
+SELECT pg_catalog.setval('users_id_seq', 3, true);
 
 
 --
@@ -136,8 +136,8 @@ COPY assets (id, asset_file_name, asset_content_type, asset_file_size, asset_typ
 --
 
 COPY categories (id, name, description, created_at, updated_at, parent_id, lft, rgt, depth, total_leads_count) FROM stdin;
-1	Test category 1	\N	2010-11-24 12:43:21.687676	2010-11-24 12:43:21.687676	\N	1	2	\N	0
-2	Test category 2	\N	2010-11-24 12:43:21.767313	2010-11-24 12:43:21.767313	\N	3	4	\N	0
+1	Test category 1	\N	2010-11-22 11:18:49.283186	2010-11-22 11:18:49.283186	\N	1	2	\N	0
+2	Test category 2	\N	2010-11-22 11:18:49.299988	2010-11-22 11:18:49.299988	\N	3	4	\N	0
 \.
 
 
@@ -154,8 +154,8 @@ COPY category_interests (id, category_id, user_id, created_at, updated_at) FROM 
 --
 
 COPY category_translations (id, category_id, locale, description, name, created_at, updated_at) FROM stdin;
-1	1	en	\N	Test category 1	2010-11-24 12:43:21.70265	2010-11-24 12:43:21.70265
-2	2	en	\N	Test category 2	2010-11-24 12:43:21.775007	2010-11-24 12:43:21.775007
+1	1	en	\N	Test category 1	2010-11-22 11:18:49.292122	2010-11-22 11:18:49.292122
+2	2	en	\N	Test category 2	2010-11-22 11:18:49.303303	2010-11-22 11:18:49.303303
 \.
 
 
