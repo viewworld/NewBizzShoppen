@@ -77,11 +77,12 @@ class DerbTemplateString < String
     #below works even with double quotes in attrs. It will fail on  "_ (space) and "> within attr, so using single quotes inside is recommended
 
 
-#       unless (pairs = gsub(/(<|>|\/>)/, '').scan(/(\w+)=("|)([^"]+)(\2|)/i)).blank?#
-#      pairs.map!{|arr| arr.reject{|k| k=="\"" || k.blank?}}#
-#      ',' + pairs.map do |key,val|
+#    unless (pairs = gsub(/(<|>|\/>)/, '').scan(/(\w+)=("|)([^"]+)(\2|)/i)).blank? #
+#      pairs.map! { |arr| arr.reject { |k| k=="\"" || k.blank? } } #
+#      ',' + pairs.map do |key, val|
 #        %{"#{key}" => #{val.strip}}
 #      end.join(', ')
+#    end
 
     unless (pairs = gsub(/(<|>)/, '').scan(/\w+=".*?"(?=\s|>)/i)).blank?
       ',' + pairs.map do |pair|

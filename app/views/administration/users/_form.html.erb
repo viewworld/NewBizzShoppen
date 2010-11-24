@@ -1,13 +1,49 @@
-<%= form.inputs :first_name, :last_name, :phone, :email, :screen_name, :street,
-                :city, :zip_code, :county
-%>
-<% if ['agent', 'call_centre'].include?(params[:role]) or @user.has_any_role?(:agent, :call_centre) %>
-    <%= form.input :payout %>
-<% end %>
-<%= form.input :agreement_read, :as => :hidden, :value => "1" %>
-<%= form.input :country, :as => :select, :collection => Country.all %>
-<%= form.input :newsletter_on, :as => :boolean %>
+<div class="pdd_10 no_pdd_t">
+  <fieldset class="inputs labels_ta_r labels_240">
+    <ol>
+      <%= form.input :first_name %>
+      <%= form.input :last_name %>
+      <%= form.input :phone %>
+      <%= form.input :email %>
+      <%= form.input :screen_name %>
+    </ol>
+  </fieldset>
+</div>
+<hl/>
 
-<% if ['lead_buyer', 'customer'].include?(params[:role]) or @user.has_any_role?(:lead_buyer, :customer) %>
-    <%= form.input :big_buyer, :as => :boolean %>
+<div class="pdd_10 no_pdd_t">
+  <fieldset class="inputs labels_ta_r labels_240">
+    <ol class="align_inputs">
+      <%= form.input :street %>
+      <%= form.input :city %>
+      <%= form.input :zip_code %>
+      <%= form.input :county %>
+    </ol>
+  </fieldset>
+</div>
+<hl/>
+
+<% if ['agent', 'call_centre'].include?(params[:role]) or @user.has_any_role?(:agent, :call_centre) %>
+    <div class="pdd_10 no_pdd_t">
+      <fieldset class="inputs labels_ta_r labels_240">
+        <ol class="align_inputs">
+          <%= form.input :payout %>
+        </ol>
+      </fieldset>
+    </div>
+    <hl/>
 <% end %>
+
+<div class="pdd_10 no_pdd_t">
+  <fieldset class="inputs labels_ta_r labels_240">
+    <ol class="align_inputs">
+      <%= form.input :country, :as => :select, :collection => Country.all %>
+      <%= form.input :agreement_read, :as => :boolean %>
+      <%= form.input :newsletter_on, :as => :boolean %>
+      <% if ['lead_buyer', 'customer'].include?(params[:role]) or @user.has_any_role?(:lead_buyer, :customer) %>
+          <%= form.input :big_buyer, :as => :boolean %>
+      <% end %>      
+    </ol>
+  </fieldset>
+</div>
+

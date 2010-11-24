@@ -1,14 +1,53 @@
 <column-mc:>
-  <h1><%= t("buyer_accounts.new.view.title") %></h1>
+  <header><%= t("buyer_accounts.new.view.title") %></header>
 
-  <%= semantic_form_for  @user, :url => buyer_accounts_path do |form| %>
-      <%= form.inputs :first_name, :last_name, :phone, :email, :screen_name, :password, :password_confirmation, :street,
-        :city, :zip_code, :county
-      %>
-      <%= form.input :country, :as => :select, :collection => Country.all %>
-      <%= form.input :agreement_read, :as => :boolean %>
-      <%= form.input :newsletter_on, :as => :boolean %>
-      <%= form.commit_button t("buyer_accounts.new.view.button_create_account") %>
+  <%= semantic_form_for @user, :url => buyer_accounts_path do |form| %>
+      <frm title="Create new account" c="todo_delete">
+        <param:content>
+          <div class="pdd_10 no_pdd_t">
+            <fieldset class="inputs labels_ta_r labels_240">
+              <ol>
+                <%= form.input :first_name %>
+                <%= form.input :last_name %>
+                <%= form.input :phone %>
+                <%= form.input :email %>
+                <%= form.input :screen_name %>
+                <%= form.input :password %>
+                <%= form.input :password_confirmation %>
+              </ol>
+            </fieldset>
+          </div>
 
+          <hl/>
+
+          <div class="pdd_10 no_pdd_t">
+            <fieldset class="inputs labels_ta_r labels_240">
+              <ol class="align_inputs">
+                <%= form.input :street %>
+                <%= form.input :city %>
+                <%= form.input :zip_code %>
+                <%= form.input :county %>
+              </ol>
+            </fieldset>
+          </div>
+
+          <hl/>
+
+          <div class="pdd_10 no_pdd_t">
+            <fieldset class="inputs labels_ta_r labels_240">
+              <ol class="align_inputs">
+                <%= form.input :country, :as => :select, :collection => Country.all %>
+                <%= form.input :agreement_read, :as => :boolean %>
+                <%= form.input :newsletter_on, :as => :boolean %>
+              </ol>
+            </fieldset>
+          </div>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="plus">
+            <%= form.submit t("buyer_accounts.new.view.button_create_account") %>
+          </ibt>
+        </param:actions>
+      </frm>
   <% end %>
 </column-mc:>

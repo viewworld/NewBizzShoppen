@@ -1,8 +1,17 @@
 <column-mc:>
-    <%= semantic_form_for @user, :url => my_profile_path, :method => :put do |form| %>
-        <%= render :partial => "form", :locals => { :form => form } %>
-        <%= form.commit_button t("password.edit.view.button_update_user") %>
-    <% end %>
+  <header>My profile</header>
 
-    <%= link_to t("my_profile.edit.view.change_password"), password_path %>
+  <%= semantic_form_for @user, :url => my_profile_path, :method => :put do |form| %>
+      <frm title="Edit account" c="todo_delete">
+        <param:content>
+          <%= render :partial => "form", :locals => { :form => form } %>
+          <%= link_to t("my_profile.edit.view.change_password"), password_path %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("password.edit.view.button_update_user") %>
+          </ibt>
+        </param:actions>
+      </frm>
+  <% end %>
 </column-mc:>

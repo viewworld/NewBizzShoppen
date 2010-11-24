@@ -1,5 +1,5 @@
 <column-mc:>
-  <h1>Categories</h1>
+  <header>Categories</header>
 
   <%= link_to t("administration.categories.index.view.new_category"), new_administration_category_path %>
   <%= all_categories_tree(:category_label => lambda { |c| c.name },
