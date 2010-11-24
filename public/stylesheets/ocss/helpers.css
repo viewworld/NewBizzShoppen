@@ -1,0 +1,143 @@
+/* --- helpers ---
+--------------------------------------------------------------------------------- */
+
+.clb
+{
+    clear: both;
+    height: 0;
+    overflow: hidden;
+}
+
+.rltv
+{
+    positon: relative;
+}
+
+
+/* --- floats ------------------------------------------------------------------- */
+
+.fltr
+{
+	float: right;
+}
+
+.fltl
+{
+	float: left;
+}
+
+.fltri
+{
+	float: right !important;
+}
+
+.fltli
+{
+	float: left !important;
+}
+
+.no_flt
+{
+    float: none;
+}
+
+
+/* --- text ---------------------------------------------------------------------- */
+
+.ta_l
+{
+    text-align: left;
+}
+
+.ta_c
+{
+    text-align: center;
+}
+
+.ta_r
+{
+    text-align: right;
+}
+
+
+/* --- padding --- */
+
+.pdd_5
+{
+    padding: 5px;
+}
+
+.pdd_10
+{
+    padding: 10px;
+}
+
+.no_pdd
+{
+    padding: 0;
+}
+
+.no_pdd_l
+{
+    padding-left: 0;
+}
+
+.no_pdd_t
+{
+    padding-top: 0;
+}
+
+.no_pdd_r
+{
+    padding-right: 0;
+}
+
+.no_pdd_b
+{
+    padding-bottom: 0;
+}
+
+
+/* --- margin ---------------------------------------------------------------------- */
+
+.marg_5
+{
+    margin: 5px;
+}
+
+.marg_10
+{
+    margin: 10px;
+}
+
+.no_marg
+{
+    margin: 0;
+}
+
+.no_marg_l
+{
+    margin-left: 0;
+}
+
+.no_marg_t
+{
+    margin-top: 0;
+}
+
+.no_marg_r
+{
+    margin-right: 0;
+}
+
+.no_marg_b
+{
+    margin-bottom: 0;
+}
+
+/* --- diverse ---------------------------------------------------------------------- */
+
+.hidden
+{
+    display: none;
+}

@@ -1,0 +1,169 @@
+/* --- frame apperience ---
+--------------------------------------------------------------------------------- */
+
+.frm .frm_head .frm_hc h1,
+.frm .frm_head .frm_hc h2,
+.frm .frm_head .frm_hc h3
+{
+    font: 14px;
+    line-height: 38px;
+    padding-left: 10px;
+    color: #555;
+}
+
+
+/* --- frame base ---
+--------------------------------------------------------------------------------- */
+
+.frm
+{
+    margin-top: 20px;        
+}
+
+.frm .frm_head
+{
+    position: relative;           
+}
+
+.frm .frm_head .frm_hl,
+.frm .frm_head .frm_hr
+{
+    width: 10px;
+    height: 38px;
+}
+
+.frm .frm_head .frm_hl
+{
+    float: left;
+    background: url(/images/frm/grey.png) no-repeat 0 0;
+
+    -moz-border-radius-topleft: 5px;
+    -webkit-border-top-left-radius: 5px;
+    border-top-left-radius: 5px;        
+}
+
+.frm .frm_head .frm_hr
+{
+    float: right;
+    background: url(/images/frm/grey.png) no-repeat right 0;
+
+    -moz-border-radius-topright: 5px;
+    -webkit-border-top-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.frm .frm_head .frm_hc
+{
+    height: 38px;
+    background: url(/images/frm/grey.png) repeat-x 0 -38px;
+
+    -moz-border-radius-topleft: 5px;
+    -webkit-border-top-left-radius: 5px;
+    border-top-left-radius: 5px;
+
+    -moz-border-radius-topright: 5px;
+    -webkit-border-top-right-radius: 5px;
+    border-top-right-radius: 5px;   
+}
+
+.frm .frm_content
+{
+    border-left: 1px solid #e3e3e3;
+    border-right: 1px solid #e3e3e3;
+    background-color: #f5f5f5;
+}
+
+.frm .frm_foot
+{
+    height: 10px;
+}
+
+.frm .frm_foot .frm_fl,
+.frm .frm_foot .frm_fr
+{
+    height: 10px;
+    width: 10px;
+}
+
+.frm .frm_foot .frm_fl
+{
+    float: left;
+    background: url(/images/frm/grey.png) repeat-x 0 -76px;
+
+    -moz-border-radius-bottomleft: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    border-bottom-left-radius: 5px;    
+}
+
+.frm .frm_foot .frm_fr
+{
+    float: right;
+    background: url(/images/frm/grey.png) repeat-x right -76px;
+
+    -moz-border-radius-bottomright: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.frm .frm_foot .frm_fc
+{
+    height: 10px;
+    background: url(/images/frm/grey.png) repeat-x 0 -86px;
+
+    -moz-border-radius-bottomleft: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+
+    -moz-border-radius-bottomright: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+
+
+.frm .frm_foot_actions
+{
+    height: 46px;    
+}
+
+.frm .frm_foot_actions .frm_fl,
+.frm .frm_foot_actions .frm_fr
+{
+    height: 46px;
+    width: 10px;
+}
+
+.frm .frm_foot_actions .frm_fl
+{
+    float: left;
+    background: url(/images/frm/grey.png) repeat-x 0 -96px;
+
+    -moz-border-radius-bottomleft: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.frm .frm_foot_actions .frm_fr
+{
+    float: right;
+    background: url(/images/frm/grey.png) repeat-x right -96px;
+
+    -moz-border-radius-bottomright: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.frm .frm_foot_actions .frm_fc
+{
+    height: 38px;
+    padding-top: 8px;
+    background: url(/images/frm/grey.png) repeat-x 0 -142px;
+
+    -moz-border-radius-bottomleft: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+
+    -moz-border-radius-bottomright: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
