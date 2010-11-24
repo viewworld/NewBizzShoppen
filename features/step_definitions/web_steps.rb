@@ -260,13 +260,13 @@ end
 
 Then /^"([^"]*)" should be selected for "([^"]*)"(?: within "([^"]*)")?$/ do |field, value, selector|
   with_scope(selector) do
-    find_field(field).value.first.should =~ /#{value}/
+    find_field(field).value.should =~ /#{value}/
   end
 end
 
 Then /^"([^"]*)" should be selected for translated "([^"]*)"(?: within "([^"]*)")?$/ do |field, key, selector|
   with_scope(selector) do
-    find_field(field).value.first.should =~ /#{I18n.t(key)}/
+    find_field(field).value.should =~ /#{I18n.t(key)}/
   end
 end
 
