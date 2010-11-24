@@ -12,9 +12,8 @@ class LeadUsers::LeadRequestsController < LeadUsers::LeadUserController
     params[:search][:with_requested_by] = current_user.id
     params[:search][:with_leads] = "1"
     @lead_requests = LeadRequest.with_requested_by(current_user.id)
-    @countries = @lead_requests.map(&:country).uniq.map{|c| [c.name, c.id]}
-    @categories = @lead_requests.map(&:category).uniq.map{|c| [c.name, c.id]}
-    @requestees = @lead_requests.map(&:requestee).uniq.map{|r| [r.full_name, r.id]}
+    @countries = Country.with_lead_request_requested_by(current_user).map{|c| [c.name, c.id]}
+    @categories = Category.with_lead_request_requested_by(current_user).map{|c| [c.name, c.id]}
     @search = LeadRequest.scoped_search(params[:search])
     @lead_requests = @search.all
   end
