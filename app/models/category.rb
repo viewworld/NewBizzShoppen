@@ -16,6 +16,7 @@ class Category < ActiveRecord::Base
   end
 
   scope :with_leads, where("total_leads_count > 0")
+  scope :with_lead_request_owner, lambda { |owner| select("DISTINCT(name), categories.*").where("requested_by IS NOT NULL and lead_purchases.owner_id = ?", owner.id).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
 
   before_destroy :check_if_category_is_empty
 
