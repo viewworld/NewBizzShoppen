@@ -8,7 +8,7 @@ class LeadUsers::LeadPurchasesController < LeadUsers::LeadUserController
   end
 
   def collection
-    @subaccounts = current_user.subaccounts
+    @subaccounts = current_user.user.subaccounts
     params[:search]||={}
     params[:search][:with_assignee] = current_user.id
     params[:search][:with_leads] = "1"
