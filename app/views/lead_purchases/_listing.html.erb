@@ -1,7 +1,7 @@
 <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
 <ul class="lead_purchases_listing">
   <% collection.each do |lead_purchase| %>
-      <li class="lead_purchase" id="<%= dom_id(lead_purchase) %>">
+      <li class="lead_purchase <%= 'highlight' if lead_purchase.expiring? %>" id="<%= dom_id(lead_purchase) %>">
         <div class="general">          
           <%= check_box_tag("lead_purchase_ids[]", lead_purchase.id) if show_checkboxes %>
           <h3><%= lead_purchase.header %></h3>

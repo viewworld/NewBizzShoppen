@@ -129,7 +129,7 @@ Scenario: I can bulk set response deadlines for lead
   And I press translated "lead_buyer.lead_purchases.index.view.bulk_update_button"
   Then I should see translated "buyer.bulk_lead_purchase_update.create.flash.lead_purchases_updated_successfully"
 
-@ao @_todo
+@ao @nontestable
 Scenario: I am notified by email when dealine expires and status of lead has not changed
 
 @m0
@@ -162,8 +162,17 @@ Scenario: I can rate lead that I have access for (good, bad, fake)
 @ao @_todo @m3
 Scenario: I can bulk rate leads that I have access for (good, bad, fake)
 
-@ao @_todo
+@ao @selenium @_tested @_done
 Scenario: I can set status of lead
+  And I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  And I select translated "lead_purchases.statuses.contacted" from "state" within ".lead_purchases_listing li:first-of-type"
+  And I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  Then "state" should be selected for translated "lead_purchases.statuses.contacted" within ".lead_purchases_listing li:first-of-type"
 
-@ao @_todo
+@ao @selenium @_tested @_done
 Scenario: I can bulk set status of leads
+  And I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  And I select translated "lead_purchases.statuses.contacted" from "bulk_state" within "#bulk_actions_form"
+  And I check "mark_all"
+  And I press translated "lead_buyer.lead_purchases.index.view.bulk_update_button"
+  Then "state" should be selected for translated "lead_purchases.statuses.contacted" within ".lead_purchases_listing li:first-of-type"

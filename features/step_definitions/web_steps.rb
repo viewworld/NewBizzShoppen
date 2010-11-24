@@ -87,6 +87,12 @@ When /^(?:|I )select "([^"]*)" from "([^"]*)"(?: within "([^"]*)")?$/ do |value,
   end
 end
 
+When /^(?:|I )select translated "([^"]*)" from "([^"]*)"(?: within "([^"]*)")?$/ do |value, field, selector|
+  with_scope(selector) do
+    select(I18n.t(value), :from => field)
+  end
+end
+
 When /^(?:|I )check "([^"]*)"(?: within "([^"]*)")?$/ do |field, selector|
   with_scope(selector) do
     check(field)
@@ -252,12 +258,16 @@ Then /^The flash message should be set to translated "([^"]*)"$/ do |key|
   assert page.body.match(I18n.t(key))
 end
 
-Then /^"([^"]*)" should be selected for "([^"]*)"$/ do |field, value|
-  find_field(field).value.should =~ /#{value}/
+Then /^"([^"]*)" should be selected for "([^"]*)"(?: within "([^"]*)")?$/ do |field, value, selector|
+  with_scope(selector) do
+    find_field(field).value.first.should =~ /#{value}/
+  end
 end
 
-Then /^"([^"]*)" should be selected for translated "([^"]*)"$/ do |field, key|
-  find_field(field).value.should =~ /#{I18n.t(key)}/
+Then /^"([^"]*)" should be selected for translated "([^"]*)"(?: within "([^"]*)")?$/ do |field, key, selector|
+  with_scope(selector) do
+    find_field(field).value.first.should =~ /#{I18n.t(key)}/
+  end
 end
 
 Then /^"([^"]*)" should be selected for value "([^"]*)"$/ do |field, value|

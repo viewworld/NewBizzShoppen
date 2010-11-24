@@ -11,7 +11,7 @@ class Buyers::LeadPurchasesController < Buyers::BuyerController
   end
 
   def collection
-    @subaccounts = current_user.subaccounts
+    @possible_assignees = current_user.subaccounts_and_me
     params[:search]||={}
     params[:search][:with_leads] = "1"
     params[:search][:with_owner] = current_user.id

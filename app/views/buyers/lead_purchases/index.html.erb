@@ -22,11 +22,9 @@
       <%= t("lead_buyer.lead_purchases.index.view.bulk_state_field") %>
       <%= select_tag :bulk_state, options_for_select([[nil, nil]]+LeadPurchaseBase.statuses_for_select) %>
 
-      <% unless @subaccounts.empty? %>
       <br/>
       <%= t("lead_buyer.lead_purchases.index.view.bulk_assignee_field") %>
-      <%= select_tag :bulk_assignee_id, options_for_select([[nil, nil]]+@subaccounts.map { |sa| [sa.screen_name, sa.id] }) %>
-      <% end %>
+      <%= select_tag :bulk_assignee_id, options_for_select(@possible_assignees.map { |sa| [sa.screen_name, sa.id] }) %>
 
       <%= t("lead_buyer.lead_purchases.index.view.lead_response_date") %>
       <%= text_field_tag :bulk_response_deadline, "", :id => "response_deadline_datepicker_bulk" %>
@@ -49,11 +47,9 @@
                              options_for_select(LeadPurchaseBase.statuses_for_select, lead_purchase.state),
                              :onchange => "$.post('#{buyers_lead_purchase_path(lead_purchase)}', {'_method':'put', 'lead_purchase[state]':this.value} );" %>
 
-              <% if @subaccounts.present? %>
-                  <%= select_tag :assignee_id,
-                                 options_for_select([[nil, nil]]+@subaccounts.map { |sa| [sa.screen_name, sa.id] }, lead_purchase.assignee_id),
-                                 :onchange => "$.post('#{buyers_lead_purchase_path(lead_purchase)}', {'_method':'put', 'lead_purchase[assignee_id]':this.value} );" %>
-              <% end %>
+              <%= select_tag :assignee_id,
+                             options_for_select(@possible_assignees.map { |sa| [sa.screen_name, sa.id] }, lead_purchase.assignee_id),
+                             :onchange => "$.post('#{buyers_lead_purchase_path(lead_purchase)}', {'_method':'put', 'lead_purchase[assignee_id]':this.value} );" %>
 
               <%= t("lead_buyer.lead_purchases.index.view.lead_response_date") %>
               <%= text_field_tag :response_deadline, lead_purchase.response_deadline, :id => "response_deadline_datepicker_#{lead_purchase.id}" %>

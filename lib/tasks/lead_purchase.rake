@@ -4,12 +4,12 @@ namespace :nbs do
 
     #TODO - Install 'whenever' gem
     #calculation details in #2599
-    LeadPurchase.where(:expiration_status => LeadPurchase::ACTIVE).each do
-
+    LeadPurchase.accessible.about_to_expire.each do |lp|
+      lp.about_to_expire!
     end
 
-    LeadPurchase.where(:expiration_status => LeadPurchase::ABOUT_TO_EXPIRE).each do
-
+    LeadPurchase.accessible.expired.each do |lp|
+      lp.expire!
     end
 
   end

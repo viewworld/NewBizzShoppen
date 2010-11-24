@@ -133,4 +133,8 @@ class User < ActiveRecord::Base
     "https://#{mailer_host}/users/password/edit?reset_password_token=#{reset_password_token}"
   end
 
+  def subaccounts_and_me
+    [self] + subaccounts
+  end
+
 end
