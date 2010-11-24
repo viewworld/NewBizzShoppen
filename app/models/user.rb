@@ -25,6 +25,9 @@ class User < ActiveRecord::Base
   scope :with_keyword, lambda { |q| where("lower(first_name) like :keyword OR lower(last_name) like :keyword OR lower(email) like :keyword", {:keyword => "%#{q.downcase}%"}) }
   scope :with_subaccounts, lambda { |parent_id| where("parent_id = ?", parent_id) }
 
+  scope :requestees_for_lead_request_owner, lambda { |owner| select("DISTINCT(users.id), users.*").where("requested_by IS NOT NULL and lead_purchases.owner_id = ?", owner.id).joins("RIGHT JOIN lead_purchases on lead_purchases.requested_by=users.id") }
+  scope :assignees_for_lead_purchase_owner, lambda { |owner| select("DISTINCT(users.id), users.*").where("requested_by IS NULL and lead_purchases.owner_id = ? and accessible = ?", owner.id, true).joins("RIGHT JOIN lead_purchases on lead_purchases.assignee_id=users.id") }
+
   scoped_order :id, :roles_mask, :first_name, :last_name, :email, :age
 
 

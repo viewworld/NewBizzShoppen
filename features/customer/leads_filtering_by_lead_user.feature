@@ -36,7 +36,6 @@ Scenario: I can browse leads assigned to one of my lead users with pagination
   And I press translated "lead_user.lead_purchases.index.view.search.search_button"
   Then I should not see "Monitors LCD deal"
   Then I should not see "Mouses deal"
-  And I open page in browser
 
 @tgn @tested_elsewhere
 Scenario: I can see lead header, purchase value, lead price, description, hottness, novelty, exposures, clicks
