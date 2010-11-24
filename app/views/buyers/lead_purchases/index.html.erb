@@ -62,6 +62,7 @@
           <% blocks.card do |lead_purchase| %>
               <%= link_to t("lead_buyer.lead_purchases.index.view.download_csv_link"), buyers_lead_purchase_path(lead_purchase, :format => :csv) %>
               <%= link_to t("lead_buyer.lead_purchases.index.view.print_link"), buyers_lead_purchase_path(lead_purchase, :format => :print), :target => "_blank" %>
+              <%= link_to_function t("lead_buyer.lead_purchases.index.view.share_email_link"), "share_lead_by_email(#{lead_purchase.id})"  %>
           <% end %>
       <% end %>
   <% end %>
@@ -82,6 +83,14 @@
   {
 
       $.post(url, {'_method':'put', 'lead_purchase[response_deadline]':field_value} );
+  }
+
+  function share_lead_by_email(lead_purchase_id){
+      $('input:checkbox').each(function() {
+        $(this).attr('checked', false);
+       });
+      $("#lead_purchase_checkbox_" + lead_purchase_id.toString()).attr('checked', true);
+      submitBulkForm('<%= bulk_lead_share_by_email_path %>#GET');
   }
   </script>
 </column-mc:>
