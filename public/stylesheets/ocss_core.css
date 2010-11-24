@@ -10,5 +10,8 @@
 /* --- frm --- */
 @import url('ocss/frm.css');
 
+/* --- table --- */
+@import url('ocss/table.css');
+
 /* --- fieldset component (inputs + labels) --- */
 @import url('ocss/inputs.css');
