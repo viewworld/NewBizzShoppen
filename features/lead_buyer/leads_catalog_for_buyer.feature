@@ -20,6 +20,8 @@ Scenario: I can click add lead to my basket and I will get a notification “Lea
   Given I follow "Another sample category"
   And I follow translated "leads.index.add_to_cart_link" for lead "Super printers"
   Then I should see translated "buyer.cart_items.create.flash.cart_item_creation_successful"
+  And I follow translated "leads.index.add_to_cart_link" for lead "Super printers"
+  Then I should see translated "buyer.cart_items.create.flash.cart_item_already_in_basket"
 
 @_tested  @selenium
 Scenario: I can toggle select leads on a displayed page
