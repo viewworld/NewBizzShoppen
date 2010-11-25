@@ -22,7 +22,7 @@ gem 'globalize3'
 gem 'role_model', :require => "role_model"
 gem 'cancan'
 gem 'rails-settings', :require => "settings"
-gem 'nested_set'
+gem 'nested_set', '1.5.4'
 gem 'fastercsv'
 
 group :development do

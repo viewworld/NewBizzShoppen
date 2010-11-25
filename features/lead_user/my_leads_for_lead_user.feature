@@ -116,6 +116,7 @@ Scenario: I can see company contact on lead details page
 @ao @_done @_tested
 Scenario: I can email the lead if email information were provided
   Given I am signed up and confirmed as user with email leaduser@nbs.com and password secret and role lead_user
+  And an user with role lead_user and email leaduser@nbs.com exists as subaccount for customer customer@nbs.com
   And I sign out
   And I am on the home page
   And I sign in as leaduser@nbs.com with password secret
@@ -174,5 +175,10 @@ Scenario: I can print out multiple leads information
   Then I should see "Keyboards deal"
   Then I should see "Monitors LCD deal"
 
-@ao @_todo
+@ao @_tested @_done
 Scenario: I should see a yellow color for a lead with expiration date ending in 3 days
+  Given lead Printers ultimate deal has deadline in 2 days from now
+  And LeadPurchase statuses are updated
+  And I follow "My assigned leads"
+  Then list item should be highlighted
+

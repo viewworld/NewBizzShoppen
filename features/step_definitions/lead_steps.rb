@@ -113,3 +113,30 @@ Given /^lead (.+) has purchase value (.+)$/ do |header,pv|
   lead = Lead.find_by_header(header).first
   lead.update_attribute(:purchase_value, pv)
 end
+
+
+Given /^lead "([^"]*)" has translation for lang "([^"]*)" with attributes "([^"]*)"$/ do |header, locale_lang, options|
+  lead = Lead.find_by_header(header).first
+  lead_translation = LeadTranslation.create(:lead_id => lead.id, :locale => locale_lang)
+  lead_translation.update_attributes(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys)
+end
+
+Given /^lead (.+) has deadline in (\d+) days from now$/ do |header,days|
+  lead = Lead.find_by_header(header).first
+  lead.lead_purchases.first.update_attribute(:response_deadline, Date.today+days.to_i.days)
+end
+
+Given /^LeadPurchase statuses are updated$/ do
+  LeadPurchase.accessible.about_to_expire.each do |lp|
+    lp.about_to_expire!
+  end
+
+  LeadPurchase.accessible.expired.each do |lp|
+    lp.expire!
+  end
+end
+
+Then /^list item should be highlighted$/ do
+  page.all(:css,"ul li[class*='highlight']").size.should eql(1)
+end
+

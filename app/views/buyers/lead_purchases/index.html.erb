@@ -23,9 +23,10 @@
       <%= select_tag :bulk_state, options_for_select([[nil, nil]]+LeadPurchaseBase.statuses_for_select) %>
 
       <% unless @subaccounts.empty? %>
-      <br/>
-      <%= t("lead_buyer.lead_purchases.index.view.bulk_assignee_field") %>
-      <%= select_tag :bulk_assignee_id, options_for_select([[nil, nil]]+@subaccounts.map { |sa| [sa.screen_name, sa.id] }) %>
+          <% opts = @subaccounts.insert(0,current_user).map { |sa| [sa.screen_name, sa.id] } %>
+          <br/>
+          <%= t("lead_buyer.lead_purchases.index.view.bulk_assignee_field") %>
+          <%= select_tag :bulk_assignee_id, options_for_select(opts), :include_blank => true %>
       <% end %>
 
       <%= t("lead_buyer.lead_purchases.index.view.lead_response_date") %>
@@ -40,6 +41,7 @@
 
       <% lead_purchases_listing @lead_purchases, :show_checkboxes => true do |blocks| %>
           <% blocks.contact do |lead_purchase| %>
+              <%= link_to t("lead_buyer.lead_purchases.index.view.view_lead"), buyers_lead_purchase_path(lead_purchase) %><br />
               <%= link_to t("lead_buyer.lead_purchases.index.view.email_lead"), new_buyers_lead_purchase_lead_email_path(lead_purchase) if lead_purchase_has_email_address?(lead_purchase) %>
           <% end %>
 
@@ -49,8 +51,10 @@
                              :onchange => "$.post('#{buyers_lead_purchase_path(lead_purchase)}', {'_method':'put', 'lead_purchase[state]':this.value} );" %>
 
               <% if @subaccounts.present? %>
+                  <% opts = @subaccounts.insert(0,current_user).map { |sa| [sa.screen_name, sa.id] } %>
                   <%= select_tag :assignee_id,
-                                 options_for_select([[nil, nil]]+@subaccounts.map { |sa| [sa.screen_name, sa.id] }, lead_purchase.assignee_id),
+                                 options_for_select(opts, lead_purchase.assignee_id),
+                                 :include_blank => true,
                                  :onchange => "$.post('#{buyers_lead_purchase_path(lead_purchase)}', {'_method':'put', 'lead_purchase[assignee_id]':this.value} );" %>
               <% end %>
 
@@ -61,6 +65,7 @@
           <% blocks.card do |lead_purchase| %>
               <%= link_to t("lead_buyer.lead_purchases.index.view.download_csv_link"), buyers_lead_purchase_path(lead_purchase, :format => :csv) %>
               <%= link_to t("lead_buyer.lead_purchases.index.view.print_link"), buyers_lead_purchase_path(lead_purchase, :format => :print), :target => "_blank" %>
+              <%= link_to_function t("lead_buyer.lead_purchases.index.view.share_email_link"), "share_lead_by_email(#{lead_purchase.id})"  %>
           <% end %>
       <% end %>
   <% end %>
@@ -81,6 +86,14 @@
   {
 
       $.post(url, {'_method':'put', 'lead_purchase[response_deadline]':field_value} );
+  }
+
+  function share_lead_by_email(lead_purchase_id){
+      $('input:checkbox').each(function() {
+        $(this).attr('checked', false);
+       });
+      $("#lead_purchase_checkbox_" + lead_purchase_id.toString()).attr('checked', true);
+      submitBulkForm('<%= bulk_lead_share_by_email_path %>#GET');
   }
   </script>
 </column-mc:>

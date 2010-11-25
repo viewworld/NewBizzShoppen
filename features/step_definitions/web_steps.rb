@@ -252,12 +252,26 @@ Then /^The flash message should be set to translated "([^"]*)"$/ do |key|
   assert page.body.match(I18n.t(key))
 end
 
-Then /^"([^"]*)" should be selected for "([^"]*)"$/ do |field, value|
-  find_field(field).value.should =~ /#{value}/
+# does not work well with selenium
+Then /^"([^"]*)" should be selected for "([^"]*)"(?: within "([^"]*)")?$/ do |field, value, selector|
+  with_scope(selector) do
+    find_field(field).value.should =~ /#{value}/
+  end
 end
 
-Then /^"([^"]*)" should be selected for translated "([^"]*)"$/ do |field, key|
-  find_field(field).value.should =~ /#{I18n.t(key)}/
+# does not work well with selenium
+Then /^"([^"]*)" should be selected for translated "([^"]*)"(?: within "([^"]*)")?$/ do |field, key, selector|
+  with_scope(selector) do
+    find_field(field).value.should =~ /#{I18n.t(key)}/
+  end
+end
+
+Then /^select with id "([^"]*)" should be selected for "([^"]*)" within "([^"]*)"$/ do |id, value, selector|
+  page.find("#{selector} select[id='#{id}'] option[selected]").text.should =~ /#{value}/
+end
+
+Then /^select with id "([^"]*)" should be selected for translated "([^"]*)" within "([^"]*)"$/ do |id, value, selector|
+  page.find("#{selector} select[id='#{id}'] option[selected]").text.should =~ /#{I18n.t(value)}/
 end
 
 Then /^"([^"]*)" should be selected for value "([^"]*)"$/ do |field, value|

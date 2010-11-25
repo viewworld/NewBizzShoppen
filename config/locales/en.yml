@@ -160,6 +160,8 @@ en:
         keyword_label: Keyword
         deal_value_from_label: Deal value from
         deal_value_to_label: Deal value to
+        category_label: 'Category'
+        country_label: 'Country'
       add_to_cart_link: Add to cart
       buy_lead: Buy lead
       request_lead: Request lead
@@ -173,6 +175,7 @@ en:
   home:
     show:
       view:
+        header: 'Home'
         buyer: 'Buyer'
         agent: 'Agent'
         remember_me: 'Remember me'
@@ -349,6 +352,7 @@ en:
         flash:
           cart_item_creation_successful: Lead has been added to cart
           cart_item_bought_successful: Lead has been bought
+          cart_item_already_in_basket: Lead has already been added to cart
       destroy:
         flash:
           cart_item_destruction_successful: Lead has been removed from cart
@@ -369,6 +373,10 @@ en:
       create:
         flash:
           lead_purchases_updated_successfully: 'Leads have been updated successfully!'
+    lead_purchases:
+      show:
+        view:
+          header: 'Lead details'
 
   categories:
     index:
@@ -486,6 +494,10 @@ en:
           button_bulk_destroy_lead_request: 'Remove lead requests'
           search:
             keyword_label: 'Keyword'
+            category_label: 'Category'
+            deal_value_from_label: 'From'
+            deal_value_to_label: 'To'
+            country_label: 'Country'
             search_button: 'Search'
     bulk_lead_purchase_update:
       create:
@@ -507,6 +519,7 @@ en:
           header: My leads
           download_csv_link: CSV
           print_link: Print
+          share_email_link: Share by email
           bulk_download_csv_link: Download CSV for selected leads
           bulk_share_by_email_link: Share by email
           bulk_print_link: Print all selected leads
@@ -514,6 +527,8 @@ en:
           bulk_assignee_field: Assigned to
           bulk_update_button: Update all selected leads
           lead_response_date: 'Response date:'
+          view_lead: View Details
+          email_lead: Email Lead
           search:
             keyword_label: 'Keyword'
             category_label: 'Category'
@@ -522,7 +537,7 @@ en:
             country_label: 'Country'
             assignee_label: 'Assignee'
             search_button: 'Search'
-            bulk_lead_share_by_email:
+    bulk_lead_share_by_email:
       new:
         view:
           header: Share leads by email

@@ -41,12 +41,21 @@ Given /^I follow translated logout link for (.+)$/ do |email|
    Then %{I follow "#{I18n.t('layout.logout_link', :user_email => email)}"}
 end
 
-Given /^I select translated "([^"]*)" from "([^"]*)"$/ do |key, field|
+When /^I select translated "([^"]*)" from "([^"]*)"(?: within "([^"]*)")?$/ do |key, field, selector|
   I18n.locale = :en
-  Then %{I select "#{I18n.t(key)}" from "#{field}"}
+  if selector.present?
+    Then %{I select "#{I18n.t(key)}" from "#{field}" within "#{selector}"}
+  else
+    Then %{I select "#{I18n.t(key)}" from "#{field}"}
+  end
 end
 
 And /"([^"]*)" should be selected for value translated "([^"]*)"/ do |field, key|
   I18n.locale = :en
   Then %{"#{field}" should be selected for value "#{I18n.t(key)}"}
+end
+
+Then /^locale is set to "([^"]*)" for translation "([^"]*)"/ do |locale_lang, key|
+  I18n.locale = locale_lang.to_sym
+  Then %{I should see "#{I18n.t(key)}"}
 end

@@ -45,7 +45,7 @@ module Nbs
 
     require "bulk_process"
     config.middleware.use "BulkProcess"
-
+    require "#{config.root}/app/modules/custom_redirect.rb"
   end
 end
 
