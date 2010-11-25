@@ -1,6 +1,8 @@
 class LeadUsers::LeadRequestsController < LeadUsers::LeadUserController
   inherit_resources
 
+  set_tab "my_requested_leads"
+
   protected
 
   def begin_of_association_chain
