@@ -1,4 +1,4 @@
-@statistics @$_admin
+@statistics @$_admin @m0
 Feature: Statistics for admin
 
 In order to make better decisions

@@ -1,4 +1,4 @@
-@lead_manager @$_call_centre
+@lead_manager @$_call_centre @m0
 Feature: My leads for call centre
 
 Scenario: I can browse leads with pagination

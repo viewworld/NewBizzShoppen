@@ -95,7 +95,7 @@ Scenario: I should see created by and certification level for each requested lea
   And I should see "Philip Glass"
   And I should see translated "models.lead.novelty.lvl0"
 
-@m3
+@m0
 Scenario: I should see rating % for each requested lead
 
 @tgn @done @_tested
@@ -156,10 +156,10 @@ Scenario: I can send selected lead by email
 @tgn @_todo
 Scenario: I can bulk send selected leads by email
 
-@ao @_todo @m3
+@ao @_todo @m0
 Scenario: I can rate lead that I have access for (good, bad, fake)
 
-@ao @_todo @m3
+@ao @_todo @m0
 Scenario: I can bulk rate leads that I have access for (good, bad, fake)
 
 @ao @_todo

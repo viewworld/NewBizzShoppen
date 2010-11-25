@@ -1,4 +1,4 @@
-@dashboard  @$_call_centre_agent
+@dashboard  @$_call_centre_agent @m0
 Feature: Call centre agent dashboard
 
 In order to have a overall view on my account

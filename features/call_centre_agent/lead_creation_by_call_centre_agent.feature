@@ -1,4 +1,4 @@
-@lead_manager @$_call_centre_agent @m3
+@lead_manager @$_call_centre_agent @m0
 Feature: Lead creation by call centre agent
 
 In order to create and manage leads I sell

@@ -53,7 +53,7 @@ Scenario: When the lead is bought and I want to edit it then "Notify the lead bu
   Then I should see translated "activerecord.attributes.lead.notify_buyers_after_update"
 
 
-@m0
+@m3
 Scenario: When the lead is bought and I update it and check "Notify the lead buyers" then email is sent to all buyers
 # Generic mail edited by the administrator.
 

@@ -1,4 +1,4 @@
-@dashboard @$_customer
+@dashboard @$_customer @m0
 Feature: Customer dashboard
 
 Scenario: Given I do not have any users yet than we I should see message encouraging me to do so and link allowing me to do so

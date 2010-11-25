@@ -1,4 +1,4 @@
-@webservices @$_call_centre
+@webservices @$_call_centre @m0
 Feature: Web services management by call centre
 
 Scenario: I can add a webservice by selecting name, url and format

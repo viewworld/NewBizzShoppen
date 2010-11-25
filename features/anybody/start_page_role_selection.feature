@@ -1,7 +1,7 @@
 @start_pages @m2
 Feature: Start page role selection
 
-@m0
+@m3
 Scenario: I can see welcome text fetch from the database
 
 @tgn @_done @_to_test

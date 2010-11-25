@@ -7,7 +7,7 @@ Scenario: I should see apropriate language version of the content if I change th
 @tgn @_done @_to_test
 Scenario: Lead translations
 
-@m0
+@m3
 Scenario: News translations
 
 @m3
