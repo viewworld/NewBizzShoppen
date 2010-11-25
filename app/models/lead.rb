@@ -48,6 +48,7 @@ class Lead < ActiveRecord::Base
   attr_accessor :notify_buyers_after_update
   after_create :cache_creator_name
   before_destroy :can_be_removed?
+  after_find :set_buyers_notification
 
   private
 
@@ -75,8 +76,12 @@ class Lead < ActiveRecord::Base
 
     def can_be_removed?
     lead_purchases.empty?
+    end
+
+  def set_buyers_notification
+    self.notify_buyers_after_update = true
   end
-  
+
   public
 
   def hotness_level

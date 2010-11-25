@@ -1,7 +1,7 @@
 <column-mc:>
   <h1><%= t("lead_buyer.bulk_lead_share_by_email.new.view.header") %></h1>
 
-  <%= form_for :email_template_preview, @email_template_preview, :url => create_bulk_lead_share_by_email_path do |f| %>
+  <%= form_for @email_template_preview, :as => :email_template_preview, :url => create_bulk_lead_share_by_email_path do |f| %>
       <%= t("lead_buyer.bulk_lead_share_by_email.new.view.recipients_label") %>
       <%= f.text_field :recipients %>
       <%= t("lead_buyer.bulk_lead_share_by_email.new.view.subject_label") %>
