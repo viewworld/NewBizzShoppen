@@ -272,6 +272,14 @@ Then /^"([^"]*)" should be selected for translated "([^"]*)"(?: within "([^"]*)"
   end
 end
 
+Then /^select with id "([^"]*)" should be selected for "([^"]*)" within "([^"]*)"$/ do |id, value, selector|
+  page.find("#{selector} select[id='#{id}'] option[selected]").text.should =~ /#{value}/
+end
+
+Then /^select with id "([^"]*)" should be selected for translated "([^"]*)" within "([^"]*)"$/ do |id, value, selector|
+  page.find("#{selector} select[id='#{id}'] option[selected]").text.should =~ /#{I18n.t(value)}/
+end
+
 Then /^"([^"]*)" should be selected for value "([^"]*)"$/ do |field, value|
   assert page.has_xpath?("//option[@selected = 'selected' and contains(string(), '#{value}')]")
 end
