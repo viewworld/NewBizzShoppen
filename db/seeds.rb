@@ -1,7 +1,7 @@
 require "spec/support/blueprints"
 
-Category.create(:name => "Test category 1")
-Category.create(:name => "Test category 2")
+Category.find_or_create_by_name(:name => "Test category 1")
+Category.find_or_create_by_name(:name => "Test category 2")
 
 #Default settings
 Settings.level_one_certification_threshold = 0
@@ -11,8 +11,6 @@ Settings.default_payout_delay = 0
 Settings.default_leads_per_page = 5
 Settings.certification_level_1 = 10
 Settings.certification_level_2 = 20
-
-
 
 Country.find_or_create_by_name("Denmark")
 Country.find_or_create_by_name("United Kingdom")
