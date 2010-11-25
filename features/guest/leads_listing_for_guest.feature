@@ -51,7 +51,7 @@ Scenario: I should see certification level for each lead
   And I follow "Sample category"
   Then I should see translated "models.lead.certification.lvl0"
 
-@m3
+@m0
 Scenario: I should see rating % for each lead
 
 @m2 @tgn @_tested

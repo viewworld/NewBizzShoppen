@@ -19,13 +19,13 @@ Scenario: Lead translations
   Then I should see "Printere ultimative aftale"
   Then I should see "Beskrivelse til printere behandle"
 
-@m0
+@m3
 Scenario: News translations
 
-@m0
+@m3
 Scenario: Article translations
 
-@m0
+@m3
 Scenario: Email translations
 
 @tgn @_done @_tested_elsewhere

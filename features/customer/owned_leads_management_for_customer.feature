@@ -95,7 +95,7 @@ Scenario: I should see created by and certification level for each requested lea
   And I should see "Philip Glass"
   And I should see translated "models.lead.novelty.lvl0"
 
-@m3
+@m0
 Scenario: I should see rating % for each requested lead
 
 @tgn @done @_tested
@@ -166,10 +166,10 @@ Scenario: I can bulk send selected leads by email
   And I press translated "lead_buyer.bulk_lead_share_by_email.new.view.send_email_button"
   Then I should see translated "flash.bulk_lead_share_by_email.actions.create.notice"
 
-@ao @_todo @m3
+@ao @_todo @m0
 Scenario: I can rate lead that I have access for (good, bad, fake)
 
-@ao @_todo @m3
+@ao @_todo @m0
 Scenario: I can bulk rate leads that I have access for (good, bad, fake)
 
 @ao @_tested @_done @selenium @wip

@@ -1,3 +1,4 @@
+@m0
 Feature: Minors
 
 @tgn @m1 @nontestable @_done

@@ -27,7 +27,7 @@ Scenario: I should see created by and certification level for each lead
   And I should see "John McCain"
   And I should see translated "models.lead.novelty.lvl0"
 
-@m3
+@m0
 Scenario: I should see rating %
 
 @tgn @_tested

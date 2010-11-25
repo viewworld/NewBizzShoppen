@@ -1,4 +1,4 @@
-@user_accounts @$_lead_buyer
+@user_accounts @$_lead_buyer @m0
 Feature: Subaccounts administration in customer scope
 
 Scenario: I can browse list of my lead users without pagination

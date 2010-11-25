@@ -1,4 +1,4 @@
-@system
+@system @m0
 Feature: Payouts backend
 
 Scenario: Payout for a given lead sold can be possible only after a certain period of time will pass.

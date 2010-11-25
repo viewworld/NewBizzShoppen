@@ -1,4 +1,4 @@
-@articles @$_admin
+@articles @$_admin @m0
 Feature: Articles linking
  
 Scenario: I can invoke a popup with Inserting a link to another article

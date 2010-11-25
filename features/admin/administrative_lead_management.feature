@@ -1,4 +1,4 @@
-@lead_manager @$_admin
+@lead_manager @$_admin @m0
 Feature: Administrative lead management 
 
 Scenario: I can edit lead if the lead is not sold yet

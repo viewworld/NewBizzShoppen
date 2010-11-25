@@ -1,4 +1,4 @@
-@system
+@system @m0
 Feature: Exporting leads to CSV
 
 Scenario: Bulk lead download file format is specified

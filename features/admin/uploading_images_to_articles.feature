@@ -1,4 +1,4 @@
-@articles @$_admin
+@articles @$_admin @m3
 Feature: Uploading images to articles
 
 

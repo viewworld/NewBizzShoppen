@@ -1,4 +1,4 @@
-@lead_manager @$_call_centre_agent @m3
+@lead_manager @$_call_centre_agent @m0
 Feature: Lead editing by call centre agent
 
 Scenario: I can edit lead if the lead is not sold yet

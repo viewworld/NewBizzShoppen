@@ -1,4 +1,4 @@
-@articles @$_admin
+@articles @$_admin @m3
 Feature: Articles administration
 
 Background: I am logged in as a system admin

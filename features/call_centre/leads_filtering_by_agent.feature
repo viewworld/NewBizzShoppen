@@ -1,4 +1,4 @@
-@lead_manager @$_call_centre
+@lead_manager @$_call_centre @m0
 Feature: Leads filtering by agent
 
 Scenario: I can browse leads created by one of my agents with pagination
