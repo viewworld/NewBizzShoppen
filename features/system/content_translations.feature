@@ -10,10 +10,10 @@ Scenario: Lead translations
 @m0
 Scenario: News translations
 
-@m0
+@m3
 Scenario: Article translations
 
-@m0
+@m3
 Scenario: Email translations
 
 @tgn @_done @_to_test
