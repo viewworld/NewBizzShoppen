@@ -52,6 +52,14 @@ email_templates_array = [
             :body => "<p>{{lead.id}}</p>"},
     :dk => {:subject => "[DK] Contact regarding lead",
             :body => "<p>{{lead.id}}</p>"}
+  },
+
+{ :name => "Lead Purchase is about to expire",
+    :uniq_id => "lead_purchase_is_about_to_expire",
+    :en => {:subject => "Lead Purchase is about to expire",
+            :body => "<p>{{lead_purchase.id}}</p>"},
+    :dk => {:subject => "[DK] Lead Purchase is about to expire",
+            :body => "<p>{{lead_purchase.id}}</p>"}
   }
 ]
 
