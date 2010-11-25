@@ -172,17 +172,17 @@ Scenario: I can rate lead that I have access for (good, bad, fake)
 @ao @_todo @m3
 Scenario: I can bulk rate leads that I have access for (good, bad, fake)
 
-@ao @_tested @_done
+@ao @_tested @_done @selenium
 Scenario: I can set status of lead
   And I follow translated "layout.main_menu.lead_buyer.lead_purchases"
   And I select translated "lead_purchases.statuses.contacted" from "state" within ".lead_purchases_listing li:first-of-type"
   And I follow translated "layout.main_menu.lead_buyer.lead_purchases"
-  Then "state" should be selected for translated "lead_purchases.statuses.contacted"
+  Then "state" should be selected for value translated "lead_purchases.statuses.contacted"
 
-@ao @_tested @_done
+@ao @_tested @_done @selenium
 Scenario: I can bulk set status of leads
   And I follow translated "layout.main_menu.lead_buyer.lead_purchases"
   And I select translated "lead_purchases.statuses.contacted" from "bulk_state" within "#bulk_actions_form"
   And I check "mark_all"
   And I press translated "lead_buyer.lead_purchases.index.view.bulk_update_button"
-  Then "state" should be selected for translated "lead_purchases.statuses.contacted"
+  Then "state" should be selected for value translated "lead_purchases.statuses.contacted"
