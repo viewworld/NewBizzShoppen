@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
 
   ROLES_PRIORITY = [:admin, :call_centre, :agent, :call_centre_agent, :customer, :lead_buyer, :lead_user]
   DEAL_VALUE_RANGE = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000]
+  ADMIN_USER_ROLES = [['Administrator', 'admin'], ['Buyer', 'customer'], ['Freelance agent', 'agent'], ['Call centre', 'call_centre']]
 
   include RoleModel
   include ScopedSearch::Model

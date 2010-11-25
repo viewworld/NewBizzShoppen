@@ -8,13 +8,13 @@
   <% end %>
 
   <%= form_tag new_administration_user_path, :method => :get do %>
-    <%= select_tag "role", options_for_select(User.valid_roles.collect { |r| [r.to_s, r.to_s] }), {} %>
+    <%= select_tag "role", options_for_select(User::ADMIN_USER_ROLES), {} %>
     <%= submit_tag  t("administration.users.index.view.new_user") %>
   <% end %>
 
   <%= form_for @search, :url => administration_users_path do |f| %>
     <%= f.text_field :with_keyword %>
-    <%= f.select :with_role, User.valid_roles.collect { |r| r.to_s }, :include_blank => true  %>
+    <%= f.select :with_role, User::ADMIN_USER_ROLES, :include_blank => true  %>
     <%= f.hidden_field :with_subaccounts %>
     <%= submit_tag t("administration.users.index.view.search_button") %>
   <% end %>
