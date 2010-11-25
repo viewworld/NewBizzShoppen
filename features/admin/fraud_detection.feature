@@ -1,4 +1,4 @@
-@user_accounts @$_admin
+@user_accounts @$_admin @m0
 Feature: Fraud detection
 
 Scenario: No agent and customer must have the same IP address, 

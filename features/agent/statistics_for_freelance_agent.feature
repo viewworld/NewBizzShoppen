@@ -1,4 +1,4 @@
-@statistics @$_freelance_agent
+@statistics @$_freelance_agent @m0
 Feature: Statistics for freelance Agent
 
 In order to make better decisions

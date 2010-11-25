@@ -1,4 +1,4 @@
-@webservices
+@webservices @m0
 Feature: Periodically querying webservices
 
 Scenario: Webservice has to be perodically queried for new entries

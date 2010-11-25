@@ -1,4 +1,4 @@
-@user_accounts @$_call_centre  @m3
+@user_accounts @$_call_centre  @m0
 Feature: Call centre payout information update
 
   Scenario: Call center has its Paypal data stored

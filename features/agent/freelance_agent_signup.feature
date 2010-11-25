@@ -78,7 +78,7 @@ Feature: Freelance agent signup
     When I follow the confirmation link sent to email@person.com with role agent
     Then I should see translated "activerecord.errors.models.user.attributes.confirmation_token.blank"
 
-@_tested
+@_tested @m1
   Scenario: Signed out user clicks confirmation link again
     Given I am signed up and confirmed as user with email email@person.com and password secret and role agent
     When I am not sign in

@@ -1,4 +1,4 @@
-@dashboard  @$_freelance_agent 
+@dashboard  @$_freelance_agent @m0
 Feature: Freelance agent dashboard 
 
 In order to have a overall view on my account

@@ -1,4 +1,4 @@
-@search
+@search @m0
 Feature: Zip code based search in Denmark
 
 Scenario: I filter leads by supplying range of zip codes that leads need to be searched within
