@@ -8,13 +8,13 @@
   <% end %>
 
   <%= form_tag new_administration_user_path, :method => :get do %>
-    <%= select_tag "role", options_for_select(User::ADMIN_USER_ROLES), {} %>
+    <%= select_tag "role", options_for_select(User::BASIC_USER_ROLES_WITH_LABELS), {} %>
     <%= submit_tag  t("administration.users.index.view.new_user") %>
   <% end %>
 
   <%= form_for @search, :url => administration_users_path do |f| %>
     <%= f.text_field :with_keyword %>
-    <%= f.select :with_role, User::ADMIN_USER_ROLES, :include_blank => true  %>
+    <%= f.select :with_role, User::BASIC_USER_ROLES_WITH_LABELS, :include_blank => true  %>
     <%= f.hidden_field :with_subaccounts %>
     <%= submit_tag t("administration.users.index.view.search_button") %>
   <% end %>
@@ -39,7 +39,7 @@
     <% @users.each do |user| %>
     <tr>
         <td><%= user.id %></td>
-        <td><%= user.roles.collect {|r| r.to_s}.join(", ") %></td>
+        <td><%= user.roles_as_text %></td>
         <td>
             <% unless user.id == current_user.id %>
                 <%= link_to user.locked_at.blank? ? t("administration.users.index.view.lock") : t("administration.users.index.view.unlock"), administration_user_path(user, { "user_#{user.role.to_s}".to_sym  => {:locked =>  user.locked_at.blank? ? "lock" : "unlock"} }) , {:method => :put}  %>
