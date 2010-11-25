@@ -1,4 +1,4 @@
-@m3
+@m0
 Feature: Lead Rating
 
   Scenario: I can rate a lead
