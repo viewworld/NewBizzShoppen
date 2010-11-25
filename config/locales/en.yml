@@ -637,6 +637,14 @@ en:
           attributes:
             reset_password_token:
               invalid: 'is invalid'
+        lead_translation:
+          attributes:
+            header:
+              blank: "can't be blank"
+            description:
+              blank: "can't be blank"
+            hidden_description:
+              blank: "can't be blank"
 
   flash:
     agent_accounts:
