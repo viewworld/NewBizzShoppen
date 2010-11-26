@@ -21,7 +21,7 @@
           <ibt c="fltri" icon="plus">
             <%= submit_tag t("buyer_accounts.new.view.button_create_account"), :onclick => "if(confirm('#{t("administration.settings.edit.view.confirmation_update_message")}')){ this.form.submit(); } else {return false;}" %>
           </ibt>
-          <ibt c="fltri" icon="plus">
+          <ibt c="bt_grey fltri">
             <%= button_to_function t("administration.settings.edit.view.button_cancel"), "history.go(-1)" %>
           </ibt>
         </param:actions>

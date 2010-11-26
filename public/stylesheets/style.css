@@ -241,7 +241,9 @@ div.bt
     position: relative;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
-	border-radius: 5px;    
+	border-radius: 5px;
+    height: 30px;
+    overflow: hidden;
 }
 
 
@@ -288,6 +290,7 @@ div.bt span input
     box-shadow: none;
     
     text-shadow: 1px 1px 0 #995c1b;
+    text-transform: uppercase;
 }
 
 div.bt span input,  x:-moz-any-link, x:default
@@ -300,6 +303,25 @@ div.bt span input,  x:-moz-any-link, x:default
 {
     margin-left: 7px;
 }
+
+
+
+div.bt_grey
+{
+    background-position: 0 -120px;
+}
+
+div.bt_grey span
+{
+    background-position: right -150px;    
+}
+
+div.bt_grey span input
+{
+    color: #888888;
+    text-shadow: none;
+}
+
 
 
 /* --- helpers ---

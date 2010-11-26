@@ -58,6 +58,7 @@
 .inputs ol li.select label,
 .inputs ol li.text label,
 .inputs ol li.password label,
+.inputs ol li.file label,
 .inputs ol li.numeric label
 {
 	display: block;
@@ -94,6 +95,11 @@
 .inputs ol li input
 {
     margin-bottom: 4px;
+}
+
+.inputs ol li.file input
+{
+    float: left;
 }
 
 
@@ -149,6 +155,7 @@
 .labels_icons ol li.password label,
 .labels_icons ol li.text label,
 .labels_icons ol li.numeric label,
+.labels_icons ol li.file label,
 .labels_icons ol li .label,
 .labels_icons li .label
 {
@@ -161,6 +168,7 @@
 .labels_80 ol li.password label,
 .labels_80 ol li.text label,
 .labels_80 ol li.numeric label,
+.labels_80 ol li.file label,
 .labels_80 ol li .label,
 .labels_80 li .label
 {
@@ -172,6 +180,7 @@
 .labels_100 ol li.password label,
 .labels_100 ol li.text label,
 .labels_100 ol li.numeric label,
+.labels_100 ol li.file label,
 .labels_100 ol li .label,
 .labels_100 li .label
 {
@@ -183,6 +192,7 @@
 .labels_120 ol li.password label,
 .labels_120 ol li.text label,
 .labels_120 ol li.numeric label,
+.labels_120 ol li.file label,
 .labels_120 ol li .label,
 .labels_120 li .label
 {
@@ -194,6 +204,7 @@
 .labels_140 ol li.password label,
 .labels_140 ol li.text label,
 .labels_140 ol li.numeric label,
+.labels_140 ol li.file label,
 .labels_140 ol li .label,
 .labels_140 li .label
 {
@@ -205,6 +216,7 @@
 .labels_160 ol li.password label,
 .labels_160 ol li.text label,
 .labels_160 ol li.numeric label,
+.labels_160 ol li.file label,
 .labels_160 ol li .label,
 .labels_160 li .label
 {
@@ -216,6 +228,7 @@
 .labels_180 ol li.password label,
 .labels_180 ol li.text label,
 .labels_180 ol li.numeric label,
+.labels_180 ol li.file label,
 .labels_180 ol li .label,
 .labels_180 li .label
 {
@@ -227,6 +240,7 @@
 .labels_200 ol li.password label,
 .labels_200 ol li.text label,
 .labels_200 ol li.numeric label,
+.labels_200 ol li.file label,
 .labels_200 ol li .label,
 .labels_200 li .label
 {
@@ -238,6 +252,7 @@
 .labels_220 ol li.password label,
 .labels_220 ol li.text label,
 .labels_220 ol li.numeric label,
+.labels_220 ol li.file label,
 .labels_220 ol li .label,
 .labels_220 li .label
 {
@@ -249,6 +264,7 @@
 .labels_240 ol li.password label,
 .labels_240 ol li.text label,
 .labels_240 ol li.numeric label,
+.labels_240 ol li.file label,
 .labels_240 ol li .label,
 .labels_240 li .label
 {
@@ -260,6 +276,7 @@
 .labels_260 ol li.password label,
 .labels_260 ol li.text label,
 .labels_260 ol li.numeric label,
+.labels_260 ol li.file label,
 .labels_260 ol li .label,
 .labels_260 li .label
 {
@@ -271,6 +288,7 @@
 .labels_280 ol li.password label,
 .labels_280 ol li.text label,
 .labels_280 ol li.numeric label,
+.labels_280 ol li.file label,
 .labels_280 ol li .label,
 .labels_280 li .label
 {
@@ -282,6 +300,7 @@
 .labels_300 ol li.password label,
 .labels_300 ol li.text label,
 .labels_300 ol li.numeric label,
+.labels_300 ol li.file label,
 .labels_300 ol li .label,
 .labels_300 li .label
 {
@@ -296,7 +315,8 @@
 .labels_ta_r ol li.select label,
 .labels_ta_r ol li.password label,    
 .labels_ta_r ol li.text label,    
-.labels_ta_r ol li.numeric label
+.labels_ta_r ol li.numeric label,
+.labels_ta_r ol li.file label
 {
     text-align: right;
 }

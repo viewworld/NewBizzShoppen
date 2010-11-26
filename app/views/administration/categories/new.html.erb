@@ -1,6 +1,15 @@
 <column-mc:>
+  <header>Create new category</header>
   <%= semantic_form_for [:administration, @category], :method => :put, :html => {:multipart => true} do |form| %>
-    <%= render :partial => 'form', :locals => { :form => form } %>
-    <%= form.commit_button t("administration.categories.new.view.button_create") %>
+      <frm title="TODO" class="todo_delete">
+        <param:content>
+          <%= render :partial => 'form', :locals => {:form => form} %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="plus">
+            <%= form.submit t("administration.categories.new.view.button_create") %>
+          </ibt>
+        </param:actions>
+      </frm>
   <% end %>
 </column-mc:>

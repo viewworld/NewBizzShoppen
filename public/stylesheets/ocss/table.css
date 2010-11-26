@@ -5,13 +5,15 @@
 {
     width: 100%;
     margin-top: 20px;
+    border-collapse:collapse;
+    font-size: 12px;
 }
-
 
 .generic thead th
 {
-	height: 45px;
-    background: url(../images/frm/head_cap_content_grey.png) repeat-x;
+	height: 39px;
+    background: url(/images/table/table.png) repeat-x 0 -39px;
+    line-height: 14px;
     vertical-align: middle;
     text-align: left;
     color:#555555;
@@ -21,15 +23,15 @@
 
 .generic thead th.hl
 {
-	background: url(../images/frm/head_cap_left_grey.png) no-repeat;
-    width: 9px;
+    background: url(/images/table/table.png) no-repeat 0 0;
+    width: 10px;
     padding: 0;
 }
 
 .generic thead th.hr
 {
-	background: url(../images/frm/head_cap_right_grey.png) no-repeat;
-    width: 9px;
+    background: url(/images/table/table.png) no-repeat right 0;
+    width: 10px;
     padding: 0;
 }
 
@@ -40,59 +42,48 @@
     border-bottom: 1px dotted #777;
 }
 
-.generic thead th a.bt
-{
-    border-bottom: none;
-}
-
-
 .generic tfoot td
 {
-    height: 7px;
-    background: url("../images/frm/dot.png") repeat-x bottom center #F8F8F8;
+    height: 10px;
+    background: url(/images/table/table.png) repeat-x 0 -88px;
     padding: 0;
 }
 
 .generic tfoot td.fl
 {
-	background: url(../images/frm/footer_cap_left_grey.png) no-repeat bottom left;
-    width: 9px;
-    padding: 0;
+    background: url(/images/table/table.png) no-repeat 0 -78px;
+    width: 10px;
 }
 
 .generic tfoot td.fr
 {
-	background: url(../images/frm/footer_cap_right_grey.png) no-repeat bottom right;
-    width: 9px;
-    padding: 0;
+    background: url(/images/table/table.png) no-repeat right -78px;
+    width: 10px;
 }
 
 .generic tbody tr td
 {
-    background: #F8F8F8;
-    border-bottom: 1px solid #D3D3D3;
-    height: 37px;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #e3e3e3;
     vertical-align:middle;
-    padding: 0px 7px;
+    padding: 0 7px;
+    height: 35px;
 }
-
-.generic tbody tr:first-child td
-{
-    border-top: none
-}
-
-
 
 .generic tbody tr td.cl
 {
-    background: url("../images/frm/dot.png") repeat-y top left #F8F8F8;
-    width: 11px;
-    padding: 0px;
+    background-image: url("/images/table/dot.png");
+    background-repeat:  repeat-y;
+    background-position: 0 0;
+    width: 10px;
+    padding: 0;
 }
 
 .generic tbody tr td.cr
 {
-    background: url("../images/frm/dot.png") repeat-y top right #F8F8F8;
-    width: 11px;
-    padding: 0px;
+    background-image: url("/images/table/dot.png");
+    background-repeat:  repeat-y;
+    background-position: right 0;
+    width: 10px;
+    padding: 0;
 }

@@ -22,7 +22,7 @@
 </def>
 
 <def tag="ibt" attrs="c,icon">
-  <div class="bt <%= c.nil? ? "" : " #{c}" %>">
+  <div class="bt<%= c.nil? ? "" : " #{c}" %>">
     <span>
       <% unless icon.nil? %>
         <%= image_tag("bt_icons/#{icon}.png") %>
@@ -34,7 +34,7 @@
 
 
 <def tag="frm" attrs="title,c">
-  <div class="frm">
+  <div class="frm<%= c.nil? ? "" : " #{c}" %>">
     <div class="frm_head">
       <div class="frm_hl"></div>
       <div class="frm_hr"></div>

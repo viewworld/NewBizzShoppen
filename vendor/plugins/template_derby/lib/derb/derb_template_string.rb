@@ -84,7 +84,8 @@ class DerbTemplateString < String
 #      end.join(', ')
 #    end
 
-    unless (pairs = gsub(/(<|>)/, '').scan(/\w+=".*?"(?=\s|>)/i)).blank?
+    #unless (pairs = gsub(/(<|>)/, '').scan(/\w+=".*?"(?=\s|>)/i)).blank?
+    unless (pairs = gsub(/(<|>)/, '').scan(/[a-z]+="[^"]+"/i)).blank?
       ',' + pairs.map do |pair|
         key, val = pair.split('=')
         %{"#{key}" => #{val}}

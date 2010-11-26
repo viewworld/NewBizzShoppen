@@ -2,7 +2,7 @@
   <header>My profile</header>
 
   <%= semantic_form_for @user, :url => my_profile_path, :method => :put do |form| %>
-      <frm title="Edit account" c="todo_delete">
+      <frm title="Edit account">
         <param:content>
           <%= render :partial => "form", :locals => { :form => form } %>
           <%= link_to t("my_profile.edit.view.change_password"), password_path %>
