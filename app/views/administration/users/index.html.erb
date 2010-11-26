@@ -1,68 +1,81 @@
 <column-mc:>
   <% if @search.with_subaccounts.blank? %>
-    <h1><%= t("administration.users.index.view.title") %></h1>
+      <header><%= t("administration.users.index.view.title") %></header>
   <% else %>
-    <% user = User.find(@search.with_subaccounts) %>
-    <h1><%= t("administration.users.index.view.subaccounts_for_user", :user_name => user.full_name) %></h1>
-    <%= link_to t("administration.users.index.view.show_all_users"), administration_users_path %>
+      <% user = User.find(@search.with_subaccounts) %>
+      <header><%= t("administration.users.index.view.subaccounts_for_user", :user_name => user.full_name) %></header>
+      <%= link_to t("administration.users.index.view.show_all_users"), administration_users_path %>
   <% end %>
 
   <%= form_tag new_administration_user_path, :method => :get do %>
-    <%= select_tag "role", options_for_select(User::BASIC_USER_ROLES_WITH_LABELS), {} %>
-    <%= submit_tag  t("administration.users.index.view.new_user") %>
+      <%= select_tag "role", options_for_select(User::BASIC_USER_ROLES_WITH_LABELS), {} %>
+      <%= submit_tag t("administration.users.index.view.new_user") %>
   <% end %>
 
   <%= form_for @search, :url => administration_users_path do |f| %>
-    <%= f.text_field :with_keyword %>
-    <%= f.select :with_role, User::BASIC_USER_ROLES_WITH_LABELS, :include_blank => true  %>
-    <%= f.hidden_field :with_subaccounts %>
-    <%= submit_tag t("administration.users.index.view.search_button") %>
+      <%= f.text_field :with_keyword %>
+      <%= f.select :with_role, User::BASIC_USER_ROLES_WITH_LABELS, :include_blank => true %>
+      <%= f.hidden_field :with_subaccounts %>
+      <%= submit_tag t("administration.users.index.view.search_button") %>
   <% end %>
 
 
-  <table id="users_table">
+  <table id="users_table" class="generic">
+    <thead>
     <tr>
-      <td><%= link_to t("administration.users.index.view.id"), order_for_scoped_search(:id) %></td>
-      <td><%= link_to t("administration.users.index.view.roles"), order_for_scoped_search(:roles_mask) %></td>
-      <td><%= t("administration.users.index.view.locked") %></td>
-      <td><%= link_to t("administration.users.index.view.first_name"), order_for_scoped_search(:first_name) %></td>
-      <td><%= link_to t("administration.users.index.view.last_name"), order_for_scoped_search(:last_name) %></td>
-      <td><%= link_to t("administration.users.index.view.email"), order_for_scoped_search(:email) %></td>
-      <td><%= link_to t("administration.users.index.view.age"), order_for_scoped_search(:age) %></td>
-      <td><%= t("administration.users.index.view.leads_bought") %></td>
-      <td><%= t("administration.users.index.view.leads_sold") %></td>
-      <td><%= t("administration.users.index.view.revenue") %></td>
-      <td><%= t("administration.users.index.view.payout") %></td>
-      <td><%= t("administration.users.index.view.actions") %></td>
+      <th class="hl"></th>
+      <th><%= link_to t("administration.users.index.view.id"), order_for_scoped_search(:id) %></th>
+      <th><%= link_to t("administration.users.index.view.roles"), order_for_scoped_search(:roles_mask) %></th>
+      <th><%= t("administration.users.index.view.locked") %></th>
+      <th><%= link_to t("administration.users.index.view.first_name"), order_for_scoped_search(:first_name) %></th>
+      <th><%= link_to t("administration.users.index.view.last_name"), order_for_scoped_search(:last_name) %></th>
+      <th><%= link_to t("administration.users.index.view.email"), order_for_scoped_search(:email) %></th>
+      <th><%= link_to t("administration.users.index.view.age"), order_for_scoped_search(:age) %></th>
+      <th><%= t("administration.users.index.view.leads_bought") %></th>
+      <th><%= t("administration.users.index.view.leads_sold") %></th>
+      <th><%= t("administration.users.index.view.revenue") %></th>
+      <th><%= t("administration.users.index.view.payout") %></th>
+      <th><%= t("administration.users.index.view.actions") %></th>
+      <th class="hr"></th>
     </tr>
-
+    </thead>
+    <tfoot>
+      <tr>
+        <td class="fl"></td>
+        <td colspan="12"></td>
+        <td class="fr"></td>
+      </tr>
+    </tfoot>
+    <tbody>
     <% @users.each do |user| %>
-    <tr>
-        <td><%= user.id %></td>
-        <td><%= user.roles_as_text %></td>
-        <td>
+        <tr>
+          <td class="cl"></td>
+          <td><%= user.id %></td>
+          <td><%= user.roles_as_text %></td>
+          <td>
             <% unless user.id == current_user.id %>
-                <%= link_to user.locked_at.blank? ? t("administration.users.index.view.lock") : t("administration.users.index.view.unlock"), administration_user_path(user, { "user_#{user.role.to_s}".to_sym  => {:locked =>  user.locked_at.blank? ? "lock" : "unlock"} }) , {:method => :put}  %>
+                <%= link_to user.locked_at.blank? ? t("administration.users.index.view.lock") : t("administration.users.index.view.unlock"), administration_user_path(user, {"user_#{user.role.to_s}".to_sym  => {:locked =>  user.locked_at.blank? ? "lock" : "unlock"}}), {:method => :put} %>
             <% end %>
-        </td>
-        <td><%= user.first_name %></td>
-        <td><%= user.last_name %></td>
-        <td><%= user.email %></td>
-        <td><%= user.age %></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>
-           <%= link_to t("administration.users.index.view.edit"), edit_administration_user_path(user) %>
-           <%= link_to t("administration.users.index.view.delete"), administration_user_path(user), {:method => :delete, :confirm => t("administration.users.index.view.delete_confirmation_message")} %>
-           <% unless user.subaccounts.empty? %>
-            <%= link_to t("administration.users.index.view.subaccounts"), administration_users_path({ :search => { :with_subaccounts => user.id }}) %>
-           <% end %>
-        </td>
-     </tr>
+          </td>
+          <td><%= user.first_name %></td>
+          <td><%= user.last_name %></td>
+          <td><%= user.email %></td>
+          <td><%= user.age %></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>
+            <%= link_to t("administration.users.index.view.edit"), edit_administration_user_path(user) %>
+            <%= link_to t("administration.users.index.view.delete"), administration_user_path(user), {:method => :delete, :confirm => t("administration.users.index.view.delete_confirmation_message")} %>
+            <% unless user.subaccounts.empty? %>
+                <%= link_to t("administration.users.index.view.subaccounts"), administration_users_path({:search => {:with_subaccounts => user.id}}) %>
+            <% end %>
+          </td>
+          <td class="cr"></td>
+        </tr>
     <% end %>
-
+    </tbody>
   </table>
 
   <%= will_paginate @users %>

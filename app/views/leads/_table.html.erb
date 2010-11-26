@@ -1,26 +1,39 @@
 <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
-<table id="leads">
-    <tr>
-      <% if show_checkboxes %>
-          <td></td>
-      <% end %>
-      <td><%= link_to t("leads.table.id"), order_for_scoped_search(:id) %></td>
-      <td><%= link_to t("leads.table.header"), order_for_scoped_search(:header) %></td>
-      <td><%= t("leads.table.clicks") %></td>
-      <td><%= t("leads.table.exposures") %></td>
-      <td><%= t("leads.table.hottness") %></td>
-      <td><%= t("leads.table.novelty") %></td>
-      <td><%= link_to t("leads.table.sale_limit"), order_for_scoped_search(:sale_limit) %></td>
-      <td><%= link_to t("leads.table.price"), order_for_scoped_search(:price) %></td>
-      <td><%= link_to t("leads.table.sold"), order_for_scoped_search(:lead_purchases_counter) %></td>
-      <td><%= link_to t("leads.table.purchase_value"), order_for_scoped_search(:purchase_value) %></td>
-      <td><%= t("leads.table.paid_out") %></td>
-      <td><%= link_to t("leads.table.status"), order_for_scoped_search(:published) %></td>
-      <td><%= t("leads.table.actions") if block_tools %></td>
-    </tr>
+<table id="leads" class="generic">
+  <thead>
 
+    <tr>
+      <th class="hl"></th>
+      <% if show_checkboxes %>
+          <th></th>
+      <% end %>
+      <th><%= link_to t("leads.table.id"), order_for_scoped_search(:id) %></th>
+      <th><%= link_to t("leads.table.header"), order_for_scoped_search(:header) %></th>
+      <th><%= t("leads.table.clicks") %></th>
+      <th><%= t("leads.table.exposures") %></th>
+      <th><%= t("leads.table.hottness") %></th>
+      <th><%= t("leads.table.novelty") %></th>
+      <th><%= link_to t("leads.table.sale_limit"), order_for_scoped_search(:sale_limit) %></th>
+      <th><%= link_to t("leads.table.price"), order_for_scoped_search(:price) %></th>
+      <th><%= link_to t("leads.table.sold"), order_for_scoped_search(:lead_purchases_counter) %></th>
+      <th><%= link_to t("leads.table.purchase_value"), order_for_scoped_search(:purchase_value) %></th>
+      <th><%= t("leads.table.paid_out") %></th>
+      <th><%= link_to t("leads.table.status"), order_for_scoped_search(:published) %></th>
+      <th><%= t("leads.table.actions") if block_tools %></th>
+      <th class="hr"></th>
+    </tr>
+  </thead>
+  <tfoot>
+  <tr>
+    <td class="fl"></td>
+    <td colspan="13"></td>
+    <td class="fr"></td>
+  </tr>
+  </tfoot>
+  <tbody>
       <% collection.each do |lead| %>
         <tr>
+          <td class="cl"></td>
           <% if show_checkboxes %>
             <td><%= check_box_tag("lead_ids[]", lead.id) %></td>
           <% end %>
@@ -43,7 +56,9 @@
             <% end %>
           </td>
           <td><%= block_tools && with_output_buffer { block_tools.call(lead) } %></td>
+          <td class="cr"></td>
         </tr>
       <% end %>
+      </tbody>
   </table>
 <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>

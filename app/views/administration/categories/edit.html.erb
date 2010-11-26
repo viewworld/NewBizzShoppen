@@ -1,10 +1,16 @@
 <column-mc:>
-  <h1><%= t("administration.categories.edit.view.header", :category_name => @category.name) %></h1>
+  <header><%= t("administration.categories.edit.view.header", :category_name => @category.name) %></header>
   <%= semantic_form_for [:administration, @category], :method => :post, :html => {:multipart => true} do |form| %>
-    <%= render :partial => 'form', :locals => { :form => form } %>
-
-      <%= image_tag(@category.image.url) unless @category.image.nil? %>
-
-    <%= form.commit_button t("administration.categories.edit.view.button_update") %>
-<% end %>
+      <frm title="TODO" class="todo_delete">
+        <param:content>
+          <%= image_tag(@category.image.url) unless @category.image.nil? %>
+          <%= render :partial => 'form', :locals => {:form => form} %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("administration.categories.edit.view.button_update") %>
+          </ibt>
+        </param:actions>
+      </frm>
+  <% end %>
 </column-mc:>

@@ -1,9 +1,9 @@
 <column-mc:>
-<h1><%= t("administration.email_templates.index.view.title") %></h1>
+  <header><%= t("administration.email_templates.index.view.title") %></header>
 
-<ul>
-<% @email_templates.each do |email_template| %>
-    <li><%= email_template.uniq_id %> <%= link_to t("administration.email_templates.index.view.edit"), edit_administration_email_template_path(email_template) %></li>
-<% end %>
-</ul>
+  <ul>
+    <% @email_templates.each do |email_template| %>
+        <li><%= email_template.uniq_id %> <%= link_to t("administration.email_templates.index.view.edit"), edit_administration_email_template_path(email_template) %></li>
+    <% end %>
+  </ul>
 </column-mc:>

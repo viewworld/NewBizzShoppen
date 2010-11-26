@@ -5,9 +5,20 @@
 </span>
 <%= link_to_function t("agent.leads.new.view.remove_language"), "remove_language('#{f.object.new_record? ? 'lead_lead_translations_attributes_0' : f.object.id}', '#{f.object.locale.blank? ? 'LOCALE_LANG' : f.object.locale}', #{f.object.new_record? ? 'null' : f.object.id})" %>
 
+
+<%= f.label :header %>
 <%= f.text_field :header %><br />
+<%= custom_error_for_field(f, :header) %>
+
+<%= f.label :description %>
 <%= f.text_area :description %><br />
+<%= custom_error_for_field(f, :description) %>
+
+<%= f.label :hidden_description %>
 <%= f.text_area :hidden_description %><br />
+<%= custom_error_for_field(f, :hidden_description) %>
+
+
 <%= f.hidden_field :locale, :class => "locale_hidden_field" %><br />
 <% unless f.object.new_record? %>
   <%= f.hidden_field :_destroy, :id => "destroy_hidden_field_#{f.object.id}" %><br />

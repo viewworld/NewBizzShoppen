@@ -26,6 +26,12 @@ module ApplicationHelper
     "add_fields(this, \"#{escape_javascript(fields)}\")"
   end
 
+  def custom_error_for_field(form, field)
+    if form.object.errors[field].present?
+      content_tag(:p, form.object.errors[field], :class => "inline-errors") + tag("br")
+    end
+  end
+
   def available_locales_list(translations)
     existing = translations.map(&:locale)
     Locale.all.map(&:code).reject { |c| c == I18n.locale.to_s or existing.include?(c) }

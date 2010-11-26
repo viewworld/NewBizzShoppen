@@ -12,7 +12,7 @@ Scenario: I should see apropriate language version of the content if I change th
 Scenario: Lead translations
   Given lead Printers ultimate deal exists within category Computers
   Given lead Printers ultimate deal exists with attributes "description:Description for printers deal"
-  And lead "Printers ultimate deal" has translation for lang "dk" with attributes "header:Printere ultimative aftale,description:Beskrivelse til printere behandle"
+  And lead "Printers ultimate deal" has translation for lang "dk" with attributes "header:Printere ultimative aftale,description:Beskrivelse til printere behandle,hidden_description:Skjult beskrivelse til printere behandle"
   When I follow translated "locales.dk_locale"
   Then I go to leads
   And I follow "Computers"

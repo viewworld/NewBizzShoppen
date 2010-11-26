@@ -1,0 +1,89 @@
+/* --- table ---
+--------------------------------------------------------------------------------- */
+
+.generic
+{
+    width: 100%;
+    margin-top: 20px;
+    border-collapse:collapse;
+    font-size: 12px;
+}
+
+.generic thead th
+{
+	height: 39px;
+    background: url(/images/table/table.png) repeat-x 0 -39px;
+    line-height: 14px;
+    vertical-align: middle;
+    text-align: left;
+    color:#555555;
+    font-size: 12px;
+    padding: 0 9px;
+}
+
+.generic thead th.hl
+{
+    background: url(/images/table/table.png) no-repeat 0 0;
+    width: 10px;
+    padding: 0;
+}
+
+.generic thead th.hr
+{
+    background: url(/images/table/table.png) no-repeat right 0;
+    width: 10px;
+    padding: 0;
+}
+
+.generic thead th a
+{
+    color: #555;
+    text-decoration: none;
+    border-bottom: 1px dotted #777;
+}
+
+.generic tfoot td
+{
+    height: 10px;
+    background: url(/images/table/table.png) repeat-x 0 -88px;
+    padding: 0;
+}
+
+.generic tfoot td.fl
+{
+    background: url(/images/table/table.png) no-repeat 0 -78px;
+    width: 10px;
+}
+
+.generic tfoot td.fr
+{
+    background: url(/images/table/table.png) no-repeat right -78px;
+    width: 10px;
+}
+
+.generic tbody tr td
+{
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #e3e3e3;
+    vertical-align:middle;
+    padding: 0 7px;
+    height: 35px;
+}
+
+.generic tbody tr td.cl
+{
+    background-image: url("/images/table/dot.png");
+    background-repeat:  repeat-y;
+    background-position: 0 0;
+    width: 10px;
+    padding: 0;
+}
+
+.generic tbody tr td.cr
+{
+    background-image: url("/images/table/dot.png");
+    background-repeat:  repeat-y;
+    background-position: right 0;
+    width: 10px;
+    padding: 0;
+}
