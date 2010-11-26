@@ -1,4 +1,4 @@
-@comments @$_lead_user
+@comments @$_lead_user @m0
 Feature: Comments administration as lead user
 
 Scenario: I can create a comment for lead owned by me (even if I am not assigned to it)

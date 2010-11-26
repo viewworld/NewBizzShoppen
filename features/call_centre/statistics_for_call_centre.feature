@@ -1,4 +1,4 @@
-@statistics @$_call_centre
+@statistics @$_call_centre @m0
 Feature: Statistics for call centre
 
 In order to make better decisions

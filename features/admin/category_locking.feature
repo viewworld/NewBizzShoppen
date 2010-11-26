@@ -1,6 +1,6 @@
 #To estimate
 
-@$_admin
+@$_admin @m0
 Feature: Category locking
 
 Scenario: I should be able to lock category

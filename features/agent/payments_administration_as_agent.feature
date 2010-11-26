@@ -1,4 +1,4 @@
-@user_accounts @$_freelance_agent
+@user_accounts @$_freelance_agent @m0
 Feature: Payments administration as agent
 
 In order to earn money

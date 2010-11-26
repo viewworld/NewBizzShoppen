@@ -1,4 +1,4 @@
-@system
+@system @m0
 Feature: Importing leads from XML file
 
 Scenario: XML format for lead import is specified

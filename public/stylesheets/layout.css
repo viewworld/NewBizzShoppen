@@ -80,3 +80,7 @@ color:white;
 p.inline-errors{
     background:orange;
 }
+
+.highlight{
+    background: yellow;
+}

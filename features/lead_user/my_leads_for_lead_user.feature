@@ -97,7 +97,7 @@ Scenario: I should see created by and certification level for each lead
   Then I should see "Johan Printing"
   And I should see translated "models.lead.certification.lvl0"
 
-@m3
+@m0
 Scenario: I should see rating % for each lead
 
 @_tgn @_tested
@@ -175,5 +175,10 @@ Scenario: I can print out multiple leads information
   Then I should see "Keyboards deal"
   Then I should see "Monitors LCD deal"
 
-@ao @_todo
+@ao @_tested @_done
 Scenario: I should see a yellow color for a lead with expiration date ending in 3 days
+  Given lead Printers ultimate deal has deadline in 2 days from now
+  And LeadPurchase statuses are updated
+  And I follow "My assigned leads"
+  Then list item should be highlighted
+

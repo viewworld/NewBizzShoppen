@@ -6,7 +6,7 @@ Background:
   And I make sure current locale is English
   And I am signed up and confirmed as user with email buyer43@person.com and password supersecret and role customer
 
-@m0
+@m3
 Scenario: I can see welcome text fetch from the database
 
 @tgn @_done @_tested_elsewhere

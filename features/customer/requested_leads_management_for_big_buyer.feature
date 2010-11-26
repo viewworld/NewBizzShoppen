@@ -1,4 +1,4 @@
-@lead_manager @$_big_buyer
+@lead_manager @$_big_buyer @m0
 Feature: Requested leads management for big buyer
 
 Scenario: I can add a given lead to my lead list

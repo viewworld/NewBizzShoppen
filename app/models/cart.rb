@@ -11,20 +11,23 @@ class Cart
   end
 
   def add_lead(lead)
-    if lead.buyable?
-      purchase = @buyer.lead_purchases.create(:lead_id => lead.id, :paid => false)
-      if @buyer.big_buyer?
-        purchase.update_attribute(:accessible, true)
-        return true
-      else
-        return purchase
+    unless items.include?(lead)
+      if lead.buyable?
+        purchase = @buyer.lead_purchases.create(:lead_id => lead.id, :paid => false)
+        if @buyer.big_buyer?
+          purchase.update_attribute(:accessible, true)
+          return :bought_successful
+        else
+          return :creation_successful
+        end
       end
+    else
+      :already_in_cart
     end
   end
 
   def add_leads(*ids)
-
-    Lead.where(:id => ids.flatten).each{|lead| add_lead(lead)}
+    Lead.where(:id => ids.flatten).map{|lead| add_lead(lead)}.select { |r| r != :already_in_cart }
   end
 
   def remove_leads(*ids)

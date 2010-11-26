@@ -1,5 +1,5 @@
 class ::User::Customer < ::User
-  ROLES = [:customer, :lead_buyer, :lead_user]
+  ROLES = [:customer, :lead_buyer]
 
   include User::RegistrationValidations
 

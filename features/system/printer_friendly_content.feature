@@ -1,4 +1,4 @@
-@system
+@system @m0
 Feature: Printer friendly content
 
 Scenario: Article, news page

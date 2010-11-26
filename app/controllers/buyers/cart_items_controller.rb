@@ -1,11 +1,14 @@
 class Buyers::CartItemsController < Buyers::BuyerController
 
   def create
-    flash[:notice] =  if current_user.cart.add_lead(Lead.find_by_id(params[:id])) === true
-                        t("buyer.cart_items.create.flash.cart_item_bought_successful")
-                      else
-                        t("buyer.cart_items.create.flash.cart_item_creation_successful")
-                      end
+    flash[:notice] = case current_user.cart.add_lead(Lead.find_by_id(params[:id]))
+                       when :bought_successful
+                         t("buyer.cart_items.create.flash.cart_item_bought_successful")
+                       when :creation_successful
+                         t("buyer.cart_items.create.flash.cart_item_creation_successful")
+                       when :already_in_cart
+                         t("buyer.cart_items.create.flash.cart_item_already_in_basket")
+                     end
     redirect_to :back
   end
 

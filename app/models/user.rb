@@ -3,6 +3,8 @@ class User < ActiveRecord::Base
 
   ROLES_PRIORITY = [:admin, :call_centre, :agent, :call_centre_agent, :customer, :lead_buyer, :lead_user]
   DEAL_VALUE_RANGE = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000]
+  BASIC_USER_ROLES_WITH_LABELS = [['Administrator', 'admin'], ['Agent', 'agent'], ['Buyer', 'customer'], ['Call centre', 'call_centre']]
+  ADDITIONAL_USER_ROLES_WITH_LABELS = [['Lead user', "lead_user"], ['Lead buyer', "lead_buyer"], ["Call centre agent", "call_centre_agent"]]
 
   include RoleModel
   include ScopedSearch::Model
@@ -134,6 +136,11 @@ class User < ActiveRecord::Base
 
   def reset_password_instructions_url
     "https://#{mailer_host}/users/password/edit?reset_password_token=#{reset_password_token}"
+  end
+
+  def roles_as_text
+   selected_role = (BASIC_USER_ROLES_WITH_LABELS + ADDITIONAL_USER_ROLES_WITH_LABELS).detect { |r| r.last == role.to_s }
+   selected_role.blank? ? "" : selected_role.first
   end
 
 end

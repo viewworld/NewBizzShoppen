@@ -1,4 +1,4 @@
-@webservices
+@webservices @m0
 Feature: Webservice agent appearance
 
 Scenario: Service name appears as lead creator name in listing and details

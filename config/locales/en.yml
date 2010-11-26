@@ -352,6 +352,7 @@ en:
         flash:
           cart_item_creation_successful: Lead has been added to cart
           cart_item_bought_successful: Lead has been bought
+          cart_item_already_in_basket: Lead has already been added to cart
       destroy:
         flash:
           cart_item_destruction_successful: Lead has been removed from cart
@@ -636,6 +637,14 @@ en:
           attributes:
             reset_password_token:
               invalid: 'is invalid'
+        lead_translation:
+          attributes:
+            header:
+              blank: "can't be blank"
+            description:
+              blank: "can't be blank"
+            hidden_description:
+              blank: "can't be blank"
 
   flash:
     agent_accounts:
