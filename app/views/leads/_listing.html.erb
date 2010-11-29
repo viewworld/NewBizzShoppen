@@ -11,6 +11,13 @@
       <th class="hr"></th>
     </tr>
     </thead>
+  <tfoot>
+  <tr>
+    <td class="fl"></td>
+    <td colspan="4"></td>
+    <td class="fr"></td>
+  </tr>
+  </tfoot>
   <tbody>
     <% collection.each do |lead| %>
       <tr class="lead <%= cycle("odd", "even") %>" id="<%= dom_id(lead) %>">

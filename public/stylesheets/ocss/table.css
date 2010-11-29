@@ -121,6 +121,11 @@
     right: -3px;
 }
 
+.generic tbody tr td.tda
+{
+    padding: 4px;
+}
+
 .td_actions ul
 {
     border: 1px solid #fc9d23;
@@ -164,7 +169,7 @@
 
 .td_actions ul li a
 {
-    padding: 3px 15px;
+    padding: 3px 20px;
     display: block;
     color: #333;
     text-decoration: none;
