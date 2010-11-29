@@ -8,7 +8,7 @@
   <br/>
 
   <div id="leads_summary">
-    <div class="column_1to3 fltl">
+    <div class="column_1to3 fltl" id="best_sellers">
       <frm title="#{t('agent_home.show.view.header_best_sellers')}">
         <param:header>
           <%= bt_link_to nil, t("agent_home.show.view.complete_list_link"), leads_path(:search => {:bestsellers => true}), :class => "fltr" %>
@@ -20,7 +20,7 @@
         </param:content>
       </frm>
     </div>
-    <div class="column_1to3 fltl" style="padding: 0 15px">
+    <div class="column_1to3 fltl" style="padding: 0 15px" id="latest_leads">
       <frm title="#{t('agent_home.show.view.header_latest_leads')}">
         <param:header>
           <%= bt_link_to nil, t("agent_home.show.view.complete_list_link"), leads_path(:search => {:latest => true}), :class => "fltr" %>

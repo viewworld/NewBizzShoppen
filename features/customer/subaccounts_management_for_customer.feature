@@ -1,4 +1,4 @@
-@user_accounts @$_customer @m3
+@user_accounts @$_customer @m3 @tgn
 Feature: Subaccounts management for customer
 
 Scenario: I do not and cannot belong to other customer

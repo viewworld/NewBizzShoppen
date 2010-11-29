@@ -23,6 +23,7 @@ Scenario: I can create a user account by seleceting its type and filling in the 
   And I fill in "user_agent_payout" with "2.0"
   And I fill in "user_agent_password" with "secret"
   And I fill in "user_agent_password_confirmation" with "secret"
+  And I check "user_agent_agreement_read"
   And I select "Denmark" from "user_agent_country"
   And I check "user_agent_newsletter_on"
   Then I press translated "administration.users.edit.view.button_update_user"

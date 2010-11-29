@@ -74,7 +74,7 @@ Scenario: I can see uniqueness, price per lead
   Then I should see "333.99"
   And I should see "10"
 
-@m3
+@m3 @tgn
 Scenario: I can see clicks, exposure, hottness, novelty  per lead
 
 

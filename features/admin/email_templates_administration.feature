@@ -1,4 +1,4 @@
-@email_templates @$_admin @m3
+@email_templates @$_admin @m3 @tgn
 Feature: Email Templates administration
 
 Scenario: I can list all available email templates and see following columns -  name, subject, actions
