@@ -1,0 +1,42 @@
+<column-mc:>
+
+  <%= form_tag new_administration_article_path, :method => :get do %>
+      <%= submit_tag t("administration.articles.index.view.new_article") %>
+  <% end %>
+
+  <%= form_for @search, :url => administration_articles_path do |f| %>
+      <%= f.select :with_type, Article::Cms::TYPES, :include_blank => true %>
+      <%= submit_tag t("administration.articles.index.view.search_button") %>
+  <% end %>
+
+  <table id="articles_table" class="generic">
+    <thead>
+    <tr>
+      <th class="hl"></th>
+      <th><%= link_to t("administration.articles.index.view.id"), order_for_scoped_search(:id) %></th>
+      <th><%= link_to t("administration.articles.index.view.title"), order_for_scoped_search(:title) %></th>
+      <th class="hr"></th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+      <td class="fl"></td>
+      <td colspan="2"></td>
+      <td class="fr"></td>
+    </tr>
+    </tfoot>
+    <tbody>
+    <% @articles.each do |article| %>
+        <tr>
+          <td class="cl"></td>
+          <td><%= article.id %></td>
+          <td><%= article.title %></td>
+          <td class="cr"></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <%= will_paginate @articles %>
+
+</column-mc:>

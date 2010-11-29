@@ -13,6 +13,8 @@ en:
         email_templates: Email templates
         settings: Settings
         leads: Leads
+        articles: Articles
+        news: News
       agent:
         leads: My created leads
       call_centre:
@@ -297,6 +299,23 @@ en:
           purchase_value_to_label: Value to
           category_label: Category
           status_label: Status
+    articles:
+      create:
+        flash:
+         article_creation_successful: 'Article was successfully created'
+      new:
+        view:
+          header: 'New article'
+          button_create: 'Create article'
+      index:
+        view:
+          new_article: 'New article'
+          search_button: 'Search'
+          id: 'ID'
+          title: 'Title'
+          main_page_articles: 'main page articles'
+          interface_content_texts: 'interface content texts'
+          help_popups: 'help popups'
 
   agent:
     leads:
