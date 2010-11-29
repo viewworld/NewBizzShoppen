@@ -1,4 +1,4 @@
-@m3 @$_customer
+@m3 @$_customer @tgn
 Feature: Lead Rating
 
 Scenario: I can rate a lead
