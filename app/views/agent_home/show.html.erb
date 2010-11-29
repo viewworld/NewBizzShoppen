@@ -14,7 +14,7 @@
           <%= bt_link_to nil, t("agent_home.show.view.complete_list_link"), leads_path(:search => {:bestsellers => true}), :class => "fltr" %>
         </param:header>
         <param:content>
-          <ul class="solid_list">
+          <ul class="solid_list" id="best_sellers">
             <%= render :partial => 'lead', :collection => @best_sellers, :as => :lead %>
           </ul>
         </param:content>
@@ -26,7 +26,7 @@
           <%= bt_link_to nil, t("agent_home.show.view.complete_list_link"), leads_path(:search => {:latest => true}), :class => "fltr" %>
         </param:header>
         <param:content>
-          <ul class="solid_list">
+          <ul class="solid_list" id="latest_leads">
             <%= render :partial => 'lead', :collection => @latest_leads, :as => :lead %>
           </ul>
         </param:content>
