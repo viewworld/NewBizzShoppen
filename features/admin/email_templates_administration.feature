@@ -1,4 +1,4 @@
-@email_templates @$_admin @m3 @tgn  @xxx
+@email_templates @$_admin @m3 @tgn
 Feature: Email Templates administration
 
 Background: Sign in user and set English locale
