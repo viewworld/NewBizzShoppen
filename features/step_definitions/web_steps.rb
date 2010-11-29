@@ -304,8 +304,8 @@ end
 
 Then /^I should see "([^"]*)" rows in a table(?: within "([^"]*)")?$/ do |number, selector|
   with_scope(selector) do
-    # +1 for header
-    page.all(:css, 'tr').size.should eql(number.to_i+1)
+    # +2 for headers
+    page.all(:css, 'tr').size.should eql(number.to_i+2)
   end
 end
 
