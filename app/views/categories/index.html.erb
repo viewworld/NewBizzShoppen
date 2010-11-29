@@ -1,6 +1,8 @@
 <column-mc:>
-  <h1><%= t("categories.index.view.header") %></h1>
-    <%#= all_categories_tree(:category_label => lambda { |c| link_to_function c.name, "setCategory(#{c.id})" }) %>
-    <%= all_categories_tree(:category_label => lambda { |c| link_to "#{c.name} (#{c.total_leads_count})", leads_path(:search => {:with_category => c.id}) },
-        :before_category => lambda { |c|  image_tag(c.image ? c.image.url(:thumb) : '/images/icons/folder_icon.png', :title => c.name) }) %>
+  <header><%= t("categories.index.view.header") %></header>
+
+  <%#= all_categories_tree(:category_label => lambda { |c| link_to_function c.name, "setCategory(#{c.id})" }) %>
+  <%= all_categories_tree(:category_label => lambda { |c| link_to "#{c.name}", leads_path(:search => {:with_category => c.id}) },
+                          :after_category => lambda { |c| "<span class='total_leads'>(#{c.total_leads_count})</span>" }) %>
+  <clb/>
 </column-mc:>

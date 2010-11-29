@@ -19,7 +19,6 @@
       <%= submit_tag t("administration.users.index.view.search_button") %>
   <% end %>
 
-
   <table id="users_table" class="generic">
     <thead>
     <tr>
@@ -40,11 +39,11 @@
     </tr>
     </thead>
     <tfoot>
-      <tr>
-        <td class="fl"></td>
-        <td colspan="12"></td>
-        <td class="fr"></td>
-      </tr>
+    <tr>
+      <td class="fl"></td>
+      <td colspan="12"></td>
+      <td class="fr"></td>
+    </tr>
     </tfoot>
     <tbody>
     <% @users.each do |user| %>
@@ -65,12 +64,23 @@
           <td></td>
           <td></td>
           <td></td>
-          <td>
-            <%= link_to t("administration.users.index.view.edit"), edit_administration_user_path(user) %>
-            <%= link_to t("administration.users.index.view.delete"), administration_user_path(user), {:method => :delete, :confirm => t("administration.users.index.view.delete_confirmation_message")} %>
-            <% unless user.subaccounts.empty? %>
-                <%= link_to t("administration.users.index.view.subaccounts"), administration_users_path({:search => {:with_subaccounts => user.id}}) %>
-            <% end %>
+          <td class="ta_r">
+            <div class="td_actions">
+              <%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %>
+              <ul>
+                <li>
+                  <%= link_to t("administration.users.index.view.edit"), edit_administration_user_path(user) %>
+                </li>
+                <li>
+                  <%= link_to t("administration.users.index.view.delete"), administration_user_path(user), {:method => :delete, :confirm => t("administration.users.index.view.delete_confirmation_message")} %>
+                </li>
+                <% unless user.subaccounts.empty? %>
+                    <li>
+                      <%= link_to t("administration.users.index.view.subaccounts"), administration_users_path({:search => {:with_subaccounts => user.id}}) %>
+                    </li>
+                <% end %>
+              </ul>
+            </div>
           </td>
           <td class="cr"></td>
         </tr>

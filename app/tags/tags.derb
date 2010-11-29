@@ -6,6 +6,10 @@
   </div>
 </def>
 
+<def tag="clb">
+  <div class="clb"></div>
+</def>
+
 
 <def tag="header">
   <div class="header_ribbon">
@@ -39,6 +43,7 @@
       <div class="frm_hl"></div>
       <div class="frm_hr"></div>
       <div class="frm_hc">
+        <param:header/>
         <h2><%= title %></h2>
       </div>
     </div>

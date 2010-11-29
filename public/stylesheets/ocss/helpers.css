@@ -14,6 +14,15 @@
 }
 
 
+/* --- text / font -------------------------------------------------------------- */
+
+.i
+{
+    font-style: italic;
+}
+
+
+
 /* --- floats ------------------------------------------------------------------- */
 
 .fltr
@@ -74,26 +83,38 @@
 
 .no_pdd
 {
-    padding: 0;
+    padding: 0 !important;
 }
 
 .no_pdd_l
 {
-    padding-left: 0;
+    padding-left: 0 !important;
 }
 
 .no_pdd_t
 {
-    padding-top: 0;
+    padding-top: 0 !important;
 }
 
 .no_pdd_r
 {
-    padding-right: 0;
+    padding-right: 0 !important;
 }
 
 .no_pdd_b
 {
+    padding-bottom: 0 !important;
+}
+
+.no_pdd_lr
+{
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.no_pdd_tb
+{
+    padding-top: 0;
     padding-bottom: 0;
 }
 

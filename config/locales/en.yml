@@ -167,9 +167,9 @@ en:
       request_lead: Request lead
       button_bulk_create_lead_request: 'Request leads'
       button_bulk_create_cart_item: 'Add to cart'
-      bestsellers_header: BEST SELLERS
-      latest_header: LATEST LEADS
-      featured_header: FEATURED LEADS
+      bestsellers_header: Best sellers
+      latest_header: Latest leads
+      featured_header: Featured leads
 
 
   home:
@@ -410,9 +410,9 @@ en:
       view:
         header_welcome: 'WELCOME TO OUR SITE AGENT'
         buyer_link: 'CLICK HERE IF YOU ARE A BUYER'
-        header_best_sellers: 'BEST SELLERS'
-        header_latest_leads: 'LATEST LEADS'
-        header_news: 'NEWS'
+        header_best_sellers: 'Best sellers'
+        header_latest_leads: 'Latest leads'
+        header_news: 'News'
         purchase_value_label: 'Purchase value:'
         lead_price_label: 'Lead price:'
         description_label: 'Description:'
