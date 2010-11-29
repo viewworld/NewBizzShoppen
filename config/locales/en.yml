@@ -270,6 +270,9 @@ en:
         view:
           title: 'Email templates'
           edit: 'Edit'
+          unique_id_column: 'Name'
+          subject_column: 'Subject'
+          actions_column: 'Actions'
       edit:
         view:
           title: 'Edit template'
@@ -690,3 +693,6 @@ en:
       actions:
         create:
           notice: Email has been sent
+    email_templates:
+      update:
+        notice: 'Email template has been successfully updated'

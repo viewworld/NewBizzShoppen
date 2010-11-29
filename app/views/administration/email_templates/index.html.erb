@@ -1,9 +1,24 @@
 <column-mc:>
   <header><%= t("administration.email_templates.index.view.title") %></header>
 
-  <ul>
-    <% @email_templates.each do |email_template| %>
-        <li><%= email_template.uniq_id %> <%= link_to t("administration.email_templates.index.view.edit"), edit_administration_email_template_path(email_template) %></li>
-    <% end %>
-  </ul>
+  <table id="users_table" class="generic">
+    <thead>
+    <tr>
+      <th><%= t("administration.email_templates.index.view.unique_id_column") %></th>
+      <th><%= t("administration.email_templates.index.view.subject_column") %></th>
+      <th><%= t("administration.email_templates.index.view.actions_column") %></th>
+    </tr>
+    </thead>
+    <tbody>
+        <% @email_templates.each do |email_template| %>
+        <tr>
+          <td><%= email_template.uniq_id %></td>
+          <td><%= email_template.subject %></td>
+          <td><%= link_to t("administration.email_templates.index.view.edit"), edit_administration_email_template_path(email_template) %></td>
+        </tr>
+        <% end %>
+    </tbody>
+  </table>
+
+<%= will_paginate @email_templates %>
 </column-mc:>
