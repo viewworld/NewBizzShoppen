@@ -1,4 +1,4 @@
-@shopping_cart @$_buyer @m3
+@shopping_cart @$_buyer @m3 @ao
 Feature: Shopping cart rules for big buyer
 
 Scenario: I can buy a lead skipping checkout
