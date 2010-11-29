@@ -39,10 +39,10 @@
           <% end %>
           <td><%= lead.id %></td>
           <td><%= lead.header %></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td><%= lead.clicks_count %></td>
+          <td><%= lead.exposures_count %></td>
+          <td><%= t("models.lead.novelty.lvl#{lead.novelty_level}") %></td>
+          <td><%= t("models.lead.hotness.lvl#{lead.hotness_level}") %></td>
           <td><%= lead.sale_limit %></td>
           <td><%= lead.price %></td>
           <td><%= lead.lead_purchases_counter %></td>
