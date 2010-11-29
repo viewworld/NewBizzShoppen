@@ -58,6 +58,14 @@ email_templates_array = [
             :body => "<p>{{lead_purchase.id}}</p>"},
     :dk => {:subject => "[DK] Lead Purchase is about to expire",
             :body => "<p>{{lead_purchase.id}}</p>"}
+  },
+
+{ :name => "Notify buyers about lead update",
+    :uniq_id => "notify_buyers_about_lead_update",
+    :en => {:subject => "Lead has been updated",
+            :body => "<p>Lead {{lead.header}} has been updated by agent.</p>"},
+    :dk => {:subject => "[DK] Lead has been updated",
+            :body => "<p>Lead {{lead.header}} has been updated by agent.</p>"}
   }
 ]
 

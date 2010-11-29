@@ -57,14 +57,14 @@ SELECT pg_catalog.setval('country_interests_id_seq', 1, false);
 -- Name: email_template_translations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('email_template_translations_id_seq', 10, true);
+SELECT pg_catalog.setval('email_template_translations_id_seq', 12, true);
 
 
 --
 -- Name: email_templates_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('email_templates_id_seq', 5, true);
+SELECT pg_catalog.setval('email_templates_id_seq', 6, true);
 
 
 --
@@ -136,8 +136,8 @@ COPY assets (id, asset_file_name, asset_content_type, asset_file_size, asset_typ
 --
 
 COPY categories (id, name, description, created_at, updated_at, parent_id, lft, rgt, depth, total_leads_count) FROM stdin;
-1	Test category 1	\N	2010-11-25 12:48:22.074845	2010-11-25 12:48:22.074845	\N	1	2	\N	0
-2	Test category 2	\N	2010-11-25 12:48:22.099283	2010-11-25 12:48:22.099283	\N	3	4	\N	0
+1	Test category 1	\N	2010-11-29 14:08:48.783756	2010-11-29 14:08:48.783756	\N	1	2	\N	0
+2	Test category 2	\N	2010-11-29 14:08:48.799956	2010-11-29 14:08:48.799956	\N	3	4	\N	0
 \.
 
 
@@ -154,8 +154,8 @@ COPY category_interests (id, category_id, user_id, created_at, updated_at) FROM 
 --
 
 COPY category_translations (id, category_id, locale, description, name, created_at, updated_at) FROM stdin;
-1	1	en	\N	Test category 1	2010-11-25 12:48:22.087522	2010-11-25 12:48:22.087522
-2	2	en	\N	Test category 2	2010-11-25 12:48:22.104059	2010-11-25 12:48:22.104059
+1	1	en	\N	Test category 1	2010-11-29 14:08:48.791773	2010-11-29 14:08:48.791773
+2	2	en	\N	Test category 2	2010-11-29 14:08:48.803078	2010-11-29 14:08:48.803078
 \.
 
 
@@ -164,9 +164,9 @@ COPY category_translations (id, category_id, locale, description, name, created_
 --
 
 COPY countries (id, name, created_at, updated_at) FROM stdin;
-1	Denmark	2010-11-25 12:48:22.181236	2010-11-25 12:48:22.181236
-2	United Kingdom	2010-11-25 12:48:22.194087	2010-11-25 12:48:22.194087
-3	Wales	2010-11-25 12:48:22.830502	2010-11-25 12:48:22.830502
+1	Denmark	2010-11-29 14:08:48.835053	2010-11-29 14:08:48.835053
+2	United Kingdom	2010-11-29 14:08:48.83995	2010-11-29 14:08:48.83995
+3	Northern Ireland	2010-11-29 14:08:49.490091	2010-11-29 14:08:49.490091
 \.
 
 
@@ -183,16 +183,18 @@ COPY country_interests (id, country_id, user_id, created_at, updated_at) FROM st
 --
 
 COPY email_template_translations (id, email_template_id, locale, subject, body, created_at, updated_at) FROM stdin;
-1	1	en	Confirmation instructions	<p>Welcome {{user.email}}!</p><p>You can confirm your account through the link below:</p><p><a href="{{user.confirmation_instructions_url}}">Confirm my account</a></p>	2010-11-25 12:48:22.245508	2010-11-25 12:48:22.245508
-2	1	dk	[DK] Confirmation instructions	<p>Welcome {{user.email}}!</p><p>You can confirm your account through the link below:</p><p><a href="{{user.confirmation_instructions_url}}">Confirm my account</a></p>	2010-11-25 12:48:22.263766	2010-11-25 12:48:22.263766
-3	2	en	Reset password instructions	<p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href="{{ user.reset_password_instructions_url }}">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>	2010-11-25 12:48:22.278805	2010-11-25 12:48:22.278805
-4	2	dk	[DK] Reset password instructions	<p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href="{{ user.reset_password_instructions_url }}">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>	2010-11-25 12:48:22.294375	2010-11-25 12:48:22.294375
-5	3	en	Somebody shared leads with you	{% for lead in leads %}\n<p>{{lead.id}}</p>\n{% endfor %}	2010-11-25 12:48:22.310764	2010-11-25 12:48:22.310764
-6	3	dk	[DK] Somebody shared leads with you	{% for lead in leads %}\n<p>{{lead.id}}</p>\n{% endfor %}	2010-11-25 12:48:22.326198	2010-11-25 12:48:22.326198
-7	4	en	Contact regarding lead	<p>{{lead.id}}</p>	2010-11-25 12:48:22.340926	2010-11-25 12:48:22.340926
-8	4	dk	[DK] Contact regarding lead	<p>{{lead.id}}</p>	2010-11-25 12:48:22.355978	2010-11-25 12:48:22.355978
-9	5	en	Lead Purchase is about to expire	<p>{{lead_purchase.id}}</p>	2010-11-25 12:48:22.371053	2010-11-25 12:48:22.371053
-10	5	dk	[DK] Lead Purchase is about to expire	<p>{{lead_purchase.id}}</p>	2010-11-25 12:48:22.38743	2010-11-25 12:48:22.38743
+1	1	en	Confirmation instructions	<p>Welcome {{user.email}}!</p><p>You can confirm your account through the link below:</p><p><a href="{{user.confirmation_instructions_url}}">Confirm my account</a></p>	2010-11-29 14:08:48.863413	2010-11-29 14:08:48.863413
+2	1	dk	[DK] Confirmation instructions	<p>Welcome {{user.email}}!</p><p>You can confirm your account through the link below:</p><p><a href="{{user.confirmation_instructions_url}}">Confirm my account</a></p>	2010-11-29 14:08:48.87532	2010-11-29 14:08:48.87532
+3	2	en	Reset password instructions	<p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href="{{ user.reset_password_instructions_url }}">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>	2010-11-29 14:08:48.884638	2010-11-29 14:08:48.884638
+4	2	dk	[DK] Reset password instructions	<p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href="{{ user.reset_password_instructions_url }}">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>	2010-11-29 14:08:48.893718	2010-11-29 14:08:48.893718
+5	3	en	Somebody shared leads with you	{% for lead in leads %}\n<p>{{lead.id}}</p>\n{% endfor %}	2010-11-29 14:08:48.903094	2010-11-29 14:08:48.903094
+6	3	dk	[DK] Somebody shared leads with you	{% for lead in leads %}\n<p>{{lead.id}}</p>\n{% endfor %}	2010-11-29 14:08:48.912201	2010-11-29 14:08:48.912201
+7	4	en	Contact regarding lead	<p>{{lead.id}}</p>	2010-11-29 14:08:48.921509	2010-11-29 14:08:48.921509
+8	4	dk	[DK] Contact regarding lead	<p>{{lead.id}}</p>	2010-11-29 14:08:48.930484	2010-11-29 14:08:48.930484
+9	5	en	Lead Purchase is about to expire	<p>{{lead_purchase.id}}</p>	2010-11-29 14:08:48.939934	2010-11-29 14:08:48.939934
+10	5	dk	[DK] Lead Purchase is about to expire	<p>{{lead_purchase.id}}</p>	2010-11-29 14:08:48.949131	2010-11-29 14:08:48.949131
+11	6	en	Lead has been updated	<p>Lead {{lead.header}} has been updated by agent.</p>	2010-11-29 14:08:49.048336	2010-11-29 14:08:49.048336
+12	6	dk	[DK] Lead has been updated	<p>Lead {{lead.header}} has been updated by agent.</p>	2010-11-29 14:08:49.061839	2010-11-29 14:08:49.061839
 \.
 
 
@@ -201,11 +203,12 @@ COPY email_template_translations (id, email_template_id, locale, subject, body, 
 --
 
 COPY email_templates (id, name, subject, "from", bcc, cc, body, template, uniq_id, persist, created_at, updated_at) FROM stdin;
-1	confirmation instructions	[DK] Confirmation instructions	noreply@newbizzshoppen.com	\N	\N	<p>Welcome {{user.email}}!</p><p>You can confirm your account through the link below:</p><p><a href="{{user.confirmation_instructions_url}}">Confirm my account</a></p>	\N	confirmation_instructions	t	2010-11-25 12:48:22.233877	2010-11-25 12:48:22.260099
-2	reset_password_instructions	[DK] Reset password instructions	noreply@newbizzshoppen.com	\N	\N	<p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href="{{ user.reset_password_instructions_url }}">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>	\N	reset_password_instructions	t	2010-11-25 12:48:22.273722	2010-11-25 12:48:22.290219
-3	Share leads by email message	[DK] Somebody shared leads with you	noreply@newbizzshoppen.com	\N	\N	{% for lead in leads %}\n<p>{{lead.id}}</p>\n{% endfor %}	\N	share_leads_by_email_message	t	2010-11-25 12:48:22.305902	2010-11-25 12:48:22.321885
-4	Contact Lead by email message	[DK] Contact regarding lead	noreply@newbizzshoppen.com	\N	\N	<p>{{lead.id}}</p>	\N	contact_lead_by_email_message	t	2010-11-25 12:48:22.336598	2010-11-25 12:48:22.352145
-5	Lead Purchase is about to expire	[DK] Lead Purchase is about to expire	noreply@newbizzshoppen.com	\N	\N	<p>{{lead_purchase.id}}</p>	\N	lead_purchase_is_about_to_expire	t	2010-11-25 12:48:22.366682	2010-11-25 12:48:22.382506
+1	confirmation instructions	[DK] Confirmation instructions	noreply@newbizzshoppen.com	\N	\N	<p>Welcome {{user.email}}!</p><p>You can confirm your account through the link below:</p><p><a href="{{user.confirmation_instructions_url}}">Confirm my account</a></p>	\N	confirmation_instructions	t	2010-11-29 14:08:48.855351	2010-11-29 14:08:48.872484
+2	reset_password_instructions	[DK] Reset password instructions	noreply@newbizzshoppen.com	\N	\N	<p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href="{{ user.reset_password_instructions_url }}">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>	\N	reset_password_instructions	t	2010-11-29 14:08:48.88127	2010-11-29 14:08:48.890835
+3	Share leads by email message	[DK] Somebody shared leads with you	noreply@newbizzshoppen.com	\N	\N	{% for lead in leads %}\n<p>{{lead.id}}</p>\n{% endfor %}	\N	share_leads_by_email_message	t	2010-11-29 14:08:48.899668	2010-11-29 14:08:48.90933
+4	Contact Lead by email message	[DK] Contact regarding lead	noreply@newbizzshoppen.com	\N	\N	<p>{{lead.id}}</p>	\N	contact_lead_by_email_message	t	2010-11-29 14:08:48.918138	2010-11-29 14:08:48.92761
+5	Lead Purchase is about to expire	[DK] Lead Purchase is about to expire	noreply@newbizzshoppen.com	\N	\N	<p>{{lead_purchase.id}}</p>	\N	lead_purchase_is_about_to_expire	t	2010-11-29 14:08:48.936321	2010-11-29 14:08:48.946288
+6	Notify buyers about lead update	[DK] Lead has been updated	noreply@newbizzshoppen.com	\N	\N	<p>Lead {{lead.header}} has been updated by agent.</p>	\N	notify_buyers_about_lead_update	t	2010-11-29 14:08:48.954908	2010-11-29 14:08:49.058993
 \.
 
 
@@ -221,7 +224,7 @@ COPY lead_purchases (id, lead_id, owner_id, assignee_id, paid, accessible, creat
 -- Data for Name: lead_translations; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY lead_translations (id, lead_id, locale, description, hidden_description, header, created_at, updated_at) FROM stdin;
+COPY lead_translations (id, lead_id, locale, hidden_description, description, header, created_at, updated_at) FROM stdin;
 \.
 
 
@@ -238,13 +241,13 @@ COPY leads (id, header, category_id, description, hidden_description, creator_id
 --
 
 COPY settings (id, var, value, created_at, updated_at) FROM stdin;
-1	level_one_certification_threshold	--- 0\n	2010-11-25 12:48:22.119922	2010-11-25 12:48:22.119922
-2	level_two_certification_threshold	--- 0\n	2010-11-25 12:48:22.130678	2010-11-25 12:48:22.130678
-3	level_three_certification_threshold	--- 0\n	2010-11-25 12:48:22.136359	2010-11-25 12:48:22.136359
-4	default_payout_delay	--- 0\n	2010-11-25 12:48:22.142439	2010-11-25 12:48:22.142439
-5	default_leads_per_page	--- 5\n	2010-11-25 12:48:22.149969	2010-11-25 12:48:22.149969
-6	certification_level_1	--- 10\n	2010-11-25 12:48:22.157275	2010-11-25 12:48:22.157275
-7	certification_level_2	--- 20\n	2010-11-25 12:48:22.163811	2010-11-25 12:48:22.163811
+1	level_one_certification_threshold	--- 0\n	2010-11-29 14:08:48.811187	2010-11-29 14:08:48.811187
+2	level_two_certification_threshold	--- 0\n	2010-11-29 14:08:48.816444	2010-11-29 14:08:48.816444
+3	level_three_certification_threshold	--- 0\n	2010-11-29 14:08:48.819142	2010-11-29 14:08:48.819142
+4	default_payout_delay	--- 0\n	2010-11-29 14:08:48.821741	2010-11-29 14:08:48.821741
+5	default_leads_per_page	--- 5\n	2010-11-29 14:08:48.824276	2010-11-29 14:08:48.824276
+6	certification_level_1	--- 10\n	2010-11-29 14:08:48.826823	2010-11-29 14:08:48.826823
+7	certification_level_2	--- 20\n	2010-11-29 14:08:48.829538	2010-11-29 14:08:48.829538
 \.
 
 
@@ -277,10 +280,10 @@ COPY tolk_translations (id, phrase_id, locale_id, text, previous_text, primary_u
 --
 
 COPY users (id, email, encrypted_password, password_salt, reset_password_token, remember_token, remember_created_at, sign_in_count, current_sign_in_at, last_sign_in_at, current_sign_in_ip, last_sign_in_ip, confirmation_token, confirmed_at, confirmation_sent_at, locked_at, created_at, updated_at, roles_mask, first_name, last_name, phone, screen_name, street, city, zip_code, county, country, newsletter_on, payout, parent_id, age, subaccounts_counter, mobile_phone, department, deal_value_range_start, deal_value_range_end, rss_token, notify_about_new_leads, big_buyer) FROM stdin;
-1	blazejek@gmail.com	b1ab0990c13eafca9d160a22a806f2a9490820300d1161af0726c04ef5039fd3f17d5deb1b76702b1260cc32757c3c6754afb860a35ca1362d3e9363379d02ae	puV_BDv6nxkoRZK3jKKj	\N	\N	\N	0	\N	\N	\N	\N	\N	2010-11-25 12:48:22.70113	2010-11-25 12:48:22.436102	\N	2010-11-25 12:48:22.43644	2010-11-25 12:48:22.701905	1	Margaretta	Schuster	146-894-3797	admin1	Brakus Plaza	North Queen	17897	Dorset	1	\N	\N	\N	\N	0	\N	\N	\N	\N	N41DmBllAYGevjj6XKbuDZTbLZeHZRptxuG27ysF1hZKjgaJ7ycGJ0L3s9M6hO	f	\N
-2	buyer@gmail2.com	f23e7fa4b6787b19b8b7e70e912564b232ccb51ef0e0c3c259d1d3509df45c0569ebcdd0f7c2131c6d9e0ff9d009a8c97595974937031471f6ee90fc71f31a91	r2Db334ZCw7QGDtuNomk	\N	\N	\N	0	\N	\N	\N	\N	\N	2010-11-25 12:48:22.784844	2010-11-25 12:48:22.754406	\N	2010-11-25 12:48:22.754699	2010-11-25 12:48:22.785333	48	Wyman	Gleason	598-759-9430 x665	Mellie Raynor	Kuhlman Skyway	West Wilfrid	26945	Kent	1	\N	\N	\N	\N	0	\N	\N	\N	\N	ZBj6zRXGyyGcx6NMQMb95xbEh0Tj2tabFSKIkl0cjf2IvHHbEGTXCOQONoyuNM	f	\N
-3	agent@gmail2.com	3e03fb1709c302e9485c3b58042b9a0dfdc1d5166f235c69a4c9c96b3266592c37ef686ff72b1ed8ec4242b49d56ec6d3d779fa1a7b639925ce29e81f1f60072	FGDIhbfBOKfNa37KmBKK	\N	\N	\N	0	\N	\N	\N	\N	\N	2010-11-25 12:48:22.87465	2010-11-25 12:48:22.842224	\N	2010-11-25 12:48:22.842526	2010-11-25 12:48:22.875191	2	Lionel	Hintz	931.137.2858 x73631	Cletus Cruickshank	Kutch Hills	South Wilmertown	84338-8220	Merseyside	3	\N	0	\N	\N	0	\N	\N	\N	\N	7YkbaPAw2Q6x0uB5h4Cs35hnj7lOBoPq794Pca1gUHKkgxpkEpabrIvfCJurG9	f	\N
-4	leaduser@gmail2.com	21049ee53d1f73a3948830e2c5372345599bd31f6a2dc92cebec7a8995208d7d71e831a7618cd04e1d7b8d344532466ea9647613111666767cdfacd6e7dfcad3	H-aQoyTvLwzXoxAr86uJ	\N	\N	\N	0	\N	\N	\N	\N	\N	2010-11-25 12:48:22.954987	2010-11-25 12:48:22.919307	\N	2010-11-25 12:48:22.919603	2010-11-25 12:48:22.955429	64	Litzy	Dicki	(322)742-5259	Guiseppe O'Reilly	Schowalter Shore	Lake Karine	31356-7433	Bedfordshire	1	\N	\N	\N	\N	0	\N	\N	\N	\N	u68WKq3sPqPN8RnmB5smGbrBQCUAS5xzr7SyiuoSppNJnEVcuKYskIANVHcT3m	f	\N
+1	blazejek@gmail.com	925af476c1bdc4b1b39eebd0ec3e7b03275eae233a28c7cbbe147e3bb0b8e6dcd8ea5f63f77d193b9ee5fcf47a87f290936ecf97e95b371cdd27c8501d5dae19	iSbQ2amNVsGBAfl4bmZo	\N	\N	\N	0	\N	\N	\N	\N	\N	2010-11-29 14:08:49.286322	2010-11-29 14:08:49.097011	\N	2010-11-29 14:08:49.097244	2010-11-29 14:08:49.286631	1	Ivory	Pagac	727.718.2721 x6826	admin1	Carissa Harbor	West Barbara	98281-5993	West Glamorgan	1	\N	\N	\N	\N	0	\N	\N	\N	\N	LfrtlVnYQfAt8gkBRUEjF6MDP1FPakueTLGvDFURQON5jbiitobHnU4EZkp8gY	f	\N
+2	buyer@gmail2.com	083dca1fff35cd37515fe60dfec1a6737a850f5ee505c7db2fb2cc2323fb06643dbaa6f1742091f191bf80443875084485df599a0f1cce8e70ffc7f3a7e3b3bb	uKOoWPTjKXflUryyNw3v	\N	\N	\N	0	\N	\N	\N	\N	\N	2010-11-29 14:08:49.464099	2010-11-29 14:08:49.440459	\N	2010-11-29 14:08:49.440713	2010-11-29 14:08:49.464393	48	Judah	Borer	1-092-247-8318 x361	Benjamin Tillman	Esther Valleys	Port Wilhelmine	72462	Isle of Wight	1	\N	\N	\N	\N	0	\N	\N	\N	\N	u5ArLm7lI4fkP8xe97IIvM0tjZTTKp2riTQpmqmSSiIsA3dJLwHts8YQzFDgZf	f	\N
+3	agent@gmail2.com	5f5ae6c5e5b7335fbe443c1e8d3295e46abef1bfc4f64bace9d97e16b00c76181260ff1db91794ff2c6081f5048998b3b136448a2df6b9b31f302cc5e13e959e	iF1GAa_vfv2PC7JPLnlR	\N	\N	\N	0	\N	\N	\N	\N	\N	2010-11-29 14:08:49.520374	2010-11-29 14:08:49.496642	\N	2010-11-29 14:08:49.496858	2010-11-29 14:08:49.520678	2	Angelica	Rippin	411.667.1880 x83964	Arnulfo Welch	Brennan Ranch	South Candido	04828	Cumbria	3	\N	0	\N	\N	0	\N	\N	\N	\N	NsC63oyypNHcgxVCl7cZGzx62Hyl8HHGqSQ3kmIosNl8461hfudqAVzIdzro07	f	\N
+4	leaduser@gmail2.com	a7ed554ff4dec88072173b75c87c0943304ae6c182d879d90a888029daac3434d21aaffe410538a2a15dd9467a287ec4f3788824f4c3e3bd5ee4d83fa1e5f5e0	_QvVxLfOkw7tD10awofP	\N	\N	\N	0	\N	\N	\N	\N	\N	2010-11-29 14:08:49.572594	2010-11-29 14:08:49.549015	\N	2010-11-29 14:08:49.549254	2010-11-29 14:08:49.572987	64	Bernardo	Collier	1-216-653-9390	Mariah Wilkinson	Wuckert Passage	Jaydeshire	19495-8941	Devon	1	\N	\N	\N	\N	0	\N	\N	\N	\N	jX5ELJzR2T0qf6uGOcrMo1zQGBpL2PciHW4Vq7fq1ExtgRFOieuGd63Af94de3	f	\N
 \.
 
 

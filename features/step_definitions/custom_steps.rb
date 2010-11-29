@@ -43,3 +43,7 @@ end
 Then /^last email sent should have content "([^"]*)"$/ do |content|
   assert ActionMailer::Base.deliveries.last.body.raw_source.include?(content)
 end
+
+Then /^last email sent should have been sent to recipient "([^"]*)"$/ do |email|
+  assert ActionMailer::Base.deliveries.last.to.include?(email)
+end

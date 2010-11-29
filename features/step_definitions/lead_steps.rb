@@ -46,6 +46,7 @@ Given /^a lead (.+) exists within category (.+) and is bought by user (.+) with 
   category = Category.make!(:name => category_name) if category.nil?
 
   customer = "User::#{role.camelize}".constantize.find_by_email(email)
+  customer = "User::#{role.camelize}".constantize.make!(:email => email) if customer.nil?
   lead = Lead.find_by_header(header).first
   if lead.nil?
     lead = Lead.make!(:header => header, :category => category)

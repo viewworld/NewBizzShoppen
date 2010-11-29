@@ -41,6 +41,8 @@ class Lead < ActiveRecord::Base
 
   liquid_methods :header, :description, :company_name, :contact_name, :phone_number, :email_address, :address, :www_address
 
+  liquid :header
+
   accepts_nested_attributes_for :lead_translations, :allow_destroy => true
 
   scoped_order :id, :header, :sale_limit, :price, :lead_purchases_counter, :published
@@ -49,6 +51,7 @@ class Lead < ActiveRecord::Base
   after_create :cache_creator_name
   before_destroy :can_be_removed?
   after_find :set_buyers_notification
+  before_update :notify_buyers_about_changes
 
   private
 
@@ -80,6 +83,20 @@ class Lead < ActiveRecord::Base
 
   def set_buyers_notification
     self.notify_buyers_after_update = true
+  end
+
+  def notify_buyers_about_changes
+    if ActiveRecord::ConnectionAdapters::Column.value_to_boolean(notify_buyers_after_update) and lead_purchases.present?
+      lead_purchases.map(&:owner).uniq.each { |buyer| deliver_notify_buyers_about_changes(buyer.email) }
+    end
+  end
+
+  def deliver_notify_buyers_about_changes(email)
+    deliver_email_template(email, "notify_buyers_about_lead_update")
+  end
+
+  def deliver_email_template(email, uniq_id)
+    ApplicationMailer.email_template(email, EmailTemplate.find_by_uniq_id(uniq_id), {:lead => self}).deliver
   end
 
   public
