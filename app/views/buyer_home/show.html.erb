@@ -8,25 +8,25 @@
   <br/>
 
     <div id="leads_summary">
-    <div class="column_1to3 fltl">
+    <div class="column_1to3 fltl" id="best_sellers">
       <frm title="#{t('agent_home.show.view.header_best_sellers')}">
         <param:header>
           <%= bt_link_to nil,t("buyer_home.show.view.complete_list_link"), leads_path(:search => {:bestsellers => true}), :class => "fltr" %>
         </param:header>
         <param:content>
-          <ul class="solid_list" id="best_sellers">
+          <ul class="solid_list">
             <%= render :partial => 'lead', :collection => @best_sellers, :as => :lead %>
           </ul>
         </param:content>
       </frm>
     </div>
-    <div class="column_1to3 fltl" style="padding: 0 15px">
+    <div class="column_1to3 fltl" style="padding: 0 15px" id="latest_leads">
       <frm title="#{t('agent_home.show.view.header_latest_leads')}">
         <param:header>
           <%= bt_link_to nil, t("buyer_home.show.view.complete_list_link"), leads_path(:search => {:latest => true}), :class => "fltr" %>
         </param:header>
         <param:content>
-          <ul class="solid_list" id="latest_leads">
+          <ul class="solid_list">
             <%= render :partial => 'lead', :collection => @latest_leads, :as => :lead %>
           </ul>
         </param:content>
