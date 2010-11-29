@@ -1,4 +1,4 @@
-@help @m3
+@help @m3 @ao
 Feature: Help presentation
 
 Scenario: I can click the button help to display a popup with the relevant help for element that has a help content associated
