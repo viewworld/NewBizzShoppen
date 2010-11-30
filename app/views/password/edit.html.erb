@@ -2,7 +2,7 @@
   <header>Password</header>
 
   <%= semantic_form_for @user, :url => password_path, :method => :put do |form| %>
-      <frm title="Change your password" c="todo_delete">
+      <frm title="Change your password">
         <param:content>
           <div class="pdd_10 no_pdd_t">
             <fieldset class="inputs labels_ta_r labels_240">
@@ -18,6 +18,9 @@
           <ibt c="fltri" icon="plus">
             <%= form.submit t("password.edit.view.button_update_user") %>
           </ibt>
+          <ibt c="bt_grey fltri">
+            <%= button_to_function t("administration.settings.edit.view.button_cancel"), "history.go(-1)" %>
+          </ibt>            
         </param:actions>
       </frm>
   <% end %>

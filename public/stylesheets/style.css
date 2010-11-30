@@ -33,6 +33,25 @@ body
     height: 82px;
 }
 
+#top .logo
+{
+    position: absolute;
+    top: 25px;
+    left: 40px;
+}
+
+#top .logo a
+{
+    color: #fff;
+    text-decoration: none;
+    font-size: 28px;
+}
+
+#top .logo a:hover
+{
+    text-decoration: underline;
+}
+
 .c
 {
     margin: 0 auto;
@@ -134,10 +153,9 @@ h4
 
 #user_panel
 {
-    position: absolute;
-    right: 30px;
-    top: 0;
-    height: 30px;
+    display: block;
+    float: right;
+
 
     font-size: 12px;
 
@@ -166,24 +184,96 @@ h4
     box-shadow: 0 1px 0 #4b3155;
 }
 
-#user_panel a
+#user_panel a.sl
 {
     color: #ddd;
     text-decoration: none;
     display: inline-block;
-    padding: 8px 10px 8px 14px;
-    padding-top: 7px !ie;
+    padding: 0 10px 0 14px;    
+    height: 30px;
+    line-height: 30px;
+    background: url(/images/bg_user_panel_separator.png) repeat-y 0 0;
 }
 
-#user_panel a:hover
+#user_panel a.sl:hover
 {
-    color: #eee;
+    color: #f1f1f1;
     text-decoration: underline
 }
 
-#user_panel .sl
+
+/* --- langs_dropdown ---
+--------------------------------------------------------------------------------- */
+
+.langs_dropdown
 {
-    background: url(/images/bg_user_panel_separator.png) repeat-y 0 0;
+    display: block;
+    float: left;
+}
+
+.langs_dropdown li.langs
+{
+    position: relative;
+}
+
+.langs_dropdown li a.lang_selected
+{
+    height: 28px;
+    line-height: 28px;
+    display: block;
+    padding: 0 18px 0 10px;
+    background: url(/images/languages/arrow.png) no-repeat 32px center;
+}
+
+.langs_dropdown li a.lang_selected img
+{
+    margin-top: 9px;    
+}
+
+.langs_dropdown li #langs_list
+{
+    display: none;
+    position: absolute;
+    left: -3px;
+    top: 22px;
+    z-index: 200;
+}
+
+.langs_dropdown li:hover #langs_list
+{
+    display: block;
+    border: 1px solid #131313;
+    border-top: none;
+    padding-top: 6px;
+    background: #2e2e34;    
+}
+
+.langs_dropdown li:hover #langs_list li
+{
+    text-align: center;
+}
+
+.langs_dropdown li:hover #langs_list li a
+{
+    display: block;
+    background: #2e2e34;
+    width: 46px;
+    font-size: 10px;
+    padding: 6px 0;
+    text-decoration: none;
+    color: #ddd;
+}
+
+.langs_dropdown li:hover #langs_list li a:hover
+{
+    background: #3c3c3e;
+    color: #f1f1f1;
+}
+
+.langs_dropdown li:hover #langs_list li a img
+{
+    vertical-align: top;
+    padding-left: 2px;
 }
 
 

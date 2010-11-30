@@ -2,7 +2,7 @@
   <header><%= t("administration.email_templates.edit.view.title") %></header>
 
   <%= semantic_form_for [:administration, @email_template], :url => administration_email_template_path(@email_template), :method => :put do |form| %>
-      <frm title="Create new account" c="todo_delete">
+      <frm title="Edit">
         <param:content>
           <%= render :partial => 'form', :locals => {:form => form} %>
         </param:content>
@@ -10,6 +10,9 @@
           <ibt c="fltri" icon="save">
             <%= form.submit t("administration.email_templates.edit.view.button_update") %>
           </ibt>
+          <ibt c="bt_grey fltri">
+            <%= button_to_function t("administration.settings.edit.view.button_cancel"), "history.go(-1)" %>
+          </ibt>          
         </param:actions>
       </frm>
   <% end %>

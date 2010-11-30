@@ -70,7 +70,11 @@
 
   <%= leads_table @leads, :show_checkboxes => false do |blocks| %>
       <% blocks.tools do |lead| %>
-          <%= link_to t("administration.leads.index.view.show"), lead_path(lead) %>
+          <ul-actions>
+            <li>
+              <%= link_to t("administration.leads.index.view.show"), lead_path(lead) %>
+            </li>
+          </ul-actions>
       <% end %>
       <% blocks.status_column do |lead| %>
           <%= administration_lead_status(lead) %>
