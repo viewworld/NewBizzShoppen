@@ -1,0 +1,20 @@
+<column-mc:>
+  <header><%= t('administration.articles.edit.view.header') %></header>
+
+  <%= semantic_form_for @article, :url => administration_article_path(@article), :method => :put do |form| %>
+      <frm title="TODO - header" c="todo_delete">
+        <param:content>
+          <%= render :partial => 'form', :locals => {:form => form} %>
+
+          <hl/>
+
+        </param:content>
+        <param:actions>
+          <%= link_to t("common.back_link"), administration_articles_path %>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("administration.articles.edit.view.button_save") %>
+          </ibt>
+        </param:actions>
+      </frm>
+  <% end %>
+</column-mc:>

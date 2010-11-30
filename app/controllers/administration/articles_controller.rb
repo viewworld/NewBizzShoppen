@@ -1,20 +1,25 @@
 class Administration::ArticlesController < Administration::AdministrationController
   inherit_resources
 
-  def create
-    @article = "Article::Cms".constantize.new(params[:article_cms])
-    @article.send("type=","Article::Cms::#{params[:article_cms][:type].to_s.camelize}")
-
-    if @article.save
-      flash[:notice] = t("administration.articles.create.flash.article_creation_successful")
-      redirect_to administration_articles_path
-    else
-      render :action => 'new'
-    end
+  def edit
+    @article = Article::Cms.find(params[:id])
+    edit!
   end
 
   def new
     @article = Article::Cms.new
+    new!
+  end
+
+  def update
+    @article = Article::Cms.find(params[:id])
+    @article.attributes = params[:article_cms]
+    update!
+  end
+
+  def create
+    @article = Article::Cms.new(params[:article_cms])
+    create!
   end
 
   protected

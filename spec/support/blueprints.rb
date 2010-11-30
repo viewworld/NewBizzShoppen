@@ -164,3 +164,15 @@ end
   country { Country.make!.id }
   roles_mask { 2 }
 end
+
+::Article::Cms.blueprint do
+  title { Faker::Lorem.words(4).to_s.capitalize }
+  content { Faker::Lorem.sentences(2).to_s }
+  scope { rand(3) }
+end
+
+::Article::News.blueprint do
+  title { Faker::Lorem.words(4).to_s.capitalize }
+  content { Faker::Lorem.sentences(2).to_s }
+  scope { rand(2) }
+end

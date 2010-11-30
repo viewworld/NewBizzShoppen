@@ -1,0 +1,18 @@
+<column-mc:>
+  <header><%= t('administration.news.show.view.header') %></header>
+
+  <frm title="#{@news.title}">
+    <param:content>
+
+      <%= @news.content %>
+
+      <hl/>
+
+    </param:content>
+    <param:actions>
+      <%= link_to t("common.back_link"), administration_news_index_path %>
+      <%= link_to t("common.edit_link"), edit_administration_news_path %>
+    </param:actions>
+  </frm>
+
+</column-mc:>

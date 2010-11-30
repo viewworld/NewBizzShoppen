@@ -1,11 +1,14 @@
 <column-mc:>
 
+  <header><%= t("administration.articles.index.view.header") %></header>
+
   <%= form_tag new_administration_article_path, :method => :get do %>
       <%= submit_tag t("administration.articles.index.view.new_article") %>
   <% end %>
 
   <%= form_for @search, :url => administration_articles_path do |f| %>
-      <%= f.select :with_type, Article::Cms::TYPES, :include_blank => true %>
+      <%= f.text_field :with_keyword %>
+      <%= f.select :with_scope, Article::Cms::SCOPE, :include_blank => true %>
       <%= submit_tag t("administration.articles.index.view.search_button") %>
   <% end %>
 
@@ -15,13 +18,14 @@
       <th class="hl"></th>
       <th><%= link_to t("administration.articles.index.view.id"), order_for_scoped_search(:id) %></th>
       <th><%= link_to t("administration.articles.index.view.title"), order_for_scoped_search(:title) %></th>
+      <th><%= t("administration.articles.index.view.actions") %></th>
       <th class="hr"></th>
     </tr>
     </thead>
     <tfoot>
     <tr>
       <td class="fl"></td>
-      <td colspan="2"></td>
+      <td colspan="3"></td>
       <td class="fr"></td>
     </tr>
     </tfoot>
@@ -31,6 +35,10 @@
           <td class="cl"></td>
           <td><%= article.id %></td>
           <td><%= article.title %></td>
+          <td>
+            <%= link_to t("administration.articles.index.view.edit_link"), edit_administration_article_path(article) %>
+            <%= link_to t("administration.articles.index.view.show_link"), administration_article_path(article) %>
+          </td>
           <td class="cr"></td>
         </tr>
     <% end %>

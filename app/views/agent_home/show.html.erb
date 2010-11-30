@@ -35,11 +35,12 @@
     <div class="column_1to3 fltl">
       <frm title="#{t('agent_home.show.view.header_news')}">
         <param:header>
-          <%= bt_link_to nil, t("agent_home.show.view.complete_list_link"), leads_path(:search => {:latest => true}), :class => "fltr" %>
+          <%= bt_link_to nil, t("agent_home.show.view.complete_list_link"), news_index_path(:search => {:scope => Article::News::AGENT}), :class => "fltr" %>
         </param:header>
         <param:content>
-          content
+          <%= render :partial => 'news', :collection => @news, :as => :news %>
         </param:content>
+
       </frm>
     </div>
     <clb/>

@@ -4,6 +4,7 @@
 en:
   common:
     back_link: Back
+    edit_link: 'Edit'
     confirmation: Are You sure?
   layout:
     main_menu:
@@ -300,6 +301,9 @@ en:
           category_label: Category
           status_label: Status
     articles:
+      show:
+        view:
+          header: 'Article'
       create:
         flash:
          article_creation_successful: 'Article was successfully created'
@@ -307,8 +311,13 @@ en:
         view:
           header: 'New article'
           button_create: 'Create article'
+      edit:
+        view:
+          header: 'Edit article'
+          button_save: 'Save article'
       index:
         view:
+          header: 'Articles'
           new_article: 'New article'
           search_button: 'Search'
           id: 'ID'
@@ -316,6 +325,34 @@ en:
           main_page_articles: 'main page articles'
           interface_content_texts: 'interface content texts'
           help_popups: 'help popups'
+          show_link: 'Show'
+          edit_link: 'Edit'
+          actions: 'Actions'
+    news:
+      index:
+        view:
+          header: 'News'
+          buyers: 'buyers'
+          agents: 'agents'
+          new_news: 'New news'
+          search_button: 'Search'
+          id: 'ID'
+          title: 'Title'
+          created_at: 'Created at'
+          actions: 'Actions'
+          show_link: 'Show'
+          edit_link: 'Edit'
+      new:
+        view:
+          header: 'New news'
+          button_create: 'Create news'
+      show:
+        view:
+          header: 'News'
+      edit:
+        view:
+          header: 'Edit news'
+          button_save: 'Save news'
 
   agent:
     leads:

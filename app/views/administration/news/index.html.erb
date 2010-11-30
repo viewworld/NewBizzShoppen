@@ -1,0 +1,52 @@
+<column-mc:>
+
+  <header><%= t("administration.news.index.view.header") %></header>
+
+  <%= form_tag new_administration_news_path, :method => :get do %>
+      <%= submit_tag t("administration.news.index.view.new_news") %>
+  <% end %>
+
+  <%= form_for @search, :url => administration_news_index_path do |f| %>
+      <%= f.text_field :with_keyword %>
+      <%= f.select :with_scope, Article::News::SCOPE, :include_blank => true %>
+      <%= submit_tag t("administration.news.index.view.search_button") %>
+  <% end %>
+
+  <table id="news_table" class="generic">
+    <thead>
+    <tr>
+      <th class="hl"></th>
+      <th><%= link_to t("administration.news.index.view.id"), order_for_scoped_search(:id) %></th>
+      <th><%= link_to t("administration.news.index.view.title"), order_for_scoped_search(:title) %></th>
+      <th><%= link_to t("administration.news.index.view.created_at"), order_for_scoped_search(:created_at) %></th>
+      <th><%= t("administration.news.index.view.actions") %></th>
+      <th class="hr"></th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+      <td class="fl"></td>
+      <td colspan="4"></td>
+      <td class="fr"></td>
+    </tr>
+    </tfoot>
+    <tbody>
+    <% @news.each do |news| %>
+        <tr>
+          <td class="cl"></td>
+          <td><%= news.id %></td>
+          <td><%= news.title %></td>
+          <td><%= news.created_at %></td>
+          <td>
+            <%= link_to t("administration.news.index.view.edit_link"), edit_administration_news_path(news) %>
+            <%= link_to t("administration.news.index.view.show_link"), administration_news_path(news) %>
+          </td>
+          <td class="cr"></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <%= will_paginate @news %>
+
+</column-mc:>

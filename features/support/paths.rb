@@ -60,6 +60,12 @@ module NavigationHelpers
         agent_home_path
     when /buyer home/
         buyer_home_path
+    when /administration articles page/
+        administration_articles_path
+    when /administration (.*) article page/
+        administration_article_path(Article::Cms.find_by_title($1))
+    when /administration (.*) news page/
+        administration_news_path(Article::News.find_by_title($1))
 
 
 

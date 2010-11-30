@@ -22,6 +22,7 @@ Nbs::Application.routes.draw do
     resources :email_templates
     resources :leads
     resources :articles
+    resources :news
   end
 
   namespace :buyers do
@@ -77,6 +78,8 @@ Nbs::Application.routes.draw do
   resources :agent_accounts, :only => [:new, :create]
   resources :buyer_accounts, :only => [:new, :create]
   resources :locales
+
+  resources :news
 
   resource :my_profile, :controller => "my_profile", :only => [:update]
   match 'my_profile' => 'my_profile#edit', :as => "my_profile"

@@ -1,11 +1,11 @@
 class ::Article::Cms < ::Article
 
-  TYPES = [
-      [I18n.t('administration.articles.index.view.main_page_articles'),'main'],
-      [I18n.t('administration.articles.index.view.interface_content_texts'),'blurb'],
-      [I18n.t('administration.articles.index.view.help_popups'),'help']
+  SCOPE = [
+      [I18n.t('administration.articles.index.view.main_page_articles'),0],
+      [I18n.t('administration.articles.index.view.interface_content_texts'),1],
+      [I18n.t('administration.articles.index.view.help_popups'),2]
   ].freeze
 
-  scope :with_type, lambda {|article_type| where(["type = ?", "Article::Cms::#{article_type.humanize}"]) }
+  scoped_order :id, :title
 
 end
