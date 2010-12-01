@@ -1,6 +1,8 @@
 class ::User::LeadBuyer < ::User
   ROLES = [:lead_buyer, :lead_user]
 
+  include User::Subaccounts
+
   has_many :country_interests, :foreign_key => 'user_id'
   has_many :category_interests, :foreign_key => 'user_id'
   has_many :countries, :through => :country_interests

@@ -431,6 +431,19 @@ en:
           new_lead_buyer: 'Create lead user with buying permission'
           new_lead_user: 'Create lead user'
           edit: 'Edit'
+          delete: 'Delete'
+          lock: 'Lock'
+          unlock: 'Unlock'
+          assigned_leads: 'Assigned leads'
+          delete_confirmation_message: 'Are you sure to delete?'
+          first_name_column: 'First name'
+          last_name_column: 'Last name'
+          department_column: 'Department'
+          actions_column: 'Actions'
+          completed_leads_column: 'Completed leads'
+          email:
+          none_per_page: 'None'
+          button_bulk_subbaccounts_update: 'Save'
       create:
         flash:
           subaccount_creation_successful: Subaccount has been added succesfully
@@ -442,6 +455,13 @@ en:
         view:
           title: 'Edit'
           button_update: 'Save'
+      update:
+        flash:
+          subaccount_update_successful: 'User has been successfully updated.'
+      destroy:
+        flash:
+          subaccount_deletion_successful: 'Subaccount has been successfully deleted'
+          subaccount_deletion_failure: 'Subaccount could not be deleted'
     lead_purchases:
       index:
         view:
@@ -696,3 +716,6 @@ en:
     email_templates:
       update:
         notice: 'Email template has been successfully updated'
+    bulk_subaccounts_update:
+      update:
+        notice: 'Selected subaccounts have been updated.'

@@ -60,6 +60,7 @@ Nbs::Application.routes.draw do
     resources :subaccounts
     resources :lead_requests, :only => [:index, :update, :destroy]
     resource :bulk_lead_requests, :controller => "bulk_lead_requests", :only => [:destroy]
+    resource :bulk_subaccounts_update, :controller => "bulk_subaccounts_update", :only => [:update]
   end
 
   namespace :agents do

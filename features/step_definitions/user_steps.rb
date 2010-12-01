@@ -51,6 +51,7 @@ end
 
 Then /^a confirmation message should be sent to (.+)$/ do |email|
   assert ActionMailer::Base.deliveries.size > 0
+  assert ActionMailer::Base.deliveries.last.to.include?(email)
 end
 
 Then /^a confirmation message to (.+) should include confirmation link$/ do |email|
@@ -139,4 +140,14 @@ end
 Then /^user (.+) with role (.+) should not be confirmed$/ do |email, role|
   user = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
   assert user.confirmed_at.blank?
+end
+
+Then /^user "([^"]*)" with role "([^"]*)" also has role "([^"]*)"$/ do |email, role, other_role|
+  user = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
+  assert user.has_role?(other_role.to_sym)
+end
+
+Then /^user "([^"]*)" with role "([^"]*)" should not have role "([^"]*)"$/ do |email, role, other_role|
+  user = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
+  assert !user.has_role?(other_role.to_sym)
 end
