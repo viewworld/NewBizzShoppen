@@ -9,8 +9,17 @@ Background: I am a guest and I am on the home page
 @ao @m3
 Scenario: I can see welcome text fetch from the database
 
-@m3 @ao @_todo
+@m3 @ao @_done
 Scenario: I can see 3 latest buyer news excerpts
+  Given buyer news exists with attributes "title:FirstNews"
+  And buyer news exists with attributes "title:SecondNews"
+  And buyer news exists with attributes "title:ThirdNews"
+  And buyer news exists with attributes "title:FourthNews"
+  And I follow translated "home.show.view.buyer"
+  Then I should see "FourthNews"
+  And I should see "SecondNews"
+  And I should see "ThirdNews"
+  And I should not see "FirstNews"
 
 @ao @_done @_tested
 Scenario: I can see 10 top bestsellers

@@ -9,5 +9,6 @@ class Article < ActiveRecord::Base
 
   scope :with_keyword, lambda { |q| where("lower(title) LIKE :keyword OR lower(content) LIKE :keyword", {:keyword => "%#{q.downcase}%"}) }
   scope :with_scope, lambda {|scope| where(["scope = ?", scope]) }
+  scope :latest, order("created_at DESC")
 
 end
