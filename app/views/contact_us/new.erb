@@ -1,0 +1,23 @@
+<column-mc:>
+
+  <h1><%= t("contact_us.new.view.header") %></h1>
+
+  <br />
+
+  <%= form_for :email_template_preview, :url => contact_us_path do |f| %>
+      <%= f.label :subject %>
+      <%= custom_error_for_object_and_field(@email_template_preview, :subject) %>
+      <% [t("contact_us.new.view.email_subjects.agent_inquiry"), t("contact_us.new.view.email_subjects.buyer_inquiry")].each do |subject| %>
+        <%= f.radio_button :subject, subject  %><%= subject %><br />
+      <% end %>
+      <%= f.label :email_from %>
+      <%= custom_error_for_object_and_field(@email_template_preview, :email_from) %>
+      <%= f.text_field :email_from %><br />
+      <%= f.label :body %>
+      <%= f.text_area :body,  :rows => 20, :cols => 40 %>
+      <%= custom_error_for_object_and_field(@email_template_preview, :body) %>
+      <br />
+      <%= submit_tag t("contact_us.new.view.send_email_button") %>
+  <% end %>
+
+</column-mc:>

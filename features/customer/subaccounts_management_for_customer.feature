@@ -1,4 +1,4 @@
-@user_accounts @$_customer @m3 @tgn  @xxx
+@user_accounts @$_customer @m3 @tgn
 Feature: Subaccounts management for customer
 
 Background:  Sign in user and set locale

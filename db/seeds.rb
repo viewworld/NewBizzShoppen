@@ -11,6 +11,7 @@ Settings.default_payout_delay = 0
 Settings.default_leads_per_page = 5
 Settings.certification_level_1 = 10
 Settings.certification_level_2 = 20
+Settings.contact_us_email = "contact@nbs.fake.com"
 
 Country.find_or_create_by_name("Denmark")
 Country.find_or_create_by_name("United Kingdom")
@@ -66,7 +67,15 @@ email_templates_array = [
             :body => "<p>Lead {{lead.header}} has been updated by agent.</p>"},
     :dk => {:subject => "[DK] Lead has been updated",
             :body => "<p>Lead {{lead.header}} has been updated by agent.</p>"}
-  }
+  },
+
+{ :name => "Contact us",
+    :uniq_id => "contact_us",
+  :en => {:subject => "Question",
+          :body => "<p></p>"},
+  :dk => {:subject => "[DK] Question",
+          :body => "<p></p>"}
+}
 ]
 
 email_templates_array.each do |email_template|
@@ -79,7 +88,6 @@ email_templates_array.each do |email_template|
     et.subject = email_template[locale][:subject]
     et.save!
   end
-
 end
 
 unless User::Admin.find_by_email("blazejek@gmail.com")

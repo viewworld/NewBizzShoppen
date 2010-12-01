@@ -9,8 +9,8 @@ class ApplicationMailer < ActionMailer::Base
     end
   end
 
-  def generic_email(recipients, subject, body)
-    mail(:to => recipients.blank? ? "fake@fake.com" : recipients, :subject => subject) do |format|
+  def generic_email(recipients, subject, body, from=nil)
+    mail(:to => recipients.blank? ? "fake@fake.com" : recipients, :subject => subject, :from => from) do |format|
       format.html { render :text => body }
     end
   end

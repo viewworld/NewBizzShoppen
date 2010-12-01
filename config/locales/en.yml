@@ -585,6 +585,18 @@ en:
       controller:
         successful_update_notice: 'Your profile has been successfully updated!'
 
+  contact_us:
+    new:
+      view:
+        header: 'Contact us'
+        send_email_button: 'Send'
+        email_subjects:
+          agent_inquiry: 'Agent inquiry'
+          buyer_inquiry: 'Buyer inquiry'
+    create:
+      flash:
+        email_sent_successfully: 'Your email was sent successfully to staff at NBS'
+
   models:
     user:
       payout_validation_message: 'can only be between 0 and 100'
@@ -667,6 +679,18 @@ en:
             description:
               blank: "can't be blank"
             hidden_description:
+              blank: "can't be blank"
+
+  activemodel:
+    errors:
+      models:
+        contact_us_template_preview:
+          attributes:
+            email_from:
+              blank: "can't be blank"
+            subject:
+              blank: "can't be blank"
+            body:
               blank: "can't be blank"
 
   flash:

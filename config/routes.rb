@@ -84,6 +84,9 @@ Nbs::Application.routes.draw do
   resource :password, :controller => 'password', :only => [:update]
   match 'password' => 'password#edit', :as => 'password'
 
+  resource :contact_us, :controller => "contact_us", :as => "contact_us", :only => [:new, :create]
+  match 'contact_us' => 'contact_us#new', :as => 'contact_us'
+
   root :to => "home#show"
 
   # The priority is based upon order of creation:

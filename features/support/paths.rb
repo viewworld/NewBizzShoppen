@@ -10,6 +10,8 @@ module NavigationHelpers
 
     when /the home\s?page/
       '/'
+    when /contact us/
+      '/contact_us'
     when /administration root/
       '/administration'
     when /agents root/
