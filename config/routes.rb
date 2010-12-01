@@ -72,7 +72,10 @@ Nbs::Application.routes.draw do
   match 'agent_home' => 'agent_home#show', :as => "agent_home"
 
   resources :leads, :only => [:index, :show]
+
   resources :categories, :only => [:index]
+  match 'categories/:slag' => "leads#index", :as => "leads"
+
 
   resources :agent_accounts, :only => [:new, :create]
   resources :buyer_accounts, :only => [:new, :create]
