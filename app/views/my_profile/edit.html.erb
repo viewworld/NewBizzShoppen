@@ -3,9 +3,11 @@
 
   <%= semantic_form_for @user, :url => my_profile_path, :method => :put do |form| %>
       <frm title="Edit account">
+        <param:header>
+          <%= bt_link_to nil, t("my_profile.edit.view.change_password"), password_path, :class => "fltr" %>
+        </param:header>
         <param:content>
           <%= render :partial => "form", :locals => { :form => form } %>
-          <%= link_to t("my_profile.edit.view.change_password"), password_path %>
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="save">

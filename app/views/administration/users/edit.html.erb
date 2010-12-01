@@ -3,9 +3,11 @@
 
   <%= semantic_form_for @user, :url => administration_user_path, :method => :put do |form| %>
       <frm title="TODO">
+        <param:header>
+          <%= bt_link_to nil, t("administration.users.edit.view.reset_password_link"), administration_user_password_path(@user) , :method => :delete, :class => "fltr" %>                      
+        </param:header>
         <param:content>
           <%= render :partial => 'form', :locals => { :form => form }  %>
-          <%= link_to t("administration.users.edit.view.reset_password_link"), administration_user_password_path(@user) , {:method => :delete} %>
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="save">

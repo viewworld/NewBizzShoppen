@@ -100,6 +100,7 @@
 .inputs ol li.file input
 {
     float: left;
+    margin-top: 7px;    
 }
 
 
@@ -169,6 +170,26 @@
     margin-left: 0 !important;
 }
 
+
+/* --- inline_errors & hints ---
+--------------------------------------------------------------------------------- */
+
+.inputs ol li p.inline-errors
+{
+    float: left;
+    line-height: 16px;
+    padding: 8px 0 0 8px;
+    color: #f10000;
+    font-size: 11px;
+}
+
+.inputs ol li.error input
+{
+    border-color: #ff6060;
+    -moz-box-shadow: 0 0 2px #ff6060;
+    -webkit-box-shadow: 0 0 2px #ff6060;
+    box-shadow: 0 0 2px #ff6060;
+}
 
 
 /* --- inputs, list sizes ---

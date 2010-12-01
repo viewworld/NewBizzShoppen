@@ -173,6 +173,7 @@
     display: block;
     color: #333;
     text-decoration: none;
+    white-space: nowrap;    
 }
 
 .td_actions ul li:hover

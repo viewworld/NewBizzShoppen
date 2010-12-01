@@ -44,12 +44,19 @@
     <search-box:/>
 
     <div class="pdd_10 no_pdd_t">
-      <br/>
 
-      <p class="notice"><%= notice %></p>
+      <% unless notice.blank? %>
+          <div class="flash flash_notice">
+            <%= notice %>
+          </div>
+      <% end %>
 
-      <p class="alert"><%= alert %></p>
-      <br/>
+      <% unless alert.blank? %>
+          <div class="flash flash_alert">
+            <%= alert %>
+          </div>
+      <% end %>
+
 
       <column-mc:/>
     </div>

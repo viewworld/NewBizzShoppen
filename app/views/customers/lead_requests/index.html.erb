@@ -54,11 +54,14 @@
   <%= bulk_form do %>
       <%= lead_requests_listing @lead_requests, :show_checkboxes => true do |blocks| %>
           <% blocks.tools do |lead_request| %>
-              <%= link_to t("customer.lead_requests.index.view.accept_lead_request_link"), customers_lead_request_path(lead_request), {:method => :put} %>
-
-              <%= link_to t("customer.lead_requests.index.view.reject_lead_request_link"),
-                          customers_lead_request_path(lead_request),
-                          {:method => :delete, :confirm => t("common.confirmation")} %>
+              <ul-actions>
+                <li>
+                  <%= link_to t("customer.lead_requests.index.view.accept_lead_request_link"), customers_lead_request_path(lead_request), {:method => :put} %>
+                </li>
+                <li>
+                  <%= link_to t("customer.lead_requests.index.view.reject_lead_request_link"), customers_lead_request_path(lead_request), {:method => :delete, :confirm => t("common.confirmation")} %>
+                </li>
+              </ul-actions>
           <% end %>
           <% blocks.bottom do %>
               <%= hidden_field_tag :route_to %>

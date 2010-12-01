@@ -1,5 +1,4 @@
 <search-box:>
-
   <div class="search_box">
     <h2>Search</h2>
 
@@ -19,7 +18,7 @@
                 <%= f.label :with_deal_value_from, t("lead_buyer.lead_purchases.index.view.search.deal_value_from_label") %>
                 <%= f.select :with_deal_value_from, User::DEAL_VALUE_RANGE, {:include_blank => true} %>
               </li>
-              <li class="select">
+              <li class="select no_pdd_l">
                 <%= f.label :with_deal_value_to, t("lead_buyer.lead_purchases.index.view.search.deal_value_to_label") %>
                 <%= f.select :with_deal_value_to, User::DEAL_VALUE_RANGE, {:include_blank => true} %>
               </li>
