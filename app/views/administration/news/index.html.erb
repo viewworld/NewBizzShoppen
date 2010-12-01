@@ -40,6 +40,7 @@
           <td>
             <%= link_to t("administration.news.index.view.edit_link"), edit_administration_news_path(news) %>
             <%= link_to t("administration.news.index.view.show_link"), administration_news_path(news) %>
+            <%= link_to t("administration.news.index.view.delete_link"), administration_news_path(news), :method => :delete, :confirm => t("administration.news.index.view.delete_confirmation") %>
           </td>
           <td class="cr"></td>
         </tr>

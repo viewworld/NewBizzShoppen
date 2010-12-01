@@ -80,6 +80,7 @@ Nbs::Application.routes.draw do
   resources :locales
 
   resources :news
+  resources :articles
 
   resource :my_profile, :controller => "my_profile", :only => [:update]
   match 'my_profile' => 'my_profile#edit', :as => "my_profile"

@@ -27,6 +27,13 @@ class Administration::NewsController < Administration::AdministrationController
     show!
   end
 
+  def destroy
+    @news = Article::News.find(params[:id])
+    super do |format|
+      format.html { redirect_to administration_news_index_path }
+    end
+  end
+
   protected
 
   def collection

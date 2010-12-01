@@ -1,5 +1,6 @@
 require "spec/support/blueprints"
 
+puts "Creating default categories..."
 Category.find_or_create_by_name(:name => "Test category 1")
 Category.find_or_create_by_name(:name => "Test category 2")
 
@@ -9,12 +10,14 @@ Settings.level_two_certification_threshold = 0
 Settings.level_three_certification_threshold = 0
 Settings.default_payout_delay = 0
 Settings.default_leads_per_page = 5
+Settings.default_news_per_page = 5
 Settings.certification_level_1 = 10
 Settings.certification_level_2 = 20
 
 Country.find_or_create_by_name("Denmark")
 Country.find_or_create_by_name("United Kingdom")
 
+puts "Creating email templates..."
 email_templates_array = [
   {:name => "confirmation instructions",
   :uniq_id => "confirmation_instructions",
@@ -74,8 +77,8 @@ email_templates_array.each do |email_template|
 
 end
 
+puts "Creating default users..."
 unless User::Admin.find_by_email("blazejek@gmail.com")
-  puts "Creating default user..."
   u = User::Admin.make!(:email => "blazejek@gmail.com", :password => "secret", :password_confirmation => "secret", :screen_name => "admin1")
   u.confirm!
   u.save
@@ -97,4 +100,30 @@ unless User::LeadUser.find_by_email("leaduser@gmail2.com")
   u = User::LeadUser.make!(:email => "leaduser@gmail2.com", :password => "secret", :password_confirmation => "secret")
   u.confirm!
   u.save
+end
+
+puts "Creating default main page articles..."
+['About us','Privacy','Terms & Conditions','Contact us'].each do |title|
+  unless Article::Cms.main_page_articles.where(:title => title).first
+    article = Article::Cms.make!(:scope => Article::Cms::MAIN_PAGE_ARTICLE, :title => title, :content => title, :key => title.parameterize('_'))
+    [:en, :dk].each do |locale|
+      I18n.locale = locale
+      article.title = title
+      article.content = title
+      article.save
+    end
+  end
+end
+
+puts "Creating default interface content texts (blurbs)..."
+['blurb_sign_up','blurb_buyer_home','blurb_agent_home','blurb_start_page_role_selection'].each do |key|
+  unless Article::Cms.interface_content_texts.where(:key => key).first
+    article = Article::Cms.make!(:scope => Article::Cms::INTERFACE_CONTENT_TEXT, :title => key.humanize, :content => key.humanize, :key => key)
+    [:en, :dk].each do |locale|
+      I18n.locale = locale
+      article.title = key.humanize
+      article.content = key.humanize
+      article.save
+    end
+  end
 end

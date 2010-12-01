@@ -1,0 +1,17 @@
+<column-mc:>
+  <header><%= news_header %></header>
+
+  <ul>
+    <% @news.each do |news| %>
+      <li>
+        <b><%= news.title %></b><br/>
+        <%= news.content %><br/>
+        <%= link_to t("news.index.view.read_more_link"), news_path(news) %>
+      </li>
+      <br/>
+    <% end %>
+  </ul>
+
+  <%= will_paginate(@news, :page_links => false, :previous_label => t("news.index.view.newer_link"), :next_label => t("news.index.view.older_link")) %>
+
+</column-mc:>

@@ -19,11 +19,56 @@ Scenario: Lead translations
   Then I should see "Printere ultimative aftale"
   Then I should see "Beskrivelse til printere behandle"
 
-@m3 @ao
+@m3 @ao @_done
 Scenario: News translations
+  Given I make sure current locale is English
+  And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
+  And I sign in as jon@lajoie.ca with password secret
+  When I follow translated "layout.main_menu.admin.news"
+  And I press translated "administration.news.index.view.new_news"
+  And I fill in "article_news_title" with "[EN]FirstNews"
+  And I fill in "article_news_content" with "[EN]Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  And I press translated "administration.news.new.view.button_create"
+  When I follow "DK" within "#langs_dropdown"
+  When I follow translated "layout.main_menu.admin.news"
+  And I follow translated "administration.news.index.view.edit_link"
+  And I fill in "article_news_title" with "[DK]FirstNews"
+  And I fill in "article_news_content" with "[DK]Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  And I press translated "administration.news.edit.view.button_save"
+  And I should be on administration [DK]FirstNews news page
+  And I should see "[DK]FirstNews"
+  And I should see "[DK]Lorem"
+  When I follow "EN" within "#langs_dropdown"
+  When I follow translated "layout.main_menu.admin.news"
+  And I follow translated "administration.news.index.view.show_link"
+  Then I should see "[EN]FirstNews"
+  And I should see "[EN]Lorem"
 
-@m3 @ao
+@m3 @ao @_done
 Scenario: Article translations
+  Given I make sure current locale is English
+  And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
+  And I sign in as jon@lajoie.ca with password secret
+  When I follow translated "layout.main_menu.admin.articles"
+  And I press translated "administration.articles.index.view.new_article"
+  And I fill in "article_cms_title" with "[EN]FirstArticle"
+  And I fill in "article_cms_content" with "[EN]Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  And I press translated "administration.articles.new.view.button_create"
+  When I follow "DK" within "#langs_dropdown"
+  When I follow translated "layout.main_menu.admin.articles"
+  And I follow translated "administration.articles.index.view.edit_link"
+  And I fill in "article_cms_title" with "[DK]FirstArticle"
+  And I fill in "article_cms_content" with "[DK]Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  And I press translated "administration.articles.edit.view.button_save"
+  And I should be on administration [DK]FirstArticle article page
+  And I should see "[DK]FirstArticle"
+  And I should see "[DK]Lorem"
+  When I follow "EN" within "#langs_dropdown"
+  When I follow translated "layout.main_menu.admin.articles"
+  And I follow translated "administration.articles.index.view.show_link"
+  Then I should see "[EN]FirstArticle"
+  And I should see "[EN]Lorem"
+
 
 @m3 @tgn
 Scenario: Email translations

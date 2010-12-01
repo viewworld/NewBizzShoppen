@@ -169,6 +169,7 @@ end
   title { Faker::Lorem.words(4).to_s.capitalize }
   content { Faker::Lorem.sentences(2).to_s }
   scope { rand(3) }
+  key { Faker::Lorem.sentences(1) }
 end
 
 ::Article::News.blueprint do

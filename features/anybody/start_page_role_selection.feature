@@ -6,8 +6,9 @@ Background:
   And I make sure current locale is English
   And I am signed up and confirmed as user with email buyer43@person.com and password supersecret and role customer
 
-@m3 @ao
+@m3 @ao @_done
 Scenario: I can see welcome text fetch from the database
+  Then I should see "Blurb start page role selection"
 
 @tgn @_done @_tested_elsewhere
 Scenario: I can login to the system

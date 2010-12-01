@@ -1,7 +1,7 @@
 class ::Article::News < ::Article
 
-  AGENT = 0
-  BUYER = 1
+  AGENT = 0.freeze
+  BUYER = 1.freeze
 
   SCOPE = [
       [I18n.t('administration.news.index.view.agents'),AGENT],

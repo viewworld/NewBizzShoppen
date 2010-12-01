@@ -93,3 +93,12 @@ Scenario: I can filter between agent and buyer
   And I press translated "administration.news.index.view.search_button"
   Then I should see "AgentNews"
   And I should not see "BuyerNews"
+
+@_added @_done
+Scenario: I can destroy news
+  When news exists with attributes "title:FirstNews"
+  And I follow translated "layout.main_menu.admin.news"
+  Then I should see "FirstNews"
+  And I follow translated "administration.news.index.view.delete_link"
+  Then I should not see "FirstNews"
+

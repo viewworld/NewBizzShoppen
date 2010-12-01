@@ -45,8 +45,8 @@ Scenario: I can search through the articles
 @_done
 Scenario: I can filter articles to articles only
   When main page article exists with attributes "title:MainPageArticle,content:lorem"
-  And interface content text exists with attributes "title:InterfaceContentText,content:lorem"
-  And help popup exists with attributes "title:HelpPopup,content:lorem"
+  And interface content text exists with attributes "title:InterfaceContentText,content:lorem,key:inter_1"
+  And help popup exists with attributes "title:HelpPopup,content:lorem,key:help_1"
   And I follow translated "layout.main_menu.admin.articles"
   And I select translated "administration.articles.index.view.main_page_article" from "search_with_scope"
   And I press translated "administration.articles.index.view.search_button"
@@ -57,8 +57,8 @@ Scenario: I can filter articles to articles only
 @_done
 Scenario: I can filter articles to blurb only
   When main page article exists with attributes "title:MainPageArticle,content:lorem"
-  And interface content text exists with attributes "title:InterfaceContentText,content:lorem"
-  And help popup exists with attributes "title:HelpPopup,content:lorem"
+  And interface content text exists with attributes "title:InterfaceContentText,content:lorem,key:inter_1"
+  And help popup exists with attributes "title:HelpPopup,content:lorem,key:help_1"
   And I follow translated "layout.main_menu.admin.articles"
   And I select translated "administration.articles.index.view.interface_content_text" from "search_with_scope"
   And I press translated "administration.articles.index.view.search_button"
@@ -69,8 +69,8 @@ Scenario: I can filter articles to blurb only
 @_done
 Scenario: I can filter articles to help only
   When main page article exists with attributes "title:MainPageArticle,content:lorem"
-  And interface content text exists with attributes "title:InterfaceContentText,content:lorem"
-  And help popup exists with attributes "title:HelpPopup,content:lorem"
+  And interface content text exists with attributes "title:InterfaceContentText,content:lorem,key:inter_1"
+  And help popup exists with attributes "title:HelpPopup,content:lorem,key:help_1"
   And I follow translated "layout.main_menu.admin.articles"
   And I select translated "administration.articles.index.view.help_popup" from "search_with_scope"
   And I press translated "administration.articles.index.view.search_button"
@@ -86,3 +86,21 @@ Scenario: I can view the article
   Then I should be on administration MainPageArticle article page
   And I should see "MainPageArticle"
   And I should see "lorem"
+
+@_added @_done
+Scenario: I can destroy main page article
+  When main page article exists with attributes "title:MainPageArticle"
+  And I follow translated "layout.main_menu.admin.articles"
+  Then I should see "MainPageArticle"
+  And I open page in browser
+  And I follow translated "administration.articles.index.view.delete_link"
+  Then I should not see "MainPageArticle"
+
+@_added @_done
+Scenario: I can not destroy interface content text
+  When interface content text exists with attributes "title:Blurb,key:blurb"
+  And help popup exists with attributes "title:HelpPopup,key:help_popup"
+  And I follow translated "layout.main_menu.admin.articles"
+  Then I should see "Blurb"
+  And I should see "HelpPopup"
+  And I should not see translated "administration.articles.index.view.delete_link"

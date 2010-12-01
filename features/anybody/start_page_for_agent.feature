@@ -5,9 +5,10 @@ Feature: Start page for agent
 Background: I am a guest and I am on the home page
   Given I am on the home page
 
-# this is gonna be stored as an article
-@ao @m3
+@ao @m3 @_done
 Scenario: I can see welcome text fetch from the database
+  When I follow translated "home.show.view.agent"
+  Then I should see "Blurb agent home"
 
 @m3 @ao @_done
 Scenario: I can see 3 latest agent news excerpts
@@ -39,7 +40,7 @@ Scenario: I can see 10 latest leads
   Then I should see "10" items on a list within "#latest_leads"
   And I should see "AwesomeLead" first on a list within "#latest_leads"
 
-@m0 @ao @_todo
+@m3 @ao @_todo
 Scenario: I can go to details of agent news
 
 @ao @_done @_tested
@@ -56,7 +57,7 @@ Scenario: I can go to details of latest leads
   And I follow "AwesomeLead" within "#latest_leads"
   Then I should be on the AwesomeLead lead page
 
-@m0 @ao @_todo
+@m3 @ao @_todo
 Scenario: I can go to agent news listing
 
 @ao @_done @_tested

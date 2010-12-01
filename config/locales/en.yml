@@ -173,7 +173,14 @@ en:
       bestsellers_header: Best sellers
       latest_header: Latest leads
       featured_header: Featured leads
-
+  news:
+    index:
+      view:
+        agents_header: 'AGENTS NEWS'
+        buyers_header: 'BUYERS NEWS'
+        read_more_link: 'read more'
+        newer_link: 'Newer'
+        older_link: 'Older'
 
   home:
     show:
@@ -327,6 +334,8 @@ en:
           help_popups: 'help popups'
           show_link: 'Show'
           edit_link: 'Edit'
+          delete_link: 'Delete'
+          delete_confirmation: 'Are you sure?'
           actions: 'Actions'
     news:
       index:
@@ -342,6 +351,8 @@ en:
           actions: 'Actions'
           show_link: 'Show'
           edit_link: 'Edit'
+          delete_link: 'Delete'
+          delete_confirmation: 'Are you sure?'
       new:
         view:
           header: 'New news'
