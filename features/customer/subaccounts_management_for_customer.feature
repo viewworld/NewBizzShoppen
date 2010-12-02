@@ -150,13 +150,30 @@ Scenario: I can bulk lock/unlock lead buyer/lead user accounts
   And I press translated "customer.subaccounts.index.view.button_bulk_subbaccounts_update"
   And I should see translated "flash.bulk_subaccounts_update.update.notice"
 
-
+@_tested
 Scenario: I can sort by name, last name, department
+  Given an user with role lead_buyer and email lead_buyer1@person.com exists as subaccount for customer bob@person.com
+  And user lead_buyer1@person.com with role lead_buyer exists with attributes "first_name:William,last_name:Craig,department:Public Relations"
+  And an user with role lead_buyer and email lead_buyer2@person.com exists as subaccount for customer bob@person.com
+  And user lead_buyer2@person.com with role lead_buyer exists with attributes "first_name:Adam,last_name:McDowell,department:QA"
+  And an user with role lead_user and email lead_user3@person.com exists as subaccount for customer bob@person.com
+  And user lead_user3@person.com with role lead_user exists with attributes "first_name:John,last_name:Lennox,department:Development"
+  And I go to customers subaccounts
+  When I follow translated "customer.subaccounts.index.view.first_name_column"
+  And I follow translated "customer.subaccounts.index.view.first_name_column"
+  Then I should have value "William" in the css path "tr:nth-child(1) td:nth-child(2)"
+  When I follow translated "customer.subaccounts.index.view.last_name_column"
+  And I follow translated "customer.subaccounts.index.view.last_name_column"
+  Then I should have value "McDowell" in the css path "tr:nth-child(1) td:nth-child(3)"
+  When I follow translated "customer.subaccounts.index.view.department_column"
+  And I follow translated "customer.subaccounts.index.view.department_column"
+  Then I should have value "QA" in the css path "tr:nth-child(1) td:nth-child(4)"
 
+@_tested
 Scenario: I can sort by completed leads, new leads requested, num. of leads assigned last 30days, num. of leads assigned last 12months, num. of leads assigned last total
   Given an user with role lead_buyer and email lead_buyer1@person.com exists as subaccount for customer bob@person.com
   And an user with role lead_buyer and email lead_buyer2@person.com exists as subaccount for customer bob@person.com
-  And an user with role lead_user and email lead_user6@person.com exists as subaccount for customer bob@person.com
+  And an user with role lead_user and email lead_user3@person.com exists as subaccount for customer bob@person.com
   And lead Ultimate printers deal exists within category Computers
   And lead Ultimate mouses deal exists within category Computers
   And lead Ultimate mouses 2 deal exists within category Computers
@@ -164,19 +181,37 @@ Scenario: I can sort by completed leads, new leads requested, num. of leads assi
   And lead "Ultimate mouses deal" was requested by user "lead_buyer1@person.com" with role "lead_buyer"
   And lead "Ultimate mouses 2 deal" was requested by user "lead_buyer2@person.com" with role "lead_buyer"
   And lead Ultimate monitors 1 exists within category Computers
-  And lead Ultimate monitors 1  exists with attributes "state:3"
   And lead Ultimate monitors 2 exists within category Computers
-  And lead Ultimate monitors 2  exists with attributes "state:3"
   And lead Ultimate monitors 3 exists within category Computers
-  And lead Ultimate monitors 3  exists with attributes "state:3"
   And lead Ultimate monitors 4 exists within category Computers
-  And lead Ultimate monitors 4  exists with attributes "state:3"
+  And lead Ultimate monitors 5 exists within category Computers
   And lead Ultimate monitors 1 is bought by user bob@person.com with role customer and is assigned to user lead_buyer1@person.com with role lead_buyer
   And lead Ultimate monitors 2 is bought by user bob@person.com with role customer and is assigned to user lead_buyer1@person.com with role lead_buyer
   And lead Ultimate monitors 3 is bought by user bob@person.com with role customer and is assigned to user lead_buyer1@person.com with role lead_buyer
-  And lead Ultimate monitors 4 is bought by user bob@person.com with role customer and is assigned to user lead_buyer3@person.com with role lead_buyer
+  And lead Ultimate monitors 5 is bought by user bob@person.com with role customer and is assigned to user lead_buyer1@person.com with role lead_buyer
+  And lead Ultimate monitors 4 is bought by user bob@person.com with role customer and is assigned to user lead_user3@person.com with role lead_user
+  And a lead purchase for lead "Ultimate monitors 1" by user "bob@person.com" with role "customer" exists with attributes "state:3"
+  And a lead purchase for lead "Ultimate monitors 2" by user "bob@person.com" with role "customer" exists with attributes "state:3"
+  And a lead purchase for lead "Ultimate monitors 3" by user "bob@person.com" with role "customer" exists with attributes "state:3"
+  And a lead purchase for lead "Ultimate monitors 4" by user "bob@person.com" with role "customer" exists with attributes "state:3"
+  And a lead purchase for lead "Ultimate monitors 5" by user "bob@person.com" with role "customer" exists with attributes "state:1,assigned_at:Date.today-60"
+  Given all users have refreshed cache counters
   And I go to customers subaccounts
-  And I open page in browser
+  And I follow translated "customer.subaccounts.index.view.completed_leads_column"
+  And I follow translated "customer.subaccounts.index.view.completed_leads_column"
+  Then I should have value "3" in the css path "tr:nth-child(1) td:nth-child(5)"
+  And I follow translated "customer.subaccounts.index.view.requested_leads_column"
+  And I follow translated "customer.subaccounts.index.view.requested_leads_column"
+  Then I should have value "2" in the css path "tr:nth-child(1) td:nth-child(6)"
+  And I follow translated "customer.subaccounts.index.view.assigned_month_ago_column"
+  And I follow translated "customer.subaccounts.index.view.assigned_month_ago_column"
+  Then I should have value "3" in the css path "tr:nth-child(1) td:nth-child(7)"
+  And I follow translated "customer.subaccounts.index.view.assigned_year_ago_column"
+  And I follow translated "customer.subaccounts.index.view.assigned_year_ago_column"
+  Then I should have value "4" in the css path "tr:nth-child(1) td:nth-child(8)"
+  And I follow translated "customer.subaccounts.index.view.total_leads_assigned_column"
+  And I follow translated "customer.subaccounts.index.view.total_leads_assigned_column"
+  Then I should have value "4" in the css path "tr:nth-child(1) td:nth-child(9)"
 
 @_non_testable
 Scenario: I can refresh the cashed values for sort by rake task

@@ -151,3 +151,9 @@ Then /^user "([^"]*)" with role "([^"]*)" should not have role "([^"]*)"$/ do |e
   user = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
   assert !user.has_role?(other_role.to_sym)
 end
+
+Given /^all users have refreshed cache counters$/ do
+    User::Abstract.where("parent_id is not null").each do |user|
+      user.refresh_subaccounts_counters!
+    end
+end

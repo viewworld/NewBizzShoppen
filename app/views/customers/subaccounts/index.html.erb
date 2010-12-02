@@ -17,7 +17,7 @@
               <th><%= link_to t("customer.subaccounts.index.view.department_column"), order_for_scoped_search(:department) %></th>
               <th><%= link_to t("customer.subaccounts.index.view.completed_leads_column"), order_for_scoped_search(:completed_leads_counter) %></th>
               <th><%= link_to t("customer.subaccounts.index.view.requested_leads_column"), order_for_scoped_search(:leads_requested_counter) %></th>
-              <th><%= link_to t("customer.subaccounts.index.view.assigned_month_ago_column"), order_for_scoped_search(:leads_assigned_month_ago_count) %></th>
+              <th><%= link_to t("customer.subaccounts.index.view.assigned_month_ago_column"), order_for_scoped_search(:leads_assigned_month_ago_counter) %></th>
               <th><%= link_to t("customer.subaccounts.index.view.assigned_year_ago_column"), order_for_scoped_search(:leads_assigned_year_ago_counter) %></th>
               <th><%= link_to t("customer.subaccounts.index.view.total_leads_assigned_column"), order_for_scoped_search(:total_leads_assigned_counter) %></th>
               <th><%= t("customer.subaccounts.index.view.actions_column") %></th>
@@ -33,7 +33,7 @@
                   <td><%= user.department %></td>
                   <td><%= user.completed_leads_counter %></td>
                   <td><%= user.leads_requested_counter %></td>
-                  <td><%= user.leads_assigned_month_ago_count %></td>
+                  <td><%= user.leads_assigned_month_ago_counter %></td>
                   <td><%= user.leads_assigned_year_ago_counter %></td>
                   <td><%= user.total_leads_assigned_counter %></td>
                   <td>

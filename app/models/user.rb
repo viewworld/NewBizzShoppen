@@ -32,11 +32,9 @@ class User < ActiveRecord::Base
 
 
   scope :join_lead_purchases_and_leads, joins("INNER JOIN lead_purchases ON lead_purchases.assignee_id=users.id").joins("INNER JOIN leads on leads.id=lead_purchases.lead_id")
-  #scope :group_by_user, group(User.column_names.map{ |c| "users.#{c}" }.join(","))
-  #scope :completed_leads, lambda { select("users.*, COUNT(leads.id) as leads_count").where("state = ?", 3).join_lead_purchases_and_leads.group_by_user }
   scope :with_completed_leads, lambda { |assignee| select("leads.id").where("assignee_id = ? and state = ?", assignee.id, 3).join_lead_purchases_and_leads }
-  scope :with_requested_leads, lambda { |requestee| select("leads.id").where("assignee_id is null and requested_by = ?", requestee.id).join_lead_purchases_and_leads }
-  scope :with_assigned_leads_time_ago, lambda { |assignee, time| select("leads.id").where("assignee_id = ? and lead_purchases.created_at >= ?", assignee.id, time).join_lead_purchases_and_leads }
+  scope :with_requested_leads, lambda { |requestee| select("leads.id").where("assignee_id IS NULL and requested_by = ?", requestee.id).joins("INNER JOIN lead_purchases ON lead_purchases.requested_by=users.id").joins("INNER JOIN leads on leads.id=lead_purchases.lead_id") }
+  scope :with_assigned_leads_time_ago, lambda { |assignee, time| select("leads.id").where("assignee_id = ? and lead_purchases.assigned_at >= ?", assignee.id, time).join_lead_purchases_and_leads }
   scope :with_assigned_leads_total, lambda { |assignee| select("leads.id").where("assignee_id = ?", assignee.id).join_lead_purchases_and_leads }
 
   scoped_order :id, :roles_mask, :first_name, :last_name, :email, :age, :department, :completed_leads_counter, :leads_requested_counter, :leads_assigned_month_ago_count, :leads_assigned_year_ago_counter, :total_leads_assigned_counter
