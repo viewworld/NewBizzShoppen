@@ -10,4 +10,8 @@ module ArticlesHelper
       blurb.content
     end
   end
+
+  def help_popup(link_name, key)
+    link_to link_name, help_popup_path(key), :id => "help_popup_#{key}"
+  end
 end

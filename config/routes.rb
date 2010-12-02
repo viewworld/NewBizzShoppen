@@ -81,6 +81,7 @@ Nbs::Application.routes.draw do
 
   resources :news
   resources :articles
+  resources :help_popups
 
   resource :my_profile, :controller => "my_profile", :only => [:update]
   match 'my_profile' => 'my_profile#edit', :as => "my_profile"

@@ -40,6 +40,13 @@ body
     position: relative;
 }
 
+.c_help
+{
+    margin: 0 auto;
+    width: 300px;
+    position: relative;
+}
+
 
 /* --- global ---
 --------------------------------------------------------------------------------- */

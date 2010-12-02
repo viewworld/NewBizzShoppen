@@ -6,6 +6,7 @@ en:
     back_link: Back
     edit_link: 'Edit'
     confirmation: Are You sure?
+    help_link: 'Help'
   layout:
     main_menu:
       admin:

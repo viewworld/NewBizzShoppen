@@ -127,3 +127,16 @@ puts "Creating default interface content texts (blurbs)..."
     end
   end
 end
+
+puts "Creating default help popups..."
+['reset_password'].each do |key|
+  unless Article::Cms.help_popups.where(:key => key).first
+    article = Article::Cms.make!(:scope => Article::Cms::HELP_POPUP, :title => key.humanize, :content => key.humanize, :key => key)
+    [:en, :dk].each do |locale|
+      I18n.locale = locale
+      article.title = key.humanize
+      article.content = key.humanize
+      article.save
+    end
+  end
+end
