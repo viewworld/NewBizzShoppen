@@ -7,6 +7,16 @@ class LeadPurchase < LeadPurchaseBase
   NOT_CONTACTED        = 0.freeze
   CONTACTED            = 1.freeze
 
+  RATING_LEVELS = [
+      [I18n.t("activerecord.attributes.lead_purchase.rating_levels.excellent"), 0.freeze],
+      [I18n.t("activerecord.attributes.lead_purchase.rating_levels.very_good"), 1.freeze],
+      [I18n.t("activerecord.attributes.lead_purchase.rating_levels.satisfactory"), 2.freeze],
+      [I18n.t("activerecord.attributes.lead_purchase.rating_levels.unsatisfactory.missing_contact_info"), 12.freeze],
+      [I18n.t("activerecord.attributes.lead_purchase.rating_levels.unsatisfactory.incorrect_description"), 13.freeze],
+      [I18n.t("activerecord.attributes.lead_purchase.rating_levels.unsatisfactory.another_supplier"), 14.freeze],
+      [I18n.t("activerecord.attributes.lead_purchase.rating_levels.unsatisfactory.other_reason"), 15.freeze],
+  ]
+
   belongs_to :assignee, :class_name => "User::LeadUser", :foreign_key =>  "assignee_id"
   belongs_to :lead, :counter_cache => :lead_purchases_counter
 

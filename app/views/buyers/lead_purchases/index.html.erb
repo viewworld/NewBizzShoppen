@@ -61,6 +61,9 @@
               <%= t("lead_buyer.lead_purchases.index.view.lead_response_date") %>
               <%= text_field_tag :response_deadline, lead_purchase.response_deadline, :id => "response_deadline_datepicker_#{lead_purchase.id}" %>
 
+              <%= t("lead_buyer.lead_purchases.index.view.rating_level") %>
+              <%= select_tag :rating_level, options_for_select(LeadPurchase::RATING_LEVELS), :include_blank => true %>
+
           <% end %>
           <% blocks.card do |lead_purchase| %>
               <%= link_to t("lead_buyer.lead_purchases.index.view.download_csv_link"), buyers_lead_purchase_path(lead_purchase, :format => :csv) %>

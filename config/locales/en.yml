@@ -555,6 +555,7 @@ en:
           bulk_assignee_field: Assigned to
           bulk_update_button: Update all selected leads
           lead_response_date: 'Response date:'
+          rating_level: 'Rating:'
           view_lead: View Details
           email_lead: Email Lead
           search:
@@ -622,6 +623,16 @@ en:
 
   activerecord:
     attributes:
+      lead_purchase:
+        rating_levels:
+          excellent: 'Excellent'
+          very_good: 'Very good'
+          satisfactory: 'Satisfactory'
+          unsatisfactory:
+            missing_contact_info: 'Unsatisfactory: missing contact info'
+            incorrect_description: 'Unsatisfactory: incorrect description'
+            another_supplier: 'Unsatisfactory: lead has chosen another supplier'
+            other_reason: 'Unsatisfactory: other reason (fill in)'
       category:
         name: 'Name'
         description: 'Description'
