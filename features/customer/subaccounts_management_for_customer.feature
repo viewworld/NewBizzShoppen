@@ -8,7 +8,7 @@ Background:  Sign in user and set locale
   Then I sign in as bob@person.com with password supersecret
   And I go to customers subaccounts
 
-@_not_testable
+@_not_testable @done
 Scenario: I do not and cannot belong to other customer
 
 @_tested
@@ -150,11 +150,36 @@ Scenario: I can bulk lock/unlock lead buyer/lead user accounts
   And I press translated "customer.subaccounts.index.view.button_bulk_subbaccounts_update"
   And I should see translated "flash.bulk_subaccounts_update.update.notice"
 
-Scenario: I can sort by name, last name, department, completed leads, new leads requested, num. of leads assigned last 30days, num. of leads assigned last 12months, num. of leads assigned last total
-  #Given an user with role lead_buyer and email lead_buyer1@person.com exists as subaccount for customer bob@person.com
-  #And an user with role lead_buyer and email lead_buyer2@person.com exists as subaccount for customer bob@person.com
-  #And an user with role lead_user and email lead_user6@person.com exists as subaccount for customer bob@person.com
 
+Scenario: I can sort by name, last name, department
+
+Scenario: I can sort by completed leads, new leads requested, num. of leads assigned last 30days, num. of leads assigned last 12months, num. of leads assigned last total
+  Given an user with role lead_buyer and email lead_buyer1@person.com exists as subaccount for customer bob@person.com
+  And an user with role lead_buyer and email lead_buyer2@person.com exists as subaccount for customer bob@person.com
+  And an user with role lead_user and email lead_user6@person.com exists as subaccount for customer bob@person.com
+  And lead Ultimate printers deal exists within category Computers
+  And lead Ultimate mouses deal exists within category Computers
+  And lead Ultimate mouses 2 deal exists within category Computers
+  And lead "Ultimate printers deal" was requested by user "lead_buyer1@person.com" with role "lead_buyer"
+  And lead "Ultimate mouses deal" was requested by user "lead_buyer1@person.com" with role "lead_buyer"
+  And lead "Ultimate mouses 2 deal" was requested by user "lead_buyer2@person.com" with role "lead_buyer"
+  And lead Ultimate monitors 1 exists within category Computers
+  And lead Ultimate monitors 1  exists with attributes "state:3"
+  And lead Ultimate monitors 2 exists within category Computers
+  And lead Ultimate monitors 2  exists with attributes "state:3"
+  And lead Ultimate monitors 3 exists within category Computers
+  And lead Ultimate monitors 3  exists with attributes "state:3"
+  And lead Ultimate monitors 4 exists within category Computers
+  And lead Ultimate monitors 4  exists with attributes "state:3"
+  And lead Ultimate monitors 1 is bought by user bob@person.com with role customer and is assigned to user lead_buyer1@person.com with role lead_buyer
+  And lead Ultimate monitors 2 is bought by user bob@person.com with role customer and is assigned to user lead_buyer1@person.com with role lead_buyer
+  And lead Ultimate monitors 3 is bought by user bob@person.com with role customer and is assigned to user lead_buyer1@person.com with role lead_buyer
+  And lead Ultimate monitors 4 is bought by user bob@person.com with role customer and is assigned to user lead_buyer3@person.com with role lead_buyer
+  And I go to customers subaccounts
+  And I open page in browser
+
+@_non_testable
+Scenario: I can refresh the cashed values for sort by rake task
 
 @_tested
 Scenario: I can select pagination level from following list: 10, 25, 50, None

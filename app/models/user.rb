@@ -30,13 +30,16 @@ class User < ActiveRecord::Base
   scope :requestees_for_lead_request_owner, lambda { |owner| select("DISTINCT(users.id), users.*").where("requested_by IS NOT NULL and lead_purchases.owner_id = ? and users.parent_id = ?", owner.id, owner.id).joins("RIGHT JOIN lead_purchases on lead_purchases.requested_by=users.id") }
   scope :assignees_for_lead_purchase_owner, lambda { |owner| select("DISTINCT(users.id), users.*").where("requested_by IS NULL and lead_purchases.owner_id = ? and accessible = ? and users.parent_id = ?", owner.id, true, owner.id).joins("RIGHT JOIN lead_purchases on lead_purchases.assignee_id=users.id") }
 
-# TODO: Deprecate Scopes for manual sort
-#  scope :join_lead_purchases_and_leads, joins("INNER JOIN lead_purchases ON lead_purchases.assignee_id=users.id").joins("INNER JOIN leads on leads.id=lead_purchases.lead_id")
-#  scope :group_by_user, group(User.column_names.map{ |c| "users.#{c}" }.join(","))
-#  scope :descend_by_completed_leads, lambda { select("users.*, COUNT(leads.id) as leads_count").where("state = ?", 3).join_lead_purchases_and_leads.order("leads_count ASC").group_by_user }
-#  scope :with_completed_leads_count, lambda { |owner, assignee| select("leads.id").where("owner_id = ? and assignee_id = ? and state = ?", owner.id, assignee.id, 3).join_lead_purchases_and_leads }
 
-  scoped_order :id, :roles_mask, :first_name, :last_name, :email, :age, :department
+  scope :join_lead_purchases_and_leads, joins("INNER JOIN lead_purchases ON lead_purchases.assignee_id=users.id").joins("INNER JOIN leads on leads.id=lead_purchases.lead_id")
+  #scope :group_by_user, group(User.column_names.map{ |c| "users.#{c}" }.join(","))
+  #scope :completed_leads, lambda { select("users.*, COUNT(leads.id) as leads_count").where("state = ?", 3).join_lead_purchases_and_leads.group_by_user }
+  scope :with_completed_leads, lambda { |assignee| select("leads.id").where("assignee_id = ? and state = ?", assignee.id, 3).join_lead_purchases_and_leads }
+  scope :with_requested_leads, lambda { |requestee| select("leads.id").where("assignee_id is null and requested_by = ?", requestee.id).join_lead_purchases_and_leads }
+  scope :with_assigned_leads_time_ago, lambda { |assignee, time| select("leads.id").where("assignee_id = ? and lead_purchases.created_at >= ?", assignee.id, time).join_lead_purchases_and_leads }
+  scope :with_assigned_leads_total, lambda { |assignee| select("leads.id").where("assignee_id = ?", assignee.id).join_lead_purchases_and_leads }
+
+  scoped_order :id, :roles_mask, :first_name, :last_name, :email, :age, :department, :completed_leads_counter, :leads_requested_counter, :leads_assigned_month_ago_count, :leads_assigned_year_ago_counter, :total_leads_assigned_counter
 
 
   attr_protected :payout, :locked
@@ -147,6 +150,15 @@ class User < ActiveRecord::Base
   def roles_as_text
    selected_role = (BASIC_USER_ROLES_WITH_LABELS + ADDITIONAL_USER_ROLES_WITH_LABELS).detect { |r| r.last == role.to_s }
    selected_role.blank? ? "" : selected_role.first
+  end
+
+  def refresh_subaccounts_counters!
+    self.completed_leads_counter = User.with_completed_leads(self).size
+    self.leads_requested_counter = User.with_requested_leads(self).size
+    self.leads_assigned_month_ago_counter = User.with_assigned_leads_time_ago(self, 30.days.ago).size
+    self.leads_assigned_year_ago_counter = User.with_assigned_leads_time_ago(self, 12.months.ago).size
+    self.total_leads_assigned_counter  = User.with_assigned_leads_total(self).size
+    self.save
   end
 
 end
