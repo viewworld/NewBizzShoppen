@@ -439,6 +439,11 @@ en:
           first_name_column: 'First name'
           last_name_column: 'Last name'
           department_column: 'Department'
+          completed_leads_column: 'Completed'
+          requested_leads_column: 'Requested'
+          assigned_month_ago_column: 'Assigned 30 days ago'
+          assigned_year_ago_column: 'Assigned 12 months ago'
+          total_leads_assigned_column: 'Total assigned'
           actions_column: 'Actions'
           completed_leads_column: 'Completed leads'
           email:

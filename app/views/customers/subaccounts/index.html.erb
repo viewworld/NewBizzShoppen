@@ -3,7 +3,7 @@
   <%= link_to t("customer.subaccounts.index.view.new_lead_buyer"), new_customers_subaccount_path(:role => "lead_buyer") %>
   <%= link_to t("customer.subaccounts.index.view.new_lead_user"), new_customers_subaccount_path(:role => "lead_user") %>
 
-    <% [1, 10, 25, 50, 0].each do |per_page| %>
+  <% [10, 25, 50, 0].each do |per_page| %>
       <%= link_to per_page == 0 ? t("customer.subaccounts.index.view.none_per_page") : per_page.to_s, customers_subaccounts_path(:per_page => per_page) %>
   <% end %>
   
@@ -16,6 +16,11 @@
       <th><%= link_to t("customer.subaccounts.index.view.first_name_column"), order_for_scoped_search(:first_name) %></th>
       <th><%= link_to t("customer.subaccounts.index.view.last_name_column"), order_for_scoped_search(:last_name) %></th>
       <th><%= link_to t("customer.subaccounts.index.view.department_column"), order_for_scoped_search(:department) %></th>
+      <th><%= link_to t("customer.subaccounts.index.view.completed_leads_column"), order_for_scoped_search(:completed_leads_counter) %></th>
+      <th><%= link_to t("customer.subaccounts.index.view.requested_leads_column"), order_for_scoped_search(:leads_requested_counter) %></th>
+      <th><%= link_to t("customer.subaccounts.index.view.assigned_month_ago_column"), order_for_scoped_search(:leads_assigned_month_ago_counter) %></th>
+      <th><%= link_to t("customer.subaccounts.index.view.assigned_year_ago_column"), order_for_scoped_search(:leads_assigned_year_ago_counter) %></th>
+      <th><%= link_to t("customer.subaccounts.index.view.total_leads_assigned_column"), order_for_scoped_search(:total_leads_assigned_counter) %></th>
       <th class="ta_r"><%= t("customer.subaccounts.index.view.actions_column") %></th>      
       <th class="hr"></th>
     </tr>
@@ -32,16 +37,20 @@
         <tr>
           <td class="cl"></td>
           <td><%= check_box_tag "user_ids[]", user.id %></td>
-          <td><%= user.first_name %></td>
-          <td><%= user.last_name %></td>
-          <td><%= user.role.to_s %></td>
-          <td><%= user.department %></td>
+            <td><%= user.first_name %></td>
+            <td><%= user.last_name %></td>
+            <td><%= user.department %></td>
+            <td><%= user.completed_leads_counter %></td>
+            <td><%= user.leads_requested_counter %></td>
+            <td><%= user.leads_assigned_month_ago_counter %></td>
+            <td><%= user.leads_assigned_year_ago_counter %></td>
+            <td><%= user.total_leads_assigned_counter %></td>
           <td class="tda ta_r">
             <ul-actions>              
-                <li><%= link_to t("customer.subaccounts.index.view.assigned_leads"), buyers_lead_purchases_path(:search => { :with_assignee => user.id }) %></li>
-                <li><%= link_to user.locked_at.blank? ? t("customer.subaccounts.index.view.lock") : t("customer.subaccounts.index.view.unlock"), customers_subaccount_path(user, {"user_#{user.role.to_s}".to_sym  => {:locked =>  user.locked_at.blank? ? "lock" : "unlock"}}), {:method => :put} %></li>
-                <li><%= link_to t("customer.subaccounts.index.view.edit"), edit_customers_subaccount_path(user) %></li>
-                <li><%= link_to t("customer.subaccounts.index.view.delete"), customers_subaccount_path(user), {:method => :delete, :confirm => t("customer.subaccounts.index.view.delete_confirmation_message")} %></li>              
+               <li><%= link_to t("customer.subaccounts.index.view.assigned_leads"), buyers_lead_purchases_path(:search => { :with_assignee => user.id }) %></li>
+               <li><%= link_to user.locked_at.blank? ? t("customer.subaccounts.index.view.lock") : t("customer.subaccounts.index.view.unlock"), customers_subaccount_path(user, {"user_#{user.role.to_s}".to_sym  => {:locked =>  user.locked_at.blank? ? "lock" : "unlock"}}), {:method => :put} %></li>
+               <li><%= link_to t("customer.subaccounts.index.view.edit"), edit_customers_subaccount_path(user) %></li>
+               <li><%= link_to t("customer.subaccounts.index.view.delete"), customers_subaccount_path(user), {:method => :delete, :confirm => t("customer.subaccounts.index.view.delete_confirmation_message")} %></li>              
             </ul-actions>
           </td>
           <td class="cr"></td>
@@ -52,6 +61,5 @@
     <%= select_tag :locked, options_for_select([[t("customer.subaccounts.index.view.lock"), "locked"], [t("customer.subaccounts.index.view.unlock"), "unlock"]]) %>
     <%= button_to_function t("customer.subaccounts.index.view.button_bulk_subbaccounts_update"), "submitBulkForm('#{customers_bulk_subaccounts_update_path}#PUT');" %>
 <% end %>
-  
   <%= will_paginate @users unless params[:per_page].to_i == 0 %>
 </column-mc:>

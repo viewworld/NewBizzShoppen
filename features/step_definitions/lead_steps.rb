@@ -13,6 +13,18 @@ end
 #  Given %{a lead exists with #{pickle_params}, category_id: #{category.id}}
 #end
 
+Given /^a lead purchase for lead "([^"]*)" by user "([^"]*)" with role "([^"]*)" exists with attributes "([^"]*)"$/ do |header, email, role, options|
+  lead = Lead.find_by_header(header).first
+  customer = "User::#{role.camelize}".constantize.find_by_email(email)
+  options_hash = Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys
+  options_hash.each_pair do |k, v|
+    if v.include?("Date.today") or v.include?("Time.now")
+      options_hash[k] = eval(v)
+    end
+  end
+  lead.lead_purchases.detect{ |lp| lp.owner_id == customer.id }.update_attributes(options_hash)
+end
+
 Given /^lead (.+) exists with attributes "([^"]*)"$/ do |header, options|
   lead = Lead.find_by_header(header).first
   lead = Lead.make!(:header => header, :category => category) if lead.nil?
@@ -60,6 +72,10 @@ Given /^lead (.+) is bought by user (.+) with role (.+) and is assigned to user 
   lead = Lead.find_by_header(header).first
   lead = Lead.make!(:header => header) if lead.nil?
 
+  if assignee_role == "lead_buyer"
+    assignee_role = "lead_user"
+  end
+
   customer = "User::#{role.camelize}".constantize.find_by_email(email)
   assignee = "User::#{assignee_role.camelize}".constantize.find_by_email(assignee_email)
 
@@ -79,6 +95,9 @@ Given /^I can see following () f for lead Printers ultimate deal$/ do |fields, l
 end
 
 Given /^lead "([^"]*)" was requested by user "([^"]*)" with role "([^"]*)"(?: and is owned by user "([^"]*)")?$/ do |header, email, role, owner_email|
+  if role == "lead_buyer"
+    role = "lead_user"
+  end
   u = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
   lead = Lead.find_by_header(header).last
   owner = User::Customer.first(:conditions => { :email => owner_email })

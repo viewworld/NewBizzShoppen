@@ -62,9 +62,7 @@
           <% blocks.tools do |lead_purchase| %>
               <%= link_to t("lead_user.lead_purchases.index.view.download_csv_link"), lead_users_lead_purchase_path(lead_purchase, :format => :csv) %>
               <%= link_to t("lead_user.lead_purchases.index.view.print_link"), lead_users_lead_purchase_path(lead_purchase, :format => :print), :target => "_blank" %>
-              <%= form_for [:lead_users, lead_purchase], :remote => true do |form| %>
-                  <%= form.select :state, LeadPurchaseBase.statuses_for_select, {}, {:onchange => "$.post('#{lead_users_lead_purchase_path(lead_purchase)}', {'_method':'put', 'lead_purchase[state]':this.value} );"} %>
-              <% end %>
+              <%= select_tag :state, options_for_select(LeadPurchaseBase.statuses_for_select, lead_purchase.state), :onchange => "$.post('#{lead_users_lead_purchase_path(lead_purchase)}', {'_method':'put', 'lead_purchase[state]':this.value} );" %>
               <% if @subaccounts.present? %>
                   <%= select_tag :assignee_id,
                                  options_for_select([[nil, nil]]+@subaccounts.map { |sa| [sa.screen_name, sa.id] }, lead_purchase.assignee_id),

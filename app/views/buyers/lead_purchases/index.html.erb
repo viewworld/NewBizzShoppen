@@ -50,7 +50,7 @@
       <%= select_tag :bulk_state, options_for_select([[nil, nil]]+LeadPurchaseBase.statuses_for_select) %>
 
       <% unless @subaccounts.empty? %>
-          <% opts = @subaccounts.insert(0, current_user).map { |sa| [sa.screen_name, sa.id] } %>
+          <% opts = @subaccounts.insert(0,current_user).map { |sa| [sa.screen_name, sa.id] } unless @subaccounts.include?(current_user) %>
           <br/>
           <%= t("lead_buyer.lead_purchases.index.view.bulk_assignee_field") %>
           <%= select_tag :bulk_assignee_id, options_for_select(opts), :include_blank => true %>
@@ -94,7 +94,7 @@
 
           <% blocks.assigned_to do |lead_purchase| %>
               <% if @subaccounts.present? %>
-                  <% opts = @subaccounts.insert(0, current_user).map { |sa| [sa.screen_name, sa.id] } %>
+                  <% opts = @subaccounts.insert(0,current_user).map { |sa| [sa.screen_name, sa.id] } unless @subaccounts.include?(current_user) %>
                   <%= select_tag :assignee_id,
                                  options_for_select(opts, lead_purchase.assignee_id),
                                  :include_blank => true,
