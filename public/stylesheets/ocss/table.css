@@ -121,6 +121,11 @@
     right: -3px;
 }
 
+.generic tbody tr td.tda
+{
+    padding: 4px;
+}
+
 .td_actions ul
 {
     border: 1px solid #fc9d23;
@@ -164,10 +169,11 @@
 
 .td_actions ul li a
 {
-    padding: 3px 15px;
+    padding: 3px 20px;
     display: block;
     color: #333;
     text-decoration: none;
+    white-space: nowrap;    
 }
 
 .td_actions ul li:hover
@@ -184,4 +190,28 @@
 {
     color: #fff;
     text-shadow: 1px 1px 0 #d98025;
+}
+
+/* --- pagination ---
+---------------------------------------------------------------------------------------------------- */
+
+.generic tbody tr.pagination td
+{
+    background: url(/images/table/table.png) repeat-x 0 -99px;
+    border-bottom: 1px solid #d4d4d4;
+    height: 32px;
+    padding: 0 10px;    
+}
+
+.td_select_all
+{
+    float: left;
+    line-height: 32px;
+}
+
+
+.generic tbody tr.main_actions td
+{
+    background: url(/images/table/table.png) repeat-x 0 -99px #e4e4e4;    
+    border-bottom: 1px solid #d4d4d4;
 }

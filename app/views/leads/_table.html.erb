@@ -19,7 +19,7 @@
       <th><%= link_to t("leads.table.purchase_value"), order_for_scoped_search(:purchase_value) %></th>
       <th><%= t("leads.table.paid_out") %></th>
       <th><%= link_to t("leads.table.status"), order_for_scoped_search(:published) %></th>
-      <th><%= t("leads.table.actions") if block_tools %></th>
+      <th class="ta_r"><%= t("leads.table.actions") if block_tools %></th>
       <th class="hr"></th>
     </tr>
   </thead>
@@ -55,7 +55,7 @@
                 <%= lead.published %>
             <% end %>
           </td>
-          <td><%= block_tools && with_output_buffer { block_tools.call(lead) } %></td>
+          <td class="tda ta_r"><%= block_tools && with_output_buffer { block_tools.call(lead) } %></td>
           <td class="cr"></td>
         </tr>
       <% end %>

@@ -1,14 +1,45 @@
-<column-mc:>
-  <h1><%= t("leads.index.header") %></h1>
+<search-box:>
+  <div class="search_box">
+    <h2>Search</h2>
 
-  <%= form_for @search, :url => leads_path do |f| %>
-      <%= t("leads.index.search.keyword_label") %><%= f.text_field :with_keyword %>
-      <%= t("leads.index.search.deal_value_from_label") %><%= f.text_field :deal_value_from %>
-      <%= t("leads.index.search.deal_value_to_label") %> <%= f.text_field :deal_value_to %>
-      <%= t("leads.index.search.category_label") %><%= f.select :with_category, Category.with_leads.map {|c| [c.name, c.id]} %>
-      <%= t("leads.index.search.country_label") %><%= f.select :with_country, Country.with_leads.map {|c| [c.name, c.id]} %>
-      <%= submit_tag t("leads.index.search.search_button") %>
-  <% end %>
+    <div class="search_content">
+      <%= form_for @search, :url => leads_path do |f| %>
+          <fieldset class="inputs labels_auto inline_li no_pdd rltv">
+            <ol class="no_pdd">
+              <li class="string">
+                <%= f.text_field :with_keyword, :value => t("leads.index.search.keyword_label") %>
+              </li>
+              <li class="select">
+                <%= f.label t("leads.index.search.category_label") %>
+                <%= f.select :with_category, Category.with_leads.map { |c| [c.name, c.id] } %>
+              </li>
+              <li class="string">
+                <%= f.label t("leads.index.search.deal_value_from_label") %>
+                <%= f.text_field :deal_value_from, :style => "width: 70px" %>
+              </li>
+              <li class="string">
+                <%= f.label t("leads.index.search.deal_value_to_label") %>
+                <%= f.text_field :deal_value_to, :style => "width: 70px" %>
+              </li>
+              <li class="select">
+                <%= f.label t("leads.index.search.country_label") %>
+                <%= f.select :with_country, Country.with_leads.map { |c| [c.name, c.id] } %>
+              </li>
+              <li class="commit">
+                <ibt c="bt_green right">
+                  <%= submit_tag t("leads.index.search.search_button") %>
+                </ibt>
+              </li>
+            </ol>
+          </fieldset>
+      <% end %>
+    </div>
+  </div>
+</search-box:>
+
+<column-mc:>
+
+  <%#= t("leads.index.header") %>
 
   <header><%= leads_listing_header %></header>
 
@@ -16,23 +47,42 @@
       <%= leads_listing @leads, :show_checkboxes => true do |blocks| %>
 
           <% blocks.right do |lead| %>
-              <!-- TODO Should not be here - should be in buyer scope! ... Oh rly? -->
               <% if current_user %>
                   <% if current_user.has_role?(:lead_buyer) %>
-                      <%= link_to current_user.big_buyer? ? t("leads.index.buy_lead") : t("leads.index.add_to_cart_link"), buyers_cart_items_path(:id => lead.id), :method => :post %>
+                      <!-- TODO Should not be here - should be in buyer scope! ... Oh rly? -->
+                      <!-- We should change it - ask RB! -->
+                      <ul-actions>
+                        <li>
+                          <%= link_to current_user.big_buyer? ? t("leads.index.buy_lead") : t("leads.index.add_to_cart_link"), buyers_cart_items_path(:id => lead.id), :method => :post %>
+                        </li>
+                      </ul-actions>
                   <% elsif current_user.has_role?(:lead_user) %>
-                      <%= link_to t("leads.index.request_lead"), lead_users_lead_requests_path(:lead_id => lead.id), :method => :post %>
+                      <ul-actions>
+                        <li>
+                          <%= link_to t("leads.index.request_lead"), lead_users_lead_requests_path(:lead_id => lead.id), :method => :post %>
+                        </li>
+                      </ul-actions>
+                  <% end %>
+
+              <% end %>
+          <% end %>
+
+          <% if user_signed_in? && (current_user.has_role?(:customer) || current_user.has_role?(:lead_user))  %>
+              <% blocks.bottom do %>
+                  <% if current_user.has_role?(:customer) %>
+                      <%= hidden_field_tag :route_to, "/buyers/bulk_cart_items" %>
+                      <ibt>
+                        <%= submit_tag t("leads.index.button_bulk_create_cart_item") %>
+                      </ibt>
+                  <% elsif current_user.has_role?(:lead_user) %>
+                      <%= hidden_field_tag :route_to, "/lead_users/bulk_lead_requests" %>
+                      <ibt>
+                        <%= submit_tag t("leads.index.button_bulk_create_lead_request") %>
+                      </ibt>
                   <% end %>
               <% end %>
-
           <% end %>
-      <% end %>
-      <% if user_signed_in? && current_user.has_role?(:customer) %>
-        <%= hidden_field_tag :route_to, "/buyers/bulk_cart_items" %>
-        <%= submit_tag t("leads.index.button_bulk_create_cart_item") %>
-      <% elsif user_signed_in? && current_user.has_role?(:lead_user) %>
-        <%= hidden_field_tag :route_to, "/lead_users/bulk_lead_requests" %>
-        <%= submit_tag t("leads.index.button_bulk_create_lead_request") %>
+
       <% end %>
   <% end %>
 </column-mc:>

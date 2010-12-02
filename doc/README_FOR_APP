@@ -44,3 +44,6 @@ http://mocha.rubyforge.org/examples/misc.html
 == Skip running a line of code in context of rake
 
 config.active_record.observers = :lead_observer unless File.basename($0) == "rake"
+
+== Restart postgresql server
+sudo /etc/init.d/postgresql restart

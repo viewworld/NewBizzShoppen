@@ -1,5 +1,5 @@
 <column-mc:>
-  <h1><%= t("lead_user.contact_lead_by_email.new.view.header") %></h1>
+  <header><%= t("lead_user.contact_lead_by_email.new.view.header") %></header>
 
   <%= form_for @email_template_preview, :as => :email_template_preview, :url => lead_users_lead_purchase_lead_email_path() do |f| %>
       <%= t("lead_user.contact_lead_by_email.new.view.recipient_label") %>

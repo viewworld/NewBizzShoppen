@@ -168,3 +168,17 @@
     -webkit-border-bottom-right-radius: 5px;
     border-bottom-right-radius: 5px;
 }
+
+
+.frm .frm_foot_actions div.bt
+{
+    margin-left: 7px;
+}
+
+
+.frm_actions_bar
+{
+    height: 28px;
+    padding: 5px;
+    background: url(/images/frm/hl.png) repeat-x bottom left;
+}

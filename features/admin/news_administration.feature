@@ -21,6 +21,4 @@ Scenario: I can use WYSIWYG to edit news entry content
 
 Scenario: I can upload and embed image into news entry
 
-Scenario: I can filter agent news to articles only
-
-Scenario: I can filter buyer news to blurb only
+Scenario: I can filter between agent and buyer
