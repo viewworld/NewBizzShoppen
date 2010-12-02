@@ -40,8 +40,12 @@ Scenario: I can see 10 latest leads
   Then I should see "10" items on a list within "#latest_leads"
   And I should see "AwesomeLead" first on a list within "#latest_leads"
 
-@m3 @ao @_todo
+@m3 @ao @_done
 Scenario: I can go to details of agent news
+  Given agent news exists with attributes "title:FirstNews"
+  And I follow translated "home.show.view.agent"
+  And I follow translated "agent_home.show.view.read_more_link" within "#news"
+  Then I should be on FirstNews news page
 
 @ao @_done @_tested
 Scenario: I can go to details of bestsellers
@@ -57,7 +61,7 @@ Scenario: I can go to details of latest leads
   And I follow "AwesomeLead" within "#latest_leads"
   Then I should be on the AwesomeLead lead page
 
-@m3 @ao @_todo
+@m3 @ao @tested_elsewhere @_done
 Scenario: I can go to agent news listing
 
 @ao @_done @_tested

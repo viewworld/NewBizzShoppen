@@ -66,7 +66,9 @@ module NavigationHelpers
         administration_article_path(Article::Cms.find_by_title($1))
     when /administration (.*) news page/
         administration_news_path(Article::News.find_by_title($1))
-
+      when /(.*) news page/
+        news = Article::News.find_by_title($1)
+        news_path(news)
 
 
     # Add more mappings here.

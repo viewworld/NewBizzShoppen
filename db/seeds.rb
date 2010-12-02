@@ -103,7 +103,7 @@ unless User::LeadUser.find_by_email("leaduser@gmail2.com")
 end
 
 puts "Creating default main page articles..."
-['About us','Privacy','Terms & Conditions','Contact us'].each do |title|
+['About us','Privacy','Terms & Conditions'].each do |title|
   unless Article::Cms.main_page_articles.where(:title => title).first
     article = Article::Cms.make!(:scope => Article::Cms::MAIN_PAGE_ARTICLE, :title => title, :content => title, :key => title.parameterize('_'))
     [:en, :dk].each do |locale|
