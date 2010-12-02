@@ -51,7 +51,7 @@ Scenario: I can toggle select leads
 @tgn @_tested @selenium @bulk
 Scenario: I can bulk remove leads from my requested leads list
   And I check "mark_all"
-  And I press translated "lead_user.lead_requests.index.view.button_bulk_destroy_lead_request"
+  And I follow translated "lead_user.lead_requests.index.view.button_bulk_destroy_lead_request"
   Then I should see translated "flash.bulk_lead_requests.actions.destroy.notice"
   And I should not see "Printers ultimate deal"
   And I should not see "Monitors LCD deal"

@@ -41,13 +41,13 @@ Scenario: I can display a list of subaccounts of big-buyer account
 @tgn @_done @_tested
 Scenario: I can sort by coulmns type, Name, Last Name, email, age,
   Given I follow translated "administration.users.index.view.email"
-  Then I should have value "ann.lead_user2@person.com" in the css path "tr:nth-child(1) td:nth-child(7)"
+  Then I should have value "ann.lead_user2@person.com" in the css path "tr:nth-child(1) td:nth-child(6)"
   Given I follow translated "administration.users.index.view.first_name"
-  Then I should have value "ann.lead_user2@person.com" in the css path "tr:nth-child(1) td:nth-child(7)"
+  Then I should have value "ann.lead_user2@person.com" in the css path "tr:nth-child(1) td:nth-child(6)"
   Given I follow translated "administration.users.index.view.last_name"
-  Then I should have value "kirk.lead_user4@person.com" in the css path "tr:nth-child(1) td:nth-child(7)"
+  Then I should have value "kirk.lead_user4@person.com" in the css path "tr:nth-child(1) td:nth-child(6)"
   Given I follow translated "administration.users.index.view.age"
-  Then I should have value "kirk.lead_user4@person.com" in the css path "tr:nth-child(1) td:nth-child(7)"
+  Then I should have value "kirk.lead_user4@person.com" in the css path "tr:nth-child(1) td:nth-child(6)"
 
 @m0
 Scenario: I can sort by bought, created, volume sold, revenue, payout %
