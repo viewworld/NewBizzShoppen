@@ -1,3 +1,32 @@
+<search-box:>
+  <div class="search_box">
+    <h2>Search</h2>
+
+    <div class="search_content">
+
+      <%= form_for @search, :url => administration_users_path do |f| %>
+          <%= f.hidden_field :with_subaccounts %>
+          <fieldset class="inputs labels_auto inline_li no_pdd">
+            <ol class="no_pdd">
+              <li class="string">
+                <%= f.text_field :with_keyword %>
+              </li>
+              <li class="select">
+                <%= f.label "User Role" %>
+                <%= f.select :with_role, User::BASIC_USER_ROLES_WITH_LABELS, :include_blank => true %>
+              </li>
+              <li class="commit">
+                <ibt c="bt_green">
+                  <%= submit_tag t("administration.users.index.view.search_button") %>
+                </ibt>
+              </li>
+            </ol>
+          </fieldset>
+      <% end %>
+    </div>
+  </div>
+</search-box:>
+
 <column-mc:>
   <% if @search.with_subaccounts.blank? %>
       <header><%= t("administration.users.index.view.title") %></header>
@@ -12,20 +41,12 @@
       <%= submit_tag t("administration.users.index.view.new_user") %>
   <% end %>
 
-  <%= form_for @search, :url => administration_users_path do |f| %>
-      <%= f.text_field :with_keyword %>
-      <%= f.select :with_role, User::BASIC_USER_ROLES_WITH_LABELS, :include_blank => true %>
-      <%= f.hidden_field :with_subaccounts %>
-      <%= submit_tag t("administration.users.index.view.search_button") %>
-  <% end %>
-
   <table id="users_table" class="generic">
     <thead>
     <tr>
       <th class="hl"></th>
       <th><%= link_to t("administration.users.index.view.id"), order_for_scoped_search(:id) %></th>
       <th><%= link_to t("administration.users.index.view.roles"), order_for_scoped_search(:roles_mask) %></th>
-      <th><%= t("administration.users.index.view.locked") %></th>
       <th><%= link_to t("administration.users.index.view.first_name"), order_for_scoped_search(:first_name) %></th>
       <th><%= link_to t("administration.users.index.view.last_name"), order_for_scoped_search(:last_name) %></th>
       <th><%= link_to t("administration.users.index.view.email"), order_for_scoped_search(:email) %></th>
@@ -34,6 +55,7 @@
       <th><%= t("administration.users.index.view.leads_sold") %></th>
       <th><%= t("administration.users.index.view.revenue") %></th>
       <th><%= t("administration.users.index.view.payout") %></th>
+      <th class="ta_c"><%= t("administration.users.index.view.locked") %></th>
       <th><%= t("administration.users.index.view.actions") %></th>
       <th class="hr"></th>
     </tr>
@@ -51,11 +73,6 @@
           <td class="cl"></td>
           <td><%= user.id %></td>
           <td><%= user.roles_as_text %></td>
-          <td>
-            <% unless user.id == current_user.id %>
-                <%= link_to user.locked_at.blank? ? t("administration.users.index.view.lock") : t("administration.users.index.view.unlock"), administration_user_path(user, {"user_#{user.role.to_s}".to_sym  => {:locked =>  user.locked_at.blank? ? "lock" : "unlock"}}), {:method => :put} %>
-            <% end %>
-          </td>
           <td><%= user.first_name %></td>
           <td><%= user.last_name %></td>
           <td><%= user.email %></td>
@@ -64,23 +81,25 @@
           <td></td>
           <td></td>
           <td></td>
-          <td class="ta_r">
-            <div class="td_actions">
-              <%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %>
-              <ul>
-                <li>
-                  <%= link_to t("administration.users.index.view.edit"), edit_administration_user_path(user) %>
-                </li>
-                <li>
-                  <%= link_to t("administration.users.index.view.delete"), administration_user_path(user), {:method => :delete, :confirm => t("administration.users.index.view.delete_confirmation_message")} %>
-                </li>
-                <% unless user.subaccounts.empty? %>
-                    <li>
-                      <%= link_to t("administration.users.index.view.subaccounts"), administration_users_path({:search => {:with_subaccounts => user.id}}) %>
-                    </li>
-                <% end %>
-              </ul>
-            </div>
+          <td class="ta_c">
+            <% unless user.id == current_user.id %>
+                <%= link_to user.locked_at.blank? ? t("administration.users.index.view.lock") : t("administration.users.index.view.unlock"), administration_user_path(user, {"user_#{user.role.to_s}".to_sym  => {:locked =>  user.locked_at.blank? ? "lock" : "unlock"}}), {:method => :put} %>
+            <% end %>
+          </td>
+          <td class="tda ta_r">
+            <ul-actions>
+              <li>
+                <%= link_to t("administration.users.index.view.edit"), edit_administration_user_path(user) %>
+              </li>
+              <li>
+                <%= link_to t("administration.users.index.view.delete"), administration_user_path(user), {:method => :delete, :confirm => t("administration.users.index.view.delete_confirmation_message")} %>
+              </li>
+              <% unless user.subaccounts.empty? %>
+                  <li>
+                    <%= link_to t("administration.users.index.view.subaccounts"), administration_users_path({:search => {:with_subaccounts => user.id}}) %>
+                  </li>
+              <% end %>
+            </ul-actions>
           </td>
           <td class="cr"></td>
         </tr>

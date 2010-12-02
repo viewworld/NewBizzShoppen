@@ -1,6 +1,6 @@
 <def tag="lbuilder_layout">
   <div class="clc" style="clear:both;">
-    <% %w(      t m b      ).each do |row_code| %>
+    <% %w(       t m b       ).each do |row_code| %>
         <%= render :partial => "/layouts/row", :locals => {:row_code => row_code} %>
     <% end %>
   </div>
@@ -36,6 +36,14 @@
   </div>
 </def>
 
+<def tag="ul-actions">
+  <div class="td_actions">
+    <%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %>
+    <ul>
+      <param:content/>
+    </ul>
+  </div>
+</def>
 
 <def tag="frm" attrs="title,c">
   <div class="frm<%= c.nil? ? "" : " #{c}" %>">

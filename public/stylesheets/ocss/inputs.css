@@ -100,20 +100,22 @@
 .inputs ol li.file input
 {
     float: left;
+    margin-top: 7px;    
 }
 
 
 /* --- select ---
 --------------------------------------------------------------------------------- */
 
-.inputs ol li.select select
-{
-    width: auto;
-}
-
 .inputs ol li.select
 {
     height: 33px;
+    line-height: 30px;
+}
+
+.inputs ol li.select select
+{
+    width: auto;
 }
 
 
@@ -142,13 +144,68 @@
 	margin: 0 !ie7;
 	padding: 0;
 	float: left;
-    background: none;    
+    background: none;
 }
 
+
+/* --- list element ---
+--------------------------------------------------------------------------------- */
+
+.inline_li ol li
+{
+    clear: none;
+    display: block;
+    float: left;
+    padding-right: 10px;
+}
+
+.inline_li ol li.boolean,
+.inline_li ol li.radio
+{
+    margin-top: 6px;
+}
+
+.inline_li ol li.commit
+{
+    margin-left: 0 !important;
+}
+
+
+/* --- inline_errors & hints ---
+--------------------------------------------------------------------------------- */
+
+.inputs ol li p.inline-errors
+{
+    float: left;
+    line-height: 16px;
+    padding: 8px 0 0 8px;
+    color: #f10000;
+    font-size: 11px;
+}
+
+.inputs ol li.error input
+{
+    border-color: #ff6060;
+    -moz-box-shadow: 0 0 2px #ff6060;
+    -webkit-box-shadow: 0 0 2px #ff6060;
+    box-shadow: 0 0 2px #ff6060;
+}
 
 
 /* --- inputs, list sizes ---
 --------------------------------------------------------------------------------- */
+
+.labels_auto ol li.string label,
+.labels_auto ol li.select label,
+.labels_auto ol li.password label,
+.labels_auto ol li.text label,
+.labels_auto ol li.numeric label,
+.labels_auto ol li.file label,
+.labels_auto ol li .label,
+.labels_auto li .label
+{
+	width: auto;
+}
 
 .labels_icons ol li.string label,
 .labels_icons ol li.select label,
@@ -161,6 +218,18 @@
 {
 	width: 25px;
     padding-top: 1px
+}
+
+.labels_70 ol li.string label,
+.labels_70 ol li.select label,
+.labels_70 ol li.password label,
+.labels_70 ol li.text label,
+.labels_70 ol li.numeric label,
+.labels_70 ol li.file label,
+.labels_70 ol li .label,
+.labels_70 li .label
+{
+	width: 70px;
 }
 
 .labels_80 ol li.string label,
@@ -313,8 +382,8 @@
 
 .labels_ta_r ol li.string label,
 .labels_ta_r ol li.select label,
-.labels_ta_r ol li.password label,    
-.labels_ta_r ol li.text label,    
+.labels_ta_r ol li.password label,
+.labels_ta_r ol li.text label,
 .labels_ta_r ol li.numeric label,
 .labels_ta_r ol li.file label
 {
@@ -325,6 +394,27 @@
 
 /* --- sizes iputs ---
 --------------------------------------------------------------------------------- */
+
+.inputs_60 ol li.string input,
+.inputs_60 ol li.password input
+{
+	width: 60px;
+}
+.inputs_60 ol li.select select
+{
+	width: 72px;
+}
+
+
+.inputs_70 ol li.string input,
+.inputs_70 ol li.password input
+{
+	width: 70px;
+}
+.inputs_70 ol li.select select
+{
+	width: 82px;
+}
 
 
 .inputs_80 ol li.string input,
@@ -548,5 +638,11 @@
 
 .select_auto_width ol li.select select
 {
-    width: auto;    
+    width: auto;
 }
+
+
+
+
+/* --- extend ---
+------------------------------------------------------------------------------------------ */
