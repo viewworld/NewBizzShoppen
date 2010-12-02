@@ -70,7 +70,7 @@ User.blueprint do
   password { "secret" }
   password_confirmation { "secret" }
   phone { Faker::PhoneNumber.phone_number }
-  screen_name { Faker::Name.name }
+ screen_name { Faker::Name.name + rand(9999).to_s }
   street { Faker::Address.street_name }
   first_name { Faker::Name.first_name }
   last_name { Faker::Name.last_name }
@@ -86,7 +86,7 @@ end
   password { "secret" }
   password_confirmation { "secret" }
   phone { Faker::PhoneNumber.phone_number }
-  screen_name { Faker::Name.name }
+ screen_name { Faker::Name.name + rand(9999).to_s }
   street { Faker::Address.street_name }
   first_name { Faker::Name.first_name }
   last_name { Faker::Name.last_name }
@@ -102,7 +102,7 @@ end
   password { "secret" }
   password_confirmation { "secret" }
   phone { Faker::PhoneNumber.phone_number }
-  screen_name { Faker::Name.name }
+ screen_name { Faker::Name.name + rand(9999).to_s }
   street { Faker::Address.street_name }
   first_name { Faker::Name.first_name }
   last_name { Faker::Name.last_name }
@@ -119,7 +119,7 @@ end
   password { "secret" }
   password_confirmation { "secret" }
   phone { Faker::PhoneNumber.phone_number }
-  screen_name { Faker::Name.name }
+ screen_name { Faker::Name.name + rand(9999).to_s }
   street { Faker::Address.street_name }
   first_name { Faker::Name.first_name }
   last_name { Faker::Name.last_name }
@@ -136,7 +136,7 @@ end
   password { "secret" }
   password_confirmation { "secret" }
   phone { Faker::PhoneNumber.phone_number }
-  screen_name { Faker::Name.name }
+ screen_name { Faker::Name.name + rand(9999).to_s }
   street { Faker::Address.street_name }
   first_name { Faker::Name.first_name }
   last_name { Faker::Name.last_name }
@@ -153,7 +153,7 @@ end
   password { "secret" }
   password_confirmation { "secret" }
   phone { Faker::PhoneNumber.phone_number }
-  screen_name { Faker::Name.name }
+  screen_name { Faker::Name.name + rand(9999).to_s }
   street { Faker::Address.street_name }
   first_name { Faker::Name.first_name }
   last_name { Faker::Name.last_name }
