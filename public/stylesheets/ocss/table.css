@@ -124,6 +124,7 @@
 .generic tbody tr td.tda
 {
     padding: 4px;
+    width: 60px;
 }
 
 .td_actions ul
@@ -200,10 +201,10 @@
     background: url(/images/table/table.png) repeat-x 0 -99px;
     border-bottom: 1px solid #d4d4d4;
     height: 32px;
-    padding: 0 10px;    
+    padding: 0 10px;
 }
 
-.td_select_all
+.generic tbody tr td div.td_select_all
 {
     float: left;
     line-height: 32px;
@@ -214,4 +215,65 @@
 {
     background: url(/images/table/table.png) repeat-x 0 -99px #e4e4e4;    
     border-bottom: 1px solid #d4d4d4;
+}
+
+
+
+/* --- pagination ---
+--------------------------------------------------------------------------------------------------------------------- */
+
+div.pagination
+{
+    text-align: center;
+    float: right !ie7;
+    margin-right: 500px !ie7;
+    line-height: 32px;    
+}
+
+div.pagination a,
+div.pagination span,
+div.pagination em    
+{
+    display: block !ie7;
+    float: left !ie7;
+
+    display: inline-block;
+    padding: 0 7px;
+    height: 22px;
+    line-height: 22px;
+    text-align: center;
+    text-decoration: none;
+
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    color: #515151;
+    text-shadow: 1px 1px 0 #fff;
+
+    border: 1px solid transparent;
+}
+
+div.pagination a:hover
+{
+    text-decoration: none;
+    background: #f4f2f2;
+    border: 1px solid #d3d3d3;
+}
+
+div.pagination em
+{
+    background: #fff;
+    font-style: normal;
+
+    border-color: #d3d3d3;
+    border-top-color: #aaa;
+
+    color: #000;       
+}
+
+
+div.pagination .disabled
+{
+    opacity: .4;
+    filter: alpha(opacity=40);
 }

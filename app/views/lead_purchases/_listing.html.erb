@@ -1,3 +1,11 @@
+<%
+   cols = 3
+   cols += 1 if show_checkboxes
+   cols += 1 if not block_assigned_to.nil?
+   cols += 1 if not block_other_actions.nil?   
+   cols += 1 if not block_tools.nil?
+-%>
+
 <table class="generic leads_table">
   <thead>
   <tr>
@@ -8,60 +16,57 @@
     <th style="width: 350px;">Leads details</th>
     <th style="width: 200px"><%= t("leads.listing.created_by_label") %></th>
     <th>Stats</th>
-    <th><%= t("lead_buyer.lead_purchases.index.view.bulk_assignee_field") %></th>
-    <th class="ta_r">Actions</th>
+
+    <% if block_assigned_to %>
+      <th><%= t("lead_buyer.lead_purchases.index.view.bulk_assigned_field") %></th>
+    <% end %>
+
+    <% if block_other_actions %>
+      <th>Other</th>
+    <% end %>
+
+    <% if block_tools %>
+      <th class="ta_r">Actions</th>
+    <% end %>
     <th class="hr"></th>
   </tr>
   </thead>
   <tfoot>
   <tr>
     <td class="fl"></td>
-    <td colspan="6"></td>
+    <td colspan="<%= cols %>"></td>
     <td class="fr"></td>
   </tr>
   </tfoot>
   <tbody>
   <% collection.each do |lead_purchase| %>
       <tr class="lead <%= cycle("odd", "even") %>" id="<%= dom_id(lead_purchase) %>">
+
         <td class="cl"></td>
         <% if show_checkboxes %>
             <td class="no_pdd_lr"><%= check_box_tag "lead_ids[]", lead_purchase.id %></td>
         <% end %>
+
         <td>
           <h4><%= lead_purchase.header %></h4>
           <% if block_contact %>
               <%= with_output_buffer { block_contact.call(lead_purchase) } if block_contact %>
-              <br/>
           <% end %>
-
-          <p class="element"><%= t("lead_purchases.listing.purchase_value_label") %>
-            <span class="green"><%= lead_purchase.purchase_value %></span>
-          </p>
-
-          <p class="element_description i">
-            <%= lead_purchase.description %>
-          </p>
-
+          <p class="element"><%= t("lead_purchases.listing.purchase_value_label") %><span class="green"><%= lead_purchase.purchase_value %></span></p>
+          <p class="element_description i"><%= lead_purchase.description %></p>
           <% if block_general %>
               <%= with_output_buffer { block_general.call(lead_purchase) } %>
           <% end %>
         </td>
+
         <td>
           <h3><%= lead_purchase.lead.company_name %></h3>
-
           <p><%= lead_purchase.lead.phone_number %></p>
-
           <p><%= lead_purchase.lead.www_address %></p>
-
           <p><%= lead_purchase.lead.www_address %></p>
-
-
           <p><%= lead_purchase.lead.email_address %></p>
-
           <p><%= lead_purchase.lead.contact_name %></p>
-
           <p><%= lead_purchase.lead.address %></p>
-
           <p><%= lead_purchase.lead.creator_name %></p>
 
           <% if block_card %>
@@ -71,38 +76,37 @@
 
         <td>
           <p><%= t("lead_purchases.listing.clicks_count_label") %><b><%= lead_purchase.clicks_count %></b></p>
-
           <p><%= t("lead_purchases.listing.exposures_count_label") %><b><%= lead_purchase.exposures_count %></b></p>
-
           <p><%= t("lead_purchases.listing.sale_limit_label") %><b><%= lead_purchase.sale_limit %></b></p>
-
-          <p><%= t("lead_purchases.listing.novelty_label") %>
-            <b><%= t("models.lead.novelty.lvl#{lead_purchase.novelty_level}") %></b></p>
-
-          <p><%= t("lead_purchases.listing.hotness_label") %>
-            <b><%= t("models.lead.hotness.lvl#{lead_purchase.hotness_level}") %></b></p>
-
-          <p><%= t("lead_purchases.listing.certification_label") %>
-            <b><%= t("models.lead.certification.lvl#{lead_purchase.certification_level}") %></b></p>
+          <p><%= t("lead_purchases.listing.novelty_label") %><b><%= t("models.lead.novelty.lvl#{lead_purchase.novelty_level}") %></b></p>
+          <p><%= t("lead_purchases.listing.hotness_label") %><b><%= t("models.lead.hotness.lvl#{lead_purchase.hotness_level}") %></b></p>
+          <p><%= t("lead_purchases.listing.certification_label") %><b><%= t("models.lead.certification.lvl#{lead_purchase.certification_level}") %></b></p>
         </td>
 
-        <td>
-          <% if block_assigned_to %>
-              <%= with_output_buffer { block_assigned_to.call(lead_purchase) } %>
-          <% end %>
-        </td>
+        <% if block_assigned_to %>
+          <td>
+            <%= with_output_buffer { block_assigned_to.call(lead_purchase) } %>
+          </td>
+        <% end %>
 
-        <td class="tda ta_r">
-          <% if block_tools %>
-              <%= with_output_buffer { block_tools.call(lead_purchase) } if block_tools %>
-          <% end %>
-        </td>
+        <% if block_other_actions %>
+          <td>
+            <%= with_output_buffer { block_other_actions.call(lead_purchase) } %>
+          </td>
+        <% end %>
+
+        <% if block_tools %>
+          <td class="tda ta_r">
+            <%= with_output_buffer { block_tools.call(lead_purchase) } if block_tools %>
+          </td>
+        <% end %>
+
         <td class="cr"></td>
       </tr>
   <% end %>
 
   <tr class="pagination">
-    <td colspan="8" class="ta_c">
+    <td colspan="<%= cols + 2 %>" class="ta_c">
       <% if show_checkboxes %>
           <div class="td_select_all">
             <%= check_box_tag "td_mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this.checked,'input:checkbox')" %>
@@ -115,7 +119,7 @@
   <% if block_bottom %>
       <tr class="main_actions">
         <td class="cl"></td>
-        <td colspan="6" class="no_pdd_lr">
+        <td colspan="<%= cols %>" class="no_pdd_lr">
           <%= with_output_buffer { block_bottom.call } %>
         </td>
         <td class="cr"></td>
@@ -123,75 +127,3 @@
   <% end %>
   </tbody>
 </table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<ul class="lead_purchases_listing" style="display: none">
-  <% collection.each do |lead_purchase| %>
-      <li class="lead_purchase <%= 'highlight' if lead_purchase.expiring? %>" id="<%= dom_id(lead_purchase) %>">
-        <div class="general">
-          <%= check_box_tag("lead_purchase_ids[]", lead_purchase.id, false, {:id => "lead_purchase_checkbox_#{lead_purchase.id}"}) if show_checkboxes %>
-          <h3><%= lead_purchase.header %></h3>
-          <% if block_contact %>
-              <%= with_output_buffer { block_contact.call(lead_purchase) } if block_contact %>
-              <br/>
-          <% end %>
-          <span><%= t("lead_purchases.listing.purchase_value_label") %>
-            <b><%= lead_purchase.purchase_value %></b></span>
-
-          <p><b><%= t("lead_purchases.listing.description_label") %></b><%= lead_purchase.description %></p>
-          <% if block_general %>
-              <%= with_output_buffer { block_general.call(lead_purchase) } %>
-          <% end %>
-
-        </div>
-        <div class="card">
-          <div><%= t("lead_purchases.listing.company_name") %> <b><%= lead_purchase.lead.company_name %></b></div>
-          <div><%= t("lead_purchases.listing.phone_number") %> <b><%= lead_purchase.lead.phone_number %></b></div>
-          <div><%= t("lead_purchases.listing.www_address") %> <b><%= lead_purchase.lead.www_address %></b></div>
-          <div><%= t("lead_purchases.listing.email_address") %> <b><%= lead_purchase.lead.email_address %></b></div>
-          <div><%= t("lead_purchases.listing.contact_name") %> <b><%= lead_purchase.lead.contact_name %></b></div>
-          <div><%= t("lead_purchases.listing.address_label") %> <b><%= lead_purchase.lead.address %></b></div>
-          <div><%= t("lead_purchases.listing.created_by_label") %> <b><%= lead_purchase.lead.creator_name %></b></div>
-
-          <% if block_card %>
-              <%= with_output_buffer { block_card.call(lead_purchase) } if block_card %>
-          <% end %>
-
-        </div>
-        <div class="stats">
-          <span><%= t("lead_purchases.listing.clicks_count_label") %><b><%= lead_purchase.clicks_count %></b></span>
-          <span><%= t("lead_purchases.listing.exposures_count_label") %>
-            <b><%= lead_purchase.exposures_count %></b></span>
-          <span><%= t("lead_purchases.listing.sale_limit_label") %><b><%= lead_purchase.sale_limit %></b></span>
-          <span><%= t("lead_purchases.listing.novelty_label") %>
-            <b><%= t("models.lead.novelty.lvl#{lead_purchase.novelty_level}") %></b></span>
-          <span><%= t("lead_purchases.listing.hotness_label") %>
-            <b><%= t("models.lead.hotness.lvl#{lead_purchase.hotness_level}") %></b></span>
-          <span><%= t("lead_purchases.listing.certification_label") %>
-            <b><%= t("models.lead.certification.lvl#{lead_purchase.certification_level}") %></b></span>
-        </div>
-        <div class="tools">
-          <% if block_tools %>
-              <%= with_output_buffer { block_tools.call(lead_purchase) } if block_tools %>
-          <% end %>
-
-        </div>
-      </li>
-  <% end %>
-</ul>
-<%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>

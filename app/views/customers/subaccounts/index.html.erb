@@ -1,7 +1,20 @@
 <column-mc:>
-  <header><%= t("customer.subaccounts.index.view.title") %></header>
-  <%= link_to t("customer.subaccounts.index.view.new_lead_buyer"), new_customers_subaccount_path(:role => "lead_buyer") %>
-  <%= link_to t("customer.subaccounts.index.view.new_lead_user"), new_customers_subaccount_path(:role => "lead_user") %>
+  <header>
+    <param:content>
+      <%= t('customer.subaccounts.index.view.title') %>  
+    </param:content>
+
+    <param:actions>
+    <ul class="header_actions">
+      <li>
+        <%= bt_link_to :plus, t("customer.subaccounts.index.view.new_lead_buyer"), new_customers_subaccount_path(:role => "lead_buyer") %>
+      </li>
+      <li class="last">
+        <%= bt_link_to :plus, t("customer.subaccounts.index.view.new_lead_user"), new_customers_subaccount_path(:role => "lead_user") %>
+      </li>
+    </ul>
+    </param:actions>
+  </header>
 
   <table id="users_table" class="generic">
     <thead>

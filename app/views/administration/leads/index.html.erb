@@ -10,7 +10,7 @@
                 <%= f.label :with_keyword, t("administration.leads.index.search.keyword_label") %>
                 <%= f.text_field :with_keyword %>
               </li>
-              <li class="select">
+              <li class="select no_pdd_l">
                 <%= f.label :with_category, t("administration.leads.index.search.category_label") %>
                 <%= f.select :with_category, categories_for_select, :include_blank => true %>
               </li>
@@ -25,7 +25,7 @@
             </ol>
           </fieldset>
 
-          <fieldset class="inputs no_pdd labels_auto inline_li inputs_70 rltv">
+          <fieldset class="inputs no_pdd labels_auto inline_li inputs_60 rltv">
             <ol class="no_pdd">
               <li class="string">
                 <%= f.label :price_from, t("administration.leads.index.search.price_from_label") %>
@@ -52,7 +52,7 @@
                 <%= f.text_field :purchase_value_to %>
               </li>
               <li class="commit">
-                <ibt c="bt_green right">
+                <ibt c="bt_green right" icon="magnify">
                   <%= submit_tag t("administration.leads.index.view.search_button") %>
                 </ibt>
               </li>

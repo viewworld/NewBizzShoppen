@@ -1,17 +1,26 @@
 <column-mc:>
 
-  <header>Welcome</header>
+  <header>
+    <param:content>
+      <%= "Welcome" %>
+    </param:content>
+
+    <param:actions>
+      <ul class="header_actions">
+        <li class="last">
+          <%= bt_link_to :plus, t("buyer_home.show.view.create_new_buyer_account"), new_buyer_account_path %>
+        </li>
+      </ul>
+    </param:actions>
+  </header>
+
   <p><%= t("buyer_home.show.view.header_welcome") %> <%= link_to t("buyer_home.show.view.agent_link"), agent_home_path %></p>
 
-  <%= link_to t("buyer_home.show.view.create_new_buyer_account"), new_buyer_account_path %>
-
-  <br/>
-
-    <div id="leads_summary">
+  <div id="leads_summary">
     <div class="column_1to3 fltl" id="best_sellers">
       <frm title="#{t('agent_home.show.view.header_best_sellers')}">
         <param:header>
-          <%= bt_link_to nil,t("buyer_home.show.view.complete_list_link"), leads_path(:search => {:bestsellers => true}), :class => "fltr" %>
+          <%= bt_link_to nil, t("buyer_home.show.view.complete_list_link"), leads_path(:search => {:bestsellers => true}), :class => "fltr" %>
         </param:header>
         <param:content>
           <ul class="solid_list">
@@ -46,4 +55,16 @@
   </div>
 
 </column-mc:>
+
+<js:>
+  <script type="text/javascript">
+
+      jQuery(document).ready(function() {
+          jQuery(".solid_list li").bind("click", function() {
+                  window.location = $(this).find('a.lead_read_more').attr("href");
+              });
+      });
+
+  </script>
+</js:>
 

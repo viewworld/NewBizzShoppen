@@ -1,5 +1,5 @@
 <column-mc:>
-  <header><%= t("administration.categories.edit.view.header", :category_name => @category.name) %></header>
+  <header back="true"><%= t("administration.categories.edit.view.header", :category_name => @category.name) %></header>
   <%= semantic_form_for [:administration, @category], :method => :post, :html => {:multipart => true} do |form| %>
       <frm title="TODO">
         <param:content>

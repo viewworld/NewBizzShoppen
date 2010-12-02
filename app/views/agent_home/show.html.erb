@@ -1,11 +1,20 @@
 <column-mc:>
 
-  <header>Welcome</header>
+  <header>
+    <param:content>
+      <%= "Welcome" %>
+    </param:content>
+
+    <param:actions>
+    <ul class="header_actions">
+      <li class="last">
+        <%= bt_link_to :plus, t("agent_home.show.view.create_new_agent_account"), new_agent_account_path %>
+      </li>
+    </ul>
+    </param:actions>
+  </header> 
+
   <p><%= t("agent_home.show.view.header_welcome") %> <%= link_to t("agent_home.show.view.buyer_link"), buyer_home_path %></p>
-
-  <%= link_to t("agent_home.show.view.create_new_agent_account"), new_agent_account_path %>
-
-  <br/>
 
   <div id="leads_summary">
     <div class="column_1to3 fltl" id="best_sellers">
@@ -46,4 +55,16 @@
   </div>
 
 </column-mc:>
+
+<js:>
+  <script type="text/javascript">
+
+      jQuery(document).ready(function() {
+          jQuery(".solid_list li").bind("click", function() {
+                  window.location = $(this).find('a.lead_read_more').attr("href");
+              });
+      });
+
+  </script>
+</js:>
 

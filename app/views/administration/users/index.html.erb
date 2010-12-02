@@ -11,12 +11,12 @@
               <li class="string">
                 <%= f.text_field :with_keyword %>
               </li>
-              <li class="select">
+              <li class="select no_pdd_l">
                 <%= f.label "User Role" %>
                 <%= f.select :with_role, User::BASIC_USER_ROLES_WITH_LABELS, :include_blank => true %>
               </li>
               <li class="commit">
-                <ibt c="bt_green">
+                <ibt c="bt_green" icon="magnify">
                   <%= submit_tag t("administration.users.index.view.search_button") %>
                 </ibt>
               </li>
@@ -37,8 +37,18 @@
   <% end %>
 
   <%= form_tag new_administration_user_path, :method => :get do %>
-      <%= select_tag "role", options_for_select(User::BASIC_USER_ROLES_WITH_LABELS), {} %>
-      <%= submit_tag t("administration.users.index.view.new_user") %>
+      <fieldset class="inputs labels_auto inline_li no_pdd">
+        <ol class="no_pdd">
+          <li class="select">
+            <%= select_tag "role", options_for_select(User::BASIC_USER_ROLES_WITH_LABELS), {} %>
+          </li>
+          <li class="commit">
+            <ibt>
+              <%= submit_tag t("administration.users.index.view.new_user") %>
+            </ibt>
+          </li>
+        </ol>
+      </fieldset>
   <% end %>
 
   <table id="users_table" class="generic">
@@ -56,7 +66,7 @@
       <th><%= t("administration.users.index.view.revenue") %></th>
       <th><%= t("administration.users.index.view.payout") %></th>
       <th class="ta_c"><%= t("administration.users.index.view.locked") %></th>
-      <th><%= t("administration.users.index.view.actions") %></th>
+      <th class="ta_r"><%= t("administration.users.index.view.actions") %></th>
       <th class="hr"></th>
     </tr>
     </thead>

@@ -62,13 +62,13 @@ en:
       signed_out: 'Signed out successfully.'
     passwords:
       button_update: 'Change my password'
-      button_create: 'Send me reset password instructions'
+      button_create: 'Reset password'
       send_instructions: 'You will receive an email with instructions about how to reset your password in a few minutes.'
       updated: 'Your password was changed successfully. You are now signed in.'
     confirmations:
       send_instructions: 'You will receive an email with instructions about how to confirm your account in a few minutes.'
       confirmed: 'Your account was successfully confirmed. You are now signed in.'
-      resend_confirmation_link: Resend confirmation instructions
+      resend_confirmation_link: Resend
     registrations:
       signed_up: 'You have signed up successfully. If enabled, a confirmation was sent to your e-mail.'
       updated: 'You updated your account successfully.'
@@ -392,11 +392,11 @@ en:
   buyer_home:
     show:
       view:
-        header_welcome: 'WELCOME TO OUR SITE'
-        agent_link: 'CLICK HERE IF YOU ARE AN AGENT'
-        header_best_sellers: 'BEST SELLERS'
-        header_latest_leads: 'LATEST LEADS'
-        header_news: 'NEWS'
+        header_welcome: 'Welcome to our site'
+        agent_link: 'click here if you are an agent'
+        header_best_sellers: 'Best sellers'
+        header_latest_leads: 'Latest leads'
+        header_news: 'News'
         purchase_value_label: 'Purchase value:'
         lead_price_label: 'Lead price:'
         description_label: 'Description:'
@@ -408,8 +408,8 @@ en:
   agent_home:
     show:
       view:
-        header_welcome: 'WELCOME TO OUR SITE AGENT'
-        buyer_link: 'CLICK HERE IF YOU ARE A BUYER'
+        header_welcome: 'Welcome to our site'
+        buyer_link: 'click here if you are a buyer'
         header_best_sellers: 'Best sellers'
         header_latest_leads: 'Latest leads'
         header_news: 'News'
@@ -472,9 +472,11 @@ en:
           bulk_state_field: 'State'
           bulk_update_button: 'Update all selected leads'
           bulk_download_csv_link: 'Download CSV for selected leads'
+          bulk_download_csv_link_short: 'Download selected'
           download_csv_link: 'CSV'
           print_link: 'Print'
           bulk_print_link: 'Print all selected leads'
+          bulk_print_link_short: 'Print selected'
           email_lead: Email Lead
           search:
             keyword_label: 'Keyword'
@@ -521,12 +523,12 @@ en:
           print_link: Print
           share_email_link: Share by email
           bulk_download_csv_link: Download CSV for selected leads
-          bulk_download_csv_short: Download CSV
+          bulk_download_csv_short: Download selected
           bulk_share_by_email_link: Share by email
           bulk_print_link: Print all selected leads
           bulk_print_link_short: Print selected
           bulk_state_field: State
-          bulk_assignee_field: Assigned to
+          bulk_assigned_field: Assigned to
           bulk_update_button: Update all selected leads
           lead_response_date: 'Response date:'
           view_lead: View Details
