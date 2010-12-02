@@ -1,17 +1,17 @@
 <column-mc:>
 
-    <h1><%= t("buyer.lead_purchases.show.view.header") %></h1>
+    <header back="true"><%= t("buyer.lead_purchases.show.view.header") %></header>
 
-    <b><%= @lead_purchase.header %></b>
+    <h2><%= @lead_purchase.header %></h2>
 
-    <p><b><%= t("lead_purchases.listing.description_label") %></b><%= @lead_purchase.description %></p>
-    <p><b><%= t("lead_purchases.listing.hidden_description_label") %></b><%= @lead_purchase.hidden_description %></p>
+    <p class="element"><%= t("lead_purchases.listing.description_label") %><%= @lead_purchase.description %></p>
+    <p class="element"><%= t("lead_purchases.listing.hidden_description_label") %><%= @lead_purchase.hidden_description %></p>
 
-    <div><%= t("lead_purchases.listing.company_name") %> <b><%= @lead_purchase.lead.company_name %></b></div>
-    <div><%= t("lead_purchases.listing.address_label") %> <b><%= @lead_purchase.lead.address %></b></div>
-    <div><%= t("lead_purchases.listing.phone_number") %> <b><%= @lead_purchase.lead.phone_number %></b></div>
-    <div><%= t("lead_purchases.listing.www_address") %> <b><%= @lead_purchase.lead.www_address %></b></div>
-    <div><%= t("lead_purchases.listing.email_address") %> <b><%= @lead_purchase.lead.email_address %></b></div>
-    <div><%= t("lead_purchases.listing.contact_name") %> <b><%= @lead_purchase.lead.contact_name %></b></div>
+    <p class="element"><%= t("lead_purchases.listing.company_name") %> <strong><%= @lead_purchase.lead.company_name %></strong></p>
+    <p class="element"><%= t("lead_purchases.listing.address_label") %> <strong><%= @lead_purchase.lead.address %></strong></p>
+    <p class="element"><%= t("lead_purchases.listing.phone_number") %> <strong><%= @lead_purchase.lead.phone_number %></strong></p>
+    <p class="element"><%= t("lead_purchases.listing.www_address") %> <strong><%= @lead_purchase.lead.www_address %></strong></p>
+    <p class="element"><%= t("lead_purchases.listing.email_address") %> <strong><%= @lead_purchase.lead.email_address %></strong></p>
+    <p class="element"><%= t("lead_purchases.listing.contact_name") %> <strong><%= @lead_purchase.lead.contact_name %></strong></p>
 
 </column-mc:>

@@ -1,1 +1,11 @@
-<%= form.inputs :subject, :from, :bcc, :cc, :body %>
+<div class="pdd_10 no_pdd_t">
+  <fieldset class="inputs labels_ta_r labels_100">
+    <ol>
+      <%= form.input :subject %>
+      <%= form.input :from %>
+      <%= form.input :bcc %>
+      <%= form.input :cc %>
+      <%= form.input :body, :input_html => {:style => "width: 600px; height: 250px" }  %>
+    </ol>
+  </fieldset>
+</div>

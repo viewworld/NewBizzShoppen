@@ -1,4 +1,4 @@
-@contact_us @m3
+@contact_us @m3 @tgn
 Feature: Contact Us page
 
 Scenario: I can display contact us page

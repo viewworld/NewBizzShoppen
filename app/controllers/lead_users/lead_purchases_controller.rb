@@ -1,6 +1,6 @@
 class LeadUsers::LeadPurchasesController < LeadUsers::LeadUserController
   inherit_resources
-
+  set_tab "my_assigned_leads"
   protected
 
   def begin_of_association_chain
@@ -8,7 +8,7 @@ class LeadUsers::LeadPurchasesController < LeadUsers::LeadUserController
   end
 
   def collection
-    @subaccounts = current_user.user.subaccounts
+    @subaccounts = current_user.subaccounts
     params[:search]||={}
     params[:search][:with_assignee] = current_user.id
     params[:search][:with_leads] = "1"

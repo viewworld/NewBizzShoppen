@@ -1,6 +1,6 @@
 module LeadPurchasesHelper
   def lead_purchases_listing(collection, options = {}, &block)
-    @hb = ApplicationHelper::HelperBlocks.new(:general, :card, :tools, :contact)
+    @hb = ApplicationHelper::HelperBlocks.new(:general, :card, :contact, :bottom, :assigned_to, :other_actions, :tools)
     block.call(@hb)
     options[:show_checkboxes] ||= false
     render(:partial => '/lead_purchases/listing', :locals => options.merge({:collection => collection}.merge(@hb.results)))

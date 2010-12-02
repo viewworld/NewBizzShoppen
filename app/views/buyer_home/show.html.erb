@@ -1,29 +1,70 @@
 <column-mc:>
 
-  <h1><%= t("buyer_home.show.view.header_welcome") %> <%= link_to t("buyer_home.show.view.agent_link"), agent_home_path %></h1>
+  <header>
+    <param:content>
+      <%= "Welcome" %>
+    </param:content>
 
-  <%= link_to t("buyer_home.show.view.create_new_buyer_account"), new_buyer_account_path %>
+    <param:actions>
+      <ul class="header_actions">
+        <li class="last">
+          <%= bt_link_to :plus, t("buyer_home.show.view.create_new_buyer_account"), new_buyer_account_path %>
+        </li>
+      </ul>
+    </param:actions>
+  </header>
 
-  <br/>
-  <div id="news">
-    <%= t("buyer_home.show.view.header_news") %>
-  </div>
+  <p><%= t("buyer_home.show.view.header_welcome") %> <%= link_to t("buyer_home.show.view.agent_link"), agent_home_path %></p>
 
-  <div id="best_sellers">
-    <%= t("buyer_home.show.view.header_best_sellers") %> <%= link_to t("buyer_home.show.view.complete_list_link"), leads_path(:search => {:bestsellers => true}) %>
-
-    <ul>
-      <%= render :partial => 'lead', :collection => @best_sellers, :as => :lead %>
-    </ul>
-  </div>
-
-  <div id="latest_leads">
-    <%= t("buyer_home.show.view.header_latest_leads") %> <%= link_to t("buyer_home.show.view.complete_list_link"), leads_path(:search => {:latest => true}) %>
-
-    <ul>
-      <%= render :partial => 'lead', :collection => @latest_leads, :as => :lead %>
-    </ul>
+  <div id="leads_summary">
+    <div class="column_1to3 fltl" id="best_sellers">
+      <frm title="#{t('agent_home.show.view.header_best_sellers')}">
+        <param:header>
+          <%= bt_link_to nil, t("buyer_home.show.view.complete_list_link"), leads_path(:search => {:bestsellers => true}), :class => "fltr" %>
+        </param:header>
+        <param:content>
+          <ul class="solid_list">
+            <%= render :partial => 'lead', :collection => @best_sellers, :as => :lead %>
+          </ul>
+        </param:content>
+      </frm>
+    </div>
+    <div class="column_1to3 fltl" style="padding: 0 15px" id="latest_leads">
+      <frm title="#{t('agent_home.show.view.header_latest_leads')}">
+        <param:header>
+          <%= bt_link_to nil, t("buyer_home.show.view.complete_list_link"), leads_path(:search => {:latest => true}), :class => "fltr" %>
+        </param:header>
+        <param:content>
+          <ul class="solid_list">
+            <%= render :partial => 'lead', :collection => @latest_leads, :as => :lead %>
+          </ul>
+        </param:content>
+      </frm>
+    </div>
+    <div class="column_1to3 fltl">
+      <frm title="#{t('agent_home.show.view.header_news')}">
+        <param:header>
+          <%= bt_link_to nil, t("agent_home.show.view.complete_list_link"), leads_path(:search => {:latest => true}), :class => "fltr" %>
+        </param:header>
+        <param:content>
+          content
+        </param:content>
+      </frm>
+    </div>
+    <clb/>
   </div>
 
 </column-mc:>
+
+<js:>
+  <script type="text/javascript">
+
+      jQuery(document).ready(function() {
+          jQuery(".solid_list li").bind("click", function() {
+                  window.location = $(this).find('a.lead_read_more').attr("href");
+              });
+      });
+
+  </script>
+</js:>
 

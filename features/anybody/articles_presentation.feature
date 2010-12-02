@@ -1,4 +1,4 @@
-@articles @m0
+@articles @m0 @ao
 Feature: Articles presentation
 
 @m3

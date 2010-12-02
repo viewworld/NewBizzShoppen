@@ -172,7 +172,7 @@ Scenario: I can rate lead that I have access for (good, bad, fake)
 @ao @_todo @m0
 Scenario: I can bulk rate leads that I have access for (good, bad, fake)
 
-@ao @_tested @_done @selenium @wip
+@ao @_tested @_done @selenium
 Scenario: I can set status of lead
   And I follow translated "layout.main_menu.lead_buyer.lead_purchases"
   And I select translated "lead_purchases.statuses.contacted" from "state" within ".lead_purchases_listing li:first-of-type"

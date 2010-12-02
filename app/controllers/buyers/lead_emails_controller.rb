@@ -9,7 +9,7 @@ class Buyers::LeadEmailsController < Buyers::BuyerController
 
   def create
     params[:email_template_preview].tap do |email_params|
-      ApplicationMailer.deliver_generic_email(email_params[:recipients], email_params[:subject], email_params[:body])
+      ApplicationMailer.generic_email(email_params[:recipients], email_params[:subject], email_params[:body]).deliver
     end
     flash[:notice] = I18n.t("flash.contact_lead_by_email.actions.create.notice")
     redirect_to buyers_lead_purchases_path

@@ -8,7 +8,7 @@ gem 'railties'
 gem 'mongrel'
 gem 'pg', '0.9.0'
 gem 'inherited_resources'
-gem "will_paginate", :git => "http://github.com/mislav/will_paginate.git", :branch => "rails3"
+gem 'will_paginate', '3.0.pre2', :branch => "rails3"
 gem 'formtastic', '1.1.0'
 gem 'liquid'
 gem 'devise', '1.1.3'

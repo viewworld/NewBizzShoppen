@@ -1,27 +1,38 @@
 <column-mc:>
-  <h1><%= t("home.show.view.header") %></h1>
+  <header><%= t("home.show.view.header") %></header>
+
   <%= link_to t("home.show.view.buyer"), buyer_home_path %>
   <%= link_to t("home.show.view.agent"), agent_home_path %>
 
-  <% unless user_signed_in?  %>
+  <% unless user_signed_in? %>
       <%= semantic_form_for(:user, :url => session_path(:user)) do |f| %>
-            <%= f.input :email, :label => I18n.t("activerecord.attributes.user.email") %>
-
-            <%= f.input :password, :label => I18n.t("activerecord.attributes.user.password") %>
-
-            <%= f.input :remember_me, :as => :boolean, :required => false, :label => I18n.t("home.show.view.remember_me") %>
-          <p><%= f.submit t("home.show.view.sign_in") %></p>
+          <fieldset class="inputs labels_100">
+            <ol class="align_inputs">
+              <%= f.input :email, :label => I18n.t("activerecord.attributes.user.email") %>
+              <%= f.input :password, :label => I18n.t("activerecord.attributes.user.password") %>
+              <%= f.input :remember_me, :as => :boolean, :required => false, :label => I18n.t("home.show.view.remember_me") %>
+              <li class="commit">
+                <ibt>
+                  <%= f.submit t("home.show.view.sign_in") %>
+                </ibt>
+              </li>
+            </ol>
+          </fieldset>
       <% end %>
 
   <% end %>
 
   <% unless user_signed_in? %>
-    <%=  t("home.show.view.signup_message")  %><br />
-    <%= link_to t("home.show.view.agent_signup"), new_agent_account_path %>
-    <%= link_to t("home.show.view.buyer_signup"), new_buyer_account_path %>
-     <br /><br />
-    <%= link_to t("home.show.view.forgotten_password_link"), new_password_path(User) %><br />
-    <%= link_to t("home.show.view.resend_confirmation_instructions"), new_confirmation_path(User) %><br />
+      <br/>
+      <%= t("home.show.view.signup_message") %>
+      <br/>
+      <%= link_to t("home.show.view.agent_signup"), new_agent_account_path %>
+      <%= link_to t("home.show.view.buyer_signup"), new_buyer_account_path %>
+      <br/><br/>
+      <%= link_to t("home.show.view.forgotten_password_link"), new_password_path(User) %>
+      <br/>
+      <%= link_to t("home.show.view.resend_confirmation_instructions"), new_confirmation_path(User) %>
+      <br/>
   <% end %>
 
 

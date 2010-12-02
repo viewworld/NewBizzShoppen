@@ -21,10 +21,11 @@ namespace :deploy do
   end
 end
 
-after "deploy:finalize_update", "copy_database_yml"
+after "deploy:finalize_update", "prepare_database"
 
-task :copy_database_yml, :roles => :app do
+task :prepare_database, :roles => :app do
   db_config = "#{app_path}/etc/database.yml"
   run "cp #{db_config} #{release_path}/config/database.yml"
+  run "cp #{app_path}/etc/.rvmrc #{release_path}/.rvmrc"
 end
 

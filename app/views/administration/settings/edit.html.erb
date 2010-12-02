@@ -1,15 +1,30 @@
 <column-mc:>
+  <header><%= t("administration.settings.edit.view.title") %></header>
 
-  <h1><%= t("administration.settings.edit.view.title") %></h1>
-
-<%= form_tag administration_setting_path, :method => :put do %>
-    <ul>
-    <% @settings.each_with_index do |setting, i| %>
-        <li><%= setting.var.humanize %> <%= text_field "settings", setting.id, :value => setting.value, :id => "setting_#{i}"  %></li>
-    <% end %>
-    </ul>
-    <%= submit_tag  t("administration.settings.edit.view.button_update_settings"), :onclick => "if(confirm('#{t("administration.settings.edit.view.confirmation_update_message")}')){ this.form.submit(); } else {return false;}" %>
-    <%= button_to_function t("administration.settings.edit.view.button_cancel"), "history.go(-1)" %>
+  <%= form_tag administration_setting_path, :method => :put do %>
+      <frm title="TODO">
+        <param:content>
+          <div class="pdd_10 no_pdd_t">
+            <fieldset class="inputs labels_ta_r labels_240">
+              <ol>
+                <% @settings.each_with_index do |setting, i| %>
+                    <li class="string">
+                      <%= label_tag setting.var.humanize %>
+                      <%= text_field "settings", setting.id, :value => setting.value, :id => "setting_#{i}" %>
+                    </li>
+                <% end %>
+              </ol>
+            </fieldset>
+          </div>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="plus">
+            <%= submit_tag t("administration.settings.edit.view.button_update_settings"), :onclick => "if(confirm('#{t("administration.settings.edit.view.confirmation_update_message")}')){ this.form.submit(); } else {return false;}" %>
+          </ibt>
+          <ibt c="bt_grey fltri">
+            <%= button_to_function t("administration.settings.edit.view.button_cancel"), "history.go(-1)" %>
+          </ibt>
+        </param:actions>
+      </frm>
   <% end %>
-
 </column-mc:>

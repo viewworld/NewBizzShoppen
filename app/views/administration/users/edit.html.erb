@@ -1,9 +1,22 @@
 <column-mc:>
-<%= semantic_form_for @user, :url => administration_user_path, :method => :put do |form| %>
-    <%= render :partial => 'form', :locals => { :form => form }  %>
-    <%= form.commit_button t("administration.users.edit.view.button_update_user") %>
-<% end %>
+  <header back="true">My profile</header>
 
-<%= link_to t("administration.users.edit.view.reset_password_link"), administration_user_password_path(@user) , {:method => :delete} %>
+  <%= semantic_form_for @user, :url => administration_user_path, :method => :put do |form| %>
+      <frm title="TODO">
+        <param:header>
+          <%= bt_link_to nil, t("administration.users.edit.view.reset_password_link"), administration_user_password_path(@user) , :method => :delete, :class => "fltr" %>                      
+        </param:header>
+        <param:content>
+          <%= render :partial => 'form', :locals => { :form => form }  %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("password.edit.view.button_update_user") %>
+          </ibt>
+          <ibt c="bt_grey fltri">
+            <%= button_to_function t("administration.settings.edit.view.button_cancel"), "history.go(-1)" %>
+          </ibt>            
+        </param:actions>
+      </frm>
+  <% end %>
 </column-mc:>
-

@@ -26,6 +26,12 @@ module ApplicationHelper
     "add_fields(this, \"#{escape_javascript(fields)}\")"
   end
 
+  def custom_error_for_field(form, field)
+    if form.object.errors[field].present?
+      content_tag(:p, form.object.errors[field], :class => "inline-errors") + tag("br")
+    end
+  end
+
   def available_locales_list(translations)
     existing = translations.map(&:locale)
     Locale.all.map(&:code).reject { |c| c == I18n.locale.to_s or existing.include?(c) }
@@ -35,4 +41,22 @@ module ApplicationHelper
   def bulk_form(&block)
     form_tag(bulk_action_path, {:method => :post, :id => 'bulk_actions_form'}, &block)
   end
+
+  def icon(name, alt = nil, opts = {})
+    opts[:alt] = alt
+    image_tag("bt_icons/#{name.to_s}.png", opts)
+  end
+
+  def bt_link_to(icon_name, text, url, opts = {})
+    icon_alt   = text || icon_name.to_s.capitalize
+    link_class = text.nil? ? "bt bt_icon" : "bt"
+    opts[:class].nil? ? opts[:class] = link_class : opts[:class] = "#{link_class} #{opts[:class]}"
+    icon_tag   = ""
+    icon_tag = icon(icon_name, icon_alt) unless icon_name.nil?
+    icon_tag << "#{text}" unless text.nil?
+    _url       = 'javascript:void(0)'
+    _url = url_for(url) unless url.nil?
+    link_to(content_tag(:span, icon_tag), _url, opts)
+  end
+
 end

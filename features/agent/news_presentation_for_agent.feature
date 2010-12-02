@@ -1,4 +1,4 @@
-@news @m3
+@news @m3 @ao
 Feature: News presentation for agent
 
 Scenario: I can see list of news for agent 

@@ -1,4 +1,4 @@
-@news @$_admin @m3
+@news @$_admin @m3 @ao
 Feature: News administration
 
 Background: I am logged in as a system admin

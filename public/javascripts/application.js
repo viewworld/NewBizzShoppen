@@ -18,3 +18,20 @@ submitBulkForm = function(url, target) {
     }
     $('#bulk_actions_form').submit();
 };
+
+jQuery(document).ready(function() {
+
+    $('.td_actions ul').hide(); // for ie7 - do not delete this line
+    
+    $('.td_actions a').bind("mouseenter", function(){
+        $(this).next().show();
+        $(this).parent().addClass("tda_hover");       
+    });
+
+    $('.td_actions').live("mouseleave", function(){
+        $(this).children("ul").hide();
+        $(this).removeClass("tda_hover");
+    });
+
+
+});

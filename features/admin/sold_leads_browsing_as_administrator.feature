@@ -72,5 +72,5 @@ Scenario: I can go to lead details by clicking on the show link
   Given pagination page size for leads is set to 1
   And lead AwesomeLead exists within category Test
   When I follow translated "layout.main_menu.admin.leads"
-  And I follow translated "administration.leads.index.view.show" within "#leads tr:nth-of-type(2) td:last-of-type"
+  And I follow translated "administration.leads.index.view.show" within "#leads tr:nth-of-type(1) td:nth-of-type(14)"
   Then I should be on the AwesomeLead lead page
