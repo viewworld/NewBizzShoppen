@@ -18,7 +18,7 @@
                 <%= f.label :without_outdated, t("agent.leads.index.view.filter_with_outdated") %>
               </li>
               <li class="commit">
-                <ibt c="bt_green">
+                <ibt c="bt_green" icon="magnify">
                   <%= submit_tag t("agent.leads.index.view.search_button") %>
                 </ibt>
               </li>
@@ -31,9 +31,19 @@
 
 <column-mc:>
 
-  <header>My created leads</header>
+  <header>
+    <param:content>
+      <%= "My created leads" %>
+    </param:content>
 
-  <%= link_to t("agent.leads.index.view.new_lead"), new_agents_lead_path %>
+    <param:actions>
+      <ul class="header_actions">
+        <li class="last">
+          <%= bt_link_to :plus, t("agent.leads.index.view.new_lead"), new_agents_lead_path %>
+        </li>
+      </ul>
+    </param:actions>
+  </header>
 
   <%= leads_table @leads, :show_checkboxes => false do |blocks| %>
       <% blocks.tools do |lead| %>

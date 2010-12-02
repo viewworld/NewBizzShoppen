@@ -1,5 +1,5 @@
 <column-mc:>
-  <header><%= t("agent.leads.new.view.title") %></header>
+  <header back="true"><%= t("agent.leads.new.view.title") %></header>
 
   <%= semantic_form_for [:agents, @lead], :method => :post do |form| %>
       <frm title="Create new">

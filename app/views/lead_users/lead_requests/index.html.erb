@@ -5,12 +5,12 @@
     <div class="search_content">
 
       <%= form_for @search, :url => lead_users_lead_requests_path do |f| %>
-          <fieldset class="inputs labels_auto inline_li no_pdd">
+          <fieldset class="inputs labels_auto inline_li no_pdd rltv">
             <ol class="no_pdd">
               <li class="string">
                 <%= f.text_field :with_keyword %>
               </li>
-              <li class="select">
+              <li class="select no_pdd_l">
                 <%= f.label :with_category, t("lead_user.lead_requests.index.view.search.category_label") %>
                 <%= f.select :with_category, @categories, {:include_blank => true} %>
               </li>
@@ -27,7 +27,7 @@
                 <%= f.select :with_country, @countries, {:include_blank => true} %>
               </li>
               <li class="commit">
-                <ibt c="bt_green">
+                <ibt c="bt_green right" icon="magnify">
                   <%= submit_tag t("lead_user.lead_requests.index.view.search.search_button") %>
                 </ibt>
               </li>
@@ -56,12 +56,11 @@
               <% end %>
 
           <% end %>
+          
           <% if user_signed_in? && current_user.has_role?(:lead_user) %>
               <% blocks.bottom do %>
                   <%= hidden_field_tag :route_to %>
-                  <ibt>
-                    <%= button_to_function t("lead_user.lead_requests.index.view.button_bulk_destroy_lead_request"), "submitBulkForm('#{lead_users_bulk_lead_requests_path}#DELETE');" %>
-                  </ibt>
+                    <%= bt_link_to :remove, t("lead_user.lead_requests.index.view.button_bulk_destroy_lead_request"), "javascript:void(0)", :onclick => "submitBulkForm('#{lead_users_bulk_lead_requests_path}#DELETE');" %>
               <% end %>
           <% end %>
       <% end %>

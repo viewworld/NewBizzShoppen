@@ -21,7 +21,7 @@
 {
     display: block;
     float: left;
-    margin: 7px 0px 7px;
+    margin: 7px 0 7px;
 }
 
 /* --- forms, inputs, etc ---
@@ -59,7 +59,8 @@
 .inputs ol li.text label,
 .inputs ol li.password label,
 .inputs ol li.file label,
-.inputs ol li.numeric label
+.inputs ol li.numeric label,
+.inputs ol li.date label
 {
 	display: block;
 	float: left;
@@ -67,6 +68,7 @@
 	width: 150px;
     padding: 8px 8px 0 0;
     font-size: 12px;
+    text-indent: 5px;
 }
 
 .inputs ol li label abbr
@@ -148,6 +150,28 @@
 }
 
 
+/* --- date ---
+--------------------------------------------------------------------------------- */
+
+.inputs ol li.date input
+{
+    width: 80px;
+    background: url(/images/forms/date.png) no-repeat left center #fff;
+    padding-left: 32px;
+}
+
+
+
+/* --- header---
+--------------------------------------------------------------------------------- */
+
+.inputs ol li.header h3
+{
+    font-size: 14px;
+    padding: 0 0 10px 10px    
+}
+
+
 /* --- list element ---
 --------------------------------------------------------------------------------- */
 
@@ -168,6 +192,11 @@
 .inline_li ol li.commit
 {
     margin-left: 0 !important;
+}
+
+.inline_li ol li.commit a.bt
+{
+    margin-top: 2px;
 }
 
 
@@ -200,6 +229,7 @@
 .labels_auto ol li.password label,
 .labels_auto ol li.text label,
 .labels_auto ol li.numeric label,
+.labels_auto ol li.date label,
 .labels_auto ol li.file label,
 .labels_auto ol li .label,
 .labels_auto li .label
@@ -212,6 +242,7 @@
 .labels_icons ol li.password label,
 .labels_icons ol li.text label,
 .labels_icons ol li.numeric label,
+.labels_icons ol li.date label,
 .labels_icons ol li.file label,
 .labels_icons ol li .label,
 .labels_icons li .label
@@ -225,6 +256,7 @@
 .labels_70 ol li.password label,
 .labels_70 ol li.text label,
 .labels_70 ol li.numeric label,
+.labels_70 ol li.date label,
 .labels_70 ol li.file label,
 .labels_70 ol li .label,
 .labels_70 li .label
@@ -237,6 +269,7 @@
 .labels_80 ol li.password label,
 .labels_80 ol li.text label,
 .labels_80 ol li.numeric label,
+.labels_80 ol li.date label,
 .labels_80 ol li.file label,
 .labels_80 ol li .label,
 .labels_80 li .label
@@ -249,6 +282,7 @@
 .labels_100 ol li.password label,
 .labels_100 ol li.text label,
 .labels_100 ol li.numeric label,
+.labels_100 ol li.date label,
 .labels_100 ol li.file label,
 .labels_100 ol li .label,
 .labels_100 li .label
@@ -261,6 +295,7 @@
 .labels_120 ol li.password label,
 .labels_120 ol li.text label,
 .labels_120 ol li.numeric label,
+.labels_120 ol li.date label,
 .labels_120 ol li.file label,
 .labels_120 ol li .label,
 .labels_120 li .label
@@ -273,6 +308,7 @@
 .labels_140 ol li.password label,
 .labels_140 ol li.text label,
 .labels_140 ol li.numeric label,
+.labels_140 ol li.date label,
 .labels_140 ol li.file label,
 .labels_140 ol li .label,
 .labels_140 li .label
@@ -285,6 +321,7 @@
 .labels_160 ol li.password label,
 .labels_160 ol li.text label,
 .labels_160 ol li.numeric label,
+.labels_160 ol li.date label,
 .labels_160 ol li.file label,
 .labels_160 ol li .label,
 .labels_160 li .label
@@ -297,6 +334,7 @@
 .labels_180 ol li.password label,
 .labels_180 ol li.text label,
 .labels_180 ol li.numeric label,
+.labels_180 ol li.date label,
 .labels_180 ol li.file label,
 .labels_180 ol li .label,
 .labels_180 li .label
@@ -309,6 +347,7 @@
 .labels_200 ol li.password label,
 .labels_200 ol li.text label,
 .labels_200 ol li.numeric label,
+.labels_200 ol li.date label,
 .labels_200 ol li.file label,
 .labels_200 ol li .label,
 .labels_200 li .label
@@ -321,6 +360,7 @@
 .labels_220 ol li.password label,
 .labels_220 ol li.text label,
 .labels_220 ol li.numeric label,
+.labels_220 ol li.date label,
 .labels_220 ol li.file label,
 .labels_220 ol li .label,
 .labels_220 li .label
@@ -333,6 +373,7 @@
 .labels_240 ol li.password label,
 .labels_240 ol li.text label,
 .labels_240 ol li.numeric label,
+.labels_240 ol li.date label,
 .labels_240 ol li.file label,
 .labels_240 ol li .label,
 .labels_240 li .label
@@ -345,6 +386,7 @@
 .labels_260 ol li.password label,
 .labels_260 ol li.text label,
 .labels_260 ol li.numeric label,
+.labels_260 ol li.date label,
 .labels_260 ol li.file label,
 .labels_260 ol li .label,
 .labels_260 li .label
@@ -357,6 +399,7 @@
 .labels_280 ol li.password label,
 .labels_280 ol li.text label,
 .labels_280 ol li.numeric label,
+.labels_280 ol li.date label,
 .labels_280 ol li.file label,
 .labels_280 ol li .label,
 .labels_280 li .label
@@ -369,6 +412,7 @@
 .labels_300 ol li.password label,
 .labels_300 ol li.text label,
 .labels_300 ol li.numeric label,
+.labels_300 ol li.date label,
 .labels_300 ol li.file label,
 .labels_300 ol li .label,
 .labels_300 li .label
@@ -610,7 +654,8 @@
 }
 
 .labels_240 ol li.commit,
-.labels_240 ol.align_inputs li.boolean
+.labels_240 ol.align_inputs li.boolean,
+.labels_240 ol.align_inputs li.header h3    
 {
     margin-left: 240px;
 }

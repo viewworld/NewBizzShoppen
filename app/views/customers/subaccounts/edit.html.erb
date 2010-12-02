@@ -1,12 +1,12 @@
 <column-mc:>
-  <header><%= t("customer.subaccounts.edit.view.title") %> <%= @user.role.to_s.humanize %></header>
+  <header back="true"><%= t("customer.subaccounts.edit.view.title") %> <%= @user.role.to_s.humanize %></header>
   <%= semantic_form_for [:customers, @user], :url => customers_subaccount_path(@user), :method => :put do |form| %>
       <frm>
         <param:content>
           <%= render :partial => 'form', :locals => {:form => form} %>
         </param:content>
         <param:actions>
-          <ibt c="fltri">
+          <ibt c="fltri" icon="save">
             <%= form.submit t("customer.subaccounts.edit.view.button_update") %>
           </ibt>
           <ibt c="bt_grey fltri">
