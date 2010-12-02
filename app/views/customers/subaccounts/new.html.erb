@@ -1,5 +1,5 @@
 <column-mc:>
-  <header><%= t("customer.subaccounts.new.view.title") %> <%= params[:role].humanize %></header>
+  <header back="true"><%= t("customer.subaccounts.new.view.title") %> <%= params[:role].humanize %></header>
   <%= semantic_form_for [:customers, @user], :url => customers_subaccounts_path(:role => params[:role]), :method => :post do |form| %>
       <frm>
         <param:content>
@@ -15,7 +15,7 @@
           </div>
         </param:content>
         <param:actions>
-          <ibt c="fltri">
+          <ibt c="fltri" icon="plus">
             <%= form.submit t("customer.subaccounts.new.view.button_create") %>
           </ibt>
           <ibt c="bt_grey fltri">

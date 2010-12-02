@@ -319,6 +319,94 @@ h4
     background: url(/images/bg_header_ribbon_green.png) no-repeat right -43px;
 }
 
+.header_actions
+{
+    position: absolute;
+    top: 5px;
+    right: 0;
+}
+
+.header_actions li
+{
+    display: block;
+    float: left;
+}
+
+.header_actions li a.bt
+{
+    background-position: 0 -542px;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+}
+
+.header_actions li a.bt span
+{
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    background-position: 0 -568px;
+    padding: 0 10px 0 5px;
+}
+
+.header_actions li a.bt:hover
+{
+    background-position: 0 -620px;    
+}
+
+.header_actions li a.bt:hover span
+{
+    background-position: 0 -646px;    
+}
+
+.header_actions li:first-child a.bt
+{
+    background-position: 0 -516px;
+    padding-left: 8px;
+}
+
+.header_actions li:first-child a.bt:hover
+{
+    background-position: 0 -594px;
+}
+
+.header_actions li:first-child a.bt span img
+{
+    padding-right:5px;
+    margin-left: -2px
+}
+
+.header_actions li.last a.bt,
+.header_actions li.last a.bt span
+{
+    -moz-border-radius-topright: 5px;
+    -moz-border-radius-bottomright: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.header_actions li.last a.bt span
+{
+    background-position: right -266px;
+}
+
+.header_actions li.last a.bt:hover span
+{
+    background-position: right -318px;    
+}
+
+.header_actions li.bt_back
+{
+    padding-left: 5px;
+}
+
+.header_actions li.bt_back a.bt_grey_small
+{
+    padding: 0;
+}
+
 /* --- footer ---
 --------------------------------------------------------------------------------- */
 
@@ -506,15 +594,40 @@ input:focus, textarea:focus, select:focus
     float: left;
     width: 24%;
     padding-right: 10px;
-    height: 30px;
-    line-height: 30px;
+    line-height: 26px;
     font-size: 14px;
+    font-weight: bold;
 }
+
+.categories_tree li a
+{
+    font-weight: normal;
+}
+
+.category_children_tree
+{
+    padding-left: 20px;
+}
+
+.category_children_tree li
+{
+    width: auto;
+    float: none;
+    line-height: 20px;
+    font-size: 13px;
+    font-weight: normal;
+}
+
 
 
 
 /* --- solid list ---
 --------------------------------------------------------------------------------- */
+
+.solid_list .lead_content
+{
+    background: url(/images/solid_list_arrow.png) no-repeat center right;
+}
 
 .solid_list li
 {
@@ -522,6 +635,7 @@ input:focus, textarea:focus, select:focus
     border-top: 1px solid #fff;
     padding: 8px 10px;
     text-shadow: 1px 1px 0 #fff;
+    cursor: pointer;
 
     background: #efefef;
 
@@ -541,16 +655,26 @@ input:focus, textarea:focus, select:focus
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#d2d2d2, endColorstr=#e5e5e5)";
 }
 
-.solid_list li h4 a
+.solid_list li:hover .lead_content h4 a
+{
+    color: #008FFF;
+}
+
+.solid_list li .lead_content h4 a
 {
     color: #515151;
     text-decoration: none;
     border-bottom: 1px solid #ccc;
 }
 
-.solid_list li h4 a:hover
+.solid_list li .lead_content h4 a:hover
 {
     border-bottom-color: #888;
+}
+
+.solid_list li .lead_content a.lead_read_more
+{
+    display: none;
 }
 
 p.element
@@ -670,6 +794,28 @@ a.bt_dropdown:hover span,
 }
 
 
+a.bt_grey_small
+{
+    background-position: 0 -672px !important;
+    color: #818181;
+    text-shadow: 1px 1px 0 #fff;
+}
+
+a.bt_grey_small span
+{
+    background-position: right -698px !important;
+    padding: 0 10px !important;
+}
+
+a.bt_grey_small:hover
+{
+   background-position: 0 -724px !important;
+}
+
+a.bt_grey_small:hover span
+{
+   background-position: right -750px !important;    
+}
 
 
 
@@ -745,6 +891,7 @@ div.bt span input
     overflow: visible;
     height: 30px;
     height /*\**/: 33 px\9; /* ie7/8 bug fix */
+    line-height: 30px !ie7;
 
     padding: 0 10px 0px !important;
     margin: 0 !important;

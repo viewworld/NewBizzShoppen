@@ -1,5 +1,5 @@
 <column-mc:>
-  <header><%= t("lead_buyer.contact_lead_by_email.new.view.header") %></header>
+  <header back="true"><%= t("lead_buyer.contact_lead_by_email.new.view.header") %></header>
 
   <%= form_for @email_template_preview, :as => :email_template_preview, :url => buyers_lead_purchase_lead_email_path() do |f| %>
       <frm title="Email">
@@ -26,7 +26,7 @@
           
         </param:content>
         <param:actions>
-          <ibt c="fltri">
+          <ibt c="fltri" icon="mail">
             <%= f.submit t("lead_buyer.contact_lead_by_email.new.view.send_email_button") %>
           </ibt>
         </param:actions>
