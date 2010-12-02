@@ -21,6 +21,7 @@ class LeadPurchase < LeadPurchaseBase
   before_save :assign_to_owner
   before_save :change_contacted_state
   before_save :handle_new_deadline
+  before_save :set_assigned_at
   after_save :deliver_about_to_expire_email
 
   liquid :id
@@ -61,6 +62,12 @@ class LeadPurchase < LeadPurchaseBase
   def deliver_about_to_expire_email
     if expiration_status_changed? and expiration_status == ABOUT_TO_EXPIRE and contacted == NOT_CONTACTED
       deliver_email_template("lead_purchase_is_about_to_expire")
+    end
+  end
+
+  def set_assigned_at
+    if !assignee_id.blank? and assignee_id_changed?
+      self.assigned_at = Time.now
     end
   end
 

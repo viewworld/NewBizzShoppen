@@ -28,6 +28,9 @@ Scenario: I can assign any of my leads to any of lead users that belong to my ac
   And I go to buyer lead purchases
   Then "assignee_id" should be selected for value "Martin Gleesse"
 
+@tgn @m3 @done @_non_testable
+Scenario: When I assign a user to a lead, then assigned_at time is recorded
+
 @tgn @done @_tested @selenium
 Scenario: I can unassing any of my leads from lead user that belong to my account and had that lead assigned to his account
   Then I go to buyer lead purchases
