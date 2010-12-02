@@ -111,7 +111,13 @@
                 </ol>
               </fieldset>
 
-              </p>
+              <%= t("lead_buyer.lead_purchases.index.view.rating_level") %>
+              <%= select_tag :rating_level, options_for_select(LeadPurchase::RATING_LEVELS, lead_purchase.rating_level), :include_blank => true, :onchange => "set_rating_level(this.value, #{lead_purchase.id})", :id => "rating_level_#{lead_purchase.id}" %>
+              <div id="rating_reson_div_<%= lead_purchase.id %>" style="display:none;">
+              <%= t("lead_buyer.lead_purchases.index.view.rating_reason") %>
+              <%= text_area_tag :rating_reason, "", :id => "rating_reason_#{lead_purchase.id}" %>
+              <%= button_to_function t("lead_buyer.lead_purchases.index.view.update_rating_button"), "$.post('#{buyers_lead_purchase_path(lead_purchase)}', {'_method':'put', 'lead_purchase[rating_reason]':$('#rating_reason_#{lead_purchase.id}').val(), 'lead_purchase[rating_level]':$('#rating_level_#{lead_purchase.id}').val()} );" %>
+              </div>
           <% end %>
 
           <% blocks.tools do |lead_purchase| %>
@@ -163,6 +169,18 @@
           });
           $("#lead_purchase_checkbox_" + lead_purchase_id.toString()).attr('checked', true);
           submitBulkForm('<%= bulk_lead_share_by_email_path %>#GET');
+      }
+
+      function set_rating_level(rating_level, lead_purchase_id)
+      {
+          if(rating_level <= 2)
+          {
+              $.post('/buyers/lead_purchases/' + lead_purchase_id.toString() , {'_method':'put', 'lead_purchase[rating_level]':rating_level} );
+          }
+          else
+          {
+              $('#rating_reson_div_' + lead_purchase_id.toString()).show();
+          }
       }
   </script>
 </column-mc:>

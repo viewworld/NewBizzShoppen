@@ -560,6 +560,8 @@ en:
           bulk_update_button: Update all selected leads
           lead_response_date: 'Response date:'
           rating_level: 'Rating:'
+          rating_reason: 'Reason:'
+          update_rating_button: 'Save rating'
           view_lead: View Details
           email_lead: Email Lead
           search:
