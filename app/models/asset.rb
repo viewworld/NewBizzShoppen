@@ -3,6 +3,7 @@ class Asset < ActiveRecord::Base
   DOCUMENT_FILE_TYPES = %w(application/x-pdf application/txt text/plain application/msword application/pdf application/vnd.ms-excel application/vnd.oasis.opendocument.text application/vnd.oasis.opendocument.spreadsheet application/octet)
 
   belongs_to :resource, :polymorphic => true, :foreign_key => "resource_id"
+  belongs_to :user
 
   before_save :set_asset_type
 
@@ -27,6 +28,10 @@ class Asset < ActiveRecord::Base
 
   def set_asset_type
     self.asset_type = self.class.name
+  end
+
+  def format_created_at
+    I18n.l(self.created_at, :format=>"%d.%m.%Y %H:%M")
   end
 
 end

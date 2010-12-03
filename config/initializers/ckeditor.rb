@@ -4,7 +4,7 @@ if Object.const_defined?("Ckeditor")
     # The file_post_name allows you to set the value name used to post the file. 
     # This is not related to the file name. The default value is 'data'. 
     # For maximum compatibility it is recommended that the default value is used.
-    #config.swf_file_post_name = "data"
+    config.swf_file_post_name = "asset"
 
     # A text description that is displayed to the user in the File Browser dialog. 
     #config.swf_file_types_description = "Files"
@@ -36,10 +36,10 @@ if Object.const_defined?("Ckeditor")
     #config.swf_image_file_upload_limit = 10
     
     # Path for view all uploaded files
-    #config.file_manager_uri = "/ckeditor/files"
+    config.file_manager_uri = "/ckeditor/files"
     
     # Path for upload files process
-    #config.file_manager_upload_uri = "/ckeditor/create/file"
+    config.file_manager_upload_uri = "/ckeditor/create/file"
     
     # Path for view all uploaded images
     config.file_manager_image_uri = "/ckeditor/images"
@@ -48,7 +48,7 @@ if Object.const_defined?("Ckeditor")
     config.file_manager_image_upload_uri = "/ckeditor/create/image"
    
     # Model's names witch processing in ckeditor_controller
-    #config.file_manager_image_model = "Ckeditor::Picture"
-    #config.file_manager_file_model = "Ckeditor::AttachmentFile"
+    config.file_manager_image_model = "Ckeditor::Picture"
+    config.file_manager_file_model = "Ckeditor::AttachmentFile"
   end
 end

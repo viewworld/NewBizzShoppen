@@ -6,13 +6,13 @@ class CkeditorController < ApplicationController
   
   # GET /ckeditor/images
   def images
-    @images = Ckeditor.image_model.where(:assetable_type => params[:assetable_type], :assetable_id => params[:assetable_id]).order("id DESC")
+    @images = Ckeditor.image_model.where(:resource_type => params[:resource_type], :resource_id => params[:resource_id]).order("id DESC")
     respond_with(@images)
   end
   
   # GET /ckeditor/files
   def files
-    @files = Ckeditor.file_model.where(:assetable_type => params[:assetable_type], :assetable_id => params[:assetable_id]).order("id DESC")
+    @files = Ckeditor.file_model.where(:resource_type => params[:resource_type], :resource_id => params[:resource_id]).order("id DESC")
     respond_with(@files)
   end
   
@@ -28,14 +28,14 @@ class CkeditorController < ApplicationController
 	  unless params[:CKEditor].blank?	  
 	    params[@swf_file_post_name] = params.delete(:upload)
 	  end
-	  
+
 	  options = {}
 	  
 	  params.each do |k, v|
 	    key = k.to_s.downcase
 	    options[key] = v if @record.respond_to?("#{key}=")
 	  end
-    
+
     @record.attributes = options
     @record.user ||= current_user if respond_to?(:current_user)
     
