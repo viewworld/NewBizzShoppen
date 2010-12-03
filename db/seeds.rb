@@ -85,14 +85,21 @@ unless Rails.env.production?
     Category.make!(:name => "Business")
   end
 
+   unless User::Agent.find_by_email("agent@nbs.com")
+    u = User::Agent.make!(:email => "agent@nbs.com", :password => "secret", :password_confirmation => "secret")
+    u.confirm!
+    u.save
+  end
+
   if Lead.count.zero?
+    agent = User::Agent.find_by_email("agent@nbs.com")
     ["Big deal on printers", "Drills required", "Need assistance in selling a car", "Ipod shipment", "Trip to amazonia - looking for offer", "LCD - Huge amounts", "GPS receivers required"].each do |header|
-      Lead.make!(:category_id => Category.last.id, :header => header)
+      Lead.make!(:category_id => Category.last.id, :header => header, :creator_id => agent.id)
     end
   end
 
   Category.all.each { |c| c.send(:refresh_leads_count_cache!) }
-  
+
   unless User::Admin.find_by_email("admin@nbs.com")
     u = User::Admin.make!(:email => "admin@nbs.com", :password => "secret", :password_confirmation => "secret")
     u.confirm!
@@ -101,13 +108,7 @@ unless Rails.env.production?
 
 
   unless User::Customer.find_by_email("buyer@nbs.com")
-    u = User::Customer.make!(:email => "buyer@nbs.com", :password => "secret", :password_confirmation => "secret")
-    u.confirm!
-    u.save
-  end
-
-  unless User::Agent.find_by_email("agent@nbs.com")
-    u = User::Agent.make!(:email => "agent@nbs.com", :password => "secret", :password_confirmation => "secret")
+    u = User::Customer.make!(:email => "buyer@nbs.com", :password => "secret", :password_confirmation => "secret", :big_buyer => true)
     u.confirm!
     u.save
   end
@@ -117,6 +118,18 @@ unless Rails.env.production?
     u.confirm!
     u.save
   end
+
+
+  buyer = User::Customer.find_by_email("buyer@nbs.com")
+  user  = User::LeadUser.find_by_email("leaduser@nbs.com")
+
+
+  unless buyer.subaccounts.include?(user)
+    buyer.subaccounts << user
+  end
+
+
+
 
 end
 

@@ -29,6 +29,7 @@ class Lead < ActiveRecord::Base
   scope :without_outdated, lambda { where("purchase_decision_date >= ?", Date.today.to_s ) }
   scope :without_locked_users, joins("INNER JOIN users ON users.id=leads.creator_id").where("users.locked_at is NULL")
   scope :with_status, lambda { |q| where(["leads.published = ?", q]) }
+  scope :published_only, where(:published => true)
   #====================
   scope :bestsellers, order("lead_purchases_counter DESC")
   scope :latest, order("created_at DESC")
