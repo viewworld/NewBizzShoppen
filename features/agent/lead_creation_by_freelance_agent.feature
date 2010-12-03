@@ -113,3 +113,6 @@ Scenario: All fields for new lead have to be filled in beside email address
   And I press translated "agent.leads.new.view.button_create"
   And I should be on agents leads
   And I should see translated "flash.leads.actions.create.notice"
+
+@m3  
+Scenario: I should be able to specify currency in which Lead will be sold (from dropdown)

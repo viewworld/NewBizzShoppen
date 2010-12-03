@@ -669,7 +669,7 @@ input:focus, textarea:focus, select:focus
 
 .solid_list li .lead_content h4 a:hover
 {
-    border-bottom-color: #888;
+    border-bottom-color: #008fff;
 }
 
 .solid_list li .lead_content a.lead_read_more
@@ -703,6 +703,43 @@ p.element_description
     padding: 10px 0 5px 22px;
     background: url(/images/table/quote.png) no-repeat 2px 12px;
 }
+
+div.element_description p
+{
+    line-height: 18px;
+    padding: 0 0 5px;
+}
+
+div.element_description h3
+{
+    font-size: 15px;
+    padding: 5px 0 10px;
+}
+
+
+
+/* --- elements_list ---
+--------------------------------------------------------------------------------- */
+
+.elements_list li
+{
+    border-bottom: 1px solid #e5e5e5;
+    padding: 7px 0;
+}
+
+.elements_list li div
+{
+    text-align: right;
+    font-weight: bold;
+}
+
+.elements_list li div span
+{
+    float: left;
+    color: #787878;
+    font-weight: normal;
+}
+
 
 /* --- links ---
 --------------------------------------------------------------------------------- */

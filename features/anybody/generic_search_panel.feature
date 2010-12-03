@@ -21,8 +21,7 @@ Background:
 
 @tgn @_done @_tested
 Scenario: I can see search panel on leads listing page
-  Then I should see translated "leads.index.search.keyword_label"
-  And I should see translated "leads.index.search.deal_value_from_label"
+  Then I should see translated "leads.index.search.deal_value_from_label"
   And I should see translated "leads.index.search.deal_value_to_label"
 
 @tgn @_done @_tested
