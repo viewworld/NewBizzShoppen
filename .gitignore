@@ -13,3 +13,4 @@ Gemfile.lock
 /public/system
 .rvmrc
 .livereload
+/tmp/*

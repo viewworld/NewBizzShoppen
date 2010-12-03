@@ -18,7 +18,7 @@ class Administration::ArticlesController < Administration::AdministrationControl
   end
 
   def create
-    @article = Article::Cms.new(params[:article_cms])
+    @article = Article::Cms.new(params[:article_cms].merge(:scope => Article::Cms::MAIN_PAGE_ARTICLE))
     create!
   end
 

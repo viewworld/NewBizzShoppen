@@ -46,6 +46,7 @@ module Nbs
     require "bulk_process"
     config.middleware.use "BulkProcess"
     require "#{config.root}/app/modules/custom_redirect.rb"
+    config.autoload_paths += %W( #{config.root}/app/models/ckeditor )
   end
 end
 

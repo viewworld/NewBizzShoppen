@@ -11,7 +11,7 @@ class ::Article::Cms < ::Article
   ].freeze
 
   validates_presence_of :key, :if => Proc.new{|a| [INTERFACE_CONTENT_TEXT,HELP_POPUP].include?(a.scope)}
-  validates_uniqueness_of :key, :scope => :scope
+  validates_uniqueness_of :key, :scope => :scope, :allow_nil => true
 
   scoped_order :id, :title
 

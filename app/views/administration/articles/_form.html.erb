@@ -1,9 +1,17 @@
 <div class="pdd_10 no_pdd_t">
-  <fieldset class="inputs labels_ta_r labels_240">
+  <fieldset class="inputs">
     <ol>
-      <%= form.input :scope, :collection => Article::Cms::SCOPE, :as => :select, :include_blank => false %>
       <%= form.input :title %>
-      <%= form.input :content %>
+      <%= form.input :content,
+                        :as => :ckeditor,
+                        :input_html => {
+                            :width => '1085px',
+                            :height => '500px',
+                            :swf_params => {
+                                :assetable_type => 'User',
+                                :assetable_id => '1'
+                                }
+                            } %>
     </ol>
   </fieldset>
 </div>
