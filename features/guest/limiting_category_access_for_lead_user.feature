@@ -1,0 +1,1 @@
+Feature: limiting category access for lead user
