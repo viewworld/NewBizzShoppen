@@ -3,6 +3,20 @@ Copyright (c) 2003-2010, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
+CKEDITOR.addQueryStringToUrl = function(url, params) {
+    // copied from filebrowser plugin core
+    var queryString = [];
+
+    if (!params)
+        return url;
+    else {
+        for (var i in params)
+            queryString.push(i + "=" + encodeURIComponent(params[ i ]));
+    }
+
+    return url + ( ( url.indexOf("?") != -1 ) ? "&" : "?" ) + queryString.join("&");
+};
+
 CKEDITOR.editorConfig = function( config )
 {
   config.PreserveSessionOnFileBrowser = true;
