@@ -43,3 +43,12 @@ Scenario: I can click bulk request leads and I will see a notification “You ad
   Then I should not see "Printers ultimate deal"
   And I should not see "Another Printers ultimate deal"
 
+@m3 @__category_restrictions
+Scenario: I should not see categories that I have been restricted access to by customer in category listing
+
+@m3 @__category_restrictions
+Scenario: I should not see categories that I have been restricted access to by customer in filter
+
+@m3 @__category_restrictions
+Scenario: I should not be able to request/buy leads from categories that I have been restricted access to by customer
+
