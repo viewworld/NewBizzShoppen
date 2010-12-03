@@ -3,7 +3,16 @@
     <ol>
       <%= form.input :scope, :collection => Article::News::SCOPE, :as => :select, :include_blank => false %>
       <%= form.input :title %>
-      <%= form.input :content %>
+      <%= form.input :content,
+                        :as => :ckeditor,
+                        :input_html => {
+                            :width => '1085px',
+                            :height => '500px',
+                            :swf_params => {
+                                :resource_type => @news.class.name,
+                                :resource_id => @news.id
+                                }
+                            } %>
     </ol>
   </fieldset>
 </div>
