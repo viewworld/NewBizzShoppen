@@ -8,8 +8,8 @@
                             :width => '1085px',
                             :height => '500px',
                             :swf_params => {
-                                :assetable_type => 'User',
-                                :assetable_id => '1'
+                                :assetable_type => @article.class.name,
+                                :assetable_id => @article.id
                                 }
                             } %>
     </ol>

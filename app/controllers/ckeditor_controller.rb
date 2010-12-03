@@ -6,13 +6,13 @@ class CkeditorController < ApplicationController
   
   # GET /ckeditor/images
   def images
-    @images = Ckeditor.image_model.order("id DESC")
+    @images = Ckeditor.image_model.where(:assetable_type => params[:assetable_type], :assetable_id => params[:assetable_id]).order("id DESC")
     respond_with(@images)
   end
   
   # GET /ckeditor/files
   def files
-    @files = Ckeditor.file_model.order("id DESC")
+    @files = Ckeditor.file_model.where(:assetable_type => params[:assetable_type], :assetable_id => params[:assetable_id]).order("id DESC")
     respond_with(@files)
   end
   

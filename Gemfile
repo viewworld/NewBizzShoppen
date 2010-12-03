@@ -24,7 +24,7 @@ gem 'cancan'
 gem 'rails-settings', :require => "settings"
 gem 'nested_set', '1.5.4'
 gem 'fastercsv'
-gem 'ckeditor', :path => File.join(File.dirname(__FILE__), '/vendor/gems/rails-ckeditor')
+gem 'ckeditor', '3.4.3.pre'
 
 group :development do
   gem 'diff-lcs'
