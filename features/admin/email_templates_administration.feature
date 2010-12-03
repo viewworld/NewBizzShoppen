@@ -8,3 +8,6 @@ Scenario: I can paginate email templates list
 Scenario: I can edit and update following email template fields: name, subject, body
 
 Scenario: I can edit and update email template fields for different language when I switch interface language
+
+@m0
+Scenario: I should be able to edit email templates using WYSIWYG editor and applying basic styling
