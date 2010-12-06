@@ -95,7 +95,7 @@ en:
       hidden_description_label: 'Hidden description:'
       company_name: 'Company:'
       phone_number: 'Phone number:'
-      www_address: 'Www address:'
+      www_address: 'www address:'
       email_address: 'Email:'
       address_label: 'Address:'
       contact_name: 'Contact name:'

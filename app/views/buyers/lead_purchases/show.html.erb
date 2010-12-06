@@ -1,17 +1,59 @@
 <column-mc:>
 
-    <header back="true"><%= t("buyer.lead_purchases.show.view.header") %></header>
+  <header back="true"><%= t("buyer.lead_purchases.show.view.header") %></header>
 
-    <h2><%= @lead_purchase.header %></h2>
+  <h2><%= @lead_purchase.header %></h2>
 
-    <p class="element"><%= t("lead_purchases.listing.description_label") %><%= @lead_purchase.description %></p>
-    <p class="element"><%= t("lead_purchases.listing.hidden_description_label") %><%= @lead_purchase.hidden_description %></p>
+  <div class="column_1to4 pdd_10 no_pdd_lr">
+    <ul class="elements_list">
+      <li>
+        <div>
+          <span class="label"><%= t("lead_purchases.listing.company_name") %></span>
+          <%= @lead_purchase.lead.company_name %>
+        </div>
+      </li>
+      <li>
+        <div>
+          <span class="label"><%= t("lead_purchases.listing.address_label") %></span>
+          <%= @lead_purchase.lead.address %>
+        </div>
+      </li>
+      <li>
+        <div>
+          <span class="label"><%= t("lead_purchases.listing.phone_number") %></span>
+          <%= @lead_purchase.lead.phone_number %>
+        </div>
+      </li>
+      <li>
+        <div>
+          <span class="label"><%= t("lead_purchases.listing.email_address") %></span>
+          <%= @lead_purchase.lead.email_address %>
+        </div>
+      </li>
+      <li>
+        <div>
+          <span class="label"><%= t("lead_purchases.listing.contact_name") %></span>
+          <%= @lead_purchase.lead.contact_name %>
+        </div>
+      </li>
+    </ul>
+  </div>
 
-    <p class="element"><%= t("lead_purchases.listing.company_name") %> <strong><%= @lead_purchase.lead.company_name %></strong></p>
-    <p class="element"><%= t("lead_purchases.listing.address_label") %> <strong><%= @lead_purchase.lead.address %></strong></p>
-    <p class="element"><%= t("lead_purchases.listing.phone_number") %> <strong><%= @lead_purchase.lead.phone_number %></strong></p>
-    <p class="element"><%= t("lead_purchases.listing.www_address") %> <strong><%= @lead_purchase.lead.www_address %></strong></p>
-    <p class="element"><%= t("lead_purchases.listing.email_address") %> <strong><%= @lead_purchase.lead.email_address %></strong></p>
-    <p class="element"><%= t("lead_purchases.listing.contact_name") %> <strong><%= @lead_purchase.lead.contact_name %></strong></p>
+  <div class="column_1to4 pdd_10 no_pdd_r" style="padding-left: 40px">
+    <div class="element_description">
+      <h3>Description</h3>
+      <%#= t("lead_purchases.listing.description_label") %>
+
+      <p><%= @lead_purchase.description %></p>
+
+      <%#= t("lead_purchases.listing.hidden_description_label") %>
+
+      <p><%= @lead_purchase.hidden_description %></p>
+    </div>
+  </div>
+
+
+  <clb/>
+
 
 </column-mc:>

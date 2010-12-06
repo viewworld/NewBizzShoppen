@@ -41,3 +41,7 @@ Scenario: I can edit and update email template fields for different language whe
   And I fill in "email_template_subject" with "Confirmation message corrected"
   And I fill in "email_template_body" with "Confirmation message corrected body"
   Then I press translated "administration.email_templates.edit.view.button_update"
+  
+  
+@m0
+Scenario: I should be able to edit email templates using WYSIWYG editor and applying basic styling

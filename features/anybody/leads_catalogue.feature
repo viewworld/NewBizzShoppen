@@ -54,3 +54,6 @@ Scenario: I should see lead header, lead price, purchase value and public descri
 
 @m0
 Scenario: I should see hottness, novelty, exposure, clicks
+
+@m3
+Scenario: I should see currency in which lead is being sold
