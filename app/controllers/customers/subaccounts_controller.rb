@@ -25,8 +25,7 @@ class Customers::SubaccountsController < Customers::CustomerController
   end
 
   def update
-    @user = User.find(params[:id])
-    "User::#{@user.role.to_s.camelize}".constantize.find(params[:id])
+    @user = User.find(params[:id]).send(:casted_class).find(params[:id])
       if @user.update_attributes(params["user_#{@user.role.to_s}".to_sym])
         redirect_to customers_subaccounts_path
       else
