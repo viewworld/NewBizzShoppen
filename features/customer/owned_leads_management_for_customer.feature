@@ -5,6 +5,7 @@ Background:
   Given I am on the homepage
   And I make sure current locale is English
   Given I am signed up and confirmed as user with email customer@person.com and password supersecret and role customer
+  And user customer@person.com with role customer exists with attributes "screen_name:Liane Young,first_name:Liane,last_name:Young"
   And an user with role lead_user and email lead_user2@person.com exists as subaccount for customer customer@person.com
   And an user with role lead_user and email lead_user3@person.com exists as subaccount for customer customer@person.com
   And user lead_user2@person.com with role lead_user exists with attributes "screen_name:John McCoy,first_name:John,last_name:McCoy"
@@ -30,6 +31,15 @@ Scenario: I can assign any of my leads to any of lead users that belong to my ac
 
 @tgn @m3 @done @_non_testable
 Scenario: When I assign a user to a lead, then assigned_at time is recorded
+
+@tgn @m3 @done @_tested @selenium
+Scenario: I can assign any of my leads back to myself
+  Given I go to buyer lead purchases
+  And I select "Martin Gleesse" from "assignee_id"
+  Given I go to buyer lead purchases
+  And I select "Liane Young" from "assignee_id"
+  Given I go to buyer lead purchases
+  Then "assignee_id" should be selected for value "Liane Young"
 
 @tgn @done @_tested @selenium
 Scenario: I can unassing any of my leads from lead user that belong to my account and had that lead assigned to his account
