@@ -1,4 +1,5 @@
 class Buyers::InterestsController <  Buyers::BuyerController
+  set_tab "interests_tab"
 
   def edit
     @categories = Category.all
@@ -15,6 +16,6 @@ class Buyers::InterestsController <  Buyers::BuyerController
     @buyer.update_attributes(params[:user])
 
     flash[:notice] = t("buyer.interests.update.flash.interests_update_successful")
-    redirect_to edit_buyers_interests_path
+    redirect_to buyers_lead_purchases_path
   end
 end
