@@ -24,6 +24,7 @@
       <% end %>
   <% end %>
       <%= hidden_field_tag :route_to %>
+      <%= button_to_function t("customer.lead_requests.index.view.button_bulk_create_lead_request"), "submitBulkForm('#{customers_bulk_lead_requests_path}#PUT');" %>
       <%= button_to_function t("customer.lead_requests.index.view.button_bulk_destroy_lead_request"), "submitBulkForm('#{customers_bulk_lead_requests_path}#DELETE');" %>
 <% end %>
 </column-mc:>

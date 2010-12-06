@@ -50,6 +50,11 @@ class CkeditorController < ApplicationController
     end
   end
 
+  def destroy
+    Ckeditor.swf_file_post_name.classify.constantize.where(:id => params[:id]).first.destroy
+    redirect_to :back
+  end
+
   private
     
     def swf_options

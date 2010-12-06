@@ -22,7 +22,7 @@ SELECT pg_catalog.setval('article_translations_id_seq', 16, true);
 -- Name: articles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('articles_id_seq', 8, true);
+SELECT pg_catalog.setval('articles_id_seq', 9, true);
 
 
 --
@@ -141,7 +141,7 @@ SELECT pg_catalog.setval('tolk_translations_id_seq', 1, false);
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('users_id_seq', 4, true);
+SELECT pg_catalog.setval('users_id_seq', 5, true);
 
 
 --
@@ -172,15 +172,15 @@ COPY article_translations (id, article_id, locale, content, title, created_at, u
 -- Data for Name: articles; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY articles (id, type, title, content, created_at, updated_at, key, scope) FROM stdin;
-1	Article::Cms	About us	About us	2010-12-03 12:19:53.890576	2010-12-03 12:19:53.93942	about_us	0
-2	Article::Cms	Privacy	Privacy	2010-12-03 12:19:53.983562	2010-12-03 12:19:54.015494	privacy	0
-3	Article::Cms	Terms & Conditions	Terms & Conditions	2010-12-03 12:19:54.058071	2010-12-03 12:19:54.088508	terms_conditions	0
-4	Article::Cms	Blurb sign up	Blurb sign up	2010-12-03 12:19:54.129491	2010-12-03 12:19:54.153963	blurb_sign_up	1
-5	Article::Cms	Blurb buyer home	Blurb buyer home	2010-12-03 12:19:54.227873	2010-12-03 12:19:54.256136	blurb_buyer_home	1
-6	Article::Cms	Blurb agent home	Blurb agent home	2010-12-03 12:19:54.300346	2010-12-03 12:19:54.329085	blurb_agent_home	1
-7	Article::Cms	Blurb start page role selection	Blurb start page role selection	2010-12-03 12:19:54.387674	2010-12-03 12:19:54.413392	blurb_start_page_role_selection	1
-8	Article::Cms	Reset password	Reset password	2010-12-03 12:19:54.641282	2010-12-03 12:19:54.687457	reset_password	2
+COPY articles (id, type, title, content, created_at, updated_at, key, scope, published, published_date) FROM stdin;
+1	Article::Cms	About us	About us	2010-12-03 12:19:53.890576	2010-12-03 12:19:53.93942	about_us	0	f	\N
+2	Article::Cms	Privacy	Privacy	2010-12-03 12:19:53.983562	2010-12-03 12:19:54.015494	privacy	0	f	\N
+3	Article::Cms	Terms & Conditions	Terms & Conditions	2010-12-03 12:19:54.058071	2010-12-03 12:19:54.088508	terms_conditions	0	f	\N
+4	Article::Cms	Blurb sign up	Blurb sign up	2010-12-03 12:19:54.129491	2010-12-03 12:19:54.153963	blurb_sign_up	1	f	\N
+5	Article::Cms	Blurb buyer home	Blurb buyer home	2010-12-03 12:19:54.227873	2010-12-03 12:19:54.256136	blurb_buyer_home	1	f	\N
+6	Article::Cms	Blurb agent home	Blurb agent home	2010-12-03 12:19:54.300346	2010-12-03 12:19:54.329085	blurb_agent_home	1	f	\N
+7	Article::Cms	Blurb start page role selection	Blurb start page role selection	2010-12-03 12:19:54.387674	2010-12-03 12:19:54.413392	blurb_start_page_role_selection	1	f	\N
+8	Article::Cms	Reset password	Reset password	2010-12-03 12:19:54.641282	2010-12-03 12:19:54.687457	reset_password	2	f	\N
 \.
 
 
@@ -188,7 +188,7 @@ COPY articles (id, type, title, content, created_at, updated_at, key, scope) FRO
 -- Data for Name: assets; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY assets (id, asset_file_name, asset_content_type, asset_file_size, asset_type, asset_updated_at, resource_type, resource_id) FROM stdin;
+COPY assets (id, asset_file_name, asset_content_type, asset_file_size, asset_type, asset_updated_at, resource_type, resource_id, type, guid, locale, user_id, created_at, updated_at) FROM stdin;
 \.
 
 

@@ -1,4 +1,4 @@
-class ::Article::Cms < ::Article
+class Article::Cms < ::Article
 
   MAIN_PAGE_ARTICLE = 0.freeze
   INTERFACE_CONTENT_TEXT = 1.freeze
@@ -9,6 +9,11 @@ class ::Article::Cms < ::Article
       [I18n.t('administration.articles.index.view.interface_content_texts'),INTERFACE_CONTENT_TEXT],
       [I18n.t('administration.articles.index.view.help_popups'),HELP_POPUP]
   ].freeze
+
+  has_many :assets, :as => :resource, :dependent => :destroy, :finder_sql =>
+      'SELECT "assets".*' +
+      'FROM "assets"' +
+      'WHERE ("assets".resource_id = #{id} AND "assets".resource_type = \'Article::Cms\')'
 
   validates_presence_of :key, :if => Proc.new{|a| [INTERFACE_CONTENT_TEXT,HELP_POPUP].include?(a.scope)}
   validates_uniqueness_of :key, :scope => :scope, :allow_nil => true

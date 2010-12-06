@@ -19,7 +19,13 @@ class Administration::NewsController < Administration::AdministrationController
 
   def create
     @news = Article::News.new(params[:article_news])
-    create!
+    create! do |format|
+      if @news.errors.empty?
+        format.html { redirect_to edit_administration_news_path(@news)}
+      else
+        format.html { redirect_to administration_news_index_path }
+      end
+    end
   end
 
   def show

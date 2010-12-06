@@ -106,10 +106,11 @@ And /^an user with role (.+) and email (.+) exists as subaccount for customer (.
   sub_user = "User::#{role.camelize}".constantize.first(:conditions => { :email => sub_email })
 
   if sub_user.nil?
-    "User::#{role.camelize}".constantize.make!(:email => sub_email, :password => 'secret', :password_confirmation => 'secret', :parent_id => customer.id)
+    sub_user = "User::#{role.camelize}".constantize.make!(:email => sub_email, :password => 'secret', :password_confirmation => 'secret', :parent_id => customer.id)
   else
     sub_user.update_attribute(:parent_id, customer.id)
   end
+  sub_user.confirm!
 end
 
 Then /^User (.+) with role (.+) is blocked$/ do |email, role|

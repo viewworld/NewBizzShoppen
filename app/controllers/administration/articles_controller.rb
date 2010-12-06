@@ -6,11 +6,6 @@ class Administration::ArticlesController < Administration::AdministrationControl
     edit!
   end
 
-  def new
-    @article = Article::Cms.new
-    new!
-  end
-
   def update
     @article = Article::Cms.find(params[:id])
     @article.attributes = params[:article_cms]
@@ -18,8 +13,15 @@ class Administration::ArticlesController < Administration::AdministrationControl
   end
 
   def create
+    params[:article_cms] ||= {}
     @article = Article::Cms.new(params[:article_cms].merge(:scope => Article::Cms::MAIN_PAGE_ARTICLE))
-    create!
+    create! do |format|
+      if @article.errors.empty?
+        format.html { redirect_to edit_administration_article_path(@article)}
+      else
+        format.html { redirect_to administration_articles_path }
+      end
+    end
   end
 
   protected

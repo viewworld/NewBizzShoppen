@@ -5,6 +5,8 @@ en:
   common:
     back_link: Back
     edit_link: 'Edit'
+    cancel_link: 'Cancel'
+    delete_link: 'Delete'
     confirmation: Are You sure?
     help_link: 'Help'
   layout:
@@ -518,6 +520,7 @@ en:
           accept_lead_request_link: Accept lead request
           reject_lead_request_link: Reject lead request
           requested_by: 'Requested by: %{user}'
+          button_bulk_create_lead_request: 'Accept lead requests'
           button_bulk_destroy_lead_request: 'Reject lead requests'
           search:
             keyword_label: 'Keyword'
@@ -528,7 +531,7 @@ en:
             requested_by_label: 'Requested by'
             search_button: 'Search'
         flash:
-          lead_request_accepted_successfully: Lead request accepted
+          lead_request_accepted_successfully: 'You added lead to your list'
           lead_request_rejected_successfully: Lead request rejected
 
   lead_user:
@@ -750,6 +753,8 @@ en:
           notice: 'Lead requests were successfully created.'
         destroy:
           notice: 'Lead requests were successfully removed.'
+        update:
+          notice: 'Lead requests were successfully updated.'
     bulk_lead_share_by_email:
       actions:
         create:

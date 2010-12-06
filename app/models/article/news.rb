@@ -8,6 +8,12 @@ class ::Article::News < ::Article
       [I18n.t('administration.news.index.view.buyers'),BUYER],
   ].freeze
 
+  has_many :assets, :as => :resource, :dependent => :destroy, :finder_sql =>
+      'SELECT "assets".*' +
+      'FROM "assets"' +
+      'WHERE ("assets".resource_id = #{id} AND "assets".resource_type = \'Article::News\')'
+
+
   scoped_order :id, :title, :created_at
 
   scope :for_agent, where("scope = ?", AGENT)

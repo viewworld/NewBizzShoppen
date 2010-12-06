@@ -2,7 +2,7 @@
 
   <header><%= t("administration.articles.index.view.header") %></header>
 
-  <%= form_tag new_administration_article_path, :method => :get do %>
+  <%= form_tag administration_articles_path do %>
       <%= submit_tag t("administration.articles.index.view.new_article") %>
   <% end %>
 

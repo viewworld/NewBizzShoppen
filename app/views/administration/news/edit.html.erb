@@ -10,7 +10,11 @@
 
         </param:content>
         <param:actions>
-          <%= link_to t("common.back_link"), administration_news_index_path %>
+          <% if @news.title.blank? %>
+            <%= link_to t("common.cancel_link"), administration_news_path(@news), :method => :delete %>
+          <% else %>
+            <%= link_to t("common.back_link"), administration_news_index_path %>
+          <% end %>
           <ibt c="fltri" icon="save">
             <%= form.submit t("administration.news.edit.view.button_save") %>
           </ibt>

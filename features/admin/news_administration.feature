@@ -80,8 +80,13 @@ Scenario: I can specify if news should be displayed for buyers, agents or both(?
   And I select translated "administration.news.index.view.agent" from "article_news_scope"
   And I select translated "administration.news.index.view.buyer" from "article_news_scope"
 
+@selenium @_done
 Scenario: I can use WYSIWYG to edit news entry content
+  When I follow translated "layout.main_menu.admin.news"
+  And I press translated "administration.news.index.view.new_news"
+  Then I should see ckeditor on the page
 
+@_done @nontestable
 Scenario: I can upload and embed image into news entry
 
 @_done

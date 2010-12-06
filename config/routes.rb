@@ -61,7 +61,7 @@ Nbs::Application.routes.draw do
     root :to => "lead_requests#index"
     resources :subaccounts
     resources :lead_requests, :only => [:index, :update, :destroy]
-    resource :bulk_lead_requests, :controller => "bulk_lead_requests", :only => [:destroy]
+    resource :bulk_lead_requests, :controller => "bulk_lead_requests", :only => [:destroy, :update]
   end
 
   namespace :agents do
@@ -88,6 +88,7 @@ Nbs::Application.routes.draw do
 
   resource :password, :controller => 'password', :only => [:update]
   match 'password' => 'password#edit', :as => 'password'
+  match 'ckeditor/destroy/:id', :to => 'ckeditor#destroy'
 
   root :to => "home#show"
 
