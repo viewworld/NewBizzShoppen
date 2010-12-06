@@ -1,6 +1,6 @@
 class LeadUsers::LeadUserController < SecuredController
   def current_user
-    @lead_user ||= ::User::LeadUser.find(super.id)
+    @lead_user ||= ::User::LeadUser.find_by_id(super.id)
   end
 
   private

@@ -1,6 +1,6 @@
 class Customers::CustomerController < SecuredController
   def current_user
-    @customer ||= ::User::Customer.find(super.id)
+    @customer ||= ::User::Customer.find_by_id(super.id)
   end
 
   private
