@@ -9,4 +9,11 @@ module LeadPurchasesHelper
   def lead_purchase_has_email_address?(lead_purchase)
     lead_purchase.lead.email_address.present?
   end
+
+  def paid_values
+    [
+        [I18n.t('common.yes_label'),true],
+        [I18n.t('common.no_label'),false]
+    ]
+  end
 end

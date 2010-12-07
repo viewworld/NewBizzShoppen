@@ -7,23 +7,24 @@ Background: I am logged in as a system admin
   And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
   Then I sign in as jon@lajoie.ca with password secret
 
-@_done
+@selenium @_done
 Scenario: I can create new article
   When I follow translated "layout.main_menu.admin.articles"
   And I press translated "administration.articles.index.view.new_article"
   And I fill in "article_cms_title" with "MainPageArticle"
-  And I fill in "article_cms_content" with "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-  And I press translated "administration.articles.new.view.button_create"
+  And I fill in "article_cms_content_editor" ckeditor with "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  And I press translated "administration.articles.edit.view.button_save"
   And I should be on administration MainPageArticle article page
 
-@_done
+@selenium @_done
 Scenario: I can edit article
   When main page article exists with attributes "title:MainPageArticle,content:lorem"
   And I follow translated "layout.main_menu.admin.articles"
   And I follow translated "administration.articles.index.view.edit_link"
   And I fill in "article_cms_title" with "OtherTitle"
+  And I fill in "article_cms_content_editor" ckeditor with "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   And I press translated "administration.articles.edit.view.button_save"
-  Then I should be on administration OtherTitle article page
+  Then I should see "OtherTitle"
 
 @_done
 Scenario: I can browse articles with pagination
@@ -81,10 +82,8 @@ Scenario: I can filter articles to help only
 @_done
 Scenario: I can view the article
   When main page article exists with attributes "title:MainPageArticle,content:lorem"
-  And I follow translated "layout.main_menu.admin.articles"
-  And I follow translated "administration.articles.index.view.show_link"
-  Then I should be on administration MainPageArticle article page
-  And I should see "MainPageArticle"
+  And I am on administration MainPageArticle article page
+  Then I should see "MainPageArticle"
   And I should see "lorem"
 
 @_added @_done
@@ -92,7 +91,6 @@ Scenario: I can destroy main page article
   When main page article exists with attributes "title:MainPageArticle"
   And I follow translated "layout.main_menu.admin.articles"
   Then I should see "MainPageArticle"
-  And I open page in browser
   And I follow translated "administration.articles.index.view.delete_link"
   Then I should not see "MainPageArticle"
 

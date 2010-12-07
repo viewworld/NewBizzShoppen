@@ -9,6 +9,8 @@ en:
     delete_link: 'Delete'
     confirmation: Are You sure?
     help_link: 'Help'
+    yes_label: 'Yes'
+    no_label: 'No'
   layout:
     main_menu:
       admin:
@@ -607,6 +609,7 @@ en:
             deal_value_to_label: 'To'
             country_label: 'Country'
             assignee_label: 'Assignee'
+            paid_label: 'Paid'
             search_button: 'Search'
     bulk_lead_share_by_email:
       new:

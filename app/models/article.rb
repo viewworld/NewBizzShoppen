@@ -13,6 +13,7 @@ class Article < ActiveRecord::Base
   scope :with_scope, lambda {|scope| where(["scope = ?", scope]) }
   scope :latest, order("created_at DESC")
   scope :published, where(:published => true)
+  scope :only_translations, lambda {|locale| includes(:translations).where(:article_translations => {:locale => locale.to_s})}
 
   private
 
@@ -23,5 +24,9 @@ class Article < ActiveRecord::Base
   end
 
   public
+
+  def publish!
+    update_attribute(:published, true)
+  end
 
 end

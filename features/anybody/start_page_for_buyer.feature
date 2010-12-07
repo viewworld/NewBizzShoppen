@@ -12,10 +12,10 @@ Scenario: I can see welcome text fetch from the database
 
 @m3 @ao @_done
 Scenario: I can see 3 latest buyer news excerpts
-  Given buyer news exists with attributes "title:FirstNews"
-  And buyer news exists with attributes "title:SecondNews"
-  And buyer news exists with attributes "title:ThirdNews"
-  And buyer news exists with attributes "title:FourthNews"
+  Given published buyer news exists with attributes "title:FirstNews"
+  And published buyer news exists with attributes "title:SecondNews"
+  And published buyer news exists with attributes "title:ThirdNews"
+  And published buyer news exists with attributes "title:FourthNews"
   And I follow translated "home.show.view.buyer"
   Then I should see "FourthNews"
   And I should see "SecondNews"
@@ -41,7 +41,7 @@ Scenario: I can see 10 latest leads
 
 @m3 @ao @_done
 Scenario: I can go to details of buyer news
-  Given buyer news exists with attributes "title:FirstNews"
+  Given published buyer news exists with attributes "title:FirstNews"
   And I follow translated "home.show.view.buyer"
   And I follow translated "buyer_home.show.view.read_more_link" within "#news"
   Then I should be on FirstNews news page

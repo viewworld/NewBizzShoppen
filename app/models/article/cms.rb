@@ -23,6 +23,8 @@ class Article::Cms < ::Article
   scope :main_page_articles, where(:scope => MAIN_PAGE_ARTICLE)
   scope :interface_content_texts, where(:scope => INTERFACE_CONTENT_TEXT)
   scope :help_popups, where(:scope => HELP_POPUP)
+  scope :ascend_by_title, only_translations(I18n.locale).order("article_translations.title ASC")
+  scope :descend_by_title, only_translations(I18n.locale).order("article_translations.title DESC")
 
   before_destroy :can_be_destroyed?
 

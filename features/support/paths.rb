@@ -62,10 +62,10 @@ module NavigationHelpers
         buyer_home_path
     when /administration articles page/
         administration_articles_path
-    when /administration (.*) article page/
-        administration_article_path(Article::Cms.find_by_title($1))
-    when /administration (.*) news page/
-        administration_news_path(Article::News.find_by_title($1))
+      when /administration (.*) article page/
+        administration_article_path(Article::Cms.includes(:translations).where(:article_translations => {:title => $1}).first)
+      when /administration (.*) news page/
+        administration_news_path(Article::News.includes(:translations).where(:article_translations => {:title => $1}).first)
       when /(.*) news page/
         news = Article::News.find_by_title($1)
         news_path(news)

@@ -1,7 +1,7 @@
 class Lead < ActiveRecord::Base
   INFINITY             = 1.0/0
   NOVELTY_LEVEL_RANGES = [(0..8), (9..30), (31..INFINITY)]
-  HOTNESS_LEVEL_RANGES = [(29..INFINITY), (7..28), (-INFINITY..6)]  
+  HOTNESS_LEVEL_RANGES = [(29..INFINITY), (7..28), (-INFINITY..6)]
 
   translates :header, :description, :hidden_description
 

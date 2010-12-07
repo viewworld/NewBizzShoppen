@@ -8,6 +8,7 @@
       <%= t("lead_buyer.lead_purchases.index.view.search.deal_value_to_label") %><%= f.select :with_deal_value_to, User::DEAL_VALUE_RANGE, {:include_blank => true} %>
       <%= t("lead_buyer.lead_purchases.index.view.search.country_label") %><%= f.select :with_country, @countries, {:include_blank => true} %>
       <%= t("lead_buyer.lead_purchases.index.view.search.assignee_label") %><%= f.select :with_assignee, @assignees, {:include_blank => true} %>
+      <%= t("lead_buyer.lead_purchases.index.view.search.paid_label") %><%= f.select :with_paid, paid_values, {:include_blank => true} %>
       <%= submit_tag t("lead_buyer.lead_purchases.index.view.search.search_button") %>
   <% end %>
 

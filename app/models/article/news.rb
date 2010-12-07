@@ -18,5 +18,8 @@ class ::Article::News < ::Article
 
   scope :for_agent, where("scope = ?", AGENT)
   scope :for_buyer, where("scope = ?", BUYER)
+  scope :ascend_by_title, only_translations(I18n.locale).order("article_translations.title ASC")
+  scope :descend_by_title, only_translations(I18n.locale).order("article_translations.title DESC")
+
 
 end

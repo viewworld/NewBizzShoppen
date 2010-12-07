@@ -15,14 +15,14 @@ SET search_path = public, pg_catalog;
 -- Name: article_translations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('article_translations_id_seq', 16, true);
+SELECT pg_catalog.setval('article_translations_id_seq', 33, true);
 
 
 --
 -- Name: articles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('articles_id_seq', 9, true);
+SELECT pg_catalog.setval('articles_id_seq', 17, true);
 
 
 --
@@ -51,13 +51,6 @@ SELECT pg_catalog.setval('category_interests_id_seq', 1, false);
 --
 
 SELECT pg_catalog.setval('category_translations_id_seq', 2, true);
-
-
---
--- Name: ckeditor_assets_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('ckeditor_assets_id_seq', 1, false);
 
 
 --
@@ -149,22 +142,38 @@ SELECT pg_catalog.setval('users_id_seq', 5, true);
 --
 
 COPY article_translations (id, article_id, locale, content, title, created_at, updated_at) FROM stdin;
-1	1	dk	About us	About us	2010-12-03 12:19:53.909424	2010-12-03 12:19:53.909424
-2	1	en	About us	About us	2010-12-03 12:19:53.946565	2010-12-03 12:19:53.946565
-3	2	dk	Privacy	Privacy	2010-12-03 12:19:53.990871	2010-12-03 12:19:53.990871
-4	2	en	Privacy	Privacy	2010-12-03 12:19:54.023898	2010-12-03 12:19:54.023898
-5	3	dk	Terms & Conditions	Terms & Conditions	2010-12-03 12:19:54.066148	2010-12-03 12:19:54.066148
-6	3	en	Terms & Conditions	Terms & Conditions	2010-12-03 12:19:54.095453	2010-12-03 12:19:54.095453
-7	4	dk	Blurb sign up	Blurb sign up	2010-12-03 12:19:54.137911	2010-12-03 12:19:54.137911
-8	4	en	Blurb sign up	Blurb sign up	2010-12-03 12:19:54.161283	2010-12-03 12:19:54.161283
-9	5	dk	Blurb buyer home	Blurb buyer home	2010-12-03 12:19:54.235922	2010-12-03 12:19:54.235922
-10	5	en	Blurb buyer home	Blurb buyer home	2010-12-03 12:19:54.262394	2010-12-03 12:19:54.262394
-11	6	dk	Blurb agent home	Blurb agent home	2010-12-03 12:19:54.308112	2010-12-03 12:19:54.308112
-12	6	en	Blurb agent home	Blurb agent home	2010-12-03 12:19:54.33609	2010-12-03 12:19:54.33609
-13	7	dk	Blurb start page role selection	Blurb start page role selection	2010-12-03 12:19:54.394446	2010-12-03 12:19:54.394446
-14	7	en	Blurb start page role selection	Blurb start page role selection	2010-12-03 12:19:54.420206	2010-12-03 12:19:54.420206
-15	8	dk	Reset password	Reset password	2010-12-03 12:19:54.648665	2010-12-03 12:19:54.648665
-16	8	en	Reset password	Reset password	2010-12-03 12:19:54.716222	2010-12-03 12:19:54.716222
+1	1	dk	About us	About us	2010-12-07 10:54:44.962365	2010-12-07 10:54:44.962365
+2	1	en	About us	About us	2010-12-07 10:54:44.993925	2010-12-07 10:54:44.993925
+3	2	dk	Privacy	Privacy	2010-12-07 10:54:45.05759	2010-12-07 10:54:45.05759
+4	2	en	Privacy	Privacy	2010-12-07 10:54:45.085134	2010-12-07 10:54:45.085134
+5	3	dk	Terms & Conditions	Terms & Conditions	2010-12-07 10:54:45.267657	2010-12-07 10:54:45.267657
+6	3	en	Terms & Conditions	Terms & Conditions	2010-12-07 10:54:45.306468	2010-12-07 10:54:45.306468
+7	4	dk	Blurb sign up	Blurb sign up	2010-12-07 10:54:45.378856	2010-12-07 10:54:45.378856
+8	4	en	Blurb sign up	Blurb sign up	2010-12-07 10:54:45.407997	2010-12-07 10:54:45.407997
+9	5	dk	Blurb buyer home	Blurb buyer home	2010-12-07 10:54:45.461986	2010-12-07 10:54:45.461986
+10	5	en	Blurb buyer home	Blurb buyer home	2010-12-07 10:54:45.48808	2010-12-07 10:54:45.48808
+11	6	dk	Blurb agent home	Blurb agent home	2010-12-07 10:54:45.768269	2010-12-07 10:54:45.768269
+12	6	en	Blurb agent home	Blurb agent home	2010-12-07 10:54:45.803795	2010-12-07 10:54:45.803795
+13	7	dk	Blurb start page role selection	Blurb start page role selection	2010-12-07 10:54:45.884659	2010-12-07 10:54:45.884659
+14	7	en	Blurb start page role selection	Blurb start page role selection	2010-12-07 10:54:45.909317	2010-12-07 10:54:45.909317
+15	8	dk	Reset password	Reset password	2010-12-07 10:54:45.960365	2010-12-07 10:54:45.960365
+16	8	en	Reset password	Reset password	2010-12-07 10:54:45.998226	2010-12-07 10:54:45.998226
+18	10	dk	About us	About us	2010-12-07 13:54:01.285794	2010-12-07 13:54:01.285794
+19	10	en	About us	About us	2010-12-07 13:54:01.315059	2010-12-07 13:54:01.315059
+20	11	dk	Privacy	Privacy	2010-12-07 13:54:01.382545	2010-12-07 13:54:01.382545
+21	11	en	Privacy	Privacy	2010-12-07 13:54:01.407215	2010-12-07 13:54:01.407215
+22	12	dk	Terms & Conditions	Terms & Conditions	2010-12-07 13:54:01.475686	2010-12-07 13:54:01.475686
+23	12	en	Terms & Conditions	Terms & Conditions	2010-12-07 13:54:01.511539	2010-12-07 13:54:01.511539
+24	13	dk	Blurb sign up	Blurb sign up	2010-12-07 13:54:01.587624	2010-12-07 13:54:01.587624
+25	13	en	Blurb sign up	Blurb sign up	2010-12-07 13:54:01.624643	2010-12-07 13:54:01.624643
+26	14	dk	Blurb buyer home	Blurb buyer home	2010-12-07 13:54:01.670261	2010-12-07 13:54:01.670261
+27	14	en	Blurb buyer home	Blurb buyer home	2010-12-07 13:54:01.692633	2010-12-07 13:54:01.692633
+28	15	dk	Blurb agent home	Blurb agent home	2010-12-07 13:54:01.768092	2010-12-07 13:54:01.768092
+29	15	en	Blurb agent home	Blurb agent home	2010-12-07 13:54:01.791188	2010-12-07 13:54:01.791188
+30	16	dk	Blurb start page role selection	Blurb start page role selection	2010-12-07 13:54:01.841492	2010-12-07 13:54:01.841492
+31	16	en	Blurb start page role selection	Blurb start page role selection	2010-12-07 13:54:01.86256	2010-12-07 13:54:01.86256
+32	17	dk	Reset password	Reset password	2010-12-07 13:54:01.912319	2010-12-07 13:54:01.912319
+33	17	en	Reset password	Reset password	2010-12-07 13:54:01.938908	2010-12-07 13:54:01.938908
 \.
 
 
@@ -172,15 +181,15 @@ COPY article_translations (id, article_id, locale, content, title, created_at, u
 -- Data for Name: articles; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY articles (id, type, title, content, created_at, updated_at, key, scope, published, published_date) FROM stdin;
-1	Article::Cms	About us	About us	2010-12-03 12:19:53.890576	2010-12-03 12:19:53.93942	about_us	0	f	\N
-2	Article::Cms	Privacy	Privacy	2010-12-03 12:19:53.983562	2010-12-03 12:19:54.015494	privacy	0	f	\N
-3	Article::Cms	Terms & Conditions	Terms & Conditions	2010-12-03 12:19:54.058071	2010-12-03 12:19:54.088508	terms_conditions	0	f	\N
-4	Article::Cms	Blurb sign up	Blurb sign up	2010-12-03 12:19:54.129491	2010-12-03 12:19:54.153963	blurb_sign_up	1	f	\N
-5	Article::Cms	Blurb buyer home	Blurb buyer home	2010-12-03 12:19:54.227873	2010-12-03 12:19:54.256136	blurb_buyer_home	1	f	\N
-6	Article::Cms	Blurb agent home	Blurb agent home	2010-12-03 12:19:54.300346	2010-12-03 12:19:54.329085	blurb_agent_home	1	f	\N
-7	Article::Cms	Blurb start page role selection	Blurb start page role selection	2010-12-03 12:19:54.387674	2010-12-03 12:19:54.413392	blurb_start_page_role_selection	1	f	\N
-8	Article::Cms	Reset password	Reset password	2010-12-03 12:19:54.641282	2010-12-03 12:19:54.687457	reset_password	2	f	\N
+COPY articles (id, type, created_at, updated_at, key, scope, published, published_date) FROM stdin;
+10	Article::Cms	2010-12-07 13:54:01.271877	2010-12-07 13:54:01.321437	about_us	0	t	2010-12-07 13:54:01.321312
+11	Article::Cms	2010-12-07 13:54:01.375736	2010-12-07 13:54:01.414591	privacy	0	t	2010-12-07 13:54:01.414468
+12	Article::Cms	2010-12-07 13:54:01.466078	2010-12-07 13:54:01.521468	terms_conditions	0	t	2010-12-07 13:54:01.521277
+13	Article::Cms	2010-12-07 13:54:01.578186	2010-12-07 13:54:01.630882	blurb_sign_up	1	t	2010-12-07 13:54:01.630774
+14	Article::Cms	2010-12-07 13:54:01.663716	2010-12-07 13:54:01.701951	blurb_buyer_home	1	t	2010-12-07 13:54:01.701775
+15	Article::Cms	2010-12-07 13:54:01.760869	2010-12-07 13:54:01.798848	blurb_agent_home	1	t	2010-12-07 13:54:01.798735
+16	Article::Cms	2010-12-07 13:54:01.835421	2010-12-07 13:54:01.868967	blurb_start_page_role_selection	1	t	2010-12-07 13:54:01.868857
+17	Article::Cms	2010-12-07 13:54:01.902928	2010-12-07 13:54:01.947558	reset_password	2	t	2010-12-07 13:54:01.94734
 \.
 
 
@@ -197,8 +206,8 @@ COPY assets (id, asset_file_name, asset_content_type, asset_file_size, asset_typ
 --
 
 COPY categories (id, name, description, created_at, updated_at, parent_id, lft, rgt, depth, total_leads_count) FROM stdin;
-1	Test category 1	\N	2010-12-03 12:19:52.207144	2010-12-03 12:19:52.207144	\N	1	2	\N	0
-2	Test category 2	\N	2010-12-03 12:19:52.279948	2010-12-03 12:19:52.279948	\N	3	4	\N	0
+1	Test category 1	\N	2010-12-07 10:54:43.7098	2010-12-07 10:54:43.7098	\N	1	2	\N	0
+2	Test category 2	\N	2010-12-07 10:54:43.748366	2010-12-07 10:54:43.748366	\N	3	4	\N	0
 \.
 
 
@@ -215,16 +224,8 @@ COPY category_interests (id, category_id, user_id, created_at, updated_at) FROM 
 --
 
 COPY category_translations (id, category_id, locale, description, name, created_at, updated_at) FROM stdin;
-1	1	en	\N	Test category 1	2010-12-03 12:19:52.244797	2010-12-03 12:19:52.244797
-2	2	en	\N	Test category 2	2010-12-03 12:19:52.293155	2010-12-03 12:19:52.293155
-\.
-
-
---
--- Data for Name: ckeditor_assets; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY ckeditor_assets (id, data_file_name, data_content_type, data_file_size, assetable_id, assetable_type, type, guid, locale, user_id, created_at, updated_at) FROM stdin;
+1	1	en	\N	Test category 1	2010-12-07 10:54:43.721117	2010-12-07 10:54:43.721117
+2	2	en	\N	Test category 2	2010-12-07 10:54:43.753789	2010-12-07 10:54:43.753789
 \.
 
 
@@ -233,9 +234,9 @@ COPY ckeditor_assets (id, data_file_name, data_content_type, data_file_size, ass
 --
 
 COPY countries (id, name, created_at, updated_at) FROM stdin;
-1	Denmark	2010-12-03 12:19:52.463189	2010-12-03 12:19:52.463189
-2	United Kingdom	2010-12-03 12:19:52.473301	2010-12-03 12:19:52.473301
-3	Scotland	2010-12-03 12:19:53.575658	2010-12-03 12:19:53.575658
+1	Denmark	2010-12-07 10:54:43.848963	2010-12-07 10:54:43.848963
+2	United Kingdom	2010-12-07 10:54:43.860387	2010-12-07 10:54:43.860387
+3	Scotland	2010-12-07 10:54:44.565925	2010-12-07 10:54:44.565925
 \.
 
 
@@ -252,16 +253,16 @@ COPY country_interests (id, country_id, user_id, created_at, updated_at) FROM st
 --
 
 COPY email_template_translations (id, email_template_id, locale, body, subject, created_at, updated_at) FROM stdin;
-1	1	en	<p>Welcome {{user.email}}!</p><p>You can confirm your account through the link below:</p><p><a href="{{user.confirmation_instructions_url}}">Confirm my account</a></p>	Confirmation instructions	2010-12-03 12:19:52.552138	2010-12-03 12:19:52.552138
-2	1	dk	<p>Welcome {{user.email}}!</p><p>You can confirm your account through the link below:</p><p><a href="{{user.confirmation_instructions_url}}">Confirm my account</a></p>	[DK] Confirmation instructions	2010-12-03 12:19:52.592838	2010-12-03 12:19:52.592838
-3	2	en	<p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href="{{ user.reset_password_instructions_url }}">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>	Reset password instructions	2010-12-03 12:19:52.621149	2010-12-03 12:19:52.621149
-4	2	dk	<p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href="{{ user.reset_password_instructions_url }}">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>	[DK] Reset password instructions	2010-12-03 12:19:52.651332	2010-12-03 12:19:52.651332
-5	3	en	{% for lead in leads %}\n<p>{{lead.id}}</p>\n{% endfor %}	Somebody shared leads with you	2010-12-03 12:19:52.680635	2010-12-03 12:19:52.680635
-6	3	dk	{% for lead in leads %}\n<p>{{lead.id}}</p>\n{% endfor %}	[DK] Somebody shared leads with you	2010-12-03 12:19:52.70729	2010-12-03 12:19:52.70729
-7	4	en	<p>{{lead.id}}</p>	Contact regarding lead	2010-12-03 12:19:52.734263	2010-12-03 12:19:52.734263
-8	4	dk	<p>{{lead.id}}</p>	[DK] Contact regarding lead	2010-12-03 12:19:52.779328	2010-12-03 12:19:52.779328
-9	5	en	<p>{{lead_purchase.id}}</p>	Lead Purchase is about to expire	2010-12-03 12:19:52.817565	2010-12-03 12:19:52.817565
-10	5	dk	<p>{{lead_purchase.id}}</p>	[DK] Lead Purchase is about to expire	2010-12-03 12:19:52.842164	2010-12-03 12:19:52.842164
+1	1	en	<p>Welcome {{user.email}}!</p><p>You can confirm your account through the link below:</p><p><a href="{{user.confirmation_instructions_url}}">Confirm my account</a></p>	Confirmation instructions	2010-12-07 10:54:43.902702	2010-12-07 10:54:43.902702
+2	1	dk	<p>Welcome {{user.email}}!</p><p>You can confirm your account through the link below:</p><p><a href="{{user.confirmation_instructions_url}}">Confirm my account</a></p>	[DK] Confirmation instructions	2010-12-07 10:54:43.94108	2010-12-07 10:54:43.94108
+3	2	en	<p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href="{{ user.reset_password_instructions_url }}">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>	Reset password instructions	2010-12-07 10:54:43.961868	2010-12-07 10:54:43.961868
+4	2	dk	<p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href="{{ user.reset_password_instructions_url }}">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>	[DK] Reset password instructions	2010-12-07 10:54:43.982622	2010-12-07 10:54:43.982622
+5	3	en	{% for lead in leads %}\n<p>{{lead.id}}</p>\n{% endfor %}	Somebody shared leads with you	2010-12-07 10:54:44.006282	2010-12-07 10:54:44.006282
+6	3	dk	{% for lead in leads %}\n<p>{{lead.id}}</p>\n{% endfor %}	[DK] Somebody shared leads with you	2010-12-07 10:54:44.029022	2010-12-07 10:54:44.029022
+7	4	en	<p>{{lead.id}}</p>	Contact regarding lead	2010-12-07 10:54:44.159969	2010-12-07 10:54:44.159969
+8	4	dk	<p>{{lead.id}}</p>	[DK] Contact regarding lead	2010-12-07 10:54:44.179301	2010-12-07 10:54:44.179301
+9	5	en	<p>{{lead_purchase.id}}</p>	Lead Purchase is about to expire	2010-12-07 10:54:44.200722	2010-12-07 10:54:44.200722
+10	5	dk	<p>{{lead_purchase.id}}</p>	[DK] Lead Purchase is about to expire	2010-12-07 10:54:44.226495	2010-12-07 10:54:44.226495
 \.
 
 
@@ -270,11 +271,11 @@ COPY email_template_translations (id, email_template_id, locale, body, subject, 
 --
 
 COPY email_templates (id, name, subject, "from", bcc, cc, body, template, uniq_id, persist, created_at, updated_at) FROM stdin;
-1	confirmation instructions	[DK] Confirmation instructions	noreply@newbizzshoppen.com	\N	\N	<p>Welcome {{user.email}}!</p><p>You can confirm your account through the link below:</p><p><a href="{{user.confirmation_instructions_url}}">Confirm my account</a></p>	\N	confirmation_instructions	t	2010-12-03 12:19:52.514977	2010-12-03 12:19:52.582504
-2	reset_password_instructions	[DK] Reset password instructions	noreply@newbizzshoppen.com	\N	\N	<p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href="{{ user.reset_password_instructions_url }}">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>	\N	reset_password_instructions	t	2010-12-03 12:19:52.612872	2010-12-03 12:19:52.643167
-3	Share leads by email message	[DK] Somebody shared leads with you	noreply@newbizzshoppen.com	\N	\N	{% for lead in leads %}\n<p>{{lead.id}}</p>\n{% endfor %}	\N	share_leads_by_email_message	t	2010-12-03 12:19:52.671429	2010-12-03 12:19:52.700469
-4	Contact Lead by email message	[DK] Contact regarding lead	noreply@newbizzshoppen.com	\N	\N	<p>{{lead.id}}</p>	\N	contact_lead_by_email_message	t	2010-12-03 12:19:52.726645	2010-12-03 12:19:52.772593
-5	Lead Purchase is about to expire	[DK] Lead Purchase is about to expire	noreply@newbizzshoppen.com	\N	\N	<p>{{lead_purchase.id}}</p>	\N	lead_purchase_is_about_to_expire	t	2010-12-03 12:19:52.809634	2010-12-03 12:19:52.836012
+1	confirmation instructions	[DK] Confirmation instructions	noreply@newbizzshoppen.com	\N	\N	<p>Welcome {{user.email}}!</p><p>You can confirm your account through the link below:</p><p><a href="{{user.confirmation_instructions_url}}">Confirm my account</a></p>	\N	confirmation_instructions	t	2010-12-07 10:54:43.888693	2010-12-07 10:54:43.934795
+2	reset_password_instructions	[DK] Reset password instructions	noreply@newbizzshoppen.com	\N	\N	<p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href="{{ user.reset_password_instructions_url }}">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>	\N	reset_password_instructions	t	2010-12-07 10:54:43.954614	2010-12-07 10:54:43.976518
+3	Share leads by email message	[DK] Somebody shared leads with you	noreply@newbizzshoppen.com	\N	\N	{% for lead in leads %}\n<p>{{lead.id}}</p>\n{% endfor %}	\N	share_leads_by_email_message	t	2010-12-07 10:54:43.998106	2010-12-07 10:54:44.022224
+4	Contact Lead by email message	[DK] Contact regarding lead	noreply@newbizzshoppen.com	\N	\N	<p>{{lead.id}}</p>	\N	contact_lead_by_email_message	t	2010-12-07 10:54:44.153102	2010-12-07 10:54:44.173555
+5	Lead Purchase is about to expire	[DK] Lead Purchase is about to expire	noreply@newbizzshoppen.com	\N	\N	<p>{{lead_purchase.id}}</p>	\N	lead_purchase_is_about_to_expire	t	2010-12-07 10:54:44.194098	2010-12-07 10:54:44.217366
 \.
 
 
@@ -307,14 +308,14 @@ COPY leads (id, header, category_id, description, hidden_description, creator_id
 --
 
 COPY settings (id, var, value, created_at, updated_at) FROM stdin;
-1	level_one_certification_threshold	--- 0\n	2010-12-03 12:19:52.308633	2010-12-03 12:19:52.308633
-2	level_two_certification_threshold	--- 0\n	2010-12-03 12:19:52.337496	2010-12-03 12:19:52.337496
-3	level_three_certification_threshold	--- 0\n	2010-12-03 12:19:52.365032	2010-12-03 12:19:52.365032
-4	default_payout_delay	--- 0\n	2010-12-03 12:19:52.377255	2010-12-03 12:19:52.377255
-5	default_leads_per_page	--- 5\n	2010-12-03 12:19:52.387679	2010-12-03 12:19:52.387679
-6	default_news_per_page	--- 5\n	2010-12-03 12:19:52.412119	2010-12-03 12:19:52.412119
-7	certification_level_1	--- 10\n	2010-12-03 12:19:52.435566	2010-12-03 12:19:52.435566
-8	certification_level_2	--- 20\n	2010-12-03 12:19:52.449345	2010-12-03 12:19:52.449345
+1	level_one_certification_threshold	--- 0\n	2010-12-07 10:54:43.768821	2010-12-07 10:54:43.768821
+2	level_two_certification_threshold	--- 0\n	2010-12-07 10:54:43.780699	2010-12-07 10:54:43.780699
+3	level_three_certification_threshold	--- 0\n	2010-12-07 10:54:43.789577	2010-12-07 10:54:43.789577
+4	default_payout_delay	--- 0\n	2010-12-07 10:54:43.799397	2010-12-07 10:54:43.799397
+5	default_leads_per_page	--- 5\n	2010-12-07 10:54:43.807828	2010-12-07 10:54:43.807828
+6	default_news_per_page	--- 5\n	2010-12-07 10:54:43.815569	2010-12-07 10:54:43.815569
+7	certification_level_1	--- 10\n	2010-12-07 10:54:43.824626	2010-12-07 10:54:43.824626
+8	certification_level_2	--- 20\n	2010-12-07 10:54:43.833376	2010-12-07 10:54:43.833376
 \.
 
 
@@ -347,10 +348,10 @@ COPY tolk_translations (id, phrase_id, locale_id, text, previous_text, primary_u
 --
 
 COPY users (id, email, encrypted_password, password_salt, reset_password_token, remember_token, remember_created_at, sign_in_count, current_sign_in_at, last_sign_in_at, current_sign_in_ip, last_sign_in_ip, confirmation_token, confirmed_at, confirmation_sent_at, locked_at, created_at, updated_at, roles_mask, first_name, last_name, phone, screen_name, street, city, zip_code, county, country, newsletter_on, payout, parent_id, age, subaccounts_counter, mobile_phone, department, deal_value_range_start, deal_value_range_end, rss_token, notify_about_new_leads, big_buyer) FROM stdin;
-1	blazejek@gmail.com	d77295750c486779d9fe2959e4fb4a563147cbff2203de111be7d561444e72d0e338cd5109abcc127c93f3834ebaa5c435b154d6064b42a570295082d6e83625	ttHJ3Q9wtSuXMcvHFO26	\N	\N	\N	0	\N	\N	\N	\N	\N	2010-12-03 12:19:53.419168	2010-12-03 12:19:52.910713	\N	2010-12-03 12:19:52.911065	2010-12-03 12:19:53.419765	1	Eino	Mohr	(086)731-8277 x49603	admin1	Francisco Gardens	New Krischester	69494-0535	Nottinghamshire	1	\N	\N	\N	\N	0	\N	\N	\N	\N	mAViQyXELpBrOn3I3z4xQQcyOxlPnhRppSaTliqzr5qUWcb2KSm5kFldd4aITh	f	\N
-2	buyer@gmail2.com	14ba866b0e62d9531edf73cdf0ea364f79fa974d5c50fa4d9ffeaf1e965a86a973f823c8250424a0d7f3d5d2476097606adc31a93f231f278c2b970a64af4a10	M8XescxXoOQQ-g_ZGmk8	\N	\N	\N	0	\N	\N	\N	\N	\N	2010-12-03 12:19:53.52867	2010-12-03 12:19:53.487374	\N	2010-12-03 12:19:53.487756	2010-12-03 12:19:53.529195	48	Giovani	Block	847.013.0012 x62638	Carlotta Mertz	Larson Extensions	East Odieburgh	86140	Devon	1	\N	\N	\N	\N	0	\N	\N	\N	\N	SqvZ6FyUNj76dlhEOtu2YTfhfd3YPqpAVhIrJArhi58j3LZPaHAVSxfLuB5DeQ	f	\N
-3	agent@gmail2.com	6eea1c6abcd922fb078375e2306ffd45ef2d8a3c9438afc6183a98414e616c905254667e82d2977484df4686be26109b3679dd2de4e9bd67e7141c9b48b29b16	0ms6_Ap6JIfdhjPQWfrl	\N	\N	\N	0	\N	\N	\N	\N	\N	2010-12-03 12:19:53.636935	2010-12-03 12:19:53.588665	\N	2010-12-03 12:19:53.588966	2010-12-03 12:19:53.637568	2	Henry	Wilkinson	1-243-238-1481 x48240	Josh Quitzon	Garry Plains	Heaneymouth	09721-0116	Strathclyde	3	\N	0	\N	\N	0	\N	\N	\N	\N	oEmgc24Mn4aUXWMNdmvYAHoWj6oTPUNDcL6HJCrrLubryUyGe5h1bZiQ1owhRb	f	\N
-4	leaduser@gmail2.com	d6ef34879f20a604e99fa260d16d022ed44a4fbe808f32c83f567231a114ddeee09d837dec0cf99c8e00f7d59af43dddb6f14622298d8e28c623e3d86ae15d2c	oaVDWFTBN5DuD1j9uGh3	\N	\N	\N	0	\N	\N	\N	\N	\N	2010-12-03 12:19:53.718546	2010-12-03 12:19:53.683364	\N	2010-12-03 12:19:53.683684	2010-12-03 12:19:53.719121	64	Aron	King	334-296-1457 x2957	Buford Hettinger I	Else Crest	North Arnulfotown	74073-7922	Northumberland	1	\N	\N	\N	\N	0	\N	\N	\N	\N	IiS6PMld8L7mqmnMKR0pXHpE8gW0tW9lbmsH0P6IaTN7W0iwJC4ilYvKcNQclY	f	\N
+1	blazejek@gmail.com	ec1d46f87f9135815e1cf828760d065529a1b3505ccc6a133e723e93b98ae46b41c33b18e0aa360ba858e5a8bf0d08e906e7c3e08811586843d3723396be5522	ZxYvzNgjEZpIyoL3etq6	\N	\N	\N	0	\N	\N	\N	\N	\N	2010-12-07 10:54:44.443345	2010-12-07 10:54:44.309214	\N	2010-12-07 10:54:44.309542	2010-12-07 10:54:44.443803	1	Humberto	Kiehn	1-579-342-1526 x45730	admin1	Luisa Valley	Klockofort	80241	Tyne and Wear	1	\N	\N	\N	\N	0	\N	\N	\N	\N	rxtovF4CaihajtgsjjooipODNL6sdIj1vH7oI7kn4jcx0PTm6nBo6oykefKL4T	f	\N
+2	buyer@gmail2.com	e8f6c0e4e0174cc42cd8a50e7afcf609acdd28776d41b5a31c6c38cf72345347d2c624e7162930f8c765367f6ff0c7f9abe436344b4eb7764b69e7422e317bfe	dNaQ9NX6V9-RKX57Y3M8	\N	\N	\N	0	\N	\N	\N	\N	\N	2010-12-07 10:54:44.527724	2010-12-07 10:54:44.493431	\N	2010-12-07 10:54:44.493755	2010-12-07 10:54:44.528225	48	Alek	Gerhold	1-122-655-4594 x5079	Myrna Williamson	Brad Plaza	Lake Zachery	25009	Merseyside	1	\N	\N	\N	\N	0	\N	\N	\N	\N	eR6qycH2S6rE4XetKTkfUJLIEnJ0fqBlTKCqIS4Z2QoEKeVvTdsSlVHynUG9Lb	f	\N
+3	agent@gmail2.com	877dd7cbbd55ba7510425354fef8b192839d003bf5637450d64c8a7d2844c9f0167cb45e117d7dd093e7d7ba9d8c9e5cadf37fb5e79c9f03a09775daf47ed607	qJGwCVhxqZQ9g3cFiB8K	\N	\N	\N	0	\N	\N	\N	\N	\N	2010-12-07 10:54:44.62017	2010-12-07 10:54:44.580524	\N	2010-12-07 10:54:44.580931	2010-12-07 10:54:44.620772	2	Michale	Haley	373-778-5193	Urban Bednar	Verona Terrace	Lake Anibal	15664-0546	Greater Manchester	3	\N	0	\N	\N	0	\N	\N	\N	\N	PNevmv4qj3629rVQ5aS6WgZclmyisqblV4AyTYlOssrlQiWxqPHQogzeMX0Yej	f	\N
+4	leaduser@gmail2.com	2072f9f27be40810e82e8b36097df325ac3020547fc8f1f2b658a5a17e649c0a02faa12d0fdfba406f9c4ef2d25f310b29e55e29df60e97e5ae010d5dc9bf499	0A5cRV6XQP4XbRaxsuDj	\N	\N	\N	0	\N	\N	\N	\N	\N	2010-12-07 10:54:44.817864	2010-12-07 10:54:44.670505	\N	2010-12-07 10:54:44.670818	2010-12-07 10:54:44.818308	64	Myrtie	Heathcote	272.416.7291 x4382	Miss Elyssa Carter	Dibbert Drive	New Michaleport	57490-7866	Isle of Wight	1	\N	\N	\N	\N	0	\N	\N	\N	\N	Bw1ZSFMOSno7WNOmSTMWGENOXadezuczkMiX3978A9G7NOlrnB3t7pHeTC5Pb1	f	\N
 \.
 
 

@@ -29,8 +29,8 @@ Scenario: I can sort listing of all news by creation date and title
 
 @_done
 Scenario: I can filter listing of all news by scope (buyers, agents, both) and by keyword (on title and content)
-  When agent news exists with attributes "title:AgentNews"
-  And buyer news exists with attributes "title:BuyerNews"
+  When published agent news exists with attributes "title:AgentNews"
+  And published buyer news exists with attributes "title:BuyerNews"
   And I follow translated "layout.main_menu.admin.news"
   Then I should see "AgentNews"
   And I should see "BuyerNews"
@@ -43,34 +43,37 @@ Scenario: I can filter listing of all news by scope (buyers, agents, both) and b
   Then I should see "BuyerNews"
   And I should not see "AgentNews"
 
-@_done
+@selenium @_done
 Scenario: I can edit existing news entry
   When news exists with attributes "title:FirstNews"
   And I follow translated "layout.main_menu.admin.news"
   And I follow translated "administration.news.index.view.edit_link"
   And I fill in "article_news_title" with "OtherTitle"
+  And I fill in "article_news_content_editor" ckeditor with "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  And I open page in browser
   And I press translated "administration.news.edit.view.button_save"
+  And I open page in browser
   Then I should be on administration OtherTitle news page
 
-@_done
+@selenium @_done
 Scenario: I can create new news entry
   When I follow translated "layout.main_menu.admin.news"
   And I press translated "administration.news.index.view.new_news"
   And I fill in "article_news_title" with "FirstNews"
-  And I fill in "article_news_content" with "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-  And I press translated "administration.news.new.view.button_create"
+  And I fill in "article_news_content_editor" ckeditor with "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  And I press translated "administration.news.edit.view.button_save"
   And I should be on administration FirstNews news page
 
-@_done
+@selenium @_done
 Scenario: I have to specify both title and content for news entry
   When I follow translated "layout.main_menu.admin.news"
   And I press translated "administration.news.index.view.new_news"
   And I fill in "article_news_title" with "FirstNews"
-  And I press translated "administration.news.new.view.button_create"
+  And I press translated "administration.news.edit.view.button_save"
   Then I should see "can't be blank"
   And I fill in "article_news_title" with ""
-  And I fill in "article_news_content" with "lllorem"
-  And I press translated "administration.news.new.view.button_create"
+  And I fill in "article_news_content_editor" ckeditor with "lllorem"
+  And I press translated "administration.news.edit.view.button_save"
   Then I should see "can't be blank"
 
 @_done

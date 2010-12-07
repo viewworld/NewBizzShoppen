@@ -47,8 +47,32 @@ Scenario: I can instant-buy lead requested by lead user that belongs to my accou
   And I follow translated "customer.lead_requests.index.view.accept_lead_request_link"
   Then I should see translated "customer.lead_requests.index.flash.lead_request_accepted_successfully"
 
-@selenium @wip
+@selenium @_done
 Scenario: I can bulk instant-buy leads and I will see a notification “You added {n} leads to your list”
+  When lead Monitors ultimate deal exists within category Computers
+  And I go to leads
+  And I follow "Computers"
+  And I check "mark_all"
+  And I press translated "leads.index.add_to_cart_link"
+  Then I should see translated "buyer.bulk_cart_items.create.flash.n_cart_items_added" with options "count:2"
+  And I should not see "Printers ultimate deal"
+  And I should not see "Monitors ultimate deal"
+  When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  Then I should see "Printers ultimate deal"
+  And I should see "Monitors ultimate deal"
+
+@_done
+Scenario: I can instant-buy lead I will see a notification “You added lead to your list”
+  And I go to leads
+  And I follow "Computers"
+  And I follow translated "leads.index.buy_lead"
+  Then I should see translated "buyer.cart_items.create.flash.cart_item_bought_successful"
+  And I should not see "Printers ultimate deal"
+  When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  Then I should see "Printers ultimate deal"
+
+@selenium @_done
+Scenario: I can bulk instant-buy leads requested by lead user that belongs to my account and I will see a notification “You added {n} leads to your list”
   When lead Monitors ultimate deal exists within category Computers
   When an user with role lead_user and email ann.lead_user2@person.com exists as subaccount for customer customer@person.com
   And I sign out
@@ -61,11 +85,16 @@ Scenario: I can bulk instant-buy leads and I will see a notification “You adde
   And I sign in as customer@person.com with password supersecret
   And I follow translated "layout.main_menu.customer.lead_requests"
   And I check "mark_all"
-  And I press translated "leads.index.button_bulk_create_lead_request"
-  Then I should see translated "flash.bulk_lead_requests.actions.destroy.notice"
+  And I press translated "customer.lead_requests.index.view.accept_lead_request_link"
+  Then I should see translated "flash.bulk_lead_requests.actions.update.notice"
 
-Scenario: I can instant-buy lead I will see a notification “You added lead to your list”
-
-Scenario: I can bulk instant-buy leads requested by lead user that belongs to my account and I will see a notification “You added {n} leads to your list”
-
+@_done
 Scenario: I can filter the list of my leads by "paid" column
+  And I go to leads
+  And I follow "Computers"
+  And I follow translated "leads.index.buy_lead"
+  When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  Then I should see "Printers ultimate deal"
+  When I select translated "common.yes_label" from "search_with_paid"
+  And I press translated "lead_buyer.lead_purchases.index.view.search.search_button"
+  Then I should not see "Printers ultimate deal"

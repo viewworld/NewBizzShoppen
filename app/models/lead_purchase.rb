@@ -1,11 +1,11 @@
 class LeadPurchase < LeadPurchaseBase
   CSV_ATTRS = %w(header description company_name contact_name phone_number email_address address)
-  ACTIVE               = 0.freeze
-  ABOUT_TO_EXPIRE      = 1.freeze
-  EXPIRED              = 2.freeze
+  ACTIVE               = 0
+  ABOUT_TO_EXPIRE      = 1
+  EXPIRED              = 2
 
-  NOT_CONTACTED        = 0.freeze
-  CONTACTED            = 1.freeze
+  NOT_CONTACTED        = 0
+  CONTACTED            = 1
 
   belongs_to :assignee, :class_name => "User::LeadUser", :foreign_key =>  "assignee_id"
   belongs_to :lead, :counter_cache => :lead_purchases_counter
@@ -16,6 +16,7 @@ class LeadPurchase < LeadPurchaseBase
   scope :accessible, where(:accessible => true)
   scope :about_to_expire, lambda { where(["response_deadline = ? AND expiration_status = ? AND contacted = ?", Date.today+2.days, ACTIVE, NOT_CONTACTED]) }
   scope :expired, lambda { where(["response_deadline < ? AND expiration_status = ? AND contacted = ?", Date.today, ABOUT_TO_EXPIRE, NOT_CONTACTED]) }
+  scope :with_paid, lambda {|paid| where(:paid => paid) }
 
   before_save :assign_to_proper_owner_if_accessible
   before_save :assign_to_owner

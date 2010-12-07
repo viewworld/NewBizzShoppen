@@ -104,13 +104,14 @@ end
 
 puts "Creating default main page articles..."
 ['About us','Privacy','Terms & Conditions'].each do |title|
-  unless Article::Cms.main_page_articles.where(:title => title).first
+  unless Article::Cms.main_page_articles.includes(:translations).where(:article_translations => {:title => title}).first
     article = Article::Cms.make!(:scope => Article::Cms::MAIN_PAGE_ARTICLE, :title => title, :content => title, :key => title.parameterize('_'))
     [:en, :dk].each do |locale|
       I18n.locale = locale
       article.title = title
       article.content = title
       article.save
+      article.publish!
     end
   end
 end
@@ -124,6 +125,7 @@ puts "Creating default interface content texts (blurbs)..."
       article.title = key.humanize
       article.content = key.humanize
       article.save
+      article.publish!
     end
   end
 end
@@ -137,6 +139,7 @@ puts "Creating default help popups..."
       article.title = key.humanize
       article.content = key.humanize
       article.save
+      article.publish!
     end
   end
 end
