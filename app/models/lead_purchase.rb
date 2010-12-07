@@ -79,7 +79,7 @@ class LeadPurchase < LeadPurchaseBase
 
   def deliver_lead_rated_as_unsatisfactory_email
     if rating_level_changed? and rating_level >= RATING_MISSING_CONTACT_INFO
-      self.lead.update_attribute(:has_unsatisfactory_rating, true)
+      self.lead.update_attributes(:notify_buyers_after_update => false, :has_unsatisfactory_rating => true)
       deliver_email_template("lead_rated_as_unsatisfactory", lead.creator.email)
     end
   end

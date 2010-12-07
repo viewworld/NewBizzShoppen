@@ -101,7 +101,7 @@ Scenario: As admin I can view all 'unsatisfactory' ratings
   Then I should have translated value "leads.listing.has_unsatisfactory_rating_yes" in the css path "tr:nth-child(1) td:nth-child(13)"
   Given I follow translated "leads.listing.has_unsatisfactory_rating_yes"
   Then I should see translated "agent.leads.show.view.rating_reason"
-  And I open page in browser
+
 # email or internal messages?
 @m0
 Scenario: As admin I can reply to 'unsatisfactory' rating
