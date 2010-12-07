@@ -1,4 +1,4 @@
-@$_customer @m3 @__category_restrictions
+@$_customer @m3 @__category_restrictions @ao
 Feature: Limiting category access for lead user
 
 Scenario: I should be able to see "Restrict requests/purchases from categories" frame in subaccounts edit page
