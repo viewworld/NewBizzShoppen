@@ -7,15 +7,16 @@ class LeadPurchase < LeadPurchaseBase
   NOT_CONTACTED        = 0.freeze
   CONTACTED            = 1.freeze
 
-  RATING_LEVELS = [
-      [I18n.t("activerecord.attributes.lead_purchase.rating_levels.excellent"), 0.freeze],
-      [I18n.t("activerecord.attributes.lead_purchase.rating_levels.very_good"), 1.freeze],
-      [I18n.t("activerecord.attributes.lead_purchase.rating_levels.satisfactory"), 2.freeze],
-      [I18n.t("activerecord.attributes.lead_purchase.rating_levels.unsatisfactory.missing_contact_info"), 12.freeze],
-      [I18n.t("activerecord.attributes.lead_purchase.rating_levels.unsatisfactory.incorrect_description"), 13.freeze],
-      [I18n.t("activerecord.attributes.lead_purchase.rating_levels.unsatisfactory.another_supplier"), 14.freeze],
-      [I18n.t("activerecord.attributes.lead_purchase.rating_levels.unsatisfactory.other_reason"), 15.freeze],
-  ]
+  RATING_EXCELLENT =              0
+  RATING_VERY_GOOD =              1
+  RATING_SATISFACTORY =           2
+  RATING_MISSING_CONTACT_INFO =   12
+  RATING_INCORRECT_DESCRIPTION =  13
+  RATING_ANOTHER_SUPPLIER =       14
+  RATING_OTHER_REASON =           15
+
+  RATING_LEVELS = [RATING_EXCELLENT, RATING_VERY_GOOD, RATING_SATISFACTORY, RATING_MISSING_CONTACT_INFO, RATING_INCORRECT_DESCRIPTION,
+                   RATING_ANOTHER_SUPPLIER, RATING_OTHER_REASON]
 
   belongs_to :assignee, :class_name => "User::LeadUser", :foreign_key =>  "assignee_id"
   belongs_to :lead, :counter_cache => :lead_purchases_counter
@@ -32,9 +33,10 @@ class LeadPurchase < LeadPurchaseBase
   before_save :change_contacted_state
   before_save :handle_new_deadline
   before_save :set_assigned_at
+  after_save :deliver_lead_rated_as_unsatisfactory_email
   after_save :deliver_about_to_expire_email
 
-  liquid :id
+  liquid :id, :header, :rating_level_as_text, :rating_reason
 
   private
 
@@ -75,6 +77,13 @@ class LeadPurchase < LeadPurchaseBase
     end
   end
 
+  def deliver_lead_rated_as_unsatisfactory_email
+    if rating_level_changed? and rating_level >= RATING_MISSING_CONTACT_INFO
+      self.lead.update_attribute(:has_unsatisfactory_rating, true)
+      deliver_email_template("lead_rated_as_unsatisfactory", lead.creator.email)
+    end
+  end
+
   def set_assigned_at
     if !assignee_id.blank? and assignee_id_changed?
       self.assigned_at = Time.now
@@ -98,8 +107,8 @@ class LeadPurchase < LeadPurchaseBase
     LeadPurchase.to_csv(id)    
   end
 
-  def deliver_email_template(uniq_id)
-    ApplicationMailer.email_template(owner.email, EmailTemplate.find_by_uniq_id(uniq_id), {:lead_purchase => self}).deliver
+  def deliver_email_template(uniq_id, to=nil)
+    ApplicationMailer.email_template(to.blank? ? owner.email : to, EmailTemplate.find_by_uniq_id(uniq_id), {:lead_purchase => self}).deliver
   end
 
   def about_to_expire!
@@ -116,6 +125,10 @@ class LeadPurchase < LeadPurchaseBase
 
   def expired?
     expiration_status == EXPIRED
+  end
+
+  def rating_level_as_text
+    I18n.t("activerecord.attributes.lead_purchase.rating_levels.rating_level#{rating_level}")
   end
 
 end

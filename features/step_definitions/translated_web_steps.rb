@@ -59,3 +59,8 @@ Then /^locale is set to "([^"]*)" for translation "([^"]*)"/ do |locale_lang, ke
   I18n.locale = locale_lang.to_sym
   Then %{I should see "#{I18n.t(key)}"}
 end
+
+Then /I should have translated value "([^"]*)" in the css path "([^"]*)"$/ do |key, css_path|
+  I18n.locale = :en
+  Then %{I should have value "#{I18n.t(key)}" in the css path "#{css_path}"}
+end

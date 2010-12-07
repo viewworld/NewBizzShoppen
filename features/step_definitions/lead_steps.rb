@@ -160,3 +160,7 @@ Then /^list item should be highlighted$/ do
   page.all(:css,"ul li[class*='highlight']").size.should eql(1)
 end
 
+Given /^a lead "([^"]*)" has (good|bad) rating$/ do |header, rating_type|
+  lead = Lead.find_by_header(header).first
+  lead.lead_purchases.first.update_attributes(:rating_level => rating_type == "good" ? 0 : 12, :rating_reason => rating_type == "bad" ? "Lorem ipsum dolor sit amet" : nil)
+end

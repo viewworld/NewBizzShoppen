@@ -59,6 +59,30 @@ class Nbs < Thor
                       :body    => "<p>{{lead_purchase.id}}</p>"},
          :dk      => {:subject => "[DK] Lead Purchase is about to expire",
                       :body    => "<p>{{lead_purchase.id}}</p>"}
+        },
+
+        {:name    => "Lead rated as unsatisfactory",
+         :uniq_id => "lead_rated_as_unsatisfactory",
+         :en      => {:subject => "Lead has been rated as unsatisfactory",
+                      :body    => "<p>Lead {{lead_purchase.header}} has been rated as {{lead_purchase.rating_level_as_text}} with the following reason: {{lead_purchase.rating_reason}}.</p>"},
+         :dk      => {:subject => "[DK] Lead has been rated as unsatisfactory",
+                      :body    => "<p>Lead {{lead_purchase.header}} has been rated as {{lead_purchase.rating_level_as_text}} with the following reason: {{lead_purchase.rating_reason}}.</p>"}
+        },
+
+        { :name => "Notify buyers about lead update",
+            :uniq_id => "notify_buyers_about_lead_update",
+            :en => {:subject => "Lead has been updated",
+                    :body => "<p>Lead {{lead.header}} has been updated by agent.</p>"},
+            :dk => {:subject => "[DK] Lead has been updated",
+                    :body => "<p>Lead {{lead.header}} has been updated by agent.</p>"}
+          },
+
+        { :name => "Contact us",
+            :uniq_id => "contact_us",
+          :en => {:subject => "Question",
+                  :body => "<p></p>"},
+          :dk => {:subject => "[DK] Question",
+                  :body => "<p></p>"}
         }
     ]
 
