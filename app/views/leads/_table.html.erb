@@ -23,6 +23,7 @@
       <th><%= link_to t("leads.table.sold"), order_for_scoped_search(:lead_purchases_counter) %></th>
       <th><%= link_to t("leads.table.purchase_value"), order_for_scoped_search(:purchase_value) %></th>
       <th><%= t("leads.table.paid_out") %></th>
+      <th><%= link_to t("leads.table.unsatisfactory_rating"), order_for_scoped_search(:has_unsatisfactory_rating) %></th>
       <th><%= link_to t("leads.table.status"), order_for_scoped_search(:published) %></th>
 
       <% if block_tools %>
@@ -58,6 +59,7 @@
           <td><%= lead.lead_purchases_counter %></td>
           <td><%= lead.purchase_value %></td>
           <td></td>
+          <td><%= link_to lead.has_unsatisfactory_rating ? t("leads.listing.has_unsatisfactory_rating_yes") : t("leads.listing.has_unsatisfactory_rating_no"), current_user.has_role?(:agent) ? agents_lead_path(lead) : administration_lead_path(lead)%></td>
           <td>
             <% if block_status_column %>
                 <%= with_output_buffer { block_status_column.call(lead) } %>

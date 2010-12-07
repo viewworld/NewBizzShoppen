@@ -14,6 +14,6 @@ class SecuredController < ApplicationController
   end
 
   def authorize_role(role)
-    raise CanCan::AccessDenied unless current_user.has_role?(role)
+    raise CanCan::AccessDenied unless current_user and current_user.has_role?(role)
   end
 end

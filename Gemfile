@@ -24,6 +24,7 @@ gem 'cancan'
 gem 'rails-settings', :require => "settings"
 gem 'nested_set', '1.5.4'
 gem 'fastercsv'
+gem 'thor'
 
 group :development do
   gem 'diff-lcs'

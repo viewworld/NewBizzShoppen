@@ -139,6 +139,8 @@ en:
       novelty_label: 'Novelty:'
       hotness_label: 'Hotness:'
       certification_label: 'Certification:'
+      has_unsatisfactory_rating_yes: 'Yes'
+      has_unsatisfactory_rating_no: 'No'
     table:
       id: 'ID'
       header: 'Lead title'
@@ -151,6 +153,7 @@ en:
       sold: 'Sold'
       purchase_value: 'Value'
       paid_out: 'Paid out'
+      unsatisfactory_rating: 'Unsatisfactory rating'
       status: 'Status'
       actions: 'Actions'
     index:
@@ -300,6 +303,12 @@ en:
           purchase_value_to_label: Value to
           category_label: Category
           status_label: Status
+      show:
+        view:
+          header: 'Ratings for lead: %{lead_header}'
+          rating_level: 'Rating:'
+          rating_reason: 'Reason:'
+          view_all_leads_link: 'View all leads'
 
   agent:
     leads:
@@ -314,6 +323,12 @@ en:
           option_not_published: 'not published'
           filter_with_inactive: 'Skip inactive'
           filter_with_outdated: 'Skip outdated'
+      show:
+        view:
+          header: 'Ratings for lead: %{lead_header}'
+          rating_level: 'Rating:'
+          rating_reason: 'Reason:'
+          view_all_leads_link: 'View all leads'
       destroy:
         flash:
           lead_deletion_successful: 'Lead has been deleted successfully.'
@@ -561,6 +576,7 @@ en:
           lead_response_date: 'Response date:'
           rating_level: 'Rating:'
           rating_reason: 'Reason:'
+          rating_reason_empty: 'You have to provide reson for your rating!'
           update_rating_button: 'Save rating'
           view_lead: View Details
           email_lead: Email Lead
@@ -631,14 +647,13 @@ en:
     attributes:
       lead_purchase:
         rating_levels:
-          excellent: 'Excellent'
-          very_good: 'Very good'
-          satisfactory: 'Satisfactory'
-          unsatisfactory:
-            missing_contact_info: 'Unsatisfactory: missing contact info'
-            incorrect_description: 'Unsatisfactory: incorrect description'
-            another_supplier: 'Unsatisfactory: lead has chosen another supplier'
-            other_reason: 'Unsatisfactory: other reason (fill in)'
+          rating_level0: 'Excellent'
+          rating_level1: 'Very good'
+          rating_level2: 'Satisfactory'
+          rating_level12: 'Unsatisfactory: missing contact info'
+          rating_level13: 'Unsatisfactory: incorrect description'
+          rating_level14: 'Unsatisfactory: lead has chosen another supplier'
+          rating_level15: 'Unsatisfactory: other reason (fill in)'
       category:
         name: 'Name'
         description: 'Description'

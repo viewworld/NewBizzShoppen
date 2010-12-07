@@ -63,6 +63,13 @@
             <%= label_tag :bulk_response_deadline, t("lead_buyer.lead_purchases.index.view.lead_response_date") %>
             <%= text_field_tag :bulk_response_deadline, "", :id => "response_deadline_datepicker_bulk" %>
           </li>
+          <li>
+            <%= select_tag :bulk_rating_level, options_for_select(LeadPurchase::RATING_LEVELS.map { |l| [t("activerecord.attributes.lead_purchase.rating_levels.rating_level#{l}"), l] }, nil), :include_blank => true, :onchange => "set_rating_level(this.value, 'bulk')", :id => "rating_level_bulk" %>
+            <div id="rating_reson_div_bulk" style="display:none;">
+              <%= t("lead_buyer.lead_purchases.index.view.rating_reason") %>
+              <%= text_area_tag :bulk_rating_reason, "", :id => "rating_reason_bulk" %>
+            </div>
+          </li>
           <li class="commit no_pdd_l">
             <%= bt_link_to nil, t("lead_buyer.lead_purchases.index.view.bulk_update_button"), "javascript:void(0)", :onclick => "submitBulkForm('#{bulk_lead_purchase_update_path}');" %>
           </li>
@@ -112,11 +119,11 @@
               </fieldset>
 
               <%= t("lead_buyer.lead_purchases.index.view.rating_level") %>
-              <%= select_tag :rating_level, options_for_select(LeadPurchase::RATING_LEVELS, lead_purchase.rating_level), :include_blank => true, :onchange => "set_rating_level(this.value, #{lead_purchase.id})", :id => "rating_level_#{lead_purchase.id}" %>
+              <%= select_tag :rating_level, options_for_select(LeadPurchase::RATING_LEVELS.map { |l| [t("activerecord.attributes.lead_purchase.rating_levels.rating_level#{l}"), l] }, lead_purchase.rating_level), :include_blank => true, :onchange => "set_rating_level(this.value, #{lead_purchase.id})", :id => "rating_level_#{lead_purchase.id}" %>
               <div id="rating_reson_div_<%= lead_purchase.id %>" style="display:none;">
               <%= t("lead_buyer.lead_purchases.index.view.rating_reason") %>
-              <%= text_area_tag :rating_reason, "", :id => "rating_reason_#{lead_purchase.id}" %>
-              <%= button_to_function t("lead_buyer.lead_purchases.index.view.update_rating_button"), "$.post('#{buyers_lead_purchase_path(lead_purchase)}', {'_method':'put', 'lead_purchase[rating_reason]':$('#rating_reason_#{lead_purchase.id}').val(), 'lead_purchase[rating_level]':$('#rating_level_#{lead_purchase.id}').val()} );" %>
+              <%= text_area_tag :rating_reason, lead_purchase.rating_reason, :id => "rating_reason_#{lead_purchase.id}" %>
+              <%= button_to_function t("lead_buyer.lead_purchases.index.view.update_rating_button"), "save_rating(#{lead_purchase.id})" %>
               </div>
           <% end %>
 
@@ -180,6 +187,19 @@
           else
           {
               $('#rating_reson_div_' + lead_purchase_id.toString()).show();
+          }
+      }
+
+      function save_rating(lead_purchase_id)
+      {
+          if(jQuery.trim($('#rating_reason_' + lead_purchase_id.toString()).val().toString()) == "")
+          {
+              alert('<%= t("lead_buyer.lead_purchases.index.view.rating_reason_empty") -%>');
+          }
+          else
+          {
+              $.post('/buyers/lead_purchases/' + lead_purchase_id.toString(), {'_method':'put', 'lead_purchase[rating_reason]':$('#rating_reason_' + lead_purchase_id.toString()).val(), 'lead_purchase[rating_level]':$('#rating_level_' + lead_purchase_id.toString()).val()} );
+              $('#rating_reson_div_' + lead_purchase_id.toString()).hide();
           }
       }
   </script>

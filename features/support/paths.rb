@@ -24,6 +24,8 @@ module NavigationHelpers
         '/administration/email_templates'
     when /administration settings/
         '/administration/setting/edit'
+    when /administration leads/
+        '/administration/leads'
     when /agents leads/
         '/agents/leads'
     when /browse leads/
