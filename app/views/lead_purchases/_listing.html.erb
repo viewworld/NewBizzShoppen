@@ -13,8 +13,8 @@
     <% if show_checkboxes %>
         <th class="no_pdd_lr" style="width: 10px;"><%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this.checked,'input:checkbox')" %></th>
     <% end %>
-    <th style="width: 350px;">Leads details</th>
-    <th style="width: 200px"><%= t("leads.listing.created_by_label") %></th>
+    <th style="width: 350px;"><%= t("leads.listing.lead_description_label") %></th>
+    <th style="width: 200px"><%= t("leads.listing.lead_details_label") %></th>
     <th>Stats</th>
 
     <% if block_assigned_to %>

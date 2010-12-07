@@ -8,7 +8,7 @@ Category.blueprint do
 end
 
 Country.blueprint do
-  name { Faker::Address.uk_country }
+  name { Faker::Address.uk_country + rand(99999).to_s }
 end
 
 Lead.blueprint do
@@ -153,9 +153,9 @@ end
   password { "secret" }
   password_confirmation { "secret" }
   phone { Faker::PhoneNumber.phone_number }
-  screen_name { Faker::Name.name + rand(9999).to_s }
+  screen_name { Faker::Name.name }
   street { Faker::Address.street_name }
-  first_name { Faker::Name.first_name }
+  first_name { Faker::Name.first_name + "rand" }
   last_name { Faker::Name.last_name }
   agreement_read { true }
   city { Faker::Address.city }
