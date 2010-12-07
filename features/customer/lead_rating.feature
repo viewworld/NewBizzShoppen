@@ -1,4 +1,4 @@
-@m3 @$_customer @tgn     @_xxx
+@m3 @$_customer @tgn
 Feature: Lead Rating
 
 Background:
