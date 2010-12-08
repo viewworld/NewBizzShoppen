@@ -11,8 +11,8 @@ Background: I am logged in as a system admin
 Scenario: I can create new article
   When I follow translated "layout.main_menu.admin.articles"
   And I press translated "administration.articles.index.view.new_article"
-  And I fill in "article_cms_title" with "MainPageArticle"
-  And I fill in "article_cms_content_editor" ckeditor with "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  And I fill in "article_title" with "MainPageArticle"
+  And I fill in "article_content_editor" ckeditor with "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   And I press translated "administration.articles.edit.view.button_save"
   And I should be on administration MainPageArticle article page
 
@@ -21,8 +21,8 @@ Scenario: I can edit article
   When main page article exists with attributes "title:MainPageArticle,content:lorem"
   And I follow translated "layout.main_menu.admin.articles"
   And I follow translated "administration.articles.index.view.edit_link"
-  And I fill in "article_cms_title" with "OtherTitle"
-  And I fill in "article_cms_content_editor" ckeditor with "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  And I fill in "article_title" with "OtherTitle"
+  And I fill in "article_content_editor" ckeditor with "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   And I press translated "administration.articles.edit.view.button_save"
   Then I should see "OtherTitle"
 

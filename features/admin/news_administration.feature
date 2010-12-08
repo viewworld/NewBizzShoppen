@@ -48,8 +48,8 @@ Scenario: I can edit existing news entry
   When news exists with attributes "title:FirstNews"
   And I follow translated "layout.main_menu.admin.news"
   And I follow translated "administration.news.index.view.edit_link"
-  And I fill in "article_news_title" with "OtherTitle"
-  And I fill in "article_news_content_editor" ckeditor with "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  And I fill in "news_title" with "OtherTitle"
+  And I fill in "news_content_editor" ckeditor with "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   And I press translated "administration.news.edit.view.button_save"
   Then I should be on administration OtherTitle news page
 
@@ -57,8 +57,8 @@ Scenario: I can edit existing news entry
 Scenario: I can create new news entry
   When I follow translated "layout.main_menu.admin.news"
   And I press translated "administration.news.index.view.new_news"
-  And I fill in "article_news_title" with "FirstNews"
-  And I fill in "article_news_content_editor" ckeditor with "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  And I fill in "news_title" with "FirstNews"
+  And I fill in "news_content_editor" ckeditor with "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   And I press translated "administration.news.edit.view.button_save"
   And I should be on administration FirstNews news page
 
@@ -66,11 +66,11 @@ Scenario: I can create new news entry
 Scenario: I have to specify both title and content for news entry
   When I follow translated "layout.main_menu.admin.news"
   And I press translated "administration.news.index.view.new_news"
-  And I fill in "article_news_title" with "FirstNews"
+  And I fill in "news_title" with "FirstNews"
   And I press translated "administration.news.edit.view.button_save"
   Then I should see "can't be blank"
-  And I fill in "article_news_title" with ""
-  And I fill in "article_news_content_editor" ckeditor with "lllorem"
+  And I fill in "news_title" with ""
+  And I fill in "news_content_editor" ckeditor with "lllorem"
   And I press translated "administration.news.edit.view.button_save"
   Then I should see "can't be blank"
 
