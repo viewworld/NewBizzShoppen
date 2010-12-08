@@ -1,7 +1,7 @@
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs labels_ta_r labels_240">
     <ol>
-      <%= form.input :scope, :collection => Article::News::SCOPE, :as => :select, :include_blank => false %>
+      <%= form.input :scope, :collection => news_scope_for_select, :as => :select, :include_blank => false %>
       <%= form.input :title %>
       <%= form.input :content,
                         :as => :ckeditor,

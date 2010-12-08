@@ -3,11 +3,6 @@ class ::Article::News < ::Article
   AGENT = 0.freeze
   BUYER = 1.freeze
 
-  SCOPE = [
-      [I18n.t('administration.news.index.view.agents'),AGENT],
-      [I18n.t('administration.news.index.view.buyers'),BUYER],
-  ].freeze
-
   has_many :assets, :as => :resource, :dependent => :destroy, :finder_sql =>
       'SELECT "assets".*' +
       'FROM "assets"' +

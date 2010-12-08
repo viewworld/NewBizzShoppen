@@ -8,7 +8,7 @@
 
   <%= form_for @search, :url => administration_news_index_path do |f| %>
       <%= f.text_field :with_keyword %>
-      <%= f.select :with_scope, Article::News::SCOPE, :include_blank => true %>
+      <%= f.select :with_scope, news_scope_for_select, :include_blank => true %>
       <%= submit_tag t("administration.news.index.view.search_button") %>
   <% end %>
 

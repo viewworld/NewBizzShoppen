@@ -61,11 +61,17 @@ Scenario: I can sort by columns (those that do match to database columns)
   Given pagination page size for leads is set to 100
   And lead ZZZZZLead exists within category Test
   And lead AAAAALead exists within category Test
+  And lead PurchaseValue1000Lead exists with attributes "purchase_value:1000"
+  And lead PurchaseValue1999Lead exists with attributes "purchase_value:1999"
   And I follow translated "layout.main_menu.admin.leads"
   And I follow translated "leads.table.header"
   Then I should see "AAAAALead" before "ZZZZZLead"
   And I follow translated "leads.table.header"
   Then I should see "ZZZZZLead" before "AAAAALead"
+  When I follow translated "leads.table.purchase_value"
+  Then I should see "PurchaseValue1000Lead" before "PurchaseValue1999Lead"
+  When I follow translated "leads.table.purchase_value"
+  Then I should see "PurchaseValue1999Lead" before "PurchaseValue1000Lead"
 
 @ao @_done @_tested
 Scenario: I can go to lead details by clicking on the show link

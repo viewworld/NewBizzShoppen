@@ -34,11 +34,11 @@ Scenario: I can filter listing of all news by scope (buyers, agents, both) and b
   And I follow translated "layout.main_menu.admin.news"
   Then I should see "AgentNews"
   And I should see "BuyerNews"
-  When I select translated "administration.news.index.view.agent" from "search_with_scope"
+  When I select translated "administration.news.index.view.agents" from "search_with_scope"
   And I press translated "administration.news.index.view.search_button"
   Then I should see "AgentNews"
   And I should not see "BuyerNews"
-  When I select translated "administration.news.index.view.buyer" from "search_with_scope"
+  When I select translated "administration.news.index.view.buyers" from "search_with_scope"
   And I press translated "administration.news.index.view.search_button"
   Then I should see "BuyerNews"
   And I should not see "AgentNews"
@@ -50,9 +50,7 @@ Scenario: I can edit existing news entry
   And I follow translated "administration.news.index.view.edit_link"
   And I fill in "article_news_title" with "OtherTitle"
   And I fill in "article_news_content_editor" ckeditor with "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-  And I open page in browser
   And I press translated "administration.news.edit.view.button_save"
-  And I open page in browser
   Then I should be on administration OtherTitle news page
 
 @selenium @_done
@@ -80,8 +78,8 @@ Scenario: I have to specify both title and content for news entry
 Scenario: I can specify if news should be displayed for buyers, agents or both(?)
   When I follow translated "layout.main_menu.admin.news"
   And I press translated "administration.news.index.view.new_news"
-  And I select translated "administration.news.index.view.agent" from "article_news_scope"
-  And I select translated "administration.news.index.view.buyer" from "article_news_scope"
+  And I select translated "administration.news.index.view.agents" from "news_scope"
+  And I select translated "administration.news.index.view.buyers" from "news_scope"
 
 @selenium @_done
 Scenario: I can use WYSIWYG to edit news entry content
@@ -94,10 +92,10 @@ Scenario: I can upload and embed image into news entry
 
 @_done
 Scenario: I can filter between agent and buyer
-  When agent news exists with attributes "title:AgentNews"
-  And buyer news exists with attributes "title:BuyerNews"
+  When published agent news exists with attributes "title:AgentNews"
+  And published buyer news exists with attributes "title:BuyerNews"
   And I follow translated "layout.main_menu.admin.news"
-  And I select translated "administration.news.index.view.agent" from "search_with_scope"
+  And I select translated "administration.news.index.view.agents" from "search_with_scope"
   And I press translated "administration.news.index.view.search_button"
   Then I should see "AgentNews"
   And I should not see "BuyerNews"

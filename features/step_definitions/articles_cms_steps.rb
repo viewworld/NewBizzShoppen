@@ -12,6 +12,6 @@ end
 
 When /^there are (\d+) random cms articles$/ do |num|
   num.to_i.times do
-    Article::Cms.make!
+    Article::Cms.make!(:key => ActiveSupport::SecureRandom.hex(16))
   end
 end

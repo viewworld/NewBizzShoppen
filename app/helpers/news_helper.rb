@@ -8,4 +8,12 @@ module NewsHelper
       end
     end
   end
+
+  def news_scope_for_select
+    [
+      [I18n.t('administration.news.index.view.agents'),Article::News::AGENT],
+      [I18n.t('administration.news.index.view.buyers'),Article::News::BUYER]
+    ]
+  end
+
 end

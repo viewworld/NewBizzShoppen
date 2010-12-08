@@ -15,7 +15,7 @@ end
 
 Given /^lead (.+) exists with attributes "([^"]*)"$/ do |header, options|
   lead = Lead.find_by_header(header).first
-  lead = Lead.make!(:header => header, :category => category) if lead.nil?
+  lead = Lead.make!(:header => header, :category => Category.make!) if lead.nil?
   lead.update_attributes(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys)
 end
 
