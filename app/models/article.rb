@@ -9,11 +9,11 @@ class Article < ActiveRecord::Base
 
   before_save :set_published_date
 
-  scope :with_keyword, lambda { |q| where("lower(title) LIKE :keyword OR lower(content) LIKE :keyword", {:keyword => "%#{q.downcase}%"}) }
+  scope :only_translations, lambda {|locale| includes(:translations).where(:article_translations => {:locale => locale.to_s})}
+  scope :with_keyword, lambda { |q| only_translations(I18n.locale).where("lower(article_translations.title) LIKE :keyword OR lower(article_translations.content) LIKE :keyword", {:keyword => "%#{q.downcase}%"}) }
   scope :with_scope, lambda {|scope| where(["scope = ?", scope]) }
   scope :latest, order("created_at DESC")
   scope :published, where(:published => true)
-  scope :only_translations, lambda {|locale| includes(:translations).where(:article_translations => {:locale => locale.to_s})}
 
   private
 
