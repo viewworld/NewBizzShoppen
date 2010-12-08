@@ -115,13 +115,13 @@ Scenario: I can see company contact on lead details page
 #Have a look at bulk_lead_share_by_email_controller.rb for sume hints regarding prerendering email template
 @ao @_done @_tested
 Scenario: I can email the lead if email information were provided
-  Given I am signed up and confirmed as user with email leaduser@nbs.com and password secret and role lead_user
-  And an user with role lead_user and email leaduser@nbs.com exists as subaccount for customer customer@nbs.com
+  Given I am signed up and confirmed as user with email leaduser87@nbs.com and password secret and role lead_user
+  And an user with role lead_user and email leaduser87@nbs.com exists as subaccount for customer customer@nbs.com
   And I sign out
-  And I am on the home page
-  And I sign in as leaduser@nbs.com with password secret
-  And lead AwesomeLead is bought by user customer@nbs.com with role customer and is assigned to user leaduser@nbs.com with role lead_user
+  And I sign in as leaduser87@nbs.com with password secret
+  And lead AwesomeLead is bought by user customer@nbs.com with role customer and is assigned to user leaduser87@nbs.com with role lead_user
   And I follow translated "layout.main_menu.lead_user.lead_purchases"
+  And I open page in browser
   And I follow translated "lead_user.lead_purchases.index.view.email_lead" within ".lead"
   And I press translated "lead_user.contact_lead_by_email.new.view.send_email_button"
   Then I should see translated "flash.contact_lead_by_email.actions.create.notice"
