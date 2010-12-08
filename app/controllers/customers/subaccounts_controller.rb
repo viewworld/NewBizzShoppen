@@ -40,11 +40,12 @@ class Customers::SubaccountsController < Customers::CustomerController
     if user_params and user_params[:locked]
       @user.locked = user_params[:locked]
     end
-      if @user.update_attributes(params["user_#{@user.role.to_s}".to_sym])
-        redirect_to customers_subaccounts_path
-      else
-        render :action => 'edit'
-      end
+    if @user.update_attributes(user_params)
+      flash[:notice] = I18n.t("customer.subaccounts.update.flash.subaccount_update_successful")
+      redirect_to customers_subaccounts_path
+    else
+      render :action => 'edit'
+    end
   end
 
   def destroy

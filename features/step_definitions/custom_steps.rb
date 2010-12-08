@@ -16,8 +16,12 @@ eval ruby
 print "\n\n"
 end
 
-Then /I should have value "([^"]*)" in the css path "([^"]*)"$/ do |value, css_path|
-    assert page.find(css_path).text == value
+Then /^I should have value "([^"]*)" in the css path "([^"]*)"$/ do |value, css_path|
+   assert page.find(css_path).text == value
+end
+
+Then /^I should have value "([^"]*)" in the xpath path "([^"]*)"$/ do |value, xpath|
+  assert page.find(:xpath, xpath).text == value
 end
 
 Given /^pagination per page size in model (.+) is set to (\d+)$/ do |model_name, n|

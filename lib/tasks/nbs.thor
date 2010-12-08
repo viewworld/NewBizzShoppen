@@ -12,6 +12,7 @@ class Nbs < Thor
     Settings.default_leads_per_page = 5
     Settings.certification_level_1  = 10
     Settings.certification_level_2  = 20
+    Settings.contact_us_email = "contact@nbs.fake.com"
 
     Country.find_or_create_by_name("Denmark")
     Country.find_or_create_by_name("United Kingdom")

@@ -74,7 +74,7 @@ Nbs::Application.routes.draw do
   resources :leads, :only => [:index, :show]
 
   resources :categories, :only => [:index]
-  match 'categories/:slag' => "leads#index", :as => "leads"
+  match 'categories/:slag' => "leads#index"
 
 
   resources :agent_accounts, :only => [:new, :create]
