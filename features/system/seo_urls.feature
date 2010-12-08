@@ -1,14 +1,14 @@
-@system @m0
+@system
 Feature: SEO urls
 
-@m3 @ao
+@m4 @ao
 Scenario: Article show
 
 @m3 @tgn
 Scenario: Lead listing - category name
 
-@m3 @ao
+@m4 @ao
 Scenario: Agent news show
 
-@m3 @ao
+@m4 @ao
 Scenario: Buyer news show
