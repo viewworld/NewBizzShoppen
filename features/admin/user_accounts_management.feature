@@ -24,9 +24,9 @@ Feature: User accounts management
 @_tested
  Scenario: I can sort users
   Given I follow translated "administration.users.index.view.email"
-  Then I should have value "aaaaaaaagent.tom.blank@paerson22.com" in the css path "tr:nth-child(1) td:nth-child(7)"
+  Then I should have value "aaaaaaaagent.tom.blank@paerson22.com" in the css path "tr:nth-child(1) td:nth-child(6)"
   Given I follow translated "administration.users.index.view.email"
-  Then I should have value "zzzenon.tom.blank@paerson22.com" in the css path "tr:nth-child(1) td:nth-child(7)"
+  Then I should have value "zzzenon.tom.blank@paerson22.com" in the css path "tr:nth-child(1) td:nth-child(6)"
 
  @_tested
  Scenario: I can filter users [...]

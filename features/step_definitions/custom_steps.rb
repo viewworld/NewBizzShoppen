@@ -27,3 +27,11 @@ end
 Given /^I click hidden link "([^"]*)"$/ do |caption|
   page.all(:css, 'a').detect { |l| l.text == caption }.click()
 end
+
+Given /^I click hidden link url "([^"]*)"$/ do |url|
+  page.all(:css, 'a').detect { |l| l.text == caption }.click()
+end
+
+Given /^I click hidden link by url regex "([^"]*)"$/ do |regex|
+  visit page.all(:css, 'a').detect { |l| !(l[:href] =~ eval(regex)).nil? }[:href]
+end

@@ -56,7 +56,7 @@ Scenario: I can create a new lead and continue (create another one)
   And I should see translated "flash.leads.actions.create.notice"
   And I should see translated "agent.leads.new.view.title"
 
-@_tested  @selenium
+@_tested  @selenium  @_xxx
 Scenario: I can add an extra language while creating lead. This will include lead title, purchase desc, hidden desc
   Given Category Test category 1 is created
   And Country Denmark is created
@@ -83,7 +83,7 @@ Scenario: I can add an extra language while creating lead. This will include lea
   And I press translated "agent.leads.new.view.button_create"
   And I should be on agents leads
   And I should see translated "flash.leads.actions.create.notice"
-  Then I follow translated "agent.leads.index.view.edit"
+  Then I click hidden link by url regex "/agents\/leads\/\d+\/edit/"
   And I should see "DK description"
   And I should see "DK hidden description"
 
