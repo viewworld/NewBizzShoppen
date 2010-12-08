@@ -13,6 +13,18 @@ end
 #  Given %{a lead exists with #{pickle_params}, category_id: #{category.id}}
 #end
 
+Given /^a lead purchase for lead "([^"]*)" by user "([^"]*)" with role "([^"]*)" exists with attributes "([^"]*)"$/ do |header, email, role, options|
+  lead = Lead.find_by_header(header).first
+  customer = "User::#{role.camelize}".constantize.find_by_email(email)
+  options_hash = Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys
+  options_hash.each_pair do |k, v|
+    if v.include?("Date.today") or v.include?("Time.now")
+      options_hash[k] = eval(v)
+    end
+  end
+  lead.lead_purchases.detect{ |lp| lp.owner_id == customer.id }.update_attributes(options_hash)
+end
+
 Given /^lead (.+) exists with attributes "([^"]*)"$/ do |header, options|
   lead = Lead.find_by_header(header).first
   lead = Lead.make!(:header => header, :category => Category.make!) if lead.nil?
@@ -46,6 +58,7 @@ Given /^a lead (.+) exists within category (.+) and is bought by user (.+) with 
   category = Category.make!(:name => category_name) if category.nil?
 
   customer = "User::#{role.camelize}".constantize.find_by_email(email)
+  customer = "User::#{role.camelize}".constantize.make!(:email => email) if customer.nil?
   lead = Lead.find_by_header(header).first
   if lead.nil?
     lead = Lead.make!(:header => header, :category => category)
@@ -58,6 +71,10 @@ end
 Given /^lead (.+) is bought by user (.+) with role (.+) and is assigned to user (.+) with role (.+)$/ do |header, email, role, assignee_email, assignee_role|
   lead = Lead.find_by_header(header).first
   lead = Lead.make!(:header => header) if lead.nil?
+
+  if assignee_role == "lead_buyer"
+    assignee_role = "lead_user"
+  end
 
   customer = "User::#{role.camelize}".constantize.find_by_email(email)
   assignee = "User::#{assignee_role.camelize}".constantize.find_by_email(assignee_email)
@@ -78,6 +95,9 @@ Given /^I can see following () f for lead Printers ultimate deal$/ do |fields, l
 end
 
 Given /^lead "([^"]*)" was requested by user "([^"]*)" with role "([^"]*)"(?: and is owned by user "([^"]*)")?$/ do |header, email, role, owner_email|
+  if role == "lead_buyer"
+    role = "lead_user"
+  end
   u = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
   lead = Lead.find_by_header(header).last
   owner = User::Customer.first(:conditions => { :email => owner_email })
@@ -140,3 +160,7 @@ Then /^list item should be highlighted$/ do
   page.all(:css,"ul li[class*='highlight']").size.should eql(1)
 end
 
+Given /^a lead "([^"]*)" has (good|bad) rating$/ do |header, rating_type|
+  lead = Lead.find_by_header(header).first
+  lead.lead_purchases.first.update_attributes(:rating_level => rating_type == "good" ? 0 : 12, :rating_reason => rating_type == "bad" ? "Lorem ipsum dolor sit amet" : nil)
+end

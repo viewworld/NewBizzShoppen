@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem 'bundler'
 
-gem 'rails', '3.0.0'
+gem 'rails', '3.0.3'
 gem 'railties'
 
 gem 'mongrel'
@@ -15,7 +15,7 @@ gem 'devise', '1.1.3'
 gem 'delayed_job', ' >= 2.1.0.pre2'
 gem 'hoptoad_notifier'
 gem "transitions", :require => ["transitions", "active_record/transitions"]
-gem 'paperclip', "2.3.3"
+gem 'paperclip', "2.3.6"
 gem 'scoped-search', '0.7.1', :require => "scoped_search"
 gem 'json_pure', '>= 1.4.6'
 gem 'globalize3'
@@ -24,6 +24,7 @@ gem 'cancan'
 gem 'rails-settings', :require => "settings"
 gem 'nested_set', '1.5.4'
 gem 'fastercsv'
+gem 'thor'
 gem 'ckeditor', '3.4.3.pre'
 
 group :development do

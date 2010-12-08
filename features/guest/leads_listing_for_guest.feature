@@ -51,7 +51,7 @@ Scenario: I should see certification level for each lead
   And I follow "Sample category"
   Then I should see translated "models.lead.certification.lvl0"
 
-@m0
+@m3 @tgn
 Scenario: I should see rating % for each lead
 
 @m2 @tgn @_tested
@@ -63,3 +63,9 @@ Scenario: I should see hottness, novelty, exposure, clicks
   And I should see translated "models.lead.novelty.lvl0"
   And I should see "887"
   And I should see "17"
+
+@m3 @tgn
+Scenario: I should be able to click "Add to cart button" that will redirect me to login page
+
+@m0
+Scenario: If I sucessfully login after requesting a lead being added to a cart, that lead should be added to cart (or bought if I am big buyer)

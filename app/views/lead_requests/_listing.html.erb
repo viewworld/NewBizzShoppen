@@ -1,36 +1,83 @@
-<ul class="lead_requests_listing">
+<table class="generic leads_table">
+  <thead>
+  <tr>
+    <th class="hl"></th>
+
+    <th class="no_pdd_lr" style="width: 10px;">
+      <%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this.checked,'input:checkbox')" %>
+    </th>
+
+    <th style="width: 350px;"><%= t("leads.listing.lead_description_label") %></th>
+    <th style="width: 200px"><%= t("leads.listing.lead_details_label") %></th>
+    <th style="width: 200px"><%= t("lead_requests.listing.requested_by") %></th>
+    <th>Stats</th>
+    <th class="ta_r">Actions</th>
+    <th class="hr"></th>
+  </tr>
+  </thead>
+  <tfoot>
+  <tr>
+    <td class="fl"></td>
+    <td colspan="6"></td>
+    <td class="fr"></td>
+  </tr>
+  </tfoot>
+  <tbody>
   <% collection.each do |lead_request| %>
-      <li class="lead_request" id="<%= dom_id(lead_request) %>">
-        <div class="general">
-          <%= check_box_tag("lead_ids[]", lead_request.id) if show_checkboxes %>
-          <h3><%= lead_request.header %></h3>
-          <span><%= t("lead_requests.listing.lead_price_label") %>
-            <b><%= lead_request.price %></b></span><br />
-          <span><%= t("lead_requests.listing.purchase_value_label") %>
-            <b><%= lead_request.purchase_value %></b></span><br />
-       <span><%= t("leads.listing.created_by_label") %><b><%= lead_request.lead.creator_name %></b></span>
+      <tr class="lead <%= cycle("odd", "even") %>" id="<%= dom_id(lead_request) %>">
+        <td class="cl"></td>
+        <td class="no_pdd_lr"><%= check_box_tag("lead_ids[]", lead_request.id) if show_checkboxes %></td>
+        <td>
+          <h4><%= lead_request.header %></h4>
 
-          <p><b><%= t("lead_requests.listing.description_label") %></b><%= lead_request.description %></p>
+          <p class="element"><%= t("lead_requests.listing.purchase_value_label") %><span class="green"><%= lead_request.purchase_value %></span></p>
+          <p class="element"><%= t("lead_requests.listing.lead_price_label") %><span class="green"><%= lead_request.price %></span></p>
+          <p class="element_description i"><%= lead_request.description %></p>
 
-          <b><%= t("lead_requests.listing.requested_by") %></b><%= lead_request.requestee.full_name %>
           <% if block_general %>
               <%= with_output_buffer { block_general.call(lead_request) } %>
           <% end %>
-
-        </div>
-        <div class="tools">
+        </td>
+        <td>
+          <b><%= lead_request.lead.creator_name %></b>
+        </td>
+        <td>
+          <b><%= lead_request.requestee.full_name %></b>          
+        </td>
+        <td>
+          <p><%= t("lead_requests.listing.clicks_count_label") %><b><%= lead_request.clicks_count %></b></p>
+          <p><%= t("lead_requests.listing.exposures_count_label") %><b><%= lead_request.exposures_count %></b></p>
+          <p><%= t("lead_requests.listing.sale_limit_label") %><b><%= lead_request.sale_limit %></b></p>
+          <p><%= t("lead_requests.listing.novelty_label") %><b><%= t("models.lead.novelty.lvl#{lead_request.novelty_level}") %></b></p>
+          <p><%= t("lead_requests.listing.hotness_label") %><b><%= t("models.lead.hotness.lvl#{lead_request.hotness_level}") %></b></p>
+          <p><%= t("lead_requests.listing.certification_label") %><b><%= t("models.lead.certification.lvl#{lead_request.certification_level}") %></b></p>
+        </td>
+        <td class="tda ta_r">
           <% if block_tools %>
               <%= with_output_buffer { block_tools.call(lead_request) } if block_tools %>
-          <% end %>
-        </div>
-        <div class="stats">
-          <span><%= t("lead_requests.listing.clicks_count_label") %><b><%= lead_request.clicks_count %></b></span>
-          <span><%= t("lead_requests.listing.exposures_count_label") %><b><%= lead_request.exposures_count %></b></span>
-          <span><%= t("lead_requests.listing.sale_limit_label") %><b><%= lead_request.sale_limit %></b></span>
-          <span><%= t("lead_requests.listing.novelty_label") %><b><%= t("models.lead.novelty.lvl#{lead_request.novelty_level}") %></b></span>
-          <span><%= t("lead_requests.listing.hotness_label") %><b><%= t("models.lead.hotness.lvl#{lead_request.hotness_level}") %></b></span>
-          <span><%= t("lead_requests.listing.certification_label") %><b><%= t("models.lead.certification.lvl#{lead_request.certification_level}") %></b></span>
-        </div>
-      </li>
+          <% end %>          
+        </td>
+        <td class="cr"></td>
+      </tr>
   <% end %>
-</ul>
+  <tr class="pagination">
+    <td colspan="8" class="ta_c">
+      <% if show_checkboxes %>
+          <div class="td_select_all">
+            <%= check_box_tag "td_mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this.checked,'input:checkbox')" %>
+            <%= label_tag "td_mark_all", "select all" %>
+          </div>
+      <% end %>      
+    </td>
+  </tr>
+  <% if block_bottom %>
+      <tr class="main_actions">
+        <td class="cl"></td>
+        <td colspan="6" class="no_pdd_lr">
+          <%= with_output_buffer { block_bottom.call } %>
+        </td>
+        <td class="cr"></td>
+      </tr>
+  <% end %>  
+  </tbody>
+</table>

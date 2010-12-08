@@ -53,9 +53,14 @@ Scenario: When the lead is bought and I want to edit it then "Notify the lead bu
   Then I should see translated "activerecord.attributes.lead.notify_buyers_after_update"
 
 
-@m3 @tgn
+@m3 @tgn @_tested
 Scenario: When the lead is bought and I update it and check "Notify the lead buyers" then email is sent to all buyers
-# Generic mail edited by the administrator.
+  Given I go to agents leads
+  And I follow translated "agent.leads.index.view.edit"
+  Then I press translated "agent.leads.edit.view.button_update"
+  And last email sent should have been sent to recipient "john.buyer@person.com"
+  And last email sent should have content "has been updated by agent"
+
 
 @_tested
 Scenario: Datepicker - after selecting form the select box it should automatically fill in the date

@@ -61,7 +61,8 @@ Nbs::Application.routes.draw do
     root :to => "lead_requests#index"
     resources :subaccounts
     resources :lead_requests, :only => [:index, :update, :destroy]
-    resource :bulk_lead_requests, :controller => "bulk_lead_requests", :only => [:destroy, :update]
+    resource :bulk_lead_requests, :controller => "bulk_lead_requests", :only => [:destroy,:update]
+    resource :bulk_subaccounts_update, :controller => "bulk_subaccounts_update", :only => [:update]
   end
 
   namespace :agents do
@@ -73,7 +74,10 @@ Nbs::Application.routes.draw do
   match 'agent_home' => 'agent_home#show', :as => "agent_home"
 
   resources :leads, :only => [:index, :show]
+
   resources :categories, :only => [:index]
+  match 'categories/:slag' => "leads#index", :as => "leads"
+
 
   resources :agent_accounts, :only => [:new, :create]
   resources :buyer_accounts, :only => [:new, :create]
@@ -89,6 +93,9 @@ Nbs::Application.routes.draw do
   resource :password, :controller => 'password', :only => [:update]
   match 'password' => 'password#edit', :as => 'password'
   match 'ckeditor/destroy/:id', :to => 'ckeditor#destroy'
+
+  resource :contact_us, :controller => "contact_us", :as => "contact_us", :only => [:new, :create]
+  match 'contact_us' => 'contact_us#new', :as => 'contact_us'
 
   root :to => "home#show"
 

@@ -32,6 +32,12 @@ module ApplicationHelper
     end
   end
 
+  def custom_error_for_object_and_field(object, field)
+    if object.errors[field].present?
+      content_tag(:p, object.errors[field], :class => "inline-errors") + tag("br")
+    end
+  end
+
   def available_locales_list(translations)
     existing = translations.map(&:locale)
     Locale.all.map(&:code).reject { |c| c == I18n.locale.to_s or existing.include?(c) }

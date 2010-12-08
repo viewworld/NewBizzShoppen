@@ -30,6 +30,7 @@ en:
         lead_requests: Requested leads
       lead_buyer:
         lead_purchases: My owned leads
+        interests: 'Interests settings'
       lead_user:
         lead_purchases: My assigned leads
         lead_requests: My requested leads
@@ -70,13 +71,13 @@ en:
       signed_out: 'Signed out successfully.'
     passwords:
       button_update: 'Change my password'
-      button_create: 'Send me reset password instructions'
+      button_create: 'Reset password'
       send_instructions: 'You will receive an email with instructions about how to reset your password in a few minutes.'
       updated: 'Your password was changed successfully. You are now signed in.'
     confirmations:
       send_instructions: 'You will receive an email with instructions about how to confirm your account in a few minutes.'
       confirmed: 'Your account was successfully confirmed. You are now signed in.'
-      resend_confirmation_link: Resend confirmation instructions
+      resend_confirmation_link: Resend
     registrations:
       signed_up: 'You have signed up successfully. If enabled, a confirmation was sent to your e-mail.'
       updated: 'You updated your account successfully.'
@@ -103,7 +104,7 @@ en:
       hidden_description_label: 'Hidden description:'
       company_name: 'Company:'
       phone_number: 'Phone number:'
-      www_address: 'Www address:'
+      www_address: 'www address:'
       email_address: 'Email:'
       address_label: 'Address:'
       contact_name: 'Contact name:'
@@ -140,13 +141,16 @@ en:
       purchase_value_label: 'Purchase value:'
       lead_price_label: 'Lead price:'
       description_label: 'Lead description:'
-      created_by_label: 'Created by:'
+      lead_details_label: 'Leads details'
+      lead_description_label: 'Leads description'
       clicks_count_label: 'Clicks:'
       exposures_count_label: 'Exposures:'
       sale_limit_label: 'Uniqueness:'
       novelty_label: 'Novelty:'
       hotness_label: 'Hotness:'
       certification_label: 'Certification:'
+      has_unsatisfactory_rating_yes: 'Yes'
+      has_unsatisfactory_rating_no: 'No'
     table:
       id: 'ID'
       header: 'Lead title'
@@ -159,6 +163,7 @@ en:
       sold: 'Sold'
       purchase_value: 'Value'
       paid_out: 'Paid out'
+      unsatisfactory_rating: 'Unsatisfactory rating'
       status: 'Status'
       actions: 'Actions'
     index:
@@ -285,6 +290,9 @@ en:
         view:
           title: 'Email templates'
           edit: 'Edit'
+          unique_id_column: 'Name'
+          subject_column: 'Subject'
+          actions_column: 'Actions'
       edit:
         view:
           title: 'Edit template'
@@ -312,6 +320,12 @@ en:
           purchase_value_to_label: Value to
           category_label: Category
           status_label: Status
+      show:
+        view:
+          header: 'Ratings for lead: %{lead_header}'
+          rating_level: 'Rating:'
+          rating_reason: 'Reason:'
+          view_all_leads_link: 'View all leads'          
     articles:
       show:
         view:
@@ -383,6 +397,12 @@ en:
           option_not_published: 'not published'
           filter_with_inactive: 'Skip inactive'
           filter_with_outdated: 'Skip outdated'
+      show:
+        view:
+          header: 'Ratings for lead: %{lead_header}'
+          rating_level: 'Rating:'
+          rating_reason: 'Reason:'
+          view_all_leads_link: 'View all leads'
       destroy:
         flash:
           lead_deletion_successful: 'Lead has been deleted successfully.'
@@ -464,11 +484,11 @@ en:
   buyer_home:
     show:
       view:
-        header_welcome: 'WELCOME TO OUR SITE'
-        agent_link: 'CLICK HERE IF YOU ARE AN AGENT'
-        header_best_sellers: 'BEST SELLERS'
-        header_latest_leads: 'LATEST LEADS'
-        header_news: 'NEWS'
+        header_welcome: 'Welcome to our site'
+        agent_link: 'click here if you are an agent'
+        header_best_sellers: 'Best sellers'
+        header_latest_leads: 'Latest leads'
+        header_news: 'News'
         purchase_value_label: 'Purchase value:'
         lead_price_label: 'Lead price:'
         description_label: 'Description:'
@@ -480,8 +500,8 @@ en:
   agent_home:
     show:
       view:
-        header_welcome: 'WELCOME TO OUR SITE AGENT'
-        buyer_link: 'CLICK HERE IF YOU ARE A BUYER'
+        header_welcome: 'Welcome to our site'
+        buyer_link: 'click here if you are a buyer'
         header_best_sellers: 'Best sellers'
         header_latest_leads: 'Latest leads'
         header_news: 'News'
@@ -500,6 +520,24 @@ en:
           new_lead_buyer: 'Create lead user with buying permission'
           new_lead_user: 'Create lead user'
           edit: 'Edit'
+          delete: 'Delete'
+          lock: 'Lock'
+          unlock: 'Unlock'
+          assigned_leads: 'Assigned leads'
+          delete_confirmation_message: 'Are you sure to delete?'
+          first_name_column: 'First name'
+          last_name_column: 'Last name'
+          department_column: 'Department'
+          completed_leads_column: 'Completed'
+          requested_leads_column: 'Requested'
+          assigned_month_ago_column: 'Assigned 30 days ago'
+          assigned_year_ago_column: 'Assigned 12 months ago'
+          total_leads_assigned_column: 'Total assigned'
+          actions_column: 'Actions'
+          completed_leads_column: 'Completed leads'
+          email:
+          none_per_page: 'None'
+          button_bulk_subbaccounts_update: 'Save'
       create:
         flash:
           subaccount_creation_successful: Subaccount has been added succesfully
@@ -511,6 +549,13 @@ en:
         view:
           title: 'Edit'
           button_update: 'Save'
+      update:
+        flash:
+          subaccount_update_successful: 'User has been successfully updated.'
+      destroy:
+        flash:
+          subaccount_deletion_successful: 'Subaccount has been successfully deleted'
+          subaccount_deletion_failure: 'Subaccount could not be deleted'
     lead_purchases:
       index:
         view:
@@ -545,9 +590,11 @@ en:
           bulk_state_field: 'State'
           bulk_update_button: 'Update all selected leads'
           bulk_download_csv_link: 'Download CSV for selected leads'
+          bulk_download_csv_link_short: 'Download selected'
           download_csv_link: 'CSV'
           print_link: 'Print'
           bulk_print_link: 'Print all selected leads'
+          bulk_print_link_short: 'Print selected'
           email_lead: Email Lead
           search:
             keyword_label: 'Keyword'
@@ -594,12 +641,18 @@ en:
           print_link: Print
           share_email_link: Share by email
           bulk_download_csv_link: Download CSV for selected leads
+          bulk_download_csv_short: Download selected
           bulk_share_by_email_link: Share by email
           bulk_print_link: Print all selected leads
+          bulk_print_link_short: Print selected
           bulk_state_field: State
-          bulk_assignee_field: Assigned to
+          bulk_assigned_field: Assigned to
           bulk_update_button: Update all selected leads
           lead_response_date: 'Response date:'
+          rating_level: 'Rating:'
+          rating_reason: 'Reason:'
+          rating_reason_empty: 'You have to provide reson for your rating!'
+          update_rating_button: 'Save rating'
           view_lead: View Details
           email_lead: Email Lead
           search:
@@ -636,6 +689,18 @@ en:
       controller:
         successful_update_notice: 'Your profile has been successfully updated!'
 
+  contact_us:
+    new:
+      view:
+        header: 'Contact us'
+        send_email_button: 'Send'
+        email_subjects:
+          agent_inquiry: 'Agent inquiry'
+          buyer_inquiry: 'Buyer inquiry'
+    create:
+      flash:
+        email_sent_successfully: 'Your email was sent successfully to staff at NBS'
+
   models:
     user:
       payout_validation_message: 'can only be between 0 and 100'
@@ -656,6 +721,15 @@ en:
 
   activerecord:
     attributes:
+      lead_purchase:
+        rating_levels:
+          rating_level0: 'Excellent'
+          rating_level1: 'Very good'
+          rating_level2: 'Satisfactory'
+          rating_level12: 'Unsatisfactory: missing contact info'
+          rating_level13: 'Unsatisfactory: incorrect description'
+          rating_level14: 'Unsatisfactory: lead has chosen another supplier'
+          rating_level15: 'Unsatisfactory: other reason (fill in)'
       category:
         name: 'Name'
         description: 'Description'
@@ -720,6 +794,18 @@ en:
             hidden_description:
               blank: "can't be blank"
 
+  activemodel:
+    errors:
+      models:
+        contact_us_template_preview:
+          attributes:
+            email_from:
+              blank: "can't be blank"
+            subject:
+              blank: "can't be blank"
+            body:
+              blank: "can't be blank"
+
   flash:
     agent_accounts:
       actions:
@@ -766,3 +852,9 @@ en:
       actions:
         create:
           notice: Email has been sent
+    email_templates:
+      update:
+        notice: 'Email template has been successfully updated'
+    bulk_subaccounts_update:
+      update:
+        notice: 'Selected subaccounts have been updated.'

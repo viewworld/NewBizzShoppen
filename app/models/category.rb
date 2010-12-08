@@ -2,13 +2,16 @@ class Category < ActiveRecord::Base
   translates :name, :description
 
   acts_as_nested_set
-
+  has_many :category_translations
   has_one :image,
           :class_name => "Asset::CategoryImage",
           :as         => :resource,
           :conditions => "asset_type = 'Asset::CategoryImage'",
           :dependent  => :destroy
   has_many :category_interests
+
+  after_save :set_cached_slug
+
   has_many :leads do
     def including_subcategories
       Lead.where(:category_id => proxy_owner.self_and_descendants.map(&:id))
@@ -26,6 +29,18 @@ class Category < ActiveRecord::Base
   accepts_nested_attributes_for :image
 
   private
+
+  def id_and_name
+    name_en = CategoryTranslation.first(:conditions => ["category_id = ? and locale = ?", self.id, "en"])
+    "#{id} #{name_en.blank? ? '' : name_en.name}".to_url
+  end
+
+  def set_cached_slug
+    if cached_slug.blank? or cached_slug != id_and_name
+      self.cached_slug = id_and_name
+      self.save
+    end
+  end
 
   def check_if_category_is_empty
     return true if is_empty?

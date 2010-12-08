@@ -7,7 +7,7 @@ module LeadsHelper
   end
 
   def leads_listing(collection, options = {}, &block)
-    @hb = ApplicationHelper::HelperBlocks.new(:left, :right)
+    @hb = ApplicationHelper::HelperBlocks.new(:lead_details, :tools, :bottom)
     block.call(@hb)
     options[:show_checkboxes] ||= false
     render(:partial => '/leads/listing', :locals => options.merge({:collection => collection}.merge(@hb.results)))

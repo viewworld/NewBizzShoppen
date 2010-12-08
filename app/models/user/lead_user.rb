@@ -1,6 +1,8 @@
 class ::User::LeadUser < ::User
   ROLES = [:lead_user]
 
+  include User::Subaccounts
+
   has_many :lead_requests,
            :foreign_key => :requested_by,
            :after_add => :set_owner

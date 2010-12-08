@@ -10,7 +10,7 @@
 
 .rltv
 {
-    positon: relative;
+    position: relative;
 }
 
 
@@ -55,17 +55,17 @@
 
 .ta_l
 {
-    text-align: left;
+    text-align: left !important;
 }
 
 .ta_c
 {
-    text-align: center;
+    text-align: center !important;
 }
 
 .ta_r
 {
-    text-align: right;
+    text-align: right !important;
 }
 
 
@@ -79,6 +79,11 @@
 .pdd_10
 {
     padding: 10px;
+}
+
+.pdd_20
+{
+    padding: 20px;
 }
 
 .no_pdd

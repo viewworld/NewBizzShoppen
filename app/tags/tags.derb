@@ -1,6 +1,6 @@
 <def tag="lbuilder_layout">
   <div class="clc" style="clear:both;">
-    <% %w(      t m b      ).each do |row_code| %>
+    <% %w(        t m b        ).each do |row_code| %>
         <%= render :partial => "/layouts/row", :locals => {:row_code => row_code} %>
     <% end %>
   </div>
@@ -11,19 +11,42 @@
 </def>
 
 
-<def tag="header">
+
+<def tag="header" attrs="title,back">
   <div class="header_ribbon">
     <h1>
       <span>
-        <param:content/>
+        <param:content/>      
       </span>
     </h1>
+    <param:actions/>
+    <% unless back.blank? %>
+        <ul class="header_actions">
+          <li class="bt_back">
+            <%= bt_link_to nil, "Back", "javascript:void(0)", :onclick => "history.go(-1)", :class => "bt_grey_small" %>
+          </li>
+        </ul>
+    <% end %>
   </div>
 </def>
+
+<def tag="bt_back" attrs="li">
+  <% if li.nil? %>
+      <% bt_link_to nil, "Back", "history.go(-1)" %>
+  <% else %>
+      <li class="bt_back">
+        <% bt_link_to nil, "Back", "history.go(-1)" %>
+      </li>
+  <% end %>
+</def>
+
+
 
 <def tag="hl" attrs="pdd">
   <div class="hl"<%= pdd.nil? ? "" : " style='padding: #{pdd}px 0'" %>></div>
 </def>
+
+
 
 <def tag="ibt" attrs="c,icon">
   <div class="bt<%= c.nil? ? "" : " #{c}" %>">
@@ -35,6 +58,18 @@
     </span>
   </div>
 </def>
+
+
+
+<def tag="ul-actions">
+  <div class="td_actions">
+    <%= bt_link_to :cog, nil, "javascript:void(0)", :class => "bt_dropdown" %>
+    <ul>
+      <param:content/>
+    </ul>
+  </div>
+</def>
+
 
 
 <def tag="frm" attrs="title,c">

@@ -5,6 +5,7 @@ Background:
   Given I am on the homepage
   And I make sure current locale is English
   Given I am signed up and confirmed as user with email customer@person.com and password supersecret and role customer
+  And user customer@person.com with role customer exists with attributes "screen_name:Liane Young,first_name:Liane,last_name:Young"
   And an user with role lead_user and email lead_user2@person.com exists as subaccount for customer customer@person.com
   And an user with role lead_user and email lead_user3@person.com exists as subaccount for customer customer@person.com
   And user lead_user2@person.com with role lead_user exists with attributes "screen_name:John McCoy,first_name:John,last_name:McCoy"
@@ -27,6 +28,18 @@ Scenario: I can assign any of my leads to any of lead users that belong to my ac
   Given I select "Martin Gleesse" from "assignee_id"
   And I go to buyer lead purchases
   Then "assignee_id" should be selected for value "Martin Gleesse"
+
+@tgn @m3 @done @_non_testable
+Scenario: When I assign a user to a lead, then assigned_at time is recorded
+
+@tgn @m3 @done @_tested @selenium
+Scenario: I can assign any of my leads back to myself
+  Given I go to buyer lead purchases
+  And I select "Martin Gleesse" from "assignee_id"
+  Given I go to buyer lead purchases
+  And I select "Liane Young" from "assignee_id"
+  Given I go to buyer lead purchases
+  Then "assignee_id" should be selected for value "Liane Young"
 
 @tgn @done @_tested @selenium
 Scenario: I can unassing any of my leads from lead user that belong to my account and had that lead assigned to his account
@@ -109,7 +122,7 @@ Scenario: I can delete lead requested by lead user that belong to my account
 Scenario: I can bulk delete leads requested by lead users that belong to my account
   Then I go to customers lead requests
   And I check "mark_all"
-  And I press translated "customer.lead_requests.index.view.button_bulk_destroy_lead_request"
+  And I follow translated "customer.lead_requests.index.view.button_bulk_destroy_lead_request"
   Then I should see translated "flash.bulk_lead_requests.actions.destroy.notice"
 
 @tgn @_tested  @selenium
@@ -126,7 +139,7 @@ Scenario: I can bulk set response deadlines for lead
   Given I go to buyer lead purchases
   And I check "mark_all"
   And I fill in "bulk_response_deadline" with "2011-01-11"
-  And I press translated "lead_buyer.lead_purchases.index.view.bulk_update_button"
+  And I follow translated "lead_buyer.lead_purchases.index.view.bulk_update_button"
   Then I should see translated "buyer.bulk_lead_purchase_update.create.flash.lead_purchases_updated_successfully"
 
 @ao @nontestable
@@ -146,7 +159,7 @@ Scenario: I can email the lead if email information were provided
   And I sign in as customer@nbs.com with password secret
   And a lead AwesomeLead exists within category Test and is bought by user customer@nbs.com with role customer
   And I follow translated "layout.main_menu.lead_buyer.lead_purchases"
-  And I follow translated "lead_buyer.lead_purchases.index.view.email_lead" within ".lead_purchase"
+  And I follow translated "lead_buyer.lead_purchases.index.view.email_lead" within ".lead"
   And I press translated "lead_buyer.contact_lead_by_email.new.view.send_email_button"
   Then I should see translated "flash.contact_lead_by_email.actions.create.notice"
 
@@ -175,7 +188,8 @@ Scenario: I can bulk rate leads that I have access for (good, bad, fake)
 @ao @_tested @_done @selenium
 Scenario: I can set status of lead
   And I follow translated "layout.main_menu.lead_buyer.lead_purchases"
-  And I select translated "lead_purchases.statuses.contacted" from "state" within ".lead_purchases_listing li:first-of-type"
+  # And I select translated "lead_purchases.statuses.contacted" from "state" [within ".lead tr:first-of-type"]
+  And I select translated "lead_purchases.statuses.contacted" from "state"
   And I follow translated "layout.main_menu.lead_buyer.lead_purchases"
   Then "state" should be selected for value translated "lead_purchases.statuses.contacted"
 
@@ -184,5 +198,5 @@ Scenario: I can bulk set status of leads
   And I follow translated "layout.main_menu.lead_buyer.lead_purchases"
   And I select translated "lead_purchases.statuses.contacted" from "bulk_state" within "#bulk_actions_form"
   And I check "mark_all"
-  And I press translated "lead_buyer.lead_purchases.index.view.bulk_update_button"
+  And I follow translated "lead_buyer.lead_purchases.index.view.bulk_update_button"
   Then "state" should be selected for value translated "lead_purchases.statuses.contacted"

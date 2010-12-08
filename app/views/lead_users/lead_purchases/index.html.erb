@@ -1,46 +1,93 @@
+<search-box:>
+  <div class="search_box">
+    <h2>Search</h2>
+
+    <div class="search_content">
+      <%= form_for @search, :url => lead_users_lead_purchases_path do |f| %>
+          <fieldset class="inputs labels_auto inline_li no_pdd rltv">
+            <ol class="no_pdd">
+              <li class="string">
+                <%= f.text_field :with_keyword %>
+              </li>
+              <li class="select">
+                <%= f.label :with_category, t("lead_user.lead_purchases.index.view.search.category_label") %>
+                <%= f.select :with_category, @categories, {:include_blank => true} %>
+              </li>
+              <li class="select">
+                <%= f.label :with_deal_value_from, t("lead_user.lead_purchases.index.view.search.deal_value_from_label") %>
+                <%= f.select :with_deal_value_from, User::DEAL_VALUE_RANGE, {:include_blank => true} %>
+              </li>
+              <li class="select no_pdd_l">
+                <%= f.label :with_deal_value_to, t("lead_user.lead_purchases.index.view.search.deal_value_to_label") %>
+                <%= f.select :with_deal_value_to, User::DEAL_VALUE_RANGE, {:include_blank => true} %>
+              </li>
+              <li class="select">
+                <%= f.label :with_country, t("lead_user.lead_purchases.index.view.search.country_label") %>
+                <%= f.select :with_country, @countries, {:include_blank => true} %>
+              <li class="commit">
+                <ibt c="bt_green right" icon="magnify">
+                  <%= submit_tag t("lead_user.lead_purchases.index.view.search.search_button") %>
+                </ibt>
+              </li>
+            </ol>
+          </fieldset>
+      <% end %>
+    </div>
+  </div>
+</search-box:>
+
 <column-mc:>
 
-  <h1><%= t("lead_user.lead_purchases.index.view.header") %></h1>
-
-  <%= form_for @search, :url => lead_users_lead_purchases_path do |f| %>
-      <%= t("lead_user.lead_purchases.index.view.search.keyword_label") %><%= f.text_field :with_keyword %>
-      <%= t("lead_user.lead_purchases.index.view.search.category_label") %><%= f.select :with_category, @categories, {:include_blank => true} %>
-      <%= t("lead_user.lead_purchases.index.view.search.deal_value_from_label") %><%= f.select :with_deal_value_from, User::DEAL_VALUE_RANGE, {:include_blank => true} %>
-      <%= t("lead_user.lead_purchases.index.view.search.deal_value_to_label") %><%= f.select :with_deal_value_to, User::DEAL_VALUE_RANGE, {:include_blank => true} %>
-      <%= t("lead_user.lead_purchases.index.view.search.country_label") %><%= f.select :with_country, @countries, {:include_blank => true} %>
-      <%= submit_tag t("lead_user.lead_purchases.index.view.search.search_button") %>
-  <% end %>
+  <header><%= t("lead_user.lead_purchases.index.view.header") %></header>
 
   <%= bulk_form do %>
 
-      <%= link_to_function t("lead_user.lead_purchases.index.view.bulk_download_csv_link"), "submitBulkForm('#{lead_users_bulk_lead_purchase_csv_path}#POST');" %>
-      <%= link_to_function t("lead_user.lead_purchases.index.view.bulk_print_link"), "submitBulkForm('#{lead_users_bulk_lead_purchase_print_path}#POST', '_blank');" %>
+      <fieldset class="inputs labels_auto inline_li">
+        <ol class="no_pdd">
+          <li class="select">
+            <%= label_tag :bulk_state, t("lead_user.lead_purchases.index.view.bulk_state_field") %>
+            <%= select_tag :bulk_state, options_for_select([[nil, nil]]+LeadPurchaseBase.statuses_for_select) %>
+          </li>
+          <li class="commit no_pdd_l">
+            <%= bt_link_to nil, t("lead_user.lead_purchases.index.view.bulk_update_button"), "javascript:void(0)", :onclick => "submitBulkForm('#{lead_users_bulk_lead_purchase_update_path}#POST');" %>
+          </li>
+        </ol>
+      </fieldset>
 
-      <%= t("lead_user.lead_purchases.index.view.bulk_state_field") %>
-      <%= select_tag :bulk_state, options_for_select([[nil, nil]]+LeadPurchaseBase.statuses_for_select) %>
       <%= hidden_field_tag :route_to %>
-      <%= button_to_function t("lead_user.lead_purchases.index.view.bulk_update_button"), "submitBulkForm('#{lead_users_bulk_lead_purchase_update_path}#POST');" %>
-      <br />
-
-      <%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this.checked,'input:checkbox')" %>
 
       <%= lead_purchases_listing @lead_purchases, :show_checkboxes => true do |blocks| %>
-           <% blocks.contact do |lead_purchase| %>
-               <%= link_to t("lead_user.lead_purchases.index.view.view_lead"), lead_users_lead_purchase_path(lead_purchase) %><br />
-               <%= link_to t("lead_user.lead_purchases.index.view.email_lead"), new_lead_users_lead_purchase_lead_email_path(lead_purchase) if lead_purchase_has_email_address?(lead_purchase)%>
-           <% end %>
+          <% blocks.contact do |lead_purchase| %>
+              <%= link_to t("lead_user.lead_purchases.index.view.view_lead"), lead_users_lead_purchase_path(lead_purchase) %>
+              <%= link_to t("lead_user.lead_purchases.index.view.email_lead"), new_lead_users_lead_purchase_lead_email_path(lead_purchase) if lead_purchase_has_email_address?(lead_purchase) %>
+          <% end %>
 
-           <% blocks.tools do |lead_purchase| %>
-              <%= link_to t("lead_user.lead_purchases.index.view.download_csv_link"), lead_users_lead_purchase_path(lead_purchase, :format => :csv) %>
-              <%= link_to t("lead_user.lead_purchases.index.view.print_link"), lead_users_lead_purchase_path(lead_purchase, :format => :print), :target => "_blank" %>
-              <%= form_for [:lead_users, lead_purchase], :remote => true do |form| %>
-                  <%= form.select :state, LeadPurchaseBase.statuses_for_select, {}, {:onchange => "$.post('#{lead_users_lead_purchase_path(lead_purchase)}', {'_method':'put', 'lead_purchase[state]':this.value} );"} %>
-              <% end %>
+           <% blocks.assigned_to do |lead_purchase| %>
               <% if @subaccounts.present? %>
                   <%= select_tag :assignee_id,
                                  options_for_select([[nil, nil]]+@subaccounts.map { |sa| [sa.screen_name, sa.id] }, lead_purchase.assignee_id),
                                  :onchange => "$.post('#{lead_users_lead_purchase_path(lead_purchase)}', {'_method':'put', 'lead_purchase[assignee_id]':this.value} );" %>
               <% end %>
+          <% end %>
+
+          <% blocks.tools do |lead_purchase| %>
+              <ul-actions>
+                <li>
+                  <%= link_to t("lead_user.lead_purchases.index.view.download_csv_link"), lead_users_lead_purchase_path(lead_purchase, :format => :csv) %>
+                </li>
+                <li>
+                  <%= link_to t("lead_user.lead_purchases.index.view.print_link"), lead_users_lead_purchase_path(lead_purchase, :format => :print), :target => "_blank" %>
+                </li>
+              </ul-actions>
+          <% end %>
+
+          <% blocks.other_actions do |lead_purchase| %>
+            <%= select_tag :state, options_for_select(LeadPurchaseBase.statuses_for_select, lead_purchase.state), :onchange => "$.post('#{lead_users_lead_purchase_path(lead_purchase)}', {'_method':'put', 'lead_purchase[state]':this.value} );" %>
+          <% end %>          
+
+          <% blocks.bottom do |lead_purchase| %>
+              <%= bt_link_to :download, t("lead_user.lead_purchases.index.view.bulk_download_csv_link_short"), "javascript:void(0)", :onclick => "submitBulkForm('#{lead_users_bulk_lead_purchase_csv_path}#POST');" %>
+              <%= bt_link_to :printer, t("lead_user.lead_purchases.index.view.bulk_print_link_short"), "javascript:void(0)", :onclick => "submitBulkForm('#{lead_users_bulk_lead_purchase_print_path}#POST', '_blank');" %>
           <% end %>
       <% end %>
 

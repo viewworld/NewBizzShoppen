@@ -69,8 +69,11 @@ Scenario: Article translations
   Then I should see "[EN]FirstArticle"
   And I should see "[EN]Lorem"
 
-@m3 @tgn
+@m3 @tgn @_tested
 Scenario: Email translations
+  When email "confirmation_instructions" has translation for lang "dk" with attributes "subject:Bekraeftelse instruktioner,body:Du kan bekraefte din konto via nedenstaende link"
+  And confirmation email is sent for locale "dk"
+  Then last email sent should have content "Du kan bekraefte din konto via nedenstaende link"
 
 @tgn @_done @_tested_elsewhere
 Scenario: Content language is displayed on the basis of choosen language

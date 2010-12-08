@@ -1,7 +1,18 @@
 <column-mc:>
-  <header>Categories</header>
+  <header>
+    <param:content>
+      <%= "Categories" %>
+    </param:content>
 
-  <%= link_to t("administration.categories.index.view.new_category"), new_administration_category_path %>
+    <param:actions>
+      <ul class="header_actions">
+        <li class="last">
+          <%= bt_link_to :plus, t("administration.categories.index.view.new_category"), new_administration_category_path %>
+        </li>
+      </ul>
+    </param:actions>
+  </header>
+
   <%= all_categories_tree(:category_label => lambda { |c| c.name },
                           :after_category => lambda do |c|
                               [].tap do |links|
@@ -11,5 +22,6 @@
                                                    :confirm => I18n.t("common.confirmation")) if c.is_empty?
                               end.join(" | ").html_safe
                           end) %>
+  
   <clb/>
 </column-mc:>

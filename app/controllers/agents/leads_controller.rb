@@ -34,6 +34,10 @@ class Agents::LeadsController < Agents::AgentController
       end
   end
 
+  def show
+    @lead = current_user.leads.find(params[:id])
+  end
+
   def update
     update! do |success, failure|
       success.html { redirect_to agents_leads_path }

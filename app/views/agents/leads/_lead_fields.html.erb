@@ -1,27 +1,40 @@
-<span id="lead_translation_form_<%= f.object.new_record? ? 'lead_lead_translations_attributes_0' : f.object.id %>">
-<br />
-<span class="locale_span">
-  <%= f.object.locale if f.object.respond_to?(:locale) %>
-</span>
-<%= link_to_function t("agent.leads.new.view.remove_language"), "remove_language('#{f.object.new_record? ? 'lead_lead_translations_attributes_0' : f.object.id}', '#{f.object.locale.blank? ? 'LOCALE_LANG' : f.object.locale}', #{f.object.new_record? ? 'null' : f.object.id})" %>
+<div id="lead_translation_form_<%= f.object.new_record? ? 'lead_lead_translations_attributes_0' : f.object.id %>">
+  <div class="pdd_10 no_pdd_t rltv">
+    <%= bt_link_to :remove, t("agent.leads.new.view.remove_language"), "javascript:void(0)", :onclick => "remove_language('#{f.object.new_record? ? 'lead_lead_translations_attributes_0' : f.object.id}', '#{f.object.locale.blank? ? 'LOCALE_LANG' : f.object.locale}', #{f.object.new_record? ? 'null' : f.object.id})", :style => "position: absolute; left:8px; top:2px" %>
+    <fieldset class="inputs labels_ta_r labels_240">
+      <ol class="align_inputs">
+        <li class="header">
+          <h3 class="locale_title">
+            <%= f.object.locale if f.object.respond_to?(:locale) %>
+          </h3>
+        </li>
+        <li class="string">
+          <%= f.label :header %>
+          <%= f.text_field :header %>
+          <%= custom_error_for_field(f, :header) %>
+        </li>
+        <li class="text">
+          <%= f.label :description %>
+          <%= f.text_area :description, :style => "height: 140px; width: 600px" %>
+          <%= custom_error_for_field(f, :description) %>
+        </li>
+        <li class="text">
+          <%= f.label :hidden_description %>
+          <%= f.text_area :hidden_description, :style => "height: 140px; width: 600px" %>
+          <br/>
+          <%= custom_error_for_field(f, :hidden_description) %>
+        </li>
+        <li class="hidden">
+          <%= f.hidden_field :locale, :class => "locale_hidden_field" %>
+          <% unless f.object.new_record? %>
+              <%= f.hidden_field :_destroy, :id => "destroy_hidden_field_#{f.object.id}" %>
+          <% end %>
+        </li>
+      </ol>
+    </fieldset>
 
+    <span class="nested_locale_span"></span>
+  </div>
+  <hl/>
+</div>
 
-<%= f.label :header %>
-<%= f.text_field :header %><br />
-<%= custom_error_for_field(f, :header) %>
-
-<%= f.label :description %>
-<%= f.text_area :description %><br />
-<%= custom_error_for_field(f, :description) %>
-
-<%= f.label :hidden_description %>
-<%= f.text_area :hidden_description %><br />
-<%= custom_error_for_field(f, :hidden_description) %>
-
-
-<%= f.hidden_field :locale, :class => "locale_hidden_field" %><br />
-<% unless f.object.new_record? %>
-  <%= f.hidden_field :_destroy, :id => "destroy_hidden_field_#{f.object.id}" %><br />
-<% end %>
-</span>
-<span class="nested_locale_span"></span>

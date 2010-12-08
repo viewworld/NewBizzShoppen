@@ -1,2 +1,15 @@
-<%= form.inputs :first_name, :last_name, :phone, :email, :screen_name, :mobile_phone, :department %>
-<%= form.input :agreement_read, :as => :hidden, :value => "1" %>
+<div class="pdd_10 no_pdd_t">
+  <fieldset class="inputs labels_ta_r labels_240">
+    <ol>
+      <%= form.input :first_name %>
+      <%= form.input :last_name %>
+      <%= form.input :phone %>
+      <%= form.input :email %>
+      <%= form.input :screen_name %>
+      <%= form.input :mobile_phone %>
+      <%= form.input :department %>
+      <%= form.input :lead_buyer_role_enabled, :as => :boolean %>
+      <%= form.input :agreement_read, :as => :hidden, :value => "1" %>
+    </ol>
+  </fieldset>
+</div>

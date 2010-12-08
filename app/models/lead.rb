@@ -1,7 +1,7 @@
 class Lead < ActiveRecord::Base
   INFINITY             = 1.0/0
   NOVELTY_LEVEL_RANGES = [(0..8), (9..30), (31..INFINITY)]
-  HOTNESS_LEVEL_RANGES = [(29..INFINITY), (7..28), (-INFINITY..6)]
+  HOTNESS_LEVEL_RANGES = [(29..INFINITY), (7..28), (-INFINITY..6)]  
 
   translates :header, :description, :hidden_description
 
@@ -29,6 +29,7 @@ class Lead < ActiveRecord::Base
   scope :without_outdated, lambda { where("purchase_decision_date >= ?", Date.today.to_s ) }
   scope :without_locked_users, joins("INNER JOIN users ON users.id=leads.creator_id").where("users.locked_at is NULL")
   scope :with_status, lambda { |q| where(["leads.published = ?", q]) }
+  scope :published_only, where(:published => true)
   #====================
   scope :bestsellers, order("lead_purchases_counter DESC")
   scope :latest, order("created_at DESC")
@@ -41,14 +42,17 @@ class Lead < ActiveRecord::Base
 
   liquid_methods :header, :description, :company_name, :contact_name, :phone_number, :email_address, :address, :www_address
 
+  liquid :header
+
   accepts_nested_attributes_for :lead_translations, :allow_destroy => true
 
-  scoped_order :id, :header, :sale_limit, :price, :lead_purchases_counter, :published, :purchase_value
+  scoped_order :id, :header, :sale_limit, :price, :lead_purchases_counter, :published, :has_unsatisfactory_rating, :purchase_value
 
   attr_accessor :notify_buyers_after_update
   after_create :cache_creator_name
   before_destroy :can_be_removed?
   after_find :set_buyers_notification
+  before_update :notify_buyers_about_changes
 
   private
 
@@ -80,6 +84,20 @@ class Lead < ActiveRecord::Base
 
   def set_buyers_notification
     self.notify_buyers_after_update = true
+  end
+
+  def notify_buyers_about_changes
+    if ActiveRecord::ConnectionAdapters::Column.value_to_boolean(notify_buyers_after_update) and lead_purchases.present?
+      lead_purchases.map(&:owner).uniq.each { |buyer| deliver_notify_buyers_about_changes(buyer.email) }
+    end
+  end
+
+  def deliver_notify_buyers_about_changes(email)
+    deliver_email_template(email, "notify_buyers_about_lead_update")
+  end
+
+  def deliver_email_template(email, uniq_id)
+    ApplicationMailer.email_template(email, EmailTemplate.find_by_uniq_id(uniq_id), {:lead => self}).deliver
   end
 
   public

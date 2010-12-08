@@ -1,16 +1,21 @@
 <column-mc:>
-
-  <%= help_popup(t("common.help_link"), 'reset_password') %>
-
-  <h2>Forgot your password?</h2>
+  <header>Forgot your password?</header>
+  <%= help_popup(t("common.help_link"), 'reset_password') %>  
 
   <%= form_for(resource, :as => resource_name, :url => user_password_path(resource_name), :html => {:method => :post}) do |f| %>
       <%= devise_error_messages! %>
+      <fieldset class="inputs labels_100">
+        <ol class="align_inputs">
+          <li class="string"><%= f.label :email %>
+            <%= f.text_field :email %></li>
 
-      <p><%= f.label :email %><br/>
-        <%= f.text_field :email %></p>
-
-      <p><%= f.submit t("devise.passwords.button_create") %></p>
+          <li class="commit">
+            <ibt>
+              <%= f.submit t("devise.passwords.button_create") %>
+            </ibt>
+          </li>
+        </ol>
+      </fieldset>
   <% end %>
 
   <%= render :partial => "devise/shared/links" %>

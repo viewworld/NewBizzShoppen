@@ -73,7 +73,7 @@ Scenario: I can download lead as CSV
 @tgn @bk @_tested @selenium
 Scenario: I can bulk download leads as CSV
   Then I check "mark_all"
-  And I follow translated "lead_user.lead_purchases.index.view.bulk_download_csv_link"
+  And I follow translated "lead_user.lead_purchases.index.view.bulk_download_csv_link_short"
 
 
 @tgn @_tested
@@ -122,7 +122,7 @@ Scenario: I can email the lead if email information were provided
   And I sign in as leaduser@nbs.com with password secret
   And lead AwesomeLead is bought by user customer@nbs.com with role customer and is assigned to user leaduser@nbs.com with role lead_user
   And I follow translated "layout.main_menu.lead_user.lead_purchases"
-  And I follow translated "lead_user.lead_purchases.index.view.email_lead" within ".lead_purchase"
+  And I follow translated "lead_user.lead_purchases.index.view.email_lead" within ".lead"
   And I press translated "lead_user.contact_lead_by_email.new.view.send_email_button"
   Then I should see translated "flash.contact_lead_by_email.actions.create.notice"
 
@@ -155,7 +155,7 @@ Scenario: I can set status of lead (not contacted, contacted, meeting, signed)
 Scenario: I can bulk set status of leads (not contacted, dontacted, meeting, signed)
   Given I check "mark_all"
   And I select "Signed" from "bulk_state"
-  And I press translated "lead_user.lead_purchases.index.view.bulk_update_button"
+  And I follow translated "lead_user.lead_purchases.index.view.bulk_update_button"
   Then I should see translated "lead_user.bulk_lead_purchase_update.create.flash.lead_purchases_updated_successfully"
 
 @tgn @bk @_tested
@@ -170,7 +170,7 @@ Scenario: I can print out lead information
 @tgn @bk @selenium @_tested
 Scenario: I can print out multiple leads information
   Given I check "mark_all"
-  And I follow translated "lead_user.lead_purchases.index.view.bulk_print_link"
+  And I follow translated "lead_user.lead_purchases.index.view.bulk_print_link_short"
   Then I should see "Printers ultimate deal"
   Then I should see "Keyboards deal"
   Then I should see "Monitors LCD deal"

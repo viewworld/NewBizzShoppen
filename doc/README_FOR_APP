@@ -1,6 +1,25 @@
 Use this README file to introduce your application and point to useful places in the API for learning more.
 Run "rake doc:app" to generate API documentation for your models, controllers, helpers, and libraries.
 
+== Comments related research
+
+https://github.com/jackdempsey/acts_as_commentable
+https://github.com/elight/acts_as_commentable_with_threading
+https://github.com/aarongough/has_threaded_comments (Rails 2 ??)
+
+== Articles research
+
+https://github.com/resolve/refinerycms
+
+
+== Reporting research
+
+https://github.com/acatighera/statistics
+
+== Security related
+
+https://github.com/flavorjones/loofah
+
 == Rspec2 Installation
 
 rails g rspec:install
@@ -32,6 +51,11 @@ https://rails.lighthouseapp.com/projects/8994/tickets/3853-route-to-root-of-a-na
 http://github.com/aslakhellesoy/cucumber/wiki/Spork-and---drb
 
 
+== PayPal
+
+http://railscasts.com/episodes/142-paypal-notifications
+
+
 == Cucumber steps related
 
 http://asciicasts.com/episodes/186-pickle-with-cucumber
@@ -44,3 +68,6 @@ http://mocha.rubyforge.org/examples/misc.html
 == Skip running a line of code in context of rake
 
 config.active_record.observers = :lead_observer unless File.basename($0) == "rake"
+
+== Restart postgresql server
+sudo /etc/init.d/postgresql restart

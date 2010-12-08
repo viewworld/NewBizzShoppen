@@ -1,6 +1,6 @@
 class Buyers::BuyerController < SecuredController
   def current_user
-    @buyer ||= ::User::LeadBuyer.find(super.id)
+    @buyer ||= ::User::LeadBuyer.find_by_id(super.id)
   end
 
   private
