@@ -14,13 +14,15 @@ Background:
 
 @_tested
 Scenario: I can create a new lead and close
-  Given I follow translated "agent.leads.index.view.new_lead"
+  Given Category Test category 1 is created
+  And I follow translated "agent.leads.index.view.new_lead"
   And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
   And I fill in "lead_description" with "Lorem ipsum"
   And I fill in "lead_hidden_description" with "Lorem ipsum hidden"
   And I fill in "lead_purchase_value" with "10000"
   And I fill in "lead_price" with "100"
   And I select "3" from "lead_sale_limit"
+  And I open page in browser
   #And I fill in "area" with "global"
   And I select "Test category 1" from "lead_category_id"
   And I select "Denmark" from "lead_country_id"
@@ -36,7 +38,8 @@ Scenario: I can create a new lead and close
 
 @_tested
 Scenario: I can create a new lead and continue (create another one)
-  Given I follow translated "agent.leads.index.view.new_lead"
+  Given Category Test category 1 is created
+  And I follow translated "agent.leads.index.view.new_lead"
   And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
   And I fill in "lead_description" with "Lorem ipsum"
   And I fill in "lead_hidden_description" with "Lorem ipsum hidden"
@@ -94,7 +97,8 @@ Scenario: Published checkbox should be selected by default
 
 @tgn @_tested @m1
 Scenario: All fields for new lead have to be filled in beside email address
-  Given I follow translated "agent.leads.index.view.new_lead"
+  Given Category Test category 1 is created
+  And I follow translated "agent.leads.index.view.new_lead"
   And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
   And I fill in "lead_description" with "Lorem ipsum"
   And I fill in "lead_hidden_description" with "Lorem ipsum hidden"

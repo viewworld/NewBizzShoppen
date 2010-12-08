@@ -43,7 +43,7 @@
   </tfoot>
   <tbody>
       <% collection.each do |lead| %>
-        <tr>
+        <tr id="lead_<%= lead.id %>">
           <td class="cl"></td>
           <% if show_checkboxes %>
             <td><%= check_box_tag("lead_ids[]", lead.id) %></td>

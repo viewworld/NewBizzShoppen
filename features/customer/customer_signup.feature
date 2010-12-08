@@ -38,7 +38,7 @@ Feature: Customer signup
     And I check "user_customer_agreement_read"
     And I press translated "buyer_accounts.new.view.button_create_account"
     Then I should see translated "flash.buyer_accounts.actions.create.notice"
-    And a confirmation message should be sent to "user@domain.dom"
+    And a confirmation message should be sent to user@domain.dom
 
   @_tested
   Scenario: User confirms his email account

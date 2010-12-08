@@ -145,7 +145,7 @@ Scenario: I can toggle select leads
 Scenario: I can set status of lead (not contacted, contacted, meeting, signed)
   Given I fill in "search_with_keyword" with "Printers ultimate deal"
   And I press translated "lead_user.lead_purchases.index.view.search.search_button"
-  Then I select "Signed" from "lead_purchase_state"
+  Then I select "Signed" from "state"
   And I go to lead user lead purchases
   Given I fill in "search_with_keyword" with "Printers ultimate deal"
   And I press translated "lead_user.lead_purchases.index.view.search.search_button"
