@@ -18,10 +18,11 @@ Scenario: I can edit lead
   And I press translated "agent.leads.edit.view.button_update"
   Then I should see translated "flash.leads.actions.update.notice"
 
-@_tested @selenium
+@_tested  @selenium
 Scenario: I can add a language - title, purchase, hidden, language
   Given I go to agents leads
-  Then I follow translated "agent.leads.index.view.edit"
+  And I open page in browser
+  Then I click hidden link by url regex "/agents\/leads\/\d+\/edit/"
   And I select "dk" from "locale_picker"
   And I fill in "lead_lead_translations_attributes_0_header" with "DK header"
   And I fill in "lead_lead_translations_attributes_0_description" with "DK description"
@@ -32,7 +33,7 @@ Scenario: I can add a language - title, purchase, hidden, language
 @_tested @selenium
 Scenario: I can delete a language
   Given I go to agents leads
-  Then I follow translated "agent.leads.index.view.edit"
+  Then I click hidden link by url regex "/agents\/leads\/\d+\/edit/"
   And I select "dk" from "locale_picker"
   Then I follow translated "agent.leads.new.view.remove_language"
   And I select "dk" from "locale_picker"
@@ -40,10 +41,10 @@ Scenario: I can delete a language
   And I fill in "lead_lead_translations_attributes_0_description" with "DK description"
   And I fill in "lead_lead_translations_attributes_0_hidden_description" with "DK hidden description"
   Then I press translated "agent.leads.edit.view.button_update"
-  And  I follow translated "agent.leads.index.view.edit"
+  And I click hidden link by url regex "/agents\/leads\/\d+\/edit/"
   And I follow translated "agent.leads.new.view.remove_language"
   Then I press translated "agent.leads.edit.view.button_update"
-  And I follow translated "agent.leads.index.view.edit"
+  And I click hidden link by url regex "/agents\/leads\/\d+\/edit/"
   And I should not see "DK hidden description"
 
 @_tested
