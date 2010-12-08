@@ -64,3 +64,8 @@ Then /I should have translated value "([^"]*)" in the css path "([^"]*)"$/ do |k
   I18n.locale = :en
   Then %{I should have value "#{I18n.t(key)}" in the css path "#{css_path}"}
 end
+
+Then /^I click hidden translated link "([^"]*)"$/ do |key|
+  I18n.locale = :en
+  Then %{I click hidden link "#{I18n.t(key)}"}
+end

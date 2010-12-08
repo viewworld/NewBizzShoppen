@@ -157,7 +157,7 @@ Given /^LeadPurchase statuses are updated$/ do
 end
 
 Then /^list item should be highlighted$/ do
-  page.all(:css,"ul li[class*='highlight']").size.should eql(1)
+  page.all(:css,"tr[class*='highlight']").size.should eql(1)
 end
 
 Given /^a lead "([^"]*)" has (good|bad) rating$/ do |header, rating_type|
