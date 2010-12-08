@@ -5,10 +5,6 @@
       <%= "Welcome" %>
     </param:content>
 
-    <p><%= t("agent_home.show.view.header_welcome") %> <%= link_to t("agent_home.show.view.buyer_link"), buyer_home_path %></p>
-    
-    <p><%= blurb("blurb_agent_home") %></p>
-
     <param:actions>
     <ul class="header_actions">
       <li class="last">
@@ -19,6 +15,8 @@
   </header> 
 
   <p><%= t("agent_home.show.view.header_welcome") %> <%= link_to t("agent_home.show.view.buyer_link"), buyer_home_path %></p>
+
+  <p><%= blurb("blurb_agent_home") %></p>
 
   <div id="leads_summary">
     <div class="column_1to3 fltl" id="news">

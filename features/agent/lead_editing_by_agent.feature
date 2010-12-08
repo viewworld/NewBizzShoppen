@@ -21,7 +21,6 @@ Scenario: I can edit lead
 @_tested  @selenium
 Scenario: I can add a language - title, purchase, hidden, language
   Given I go to agents leads
-  And I open page in browser
   Then I click hidden link by url regex "/agents\/leads\/\d+\/edit/"
   And I select "dk" from "locale_picker"
   And I fill in "lead_lead_translations_attributes_0_header" with "DK header"

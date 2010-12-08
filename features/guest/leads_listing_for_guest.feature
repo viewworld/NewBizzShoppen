@@ -27,7 +27,7 @@ Scenario: I should not see any leads that belong to a user which is blocked
   And I follow "Sample category"
   Then I should not see "Lead 1"
 
-@_tested @bk @wip
+@_tested @bk
 Scenario: I can browse leads in a given category with pagination
   Given pagination page size for leads is set to 3
   And Lead named "Lead 1" exists within "Sample category" category
@@ -35,10 +35,9 @@ Scenario: I can browse leads in a given category with pagination
   And Lead named "Lead 3" exists within "Sample category" category
   And Lead named "Lead 4" exists within "Sample category" category
   And I follow "Sample category"
-  And I open page in browser
   Then I follow "2"
 
-@bk @_wip
+@bk @_tested
 Scenario: I should see lead header, lead price, purchase value, created by and public description
   Given a category "cat1" exists with name: "One more sample category"
   And a lead exists with header: "Nice", category: category "cat1", company_name: "Google", phone_number: "0123456789"
@@ -55,12 +54,11 @@ Scenario: I should see certification level for each lead
 @m3 @tgn
 Scenario: I should see rating % for each lead
 
-@m2 @tgn @_tested  @wip
+@m2 @tgn @_tested
 Scenario: I should see hottness, novelty, exposure, clicks
   Given Lead named "Lead 1" exists within "Sample category" category
   And lead Lead 1 exists with attributes "clicks_count:17,exposures_count:887"
   And I follow "Sample category"
-  And I open page in browser
   Then I should see translated "models.lead.hotness.lvl1"
   And I should see translated "models.lead.novelty.lvl0"
   And I should see "887"

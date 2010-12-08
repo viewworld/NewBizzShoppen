@@ -22,7 +22,6 @@ Scenario: I can create a new lead and close
   And I fill in "lead_purchase_value" with "10000"
   And I fill in "lead_price" with "100"
   And I select "3" from "lead_sale_limit"
-  And I open page in browser
   #And I fill in "area" with "global"
   And I select "Test category 1" from "lead_category_id"
   And I select "Denmark" from "lead_country_id"

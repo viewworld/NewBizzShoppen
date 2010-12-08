@@ -197,7 +197,6 @@ Scenario: I can sort by completed leads, new leads requested, num. of leads assi
   And a lead purchase for lead "Ultimate monitors 5" by user "bob@person.com" with role "customer" exists with attributes "state:1,assigned_at:Date.today-60"
   Given all users have refreshed cache counters
   And I go to customers subaccounts
-  And I open page in browser
   And I follow translated "customer.subaccounts.index.view.completed_leads_column"
   And I follow translated "customer.subaccounts.index.view.completed_leads_column"
   Then I should have value "3" in the xpath path "//tr[(((count(preceding-sibling::*) + 1) = 1) and parent::*)]//td[(((count(preceding-sibling::*) + 1) = 6) and parent::*)]"
