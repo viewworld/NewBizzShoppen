@@ -40,7 +40,7 @@
   </tfoot>
   <tbody>
   <% collection.each do |lead_purchase| %>
-      <tr class="lead <%= cycle("odd", "even") %>" id="<%= dom_id(lead_purchase) %>">
+      <tr class="lead <%= cycle("odd", "even") %> <%= 'highlight' if lead_purchase.expiring? %>" id="<%= dom_id(lead_purchase) %>">
 
         <td class="cl"></td>
         <% if show_checkboxes %>

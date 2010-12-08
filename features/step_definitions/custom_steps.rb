@@ -23,3 +23,7 @@ end
 Given /^pagination per page size in model (.+) is set to (\d+)$/ do |model_name, n|
   model_name.constantize.stubs(:per_page).returns(n)
 end
+
+Given /^I click hidden link "([^"]*)"$/ do |caption|
+  page.all(:css, 'a').detect { |l| l.text == caption }.click()
+end

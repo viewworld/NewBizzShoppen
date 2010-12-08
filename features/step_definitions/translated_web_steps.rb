@@ -59,3 +59,8 @@ Then /^locale is set to "([^"]*)" for translation "([^"]*)"/ do |locale_lang, ke
   I18n.locale = locale_lang.to_sym
   Then %{I should see "#{I18n.t(key)}"}
 end
+
+Then /^I click hidden translated link "([^"]*)"$/ do |key|
+  I18n.locale = :en
+  Then %{I click hidden link "#{I18n.t(key)}"}
+end

@@ -8,7 +8,7 @@ Category.blueprint do
 end
 
 Country.blueprint do
-  name { Faker::Address.uk_country }
+  name { Faker::Address.uk_country + Time.now.to_f.to_s.sub('.','') }
 end
 
 Lead.blueprint do
@@ -28,6 +28,7 @@ Lead.blueprint do
   category_id { Category.make!.id }
   sale_limit { 1 }
   purchase_decision_date { (Date.today+5) }
+  published { true }
 end
 
 Lead.blueprint(:featured) do
@@ -70,7 +71,7 @@ User.blueprint do
   password { "secret" }
   password_confirmation { "secret" }
   phone { Faker::PhoneNumber.phone_number }
- screen_name { Faker::Name.name + rand(9999).to_s }
+ screen_name { Faker::Name.name + Time.now.to_f.to_s.sub('.','')}
   street { Faker::Address.street_name }
   first_name { Faker::Name.first_name }
   last_name { Faker::Name.last_name }
@@ -86,7 +87,7 @@ end
   password { "secret" }
   password_confirmation { "secret" }
   phone { Faker::PhoneNumber.phone_number }
- screen_name { Faker::Name.name + rand(9999).to_s }
+ screen_name { Faker::Name.name + Time.now.to_f.to_s.sub('.','') }
   street { Faker::Address.street_name }
   first_name { Faker::Name.first_name }
   last_name { Faker::Name.last_name }
@@ -102,7 +103,7 @@ end
   password { "secret" }
   password_confirmation { "secret" }
   phone { Faker::PhoneNumber.phone_number }
- screen_name { Faker::Name.name + rand(9999).to_s }
+ screen_name { Faker::Name.name + Time.now.to_f.to_s.sub('.','') }
   street { Faker::Address.street_name }
   first_name { Faker::Name.first_name }
   last_name { Faker::Name.last_name }
@@ -119,7 +120,7 @@ end
   password { "secret" }
   password_confirmation { "secret" }
   phone { Faker::PhoneNumber.phone_number }
- screen_name { Faker::Name.name + rand(9999).to_s }
+ screen_name { Faker::Name.name + Time.now.to_f.to_s.sub('.','') }
   street { Faker::Address.street_name }
   first_name { Faker::Name.first_name }
   last_name { Faker::Name.last_name }
@@ -136,7 +137,7 @@ end
   password { "secret" }
   password_confirmation { "secret" }
   phone { Faker::PhoneNumber.phone_number }
- screen_name { Faker::Name.name + rand(9999).to_s }
+ screen_name { Faker::Name.name + Time.now.to_f.to_s.sub('.','') }
   street { Faker::Address.street_name }
   first_name { Faker::Name.first_name }
   last_name { Faker::Name.last_name }
@@ -153,7 +154,7 @@ end
   password { "secret" }
   password_confirmation { "secret" }
   phone { Faker::PhoneNumber.phone_number }
-  screen_name { Faker::Name.name + rand(9999).to_s }
+  screen_name { Faker::Name.name + Time.now.to_f.to_s.sub('.','') }
   street { Faker::Address.street_name }
   first_name { Faker::Name.first_name }
   last_name { Faker::Name.last_name }
