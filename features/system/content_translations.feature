@@ -3,7 +3,6 @@ Feature: Content translations
 
 Background:
   Given I am on the homepage
-  And I go to leads
 
 @tgn @_done @_tested_elsewhere
 Scenario: I should see apropriate language version of the content if I change the language for the page

@@ -38,13 +38,7 @@
       <th class="hr"></th>
     </tr>
     </thead>
-    <tfoot>
-    <tr>
-      <td class="fl"></td>
-      <td colspan="5"></td>
-      <td class="fr"></td>
-    </tr>
-    </tfoot>
+
     <tbody>
     <% @users.each do |user| %>
         <tr>
@@ -69,6 +63,13 @@
           <td class="cr"></td>
     <% end %>
     </tbody>
+    <tfoot>
+    <tr>
+      <td class="fl"></td>
+      <td colspan="10"></td>
+      <td class="fr"></td>
+    </tr>
+    </tfoot>
   </table>
      <%= hidden_field_tag :route_to %>
     <%= select_tag :locked, options_for_select([[t("customer.subaccounts.index.view.lock"), "locked"], [t("customer.subaccounts.index.view.unlock"), "unlock"]]) %>
