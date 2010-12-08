@@ -1,7 +1,7 @@
 <column-mc:>
   <header><%= t('administration.articles.edit.view.header') %></header>
 
-  <%= semantic_form_for :article, @article, :url => administration_article_path(@article), :html => {:method => :put} do |form| %>
+  <%= semantic_form_for @article, :as => :article, :url => administration_article_path(@article), :html => {:method => :put} do |form| %>
       <frm title="TODO - header" c="todo_delete">
         <param:content>
           <%= render :partial => 'form', :locals => {:form => form} %>
