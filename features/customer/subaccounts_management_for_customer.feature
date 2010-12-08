@@ -161,13 +161,13 @@ Scenario: I can sort by name, last name, department
   And I go to customers subaccounts
   When I follow translated "customer.subaccounts.index.view.first_name_column"
   And I follow translated "customer.subaccounts.index.view.first_name_column"
-  Then I should have value "William" in the css path "tr:nth-child(1) td:nth-child(2)"
+  Then I should have value "William" in the css path "tr:nth-child(1) td:nth-child(3)"
   When I follow translated "customer.subaccounts.index.view.last_name_column"
   And I follow translated "customer.subaccounts.index.view.last_name_column"
-  Then I should have value "McDowell" in the css path "tr:nth-child(1) td:nth-child(3)"
+  Then I should have value "McDowell" in the css path "tr:nth-child(1) td:nth-child(4)"
   When I follow translated "customer.subaccounts.index.view.department_column"
   And I follow translated "customer.subaccounts.index.view.department_column"
-  Then I should have value "QA" in the css path "tr:nth-child(1) td:nth-child(4)"
+  Then I should have value "QA" in the css path "tr:nth-child(1) td:nth-child(5)"
 
 @_tested
 Scenario: I can sort by completed leads, new leads requested, num. of leads assigned last 30days, num. of leads assigned last 12months, num. of leads assigned last total
@@ -197,21 +197,22 @@ Scenario: I can sort by completed leads, new leads requested, num. of leads assi
   And a lead purchase for lead "Ultimate monitors 5" by user "bob@person.com" with role "customer" exists with attributes "state:1,assigned_at:Date.today-60"
   Given all users have refreshed cache counters
   And I go to customers subaccounts
+  And I open page in browser
   And I follow translated "customer.subaccounts.index.view.completed_leads_column"
   And I follow translated "customer.subaccounts.index.view.completed_leads_column"
-  Then I should have value "3" in the css path "tr:nth-child(1) td:nth-child(5)"
+  Then I should have value "3" in the xpath path "//tr[(((count(preceding-sibling::*) + 1) = 1) and parent::*)]//td[(((count(preceding-sibling::*) + 1) = 6) and parent::*)]"
   And I follow translated "customer.subaccounts.index.view.requested_leads_column"
   And I follow translated "customer.subaccounts.index.view.requested_leads_column"
-  Then I should have value "2" in the css path "tr:nth-child(1) td:nth-child(6)"
+  Then I should have value "2" in the xpath path "//tr[(((count(preceding-sibling::*) + 1) = 1) and parent::*)]//td[(((count(preceding-sibling::*) + 1) = 7) and parent::*)]"
   And I follow translated "customer.subaccounts.index.view.assigned_month_ago_column"
   And I follow translated "customer.subaccounts.index.view.assigned_month_ago_column"
-  Then I should have value "3" in the css path "tr:nth-child(1) td:nth-child(7)"
+  Then I should have value "3" in the xpath path "//tr[(((count(preceding-sibling::*) + 1) = 1) and parent::*)]//td[(((count(preceding-sibling::*) + 1) = 8) and parent::*)]"
   And I follow translated "customer.subaccounts.index.view.assigned_year_ago_column"
   And I follow translated "customer.subaccounts.index.view.assigned_year_ago_column"
-  Then I should have value "4" in the css path "tr:nth-child(1) td:nth-child(8)"
+  Then I should have value "4" in the xpath path "//tr[(((count(preceding-sibling::*) + 1) = 1) and parent::*)]//td[(((count(preceding-sibling::*) + 1) = 9) and parent::*)]"
   And I follow translated "customer.subaccounts.index.view.total_leads_assigned_column"
   And I follow translated "customer.subaccounts.index.view.total_leads_assigned_column"
-  Then I should have value "4" in the css path "tr:nth-child(1) td:nth-child(9)"
+  Then I should have value "4" in the xpath path "//tr[(((count(preceding-sibling::*) + 1) = 1) and parent::*)]//td[(((count(preceding-sibling::*) + 1) = 10) and parent::*)]"
 
 @_non_testable
 Scenario: I can refresh the cashed values for sort by rake task

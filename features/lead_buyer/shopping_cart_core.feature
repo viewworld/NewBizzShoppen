@@ -14,7 +14,7 @@ Background:
   And lead Mouses deal exists within category Computers
   And lead Mouses deal exists with attributes "price:2000"
   Then I sign in as customer@person.com with password supersecret
-  And I go to leads
+  And I go to browse leads
   And I follow "Computers"
 
 @tgn @_done @_tested @selenium

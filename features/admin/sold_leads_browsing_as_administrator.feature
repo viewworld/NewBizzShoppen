@@ -33,27 +33,27 @@ Scenario: I can filter the listing (similiar to those in lead catalogue + catego
   And lead BestsellerLead exists within category Test
   And BestsellerLead is a best seller
   When I follow translated "layout.main_menu.admin.leads"
-  Then I should see "7" rows in a table within "#leads"
+  Then I should see "10" rows with id like "lead_" in a table within "#leads"
   When I check translated "administration.leads.index.view.filter_purchased"
   And I press translated "administration.leads.index.view.search_button"
-  Then I should see "2" rows in a table within "#leads"
+  Then I should see "2" rows with id like "lead_" in a table within "#leads"
   When I uncheck translated "administration.leads.index.view.filter_purchased"
   And I fill in translated "administration.leads.index.search.keyword_label" with "ForKeywordLead"
   And I press translated "administration.leads.index.view.search_button"
-  Then I should see "1" rows in a table within "#leads"
+  Then I should see "1" rows with id like "lead_" in a table within "#leads"
   And I should see "ForKeywordLead"
   When I fill in translated "administration.leads.index.search.keyword_label" with ""
   And I fill in translated "administration.leads.index.search.price_from_label" with "99"
   And I fill in translated "administration.leads.index.search.price_to_label" with "101"
   And I press translated "administration.leads.index.view.search_button"
-  Then I should see "1" rows in a table within "#leads"
+  Then I should see "1" rows with id like "lead_" in a table within "#leads"
   And I should see "Price100Lead"
   When I fill in translated "administration.leads.index.search.price_from_label" with ""
   And I fill in translated "administration.leads.index.search.price_to_label" with ""
   And I fill in translated "administration.leads.index.search.purchase_value_from_label" with "499"
   And I fill in translated "administration.leads.index.search.purchase_value_to_label" with "501"
   And I press translated "administration.leads.index.view.search_button"
-  Then I should see "1" rows in a table within "#leads"
+  Then I should see "1" rows with id like "lead_" in a table within "#leads"
   And I should see "Value500Lead"
 
 @ao @_done @_tested
@@ -76,7 +76,9 @@ Scenario: I can sort by columns (those that do match to database columns)
 @ao @_done @_tested
 Scenario: I can go to lead details by clicking on the show link
   Given pagination page size for leads is set to 1
-  And lead AwesomeLead exists within category Test
+  And lead AwesomeLead exists within category TestShowLink
   When I follow translated "layout.main_menu.admin.leads"
-  And I follow translated "administration.leads.index.view.show" within "#leads tr:nth-of-type(1) td:nth-of-type(14)"
+  And I select "TestShowLink" from "search_with_category"
+  And I press translated "leads.index.search.search_button"
+  And I click hidden translated link "administration.leads.index.view.show"
   Then I should be on the AwesomeLead lead page

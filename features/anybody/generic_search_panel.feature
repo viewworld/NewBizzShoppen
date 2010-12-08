@@ -16,7 +16,7 @@ Background:
   And lead Faxes deal exists with attributes "purchase_value:6000"
   And lead Furniture for office deal exists within category Office
   And lead Furniture for office deal exists with attributes "purchase_value:6500"
-  Then I go to leads
+  Then I go to browse leads
   And I follow "Computers"
 
 @tgn @_done @_tested

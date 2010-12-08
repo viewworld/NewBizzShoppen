@@ -7,6 +7,7 @@
     <tr>
       <th class="hl"></th>
       <th><%= t("administration.email_templates.index.view.unique_id_column") %></th>
+      <th><%= t("administration.email_templates.index.view.subject_column") %></th>
       <th><%= t("administration.email_templates.index.view.actions_column") %></th>
       <th class="hr"></th>
     </tr>
@@ -14,7 +15,7 @@
     <tfoot>
     <tr>
       <td class="fl"></td>
-      <td colspan="2"></td>
+      <td colspan="3"></td>
       <td class="fr"></td>
     </tr>
     </tfoot>
@@ -23,6 +24,7 @@
         <tr>
           <td class="cl"></td>
           <td><%= email_template.uniq_id %></td>
+          <td><%= email_template.subject %></td>
           <td class="tda ta_r">
             <ul-actions>
               <li>
