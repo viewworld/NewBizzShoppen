@@ -22,7 +22,7 @@ Scenario: I should see rating % and certification level for each lead
 @_tested
 Scenario: I should see lead header, lead price, purchase value and public description
   Then I should see "989.39"
-  And I should see "7843.99"
+  And I should see "7,843.99"
   And I should see "Printers ultimate deal"
   And I should see "Public desc about printers deal"
 
