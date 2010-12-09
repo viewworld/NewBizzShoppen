@@ -51,8 +51,24 @@ Scenario: I should see certification level for each lead
   And I follow "Sample category"
   Then I should see translated "models.lead.certification.lvl0"
 
-@m3 @tgn
+@m3 @tgn @_tested @_done
 Scenario: I should see rating % for each lead
+  Given Lead named "Lead 392S2" exists within "Sample category" category
+  And I have user with email customer.john.doe1@person.com and role customer
+  And I have user with email customer.john.doe2@person.com and role customer
+  And I have user with email customer.john.doe3@person.com and role customer
+  And I have user with email customer.john.doe4@person.com and role customer
+  And a lead Lead 392S2 exists within category Sample category and is bought by user customer.john.doe1@person.com with role customer
+  And a lead Lead 392S2 exists within category Sample category and is bought by user customer.john.doe2@person.com with role customer
+  And a lead Lead 392S2 exists within category Sample category and is bought by user customer.john.doe3@person.com with role customer
+  And a lead Lead 392S2 exists within category Sample category and is bought by user customer.john.doe4@person.com with role customer
+  And a lead purchase for lead "Lead 392S2" by user "customer.john.doe1@person.com" with role "customer" exists with attributes "rating_level:0,rating_reason:Abcd efgh"
+  And a lead purchase for lead "Lead 392S2" by user "customer.john.doe2@person.com" with role "customer" exists with attributes "rating_level:2,rating_reason:Abcd efgh"
+  And a lead purchase for lead "Lead 392S2" by user "customer.john.doe3@person.com" with role "customer" exists with attributes "rating_level:1,rating_reason:Abcd efgh"
+  And a lead purchase for lead "Lead 392S2" by user "customer.john.doe4@person.com" with role "customer" exists with attributes ""
+  Given All leads have refreshed average ratings
+  And I follow "Sample category"
+  Then I should see "58%"
 
 @m2 @tgn @_tested
 Scenario: I should see hottness, novelty, exposure, clicks

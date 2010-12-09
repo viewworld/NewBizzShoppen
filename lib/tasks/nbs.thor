@@ -205,4 +205,13 @@ class Nbs < Thor
     end
 
   end
+
+  desc "recalculate_leads_average_ratings", ""
+
+  def recalculate_leads_average_ratings
+    Lead.all(:conditions => ["published = ? and users.locked_at is NULL", true], :joins => "INNER JOIN users ON users.id=leads.creator_id", :readonly => false).each do |lead|
+      lead.calculate_average_rating
+      lead.save
+    end
+  end
 end

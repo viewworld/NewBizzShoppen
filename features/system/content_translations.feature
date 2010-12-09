@@ -1,4 +1,4 @@
-@translations @m2 @$_system    @_wip1
+@translations @m2 @$_system
 Feature: Content translations
 
 Background:

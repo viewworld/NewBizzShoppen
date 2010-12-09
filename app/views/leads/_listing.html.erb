@@ -56,6 +56,7 @@
         <td>
           <p><%= t("leads.listing.clicks_count_label") %><b><%= lead.clicks_count %></b></p>
           <p><%= t("leads.listing.exposures_count_label") %><b><%= lead.exposures_count %></b></p>
+          <p><%= t("leads.listing.average_rating_label") %><b><%= lead.average_rating == -1 ? t("leads.listing.average_rating_none_label") : lead.average_rating_as_text %></b></p>
           <p><%= t("leads.listing.sale_limit_label") %><b><%= lead.sale_limit %></b></p>
           <p><%= t("leads.listing.novelty_label") %><b><%= t("models.lead.novelty.lvl#{lead.novelty_level}") %></b></p>
           <p><%= t("leads.listing.hotness_label") %><b><%= t("models.lead.hotness.lvl#{lead.hotness_level}") %></b></p>

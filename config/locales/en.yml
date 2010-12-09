@@ -149,6 +149,8 @@ en:
       novelty_label: 'Novelty:'
       hotness_label: 'Hotness:'
       certification_label: 'Certification:'
+      average_rating_label: 'Rating:'
+      average_rating_none_label: 'None'
       has_unsatisfactory_rating_yes: 'Yes'
       has_unsatisfactory_rating_no: 'No'
     table:
