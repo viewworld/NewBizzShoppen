@@ -1,0 +1,21 @@
+<column-mc:>
+  <header back="true"><%= t("administration.currencies.new.view.header") %></header>
+
+  <p><%= blurb("blurb_currencies") %></p>
+
+  <%= semantic_form_for @currency, :url => administration_currencies_path do |form| %>
+      <frm title="TODO">
+        <param:content>
+          <%= render :partial => 'form', :locals => {:form => form} %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("administration.currencies.new.view.button_create_currency") %>
+          </ibt>
+          <ibt c="bt_grey fltri">
+            <%= button_to_function t("administration.currencies.new.view.button_cancel"), "history.go(-1)" %>
+          </ibt>          
+        </param:actions>
+      </frm>
+  <% end %>
+</column-mc:>

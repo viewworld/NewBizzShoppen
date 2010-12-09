@@ -52,8 +52,12 @@ Then /^last email sent should have been sent to recipient "([^"]*)"$/ do |email|
   assert ActionMailer::Base.deliveries.last.to.include?(email)
 end
 
-Given /^I click hidden link "([^"]*)"$/ do |caption|
-  page.all(:css, 'a').detect { |l| l.text == caption }.click()
+Given /^I click hidden link "([^"]*)"(?: within "([^"]*)")?$/ do |caption,selector|
+  if selector
+    page.all(:css, "#{selector} a").detect { |l| l.text == caption }.click()
+  else
+    page.all(:css, 'a').detect { |l| l.text == caption }.click()
+  end
 end
 
 Given /^I click hidden link url "([^"]*)"$/ do |url|

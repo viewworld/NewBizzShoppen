@@ -177,7 +177,7 @@ class Nbs < Thor
     end
 
     puts "Creating default interface content texts (blurbs)..."
-    ['blurb_sign_up','blurb_buyer_home','blurb_agent_home','blurb_start_page_role_selection'].each do |key|
+    ['blurb_sign_up','blurb_buyer_home','blurb_agent_home','blurb_start_page_role_selection','blurb_currencies'].each do |key|
       unless Article::Cms.interface_content_texts.where(:key => key).first
         article = Article::Cms.make!(:scope => Article::Cms::INTERFACE_CONTENT_TEXT, :title => key.humanize, :content => key.humanize, :key => key)
         [:en, :dk].each do |locale|
@@ -202,6 +202,13 @@ class Nbs < Thor
           article.publish!
         end
       end
+    end
+
+    puts "Creating default currency..."
+    [
+        {:name => 'Euro', :symbol => '&euro;', :format => '%u%n', :active => true}
+    ].each do |params|
+      Currency.create!(params)
     end
 
   end

@@ -23,6 +23,7 @@ Nbs::Application.routes.draw do
     resources :leads
     resources :articles
     resources :news
+    resources :currencies
   end
 
   namespace :buyers do

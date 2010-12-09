@@ -29,6 +29,7 @@ Lead.blueprint do
   sale_limit { 1 }
   purchase_decision_date { (Date.today+5) }
   published { true }
+  currency { Currency.make!}
 end
 
 Lead.blueprint(:featured) do
@@ -49,6 +50,13 @@ Lead.blueprint(:featured) do
   sale_limit { 1 }
   purchase_decision_date { (Date.today+5) }
   featured { true }
+  currency { Currency.make!}
+end
+
+Currency.blueprint do
+  name { Faker::Lorem.words(1) }
+  symbol { ['&euro;','&pound;','$'][rand(3)]}
+  active { true }
 end
 
 LeadPurchase.blueprint do
