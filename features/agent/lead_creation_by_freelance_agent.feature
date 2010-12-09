@@ -117,5 +117,7 @@ Scenario: All fields for new lead have to be filled in beside email address
   And I should be on agents leads
   And I should see translated "flash.leads.actions.create.notice"
 
-@m3 @ao 
+@m3 @ao @_done
 Scenario: I should be able to specify currency in which Lead will be sold (from dropdown)
+  When I follow translated "agent.leads.index.view.new_lead"
+  Then I select "Euro" from "lead_currency_id"

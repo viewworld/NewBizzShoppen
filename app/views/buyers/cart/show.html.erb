@@ -15,7 +15,7 @@
         <tr>
           <td><%= i+1 %></td>
           <td><%= lead.header %></td>
-          <td><%= lead.price %></td>
+          <td><%= as_currency(lead.price,lead.currency) %></td>
           <td><%= link_to t("buyer.cart.show.view.remove_item_link"), buyers_cart_item_path(lead.id), :method => :delete %></td>
         </tr>
     <% end %>

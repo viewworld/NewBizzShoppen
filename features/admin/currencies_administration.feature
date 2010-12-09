@@ -46,14 +46,3 @@ Scenario: I should be able to destroy currency unless there are leads defined wi
   And I delete "Euro" currency
   Then I should see "Euro"
 
-@ao @added @_done
-Scenario: I can select a currency while creating new lead
-  Given I sign out
-  And I am signed up and confirmed as user with email bob@person.com and password supersecret and role agent
-  And I am on the homepage
-  And I make sure current locale is English
-  Then I sign in as bob@person.com with password supersecret
-  And I go to agents leads
-  And Category Test category 1 is created
-  And I follow translated "agent.leads.index.view.new_lead"
-  Then I select "Euro" from "lead_currency_id"

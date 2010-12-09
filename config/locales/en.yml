@@ -141,6 +141,7 @@ en:
     listing:
       purchase_value_label: 'Purchase value:'
       lead_price_label: 'Lead price:'
+      lead_currency_label: 'Lead currency:'
       description_label: 'Lead description:'
       lead_details_label: 'Leads details'
       lead_description_label: 'Leads description'

@@ -55,9 +55,9 @@
           <td><%= t("models.lead.novelty.lvl#{lead.novelty_level}") %></td>
           <td><%= t("models.lead.hotness.lvl#{lead.hotness_level}") %></td>
           <td><%= lead.sale_limit %></td>
-          <td><%= lead.price %></td>
+          <td><%= as_currency(lead.price,lead.currency) %></td>
           <td><%= lead.lead_purchases_counter %></td>
-          <td><%= lead.purchase_value %></td>
+          <td><%= as_currency(lead.purchase_value,lead.currency) %></td>
           <td></td>
           <td><%= link_to lead.has_unsatisfactory_rating ? t("leads.listing.has_unsatisfactory_rating_yes") : t("leads.listing.has_unsatisfactory_rating_no"), current_user.has_role?(:agent) ? agents_lead_path(lead) : administration_lead_path(lead)%></td>
           <td>
