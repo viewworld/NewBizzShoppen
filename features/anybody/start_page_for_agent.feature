@@ -91,3 +91,18 @@ Scenario: I can go to creation of new agent account page
   When I follow translated "home.show.view.agent"
   And I follow translated "agent_home.show.view.create_new_agent_account"
   Then I should be on agent sign up page
+
+@ao @m3 @_done
+Scenario: In bestsellers and latest listings I should not see leads which I've already bought
+  When I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
+  And a lead BoughtLead exists within category Test and is bought by user jon@lajoie.ca with role customer
+  And lead AwesomeLead exists within category Test
+  And I follow translated "home.show.view.agent"
+  Then I should see "AwesomeLead"
+  And I should see "BoughtLead"
+  When I am on the home page
+  And I sign in as jon@lajoie.ca with password secret
+  And I am on the home page
+  And I follow translated "home.show.view.agent"
+  Then I should see "AwesomeLead"
+  And I should not see "BoughtLead"

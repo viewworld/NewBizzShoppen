@@ -60,6 +60,7 @@
           <% end %>
           <% blocks.bottom do %>
               <%= hidden_field_tag :route_to %>
+              <%= bt_link_to :undo, t("customer.lead_requests.index.view.button_bulk_create_lead_request"), "javascript:void(0)", :onclick => "submitBulkForm('#{customers_bulk_lead_requests_path}#PUT');" %>
               <%= bt_link_to :undo, t("customer.lead_requests.index.view.button_bulk_destroy_lead_request"), "javascript:void(0)", :onclick => "submitBulkForm('#{customers_bulk_lead_requests_path}#DELETE');" %>
           <% end %>
       <% end %>
