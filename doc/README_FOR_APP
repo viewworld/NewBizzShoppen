@@ -71,3 +71,17 @@ config.active_record.observers = :lead_observer unless File.basename($0) == "rak
 
 == Restart postgresql server
 sudo /etc/init.d/postgresql restart
+
+== Devise/Warden
+
+Callback before the failure to get access to page for registerd users:
+
+ in Application controller (needs server restart):
+  Warden::Manager.before_failure do |env, opts|
+    params = Rack::Request.new(env).params
+    session = env['rack.session']
+    session[:user_requested_url] = params["requested_url"]
+
+    params[:action] = :unauthenticated
+    params[:warden_failure] = opts
+  end

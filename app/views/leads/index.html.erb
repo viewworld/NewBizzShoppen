@@ -43,9 +43,9 @@
 
   <%= form_tag bulk_action_path do %>
       <%= leads_listing @leads, :show_checkboxes => true do |blocks| %>
-          <% if user_signed_in? %>
+
               <% blocks.tools do |lead| %>
-                  <% if current_user %>
+                  <% if user_signed_in? %>
                       <% if current_user.has_role?(:lead_buyer) %>
                           <!-- TODO Should not be here - should be in buyer scope! ... Oh rly? -->
                           <!-- We should change it - ask RB! -->
@@ -61,10 +61,15 @@
                             </li>
                           </ul-actions>
                       <% end %>
-
+                  <% else %>
+                      <ul-actions>
+                        <li>
+                          <%= link_to t("leads.index.add_to_cart_link"), buyers_cart_items_path(:id => lead.id, :requested_url =>  request.request_uri), :method => :post %>
+                        </li>
+                      </ul-actions>
                   <% end %>
               <% end %>
-          <% end %>
+
 
           <% if user_signed_in? && (current_user.has_role?(:customer) || current_user.has_role?(:lead_user)) %>
               <% blocks.bottom do %>
