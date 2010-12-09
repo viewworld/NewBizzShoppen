@@ -104,6 +104,5 @@ Scenario: In bestsellers and latest listings I should not see leads which I've a
   And I sign in as jon@lajoie.ca with password secret
   And I am on the home page
   And I follow translated "home.show.view.agent"
-  And I open page in browser
   Then I should see "AwesomeLead"
   And I should not see "BoughtLead"
