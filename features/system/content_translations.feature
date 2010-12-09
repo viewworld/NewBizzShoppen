@@ -1,4 +1,4 @@
-@translations @m2 @$_system
+@translations @m2 @$_system    @_wip1
 Feature: Content translations
 
 Background:
@@ -30,7 +30,7 @@ Scenario: News translations
   And I fill in "news_content_editor" ckeditor with "[EN]Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   And I check "news_published"
   And I press translated "administration.news.edit.view.button_save"
-  When I follow "DK" within "#langs_dropdown"
+  When I click hidden link by url regex "/locales\/dk/"
   When I follow translated "layout.main_menu.admin.news"
   And I follow translated "administration.news.index.view.edit_link"
   And I fill in "news_title" with "[DK]FirstNews"
@@ -39,7 +39,7 @@ Scenario: News translations
   And I should be on administration [DK]FirstNews news page
   And I should see "[DK]FirstNews"
   And I should see "[DK]Lorem"
-  When I follow "EN" within "#langs_dropdown"
+  When I click hidden link by url regex "/locales\/en/"
   And I am on administration [DK]FirstNews news page
   Then I should see "[EN]FirstNews"
   And I should see "[EN]Lorem"
@@ -55,7 +55,7 @@ Scenario: Article translations
   And I fill in "article_content_editor" ckeditor with "[EN]Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   And I check "article_published"
   And I press translated "administration.articles.edit.view.button_save"
-  When I follow "DK" within "#langs_dropdown"
+  When I click hidden link by url regex "/locales\/dk/"
   When I follow translated "layout.main_menu.admin.articles"
   And I follow translated "administration.articles.index.view.edit_link"
   And I fill in "article_title" with "[DK]FirstArticle"
@@ -64,7 +64,7 @@ Scenario: Article translations
   And I should be on administration [DK]FirstArticle article page
   And I should see "[DK]FirstArticle"
   And I should see "[DK]Lorem"
-  When I follow "EN" within "#langs_dropdown"
+  When I click hidden link by url regex "/locales\/en/"
   And I am on administration [EN]FirstArticle article page
   Then I should see "[EN]FirstArticle"
   And I should see "[EN]Lorem"
