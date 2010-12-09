@@ -123,4 +123,17 @@ class Lead < ActiveRecord::Base
   def buyable?
     true #Some more complex logic here...
   end
+
+  def calculate_average_rating
+    ratings_percentage = lead_purchases.map(&:rating_as_percentage).select { |rp| rp >= 0 }
+    unless ratings_percentage.empty?
+      self.average_rating = ((ratings_percentage.sum.to_f / ratings_percentage.size.to_f) * 100).round
+    else
+      self.average_rating = -1
+    end
+  end
+
+  def average_rating_as_text
+    "#{average_rating}%"
+  end
 end

@@ -164,3 +164,10 @@ Given /^a lead "([^"]*)" has (good|bad) rating$/ do |header, rating_type|
   lead = Lead.find_by_header(header).first
   lead.lead_purchases.first.update_attributes(:rating_level => rating_type == "good" ? 0 : 12, :rating_reason => rating_type == "bad" ? "Lorem ipsum dolor sit amet" : nil)
 end
+
+Given /^All leads have refreshed average ratings$/ do
+  Lead.all.each do |lead|
+    lead.calculate_average_rating
+    lead.save
+  end
+end

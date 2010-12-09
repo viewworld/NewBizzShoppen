@@ -132,4 +132,18 @@ class LeadPurchase < LeadPurchaseBase
     I18n.t("activerecord.attributes.lead_purchase.rating_levels.rating_level#{rating_level}")
   end
 
+  def rating_as_percentage
+    if rating_level == RATING_EXCELLENT
+      1
+    elsif rating_level == RATING_VERY_GOOD
+      0.5
+    elsif rating_level == RATING_SATISFACTORY
+      0.25
+    elsif (RATING_MISSING_CONTACT_INFO..RATING_OTHER_REASON).include?(rating_level)
+      0
+    else
+      -1
+    end
+  end
+
 end
