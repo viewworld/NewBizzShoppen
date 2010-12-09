@@ -71,7 +71,7 @@ Scenario: I can instant-buy lead I will see a notification “You added lead to 
   When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
   Then I should see "Printers ultimate deal"
 
-@selenium @_done
+@selenium @_done @wip
 Scenario: I can bulk instant-buy leads requested by lead user that belongs to my account and I will see a notification “You added {n} leads to your list”
   When lead Monitors ultimate deal exists within category Computers
   When an user with role lead_user and email ann.lead_user2@person.com exists as subaccount for customer customer@person.com
@@ -85,7 +85,7 @@ Scenario: I can bulk instant-buy leads requested by lead user that belongs to my
   And I sign in as customer@person.com with password supersecret
   And I follow translated "layout.main_menu.customer.lead_requests"
   And I check "mark_all"
-  And I press translated "customer.lead_requests.index.view.accept_lead_request_link"
+  And I follow translated "customer.lead_requests.index.view.button_bulk_create_lead_request"
   Then I should see translated "flash.bulk_lead_requests.actions.update.notice"
 
 @_done
