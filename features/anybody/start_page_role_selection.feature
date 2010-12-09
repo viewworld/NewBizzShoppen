@@ -8,7 +8,6 @@ Background:
 
 @m3 @ao @_done
 Scenario: I can see welcome text fetch from the database
-  And I open page in browser
   Then I should see "Blurb start page role selection"
 
 @tgn @_done @_tested_elsewhere

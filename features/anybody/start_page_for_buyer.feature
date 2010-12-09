@@ -8,7 +8,6 @@ Background: I am a guest and I am on the home page
 @ao @m3 @_done
 Scenario: I can see welcome text fetch from the database
   When I follow translated "home.show.view.buyer"
-  And I open page in browser
   Then I should see "Blurb buyer home"
 
 @m3 @ao @_done
