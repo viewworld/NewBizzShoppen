@@ -121,7 +121,6 @@ Scenario: I can email the lead if email information were provided
   And I sign in as leaduser87@nbs.com with password secret
   And lead AwesomeLead is bought by user customer@nbs.com with role customer and is assigned to user leaduser87@nbs.com with role lead_user
   And I follow translated "layout.main_menu.lead_user.lead_purchases"
-  And I open page in browser
   And I follow translated "lead_user.lead_purchases.index.view.email_lead" within ".lead"
   And I press translated "lead_user.contact_lead_by_email.new.view.send_email_button"
   Then I should see translated "flash.contact_lead_by_email.actions.create.notice"
