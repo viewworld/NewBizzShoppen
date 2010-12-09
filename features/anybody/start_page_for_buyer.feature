@@ -89,3 +89,18 @@ Scenario: I can go to new buyer creation page
   And I follow translated "buyer_home.show.view.create_new_buyer_account"
   Then I should be on buyer sign up page
 
+@ao @m3 @_done
+Scenario: In bestsellers and latest listings I should not see leads which I've already bought
+  When I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
+  And a lead BoughtLead exists within category Test and is bought by user jon@lajoie.ca with role customer
+  And lead AwesomeLead exists within category Test
+  And I follow translated "home.show.view.buyer"
+  Then I should see "AwesomeLead"
+  And I should see "BoughtLead"
+  When I am on the home page
+  And I sign in as jon@lajoie.ca with password secret
+  And I am on the home page
+  And I follow translated "home.show.view.buyer"
+  And I open page in browser
+  Then I should see "AwesomeLead"
+  And I should not see "BoughtLead"

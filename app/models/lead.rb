@@ -31,10 +31,11 @@ class Lead < ActiveRecord::Base
   scope :with_status, lambda { |q| where(["leads.published = ?", q]) }
   scope :published_only, where(:published => true)
   #====================
-  scope :bestsellers, order("lead_purchases_counter DESC")
-  scope :latest, order("created_at DESC")
   scope :featured, where(:featured => true)
   scope :purchased, where("lead_purchases_counter > 0")
+  scope :without_bought_and_requested_by, lambda {|u| joins("LEFT JOIN lead_purchases lp ON lp.lead_id = leads.id").where(["(lp.owner_id <> ? OR lp.owner_id IS NULL) AND (lp.assignee_id <> ? OR lp.assignee_id IS NULL) AND (lp.requested_by <> ? OR lp.requested_by IS NULL)", u.id, u.id, u.id]) if u}
+  scope :bestsellers, order("lead_purchases_counter DESC")
+  scope :latest, order("created_at DESC")
 
   validates_presence_of :header, :description, :hidden_description, :purchase_value, :price, :company_name, :contact_name, :phone_number, :sale_limit, :category_id, :address, :purchase_decision_date, :country_id
   validates_inclusion_of :sale_limit, :in => 0..10
