@@ -27,6 +27,23 @@ module LeadsHelper
     end
   end
 
+  def administration_lead_statuses
+    [
+        [t("administration.leads.index.view.option_not_published"), false],
+        [t("administration.leads.index.view.option_published"), true]
+    ]
+  end
+
+  def status_or_status_change(lead)
+    if lead.created_by?('PurchaseManager')
+      select_tag :published,
+                  options_for_select(administration_lead_statuses, lead.published),
+                  :onchange => "$.post('#{administration_lead_path(lead)}', {'format':'js', '_method':'put', 'lead[published]':this.value} );"
+    else
+      administration_lead_status(lead)
+    end
+  end
+
   def categories_for_select
     Category.roots.map{|c| [c.name,c.id]}
   end
@@ -40,6 +57,10 @@ module LeadsHelper
 
   def currencies_for_select
     Currency.active.map{|c| [c.name,c.id]}
+  end
+
+  def creator_types
+    Lead.select("DISTINCT creator_type").map{|ct| ct.creator_type.split('::').last}
   end
 
 end

@@ -31,6 +31,7 @@ class Lead < ActiveRecord::Base
   scope :without_locked_users, joins("INNER JOIN users ON users.id=leads.creator_id").where("users.locked_at is NULL")
   scope :with_status, lambda { |q| where(["leads.published = ?", q]) }
   scope :published_only, where(:published => true)
+  scope :with_creator_type, lambda {|creator_type| where(["leads.creator_type = ?", "User::#{creator_type}"]) }
   #====================
   scope :featured, where(:featured => true)
   scope :purchased, where("lead_purchases_counter > 0")
@@ -137,5 +138,9 @@ class Lead < ActiveRecord::Base
 
   def average_rating_as_text
     "#{average_rating}%"
+  end
+
+  def created_by?(creator_type)
+    self.creator_type == "User::#{creator_type}"
   end
 end

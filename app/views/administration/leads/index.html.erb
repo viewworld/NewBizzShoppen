@@ -18,6 +18,10 @@
                 <%= f.label :with_status, t("administration.leads.index.search.status_label") %>
                 <%= f.select :with_status, statuses_for_select, :include_blank => true %>
               </li>
+              <li class="string no_pdd_l">
+                <%= f.label :with_creator_type, t("administration.leads.index.search.owner_type_label") %>
+                <%= f.select :with_creator_type, creator_types, :include_blank => true %>
+              </li>
               <li class="boolean">
                 <%= f.check_box :purchased, {}, "true", "false" %>
                 <%= f.label :purchased, t("administration.leads.index.view.filter_purchased") %>
@@ -77,7 +81,7 @@
           </ul-actions>
       <% end %>
       <% blocks.status_column do |lead| %>
-          <%= administration_lead_status(lead) %>
+         <%= status_or_status_change(lead) %>
       <% end %>
   <% end %>
 </column-mc:>

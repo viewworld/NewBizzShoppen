@@ -1,0 +1,55 @@
+<column-mc:>
+  <header><%= t("purchase_manager_accounts.new.view.title") %></header>
+
+  <%= blurb('blurb_sign_up') %>
+
+  <%= semantic_form_for  @user, :url => purchase_manager_accounts_path do |form| %>
+      <frm title="#{t('purchase_manager_accounts.new.view.header')}">
+        <param:content>
+          <div class="pdd_10 no_pdd_t">
+            <fieldset class="inputs labels_ta_r labels_240">
+              <ol>
+                <%= form.input :first_name %>
+                <%= form.input :last_name %>
+                <%= form.input :phone %>
+                <%= form.input :email %>
+                <%= form.input :screen_name %>
+                <%= form.input :password %>
+                <%= form.input :password_confirmation %>
+              </ol>
+            </fieldset>
+          </div>
+
+          <hl/>
+
+          <div class="pdd_10 no_pdd_t">
+            <fieldset class="inputs labels_ta_r labels_240">
+              <ol class="align_inputs">
+                <%= form.input :street %>
+                <%= form.input :city %>
+                <%= form.input :zip_code %>
+                <%= form.input :county %>
+              </ol>
+            </fieldset>
+          </div>
+
+          <hl/>
+
+          <div class="pdd_10 no_pdd_t">
+            <fieldset class="inputs labels_ta_r labels_240">
+              <ol class="align_inputs">
+                <%= form.input :country, :as => :select, :collection => Country.all %>
+                <%= form.input :agreement_read, :as => :boolean %>
+                <%= form.input :newsletter_on, :as => :boolean %>
+              </ol>
+            </fieldset>
+          </div>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="plus">
+            <%= form.submit t("purchase_manager_accounts.new.view.button_create_account") %>
+          </ibt>
+        </param:actions>
+      </frm>
+  <% end %>
+</column-mc:>

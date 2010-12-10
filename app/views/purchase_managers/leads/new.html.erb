@@ -1,0 +1,22 @@
+<column-mc:>
+  <header back="true"><%= t("purchase_manager.leads.new.view.title") %></header>
+
+  <%= semantic_form_for [:purchase_managers, @lead], :method => :post do |form| %>
+      <frm title="Create new">
+        <param:content>
+          <%= render :partial => 'form', :locals => {:form => form, :lead => @lead} %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("purchase_manager.leads.new.view.button_create_and_continue"), :name => "commit_continue" %>
+          </ibt>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("purchase_manager.leads.new.view.button_create"), :name => "commit_create" %>
+          </ibt>
+          <ibt c="bt_grey fltri">
+            <%= button_to_function t("administration.settings.edit.view.button_cancel"), "history.go(-1)" %>
+          </ibt>
+        </param:actions>
+      </frm>
+  <% end %>
+</column-mc:>
