@@ -14,6 +14,8 @@ role :db,  "nbs.selleo.com", :primary => true
 set :user, "rails"
 set :use_sudo, false
 
+set :keep_releases, 4
+
 namespace :deploy do
   desc "Restarting god"
   task :restart, :roles => :app do
