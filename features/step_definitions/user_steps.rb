@@ -158,3 +158,9 @@ Given /^all users have refreshed cache counters$/ do
       user.refresh_subaccounts_counters!
     end
 end
+
+Given /^user "([^"]*)" with role "([^"]*)" has interest in following categories "([^"]*)"$/ do |email, role, category_names|
+  user = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
+  user.categories = category_names.split(",").map { |name| Category.find_by_name(name).last }
+  user.save
+end

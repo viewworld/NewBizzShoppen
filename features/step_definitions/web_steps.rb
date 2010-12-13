@@ -315,3 +315,14 @@ Then /^I should see "([^"]*)" rows with id like "([^"]*)" in a table(?: within "
   end
 end
 
+Then /^"([^"]*)" dropdown should have values "([^"]*)"$/ do |field, values|
+  values.split(",").each do |value|
+    assert page.has_xpath?("//option[contains(string(), '#{value}')]")
+  end
+end
+
+Then /^"([^"]*)" dropdown should not have values "([^"]*)"$/ do |field, values|
+  values.split(",").each do |value|
+    assert !page.has_xpath?("//option[contains(string(), '#{value}')]")
+  end
+end

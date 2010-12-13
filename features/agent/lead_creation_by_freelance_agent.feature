@@ -58,7 +58,7 @@ Scenario: I can create a new lead and continue (create another one)
   And I should see translated "flash.leads.actions.create.notice"
   And I should see translated "agent.leads.new.view.title"
 
-@_tested  @selenium  @_xxx
+@_tested  @selenium
 Scenario: I can add an extra language while creating lead. This will include lead title, purchase desc, hidden desc
   Given Category Test category 1 is created
   And Country Denmark is created
