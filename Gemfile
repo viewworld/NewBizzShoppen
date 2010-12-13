@@ -29,7 +29,7 @@ gem 'ckeditor', '3.4.3.pre'
 
 group :development do
   gem 'diff-lcs'
-  gem 'tolk', :git => "http://github.com/10to1/tolk.git", :branch => "rails3"
+  gem 'tolk', :path => "vendor/gems/tolk"
 end
 
 group :test do
