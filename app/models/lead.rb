@@ -30,6 +30,7 @@ class Lead < ActiveRecord::Base
   scope :without_locked_users, joins("INNER JOIN users ON users.id=leads.creator_id").where("users.locked_at is NULL")
   scope :with_status, lambda { |q| where(["leads.published = ?", q]) }
   scope :published_only, where(:published => true)
+  scope :within_accessible_categories, lambda { |accessible_categories_ids| where("category_id IN (?)", accessible_categories_ids) }
   #====================
   scope :featured, where(:featured => true)
   scope :purchased, where("lead_purchases_counter > 0")
