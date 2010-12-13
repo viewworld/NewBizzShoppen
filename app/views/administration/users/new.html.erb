@@ -2,7 +2,7 @@
   <header back="true">New account</header>
 
   <%= semantic_form_for @user, :url => administration_users_path(:role => params[:role]) do |form| %>
-      <frm title="TODO">
+      <frm title="#{User.role_as_text(params[:role])}">
         <param:content>
           <%= render :partial => 'form', :locals => {:form => form} %>
 

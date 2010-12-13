@@ -4,7 +4,7 @@
   <p><%= blurb("blurb_currencies") %></p>
 
   <%= semantic_form_for @currency, :url => administration_currency_path do |form| %>
-      <frm title="TODO">
+      <frm title="#{@currency.name}">
         <param:content>
           <%= render :partial => 'form', :locals => {:form => form} %>
         </param:content>

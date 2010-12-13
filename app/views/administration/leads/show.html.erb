@@ -1,12 +1,7 @@
 <column-mc:>
+
 <header back="true"><%= t("administration.leads.show.view.header", :lead_header => @lead.header) %></header>
-<p><b><%= t("administration.leads.show.view.lead_header") %></b> <%= @lead.header %></p>
-<p><b><%= t("administration.leads.show.view.lead_description") %></b> <%= @lead.description %></p>
-<p><b><%= t("administration.leads.show.view.lead_hidden_description") %></b> <%= @lead.hidden_description %></p>
-
-  <% unless @lead.lead_purchases.detect { |lp| !lp.rating_level.nil?  }.nil? %>
-<header><%= t("administration.leads.show.view.raintgs_header", :lead_header => @lead.header) %></header>
-
+<% unless @lead.lead_purchases.detect { |lp| !lp.rating_level.nil?  }.nil? %>
 <ul>
 <% @lead.lead_purchases.each do |lead_purchase| %>
       <% unless lead_purchase.rating_level.nil? %>
@@ -18,5 +13,5 @@
 <% end %>
 </ul>
 <% end %>
-  <%= link_to t("administration.leads.show.view.view_all_leads_link"), administration_leads_path %>
+<%= link_to t("administration.leads.show.view.view_all_leads_link"), administration_leads_path %>
 </column-mc:>

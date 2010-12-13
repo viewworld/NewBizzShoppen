@@ -150,6 +150,11 @@ class User < ActiveRecord::Base
    selected_role.blank? ? "" : selected_role.first
   end
 
+  def self.role_as_text(_role)
+    selected_role = BASIC_USER_ROLES_WITH_LABELS.detect { |r| r.last == _role.to_s }
+    selected_role.blank? ? "" : selected_role.first
+  end
+
   def refresh_subaccounts_counters!
     self.completed_leads_counter = User.with_completed_leads(self).size
     self.leads_requested_counter = User.with_requested_leads(self).size
