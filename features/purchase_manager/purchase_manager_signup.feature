@@ -1,4 +1,4 @@
-@purchase_manager
+@purchase_manager @m3
 Feature: Purchase Manager signup
 
   In order to get access to protected sections of the site
