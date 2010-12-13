@@ -15,10 +15,10 @@
       <%= form.input :price %>
       <%= form.input :currency, :collection => currencies_for_select, :include_blank => false %>
       <%= form.input :company_name %>
-      <%= form.input :contact_name, :input_html => {:disabled => true} %>
-      <%= form.input :phone_number, :input_html => {:disabled => true} %>
-      <%= form.input :email_address, :input_html => {:disabled => true} %>
-      <%= form.input :address, :input_html => { :style => "height: 80px; width: 600px", :disabled => true } %>
+      <%= form.input :contact_name %>
+      <%= form.input :phone_number %>
+      <%= form.input :email_address %>
+      <%= form.input :address, :input_html => { :style => "height: 80px; width: 600px" } %>
     </ol>
   </fieldset>
 </div>
