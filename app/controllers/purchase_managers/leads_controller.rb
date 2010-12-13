@@ -14,14 +14,24 @@ class PurchaseManagers::LeadsController < PurchaseManagers::PurchaseManagerContr
     @leads = @search.where(:creator_id => current_user.id).paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)
   end
 
+  def default_params_hash(params={})
+    params.merge({
+        :contact_name  => current_user.full_name,
+        :phone_number  => current_user.phone,
+        :email_address => current_user.email,
+        :address       => current_user.address,
+        :published     => false
+    })
+  end
+
   public
 
   def new
-    @lead = Lead.new(:published => true)
+    @lead = Lead.new(default_params_hash)
   end
 
   def create
-    @lead = current_user.leads.build(params[:lead])
+    @lead = current_user.leads.build(default_params_hash(params[:lead]))
 
     create! do |success, failure|
       success.html {
@@ -42,6 +52,8 @@ class PurchaseManagers::LeadsController < PurchaseManagers::PurchaseManagerContr
     update! do |success, failure|
       success.html { redirect_to purchase_managers_leads_path }
       success.js { render :nothing => true }
+      failure.html { redirect_to purchase_managers_leads_path }
+      failure.js { render :nothing => true }
     end
   end
 
