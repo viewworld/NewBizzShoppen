@@ -253,7 +253,9 @@ en:
           delete_confirmation_message: 'Are you sure?'
       edit:
         view:
+          title: Edit user
           button_update_user: Save
+          button_cancel: Cancel
           reset_password_link: Reset password
       create:
         flash:

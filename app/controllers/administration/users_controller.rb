@@ -5,7 +5,7 @@ class Administration::UsersController < Administration::AdministrationController
   set_tab "users"
 
   def new
-    @user = "User::#{params[:role].to_s.camelize}".constantize.new
+    @user = "User::#{params[:role].to_s.camelize}".constantize.new(:agreement_read => true)
   end
 
   def create
