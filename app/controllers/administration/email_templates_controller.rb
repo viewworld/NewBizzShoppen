@@ -1,6 +1,8 @@
 class Administration::EmailTemplatesController < Administration::AdministrationController
   inherit_resources
 
+  set_tab "email_templates"
+
   def update
     update! do |success, failure|
       success.html { redirect_to administration_email_templates_path }

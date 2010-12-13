@@ -1,6 +1,8 @@
 class Administration::ArticlesController < Administration::AdministrationController
   inherit_resources
 
+  set_tab "articles"
+
   def edit
     @article = Article::Cms.find(params[:id])
     edit!

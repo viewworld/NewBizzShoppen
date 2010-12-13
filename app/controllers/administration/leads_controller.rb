@@ -2,6 +2,8 @@ class Administration::LeadsController < Administration::AdministrationController
   inherit_resources
   actions :all, :except => [:create,:new]
 
+  set_tab "leads"
+
   protected
 
   def collection

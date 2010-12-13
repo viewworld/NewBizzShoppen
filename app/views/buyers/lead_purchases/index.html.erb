@@ -186,7 +186,11 @@
       {
           if(rating_level <= 2)
           {
-              $.post('/buyers/lead_purchases/' + lead_purchase_id.toString() , {'_method':'put', 'lead_purchase[rating_level]':rating_level} );
+              if(lead_purchase_id.toString() != "bulk")
+              {
+                $.post('/buyers/lead_purchases/' + lead_purchase_id.toString() , {'_method':'put', 'lead_purchase[rating_level]':rating_level} );
+              }
+              $('#rating_reson_div_' + lead_purchase_id.toString()).hide();
           }
           else
           {

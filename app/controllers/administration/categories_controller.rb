@@ -1,6 +1,8 @@
 class Administration::CategoriesController < Administration::AdministrationController
   inherit_resources
 
+  set_tab "categories"
+
   def create
     create! do |success, failure|
       success.html { redirect_to administration_categories_path }

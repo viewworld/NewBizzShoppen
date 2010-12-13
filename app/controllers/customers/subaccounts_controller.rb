@@ -1,6 +1,8 @@
 class Customers::SubaccountsController < Customers::CustomerController
   before_filter :check_roles_selection, :only => [:new, :create]
 
+  set_tab "subaccounts"
+
   def index
     per_page = params[:per_page].blank? ? 25 : params[:per_page].to_i
     params[:search] ||= {}

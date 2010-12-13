@@ -2,6 +2,8 @@ class Administration::CurrenciesController < Administration::AdministrationContr
   inherit_resources
   actions :all, :except => [:show]
 
+  set_tab "currencies"
+
   def create
     create! do |success,failure|
       success.html { redirect_to administration_currencies_path }

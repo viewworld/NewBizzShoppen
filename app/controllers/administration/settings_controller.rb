@@ -1,5 +1,7 @@
 class Administration::SettingsController < Administration::AdministrationController
 
+  set_tab "settings"
+
   def edit
     @settings = Settings.where({})
   end
