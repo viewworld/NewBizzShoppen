@@ -5,7 +5,6 @@
 # files.
 
 require 'rubygems'
-require 'bundler/setup'
 require 'spork'
 
 def load_db

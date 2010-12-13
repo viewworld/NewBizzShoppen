@@ -1,5 +1,4 @@
 require 'rubygems'
-require 'bundler/setup'
 require 'spork'
 
 Spork.prefork do
