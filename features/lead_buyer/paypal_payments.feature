@@ -9,4 +9,6 @@ Scenario: Paypal payment information is stored in the system
 
 Scenario: Paypal payment information is linked to appropriate invoice
 
-Scenario: Paypal payment registration marks all related lead purchases as paid and accessible
+Scenario: Paypal's IPN marks all related lead purchases as paid and accessible
+
+Scenario: Data is transfererd to paypal in encrypted form
