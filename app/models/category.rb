@@ -18,6 +18,7 @@ class Category < ActiveRecord::Base
     end
   end
 
+  scope :within_accessible, lambda { |customer| where("categories.id IN (?)", customer.accessible_categories_ids) }
   scope :with_leads, where("total_leads_count > 0")
   scope :with_lead_request_owner, lambda { |owner| select("DISTINCT(name), categories.*").where("requested_by IS NOT NULL and lead_purchases.owner_id = ?", owner.id).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
   scope :with_lead_request_requested_by, lambda { |requested_by| select("DISTINCT(name), categories.*").where("lead_purchases.requested_by = ?", requested_by.id).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }

@@ -32,6 +32,7 @@ class Lead < ActiveRecord::Base
   scope :with_status, lambda { |q| where(["leads.published = ?", q]) }
   scope :published_only, where(:published => true)
   scope :with_creator_type, lambda {|creator_type| where(["leads.creator_type = ?", "User::#{creator_type}"]) }
+  scope :within_accessible_categories, lambda { |accessible_categories_ids| where("category_id IN (?)", accessible_categories_ids) }
   #====================
   scope :featured, where(:featured => true)
   scope :purchased, where("lead_purchases_counter > 0")

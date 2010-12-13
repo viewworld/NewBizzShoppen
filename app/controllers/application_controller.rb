@@ -12,7 +12,11 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource)
     if resource.is_a?(User)
-      if resource.has_role? :admin
+      if session[:user_requested_url].present?
+        requested_path = session[:user_requested_url]
+        session[:user_requested_url] = nil
+        requested_path
+      elsif resource.has_role? :admin
         administration_root_path
       elsif resource.has_role? :customer or resource.has_role? :lead_buyer and resource.sign_in_count <= 1
         edit_buyers_interests_path
@@ -40,4 +44,15 @@ class ApplicationController < ActionController::Base
       redirect_to self.send(method_path)
     end
   end
+
+  Warden::Manager.before_failure do |env, opts|
+    params = Rack::Request.new(env).params
+    session = env['rack.session']
+    session[:user_requested_url] = params["requested_url"]
+
+    params[:action] = :unauthenticated
+    params[:warden_failure] = opts
+  end
+
 end
+

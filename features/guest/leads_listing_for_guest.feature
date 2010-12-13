@@ -80,8 +80,17 @@ Scenario: I should see hottness, novelty, exposure, clicks
   And I should see "887"
   And I should see "17"
 
-@m3 @tgn
+@m3 @tgn @_tested @_done
 Scenario: I should be able to click "Add to cart button" that will redirect me to login page
+  Given I am signed up and confirmed as user with email johnbuyer3434@person.com and password secret and role customer
+  Given Lead named "Lead 392S2" exists within "Sample category" category
+  And I follow "Sample category"
+  Then I click hidden translated link "leads.index.add_to_cart_link"
+  And I should see translated "devise.failure.unauthenticated"
+  Then I fill in "user_email" with "johnbuyer3434@person.com"
+  And I fill in "user_password" with "secret"
+  And I press translated "home.show.view.sign_in"
+  Then I should see "Lead 392S2"
 
 @m0
 Scenario: If I sucessfully login after requesting a lead being added to a cart, that lead should be added to cart (or bought if I am big buyer)
