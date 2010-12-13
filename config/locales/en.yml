@@ -328,9 +328,13 @@ en:
           status_label: Status
       show:
         view:
-          header: 'Ratings for lead: %{lead_header}'
+          header: 'Lead details'
+          raintgs_header: 'Ratings for lead: %{lead_header}'
           rating_level: 'Rating:'
           rating_reason: 'Reason:'
+          lead_header: 'Header'
+          lead_description: 'Description'
+          lead_hidden_description: 'Hidden description'
           view_all_leads_link: 'View all leads'          
     articles:
       show:
