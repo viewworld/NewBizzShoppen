@@ -1,7 +1,7 @@
 <column-mc:>
   <header back="true"><%= t("administration.categories.edit.view.header", :category_name => @category.name) %></header>
   <%= semantic_form_for [:administration, @category], :method => :post, :html => {:multipart => true} do |form| %>
-      <frm title="TODO">
+      <frm title="">
         <param:content>
           <%= image_tag(@category.image.url) unless @category.image.nil? %>
           <%= render :partial => 'form', :locals => {:form => form} %>
