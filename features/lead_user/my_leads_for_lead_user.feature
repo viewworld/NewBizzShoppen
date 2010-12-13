@@ -97,7 +97,7 @@ Scenario: I should see created by and certification level for each lead
   Then I should see "Johan Printing"
   And I should see translated "models.lead.certification.lvl0"
 
-@m0
+@m4
 Scenario: I should see rating % for each lead
 
 @_tgn @_tested
