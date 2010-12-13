@@ -44,7 +44,7 @@
 
         <td class="cl"></td>
         <% if show_checkboxes %>
-            <td class="no_pdd_lr"><%= check_box_tag "lead_purchase_ids[]", lead_purchase.id %></td>
+            <td class="no_pdd_lr"><%= check_box_tag "lead_purchase_ids[]", lead_purchase.id, false, {:id => "lead_purchase_checkbox_#{lead_purchase.id}"} %></td>
         <% end %>
 
         <td>
