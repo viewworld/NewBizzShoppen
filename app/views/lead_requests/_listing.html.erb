@@ -48,6 +48,7 @@
           <p><%= t("lead_requests.listing.clicks_count_label") %><b><%= lead_request.clicks_count %></b></p>
           <p><%= t("lead_requests.listing.exposures_count_label") %><b><%= lead_request.exposures_count %></b></p>
           <p><%= t("lead_requests.listing.sale_limit_label") %><b><%= lead_request.sale_limit %></b></p>
+          <p><%= t("lead_requests.listing.rating_level") %><b><%= lead_request.lead.average_rating == -1 ? t("leads.listing.average_rating_none_label") : lead_request.lead.average_rating_as_text %></b></p>
           <p><%= t("lead_requests.listing.novelty_label") %><b><%= t("models.lead.novelty.lvl#{lead_request.novelty_level}") %></b></p>
           <p><%= t("lead_requests.listing.hotness_label") %><b><%= t("models.lead.hotness.lvl#{lead_request.hotness_level}") %></b></p>
           <p><%= t("lead_requests.listing.certification_label") %><b><%= t("models.lead.certification.lvl#{lead_request.certification_level}") %></b></p>

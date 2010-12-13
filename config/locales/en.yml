@@ -136,7 +136,7 @@ en:
       novelty_label: 'Novelty:'
       hotness_label: 'Hotness:'
       certification_label: 'Certification:'
-
+      rating_level: 'Rating:'
   leads:
     listing:
       purchase_value_label: 'Purchase value:'
