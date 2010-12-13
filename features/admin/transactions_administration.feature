@@ -1,4 +1,4 @@
-@transactions @$_admin @m0
+@transactions @$_admin @m4 
 Feature: Transactions administration
 
 Scenario: I can see a listing of all transactions registered in system
