@@ -65,4 +65,8 @@ module ApplicationHelper
     link_to(content_tag(:span, icon_tag), _url, opts)
   end
 
+  def as_currency(number,currency)
+    number_to_currency(number, :format => currency.format, :unit => currency.symbol)
+  end
+
 end

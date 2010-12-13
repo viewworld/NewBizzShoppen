@@ -31,6 +31,14 @@ Given /^lead (.+) exists with attributes "([^"]*)"$/ do |header, options|
   lead.update_attributes(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys)
 end
 
+Given /^lead (.+) exists with currency "([^"]*)"$/ do |header, currency_name|
+  unless currency = Currency.where(:name => currency_name).first
+    currency = Currency.make!(:name => currency_name)
+  end
+  lead = Lead.find_by_header(header).first
+  Lead.make!(:header => header, :currency => currency, :category => Category.make!) if lead.nil?
+end
+
 Given /^purchase for lead "([^"]*)" and user "([^"]*)" exists with attributes "([^"]*)"$/ do |header, email, options|
   user = User::Customer.find_by_email(email)
   lead = Lead.find_by_header(header).first

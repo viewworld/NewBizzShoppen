@@ -3,7 +3,7 @@
   <ul>
     <% current_user.cart.items.each do |lead| %>
         <li><%= lead.header %> x 1 -
-          <b><%= lead.price %></b><%= link_to t("layout.cart.remove_item_link"), buyers_cart_item_path(lead.id), :method => :delete %></li>
+          <b><%= as_currency(lead.price,lead.currency) %></b><%= link_to t("layout.cart.remove_item_link"), buyers_cart_item_path(lead.id), :method => :delete %></li>
     <% end %>
   </ul>
   <b><%= t("layout.cart.total_label") %></b><i><%= current_user.cart.total %></i>

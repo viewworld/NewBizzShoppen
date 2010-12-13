@@ -13,6 +13,7 @@
     <ol class="align_inputs">
       <%= form.input :purchase_value %>
       <%= form.input :price %>
+      <%= form.input :currency, :collection => currencies_for_select, :include_blank => false %>
       <%= form.input :company_name %>
       <%= form.input :contact_name %>
       <%= form.input :phone_number %>

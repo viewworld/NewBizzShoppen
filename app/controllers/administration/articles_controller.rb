@@ -15,12 +15,9 @@ class Administration::ArticlesController < Administration::AdministrationControl
   def create
     params[:article_cms] ||= {}
     @article = Article::Cms.new(params[:article_cms].merge(:scope => Article::Cms::MAIN_PAGE_ARTICLE))
-    create! do |format|
-      if @article.errors.empty?
-        format.html { redirect_to edit_administration_article_path(@article)}
-      else
-        format.html { redirect_to administration_articles_path }
-      end
+    create! do |success,failure|
+      success.html { redirect_to edit_administration_article_path(@article)}
+      failure.html { redirect_to administration_articles_path }
     end
   end
 

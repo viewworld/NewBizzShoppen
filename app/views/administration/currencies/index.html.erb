@@ -1,0 +1,64 @@
+<column-mc:>
+  <header><%= t("administration.currencies.index.view.title") %></header>
+
+  <%= form_tag new_administration_currency_path, :method => :get do %>
+      <fieldset class="inputs labels_auto inline_li no_pdd">
+        <ol class="no_pdd">
+          <li class="commit">
+            <ibt>
+              <%= submit_tag t("administration.currencies.index.view.new_currency") %>
+            </ibt>
+          </li>
+        </ol>
+      </fieldset>
+  <% end %>
+
+  <% if @currencies.any? %>
+      <table id="currencies_table" class="generic">
+        <thead>
+        <tr>
+          <th class="hl"></th>
+          <th><%= t("administration.currencies.index.view.table.id") %></th>
+          <th><%= t("administration.currencies.index.view.table.name") %></th>
+          <th><%= t("administration.currencies.index.view.table.symbol") %></th>
+          <th><%= t("administration.currencies.index.view.table.format") %></th>
+          <th><%= t("administration.currencies.index.view.table.active") %></th>
+          <th class="ta_r"><%= t("administration.currencies.index.view.actions") %></th>
+          <th class="hr"></th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+          <td class="fl"></td>
+          <td colspan="6"></td>
+          <td class="fr"></td>
+        </tr>
+        </tfoot>
+        <tbody>
+        <% @currencies.each do |currency| %>
+            <tr id="currency_<%= currency.id %>">
+              <td class="cl"></td>
+              <td><%= currency.id %></td>
+              <td><%= currency.name %></td>
+              <td><%= currency.symbol %> (<%= raw currency.symbol %>)</td>
+              <td><%= currency.format %> (<%= raw number_to_currency(100, :format => currency.format, :unit => currency.symbol) %>)</td>
+              <td><%= currency.active %></td>
+              <td class="tda ta_r">
+                <ul-actions>
+                  <li>
+                    <%= link_to t("administration.currencies.index.view.edit"), edit_administration_currency_path(currency) %>
+                  </li>
+                  <li>
+                    <%= link_to t("administration.currencies.index.view.delete"), administration_currency_path(currency), {:method => :delete, :confirm => t("administration.currencies.index.view.delete_confirmation_message")} %>
+                  </li>
+                </ul-actions>
+              </td>
+              <td class="cr"></td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+  <% else %>
+    <p><%= t("administration.currencies.index.view.no_currencies_defined") %></p>
+  <% end %>
+</column-mc:>

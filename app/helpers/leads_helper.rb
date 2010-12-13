@@ -38,4 +38,8 @@ module LeadsHelper
     ]
   end
 
+  def currencies_for_select
+    Currency.active.map{|c| [c.name,c.id]}
+  end
+
 end

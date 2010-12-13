@@ -48,12 +48,19 @@ Scenario: I should see rating % and certification level for each lead
 Scenario: I should see lead header, lead price, purchase value and public description
   Then I follow "Computers"
   And I should see "989.39"
-  And I should see "7843.99"
+  And I should see "7,843.99"
   And I should see "Printers ultimate deal"
   And I should see "Public desc about printers deal"
 
 @m0
 Scenario: I should see hottness, novelty, exposure, clicks
 
-@m3 @ao
+@m3 @ao @_done
 Scenario: I should see currency in which lead is being sold
+  When lead "Printers ultimate deal" has currency "Euro"
+  And I follow "Computers"
+  And I fill in "search_with_keyword" with "Printers"
+  And I press translated "leads.index.search.search_button"
+  Then I should see "Euro" within "table"
+  And I should see "€989.39" within "table"
+

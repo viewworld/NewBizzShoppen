@@ -21,6 +21,7 @@ en:
         leads: Leads
         articles: Articles
         news: News
+        currencies: Currencies
       agent:
         leads: My created leads
       call_centre:
@@ -140,6 +141,7 @@ en:
     listing:
       purchase_value_label: 'Purchase value:'
       lead_price_label: 'Lead price:'
+      lead_currency_label: 'Lead currency:'
       description_label: 'Lead description:'
       lead_details_label: 'Leads details'
       lead_description_label: 'Leads description'
@@ -385,6 +387,35 @@ en:
         view:
           header: 'Edit news'
           button_save: 'Save news'
+    currencies:
+      index:
+        view:
+          title: 'Currencies'
+          new_currency: 'New currency'
+          edit: 'Edit'
+          delete: 'Delete'
+          delete_confirmation_message: 'Are you sure?'
+          actions: 'Actions'
+          no_currencies_defined: 'There are no currencies defined'
+          table:
+            id: 'ID'
+            name: 'Name'
+            symbol: 'Symbol'
+            format: 'Format'
+            active: 'Active'
+      new:
+        view:
+          header: 'New currency'
+          button_create_currency: 'Create currency'
+          button_cancel: 'Cancel'
+      edit:
+        view:
+          header: 'Edit currency'
+          button_update_currency: 'Update currency'
+          button_cancel: 'Cancel'
+      destroy:
+        errors:
+          has_leads: "You can't delete this currency because there are leads using it"
 
   agent:
     leads:
