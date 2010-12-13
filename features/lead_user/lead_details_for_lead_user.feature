@@ -16,7 +16,7 @@ Background: Sign in user and set English locale
 Scenario: I should see created by
   Then I should see "Jim Spong"
 
-@m0
+@m4 @tgn
 Scenario: I should see rating % and certification level for each lead
 
 @_tested
@@ -26,5 +26,5 @@ Scenario: I should see lead header, lead price, purchase value and public descri
   And I should see "Printers ultimate deal"
   And I should see "Public desc about printers deal"
 
-@m0
+@m4 @tgn
 Scenario: I should see hottness, novelty, exposure, clicks
