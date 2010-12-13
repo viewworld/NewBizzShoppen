@@ -38,11 +38,13 @@ class Nbs < Thor
          :uniq_id => "share_leads_by_email_message",
          :en      => {:subject => "Somebody shared leads with you",
                       :body    => "{% for lead in leads %}
-<p>{{lead.id}}</p>
+<p>{{lead.header}}<br />
+{{lead.description}}<br /></p>
 {% endfor %}"},
          :dk      => {:subject => "[DK] Somebody shared leads with you",
                       :body    => "{% for lead in leads %}
-<p>{{lead.id}}</p>
+<p>{{lead.header}}<br />
+{{lead.description}}<br /></p>
 {% endfor %}"}
         },
 
