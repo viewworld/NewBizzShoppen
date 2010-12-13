@@ -112,9 +112,17 @@ class Nbs < Thor
     unless Rails.env.production?
 
       if Category.count.zero?
-        Category.make!(:name => "Electronics")
-        Category.make!(:name => "Leisure")
-        Category.make!(:name => "Business")
+        ['Electronics','Leisure','Business'].each do |name|
+          [:en, :dk].each do |locale|
+            I18n.locale = locale
+            if category = Category.where(:name => name).first
+              category.name = name
+              category.save
+            else
+              Category.make!(:name => name)
+            end
+          end
+        end
       end
 
       unless User::Agent.find_by_email("agent@nbs.com")
