@@ -184,6 +184,7 @@ en:
       request_lead: Request lead
       button_bulk_create_lead_request: 'Request leads'
       button_bulk_create_cart_item: 'Add to cart'
+      button_bulk_buy_leads: 'Buy leads'
       bestsellers_header: Best sellers
       latest_header: Latest leads
       featured_header: Featured leads
@@ -481,7 +482,8 @@ en:
     bulk_cart_items:
       create:
         flash:
-          n_cart_items_added: '%{count} leads has been added to cart'
+          n_cart_items_added: '%{count} leads have been added to cart'
+          n_leads_bought: '%{count} leads have been bought'
           no_cart_items_added: 'No leads added to cart'
     bulk_lead_purchase_update:
       create:

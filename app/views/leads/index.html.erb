@@ -76,7 +76,7 @@
                   <% if current_user.has_role?(:customer) %>
                       <%= hidden_field_tag :route_to, "/buyers/bulk_cart_items" %>
                       <ibt>
-                        <%= submit_tag t("leads.index.button_bulk_create_cart_item") %>
+                        <%= submit_tag current_user.big_buyer? ? t("leads.index.button_bulk_buy_leads") : t("leads.index.button_bulk_create_cart_item") %>
                       </ibt>
                   <% elsif current_user.has_role?(:lead_user) %>
                       <%= hidden_field_tag :route_to, "/lead_users/bulk_lead_requests" %>
