@@ -22,18 +22,17 @@ module CucumberFM
         TECHNICAL = [
                 '@javascript',
                 '@selenium',
+                '@sellenium',
                 '@celerity',
                 '@culerity',
                 '@mongo',
                 '@allow-rescue',
-                '@allow_rescue',
                 '@needs_wireframe',
                 '@tested_elsewhere',
                 '@added',
                 '@nontestable',
                 '@additional-test',
-                '@additional_test',
-                '@non_testable'
+                '@non_testable'        
         ]
 
         STATUS_COMPLETE = %w(@_done @_qa @_tested @_accepted)
@@ -44,6 +43,10 @@ module CucumberFM
 
         def tags= tags
           @tags = tags
+        end
+
+        def tags_without_technical
+          tags - TECHNICAL
         end
 
         def done?
