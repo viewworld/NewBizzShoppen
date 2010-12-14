@@ -1,4 +1,4 @@
-@user_accounts @$_call_centre  @m4
+@user_accounts @$_call_centre  @m4 @tgn
 Feature: Freelance agent payout information
 
   Scenario: Freelance has its Paypal data stored
