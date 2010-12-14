@@ -15,7 +15,6 @@ Background:
 @_done
 Scenario: I can create a new lead and close
   Given Category PMCategory is created
-  And I open page in browser
   And I follow translated "purchase_manager.leads.index.view.new_lead"
   And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
   And I fill in "lead_description" with "Lorem ipsum"
@@ -28,7 +27,6 @@ Scenario: I can create a new lead and close
   And I fill in "datepicker" with "2012-02-20"
   And I press translated "purchase_manager.leads.new.view.button_create"
   And I should be on purchase managers leads
-  And I open page in browser
   And I should see translated "flash.leads.actions.create.notice"
 
 @_done
@@ -45,7 +43,6 @@ Scenario: I can create a new lead and continue (create another one)
   And I select "Denmark" from "lead_country_id"
   And I fill in "datepicker" with "2012-02-20"
   And I press translated "purchase_manager.leads.new.view.button_create_and_continue"
-  And I open page in browser
   And I should see translated "flash.leads.actions.create.notice"
   And I should see translated "purchase_manager.leads.new.view.title"
 
@@ -87,7 +84,7 @@ Scenario: Published checkbox should not be visible
   Given I follow translated "agent.leads.index.view.new_lead"
   Then I should not see field "lead_published"
 
-@wip
+@_done
 Scenario: Hidden description should not be visible
   Given I follow translated "agent.leads.index.view.new_lead"
   Then I should not see field "lead_hidden_description"
