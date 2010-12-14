@@ -26,11 +26,14 @@ module CucumberFM
                 '@culerity',
                 '@mongo',
                 '@allow-rescue',
+                '@allow_rescue',
                 '@needs_wireframe',
                 '@tested_elsewhere',
                 '@added',
                 '@nontestable',
-                '@additional-test'
+                '@additional-test',
+                '@additional_test',
+                '@non_testable'
         ]
 
         STATUS_COMPLETE = %w(@_done @_qa @_tested @_accepted)
