@@ -111,6 +111,7 @@ en:
       contact_name: 'Contact name:'
       clicks_count_label: 'Clicks:'
       exposures_count_label: 'Exposures:'
+      average_rating_label: 'Rating:'
       sale_limit_label: 'Uniqueness:'
       novelty_label: 'Novelty:'
       hotness_label: 'Hotness:'
