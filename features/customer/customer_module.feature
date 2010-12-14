@@ -33,7 +33,7 @@ Scenario: After signup I am assigned roles of Customer, Lead Buyer and Lead user
 
 @m0 @tested
 Scenario: I can see my unique RSS feed URL
-  Then I should see translated "buyer.interests.edit.view.rss_feed_url"
+  Then I should see translated "customer.interests.edit.view.rss_feed_url"
 
 @_tested
 Scenario: I can select if I want to be notified about new leads matching my interests criteria
@@ -42,19 +42,19 @@ Scenario: I can select if I want to be notified about new leads matching my inte
 Scenario: I can select multiple lead categories that I am interested in
   Given I check "category_0"
   And I check "category_1"
-  And I press translated "buyer.interests.edit.view.button_update"
-  Then I should see translated "buyer.interests.update.flash.interests_update_successful"
+  And I press translated "customer.interests.edit.view.button_update"
+  Then I should see translated "customer.interests.update.flash.interests_update_successful"
 
 @_tested
 Scenario: I can select lead purchase value range that I am interested in
   Given I select "3000" from "user_deal_value_range_start"
   And I select "6000" from "user_deal_value_range_end"
-  And I press translated "buyer.interests.edit.view.button_update"
-  Then I should see translated "buyer.interests.update.flash.interests_update_successful"
+  And I press translated "customer.interests.edit.view.button_update"
+  Then I should see translated "customer.interests.update.flash.interests_update_successful"
 
 @_tested
 Scenario: I can select multiple lead areas/countries that I am interested in
   Given I select "Denmark" from "countries"
   Given I select "United Kingdom" from "countries"
-  And I press translated "buyer.interests.edit.view.button_update"
-  Then I should see translated "buyer.interests.update.flash.interests_update_successful"
+  And I press translated "customer.interests.edit.view.button_update"
+  Then I should see translated "customer.interests.update.flash.interests_update_successful"

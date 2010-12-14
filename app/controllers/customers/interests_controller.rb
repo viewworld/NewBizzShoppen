@@ -1,4 +1,4 @@
-class Buyers::InterestsController <  Buyers::BuyerController
+class Customers::InterestsController <  Customers::CustomerController
   set_tab "interests_tab"
 
   def edit
@@ -10,12 +10,12 @@ class Buyers::InterestsController <  Buyers::BuyerController
     @categories = params[:categories].nil? ? [] : Category.where(:id => params[:categories])
     @countries = params[:countries].nil? ? [] : Country.where(:id => params[:countries])
 
-    @buyer.categories = @categories
-    @buyer.countries = @countries
-    @buyer.save
-    @buyer.update_attributes(params[:user])
+    current_user.categories = @categories
+    current_user.countries = @countries
+    current_user.save
+    current_user.update_attributes(params[:user])
 
-    flash[:notice] = t("buyer.interests.update.flash.interests_update_successful")
+    flash[:notice] = t("customer.interests.update.flash.interests_update_successful")
     redirect_to buyers_lead_purchases_path
   end
 end
