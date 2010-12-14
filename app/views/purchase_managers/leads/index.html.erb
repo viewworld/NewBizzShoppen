@@ -57,13 +57,7 @@
             </ul-actions>
       <% end %>
       <% blocks.status_column do |lead| %>
-        <% if lead.created_by?('PurchaseManager') and !lead.published? %>
-          <%= lead_status(lead) %>
-        <% else %>
-          <%= form_for [:purchase_managers, lead], :method => :put do |f| %>
-              <%= f.select :published, [[t("purchase_manager.leads.index.view.option_published"), 1], [t("purchase_manager.leads.index.view.option_not_published"), 0]], {:selected => lead.published ? 1 : 0}, {:onchange => "jQuery(this.form).callRemote()"} %>
-          <% end %>
-        <% end %>
+        <%= lead_status(lead) %>
       <% end %>
   <% end %>
 </column-mc:>
