@@ -32,8 +32,8 @@ module NavigationHelpers
         '/categories'
     when /buyer cart items/
         '/buyers/cart_items'
-    when /buyer interests/
-        '/buyers/interests/edit'
+    when /customer interests/
+        '/customers/interests/edit'
     when /lead user lead purchases/
         '/lead_users/lead_purchases'
     when /customers subaccounts/

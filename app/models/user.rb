@@ -166,11 +166,11 @@ class User < ActiveRecord::Base
   end
 
   def has_accessible_categories?
-    parent.present? and User::LeadBuyer.find(parent_id).category_interests.present?
+    parent.present? and User::Customer.find(parent_id).category_interests.present?
   end
 
   def accessible_categories_ids
-    User::LeadBuyer.find(parent_id).category_interests.map(&:category_id)
+    User::Customer.find(parent_id).category_interests.map(&:category_id)
   end
   
   def address

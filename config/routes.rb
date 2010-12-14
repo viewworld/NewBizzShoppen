@@ -28,7 +28,6 @@ Nbs::Application.routes.draw do
 
   namespace :buyers do
     root :to => "lead_purchases#index"
-    resource :interests, :only => [:edit, :update]
     resources :cart_items
     resource :cart, :only => [:show, :destroy], :controller => 'cart'
     resources :lead_purchases do
@@ -60,6 +59,7 @@ Nbs::Application.routes.draw do
 
   namespace :customers do
     root :to => "lead_requests#index"
+    resource :interests, :only => [:edit, :update]
     resources :subaccounts
     resources :lead_requests, :only => [:index, :update, :destroy]
     resource :bulk_lead_requests, :controller => "bulk_lead_requests", :only => [:destroy,:update]
