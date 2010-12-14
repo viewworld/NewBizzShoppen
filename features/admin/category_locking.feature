@@ -1,5 +1,5 @@
 #To estimate
-@$_admin @m4 @tgn
+@$_admin @m4 @tgn @category_locking
 Feature: Category locking
 
 Scenario: I should be able to lock category
