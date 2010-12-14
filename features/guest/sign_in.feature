@@ -69,7 +69,7 @@ Feature: Sign in
     | administration email templates |
     | administration settings        |
     | agents leads                   |
-    | buyer interests                |
+    | customer interests             |
     | lead user lead purchases       |
     | customers subaccounts          |
     | my profile                     |

@@ -29,9 +29,9 @@ en:
       customer:
         subaccounts: Subaccounts
         lead_requests: Requested leads
+        interests: 'Interests settings'
       lead_buyer:
         lead_purchases: My owned leads
-        interests: 'Interests settings'
       lead_user:
         lead_purchases: My assigned leads
         lead_requests: My requested leads
@@ -461,19 +461,6 @@ en:
         button_create_account: 'Create my account'
 
   buyer:
-    interests:
-      edit:
-        view:
-          title: 'Configure your interests'
-          categories: 'Categories'
-          deal_values: 'Deal value'
-          countries: 'Countries'
-          notify_about_new_leads: 'Notify me about new leads via email'
-          button_update: 'Save'
-          rss_feed_url: 'RSS Feed'
-      update:
-        flash:
-          interests_update_successful: Interest settings have been saved successfuly
     cart_items:
       create:
         flash:
@@ -548,6 +535,19 @@ en:
         create_new_agent_account: 'Create new agent account'
 
   customer:
+    interests:
+      edit:
+        view:
+          title: 'Configure your interests'
+          categories: 'Categories'
+          deal_values: 'Deal value'
+          countries: 'Countries'
+          notify_about_new_leads: 'Notify me about new leads via email'
+          button_update: 'Save'
+          rss_feed_url: 'RSS Feed'
+      update:
+        flash:
+          interests_update_successful: Interest settings have been saved successfuly
     subaccounts:
       index:
         view:

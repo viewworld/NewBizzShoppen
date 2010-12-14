@@ -48,7 +48,7 @@ Scenario: I should not see categories that I have been restricted access to by c
   And lead Chairs ultimate deal exists within category Office
   And lead Pipes ultimate deal exists within category Building
   And lead AP ultimate deal exists within category Wireless Devices
-  And user "customer@person.com" with role "lead_buyer" has interest in following categories "Office,Wireless Devices"
+  And user "customer@person.com" with role "customer" has interest in following categories "Office,Wireless Devices"
   When I am not sign in
   Then I sign in as lead_user2@person.com with password supersecret
   Given I go to browse leads
@@ -62,7 +62,7 @@ Scenario: I should not see categories that I have been restricted access to by c
     And lead Chairs ultimate deal exists within category Office
   And lead Pipes ultimate deal exists within category Building
   And lead AP ultimate deal exists within category Wireless Devices
-  And user "customer@person.com" with role "lead_buyer" has interest in following categories "Office,Wireless Devices"
+  And user "customer@person.com" with role "customer" has interest in following categories "Office,Wireless Devices"
   When I am not sign in
   Then I sign in as lead_user2@person.com with password supersecret
   Given I go to browse leads
