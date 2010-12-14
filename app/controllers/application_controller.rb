@@ -20,6 +20,8 @@ class ApplicationController < ActionController::Base
         administration_root_path
       elsif resource.has_role? :customer or resource.has_role? :lead_buyer and resource.sign_in_count <= 1
         edit_buyers_interests_path
+      elsif resource.role == :lead_buyer
+        buyers_root_path
       else
         self.send "#{resource.role.to_s.pluralize}_root_path"
       end

@@ -1,4 +1,4 @@
-@paypal @$_system @m0
+@paypal @$_system @m4
 Feature: Automatically assigning lead purchases paid by paypal
 
 Scenario: When I buy a lead it is automatically assigned to me

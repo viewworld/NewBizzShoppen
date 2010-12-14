@@ -1,4 +1,5 @@
-Feature: Leads managements for call centre agent @m0
+@m0
+Feature: Leads managements for call centre agent
 
 Scenario: I can browse leads with pagination
 

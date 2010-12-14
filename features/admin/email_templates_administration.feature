@@ -43,5 +43,5 @@ Scenario: I can edit and update email template fields for different language whe
   Then I press translated "administration.email_templates.edit.view.button_update"
   
   
-@m0
+@m4 @tgn
 Scenario: I should be able to edit email templates using WYSIWYG editor and applying basic styling

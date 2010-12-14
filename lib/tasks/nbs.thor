@@ -38,11 +38,13 @@ class Nbs < Thor
          :uniq_id => "share_leads_by_email_message",
          :en      => {:subject => "Somebody shared leads with you",
                       :body    => "{% for lead in leads %}
-<p>{{lead.id}}</p>
+<p>{{lead.header}}<br />
+{{lead.description}}<br /></p>
 {% endfor %}"},
          :dk      => {:subject => "[DK] Somebody shared leads with you",
                       :body    => "{% for lead in leads %}
-<p>{{lead.id}}</p>
+<p>{{lead.header}}<br />
+{{lead.description}}<br /></p>
 {% endfor %}"}
         },
 
@@ -112,9 +114,17 @@ class Nbs < Thor
     unless Rails.env.production?
 
       if Category.count.zero?
-        Category.make!(:name => "Electronics")
-        Category.make!(:name => "Leisure")
-        Category.make!(:name => "Business")
+        ['Electronics','Leisure','Business'].each do |name|
+          [:en, :dk].each do |locale|
+            I18n.locale = locale
+            if category = Category.where(:name => name).first
+              category.name = name
+              category.save
+            else
+              Category.make!(:name => name)
+            end
+          end
+        end
       end
 
       unless User::Agent.find_by_email("agent@nbs.com")

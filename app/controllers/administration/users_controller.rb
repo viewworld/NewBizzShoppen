@@ -2,8 +2,10 @@ class Administration::UsersController < Administration::AdministrationController
   inherit_resources
   actions :all, :except => [:create, :update]
 
+  set_tab "users"
+
   def new
-    @user = "User::#{params[:role].to_s.camelize}".constantize.new
+    @user = "User::#{params[:role].to_s.camelize}".constantize.new(:agreement_read => true)
   end
 
   def create

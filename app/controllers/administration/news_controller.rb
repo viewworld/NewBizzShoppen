@@ -1,6 +1,8 @@
 class Administration::NewsController < Administration::AdministrationController
   inherit_resources
 
+  set_tab "news"
+
   def edit
     @news = Article::News.find(params[:id])
     edit!

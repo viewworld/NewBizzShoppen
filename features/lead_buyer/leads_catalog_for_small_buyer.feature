@@ -42,7 +42,7 @@ Scenario: I should see created by
   Then I follow "Computers"
   And I should see "John Dulinky"
 
-@m0
+@m4 @tgn
 Scenario: I should see rating % and certification level for each lead
 
 @_tested
@@ -53,7 +53,7 @@ Scenario: I should see lead header, lead price, purchase value and public descri
   And I should see "Printers ultimate deal"
   And I should see "Public desc about printers deal"
 
-@m0
+@m4 @tgn
 Scenario: I should see hottness, novelty, exposure, clicks
 
 @_tested

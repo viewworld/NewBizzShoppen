@@ -179,10 +179,12 @@ Scenario: I can bulk send selected leads by email
   And I press translated "lead_buyer.bulk_lead_share_by_email.new.view.send_email_button"
   Then I should see translated "flash.bulk_lead_share_by_email.actions.create.notice"
 
-@ao @_todo @m0
+#Adjust to current requirements first
+@_todo @m4 @tgn
 Scenario: I can rate lead that I have access for (good, bad, fake)
 
-@ao @_todo @m0
+#Adjust to current requirements first
+@_todo @m4 @tgn
 Scenario: I can bulk rate leads that I have access for (good, bad, fake)
 
 @ao @_tested @_done @selenium

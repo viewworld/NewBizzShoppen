@@ -138,7 +138,7 @@ en:
       novelty_label: 'Novelty:'
       hotness_label: 'Hotness:'
       certification_label: 'Certification:'
-
+      rating_level: 'Rating:'
   leads:
     listing:
       purchase_value_label: 'Purchase value:'
@@ -257,7 +257,9 @@ en:
           delete_confirmation_message: 'Are you sure?'
       edit:
         view:
+          title: Edit user
           button_update_user: Save
+          button_cancel: Cancel
           reset_password_link: Reset password
       create:
         flash:

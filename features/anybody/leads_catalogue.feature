@@ -6,7 +6,7 @@ Background:
   And I make sure current locale is English
   And I am not sign in
   And lead Printers ultimate deal exists within category Computers
-  And lead Printers ultimate deal exists with attributes "creator_name:John Dulinky,price:989.39,purchase_value:7843.99,description:Public desc about printers deal"
+  And lead Printers ultimate deal exists with attributes "creator_name:John Dulinky,price:989.39,purchase_value:7843.99,description:Public desc about printers deal,exposures_count:887,clicks_count:17"
   And lead Faxes ultimate deal exists within category Computers
   And lead Monitors ultimate deal exists within category Computers
   And lead Cheap mouses ultimate deal exists within category Computers
@@ -41,8 +41,16 @@ Scenario: I should see created by
   Then I follow "Computers"
   And I should see "John Dulinky"
 
-@m0
+@m4 @tgn @_done @_tested
 Scenario: I should see rating % and certification level for each lead
+  Given I have user with email bob@person.com and role customer
+  And a lead Printers ultimate deal exists within category Computers and is bought by user bob@person.com with role customer
+  And a lead "Printers ultimate deal" has good rating
+  Given All leads have refreshed average ratings
+  Given I go to browse leads
+  And I follow "Computers"
+  Then I should see "100%"
+  And I should see translated "models.lead.certification.lvl0"
 
 @_tested
 Scenario: I should see lead header, lead price, purchase value and public description
@@ -52,8 +60,14 @@ Scenario: I should see lead header, lead price, purchase value and public descri
   And I should see "Printers ultimate deal"
   And I should see "Public desc about printers deal"
 
-@m0
+@m4 @tgn @_done @_tested
 Scenario: I should see hottness, novelty, exposure, clicks
+  When I follow "Computers"
+  Then I should see translated "models.lead.hotness.lvl1"
+  And I should see translated "models.lead.novelty.lvl0"
+  And I should see "887"
+  And I should see "17"
+
 
 @m3 @ao @_done
 Scenario: I should see currency in which lead is being sold

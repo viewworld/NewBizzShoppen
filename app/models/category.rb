@@ -12,6 +12,8 @@ class Category < ActiveRecord::Base
 
   after_save :set_cached_slug
 
+  validates_presence_of :name
+
   has_many :leads do
     def including_subcategories
       Lead.where(:category_id => proxy_owner.self_and_descendants.map(&:id))
