@@ -37,6 +37,15 @@ Scenario: When I lock a parent category then all its children are locked as well
   Then category named "Another sample category" should be locked
   Then category named "Also another sample category" should be locked
 
+@_tested
 Scenario: No new leads could be added to locked category
+  Given I am not sign in
+  Given Category named "Sample category" already exists
+  And category named "Sample category" is locked
+  Given I am signed up and confirmed as user with email agent.jones@person.com and password secret and role agent
+  Then I sign in as agent.jones@person.com with password secret
+  And I follow translated "agent.leads.index.view.new_lead"
+  Then "lead_category_id" dropdown should not have values "Sample category"
+
 
 Scenario: Locked category should not be visible if no active leads are present within it
