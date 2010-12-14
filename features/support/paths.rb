@@ -48,6 +48,8 @@ module NavigationHelpers
         '/agent_accounts/new'
     when /buyer sign up/
         '/buyer_accounts/new'
+    when /purchase manager sign up/
+        '/purchase_manager_accounts/new'
     when /sample image/
         "#{::Rails.root.to_s}/spec/fixtures/sample.jpg"
     when /resend confirmation instructions/
@@ -58,6 +60,8 @@ module NavigationHelpers
         '/lead_users/lead_requests'
     when /the (.*) lead/
         lead_path(Lead.find_by_header($1))
+    when /purchase managers leads/
+        purchase_managers_leads_path
     when /leads/
         leads_path
     when /agent home/

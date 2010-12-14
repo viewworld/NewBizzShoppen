@@ -20,7 +20,7 @@ module LeadsHelper
     end
   end
 
-  def administration_lead_status(lead)
+  def lead_status(lead)
     case lead.published
       when false then t("administration.leads.index.view.option_not_published")
       when true then t("administration.leads.index.view.option_published")
@@ -40,7 +40,7 @@ module LeadsHelper
                   options_for_select(administration_lead_statuses, lead.published),
                   :onchange => "$.post('#{administration_lead_path(lead)}', {'format':'js', '_method':'put', 'lead[published]':this.value} );"
     else
-      administration_lead_status(lead)
+      lead_status(lead)
     end
   end
 

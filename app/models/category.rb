@@ -20,6 +20,12 @@ class Category < ActiveRecord::Base
     end
   end
 
+  has_many :published_leads, :class_name => 'Lead', :conditions => ["published = ?", true] do
+    def including_subcategories
+      Lead.where(:category_id => proxy_owner.self_and_descendants.map(&:id)).published_only
+    end
+  end
+
   scope :within_accessible, lambda { |customer| where("categories.id IN (?)", customer.accessible_categories_ids) }
   scope :with_leads, where("total_leads_count > 0")
   scope :with_lead_request_owner, lambda { |owner| select("DISTINCT(name), categories.*").where("requested_by IS NOT NULL and lead_purchases.owner_id = ?", owner.id).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
@@ -54,6 +60,7 @@ class Category < ActiveRecord::Base
   def refresh_leads_count_cache!
     Category.find(self_and_ancestors.map(&:id)).each do |c|
       c.update_attribute(:total_leads_count, c.leads.including_subcategories.count)
+      c.update_attribute(:published_leads_count, c.published_leads.including_subcategories.count)
     end
   end
 

@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
 
   has_many :subaccounts, :class_name => "User", :foreign_key => "parent_id"
   belongs_to :user, :class_name => "User", :foreign_key => "parent_id", :counter_cache => :subaccounts_counter
-  belongs_to :country, :foreign_key => "country"
+#  belongs_to :country, :foreign_key => "country"
   alias_method :parent, :user
 
   scope :with_role, lambda { |role| where("roles_mask & #{2**User.valid_roles.index(role.to_sym)} > 0 ") }
@@ -174,7 +174,7 @@ class User < ActiveRecord::Base
   end
   
   def address
-    %{#{street}\n#{zip_code} #{city}\n#{county}\n#{country.name}}
+    %{#{street}\n#{zip_code} #{city}\n#{county}}
   end
 
   def has_role?(r)

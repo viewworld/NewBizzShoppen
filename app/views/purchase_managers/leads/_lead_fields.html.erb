@@ -18,12 +18,6 @@
           <%= f.text_area :description, :style => "height: 140px; width: 600px" %>
           <%= custom_error_for_field(f, :description) %>
         </li>
-        <li class="text">
-          <%= f.label :hidden_description %>
-          <%= f.text_area :hidden_description, :style => "height: 140px; width: 600px" %>
-          <br/>
-          <%= custom_error_for_field(f, :hidden_description) %>
-        </li>
         <li class="hidden">
           <%= f.hidden_field :locale, :class => "locale_hidden_field" %>
           <% unless f.object.new_record? %>

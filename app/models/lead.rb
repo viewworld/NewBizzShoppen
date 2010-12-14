@@ -40,7 +40,8 @@ class Lead < ActiveRecord::Base
   scope :bestsellers, order("lead_purchases_counter DESC")
   scope :latest, order("created_at DESC")
 
-  validates_presence_of :header, :description, :hidden_description, :purchase_value, :price, :company_name, :contact_name, :phone_number, :sale_limit, :category_id, :address, :purchase_decision_date, :country_id, :currency
+  validates_presence_of :header, :description, :purchase_value, :price, :company_name, :contact_name, :phone_number, :sale_limit, :category_id, :address, :purchase_decision_date, :country_id, :currency
+  validates_presence_of :hidden_description, :unless => Proc.new{|l| l.created_by?('PurchaseManager')}
   validates_inclusion_of :sale_limit, :in => 0..10
   
 

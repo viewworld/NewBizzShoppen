@@ -123,6 +123,23 @@ end
   roles_mask { 112 }
 end
 
+::User::PurchaseManager.blueprint do
+  email { Faker::Internet.email }
+  password { "secret" }
+  password_confirmation { "secret" }
+  phone { Faker::PhoneNumber.phone_number }
+ screen_name { Faker::Name.name + Time.now.to_f.to_s.sub('.','') }
+  street { Faker::Address.street_name }
+  first_name { Faker::Name.first_name }
+  last_name { Faker::Name.last_name }
+  agreement_read { true }
+  city { Faker::Address.city }
+  zip_code { Faker::Address.zip_code }
+  county { Faker::Address.uk_county }
+  country { 1 }
+  roles_mask { 128 }
+end
+
 ::User::LeadUser.blueprint do
   email { Faker::Internet.email }
   password { "secret" }

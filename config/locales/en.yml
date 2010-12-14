@@ -484,6 +484,9 @@ en:
         flash:
           lead_deletion_successful: 'Lead has been deleted successfully.'
           lead_deletion_failure: 'Lead could not be deleted'
+      update:
+        errors:
+          only_admin_can_change_status: 'Only administrator can change lead status'
 
       new:
         view:
@@ -857,6 +860,15 @@ en:
             screen_name:
               taken: 'has already been taken'
         user/customer:
+          attributes:
+            email:
+              invalid: 'is invalid'
+            password:
+              blank: 'is blank'
+              confirmation: "doesn't match confirmation"
+            screen_name:
+              taken: 'has already been taken'
+        user/purchase_manager:
           attributes:
             email:
               invalid: 'is invalid'
