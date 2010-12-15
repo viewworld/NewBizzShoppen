@@ -3,6 +3,19 @@ class Administration::LeadsController < Administration::AdministrationController
   actions :all, :except => [:create,:new]
 
   set_tab "leads"
+  
+  def update
+    update! do |success,failure|
+      success.js {
+        render :nothing => true
+      }
+      failure.js {
+        render :update do |page|
+          page << "alert('#{t("administration.leads.index.ajax.not_updated")}')"
+        end
+      }
+    end
+  end
 
   protected
 

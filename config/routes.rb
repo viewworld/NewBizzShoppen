@@ -71,6 +71,11 @@ Nbs::Application.routes.draw do
     resources :leads
   end
 
+  namespace :purchase_managers do
+    root :to => "leads#index"
+    resources :leads
+  end
+
   match 'buyer_home' => 'buyer_home#show', :as => "buyer_home"
   match 'agent_home' => 'agent_home#show', :as => "agent_home"
 
@@ -82,6 +87,7 @@ Nbs::Application.routes.draw do
 
   resources :agent_accounts, :only => [:new, :create]
   resources :buyer_accounts, :only => [:new, :create]
+  resources :purchase_manager_accounts, :only => [:new, :create]
   resources :locales
 
   resources :news

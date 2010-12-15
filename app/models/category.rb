@@ -20,6 +20,12 @@ class Category < ActiveRecord::Base
     end
   end
 
+  has_many :published_leads, :class_name => 'Lead', :conditions => ["published = ?", true] do
+    def including_subcategories
+      Lead.where(:category_id => proxy_owner.self_and_descendants.map(&:id)).published_only
+    end
+  end
+
   scope :within_accessible, lambda { |customer| where("categories.id IN (?)", customer.accessible_categories_ids) }
   scope :without_locked, where("is_locked = ?", false)
   scope :with_leads, where("total_leads_count > 0")
@@ -64,6 +70,12 @@ class Category < ActiveRecord::Base
       (self_and_descendants - [self]).each do |category|
         category.update_attribute(:is_locked, is_locked)
       end
+    end
+  end
+
+  def refresh_published_leads_count_cache!
+    Category.find(self_and_ancestors.map(&:id)).each do |c|
+      c.update_attribute(:published_leads_count, c.published_leads.including_subcategories.count)
     end
   end
 

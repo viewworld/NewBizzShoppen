@@ -1,0 +1,15 @@
+<column-mc:>
+
+  <h1><%= t("purchase_manager.leads.show.view.header", :lead_header => @lead.header) %></h1>
+
+<ul>
+<% @lead.lead_purchases.each do |lead_purchase| %>
+      <li>
+        <%= t("purchase_manager.leads.show.view.rating_level") %><%= lead_purchase.rating_level_as_text %><br />
+        <%= t("purchase_manager.leads.show.view.rating_reason") %><%= lead_purchase.rating_reason %>
+      </li>
+<% end %>
+</ul>
+
+  <%= link_to t("purchase_manager.leads.show.view.view_all_leads_link"), purchase_managers_leads_path %>
+</column-mc:>

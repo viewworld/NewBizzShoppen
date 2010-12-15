@@ -1,4 +1,4 @@
-@$_admin @m3 
+@$_admin @m3 @currencies
 Feature: Currencies administration
 
 Background:
