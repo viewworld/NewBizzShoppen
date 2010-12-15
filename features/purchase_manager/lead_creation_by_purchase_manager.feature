@@ -63,13 +63,11 @@ Scenario: I can add an extra language while creating lead. This will include lea
   And I select "dk" from "locale_picker"
   And I fill in "lead_lead_translations_attributes_0_header" with "DK header"
   And I fill in "lead_lead_translations_attributes_0_description" with "DK description"
-  And I fill in "lead_lead_translations_attributes_0_hidden_description" with "DK hidden description"
   And I press translated "purchase_manager.leads.new.view.button_create"
   And I should be on purchase managers leads
   And I should see translated "flash.leads.actions.create.notice"
   Then I click hidden link by url regex "/purchase_managers\/leads\/\d+\/edit/"
   And I should see "DK description"
-  And I should see "DK hidden description"
 
 @_done
 Scenario: Contact information should be prepopulated
