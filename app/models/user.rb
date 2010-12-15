@@ -40,7 +40,7 @@ class User < ActiveRecord::Base
   scoped_order :id, :roles_mask, :first_name, :last_name, :email, :age, :department, :completed_leads_counter, :leads_requested_counter, :leads_assigned_month_ago_count, :leads_assigned_year_ago_counter, :total_leads_assigned_counter
 
 
-  attr_protected :payout, :locked
+  attr_protected :payout, :locked, :can_edit_payout_information, :paypal_email, :bank_swift_number, :bank_iban_number
 
   attr_accessor :agreement_read, :locked
 
