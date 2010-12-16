@@ -86,7 +86,7 @@ Scenario: I can view the article
   Then I should see "MainPageArticle"
   And I should see "lorem"
 
-@_added @_done
+@added @_done
 Scenario: I can destroy main page article
   When main page article exists with attributes "title:MainPageArticle"
   And I follow translated "layout.main_menu.admin.articles"
@@ -94,7 +94,7 @@ Scenario: I can destroy main page article
   And I follow translated "administration.articles.index.view.delete_link"
   Then I should not see "MainPageArticle"
 
-@_added @_done
+@added @_done
 Scenario: I can not destroy interface content text
   When interface content text exists with attributes "title:Blurb,key:blurb"
   And help popup exists with attributes "title:HelpPopup,key:help_popup"

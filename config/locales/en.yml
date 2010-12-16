@@ -38,6 +38,8 @@ en:
       shared:
         browse_leads: Browse leads
         home: Home
+      purchase_manager:
+        leads: My created leads
     my_profile_link: My profile
     logout_link: 'Logout %{user_email}'
 
@@ -208,6 +210,8 @@ en:
         signup_message: "Don't have an account yet"
         agent_signup: 'Freelance agent signup'
         buyer_signup: 'Lead buyer signup'
+        purchase_manager_signup: 'Purchase Manager signup'
+        _signup: 'Lead buyer signup'
         forgotten_password_link: "Forgot your password?"
         resend_confirmation_instructions: "Didn't receive confirmation instructions?"
 
@@ -327,6 +331,9 @@ en:
           purchase_value_to_label: Value to
           category_label: Category
           status_label: Status
+          owner_type_label: Owner type
+        ajax:
+          not_updated: Lead was not updated
       show:
         view:
           header: 'Ratings for lead: %{lead_header}'
@@ -455,10 +462,55 @@ en:
           title: 'Edit lead'
           button_update: 'Save'
 
+  purchase_manager:
+    leads:
+      index:
+        view:
+          new_lead: 'New lead'
+          edit: 'Edit'
+          destroy: 'Destroy'
+          destroy_confirmation: 'Are you sure?'
+          search_button: 'Search'
+          option_published: 'published'
+          option_not_published: 'not published'
+          filter_with_inactive: 'Skip inactive'
+          filter_with_outdated: 'Skip outdated'
+      show:
+        view:
+          header: 'Ratings for lead: %{lead_header}'
+          rating_level: 'Rating:'
+          rating_reason: 'Reason:'
+          view_all_leads_link: 'View all leads'
+      destroy:
+        flash:
+          lead_deletion_successful: 'Lead has been deleted successfully.'
+          lead_deletion_failure: 'Lead could not be deleted'
+      update:
+        errors:
+          only_admin_can_change_status: 'Only administrator can change lead status'
+
+      new:
+        view:
+          title: 'New lead'
+          button_create: 'Create'
+          button_create_and_continue: 'Create & continue'
+          remove_language: 'Remove'
+      edit:
+        view:
+          title: 'Edit lead'
+          button_update: 'Save'
+
   agent_accounts:
     new:
       view:
         title: 'Freelancer Agent signup'
+        button_create_account: 'Create my account'
+
+  purchase_manager_accounts:
+    new:
+      view:
+        title: 'Purchase Manager signup'
+        header: 'Create new account'
         button_create_account: 'Create my account'
 
   buyer:
@@ -818,6 +870,15 @@ en:
               confirmation: "doesn't match confirmation"
             screen_name:
               taken: 'has already been taken'
+        user/purchase_manager:
+          attributes:
+            email:
+              invalid: 'is invalid'
+            password:
+              blank: 'is blank'
+              confirmation: "doesn't match confirmation"
+            screen_name:
+              taken: 'has already been taken'
         user/abstract:
           attributes:
             reset_password_token:
@@ -849,6 +910,10 @@ en:
         create:
           notice: 'Your account has been successfully created!'
     buyer_accounts:
+      actions:
+        create:
+          notice: 'Your account has been successfully created!'
+    purchase_manager_accounts:
       actions:
         create:
           notice: 'Your account has been successfully created!'

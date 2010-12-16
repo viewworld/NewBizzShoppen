@@ -37,7 +37,7 @@
   <tfoot>
   <tr>
     <td class="fl"></td>
-    <td colspan="<%= cols %>"></td>
+    <td colspan="<%= cols + 1 %>"></td>
     <td class="fr"></td>
   </tr>
   </tfoot>
@@ -79,7 +79,7 @@
 
       <% if will_paginate %>
         <tr class="pagination">
-          <td colspan="<%= cols + 2 %>" class="ta_c">
+          <td colspan="<%= cols + 3 %>" class="ta_c">
             <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
           </td>
         </tr>
