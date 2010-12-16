@@ -180,11 +180,11 @@ Scenario: I can bulk send selected leads by email
   Then I should see translated "flash.bulk_lead_share_by_email.actions.create.notice"
 
 #Adjust to current requirements first
-@_todo @m4 @tgn
+@m4 @tgn @_done @non_testable
 Scenario: I can rate lead that I have access for (good, bad, fake)
 
 #Adjust to current requirements first
-@_todo @m4 @tgn
+@m4 @tgn @_done @non_testable
 Scenario: I can bulk rate leads that I have access for (good, bad, fake)
 
 @ao @_tested @_done @selenium
