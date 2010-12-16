@@ -180,3 +180,9 @@ Given /^All leads have refreshed average ratings$/ do
     lead.save
   end
 end
+
+Given /^lead named "([^"]*)" is owned by user "([^"]*)" with role "([^"]*)"$/ do |header, email, role|
+  lead = Lead.find_by_header(header).first
+  customer = "User::#{role.camelize}".constantize.find_by_email(email)
+  assert !lead.lead_purchases.detect { |lp| lp.owner_id == customer.id  }.nil?
+end
