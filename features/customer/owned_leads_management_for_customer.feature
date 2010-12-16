@@ -108,7 +108,7 @@ Scenario: I should see created by and certification level for each requested lea
   And I should see "Philip Glass"
   And I should see translated "models.lead.novelty.lvl0"
 
-@m0
+@m0 @added
 Scenario: I should see rating % for each requested lead
 
 @tgn @done @_tested
