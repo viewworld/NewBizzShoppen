@@ -24,6 +24,7 @@ Scenario: I cannot buy a lead skipping checkout
   When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
   Then I should not see "Ultra new printers" within ".leads_table"
 
+@tgn
 Scenario: I can buy lead through checkout
 
 @tgn @_tested
@@ -34,6 +35,8 @@ Scenario: Lead purchase is not marked with "has access" after creation
   When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
   Then I should not see "Ultra new printers" within ".leads_table"
 
+#after AO finishes invoicing subsystem
+@tgn
 Scenario: Invoice is auto-created if a new paypal transaction (payment for cart content has been confirmed) is created in the system
 
 @tgn @_tested
