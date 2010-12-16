@@ -1,0 +1,137 @@
+/*****************************************************************************************************************/
+/***************************************** STYLE DLA OGÓLNE ******************************************************/
+
+div.invoice_show label{font-family: "arial_bold", "arial"; font-weight: bold; display: inline-block; padding-right: 10px}
+
+div.invoice_show .clear{clear:both;}
+
+div.invoice_show .h{font-family: "arial_bold", "arial"; font-weight: bold; padding-right: 10px}
+
+div.invoice_show  h2 {font-family: "arial_bold", "arial"; font-weight: bold; font-size: 18px}
+
+div.invoice_show div.sides {margin: 20px 0px;}
+
+div.invoice_show div.sides .bigger {font-size: 18px;}
+
+div.invoice_show .type {font-size: 16px; font-family: "arial_bold", "arial"; font-weight: bold;}
+
+div.invoice_show div.general_data table  {margin-bottom: 20px; empty-cells:show;}
+
+div.invoice_show div.general_data table td{width: 150px}
+
+div.hInvoice {text-align: center; font-size: 22px; font-family: "arial_bold", "arial"; font-weight: bold; margin: 20px 0px;}
+
+div.invoice_show div.product_data{width: 100%;margin-bottom: 20px;}
+
+div.invoice_show div.product_data table{width: 100%;  empty-cells:show; -pdf-keep-in-frame-mode: overflow;}
+
+div.invoice_show .product_data table thead td {
+        background: #eeeeee;
+        border-bottom: 2px solid #cccccc;
+		font-family: "arial_bold", "arial";
+        font-weight: bold;
+    }
+
+div.invoice_show .product_data table tbody td {background: #f8f8f8;border-bottom: 1px solid #eeeeee;}
+
+div.invoice_show .product_data table tbody tr.space td {padding: 0px; background: none; border: none }
+
+div.invoice_show .product_data table tbody tr.totals td.empty {background: none;border: none;}
+
+div.invoice_show .product_data table tbody tr.totals td.totals_h {background: #eeeeee;border-right: 2px solid #cccccc;}
+
+div.invoice_show .product_data table td.r {text-align: right;}
+
+div.invoice_show div.product_data table {margin-bottom: 30px}
+
+
+/*****************************************************************************************************************/
+/***************************************** STYLE DLA STRONY INTERNETOWEJ *****************************************/
+@media screen {
+
+    div.invoice_show {padding:40px;}
+
+    div.copy {display: none ! important;}
+
+    div.invoice_show div.sides tr td{width: 300px; padding-right: 50px;}
+
+    div.invoice_show .type {display:none}
+
+    div.invoice_show .general_data{padding-left: 630px;}
+
+    div.invoice_show .product_data table td {padding: 10px}
+
+    div.invoice_show .product_data table thead td {height: 40px;}
+
+    div.invoice_show .product_data table tbody tr.space td {height: 15px;}
+
+            div.invoice_show div.product_data table td.field_id{width: 30px}
+            div.invoice_show div.product_data table td.product_name{width: 365px}
+            div.invoice_show div.product_data table td.qty{width: 50px}
+            div.invoice_show div.product_data table td.netto_price{width: 80px}
+            div.invoice_show div.product_data table td.netto_value{width: 80px}
+            div.invoice_show div.product_data table td.vat{width: 40px}
+            div.invoice_show div.product_data table td.vat_value{width: 80px}
+            div.invoice_show div.product_data table td.brutto_value{width: 80px}
+
+    div.invoice_show div.signs {display: none}
+
+    div.invoice_show .status_data{width: 100%;  margin-bottom: 30px}
+
+    div.invoice_show .status_data ul {margin-top: 10px}
+
+    div.invoice_show .status_data ul li {float: left; margin: 0px 10px;}
+
+    div.invoice_show .status_data ul li label {padding-left: 40px}
+
+    div.invoice_show .additional_data{width: 100%; margin-bottom: 40px}
+
+    div.invoice_show .additional_data .h {padding-right: 10px}
+
+}
+
+
+/**************************************************************************************************************/
+/******************************************** STYLE DLA DRUKOWANIA ********************************************/
+@media print {
+
+    @page { margin: 1cm}
+
+    * {font-size: 11px; margin: 0px; padding: 0px;}
+
+	body {font-family: "arial_reg", "arial";}
+
+	div.invoice_show {page-break-after:always;}
+
+    div.invoice_show .h{padding: 0px; padding-right: 5px; margin: 0px}
+
+	div.invoice_show div.sides tr td{width: 320px; padding-right: 20px; vertical-align: top;}
+
+    div.invoice_show div.general_data{margin-left: 410px;}
+
+    div.invoice_show div.product_data table td {padding: 2px 8px; padding-top:6px; margin: 0px; }
+
+    div.invoice_show .product_data table tbody tr.space td {height: 10px;}
+
+            div.invoice_show div.product_data table td.field_id{width: 30px}
+            div.invoice_show div.product_data table td.product_name{width: 385px}
+            div.invoice_show div.product_data table td.qty{width: 40px}
+            div.invoice_show div.product_data table td.netto_price{width: 60px}
+            div.invoice_show div.product_data table td.netto_value{width: 60px}
+            div.invoice_show div.product_data table td.vat{width: 40px}
+            div.invoice_show div.product_data table td.vat_value{width: 60px}
+            div.invoice_show div.product_data table td.brutto_value{width: 70px}
+
+	div.invoice_show div.signs table {margin-top: 20px; empty-cells:show;}
+
+	div.invoice_show div.signs table td {text-align: center;border: 0px solid #000000;width: 300px;}
+
+	div.invoice_show div.signs table td.space {border: none;width: 40px;background-color: #ffffff;}
+
+	div.invoice_show div.signs table thead td {background-color: #eeeeee;height: 20px;padding-top: 5px;border-bottom: none;}
+
+	div.invoice_show div.signs table tbody td {border-top: none;padding-top:30px;vertical-align: bottom;}
+
+    div.invoice_show div.status_data{display:none}
+
+}

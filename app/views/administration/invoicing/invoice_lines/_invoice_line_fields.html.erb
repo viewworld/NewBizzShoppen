@@ -1,0 +1,21 @@
+<% f.inputs :class => 'inputs invoice_line' do %>
+    <%= f.input :payable_type, :as => :hidden %>
+    <%= f.input :payable_id, :as => :hidden %>
+    <%= f.input :payable_update, :as => :boolean, :wrapper_html => { :class => "invoice_line_payable_update"}, :label => ' ',
+                :input_html => {:onclick => "addIdToPayablesSet(this);", :tabindex => "-1", :scope => "invoice_line_payable_update", } %>
+    <%= f.input :name, :input_html => {:navigation => "advanced", :autocomplete => "off", :scope => "invoice_line_name", :onKeyDown => "extendedNavigation(event)"}, :wrapper_html => { :class => "invoice_line_name", :maxlength => 1000}, :as => :string, :label => false, :hint => f.object.payable_name_for_hint  %>
+    <%= f.input :pkwiu, :input_html => {:navigation => "advanced", :autocomplete => "off", :scope => "invoice_line_pkwiu", :onKeyDown => "extendedNavigation(event)"}, :wrapper_html => { :class => "invoice_line_pkwiu" }, :label => false %>
+    <%= f.input :unit, :input_html => {:navigation => "advanced", :autocomplete => "off", :scope => "invoice_line_unit", :onKeyDown => "extendedNavigation(event)"}, :wrapper_html => { :class => "invoice_line_unit" }, :label => false %>
+    <%= f.input :quantity, :input_html => {:navigation => "advanced", :autocomplete => "off", :scope => "invoice_line_quantity", :onKeyDown => "extendedNavigation(event)"}, :wrapper_html => { :class => "invoice_line_quantity" }, :label => false %>
+    <%= f.input :vat_rate, :input_html => {:navigation => "advanced", :autocomplete => "off", :scope => "invoice_line_vat_rate", :onKeyDown => "extendedNavigation(event)"}, :wrapper_html => { :class => "invoice_line_vat_rate" }, :label => false %>
+    <%= f.input :netto_price, :input_html => {:navigation => "advanced", :autocomplete => "off", :scope => "invoice_line_netto_price", :onKeyDown => "extendedNavigation(event)"}, :wrapper_html => { :class => "invoice_line_netto_price" }, :label => false %>
+    <%= f.input :netto_value, :input_html => {:readonly => true, :autocomplete => "off", :tabindex => "-1" }, :wrapper_html => { :class => "readonly invoice_line_netto_value" }, :label => false %>
+    <%= f.input :vat_value, :input_html => { :readonly => true, :autocomplete => "off", :tabindex => "-1" }, :wrapper_html => { :class => "readonly invoice_line_vat_value" }, :label => false %>
+    <%= f.input :brutto_value, :input_html => { :autocomplete => "off", :scope => "invoice_line_brutto_value", :onKeyDown => "extendedNavigation(event)" }, :wrapper_html => { :class => "invoice_line_brutto_value" }, :label => false %>
+    <%= f.input :_destroy, :as => :hidden %>
+
+    <li class="li_remove_line">
+      <%= link_to_function image_tag('/images/icons/remove_line.png'), "remove_fields(this);recalcValues();", :class => "remove_line", :tabindex => "-1" %>
+    </li>
+<% end %>
+ 

@@ -22,6 +22,7 @@ en:
         articles: Articles
         news: News
         currencies: Currencies
+        invoices: Invoices
       agent:
         leads: My created leads
       call_centre:
@@ -427,6 +428,10 @@ en:
       destroy:
         errors:
           has_leads: "You can't delete this currency because there are leads using it"
+    invoices:
+      show:
+        view:
+          print_invoice: 'Print Invoice'
 
   agent:
     leads:

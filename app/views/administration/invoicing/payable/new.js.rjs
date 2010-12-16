@@ -1,0 +1,3 @@
+page.replace_html "osx-modal-data", :partial => "/invoicing/payable/new"
+page.replace_html "osx-modal-title", "Set payable for invoice ##{@invoice.id}"
+page << "showModal();"

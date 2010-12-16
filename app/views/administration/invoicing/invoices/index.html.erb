@@ -1,0 +1,48 @@
+<column-mc:>
+
+  <frame id="new" header="Create" close="true">
+  <% semantic_form_for [:administration, :invoicing, Invoice.new] do |form| %>
+      <% form.inputs do %>
+          <%= form.input :user, :include_blank => false %>
+      <% end %>
+      <%= form.buttons %>
+  <% end %>
+  </frame>
+
+  <div id="table" class="invoiceFilter">
+    <frame id="filter" header="Filter" close="true">
+    <%= form_for @search, :url => administration_invoicing_invoices_path do |f| %>
+        <%= f.text_field :with_keyword %>
+        <%= f.text_field :with_sale_date_after_and_including, :class => "datepicker" %>
+        <%= f.text_field :with_sale_date_before_and_including, :class => "datepicker" %>
+        <%= f.check_box :not_paid %>
+        <%= submit_tag t("administration.articles.index.view.search_button") %>
+    <% end %>
+
+    </frame>
+
+    <h1>Invoices</h1>
+
+    <table class="generic" cellspacing="0" cellpadding="0">
+      <thead>
+        <tr>
+          <th><%= link_to "sale_date", order_for_scoped_search(:sale_date) %>
+          <th id="invoice_number_header"><%= link_to "invoice_number", order_for_scoped_search(:invoice_number) %></th>
+          <th><%= "customer" %></th>
+          <th><%= link_to "revenue_frozen", order_for_scoped_search(:revenue_frozen) %></th>
+          <th id="invoice_payment_status_header"><%= link_to "paid_at", order_for_scoped_search(:paid_at) %></th>
+          <th>actions</th>
+      </thead>
+      <tbody id="invoices_list">
+      <%= render @invoices %>
+      </tbody>
+    </table>
+    <%= will_paginate @invoices %>
+  </div>
+
+  <script>
+    $(function() {
+        $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+    });
+  </script>
+</column-mc:>
