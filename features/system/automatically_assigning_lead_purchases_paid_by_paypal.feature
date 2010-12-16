@@ -1,4 +1,4 @@
-@paypal @$_system @m4 @tgn   @_wip
+@paypal @$_system @m4 @tgn
 Feature: Automatically assigning lead purchases paid by paypal
 
 Background:
@@ -15,7 +15,6 @@ Scenario: When I buy a lead it is automatically assigned to me
   And I go to browse leads
   And I follow "Computers"
   Then I follow translated "leads.index.add_to_cart_link"
-  And I open page in browser
   And I follow translated "layout.cart.show_cart"
   Then I press translated "buyer.cart.show.view.checkout_link"
   And paypal payment for user with email "buyer.jim.jones@nbs.com" and role "customer"

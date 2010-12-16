@@ -70,9 +70,6 @@ end
 
 Given /^paypal payment for user with email "([^"]*)" and role "([^"]*)"$/ do |email, role|
   customer = "User::#{role.camelize}".constantize.find_by_email(email)
-  #post :create, :txn_id => "irek", :payment_status => "Completed", :secret => APP_CONFIG[:paypal_secret], :receiver_email => APP_CONFIG[:paypal_email], :mc_gross => @customer.cart.total.to_s, :invoice => @customer.cart.id
-  #process(:post, "/payment_notifications/create", {:payment_status => "Completed"})
-  #visit("/payment_notifications/create", :post, :payment_status => "Completed")
   rack_test_session_wrapper = Capybara.current_session.driver
   rack_test_session_wrapper.process(:post, "/payment_notifications", :txn_id => "irek", :payment_status => "Completed", :secret => APP_CONFIG[:paypal_secret], :receiver_email => APP_CONFIG[:paypal_email], :mc_gross => customer.cart.total.to_s, :invoice => customer.cart.id)
 end

@@ -24,8 +24,16 @@ Scenario: I cannot buy a lead skipping checkout
   When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
   Then I should not see "Ultra new printers" within ".leads_table"
 
-@tgn
+@tgn @_tested
 Scenario: I can buy lead through checkout
+  And I go to browse leads
+  And I follow "Computers"
+  And I open page in browser
+  Then I follow translated "leads.index.add_to_cart_link"
+  And I follow translated "layout.cart.show_cart"
+  Then I press translated "buyer.cart.show.view.checkout_link"
+  And paypal payment for user with email "john@doe.com" and role "customer"
+  And lead named "Ultra new printers" is owned by user "john@doe.com" with role "customer"
 
 @tgn @_tested
 Scenario: Lead purchase is not marked with "has access" after creation
