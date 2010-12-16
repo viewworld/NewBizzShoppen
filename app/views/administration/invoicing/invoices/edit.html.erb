@@ -5,6 +5,8 @@
 
 <column-mc:>
 
+  <header><%= t("administration.invoices.edit.view.header") %> #<%= @invoice.id %></header>
+
   <ul class="actions">
     <%= link_to_function "Save changes", "$('##{dom_id(@invoice, :edit)}').submit()", :icon => "save" %>
     <%= link_to "Set as paid", new_administration_invoicing_invoice_cash_flow_path(@invoice.id), :remote => true, :method => :get, :icon => "paid" %>
@@ -12,10 +14,9 @@
     <%= link_to "Go back", administration_invoicing_invoices_path, :icon => "back" %>
   </ul>
 
-  <h1>Edit invoice #<%= @invoice.id %></h1>
 
   <frame>
-  <% semantic_form_for [:invoicing, @invoice] do |form| %>
+  <% semantic_form_for [:administration, :invoicing, @invoice] do |form| %>
 
       <% form.inputs :name => "General information", :class => "inputs separated" do %>
           <%= form.input :number %>
@@ -51,7 +52,7 @@
           <%= form.input :payment_account_information %>
           <%= form.input :payment_method,
                          :as => :select,
-                         :collection => Invoice::PAYMENT_METHODS.map{|pm| [t(pm, :scope => :invoices), pm.to_s]},
+                         :collection => Invoice::PAYMENT_METHODS.map{|pm| [t("administration.invoices.common.view.#{pm}"), pm.to_s]},
                          :include_blank => false %>
           <%= form.input :currency,
                          :include_blank => false %>
@@ -76,17 +77,17 @@
       <% end %>
 
       <% form.semantic_fields_for :invoice_lines do |invoice_line| %>
-          <%= render :partial => "/invoicing/invoice_lines/invoice_line_fields", :locals => {:f => invoice_line} %>
+          <%#= render :partial => "/administration/invoicing/invoice_lines/invoice_line_fields", :locals => {:f => invoice_line} %>
       <% end %>
 
 
       <div class="add_invoice_line_btns">
         <%= link_to_add_fields image_tag('/images/icons/add_small.png'), form, :invoice_lines %>
-        <%= link_to_remote image_tag('/images/icons/raw_text_small.png'), :url => new_administration_invoicing_invoice_invoice_lines_import_path(@invoice.id), :method => :get, :title => "Add invoice lines by raw text", :html => {:class => "add_by_raw" } %>
+        <%= link_to image_tag('/images/icons/raw_text_small.png'), new_administration_invoicing_invoice_invoice_lines_import_path(@invoice.id), :remote => true, :method => :get, :title => "Add invoice lines by raw text", :html => {:class => "add_by_raw" } %>
       </div>
 
       <div style="height: 40px;">
-       <div id="link_set_payable"><%= link_to_remote "Set payable for invoice lines", :url => new_administration_invoicing_invoice_invoice_lines_payable_path(@invoice.id), :method => :get %></div>
+       <div id="link_set_payable"><%= link_to "Set payable for invoice lines", new_administration_invoicing_invoice_invoice_lines_payable_path(@invoice.id), :remote => true, :method => :get %></div>
       </div>
 
       <%= render "totals" %>

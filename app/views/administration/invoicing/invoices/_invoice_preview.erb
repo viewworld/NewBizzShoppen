@@ -1,21 +1,21 @@
 <div class="invoice_show <%= version == :original ? "original" : "copy" %>">
 
-  <div class="type"><%= version == :original ? (t :original, :scope => :invoices) : (t :copy, :scope => :invoices) %></div>
+  <div class="type"><%= version == :original ? (t("administration.invoices.show.view.original")) : (t("administration.invoices.show.view.copy")) %></div>
 
   <div class="general_data">
     <table cellpadding="0" cellspacing="0">
-      <tr><td class="h"><%= t :number, :scope => :invoices %>: </td><td><%= @invoice.number %>/<%=@invoice.creation_date.year%></td></tr>
-      <tr><td class="h"><%= t :sale_date, :scope => :invoices %>: </td><td><%= @invoice.sale_date %></td></tr>
-      <tr><td class="h"><%= t :payment_dd, :scope => :invoices %>: </td><td><%= @invoice.payment_deadline_date %></td></tr>
-      <tr><td class="h"><%= t :creation_date, :scope => :invoices %>: </td><td><%= @invoice.creation_date %></td></tr>
+      <tr><td class="h"><%= t("administration.invoices.show.view.number") %>: </td><td><%= @invoice.number %>/<%=@invoice.creation_date.year%></td></tr>
+      <tr><td class="h"><%= t("administration.invoices.show.view.sale_date") %>: </td><td><%= @invoice.sale_date %></td></tr>
+      <tr><td class="h"><%= t("administration.invoices.show.view.payment_deadline") %>: </td><td><%= @invoice.payment_deadline_date %></td></tr>
+      <tr><td class="h"><%= t("administration.invoices.show.view.creation_date") %>: </td><td><%= @invoice.creation_date %></td></tr>
     </table>
   </div>
 
-  <div class="hInvoice"><%= t :invoice, :scope => :invoices %></div>
+  <div class="hInvoice"><%= t("administration.invoices.show.view.header") %></div>
 
   <div class="sides">
         <table cellpadding="0" cellspacing="0">
-        <tr><td class="bigger"><%= t :from, :scope => :invoices %></td><td class="bigger"><%= t :to, :scope => :invoices %></td></tr>
+        <tr><td class="bigger"><%= t("administration.invoices.show.view.from") %></td><td class="bigger"><%= t("administration.invoices.show.view.to") %></td></tr>
         <tr><td class="h"><%= @invoice.seller_name %></td><td class="h"><%= @invoice.customer_name %></td></tr>
         <tr><td><%= @invoice.seller_address %></td><td><%= @invoice.customer_address %></td></tr>
         <tr><td><%= @invoice.seller_vat_no %></td><td><%= @invoice.customer_vat_no %></td></tr>
@@ -27,13 +27,13 @@
       <thead>
       <tr>
         <td class="field_id">#</td>
-        <td class="product_name"><%= t :product_name, :scope => :invoices %></td>
-        <td class="qty"><%= t :qty, :scope => :invoices %></td>
-        <td class="netto_price"><%= t :netto_price, :scope => :invoices %></td>
-        <td class="netto_value"><%= t :netto_value, :scope => :invoices %></td>
-        <td class="vat"><%= t :vat, :scope => :invoices %></td>
-        <td class="vat_value"><%= t :vat_value, :scope => :invoices %></td>
-        <td class="brutto_value r"><%= t :brutto_value, :scope => :invoices %></td>
+        <td class="product_name"><%= t("administration.invoices.show.view.name") %></td>
+        <td class="qty"><%= t("administration.invoices.show.view.quantity") %></td>
+        <td class="netto_price"><%= t("administration.invoices.show.view.netto_price") %></td>
+        <td class="netto_value"><%= t("administration.invoices.show.view.netto_value") %></td>
+        <td class="vat"><%= t("administration.invoices.show.view.vat") %></td>
+        <td class="vat_value"><%= t("administration.invoices.show.view.download_pdf") %></td>
+        <td class="brutto_value r"><%= t("administration.invoices.show.view.download_pdf") %></td>
       </tr>
       </thead>
       <tbody>
@@ -55,7 +55,7 @@
 
       <tr class="totals">
         <td class="empty" colspan="3"></td>
-        <td class="totals_h h r"><%= t :total, :scope => :invoices %></td>
+        <td class="totals_h h r"><%= t("administration.invoices.show.view.total") %></td>
         <td><%= number_to_currency(@invoice.total_netto, :unit => @invoice.currency.symbol) %></td>
         <td></td>
         <td><%= number_to_currency(@invoice.total_vat, :unit => @invoice.currency.symbol) %></td>
@@ -68,7 +68,7 @@
           <tr class="totals">
             <td class="empty" colspan="3"></td>
             <% if index.zero? %>
-                <td class="totals_h h r"><%= t :including, :scope => :invoices %></td>
+                <td class="totals_h h r"><%= t("administration.invoices.show.view.including") %></td>
             <% else %>
                 <td class="empty"></td>
             <% end %>
@@ -86,17 +86,17 @@
   <div class="additional_data">
     <ul>
       <% if !@invoice.english_version or version == :copy %>
-          <p><span class="h"><%= t :total_iw, :scope => :invoices %>:</span> <%= @invoice.total_in_words %></p>
+          <p><span class="h"><%= t("administration.invoices.show.view.total_in_words") %>:</span> <%= @invoice.total_in_words %></p>
       <% end %>
       <% if @invoice.english_version %>
-          <p><span class="h"><%= t :vat_paid, :scope => :invoices %>
-            :</span> <%= @invoice.vat_paid_in_customer_country == true ? t(:yesss) : t(:nooo) %> <%= "- #{@invoice.vat_text_in_customer_country}" if @invoice.vat_text_in_customer_country.present? %></p>
+          <p><span class="h"><%= t("administration.invoices.show.view.vat_paid") %>
+            :</span> <%= @invoice.vat_paid_in_customer_country == true ? t("administration.invoices.show.view.yes_label") : t("administration.invoices.show.view.no_label") %> <%= "- #{@invoice.vat_text_in_customer_country}" if @invoice.vat_text_in_customer_country.present? %></p>
       <% end %>
-      <p><span class="h"><%= t :pay_method, :scope => :invoices %>
-        :</span> <%= @invoice.payment_method == "cash" ? (t :cash, :scope => :invoices) : (t :bank_transfer, :scope => :invoices) %>
+      <p><span class="h"><%= t("administration.invoices.show.view.payment_method") %>
+        :</span> <%= @invoice.payment_method == "cash" ? t("administration.invoices.common.view.cash") : t("administration.invoices.common.view.bank_transfer") %>
       </p>
       <% if not @invoice.payment_method == "cash" %>
-          <p><span class="h"><%= t :pay_account, :scope => :invoices %>
+          <p><span class="h"><%= t("administration.invoices.show.view.payment_account") %>
             :</span> <%= @invoice.payment_account_information.blank? ? "-" : @invoice.payment_account_information %>
           </p>
       <% end %>
@@ -108,9 +108,9 @@
     <thead>
     <tr>
       <td class="space"></td>
-      <td class="h"><%= t :seller, :scope => :invoices %></td>
+      <td class="h"><%= t("administration.invoices.show.view.seller") %></td>
       <td class="space"></td>
-      <td class="h"><%= t :customer, :scope => :invoices %></td>
+      <td class="h"><%= t("administration.invoices.show.view.customer") %></td>
     </tr>
     </thead>
     <tbody>
@@ -125,12 +125,12 @@
   </div>
 
   <div class="status_data">
-    <h2><%= t :status, :scope => :invoices %></h2>
+    <h2><%= t("administration.invoices.show.view.status") %></h2>
     <ul>
-      <li><label class="h"><%= t :creation_place, :scope => :invoices %></label><%= @invoice.creation_place %></li>
-      <li><label class="h"><%= t :email_at, :scope => :invoices %></label><%= @invoice.emailed_at or "-" %></li>
-      <li><label class="h"><%= t :paid_at, :scope => :invoices %></label><%= @invoice.paid_at or "-" %></li>
-      <li><label class="h"><%= t :cashflow, :scope => :invoices %></label><%= number_to_currency(@invoice.cash_flow, :unit => @invoice.currency.symbol)%></li>
+      <li><label class="h"><%= t("administration.invoices.show.view.creation_place") %></label><%= @invoice.creation_place %></li>
+      <li><label class="h"><%= t("administration.invoices.show.view.emailed_at") %></label><%= @invoice.emailed_at or "-" %></li>
+      <li><label class="h"><%= t("administration.invoices.show.view.paid_at") %></label><%= @invoice.paid_at or "-" %></li>
+      <li><label class="h"><%= t("administration.invoices.show.view.cashflow") %></label><%= number_to_currency(@invoice.cash_flow, :unit => @invoice.currency.symbol)%></li>
     </ul>
     <div class="clear"></div>
   </div>

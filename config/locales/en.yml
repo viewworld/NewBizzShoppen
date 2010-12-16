@@ -427,9 +427,54 @@ en:
         errors:
           has_leads: "You can't delete this currency because there are leads using it"
     invoices:
+      common:
+        view:
+          cash: 'Cash'
+          bank_transfer: 'Bank transfer'
+
       show:
         view:
-          print_invoice: 'Print Invoice'
+          print_invoice: 'Print invoice'
+          download_pdf: 'Download PDF'
+          set_as_paid: 'Set as paid'
+          send: 'Send'
+          edit_invoice: 'Edit invoice'
+          go_back: 'Go back'
+          header: 'Invoice'
+          number: 'Number'
+          sale_date: 'Sale date'
+          payment_deadline: 'Payment deadline date'
+          creation_date: 'Creation date'
+          original: 'Original'
+          copy: 'Copy'
+          from: 'From'
+          to: 'To'
+          name: 'Name'
+          quantity: 'Quantity'
+          netto_price: 'Netto price'
+          netto_value: 'Netto value'
+          vat: 'VAT'
+          vat_value: 'VAT value'
+          brutto_value: 'Brutto value'
+          total: 'Total'
+          including: 'Including'
+          total_in_words: 'Total in words'
+          vat_paid: 'VAT paid'
+          payment_method: 'Payment method'
+          payment_account: 'Payment account'
+          seller: 'Seller'
+          customer: 'Customer'
+          status: 'Status'
+          creation_place: 'Creation place'
+          emailed_at: 'Emailed at'
+          paid_at: 'Paid at'
+          cashflow: 'Cashflow'
+          yes_label: 'Yes'
+          no_label: 'No'
+      edit:
+        view:
+          header: 'Edit invoice'
+
 
   agent:
     leads:
