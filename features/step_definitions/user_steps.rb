@@ -35,7 +35,7 @@ Given /^I am signed up with email (.+) and password (.+) and role (.+)$/ do |ema
   "User::#{role.camelize}".constantize.make!(:email => email, :password => password, :password_confirmation => password)
 end
 
-Given /^I am signed up and confirmed as user with email (.+) and password (.+) and role (.+)$/ do |email, password, role|
+Given /^(?:|I am |someone is )signed up and confirmed as user with email (.+) and password (.+) and role (.+)$/ do |email, password, role|
   u = "User::#{role.camelize}".constantize.make!(:email => email, :password => password, :password_confirmation => password)
   u.confirm!
 end

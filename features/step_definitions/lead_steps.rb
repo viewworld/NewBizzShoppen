@@ -94,7 +94,8 @@ Given /^lead (.+).is created by user (.+) with role (.+)$/ do |name, email, role
   u = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
   lead = Lead.find_by_header(name).last
   lead.update_attributes({ :creator_id => u.id, :published => true}) unless lead.nil?
-  lead = Lead.make!(:header => name, :creator_id => u.id, :published => true) if lead.nil?
+  published = (role != "purchase_manager")
+  lead = Lead.make!(:header => name, :creator_id => u.id, :creator_type => "User::#{role.camelize}", :published => published) if lead.nil?
   lead.lead_translations.each { |lt| lt.destroy if lt.locale != "en" }
 end
 
