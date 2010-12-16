@@ -15,7 +15,6 @@ Scenario: I should be able to lock category
   Then I check "category_is_locked"
   And attach the file "sample image" to "category_image_attributes_asset"
   And I press translated "administration.categories.edit.view.button_update"
-  And I open page in browser
   Then I should see translated "flash.categories.actions.update.notice"
 
 @_tested
@@ -47,5 +46,12 @@ Scenario: No new leads could be added to locked category
   And I follow translated "agent.leads.index.view.new_lead"
   Then "lead_category_id" dropdown should not have values "Sample category"
 
-
+@_tested
 Scenario: Locked category should not be visible if no active leads are present within it
+  Given category named "Electronics" is locked
+  Given category named "Business" is locked
+  Given I go to browse leads
+  And I should not see "Electronics"
+  And I should see "Business"
+  And I should see "Leisure"
+

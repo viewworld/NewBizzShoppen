@@ -102,7 +102,6 @@ Scenario: I should see rating % for each lead
   Given a lead "Printers ultimate deal" has good rating
   Given All leads have refreshed average ratings
   Given I go to lead user lead purchases
-  And I open page in browser
   Then I should see "100%"
 
 @_tgn @_tested

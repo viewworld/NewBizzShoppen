@@ -26,6 +26,7 @@ class Category < ActiveRecord::Base
     end
   end
 
+  scope :without_locked_and_not_published, where("is_locked = ? or (is_locked = ? and published_leads_count > 0)", false, true)
   scope :within_accessible, lambda { |customer| where("categories.id IN (?)", customer.accessible_categories_ids) }
   scope :without_locked, where("is_locked = ?", false)
   scope :with_leads, where("total_leads_count > 0")
