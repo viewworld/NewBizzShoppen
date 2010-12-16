@@ -1,4 +1,4 @@
-@paypal @$_system @m4
+@paypal @$_system @m4 @tgn
 Feature: Paypal payments
 
 Scenario: I am redirected to paypal from cart view on checkout
