@@ -8,7 +8,7 @@ Background:  Sign in user and set locale
   Then I sign in as bob@person.com with password supersecret
   And I go to customers subaccounts
 
-@_not_testable @done
+@non_testable @_done
 Scenario: I do not and cannot belong to other customer
 
 @_tested
@@ -213,7 +213,7 @@ Scenario: I can sort by completed leads, new leads requested, num. of leads assi
   And I follow translated "customer.subaccounts.index.view.total_leads_assigned_column"
   Then I should have value "4" in the xpath path "//tr[(((count(preceding-sibling::*) + 1) = 1) and parent::*)]//td[(((count(preceding-sibling::*) + 1) = 10) and parent::*)]"
 
-@_non_testable
+@non_testable
 Scenario: I can refresh the cashed values for sort by rake task
 
 @_tested

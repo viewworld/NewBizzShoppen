@@ -27,7 +27,7 @@ Scenario: I should see created by and certification level for each lead
   And I should see "John McCain"
   And I should see translated "models.lead.novelty.lvl0"
 
-@m4 @tgn  @_done @_tested
+@m4 @tgn @_tested
 Scenario: I should see rating %
   Given I have user with email bob@person.com and role customer
   And a lead Printers ultimate deal exists within category Computers and is bought by user bob@person.com with role customer
@@ -62,12 +62,12 @@ Scenario: I can bulk remove leads from my requested leads list
   And I should not see "Printers ultimate deal"
   And I should not see "Monitors LCD deal"
 
-@tgn @done @_tested
+@tgn @_tested
 Scenario: I can remove a given leads from my requested leads list
   And I follow translated "lead_user.lead_requests.index.view.destroy_lead_request"
   Then I should see translated "flash.lead_users.actions.destroy.notice"
 
-@tgn @done @_non_testable
+@tgn @_done @non_testable
 Scenario: My requested list should be without pagination
   Given pagination per page size in model LeadRequest is set to 1
   And I go to lead user lead requests

@@ -53,7 +53,6 @@ module CucumberFM
           STATUS_COMPLETE.include?(status)
         end
 
-
         def estimation
           effort ? effort.gsub('@', '').to_f : 0.0
         end

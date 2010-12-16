@@ -65,6 +65,7 @@ class Category < ActiveRecord::Base
     end
   end
 
+  
   def handle_locking_for_descendants
     if is_locked_changed?
       (self_and_descendants - [self]).each do |category|
@@ -78,6 +79,7 @@ class Category < ActiveRecord::Base
       c.update_attribute(:published_leads_count, c.published_leads.including_subcategories.count)
     end
   end
+
 
   public
 
