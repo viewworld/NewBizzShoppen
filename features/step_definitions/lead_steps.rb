@@ -186,3 +186,17 @@ Given /^lead named "([^"]*)" is owned by user "([^"]*)" with role "([^"]*)"$/ do
   customer = "User::#{role.camelize}".constantize.find_by_email(email)
   assert !lead.lead_purchases.detect { |lp| lp.owner_id == customer.id  }.nil?
 end
+
+Given /^lead named "([^"]*)" is assigned to user "([^"]*)" with role "([^"]*)"$/ do |header, email, role|
+  lead = Lead.find_by_header(header).first
+  customer = "User::#{role.camelize}".constantize.find_by_email(email)
+  assert !lead.lead_purchases.detect { |lp| lp.assignee_id == customer.id  }.nil?
+end
+
+Given /^lead named "([^"]*)" is paid and accessible for user with email "([^"]*)" and role "([^"]*)"$/ do |header, email, role|
+  lead = Lead.find_by_header(header).first
+  customer = "User::#{role.camelize}".constantize.find_by_email(email)
+  lead_purchase = lead.lead_purchases.detect { |lp| lp.owner_id == customer.id  }
+  assert lead_purchase.paid == true
+  assert lead_purchase.accessible == true
+end
