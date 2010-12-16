@@ -34,6 +34,7 @@ class Category < ActiveRecord::Base
   scope :with_lead_purchase_assignee, lambda { |assignee| select("DISTINCT(name), categories.*").where("lead_purchases.assignee_id = ? and accessible = ?", assignee.id, true).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
 
   before_destroy :check_if_category_is_empty
+  before_save :handle_locking_for_descendants
 
   accepts_nested_attributes_for :image
 
@@ -64,8 +65,17 @@ class Category < ActiveRecord::Base
   end
 
   def refresh_published_leads_count_cache!
-    Category.find(self_and_ancestors.map(&:id)).each do |c|
-      c.update_attribute(:published_leads_count, c.published_leads.including_subcategories.count)
+      Category.find(self_and_ancestors.map(&:id)).each do |c|
+        c.update_attribute(:published_leads_count, c.published_leads.including_subcategories.count)
+      end
+    end
+
+  
+  def handle_locking_for_descendants
+    if is_locked_changed?
+      (self_and_descendants - [self]).each do |category|
+        category.update_attribute(:is_locked, is_locked)
+      end
     end
   end
 
