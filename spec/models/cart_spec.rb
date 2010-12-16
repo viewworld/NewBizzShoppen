@@ -21,8 +21,8 @@ describe Cart do
     end
 
     it "should not contain requested leads" do
-      @lead = Lead.make!
-      @customer = User::Customer.make!
+      @lead      = Lead.make!
+      @customer  = User::Customer.make!
       @lead_user = User::LeadUser.make!(:parent_id => @customer.id)
       @lead_user.lead_requests.create!(:lead_id => @lead.id)
 
@@ -42,12 +42,12 @@ describe Cart do
 
       cart.empty?.should be false
       cart.items.should have(1).things
-      end
+    end
 
     it "should add multiple leads to cart properly" do
       lead1 = Lead.make!
       lead2 = Lead.make!
-      cart = Cart.new(@buyer)
+      cart  = Cart.new(@buyer)
       lambda { cart.add_leads(lead1.id, lead2.id) }.should change(cart, :empty?).from(true).to(false)
       cart.items.should have(2).things
     end
@@ -56,7 +56,7 @@ describe Cart do
       lead1 = Lead.make!(:price => 100.0)
       lead2 = Lead.make!(:price => 150.0)
 
-      cart = Cart.new(@buyer)
+      cart  = Cart.new(@buyer)
 
       cart.add_lead(lead1)
       cart.add_lead(lead2)
@@ -83,7 +83,7 @@ describe Cart do
       lead2 = Lead.make!
       lead3 = Lead.make!
 
-      cart = Cart.new(@buyer)
+      cart  = Cart.new(@buyer)
 
       cart.add_lead(lead1)
       cart.add_lead(lead2)
@@ -97,4 +97,21 @@ describe Cart do
     end
 
   end
+
+  context "Paid for lead in the card" do
+
+    it "should decrease lead purchases in cart and increase accessible lead purchases " do
+      lead1 = Lead.make!
+      lead2 = Lead.make!
+
+      cart  = Cart.new(@buyer)
+
+      cart.add_lead(lead1)
+      cart.add_lead(lead2)
+      lambda {
+        lambda { cart.paid! }.should change(@buyer.lead_purchases.in_cart, :count).by(-2)
+      }.should change(@buyer.lead_purchases.accessible, :count).by(2)
+    end
+  end
+
 end

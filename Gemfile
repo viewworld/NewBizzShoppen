@@ -25,6 +25,7 @@ gem 'rails-settings', :require => "settings"
 gem 'nested_set', '1.5.4'
 gem 'fastercsv'
 gem 'thor'
+gem "nifty-generators"
 
 group :development do
   gem 'diff-lcs'

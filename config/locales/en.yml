@@ -384,6 +384,7 @@ en:
           lead_price_header: Price
           total_label: Total
           remove_item_link: Remove item
+          checkout_link: Checkout
     bulk_cart_items:
       create:
         flash:
