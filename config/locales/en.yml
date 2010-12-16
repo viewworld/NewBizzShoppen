@@ -426,6 +426,10 @@ en:
       destroy:
         errors:
           has_leads: "You can't delete this currency because there are leads using it"
+    invoices:
+      show:
+        view:
+          print_invoice: 'Print Invoice'
 
   agent:
     leads:

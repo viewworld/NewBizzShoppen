@@ -21,7 +21,7 @@ class Invoice < ActiveRecord::Base
   include ScopedSearch::Model
 
   belongs_to :user
-  belongs_to :currency, :class_name => "CurrencyCode", :foreign_key => :currency_id
+  belongs_to :currency
 
   has_many :invoice_lines, :dependent => :destroy
   has_many :invoice_lines_grouped_by_vat_rate, :select => "SUM(invoice_lines.netto_value) as netto_value_sum,
@@ -30,16 +30,20 @@ class Invoice < ActiveRecord::Base
            :group => "vat_rate", :class_name => "InvoiceLine"
 
 
-  named_scope :ascend_by_invoice_number, :order => "YEAR(invoices.creation_date) ASC, invoices.number ASC, company_id ASC"
-  named_scope :descend_by_invoice_number, :order => "YEAR(invoices.creation_date) DESC, invoices.number DESC, company_id ASC"
-  scope :creation_date_in_year, where({})
+  scope :ascend_by_invoice_number, order("YEAR(invoices.creation_date) ASC, invoices.number ASC, company_id ASC")
+  scope :descend_by_invoice_number, order("YEAR(invoices.creation_date) DESC, invoices.number DESC, company_id ASC")
+  scope :creation_date_in_year, lambda{ |date| where(["(date_part('year', created_at) = ?)", date.year]) }
+  scope :with_sale_date_after_and_including, lambda{ |date| where(["sale_date >= ?",date])}
+  scope :with_sale_date_before_and_including, lambda{ |date| where(["sale_date <= ?",date])}
+  scope :not_paid, where(:paid_at => nil)
+  scope :with_keyword, lambda{ |keyword| where("number LIKE :keyword OR lower(customer_name) LIKE :keyword OR lower(customer_address) LIKE :keyword OR lower(customer_vat_no) LIKE :keyword", {:keyword => "%#{keyword.downcase}%"}) }
 
   validates_presence_of :user_id
   validates_associated :invoice_lines
 
 
   after_create :duplicate_company_and_customer_information, :set_year
-  after_validation_on_create :set_default_currency
+  after_validation :set_default_currency, :if => Proc.new{ |i| i.new_record? }
   after_update :cache_total_words, :update_revenue_frozen
 
   #Uncomment reject_if, if not validating invoice lines
@@ -52,14 +56,14 @@ class Invoice < ActiveRecord::Base
   end
 
   def cache_total_words
-#    self.total_in_words = InvoiceHelper.number_in_words_ext(total, currency.symbol)
-#    self.send :update_without_callbacks
+    Invoice.update_all ["total_in_words = ?",InvoiceHelper.number_in_words_ext(total, currency.symbol)], ["id = ?",id]
   end
 
   private
 
+  #TODO
   def set_default_currency
-#    self.currency_id = CurrencyCode.find_by_short_name("PLN")
+    self.currency = Currency.first
   end
 
   def duplicate_company_and_customer_information

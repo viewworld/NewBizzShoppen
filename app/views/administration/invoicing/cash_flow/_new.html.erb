@@ -1,4 +1,4 @@
-<% semantic_form_for [:invoicing, @invoice] do |form| %>
+<% semantic_form_for [:administration, :invoicing, @invoice] do |form| %>
     <% form.inputs do %>
         <%= form.input :cash_flow, :label => "Amount paid",
                        :hint => "(amount in PLN)",

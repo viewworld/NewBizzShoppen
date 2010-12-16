@@ -6,7 +6,7 @@ class CreateInvoices < ActiveRecord::Migration
       t.date :paid_at
       t.datetime :emailed_at
 
-      t.integer :customer_id
+      t.integer :currency_id
       t.integer :user_id
 
       t.string :seller_name

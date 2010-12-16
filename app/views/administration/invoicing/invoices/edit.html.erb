@@ -7,7 +7,7 @@
 
   <ul class="actions">
     <%= link_to_function "Save changes", "$('##{dom_id(@invoice, :edit)}').submit()", :icon => "save" %>
-    <%= link_to_remote "Set as paid", :url => new_administration_invoicing_invoice_cash_flow_path(@invoice.id), :method => :get, :icon => "paid" %>
+    <%= link_to "Set as paid", new_administration_invoicing_invoice_cash_flow_path(@invoice.id), :remote => true, :method => :get, :icon => "paid" %>
     <%= link_to "Show invoice", administration_invoicing_invoice_path(@invoice), :icon => "show" %>
     <%= link_to "Go back", administration_invoicing_invoices_path, :icon => "back" %>
   </ul>

@@ -1,4 +1,4 @@
-class Invoicing::CashFlowController < ApplicationController
+class Administration::Invoicing::CashFlowController < Administration::AdministrationController
   before_filter :get_invoice
 
   def new

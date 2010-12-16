@@ -1,16 +1,15 @@
 <column-mc:>
 
   <ul class="actions">
-    <%= link_to_function "Print invoice", '$("#invoice_container").printElement()', :icon => "print" %>
+    <%= link_to_function t("administration.invoices.show.view.print_invoice"), '$("#invoice_container").printElement()', :icon => "print" %>
     <%= link_to "Download PDF", administration_invoicing_invoice_path(@invoice, :format => :pdf), :icon => "pdf" %>
-    <%#= link_to_remote "Set as paid", :url => new_administration_invoicing_invoice_cash_flow_path(@invoice.id), :method => :get, :icon => "paid" %>
-    <%#= link_to_remote "Send", :url => new_administration_invoicing_invoice_mailing_path(@invoice), :method => :get, :icon => "send" %>
+    <%= link_to "Set as paid", new_administration_invoicing_invoice_cash_flow_path(@invoice.id), :remote => true, :method => :get, :icon => "paid" %>
+    <%= link_to "Send", new_administration_invoicing_invoice_mailing_path(@invoice), :remote => true, :method => :get, :icon => "send" %>
     <%= link_to "Edit invoice", edit_administration_invoicing_invoice_path(@invoice), :icon => "edit" %>
     <%= link_to "Go back", administration_invoicing_invoices_path, :icon => "back" %>
   </ul>
 
   <h1>Invoice</h1>
-  <frame>
 
   <ribbon colour="#{@invoice.ribbon_colour}"><%= @invoice.status.to_s.capitalize %></ribbon>
 
@@ -18,6 +17,12 @@
     <%= render :partial => "administration/invoicing/invoices/invoice_preview", :locals => {:version => :original} %>
     <%= render :partial => "administration/invoicing/invoices/invoice_preview", :locals => {:version => :copy} %>
   </div>
-  </frame>
+
+<div id="osx-modal-content" style="display:none">
+  <div id="osx-modal-title">Title</div>
+  <div id="osx-modal-data"></div>
+</div>
+<%= javascript_include_tag 'jquery.simplemodal.js', 'osx.js', 'jquery-ui-1.8.5.custom.min' %>
+
 
 </column-mc:>
