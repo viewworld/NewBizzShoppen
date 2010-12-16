@@ -12,7 +12,7 @@ Background:
     Then I sign in as jon@lajoie.ca with password secret
     And I go to purchase managers leads
 
-@_done
+@added @_done
 Scenario: I can create a new lead and close
   Given Category PMCategory is created
   And I follow translated "purchase_manager.leads.index.view.new_lead"
@@ -29,7 +29,7 @@ Scenario: I can create a new lead and close
   And I should be on purchase managers leads
   And I should see translated "flash.leads.actions.create.notice"
 
-@_done
+@added @_done
 Scenario: I can create a new lead and continue (create another one)
   Given Category PMCategory is created
   And I follow translated "purchase_manager.leads.index.view.new_lead"
@@ -46,7 +46,7 @@ Scenario: I can create a new lead and continue (create another one)
   And I should see translated "flash.leads.actions.create.notice"
   And I should see translated "purchase_manager.leads.new.view.title"
 
-@selenium @_done
+@added @selenium @_done
 Scenario: I can add an extra language while creating lead. This will include lead title, purchase desc but no hidden desc
   Given Category PMCategory is created
   And Country Denmark is created
@@ -69,7 +69,7 @@ Scenario: I can add an extra language while creating lead. This will include lea
   Then I click hidden link by url regex "/purchase_managers\/leads\/\d+\/edit/"
   And I should see "DK description"
 
-@_done
+@added @_done
 Scenario: Contact information should be prepopulated
   Given I follow translated "agent.leads.index.view.new_lead"
   Then the "lead_email_address" field should contain "jon@lajoie.ca"
@@ -77,17 +77,17 @@ Scenario: Contact information should be prepopulated
   And the "lead_phone_number" field should contain any value
   And the "lead_address" field should contain any value
 
-@_done
+@added @_done
 Scenario: Published checkbox should not be visible
   Given I follow translated "agent.leads.index.view.new_lead"
   Then I should not see field "lead_published"
 
-@_done
+@added @_done
 Scenario: Hidden description should not be visible
   Given I follow translated "agent.leads.index.view.new_lead"
   Then I should not see field "lead_hidden_description"
 
-@_done
+@added @_done
 Scenario: Created leads should not be published (not listed)
   Given Category PMCategory is created
   And Country Denmark is created

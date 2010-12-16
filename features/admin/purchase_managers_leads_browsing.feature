@@ -9,7 +9,7 @@ Background:
   And lead PMLeadOne is created by user pm@nbs.com with role purchase_manager
   And I follow translated "layout.main_menu.admin.leads"
 
-@_done
+@added @_done
 Scenario: I can filter leads by owner type (Purchase Manager) and Status (not published)
   When I select translated "administration.leads.index.view.option_not_published" from "search_with_status"
   And I select "PurchaseManager" from "search_with_creator_type"
@@ -17,7 +17,7 @@ Scenario: I can filter leads by owner type (Purchase Manager) and Status (not pu
   Then I should see "PMLeadOne"
   And I should see "1" rows with id like "lead_" in a table within "#leads"
 
-@selenium @_done
+@added @selenium @_done
 Scenario: I can publish leads created by Purchase Managers
   When I select translated "administration.leads.index.view.option_not_published" from "search_with_status"
   And I select "PurchaseManager" from "search_with_creator_type"

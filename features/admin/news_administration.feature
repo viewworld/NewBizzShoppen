@@ -100,7 +100,7 @@ Scenario: I can filter between agent and buyer
   Then I should see "AgentNews"
   And I should not see "BuyerNews"
 
-@_added @_done
+@added @_done
 Scenario: I can destroy news
   When news exists with attributes "title:FirstNews"
   And I follow translated "layout.main_menu.admin.news"
