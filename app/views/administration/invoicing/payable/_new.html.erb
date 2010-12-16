@@ -1,0 +1,11 @@
+<script type='text/javascript'>
+$("#projects_main_tree").treeview({
+    persist: "location",
+    animated: "fast",    
+    collapsed: true,
+    unique: false
+});
+</script>
+<%= all_projects_tree( :skip_issues => true,
+                       :project_label => lambda {|project| link_to_function project.name, %{$("#invoice_payable_name").val('#{project.name}');$("#invoice_payable_type").val('Project');$("#invoice_payable_id").val('#{project.id}');$.modal.close();}},
+                       :versioned => true) %>

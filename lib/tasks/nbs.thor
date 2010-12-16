@@ -13,6 +13,8 @@ class Nbs < Thor
     Settings.certification_level_1  = 10
     Settings.certification_level_2  = 20
     Settings.contact_us_email = "contact@nbs.fake.com"
+    # Invoicing
+    Settings.default_payment_deadline_date = 14
 
     Country.find_or_create_by_name("Denmark")
     Country.find_or_create_by_name("United Kingdom")

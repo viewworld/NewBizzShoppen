@@ -1,0 +1,75 @@
+<column-mc:>
+
+  <frame id="new" header="Create" close="true">
+  <% semantic_form_for [:administration, :invoicing, Invoice.new] do |form| %>
+      <% form.inputs do %>
+          <%= form.input :user %>
+      <% end %>
+      <%= form.buttons %>
+  <% end %>
+  </frame>
+
+  <div id="table" class="invoiceFilter">
+    <frame id="filter" header="Filter" close="true">
+    <% semantic_form_for @search, :url => administration_invoicing_invoices_path, :html => {:id => "invoices_filter"} do |form| %>
+        <% form.inputs do %>
+            <%#= form.input :company_name_like_any,
+                           :as => :select,
+                           :label => "Company",
+                           :collection => Company.all,
+                           :label_method => :name,
+                           :value_method => :name,
+                           :required => false %>
+            <%#= form.input :customer_name_like_any, :as => :string,
+                           :required => false,
+                           :label => "Customer" %>
+            <%#= form.input :sale_date_after_and_including,
+                           :as => :string,
+                           :label => "Sale date after",
+                           :required => false,
+                           :input_html => { :class => "date_field"} %>
+            <%#= form.input :sale_date_before_and_including,
+                           :as => :string,
+                           :label => "Sale date before",
+                           :required => false,
+                           :input_html => { :class => "date_field"} %>
+            
+            <li id="open_predefined_time_ranges"><%= link_to_function image_tag('/images/icons/calendar_ranges.png'), "$('#predefined_time_ranges').css('display') == 'none' ? $('#predefined_time_ranges').fadeIn() : $('#predefined_time_ranges').fadeOut()"%></li>
+            <%#= predefined_ranges("created_at_after_and_including", "created_at_before_and_including") %>
+
+            <%#= form.input :paid_at_null,
+                           :as => :boolean,
+                           :required => false,
+                           :label => "Not paid only" %>
+        <% end %>
+        <% form.buttons do %>
+            <li class="filter"><%= link_to_function "Clear filter", "clearForm($('#invoices_filter'));$('#invoices_filter').submit();", :class => "clear_filter" %></li>
+            <%= form.commit_button :label => "Filter", :button_html => { :class => "filter bt_highlighted" } %>
+        <% end %>
+    <% end %>
+    </frame>
+
+    <ul class="actions">
+      <%= link_to "new", new_administration_invoicing_invoice_path, :icon => "add" %>
+      <%= link_to "filter", administration_invoicing_invoices_path, :icon => "filter" %>
+    </ul>
+
+    <h1>Invoices</h1>
+
+    <table class="generic" cellspacing="0" cellpadding="0">
+      <thead>
+        <tr>
+          <th><%= link_to "sale_date", order_for_scoped_search(:sale_date) %>
+          <th id="invoice_number_header"><%= link_to "invoice_number", order_for_scoped_search(:invoice_number) %></th>
+          <th><%= "customer" %></th>
+          <th><%= link_to "revenue_frozen", order_for_scoped_search(:revenue_frozen) %></th>
+          <th id="invoice_payment_status_header"><%= link_to "paid_at", order_for_scoped_search(:paid_at) %></th>
+          <th>actions</th>
+      </thead>
+      <tbody id="invoices_list">
+      <%= render @invoices %>
+      </tbody>
+    </table>
+    <%= will_paginate @invoices %>
+  </div>
+</column-mc:>

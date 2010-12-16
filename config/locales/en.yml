@@ -22,6 +22,7 @@ en:
         articles: Articles
         news: News
         currencies: Currencies
+        invoices: Invoices
       agent:
         leads: My created leads
       call_centre:

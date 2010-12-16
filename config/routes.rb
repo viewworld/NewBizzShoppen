@@ -24,6 +24,16 @@ Nbs::Application.routes.draw do
     resources :articles
     resources :news
     resources :currencies
+    namespace :invoicing do
+      resources :invoices do
+        resources :invoice_lines
+        resource :cash_flow, :only => [:new, :create], :controller => "CashFlow"
+        resource :invoice_lines_import, :only => [:new, :create], :controller => "InvoiceLinesImport"
+        resource :payable, :only => :new, :controller => "Payable"
+        resource :invoice_lines_payable, :only => :new, :controller => "InvoiceLinesPayable"
+        resources :mailings, :only => [:new, :create]
+      end
+    end
   end
 
   namespace :buyers do
