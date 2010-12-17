@@ -1,4 +1,4 @@
-class Invoicing::PayableController <  InheritedResources::Base
+class Administration::Invoicing::PayableController <  Administration::AdministrationController
   respond_to :js, :only => :new
   
   def new

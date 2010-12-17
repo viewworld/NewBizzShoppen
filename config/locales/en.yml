@@ -431,7 +431,6 @@ en:
         view:
           cash: 'Cash'
           bank_transfer: 'Bank transfer'
-
       show:
         view:
           print_invoice: 'Print invoice'
@@ -474,7 +473,34 @@ en:
       edit:
         view:
           header: 'Edit invoice'
-
+          save_button: 'Save'
+          add_line: 'Add line'
+          import_lines: 'Import lines'
+          remove_line: 'Remove line'
+      destroy:
+        view:
+          confirmation: 'Are you sure?'
+      index:
+        view:
+          header: 'Invoices'
+          search_button: 'Search'
+          sale_date: 'Sale date'
+          invoice_number: 'Invoice number'
+          customer: 'Customer'
+          revenue_frozen: 'Revenue frozen'
+          paid_at: 'Paid at'
+          search_label: 'Search'
+          create_invoice: 'Create invoice'
+          show_invoice: 'Show'
+          edit_invoice: 'Edit'
+          remove_invoice: 'Delete'
+          set_as_paid: 'Set as paid'
+          paid: 'Paid'
+          search:
+            with_keyword: 'Keyword'
+            with_sale_date_after_and_including: 'Sale date after and including'
+            with_sale_date_before_and_including: 'Sale date before and including'
+            not_paid: 'Not paid only'
 
   agent:
     leads:

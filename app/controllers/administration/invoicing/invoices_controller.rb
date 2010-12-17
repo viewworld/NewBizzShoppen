@@ -20,7 +20,7 @@ class Administration::Invoicing::InvoicesController < Administration::Administra
 
   def collection
     @search = Invoice.scoped_search(params[:search])
-    @search.order ||= :descend_by_sale_date
+    @search.descend_by_sale_date_and_number = true
     @invoices = @search.all.paginate :page => params[:page], :per_page => 20
   end
 

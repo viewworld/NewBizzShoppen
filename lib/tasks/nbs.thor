@@ -14,7 +14,11 @@ class Nbs < Thor
     Settings.certification_level_2  = 20
     Settings.contact_us_email = "contact@nbs.fake.com"
     # Invoicing
-    Settings.default_payment_deadline_date = 14
+    Settings.invoicing_default_payment_deadline_date = 14
+    Settings.invoicing_seller_name                   = "Fairleads"
+    Settings.invoicing_seller_address                = "Streeet\nPost Code City\nCounty\nCountry"
+    Settings.invoicing_seller_vat_number             = "123-456-789"
+    Settings.invoicing_seller_payment_account        = "0011400000000000000000001"
 
     Country.find_or_create_by_name("Denmark")
     Country.find_or_create_by_name("United Kingdom")

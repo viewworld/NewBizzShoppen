@@ -1,4 +1,4 @@
-class Invoicing::MailingsController < ApplicationController
+class Administration::Invoicing::MailingsController < Administration::AdministrationController
   before_filter :get_invoice
 
   def new

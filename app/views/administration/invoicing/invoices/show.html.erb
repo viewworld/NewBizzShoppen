@@ -11,10 +11,10 @@
     <%= link_to t("administration.invoices.show.view.go_back"), administration_invoicing_invoices_path, :icon => "back" %>
   </ul>
 
-  <ribbon colour="#{@invoice.ribbon_colour}"><%= @invoice.status.to_s.capitalize %></ribbon>
+  <br/><h4><%= t("administration.invoices.show.view.status") %>: <%= @invoice.status.to_s.capitalize %></h4>
 
   <div class="invoice_container" id="invoice_container">
-    <%= render :partial => "administration/invoicing/invoices/invoice_preview", :locals => {:version => :original} %>
+    <%= render :partial => "administration/invoicing/invoices/invoice_preview", :locals => {:version => :original} %> <hr/>
     <%= render :partial => "administration/invoicing/invoices/invoice_preview", :locals => {:version => :copy} %>
   </div>
 

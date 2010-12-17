@@ -13,21 +13,21 @@
 
 
   <frame>
-  <% semantic_form_for [:administration, :invoicing, @invoice] do |form| %>
+  <%= semantic_form_for [:administration, :invoicing, @invoice] do |form| %>
 
       <% form.inputs :name => "General information", :class => "inputs separated" do %>
           <%= form.input :number %>
-          <%= form.input :english_version %>
+          <%#= form.input :english_version %>
       <% end %>
 
 
-      <% form.inputs :name => "Customer information", :id => "customer_information", :class => "inputs separated" do %>
+      <%= form.inputs :name => "Customer information", :id => "customer_information", :class => "inputs separated" do %>
           <%= form.input :customer_name %>
           <%= form.input :customer_address %>
           <%= form.input :customer_vat_no %>
       <% end %>
 
-      <% form.inputs :name => "Seller information", :id => "seller_information", :class => "inputs separated" do %>
+      <%= form.inputs :name => "Seller information", :id => "seller_information", :class => "inputs separated" do %>
           <%= form.input :seller_name %>
           <%= form.input :seller_first_name %>
           <%= form.input :seller_last_name %>
@@ -35,7 +35,7 @@
           <%= form.input :seller_vat_no %>
       <% end %>
 
-      <% form.inputs :name => "Payment information", :id => "payment_information", :class => "inputs separated" do %>
+      <%= form.inputs :name => "Payment information", :id => "payment_information", :class => "inputs separated" do %>
           <%= form.input :creation_place %>
           <%= form.input :creation_date,
                          :as => :string,
@@ -59,7 +59,7 @@
 
       <br/>
 
-      <% form.inputs :class => "invoice_line_labels" do %>          
+      <%= form.inputs :class => "invoice_line_labels" do %>
           <%= check_box_tag "check_all_invoice_lines", false %>
           <%= form.label "&nbsp", :class => "invoice_payable_update" %>
           <%= form.label :name, :class => "invoice_name" %>
@@ -73,14 +73,14 @@
           <%= form.label :brutto_value, :class => "invoice_brutto_value" %>
       <% end %>
 
-      <% form.semantic_fields_for :invoice_lines do |invoice_line| %>
+      <%= form.semantic_fields_for :invoice_lines do |invoice_line| %>
           <%= render :partial => "/administration/invoicing/invoice_lines/invoice_line_fields", :locals => {:f => invoice_line} %>
       <% end %>
 
 
       <div class="add_invoice_line_btns">
-        <%= link_to_add_fields image_tag('/images/icons/add_small.png'), form, :invoice_lines %>
-        <%= link_to image_tag('/images/icons/raw_text_small.png'), new_administration_invoicing_invoice_invoice_lines_import_path(@invoice.id), :remote => true, :method => :get, :title => "Add invoice lines by raw text", :html => {:class => "add_by_raw" } %>
+        <%= link_to_add_fields t("administration.invoices.edit.view.add_line"), form, :invoice_lines %>
+        <%= link_to t("administration.invoices.edit.view.import_lines"), new_administration_invoicing_invoice_invoice_lines_import_path(@invoice.id), :remote => true, :method => :get, :title => "Add invoice lines by raw text", :html => {:class => "add_by_raw" } %>
       </div>
 
       <div style="height: 40px;">
@@ -89,7 +89,7 @@
 
       <%= render "totals" %>
 
-      <%= form.buttons %>
+      <%= form.commit_button t("administration.invoices.edit.view.save_button") %>
   <% end %>
   </frame>
 </column-mc:>

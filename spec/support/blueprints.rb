@@ -202,3 +202,7 @@ end
   content { Faker::Lorem.sentences(2).to_s }
   scope { rand(2) }
 end
+
+Invoice.blueprint do
+  user { User::Agent.make! }
+end
