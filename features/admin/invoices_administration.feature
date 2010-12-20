@@ -1,4 +1,4 @@
-@invoices @$_admin @m4 @ao
+@invoices @$_admin @m4 @ao @noguess
 Feature: Invoices administration
 
 Scenario: I can create new invoice for user
