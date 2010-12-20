@@ -10,6 +10,6 @@ class ::User::Customer < ::User
   has_many :category_interests, :foreign_key => 'user_id'
   has_many :countries, :through => :country_interests
   has_many :categories, :through => :category_interests
-
+  has_many :invoices, :foreign_key => "user_id"
   accepts_nested_attributes_for :lead_purchases
 end

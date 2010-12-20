@@ -28,7 +28,6 @@ Scenario: I cannot buy a lead skipping checkout
 Scenario: I can buy lead through checkout
   And I go to browse leads
   And I follow "Computers"
-  And I open page in browser
   Then I follow translated "leads.index.add_to_cart_link"
   And I follow translated "layout.cart.show_cart"
   Then I press translated "buyer.cart.show.view.checkout_link"
@@ -44,8 +43,30 @@ Scenario: Lead purchase is not marked with "has access" after creation
   Then I should not see "Ultra new printers" within ".leads_table"
 
 #after AO finishes invoicing subsystem
-@tgn
+@tgn @_tested
 Scenario: Invoice is auto-created if a new paypal transaction (payment for cart content has been confirmed) is created in the system
+  And I go to browse leads
+  And I follow "Computers"
+  Then I follow translated "leads.index.add_to_cart_link"
+  And I follow translated "layout.cart.show_cart"
+  Then I press translated "buyer.cart.show.view.checkout_link"
+  And paypal payment for user with email "john@doe.com" and role "customer"
+  Then invoice is created for user with email "john@doe.com" and role "customer"
+  And invoice line is created for lead "Ultra new printers" and user with email "john@doe.com" and role "customer"
+
+@tgn @_tested @added
+Scenario: Invoice is NOT created when payment notification is duplicated
+  And I go to browse leads
+  And I follow "Computers"
+  Then I follow translated "leads.index.add_to_cart_link"
+  And I follow translated "layout.cart.show_cart"
+  Then I press translated "buyer.cart.show.view.checkout_link"
+  And paypal payment for user with email "john@doe.com" and role "customer"
+  Then invoice is created for user with email "john@doe.com" and role "customer"
+  And invoice line is created for lead "Ultra new printers" and user with email "john@doe.com" and role "customer"
+  When paypal payment for user with email "john@doe.com" and role "customer"
+  Then last payment notification is marked as "Duplicated"
+  And invoices count for user with email "john@doe.com" and role "customer" is 1
 
 @tgn @_tested
 Scenario: I can add to cart lead requested by lead user that belongs to my account

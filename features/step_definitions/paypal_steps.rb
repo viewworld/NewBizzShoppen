@@ -7,3 +7,7 @@ end
 Then /^I should be redirected to paypal page$/ do
   assert current_path.include?("testpaypalurl")
 end
+
+Then /^last payment notification is marked as "([^"]*)"$/ do |status|
+  assert PaymentNotification.last.status == status
+end
