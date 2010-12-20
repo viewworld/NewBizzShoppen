@@ -9,4 +9,5 @@ Scenario: I can create transaction (manual) for given invoice (need to supply am
 
 Scenario: I can create more than one transaction for given invoice
 
+@m0
 Scenario: I can refund a transaction manually (what is the implication??)
