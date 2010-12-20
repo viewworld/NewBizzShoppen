@@ -58,7 +58,7 @@ Scenario: I can create a new lead and continue (create another one)
   And I should see translated "flash.leads.actions.create.notice"
   And I should see translated "agent.leads.new.view.title"
 
-@_tested  @selenium @noguess
+@_tested  @selenium
 Scenario: I can add an extra language while creating lead. This will include lead title, purchase desc, hidden desc
   Given Category Test category 1 is created
   And Country Denmark is created
@@ -89,7 +89,7 @@ Scenario: I can add an extra language while creating lead. This will include lea
   And I should see "DK description"
   And I should see "DK hidden description"
 
-@tgn @added @_tested @m1
+@tgn @added @_tested @m1 @noguess
 Scenario: Published checkbox should be selected by default
   Given I follow translated "agent.leads.index.view.new_lead"
   Then the "lead_published" checkbox should be checked
