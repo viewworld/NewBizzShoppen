@@ -11,6 +11,7 @@ class Category < ActiveRecord::Base
   has_many :category_interests
 
   after_save :set_cached_slug
+  before_save :handle_locking_for_descendants
 
   validates_presence_of :name
 
