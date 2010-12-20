@@ -10,7 +10,7 @@ Background: Sign in user and set English locale
   And a lead Monitors LCD deal exists within category Computers and is bought by user customer@person.com with role customer
   Then I sign in as lead_user2@person.com with password supersecret
 
-@_tested @noguess
+@_tested @noguess 
 Scenario: Listings should not show leads that are already bought or requested within my ownership branch
   Given I go to browse leads
   And I follow "Computers"
@@ -23,14 +23,14 @@ Scenario: Listings should not show leads that are already bought or requested wi
   And I go to lead user lead requests
   And I should see "Printers ultimate deal"
 
-@_tested @noguess
+@_tested @noguess 
 Scenario: I can click request lead and I will see a notification "You added lead to your requested leads list"
   Given I go to browse leads
   And I follow "Computers"
   And I follow translated "leads.index.request_lead"
   Then I should see translated "flash.lead_users.actions.create.notice"
 
-@_tested @selenium @noguess
+@_tested @selenium @noguess 
 Scenario: I can click bulk request leads and I will see a notification “You added leads to your requested leads list”
   And lead Another Printers ultimate deal exists within category Computers
   Given I go to browse leads
@@ -43,7 +43,7 @@ Scenario: I can click bulk request leads and I will see a notification “You ad
   Then I should not see "Printers ultimate deal"
   And I should not see "Another Printers ultimate deal"
 
-@m3 @__category_restrictions @tgn @_done @_tested @noguess
+@m3 @__category_restrictions @tgn @_done @_tested @noguess 
 Scenario: I should not see categories that I have been restricted access to by customer in category listing
   And lead Chairs ultimate deal exists within category Office
   And lead Pipes ultimate deal exists within category Building
