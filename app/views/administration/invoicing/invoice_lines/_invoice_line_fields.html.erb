@@ -15,7 +15,7 @@
     <%= f.input :_destroy, :as => :hidden %>
 
     <li class="li_remove_line">
-      <%= link_to_function image_tag('/images/icons/remove_line.png'), "remove_fields(this);recalcValues();", :class => "remove_line", :tabindex => "-1" %>
+      <%= link_to_function t("administration.invoices.edit.view.remove_line"), "remove_fields(this);recalcValues();", :class => "remove_line", :tabindex => "-1" %>
     </li>
 <% end %>
  

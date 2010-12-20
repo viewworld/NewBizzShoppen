@@ -19,12 +19,13 @@ class Invoice < ActiveRecord::Base
   TEMP_INVOICE_MARKUP_PATH = Rails.root.join("html2pdf/invoice.html")
 
   include ScopedSearch::Model
+  include MultiScopedOrder
 
   belongs_to :user
   belongs_to :currency
 
   has_many :invoice_lines, :dependent => :destroy
-  has_many :invoice_lines_grouped_by_vat_rate, :select => "SUM(invoice_lines.netto_value) as netto_value_sum,
+  has_many :invoice_lines_grouped_by_vat_rate, :select => "vat_rate, SUM(invoice_lines.netto_value) as netto_value_sum,
                                                            SUM(invoice_lines.vat_value) as vat_value_sum,
                                                            SUM(invoice_lines.brutto_value) as brutto_value_sum",
            :group => "vat_rate", :class_name => "InvoiceLine"
@@ -49,6 +50,9 @@ class Invoice < ActiveRecord::Base
   #Uncomment reject_if, if not validating invoice lines
   accepts_nested_attributes_for :invoice_lines, :allow_destroy => true #,:reject_if => lambda { |a| a[:name].blank? }
 
+  scoped_order :revenue_frozen, :paid_at
+  multi_scoped_order :sale_date_and_number
+
   protected
 
   def update_revenue_frozen
@@ -71,24 +75,24 @@ class Invoice < ActiveRecord::Base
             :customer_name => user.full_name,
             :customer_address => user.address,
             :customer_vat_no => "User vat",
-            :seller_address => "Address from settings",
-            :seller_name => "Seller name from settings",
-            :seller_vat_no => "Seller vat from settings",
-            :seller_first_name => "Seller first name from settings",
-            :seller_last_name => "Seller last name from settings",
-            :payment_account_information => "Payment account from settings"
+            :seller_address => Settings.invoicing_seller_address,
+            :seller_name => Settings.invoicing_seller_name,
+            :seller_vat_no => Settings.invoicing_seller_vat_number,
+            :seller_first_name => Settings.invoicing_seller_first_name,
+            :seller_last_name => Settings.invoicing_seller_last_name,
+            :payment_account_information => Settings.invoicing_seller_payment_account
     })
   end
 
   def set_year
     self.update_attribute :creation_date, Time.now
     self.update_attribute :sale_date, Time.now
-    self.update_attribute :payment_deadline_date, Time.now + Settings.default_payment_deadline_date.days
+    self.update_attribute :payment_deadline_date, Time.now + Settings.invoicing_default_payment_deadline_date.days
     update_number_according_to_year
   end
 
   def update_number_according_to_year
-    self.update_attribute(:number, (user.invoices.creation_date_in_year(creation_date).maximum(:number) || 0)+1)
+    self.update_attribute(:number, (Invoice.creation_date_in_year(creation_date).maximum(:number) || 0)+1)
   end
 
   def get_template_source

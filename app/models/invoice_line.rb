@@ -18,20 +18,11 @@ class InvoiceLine < ActiveRecord::Base
   private
 
   def calculated_revenue_in_pln
-    if invoice.currency.short_name == "PLN"
-      return brutto_value
-    else
-      require "money"
-      Money.default_bank = Currency::ExchangeBank.new
-      total_brutto_in_cts = (brutto_value*100.0).round
-      total_brutto_in_cts_converted = Money.new(total_brutto_in_cts, invoice.currency.short_name).exchange_to("PLN")
-      return (total_brutto_in_cts_converted.to_f)
-    end
+    return brutto_value
   end
 
   def update_frozen_revenue
-    self.revenue_frozen = calculated_revenue_in_pln
-    self.send :update_without_callbacks
+    InvoiceLine.update_all "revenue_frozen = brutto_value", ["id = ?",id]
   end
 
   def switch_project_or_version_id_from_redmine_to_diamond_mine
