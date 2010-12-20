@@ -90,6 +90,7 @@ Scenario: I can see all leads bought by lead buyers that belong to my account
   Then I should see "Keyboards deal"
   Then I should not see "Mouses deal"
 
+ @noguess
 Scenario: I can see all leads requested by lead users that belong to my account
 
 @tgn @_tested
@@ -174,7 +175,7 @@ Scenario: I can print out multiple leads information
   Then I should see "Keyboards deal"
   Then I should see "Monitors LCD deal"
 
-@ao @_tested @_done
+@ao @_tested @_done  @noguess
 Scenario: I should see a yellow color for a lead with expiration date ending in 3 days
   Given lead Printers ultimate deal has deadline in 2 days from now
   And LeadPurchase statuses are updated
