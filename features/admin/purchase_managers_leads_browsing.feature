@@ -1,4 +1,4 @@
-@purchase_manager @m3 @ao
+@purchase_manager @m3 @ao @noguess
 Feature: Purchase Managers leads browsing
 
 Background:
