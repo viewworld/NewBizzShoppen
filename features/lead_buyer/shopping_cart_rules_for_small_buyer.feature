@@ -7,6 +7,7 @@ Scenario: I can buy lead through checkout
 
 Scenario: Lead purchase is not marked with "has access" after creation
 
+ @noguess
 Scenario: Invoice is auto-created if a new paypal transaction (payment for cart content has been confirmed) is created in the system
 
 Scenario: I can add to cart lead requested by lead user that belongs to my account  
