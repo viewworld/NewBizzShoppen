@@ -10,7 +10,7 @@ Background: Sign in user and set English locale
   And a lead Monitors LCD deal exists within category Computers and is bought by user customer@person.com with role customer
   Then I sign in as lead_user2@person.com with password supersecret
 
-@_tested
+@_tested @noguess
 Scenario: Listings should not show leads that are already bought or requested within my ownership branch
   Given I go to browse leads
   And I follow "Computers"
