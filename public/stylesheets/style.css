@@ -1040,3 +1040,8 @@ div.bt_green:hover span
 }
 
 
+span.cke_skin_kama
+{
+    padding: 0 !important;
+    margin-left: 5px;
+}

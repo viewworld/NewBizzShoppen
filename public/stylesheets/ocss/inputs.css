@@ -167,7 +167,7 @@
 
 .inputs ol li.ckeditor
 {
-    padding-bottom: 8px;
+    padding: 5px 0 8px;    
 }
 
 
@@ -649,7 +649,7 @@
 .inputs ol.align_inputs li.boolean,
 .inputs ol.align_inputs li.radio
 {
-    margin-left: 158px;
+    margin-left: 150px;
 }
 
 .labels_80 ol li.commit,

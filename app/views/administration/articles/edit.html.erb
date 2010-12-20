@@ -1,5 +1,5 @@
 <column-mc:>
-  <header back="true"><%= t('administration.articles.edit.view.header') %></header>
+  <header><%= t('administration.articles.edit.view.header') %></header>
   
   <%= semantic_form_for @article, :as => :article, :url => administration_article_path(@article), :html => {:method => :put} do |form| %>
       <frm title="#{@article.title}">

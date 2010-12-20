@@ -28,28 +28,36 @@
 </search-box:>
 
 <column-mc:>
-  <% if @search.with_subaccounts.blank? %>
-      <header><%= t("administration.users.index.view.title") %></header>
-  <% else %>
-      <% user = User.find(@search.with_subaccounts) %>
-      <header><%= t("administration.users.index.view.subaccounts_for_user", :user_name => user.full_name) %></header>
-      <%= link_to t("administration.users.index.view.show_all_users"), administration_users_path %>
-  <% end %>
 
-  <%= form_tag new_administration_user_path, :method => :get do %>
-      <fieldset class="inputs labels_auto inline_li no_pdd">
-        <ol class="no_pdd">
-          <li class="select">
+  <header>
+    <param:content>
+      <%= t("administration.users.index.view.title") %>
+      <% if @search.with_subaccounts.blank? %>
+          <%= t("administration.users.index.view.title") %>
+      <% else %>
+          <% user = User.find(@search.with_subaccounts) %>
+          <%= t("administration.users.index.view.subaccounts_for_user", :user_name => user.full_name) %>
+          <%= link_to t("administration.users.index.view.show_all_users"), administration_users_path %>
+      <% end %>
+    </param:content>
+
+    <param:actions>
+      <%= form_tag new_administration_user_path, :method => :get, :id => "form_new_user" do %>
+          <span style="position:absolute;top: 5px; right: 110px;">
             <%= select_tag "role", options_for_select(User::BASIC_USER_ROLES_WITH_LABELS), {} %>
-          </li>
-          <li class="commit">
-            <ibt>
-              <%= submit_tag t("administration.users.index.view.new_user") %>
-            </ibt>
-          </li>
-        </ol>
-      </fieldset>
-  <% end %>
+          </span>
+          <ul class="header_actions">
+            <li class="last">
+              <div class="hidden">
+                <%= submit_tag t("administration.users.index.view.new_user") %>
+              </div>
+              <%= bt_link_to :plus, t("administration.users.index.view.new_user"), "javascript:void", :onclick => "$('#form_new_user').submit()" %>
+            </li>
+          </ul>
+      <% end %>
+    </param:actions>
+  </header>
+
 
   <table id="users_table" class="generic">
     <thead>
