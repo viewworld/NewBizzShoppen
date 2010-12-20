@@ -26,6 +26,7 @@ Scenario: I create account through signup
   And I check "user_customer_agreement_read"
   Then I press translated "buyer_accounts.new.view.button_create_account"
 
+@noguess
 Scenario: I can follow "What do you want to do today?" links and they take me to appropriate places
 
 @_tested_in_rspec
