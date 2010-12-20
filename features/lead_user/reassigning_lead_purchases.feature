@@ -1,4 +1,4 @@
-@m2 @$_lead_user @lead_user
+@m2 @$_lead_user @lead_user  @noguess
 Feature: Reassigning lead purchases
 
   Background:
