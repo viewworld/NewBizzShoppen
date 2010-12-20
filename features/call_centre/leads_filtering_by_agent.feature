@@ -7,6 +7,7 @@ Scenario: I can see lead header, purchase value, lead price, description, hottne
 
 Scenario: I can see created by, rating, certification level
 
+@noguess
 Scenario: I can see a link to comment for a lead if there is a conversation started
 
 Scenario: I can filter leads by values ...
