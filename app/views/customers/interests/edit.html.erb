@@ -1,33 +1,98 @@
 <column-mc:>
-  <h1><%= t("customer.interests.edit.view.title") %></h1>
+  <header><%= t("customer.interests.edit.view.title") %></header>
   <%= form_tag customers_interests_path, :method => :put do %>
-    <%= t("customer.interests.edit.view.categories") %>
-    <ul>
-    <% @categories.each_with_index do |category, index| %>
-        <li>
-          <%= check_box_tag("categories[]", category.id, current_user.categories.include?(category), :id => "category_#{index}") %>
-          <%= category.name %>
-        </li>
-    <% end %>
-    </ul>
+      <frm>
+        <param:content>
 
+          <div class="column_right">
+            <fieldset class="inputs labels_ta_r labels_80">
+              <ol>
+                <li class="header">
+                  <h3 class="no_pdd_l">
+                    <%= t("customer.interests.edit.view.categories") %>
+                  </h3>
+                </li>
+                <li>
+                  <table class="categories_table">
+                    <tbody>
+                    <% @categories.in_groups_of(3, false).each do |categories| %>
+                        <tr>
+                          <% categories.each do |category| %>
+                              <td>
+                                <%= check_box_tag("categories[]", category.id, current_user.categories.include?(category), :id => "category_#{category.id}") %>
+                                <%= label_tag "category_#{category.id}", category.name %>
+                              </td>
+                          <% end %>
+                        </tr>
+                    <% end %>
+                    </tbody>
+                  </table>
+                </li>
+              </ol>
+            </fieldset>
+          </div>
 
-    <br />
-    <%= t("customer.interests.edit.view.deal_values") %><br />
-    <%= "From" %> <%= select "user", "deal_value_range_start", User::DEAL_VALUE_RANGE.collect { |d| ["$#{d}", d] }, { :selected => current_user.deal_value_range_start.to_i.to_s } %>
-    <%= "To" %> <%= select "user", "deal_value_range_end", User::DEAL_VALUE_RANGE.collect { |d| ["$#{d}", d] }, :selected => current_user.deal_value_range_end.to_i.to_s %>
+          <div class="column_left">
 
-    <br /><br />
+            <div class="column_left">
+              <fieldset class="inputs labels_ta_r labels_80">
+                <ol>
+                  <li class="header">
+                    <h3>
+                      <%= t("customer.interests.edit.view.deal_values") %>
+                    </h3>
+                  </li>
+                  <li class="select">
+                    <%= select "user", "deal_value_range_start", User::DEAL_VALUE_RANGE.collect { |d| ["$#{d}", d] }, {:selected => current_user.deal_value_range_start.to_i.to_s} %>
+                    <%= label_tag "deal_value_range_start", "From" %>
+                  </li>
+                  <li class="select">
+                    <%= select "user", "deal_value_range_end", User::DEAL_VALUE_RANGE.collect { |d| ["$#{d}", d] }, :selected => current_user.deal_value_range_end.to_i.to_s %>
+                    <%= label_tag "deal_value_range_end", "Tp" %>
+                  </li>
+                </ol>
+              </fieldset>
+            </div>
+            <div class="column_right">
+              <fieldset class="inputs labels_ta_r labels_80">
+                <ol>
+                  <li class="header">
+                    <h3 class="no_pdd_l">
+                      <%= t("customer.interests.edit.view.countries") %>
+                    </h3>
+                  </li>
+                  <li class="select multiple">
+                    <%= select_tag "countries", options_for_select(@countries.collect { |c| [c.name, c.id] }, current_user.countries.collect { |c| c.id.to_s }), :multiple => true %>
+                  </li>
+                </ol>
+              </fieldset>
+            </div>
+            <clb/>
+          </div>
 
-    <%= t("customer.interests.edit.view.countries") %><br />
-    <%= select_tag "countries", options_for_select(@countries.collect { |c| [c.name, c.id] }, current_user.countries.collect { |c| c.id.to_s }), :multiple => true %>
-    <br /><br />
-
-    <%= check_box "user", "notify_about_new_leads", :checked => current_user.notify_about_new_leads %> <%= t("customer.interests.edit.view.notify_about_new_leads") %>
-
-    <br />
-    <%= submit_tag  t("customer.interests.edit.view.button_update") %>
+          <clb/>
+          <hl pdd="8"/>
+          <div class="pdd_10 no_pdd_tb">
+            <%= check_box "user", "notify_about_new_leads", :checked => current_user.notify_about_new_leads %>
+            <%= label_tag "user_notify_about_new_leads", t("customer.interests.edit.view.notify_about_new_leads") %>
+          </div>
+          <hl pdd="8"/>
+          <fieldset class="inputs labels_ta_r labels_80 inputs_360 no_pdd">
+            <ol class="no_pdd">
+              <li class="string">
+                <%= label_tag "rss_url", t("customer.interests.edit.view.rss_feed_url") %>
+                <%= text_field_tag "rss_url", "http://www.newbizzshoppen.com/rss/#{current_user.rss_token}" %>
+              </li>
+            </ol>
+          </fieldset>
+          <br/>
+          <clb/>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= submit_tag t("customer.interests.edit.view.button_update") %>
+          </ibt>
+        </param:actions>
+      </frm>
   <% end %>
-
-  <%= t("customer.interests.edit.view.rss_feed_url") %> <%= text_field_tag "rss_url", "http://www.newbizzshoppen.com/rss/#{current_user.rss_token}", :size => 60 %>
 </column-mc:>

@@ -1,24 +1,58 @@
+<search-box:>
+  <div class="search_box">
+    <h2>Search</h2>
+
+    <div class="search_content">
+      <%= form_for @search, :url => administration_articles_path do |f| %>
+          <fieldset class="inputs labels_auto inline_li no_pdd">
+            <ol class="no_pdd">
+              <li class="string">
+                <%= f.text_field :with_keyword %>
+              </li>
+              <li class="select">
+                <%= f.select :with_scope, Article::Cms::SCOPE, :include_blank => true %>
+              </li>
+              <li class="commit">
+                <ibt c="bt_green" icon="magnify">
+                  <%= submit_tag t("administration.articles.index.view.search_button") %>
+                </ibt>
+              </li>
+            </ol>
+          </fieldset>
+      <% end %>
+    </div>
+  </div>
+</search-box:>
+
 <column-mc:>
 
-  <header><%= t("administration.articles.index.view.header") %></header>
+  <header>
+    <param:content>
+      <%= t("administration.articles.index.view.header") %>
+    </param:content>
 
-  <%= form_tag administration_articles_path do %>
-      <%= submit_tag t("administration.articles.index.view.new_article") %>
-  <% end %>
+    <param:actions>
+      <ul class="header_actions">
+        <li class="last">
+          <%= bt_link_to :plus, t("administration.articles.index.view.new_article"), "javascript:void(0)", :onclick => "$('#form_new_article').submit()" %>
+        </li>
+      </ul>
+    </param:actions>
+  </header>
 
-  <%= form_for @search, :url => administration_articles_path do |f| %>
-      <%= f.text_field :with_keyword %>
-      <%= f.select :with_scope, Article::Cms::SCOPE, :include_blank => true %>
-      <%= submit_tag t("administration.articles.index.view.search_button") %>
-  <% end %>
+  <div class="hidden">
+    <%= form_tag administration_articles_path, :id => "form_new_article" do %>
+        <%= submit_tag t("administration.articles.index.view.new_article") %>
+    <% end %>
+  </div>
 
   <table id="articles_table" class="generic">
     <thead>
     <tr>
       <th class="hl"></th>
-      <th><%= link_to t("administration.articles.index.view.id"), order_for_scoped_search(:id) %></th>
+      <th style="width: 10px"><%= link_to t("administration.articles.index.view.id"), order_for_scoped_search(:id) %></th>
       <th><%= link_to t("administration.articles.index.view.title"), order_for_scoped_search(:title) %></th>
-      <th><%= t("administration.articles.index.view.actions") %></th>
+      <th class="ta_r"><%= t("administration.articles.index.view.actions") %></th>
       <th class="hr"></th>
     </tr>
     </thead>
@@ -35,10 +69,20 @@
           <td class="cl"></td>
           <td><%= article.id %></td>
           <td><%= article.title %></td>
-          <td>
-            <%= link_to t("administration.articles.index.view.edit_link"), edit_administration_article_path(article) %>
-            <%= link_to t("administration.articles.index.view.show_link"), administration_article_path(article) %>
-            <%= link_to t("administration.articles.index.view.delete_link"), administration_article_path(article), :method => :delete, :confirm => t("administration.articles.index.view.delete_confirmation") if article.can_be_destroyed? %>
+          <td class="tda ta_r">
+            <ul-actions>
+              <li>
+                <%= link_to t("administration.articles.index.view.edit_link"), edit_administration_article_path(article) %>
+              </li>
+              <li>
+                <%= link_to t("administration.articles.index.view.show_link"), administration_article_path(article) %>
+              </li>
+              <% if article.can_be_destroyed? %>
+                  <li>
+                    <%= link_to t("administration.articles.index.view.delete_link"), administration_article_path(article), :method => :delete, :confirm => t("administration.articles.index.view.delete_confirmation") %>
+                  </li>
+              <% end %>
+            </ul-actions>
           </td>
           <td class="cr"></td>
         </tr>

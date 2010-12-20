@@ -100,6 +100,7 @@ h4
 {
     background: url(/images/bg_nav.png) no-repeat top left;
     height: 50px;
+    overflow:hidden;
 }
 
 #nav ul
@@ -917,14 +918,6 @@ div.bt span
     float: left;
 }
 
-div.bt span img
-{
-    position: relative;
-    float: left;
-    top: 7px;
-    left: 6px;
-}
-
 div.bt span input
 {
     border: none;
@@ -966,6 +959,22 @@ div.bt:hover
 div.bt:hover span
 {
     background-position: right -90px;
+}
+
+
+div.bt_icon span input
+{
+    padding: 0 10px 0 28px !important;
+    position: relative;
+    z-index: 100;
+}
+
+div.bt_icon span img
+{
+    position: absolute;
+    top: 7px;
+    left: 6px;
+    z-index: 50;
 }
 
 
