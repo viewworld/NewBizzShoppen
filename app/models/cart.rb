@@ -57,7 +57,7 @@ class Cart
   end
 
   def id
-    @buyer.id
+    Date.today.strftime("%y%m%d%S") + @buyer.id.to_s
   end
 
 end

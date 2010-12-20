@@ -2,7 +2,7 @@ class PaymentNotificationsController < ApplicationController
   protect_from_forgery :except => [:create]
 
   def create
-    payment_notification = PaymentNotification.create!(:params => params, :buyer_id => params[:invoice], :status => params[:payment_status], :transaction_id => params[:txn_id])
+    payment_notification = PaymentNotification.create!(:params => params, :buyer_id => params[:invoice].to_s[-2..-1], :status => params[:payment_status], :transaction_id => params[:txn_id])
     if payment_notification.status == "Completed" &&
         params[:secret] == APP_CONFIG[:paypal_secret] &&
         params[:receiver_email] == APP_CONFIG[:paypal_email] &&
