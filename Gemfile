@@ -26,11 +26,12 @@ gem 'nested_set', '1.5.4'
 gem 'fastercsv'
 gem 'thor'
 gem 'ckeditor', '3.4.3.pre'
-gem "nifty-generators"
+
 
 group :development do
   gem 'diff-lcs'
   gem 'tolk', :path => "vendor/gems/tolk"
+  gem "nifty-generators"
 end
 
 group :test do
