@@ -19,9 +19,6 @@ class CreateInvoices < ActiveRecord::Migration
       t.text :customer_address
       t.string :customer_vat_no
 
-      t.integer :payable_id
-      t.string :payable_type
-
       t.decimal :cash_flow, :precision => 10, :scale => 2, :default => 0.0
 
       t.string :creation_place

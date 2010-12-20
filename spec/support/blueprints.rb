@@ -206,3 +206,10 @@ end
 Invoice.blueprint do
   user { User::Agent.make! }
 end
+
+InvoiceLine.blueprint do
+  invoice { Invoice.make! }
+  name { Faker::Lorem.words(4).to_s }
+  netto_price { rand(10000) }
+  quantity { rand(100) }
+end
