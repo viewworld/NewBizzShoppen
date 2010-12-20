@@ -59,7 +59,7 @@ Scenario: I cannot delete a category if it is not empty
   And I follow translated "administration.categories.index.view.destroy_link" within "New test category" category
   Then I should see translated "flash.categories.actions.destroy.error"
 
-@question
+@question @noguess
 Scenario: I can see statistics for a selected category
 
 @_tested @bk
