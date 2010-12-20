@@ -29,7 +29,7 @@ Scenario: I can assign any of my leads to any of lead users that belong to my ac
   And I go to buyer lead purchases
   Then "assignee_id" should be selected for value "Martin Gleesse"
 
-@tgn @m3 @done @_non_testable
+@tgn @m3 @done @_non_testable @noguess
 Scenario: When I assign a user to a lead, then assigned_at time is recorded
 
 @tgn @m3 @done @_tested @selenium
@@ -125,7 +125,7 @@ Scenario: I can bulk delete leads requested by lead users that belong to my acco
   And I follow translated "customer.lead_requests.index.view.button_bulk_destroy_lead_request"
   Then I should see translated "flash.bulk_lead_requests.actions.destroy.notice"
 
-@tgn @_tested  @selenium
+@tgn @_tested  @selenium  @noguess
 Scenario: I can set response deadline for lead
   Given I go to buyer lead purchases
   And I fill in "response_deadline" with "2011-01-01"
@@ -134,7 +134,7 @@ Scenario: I can set response deadline for lead
   Given I go to buyer lead purchases
   Then "response_deadline" should be selected for "2011-01-01"
 
-@tgn @_tested @selenium
+@tgn @_tested @selenium  @noguess
 Scenario: I can bulk set response deadlines for lead
   Given I go to buyer lead purchases
   And I check "mark_all"
@@ -142,10 +142,10 @@ Scenario: I can bulk set response deadlines for lead
   And I follow translated "lead_buyer.lead_purchases.index.view.bulk_update_button"
   Then I should see translated "buyer.bulk_lead_purchase_update.create.flash.lead_purchases_updated_successfully"
 
-@ao @nontestable
+@ao @nontestable  @noguess
 Scenario: I am notified by email when dealine expires and status of lead has not changed
 
-@m0
+@m0  @noguess
 Scenario: I can create a comment for lead that I have access for
 
 #Accessible from owned leads listing
