@@ -1,4 +1,4 @@
-@lead_manager @$_big_buyer @m4 @tgn
+@lead_manager @$_big_buyer @m4 @tgn  @noguess
 Feature: Requested leads management for big buyer
 
 Background:
