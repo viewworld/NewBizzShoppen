@@ -1,4 +1,4 @@
-@purchase_manager @m3 @ao
+@purchase_manager @m3 @ao  @noguess
 Feature: Purchase Manager signup
 
   In order to get access to protected sections of the site
