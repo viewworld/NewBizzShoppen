@@ -32,7 +32,7 @@ Scenario: News translations
   And I press translated "administration.news.edit.view.button_save"
   When I click hidden link by url regex "/locales\/dk/"
   When I follow translated "layout.main_menu.admin.news"
-  And I follow translated "administration.news.index.view.edit_link"
+  And I click hidden link by url regex "/administration\/news\/\d+\/edit/"
   And I fill in "news_title" with "[DK]FirstNews"
   And I fill in "news_content_editor" ckeditor with "[DK]Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   And I press translated "administration.news.edit.view.button_save"
