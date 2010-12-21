@@ -2,9 +2,6 @@
   <header><%= t("contact_us.new.view.header") %></header>
 
   <%= form_for :email_template_preview, :url => contact_us_path do |f| %>
-      <%#= custom_error_for_object_and_field(@email_template_preview, :subject) %>
-      <%#= custom_error_for_object_and_field(@email_template_preview, :email_from) %>
-      <%#= custom_error_for_object_and_field(@email_template_preview, :body) %>
 
       <frm title="Contact Form">
         <param:content>
@@ -13,18 +10,19 @@
             <ol class="align_inputs">
               <% [t("contact_us.new.view.email_subjects.agent_inquiry"), t("contact_us.new.view.email_subjects.buyer_inquiry")].each do |subject| %>
                   <li class="radio">
-                    <%= f.radio_button :subject, subject %><%= subject %>
+                    <%= f.radio_button :subject, subject %><%= subject %><br />
+                    <%= custom_error_for_object_and_field(@email_template_preview, :subject) %>
                   </li>
               <% end %>
 
               <li class="string">
                 <%= f.label :email_from %>
-                <%= f.text_field :email_from %>
+                <%= f.text_field :email_from %> <%= custom_error_for_object_and_field(@email_template_preview, :email_from) %>
               </li>
 
               <li class="text">
                 <%= f.label :body %>
-                <%= f.text_area :body, :size => "100x15" %>
+                <%= f.text_area :body, :size => "100x15" %><%= custom_error_for_object_and_field(@email_template_preview, :body) %>
               </li>
             </ol>
           </fieldset>
