@@ -15,3 +15,6 @@
 
 /* --- fieldset component (inputs + labels) --- */
 @import url('ocss/inputs.css');
+
+/* --- popup layout for colorbox --- */
+@import url('ocss/popup.css');

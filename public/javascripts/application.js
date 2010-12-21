@@ -34,4 +34,15 @@ jQuery(document).ready(function() {
     });
 
 
+    /* --- colorbox - modalbox --- */
+    
+    $("a[id*='help_popup_']").colorbox({
+        opacity: "0.5",
+        initialWidth: 200,
+        initialHeight: 200
+
+    });
+
+
+
 });

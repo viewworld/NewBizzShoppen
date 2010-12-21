@@ -127,6 +127,11 @@
     width: 60px;
 }
 
+td.tda a.bt
+{
+    white-space: nowrap;
+}
+
 .td_actions ul
 {
     border: 1px solid #fc9d23;
@@ -278,6 +283,11 @@ div.pagination .disabled
     filter: alpha(opacity=40);
 }
 
+
+.generic tbody tr.highlight_row td
+{
+    background-color: #fffcc0;
+}
 
 
 /* --- categories_table ---

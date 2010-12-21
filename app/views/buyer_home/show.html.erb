@@ -25,7 +25,9 @@
           <%= bt_link_to nil, t("buyer_home.show.view.complete_list_link"), news_index_path(:search => {:for_buyer => true}), :class => "fltr" %>
         </param:header>
         <param:content>
-          <%= render :partial => 'news', :collection => @news, :as => :news %>
+          <ul class="solid_list">
+            <%= render :partial => 'news', :collection => @news, :as => :news %>
+          </ul>
         </param:content>
       </frm>
     </div>
@@ -63,7 +65,7 @@
 
       jQuery(document).ready(function() {
           jQuery(".solid_list li").bind("click", function() {
-                  window.location = $(this).find('a.lead_read_more').attr("href");
+                  window.location = $(this).find('a.read_more').attr("href");
               });
       });
 

@@ -1,17 +1,43 @@
 <column-mc:>
   <header><%= news_header %></header>
 
-  <ul>
+  <table class="generic">
+    <thead>
+    <tr>
+      <th class="hl"></th>
+      <th></th>
+      <th class="hr"></th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+      <td class="fl"></td>
+      <td></td>
+      <td class="fr"></td>
+    </tr>
+    </tfoot>
+    <tbody>
     <% @news.each do |news| %>
-      <li>
-        <b><%= news.title %></b><br/>
-        <%= raw news.content %><br/>
-        <%= link_to t("news.index.view.read_more_link"), news_path(news) %>
-      </li>
-      <br/>
+        <tr>
+          <td class="cl"></td>
+          <td>
+            <div class="news_element">
+              <h2><%= news.title %></h2>
+              <%= raw news.content %>
+              <%= bt_link_to nil, t("news.index.view.read_more_link"), news_path(news), :class => "fltr" %>
+            </div>
+          </td>
+          <td class="cr"></td>
+        </tr>
     <% end %>
-  </ul>
-
-  <%= will_paginate(@news, :page_links => false, :previous_label => t("news.index.view.newer_link"), :next_label => t("news.index.view.older_link")) %>
+    <% if will_paginate %>
+        <tr class="pagination">
+          <td class="ta_c" colspan="3">
+            <%= will_paginate(@news, :page_links => false, :previous_label => t("news.index.view.newer_link"), :next_label => t("news.index.view.older_link")) %>
+          </td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
 
 </column-mc:>

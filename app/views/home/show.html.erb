@@ -1,6 +1,8 @@
 <column-mc:>
   <header><%= t("home.show.view.header") %></header>
 
+  <p><%= blurb("blurb_start_page_role_selection") %></p>
+
   <%= link_to t("home.show.view.buyer"), buyer_home_path %>
   <%= link_to t("home.show.view.agent"), agent_home_path %>
 
@@ -35,7 +37,5 @@
       <%= link_to t("home.show.view.resend_confirmation_instructions"), new_confirmation_path(User) %>
       <br/>
   <% end %>
-
-  <%= blurb("blurb_start_page_role_selection") %>
 
 </column-mc:>
