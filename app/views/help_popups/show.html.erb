@@ -1,13 +1,4 @@
-<column-mc:>
-
-  <frm title="#{@help.title}">
-    <param:content>
-
-      <%= raw @help.content %>
-
-      <hl/>
-
-    </param:content>
-  </frm>
-
-</column-mc:>
+<popup:>
+  <h1><%= @help.title %></h1>
+  <%= raw @help.content %>
+</popup:>
