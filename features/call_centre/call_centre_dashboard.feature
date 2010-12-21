@@ -11,5 +11,4 @@ Scenario: I can see 10 latest leads sold
 
 Scenario: I can browse the complete list of recently sold leads 
 
-@noguess
 Scenario: I can see 5 message excerpts from buyers
