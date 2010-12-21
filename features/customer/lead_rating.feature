@@ -40,7 +40,7 @@ Scenario: I can select from 4 different rating levels: Very good, good, satisfac
 Scenario: I can select a reason when I rate lead as 'unsatisfactory'
   Given I select translated "activerecord.attributes.lead_purchase.rating_levels.rating_level12" from "rating_level"
   Then I fill in "rating_reason" with "The reason for unsatisfactory rating"
-  And I follow translated "lead_buyer.lead_purchases.index.view.update_rating_button"
+  And I press translated "lead_buyer.lead_purchases.index.view.update_rating_button"
   And I go to buyer lead purchases
   Then "rating_level" should be selected for value translated "activerecord.attributes.lead_purchase.rating_levels.rating_level12"
 
@@ -48,7 +48,7 @@ Scenario: I can select a reason when I rate lead as 'unsatisfactory'
 Scenario: I must enter additional explaination for selected reason
   Given I select translated "activerecord.attributes.lead_purchase.rating_levels.rating_level12" from "rating_level"
   Then I fill in "rating_reason" with "The reason for unsatisfactory rating"
-  And I follow translated "lead_buyer.lead_purchases.index.view.update_rating_button"
+  And I press translated "lead_buyer.lead_purchases.index.view.update_rating_button"
   And I go to buyer lead purchases
   Then "rating_level" should be selected for value translated "activerecord.attributes.lead_purchase.rating_levels.rating_level12"
 
