@@ -5,6 +5,8 @@
   </header>
 
   <%#= link_to t("common.back_link"), administration_news_index_path %>
+  <%= form_for @news, :as => :news, :url => administration_news_path(@news), :html => {:method => :delete, :id => "delete_news_form"} do |form| %>
+  <% end %>
 
   <%= semantic_form_for @news, :as => :news, :url => administration_news_path(@news), :html => {:method => :put} do |form| %>
       <frm title="#{@news.title}" c="todo_delete">
@@ -17,10 +19,11 @@
           </ibt>
           <ibt c="bt_grey fltri">
             <% if @news.title.blank? %>
-                <%= button_to t("common.cancel_link"), administration_news_path(@news), :method => :delete %>
+                <%= button_to_function t("common.cancel_link"), "$('#delete_news_form').submit();"  %>
             <% end %>
           </ibt>
         </param:actions>
       </frm>
   <% end %>
+
 </column-mc:>
