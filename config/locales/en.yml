@@ -23,6 +23,7 @@ en:
         news: News
         currencies: Currencies
         invoices: Invoices
+        payment_transactions: 'Transactions'
       agent:
         leads: My created leads
       call_centre:
@@ -497,12 +498,31 @@ en:
           edit_invoice: 'Edit'
           remove_invoice: 'Delete'
           set_as_paid: 'Set as paid'
+          add_transaction: 'Add transaction'
           paid: 'Paid'
           search:
             with_keyword: 'Keyword'
             with_sale_date_after_and_including: 'Sale date after and including'
             with_sale_date_before_and_including: 'Sale date before and including'
             not_paid: 'Not paid only'
+    payment_transactions:
+      index:
+        view:
+          header: 'Payment transactions'
+          search_label: 'Search'
+          invoice_number: 'Invoice number'
+          customer_name: 'Customer name'
+          customer_address: 'Customer address'
+          amount: 'Amount'
+          actions: 'Actions'
+          manually_register_transaction: 'Manually register a transaction'
+          search_button: 'Search'
+          search:
+            with_keyword: 'Keyword:'
+      new:
+        view:
+          header: 'New transaction'
+          button_create: 'Create'
 
   agent:
     leads:

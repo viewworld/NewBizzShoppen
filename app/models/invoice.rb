@@ -24,6 +24,7 @@ class Invoice < ActiveRecord::Base
   belongs_to :user
   belongs_to :currency
 
+  has_many :payment_transactions
   has_many :invoice_lines, :dependent => :destroy
   has_many :invoice_lines_grouped_by_vat_rate, :select => "vat_rate, SUM(invoice_lines.netto_value) as netto_value_sum,
                                                            SUM(invoice_lines.vat_value) as vat_value_sum,

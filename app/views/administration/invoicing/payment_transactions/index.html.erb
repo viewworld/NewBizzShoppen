@@ -1,0 +1,39 @@
+<search-box:>
+  <div class="search_box">
+    <h2><%= t("administration.payment_transactions.index.view.search_label") %></h2>
+
+    <div class="search_content">
+      <%= form_for @search, :url => administration_invoicing_payment_transactions_path do |f| %>
+          <%= f.label :with_keyword, t("administration.payment_transactions.index.view.search.with_keyword")%><%= f.text_field :with_keyword %>
+          <%= submit_tag t("administration.payment_transactions.index.view.search_button") %>
+      <% end %>
+    </div>
+  </div>
+</search-box:>
+
+<column-mc:>
+  <header><%= t("administration.payment_transactions.index.view.header") %></header>
+
+    <table class="generic" cellspacing="0" cellpadding="0">
+      <thead>
+        <tr>
+          <th><%= t("administration.payment_transactions.index.view.invoice_number") %>
+          <th id="invoice_number_header"><%= t("administration.payment_transactions.index.view.customer_name") %></th>
+          <th><%= t("administration.payment_transactions.index.view.customer_address") %></th>
+          <th><%= t("administration.payment_transactions.index.view.amount") %></th>
+          <th><%= t("administration.payment_transactions.index.view.actions") %></th>
+      </thead>
+      <tbody id="invoices_list">
+      <% @payment_transactions.each do |payment_transaction| %>
+        <tr>
+          <td><%= payment_transaction.invoice.number %></td>
+          <td><%= payment_transaction.invoice.customer_name %></td>
+          <td><%= payment_transaction.invoice.customer_address %></td>
+          <td><%= payment_transaction.amount %></td>
+          <td></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <%= will_paginate @payment_transactions %>
+</column-mc:>

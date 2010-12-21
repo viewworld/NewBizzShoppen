@@ -1,6 +1,7 @@
 @transactions @$_admin @m4 @tgn
 Feature: Transactions administration
 
+@_wip
 Scenario: I can see a listing of all transactions registered in system
 
 Scenario: I can filter listing of transactions by invoice number

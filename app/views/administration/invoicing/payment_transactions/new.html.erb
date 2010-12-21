@@ -1,0 +1,18 @@
+<column-mc:>
+  <header><%= t("administration.payment_transactions.new.view.header") %></header>
+
+  <% semantic_form_for @payment_transaction, :url => administration_invoicing_payment_transactions_path do |form| %>
+
+      <%= form.input :amount %>
+      <%= form.input :paid_at, :as => :string, :input_html => {:class => "datepicker"} %>
+      <%= form.input :invoice_id, :as => :hidden %>
+
+      <%= form.submit t("administration.payment_transactions.new.view.button_create") %>
+  <% end %>
+
+   <script>
+    $(function() {
+        $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+    });
+  </script>
+</column-mc:>

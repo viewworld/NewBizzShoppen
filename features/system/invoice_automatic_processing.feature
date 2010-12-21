@@ -6,7 +6,7 @@ Scenario: Invoice should have invoice lines automatically generated for all non-
   
 Scenario: Automatically generated invoice lines are linked to leads bought
 
-
+@deprecated
 Scenario: Invoice is automatically generated after user goes to checkout
 
 
