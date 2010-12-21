@@ -1,13 +1,17 @@
 <column-mc:>
   <header>Forgot your password?</header>
-  <%= help_popup(t("common.help_link"), 'reset_password') %>  
 
   <%= form_for(resource, :as => resource_name, :url => user_password_path(resource_name), :html => {:method => :post}) do |f| %>
       <%= devise_error_messages! %>
       <fieldset class="inputs labels_100">
         <ol class="align_inputs">
-          <li class="string"><%= f.label :email %>
-            <%= f.text_field :email %></li>
+          <li class="string">
+            <%= f.label :email %>
+            <%= f.text_field :email %>
+            <span class="fltl" style="line-height: 28px; padding-left: 5px">
+              <%= help_popup(t("common.help_link"), 'reset_password') %>
+            </span>
+          </li>
 
           <li class="commit">
             <ibt>
