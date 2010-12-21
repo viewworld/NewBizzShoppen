@@ -15,7 +15,6 @@ Scenario: I should be able to lock category
   Then I check "category_is_locked"
   And attach the file "sample image" to "category_image_attributes_asset"
   And I press translated "administration.categories.edit.view.button_update"
-  And I open page in browser
   Then I should see translated "flash.categories.actions.update.notice"
 
 @_tested
