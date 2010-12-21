@@ -14,7 +14,7 @@
   <br/><h4><%= t("administration.invoices.show.view.status") %>: <%= @invoice.status.to_s.capitalize %></h4>
 
   <div class="invoice_container" id="invoice_container">
-    <%= render :partial => "administration/invoicing/invoices/invoice_preview", :locals => {:version => :origina, :invoice => @invoicel} %> <hr/>
+    <%= render :partial => "administration/invoicing/invoices/invoice_preview", :locals => {:version => :original, :invoice => @invoice} %> <hr/>
     <%= render :partial => "administration/invoicing/invoices/invoice_preview", :locals => {:version => :copy, :invoice => @invoice} %>
   </div>
 
