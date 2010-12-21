@@ -29,10 +29,10 @@ Scenario: I can assign any of my leads to any of lead users that belong to my ac
   And I go to buyer lead purchases
   Then "assignee_id" should be selected for value "Martin Gleesse"
 
-@tgn @m3 @done @_non_testable @noguess
+@tgn @m3 @_done @_non_testable @noguess
 Scenario: When I assign a user to a lead, then assigned_at time is recorded
 
-@tgn @m3 @done @_tested @selenium
+@tgn @m3 @_done @_tested @selenium
 Scenario: I can assign any of my leads back to myself
   Given I go to buyer lead purchases
   And I select "Martin Gleesse" from "assignee_id"
@@ -48,7 +48,7 @@ Scenario: I can unassing any of my leads from lead user that belong to my accoun
   And I go to buyer lead purchases
   Then "assignee_id" should be selected for value ""
 
-@tgn @done @_tested
+@tgn @_done @_tested
 Scenario: Assignment should not be possible/visible if I have not lead users associated with me
   Given I am not sign in
   Given user customer@person.com with role customer has no subaccounts
@@ -57,7 +57,7 @@ Scenario: Assignment should not be possible/visible if I have not lead users ass
   Then I should not see field "assignee_id"
   And I should not see field "bulk_assignee_id"
 
-@tgn @done @_tested @selenium
+@tgn @_done @_tested @selenium
 Scenario: I can transfer assignment of any of my leads from any of lead users that belong to my account to any other lead user that belong to my account
   Then I go to buyer lead purchases
   Given I select "Martin Gleesse" from "assignee_id"
@@ -66,7 +66,7 @@ Scenario: I can transfer assignment of any of my leads from any of lead users th
   And I go to buyer lead purchases
   Then "assignee_id" should be selected for value "John McCoy"
 
-@tgn @done @_non_testable
+@tgn @_done @_non_testable
 Scenario: Requested leads listing should lack pagination
   Given pagination per page size in model LeadRequest is set to 1
   Then I go to customers lead requests
@@ -74,7 +74,7 @@ Scenario: Requested leads listing should lack pagination
   And I should see "Plotters ultimate deal"
 
 
-@tgn @done @_tested
+@tgn @_done @_tested
 Scenario: I should see who has requested each lead
   Then I go to customers lead requests
   And I should see "John McCoy"
@@ -108,10 +108,10 @@ Scenario: I should see created by and certification level for each requested lea
   And I should see "Philip Glass"
   And I should see translated "models.lead.novelty.lvl0"
 
-@m0 @added
+@m0 @_added
 Scenario: I should see rating % for each requested lead
 
-@tgn @done @_tested
+@tgn @_done @_tested
 Scenario: I can delete lead requested by lead user that belong to my account
   Then I go to customers lead requests
   And I follow translated "customer.lead_requests.index.view.reject_lead_request_link"
