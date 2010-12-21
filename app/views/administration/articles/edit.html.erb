@@ -1,6 +1,9 @@
 <column-mc:>
   <header><%= t('administration.articles.edit.view.header') %></header>
-  
+
+  <%= form_for @article, :as => :article, :url => administration_article_path(@article), :html => {:method => :delete, :id => "delete_article_form"} do |form| %>
+  <% end %>
+
   <%= semantic_form_for @article, :as => :article, :url => administration_article_path(@article), :input_html => {:method => :put} do |form| %>
       <frm title="#{@article.title}">
         <param:content>
@@ -10,12 +13,12 @@
           <ibt c="fltri" icon="save">
             <%= form.submit t("administration.articles.edit.view.button_save") %>
           </ibt>
+          <% if @article.title.blank? %>
+            <ibt c="fltri bt_grey">
+              <%= button_to_function t("common.cancel_link"), "$('#delete_article_form').submit();"  %>
+            </ibt>
+          <% end %>
         </param:actions>
       </frm>
-  <% end %>
-  <% if @article.title.blank? %>
-    <ibt c="fltri bt_grey">
-      <%= button_to t("common.cancel_link"), administration_article_path, :method => :delete %>
-    </ibt>
   <% end %>
 </column-mc:>
