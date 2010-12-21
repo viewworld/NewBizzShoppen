@@ -74,7 +74,7 @@ Scenario: I have to specify both title and content for news entry
   And I press translated "administration.news.edit.view.button_save"
   Then I should see "can't be blank"
 
-@_done
+@_done @selenium
 Scenario: I can specify if news should be displayed for buyers, agents or both(?)
   When I follow translated "layout.main_menu.admin.news"
   And I follow translated "administration.news.index.view.new_news"
