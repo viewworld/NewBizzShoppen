@@ -7,7 +7,7 @@ module ArticlesHelper
 
   def blurb(key)
     if blurb = Article::Cms.interface_content_texts.where(:key => key).first
-      blurb.content
+      raw blurb.content
     end
   end
 
