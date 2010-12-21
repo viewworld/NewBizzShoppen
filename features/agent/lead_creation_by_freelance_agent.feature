@@ -89,7 +89,7 @@ Scenario: I can add an extra language while creating lead. This will include lea
   And I should see "DK description"
   And I should see "DK hidden description"
 
-@tgn @added @_tested @m1 @noguess
+@tgn @added @_tested @m1
 Scenario: Published checkbox should be selected by default
   Given I follow translated "agent.leads.index.view.new_lead"
   Then the "lead_published" checkbox should be checked
