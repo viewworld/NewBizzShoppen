@@ -25,7 +25,7 @@ Scenario: News translations
   And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
   And I sign in as jon@lajoie.ca with password secret
   When I follow translated "layout.main_menu.admin.news"
-  And I press translated "administration.news.index.view.new_news"
+  And I follow translated "administration.news.index.view.new_news"
   And I fill in "news_title" with "[EN]FirstNews"
   And I fill in "news_content_editor" ckeditor with "[EN]Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   And I check "news_published"

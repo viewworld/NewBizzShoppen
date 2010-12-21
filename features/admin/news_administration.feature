@@ -77,7 +77,7 @@ Scenario: I have to specify both title and content for news entry
 @_done
 Scenario: I can specify if news should be displayed for buyers, agents or both(?)
   When I follow translated "layout.main_menu.admin.news"
-  And I press translated "administration.news.index.view.new_news"
+  And I follow translated "administration.news.index.view.new_news"
   And I select translated "administration.news.index.view.agents" from "news_scope"
   And I select translated "administration.news.index.view.buyers" from "news_scope"
 
