@@ -14,10 +14,12 @@ module LeadsHelper
   end
 
   def leads_listing_header
-    if params[:search].is_a?(Hash)
-      header = (['bestsellers','latest','featured'] & params[:search].keys).first
-      header ? t("leads.index.#{header}_header") : nil
+    header = if params[:search].is_a?(Hash)
+      (['bestsellers','latest','featured'] & params[:search].keys).first
+    else
+      nil
     end
+    header ? t("leads.index.#{header}_header") : t("leads.index.header")
   end
 
   def lead_status(lead)

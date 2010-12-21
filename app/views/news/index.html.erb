@@ -5,7 +5,7 @@
     <% @news.each do |news| %>
       <li>
         <b><%= news.title %></b><br/>
-        <%= news.content %><br/>
+        <%= raw news.content %><br/>
         <%= link_to t("news.index.view.read_more_link"), news_path(news) %>
       </li>
       <br/>
