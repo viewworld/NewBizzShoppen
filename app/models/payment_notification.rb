@@ -2,7 +2,7 @@ class PaymentNotification < ActiveRecord::Base
   serialize :params
 
   belongs_to :buyer, :class_name => "User::LeadBuyer"
-  belongs_to :payment_transaction
+  has_one :payment_transaction
 
   before_create :check_if_duplicated
   after_create :generate_invoice

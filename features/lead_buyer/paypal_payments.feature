@@ -30,7 +30,10 @@ Scenario: I can see the leads I am paying for on paypal's summary page
 @_done @non_testable
 Scenario: Paypal payment information is stored in the system
 
+@_tested
 Scenario: Paypal payment information is linked to appropriate invoice
+  Then paypal payment for user with email "buyer.jim.jones@nbs.com" and role "customer"
+  And last payment notification is linked to invoice
 
 @_tested
 Scenario: Paypal's IPN marks all related lead purchases as paid and accessible
