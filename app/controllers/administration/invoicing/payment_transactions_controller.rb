@@ -4,7 +4,23 @@ class Administration::Invoicing::PaymentTransactionsController < Administration:
   set_tab "payment_transactions"
 
   def new
-    @payment_transaction = PaymentTransaction.new(:invoice_id => params[:invoice_id])
+    @payment_transaction = ManualTransaction.new(:invoice_id => params[:invoice_id])
+  end
+
+  def create
+    @payment_transaction = ManualTransaction.new(params[:manual_transaction])
+    create! do |success, failure|
+      success.html { redirect_to administration_invoicing_payment_transactions_path }
+      failure.html { render(:action => "new") }
+    end
+  end
+
+  def update
+    @payment_transaction = ManualTransaction.new(params[:manual_transaction])
+    update! do |success, failure|
+      success.html { redirect_to administration_invoicing_payment_transactions_path }
+      failure.html { render(:action => "edit") }
+    end
   end
 
   protected

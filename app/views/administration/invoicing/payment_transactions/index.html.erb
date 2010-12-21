@@ -17,6 +17,7 @@
     <table class="generic" cellspacing="0" cellpadding="0">
       <thead>
         <tr>
+          <th><%= t("administration.payment_transactions.index.view.transaction_type") %></th>
           <th><%= t("administration.payment_transactions.index.view.invoice_number") %>
           <th id="invoice_number_header"><%= t("administration.payment_transactions.index.view.customer_name") %></th>
           <th><%= t("administration.payment_transactions.index.view.customer_address") %></th>
@@ -26,11 +27,16 @@
       <tbody id="invoices_list">
       <% @payment_transactions.each do |payment_transaction| %>
         <tr>
+          <td><%= payment_transaction.class.to_s == "PaypalTransaction" ? t("administration.payment_transactions.index.view.transaction_type_paypal") : t("administration.payment_transactions.index.view.transaction_type_manual") %></td>
           <td><%= payment_transaction.invoice.number %></td>
           <td><%= payment_transaction.invoice.customer_name %></td>
           <td><%= payment_transaction.invoice.customer_address %></td>
           <td><%= payment_transaction.amount %></td>
-          <td></td>
+          <td>
+            <% if payment_transaction.can_be_edited? %>
+                <%= link_to t("administration.payment_transactions.index.view.edit"), edit_administration_invoicing_payment_transaction_path(payment_transaction) %>
+            <% end %>
+          </td>
         </tr>
       <% end %>
       </tbody>

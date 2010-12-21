@@ -20,8 +20,8 @@ class PaymentNotification < ActiveRecord::Base
   def generate_invoice
     if status == "Completed" and params[:receiver_email] == APP_CONFIG[:paypal_email] and params[:secret] == APP_CONFIG[:paypal_secret] and
        params[:mc_gross] == buyer.cart.total.to_s
-      invoice = Invoice.create(:user_id => buyer.id, :paid_at => self.created_at)
-      PaymentTransaction.create(:invoice => invoice, :payment_notification => self, :amount => buyer.cart.total, :paid_at => self.created_at)
+      invoice = Invoice.create(:user_id => buyer.parent.present? ? buyer.parent_id : buyer.id, :paid_at => self.created_at)
+      PaypalTransaction.create(:invoice => invoice, :payment_notification => self, :amount => buyer.cart.total, :paid_at => self.created_at)
       buyer.lead_purchases.in_cart.each do |lead_purchase|
         InvoiceLine.create(:invoice => invoice, :payable => lead_purchase, :name => lead_purchase.lead.header, :netto_price => lead_purchase.lead.price)
       end
