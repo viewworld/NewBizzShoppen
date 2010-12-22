@@ -1,0 +1,19 @@
+@font-face {
+	font-family: CODE2000;
+	src: url("font/CODE2000.TTF");
+}
+
+@font-face {
+	font-family: arial_reg;
+	src: url("font/arial.ttf");
+}
+
+@font-face {
+	font-family: arial_bold;
+	src: url("font/arialbd.ttf");
+}
+
+@font-face {
+	font-family: arial_italic;
+	src: url("font/ariali.ttf");
+}

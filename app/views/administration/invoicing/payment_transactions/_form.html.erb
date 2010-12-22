@@ -1,0 +1,5 @@
+     <% form.inputs do %>
+      <%= form.input :amount %>
+      <%= form.input :paid_at, :as => :string, :input_html => {:class => "datepicker"} %>
+      <%= form.input :invoice_id, :as => :hidden %>
+     <% end %>

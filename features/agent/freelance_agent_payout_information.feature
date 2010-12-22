@@ -7,17 +7,17 @@ Background:
   And I am signed up and confirmed as user with email agent@person.com and password secret and role agent
   Then I sign in as agent@person.com with password secret
 
-@tbd @non_testable
+@_done @non_testable
 Scenario: Freelance has its Paypal data stored
 
 # SWIFT/BIC + IBAN
 # Remember to make these fields protected - we do not wnat anybody to update those without authotization :P
 # "Yes, if the agents do not have a pay pal account. They should be able
 # to register their international banking details."
-@tbd @non_testable
+@_done @non_testable
 Scenario: Freelance agent has its international bank data stored if doesnt have Paypal account
 
-@tbd
+@_tested
 Scenario: As an administrator I can allow user freelance agent to change his/hers payout information
   Given I am not sign in
   And I am signed up and confirmed as user with email nbsadmin@person.com and password secret and role admin
@@ -32,7 +32,7 @@ Scenario: As an administrator I can allow user freelance agent to change his/her
 # "By default only call centers should be abel to register bank detalis,
 # but the admin should also be abel to let freelanceers enter banking
 # details."
-@tbd
+@_tested
 Scenario: I can update my payout information if I am a Freelance Agent and Admin allows me to do so
   Given user agent@person.com with role agent exists with attributes "can_edit_payout_information:true"
   Given I am not sign in

@@ -23,6 +23,7 @@ en:
         news: News
         currencies: Currencies
         invoices: Invoices
+        payment_transactions: 'Transactions'
       agent:
         leads: My created leads
       call_centre:
@@ -472,13 +473,29 @@ en:
           cashflow: 'Cashflow'
           yes_label: 'Yes'
           no_label: 'No'
+          payment_transactions:
+            header: 'Transactions'
+            type: 'Type'
+            paid_at: 'Paid at'
+            type_paypal: 'PayPal'
+            type_manual: 'Manual'
+            amount: 'Amount'
       edit:
         view:
           header: 'Edit invoice'
           save_button: 'Save'
+          save_changes: 'Save changes'
           add_line: 'Add line'
-          import_lines: 'Import lines'
           remove_line: 'Remove line'
+          set_as_paid: 'Set as paid'
+          show_invoice: 'Show invoice'
+          go_back: 'Go back'
+          set_payable_for_invoice_items: 'Set payable for invoice items'
+          form:
+            general_information: 'General information'
+            customer_information: 'Customer information'
+            seller_information: 'Seller information'
+            payment_information: 'Payment information'
       destroy:
         view:
           confirmation: 'Are you sure?'
@@ -490,19 +507,53 @@ en:
           invoice_number: 'Invoice number'
           customer: 'Customer'
           revenue_frozen: 'Revenue frozen'
-          paid_at: 'Paid at'
+          status: 'Status'
           search_label: 'Search'
           create_invoice: 'Create invoice'
           show_invoice: 'Show'
           edit_invoice: 'Edit'
           remove_invoice: 'Delete'
           set_as_paid: 'Set as paid'
+          add_transaction: 'Add transaction'
           paid: 'Paid'
+          not_paid: 'Not paid'
+          total: 'Total'
           search:
             with_keyword: 'Keyword'
             with_sale_date_after_and_including: 'Sale date after and including'
             with_sale_date_before_and_including: 'Sale date before and including'
             not_paid: 'Not paid only'
+            payment_status: 'Payment status'
+      cash_flow:
+        view:
+          save_button: 'Save'
+
+    payment_transactions:
+      index:
+        view:
+          header: 'Payment transactions'
+          search_label: 'Search'
+          edit: 'Edit'
+          invoice_number: 'Invoice number'
+          transaction_type: 'Type'
+          transaction_type_paypal: 'Paypal'
+          transaction_type_manual: 'Manual'
+          customer_name: 'Customer name'
+          customer_address: 'Customer address'
+          amount: 'Amount'
+          actions: 'Actions'
+          manually_register_transaction: 'Manually register a transaction'
+          search_button: 'Search'
+          search:
+            with_keyword: 'Keyword:'
+      new:
+        view:
+          header: 'New transaction'
+          button_create: 'Create'
+      edit:
+        view:
+          header: 'Edit transaction'
+          button_update: 'Save'
 
   agent:
     leads:
@@ -1038,3 +1089,8 @@ en:
     bulk_subaccounts_update:
       update:
         notice: 'Selected subaccounts have been updated.'
+    payment_transactions:
+      create:
+        notice: 'Manual transaction has been successfully created.'
+      update:
+        notice: 'Manual transaction has been successfully updated.'

@@ -26,6 +26,10 @@ module NavigationHelpers
         '/administration/setting/edit'
     when /administration leads/
         '/administration/leads'
+    when /administration transactions/
+        '/administration/invoicing/payment_transactions'
+    when /administration invoices/
+        '/administration/invoicing/invoices/'
     when /agents leads/
         '/agents/leads'
     when /browse leads/

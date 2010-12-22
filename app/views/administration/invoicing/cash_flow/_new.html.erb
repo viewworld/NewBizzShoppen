@@ -1,7 +1,6 @@
-<% semantic_form_for [:administration, :invoicing, @invoice] do |form| %>
+<%= semantic_form_for [:administration, :invoicing, @invoice] do |form| %>
     <% form.inputs do %>
         <%= form.input :cash_flow, :label => "Amount paid",
-                       :hint => "(amount in PLN)",
                        :input_html => { :value => @invoice.cash_flow.zero? ? number_to_currency(@invoice.revenue_frozen,
                                                                                                 :unit => "",
                                                                                                 :delimiter => "") :
@@ -15,7 +14,7 @@
                                         :value => @invoice.paid_at.nil? ? Date.today : @invoice.paid_at}%>
     <% end %>
     <% form.buttons do %>
-        <%= form.commit_button "Save" %>
+        <%= form.commit_button t("administration.invoices.cash_flow.view.save_button") %>
     <% end %>
 <% end %>
 

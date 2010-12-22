@@ -1,4 +1,4 @@
-<% f.inputs :class => 'inputs invoice_line' do %>
+<%= f.inputs :class => 'inputs invoice_line' do %>
     <%= f.input :payable_type, :as => :hidden %>
     <%= f.input :payable_id, :as => :hidden %>
     <%= f.input :payable_update, :as => :boolean, :wrapper_html => { :class => "invoice_line_payable_update"}, :label => ' ',

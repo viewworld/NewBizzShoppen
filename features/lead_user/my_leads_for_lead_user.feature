@@ -98,7 +98,7 @@ Scenario: I should see created by and certification level for each lead
   Then I should see "Johan Printing"
   And I should see translated "models.lead.certification.lvl0"
 
-@m4 @tgn @tbd @added
+@m4 @tgn @_tested @added
 Scenario: I should see rating % for each lead
   Given a lead "Printers ultimate deal" has good rating
   Given All leads have refreshed average ratings
