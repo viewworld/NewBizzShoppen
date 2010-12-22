@@ -1,0 +1,95 @@
+<column-mc:>
+
+  <%= javascript_include_tag "jquery.field.min.js", "jquery.calculation.min.js", "invoice_calculations.js", "invoice_navigation.js" %>
+
+  <header><%= t("administration.invoices.edit.view.header") %> #<%= @invoice.id %></header>
+
+  <ul class="actions">
+    <%= link_to_function "Save changes", "$('##{dom_id(@invoice, :edit)}').submit()", :icon => "save" %>
+    <%= link_to "Set as paid", new_administration_invoicing_invoice_cash_flow_path(@invoice.id), :remote => true, :method => :get, :icon => "paid" %>
+    <%= link_to "Show invoice", administration_invoicing_invoice_path(@invoice), :icon => "show" %>
+    <%= link_to "Go back", administration_invoicing_invoices_path, :icon => "back" %>
+  </ul>
+
+
+  <frame>
+  <%= semantic_form_for [:administration, :invoicing, @invoice] do |form| %>
+
+      <% form.inputs :name => "General information", :class => "inputs separated" do %>
+          <%= form.input :number %>
+          <%#= form.input :english_version %>
+      <% end %>
+
+
+      <%= form.inputs :name => "Customer information", :id => "customer_information", :class => "inputs separated" do %>
+          <%= form.input :customer_name %>
+          <%= form.input :customer_address %>
+          <%= form.input :customer_vat_no %>
+      <% end %>
+
+      <%= form.inputs :name => "Seller information", :id => "seller_information", :class => "inputs separated" do %>
+          <%= form.input :seller_name %>
+          <%= form.input :seller_first_name %>
+          <%= form.input :seller_last_name %>
+          <%= form.input :seller_address %>
+          <%= form.input :seller_vat_no %>
+      <% end %>
+
+      <%= form.inputs :name => "Payment information", :id => "payment_information", :class => "inputs separated" do %>
+          <%= form.input :creation_place %>
+          <%= form.input :creation_date,
+                         :as => :string,
+                         :input_html => { :class => "date_field"} %>
+          <%= form.input :sale_date,
+                         :as => :string,
+                         :input_html => { :class => "date_field"} %>
+          <%= form.input :payment_deadline_date,
+                         :as => :string,
+                         :input_html => { :class => "date_field"} %>
+          <%= form.input :payment_account_information %>
+          <%= form.input :payment_method,
+                         :as => :select,
+                         :collection => Invoice::PAYMENT_METHODS.map{|pm| [t("administration.invoices.common.view.#{pm}"), pm.to_s]},
+                         :include_blank => false %>
+          <%= form.input :currency,
+                         :include_blank => false %>
+          <%= form.input :vat_paid_in_customer_country %>
+          <%= form.input :vat_text_in_customer_country, :as => :string %>
+      <% end %>
+
+      <br/>
+
+      <%= form.inputs :class => "invoice_line_labels" do %>
+          <%= check_box_tag "check_all_invoice_lines", false %>
+          <%= form.label "&nbsp", :class => "invoice_payable_update" %>
+          <%= form.label :name, :class => "invoice_name" %>
+          <%= form.label :pkwiu, :class => "invoice_pkwiu" %>
+          <%= form.label :unit, :class => "invoice_unit" %>
+          <%= form.label :quantity, :class => "invoice_quantity" %>
+          <%= form.label :vat_rate, :class => "invoice_vat_rate" %>
+          <%= form.label :netto_price, :class => "invoice_netto_price" %>
+          <%= form.label :netto_value, :class => "invoice_netto_value" %>
+          <%= form.label :vat_value, :class => "invoice_vat_value" %>
+          <%= form.label :brutto_value, :class => "invoice_brutto_value" %>
+      <% end %>
+
+      <%= form.semantic_fields_for :invoice_lines do |invoice_line| %>
+          <%= render :partial => "/administration/invoicing/invoice_lines/invoice_line_fields", :locals => {:f => invoice_line} %>
+      <% end %>
+
+
+      <div class="add_invoice_line_btns">
+        <%= link_to_add_fields t("administration.invoices.edit.view.add_line"), form, :invoice_lines %>
+        <%= link_to t("administration.invoices.edit.view.import_lines"), new_administration_invoicing_invoice_invoice_lines_import_path(@invoice.id), :remote => true, :method => :get, :title => "Add invoice lines by raw text", :html => {:class => "add_by_raw" } %>
+      </div>
+
+      <div style="height: 40px;">
+       <div id="link_set_payable"><%= link_to "Set payable for invoice lines", new_administration_invoicing_invoice_invoice_lines_payable_path(@invoice.id), :remote => true, :method => :get %></div>
+      </div>
+
+      <%= render "totals" %>
+
+      <%= form.commit_button t("administration.invoices.edit.view.save_button") %>
+  <% end %>
+  </frame>
+</column-mc:>

@@ -1,0 +1,13 @@
+<tr>
+    <td><%= invoice.sale_date %></td>
+    <td><%= link_to invoice.full_number, [:administration, :invoicing, invoice] %></td>
+    <td><%= invoice.user %></td>
+    <td><%= number_to_currency(invoice.revenue_frozen, :unit => invoice.currency.symbol) %></td>
+    <td class="ta_c"><%= payment_status(invoice.paid?, t("administration.invoices.index.view.paid"), invoice.status.to_s.capitalize) %></td>
+    <td>
+        <%= link_to t("administration.invoices.index.view.show_invoice"), administration_invoicing_invoice_path(invoice) %>
+        <%= link_to t("administration.invoices.index.view.edit_invoice"), edit_administration_invoicing_invoice_path(invoice) %>
+        <%= link_to t("administration.invoices.index.view.remove_invoice"), administration_invoicing_invoice_path(invoice), :method => :delete, :confirm => t("administration.invoices.destroy.view.confirmation") %>
+        <%= link_to t("administration.invoices.index.view.set_as_paid"), :url => new_administration_invoicing_invoice_cash_flow_path(invoice.id), :method => :get %>
+    </td>
+</tr>

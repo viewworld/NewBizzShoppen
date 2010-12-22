@@ -35,8 +35,10 @@ Given /^I am signed up with email (.+) and password (.+) and role (.+)$/ do |ema
   "User::#{role.camelize}".constantize.make!(:email => email, :password => password, :password_confirmation => password)
 end
 
-Given /^(?:|I am |someone is )signed up and confirmed as user with email (.+) and password (.+) and role (.+)$/ do |email, password, role|
-  u = "User::#{role.camelize}".constantize.make!(:email => email, :password => password, :password_confirmation => password)
+Given /^(?:|I am |someone is )signed up and confirmed as user with email ([^"]*) and password ([^"]*) and role ([^"]*)(?: with attributes "([^"]*)")?$/ do |email, password, role, options|
+  std_opts = {:email => email, :password => password, :password_confirmation => password}
+  opts = options ? Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys.merge(std_opts) : std_opts
+  u = "User::#{role.camelize}".constantize.make!(opts)
   u.confirm!
 end
 
@@ -126,7 +128,14 @@ end
 
 Then /^user (.+) with role (.+) exists with attributes "([^"]*)"$/ do |email, role, options|
   user = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
-  user.update_attributes(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys)
+  options_hash = Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys
+  options_hash.each_pair do |k, v|
+    if v.include?("true") or v.include?("false")
+      options_hash[k] = eval(v)
+    end
+  end
+  user.send(:attributes=, options_hash, false)
+  user.save
 end
 
 Then /^user (.+) with role (.+) has no subaccounts$/ do |email, role|

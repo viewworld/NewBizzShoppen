@@ -21,25 +21,25 @@ Scenario: I can paginate email templates list
   And I follow "2"
   And I follow "1"
 
-@_tested
+@_tested @selenium
 Scenario: I can edit and update following email template fields: name, subject, body
-  Then I follow translated "administration.email_templates.index.view.edit"
+  Then I click hidden link by url regex "/administration\/email_templates\/(\d+)\/edit/"
   And I fill in "email_template_subject" with "Confirmation message corrected"
-  And I fill in "email_template_body" with "Confirmation message corrected body"
+  And I fill in "email_template_body_editor" ckeditor with "Confirmation message corrected body"
   Then I press translated "administration.email_templates.edit.view.button_update"
   And I should see translated "flash.email_templates.update.notice"
 
-@_tested
+@_tested @selenium
 Scenario: I can edit and update email template fields for different language when I switch interface language
   Given email "confirmation_instructions" has translation for lang "dk" with attributes "subject:Bekraeftelse instruktioner"
-  Then I follow translated "administration.email_templates.index.view.edit"
+  Then I click hidden link by url regex "/administration\/email_templates\/(\d+)\/edit/"
   And the "email_template_subject" field should contain "Confirmation instructions"
-  Then I follow translated "locales.dk_locale"
+  Then I click hidden link by url regex "/locales\/dk/"
   And I go to administration email templates
-  Then I follow translated "administration.email_templates.index.view.edit"
+  Then I click hidden link by url regex "/administration\/email_templates\/(\d+)\/edit/"
   And the "email_template_subject" field should contain "Bekraeftelse instruktioner"
   And I fill in "email_template_subject" with "Confirmation message corrected"
-  And I fill in "email_template_body" with "Confirmation message corrected body"
+  And I fill in "email_template_body_editor" ckeditor with "Confirmation message corrected body"
   Then I press translated "administration.email_templates.edit.view.button_update"
   
   

@@ -1,4 +1,6 @@
 class Cart
+  include PaypalPayment
+
   attr_accessor :buyer
 
   def initialize(buyer)
@@ -27,7 +29,7 @@ class Cart
   end
 
   def add_leads(*ids)
-    Lead.where(:id => ids.flatten).map{|lead| add_lead(lead)}.select { |r| r != :already_in_cart }
+    Lead.where(:id => ids.flatten).map { |lead| add_lead(lead) }.select { |r| r != :already_in_cart }
   end
 
   def remove_leads(*ids)
@@ -49,4 +51,13 @@ class Cart
   def empty!
     @buyer.lead_purchases.in_cart.destroy_all
   end
+
+  def paid!
+    buyer.lead_purchases.in_cart.each { |lp| lp.send(:paid!) }
+  end
+
+  def id
+    Date.today.strftime("%y%m%d%S") + @buyer.id.to_s
+  end
+
 end

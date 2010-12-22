@@ -91,6 +91,12 @@ class LeadPurchase < LeadPurchaseBase
     end
   end
 
+  def paid!
+    self.paid = true
+    self.accessible = true
+    save
+  end
+
   public
 
   class << self

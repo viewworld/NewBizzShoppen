@@ -1,0 +1,15 @@
+<%= link_to_function 'None', %{updateInvoiceLines(null, '&nbsp;', null, window.selected_ids);$.modal.close();} %>
+<script type='text/javascript'>
+$("#projects_main_tree").treeview({
+    persist: "location",
+    animated: "fast",    
+    collapsed: true,
+    unique: false
+});
+</script>
+<%= all_projects_tree( :skip_issues => true,
+                       :versioned => true,
+                       :project_label => lambda {|project| link_to_function project.name,
+                                                                            %{updateInvoiceLines('#{project.id}', '#{project.name}', 'Project', window.selected_ids);$.modal.close();}},
+                       :version_label => lambda {|version| link_to_function version.with_project_name,
+                                                                            %{updateInvoiceLines('#{version.id}', '#{version.with_project_name}', 'Version', window.selected_ids);$.modal.close();}})%>

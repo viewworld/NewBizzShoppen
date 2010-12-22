@@ -1,0 +1,15 @@
+<% semantic_form_for [:invoicing, @invoice, @mailing] do |form| %>
+    <% form.inputs :class => "inputs send_email_form" do %>
+        <%= form.input :recipients,
+                       :as => :string,
+                       :input_html => {:value => @invoice.customer.email},
+                       :label => false
+                       %>
+        <%= form.input :body, :as => :text, :label => false %>
+    <% end %>
+    <%= form.buttons :class => "buttons send"%>
+<% end %>
+<% semantic_form_for [:invoicing, @invoice] do |form| %>
+    <%= form.input :emailed_at, :as => :hidden, :label => false, :input_html => {:value => DateTime.now} %>
+    <%= link_to_function "Mark as sent only", "$(this).parents().submit(); $.modal.close();", :class => 'mark_as_sent_link' %>
+<% end %>

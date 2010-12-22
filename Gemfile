@@ -26,6 +26,7 @@ gem 'nested_set', '1.5.4'
 gem 'fastercsv'
 gem 'thor'
 gem 'ckeditor', '3.4.3.pre'
+gem "nifty-generators"
 
 group :development do
   gem 'diff-lcs'

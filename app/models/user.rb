@@ -22,6 +22,7 @@ class User < ActiveRecord::Base
   has_many :subaccounts, :class_name => "User", :foreign_key => "parent_id"
   belongs_to :user, :class_name => "User", :foreign_key => "parent_id", :counter_cache => :subaccounts_counter
 #  belongs_to :country, :foreign_key => "country"
+  has_many :invoices
   alias_method :parent, :user
 
   scope :with_role, lambda { |role| where("roles_mask & #{2**User.valid_roles.index(role.to_sym)} > 0 ") }
@@ -41,7 +42,7 @@ class User < ActiveRecord::Base
   scoped_order :id, :roles_mask, :first_name, :last_name, :email, :age, :department, :completed_leads_counter, :leads_requested_counter, :leads_assigned_month_ago_count, :leads_assigned_year_ago_counter, :total_leads_assigned_counter
 
 
-  attr_protected :payout, :locked
+  attr_protected :payout, :locked, :can_edit_payout_information, :paypal_email, :bank_swift_number, :bank_iban_number
 
   attr_accessor :agreement_read, :locked
 
@@ -179,5 +180,10 @@ class User < ActiveRecord::Base
 
   def has_role?(r)
     roles.include?(r)
-  end  
+  end
+
+  def to_s
+    full_name
+  end
+
 end
