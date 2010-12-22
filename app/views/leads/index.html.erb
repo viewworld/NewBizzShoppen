@@ -69,7 +69,7 @@
 
           <% if user_signed_in? && (current_user.has_role?(:customer) || current_user.has_role?(:lead_user)) %>
               <% blocks.bottom do %>
-                  <% if current_user.has_role?(:customer) %>
+                  <% if current_user.has_role?(:customer) or current_user.has_role?(:lead_buyer) %>
                       <%= hidden_field_tag :route_to, "/buyers/bulk_cart_items" %>
                       <ibt>
                         <%= submit_tag current_user.big_buyer? ? t("leads.index.button_bulk_buy_leads") : t("leads.index.button_bulk_create_cart_item") %>
