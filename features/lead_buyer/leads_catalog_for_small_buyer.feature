@@ -42,7 +42,7 @@ Scenario: I should see created by
   Then I follow "Computers"
   And I should see "John Dulinky"
 
-@m4 @tgn @_tested @added
+@m4 @tgn @tbd @added
 Scenario: I should see rating % and certification level for each lead
   Given I have user with email bob@person.com and role customer
   And a lead Printers ultimate deal exists within category Computers and is bought by user bob@person.com with role customer
@@ -61,7 +61,7 @@ Scenario: I should see lead header, lead price, purchase value and public descri
   And I should see "Printers ultimate deal"
   And I should see "Public desc about printers deal"
 
-@m4 @tgn @_tested
+@m4 @tgn @tbd
 Scenario: I should see hottness, novelty, exposure, clicks
   Then I follow "Computers"
   And I should see translated "models.lead.hotness.lvl1"

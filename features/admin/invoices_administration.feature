@@ -8,7 +8,7 @@ Background:
   And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role customer with attributes "first_name:Janko,last_name:Muzykant"
   Then I sign in as jon@lajoie.ca with password secret
 
-@_done
+@tbd
 Scenario: I can create new invoice for user
   When I follow translated "layout.main_menu.admin.invoices"
   And I select "Janko Muzykant" from "invoice_user_id"
@@ -21,14 +21,14 @@ Scenario: I can see list of invoices pending creation
 @_todo
 Scenario: I can create new invoice from suggestion on invoices pending creation listing
 
-@_done
+@tbd
 Scenario: I can see invoice details
   When invoice exists for user "kastomer@nbs.fake"
   And I follow translated "layout.main_menu.admin.invoices"
   And I follow translated "administration.invoices.index.view.show_invoice"
   Then I should see translated "administration.invoices.show.view.header"
 
-@_done
+@tbd
 Scenario: I can edit invoice’s customer information - name, address, vat no
   When invoice exists for user "kastomer@nbs.fake"
   And I follow translated "layout.main_menu.admin.invoices"
@@ -48,7 +48,7 @@ Scenario: I can edit invoice’s customer information - name, address, vat no
   And I should see "NewAddress"
   And I should see "NewVatNo"
 
-@_done
+@tbd
 Scenario: I can edit invoice’s seller information - name, address, vat no
   When invoice exists for user "kastomer@nbs.fake"
   And I follow translated "layout.main_menu.admin.invoices"
@@ -75,7 +75,7 @@ Scenario: Invoice created has its number automatically generated
 
 Scenario: I can edit following additional information-  need example of norwegian invoice with comments
 
-@_done
+@tbd
 Scenario: I can add custom invoice line to invoice
   When invoice exists for user "kastomer@nbs.fake"
   And I follow translated "layout.main_menu.admin.invoices"
