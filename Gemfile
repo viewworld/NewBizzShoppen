@@ -42,7 +42,7 @@ group :test do
   gem 'pickle'
   gem 'spork'
   gem 'mocha'
-  gem 'faker'
+  gem 'faker', "0.3.1"
   gem 'machinist', '>= 2.0.0.beta1'
   gem 'gherkin', '>= 2.2.4'
 
