@@ -25,14 +25,14 @@ Scenario: News translations
   And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
   And I sign in as jon@lajoie.ca with password secret
   When I follow translated "layout.main_menu.admin.news"
-  And I press translated "administration.news.index.view.new_news"
+  And I follow translated "administration.news.index.view.new_news"
   And I fill in "news_title" with "[EN]FirstNews"
   And I fill in "news_content_editor" ckeditor with "[EN]Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   And I check "news_published"
   And I press translated "administration.news.edit.view.button_save"
   When I click hidden link by url regex "/locales\/dk/"
   When I follow translated "layout.main_menu.admin.news"
-  And I follow translated "administration.news.index.view.edit_link"
+  And I click hidden link by url regex "/administration\/news\/\d+\/edit/"
   And I fill in "news_title" with "[DK]FirstNews"
   And I fill in "news_content_editor" ckeditor with "[DK]Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   And I press translated "administration.news.edit.view.button_save"
@@ -50,14 +50,14 @@ Scenario: Article translations
   And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
   And I sign in as jon@lajoie.ca with password secret
   When I follow translated "layout.main_menu.admin.articles"
-  And I press translated "administration.articles.index.view.new_article"
+  And I follow translated "administration.articles.index.view.new_article"
   And I fill in "article_title" with "[EN]FirstArticle"
   And I fill in "article_content_editor" ckeditor with "[EN]Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   And I check "article_published"
   And I press translated "administration.articles.edit.view.button_save"
   When I click hidden link by url regex "/locales\/dk/"
   When I follow translated "layout.main_menu.admin.articles"
-  And I follow translated "administration.articles.index.view.edit_link"
+  And I click hidden link by url regex "/administration\/articles\/\d+\/edit/"
   And I fill in "article_title" with "[DK]FirstArticle"
   And I fill in "article_content_editor" ckeditor with "[DK]Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   And I press translated "administration.articles.edit.view.button_save"

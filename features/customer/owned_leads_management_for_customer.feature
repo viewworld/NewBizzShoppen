@@ -29,7 +29,7 @@ Scenario: I can assign any of my leads to any of lead users that belong to my ac
   And I go to buyer lead purchases
   Then "assignee_id" should be selected for value "Martin Gleesse"
 
-@tgn @m3 @_done @_non_testable @noguess
+@_done @tgn @m3 @non_testable @noguess
 Scenario: When I assign a user to a lead, then assigned_at time is recorded
 
 @tgn @m3 @_done @_tested @selenium

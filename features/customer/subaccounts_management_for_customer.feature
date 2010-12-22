@@ -8,7 +8,7 @@ Background:  Sign in user and set locale
   Then I sign in as bob@person.com with password supersecret
   And I go to customers subaccounts
 
-@non_testable @_done
+@_done @not_testable @done
 Scenario: I do not and cannot belong to other customer
 
 @_tested
@@ -143,11 +143,11 @@ Scenario: I can bulk lock/unlock lead buyer/lead user accounts
   And an user with role lead_user and email lead_user@person.com exists as subaccount for customer bob@person.com
   And I go to customers subaccounts
   Then I check "mark_all"
-  And I press translated "customer.subaccounts.index.view.button_bulk_subbaccounts_update"
+  And I follow translated "customer.subaccounts.index.view.button_bulk_subbaccounts_update"
   And I should see translated "flash.bulk_subaccounts_update.update.notice"
   Then I check "mark_all"
   And I select translated "customer.subaccounts.index.view.unlock" from "locked"
-  And I press translated "customer.subaccounts.index.view.button_bulk_subbaccounts_update"
+  And I follow translated "customer.subaccounts.index.view.button_bulk_subbaccounts_update"
   And I should see translated "flash.bulk_subaccounts_update.update.notice"
 
 @_tested
@@ -213,7 +213,7 @@ Scenario: I can sort by completed leads, new leads requested, num. of leads assi
   And I follow translated "customer.subaccounts.index.view.total_leads_assigned_column"
   Then I should have value "4" in the xpath path "//tr[(((count(preceding-sibling::*) + 1) = 1) and parent::*)]//td[(((count(preceding-sibling::*) + 1) = 10) and parent::*)]"
 
-@_non_testable @added
+@_done @non_testable @added
 Scenario: I can refresh the cashed values for sort by rake task
 
 @_tested

@@ -66,7 +66,8 @@
               <% if @subaccounts.present? %>
                   <%= select_tag :assignee_id,
                                  options_for_select([[nil, nil]]+@subaccounts.map { |sa| [sa.screen_name, sa.id] }, lead_purchase.assignee_id),
-                                 :onchange => "$.post('#{lead_users_lead_purchase_path(lead_purchase)}', {'_method':'put', 'lead_purchase[assignee_id]':this.value} );" %>
+                                 :onchange => "$.post('#{lead_users_lead_purchase_path(lead_purchase)}', {'_method':'put', 'lead_purchase[assignee_id]':this.value} );",
+                                 :style => "width: 140px" %>
               <% end %>
           <% end %>
 

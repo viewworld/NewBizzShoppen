@@ -70,6 +70,6 @@ Scenario: I should not see categories that I have been restricted access to by c
   And "search_with_category" dropdown should have values "Office,Wireless Devices"
   And "search_with_category" dropdown should not have values "Building,Computers"
 
-@m3 @__category_restrictions @tgn @_done @_not_testable @noguess
+@_done @m3 @__category_restrictions @tgn @not_testable @noguess
 Scenario: I should not be able to request/buy leads from categories that I have been restricted access to by customer
 

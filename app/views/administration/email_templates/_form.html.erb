@@ -6,11 +6,11 @@
       <%= form.input :bcc %>
       <%= form.input :cc %>
       <%= form.input :body,
-
+                        :label => false,
                         :as => :ckeditor,
                         :input_html => {
                             :width => '1085px',
-                            :height => '500px',
+                            :height => '300px',
                         :toolbar => "Email"
                             }
 

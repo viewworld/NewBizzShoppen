@@ -60,7 +60,8 @@
 .inputs ol li.password label,
 .inputs ol li.file label,
 .inputs ol li.numeric label,
-.inputs ol li.date label
+.inputs ol li.date label,
+.inputs ol li.ckeditor label
 {
 	display: block;
 	float: left;
@@ -120,6 +121,17 @@
     width: auto;
 }
 
+.inputs ol li.multiple
+{
+    height: auto;    
+}
+
+.inputs ol li.multiple select
+{
+    height: 80px;
+    width: 180px;
+}
+
 
 /* --- boolean + radio ---
 --------------------------------------------------------------------------------- */
@@ -147,6 +159,15 @@
 	padding: 0;
 	float: left;
     background: none;
+}
+
+
+/* --- ckeditor ---
+--------------------------------------------------------------------------------- */
+
+.inputs ol li.ckeditor
+{
+    padding: 5px 0 8px;    
 }
 
 
@@ -250,6 +271,21 @@
 	width: 25px;
     padding-top: 1px
 }
+
+
+.labels_50 ol li.string label,
+.labels_50 ol li.select label,
+.labels_50 ol li.password label,
+.labels_50 ol li.text label,
+.labels_50 ol li.numeric label,
+.labels_50 ol li.date label,
+.labels_50 ol li.file label,
+.labels_50 ol li .label,
+.labels_50 li .label
+{
+	width: 50px;
+}
+
 
 .labels_70 ol li.string label,
 .labels_70 ol li.select label,
@@ -594,6 +630,17 @@
 }
 
 
+.inputs_360 ol li.string input,
+.inputs_360 ol li.password input
+{
+	width: 360px;
+}
+.inputs_360 ol li.select select
+{
+	width: 372px;
+}
+
+
 
 /* --- inputs - align_inputs - boolean, radio, commit ---
 --------------------------------------------------------------------------------- */
@@ -602,7 +649,7 @@
 .inputs ol.align_inputs li.boolean,
 .inputs ol.align_inputs li.radio
 {
-    margin-left: 158px;
+    margin-left: 150px;
 }
 
 .labels_80 ol li.commit,

@@ -11,7 +11,7 @@ Scenario: I can see list of news for buyer (to jest scopnięte, czy też zwykli 
   When I follow translated "home.show.view.buyer"
   And I follow translated "buyer_home.show.view.complete_list_link" within "#news"
   Then I should see translated "news.index.view.buyers_header"
-  And I should see "1" items on a list within "#content"
+  And I should see "1" div blocks with class like "news_element"
 
 @_done
 Scenario: I can see paginated list of news for agent

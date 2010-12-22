@@ -53,8 +53,8 @@ Scenario: I can bulk instant-buy leads and I will see a notification “You adde
   And I go to leads
   And I follow "Computers"
   And I check "mark_all"
-  And I press translated "leads.index.add_to_cart_link"
-  Then I should see translated "buyer.bulk_cart_items.create.flash.n_cart_items_added" with options "count:2"
+  And I press translated "leads.index.button_bulk_buy_leads"
+  Then I should see translated "buyer.bulk_cart_items.create.flash.n_leads_bought" with options "count:2"
   And I should not see "Printers ultimate deal"
   And I should not see "Monitors ultimate deal"
   When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
