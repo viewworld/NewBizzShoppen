@@ -43,11 +43,18 @@ Then /^user with email "([^"]*)" and role "([^"]*)" has invoice for lead "([^"]*
   else
     payment_notification = nil
   end
-  invoice = Invoice.create(:user_id => customer.id, :paid_at => Time.now)
+  invoice = Invoice.create(:user_id => customer.id, :paid_at => transaction_type == "by paypal" ? Time.now : nil)
   if transaction_type == "by paypal"
     PaypalTransaction.create(:invoice => invoice, :payment_notification => payment_notification, :amount => lead.price, :paid_at => Time.now)
   else
     ManualTransaction.create(:invoice => invoice, :amount => lead.price, :paid_at => Time.now)
   end
   InvoiceLine.create(:invoice => invoice, :payable => lead_purchase, :name => lead_purchase.lead.header, :netto_price => lead_purchase.lead.price)
+end
+
+Then /^invoice lines for last invoice are paid for user with email "([^"]*)" and role "([^"]*)"$/ do |email, role|
+  customer = "User::#{role.camelize}".constantize.find_by_email(email)
+  invoice = customer.invoices.last
+  assert !invoice.paid_at.blank?
+  assert invoice.invoice_lines.detect { |il| il.paid_at.blank? }.nil?
 end

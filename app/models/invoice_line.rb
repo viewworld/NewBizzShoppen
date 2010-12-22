@@ -7,11 +7,18 @@ class InvoiceLine < ActiveRecord::Base
   belongs_to :invoice
 
   after_save :update_frozen_revenue
+  before_save :mark_as_paid
 
   private
 
   def update_frozen_revenue
     InvoiceLine.update_all "revenue_frozen = brutto_value", ["id = ?",id]
+  end
+
+  def mark_as_paid
+    if !invoice.paid_at.blank? and paid_at.blank?
+      self.paid_at = invoice.paid_at
+    end
   end
 
   public
