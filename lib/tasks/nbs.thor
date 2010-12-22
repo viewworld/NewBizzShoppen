@@ -123,6 +123,10 @@ class Nbs < Thor
       Currency.create!(params)
     end
 
+    if ENV["RAILS_ENV"] == 'test'
+      Currency.create!(:name => 'PLN', :symbol => '&pln;', :format => '%u%n', :active => true)
+    end
+
     unless Rails.env.production?
 
       if Category.count.zero?

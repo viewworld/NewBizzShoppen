@@ -38,11 +38,10 @@ Scenario: I should be able to edit currency
 @ao @_done
 Scenario: I should be able to destroy currency unless there are leads defined with that currency chosen
   When I follow translated "layout.main_menu.admin.currencies"
-  And I delete "Euro" currency
-  Then I should not see "Euro"
-  When currency with name "Euro" exists
-  And lead LeadInOjro exists with currency "Euro"
+  And I delete "PLN" currency
+  Then I should not see "PLN"
+  When currency with name "PLN" exists
+  And lead LeadInPLN exists with currency "PLN"
   And I follow translated "layout.main_menu.admin.currencies"
-  And I delete "Euro" currency
-  Then I should see "Euro"
-
+  And I delete "PLN" currency
+  Then I should see "PLN"
