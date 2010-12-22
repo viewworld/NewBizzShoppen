@@ -14,9 +14,15 @@ Background:
   And lead Monitors deal is bought by user gerard.jones@paerson22.com with role customer and is assigned to user lead_user.jones@paerson22.com with role lead_user
   And lead Printers deal is bought by user gerard.jones@paerson22.com with role customer and is assigned to user lead_user.jones@paerson22.com with role lead_user
   And I am signed up and confirmed as user with email bob@person.com and password supersecret and role admin
+  Then I sign in as bob@person.com with password supersecret
 
 @_done @tested_elsewhere
 Scenario: Create an invoice if a new paypal transaction (payment for cart content has been confirmed) is created in the system
 
-@_wip
+@_tested
 Scenario: Invoice lines for manually created invoice should be automatically generated
+  When I go to administration invoices
+  And I select "John Kohen" from "invoice_user_id"
+  And I press translated "administration.invoices.index.view.create_invoice"
+  Then I should see "Monitors deal"
+  And I should see "Printers deal"
