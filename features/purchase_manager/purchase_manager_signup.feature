@@ -1,4 +1,4 @@
-@purchase_manager @m3 @ao
+@purchase_manager @m3 @ao  @noguess
 Feature: Purchase Manager signup
 
   In order to get access to protected sections of the site
@@ -9,7 +9,7 @@ Feature: Purchase Manager signup
     Given I am on the homepage
     And I make sure current locale is English
 
-  @_done
+  @added @_done
   Scenario: User signs up with invalid data as a Purchase Manager
     When I go to purchase manager sign up
     And I fill in the following:
@@ -20,7 +20,7 @@ Feature: Purchase Manager signup
     Then I should see translated "activerecord.errors.models.user/purchase_manager.attributes.email.invalid"
     And I should see translated "activerecord.errors.models.user/purchase_manager.attributes.password.confirmation"
 
-  @_done
+  @added @_done
   Scenario: User signs up with valid data as a Purchase Manager
     When I go to purchase manager sign up
     And I fill in the following:
@@ -41,7 +41,7 @@ Feature: Purchase Manager signup
     Then I should see translated "flash.purchase_manager_accounts.actions.create.notice"
     And a confirmation message should be sent to jon@lajoie.ca
 
-  @_done
+  @added @_done
   Scenario: Purchase Manager confirms his email account
     Given I am signed up with email jon@lajoie.ca and password secret and role purchase_manager
     When I follow the confirmation link sent to jon@lajoie.ca with role purchase_manager

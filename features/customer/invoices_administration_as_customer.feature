@@ -1,4 +1,4 @@
-@invoices @$_customer @m0
+@invoices @$_customer @m0 @noguess
 Feature: Invoices administration as customer
 
 Scenario: I can see a list of my invoices 

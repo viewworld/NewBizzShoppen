@@ -20,12 +20,6 @@ class Category < ActiveRecord::Base
     end
   end
 
-  has_many :published_leads, :class_name => 'Lead', :conditions => ["published = ?", true] do
-    def including_subcategories
-      Lead.where(:category_id => proxy_owner.self_and_descendants.map(&:id)).published_only
-    end
-  end
-
   scope :within_accessible, lambda { |customer| where("categories.id IN (?)", customer.accessible_categories_ids) }
   scope :with_leads, where("total_leads_count > 0")
   scope :with_lead_request_owner, lambda { |owner| select("DISTINCT(name), categories.*").where("requested_by IS NOT NULL and lead_purchases.owner_id = ?", owner.id).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
@@ -34,7 +28,6 @@ class Category < ActiveRecord::Base
   scope :with_lead_purchase_assignee, lambda { |assignee| select("DISTINCT(name), categories.*").where("lead_purchases.assignee_id = ? and accessible = ?", assignee.id, true).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
 
   before_destroy :check_if_category_is_empty
-  before_save :handle_locking_for_descendants
 
   accepts_nested_attributes_for :image
 
@@ -63,6 +56,7 @@ class Category < ActiveRecord::Base
       c.update_attribute(:total_leads_count, c.leads.including_subcategories.count)
     end
   end
+  
 
   def refresh_published_leads_count_cache!
       Category.find(self_and_ancestors.map(&:id)).each do |c|
@@ -77,7 +71,7 @@ class Category < ActiveRecord::Base
         category.update_attribute(:is_locked, is_locked)
       end
     end
-  end
+  end  end 
 
   public
 

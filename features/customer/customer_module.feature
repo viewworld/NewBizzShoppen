@@ -52,7 +52,7 @@ Scenario: I can select lead purchase value range that I am interested in
   And I press translated "customer.interests.edit.view.button_update"
   Then I should see translated "customer.interests.update.flash.interests_update_successful"
 
-@_tested
+@_tested @noguess
 Scenario: I can select multiple lead areas/countries that I am interested in
   Given I select "Denmark" from "countries"
   Given I select "United Kingdom" from "countries"

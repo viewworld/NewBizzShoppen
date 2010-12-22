@@ -85,5 +85,5 @@ Scenario: I can toggle select/deselect accounts on active page
 @m0
 Scenario: I can perform a bulk block action
 
-@m0
+@m0 @noguess
 Scenario: I can perform a bulk invoice action

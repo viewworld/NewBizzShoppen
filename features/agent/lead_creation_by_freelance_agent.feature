@@ -35,7 +35,7 @@ Scenario: I can create a new lead and close
   And I should be on agents leads
   And I should see translated "flash.leads.actions.create.notice"
 
-@_tested
+@_tested @noguess
 Scenario: I can create a new lead and continue (create another one)
   Given Category Test category 1 is created
   And I follow translated "agent.leads.index.view.new_lead"
@@ -58,7 +58,7 @@ Scenario: I can create a new lead and continue (create another one)
   And I should see translated "flash.leads.actions.create.notice"
   And I should see translated "agent.leads.new.view.title"
 
-@_tested  @selenium
+@_tested  @selenium @noguess
 Scenario: I can add an extra language while creating lead. This will include lead title, purchase desc, hidden desc
   Given Category Test category 1 is created
   And Country Denmark is created

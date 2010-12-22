@@ -11,4 +11,5 @@ Scenario: possible fraud have blocked receiving money
 
 Scenario: I can browse possible frauds with pagination 
 
+@noguess
 Scenario: I can mark possible fraud as a mistake and money transfers will resume

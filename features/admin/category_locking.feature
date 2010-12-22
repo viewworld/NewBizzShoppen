@@ -1,5 +1,5 @@
 #To estimate
-@$_admin @m4 @tgn @category_locking
+@$_admin @m4 @tgn @noguess
 Feature: Category locking
 
 Background: Sign in user and set English locale

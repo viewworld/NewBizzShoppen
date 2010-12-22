@@ -46,14 +46,14 @@ Scenario: I can delete a language
   And I click hidden link by url regex "/agents\/leads\/\d+\/edit/"
   And I should not see "DK hidden description"
 
-@_tested
+@_tested @noguess
 Scenario: When the lead is bought and I want to edit it then "Notify the lead buyers" checkbox is present
   Given I go to agents leads
   And I follow translated "agent.leads.index.view.edit"
   Then I should see translated "activerecord.attributes.lead.notify_buyers_after_update"
 
 
-@m3 @tgn @_tested
+@m3 @tgn @_tested @noguess
 Scenario: When the lead is bought and I update it and check "Notify the lead buyers" then email is sent to all buyers
   Given I go to agents leads
   And I follow translated "agent.leads.index.view.edit"

@@ -73,7 +73,7 @@ Scenario: I can see uniqueness, price per lead
   Then I should see "333.99"
   And I should see "10"
 
-@m3 @tgn @_tested
+@m3 @tgn @_tested  @added
 Scenario: I can see clicks, exposure, hottness, novelty per lead
   Given lead Lead 1 exists with attributes "clicks_count:982,exposures_count:9821"
   And I go to agents leads
