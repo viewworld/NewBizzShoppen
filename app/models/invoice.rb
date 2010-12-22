@@ -48,6 +48,7 @@ class Invoice < ActiveRecord::Base
   after_validation :set_default_currency, :if => Proc.new{ |i| i.new_record? }
   after_update :cache_total_words, :update_revenue_frozen
   after_create :generate_invoice_lines_for_big_buyer
+  before_save :mark_all_invoice_lines_as_paid
 
   #Uncomment reject_if, if not validating invoice lines
   accepts_nested_attributes_for :invoice_lines, :allow_destroy => true #,:reject_if => lambda { |a| a[:name].blank? }
@@ -105,6 +106,15 @@ class Invoice < ActiveRecord::Base
     if user and user.big_buyer?
       User::Customer.find(user_id).lead_purchases.select { |lp| lp.invoice_line.blank? }.each do |lead_purchase|
         InvoiceLine.create(:invoice => self, :payable => lead_purchase, :name => lead_purchase.lead.header, :netto_price => lead_purchase.lead.price)
+      end
+    end
+  end
+
+  def mark_all_invoice_lines_as_paid
+    if paid_at_changed?
+      throw "d"
+      invoice_lines.each do |invoice_line|
+        invoice_line.update_attribute(:paid_at, paid_at)
       end
     end
   end

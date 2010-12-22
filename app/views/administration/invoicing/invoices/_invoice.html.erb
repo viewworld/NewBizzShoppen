@@ -8,7 +8,7 @@
         <%= link_to t("administration.invoices.index.view.show_invoice"), administration_invoicing_invoice_path(invoice) %>
         <%= link_to t("administration.invoices.index.view.edit_invoice"), edit_administration_invoicing_invoice_path(invoice) %>
         <%= link_to t("administration.invoices.index.view.remove_invoice"), administration_invoicing_invoice_path(invoice), :method => :delete, :confirm => t("administration.invoices.destroy.view.confirmation") %>
-        <%= link_to t("administration.invoices.index.view.set_as_paid"), :url => new_administration_invoicing_invoice_cash_flow_path(invoice.id), :method => :get %>
+        <%= link_to t("administration.invoices.index.view.set_as_paid"), new_administration_invoicing_invoice_cash_flow_path(invoice.id) %>
         <%= link_to t("administration.invoices.index.view.add_transaction"),new_administration_invoicing_payment_transaction_path(:invoice_id => invoice.id) %>
     </td>
 </tr>
