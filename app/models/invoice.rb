@@ -115,7 +115,6 @@ class Invoice < ActiveRecord::Base
 
   def mark_all_invoice_lines_as_paid
     if paid_at_changed?
-      throw "d"
       invoice_lines.each do |invoice_line|
         invoice_line.update_attribute(:paid_at, paid_at)
       end

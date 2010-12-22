@@ -523,7 +523,12 @@ en:
             with_sale_date_after_and_including: 'Sale date after and including'
             with_sale_date_before_and_including: 'Sale date before and including'
             not_paid: 'Not paid only'
-  payment_transactions:
+            payment_status: 'Payment status'
+      cash_flow:
+        view:
+          save_button: 'Save'
+
+    payment_transactions:
       index:
         view:
           header: 'Payment transactions'
