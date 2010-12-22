@@ -1,9 +1,0 @@
-<% semantic_form_for [:invoicing, @invoice, @invoice_lines_import], :url => administration_invoicing_invoice_invoice_lines_import_path(@invoice) do |form| %>
-    <% form.inputs do %>
-        <%= form.input :raw_text,:as => :text %>
-        <%= form.input :invoice_id, :as => :hidden, :value => @invoice.id  %>
-    <% end %>
-    <%= form.buttons %>
-<% end %>
-
-

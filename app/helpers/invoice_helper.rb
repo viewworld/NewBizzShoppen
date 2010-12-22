@@ -41,5 +41,12 @@ module InvoiceHelper
     link_to_function(name, (%{add_fields(this, '#{association}', '#{escape_javascript(fields)}')}), :id => "add_fields_#{association}", :class => "add_line")
   end
 
+  def options_for_with_paid
+    [
+        [t('administration.invoices.index.view.paid'),1],
+        [t('administration.invoices.index.view.not_paid'),0],
+    ]
+  end
+
 
 end

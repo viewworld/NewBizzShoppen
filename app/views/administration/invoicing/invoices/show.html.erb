@@ -4,18 +4,18 @@
 
   <ul class="actions">
     <%= link_to_function t("administration.invoices.show.view.print_invoice"), '$("#invoice_container").printElement()', :icon => "print" %>
-    <%= link_to t("administration.invoices.show.view.download_pdf"), administration_invoicing_invoice_path(@invoice, :format => :pdf), :icon => "pdf" %>
-    <%= link_to t("administration.invoices.show.view.set_as_paid"), new_administration_invoicing_invoice_cash_flow_path(@invoice.id), :remote => true, :method => :get, :icon => "paid" %>
-    <%= link_to t("administration.invoices.show.view.send"), new_administration_invoicing_invoice_mailing_path(@invoice), :remote => true, :method => :get, :icon => "send" %>
-    <%= link_to t("administration.invoices.show.view.edit_invoice"), edit_administration_invoicing_invoice_path(@invoice), :icon => "edit" %>
-    <%= link_to t("administration.invoices.show.view.go_back"), administration_invoicing_invoices_path, :icon => "back" %>
+    <%= link_to t("administration.invoices.show.view.download_pdf"), administration_invoicing_invoice_path(@invoice, :format => :pdf) %>
+    <%= link_to t("administration.invoices.show.view.set_as_paid"), new_administration_invoicing_invoice_cash_flow_path(@invoice.id), :method => :get %>
+    <%= link_to t("administration.invoices.show.view.send"), new_administration_invoicing_invoice_mailing_path(@invoice), :method => :get %>
+    <%= link_to t("administration.invoices.show.view.edit_invoice"), edit_administration_invoicing_invoice_path(@invoice) %>
+    <%= link_to t("administration.invoices.show.view.go_back"), administration_invoicing_invoices_path %>
   </ul>
 
   <br/><h4><%= t("administration.invoices.show.view.status") %>: <%= @invoice.status.to_s.capitalize %></h4>
 
   <div class="invoice_container" id="invoice_container">
-    <%= render :partial => "administration/invoicing/invoices/invoice_preview", :locals => {:version => :original} %> <hr/>
-    <%= render :partial => "administration/invoicing/invoices/invoice_preview", :locals => {:version => :copy} %>
+    <%= render :partial => "administration/invoicing/invoices/invoice_preview", :locals => {:version => :original, :invoice => @invoice} %> <hr/>
+    <%= render :partial => "administration/invoicing/invoices/invoice_preview", :locals => {:version => :copy, :invoice => @invoice} %>
   </div>
 
   <% unless @invoice.payment_transactions.empty?  %>

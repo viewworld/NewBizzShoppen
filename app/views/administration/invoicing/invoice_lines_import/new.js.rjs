@@ -1,3 +1,0 @@
-page.replace_html "osx-modal-data", :partial => "/administration/invoicing/invoice_lines_import/new"
-page.replace_html "osx-modal-title", "Import new invoice line"
-page << "showModal();"

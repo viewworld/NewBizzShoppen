@@ -484,9 +484,18 @@ en:
         view:
           header: 'Edit invoice'
           save_button: 'Save'
+          save_changes: 'Save changes'
           add_line: 'Add line'
-          import_lines: 'Import lines'
           remove_line: 'Remove line'
+          set_as_paid: 'Set as paid'
+          show_invoice: 'Show invoice'
+          go_back: 'Go back'
+          set_payable_for_invoice_items: 'Set payable for invoice items'
+          form:
+            general_information: 'General information'
+            customer_information: 'Customer information'
+            seller_information: 'Seller information'
+            payment_information: 'Payment information'
       destroy:
         view:
           confirmation: 'Are you sure?'
@@ -498,7 +507,7 @@ en:
           invoice_number: 'Invoice number'
           customer: 'Customer'
           revenue_frozen: 'Revenue frozen'
-          paid_at: 'Paid at'
+          status: 'Status'
           search_label: 'Search'
           create_invoice: 'Create invoice'
           show_invoice: 'Show'
@@ -507,12 +516,14 @@ en:
           set_as_paid: 'Set as paid'
           add_transaction: 'Add transaction'
           paid: 'Paid'
+          not_paid: 'Not paid'
+          total: 'Total'
           search:
             with_keyword: 'Keyword'
             with_sale_date_after_and_including: 'Sale date after and including'
             with_sale_date_before_and_including: 'Sale date before and including'
             not_paid: 'Not paid only'
-    payment_transactions:
+  payment_transactions:
       index:
         view:
           header: 'Payment transactions'
