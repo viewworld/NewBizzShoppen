@@ -47,6 +47,7 @@ class Invoice < ActiveRecord::Base
   after_create :duplicate_company_and_customer_information, :set_year
   after_validation :set_default_currency, :if => Proc.new{ |i| i.new_record? }
   after_update :cache_total_words, :update_revenue_frozen
+  after_create :generate_invoice_lines_for_big_buyer
 
   #Uncomment reject_if, if not validating invoice lines
   accepts_nested_attributes_for :invoice_lines, :allow_destroy => true #,:reject_if => lambda { |a| a[:name].blank? }
@@ -98,6 +99,14 @@ class Invoice < ActiveRecord::Base
 
   def get_template_source
     File.open(File.join((Rails::Configuration.new.view_path), "invoicing", "invoices", "_invoice_preview.erb")){|file| file.read}
+  end
+
+  def generate_invoice_lines_for_big_buyer
+    if user and user.big_buyer?
+      User::Customer.find(user_id).lead_purchases.select { |lp| lp.invoice_line.blank? }.each do |lead_purchase|
+        InvoiceLine.create(:invoice => self, :payable => lead_purchase, :name => lead_purchase.lead.header, :netto_price => lead_purchase.lead.price)
+      end
+    end
   end
 
   public
