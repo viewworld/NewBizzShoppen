@@ -11,6 +11,7 @@ en:
     help_link: 'Help'
     yes_label: 'Yes'
     no_label: 'No'
+    read_more: 'read more'
   layout:
     main_menu:
       admin:
