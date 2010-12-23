@@ -2,7 +2,6 @@
 class Buyers::BulkLeadPurchaseUpdateController < Buyers::BuyerController
 
   def create
-    throw params
     if params[:lead_purchase_ids]
       current_user.lead_purchases.where(:id => params[:lead_purchase_ids]).each do |lead_purchase|
         lead_purchase.state = params[:bulk_state] unless params[:bulk_state].blank?
