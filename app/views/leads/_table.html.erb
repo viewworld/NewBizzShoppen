@@ -52,8 +52,8 @@
           <td><%= lead.header %></td>
           <td><%= lead.clicks_count %></td>
           <td><%= lead.exposures_count %></td>
-          <td><%= t("models.lead.novelty.lvl#{lead.novelty_level}") %></td>
           <td><%= t("models.lead.hotness.lvl#{lead.hotness_level}") %></td>
+          <td><%= lead.published ? t("models.lead.novelty.lvl#{lead.novelty_level}") : "-" %></td>
           <td><%= lead.sale_limit %></td>
           <td><%= as_currency(lead.price,lead.currency) %></td>
           <td><%= lead.lead_purchases_counter %></td>
