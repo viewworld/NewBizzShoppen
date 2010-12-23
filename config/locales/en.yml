@@ -210,13 +210,13 @@ en:
     show:
       view:
         header: 'Home'
-        buyer: 'Buyer'
+        buyer: 'Sales manager'
         agent: 'Agent'
         remember_me: 'Remember me'
         sign_in: 'Sign in'
         signup_message: "Don't have an account yet"
         agent_signup: 'Freelance agent signup'
-        buyer_signup: 'Lead buyer signup'
+        buyer_signup: 'Sales manager signup'
         purchase_manager_signup: 'Purchase Manager signup'
         _signup: 'Lead buyer signup'
         forgotten_password_link: "Forgot your password?"
@@ -687,7 +687,7 @@ en:
   buyer_accounts:
     new:
       view:
-        title: 'Lead Buyer signup'
+        title: 'Sales manager signup'
         button_create_account: 'Create'
 
   buyer_home:
@@ -710,7 +710,7 @@ en:
     show:
       view:
         header_welcome: 'Welcome to our site'
-        buyer_link: 'click here if you are a buyer'
+        buyer_link: 'click here if you are a sales manager'
         header_best_sellers: 'Best sellers'
         header_latest_leads: 'Latest leads'
         header_news: 'News'
@@ -920,7 +920,7 @@ en:
         send_email_button: 'Send'
         email_subjects:
           agent_inquiry: 'Agent inquiry'
-          buyer_inquiry: 'Buyer inquiry'
+          buyer_inquiry: 'Sales manager inquiry'
     create:
       flash:
         email_sent_successfully: 'Your email was sent successfully to staff at NBS'
