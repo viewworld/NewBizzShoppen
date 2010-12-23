@@ -198,7 +198,7 @@ en:
     index:
       view:
         agents_header: 'AGENTS NEWS'
-        buyers_header: 'BUYERS NEWS'
+        buyers_header: 'SALES MANAGER NEWS'
         read_more_link: 'read more'
         newer_link: 'Newer'
         older_link: 'Older'
@@ -218,7 +218,7 @@ en:
         agent_signup: 'Freelance agent signup'
         buyer_signup: 'Sales manager signup'
         purchase_manager_signup: 'Purchase Manager signup'
-        _signup: 'Lead buyer signup'
+        _signup: 'Sales manager signup'
         forgotten_password_link: "Forgot your password?"
         resend_confirmation_instructions: "Didn't receive confirmation instructions?"
 
@@ -381,7 +381,7 @@ en:
       index:
         view:
           header: 'News'
-          buyers: 'buyers'
+          buyers: 'sales managers'
           agents: 'agents'
           new_news: 'New news'
           search_button: 'Search'
@@ -703,7 +703,7 @@ en:
         description_label: 'Description:'
         read_more_link: 'read more'
         complete_list_link: 'complete list'
-        create_new_buyer_account: 'Create new buyer account'
+        create_new_buyer_account: 'Create new sales manager account'
 
 
   agent_home:
@@ -974,7 +974,7 @@ en:
         newsletter_on: 'I want to receive the newsletter'
       lead:
         purchase_decision_date: 'Purchase decision date'
-        notify_buyers_after_update: 'Notify buyers about changes'
+        notify_buyers_after_update: 'Notify sales managers about changes'
     errors:
       models:
         user:
