@@ -202,6 +202,9 @@ en:
         read_more_link: 'read more'
         newer_link: 'Newer'
         older_link: 'Older'
+    show:
+      view:
+        header: 'News'
 
   home:
     show:
