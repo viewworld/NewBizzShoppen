@@ -43,11 +43,11 @@ Scenario: I can filter listing of all news by scope (buyers, agents, both) and b
   Then I should see "BuyerNews"
   And I should not see "AgentNews"
 
-@selenium @_done
+@_done @selenium
 Scenario: I can edit existing news entry
   When news exists with attributes "title:FirstNews"
   And I follow translated "layout.main_menu.admin.news"
-  And I follow translated "administration.news.index.view.edit_link"
+  And I click hidden link by url regex "/administration\/news\/\d+\/edit/"
   And I fill in "news_title" with "OtherTitle"
   And I fill in "news_content_editor" ckeditor with "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   And I press translated "administration.news.edit.view.button_save"
@@ -56,7 +56,7 @@ Scenario: I can edit existing news entry
 @selenium @_done
 Scenario: I can create new news entry
   When I follow translated "layout.main_menu.admin.news"
-  And I press translated "administration.news.index.view.new_news"
+  And I follow translated "administration.news.index.view.new_news"
   And I fill in "news_title" with "FirstNews"
   And I fill in "news_content_editor" ckeditor with "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   And I press translated "administration.news.edit.view.button_save"
@@ -65,7 +65,7 @@ Scenario: I can create new news entry
 @selenium @_done
 Scenario: I have to specify both title and content for news entry
   When I follow translated "layout.main_menu.admin.news"
-  And I press translated "administration.news.index.view.new_news"
+  And I follow translated "administration.news.index.view.new_news"
   And I fill in "news_title" with "FirstNews"
   And I press translated "administration.news.edit.view.button_save"
   Then I should see "can't be blank"
@@ -74,17 +74,17 @@ Scenario: I have to specify both title and content for news entry
   And I press translated "administration.news.edit.view.button_save"
   Then I should see "can't be blank"
 
-@_done
+@_done @selenium
 Scenario: I can specify if news should be displayed for buyers, agents or both(?)
   When I follow translated "layout.main_menu.admin.news"
-  And I press translated "administration.news.index.view.new_news"
+  And I follow translated "administration.news.index.view.new_news"
   And I select translated "administration.news.index.view.agents" from "news_scope"
   And I select translated "administration.news.index.view.buyers" from "news_scope"
 
 @selenium @_done
 Scenario: I can use WYSIWYG to edit news entry content
   When I follow translated "layout.main_menu.admin.news"
-  And I press translated "administration.news.index.view.new_news"
+  And I follow translated "administration.news.index.view.new_news"
   Then I should see ckeditor on the page
 
 @_done @nontestable
@@ -100,7 +100,7 @@ Scenario: I can filter between agent and buyer
   Then I should see "AgentNews"
   And I should not see "BuyerNews"
 
-@_added @_done
+@added @_done
 Scenario: I can destroy news
   When news exists with attributes "title:FirstNews"
   And I follow translated "layout.main_menu.admin.news"

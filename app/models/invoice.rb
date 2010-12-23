@@ -24,6 +24,7 @@ class Invoice < ActiveRecord::Base
   belongs_to :user
   belongs_to :currency
 
+  has_many :payment_transactions
   has_many :invoice_lines, :dependent => :destroy
   has_many :invoice_lines_grouped_by_vat_rate, :select => "vat_rate, SUM(invoice_lines.netto_value) as netto_value_sum,
                                                            SUM(invoice_lines.vat_value) as vat_value_sum,
@@ -49,6 +50,8 @@ class Invoice < ActiveRecord::Base
   after_create :duplicate_company_and_customer_information, :set_year
   after_validation :set_default_currency, :if => Proc.new{ |i| i.new_record? }
   after_update :cache_total_words, :update_revenue_frozen
+  after_create :generate_invoice_lines_for_big_buyer
+  before_save :mark_all_invoice_lines_as_paid
 
   #Uncomment reject_if, if not validating invoice lines
   accepts_nested_attributes_for :invoice_lines, :allow_destroy => true #,:reject_if => lambda { |a| a[:name].blank? }
@@ -100,6 +103,22 @@ class Invoice < ActiveRecord::Base
 
   def get_template_source
     File.open(File.join(RAILS_ROOT, "app", "views", "administration", "invoicing", "invoices", "_invoice_preview.erb")){|file| file.read}
+  end
+
+  def generate_invoice_lines_for_big_buyer
+    if user and user.big_buyer?
+      User::Customer.find(user_id).lead_purchases.select { |lp| lp.invoice_line.blank? }.each do |lead_purchase|
+        InvoiceLine.create(:invoice => self, :payable => lead_purchase, :name => lead_purchase.lead.header, :netto_price => lead_purchase.lead.price)
+      end
+    end
+  end
+
+  def mark_all_invoice_lines_as_paid
+    if paid_at_changed?
+      invoice_lines.each do |invoice_line|
+        invoice_line.update_attribute(:paid_at, paid_at)
+      end
+    end
   end
 
   public

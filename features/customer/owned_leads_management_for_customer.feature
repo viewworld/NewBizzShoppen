@@ -22,17 +22,17 @@ Background:
   And lead Keyboards deal exists with attributes "creator_name:Philip Glass,price:9893.56,purchase_value:4002.21,description:Public description for keyboards"
   Then I sign in as customer@person.com with password supersecret
 
-@tgn @done @_tested @selenium
+@tgn @_tested @selenium
 Scenario: I can assign any of my leads to any of lead users that belong to my account
   Then I go to buyer lead purchases
   Given I select "Martin Gleesse" from "assignee_id"
   And I go to buyer lead purchases
   Then "assignee_id" should be selected for value "Martin Gleesse"
 
-@tgn @m3 @done @_non_testable
+@_done @tgn @m3 @non_testable @noguess
 Scenario: When I assign a user to a lead, then assigned_at time is recorded
 
-@tgn @m3 @done @_tested @selenium
+@tgn @m3 @_done @_tested @selenium
 Scenario: I can assign any of my leads back to myself
   Given I go to buyer lead purchases
   And I select "Martin Gleesse" from "assignee_id"
@@ -41,14 +41,14 @@ Scenario: I can assign any of my leads back to myself
   Given I go to buyer lead purchases
   Then "assignee_id" should be selected for value "Liane Young"
 
-@tgn @done @_tested @selenium
+@tgn @_tested @selenium
 Scenario: I can unassing any of my leads from lead user that belong to my account and had that lead assigned to his account
   Then I go to buyer lead purchases
   Given I select "" from "assignee_id"
   And I go to buyer lead purchases
   Then "assignee_id" should be selected for value ""
 
-@tgn @done @_tested
+@tgn @_done @_tested
 Scenario: Assignment should not be possible/visible if I have not lead users associated with me
   Given I am not sign in
   Given user customer@person.com with role customer has no subaccounts
@@ -57,7 +57,7 @@ Scenario: Assignment should not be possible/visible if I have not lead users ass
   Then I should not see field "assignee_id"
   And I should not see field "bulk_assignee_id"
 
-@tgn @done @_tested @selenium
+@tgn @_done @_tested @selenium
 Scenario: I can transfer assignment of any of my leads from any of lead users that belong to my account to any other lead user that belong to my account
   Then I go to buyer lead purchases
   Given I select "Martin Gleesse" from "assignee_id"
@@ -66,7 +66,7 @@ Scenario: I can transfer assignment of any of my leads from any of lead users th
   And I go to buyer lead purchases
   Then "assignee_id" should be selected for value "John McCoy"
 
-@tgn @done @_non_testable
+@tgn @_done @_non_testable
 Scenario: Requested leads listing should lack pagination
   Given pagination per page size in model LeadRequest is set to 1
   Then I go to customers lead requests
@@ -74,7 +74,7 @@ Scenario: Requested leads listing should lack pagination
   And I should see "Plotters ultimate deal"
 
 
-@tgn @done @_tested
+@tgn @_done @_tested
 Scenario: I should see who has requested each lead
   Then I go to customers lead requests
   And I should see "John McCoy"
@@ -108,10 +108,10 @@ Scenario: I should see created by and certification level for each requested lea
   And I should see "Philip Glass"
   And I should see translated "models.lead.novelty.lvl0"
 
-@m0
+@m0 @_added
 Scenario: I should see rating % for each requested lead
 
-@tgn @done @_tested
+@tgn @_done @_tested
 Scenario: I can delete lead requested by lead user that belong to my account
   Then I go to customers lead requests
   And I follow translated "customer.lead_requests.index.view.reject_lead_request_link"
@@ -125,7 +125,7 @@ Scenario: I can bulk delete leads requested by lead users that belong to my acco
   And I follow translated "customer.lead_requests.index.view.button_bulk_destroy_lead_request"
   Then I should see translated "flash.bulk_lead_requests.actions.destroy.notice"
 
-@tgn @_tested  @selenium
+@tgn @_tested  @selenium  @noguess
 Scenario: I can set response deadline for lead
   Given I go to buyer lead purchases
   And I fill in "response_deadline" with "2011-01-01"
@@ -134,7 +134,7 @@ Scenario: I can set response deadline for lead
   Given I go to buyer lead purchases
   Then "response_deadline" should be selected for "2011-01-01"
 
-@tgn @_tested @selenium
+@tgn @_tested @selenium  @noguess
 Scenario: I can bulk set response deadlines for lead
   Given I go to buyer lead purchases
   And I check "mark_all"
@@ -142,16 +142,16 @@ Scenario: I can bulk set response deadlines for lead
   And I follow translated "lead_buyer.lead_purchases.index.view.bulk_update_button"
   Then I should see translated "buyer.bulk_lead_purchase_update.create.flash.lead_purchases_updated_successfully"
 
-@ao @nontestable
+@ao @nontestable  @noguess
 Scenario: I am notified by email when dealine expires and status of lead has not changed
 
-@m0
+@m0  @noguess
 Scenario: I can create a comment for lead that I have access for
 
 #Accessible from owned leads listing
 #Just prepare interface for sending an email (based on email template as ususal) with recipient field read-only and prepopulated
 #Have a look at bulk_lead_share_by_email_controller.rb for sume hints regarding prerendering email template
-@ao @_done @_tested
+@ao @_tested
 Scenario: I can email the lead if email information were provided
   Given I am signed up and confirmed as user with email customer@nbs.com and password secret and role customer
   And I sign out
@@ -180,14 +180,14 @@ Scenario: I can bulk send selected leads by email
   Then I should see translated "flash.bulk_lead_share_by_email.actions.create.notice"
 
 #Adjust to current requirements first
-@_todo @m4 @tgn
+@m4 @tgn @_done @non_testable
 Scenario: I can rate lead that I have access for (good, bad, fake)
 
 #Adjust to current requirements first
-@_todo @m4 @tgn
+@m4 @tgn @_done @non_testable
 Scenario: I can bulk rate leads that I have access for (good, bad, fake)
 
-@ao @_tested @_done @selenium
+@ao @_tested @selenium
 Scenario: I can set status of lead
   And I follow translated "layout.main_menu.lead_buyer.lead_purchases"
   # And I select translated "lead_purchases.statuses.contacted" from "state" [within ".lead tr:first-of-type"]
@@ -195,7 +195,7 @@ Scenario: I can set status of lead
   And I follow translated "layout.main_menu.lead_buyer.lead_purchases"
   Then "state" should be selected for value translated "lead_purchases.statuses.contacted"
 
-@ao @_tested @_done @selenium
+@ao @_tested @selenium
 Scenario: I can bulk set status of leads
   And I follow translated "layout.main_menu.lead_buyer.lead_purchases"
   And I select translated "lead_purchases.statuses.contacted" from "bulk_state" within "#bulk_actions_form"

@@ -9,5 +9,5 @@ class ::User::LeadBuyer < ::User
            :through => :lead_purchases,
            :conditions => {"lead_purchases.accessible" => false, "lead_purchases.paid" => false, "lead_purchases.requested_by" => nil},
            :source => :lead
-
+  has_many :invoices, :foreign_key => "user_id"
 end

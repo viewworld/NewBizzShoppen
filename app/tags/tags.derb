@@ -1,6 +1,6 @@
 <def tag="lbuilder_layout">
   <div class="clc" style="clear:both;">
-    <% %w(        t m b        ).each do |row_code| %>
+    <% %w(         t m b         ).each do |row_code| %>
         <%= render :partial => "/layouts/row", :locals => {:row_code => row_code} %>
     <% end %>
   </div>
@@ -49,12 +49,12 @@
 
 
 <def tag="ibt" attrs="c,icon">
-  <div class="bt<%= c.nil? ? "" : " #{c}" %>">
+  <div class="bt<%= icon.nil? ? "" : " bt_icon" %><%= c.nil? ? "" : " #{c}" %>">
     <span>
+      <param:content/>
       <% unless icon.nil? %>
         <%= image_tag("bt_icons/#{icon}.png") %>
       <% end %>
-      <param:content/>
     </span>
   </div>
 </def>

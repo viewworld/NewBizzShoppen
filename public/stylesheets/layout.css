@@ -1,6 +1,7 @@
 /* layout.css - all layout styles without content part */
 
-body {
+body
+{
     width: 1000px;
     margin: auto;
     padding: 0px;
@@ -10,7 +11,7 @@ body {
 
 p.notice
 {
-    background:#CEFF7F;
+    background: #CEFF7F;
 }
 
 p.error
@@ -18,69 +19,68 @@ p.error
     background: #FFD86F;
 }
 
-
 .leads_listing li
 {
-list-style:none;
-background: lightGrey;
-display:block;
-overflow:hidden;
-border-bottom: 1px dotted;
-margin: 5px 0;
+    list-style: none;
+    background: lightGrey;
+    display: block;
+    overflow: hidden;
+    border-bottom: 1px dotted;
+    margin: 5px 0;
 }
 
 .leads_listing li div.general
 {
-width: 70%;
-float:left;
+    width: 70%;
+    float: left;
 }
 
 .leads_listing li div.details
 {
-width: 29%;
-float:right;
+    width: 29%;
+    float: right;
 }
 
 .leads_listing li div.stats
 {
-clear:both;
+    clear: both;
 }
 
 div.cart
 {
-background: peachPuff;
-width: 400px;
+    background: peachPuff;
+    width: 400px;
 }
-
 
 ul.main_menu li
 {
-list-style:none;
-float:left;
+    list-style: none;
+    float: left;
 }
 
 ul.main_menu a
 {
-display:block;
-border: 1px solid black;
-padding: 3px 6px;
-margin: 0px 2px;
-font-size: 16px;
-text-decoration:none;
+    display: block;
+    border: 1px solid black;
+    padding: 3px 6px;
+    margin: 0px 2px;
+    font-size: 16px;
+    text-decoration: none;
 }
 
 ul.main_menu li.active a,
 ul.main_menu a:hover
 {
-background: black;
-color:white;
+    background: black;
+    color: white;
 }
 
-
-p.inline-errors{
-    background:orange;
+p.inline-errors
+{
+    background: orange;
 }
 
-.highlight{
+.highlight
+{
     background: yellow;
 }

@@ -38,10 +38,11 @@ Scenario: I can see my unique RSS feed URL
 @_tested
 Scenario: I can select if I want to be notified about new leads matching my interests criteria
   Then I check "user_notify_about_new_leads"
+
 @_tested
 Scenario: I can select multiple lead categories that I am interested in
-  Given I check "category_0"
-  And I check "category_1"
+  Given I check "category_1"
+  And I check "category_2"
   And I press translated "customer.interests.edit.view.button_update"
   Then I should see translated "customer.interests.update.flash.interests_update_successful"
 
@@ -52,7 +53,7 @@ Scenario: I can select lead purchase value range that I am interested in
   And I press translated "customer.interests.edit.view.button_update"
   Then I should see translated "customer.interests.update.flash.interests_update_successful"
 
-@_tested
+@_tested @noguess
 Scenario: I can select multiple lead areas/countries that I am interested in
   Given I select "Denmark" from "countries"
   Given I select "United Kingdom" from "countries"

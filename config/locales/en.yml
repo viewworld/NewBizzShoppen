@@ -23,6 +23,7 @@ en:
         news: News
         currencies: Currencies
         invoices: Invoices
+        payment_transactions: 'Transactions'
       agent:
         leads: My created leads
       call_centre:
@@ -114,6 +115,7 @@ en:
       contact_name: 'Contact name:'
       clicks_count_label: 'Clicks:'
       exposures_count_label: 'Exposures:'
+      average_rating_label: 'Rating:'
       sale_limit_label: 'Uniqueness:'
       novelty_label: 'Novelty:'
       hotness_label: 'Hotness:'
@@ -187,6 +189,7 @@ en:
       request_lead: Request lead
       button_bulk_create_lead_request: 'Request leads'
       button_bulk_create_cart_item: 'Add to cart'
+      button_bulk_buy_leads: 'Buy leads'
       bestsellers_header: Best sellers
       latest_header: Latest leads
       featured_header: Featured leads
@@ -470,6 +473,13 @@ en:
           cashflow: 'Cashflow'
           yes_label: 'Yes'
           no_label: 'No'
+          payment_transactions:
+            header: 'Transactions'
+            type: 'Type'
+            paid_at: 'Paid at'
+            type_paypal: 'PayPal'
+            type_manual: 'Manual'
+            amount: 'Amount'
       edit:
         view:
           header: 'Edit invoice'
@@ -504,6 +514,7 @@ en:
           edit_invoice: 'Edit'
           remove_invoice: 'Delete'
           set_as_paid: 'Set as paid'
+          add_transaction: 'Add transaction'
           paid: 'Paid'
           not_paid: 'Not paid'
           total: 'Total'
@@ -516,6 +527,33 @@ en:
       cash_flow:
         view:
           save_button: 'Save'
+
+    payment_transactions:
+      index:
+        view:
+          header: 'Payment transactions'
+          search_label: 'Search'
+          edit: 'Edit'
+          invoice_number: 'Invoice number'
+          transaction_type: 'Type'
+          transaction_type_paypal: 'Paypal'
+          transaction_type_manual: 'Manual'
+          customer_name: 'Customer name'
+          customer_address: 'Customer address'
+          amount: 'Amount'
+          actions: 'Actions'
+          manually_register_transaction: 'Manually register a transaction'
+          search_button: 'Search'
+          search:
+            with_keyword: 'Keyword:'
+      new:
+        view:
+          header: 'New transaction'
+          button_create: 'Create'
+      edit:
+        view:
+          header: 'Edit transaction'
+          button_update: 'Save'
 
   agent:
     leads:
@@ -621,10 +659,12 @@ en:
           lead_price_header: Price
           total_label: Total
           remove_item_link: Remove item
+          checkout_link: Checkout
     bulk_cart_items:
       create:
         flash:
-          n_cart_items_added: '%{count} leads has been added to cart'
+          n_cart_items_added: '%{count} leads have been added to cart'
+          n_leads_bought: '%{count} leads have been bought'
           no_cart_items_added: 'No leads added to cart'
     bulk_lead_purchase_update:
       create:
@@ -1049,3 +1089,8 @@ en:
     bulk_subaccounts_update:
       update:
         notice: 'Selected subaccounts have been updated.'
+    payment_transactions:
+      create:
+        notice: 'Manual transaction has been successfully created.'
+      update:
+        notice: 'Manual transaction has been successfully updated.'

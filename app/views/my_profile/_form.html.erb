@@ -29,7 +29,22 @@
   <fieldset class="inputs labels_ta_r labels_240">
     <ol class="align_inputs">
       <%= form.input :country, :as => :select, :collection => Country.all %>
+      <%= form.input :linkedin_url %>
       <%= form.input :newsletter_on, :as => :boolean %>
     </ol>
   </fieldset>
 </div>
+
+<% if current_user.can_edit_payout_information %>
+<hl />
+
+<div class="pdd_10 no_pdd_t">
+  <fieldset class="inputs labels_ta_r labels_240">
+    <ol class="align_inputs">
+      <%= form.input :paypal_email %>
+      <%= form.input :bank_swift_number %>
+      <%= form.input :bank_iban_number %>
+    </ol>
+  </fieldset>
+</div>
+<% end %>

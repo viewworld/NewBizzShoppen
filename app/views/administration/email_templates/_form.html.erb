@@ -5,7 +5,16 @@
       <%= form.input :from %>
       <%= form.input :bcc %>
       <%= form.input :cc %>
-      <%= form.input :body, :input_html => {:style => "width: 600px; height: 250px" }  %>
+      <%= form.input :body,
+                        :label => false,
+                        :as => :ckeditor,
+                        :input_html => {
+                            :width => '1085px',
+                            :height => '300px',
+                        :toolbar => "Email"
+                            }
+
+      %>
     </ol>
   </fieldset>
 </div>

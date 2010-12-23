@@ -33,7 +33,7 @@ Scenario: Lead purchase is marked with "has access" after creation
   When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
   Then I should see "Printers ultimate deal"
 
-@_done
+@_done  @noguess
 Scenario: I can instant-buy lead requested by lead user that belongs to my account and I will see a notification “You added lead to your list”
   When an user with role lead_user and email ann.lead_user2@person.com exists as subaccount for customer customer@person.com
   And I sign out
@@ -53,8 +53,8 @@ Scenario: I can bulk instant-buy leads and I will see a notification “You adde
   And I go to leads
   And I follow "Computers"
   And I check "mark_all"
-  And I press translated "leads.index.add_to_cart_link"
-  Then I should see translated "buyer.bulk_cart_items.create.flash.n_cart_items_added" with options "count:2"
+  And I press translated "leads.index.button_bulk_buy_leads"
+  Then I should see translated "buyer.bulk_cart_items.create.flash.n_leads_bought" with options "count:2"
   And I should not see "Printers ultimate deal"
   And I should not see "Monitors ultimate deal"
   When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
@@ -71,7 +71,7 @@ Scenario: I can instant-buy lead I will see a notification “You added lead to 
   When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
   Then I should see "Printers ultimate deal"
 
-@selenium @_done
+@selenium @_done  @noguess
 Scenario: I can bulk instant-buy leads requested by lead user that belongs to my account and I will see a notification “You added {n} leads to your list”
   When lead Monitors ultimate deal exists within category Computers
   When an user with role lead_user and email ann.lead_user2@person.com exists as subaccount for customer customer@person.com

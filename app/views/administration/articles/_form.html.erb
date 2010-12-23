@@ -4,9 +4,10 @@
       <%= form.input :title %>
       <%= form.input :content,
                         :as => :ckeditor,
+                        :label => false,
                         :input_html => {
                             :width => '1085px',
-                            :height => '500px',
+                            :height => '300px',
                             :swf_params => {
                                 :resource_type => @article.class.name,
                                 :resource_id => @article.id
@@ -16,4 +17,3 @@
     </ol>
   </fieldset>
 </div>
-<hl/>

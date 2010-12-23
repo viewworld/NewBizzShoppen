@@ -20,6 +20,7 @@ class LeadPurchase < LeadPurchaseBase
 
   belongs_to :assignee, :class_name => "User::LeadUser", :foreign_key =>  "assignee_id"
   belongs_to :lead, :counter_cache => :lead_purchases_counter
+  has_one :invoice_line, :as => :payable
 
   default_scope where(:requested_by => nil)
 
@@ -89,6 +90,12 @@ class LeadPurchase < LeadPurchaseBase
     if !assignee_id.blank? and assignee_id_changed?
       self.assigned_at = Time.now
     end
+  end
+
+  def paid!
+    self.paid = true
+    self.accessible = true
+    save
   end
 
   public

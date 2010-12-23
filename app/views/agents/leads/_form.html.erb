@@ -1,7 +1,7 @@
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs labels_ta_r labels_240">
     <ol>
-      <%= form.input :category_id, :as => :select, :collection => Category.all %>
+      <%= form.input :category_id, :as => :select, :collection => Category.without_locked %>
       <%= form.input :country_id, :as => :select, :collection => Country.all %>
     </ol>
   </fieldset>

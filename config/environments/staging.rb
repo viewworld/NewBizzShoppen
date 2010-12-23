@@ -24,9 +24,16 @@ Nbs::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
 
   #Required by Devise
-  config.action_mailer.default_url_options = {:host => 'localhost:3000'}
+  config.action_mailer.default_url_options = {:host => 'nbs.selleo.com'}
 
-  config.action_mailer.delivery_method = :test
+  config.action_mailer.delivery_method     = :smtp
+  config.action_mailer.smtp_settings       = {:address              => "smtp.gmail.com",
+                                              :port                 => 587,
+                                              :domain               => 'newbizzshoppen.com',
+                                              :user_name            => 'selleo.test1@gmail.com',
+                                              :password             => 'selleotest',
+                                              :authentication       => 'plain',
+                                              :enable_starttls_auto => true}
 end
 
 I18n.default_locale = :"en"

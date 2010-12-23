@@ -1,24 +1,29 @@
 <column-mc:>
-  <header><%= t('administration.news.edit.view.header') %></header>
+
+  <header>
+    <%= t('administration.news.edit.view.header') %>
+  </header>
+
+  <%#= link_to t("common.back_link"), administration_news_index_path %>
+  <%= form_for @news, :as => :news, :url => administration_news_path(@news), :html => {:method => :delete, :id => "delete_news_form"} do |form| %>
+  <% end %>
 
   <%= semantic_form_for @news, :as => :news, :url => administration_news_path(@news), :html => {:method => :put} do |form| %>
       <frm title="#{@news.title}" c="todo_delete">
         <param:content>
           <%= render :partial => 'form', :locals => {:form => form} %>
-
-          <hl/>
-
         </param:content>
         <param:actions>
-          <% if @news.title.blank? %>
-            <%= link_to t("common.cancel_link"), administration_news_path(@news), :method => :delete %>
-          <% else %>
-            <%= link_to t("common.back_link"), administration_news_index_path %>
-          <% end %>
           <ibt c="fltri" icon="save">
             <%= form.submit t("administration.news.edit.view.button_save") %>
+          </ibt>
+          <ibt c="bt_grey fltri">
+            <% if @news.title.blank? %>
+                <%= button_to_function t("common.cancel_link"), "$('#delete_news_form').submit();"  %>
+            <% end %>
           </ibt>
         </param:actions>
       </frm>
   <% end %>
+
 </column-mc:>

@@ -11,7 +11,7 @@ Scenario: I can see list of news for agent
   When I follow translated "home.show.view.agent"
   And I follow translated "agent_home.show.view.complete_list_link" within "#news"
   Then I should see translated "news.index.view.agents_header"
-  And I should see "1" items on a list within "#content"
+  And I should see "1" div blocks with class like "news_element"
 
 @_done
 Scenario: I can see paginated list of news for agent

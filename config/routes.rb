@@ -1,5 +1,7 @@
 Nbs::Application.routes.draw do
 
+  resources :payment_notifications
+
   get "agent_home/show"
   get "buyer_home/show"
 
@@ -31,6 +33,7 @@ Nbs::Application.routes.draw do
         resource :invoice_lines_payable, :only => :new, :controller => "InvoiceLinesPayable"
         resources :mailings, :only => [:new, :create]
       end
+      resources :payment_transactions
     end
   end
 
@@ -51,7 +54,6 @@ Nbs::Application.routes.draw do
   match 'buyers/bulk_lead_purchase_update' => 'buyers/bulk_lead_purchase_update#create', :as => "bulk_lead_purchase_update"
   match 'buyers/bulk_lead_share_by_email' => 'buyers/bulk_lead_share_by_email#new', :as => "bulk_lead_share_by_email"
   match 'buyers/create_bulk_lead_share_by_email' => 'buyers/bulk_lead_share_by_email#create', :as => "create_bulk_lead_share_by_email"
-
 
   namespace :lead_users do
     root :to => "lead_purchases#index"

@@ -128,7 +128,14 @@ end
 
 Then /^user (.+) with role (.+) exists with attributes "([^"]*)"$/ do |email, role, options|
   user = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
-  user.update_attributes(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys)
+  options_hash = Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys
+  options_hash.each_pair do |k, v|
+    if v.include?("true") or v.include?("false")
+      options_hash[k] = eval(v)
+    end
+  end
+  user.send(:attributes=, options_hash, false)
+  user.save
 end
 
 Then /^user (.+) with role (.+) has no subaccounts$/ do |email, role|

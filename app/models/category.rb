@@ -11,6 +11,7 @@ class Category < ActiveRecord::Base
   has_many :category_interests
 
   after_save :set_cached_slug
+  before_save :handle_locking_for_descendants
 
   validates_presence_of :name
 
@@ -26,7 +27,9 @@ class Category < ActiveRecord::Base
     end
   end
 
+  scope :without_locked_and_not_published, where("is_locked = ? or (is_locked = ? and published_leads_count > 0)", false, true)
   scope :within_accessible, lambda { |customer| where("categories.id IN (?)", customer.accessible_categories_ids) }
+  scope :without_locked, where("is_locked = ?", false)
   scope :with_leads, where("total_leads_count > 0")
   scope :with_lead_request_owner, lambda { |owner| select("DISTINCT(name), categories.*").where("requested_by IS NOT NULL and lead_purchases.owner_id = ?", owner.id).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
   scope :with_lead_request_requested_by, lambda { |requested_by| select("DISTINCT(name), categories.*").where("lead_purchases.requested_by = ?", requested_by.id).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
@@ -62,12 +65,23 @@ class Category < ActiveRecord::Base
       c.update_attribute(:total_leads_count, c.leads.including_subcategories.count)
     end
   end
+  
+
+  
+  def handle_locking_for_descendants
+    if is_locked_changed?
+      (self_and_descendants - [self]).each do |category|
+        category.update_attribute(:is_locked, is_locked)
+      end
+    end
+  end 
 
   def refresh_published_leads_count_cache!
     Category.find(self_and_ancestors.map(&:id)).each do |c|
       c.update_attribute(:published_leads_count, c.published_leads.including_subcategories.count)
     end
   end
+
 
   public
 

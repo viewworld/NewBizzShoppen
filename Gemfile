@@ -27,9 +27,11 @@ gem 'fastercsv'
 gem 'thor'
 gem 'ckeditor', '3.4.3.pre'
 
+
 group :development do
   gem 'diff-lcs'
   gem 'tolk', :path => "vendor/gems/tolk"
+  gem "nifty-generators"
 end
 
 group :test do

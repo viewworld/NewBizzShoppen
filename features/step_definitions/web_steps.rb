@@ -321,6 +321,12 @@ Then /^I should see "([^"]*)" rows in a table(?: within "([^"]*)")?$/ do |number
   end
 end
 
+Then /^I should see "([^"]*)" div blocks with class like "([^"]*)"(?: within "([^"]*)")?$/ do |number, css_class, selector|
+  with_scope(selector) do
+    page.all(:css, "div[class*='#{css_class}']").size.should eql(number.to_i)
+  end
+end
+
 Then /^I should see "([^"]*)" rows with id like "([^"]*)" in a table(?: within "([^"]*)")?$/ do |number, id, selector|
   with_scope(selector) do
     page.all(:css, "tr[id*='#{id}']").size.should eql(number.to_i)

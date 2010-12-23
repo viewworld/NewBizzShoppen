@@ -1,18 +1,15 @@
 <column-mc:>
-  <header><%= t('administration.articles.show.view.header') %></header>
+  <header back="true"><%= t('administration.articles.show.view.header') %></header>
 
   <frm title="#{@article.title}">
+    <param:header>
+      <%= bt_link_to nil, t("common.edit_link"), edit_administration_article_path, :class => "fltr" %>
+    </param:header>
     <param:content>
-
-      <%= raw @article.content %>
-
-      <hl/>
-
+      <div class="pdd_10">
+        <%= raw @article.content %>
+      </div>
     </param:content>
-    <param:actions>
-      <%= link_to t("common.back_link"), administration_articles_path %>
-      <%= link_to t("common.edit_link"), edit_administration_article_path %>
-    </param:actions>
   </frm>
 
 </column-mc:>

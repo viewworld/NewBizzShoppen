@@ -8,7 +8,7 @@ Background:  Sign in user and set locale
   Then I sign in as bob@person.com with password supersecret
   And I go to customers subaccounts
 
-@_not_testable @done
+@_done @not_testable @done
 Scenario: I do not and cannot belong to other customer
 
 @_tested
@@ -16,7 +16,7 @@ Scenario: I can see accounts managament tab
   When I go to customers lead requests
   Then I should see translated "layout.main_menu.customer.subaccounts"
 
-@_tested
+@_tested  @noguess
 Scenario: I can add new lead buyer that belongs to my account (checkbox selected - can buy leads -- req deprecated)
   Then I follow translated "customer.subaccounts.index.view.new_lead_buyer"
   And I fill in "user_lead_buyer_first_name" with "Mark"
@@ -28,7 +28,7 @@ Scenario: I can add new lead buyer that belongs to my account (checkbox selected
   And I press translated "customer.subaccounts.new.view.button_create"
   Then I should see translated "customer.subaccounts.create.flash.subaccount_creation_successful"
 
-@_tested
+@_tested  @noguess
 Scenario: Each lead buyer added has lead user role automatically assigned
   When I have user with email lead_buyer11@person.com and role lead_buyer
   Then user "lead_buyer11@person.com" with role "lead_buyer" also has role "lead_user"
@@ -45,7 +45,7 @@ Scenario: I can add new lead user that belongs to my account
   And I press translated "customer.subaccounts.new.view.button_create"
   Then I should see translated "customer.subaccounts.create.flash.subaccount_creation_successful"
 
-@_tested
+@_tested  @noguess
 Scenario: Lead buyer have to be activated through activation email
   When I follow translated "customer.subaccounts.index.view.new_lead_buyer"
   And I fill in "user_lead_buyer_first_name" with "Mark"
@@ -69,7 +69,7 @@ Scenario: Lead user have to be activated through activation email
   And I press translated "customer.subaccounts.new.view.button_create"
   Then a confirmation message should be sent to driscoll@person.noserver.com
 
-@_tested
+@_tested  @noguess
 Scenario: I can remove lead buyer role from lead buyer (leaving him lead user role)
   Given an user with role lead_buyer and email lead_buyer@person.com exists as subaccount for customer bob@person.com
   And I go to customers subaccounts
@@ -78,7 +78,7 @@ Scenario: I can remove lead buyer role from lead buyer (leaving him lead user ro
   And I press translated "customer.subaccounts.edit.view.button_update"
   Then user "lead_buyer@person.com" with role "lead_user" should not have role "lead_buyer"
 
-@_tested
+@_tested  @noguess
 Scenario: I can remove lead buyer that belongs to my account
   Given an user with role lead_buyer and email lead_buyer@person.com exists as subaccount for customer bob@person.com
   And I go to customers subaccounts
@@ -92,7 +92,7 @@ Scenario: I can remove lead user that belongs to my account (What happens here -
   Then I follow translated "customer.subaccounts.index.view.delete"
   And I should see translated "customer.subaccounts.destroy.flash.subaccount_deletion_successful"
 
-@_tested
+@_tested  @noguess
 Scenario: I can edit lead buyer that belongs to my account
   Given an user with role lead_buyer and email lead_buyer@person.com exists as subaccount for customer bob@person.com
   And go to customers subaccounts
@@ -143,11 +143,11 @@ Scenario: I can bulk lock/unlock lead buyer/lead user accounts
   And an user with role lead_user and email lead_user@person.com exists as subaccount for customer bob@person.com
   And I go to customers subaccounts
   Then I check "mark_all"
-  And I press translated "customer.subaccounts.index.view.button_bulk_subbaccounts_update"
+  And I follow translated "customer.subaccounts.index.view.button_bulk_subbaccounts_update"
   And I should see translated "flash.bulk_subaccounts_update.update.notice"
   Then I check "mark_all"
   And I select translated "customer.subaccounts.index.view.unlock" from "locked"
-  And I press translated "customer.subaccounts.index.view.button_bulk_subbaccounts_update"
+  And I follow translated "customer.subaccounts.index.view.button_bulk_subbaccounts_update"
   And I should see translated "flash.bulk_subaccounts_update.update.notice"
 
 @_tested
@@ -169,7 +169,7 @@ Scenario: I can sort by name, last name, department
   And I follow translated "customer.subaccounts.index.view.department_column"
   Then I should have value "QA" in the css path "tr:nth-child(1) td:nth-child(5)"
 
-@_tested
+@_tested @added
 Scenario: I can sort by completed leads, new leads requested, num. of leads assigned last 30days, num. of leads assigned last 12months, num. of leads assigned last total
   Given an user with role lead_buyer and email lead_buyer1@person.com exists as subaccount for customer bob@person.com
   And an user with role lead_buyer and email lead_buyer2@person.com exists as subaccount for customer bob@person.com
@@ -213,7 +213,7 @@ Scenario: I can sort by completed leads, new leads requested, num. of leads assi
   And I follow translated "customer.subaccounts.index.view.total_leads_assigned_column"
   Then I should have value "4" in the xpath path "//tr[(((count(preceding-sibling::*) + 1) = 1) and parent::*)]//td[(((count(preceding-sibling::*) + 1) = 10) and parent::*)]"
 
-@_non_testable
+@_done @non_testable @added
 Scenario: I can refresh the cashed values for sort by rake task
 
 @_tested

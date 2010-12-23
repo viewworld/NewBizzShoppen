@@ -1,0 +1,14 @@
+<column-mc:>
+  <header><%= t("administration.payment_transactions.edit.view.header") %></header>
+
+  <% semantic_form_for @payment_transaction, :url => administration_invoicing_payment_transaction_path(@payment_transaction) do |form| %>
+      <%= render :partial => 'form', :locals => { :form => form } %>
+      <%= form.submit t("administration.payment_transactions.edit.view.button_update") %>
+  <% end %>
+
+   <script>
+    $(function() {
+        $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+    });
+  </script>
+</column-mc:>

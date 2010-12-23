@@ -116,6 +116,16 @@ class Nbs < Thor
       u.save
     end
 
+    puts "Creating default currency..."
+    [
+        {:name => 'Euro', :symbol => '&euro;', :format => '%u%n', :active => true}
+    ].each do |params|
+      Currency.create!(params)
+    end
+
+    if ENV["RAILS_ENV"] == 'test'
+      Currency.create!(:name => 'PLN', :symbol => '&pln;', :format => '%u%n', :active => true)
+    end
 
     unless Rails.env.production?
 
@@ -142,7 +152,7 @@ class Nbs < Thor
       if Lead.count.zero?
         agent = User::Agent.find_by_email("agent@nbs.com")
         ["Big deal on printers", "Drills required", "Need assistance in selling a car", "Ipod shipment", "Trip to amazonia - looking for offer", "LCD - Huge amounts", "GPS receivers required"].each do |header|
-          Lead.make!(:category_id => Category.last.id, :header => header, :creator_id => agent.id)
+          Lead.make!(:category_id => Category.last.id, :header => header, :creator_id => agent.id, :currency => Currency.where(:name => "Euro").first)
         end
       end
 
@@ -218,13 +228,6 @@ class Nbs < Thor
           article.publish!
         end
       end
-    end
-
-    puts "Creating default currency..."
-    [
-        {:name => 'Euro', :symbol => '&euro;', :format => '%u%n', :active => true}
-    ].each do |params|
-      Currency.create!(params)
     end
 
   end
