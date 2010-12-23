@@ -15,8 +15,9 @@ class LeadPurchase < LeadPurchaseBase
   RATING_ANOTHER_SUPPLIER =       14
   RATING_OTHER_REASON =           15
 
-  RATING_LEVELS = [RATING_EXCELLENT, RATING_VERY_GOOD, RATING_SATISFACTORY, RATING_MISSING_CONTACT_INFO, RATING_INCORRECT_DESCRIPTION,
-                   RATING_ANOTHER_SUPPLIER, RATING_OTHER_REASON]
+  UNSATISFACTORY_RATING_LEVELS = [RATING_MISSING_CONTACT_INFO, RATING_INCORRECT_DESCRIPTION,
+                          RATING_ANOTHER_SUPPLIER, RATING_OTHER_REASON]
+  RATING_LEVELS = [RATING_EXCELLENT, RATING_VERY_GOOD, RATING_SATISFACTORY] + UNSATISFACTORY_RATING_LEVELS
 
   belongs_to :assignee, :class_name => "User::LeadUser", :foreign_key =>  "assignee_id"
   belongs_to :lead, :counter_cache => :lead_purchases_counter
@@ -151,6 +152,10 @@ class LeadPurchase < LeadPurchaseBase
     else
       -1
     end
+  end
+
+  def is_rated_as_unsatisfactory?
+    UNSATISFACTORY_RATING_LEVELS.include?(rating_level)
   end
 
 end
