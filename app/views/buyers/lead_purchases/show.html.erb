@@ -41,13 +41,12 @@
 
   <div class="column_1to4 pdd_10 no_pdd_r" style="padding-left: 40px">
     <div class="element_description">
-      <h3>Description</h3>
-      <%#= t("lead_purchases.listing.description_label") %>
+      <h3><%=  t("lead_purchases.listing.description_label") %></h3>
 
       <p><%= @lead_purchase.description %></p>
 
-      <%#= t("lead_purchases.listing.hidden_description_label") %>
 
+      <h3><%= t("lead_purchases.listing.hidden_description_label") %></h3>
       <p><%= @lead_purchase.hidden_description %></p>
     </div>
   </div>

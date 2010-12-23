@@ -12,6 +12,7 @@ en:
     yes_label: 'Yes'
     no_label: 'No'
     read_more: 'read more'
+    all_label: 'All'    
   layout:
     main_menu:
       admin:
@@ -30,7 +31,7 @@ en:
       call_centre:
       call_centre_agent:
       customer:
-        subaccounts: Subaccounts
+        subaccounts: Team
         lead_requests: Requested leads
         interests: 'Interests settings'
       lead_buyer:
@@ -119,8 +120,8 @@ en:
       average_rating_label: 'Rating:'
       sale_limit_label: 'Uniqueness:'
       novelty_label: 'Novelty:'
-      hotness_label: 'Hotness:'
-      certification_label: 'Certification:'
+      hotness_label: 'Deadline:'
+      certification_label: 'Agent certification level:'
       created_by_label: 'Created by:'
     statuses:
       not_contacted: Not contacted
@@ -147,7 +148,6 @@ en:
     listing:
       purchase_value_label: 'Purchase value:'
       lead_price_label: 'Lead price:'
-      lead_currency_label: 'Lead currency:'
       description_label: 'Lead description:'
       lead_details_label: 'Leads details'
       lead_description_label: 'Leads description'
@@ -169,7 +169,7 @@ en:
       hottness: 'Hotness'
       novelty: 'Novelty'
       sale_limit: 'Uniqueness'
-      price: 'Price'
+      price: 'Lead price'
       sold: 'Sold'
       purchase_value: 'Value'
       paid_out: 'Paid out'
@@ -657,7 +657,7 @@ en:
         view:
           header: Cart
           lead_name_header: Lead name
-          lead_price_header: Price
+          lead_price_header: Lead price
           total_label: Total
           remove_item_link: Remove item
           checkout_link: Checkout
@@ -814,7 +814,7 @@ en:
           print_link: 'Print'
           bulk_print_link: 'Print all selected leads'
           bulk_print_link_short: 'Print selected'
-          email_lead: Email Lead
+          email_lead: Contact lead
           search:
             keyword_label: 'Keyword'
             search_button: 'Search'
@@ -865,7 +865,9 @@ en:
           bulk_print_link: Print all selected leads
           bulk_print_link_short: Print selected
           bulk_state_field: State
+          bulk_clear_response_dates: Clear response dates
           bulk_assigned_field: Assigned to
+          bulk_rating: 'Rating'
           bulk_update_button: Update all selected leads
           lead_response_date: 'Response date:'
           rating_level: 'Rating:'
@@ -873,7 +875,7 @@ en:
           rating_reason_empty: 'You have to provide reson for your rating!'
           update_rating_button: 'Save rating'
           view_lead: View Details
-          email_lead: Email Lead
+          email_lead: Contact lead
           search:
             keyword_label: 'Keyword'
             category_label: 'Category'

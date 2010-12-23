@@ -75,6 +75,5 @@ Scenario: I should see currency in which lead is being sold
   And I follow "Computers"
   And I fill in "search_with_keyword" with "Printers"
   And I press translated "leads.index.search.search_button"
-  Then I should see "Euro" within "table"
   And I should see "€989.39" within "table"
 

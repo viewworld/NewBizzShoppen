@@ -21,7 +21,7 @@ Background:
 
 @tgn @_done @_tested
 Scenario: I can see details of lead that is assigned to me
-  Given I follow translated "lead_user.lead_purchases.index.view.view_lead"
+  Given I follow "Printers ultimate deal"
   Then I should see translated "lead_user.lead_purchases.show.view.header"
   And I should see "Hidden description for this lead"
 
@@ -53,7 +53,7 @@ Scenario: I can scope down leads listing with filter
 @tgn @_tested
 Scenario: I can see lead header, purchase value, description, contact info
   Given I should see "Printers ultimate deal"
-  And I should see "3034.87"
+  And I should see "3,034.87"
   And I should see "Public desc for printers deal"
   And I should see "John Printer"
   And I should see "john.printer@fghprintesrs.noserver.com"
@@ -98,18 +98,18 @@ Scenario: I should see created by and certification level for each lead
   Then I should see "Johan Printing"
   And I should see translated "models.lead.certification.lvl0"
 
-@m4 @tgn @_tested @added
+@m4 @tgn @_tested @added @deprecated
 Scenario: I should see rating % for each lead
-  Given a lead "Printers ultimate deal" has good rating
-  Given All leads have refreshed average ratings
-  Given I go to lead user lead purchases
-  Then I should see "100%"
+#  Given a lead "Printers ultimate deal" has good rating
+#  Given All leads have refreshed average ratings
+#  Given I go to lead user lead purchases
+#  Then I should see "100%"
 
 @_tgn @_tested
 Scenario: I can see company contact on lead details page
   When I fill in "search_with_keyword" with "printers"
   And I press translated "lead_user.lead_purchases.index.view.search.search_button"
-  Then I follow translated "lead_user.lead_purchases.index.view.view_lead"
+  Then I follow "Printers ultimate deal"
   Then I should see "John Printer"
   And I should see "john.printer@fghprintesrs.noserver.com"
   And I should see "FGH Printers"
@@ -132,10 +132,8 @@ Scenario: I can email the lead if email information were provided
 
 @tgn @_done @_tested
 Scenario: I should see hottness, novelty, exposure, clicks
-  Then I should see translated "models.lead.hotness.lvl1"
+  Then I should see translated "models.lead.hotness.lvl2"
   And I should see translated "models.lead.novelty.lvl0"
-  And I should see "887"
-  And I should see "17"
 
 @tgn @_tested
 Scenario: I can see company contact
