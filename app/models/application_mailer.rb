@@ -9,7 +9,10 @@ class ApplicationMailer < ActionMailer::Base
     end
   end
 
-  def generic_email(recipients, subject, body, from=nil)
+  def generic_email(recipients, subject, body, from=nil, attachment_paths=[])
+    attachment_paths.each do |ap|
+      attachments[ap.basename] = File.read(ap.to_s)
+    end
     mail(:to => recipients.blank? ? "fake@fake.com" : recipients, :subject => subject, :from => from) do |format|
       format.html { render :text => body }
     end

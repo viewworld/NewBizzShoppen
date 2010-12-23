@@ -7,6 +7,8 @@ class PaymentNotification < ActiveRecord::Base
   before_create :check_if_duplicated
   after_create :generate_invoice
 
+  validates_presence_of :buyer
+
   private
 
   def check_if_duplicated

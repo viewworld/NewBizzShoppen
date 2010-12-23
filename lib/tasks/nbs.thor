@@ -92,6 +92,14 @@ class Nbs < Thor
                   :body => "<p></p>"},
           :dk => {:subject => "[DK] Question",
                   :body => "<p></p>"}
+        },
+
+        { :name => "Invoice",
+            :uniq_id => "invoice",
+          :en => {:subject => "Invoice",
+                  :body => "<p></p>"},
+          :dk => {:subject => "[DK] Invoice",
+                  :body => "<p></p>"}
         }
     ]
 

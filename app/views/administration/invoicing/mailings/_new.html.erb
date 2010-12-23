@@ -1,15 +1,14 @@
-<% semantic_form_for [:invoicing, @invoice, @mailing] do |form| %>
-    <% form.inputs :class => "inputs send_email_form" do %>
-        <%= form.input :recipients,
-                       :as => :string,
-                       :input_html => {:value => @invoice.customer.email},
-                       :label => false
-                       %>
-        <%= form.input :body, :as => :text, :label => false %>
-    <% end %>
-    <%= form.buttons :class => "buttons send"%>
-<% end %>
-<% semantic_form_for [:invoicing, @invoice] do |form| %>
-    <%= form.input :emailed_at, :as => :hidden, :label => false, :input_html => {:value => DateTime.now} %>
-    <%= link_to_function "Mark as sent only", "$(this).parents().submit(); $.modal.close();", :class => 'mark_as_sent_link' %>
+<%= form_for @email_template_preview, :as => :email_template_preview, :url => administration_invoicing_invoice_mailings_path(@invoice) do |f| %>
+    <p>
+      <%= f.text_field :recipients,
+                     :value => @invoice.user.email
+                   %>
+    </p>
+    <p>
+      <%= f.text_area :body %>
+    </p>
+    <p>Attachment</p>
+    <p><%= link_to @email_template_preview.invoice_filename, invoice_preview_path(@email_template_preview.invoice_filename) %></p>
+    <%= f.hidden_field :invoice_filename, :value => @email_template_preview.invoice_filename.basename %>
+    <p><%= f.submit "Send" %></p>
 <% end %>

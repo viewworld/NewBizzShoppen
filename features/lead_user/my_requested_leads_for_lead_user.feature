@@ -40,7 +40,7 @@ Scenario: I should see rating %
 Scenario: I should see lead header, lead price, purchase value and public description
   Then I should see "Printers ultimate deal"
   And I should see "989.78"
-  And I should see "3030.03"
+  And I should see "3,030.03"
   And I should see "Lorem ipsum public desc"
 
 @tgn @_tested

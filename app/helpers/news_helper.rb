@@ -16,8 +16,10 @@ module NewsHelper
     ]
   end
 
-  def st(text="", sanitize_options={:tags=>[],:attributes=>[]},truncate_options={:length=>350})
-    raw truncate(sanitize(text, sanitize_options),truncate_options)
+  def st(text, sanitize_options={},truncate_options={})
+    sanitize_options = {:tags=>[],:attributes=>[]}.merge(sanitize_options)
+    truncate_options = {:length=>380,:omission=>"... (#{t('common.read_more')})"}.merge(truncate_options)
+    raw truncate(sanitize(text, sanitize_options), truncate_options)
   end
 
 end
