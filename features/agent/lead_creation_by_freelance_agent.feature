@@ -121,3 +121,6 @@ Scenario: All fields for new lead have to be filled in beside email address
 Scenario: I should be able to specify currency in which Lead will be sold (from dropdown)
   When I follow translated "agent.leads.index.view.new_lead"
   Then I select "Euro" from "lead_currency_id"
+
+@m3 @tgn @_done @non_testable
+Scenario: When lead is published then the published_at time is recorded

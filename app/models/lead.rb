@@ -58,6 +58,7 @@ class Lead < ActiveRecord::Base
   before_destroy :can_be_removed?
   after_find :set_buyers_notification
   before_update :notify_buyers_about_changes
+  before_save :set_published_at
 
   private
 
@@ -66,7 +67,7 @@ class Lead < ActiveRecord::Base
   end
 
   def novelty_ratio
-    (Date.today - created_at.to_date).to_i
+    (Date.today - published_at.to_date).to_i
   end
 
   def hotness_ratio
@@ -81,6 +82,12 @@ class Lead < ActiveRecord::Base
 
   def certification_level_ratio
     Lead.joins(:lead_purchases).where(:creator_id => creator_id, :creator_type => creator_type).count
+  end
+
+  def set_published_at
+    if published_changed?
+      self.published_at = published ? Time.now : nil
+    end
   end
 
     def can_be_removed?
