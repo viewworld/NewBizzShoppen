@@ -98,8 +98,8 @@ Scenario: I can scope down requested leads listing with filter
 Scenario: I should see lead header, lead price, purchase value and public description for each requested lead
   Then I go to customers lead requests
   And I should see "Keyboards deal"
-  And I should see "9893.56"
-  And I should see "4002.21"
+  And I should see "9,893.56"
+  And I should see "4,002.21"
   And I should see "Public description for keyboards"
 
 @tgn @_tested

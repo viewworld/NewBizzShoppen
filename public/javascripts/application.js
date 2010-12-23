@@ -5,7 +5,10 @@
 
 mark_all_cbs_with_selector = function(val, selector) {
     $(selector).each(function() {
-        $(this).attr('checked', val);
+        if(!$(this).hasClass('non_selectable'))
+        {
+            $(this).attr('checked', val);
+        }
     });
 };
 
