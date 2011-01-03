@@ -1,4 +1,4 @@
-@user_accounts @$_call_centre @m0
+@user_accounts @$_call_centre @m4 @tgn
 Feature: Agents administration in call centre scope
 
 Scenario: I can browse list of my agents without pagination
