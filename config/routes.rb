@@ -55,6 +55,11 @@ Nbs::Application.routes.draw do
   match 'buyers/bulk_lead_share_by_email' => 'buyers/bulk_lead_share_by_email#new', :as => "bulk_lead_share_by_email"
   match 'buyers/create_bulk_lead_share_by_email' => 'buyers/bulk_lead_share_by_email#create', :as => "create_bulk_lead_share_by_email"
 
+  namespace :call_centres do
+    root :to => "call_centre_agents#index"
+    resources :call_centre_agents
+  end
+
   namespace :lead_users do
     root :to => "lead_purchases#index"
     resources :lead_purchases do

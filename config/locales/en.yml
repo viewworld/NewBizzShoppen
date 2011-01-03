@@ -29,6 +29,7 @@ en:
       agent:
         leads: My created leads
       call_centre:
+        call_centre_agents: 'Agents'
       call_centre_agent:
       customer:
         subaccounts: Team
@@ -595,6 +596,21 @@ en:
         view:
           title: 'Edit lead'
           button_update: 'Save'
+
+  call_centre:
+    call_centre_agents:
+      index:
+        view:
+          title: 'Manage agents'
+          new_agent: 'Create agent'
+      new:
+        view:
+          title: 'New call centre agent'
+          button_create: 'Create'
+          button_cancel: 'Cancel'
+      create:
+        flash:
+          call_centre_agent_creation_successful: 'Call centre agent has been created successfully!'
 
   purchase_manager:
     leads:
