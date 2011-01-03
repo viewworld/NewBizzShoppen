@@ -123,6 +123,8 @@ en:
       hotness_label: 'Deadline:'
       certification_label: 'Agent certification level:'
       created_by_label: 'Created by:'
+      linkedin_url: 'LinkedIn'
+      facebook_url: 'Facebook'
     statuses:
       not_contacted: Not contacted
       contacted: Contacted

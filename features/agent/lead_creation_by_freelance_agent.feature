@@ -124,3 +124,27 @@ Scenario: I should be able to specify currency in which Lead will be sold (from 
 
 @m3 @tgn @_done @non_testable
 Scenario: When lead is published then the published_at time is recorded
+
+@m4 @_tested @tgn
+Scenario: I can add linkedin and facebook links to lead's contact information
+  Given Category Test category 1 is created
+  And I follow translated "agent.leads.index.view.new_lead"
+  And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
+  And I fill in "lead_description" with "Lorem ipsum"
+  And I fill in "lead_hidden_description" with "Lorem ipsum hidden"
+  And I fill in "lead_purchase_value" with "10000"
+  And I fill in "lead_price" with "100"
+  And I select "3" from "lead_sale_limit"
+  And I select "Test category 1" from "lead_category_id"
+  And I select "Denmark" from "lead_country_id"
+  And I fill in "lead_company_name" with "Printing company"
+  And I fill in "lead_contact_name" with "Marek Kowalski"
+  And I fill in "lead_phone_number" with "123456789"
+  And I fill in "lead_email_address" with "my@email.com"
+  And I fill in "lead_address" with "ul.Kaminskiego 19"
+  And I fill in "datepicker" with "2011-02-20"
+  And I fill in "lead_facebook_url" with "http://www.facebook.com/myfakefacebookprofile"
+  And I fill in "lead_linkedin_url" with "http://www.linkedin.com/myfakelinkedinprofile"
+  And I press translated "agent.leads.new.view.button_create"
+  And I should be on agents leads
+  And I should see translated "flash.leads.actions.create.notice"
