@@ -1,4 +1,4 @@
-@user_accounts @$_call_centre @m0
+@user_accounts @$_call_centre @m4 @tgn
 Feature: Agent accounts administration for call centre
 
 Scenario: I can create call centre agent account
