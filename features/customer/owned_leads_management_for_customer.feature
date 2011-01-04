@@ -106,7 +106,7 @@ Scenario: I should see lead header, lead price, purchase value and public descri
 Scenario: I should see created by and certification level for each requested lead
   Then I go to customers lead requests
   And I should see "Philip Glass"
-  And I should see translated "models.lead.novelty.lvl0"
+  And I should see translated "models.lead.certification.lvl0"
 
 @m0 @_added
 Scenario: I should see rating % for each requested lead
@@ -202,3 +202,9 @@ Scenario: I can bulk set status of leads
   And I check "mark_all"
   And I follow translated "lead_buyer.lead_purchases.index.view.bulk_update_button"
   Then "state" should be selected for value translated "lead_purchases.statuses.contacted"
+
+@m4 @added @lead_templates
+Scenario: I can see lead template fields with public values for each lead
+
+@m4 @added @lead_templates
+Scenario: I can see lead template fields with hidden values for each lead that I have bought

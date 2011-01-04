@@ -29,6 +29,7 @@ en:
       agent:
         leads: My created leads
       call_centre:
+        call_centre_agents: 'Agents'
       call_centre_agent:
       customer:
         subaccounts: Team
@@ -119,10 +120,12 @@ en:
       exposures_count_label: 'Exposures:'
       average_rating_label: 'Rating:'
       sale_limit_label: 'Uniqueness:'
-      novelty_label: 'Novelty:'
+      novelty_label: 'Publish date:'
       hotness_label: 'Deadline:'
       certification_label: 'Agent certification level:'
       created_by_label: 'Created by:'
+      linkedin_url: 'LinkedIn'
+      facebook_url: 'Facebook'
     statuses:
       not_contacted: Not contacted
       contacted: Contacted
@@ -198,7 +201,7 @@ en:
     index:
       view:
         agents_header: 'AGENTS NEWS'
-        buyers_header: 'BUYERS NEWS'
+        buyers_header: 'SALES MANAGER NEWS'
         read_more_link: 'read more'
         newer_link: 'Newer'
         older_link: 'Older'
@@ -210,15 +213,15 @@ en:
     show:
       view:
         header: 'Home'
-        buyer: 'Buyer'
+        buyer: 'Sales manager'
         agent: 'Agent'
         remember_me: 'Remember me'
         sign_in: 'Sign in'
         signup_message: "Don't have an account yet"
         agent_signup: 'Freelance agent signup'
-        buyer_signup: 'Lead buyer signup'
+        buyer_signup: 'Sales manager signup'
         purchase_manager_signup: 'Purchase Manager signup'
-        _signup: 'Lead buyer signup'
+        _signup: 'Sales manager signup'
         forgotten_password_link: "Forgot your password?"
         resend_confirmation_instructions: "Didn't receive confirmation instructions?"
 
@@ -381,7 +384,7 @@ en:
       index:
         view:
           header: 'News'
-          buyers: 'buyers'
+          buyers: 'sales managers'
           agents: 'agents'
           new_news: 'New news'
           search_button: 'Search'
@@ -594,6 +597,21 @@ en:
           title: 'Edit lead'
           button_update: 'Save'
 
+  call_centre:
+    call_centre_agents:
+      index:
+        view:
+          title: 'Manage agents'
+          new_agent: 'Create agent'
+      new:
+        view:
+          title: 'New call centre agent'
+          button_create: 'Create'
+          button_cancel: 'Cancel'
+      create:
+        flash:
+          call_centre_agent_creation_successful: 'Call centre agent has been created successfully!'
+
   purchase_manager:
     leads:
       index:
@@ -687,7 +705,7 @@ en:
   buyer_accounts:
     new:
       view:
-        title: 'Lead Buyer signup'
+        title: 'Sales manager signup'
         button_create_account: 'Create'
 
   buyer_home:
@@ -703,14 +721,14 @@ en:
         description_label: 'Description:'
         read_more_link: 'read more'
         complete_list_link: 'complete list'
-        create_new_buyer_account: 'Create new buyer account'
+        create_new_buyer_account: 'Create new sales manager account'
 
 
   agent_home:
     show:
       view:
         header_welcome: 'Welcome to our site'
-        buyer_link: 'click here if you are a buyer'
+        buyer_link: 'click here if you are a sales manager'
         header_best_sellers: 'Best sellers'
         header_latest_leads: 'Latest leads'
         header_news: 'News'
@@ -920,7 +938,7 @@ en:
         send_email_button: 'Send'
         email_subjects:
           agent_inquiry: 'Agent inquiry'
-          buyer_inquiry: 'Buyer inquiry'
+          buyer_inquiry: 'Sales manager inquiry'
     create:
       flash:
         email_sent_successfully: 'Your email was sent successfully to staff at NBS'
@@ -974,7 +992,7 @@ en:
         newsletter_on: 'I want to receive the newsletter'
       lead:
         purchase_decision_date: 'Purchase decision date'
-        notify_buyers_after_update: 'Notify buyers about changes'
+        notify_buyers_after_update: 'Notify sales managers about changes'
     errors:
       models:
         user:

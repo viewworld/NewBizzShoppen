@@ -36,3 +36,9 @@ Scenario: I can bulk add leads to my basket and I will get a notification “Lea
   Then I check "mark_all"
   And I press translated "leads.index.button_bulk_create_cart_item"
   Then I should see translated "buyer.bulk_cart_items.create.flash.n_cart_items_added" with options "count:2"
+
+@m4 @added @lead_templates
+Scenario: I can see lead template fields with public values for each lead
+
+@m4 @added @lead_templates
+Scenario: I can see only lead template fields' names (not values) for hidden fields

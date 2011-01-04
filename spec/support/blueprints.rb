@@ -191,6 +191,24 @@ end
   roles_mask { 2 }
 end
 
+::User::CallCentre.blueprint do
+  email { Faker::Internet.email }
+  password { "secret" }
+  password_confirmation { "secret" }
+  phone { Faker::PhoneNumber.phone_number }
+  screen_name { Faker::Name.name + Time.now.to_f.to_s.sub('.','') }
+  street { Faker::Address.street_name }
+  first_name { Faker::Name.first_name + Time.now.to_f.to_s.sub('.','') }
+  last_name { Faker::Name.last_name }
+  agreement_read { true }
+  city { Faker::Address.city }
+  zip_code { Faker::Address.zip_code }
+  county { Faker::Address.uk_county }
+  country { Country.make!.id }
+  payout { rand(100) }
+  roles_mask { 4 }
+end
+
 ::Article::Cms.blueprint do
   title { Faker::Lorem.words(4).to_s.capitalize }
   content { Faker::Lorem.sentences(2).to_s }

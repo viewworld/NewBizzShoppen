@@ -147,7 +147,7 @@ Scenario: I can list all invoices an see following columns -  number, customer, 
   And I should see translated "administration.invoices.index.view.invoice_number"
   And I should see translated "administration.invoices.index.view.customer"
   And I should see translated "administration.invoices.index.view.total"
-  And I should see translated "administration.invoices.index.view.paid_at"
+  And I should see translated "administration.invoices.index.view.status"
 
 @_done
 Scenario: I can sort invoices listing by following columns -  number, customer, total

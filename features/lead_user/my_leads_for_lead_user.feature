@@ -8,7 +8,7 @@ Background:
   And an user with role lead_user and email lead_user2@person.com exists as subaccount for customer customer@person.com
   And an user with role lead_user and email lead_user44@person.com exists as subaccount for customer customer@person.com
   And lead Printers ultimate deal exists within category Computers
-  And lead Printers ultimate deal exists with attributes "creator_name:Johan Printing,email_address:john.printer@fghprintesrs.noserver.com,address:London 847-387 Veilingstreet 46,clicks_count:17,exposures_count:887,company_name:FGH Printers,contact_name:John Printer,hidden_description:Hidden description for this lead,purchase_value:3034.87,description:Public desc for printers deal"
+  And lead Printers ultimate deal exists with attributes "creator_name:Johan Printing,email_address:john.printer@fghprintesrs.noserver.com,address:London 847-387 Veilingstreet 46,clicks_count:17,exposures_count:887,company_name:FGH Printers,contact_name:John Printer,hidden_description:Hidden description for this lead,purchase_value:3034.87,description:Public desc for printers deal,published_at:01-01-2011"
   And lead Monitors LCD deal exists within category Computers
   And lead Monitors LCD deal exists with attributes "hidden_description:Hidden description for this lead,purchase_value:2002.87"
   And lead Keyboards deal exists within category Office
@@ -131,9 +131,9 @@ Scenario: I can email the lead if email information were provided
   Then I should see translated "flash.contact_lead_by_email.actions.create.notice"
 
 @tgn @_done @_tested
-Scenario: I should see hottness, novelty, exposure, clicks
+Scenario: I should see hottness, publish date, exposure, clicks
   Then I should see translated "models.lead.hotness.lvl2"
-  And I should see translated "models.lead.novelty.lvl0"
+  And I should see "01-01-2011"
 
 @tgn @_tested
 Scenario: I can see company contact
