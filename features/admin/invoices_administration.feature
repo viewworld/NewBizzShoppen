@@ -1,4 +1,4 @@
-@invoices @$_admin @m4 @ao @noguess
+@invoices @$_admin @m4 @noguess
 Feature: Invoices administration
 
 Background:
@@ -8,27 +8,27 @@ Background:
   And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role customer with attributes "first_name:Janko,last_name:Muzykant"
   Then I sign in as jon@lajoie.ca with password secret
 
-@_done
+@_done @ao
 Scenario: I can create new invoice for user
   When I follow translated "layout.main_menu.admin.invoices"
   And I select "Janko Muzykant" from "invoice_user_id"
   And I press translated "administration.invoices.index.view.create_invoice"
   Then I should see "was successfully created"
 
-@_todo
+@_todo @tgn
 Scenario: I can see list of invoices pending creation
 
-@_todo
+@_todo @tgn
 Scenario: I can create new invoice from suggestion on invoices pending creation listing
 
-@_done
+@_done @ao
 Scenario: I can see invoice details
   When invoice exists for user "kastomer@nbs.fake"
   And I follow translated "layout.main_menu.admin.invoices"
   And I follow translated "administration.invoices.index.view.show_invoice"
   Then I should see translated "administration.invoices.show.view.header"
 
-@_done
+@_done @ao
 Scenario: I can edit invoice’s customer information - name, address, vat no
   When invoice exists for user "kastomer@nbs.fake"
   And I follow translated "layout.main_menu.admin.invoices"
@@ -48,7 +48,7 @@ Scenario: I can edit invoice’s customer information - name, address, vat no
   And I should see "NewAddress"
   And I should see "NewVatNo"
 
-@_done
+@_done @ao
 Scenario: I can edit invoice’s seller information - name, address, vat no
   When invoice exists for user "kastomer@nbs.fake"
   And I follow translated "layout.main_menu.admin.invoices"
@@ -70,15 +70,16 @@ Scenario: I can edit invoice’s seller information - name, address, vat no
   And I should see "NewSellerAddress"
   And I should see "NewSellerVatNo"
 
-@wip
+@_done @ao
 Scenario: Invoice created has its number automatically generated
   When invoice exists for user "kastomer@nbs.fake"
   And I follow translated "layout.main_menu.admin.invoices"
   Then I should see "1/201" within "#invoices"
 
+@tgn
 Scenario: I can edit following additional information-  need example of norwegian invoice with comments
 
-@_done
+@_done @ao
 Scenario: I can add custom invoice line to invoice
   When invoice exists for user "kastomer@nbs.fake"
   And I follow translated "layout.main_menu.admin.invoices"
@@ -94,7 +95,7 @@ Scenario: I can add custom invoice line to invoice
   And I follow translated "administration.invoices.index.view.edit_invoice"
   Then the "invoice_invoice_lines_attributes_0_name" field should contain "AddedLineOne"
 
-@_done
+@_done @ao
 Scenario: I can remove invoice line from invoice
   When invoice exists for user "kastomer@nbs.fake"
   And invoice line for first invoice exists for user "kastomer@nbs.fake"
@@ -105,7 +106,7 @@ Scenario: I can remove invoice line from invoice
   And I follow translated "administration.invoices.index.view.edit_invoice"
   Then the "invoice_invoice_lines_attributes_0_name" field should contain ""
 
-@_done
+@_done @ao
 Scenario: I can edit invoice line within invoice
   When invoice exists for user "kastomer@nbs.fake"
   And invoice line for first invoice exists for user "kastomer@nbs.fake"
@@ -116,7 +117,7 @@ Scenario: I can edit invoice line within invoice
   And I follow translated "administration.invoices.index.view.edit_invoice"
   Then the "invoice_invoice_lines_attributes_0_name" field should contain "EditedLine"
 
-@selenium @_done
+@selenium @_done @ao
 Scenario: Invoice line’s netto/brutto fields are automatically updated on edit
   When invoice exists for user "kastomer@nbs.fake"
   And I follow translated "layout.main_menu.admin.invoices"
@@ -128,7 +129,7 @@ Scenario: Invoice line’s netto/brutto fields are automatically updated on edit
   And the "invoice_invoice_lines_attributes_0_vat_value" field should contain "44.00"
   And the "invoice_invoice_lines_attributes_0_brutto_value" field should contain "244.00"
 
-@_done
+@_done @ao
 Scenario: I can mark an invoice as paid by filling in amount and date fields
   When invoice exists for user "kastomer@nbs.fake"
   And invoice line for first invoice exists for user "kastomer@nbs.fake" with attributes "netto_price:100,quantity:1,vat_rate:0.22,netto_value:100,brutto_value:122"
@@ -139,7 +140,7 @@ Scenario: I can mark an invoice as paid by filling in amount and date fields
   And I follow translated "administration.invoices.show.view.go_back"
   Then I should see "Paid" within "#invoices"
 
-@_done
+@_done @ao
 Scenario: I can list all invoices an see following columns -  number, customer, total, payment status
   When invoice exists for user "kastomer@nbs.fake"
   And I follow translated "layout.main_menu.admin.invoices"
@@ -149,7 +150,7 @@ Scenario: I can list all invoices an see following columns -  number, customer, 
   And I should see translated "administration.invoices.index.view.total"
   And I should see translated "administration.invoices.index.view.status"
 
-@_done
+@_done @ao
 Scenario: I can sort invoices listing by following columns -  number, customer, total
   When invoice exists for user "kastomer@nbs.fake"
   And invoice line for first invoice exists for user "kastomer@nbs.fake" with attributes "quantity:1,netto_price:100,vat_rate:0.22,netto_value:100,brutto_value:122"
@@ -169,7 +170,7 @@ Scenario: I can sort invoices listing by following columns -  number, customer, 
   When I follow translated "administration.invoices.index.view.customer"
   Then I should see "Janko Muzykant" before "Ferdek Kiepski"
 
-@_done
+@_done @ao
 Scenario: I can filter invoices list by following parameters - creation range, payment status, customer
   When invoice exists for user "kastomer@nbs.fake"
   And invoice line for first invoice exists for user "kastomer@nbs.fake" with attributes "quantity:1,netto_price:100,vat_rate:0.22,netto_value:100,brutto_value:122"
@@ -199,7 +200,7 @@ Scenario: I can filter invoices list by following parameters - creation range, p
   Then I should see "Ferdek Kiepski" within "#invoices"
   And I should not see "Janko Muzykant" within "#invoices"
 
-@_done
+@_done @ao
 Scenario: I can download invoice as PDF file
   When invoice exists for user "kastomer@nbs.fake"
   And invoice line for first invoice exists for user "kastomer@nbs.fake" with attributes "quantity:1,netto_price:100,vat_rate:0.22,netto_value:100,brutto_value:122"
@@ -209,10 +210,20 @@ Scenario: I can download invoice as PDF file
   Then I should see "Janko Muzykant"
   And I should see "122"
 
-@wip
+@_done @ao
 Scenario: I can send invoice to given email address (as an attachment)
+  When invoice exists for user "kastomer@nbs.fake"
+  And invoice line for first invoice exists for user "kastomer@nbs.fake" with attributes "quantity:1,netto_price:100,vat_rate:0.22,netto_value:100,brutto_value:122"
+  And I follow translated "layout.main_menu.admin.invoices"
+  And I follow translated "administration.invoices.index.view.show_invoice"
+  And I follow translated "administration.invoices.show.view.send"
+  Then the "email_template_preview_recipients" field should contain "kastomer@nbs.fake"
+  And I should see translated "administration.invoices.mailing.new.view.attachment"
+  When I press translated "administration.invoices.mailing.new.view.send"
+  Then I should see translated "flash.bulk_lead_share_by_email.actions.create.notice"
 
-
+@tgn
 Scenario: I can print out invoice (bypassing PDF)
 
+@tgn
 Scenario: I can credit an invoice ...

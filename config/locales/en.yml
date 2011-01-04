@@ -534,6 +534,14 @@ en:
       cash_flow:
         view:
           save_button: 'Save'
+      mailing:
+        new:
+          view:
+            attachment: 'Attachment'
+            send: 'Send'
+            recipeints: 'Recipeints'
+            subject: 'Subject'
+            body: 'Body'
 
     payment_transactions:
       index:

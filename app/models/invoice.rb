@@ -7,7 +7,7 @@ class Invoice < ActiveRecord::Base
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
             <style type="text/css">
               @import url("unicode.css") print;
-              @import url("../public/stylesheets/invoice.css") print;
+              @import url("../../stylesheets/invoice.css") print;
               @import url("css.css") print;
             </style>
           </head>
