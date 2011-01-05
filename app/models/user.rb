@@ -6,6 +6,14 @@ class User < ActiveRecord::Base
   BASIC_USER_ROLES_WITH_LABELS = [['Administrator', 'admin'], ['Agent', 'agent'], ['Buyer', 'customer'], ['Call centre', 'call_centre'], ['Purchase Manager', 'purchase_manager']]
   ADDITIONAL_USER_ROLES_WITH_LABELS = [['Lead user', "lead_user"], ['Lead buyer', "lead_buyer"], ["Call centre agent", "call_centre_agent"]]
 
+  NOT_CERTIFIED               = 0
+  SILVER_CERTIFICATION        = 1
+  GOLD_CERTIFICATION          = 2
+  NOT_CERTIFIED_LOCKED        = 10
+  SILVER_CERTIFICATION_LOCKED = 11
+  GOLD_CERTIFICATION_LOCKED   = 12
+  CERTIFICATION_LEVELS = [NOT_CERTIFIED, SILVER_CERTIFICATION, GOLD_CERTIFICATION]
+
   include RoleModel
   include ScopedSearch::Model
 
@@ -30,7 +38,7 @@ class User < ActiveRecord::Base
   scope :with_subaccounts, lambda { |parent_id| where("parent_id = ?", parent_id) }
 
   scope :requestees_for_lead_request_owner, lambda { |owner| select("DISTINCT(users.id), users.*").where("requested_by IS NOT NULL and lead_purchases.owner_id = ? and users.parent_id = ?", owner.id, owner.id).joins("RIGHT JOIN lead_purchases on lead_purchases.requested_by=users.id") }
-  scope :assignees_for_lead_purchase_owner, lambda { |owner| select("DISTINCT(users.id), users.*").where("requested_by IS NULL and lead_purchases.owner_id = ? and accessible = ? and users.parent_id = ?", owner.id, true, owner.id).joins("RIGHT JOIN lead_purchases on lead_purchases.assignee_id=users.id") }
+  scope :assignees_for_lead_purchase_owner, lambda { |owner| select("DISTINCT(users.id), users.*").where("requested_by IS NULL and lead_purchases.owner_id = ? and accessible_from IS NOT NULL and users.parent_id = ?", owner.id, owner.id).joins("RIGHT JOIN lead_purchases on lead_purchases.assignee_id=users.id") }
 
 
   scope :join_lead_purchases_and_leads, joins("INNER JOIN lead_purchases ON lead_purchases.assignee_id=users.id").joins("INNER JOIN leads on leads.id=lead_purchases.lead_id")
@@ -39,7 +47,11 @@ class User < ActiveRecord::Base
   scope :with_assigned_leads_time_ago, lambda { |assignee, time| select("leads.id").where("assignee_id = ? and lead_purchases.assigned_at >= ?", assignee.id, time).join_lead_purchases_and_leads }
   scope :with_assigned_leads_total, lambda { |assignee| select("leads.id").where("assignee_id = ?", assignee.id).join_lead_purchases_and_leads }
 
-  scoped_order :id, :roles_mask, :first_name, :last_name, :email, :age, :department, :completed_leads_counter, :leads_requested_counter, :leads_assigned_month_ago_count, :leads_assigned_year_ago_counter, :total_leads_assigned_counter
+
+  scoped_order :id, :roles_mask, :first_name, :last_name, :email, :age, :department, :mobile_phone, :completed_leads_counter, :leads_requested_counter,
+               :leads_assigned_month_ago_count, :leads_assigned_year_ago_counter, :total_leads_assigned_counter, :leads_created_counter,
+               :leads_volume_sold_counter, :leads_revenue_counter, :leads_purchased_month_ago_counter, :leads_purchased_year_ago_counter,
+               :leads_rated_good_counter, :leads_rated_bad_counter, :leads_not_rated_counter, :leads_rating_avg, :certification
 
 
   attr_protected :payout, :locked, :can_edit_payout_information, :paypal_email, :bank_swift_number, :bank_iban_number
@@ -100,7 +112,7 @@ class User < ActiveRecord::Base
 
   def all_purchased_lead_purchases
     user = parent || self
-    user.has_role?(:customer) ? LeadPurchase.where(:owner_id => user.id, :accessible => true) : []
+    user.has_role?(:customer) ? LeadPurchase.where("owner_id = ? and accessible_from IS NOT NULL", user.id) : []
   end
 
   def all_requested_lead_ids
@@ -164,6 +176,42 @@ class User < ActiveRecord::Base
     self.leads_assigned_year_ago_counter = User.with_assigned_leads_time_ago(self, 12.months.ago).size
     self.total_leads_assigned_counter  = User.with_assigned_leads_total(self).size
     self.save
+  end
+
+  def refresh_agent_counters!
+    self.leads_created_counter = Lead.with_created_by(self).size
+    self.leads_volume_sold_counter = LeadPurchase.with_volume_sold_by(self).size
+    self.leads_revenue_counter = Lead.with_revenue_by(self).first.id || 0
+    self.leads_purchased_month_ago_counter = LeadPurchase.with_purchased_time_ago_by(self, 30.days.ago).size
+    self.leads_purchased_year_ago_counter = LeadPurchase.with_purchased_time_ago_by(self, 12.months.ago).size
+    self.leads_rated_good_counter = Lead.with_rated_good_by(self).size
+    self.leads_rated_bad_counter = Lead.with_rated_bad_by(self).size
+    self.leads_not_rated_counter = Lead.with_not_rated_by(self).size
+    self.leads_rating_avg = LeadPurchase.with_rating_avg_by(self).first.id || 0
+    self.refresh_certification_level
+    self.save
+  end
+
+  def certification_level
+    read_attribute(:certification_level) % 10
+  end
+
+  def refresh_certification_level
+    self.certification_level = calculate_certification_level if read_attribute(:certification_level).to_i < NOT_CERTIFIED_LOCKED
+  end
+
+  def certification_level_ratio
+    Lead.joins(:lead_purchases).where(:creator_id => id, :creator_type => self.class.to_s).count
+  end
+
+  def calculate_certification_level
+    if certification_level_ratio >= Settings.certification_level_2.to_i
+      GOLD_CERTIFICATION
+    elsif certification_level_ratio >= Settings.certification_level_1.to_i
+      SILVER_CERTIFICATION
+    else
+      NOT_CERTIFIED
+    end
   end
 
   def has_accessible_categories?

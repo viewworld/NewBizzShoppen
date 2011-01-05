@@ -8,3 +8,7 @@ Scenario: I can’t edit lead if the lead was already sold
 Scenario: I can add a language
 
 Scenario: I can delete a language
+
+@m4 @tgn @added @agent_certification
+Scenario: I can publish a lead that is not published
+

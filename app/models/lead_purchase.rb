@@ -25,11 +25,15 @@ class LeadPurchase < LeadPurchaseBase
 
   default_scope where(:requested_by => nil)
 
-  scope :in_cart, where(:paid => false, :accessible => false)
-  scope :accessible, where(:accessible => true)
+  scope :in_cart, where(:paid => false, :accessible_from => nil)
+  scope :accessible, where("accessible_from IS NOT NULL")
   scope :about_to_expire, lambda { where(["response_deadline = ? AND expiration_status = ? AND contacted = ?", Date.today+2.days, ACTIVE, NOT_CONTACTED]) }
   scope :expired, lambda { where(["response_deadline < ? AND expiration_status = ? AND contacted = ?", Date.today, ABOUT_TO_EXPIRE, NOT_CONTACTED]) }
   scope :with_paid, lambda {|paid| where(:paid => paid) }
+
+  scope :with_volume_sold_by, lambda { |agent| where("leads.creator_id = ?", agent.id).joins("INNER JOIN leads ON lead_purchases.lead_id=leads.id") }
+  scope :with_rating_avg_by, lambda { |agent| select("avg(CASE WHEN rating_level in (#{(RATING_MISSING_CONTACT_INFO..RATING_OTHER_REASON).to_a.join(',')}) THEN 0 WHEN rating_level=2 THEN 0.25 WHEN rating_level=1 THEN 0.5 WHEN rating_level=0 THEN 1 END)*100 as id").where("creator_id = ? and (lead_purchases.rating_level != -1 and lead_purchases.rating_level is NOT NULL)", agent.id).joins("INNER JOIN leads ON lead_purchases.lead_id=leads.id") }
+  scope :with_purchased_time_ago_by, lambda { |agent, time| where("creator_id = ? and accessible_from IS NOT NULL and accessible_from >= ?", agent.id, time).joins("INNER JOIN leads ON lead_purchases.lead_id=leads.id") }
 
   before_save :assign_to_proper_owner_if_accessible
   before_save :assign_to_owner
@@ -45,7 +49,7 @@ class LeadPurchase < LeadPurchaseBase
 
   def assign_to_proper_owner_if_accessible
     if (u = User.find(owner_id)) && u.parent
-      if (new_record? && accessible) || (changes["accessible"] == [false, true])
+      if (new_record? && !accessible_from.nil?) || (accessible_from_changed? && !accessible_from.nil?)
         self.owner_id = u.parent_id
       end
     end
@@ -95,7 +99,7 @@ class LeadPurchase < LeadPurchaseBase
 
   def paid!
     self.paid = true
-    self.accessible = true
+    self.accessible_from = Time.now
     save
   end
 
@@ -113,7 +117,7 @@ class LeadPurchase < LeadPurchaseBase
   end
 
   def to_csv
-    LeadPurchase.to_csv(id)    
+    LeadPurchase.to_csv(id)
   end
 
   def deliver_email_template(uniq_id, to=nil)

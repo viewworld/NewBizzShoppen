@@ -68,11 +68,11 @@ Scenario: Datepicker - after selecting form the select box it should automatical
   Then I follow translated "agent.leads.index.view.edit"
   And  I fill in "datepicker" with "2010-01-01"
 
-@m4 @added @lead_templates
+@m0 @added @lead_templates
 Scenario: I can add multiple categories to a lead
 
-@m4 @added @lead_templates
+@m0 @added @lead_templates
 Scenario: I have to fill out the templates which are mandatory for given category that was added
 
-@m4 @added @lead_templates
+@m0 @added @lead_templates
 Scenario: I can select additional templates that are optional for given category that was added

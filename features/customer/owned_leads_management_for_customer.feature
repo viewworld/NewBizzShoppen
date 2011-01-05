@@ -203,8 +203,8 @@ Scenario: I can bulk set status of leads
   And I follow translated "lead_buyer.lead_purchases.index.view.bulk_update_button"
   Then "state" should be selected for value translated "lead_purchases.statuses.contacted"
 
-@m4 @added @lead_templates
+@m0 @added @lead_templates
 Scenario: I can see lead template fields with public values for each lead
 
-@m4 @added @lead_templates
+@m0 @added @lead_templates
 Scenario: I can see lead template fields with hidden values for each lead that I have bought

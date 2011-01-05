@@ -61,14 +61,14 @@ end
 
 LeadPurchase.blueprint do
   paid { false }
-  accessible { false }
+  accessible_from { nil }
   lead_id { Lead.make! }
   owner_id { User::Customer.make!.id }
 end
 
 LeadRequest.blueprint do
   paid { false }
-  accessible { false }
+  accessible_from { nil }
   requested_by { User::LeadBuyer.make!.id }
   lead_id { Lead.make! }
 end
@@ -207,6 +207,23 @@ end
   country { Country.make!.id }
   payout { rand(100) }
   roles_mask { 4 }
+end
+
+::User::CallCentreAgent.blueprint do
+  email { Faker::Internet.email }
+  password { "secret" }
+  password_confirmation { "secret" }
+  phone { Faker::PhoneNumber.phone_number }
+  screen_name { Faker::Name.name + Time.now.to_f.to_s.sub('.','') }
+  street { Faker::Address.street_name }
+  first_name { Faker::Name.first_name + Time.now.to_f.to_s.sub('.','') }
+  last_name { Faker::Name.last_name }
+  agreement_read { true }
+  city { Faker::Address.city }
+  zip_code { Faker::Address.zip_code }
+  county { Faker::Address.uk_county }
+  country { Country.make!.id }
+  roles_mask { 8 }
 end
 
 ::Article::Cms.blueprint do

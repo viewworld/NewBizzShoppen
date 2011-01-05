@@ -1,4 +1,4 @@
-@lead_templates @$_freelance_agent @m4
+@lead_templates @$_freelance_agent @m0
 Feature: Lead templates management for freelance agent
 
 @added

@@ -166,6 +166,10 @@ Given /^all users have refreshed cache counters$/ do
     User::Abstract.where("parent_id is not null").each do |user|
       user.refresh_subaccounts_counters!
     end
+
+    (User::Agent.all + User::CallCentreAgent.all).each do |user|
+      user.refresh_agent_counters!
+    end
 end
 
 Given /^user "([^"]*)" with role "([^"]*)" has interest in following categories "([^"]*)"$/ do |email, role, category_names|

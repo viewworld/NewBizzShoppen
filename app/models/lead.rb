@@ -40,6 +40,15 @@ class Lead < ActiveRecord::Base
   scope :bestsellers, order("lead_purchases_counter DESC")
   scope :latest, order("created_at DESC")
 
+  scope :joins_on_lead_purchases , joins("INNER JOIN lead_purchases ON lead_purchases.lead_id=leads.id")
+  scope :with_created_by, lambda { |agent| where("creator_id = ?", agent.id) }
+  scope :with_revenue_by, lambda { |agent| select("sum(price) as id").where("creator_id = ? and requested_by IS NULL", agent.id).joins_on_lead_purchases }
+  scope :with_rated_good_by, lambda { |agent| where("creator_id = ? and lead_purchases.rating_level > -1 and lead_purchases.rating_level <= ? and requested_by IS NULL", agent.id, LeadPurchase::RATING_SATISFACTORY).joins_on_lead_purchases }
+  scope :with_rated_bad_by, lambda { |agent| where("creator_id = ? and lead_purchases.rating_level > ? and requested_by IS NULL", agent.id, LeadPurchase::RATING_SATISFACTORY).joins_on_lead_purchases }
+  scope :with_not_rated_by, lambda { |agent| where("creator_id = ? and (lead_purchases.rating_level = -1 or lead_purchases.rating_level is NULL) and requested_by IS NULL", agent.id).joins_on_lead_purchases }
+
+
+
   validates_presence_of :header, :description, :purchase_value, :price, :company_name, :contact_name, :phone_number, :sale_limit, :category_id, :address, :purchase_decision_date, :country_id, :currency
   validates_presence_of :hidden_description, :unless => Proc.new{|l| l.created_by?('PurchaseManager')}
   validates_inclusion_of :sale_limit, :in => 0..10
@@ -48,6 +57,8 @@ class Lead < ActiveRecord::Base
   liquid_methods :header, :description, :company_name, :contact_name, :phone_number, :email_address, :address, :www_address
 
   liquid :header
+
+  delegate :certification_level, :to => :creator
 
   accepts_nested_attributes_for :lead_translations, :allow_destroy => true
 
@@ -78,10 +89,6 @@ class Lead < ActiveRecord::Base
     else
       INFINITY
     end
-  end
-
-  def certification_level_ratio
-    Lead.joins(:lead_purchases).where(:creator_id => creator_id, :creator_type => creator_type).count
   end
 
   def set_published_at
@@ -120,16 +127,6 @@ class Lead < ActiveRecord::Base
 
   def novelty_level
     NOVELTY_LEVEL_RANGES.each_with_index { |range, i| return i if range.include?(novelty_ratio) }
-  end
-
-  def certification_level
-    if certification_level_ratio >= Settings.certification_level_2.to_i
-      2
-    elsif certification_level_ratio >= Settings.certification_level_1.to_i
-      1
-    else
-      0
-    end
   end
 
   def buyable?

@@ -240,4 +240,20 @@ class Nbs < Thor
       lead.save
     end
   end
+
+  desc "refresh_subaccounts_counters", ""
+
+  def refresh_subaccounts_counters
+    User::Abstract.where("parent_id is not null").each do |user|
+      user.refresh_subaccounts_counters!
+    end
+  end
+
+  desc "refresh_agent_counters", ""
+
+  def refresh_agent_counters
+    (User::Agent.all + User::CallCentreAgent.all).each do |user|
+      user.refresh_agent_counters!
+    end
+  end
 end

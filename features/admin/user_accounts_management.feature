@@ -87,3 +87,6 @@ Scenario: I can perform a bulk block action
 
 @m0 @noguess
 Scenario: I can perform a bulk invoice action
+
+@m4 @added @agent_certification @tgn
+Scenario: I can override the certification level of any (call center-) agent

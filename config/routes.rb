@@ -58,6 +58,7 @@ Nbs::Application.routes.draw do
   namespace :call_centres do
     root :to => "call_centre_agents#index"
     resources :call_centre_agents
+    resource :bulk_call_centre_agents_update, :controller => "bulk_call_centre_agents_update", :only => [:update]
   end
 
   namespace :lead_users do

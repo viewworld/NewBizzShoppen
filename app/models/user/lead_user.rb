@@ -9,7 +9,7 @@ class ::User::LeadUser < ::User
 
   has_many :lead_purchases,
            :foreign_key => :assignee_id,
-           :conditions => {:accessible => true},
+           :conditions => "accessible_from IS NOT NULL",
            :include => :lead
 
   private

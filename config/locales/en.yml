@@ -603,14 +603,49 @@ en:
         view:
           title: 'Manage agents'
           new_agent: 'Create agent'
+          per_page_selection: 'Per page:'
+          none_per_page: 'None'
+          first_name_column: 'First name'
+          last_name_column: 'Last name'
+          created_leads_column: 'Created leads'
+          volume_sold_column: 'Volume sold'
+          mobile_phone_column: 'Mobile phone'
+          revenue_column: 'Revenue'
+          purchased_month_ago_column: 'Purchased 30 days ago'
+          purchased_year_ago_column: 'Purchased 12 months ago'
+          good_leads_column: 'Good'
+          bad_leads_column: 'Bad'
+          fake_leads_column: 'Fake'
+          not_rated_leads_column: 'Not rated'
+          rating_percent_column: 'Rating %'
+          certification_lvl_column: 'Certif. level'
+          actions_column: 'Actions'
+          lock: 'Lock'
+          unlock: 'Unlock'
+          edit: 'Edit'
+          delete: 'Delete'
+          delete_confirmation_message: 'Are you sure?'
+          button_bulk_subbaccounts_update: 'Save'
       new:
         view:
           title: 'New call centre agent'
           button_create: 'Create'
           button_cancel: 'Cancel'
+      edit:
+        view:
+          title: 'Edit call centre agent'
+          button_update: 'Save'
+          button_cancel: 'Cancel'
       create:
         flash:
           call_centre_agent_creation_successful: 'Call centre agent has been created successfully!'
+      update:
+        flash:
+          call_centre_agent_update_successful: 'Call centre agent has been updated successfully!'
+      destroy:
+        flash:
+          call_centre_agent_deletion_successful: 'Call centre agent has been successfully deleted'
+          call_centre_agent_deletion_failure: 'Call centre agent could not be deleted'
 
   purchase_manager:
     leads:
@@ -957,9 +992,9 @@ en:
         lvl1: Stable
         lvl2: Classic
       certification:
-        lvl0: New
-        lvl1: Experienced
-        lvl2: Expert
+        lvl0: Not certified
+        lvl1: Silver
+        lvl2: Gold
 
   activerecord:
     attributes:
@@ -1113,6 +1148,9 @@ en:
     bulk_subaccounts_update:
       update:
         notice: 'Selected subaccounts have been updated.'
+    bulk_call_centre_agents_update:
+      update:
+        notice: 'Selected call centre agents have been updated.'
     payment_transactions:
       create:
         notice: 'Manual transaction has been successfully created.'
