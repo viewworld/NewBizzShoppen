@@ -177,3 +177,8 @@ Given /^user "([^"]*)" with role "([^"]*)" has interest in following categories 
   user.categories = category_names.split(",").map { |name| Category.find_by_name(name).last }
   user.save
 end
+
+Given /^user "([^"]*)" with role "([^"]*)" has certification level (\d+)$/ do |email, role, c_level|
+  user = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
+  assert user.read_attribute(:certification_level).to_i == c_level.to_i
+end

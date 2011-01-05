@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   NOT_CERTIFIED_LOCKED        = 10
   SILVER_CERTIFICATION_LOCKED = 11
   GOLD_CERTIFICATION_LOCKED   = 12
-  CERTIFICATION_LEVELS = [NOT_CERTIFIED, SILVER_CERTIFICATION, GOLD_CERTIFICATION]
+  CERTIFICATION_LEVELS = [NOT_CERTIFIED, SILVER_CERTIFICATION, GOLD_CERTIFICATION, NOT_CERTIFIED_LOCKED, SILVER_CERTIFICATION_LOCKED, GOLD_CERTIFICATION_LOCKED]
 
   include RoleModel
   include ScopedSearch::Model
@@ -190,6 +190,13 @@ class User < ActiveRecord::Base
     self.leads_rating_avg = LeadPurchase.with_rating_avg_by(self).first.id || 0
     self.refresh_certification_level
     self.save
+  end
+
+  def self.refresh_agents_certification_level
+    (User::Agent.all + User::CallCentreAgent.all).each do |user|
+      user.refresh_certification_level
+      user.save
+    end
   end
 
   def certification_level

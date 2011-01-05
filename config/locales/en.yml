@@ -275,6 +275,9 @@ en:
       create:
         flash:
           user_creation_successful: User has been created successfuly
+      update:
+        flash:
+          user_update_successful: User has been updated successfuly
       destroy:
         flash:
           user_deletion_successful: 'User was successfully deleted!'
@@ -1003,6 +1006,9 @@ en:
         lvl0: Not certified
         lvl1: Silver
         lvl2: Gold
+        lvl10: Not certified (locked)
+        lvl11: Silver (locked)
+        lvl12: Gold (locked)
 
   activerecord:
     attributes:
