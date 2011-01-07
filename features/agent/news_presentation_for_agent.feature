@@ -24,3 +24,9 @@ Scenario: I can click on and see details for particular news entry
   When I follow translated "home.show.view.agent"
   And I follow translated "agent_home.show.view.complete_list_link" within "#news"
   And I follow translated "news.index.view.read_more_link"
+
+@added @_done
+Scenario: I can go back to start page from news listing
+  When I follow translated "home.show.view.agent"
+  And I follow translated "agent_home.show.view.complete_list_link" within "#news"
+  Then I should see "Back"
