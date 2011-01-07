@@ -69,4 +69,8 @@ module ApplicationHelper
     number_to_currency(number, :format => currency.format, :unit => currency.symbol)
   end
 
+  def current_user_has_role?(r)
+    current_user && current_user.has_role?(r)
+  end
+
 end

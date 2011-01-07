@@ -83,6 +83,9 @@ module NavigationHelpers
       when /(.*) news page/
         news = Article::News.find_by_title($1)
         news_path(news)
+      when /(.*) article page/
+        news = Article::Cms.find_by_title($1)
+        article_path(news)
       when /administration currencies/
         administration_currencies_path
 

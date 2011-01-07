@@ -78,14 +78,14 @@ SELECT pg_catalog.setval('currencies_id_seq', 2, true);
 -- Name: email_template_translations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('email_template_translations_id_seq', 16, true);
+SELECT pg_catalog.setval('email_template_translations_id_seq', 18, true);
 
 
 --
 -- Name: email_templates_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('email_templates_id_seq', 8, true);
+SELECT pg_catalog.setval('email_templates_id_seq', 9, true);
 
 
 --
@@ -177,24 +177,24 @@ SELECT pg_catalog.setval('users_id_seq', 5, true);
 --
 
 COPY article_translations (id, article_id, locale, content, title, created_at, updated_at) FROM stdin;
-1	1	dk	About us	About us	2011-01-05 08:32:47.813454	2011-01-05 08:32:47.813454
-2	1	en	About us	About us	2011-01-05 08:32:47.827196	2011-01-05 08:32:47.827196
-3	2	dk	Privacy	Privacy	2011-01-05 08:32:47.85708	2011-01-05 08:32:47.85708
-4	2	en	Privacy	Privacy	2011-01-05 08:32:47.868603	2011-01-05 08:32:47.868603
-5	3	dk	Terms & Conditions	Terms & Conditions	2011-01-05 08:32:47.900413	2011-01-05 08:32:47.900413
-6	3	en	Terms & Conditions	Terms & Conditions	2011-01-05 08:32:47.911792	2011-01-05 08:32:47.911792
-7	4	dk	Blurb sign up	Blurb sign up	2011-01-05 08:32:47.94032	2011-01-05 08:32:47.94032
-8	4	en	Blurb sign up	Blurb sign up	2011-01-05 08:32:47.952057	2011-01-05 08:32:47.952057
-9	5	dk	Blurb buyer home	Blurb buyer home	2011-01-05 08:32:47.981037	2011-01-05 08:32:47.981037
-10	5	en	Blurb buyer home	Blurb buyer home	2011-01-05 08:32:47.99287	2011-01-05 08:32:47.99287
-11	6	dk	Blurb agent home	Blurb agent home	2011-01-05 08:32:48.02321	2011-01-05 08:32:48.02321
-12	6	en	Blurb agent home	Blurb agent home	2011-01-05 08:32:48.035948	2011-01-05 08:32:48.035948
-13	7	dk	Blurb start page role selection	Blurb start page role selection	2011-01-05 08:32:48.065272	2011-01-05 08:32:48.065272
-14	7	en	Blurb start page role selection	Blurb start page role selection	2011-01-05 08:32:48.076786	2011-01-05 08:32:48.076786
-15	8	dk	Blurb currencies	Blurb currencies	2011-01-05 08:32:48.105312	2011-01-05 08:32:48.105312
-16	8	en	Blurb currencies	Blurb currencies	2011-01-05 08:32:48.116334	2011-01-05 08:32:48.116334
-17	9	dk	Reset password	Reset password	2011-01-05 08:32:48.143939	2011-01-05 08:32:48.143939
-18	9	en	Reset password	Reset password	2011-01-05 08:32:48.155299	2011-01-05 08:32:48.155299
+1	1	dk	About us	About us	2011-01-07 11:23:30.256841	2011-01-07 11:23:30.256841
+2	1	en	About us	About us	2011-01-07 11:23:30.279563	2011-01-07 11:23:30.279563
+3	2	dk	Privacy	Privacy	2011-01-07 11:23:30.324619	2011-01-07 11:23:30.324619
+4	2	en	Privacy	Privacy	2011-01-07 11:23:30.34282	2011-01-07 11:23:30.34282
+5	3	dk	Terms & Conditions	Terms & Conditions	2011-01-07 11:23:30.393344	2011-01-07 11:23:30.393344
+6	3	en	Terms & Conditions	Terms & Conditions	2011-01-07 11:23:30.411103	2011-01-07 11:23:30.411103
+7	4	dk	Blurb sign up	Blurb sign up	2011-01-07 11:23:30.452673	2011-01-07 11:23:30.452673
+8	4	en	Blurb sign up	Blurb sign up	2011-01-07 11:23:30.469192	2011-01-07 11:23:30.469192
+9	5	dk	Blurb buyer home	Blurb buyer home	2011-01-07 11:23:30.513742	2011-01-07 11:23:30.513742
+10	5	en	Blurb buyer home	Blurb buyer home	2011-01-07 11:23:30.531913	2011-01-07 11:23:30.531913
+11	6	dk	Blurb agent home	Blurb agent home	2011-01-07 11:23:30.578172	2011-01-07 11:23:30.578172
+12	6	en	Blurb agent home	Blurb agent home	2011-01-07 11:23:30.596577	2011-01-07 11:23:30.596577
+13	7	dk	Blurb start page role selection	Blurb start page role selection	2011-01-07 11:23:30.640091	2011-01-07 11:23:30.640091
+14	7	en	Blurb start page role selection	Blurb start page role selection	2011-01-07 11:23:30.656576	2011-01-07 11:23:30.656576
+15	8	dk	Blurb currencies	Blurb currencies	2011-01-07 11:23:30.69944	2011-01-07 11:23:30.69944
+16	8	en	Blurb currencies	Blurb currencies	2011-01-07 11:23:30.716079	2011-01-07 11:23:30.716079
+17	9	dk	Reset password	Reset password	2011-01-07 11:23:30.755345	2011-01-07 11:23:30.755345
+18	9	en	Reset password	Reset password	2011-01-07 11:23:30.774294	2011-01-07 11:23:30.774294
 \.
 
 
@@ -203,15 +203,15 @@ COPY article_translations (id, article_id, locale, content, title, created_at, u
 --
 
 COPY articles (id, type, created_at, updated_at, key, scope, published, published_date) FROM stdin;
-1	Article::Cms	2011-01-05 08:32:47.674941	2011-01-05 08:32:47.829833	about_us	0	t	2011-01-05 08:32:47.829764
-2	Article::Cms	2011-01-05 08:32:47.85318	2011-01-05 08:32:47.871275	privacy	0	t	2011-01-05 08:32:47.871203
-3	Article::Cms	2011-01-05 08:32:47.895878	2011-01-05 08:32:47.914542	terms_conditions	0	t	2011-01-05 08:32:47.91445
-4	Article::Cms	2011-01-05 08:32:47.935905	2011-01-05 08:32:47.955227	blurb_sign_up	1	t	2011-01-05 08:32:47.955143
-5	Article::Cms	2011-01-05 08:32:47.976316	2011-01-05 08:32:47.996105	blurb_buyer_home	1	t	2011-01-05 08:32:47.996026
-6	Article::Cms	2011-01-05 08:32:48.018863	2011-01-05 08:32:48.038957	blurb_agent_home	1	t	2011-01-05 08:32:48.038873
-7	Article::Cms	2011-01-05 08:32:48.061138	2011-01-05 08:32:48.079618	blurb_start_page_role_selection	1	t	2011-01-05 08:32:48.079548
-8	Article::Cms	2011-01-05 08:32:48.101034	2011-01-05 08:32:48.119097	blurb_currencies	1	t	2011-01-05 08:32:48.119022
-9	Article::Cms	2011-01-05 08:32:48.139924	2011-01-05 08:32:48.30694	reset_password	2	t	2011-01-05 08:32:48.306847
+1	Article::Cms	2011-01-07 11:23:30.246255	2011-01-07 11:23:30.285153	about_us	0	t	2011-01-07 11:23:30.285039
+2	Article::Cms	2011-01-07 11:23:30.319408	2011-01-07 11:23:30.349162	privacy	0	t	2011-01-07 11:23:30.349061
+3	Article::Cms	2011-01-07 11:23:30.387148	2011-01-07 11:23:30.418561	terms_conditions	0	t	2011-01-07 11:23:30.418459
+4	Article::Cms	2011-01-07 11:23:30.447829	2011-01-07 11:23:30.474512	blurb_sign_up	1	t	2011-01-07 11:23:30.474408
+5	Article::Cms	2011-01-07 11:23:30.508797	2011-01-07 11:23:30.538645	blurb_buyer_home	1	t	2011-01-07 11:23:30.538478
+6	Article::Cms	2011-01-07 11:23:30.573202	2011-01-07 11:23:30.602851	blurb_agent_home	1	t	2011-01-07 11:23:30.602747
+7	Article::Cms	2011-01-07 11:23:30.635186	2011-01-07 11:23:30.662985	blurb_start_page_role_selection	1	t	2011-01-07 11:23:30.662882
+8	Article::Cms	2011-01-07 11:23:30.693934	2011-01-07 11:23:30.721541	blurb_currencies	1	t	2011-01-07 11:23:30.721441
+9	Article::Cms	2011-01-07 11:23:30.750395	2011-01-07 11:23:30.779619	reset_password	2	t	2011-01-07 11:23:30.779513
 \.
 
 
@@ -228,9 +228,9 @@ COPY assets (id, asset_file_name, asset_content_type, asset_file_size, asset_typ
 --
 
 COPY categories (id, name, description, created_at, updated_at, parent_id, lft, rgt, depth, total_leads_count, cached_slug, is_locked, published_leads_count) FROM stdin;
-1	Electronics	Laboriosam magnam et quia ullam suscipit et non nesciunt.Perspiciatis dolor molestias maxime cumque placeat provident accusantium expedita.	2011-01-05 08:32:46.331894	2011-01-05 08:32:46.331894	\N	1	2	\N	0	1-electronics	f	0
-2	Leisure	Necessitatibus ullam a culpa ut qui debitis.Porro nisi tempore dolore.	2011-01-05 08:32:46.374926	2011-01-05 08:32:46.374926	\N	3	4	\N	0	2-leisure	f	0
-3	Business	Possimus exercitationem quia ratione corrupti itaque fugiat.Doloremque repellat odio amet.	2011-01-05 08:32:46.533673	2011-01-05 08:32:47.224964	\N	5	6	\N	7	3-business	f	7
+1	Electronics	Est ut rerum reiciendis.Beatae eaque est eum non aspernatur.	2011-01-07 11:23:28.915653	2011-01-07 11:23:28.915653	\N	1	2	\N	0	1-electronics	f	0
+2	Leisure	Ut tenetur sit maxime dolor omnis cum est deleniti.Odit dolorem dolore quas nobis.	2011-01-07 11:23:28.982308	2011-01-07 11:23:28.982308	\N	3	4	\N	0	2-leisure	f	0
+3	Business	Et et eveniet esse.Animi sint accusamus laudantium non qui similique.	2011-01-07 11:23:29.035107	2011-01-07 11:23:29.817409	\N	5	6	\N	7	3-business	f	7
 \.
 
 
@@ -247,12 +247,12 @@ COPY category_interests (id, category_id, user_id, created_at, updated_at) FROM 
 --
 
 COPY category_translations (id, category_id, locale, description, name, created_at, updated_at) FROM stdin;
-1	1	en	Laboriosam magnam et quia ullam suscipit et non nesciunt.Perspiciatis dolor molestias maxime cumque placeat provident accusantium expedita.	Electronics	2011-01-05 08:32:46.340752	2011-01-05 08:32:46.340752
-2	1	dk	\N	Electronics	2011-01-05 08:32:46.365515	2011-01-05 08:32:46.365515
-3	2	en	Necessitatibus ullam a culpa ut qui debitis.Porro nisi tempore dolore.	Leisure	2011-01-05 08:32:46.50494	2011-01-05 08:32:46.50494
-4	2	dk	\N	Leisure	2011-01-05 08:32:46.524193	2011-01-05 08:32:46.524193
-5	3	en	Possimus exercitationem quia ratione corrupti itaque fugiat.Doloremque repellat odio amet.	Business	2011-01-05 08:32:46.537745	2011-01-05 08:32:46.537745
-6	3	dk	\N	Business	2011-01-05 08:32:46.556526	2011-01-05 08:32:46.556526
+1	1	en	Est ut rerum reiciendis.Beatae eaque est eum non aspernatur.	Electronics	2011-01-07 11:23:28.92854	2011-01-07 11:23:28.92854
+2	1	dk	\N	Electronics	2011-01-07 11:23:28.968072	2011-01-07 11:23:28.968072
+3	2	en	Ut tenetur sit maxime dolor omnis cum est deleniti.Odit dolorem dolore quas nobis.	Leisure	2011-01-07 11:23:28.987635	2011-01-07 11:23:28.987635
+4	2	dk	\N	Leisure	2011-01-07 11:23:29.013702	2011-01-07 11:23:29.013702
+5	3	en	Et et eveniet esse.Animi sint accusamus laudantium non qui similique.	Business	2011-01-07 11:23:29.040455	2011-01-07 11:23:29.040455
+6	3	dk	\N	Business	2011-01-07 11:23:29.067746	2011-01-07 11:23:29.067746
 \.
 
 
@@ -261,9 +261,9 @@ COPY category_translations (id, category_id, locale, description, name, created_
 --
 
 COPY countries (id, name, created_at, updated_at) FROM stdin;
-1	Denmark	2011-01-05 08:32:45.855166	2011-01-05 08:32:45.855166
-2	United Kingdom	2011-01-05 08:32:45.860057	2011-01-05 08:32:45.860057
-3	Wales129421636658391	2011-01-05 08:32:46.585228	2011-01-05 08:32:46.585228
+1	Denmark	2011-01-07 11:23:27.027745	2011-01-07 11:23:27.027745
+2	United Kingdom	2011-01-07 11:23:27.040102	2011-01-07 11:23:27.040102
+3	Scotland129439940910562	2011-01-07 11:23:29.10735	2011-01-07 11:23:29.10735
 \.
 
 
@@ -280,8 +280,8 @@ COPY country_interests (id, country_id, user_id, created_at, updated_at) FROM st
 --
 
 COPY currencies (id, name, symbol, format, active, created_at, updated_at) FROM stdin;
-1	Euro	&euro;	%u%n	t	2011-01-05 08:32:46.310874	2011-01-05 08:32:46.310874
-2	PLN	&pln;	%u%n	t	2011-01-05 08:32:46.314937	2011-01-05 08:32:46.314937
+1	Euro	&euro;	%u%n	t	2011-01-07 11:23:28.878023	2011-01-07 11:23:28.878023
+2	PLN	&pln;	%u%n	t	2011-01-07 11:23:28.888259	2011-01-07 11:23:28.888259
 \.
 
 
@@ -289,23 +289,25 @@ COPY currencies (id, name, symbol, format, active, created_at, updated_at) FROM 
 -- Data for Name: email_template_translations; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY email_template_translations (id, email_template_id, locale, subject, body, created_at, updated_at) FROM stdin;
-1	1	en	Confirmation instructions	<p>Welcome {{user.email}}!</p><p>You can confirm your account through the link below:</p><p><a href="{{user.confirmation_instructions_url}}">Confirm my account</a></p>	2011-01-05 08:32:46.010511	2011-01-05 08:32:46.010511
-2	1	dk	[DK] Confirmation instructions	<p>Welcome {{user.email}}!</p><p>You can confirm your account through the link below:</p><p><a href="{{user.confirmation_instructions_url}}">Confirm my account</a></p>	2011-01-05 08:32:46.025242	2011-01-05 08:32:46.025242
-3	2	en	Reset password instructions	<p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href="{{ user.reset_password_instructions_url }}">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>	2011-01-05 08:32:46.037886	2011-01-05 08:32:46.037886
-4	2	dk	[DK] Reset password instructions	<p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href="{{ user.reset_password_instructions_url }}">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>	2011-01-05 08:32:46.049675	2011-01-05 08:32:46.049675
-5	3	en	Somebody shared leads with you	{% for lead in leads %}\n<p>{{lead.header}}<br />\n{{lead.description}}<br /></p>\n{% endfor %}	2011-01-05 08:32:46.061546	2011-01-05 08:32:46.061546
-6	3	dk	[DK] Somebody shared leads with you	{% for lead in leads %}\n<p>{{lead.header}}<br />\n{{lead.description}}<br /></p>\n{% endfor %}	2011-01-05 08:32:46.07315	2011-01-05 08:32:46.07315
-7	4	en	Contact regarding lead	<p>{{lead.id}}</p>	2011-01-05 08:32:46.08506	2011-01-05 08:32:46.08506
-8	4	dk	[DK] Contact regarding lead	<p>{{lead.id}}</p>	2011-01-05 08:32:46.096738	2011-01-05 08:32:46.096738
-9	5	en	Lead Purchase is about to expire	<p>{{lead_purchase.id}}</p>	2011-01-05 08:32:46.108986	2011-01-05 08:32:46.108986
-10	5	dk	[DK] Lead Purchase is about to expire	<p>{{lead_purchase.id}}</p>	2011-01-05 08:32:46.121368	2011-01-05 08:32:46.121368
-11	6	en	Lead has been rated as unsatisfactory	<p>Lead {{lead_purchase.header}} has been rated as {{lead_purchase.rating_level_as_text}} with the following reason: {{lead_purchase.rating_reason}}.</p>	2011-01-05 08:32:46.134039	2011-01-05 08:32:46.134039
-12	6	dk	[DK] Lead has been rated as unsatisfactory	<p>Lead {{lead_purchase.header}} has been rated as {{lead_purchase.rating_level_as_text}} with the following reason: {{lead_purchase.rating_reason}}.</p>	2011-01-05 08:32:46.146606	2011-01-05 08:32:46.146606
-13	7	en	Lead has been updated	<p>Lead {{lead.header}} has been updated by agent.</p>	2011-01-05 08:32:46.159534	2011-01-05 08:32:46.159534
-14	7	dk	[DK] Lead has been updated	<p>Lead {{lead.header}} has been updated by agent.</p>	2011-01-05 08:32:46.172039	2011-01-05 08:32:46.172039
-15	8	en	Question	<p></p>	2011-01-05 08:32:46.184772	2011-01-05 08:32:46.184772
-16	8	dk	[DK] Question	<p></p>	2011-01-05 08:32:46.197102	2011-01-05 08:32:46.197102
+COPY email_template_translations (id, email_template_id, locale, body, subject, created_at, updated_at) FROM stdin;
+1	1	en	<p>Welcome {{user.email}}!</p><p>You can confirm your account through the link below:</p><p><a href="{{user.confirmation_instructions_url}}">Confirm my account</a></p>	Confirmation instructions	2011-01-07 11:23:27.08929	2011-01-07 11:23:27.08929
+2	1	dk	<p>Welcome {{user.email}}!</p><p>You can confirm your account through the link below:</p><p><a href="{{user.confirmation_instructions_url}}">Confirm my account</a></p>	[DK] Confirmation instructions	2011-01-07 11:23:27.111746	2011-01-07 11:23:27.111746
+3	2	en	<p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href="{{ user.reset_password_instructions_url }}">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>	Reset password instructions	2011-01-07 11:23:27.133345	2011-01-07 11:23:27.133345
+4	2	dk	<p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href="{{ user.reset_password_instructions_url }}">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>	[DK] Reset password instructions	2011-01-07 11:23:27.153427	2011-01-07 11:23:27.153427
+5	3	en	{% for lead in leads %}\n<p>{{lead.header}}<br />\n{{lead.description}}<br /></p>\n{% endfor %}	Somebody shared leads with you	2011-01-07 11:23:27.179439	2011-01-07 11:23:27.179439
+6	3	dk	{% for lead in leads %}\n<p>{{lead.header}}<br />\n{{lead.description}}<br /></p>\n{% endfor %}	[DK] Somebody shared leads with you	2011-01-07 11:23:27.645006	2011-01-07 11:23:27.645006
+7	4	en	<p>{{lead.id}}</p>	Contact regarding lead	2011-01-07 11:23:27.675169	2011-01-07 11:23:27.675169
+8	4	dk	<p>{{lead.id}}</p>	[DK] Contact regarding lead	2011-01-07 11:23:27.697302	2011-01-07 11:23:27.697302
+9	5	en	<p>{{lead_purchase.id}}</p>	Lead Purchase is about to expire	2011-01-07 11:23:27.719535	2011-01-07 11:23:27.719535
+10	5	dk	<p>{{lead_purchase.id}}</p>	[DK] Lead Purchase is about to expire	2011-01-07 11:23:27.772541	2011-01-07 11:23:27.772541
+11	6	en	<p>Lead {{lead_purchase.header}} has been rated as {{lead_purchase.rating_level_as_text}} with the following reason: {{lead_purchase.rating_reason}}.</p>	Lead has been rated as unsatisfactory	2011-01-07 11:23:28.241691	2011-01-07 11:23:28.241691
+12	6	dk	<p>Lead {{lead_purchase.header}} has been rated as {{lead_purchase.rating_level_as_text}} with the following reason: {{lead_purchase.rating_reason}}.</p>	[DK] Lead has been rated as unsatisfactory	2011-01-07 11:23:28.280981	2011-01-07 11:23:28.280981
+13	7	en	<p>Lead {{lead.header}} has been updated by agent.</p>	Lead has been updated	2011-01-07 11:23:28.315058	2011-01-07 11:23:28.315058
+14	7	dk	<p>Lead {{lead.header}} has been updated by agent.</p>	[DK] Lead has been updated	2011-01-07 11:23:28.338842	2011-01-07 11:23:28.338842
+15	8	en	<p></p>	Question	2011-01-07 11:23:28.616761	2011-01-07 11:23:28.616761
+16	8	dk	<p></p>	[DK] Question	2011-01-07 11:23:28.635619	2011-01-07 11:23:28.635619
+17	9	en	<p></p>	Invoice	2011-01-07 11:23:28.657023	2011-01-07 11:23:28.657023
+18	9	dk	<p></p>	[DK] Invoice	2011-01-07 11:23:28.674819	2011-01-07 11:23:28.674819
 \.
 
 
@@ -314,14 +316,15 @@ COPY email_template_translations (id, email_template_id, locale, subject, body, 
 --
 
 COPY email_templates (id, name, subject, "from", bcc, cc, body, template, uniq_id, persist, created_at, updated_at) FROM stdin;
-1	confirmation instructions	[DK] Confirmation instructions	noreply@newbizzshoppen.com	\N	\N	<p>Welcome {{user.email}}!</p><p>You can confirm your account through the link below:</p><p><a href="{{user.confirmation_instructions_url}}">Confirm my account</a></p>	\N	confirmation_instructions	t	2011-01-05 08:32:45.876992	2011-01-05 08:32:46.021211
-2	reset_password_instructions	[DK] Reset password instructions	noreply@newbizzshoppen.com	\N	\N	<p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href="{{ user.reset_password_instructions_url }}">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>	\N	reset_password_instructions	t	2011-01-05 08:32:46.033422	2011-01-05 08:32:46.045711
-3	Share leads by email message	[DK] Somebody shared leads with you	noreply@newbizzshoppen.com	\N	\N	{% for lead in leads %}\n<p>{{lead.header}}<br />\n{{lead.description}}<br /></p>\n{% endfor %}	\N	share_leads_by_email_message	t	2011-01-05 08:32:46.057325	2011-01-05 08:32:46.069128
-4	Contact Lead by email message	[DK] Contact regarding lead	noreply@newbizzshoppen.com	\N	\N	<p>{{lead.id}}</p>	\N	contact_lead_by_email_message	t	2011-01-05 08:32:46.080784	2011-01-05 08:32:46.092779
-5	Lead Purchase is about to expire	[DK] Lead Purchase is about to expire	noreply@newbizzshoppen.com	\N	\N	<p>{{lead_purchase.id}}</p>	\N	lead_purchase_is_about_to_expire	t	2011-01-05 08:32:46.104615	2011-01-05 08:32:46.117094
-6	Lead rated as unsatisfactory	[DK] Lead has been rated as unsatisfactory	noreply@newbizzshoppen.com	\N	\N	<p>Lead {{lead_purchase.header}} has been rated as {{lead_purchase.rating_level_as_text}} with the following reason: {{lead_purchase.rating_reason}}.</p>	\N	lead_rated_as_unsatisfactory	t	2011-01-05 08:32:46.129619	2011-01-05 08:32:46.142294
-7	Notify buyers about lead update	[DK] Lead has been updated	noreply@newbizzshoppen.com	\N	\N	<p>Lead {{lead.header}} has been updated by agent.</p>	\N	notify_buyers_about_lead_update	t	2011-01-05 08:32:46.15497	2011-01-05 08:32:46.16778
-8	Contact us	[DK] Question	noreply@newbizzshoppen.com	\N	\N	<p></p>	\N	contact_us	t	2011-01-05 08:32:46.180052	2011-01-05 08:32:46.19294
+1	confirmation instructions	[DK] Confirmation instructions	noreply@newbizzshoppen.com	\N	\N	<p>Welcome {{user.email}}!</p><p>You can confirm your account through the link below:</p><p><a href="{{user.confirmation_instructions_url}}">Confirm my account</a></p>	\N	confirmation_instructions	t	2011-01-07 11:23:27.077205	2011-01-07 11:23:27.106121
+2	reset_password_instructions	[DK] Reset password instructions	noreply@newbizzshoppen.com	\N	\N	<p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href="{{ user.reset_password_instructions_url }}">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>	\N	reset_password_instructions	t	2011-01-07 11:23:27.127458	2011-01-07 11:23:27.147881
+3	Share leads by email message	[DK] Somebody shared leads with you	noreply@newbizzshoppen.com	\N	\N	{% for lead in leads %}\n<p>{{lead.header}}<br />\n{{lead.description}}<br /></p>\n{% endfor %}	\N	share_leads_by_email_message	t	2011-01-07 11:23:27.172215	2011-01-07 11:23:27.639147
+4	Contact Lead by email message	[DK] Contact regarding lead	noreply@newbizzshoppen.com	\N	\N	<p>{{lead.id}}</p>	\N	contact_lead_by_email_message	t	2011-01-07 11:23:27.668505	2011-01-07 11:23:27.691447
+5	Lead Purchase is about to expire	[DK] Lead Purchase is about to expire	noreply@newbizzshoppen.com	\N	\N	<p>{{lead_purchase.id}}</p>	\N	lead_purchase_is_about_to_expire	t	2011-01-07 11:23:27.712497	2011-01-07 11:23:27.75988
+6	Lead rated as unsatisfactory	[DK] Lead has been rated as unsatisfactory	noreply@newbizzshoppen.com	\N	\N	<p>Lead {{lead_purchase.header}} has been rated as {{lead_purchase.rating_level_as_text}} with the following reason: {{lead_purchase.rating_reason}}.</p>	\N	lead_rated_as_unsatisfactory	t	2011-01-07 11:23:28.230202	2011-01-07 11:23:28.274986
+7	Notify buyers about lead update	[DK] Lead has been updated	noreply@newbizzshoppen.com	\N	\N	<p>Lead {{lead.header}} has been updated by agent.</p>	\N	notify_buyers_about_lead_update	t	2011-01-07 11:23:28.304526	2011-01-07 11:23:28.332109
+8	Contact us	[DK] Question	noreply@newbizzshoppen.com	\N	\N	<p></p>	\N	contact_us	t	2011-01-07 11:23:28.610973	2011-01-07 11:23:28.630284
+9	Invoice	[DK] Invoice	noreply@newbizzshoppen.com	\N	\N	<p></p>	\N	invoice	t	2011-01-07 11:23:28.650123	2011-01-07 11:23:28.669541
 \.
 
 
@@ -354,13 +357,13 @@ COPY lead_purchases (id, lead_id, owner_id, assignee_id, paid, created_at, updat
 --
 
 COPY lead_translations (id, lead_id, locale, description, hidden_description, header, created_at, updated_at) FROM stdin;
-1	1	dk	Deleniti voluptatem laborum debitis atque.Architecto repudiandae hic eos at.	Non perferendis magnam accusamus consectetur numquam similique odio.Pariatur saepe placeat tempora autem eligendi perspiciatis.	Big deal on printers	2011-01-05 08:32:46.6884	2011-01-05 08:32:46.6884
-2	2	dk	Sed provident neque cumque veritatis.Inventore fugiat alias assumenda autem.	Consequatur sit repellat possimus aut veritatis.Earum sed consequatur numquam.	Drills required	2011-01-05 08:32:46.758775	2011-01-05 08:32:46.758775
-3	3	dk	Dolorem excepturi at ratione quia odio magni.Iste amet sit vero alias aut asperiores ipsa.	Tempore dolorum nam similique.Aut esse et velit.	Need assistance in selling a car	2011-01-05 08:32:46.829168	2011-01-05 08:32:46.829168
-4	4	dk	Ut aperiam quia tempore fugit et et.Minima autem culpa assumenda atque.	Qui odit dolores vel ut voluptatum distinctio inventore asperiores.Velit voluptatem consequuntur aliquam.	Ipod shipment	2011-01-05 08:32:47.029969	2011-01-05 08:32:47.029969
-5	5	dk	Earum eligendi harum magnam eos enim eveniet aut.Amet accusamus et est et iusto voluptatem esse nam.	Accusantium non ut quisquam veritatis sed quae eos.Sunt aperiam expedita voluptas.	Trip to amazonia - looking for offer	2011-01-05 08:32:47.098854	2011-01-05 08:32:47.098854
-6	6	dk	Dolorem temporibus culpa qui suscipit.Ex quo sit rerum quos dignissimos ut omnis placeat.	Accusamus labore natus officia.Ullam non perspiciatis non.	LCD - Huge amounts	2011-01-05 08:32:47.165915	2011-01-05 08:32:47.165915
-7	7	dk	Non optio quod voluptas.Et et velit repellat animi.	Corporis qui magni in.Quia et error distinctio.	GPS receivers required	2011-01-05 08:32:47.23179	2011-01-05 08:32:47.23179
+1	1	dk	Aut distinctio sed vel nesciunt.Odio voluptatibus iste est velit tenetur optio saepe pariatur.	Accusamus molestiae ipsam enim nam aut laborum.Ea perferendis eum magni tempore.	Big deal on printers	2011-01-07 11:23:29.251531	2011-01-07 11:23:29.251531
+2	2	dk	Asperiores ipsam iure aut nemo hic sint est voluptas.Ad cumque eos quaerat.	Doloremque asperiores quisquam ut.Rerum nihil quos ut veniam odit dolor eos dignissimos.	Drills required	2011-01-07 11:23:29.346141	2011-01-07 11:23:29.346141
+3	3	dk	Sed eaque amet architecto vitae.Similique quas ut et nostrum quisquam ipsam.	Voluptates rem ratione suscipit aut iste aspernatur.Dolorum iste corporis quo nemo.	Need assistance in selling a car	2011-01-07 11:23:29.441361	2011-01-07 11:23:29.441361
+4	4	dk	Et quod exercitationem voluptas.Distinctio autem eveniet quia.	Non quis adipisci odit labore.Voluptatem ipsam voluptatem qui ut architecto aut.	Ipod shipment	2011-01-07 11:23:29.534226	2011-01-07 11:23:29.534226
+5	5	dk	Ut est enim odio perspiciatis consectetur aut.Non quam velit similique ut veniam saepe.	Quis et quasi pariatur et.Sapiente et numquam sit.	Trip to amazonia - looking for offer	2011-01-07 11:23:29.634166	2011-01-07 11:23:29.634166
+6	6	dk	Saepe voluptatibus quis atque quisquam ex officia.Quos illo omnis qui.	Culpa eum aut laborum qui molestiae voluptas animi.Earum excepturi consequatur cum error.	LCD - Huge amounts	2011-01-07 11:23:29.727363	2011-01-07 11:23:29.727363
+7	7	dk	Magni mollitia cupiditate culpa iusto at aut nihil eum.Suscipit quidem reiciendis inventore nemo nisi.	A quod dolorem quia.Quibusdam dolores necessitatibus excepturi et.	GPS receivers required	2011-01-07 11:23:29.826968	2011-01-07 11:23:29.826968
 \.
 
 
@@ -369,13 +372,13 @@ COPY lead_translations (id, lead_id, locale, description, hidden_description, he
 --
 
 COPY leads (id, header, category_id, description, hidden_description, creator_id, creator_type, clicks_count, purchase_value, price, country_id, company_name, contact_name, phone_number, email_address, address, created_at, updated_at, purchase_decision_date, creator_name, sale_limit, published, www_address, lead_purchases_counter, exposures_count, featured, has_unsatisfactory_rating, average_rating, currency_id, published_at, linkedin_url, facebook_url) FROM stdin;
-1	Big deal on printers	3	Deleniti voluptatem laborum debitis atque.Architecto repudiandae hic eos at.	Non perferendis magnam accusamus consectetur numquam similique odio.Pariatur saepe placeat tempora autem eligendi perspiciatis.	2	User::Agent	0	384.0	658.0	1	Corkerylind	Devin Weimann	1-246-239-7687 x967	river.powlowski@renner.name	195 Leuschke Forest	2011-01-05 08:32:46.647651	2011-01-05 08:32:46.647651	2011-01-10	Nigel129421636658305 Little	1	t	\N	0	0	f	f	-1	1	2011-01-05 08:32:46.656852	\N	\N
-2	Drills required	3	Sed provident neque cumque veritatis.Inventore fugiat alias assumenda autem.	Consequatur sit repellat possimus aut veritatis.Earum sed consequatur numquam.	2	User::Agent	0	411.0	977.0	1	Nienowheathcote	Shany Lockman	1-639-538-3274 x960	jessie_williamson@prohaska.uk	6010 Justice Stream	2011-01-05 08:32:46.726716	2011-01-05 08:32:46.726716	2011-01-10	Nigel129421636658305 Little	1	t	\N	0	0	f	f	-1	1	2011-01-05 08:32:46.733246	\N	\N
-3	Need assistance in selling a car	3	Dolorem excepturi at ratione quia odio magni.Iste amet sit vero alias aut asperiores ipsa.	Tempore dolorum nam similique.Aut esse et velit.	2	User::Agent	0	420.0	402.0	1	Lemke	Susanna Swaniawski	522-958-0891 x59089	andres.grimes@pouros.name	7768 Newton Pass	2011-01-05 08:32:46.797357	2011-01-05 08:32:46.797357	2011-01-10	Nigel129421636658305 Little	1	t	\N	0	0	f	f	-1	1	2011-01-05 08:32:46.803846	\N	\N
-4	Ipod shipment	3	Ut aperiam quia tempore fugit et et.Minima autem culpa assumenda atque.	Qui odit dolores vel ut voluptatum distinctio inventore asperiores.Velit voluptatem consequuntur aliquam.	2	User::Agent	0	114.0	678.0	1	Hirthegerhold	Madonna Lebsack	(028)553-1989 x7218	roy.gerhold@homenickcronin.us	0110 Flo Roads	2011-01-05 08:32:46.997331	2011-01-05 08:32:46.997331	2011-01-10	Nigel129421636658305 Little	1	t	\N	0	0	f	f	-1	1	2011-01-05 08:32:47.003824	\N	\N
-5	Trip to amazonia - looking for offer	3	Earum eligendi harum magnam eos enim eveniet aut.Amet accusamus et est et iusto voluptatem esse nam.	Accusantium non ut quisquam veritatis sed quae eos.Sunt aperiam expedita voluptas.	2	User::Agent	0	96.0	815.0	1	Baumbachauer	Esmeralda Wiegand	696.911.9432 x28432	bailey_strosin@block.uk	839 Lois Mountains	2011-01-05 08:32:47.065629	2011-01-05 08:32:47.065629	2011-01-10	Nigel129421636658305 Little	1	t	\N	0	0	f	f	-1	1	2011-01-05 08:32:47.072674	\N	\N
-6	LCD - Huge amounts	3	Dolorem temporibus culpa qui suscipit.Ex quo sit rerum quos dignissimos ut omnis placeat.	Accusamus labore natus officia.Ullam non perspiciatis non.	2	User::Agent	0	641.0	511.0	1	Schiller	Jodie Mayer	232.974.2400	garland@wisoky.com	6247 Monahan Freeway	2011-01-05 08:32:47.133877	2011-01-05 08:32:47.133877	2011-01-10	Nigel129421636658305 Little	1	t	\N	0	0	f	f	-1	1	2011-01-05 08:32:47.140462	\N	\N
-7	GPS receivers required	3	Non optio quod voluptas.Et et velit repellat animi.	Corporis qui magni in.Quia et error distinctio.	2	User::Agent	0	546.0	299.0	1	Gulgowski	Cooper Kris IV	014-845-0033 x69310	jonas@ohara.co.uk	5765 Amani Island	2011-01-05 08:32:47.200391	2011-01-05 08:32:47.200391	2011-01-10	Nigel129421636658305 Little	1	t	\N	0	0	f	f	-1	1	2011-01-05 08:32:47.206565	\N	\N
+1	Big deal on printers	3	Aut distinctio sed vel nesciunt.Odio voluptatibus iste est velit tenetur optio saepe pariatur.	Accusamus molestiae ipsam enim nam aut laborum.Ea perferendis eum magni tempore.	2	User::Agent	0	963.0	627.0	1	Hudsonoconnell	Kelton Parisian	1-102-414-8309	meta@rutherfordmraz.com	2128 Gregg Plaza	2011-01-07 11:23:29.199265	2011-01-07 11:23:29.199265	2011-01-12	Kylie129439940910482 Boehm	1	t	\N	0	0	f	f	-1	1	2011-01-07 11:23:29.210588	\N	\N
+2	Drills required	3	Asperiores ipsam iure aut nemo hic sint est voluptas.Ad cumque eos quaerat.	Doloremque asperiores quisquam ut.Rerum nihil quos ut veniam odit dolor eos dignissimos.	2	User::Agent	0	611.0	64.0	1	Mrazhowe	Anahi Dicki	(474)155-8359 x8284	manuela_gaylord@beahan.ca	1278 Keeling Canyon	2011-01-07 11:23:29.303626	2011-01-07 11:23:29.303626	2011-01-12	Kylie129439940910482 Boehm	1	t	\N	0	0	f	f	-1	1	2011-01-07 11:23:29.311767	\N	\N
+3	Need assistance in selling a car	3	Sed eaque amet architecto vitae.Similique quas ut et nostrum quisquam ipsam.	Voluptates rem ratione suscipit aut iste aspernatur.Dolorum iste corporis quo nemo.	2	User::Agent	0	859.0	857.0	1	Medhurst	Norberto McKenzie	707.537.1639	mario@nader.ca	9939 Hand Glen	2011-01-07 11:23:29.399268	2011-01-07 11:23:29.399268	2011-01-12	Kylie129439940910482 Boehm	1	t	\N	0	0	f	f	-1	1	2011-01-07 11:23:29.406942	\N	\N
+4	Ipod shipment	3	Et quod exercitationem voluptas.Distinctio autem eveniet quia.	Non quis adipisci odit labore.Voluptatem ipsam voluptatem qui ut architecto aut.	2	User::Agent	0	843.0	616.0	1	Wilkinson	Samir Lind	442-290-0510 x324	cortney@willms.biz	643 Littel Drives	2011-01-07 11:23:29.491286	2011-01-07 11:23:29.491286	2011-01-12	Kylie129439940910482 Boehm	1	t	\N	0	0	f	f	-1	1	2011-01-07 11:23:29.500073	\N	\N
+5	Trip to amazonia - looking for offer	3	Ut est enim odio perspiciatis consectetur aut.Non quam velit similique ut veniam saepe.	Quis et quasi pariatur et.Sapiente et numquam sit.	2	User::Agent	0	547.0	931.0	1	Davisstrosin	Emmitt Jakubowski	1-446-417-1243	lazaro.hudson@hamill.info	449 O'Conner Square	2011-01-07 11:23:29.588107	2011-01-07 11:23:29.588107	2011-01-12	Kylie129439940910482 Boehm	1	t	\N	0	0	f	f	-1	1	2011-01-07 11:23:29.598844	\N	\N
+6	LCD - Huge amounts	3	Saepe voluptatibus quis atque quisquam ex officia.Quos illo omnis qui.	Culpa eum aut laborum qui molestiae voluptas animi.Earum excepturi consequatur cum error.	2	User::Agent	0	108.0	242.0	1	Larsondickinson	Martine Rempel	1-216-235-9148	haskell@mcdermott.biz	0640 Paucek Prairie	2011-01-07 11:23:29.683238	2011-01-07 11:23:29.683238	2011-01-12	Kylie129439940910482 Boehm	1	t	\N	0	0	f	f	-1	1	2011-01-07 11:23:29.693038	\N	\N
+7	GPS receivers required	3	Magni mollitia cupiditate culpa iusto at aut nihil eum.Suscipit quidem reiciendis inventore nemo nisi.	A quod dolorem quia.Quibusdam dolores necessitatibus excepturi et.	2	User::Agent	0	218.0	920.0	1	Schroeder	Luisa Reinger II	385-542-2688	earline@hermiston.name	444 Jacobs Wells	2011-01-07 11:23:29.783395	2011-01-07 11:23:29.783395	2011-01-12	Kylie129439940910482 Boehm	1	t	\N	0	0	f	f	-1	1	2011-01-07 11:23:29.792554	\N	\N
 \.
 
 
@@ -400,16 +403,16 @@ COPY payment_transactions (id, invoice_id, payment_notification_id, type, paid_a
 --
 
 COPY settings (id, var, value, created_at, updated_at) FROM stdin;
-1	default_payout_delay	--- 0\n	2011-01-05 08:32:45.824253	2011-01-05 08:32:45.824253
-2	default_leads_per_page	--- 5\n	2011-01-05 08:32:45.829768	2011-01-05 08:32:45.829768
-3	certification_level_1	--- 10\n	2011-01-05 08:32:45.831933	2011-01-05 08:32:45.831933
-4	certification_level_2	--- 20\n	2011-01-05 08:32:45.834029	2011-01-05 08:32:45.834029
-5	contact_us_email	--- contact@nbs.fake.com\n	2011-01-05 08:32:45.836092	2011-01-05 08:32:45.836092
-6	invoicing_default_payment_deadline_date	--- 14\n	2011-01-05 08:32:45.838172	2011-01-05 08:32:45.838172
-7	invoicing_seller_name	--- Fairleads\n	2011-01-05 08:32:45.840432	2011-01-05 08:32:45.840432
-8	invoicing_seller_address	--- |-\nStreeet\nPost Code City\nCounty\nCountry\n	2011-01-05 08:32:45.842691	2011-01-05 08:32:45.842691
-9	invoicing_seller_vat_number	--- 123-456-789\n	2011-01-05 08:32:45.844853	2011-01-05 08:32:45.844853
-10	invoicing_seller_payment_account	--- "0011400000000000000000001"\n	2011-01-05 08:32:45.846967	2011-01-05 08:32:45.846967
+1	default_payout_delay	--- 0\n	2011-01-07 11:23:26.673925	2011-01-07 11:23:26.673925
+2	default_leads_per_page	--- 5\n	2011-01-07 11:23:26.897095	2011-01-07 11:23:26.897095
+3	certification_level_1	--- 10\n	2011-01-07 11:23:26.941711	2011-01-07 11:23:26.941711
+4	certification_level_2	--- 20\n	2011-01-07 11:23:26.953364	2011-01-07 11:23:26.953364
+5	contact_us_email	--- contact@nbs.fake.com\n	2011-01-07 11:23:26.962738	2011-01-07 11:23:26.962738
+6	invoicing_default_payment_deadline_date	--- 14\n	2011-01-07 11:23:26.970998	2011-01-07 11:23:26.970998
+7	invoicing_seller_name	--- Fairleads\n	2011-01-07 11:23:26.98104	2011-01-07 11:23:26.98104
+8	invoicing_seller_address	--- |-\nStreeet\nPost Code City\nCounty\nCountry\n	2011-01-07 11:23:26.988752	2011-01-07 11:23:26.988752
+9	invoicing_seller_vat_number	--- 123-456-789\n	2011-01-07 11:23:26.996551	2011-01-07 11:23:26.996551
+10	invoicing_seller_payment_account	--- "0011400000000000000000001"\n	2011-01-07 11:23:27.00409	2011-01-07 11:23:27.00409
 \.
 
 
@@ -442,11 +445,11 @@ COPY tolk_translations (id, phrase_id, locale_id, text, previous_text, primary_u
 --
 
 COPY users (id, email, encrypted_password, password_salt, reset_password_token, remember_token, remember_created_at, sign_in_count, current_sign_in_at, last_sign_in_at, current_sign_in_ip, last_sign_in_ip, confirmation_token, confirmed_at, confirmation_sent_at, locked_at, created_at, updated_at, roles_mask, first_name, last_name, phone, screen_name, street, city, zip_code, county, country, newsletter_on, payout, parent_id, age, subaccounts_counter, mobile_phone, department, deal_value_range_start, deal_value_range_end, rss_token, notify_about_new_leads, big_buyer, completed_leads_counter, leads_requested_counter, leads_assigned_month_ago_counter, leads_assigned_year_ago_counter, total_leads_assigned_counter, paypal_email, bank_swift_number, bank_iban_number, can_edit_payout_information, leads_created_counter, leads_volume_sold_counter, leads_revenue_counter, leads_purchased_month_ago_counter, leads_purchased_year_ago_counter, leads_rated_good_counter, leads_rated_bad_counter, leads_not_rated_counter, leads_rating_avg, certification_level) FROM stdin;
-1	blazejek@gmail.com	63edb251abd6dffca660836181ad6d8ae94069ed941ee26c0f413232d3376fe3a0da67acddea23d37b394ca7bf0194875a0e234e99c483cf146ba4867213a971	ZMjV22ZYnSm3N9cv5Vqr	\N	\N	\N	0	\N	\N	\N	\N	\N	2011-01-05 08:32:46.301127	2011-01-05 08:32:46.232531	\N	2011-01-05 08:32:46.23274	2011-01-05 08:32:46.301405	1	Giovanny	Goldner	865.991.6975 x46548	root	Dwight Ferry	West Josefort	78140	Dyfed	1	\N	\N	\N	\N	0	\N	\N	\N	\N	jWvVuFrfeyId49MoSsJkFHtrCytnwh74GUEAP8PBpAZbI7yoWEDWnu83XBlISb	f	\N	0	0	0	0	0	\N	\N	\N	f	0	0	0	0	0	0	0	0	0	0
-2	agent@nbs.com	4c783e2cb92422e3fa26fa94136fd842c748f2d78c318f6aec8ddd789e209578293d05b2da168a94befc88de9768d4ccdfa83bf6ec3cd4031adb3d730ccfaefa	-b5Tz1GnGad21flEiZzY	\N	\N	\N	0	\N	\N	\N	\N	\N	2011-01-05 08:32:46.614283	2011-01-05 08:32:46.591065	\N	2011-01-05 08:32:46.591272	2011-01-05 08:32:46.614552	2	Nigel129421636658305	Little	632.680.7202 x0517	Silas Schuppe12942163665827	Eudora Branch	Haagside	38541-2648	Berkshire	3	\N	0	\N	\N	0	\N	\N	\N	\N	ljtkyf9NaRyHgmOMxXbLzBDz4b3fUREIZdVE4AMBfzoc357g42y3YbeZ3YG7in	f	\N	0	0	0	0	0	\N	\N	\N	f	0	0	0	0	0	0	0	0	0	0
-3	admin@nbs.com	d4cb23b1d39f122cc0a26a4f268604e5f02533ca024f84e1422e9a7e44d7a8b7597d90e3ca7dd30eb72ce1a0b9ba8352b9e8f969bcbafabd316fd6ee5b1c6a1d	97TPspY7nZMlOqENFQzQ	\N	\N	\N	0	\N	\N	\N	\N	\N	2011-01-05 08:32:47.311305	2011-01-05 08:32:47.290411	\N	2011-01-05 08:32:47.29069	2011-01-05 08:32:47.311581	1	Jerrold	Ryan	278.579.8768	Drew Koch129421636728592	Taylor Brook	Powlowskishire	10724	County Armagh	1	\N	\N	\N	\N	0	\N	\N	\N	\N	nE0Imr876udGBrPDELvh55HgKijAYKOtQJh0p4ytuwAojjJRTVotRbDN9VqA4F	f	\N	0	0	0	0	0	\N	\N	\N	f	0	0	0	0	0	0	0	0	0	0
-4	buyer@nbs.com	69fd98a5e7e857f08615a1fb2466bb09d9ffcafb8e5410e6dee1063c38c399bdb153e51df9531c1bd5103eb16970587d58c63da36cfed0d5e3665312925ce008	E1OBORjkuOamdW8t5Y7I	\N	\N	\N	0	\N	\N	\N	\N	\N	2011-01-05 08:32:47.500787	2011-01-05 08:32:47.477539	\N	2011-01-05 08:32:47.477756	2011-01-05 08:32:47.501072	48	Teagan	Bernhard	(003)304-0839	Jed Simonis12942163674722	Denesik Pines	Johnsstad	76424	Mid Glamorgan	1	\N	\N	\N	\N	0	\N	\N	\N	\N	RscHuYS4ny4QKfV5eKrQCRaHi4BKm7xpygKLjc58GywuSnP2qyYZUZv4JWIEzq	f	t	0	0	0	0	0	\N	\N	\N	f	0	0	0	0	0	0	0	0	0	0
-5	leaduser@nbs.com	b758000ca11d06dde5ec4cebc339773530ee05233eaa1911062cd96fc8161c57e0a1059d098f8d88ebe407c2fac85bcdd482c6cde3f9cc7178b67e43ae0a6c95	zy9QAK2o_4LGOUaS_WRR	\N	\N	\N	0	\N	\N	\N	\N	\N	2011-01-05 08:32:47.557624	2011-01-05 08:32:47.534867	\N	2011-01-05 08:32:47.535081	2011-01-05 08:32:47.572826	64	Juvenal	Robel	941.381.4751	Mariane Nader129421636752968	Cronin Fork	Conroyton	40808-7422	Buckinghamshire	1	\N	\N	4	\N	0	\N	\N	\N	\N	Jadsmgj1eJoO3LrZfQU18Z2NlNAGdyNNdx8TfV0QnLBMwSOYSBeM5txl8ji52K	f	\N	0	0	0	0	0	\N	\N	\N	f	0	0	0	0	0	0	0	0	0	0
+1	blazejek@gmail.com	da2ddd2193d44059ab16c7b44d5b8bd66b9ce7386f236e9e567b8273c2449798519197d089e936da77c335a07fb1232bb0839f6876f65a2b8c45e5b59818616f	sPfXxr0WML0L3RdHzpJh	\N	\N	\N	0	\N	\N	\N	\N	\N	2011-01-07 11:23:28.859182	2011-01-07 11:23:28.730675	\N	2011-01-07 11:23:28.731005	2011-01-07 11:23:28.859605	1	Hermann	Hand	000-806-6679 x94022	root	Steuber Cove	Reichelburgh	58431	West Yorkshire	1	\N	\N	\N	\N	0	\N	\N	\N	\N	JW4to3z5hlfu8Jj2cSqXRtiGIXcwz21sxoTuLcD8rXyLWO3qe4FguLa6EMUGjQ	f	\N	0	0	0	0	0	\N	\N	\N	f	0	0	0	0	0	0	0	0	0	0
+2	agent@nbs.com	1fb0fd709a5eeb449b65cdafd9f2658c9816e11cd6e754502ffc522b9b36c26b59292e5b063051f4172d3e4d575769a4651e70939451b50be241c907ee90bf80	JBxizCIvsVXqL4KFQqh9	\N	\N	\N	0	\N	\N	\N	\N	\N	2011-01-07 11:23:29.150119	2011-01-07 11:23:29.117207	\N	2011-01-07 11:23:29.117536	2011-01-07 11:23:29.150592	2	Kylie129439940910482	Boehm	953-965-1231 x42574	Brennan Jacobi129439940910458	Hoeger Rapids	Creminshire	71070-5636	North Yorkshire	3	\N	0	\N	\N	0	\N	\N	\N	\N	sCWnkwc2w0SzM4DWW1TcKBRfROWYuUztodcEagafPQMwh5YtwcwlTa1tGXfz2f	f	\N	0	0	0	0	0	\N	\N	\N	f	0	0	0	0	0	0	0	0	0	0
+3	admin@nbs.com	1f73ada014b36a757f81435ef58286646bebc8c0b2758b31217281ff445af24125d4ebd06d768921bbe93a8c98dda28ff5bf2c9c6e72d41a91bae7f89322561c	0bR2WatrrruqP65CkdQS	\N	\N	\N	0	\N	\N	\N	\N	\N	2011-01-07 11:23:29.946853	2011-01-07 11:23:29.918674	\N	2011-01-07 11:23:29.918974	2011-01-07 11:23:29.947278	1	Angelica	Treutel	(958)884-7121 x9052	Mr. Allison Reichert129439940991238	Filomena Fort	Donnieport	46694-3571	Dumfries and Galloway	1	\N	\N	\N	\N	0	\N	\N	\N	\N	4lqmOTYSqrzjE74ozFu0PU0jaeCkMQdXc6fxv4mLUMGyH0vupGpAH1KueNXwiu	f	\N	0	0	0	0	0	\N	\N	\N	f	0	0	0	0	0	0	0	0	0	0
+4	buyer@nbs.com	8d8585b4dc57125a51b8b4be7f417057bba802ccf1cb974b24fcc1bc3001aadc4c523a4f4cb5905d421fcbaab3312ce6bc754c93e98f2f2ee7eb134760b33c7f	xuRv8_rESaB-vy2hqGiP	\N	\N	\N	0	\N	\N	\N	\N	\N	2011-01-07 11:23:30.024777	2011-01-07 11:23:29.992741	\N	2011-01-07 11:23:29.993034	2011-01-07 11:23:30.025198	48	Justice	Blanda	156-784-7552	Mr. Moises Becker129439940998574	Sheila Road	Ashleeburgh	97164-8575	Northumberland	1	\N	\N	\N	\N	0	\N	\N	\N	\N	2uD02KnYtVhiaUI162dAcvFObWDIsdGY59dFZ5yn61rjmsOgj5V2X5VOCZtkQ4	f	t	0	0	0	0	0	\N	\N	\N	f	0	0	0	0	0	0	0	0	0	0
+5	leaduser@nbs.com	612b2e63531a1718004933622d5ba03653ee06c13c0de0f73d55744994ebc5e85015833fc0ef3d8c57f757043ce7d349bf632bbce9184d8c33071fd70044de37	uU2NJWa9LC3nmoXovZM8	\N	\N	\N	0	\N	\N	\N	\N	\N	2011-01-07 11:23:30.102908	2011-01-07 11:23:30.07146	\N	2011-01-07 11:23:30.071739	2011-01-07 11:23:30.126618	64	Wilhelmine	Kozey	404-316-8625 x4983	Bernice Sauer129439941006499	Lexie Shore	Davehaven	18192	Powys	1	\N	\N	4	\N	0	\N	\N	\N	\N	Ii6df6Zb6zsPlSi8THP6lMExoM8JdAw25NGUjPURTKzlwVZlFMmTJVn6Km1fIz	f	\N	0	0	0	0	0	\N	\N	\N	f	0	0	0	0	0	0	0	0	0	0
 \.
 
 
