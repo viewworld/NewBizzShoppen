@@ -202,6 +202,7 @@ en:
       view:
         agents_header: 'AGENTS NEWS'
         buyers_header: 'SALES MANAGER NEWS'
+        purchase_managers_header: 'PURCHASE MANAGERS NEWS'
         read_more_link: 'read more'
         newer_link: 'Newer'
         older_link: 'Older'
@@ -215,6 +216,7 @@ en:
         header: 'Home'
         buyer: 'Sales manager'
         agent: 'Agent'
+        purchase_manager: 'Purchase manager'
         remember_me: 'Remember me'
         sign_in: 'Sign in'
         signup_message: "Don't have an account yet"
@@ -389,6 +391,7 @@ en:
           header: 'News'
           buyers: 'sales managers'
           agents: 'agents'
+          purchase_managers: 'purchase managers'
           new_news: 'New news'
           search_button: 'Search'
           id: 'ID'
@@ -759,6 +762,7 @@ en:
       view:
         header_welcome: 'Welcome to our site'
         agent_link: 'click here if you are an agent'
+        purchase_manager_link: 'click here if you are a purchase manager'
         header_best_sellers: 'Best sellers'
         header_latest_leads: 'Latest leads'
         header_news: 'News'
@@ -769,12 +773,12 @@ en:
         complete_list_link: 'complete list'
         create_new_buyer_account: 'Create new sales manager account'
 
-
   agent_home:
     show:
       view:
         header_welcome: 'Welcome to our site'
         buyer_link: 'click here if you are a sales manager'
+        purchase_manager_link: 'click here if you are a purchase manager'
         header_best_sellers: 'Best sellers'
         header_latest_leads: 'Latest leads'
         header_news: 'News'
@@ -784,6 +788,22 @@ en:
         read_more_link: 'read more'
         complete_list_link: 'complete list'
         create_new_agent_account: 'Create new agent account'
+
+  purchase_manager_home:
+    show:
+      view:
+        header_welcome: 'Welcome to our site'
+        agent_link: 'click here if you are an agent'
+        buyer_link: 'click here if you are a sales manager'
+        header_best_sellers: 'Best sellers'
+        header_latest_leads: 'Latest leads'
+        header_news: 'News'
+        purchase_value_label: 'Purchase value:'
+        lead_price_label: 'Lead price:'
+        description_label: 'Description:'
+        read_more_link: 'read more'
+        complete_list_link: 'complete list'
+        create_new_purchase_manager_account: 'Create new purchase manager account'
 
   customer:
     interests:

@@ -14,7 +14,10 @@
     </param:actions>
   </header> 
 
-  <p><%= t("agent_home.show.view.header_welcome") %> <%= link_to t("agent_home.show.view.buyer_link"), buyer_home_path %></p>
+  <p><%= t("agent_home.show.view.header_welcome") %>
+    <%= link_to t("agent_home.show.view.buyer_link"), buyer_home_path %>
+    <%= link_to t("agent_home.show.view.purchase_manager_link"), purchase_manager_home_path %>
+  </p>
 
   <p><%= blurb("blurb_agent_home") %></p>
 

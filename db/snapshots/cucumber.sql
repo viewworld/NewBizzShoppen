@@ -15,14 +15,14 @@ SET search_path = public, pg_catalog;
 -- Name: article_translations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('article_translations_id_seq', 18, true);
+SELECT pg_catalog.setval('article_translations_id_seq', 24, true);
 
 
 --
 -- Name: articles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('articles_id_seq', 9, true);
+SELECT pg_catalog.setval('articles_id_seq', 15, true);
 
 
 --
