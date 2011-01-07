@@ -7,7 +7,10 @@ module ArticlesHelper
 
   def blurb(key)
     if blurb = Article::Cms.interface_content_texts.where(:key => key).first
-      raw blurb.content
+      raw %{
+        #{link_to "(#{t("common.edit_link").downcase}) ", edit_administration_article_path(blurb)  if current_user_has_role? :admin}
+        #{blurb.content}
+      }
     end
   end
 
