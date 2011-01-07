@@ -1,4 +1,7 @@
 <popup:>
+  <param:header>
+    <%= bt_link_to nil, t("common.edit_link"), edit_administration_article_path(@help), :class => "fltr"  if current_user_has_role? :admin %>
+  </param:header>
   <h1><%= @help.title %></h1>
   <%= raw @help.content %>
 </popup:>

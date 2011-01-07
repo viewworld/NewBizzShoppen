@@ -115,3 +115,16 @@ Scenario: I can't see link to edit article when viewing it without admin role
   And I sign out
   And I am on MainPageArticle article page
   Then I should not see "Edit"
+
+@added @_done
+Scenario: I can see link to edit help popup when viewing it with admin role
+  When help popup exists with attributes "title:HelpPopup,content:lorem,key:help_1,published:1"
+  And I am on HelpPopup article page
+  Then I should see "Edit"
+
+@added @_done
+Scenario: I can't see link to edit help popup when viewing it without admin role
+  When help popup exists with attributes "title:HelpPopup,content:lorem,key:help_1,published:1"
+  And I sign out
+  And I am on HelpPopup article page
+  Then I should not see "Edit"
