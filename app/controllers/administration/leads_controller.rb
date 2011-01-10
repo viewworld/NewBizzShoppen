@@ -5,6 +5,8 @@ class Administration::LeadsController < Administration::AdministrationController
   set_tab "leads"
   
   def update
+    @lead = Lead.find(params[:id])
+    @lead.current_user = current_user
     update! do |success,failure|
       success.js {
         render :nothing => true

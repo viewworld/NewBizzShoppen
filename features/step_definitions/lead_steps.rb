@@ -200,3 +200,9 @@ Given /^lead named "([^"]*)" is paid and accessible for user with email "([^"]*)
   assert lead_purchase.paid == true
   assert !lead_purchase.accessible_from.nil?
 end
+
+Given /^lead named "([^"]*)" (is published|is not published)$/ do |header, is_published|
+  lead = Lead.find_by_header(header).first
+  lead.published = (is_published == "is published")
+  lead.save
+end

@@ -21,7 +21,11 @@
       <%= form.input :linkedin_url %>
       <%= form.input :facebook_url %>
       <%= form.input :address, :input_html => { :style => "height: 80px; width: 600px" } %>
-      <%= form.input :published %>
+      <% if current_user.can_publish_leads? %>
+        <%= form.input :published %>
+      <% else %>
+        <%= form.input :published, :as => :hidden %>
+      <% end %>
     </ol>
   </fieldset>
 </div>

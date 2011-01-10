@@ -56,6 +56,10 @@ module User::CommonAgent
       full_name
     end
 
+    def can_publish_leads?
+      ![User::NOT_CERTIFIED, User::NOT_CERTIFIED_LOCKED].include?(read_attribute(:certification_level))
+    end
+
     alias_method :to_s, :name
   end
 end

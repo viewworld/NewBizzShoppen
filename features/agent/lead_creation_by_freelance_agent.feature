@@ -91,6 +91,10 @@ Scenario: I can add an extra language while creating lead. This will include lea
 
 @tgn @added @_tested @m1
 Scenario: Published checkbox should be selected by default
+  Given I am not sign in
+  And user bob@person.com with role agent exists with attributes "certification_level:1"
+  Then I sign in as bob@person.com with password supersecret
+  And I go to agents leads
   Given I follow translated "agent.leads.index.view.new_lead"
   Then the "lead_published" checkbox should be checked
 
@@ -161,5 +165,8 @@ Scenario: I can select additional templates that are optional for given category
 @m0 @added @lead_templates
 Scenario: Lead templates for given category consist of my templates and my call centre's
 
-@m4 @added @tgn @agent_certification
+@m4 @added @tgn @agent_certification @_tested
 Scenario: I cannot publish leads if my certification level is Not Certified or Locked
+  Given Category Test category 1 is created
+  And I follow translated "agent.leads.index.view.new_lead"
+  Then I should not see "Published"

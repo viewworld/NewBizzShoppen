@@ -1,7 +1,8 @@
 class Lead < ActiveRecord::Base
   INFINITY             = 1.0/0
   NOVELTY_LEVEL_RANGES = [(0..8), (9..30), (31..INFINITY)]
-  HOTNESS_LEVEL_RANGES = [(29..INFINITY), (7..28), (-INFINITY..6)]  
+  HOTNESS_LEVEL_RANGES = [(29..INFINITY), (7..28), (-INFINITY..6)]
+  BLACK_LISTED_ATTRIBUTES = [:published]
 
   translates :header, :description, :hidden_description
 
@@ -64,6 +65,9 @@ class Lead < ActiveRecord::Base
 
   scoped_order :id, :header, :sale_limit, :price, :lead_purchases_counter, :published, :has_unsatisfactory_rating, :purchase_value
 
+  attr_protected :published
+
+  attr_accessor :current_user
   attr_accessor :notify_buyers_after_update
   after_create :cache_creator_name
   before_destroy :can_be_removed?
@@ -72,6 +76,15 @@ class Lead < ActiveRecord::Base
   before_save :set_published_at
 
   private
+
+  def mass_assignment_authorizer
+    if self.current_user and current_user.can_publish_leads?
+      self.class.protected_attributes.reject! { |a| BLACK_LISTED_ATTRIBUTES.include?(a.to_sym)  }
+      self.class.protected_attributes
+    else
+      super
+    end
+  end
 
   def cache_creator_name
     update_attribute(:creator_name, creator.name) unless creator_name

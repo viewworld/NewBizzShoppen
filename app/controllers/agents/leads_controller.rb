@@ -17,11 +17,13 @@ class Agents::LeadsController < Agents::AgentController
   public
 
   def new
-    @lead = Lead.new(:published => true)
+    @lead = Lead.new(:current_user => current_user)
+    @lead.published = current_user.can_publish_leads?
   end
 
   def create
     @lead = current_user.leads.build(params[:lead])
+    @lead.current_user = current_user
 
     create! do |success, failure|
       success.html {
@@ -39,6 +41,9 @@ class Agents::LeadsController < Agents::AgentController
   end
 
   def update
+    @lead = Lead.find(params[:id])
+    @lead.current_user = current_user
+
     update! do |success, failure|
       success.html { redirect_to agents_leads_path }
       success.js { render :nothing => true }
