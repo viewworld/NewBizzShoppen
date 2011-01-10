@@ -25,6 +25,7 @@ en:
         news: News
         currencies: Currencies
         invoices: Invoices
+        upcoming_invoices: Upcoming invoices
         payment_transactions: 'Transactions'
       agent:
         leads: My created leads
@@ -575,6 +576,16 @@ en:
         view:
           header: 'Edit transaction'
           button_update: 'Save'
+    upcoming_invoices:
+      index:
+        view:
+          header: Upcoming invoices
+          customer_first_name: First name
+          customer_last_name: Last name
+          customer_screen_name: 'Screen name'
+          not_invoiced_count: Leads
+          not_invoiced_sum: Total
+          create_invoice: Create invoice
 
   agent:
     leads:

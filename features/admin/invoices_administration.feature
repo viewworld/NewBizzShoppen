@@ -15,11 +15,43 @@ Scenario: I can create new invoice for user
   And I press translated "administration.invoices.index.view.create_invoice"
   Then I should see "was successfully created"
 
-@_todo @tgn
+@tgn @_tested
 Scenario: I can see list of invoices pending creation
+  Given I am not sign in
+  Given I have user with email bigbuyer1@person.com and role customer
+  And User bigbuyer1@person.com with role customer is big buyer
+  And I have user with email bigbuyer2@person.com and role customer
+  And User bigbuyer2@person.com with role customer is big buyer
+  And a lead Monitors ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role customer
+  And a lead Monitors ultimate deal2 exists within category Computers and is bought by user bigbuyer2@person.com with role customer
+  And a lead Monitors ultimate deal3 exists within category Computers and is bought by user bigbuyer2@person.com with role customer
+  And lead Monitors ultimate deal exists with attributes "price:304.35"
+  And lead Monitors ultimate deal2 exists with attributes "price:20.11"
+  And lead Monitors ultimate deal3 exists with attributes "price:21.11"
+  Then I sign in as jon@lajoie.ca with password secret
+  And I go to administration upcoming invoices
+  Then I should see "304.35"
+  Then I should see "41.22"
 
-@_todo @tgn
+@tgn @_tested
 Scenario: I can create new invoice from suggestion on invoices pending creation listing
+  Given I am not sign in
+  Given I have user with email bigbuyer1@person.com and role customer
+  And User bigbuyer1@person.com with role customer is big buyer
+  And a lead Monitors ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role customer
+  And a lead Monitors ultimate deal2 exists within category Computers and is bought by user bigbuyer1@person.com with role customer
+  And a lead Monitors ultimate deal3 exists within category Computers and is bought by user bigbuyer1@person.com with role customer
+  And lead Monitors ultimate deal exists with attributes "price:304.35"
+  And lead Monitors ultimate deal2 exists with attributes "price:20.11"
+  And lead Monitors ultimate deal3 exists with attributes "price:21.11"
+  Then I sign in as jon@lajoie.ca with password secret
+  And I go to administration upcoming invoices
+  And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
+  And I press "Create Invoice"
+  Then I should see translated "administration.invoices.show.view.header"
+  And I should see "304.35"
+  And I should see "20.11"
+  And I should see "21.11"
 
 @_done @ao
 Scenario: I can see invoice details

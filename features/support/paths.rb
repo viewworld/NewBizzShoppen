@@ -30,6 +30,8 @@ module NavigationHelpers
         '/administration/invoicing/payment_transactions'
     when /administration invoices/
         '/administration/invoicing/invoices/'
+    when /administration upcoming invoices/
+        '/administration/invoicing/upcoming_invoices'
     when /agents leads/
         '/agents/leads'
     when /browse leads/

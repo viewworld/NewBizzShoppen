@@ -35,6 +35,8 @@ class LeadPurchase < LeadPurchaseBase
   scope :with_rating_avg_by, lambda { |agent| select("avg(CASE WHEN rating_level in (#{(RATING_MISSING_CONTACT_INFO..RATING_OTHER_REASON).to_a.join(',')}) THEN 0 WHEN rating_level=2 THEN 0.25 WHEN rating_level=1 THEN 0.5 WHEN rating_level=0 THEN 1 END)*100 as id").where("creator_id = ? and (lead_purchases.rating_level != -1 and lead_purchases.rating_level is NOT NULL)", agent.id).joins("INNER JOIN leads ON lead_purchases.lead_id=leads.id") }
   scope :with_purchased_time_ago_by, lambda { |agent, time| where("creator_id = ? and accessible_from IS NOT NULL and accessible_from >= ?", agent.id, time).joins("INNER JOIN leads ON lead_purchases.lead_id=leads.id") }
 
+  scope :with_not_invoiced, select("lead_purchases.owner_id, count(lead_purchases.id) as not_invoiced_count, sum(leads.price) as not_invoiced_sum").joins("inner join leads on leads.id=lead_purchases.lead_id inner join users on users.id=lead_purchases.owner_id left outer join invoice_lines on lead_purchases.id=invoice_lines.payable_id").where("invoice_lines.payable_id is NULL and users.big_buyer = ?", true).group("owner_id")
+
   before_save :assign_to_proper_owner_if_accessible
   before_save :assign_to_owner
   before_save :change_contacted_state

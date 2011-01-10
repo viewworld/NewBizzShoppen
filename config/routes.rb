@@ -33,6 +33,7 @@ Nbs::Application.routes.draw do
         resource :invoice_lines_payable, :only => :new, :controller => "InvoiceLinesPayable"
         resources :mailings, :only => [:new, :create]
       end
+      resources :upcoming_invoices, :only => [:index]
       resources :payment_transactions
     end
   end
