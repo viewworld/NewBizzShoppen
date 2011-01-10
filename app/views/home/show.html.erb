@@ -5,6 +5,7 @@
 
   <%= link_to t("home.show.view.buyer"), buyer_home_path %>
   <%= link_to t("home.show.view.agent"), agent_home_path %>
+  <%= link_to t("home.show.view.purchase_manager"), purchase_manager_home_path %>
 
   <% unless user_signed_in? %>
       <%= semantic_form_for(:user, :url => session_path(:user)) do |f| %>

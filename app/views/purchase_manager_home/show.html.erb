@@ -6,38 +6,39 @@
     </param:content>
 
     <param:actions>
-      <ul class="header_actions">
-        <li class="last">
-          <%= bt_link_to :plus, t("buyer_home.show.view.create_new_buyer_account"), new_buyer_account_path %>
-        </li>
-      </ul>
+    <ul class="header_actions">
+      <li class="last">
+        <%= bt_link_to :plus, t("purchase_manager_home.show.view.create_new_purchase_manager_account"), new_purchase_manager_account_path %>
+      </li>
+    </ul>
     </param:actions>
-  </header>
+  </header> 
 
-  <p><%= t("buyer_home.show.view.header_welcome") %>
-    <%= link_to t("buyer_home.show.view.agent_link"), agent_home_path %>
-    <%= link_to t("buyer_home.show.view.purchase_manager_link"), purchase_manager_home_path %>
+  <p><%= t("purchase_manager_home.show.view.header_welcome") %>
+    <%= link_to t("purchase_manager_home.show.view.agent_link"), agent_home_path %>
+    <%= link_to t("purchase_manager_home.show.view.buyer_link"), buyer_home_path %>
   </p>
 
-  <p><%= blurb("blurb_buyer_home") %></p>
+  <p><%= blurb("blurb_purchase_manager_home") %></p>
 
-    <div id="leads_summary">
+  <div id="leads_summary">
     <div class="column_1to3 fltl" id="news">
-      <frm title="#{t('agent_home.show.view.header_news')}">
+      <frm title="#{t('purchase_manager_home.show.view.header_news')}">
         <param:header>
-          <%= bt_link_to nil, t("buyer_home.show.view.complete_list_link"), news_index_path(:search => {:for_buyer => true}), :class => "fltr" %>
+          <%= bt_link_to nil, t("purchase_manager_home.show.view.complete_list_link"), news_index_path(:search => {:for_purchase_manager => true}), :class => "fltr" %>
         </param:header>
         <param:content>
           <ul class="solid_list">
             <%= render :partial => 'news', :collection => @news, :as => :news %>
-          </ul>
+          </ul>              
         </param:content>
+
       </frm>
     </div>
     <div class="column_1to3 fltl" style="padding: 0 15px" id="best_sellers">
-      <frm title="#{t('agent_home.show.view.header_best_sellers')}">
+      <frm title="#{t('purchase_manager_home.show.view.header_best_sellers')}">
         <param:header>
-          <%= bt_link_to nil, t("buyer_home.show.view.complete_list_link"), leads_path(:search => {:bestsellers => true}), :class => "fltr" %>
+          <%= bt_link_to nil, t("purchase_manager_home.show.view.complete_list_link"), leads_path(:search => {:bestsellers => true}), :class => "fltr" %>
         </param:header>
         <param:content>
           <ul class="solid_list">
@@ -47,9 +48,9 @@
       </frm>
     </div>
     <div class="column_1to3 fltl" id="latest_leads">
-      <frm title="#{t('agent_home.show.view.header_latest_leads')}">
+      <frm title="#{t('purchase_manager_home.show.view.header_latest_leads')}">
         <param:header>
-          <%= bt_link_to nil, t("buyer_home.show.view.complete_list_link"), leads_path(:search => {:latest => true}), :class => "fltr" %>
+          <%= bt_link_to nil, t("purchase_manager_home.show.view.complete_list_link"), leads_path(:search => {:latest => true}), :class => "fltr" %>
         </param:header>
         <param:content>
           <ul class="solid_list">

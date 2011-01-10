@@ -94,6 +94,7 @@ Nbs::Application.routes.draw do
 
   match 'buyer_home' => 'buyer_home#show', :as => "buyer_home"
   match 'agent_home' => 'agent_home#show', :as => "agent_home"
+  match 'purchase_manager_home' => 'purchase_manager_home#show', :as => "purchase_manager_home"
 
   resources :leads, :only => [:index, :show]
 

@@ -1,7 +1,8 @@
 class ::Article::News < ::Article
 
-  AGENT = 0.freeze
-  BUYER = 1.freeze
+  AGENT = 0
+  BUYER = 1
+  PURCHASE_MANAGER = 2
 
   has_many :assets, :as => :resource, :dependent => :destroy, :finder_sql =>
       'SELECT "assets".*' +
@@ -13,6 +14,7 @@ class ::Article::News < ::Article
 
   scope :for_agent, where("scope = ?", AGENT)
   scope :for_buyer, where("scope = ?", BUYER)
+  scope :for_purchase_manager, where("scope = ?", PURCHASE_MANAGER)
   scope :ascend_by_title, only_translations(I18n.locale).order("article_translations.title ASC")
   scope :descend_by_title, only_translations(I18n.locale).order("article_translations.title DESC")
 

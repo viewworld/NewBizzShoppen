@@ -17,6 +17,10 @@
             <ibt c="fltri bt_grey">
               <%= button_to_function t("common.cancel_link"), "$('#delete_article_form').submit();"  %>
             </ibt>
+          <% else %>
+            <ibt c="fltri bt_grey">
+              <%= button_to_function t("common.cancel_link"), "history.go(-1)" %>
+            </ibt>
           <% end %>
         </param:actions>
       </frm>

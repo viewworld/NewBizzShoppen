@@ -102,3 +102,42 @@ Scenario: I can not destroy interface content text
   Then I should see "Blurb"
   And I should see "HelpPopup"
   And I should not see translated "administration.articles.index.view.delete_link"
+
+@added @_done
+Scenario: I can see link to edit article when viewing it with admin role
+  When main page article exists with attributes "title:MainPageArticle,content:lorem,published:1"
+  And I am on MainPageArticle article page
+  Then I should see "Edit"
+
+@added @_done
+Scenario: I can't see link to edit article when viewing it without admin role
+  When main page article exists with attributes "title:MainPageArticle,content:lorem,published:1"
+  And I sign out
+  And I am on MainPageArticle article page
+  Then I should not see "Edit"
+
+@added @_done
+Scenario: I can see link to edit help popup when viewing it with admin role
+  When help popup exists with attributes "title:HelpPopup,content:lorem,key:help_1,published:1"
+  And I am on HelpPopup article page
+  Then I should see "Edit"
+
+@added @_done
+Scenario: I can't see link to edit help popup when viewing it without admin role
+  When help popup exists with attributes "title:HelpPopup,content:lorem,key:help_1,published:1"
+  And I sign out
+  And I am on HelpPopup article page
+  Then I should not see "Edit"
+
+@added @_done
+Scenario: I can see link to edit blurb when viewing it with admin role
+  When interface content text exists with attributes "title:Blurb,content:lorem,key:blurb_1,published:1"
+  And I am on Blurb article page
+  Then I should see "Edit"
+
+@added @_done
+Scenario: I can't see link to edit blurb when viewing it without admin role
+  When interface content text exists with attributes "title:Blurb,content:lorem,key:blurb_1,published:1"
+  And I sign out
+  And I am on Blurb article page
+  Then I should not see "Edit"
