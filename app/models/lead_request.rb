@@ -7,7 +7,7 @@ class LeadRequest < LeadPurchaseBase
   def accept!
     self.assignee_id = requested_by
     self.requested_by = nil
-    self.accessible = Time.now if owner.big_buyer?
+    self.accessible_from = Time.now if owner.big_buyer?
     self.save
   end
 

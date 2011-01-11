@@ -19,7 +19,7 @@ Scenario: I can browse sold leads with pagination
   And I should not see "3" within ".pagination"
   And I follow "2" within ".pagination"
 
-@ao @_done @_tested
+@ao @_done @_tested  @_wip @selenium
 Scenario: I can filter the listing (similiar to those in lead catalogue + categories)
   Given pagination page size for leads is set to 10
   And lead NotBoughtLead exists within category Test
@@ -43,15 +43,15 @@ Scenario: I can filter the listing (similiar to those in lead catalogue + catego
   Then I should see "1" rows with id like "lead_" in a table within "#leads"
   And I should see "ForKeywordLead"
   When I fill in translated "administration.leads.index.search.keyword_label" with ""
-  And I fill in translated "administration.leads.index.search.price_from_label" with "99"
-  And I fill in translated "administration.leads.index.search.price_to_label" with "101"
+  And I fill in hidden field "search_price_from" with "99"
+  And I fill in hidden field "search_price_to" with "101"
   And I press translated "administration.leads.index.view.search_button"
   Then I should see "1" rows with id like "lead_" in a table within "#leads"
   And I should see "Price100Lead"
-  When I fill in translated "administration.leads.index.search.price_from_label" with ""
-  And I fill in translated "administration.leads.index.search.price_to_label" with ""
-  And I fill in translated "administration.leads.index.search.purchase_value_from_label" with "499"
-  And I fill in translated "administration.leads.index.search.purchase_value_to_label" with "501"
+  When I fill in hidden field "search_price_from" with ""
+  And I fill in hidden field "search_price_to" with ""
+  And I fill in hidden field "search_purchase_value_from" with "499"
+  And I fill in hidden field "search_purchase_value_to" with "501"
   And I press translated "administration.leads.index.view.search_button"
   Then I should see "1" rows with id like "lead_" in a table within "#leads"
   And I should see "Value500Lead"

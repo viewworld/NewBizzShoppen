@@ -43,7 +43,7 @@
 
         <td>
           <h4><%= lead.header %></h4>
-          <p class="element"><%= t("leads.listing.purchase_value_label") %><span class="green"><%= as_currency(lead.purchase_value,lead.currency) %></span></p>
+          <p class="element"><%= t("leads.listing.purchase_value_label") %> <span class="green"><%= as_currency(lead.purchase_value,lead.currency) %></span></p>
           <p class="element"><%= t("leads.listing.lead_price_label") %> <span class="green"><%= as_currency(lead.price,lead.currency) %></span></p>
           <p class="element_description i"><%= lead.description %></p>
           <%= block_lead_details && with_output_buffer { lead_details.call(lead) } %>
@@ -54,13 +54,13 @@
         </td>
 
         <td>
-          <p><%= t("leads.listing.clicks_count_label") %><b><%= lead.clicks_count %></b></p>
-          <p><%= t("leads.listing.exposures_count_label") %><b><%= lead.exposures_count %></b></p>
-          <p><%= t("leads.listing.average_rating_label") %><b><%= lead.average_rating == -1 ? t("leads.listing.average_rating_none_label") : lead.average_rating_as_text %></b></p>
-          <p><%= t("leads.listing.sale_limit_label") %><b><%= lead.sale_limit %></b></p>
-          <p><%= t("leads.listing.novelty_label") %><b><%= t("models.lead.novelty.lvl#{lead.novelty_level}") %></b></p>
-          <p><%= t("leads.listing.hotness_label") %><b><%= t("models.lead.hotness.lvl#{lead.hotness_level}") %></b></p>
-          <p><%= t("leads.listing.certification_label") %><b><%= t("models.lead.certification.lvl#{lead.certification_level}") %></b></p>
+          <p><%= t("leads.listing.clicks_count_label") %><b> <%= lead.clicks_count %></b></p>
+          <p><%= t("leads.listing.exposures_count_label") %><b> <%= lead.exposures_count %></b></p>
+          <p><%= t("leads.listing.average_rating_label") %><b> <%= lead.average_rating == -1 ? t("leads.listing.average_rating_none_label") : lead.average_rating_as_text %></b></p>
+          <p><%= t("leads.listing.sale_limit_label") %><b> <%= lead.sale_limit %></b></p>
+          <p><%= t("leads.listing.novelty_label") %><b> <%= t("models.lead.novelty.lvl#{lead.novelty_level}") %></b></p>
+          <p><%= t("leads.listing.hotness_label") %><b> <%= t("models.lead.hotness.lvl#{lead.hotness_level}") %></b></p>
+          <p><%= t("leads.listing.certification_label") %><b> <%= t("models.lead.certification.lvl#{lead.certification_level}") %></b></p>
         </td>
 
         <% if block_tools %>

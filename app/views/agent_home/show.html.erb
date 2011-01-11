@@ -1,42 +1,46 @@
 <column-mc:>
-
   <header>
     <param:content>
       <%= "Welcome" %>
     </param:content>
 
     <param:actions>
-    <ul class="header_actions">
-      <li class="last">
-        <%= bt_link_to :plus, t("agent_home.show.view.create_new_agent_account"), new_agent_account_path %>
-      </li>
-    </ul>
+      <ul class="header_actions">
+        <li class="last">
+          <%= bt_link_to :plus, t("agent_home.show.view.create_new_agent_account"), new_agent_account_path %>
+        </li>
+      </ul>
     </param:actions>
-  </header> 
+  </header>
 
-  <p><%= t("agent_home.show.view.header_welcome") %>
-    <%= link_to t("agent_home.show.view.buyer_link"), buyer_home_path %>
-    <%= link_to t("agent_home.show.view.purchase_manager_link"), purchase_manager_home_path %>
-  </p>
+  <div class="pdd_5 no_pdd_b">
+    <h2><%= t("agent_home.show.view.header_welcome") %></h2>
 
-  <p><%= blurb("blurb_agent_home") %></p>
+    <p>- <%= link_to t("agent_home.show.view.buyer_link"), buyer_home_path %></p>
+    <p>- <%= link_to t("agent_home.show.view.purchase_manager_link"), purchase_manager_home_path %></p>
+    <br/>
+    <p><%= blurb("blurb_agent_home") %></p>
+
+  </div>
+
+  <hl pdd="15"></hl>
 
   <div id="leads_summary">
     <div class="column_1to3 fltl" id="news">
-      <frm title="#{t('agent_home.show.view.header_news')}">
+      <frm title="#{t('agent_home.show.view.header_news')}" c="no_marg">
         <param:header>
           <%= bt_link_to nil, t("agent_home.show.view.complete_list_link"), news_index_path(:search => {:for_agent => true}), :class => "fltr" %>
         </param:header>
         <param:content>
           <ul class="solid_list">
             <%= render :partial => 'news', :collection => @news, :as => :news %>
-          </ul>              
+          </ul>
         </param:content>
 
       </frm>
     </div>
     <div class="column_1to3 fltl" style="padding: 0 15px" id="best_sellers">
-      <frm title="#{t('agent_home.show.view.header_best_sellers')}">
+      <frm title="#{t('agent_home.show.view.header_best_sellers')}" c="no_marg">
         <param:header>
           <%= bt_link_to nil, t("agent_home.show.view.complete_list_link"), leads_path(:search => {:bestsellers => true}), :class => "fltr" %>
         </param:header>
@@ -48,7 +52,7 @@
       </frm>
     </div>
     <div class="column_1to3 fltl" id="latest_leads">
-      <frm title="#{t('agent_home.show.view.header_latest_leads')}">
+      <frm title="#{t('agent_home.show.view.header_latest_leads')}" c="no_marg">
         <param:header>
           <%= bt_link_to nil, t("agent_home.show.view.complete_list_link"), leads_path(:search => {:latest => true}), :class => "fltr" %>
         </param:header>
@@ -69,8 +73,8 @@
 
       jQuery(document).ready(function() {
           jQuery(".solid_list li").bind("click", function() {
-                  window.location = $(this).find('a.read_more').attr("href");
-              });
+              window.location = $(this).find('a.read_more').attr("href");
+          });
       });
 
   </script>

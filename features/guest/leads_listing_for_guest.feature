@@ -18,11 +18,11 @@ Scenario: I can click on a category name and see a list of leads in that categor
 @m2 @_tested @tgn
 Scenario: I should not see any leads that belong to a user which is blocked
   Given Lead named "Lead 1" exists within "Sample category" category
-  And I have user with email customer1@person.com and role customer
-  And lead Lead 1 is created by user customer1@person.com with role customer
+  And I have user with email agent@person.com and role agent
+  And lead Lead 1 is created by user agent@person.com with role agent
   And I follow "Sample category"
   Then I should see "Lead 1"
-  When User customer1@person.com with role customer is blocked
+  When User agent@person.com with role agent is blocked
   And I go to browse leads
   And I follow "Sample category"
   Then I should not see "Lead 1"
