@@ -48,7 +48,7 @@
                   <fieldset class="inputs labels_100 inputs_240 no_pdd">
                     <ol class="align_inputs no_pdd">
                       <%= f.input :email, :label => I18n.t("activerecord.attributes.user.email") %>
-                      <%= f.input :password, :label => raw(I18n.t("activerecord.attributes.user.password") + content_tag(:span, link_to(t("home.show.view.forgotten_password_link"), "#"), :class => "label_link")), :wrapper_html => { :class => "rltv" } %>
+                      <%= f.input :password, :label => raw(I18n.t("activerecord.attributes.user.password") + content_tag(:span, link_to(t("home.show.view.forgotten_password_link"), new_password_path(User)), :class => "label_link")), :wrapper_html => { :class => "rltv" } %>
                       <%= f.input :remember_me, :as => :boolean, :required => false, :label => I18n.t("home.show.view.remember_me") %>
                       <li class="commit">
                         <ibt>
