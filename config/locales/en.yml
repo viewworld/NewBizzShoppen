@@ -448,6 +448,7 @@ en:
         view:
           cash: 'Cash'
           bank_transfer: 'Bank transfer'
+          na: N/A
       show:
         view:
           print_invoice: 'Print invoice'
