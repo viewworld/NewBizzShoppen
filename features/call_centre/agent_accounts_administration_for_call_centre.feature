@@ -11,8 +11,16 @@ Background:  Sign in user and set locale
 @_tested
 Scenario: I can create call centre agent account
   When I follow translated "call_centre.call_centre_agents.index.view.new_agent"
+  And I fill in "user_call_centre_agent_first_name" with "Tymon"
+  And I fill in "user_call_centre_agent_last_name" with "Tymanski"
+  And I fill in "user_call_centre_agent_phone" with "1234234342"
   And I fill in "user_call_centre_agent_email" with "callcentreagent93@nbs.com"
   And I fill in "user_call_centre_agent_screen_name" with "Tymon Tymanski"
+  And I fill in "user_call_centre_agent_street" with "Derhfjf Blv 32/21"
+  And I fill in "user_call_centre_agent_city" with "Hamburg"
+  And I fill in "user_call_centre_agent_zip_code" with "234213"
+  And I fill in "user_call_centre_agent_county" with "Fejdjd"
+  And I select "Denmark" from "user_call_centre_agent_country"
   And I fill in "user_call_centre_agent_password" with "secret"
   And I fill in "user_call_centre_agent_password_confirmation" with "secret"
   And I press translated "call_centre.call_centre_agents.new.view.button_create"
@@ -21,8 +29,16 @@ Scenario: I can create call centre agent account
 @_tested
 Scenario: Account have to be activated by link in activation email sent to his email address
   When I follow translated "call_centre.call_centre_agents.index.view.new_agent"
+  And I fill in "user_call_centre_agent_first_name" with "Tymon"
+  And I fill in "user_call_centre_agent_last_name" with "Tymanski"
+  And I fill in "user_call_centre_agent_phone" with "1234234342"
   And I fill in "user_call_centre_agent_email" with "callcentreagent93@nbs.com"
   And I fill in "user_call_centre_agent_screen_name" with "Tymon Tymanski"
+  And I fill in "user_call_centre_agent_street" with "Derhfjf Blv 32/21"
+  And I fill in "user_call_centre_agent_city" with "Hamburg"
+  And I fill in "user_call_centre_agent_zip_code" with "234213"
+  And I fill in "user_call_centre_agent_county" with "Fejdjd"
+  And I select "Denmark" from "user_call_centre_agent_country"
   And I fill in "user_call_centre_agent_password" with "secret"
   And I fill in "user_call_centre_agent_password_confirmation" with "secret"
   And I press translated "call_centre.call_centre_agents.new.view.button_create"
