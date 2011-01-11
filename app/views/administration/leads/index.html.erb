@@ -23,51 +23,35 @@
                 <%= f.select :with_creator_type, creator_types, :include_blank => true %>
               </li>
               <li class="string range">
-                <%= f.label :price_from, "Price range" %>
-                <%= f.text_field :price_from, :readonly => "readonly" %>
+                <%= f.hidden_field :price_from %>
+                <%= f.hidden_field :price_to %>
+                <%= f.label :price_from_to, "Price range" %>
+                <%= text_field_tag :price_from_to, '', {:readonly => "readonly", :id => "price_from_to"} %>
                 <div class="range_container">
                   <div id="price_range" class="slider-range"></div>
                 </div>
-              </li>              
-              <!--<li class="string input_60">-->
-                <!--<%#= f.label :price_from, t("administration.leads.index.search.price_from_label") %>-->
-                <!--<%#= f.text_field :price_from %>-->
-              <!--</li>-->
-              <!--<li class="string input_60">-->
-                <!--<%#= f.label :price_to, t("administration.leads.index.search.price_to_label") %>-->
-                <!--<%#= f.text_field :price_to %>-->
-              <!--</li>-->
+              </li>
 
               <li class="string range">
+                <%= f.hidden_field :lead_purchases_counter_from %>
+                <%= f.hidden_field :lead_purchases_counter_to %>
                 <%= f.label :lead_purchases_counter_from, "Sold range" %>
-                <%= f.text_field :lead_purchases_counter_from, :readonly => "readonly" %>
+                <%= text_field_tag :lead_purchases_counter_from_to, '', { :readonly => "readonly", :id => "lead_purchases_counter_from_to" } %>
                 <div class="range_container">
                   <div id="sold_range" class="slider-range"></div>
                 </div>
               </li>
-              <!--<li class="string input_60">-->
-                <!--<%#= f.label :lead_purchases_counter_from, t("administration.leads.index.search.lead_purchases_counter_from_label") %>-->
-                <!--<%#= f.text_field :lead_purchases_counter_from %>-->
-              <!--</li>-->
-              <!--<li class="string input_60">-->
-                <!--<%#= f.label :lead_purchases_counter_to, t("administration.leads.index.search.lead_purchases_counter_to_label") %>-->
-                <!--<%#= f.text_field :lead_purchases_counter_to %>-->
-              <!--</li>-->
+
               <li class="string range">
+                <%= f.hidden_field :purchase_value_from %>
+                <%= f.hidden_field :purchase_value_to %>
                 <%= f.label :purchase_value_from, "Value range" %>
-                <%= f.text_field :purchase_value_from, :readonly => "readonly" %>
+                <%= text_field_tag :purchase_value_from_to, '', { :readonly => "readonly", :id => "purchase_value_from_to" } %>
                 <div class="range_container">
                   <div id="value_range" class="slider-range"></div>
                 </div>
               </li>              
-              <!--<li class="string input_60">-->
-                <!--<%#= f.label :purchase_value_from, t("administration.leads.index.search.purchase_value_from_label") %>-->
-                <!--<%#= f.text_field :purchase_value_from %>-->
-              <!--</li>-->
-              <!--<li class="string input_60">-->
-                <!--<%#= f.label :purchase_value_to, t("administration.leads.index.search.purchase_value_to_label") %>-->
-                <!--<%#= f.text_field :purchase_value_to %>-->
-              <!--</li>-->
+
               <li class="boolean">
                 <%= f.check_box :purchased, {}, "true", "false" %>
                 <%= f.label :purchased, t("administration.leads.index.view.filter_purchased") %>
@@ -112,7 +96,10 @@
             max: 10000,
             values: [ 0, 10000 ],
             slide: function(event, ui) {
+                $('#search_price_from').val(ui.values[ 0 ]);
+                $('#search_price_to').val(ui.values[ 1 ]);
                 $(this).parents().prev().val("$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ]);
+
             }
         });
 
@@ -121,18 +108,42 @@
             max: 20,
             values: [ 0, 20 ],
             slide: function(event, ui) {
+                $('#search_lead_purchases_counter_from').val(ui.values[ 0 ]);
+                $('#search_lead_purchases_counter_to').val(ui.values[ 1 ]);
                 $(this).parents().prev().val(ui.values[ 0 ] + " - " + ui.values[ 1 ]);
             }
         });
 
         $("#value_range").slider({
-            min: 0,
-            max: 50,
-            values: [ 0, 50 ],
+            min: 1000,
+            max: 300000,
+            values: [ 1000, 300000 ],
             slide: function(event, ui) {
+                $('#search_purchase_value_from').val(ui.values[ 0 ]);
+                $('#search_purchase_value_to').val(ui.values[ 1 ]);
                 $(this).parents().prev().val("$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ]);
             }
         });
+    });
+
+    $(document).ready(function() {
+        if($('#search_price_from').val() != "" && $('#search_price_to').val() != "")
+        {
+            $( "#price_range" ).slider( "option", "values", [parseInt($('#search_price_from').val()), parseInt($('#search_price_to').val())] );
+            $('#price_from_to').val("$" + $('#search_price_from').val() + " - $" + $('#search_price_to').val());
+        }
+
+        if($('#search_lead_purchases_counter_from').val() != "" && $('#search_lead_purchases_counter_to').val() != "")
+        {
+            $( "#sold_range" ).slider( "option", "values", [parseInt($('#search_lead_purchases_counter_from').val()), parseInt($('#search_lead_purchases_counter_to').val())] );
+            $('#lead_purchases_counter_from_to').val($('#search_lead_purchases_counter_from').val() + " - " + $('#search_lead_purchases_counter_to').val());
+        }
+
+        if($('#search_purchase_value_from').val() != "" && $('#search_purchase_value_to').val() != "")
+        {
+            $( "#value_range" ).slider( "option", "values", [parseInt($('#search_purchase_value_from').val()), parseInt($('#search_purchase_value_to').val())] );
+            $('#purchase_value_from_to').val($('#search_purchase_value_from').val() + " - " + $('#search_purchase_value_to').val());
+        }
     });
 </script>
 </js:>
