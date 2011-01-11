@@ -1,42 +1,69 @@
 <column-mc:>
   <header><%= t("home.show.view.header") %></header>
 
-  <p><%= blurb("blurb_start_page_role_selection") %></p>
+  <div class="pdd_5 no_pdd_b">
+    <p><%= blurb("blurb_start_page_role_selection") %></p>
 
-  <%= link_to t("home.show.view.buyer"), buyer_home_path %>
-  <%= link_to t("home.show.view.agent"), agent_home_path %>
-  <%= link_to t("home.show.view.purchase_manager"), purchase_manager_home_path %>
+    <p>
+      <%= link_to t("home.show.view.buyer"), buyer_home_path %>
+      <%= link_to t("home.show.view.agent"), agent_home_path %>
+      <%= link_to t("home.show.view.purchase_manager"), purchase_manager_home_path %>
+    </p>
+  </div>
 
-  <% unless user_signed_in? %>
-      <%= semantic_form_for(:user, :url => session_path(:user)) do |f| %>
-          <fieldset class="inputs labels_100">
-            <ol class="align_inputs">
-              <%= f.input :email, :label => I18n.t("activerecord.attributes.user.email") %>
-              <%= f.input :password, :label => I18n.t("activerecord.attributes.user.password") %>
-              <%= f.input :remember_me, :as => :boolean, :required => false, :label => I18n.t("home.show.view.remember_me") %>
-              <li class="commit">
-                <ibt>
-                  <%= f.submit t("home.show.view.sign_in") %>
-                </ibt>
-              </li>
-            </ol>
-          </fieldset>
-      <% end %>
-
-  <% end %>
+  <hl pdd="15"/>
 
   <% unless user_signed_in? %>
-      <br/>
-      <%= t("home.show.view.signup_message") %>
-      <br/>
-      <%= link_to t("home.show.view.agent_signup"), new_agent_account_path %>
-      <%= link_to t("home.show.view.buyer_signup"), new_buyer_account_path %>
-      <%= link_to t("home.show.view.purchase_manager_signup"), new_purchase_manager_account_path %>
-      <br/><br/>
-      <%= link_to t("home.show.view.forgotten_password_link"), new_password_path(User) %>
-      <br/>
-      <%= link_to t("home.show.view.resend_confirmation_instructions"), new_confirmation_path(User) %>
-      <br/>
+      <div class="grid_750 grid_c">
+
+        <div class="grid_300 fltl">
+          <frm title="#{t('home.show.view.signup_message')}?" c="no_marg">
+            <div class="pdd_10">
+              <p>
+                <%= link_to t("home.show.view.agent_signup"), new_agent_account_path %>
+              </p>
+
+              <p>
+                <%= link_to t("home.show.view.buyer_signup"), new_buyer_account_path %>
+              </p>
+
+              <p>
+                <%= link_to t("home.show.view.purchase_manager_signup"), new_purchase_manager_account_path %>
+              </p>
+
+              <hl pdd="10"/>
+
+              <p>
+                <%= link_to t("home.show.view.resend_confirmation_instructions"), new_confirmation_path(User) %>
+              </p>
+
+            </div>
+          </frm>
+
+        </div>
+        <div class="grid_430 fltr">
+          <frm title="I have an account" c="no_marg">
+            <div class="pdd_10">
+              <%= semantic_form_for(:user, :url => session_path(:user)) do |f| %>
+                  <fieldset class="inputs labels_100 inputs_240 no_pdd">
+                    <ol class="align_inputs no_pdd">
+                      <%= f.input :email, :label => I18n.t("activerecord.attributes.user.email") %>
+                      <%= f.input :password, :label => raw(I18n.t("activerecord.attributes.user.password") + content_tag(:span, link_to(t("home.show.view.forgotten_password_link"), "#"), :class => "label_link")), :wrapper_html => { :class => "rltv" } %>
+                      <%= f.input :remember_me, :as => :boolean, :required => false, :label => I18n.t("home.show.view.remember_me") %>
+                      <li class="commit">
+                        <ibt>
+                          <%= f.submit t("home.show.view.sign_in") %>
+                        </ibt>
+                      </li>
+                    </ol>
+                  </fieldset>
+              <% end %>
+            </div>
+          </frm>
+        </div>
+        <clb/>
+
+      </div>
   <% end %>
 
 </column-mc:>

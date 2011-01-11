@@ -5,7 +5,7 @@
 
 mark_all_cbs_with_selector = function(val, selector) {
     $(selector).each(function() {
-        if(!$(this).hasClass('non_selectable'))
+        if (!$(this).hasClass('non_selectable'))
         {
             $(this).attr('checked', val);
         }
@@ -25,13 +25,13 @@ submitBulkForm = function(url, target) {
 jQuery(document).ready(function() {
 
     $('.td_actions ul').hide(); // for ie7 - do not delete this line
-    
-    $('.td_actions a').bind("mouseenter", function(){
+
+    $('.td_actions a').bind("mouseenter", function() {
         $(this).next().show();
-        $(this).parent().addClass("tda_hover");       
+        $(this).parent().addClass("tda_hover");
     });
 
-    $('.td_actions').live("mouseleave", function(){
+    $('.td_actions').live("mouseleave", function() {
         $(this).children("ul").hide();
         $(this).removeClass("tda_hover");
     });
@@ -40,15 +40,35 @@ jQuery(document).ready(function() {
     /* --- colorbox - modalbox --- */
     try
     {
-    $("a[id*='help_popup_']").colorbox({
-        opacity: "0.5",
-        initialWidth: 200,
-        initialHeight: 200
+        $("a[id*='help_popup_']").colorbox({
+            opacity: "0.5",
+            initialWidth: 200,
+            initialHeight: 200
 
-    });
+        });
     }
     catch(e)
-    {}
+    {
+    }
+
+    /* --- slider range --- */
+
+    $(".string.range input[type='text']").bind("click", function() {
+        $('.range_container:visible').hide();
+        $(this).next().fadeIn(200);
+    });
+
+
+    $(".string.range input[type='text']").parents('li').bind("mouseleave", function() {
+        $(this).find('.range_container').fadeOut(200);
+    });
+
+    $(".slider-range").slider({
+        range: true,
+        min: 0,
+        max: 100,
+        values: [ 0, 100 ]
+    });
 
 
 });

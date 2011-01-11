@@ -83,6 +83,14 @@
     padding-left: 6px;
 }
 
+.inputs ol li span.label_link
+{
+    position: absolute;
+    left: 0;
+    top: 25px;
+    font-size: 10px;
+}
+
 
 /* --- input ---
 --------------------------------------------------------------------------------- */
@@ -115,6 +123,18 @@
     height: 33px;
     line-height: 30px;
 }
+
+/* Firefox 3.0+ */
+.inputs ol li.select,  x:-moz-any-link, x:default
+{
+    line-height: 28px;
+}
+
+.inputs ol li.select select,  x:-moz-any-link, x:default
+{
+    padding: 5px 6px 4px;
+}
+
 
 .inputs ol li.select select
 {
@@ -174,9 +194,10 @@
 /* --- date ---
 --------------------------------------------------------------------------------- */
 
-.inputs ol li.date input
+.inputs ol li.date input,
+.inputs_vertical ol li.date input   
 {
-    width: 80px;
+    width: 70px;
     background: url(/images/forms/date.png) no-repeat left center #fff;
     padding-left: 32px;
 }
@@ -738,3 +759,168 @@
 
 /* --- extend ---
 ------------------------------------------------------------------------------------------ */
+
+.inputs_vertical li
+{
+    display: block;
+    float: left;    
+    padding: 0 3px 5px 10px;
+}
+
+.inputs_vertical li.string label,
+.inputs_vertical li.select label,
+.inputs_vertical li.date label
+{
+    display: block;
+    padding: 10px 0 3px 5px;
+    line-height: 14px;
+}
+
+
+.inputs_vertical li.string input
+{
+    width: 170px;
+    margin: 0;
+}
+
+.inputs_vertical li.select
+{    
+    max-width: 164px;
+}
+
+.inputs_vertical li.select select
+{
+    min-width: 80px;
+    margin: 0;
+}
+
+.inputs_vertical li.select.select_max select
+{
+    width: 150px;
+}
+
+
+@media screen and (-webkit-min-device-pixel-ratio:0)
+{
+    .inputs_vertical li.select select
+    {
+        height: 28px;        
+    }
+}
+
+
+.inputs_vertical li.date input
+{
+    margin: 0;    
+}
+
+.inputs_vertical li.boolean,
+.inputs_vertical li.radio
+{
+    padding-top: 32px;
+}
+
+.inputs_vertical li.boolean label,
+.inputs_vertical li.radio label
+{
+    line-height: 14px;
+}
+
+
+.inputs_vertical li.string.range
+{
+    position: relative;
+}
+
+.inputs_vertical li.string.range input
+{
+    width: 90px;    
+}
+
+.inputs_vertical li.string.range .range_container
+{
+    display: none;
+    position: absolute;
+    z-index: 1000;
+    bottom: -34px;
+    left: -15px;
+    width: 120px;    
+    border: 1px solid #CFCFCF;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    padding: 10px 15px;
+
+    background: #efefef;
+
+    background: -webkit-gradient(linear, left top, left bottom, from(#efefef ), to(#e4e4e4));
+    background: -moz-linear-gradient(top, #efefef , #e4e4e4);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#efefef, endColorstr=#e4e4e4);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#efefef, endColorstr=#e4e4e4)";
+
+    -webkit-box-shadow: 0px 0px 3px #ccc, 0 1px 0 #fff inset;
+
+    /* #efefef - #e4e4e4*/
+}
+
+.inputs_vertical li.commit
+{
+    margin-top: 26px;    
+}
+
+.inputs_vertical li.commit a.bt
+{
+    margin-top: 2px;
+}
+
+
+
+.inputs_vertical ol li.input_60 input
+{
+    width: 60px;
+}
+
+.inputs_vertical ol li.input_80 input
+{
+    width: 80px;
+}
+
+
+
+.range_container .ui-slider-horizontal
+{
+    border: 1px solid #b7b7b7;
+    -moz-box-shadow: 0 1px 0 #fff;
+    -webkit-box-shadow: 0 1px 0 #fff;
+    box-shadow: 0 1px 0 #fff;
+
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+
+    background: url(/images/range_slider/bg_range.png) repeat-x 0 0 transparent;
+}
+
+.range_container .ui-slider-range
+{
+    -moz-box-shadow: 0 -1px 0 #ff9a18, 0 1px 0 #b97012, 0 1px 0 #ffcd7e inset;
+    -webkit-box-shadow: 0 -1px 0 #ff9a18, 0 1px 0 #b97012, 0 1px 0 #ffcd7e inset;
+    box-shadow: 0 -1px 0 #ff9a18, 0 1px 0 #b97012, 0 1px 0 #ffcd7e inset;
+
+    background: #ffb23e;
+
+    background: -webkit-gradient(linear, left top, left bottom, from(#ffb23e), to(#ff851f));
+    background: -moz-linear-gradient(top, #ffb23e, #ff851f);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffb23e, endColorstr=#ff851f);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffb23e, endColorstr=#ff851f)";
+}
+
+.range_container .ui-slider .ui-slider-handle
+{    
+    background: url(/images/range_slider/handler.png) no-repeat 0 0 transparent;
+    border: none;
+    width: 17px;
+    height: 17px;
+    z-index: 2000;
+    cursor: pointer;
+}

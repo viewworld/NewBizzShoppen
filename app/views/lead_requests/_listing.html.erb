@@ -30,8 +30,8 @@
         <td>
           <h4><%= lead_request.header %></h4>
 
-          <p class="element"><%= t("lead_requests.listing.purchase_value_label") %><span class="green"><%= as_currency(lead_request.purchase_value, lead_request.lead.currency) %></span></p>
-          <p class="element"><%= t("lead_requests.listing.lead_price_label") %><span class="green"><%= as_currency(lead_request.price, lead_request.lead.currency) %></span></p>
+          <p class="element"><%= t("lead_requests.listing.purchase_value_label") %> <span class="green"><%= as_currency(lead_request.purchase_value, lead_request.lead.currency) %></span></p>
+          <p class="element"><%= t("lead_requests.listing.lead_price_label") %> <span class="green"><%= as_currency(lead_request.price, lead_request.lead.currency) %></span></p>
           <p class="element_description i"><%= lead_request.description %></p>
 
           <% if block_general %>
@@ -45,13 +45,13 @@
           <b><%= lead_request.requestee.full_name %></b>          
         </td>
         <td>
-          <p><%= t("lead_requests.listing.clicks_count_label") %><b><%= lead_request.clicks_count %></b></p>
-          <p><%= t("lead_requests.listing.exposures_count_label") %><b><%= lead_request.exposures_count %></b></p>
-          <p><%= t("lead_requests.listing.sale_limit_label") %><b><%= lead_request.sale_limit %></b></p>
-          <p><%= t("lead_requests.listing.rating_level") %><b><%= lead_request.lead.average_rating == -1 ? t("leads.listing.average_rating_none_label") : lead_request.lead.average_rating_as_text %></b></p>
-          <p><%= t("lead_requests.listing.novelty_label") %><b><%= t("models.lead.novelty.lvl#{lead_request.novelty_level}") %></b></p>
-          <p><%= t("lead_requests.listing.hotness_label") %><b><%= t("models.lead.hotness.lvl#{lead_request.hotness_level}") %></b></p>
-          <p><%= t("lead_requests.listing.certification_label") %><b><%= t("models.lead.certification.lvl#{lead_request.certification_level}") %></b></p>
+          <p><%= t("lead_requests.listing.clicks_count_label") %><b> <%= lead_request.clicks_count %></b></p>
+          <p><%= t("lead_requests.listing.exposures_count_label") %><b> <%= lead_request.exposures_count %></b></p>
+          <p><%= t("lead_requests.listing.sale_limit_label") %><b> <%= lead_request.sale_limit %></b></p>
+          <p><%= t("lead_requests.listing.rating_level") %><b> <%= lead_request.lead.average_rating == -1 ? t("leads.listing.average_rating_none_label") : lead_request.lead.average_rating_as_text %></b></p>
+          <p><%= t("lead_requests.listing.novelty_label") %><b> <%= t("models.lead.novelty.lvl#{lead_request.novelty_level}") %></b></p>
+          <p><%= t("lead_requests.listing.hotness_label") %><b> <%= t("models.lead.hotness.lvl#{lead_request.hotness_level}") %></b></p>
+          <p><%= t("lead_requests.listing.certification_label") %><b> <%= t("models.lead.certification.lvl#{lead_request.certification_level}") %></b></p>
         </td>
         <td class="tda ta_r">
           <% if block_tools %>

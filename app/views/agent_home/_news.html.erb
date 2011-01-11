@@ -2,7 +2,7 @@
   <div class="news_content">
     <h4><%= link_to news.title, news_path(news) %></h4>
     <div class="news_text">
-     <%= st(news.content) %>
+      <%= st(news.content) %>
     </div>    
     <%= link_to t("buyer_home.show.view.read_more_link"), news_path(news), :class => "read_more" %>
   </div>

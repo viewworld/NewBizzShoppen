@@ -4,12 +4,14 @@
 
     <div class="search_content">
       <%= form_for @search, :url => administration_articles_path do |f| %>
-          <fieldset class="inputs labels_auto inline_li no_pdd">
+          <fieldset class="inputs_vertical">
             <ol class="no_pdd">
               <li class="string">
+                <%= f.label :with_keyword, t("administration.leads.index.search.keyword_label") %>
                 <%= f.text_field :with_keyword %>
               </li>
               <li class="select">
+                <%= f.label :with_scope, t("administration.leads.index.search.article_label") %>
                 <%= f.select :with_scope, Article::Cms::SCOPE, :include_blank => true %>
               </li>
               <li class="commit">

@@ -224,7 +224,7 @@ en:
         buyer_signup: 'Sales manager signup'
         purchase_manager_signup: 'Purchase Manager signup'
         _signup: 'Sales manager signup'
-        forgotten_password_link: "Forgot your password?"
+        forgotten_password_link: "Forgot password?"
         resend_confirmation_instructions: "Didn't receive confirmation instructions?"
 
   password:
@@ -347,6 +347,7 @@ en:
           category_label: Category
           status_label: Status
           owner_type_label: Owner type
+          article_label: Article
         ajax:
           not_updated: Lead was not updated
       show:

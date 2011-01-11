@@ -4,22 +4,23 @@
 
     <div class="search_content">
       <%= form_for @search, :url => leads_path do |f| %>
-          <fieldset class="inputs labels_auto inline_li no_pdd rltv">
+          <fieldset class="inputs_vertical">
             <ol class="no_pdd">
               <li class="string">
+                <%= f.label :with_keyword, t("customer.lead_requests.index.view.search.keyword_label") %>
                 <%= f.text_field :with_keyword %>
               </li>
-              <li class="select no_pdd_l">
+              <li class="select">
                 <%= f.label t("leads.index.search.category_label") %>
                 <%= f.select :with_category, @categories.map { |c| [c.name, c.id] } %>
               </li>
               <li class="string">
                 <%= f.label t("leads.index.search.deal_value_from_label") %>
-                <%= f.text_field :deal_value_from, :style => "width: 60px" %>
+                <%= f.text_field :deal_value_from, :style => "width: 90px" %>
               </li>
-              <li class="string no_pdd_l">
+              <li class="string">
                 <%= f.label t("leads.index.search.deal_value_to_label") %>
-                <%= f.text_field :deal_value_to, :style => "width: 60px" %>
+                <%= f.text_field :deal_value_to, :style => "width: 90px" %>
               </li>
               <li class="select">
                 <%= f.label t("leads.index.search.country_label") %>

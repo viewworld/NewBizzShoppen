@@ -4,7 +4,7 @@
 
   <h2><%= @lead_purchase.header %></h2>
 
-  <div class="column_1to4 pdd_10 no_pdd_lr">
+  <div class="grid_280 fltl pdd_10 no_pdd_lr">
     <ul class="elements_list">
       <li>
         <div>
@@ -39,19 +39,21 @@
       <li>
         <div>
           <span class="label"><%= t("lead_purchases.listing.linkedin_url") %></span>
-          <%= @lead_purchase.lead.linkedin_url %>
+          <%= link_to "LinkedIn profile", @lead_purchase.lead.linkedin_url %>
+          <%= link_to image_tag("icons/in_icon.png", :style => "vertical-align: top;"), @lead_purchase.lead.linkedin_url %>
         </div>
       </li>
       <li>
         <div>
           <span class="label"><%= t("lead_purchases.listing.facebook_url") %></span>
-          <%= @lead_purchase.lead.facebook_url %>
+          <%= link_to "Facebook profile", @lead_purchase.lead.facebook_url %>
+          <%= link_to image_tag("icons/fb_icon.png", :style => "vertical-align: top;"), @lead_purchase.lead.facebook_url %>
         </div>
       </li>
     </ul>
   </div>
 
-  <div class="column_1to4 pdd_10 no_pdd_r" style="padding-left: 40px">
+  <div class="grid_800 fltr pdd_10 no_pdd_r">
     <div class="element_description">
       <h3><%=  t("lead_purchases.listing.description_label") %></h3>
 
@@ -63,8 +65,6 @@
     </div>
   </div>
 
-
   <clb/>
-
 
 </column-mc:>
