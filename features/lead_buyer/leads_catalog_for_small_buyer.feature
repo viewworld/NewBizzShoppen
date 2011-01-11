@@ -61,7 +61,7 @@ Scenario: I should see lead header, lead price, purchase value and public descri
   And I should see "Printers ultimate deal"
   And I should see "Public desc about printers deal"
 
-@m4 @_tested @tbd
+@m4 @_tested @tgn
 Scenario: I should see hottness, novelty, exposure, clicks
   Then I follow "Computers"
   And I should see translated "models.lead.hotness.lvl1"
