@@ -12,7 +12,7 @@
               </li>
               <li class="select">
                 <%= f.label :with_scope, t("administration.leads.index.search.article_label") %>
-                <%= f.select :with_scope, Article::Cms::SCOPE, :include_blank => true %>
+                <%= f.select :with_scope, article_scope_for_select, :include_blank => true %>
               </li>
               <li class="commit">
                 <ibt c="bt_green" icon="magnify">
@@ -53,6 +53,7 @@
     <tr>
       <th class="hl"></th>
       <th style="width: 10px"><%= link_to t("administration.articles.index.view.id"), order_for_scoped_search(:id) %></th>
+      <th><%= t("administration.articles.index.view.type") %></th>
       <th><%= link_to t("administration.articles.index.view.title"), order_for_scoped_search(:title) %></th>
       <th class="ta_r"><%= t("administration.articles.index.view.actions") %></th>
       <th class="hr"></th>
@@ -61,7 +62,7 @@
     <tfoot>
     <tr>
       <td class="fl"></td>
-      <td colspan="3"></td>
+      <td colspan="4"></td>
       <td class="fr"></td>
     </tr>
     </tfoot>
@@ -70,6 +71,7 @@
         <tr>
           <td class="cl"></td>
           <td><%= article.id %></td>
+          <td><%= article.show_type %></td>
           <td><%= article.title %></td>
           <td class="tda ta_r">
             <ul-actions>
