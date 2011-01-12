@@ -61,7 +61,7 @@
               <% else %>
                   <ul-actions>
                     <li>
-                      <%= link_to t("leads.index.add_to_cart_link"), buyers_cart_items_path(:id => lead.id, :requested_url =>  request.request_uri), :method => :post %>
+                      <%= link_to t("leads.index.add_to_cart_link"), buyers_cart_items_path(:id => lead.id, :requested_url =>  request.fullpath), :method => :post %>
                     </li>
                   </ul-actions>
               <% end %>

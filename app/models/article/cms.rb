@@ -4,12 +4,6 @@ class Article::Cms < ::Article
   INTERFACE_CONTENT_TEXT = 1.freeze
   HELP_POPUP = 2.freeze
 
-  SCOPE = [
-      [I18n.t('administration.articles.index.view.main_page_articles'),MAIN_PAGE_ARTICLE],
-      [I18n.t('administration.articles.index.view.interface_content_texts'),INTERFACE_CONTENT_TEXT],
-      [I18n.t('administration.articles.index.view.help_popups'),HELP_POPUP]
-  ].freeze
-
   has_many :assets, :as => :resource, :dependent => :destroy, :finder_sql =>
       'SELECT "assets".*' +
       'FROM "assets"' +
@@ -30,6 +24,14 @@ class Article::Cms < ::Article
 
   def can_be_destroyed?
     key.blank?
+  end
+
+  def show_type
+    case scope
+      when MAIN_PAGE_ARTICLE then I18n.t('administration.articles.index.view.main_page_articles')
+      when INTERFACE_CONTENT_TEXT then I18n.t('administration.articles.index.view.interface_content_texts')
+      when HELP_POPUP then I18n.t('administration.articles.index.view.help_popups')
+    end
   end
 
 end

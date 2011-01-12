@@ -49,7 +49,7 @@ Scenario: I can filter articles to articles only
   And interface content text exists with attributes "title:InterfaceContentText,content:lorem,key:inter_1"
   And help popup exists with attributes "title:HelpPopup,content:lorem,key:help_1"
   And I follow translated "layout.main_menu.admin.articles"
-  And I select translated "administration.articles.index.view.main_page_article" from "search_with_scope"
+  And I select translated "administration.articles.index.view.main_page_articles" from "search_with_scope"
   And I press translated "administration.articles.index.view.search_button"
   Then I should see "MainPageArticle"
   And I should not see "InterfaceContentText"
@@ -61,7 +61,7 @@ Scenario: I can filter articles to blurb only
   And interface content text exists with attributes "title:InterfaceContentText,content:lorem,key:inter_1"
   And help popup exists with attributes "title:HelpPopup,content:lorem,key:help_1"
   And I follow translated "layout.main_menu.admin.articles"
-  And I select translated "administration.articles.index.view.interface_content_text" from "search_with_scope"
+  And I select translated "administration.articles.index.view.interface_content_texts" from "search_with_scope"
   And I press translated "administration.articles.index.view.search_button"
   Then I should see "InterfaceContentText"
   And I should not see "MainPageArticle"
@@ -73,7 +73,7 @@ Scenario: I can filter articles to help only
   And interface content text exists with attributes "title:InterfaceContentText,content:lorem,key:inter_1"
   And help popup exists with attributes "title:HelpPopup,content:lorem,key:help_1"
   And I follow translated "layout.main_menu.admin.articles"
-  And I select translated "administration.articles.index.view.help_popup" from "search_with_scope"
+  And I select translated "administration.articles.index.view.help_popups" from "search_with_scope"
   And I press translated "administration.articles.index.view.search_button"
   Then I should see "HelpPopup"
   And I should not see "InterfaceContentText"
@@ -141,3 +141,10 @@ Scenario: I can't see link to edit blurb when viewing it without admin role
   And I sign out
   And I am on Blurb article page
   Then I should not see "Edit"
+
+@added @_done
+Scenario: I can see type of article on the listing
+  When interface content text exists with attributes "title:Blurb,key:blurb"
+  And help popup exists with attributes "title:HelpPopup,key:help_popup"
+  And I follow translated "layout.main_menu.admin.articles"
+  Then I should see translated "administration.articles.index.view.type"

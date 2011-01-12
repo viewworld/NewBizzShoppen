@@ -40,7 +40,7 @@ module CategoriesHelper
 
   def all_categories_tree(options={})
     root_categories = (user_signed_in? and current_user.has_accessible_categories?) ? Category.roots.within_accessible(current_user) : Category.roots
-    root_categories = root_categories.without_locked_and_not_published
+    root_categories = root_categories.without_locked_and_not_published unless user_signed_in? and current_user.has_role?(:admin)
     content_tag(:ul, root_categories.map { |c| content_tag(:li, category_tree(c, options), :class => "categories_node", :id => dom_id(c)) }.join.html_safe, :class => "categories_tree", :id => "categories_main_tree")
 
   end
@@ -52,7 +52,7 @@ module CategoriesHelper
 
   def category_children(category, options)
     children_categories = (user_signed_in? and current_user.has_accessible_categories?) ? category.children.within_accessible(current_user) : category.children
-    children_categories = children_categories.without_locked_and_not_published
+    children_categories =  children_categories.without_locked_and_not_published unless user_signed_in? and current_user.has_role?(:admin)
     unless children_categories.empty?
       content_tag(:ul, :class => "category_children_tree") do
         children_categories.map do |child|

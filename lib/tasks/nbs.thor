@@ -197,7 +197,11 @@ class Nbs < Thor
     end
 
     puts "Creating default main page articles..."
-    ['About us','Privacy','Terms & Conditions'].each do |title|
+    [
+        'About us',
+        'Privacy',
+        'Terms & Conditions'
+    ].each do |title|
       unless Article::Cms.main_page_articles.includes(:translations).where(:article_translations => {:title => title}).first
         article = Article::Cms.make!(:scope => Article::Cms::MAIN_PAGE_ARTICLE, :title => title, :content => title, :key => title.parameterize('_'))
         [:en, :dk].each do |locale|
@@ -211,7 +215,14 @@ class Nbs < Thor
     end
 
     puts "Creating default interface content texts (blurbs)..."
-    ['blurb_sign_up','blurb_buyer_home','blurb_agent_home','blurb_start_page_role_selection','blurb_currencies'].each do |key|
+    [
+        'blurb_sign_up',
+        'blurb_buyer_home',
+        'blurb_agent_home',
+        'blurb_purchase_manager_home',
+        'blurb_start_page_role_selection',
+        'blurb_currencies'
+    ].each do |key|
       unless Article::Cms.interface_content_texts.where(:key => key).first
         article = Article::Cms.make!(:scope => Article::Cms::INTERFACE_CONTENT_TEXT, :title => key.humanize, :content => key.humanize, :key => key)
         [:en, :dk].each do |locale|
@@ -225,7 +236,9 @@ class Nbs < Thor
     end
 
     puts "Creating default help popups..."
-    ['reset_password'].each do |key|
+    [
+        'reset_password'
+    ].each do |key|
       unless Article::Cms.help_popups.where(:key => key).first
         article = Article::Cms.make!(:scope => Article::Cms::HELP_POPUP, :title => key.humanize, :content => key.humanize, :key => key)
         [:en, :dk].each do |locale|

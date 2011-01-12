@@ -56,7 +56,7 @@ class Lead < ActiveRecord::Base
 
 
   liquid_methods :header, :description, :company_name, :contact_name, :phone_number, :email_address, :address, :www_address
-
+  #TODO ???
   liquid :header
 
   delegate :certification_level, :to => :creator
