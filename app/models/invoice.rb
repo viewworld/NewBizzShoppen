@@ -93,7 +93,7 @@ class Invoice < ActiveRecord::Base
   def set_year
     self.update_attribute :creation_date, Time.now
     self.update_attribute :sale_date, Time.now
-    self.update_attribute :payment_deadline_date, Time.now + Settings.invoicing_default_payment_deadline_date.days
+    self.update_attribute :payment_deadline_date, Time.now + Settings.invoicing_default_payment_deadline_date.to_i.days
     update_number_according_to_year
   end
 

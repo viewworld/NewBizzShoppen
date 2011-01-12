@@ -5,7 +5,7 @@
   <ul class="actions">
     <%= link_to_function t("administration.invoices.show.view.print_invoice"), '$("#invoice_container").printElement()', :icon => "print" %>
     <%= link_to t("administration.invoices.show.view.download_pdf"), administration_invoicing_invoice_path(@invoice, :format => :pdf) %>
-    <%= link_to t("administration.invoices.show.view.set_as_paid"), new_administration_invoicing_invoice_cash_flow_path(@invoice.id), :method => :get %>
+    <%= link_to t("administration.invoices.show.view.set_as_paid"), new_administration_invoicing_invoice_cash_flow_path(@invoice.id), :method => :get unless @invoice.paid? %>
     <%= link_to t("administration.invoices.show.view.send"), new_administration_invoicing_invoice_mailing_path(@invoice), :method => :get %>
     <%= link_to t("administration.invoices.show.view.edit_invoice"), edit_administration_invoicing_invoice_path(@invoice) %>
     <%= link_to t("administration.invoices.show.view.go_back"), administration_invoicing_invoices_path %>
