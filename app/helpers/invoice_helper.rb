@@ -49,7 +49,7 @@ module InvoiceHelper
   end
 
   def invoice_preview_path(filename)
-    "/system/html2pdf/invoice_cache/#{filename}"
+    "/html2pdf/invoice_cache/#{filename}"
   end
 
 

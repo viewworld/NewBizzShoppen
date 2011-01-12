@@ -7,7 +7,7 @@ class Invoice < ActiveRecord::Base
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
             <style type="text/css">
               @import url("unicode.css") print;
-              @import url("../../stylesheets/invoice.css") print;
+              @import url("../stylesheets/invoice.css") print;
               @import url("css.css") print;
             </style>
           </head>
@@ -16,7 +16,7 @@ class Invoice < ActiveRecord::Base
           </body>
         </html>}
 
-  TEMP_INVOICE_MARKUP_PATH = Rails.root.join("public/system/html2pdf/invoice.html")
+  TEMP_INVOICE_MARKUP_PATH = Rails.root.join("public/html2pdf/invoice.html")
 
   include ScopedSearch::Model
   include MultiScopedOrder
@@ -154,15 +154,15 @@ class Invoice < ActiveRecord::Base
   def store_pdf
     File.open(TEMP_INVOICE_MARKUP_PATH, 'w') {|f| f.write(markup) }
     if ENV['OS'] and ENV['OS'].include?("Windows")
-      `xhtml2pdf public/system/html2pdf/invoice.html #{filepath}`
+      `xhtml2pdf public/html2pdf/invoice.html #{filepath}`
     else
-      `python public/system/html2pdf/pisa.py #{TEMP_INVOICE_MARKUP_PATH} #{filepath}`
+      `python public/html2pdf/pisa.py #{TEMP_INVOICE_MARKUP_PATH} #{filepath}`
     end
     filepath
   end
 
   def filepath(extension='pdf')
-    Rails.root.join "public/system/html2pdf/invoice_cache/#{filename}.#{extension}"
+    Rails.root.join "public/html2pdf/invoice_cache/#{filename}.#{extension}"
   end
 
   def filename
