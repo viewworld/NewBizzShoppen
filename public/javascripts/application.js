@@ -70,5 +70,17 @@ jQuery(document).ready(function() {
         values: [ 0, 100 ]
     });
 
+    /* --- show basket / hide --- */
+
+    $("#basket_bt").bind("mouseenter", function()
+    {
+        $("#cart_details").slideDown(350);
+    })
+
+    $("#cart_details").bind("mouseleave", function()
+    {
+        $(this).fadeOut(200);
+    })
+
 
 });
