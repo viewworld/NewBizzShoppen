@@ -50,6 +50,7 @@ Scenario: No new leads could be added to locked category
 Scenario: Locked category should not be visible if no active leads are present within it
   Given category named "Electronics" is locked
   Given category named "Business" is locked
+  Given I am not sign in
   Given I go to browse leads
   And I should not see "Electronics"
   And I should see "Business"

@@ -36,6 +36,7 @@
           <%= @lead_purchase.lead.contact_name %>
         </div>
       </li>
+      <% if @lead_purchase.lead.linkedin_url.present? %>
       <li>
         <div>
           <span class="label"><%= t("lead_purchases.listing.linkedin_url") %></span>
@@ -43,6 +44,8 @@
           <%= link_to image_tag("icons/in_icon.png", :style => "vertical-align: top;"), @lead_purchase.lead.linkedin_url %>
         </div>
       </li>
+      <% end %>
+      <% if @lead_purchase.lead.facebook_url.present? %>
       <li>
         <div>
           <span class="label"><%= t("lead_purchases.listing.facebook_url") %></span>
@@ -50,6 +53,7 @@
           <%= link_to image_tag("icons/fb_icon.png", :style => "vertical-align: top;"), @lead_purchase.lead.facebook_url %>
         </div>
       </li>
+      <% end %>
     </ul>
   </div>
 
