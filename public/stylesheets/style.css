@@ -96,26 +96,26 @@ h4
 /* --- nav---
 --------------------------------------------------------------------------------- */
 
-#nav
+#user_menu
 {
     background: url(/images/bg_nav.png) no-repeat top left;
-    height: 50px;
-    overflow:hidden;
+    height: 50px;    
+    position: relative;
 }
 
-#nav ul
+#user_menu ul.nav
 {
     padding: 0 15px;
 }
 
-#nav ul li
+#user_menu ul.nav li
 {
     display: block;
     float: left;
     padding-right: 5px;
 }
 
-#nav ul li a
+#user_menu ul.nav li a
 {
     background: url(/images/nav/bg_menu.png) no-repeat 0 0;
     display: block;
@@ -125,7 +125,7 @@ h4
     text-shadow: 1px 1px 0 #4d7019;
 }
 
-#nav ul li a span
+#user_menu ul.nav li a span
 {
     background: url(/images/nav/bg_menu.png) no-repeat right -36px;
     display: block;
@@ -134,26 +134,137 @@ h4
     padding: 0 15px;
 }
 
-#nav ul li a:hover
+#user_menu ul.nav li a:hover
 {
     background-position: 0 -72px;    
 }
 
-#nav ul li a:hover span
+#user_menu ul.nav li a:hover span
 {
     background-position: right -108px;    
 }
 
-#nav ul li.active a
+#user_menu ul.nav li.active a
 {
     background-position: 0 -144px;
 }
 
-#nav ul li.active a span
+#user_menu ul.nav li.active a span
 {
     background-position: right -182px;
     height: 38px;
     line-height: 38px;    
+}
+
+
+/* --- cart ---
+--------------------------------------------------------------------------------- */
+
+#cart
+{
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+#cart ul.nav li a span
+{
+    padding-right: 40px;
+    position: relative;
+}
+
+#cart ul.nav li a span img
+{
+    position: absolute;
+    top: 5px;
+    right: 9px;
+}
+
+#cart_details
+{
+    position: absolute;
+    top: 80px;
+    right: 40px;
+    width: 250px;
+    background: #fff;    
+    z-index: 9999;
+    border: 2px solid #d8d8d8;
+
+    display: none;
+
+
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+#cart_details .cart_header
+{
+    -moz-border-radius: 8px 8px 0 0;
+    -webkit-border-radius: 8px 8px 0 0;
+    border-radius: 8px 8px 0 0;    
+
+    
+    height: 30px;
+    padding: 10px;
+
+    background: #ededed;
+    background: -webkit-gradient(linear, left top, left bottom, from(#f1f1f1), to(#e9e9e9));
+    background: -moz-linear-gradient(top, #f1f1f1, #e9e9e9);
+
+    border-bottom: 1px solid #e0e0e0;
+
+    /* -- f1f1f1 - e9e9e9 -- */
+}
+
+#cart_details .cart_header img
+{
+    position: absolute;
+    top: 13px;
+    right: 15px;
+}
+
+#cart_details .cart_header h3
+{
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 30px;
+}
+
+#cart_details .cart_content
+{
+    padding: 10px 10px 0;
+}
+
+#cart_details .cart_content p.price
+{
+    color: #777;
+}
+
+#cart_details .cart_content ul li
+{
+    border-top: 1px solid #e0e0e0;
+    padding: 6px 0;    
+}
+
+#cart_details .cart_content ul li:first-child
+{
+    border-top: none;
+    padding-top: 0;
+}
+
+#cart_details .cart_footer
+{
+    padding: 8px 10px;
+    border-top: 1px solid #e0e0e0;
+
+    -moz-border-radius: 0 0 8px 8px;
+    -webkit-border-radius: 0 0 8px 8px;
+    border-radius: 0 0 8px 8px;
+    
+    background: #ededed;
+    background: -webkit-gradient(linear, left top, left bottom, from(#f1f1f1), to(#e9e9e9));
+    background: -moz-linear-gradient(top, #f1f1f1, #e9e9e9);
 }
 
 /* --- user panel ---
@@ -715,14 +826,14 @@ p.element
     line-height: 14px;
 }
 
-p.element span.green
+.green
 {
     font-size: 14px;
     font-weight: bold;
     color: #5cbf1a;
 }
 
-p.element span.grey
+.grey
 {
     font-size: 14px;
     font-weight: bold;

@@ -17,17 +17,17 @@
 <div id="head">
   <div id="head_bg"></div>
 </div>
-    
+
 <div id="container" class="c">
   <div id="top">
 
-        <div id="user_panel">
-          <%= render '/layouts/locale_selection' %>
-           <% if user_signed_in? %>
-            <%= link_to t("layout.my_profile_link"), my_profile_path, :class => "sl" %>
-            <%= link_to t("layout.logout_link", :user_email => current_user.email), '/logout', :class => "sl" %>
-          <% end %>
-        </div>
+    <div id="user_panel">
+      <%= render '/layouts/locale_selection' %>
+      <% if user_signed_in? %>
+          <%= link_to t("layout.my_profile_link"), my_profile_path, :class => "sl" %>
+          <%= link_to t("layout.logout_link", :user_email => current_user.email), '/logout', :class => "sl" %>
+      <% end %>
+    </div>
 
 
     <div style="position: absolute;right:30px; top:52px">
@@ -38,11 +38,22 @@
       <% end %>
     </div>
     <h1 class="logo"><%= link_to "New Bizz Shoppen", root_path %></h1>
-    <%= render('/layouts/cart') if current_user && current_user.has_role?(:lead_buyer) %>
   </div>
 
-  <div id="nav">
+  <%= render('/layouts/cart') if current_user && current_user.has_role?(:lead_buyer) %>
+
+  <div id="user_menu">
     <%= render "layouts/main_menu" %>
+
+    <% if current_user && current_user.has_role?(:lead_buyer) %>
+        <div id="cart">
+          <ul class="nav">
+            <li>
+              <%= link_to(content_tag(:span, image_tag("icons/basket.png") + t("layout.cart.cart_header", :count => current_user.cart.count)), "#", :id => "basket_bt") %>
+            </li>
+          </ul>
+        </div>
+    <% end %>
   </div>
 
   <div id="content">
