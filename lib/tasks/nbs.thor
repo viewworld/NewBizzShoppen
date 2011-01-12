@@ -19,6 +19,7 @@ class Nbs < Thor
     Settings.invoicing_seller_address                = "Streeet\nPost Code City\nCounty\nCountry"
     Settings.invoicing_seller_vat_number             = "123-456-789"
     Settings.invoicing_seller_payment_account        = "0011400000000000000000001"
+    Settings.invoicing_default_vat_rate              = 0.15
 
     Country.find_or_create_by_name("Denmark")
     Country.find_or_create_by_name("United Kingdom")
