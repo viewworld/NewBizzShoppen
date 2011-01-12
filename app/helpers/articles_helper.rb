@@ -17,4 +17,13 @@ module ArticlesHelper
   def help_popup(link_name, key)
     link_to link_name, help_popup_path(key), :id => "help_popup_#{key}"
   end
+
+  def article_scope_for_select
+    [
+        [I18n.t('administration.articles.index.view.main_page_articles'),Article::Cms::MAIN_PAGE_ARTICLE],
+        [I18n.t('administration.articles.index.view.interface_content_texts'),Article::Cms::INTERFACE_CONTENT_TEXT],
+        [I18n.t('administration.articles.index.view.help_popups'),Article::Cms::HELP_POPUP]
+    ]
+  end
+
 end
