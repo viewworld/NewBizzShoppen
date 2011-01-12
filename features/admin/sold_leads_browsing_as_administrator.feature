@@ -19,7 +19,7 @@ Scenario: I can browse sold leads with pagination
   And I should not see "3" within ".pagination"
   And I follow "2" within ".pagination"
 
-@ao @_done @_tested  @_wip @selenium
+@ao @_done @_tested @selenium
 Scenario: I can filter the listing (similiar to those in lead catalogue + categories)
   Given pagination page size for leads is set to 10
   And lead NotBoughtLead exists within category Test
