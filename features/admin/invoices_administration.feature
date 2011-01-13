@@ -242,7 +242,7 @@ Scenario: I can download invoice as PDF file
   Then I should see "Janko Muzykant"
   And I should see "122"
 
-@_done @ao
+@_done @ao @_tested
 Scenario: I can send invoice to given email address (as an attachment)
   When invoice exists for user "kastomer@nbs.fake"
   And invoice line for first invoice exists for user "kastomer@nbs.fake" with attributes "quantity:1,netto_price:100,vat_rate:0.22,netto_value:100,brutto_value:122"
