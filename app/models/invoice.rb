@@ -56,7 +56,7 @@ class Invoice < ActiveRecord::Base
   #Uncomment reject_if, if not validating invoice lines
   accepts_nested_attributes_for :invoice_lines, :allow_destroy => true #,:reject_if => lambda { |a| a[:name].blank? }
 
-  scoped_order :revenue_frozen, :paid_at, :number
+  scoped_order :revenue_frozen, :paid_at, :number, :sale_date
   multi_scoped_order :sale_date_and_number
 
   protected
