@@ -543,6 +543,7 @@ en:
             payment_status: 'Payment status'
       cash_flow:
         view:
+          header: 'New payment'
           save_button: 'Save'
       mailing:
         new:
