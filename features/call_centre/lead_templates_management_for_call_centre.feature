@@ -1,4 +1,4 @@
-@lead_templates @$_call_centre @m0
+@lead_templates @$_call_centre @m5
 Feature: Lead templates management for call centre
 
 @added
