@@ -24,7 +24,7 @@ Nbs::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
 
   #Required by Devise
-  config.action_mailer.default_url_options = {:host => 'https://beta.fairleads.com'}
+  config.action_mailer.default_url_options = {:host => 'beta.fairleads.com'}
 
   config.action_mailer.delivery_method     = :smtp
   config.action_mailer.smtp_settings       = {:address              => "smtp.gmail.com",
