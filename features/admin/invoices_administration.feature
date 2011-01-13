@@ -169,7 +169,7 @@ Scenario: I can mark an invoice as paid by filling in amount and date fields
   And I follow translated "administration.invoices.index.view.set_as_paid"
   And I fill in "invoice_cash_flow" with "122"
   And I press translated "administration.invoices.cash_flow.view.save_button"
-  And I follow translated "administration.invoices.show.view.go_back"
+  And I follow translated "layout.main_menu.admin.invoices"
   Then I should see "Paid" within "#invoices"
 
 @_done @ao
