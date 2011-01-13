@@ -76,16 +76,16 @@ Feature: User accounts management
    And I sign in as deleted_person@domain.dom with password secret
    Then I should see translated "devise.failure.invalid"
 
-@m0
+@m5
 Scenario: I can invoice an account
 
-@m0
+@m5
 Scenario: I can toggle select/deselect accounts on active page
 
-@m0
+@m5
 Scenario: I can perform a bulk block action
 
-@m0 @noguess
+@m5 @noguess
 Scenario: I can perform a bulk invoice action
 
 @m4 @added @agent_certification @tgn @_tested
