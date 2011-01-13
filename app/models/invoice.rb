@@ -66,7 +66,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def cache_total_words
-    Invoice.update_all ["total_in_words = ?",InvoiceHelper.number_in_words_ext(total, currency.symbol)], ["id = ?",id]
+    Invoice.update_all ["total_in_words = ?",EnglishNumerals.to_English(total)], ["id = ?",id]
   end
 
   private

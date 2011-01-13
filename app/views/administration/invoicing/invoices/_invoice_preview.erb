@@ -85,9 +85,7 @@
 
   <div class="additional_data">
     <ul>
-      <% if !invoice.english_version or version == :copy %>
-          <p><span class="h"><%= t("administration.invoices.show.view.total_in_words") %>:</span> <%= invoice.total_in_words %></p>
-      <% end %>
+      <p><span class="h"><%= t("administration.invoices.show.view.total_in_words") %>:</span> <%= invoice.total_in_words %></p>
       <% if invoice.english_version %>
           <p><span class="h"><%= t("administration.invoices.show.view.vat_paid") %>
             :</span> <%= invoice.vat_paid_in_customer_country == true ? t("administration.invoices.show.view.yes_label") : t("administration.invoices.show.view.no_label") %> <%= "- #{invoice.vat_text_in_customer_country}" if invoice.vat_text_in_customer_country.present? %></p>
