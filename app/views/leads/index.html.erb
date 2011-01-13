@@ -12,7 +12,7 @@
               </li>
               <li class="select">
                 <%= f.label t("leads.index.search.category_label") %>
-                <%= f.select :with_category, @categories.map { |c| [c.name, c.id] } %>
+                <%= f.select :with_category, @categories.map { |c| [c.name, c.id] }, :include_blank => true %>
               </li>
               <li class="string">
                 <%= f.label t("leads.index.search.deal_value_from_label") %>
@@ -24,7 +24,7 @@
               </li>
               <li class="select">
                 <%= f.label t("leads.index.search.country_label") %>
-                <%= f.select :with_country, @countries.map { |c| [c.name, c.id] } %>
+                <%= f.select :with_country, @countries.map { |c| [c.name, c.id] }, :include_blank => true %>
               </li>
               <li class="commit">
                 <ibt c="bt_green" icon="magnify">
