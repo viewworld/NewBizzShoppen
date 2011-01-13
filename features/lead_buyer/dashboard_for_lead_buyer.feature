@@ -1,4 +1,4 @@
-@dashboard @$_lead_buyer @m5
+@dashboard @$_lead_buyer @m0
 Feature: Dashboard for lead buyer
 
 Scenario: I can follow “What do you want to do today?” links and they take me to appropriate places
