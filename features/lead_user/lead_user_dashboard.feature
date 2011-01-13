@@ -1,4 +1,4 @@
-@dashboard @$_lead_user @m6
+@dashboard @$_lead_user @m5
 Feature: Lead user dashboard
 
 
