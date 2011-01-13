@@ -1,4 +1,4 @@
-@comments @m0 @noguess
+@comments @m5 @noguess
 Feature: Comments administration as call centre admin 
 
 Scenario: I can see the amount of comments per lead on Lead created by my agents listing
