@@ -92,5 +92,5 @@ Scenario: I should be able to click "Add to cart button" that will redirect me t
   And I press translated "home.show.view.sign_in"
   Then I should see "Lead 392S2"
 
-@m0
+@m5
 Scenario: If I sucessfully login after requesting a lead being added to a cart, that lead should be added to cart (or bought if I am big buyer)

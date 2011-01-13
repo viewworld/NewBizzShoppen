@@ -23,7 +23,7 @@ class Agents::LeadsController < Agents::AgentController
 
   def create
     @lead = current_user.leads.build(params[:lead])
-    @lead.current_user = current_user
+    @lead.published = params[:lead][:published] if current_user.can_publish_leads?
 
     create! do |success, failure|
       success.html {

@@ -1,5 +1,6 @@
 class ApplicationMailer < ActionMailer::Base
-  default :from => "Application <noreply@application.com>", :return_path => 'noreply@application.com'
+  default :from => "Fairleads.com <noreply@#{ActionMailer::Base.default_url_options[:host]}>",
+          :return_path => "noreply@#{ActionMailer::Base.default_url_options[:host]}"
 
   def email_template(to, email_template, options = {})
     subject = email_template.render_subject(options)
