@@ -18,14 +18,14 @@ en:
       admin:
         users: Users
         categories: Categories
-        email_templates: Email templates
+        email_templates: Emails
         settings: Settings
         leads: Leads
         articles: Articles
         news: News
         currencies: Currencies
         invoices: Invoices
-        upcoming_invoices: Upcoming invoices
+        upcoming_invoices: Upcoming
         payment_transactions: 'Transactions'
       agent:
         leads: My created leads

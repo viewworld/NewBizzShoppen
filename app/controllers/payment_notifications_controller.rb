@@ -8,7 +8,8 @@ class PaymentNotificationsController < ApplicationController
         params[:secret] == APP_CONFIG[:paypal_secret] &&
         params[:receiver_email] == APP_CONFIG[:paypal_email] &&
         params[:mc_gross] == current_user.cart.total.to_s
-      current_user.cart.paid!
+      payment_notification.reload
+      payment_notification.buyer.cart.paid!
     end
     render :nothing => true
   end
