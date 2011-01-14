@@ -35,9 +35,9 @@ namespace :deploy do
 end
 
 after "deploy:finalize_update", "prepare_database"
+after "deploy:finalize_update", "deploy:cleanup"
 
 task :prepare_database, :roles => :app do
   db_config = "#{app_path}/etc/database.yml"
   run "cp #{db_config} #{release_path}/config/database.yml"
 end
-
