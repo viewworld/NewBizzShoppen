@@ -263,6 +263,7 @@ en:
           lock: 'Lock'
           unlock: 'Unlock'
           subaccounts: 'Subaccounts'
+          create_invoice: 'Create invoice'
           edit: 'Edit'
           subaccounts_for_user: 'Subaccounts of user %{user_name}'
           show_all_users: 'Show all users'
@@ -537,10 +538,12 @@ en:
           edit_invoice: 'Edit'
           remove_invoice: 'Delete'
           set_as_paid: 'Set as paid'
+          bulk_set_as_paid: 'Set all as paid'
           add_transaction: 'Add transaction'
           paid: 'Paid'
           not_paid: 'Not paid'
           total: 'Total'
+          actions: Actions
           search:
             with_keyword: 'Keyword'
             with_sale_date_after_and_including: 'Sale date after and including'
@@ -1211,3 +1214,6 @@ en:
         notice: 'Manual transaction has been successfully created.'
       update:
         notice: 'Manual transaction has been successfully updated.'
+    bulk_invoice_update:
+      update:
+        notice: 'Invoices have been successfully updated'
