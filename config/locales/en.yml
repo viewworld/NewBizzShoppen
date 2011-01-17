@@ -37,7 +37,7 @@ en:
         lead_requests: Requested leads
         interests: 'Interests settings'
       lead_buyer:
-        lead_purchases: My owned leads
+        lead_purchases: My leads
       lead_user:
         lead_purchases: My assigned leads
         lead_requests: My requested leads

@@ -29,7 +29,7 @@
       <td class="cl"></td>
       <td></td>
       <td><%= t("buyer.cart.show.view.total_label") %></td>
-      <td><%= @cart.total %></td>
+      <td><%= as_currency(@cart.total, @cart.currency) %></td>
       <td></td>
       <td class="cr"></td>
     </tr>

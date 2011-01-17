@@ -60,4 +60,8 @@ class Cart
     Time.now.strftime("%y%m%d%S") + @buyer.id.to_s
   end
 
+  def currency
+    items.any? ? items.first.currency : ""
+  end
+
 end

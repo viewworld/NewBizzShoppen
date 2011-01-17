@@ -75,7 +75,7 @@ Nbs::Application.routes.draw do
   end
 
   namespace :customers do
-    root :to => "lead_requests#index"
+    root :to => "buyers/lead_purchases#index"
     resource :interests, :only => [:edit, :update]
     resources :subaccounts
     resources :lead_requests, :only => [:index, :update, :destroy]
