@@ -145,7 +145,7 @@ Scenario: I can bulk set response deadlines for lead
 @ao @nontestable  @noguess
 Scenario: I am notified by email when dealine expires and status of lead has not changed
 
-@m0  @noguess
+@m5  @noguess
 Scenario: I can create a comment for lead that I have access for
 
 #Accessible from owned leads listing
@@ -203,8 +203,8 @@ Scenario: I can bulk set status of leads
   And I follow translated "lead_buyer.lead_purchases.index.view.bulk_update_button"
   Then "state" should be selected for value translated "lead_purchases.statuses.contacted"
 
-@m0 @added @lead_templates
+@m5 @added @lead_templates
 Scenario: I can see lead template fields with public values for each lead
 
-@m0 @added @lead_templates
+@m5 @added @lead_templates
 Scenario: I can see lead template fields with hidden values for each lead that I have bought

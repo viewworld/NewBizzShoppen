@@ -1,7 +1,5 @@
 <column-mc:>
-  <h1>New payment</h1>
+  <header back="true"><%= t("administration.invoices.cash_flow.view.header") %></header>
 
   <%= render :partial => 'new' %>
-
-  <%= link_to 'Back', administration_invoicing_invoice_path(@invoice) %>
 </column-mc:>

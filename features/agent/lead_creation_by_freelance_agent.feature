@@ -153,16 +153,16 @@ Scenario: I can add linkedin and facebook links to lead's contact information
   And I should be on agents leads
   And I should see translated "flash.leads.actions.create.notice"
 
-@m0 @added @lead_templates
+@m5 @added @lead_templates
 Scenario: I can create lead with multiple categories
 
-@m0 @added @lead_templates
+@m5 @added @lead_templates
 Scenario: I have to fill out the templates which are mandatory for given category
 
-@m0 @added @lead_templates
+@m5 @added @lead_templates
 Scenario: I can select additional templates that are optional for given category
 
-@m0 @added @lead_templates
+@m5 @added @lead_templates
 Scenario: Lead templates for given category consist of my templates and my call centre's
 
 @m4 @added @tgn @agent_certification @_tested

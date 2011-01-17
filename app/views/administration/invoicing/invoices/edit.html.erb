@@ -2,13 +2,12 @@
 
   <%= javascript_include_tag "jquery.field.min.js", "jquery.calculation.min.js", "invoice_calculations.js", "invoice_navigation.js" %>
 
-  <header><%= t("administration.invoices.edit.view.header") %> #<%= @invoice.id %></header>
+  <header back="true"><%= t("administration.invoices.edit.view.header") %> #<%= @invoice.id %></header>
 
   <ul class="actions">
     <%= link_to_function t("administration.invoices.edit.view.save_changes"), "$('##{dom_id(@invoice, :edit)}').submit()" %>
     <%= link_to t("administration.invoices.edit.view.set_as_paid"), new_administration_invoicing_invoice_cash_flow_path(@invoice.id), :method => :get %>
     <%= link_to t("administration.invoices.edit.view.show_invoice"), administration_invoicing_invoice_path(@invoice) %>
-    <%= link_to t("administration.invoices.edit.view.go_back"), administration_invoicing_invoices_path %>
   </ul>
 
 

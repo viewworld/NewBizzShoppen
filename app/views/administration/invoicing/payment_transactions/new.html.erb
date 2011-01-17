@@ -1,5 +1,5 @@
 <column-mc:>
-  <header><%= t("administration.payment_transactions.new.view.header") %></header>
+  <header back="true"><%= t("administration.payment_transactions.new.view.header") %></header>
 
   <% semantic_form_for @payment_transaction, :url => administration_invoicing_payment_transactions_path do |form| %>
       <%= render :partial => 'form', :locals => { :form => form } %>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-  <title>Nbs</title>
+  <title>Fairleads</title>
   <%= stylesheet_link_tag "ocss_core", "style", "jquery-ui-1.8.5.custom", "colorbox", "invoice", "invoice_lines_edit" %>
   <%= javascript_include_tag :defaults %>
   <%= javascript_include_tag 'jquery.colorbox-min' %>
@@ -37,7 +37,7 @@
           </div>
       <% end %>
     </div>
-    <h1 class="logo"><%= link_to "New Bizz Shoppen", root_path %></h1>
+    <h1 class="logo"><%= link_to "Fairleads", root_path %></h1>
   </div>
 
   <%= render('/layouts/cart') if current_user && current_user.has_role?(:lead_buyer) %>
