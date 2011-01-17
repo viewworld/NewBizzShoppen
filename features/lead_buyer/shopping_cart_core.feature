@@ -42,7 +42,7 @@ Scenario: I can see basket summary before I go to checkout and I can see a total
   And I should see "Mouses deal"
   And I should see "6000"
 
-@tgn @_done @_tested
+@tgn @_done @_tested  @_wip
 Scenario: I can access my basket after I logout and login again
   Given I fill in "search_with_keyword" with "printers"
   And I press translated "leads.index.search.search_button"

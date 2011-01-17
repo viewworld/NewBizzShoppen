@@ -16,6 +16,6 @@ class Customers::InterestsController <  Customers::CustomerController
     current_user.update_attributes(params[:user])
 
     flash[:notice] = t("customer.interests.update.flash.interests_update_successful")
-    redirect_to buyers_lead_purchases_path
+    redirect_to categories_path
   end
 end

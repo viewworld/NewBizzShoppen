@@ -40,7 +40,7 @@
       <li>
         <div>
           <span class="label"><%= t("lead_purchases.listing.linkedin_url") %></span>
-          <%= link_to "LinkedIn profile", @lead_purchase.lead.linkedin_url %>
+          <%= link_to t("lead_purchases.listing.linkedin_profile"), @lead_purchase.lead.linkedin_url %>
           <%= link_to image_tag("icons/in_icon.png", :style => "vertical-align: top;"), @lead_purchase.lead.linkedin_url %>
         </div>
       </li>
@@ -49,7 +49,7 @@
       <li>
         <div>
           <span class="label"><%= t("lead_purchases.listing.facebook_url") %></span>
-          <%= link_to "Facebook profile", @lead_purchase.lead.facebook_url %>
+          <%= link_to t("lead_purchases.listing.facebook_profile"), @lead_purchase.lead.facebook_url %>
           <%= link_to image_tag("icons/fb_icon.png", :style => "vertical-align: top;"), @lead_purchase.lead.facebook_url %>
         </div>
       </li>

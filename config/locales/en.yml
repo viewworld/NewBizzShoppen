@@ -131,6 +131,8 @@ en:
       created_by_label: 'Created by:'
       linkedin_url: 'LinkedIn'
       facebook_url: 'Facebook'
+      linkedin_profile: 'LinkedIn profile'
+      facebook_profile: 'Facebook profile'
     statuses:
       not_contacted: Not contacted
       contacted: Contacted
@@ -1160,15 +1162,15 @@ en:
     agent_accounts:
       actions:
         create:
-          notice: 'Your account has been successfully created!'
+          notice: 'Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account.'
     buyer_accounts:
       actions:
         create:
-          notice: 'Your account has been successfully created!'
+          notice: 'Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account.'
     purchase_manager_accounts:
       actions:
         create:
-          notice: 'Your account has been successfully created!'
+          notice: 'Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account.'
     categories:
       actions:
         create:
