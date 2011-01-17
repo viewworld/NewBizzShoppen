@@ -51,6 +51,7 @@ class Invoice < ActiveRecord::Base
   after_validation :set_default_currency, :if => Proc.new{ |i| i.new_record? }
   after_update :cache_total_words, :update_revenue_frozen
   after_create :generate_invoice_lines_for_big_buyer
+  before_update :generate_manual_transaction_for_big_buyer
   before_save :mark_all_invoice_lines_as_paid
 
   #Uncomment reject_if, if not validating invoice lines
@@ -110,6 +111,12 @@ class Invoice < ActiveRecord::Base
       User::Customer.find(user_id).lead_purchases.select { |lp| lp.invoice_line.blank? }.each do |lead_purchase|
         InvoiceLine.create(:invoice => self, :payable => lead_purchase, :name => lead_purchase.lead.header, :netto_price => lead_purchase.lead.price, :vat_rate => Settings.invoicing_default_vat_rate.to_f)
       end
+    end
+  end
+
+  def generate_manual_transaction_for_big_buyer
+    if paid_at_changed? and cash_flow_changed? and user and user.big_buyer?
+      ManualTransaction.create(:invoice => self, :amount => cash_flow, :paid_at => Time.now)
     end
   end
 

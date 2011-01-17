@@ -49,6 +49,8 @@ Scenario: I can create new invoice from suggestion on invoices pending creation 
   And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
   And I press "Create Invoice"
   Then I should see translated "administration.invoices.show.view.header"
+  And I go to administration invoices
+  And I follow translated "administration.invoices.index.view.show_invoice"
   And I should see "304.35"
   And I should see "20.11"
   And I should see "21.11"
@@ -153,7 +155,7 @@ Scenario: I can edit invoice line within invoice
 Scenario: Invoice line’s netto/brutto fields are automatically updated on edit
   When invoice exists for user "kastomer@nbs.fake"
   And I follow translated "layout.main_menu.admin.invoices"
-  And I follow translated "administration.invoices.index.view.edit_invoice"
+  And I click hidden link by url regex "/administration\/invoicing\/invoices\/\d+\/edit/"
   And I fill in "invoice_invoice_lines_attributes_0_quantity" with "2"
   And I fill in "invoice_invoice_lines_attributes_0_netto_price" with "100"
   And I fill in "invoice_invoice_lines_attributes_0_vat_rate" with "0.22"
@@ -162,13 +164,11 @@ Scenario: Invoice line’s netto/brutto fields are automatically updated on edit
   And the "invoice_invoice_lines_attributes_0_brutto_value" field should contain "244.00"
 
 @_done @ao
-Scenario: I can mark an invoice as paid by filling in amount and date fields
+Scenario: I can mark an invoice as paid by clicking on Set as paid shortcut
   When invoice exists for user "kastomer@nbs.fake"
   And invoice line for first invoice exists for user "kastomer@nbs.fake" with attributes "netto_price:100,quantity:1,vat_rate:0.22,netto_value:100,brutto_value:122"
   And I follow translated "layout.main_menu.admin.invoices"
   And I follow translated "administration.invoices.index.view.set_as_paid"
-  And I fill in "invoice_cash_flow" with "122"
-  And I press translated "administration.invoices.cash_flow.view.save_button"
   And I follow translated "layout.main_menu.admin.invoices"
   Then I should see "Paid" within "#invoices"
 
@@ -259,3 +259,20 @@ Scenario: I can print out invoice (bypassing PDF)
 
 @tgn
 Scenario: I can credit an invoice ...
+
+@tgn @added @_tested @selenium
+Scenario: I can bulk set selected invoices as paid
+  Given invoice exists for user "kastomer@nbs.fake"
+  And invoice exists for user "kastomer@nbs.fake"
+  When I follow translated "layout.main_menu.admin.invoices"
+  Then I check "mark_all"
+  And I follow translated "administration.invoices.index.view.bulk_set_as_paid"
+  Then I should see translated "flash.bulk_invoice_update.update.notice"
+  Then I should see "Paid"
+
+@tgn @added @_tested
+Scenario: I can create invoice for any customer from users tab
+  Given I go to administration users
+  And I click hidden translated link "administration.users.index.view.create_invoice"
+  Then I press "Create Invoice"
+  And I should see translated "administration.invoices.edit.view.header"

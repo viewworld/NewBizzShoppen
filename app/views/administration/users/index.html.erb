@@ -117,6 +117,9 @@
                     <%= link_to t("administration.users.index.view.subaccounts"), administration_users_path({:search => {:with_subaccounts => user.id}}) %>
                   </li>
               <% end %>
+              <% if user.has_role?(:customer) %>
+                  <li><%= link_to t("administration.users.index.view.create_invoice"), new_administration_invoicing_invoice_path(:invoice => {:user_id => user.id}) %></li>
+              <% end %>
             </ul-actions>
           </td>
           <td class="cr"></td>

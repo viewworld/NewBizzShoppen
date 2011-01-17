@@ -3,6 +3,13 @@ class Administration::Invoicing::InvoicesController < Administration::Administra
 #  defaults :redirects => {:create => :edit, :update => :show}
 #  set_search_persistence :name => "invoices_filter"
 
+  def create
+    @invoice = Invoice.new(params[:invoice])
+    create! do |success, failure|
+      success.html { redirect_to edit_administration_invoicing_invoice_path(@invoice) }
+    end
+  end
+
   def edit
     super do |format|
       format.html {@invoice.invoice_lines.build if @invoice.invoice_lines.blank? }
