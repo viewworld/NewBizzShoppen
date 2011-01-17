@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   before_filter do
-    if RAILS_ENV == "staging"
+    if Rails.env.staging?
       authenticate_or_request_with_http_basic do |user_name, password|
         user_name == "fairleads" && password == "staging"
       end
