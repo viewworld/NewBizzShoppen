@@ -26,7 +26,7 @@
         <thead>
         <tr>
           <th class="hl"></th>
-          <th class="no_pdd_lr" style="width:10px"><%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this.checked,'input:checkbox')" %></th>
+          <th class="no_pdd_lr" style="width:10px"><%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %></th>
           <th><%= link_to t("customer.subaccounts.index.view.first_name_column"), order_for_scoped_search(:first_name) %></th>
           <th><%= link_to t("customer.subaccounts.index.view.last_name_column"), order_for_scoped_search(:last_name) %></th>
           <th><%= link_to t("customer.subaccounts.index.view.department_column"), order_for_scoped_search(:department) %></th>
@@ -66,7 +66,7 @@
         <tr class="pagination">
           <td colspan="12">
             <div class="td_select_all">
-              <%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this.checked,'input:checkbox')" %>
+              <%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %>
               <%= label_tag "mark_all", "select all" %>
             </div>
           </td>

@@ -716,7 +716,8 @@
 }
 
 .labels_220 ol li.commit,
-.labels_220 ol.align_inputs li.boolean
+.labels_220 ol.align_inputs li.boolean,
+.labels_220 ol.align_inputs li.header h3    
 {
     margin-left: 220px;
 }

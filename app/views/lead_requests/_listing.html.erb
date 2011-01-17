@@ -4,7 +4,7 @@
     <th class="hl"></th>
 
     <th class="no_pdd_lr" style="width: 10px;">
-      <%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this.checked,'input:checkbox')" %>
+      <%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %>
     </th>
 
     <th style="width: 350px;"><%= t("leads.listing.lead_description_label") %></th>
@@ -65,7 +65,7 @@
     <td colspan="8" class="ta_c">
       <% if show_checkboxes %>
           <div class="td_select_all">
-            <%= check_box_tag "td_mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this.checked,'input:checkbox')" %>
+            <%= check_box_tag "td_mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %>
             <%= label_tag "td_mark_all", "select all" %>
           </div>
       <% end %>      

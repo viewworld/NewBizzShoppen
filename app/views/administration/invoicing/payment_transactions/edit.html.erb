@@ -1,9 +1,17 @@
 <column-mc:>
-  <header><%= t("administration.payment_transactions.edit.view.header") %></header>
+  <header back="true"><%= t("administration.payment_transactions.edit.view.header") %></header>
 
   <% semantic_form_for @payment_transaction, :url => administration_invoicing_payment_transaction_path(@payment_transaction) do |form| %>
-      <%= render :partial => 'form', :locals => { :form => form } %>
-      <%= form.submit t("administration.payment_transactions.edit.view.button_update") %>
+      <frm title="Edit">
+        <param:content>
+          <%= render :partial => 'form', :locals => { :form => form } %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("administration.payment_transactions.edit.view.button_update") %>
+          </ibt>
+        </param:actions>
+      </frm>
   <% end %>
 
    <script>

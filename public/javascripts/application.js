@@ -3,13 +3,19 @@
 //    $('#search_new').submit();
 //};
 
-mark_all_cbs_with_selector = function(val, selector) {
-    $(selector).each(function() {
-        if (!$(this).hasClass('non_selectable'))
-        {
-            $(this).attr('checked', val);
-        }
-    });
+function mark_all_cbs_with_selector(t)
+{
+    var tr = $(t).parents('table').find("tr");
+
+    if($(t).is(":checked"))
+    {
+        $("input=[type=checkbox]:not(:checked)", tr).attr("checked", "checked").parents('tr.lead').addClass("highlight_row");
+
+    }
+    else
+    {
+        $("input=[type=checkbox]:checked", tr).attr("checked", "").parents('tr.lead').removeClass("highlight_row");
+    }
 };
 
 submitBulkForm = function(url, target) {
@@ -22,7 +28,40 @@ submitBulkForm = function(url, target) {
     $('#bulk_actions_form').submit();
 };
 
-jQuery(document).ready(function() {
+
+jQuery(document).ready(function()
+{
+
+    /*--- clickable tr in leads browsing --- */
+
+    $('tr:not(.pagination)', 'table.leads_table tbody').bind("click", function()
+    {        
+        var chbox = $(this).find("input[type=checkbox]");
+
+        
+
+        chbox.bind("click", function(e) {
+            e.stopPropagation();
+//            $(this).parent('tr').toggleClass("highlight_row");
+        });
+
+        if( chbox.is(":checked") )
+        {
+            $('input[type=checkbox]', this).attr("checked", "");
+        }
+        else
+        {
+            $('input[type=checkbox]', this).attr("checked", "checked");
+        }
+
+        $(this).toggleClass("highlight_row");
+
+
+    });
+
+
+    /* --- other --- */
+
 
     $('.td_actions ul').hide(); // for ie7 - do not delete this line
 
@@ -75,12 +114,12 @@ jQuery(document).ready(function() {
     $("#basket_bt").bind("mouseenter", function()
     {
         $("#cart_details").slideDown(350);
-    })
+    });
 
     $("#cart_details").bind("mouseleave", function()
     {
         $(this).fadeOut(200);
-    })
+    });
 
 
 });

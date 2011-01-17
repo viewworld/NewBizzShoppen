@@ -686,6 +686,7 @@ textarea, select
     -moz-box-shadow: 0 1px 0 #fff;
     -webkit-box-shadow: 0 1px 0 #fff;
     box-shadow: 0 1px 0 #fff;
+    margin: 0;
 }
 
 select

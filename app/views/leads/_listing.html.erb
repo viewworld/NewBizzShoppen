@@ -9,7 +9,7 @@
   <tr>
     <th class="hl"></th>
     <% if show_checkboxes %>
-        <th class="no_pdd_lr" style="width: 10px;"><%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this.checked,'input:checkbox')" %></th>
+        <th class="no_pdd_lr" style="width: 10px;"><%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %></th>
     <% end %>
     <th style="width: 350px;"><%= t("leads.listing.lead_description_label") %></th>
     <th style="width: 200px"><%= t("leads.listing.lead_details_label") %></th>
@@ -78,14 +78,13 @@
     <td colspan="<%= cols + 2 %>" class="ta_c">
       <% if show_checkboxes %>
           <div class="td_select_all">
-            <%= check_box_tag "td_mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this.checked,'input:checkbox')" %>
+            <%= check_box_tag "td_mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %>
             <%= label_tag "td_mark_all", "select all" %>
           </div>
       <% end %>
       <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
     </td>
   </tr>
-
 
 
   <% if block_bottom %>

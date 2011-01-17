@@ -2,7 +2,7 @@
   <header><%= t("customer.restricted_categories.edit.view.header") %></header>
 
   <%= form_tag customers_restricted_categories_path, :method => :put do %>
-    <%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this.checked,'input:checkbox')" %>
+    <%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %>
     <ul>
     <% @categories.each_with_index do |category, index| %>
         <li>
