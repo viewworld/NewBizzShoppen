@@ -18,7 +18,7 @@ module ApplicationHelper
   end
   
   def fields_for_leads_translations(f)
-    new_object = current_user.leads.build
+    new_object = current_user.has_role?(:admin) ? Lead.new : current_user.leads.build
     new_object.lead_translations = [LeadTranslation.new]
     fields = f.fields_for :lead_translations, new_object.lead_translations do |builder|
        render("lead_fields", :f => builder)

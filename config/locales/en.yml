@@ -332,7 +332,7 @@ en:
           search_button: 'Search'
           edit: 'Edit'
           destroy: 'Destroy'
-          show: 'Show'
+          edit: 'Edit'
           destroy_confirmation: 'Are you sure?'
           option_published: 'published'
           option_not_published: 'not published'
@@ -356,7 +356,13 @@ en:
           header: 'Ratings for lead: %{lead_header}'
           rating_level: 'Rating:'
           rating_reason: 'Reason:'
-          view_all_leads_link: 'View all leads'          
+          view_all_leads_link: 'View all leads'
+      edit:
+        view:
+          header: 'Edit lead'
+          rating_header: 'Ratings'
+          button_update: 'Save'
+          button_cancel: 'Cancel'
     articles:
       show:
         view:

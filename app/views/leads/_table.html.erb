@@ -59,7 +59,7 @@
           <td><%= lead.lead_purchases_counter %></td>
           <td><%= as_currency(lead.purchase_value,lead.currency) %></td>
           <td></td>
-          <td><%= link_to lead.has_unsatisfactory_rating ? t("leads.listing.has_unsatisfactory_rating_yes") : t("leads.listing.has_unsatisfactory_rating_no"), current_user.has_role?(:agent) ? agents_lead_path(lead) : administration_lead_path(lead)%></td>
+          <td><%= link_to lead.has_unsatisfactory_rating ? t("leads.listing.has_unsatisfactory_rating_yes") : t("leads.listing.has_unsatisfactory_rating_no"), current_user.has_role?(:agent) ? agents_lead_path(lead) : edit_administration_lead_path(lead, :anchor => "lead_rating")%></td>
           <td>
             <% if block_status_column %>
                 <%= with_output_buffer { block_status_column.call(lead) } %>
