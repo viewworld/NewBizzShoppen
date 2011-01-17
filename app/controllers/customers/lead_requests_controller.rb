@@ -2,6 +2,9 @@ class Customers::LeadRequestsController < Customers::CustomerController
   inherit_resources
 
   set_tab "requested_leads"
+
+  before_filter :authorize_for_team_buyers
+
   protected
 
   def begin_of_association_chain

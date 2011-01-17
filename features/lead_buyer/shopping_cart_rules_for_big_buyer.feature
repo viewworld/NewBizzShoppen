@@ -5,6 +5,7 @@ Background:
   Given I am on the homepage
   And I make sure current locale is English
   And I am signed up and confirmed as user with email customer@person.com and password supersecret and role customer
+  And user "customer@person.com" has team buyers enabled
   And User customer@person.com with role customer is big buyer
   And lead Printers ultimate deal exists within category Computers
   And I sign in as customer@person.com with password supersecret

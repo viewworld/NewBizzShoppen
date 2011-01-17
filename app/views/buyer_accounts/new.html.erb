@@ -43,6 +43,7 @@
             <fieldset class="inputs labels_ta_r labels_240">
               <ol class="align_inputs">
                 <%= form.input :country, :as => :select, :collection => Country.all %>
+                <%= form.input :team_buyers, :as => :boolean, :label => t("buyer_accounts.new.view.enable_team_buyers") %>
                 <%= form.input :agreement_read, :as => :boolean %>
                 <%= form.input :newsletter_on, :as => :boolean %>
               </ol>

@@ -777,6 +777,7 @@ en:
       view:
         title: 'Sales manager signup'
         button_create_account: 'Create'
+        enable_team_buyers: 'Enable team buyers'
 
   buyer_home:
     show:

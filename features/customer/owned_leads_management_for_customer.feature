@@ -5,6 +5,7 @@ Background:
   Given I am on the homepage
   And I make sure current locale is English
   Given I am signed up and confirmed as user with email customer@person.com and password supersecret and role customer
+  And user "customer@person.com" has team buyers enabled
   And user customer@person.com with role customer exists with attributes "screen_name:Liane Young,first_name:Liane,last_name:Young"
   And an user with role lead_user and email lead_user2@person.com exists as subaccount for customer customer@person.com
   And an user with role lead_user and email lead_user3@person.com exists as subaccount for customer customer@person.com

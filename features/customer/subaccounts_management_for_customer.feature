@@ -5,6 +5,7 @@ Background:  Sign in user and set locale
   Given I am on the homepage
   And I make sure current locale is English
   And I am signed up and confirmed as user with email bob@person.com and password supersecret and role customer
+  And user "bob@person.com" has team buyers enabled
   Then I sign in as bob@person.com with password supersecret
   And I go to customers subaccounts
 
@@ -240,3 +241,11 @@ Scenario: I can browse leads assigned to one of my lead users with pagination
   And I go to customers subaccounts
   Then I follow translated "customer.subaccounts.index.view.assigned_leads"
   And I should see "Ultimate printers deal"
+
+@added @_done
+Scenario: I should not have access to subaccounts without team buyers flag
+  Given I am signed up and confirmed as user with email no_flag@nbs.com and password secret and role customer
+  And I sign out
+  And I sign in as no_flag@nbs.com with password secret
+  And I go to customers subaccounts
+  Then I should see "You are not authorized"

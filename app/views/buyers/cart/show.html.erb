@@ -37,7 +37,7 @@
     <tr class="main_actions">
       <td class="cl"></td>
       <td class="no_pdd_lr" colspan="4">
-        <% form_tag APP_CONFIG[:paypal_url] do %>
+        <%= form_tag APP_CONFIG[:paypal_url] do %>
             <%= hidden_field_tag :cmd, "_s-xclick" %>
             <%= hidden_field_tag :encrypted, @cart.paypal_encrypted(categories_url, payment_notifications_url(:secret => APP_CONFIG[:paypal_secret])) %>
             <ibt c="fltri">
