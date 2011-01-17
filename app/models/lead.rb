@@ -50,7 +50,7 @@ class Lead < ActiveRecord::Base
 
 
 
-  validates_presence_of :header, :description, :purchase_value, :price, :company_name, :contact_name, :phone_number, :sale_limit, :category_id, :address, :purchase_decision_date, :country_id, :currency
+  validates_presence_of :header, :description, :purchase_value, :price, :company_name, :contact_name, :phone_number, :sale_limit, :category_id, :purchase_decision_date, :country_id, :currency, :address_line_1, :city, :zip_code
   validates_presence_of :hidden_description, :unless => Proc.new{|l| l.created_by?('PurchaseManager')}
   validates_inclusion_of :sale_limit, :in => 0..10
 
@@ -161,5 +161,9 @@ class Lead < ActiveRecord::Base
 
   def created_by?(creator_type)
     self.creator_type == "User::#{creator_type}"
+  end
+
+  def address
+    [address_line_1, address_line_2, address_line_3, zip_code, city, county].join(" ")
   end
 end

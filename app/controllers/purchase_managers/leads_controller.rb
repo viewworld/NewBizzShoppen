@@ -16,11 +16,14 @@ class PurchaseManagers::LeadsController < PurchaseManagers::PurchaseManagerContr
 
   def default_params_hash(params={})
     params.merge({
-        :contact_name  => current_user.full_name,
-        :phone_number  => current_user.phone,
-        :email_address => current_user.email,
-        :address       => current_user.address,
-        :published     => false
+        :contact_name   => current_user.full_name,
+        :phone_number   => current_user.phone,
+        :email_address  => current_user.email,
+        :address_line_1 => current_user.street,
+        :city           => current_user.city,
+        :zip_code       => current_user.zip_code,
+        :county         => current_user.county,
+        :published      => false
     })
   end
 
