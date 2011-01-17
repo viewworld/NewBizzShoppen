@@ -28,6 +28,7 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email, :screen_name
 
   has_many :subaccounts, :class_name => "User", :foreign_key => "parent_id"
+  has_many :owned_lead_requests, :class_name => 'LeadRequest', :foreign_key => :owner_id
   belongs_to :user, :class_name => "User", :foreign_key => "parent_id", :counter_cache => :subaccounts_counter
 #  belongs_to :country, :foreign_key => "country"
   has_many :invoices
@@ -61,6 +62,7 @@ class User < ActiveRecord::Base
   before_save :handle_locking
   before_create :set_rss_token, :set_role
   before_destroy :can_be_removed
+  before_save :handle_team_buyers_flag
 
   liquid :email, :first_name, :last_name, :confirmation_instructions_url, :reset_password_instructions_url
 
@@ -76,6 +78,18 @@ class User < ActiveRecord::Base
   def handle_locking
     if locked
       self.locked_at = locked == "unlock" ? nil : Time.now
+    end
+  end
+
+  def handle_team_buyers_flag
+    if team_buyers_changed? and !team_buyers # unchecking / turning off
+      if owned_lead_requests.any?
+        errors.add(:team_buyers, I18n.t("errors.messages.user.team_buyers.has_lead_requests"))
+        return false
+      elsif subaccounts.any?
+        errors.add(:team_buyers, I18n.t("errors.messages.user.team_buyers.has_subaccounts"))
+        return false
+      end
     end
   end
 

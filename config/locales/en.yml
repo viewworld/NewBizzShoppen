@@ -61,6 +61,10 @@ en:
       not_found: "not found"
       already_confirmed: "was already confirmed"
       not_locked: "was not locked"
+      user:
+        team_buyers:
+          has_subaccounts: "Team buyers can't be disabled as you have already created some subaccounts"
+          has_lead_requests: "Team buyers can't be disabled because there are some Requested Leads"
 
   locales:
     en_locale: 'EN'
@@ -1015,6 +1019,7 @@ en:
     edit:
       view:
         change_password: 'Change password'
+        enable_team_buyers: 'Enable team buyers'
     update:
       controller:
         successful_update_notice: 'Your profile has been successfully updated!'
