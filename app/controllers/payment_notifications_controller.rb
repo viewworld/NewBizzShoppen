@@ -1,5 +1,6 @@
 class PaymentNotificationsController < ApplicationController
   protect_from_forgery :except => [:create]
+  before_filter :authorize_with_http_basic_for_staging, :except => [:create]
 
   def create
     params[:invoice].to_s.slice!(0..7)
