@@ -20,7 +20,12 @@
       <%= form.input :email_address %>
       <%= form.input :linkedin_url %>
       <%= form.input :facebook_url %>
-      <%= form.input :address, :input_html => { :style => "height: 80px; width: 600px" } %>
+      <%= form.input :address_line_1 %>
+      <%= form.input :address_line_2 %>
+      <%= form.input :address_line_3 %>
+      <%= form.input :city %>
+      <%= form.input :county %>
+      <%= form.input :zip_code %>
       <% if current_user.can_publish_leads? %>
         <%= form.input :published %>
       <% else %>

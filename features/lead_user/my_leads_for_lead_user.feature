@@ -8,7 +8,7 @@ Background:
   And an user with role lead_user and email lead_user2@person.com exists as subaccount for customer customer@person.com
   And an user with role lead_user and email lead_user44@person.com exists as subaccount for customer customer@person.com
   And lead Printers ultimate deal exists within category Computers
-  And lead Printers ultimate deal exists with attributes "creator_name:Johan Printing,email_address:john.printer@fghprintesrs.noserver.com,address:London 847-387 Veilingstreet 46,clicks_count:17,exposures_count:887,company_name:FGH Printers,contact_name:John Printer,hidden_description:Hidden description for this lead,purchase_value:3034.87,description:Public desc for printers deal,published_at:01-01-2011"
+  And lead Printers ultimate deal exists with attributes "creator_name:Johan Printing,email_address:john.printer@fghprintesrs.noserver.com,city:London,zip_code:847-387,address_line_1:Veilingstreet 46,clicks_count:17,exposures_count:887,company_name:FGH Printers,contact_name:John Printer,hidden_description:Hidden description for this lead,purchase_value:3034.87,description:Public desc for printers deal,published_at:01-01-2011"
   And lead Monitors LCD deal exists within category Computers
   And lead Monitors LCD deal exists with attributes "hidden_description:Hidden description for this lead,purchase_value:2002.87"
   And lead Keyboards deal exists within category Office
@@ -113,7 +113,9 @@ Scenario: I can see company contact on lead details page
   Then I should see "John Printer"
   And I should see "john.printer@fghprintesrs.noserver.com"
   And I should see "FGH Printers"
-  And I should see "London 847-387 Veilingstreet 46"
+  And I should see "London"
+  And I should see "847-387"
+  And I should see "Veilingstreet 46"
 
 #Accessible from my (assigned) leads listing
 #Just prepare interface for sending an email (based on email template as ususal) with recipient field read-only and prepopulated
@@ -137,7 +139,9 @@ Scenario: I should see hottness, publish date, exposure, clicks
 
 @tgn @_tested
 Scenario: I can see company contact
-  Then I should see "London 847-387 Veilingstreet 46"
+  Then I should see "London"
+  And I should see "847-387"
+  And I should see "Veilingstreet 46"
 
 @tgn @_tested @selenium
 Scenario: I can toggle select leads

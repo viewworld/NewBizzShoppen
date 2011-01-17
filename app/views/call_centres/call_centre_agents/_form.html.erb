@@ -13,6 +13,7 @@
       <%= form.input :zip_code %>
       <%= form.input :county %>
       <%= form.input :country, :as => :select, :collection => Country.all %>
+      <%= form.input :payout %>%
       <%= form.input :agreement_read, :as => :hidden, :value => "1" %>
     </ol>
   </fieldset>

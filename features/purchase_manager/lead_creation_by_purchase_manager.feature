@@ -75,7 +75,10 @@ Scenario: Contact information should be prepopulated
   Then the "lead_email_address" field should contain "jon@lajoie.ca"
   And the "lead_contact_name" field should contain any value
   And the "lead_phone_number" field should contain any value
-  And the "lead_address" field should contain any value
+  And the "lead_address_line_1" field should contain any value
+  And the "lead_city" field should contain any value
+  And the "lead_county" field should contain any value
+  And the "lead_zip_code" field should contain any value
 
 @added @_done
 Scenario: Published checkbox should not be visible
