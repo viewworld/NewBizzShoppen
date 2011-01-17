@@ -8,6 +8,9 @@ class Administration::LeadsController < Administration::AdministrationController
     @lead = Lead.find(params[:id])
     @lead.current_user = current_user
     update! do |success,failure|
+      success.html {
+        redirect_to administration_leads_path
+      }
       success.js {
         render :nothing => true
       }
@@ -24,6 +27,10 @@ class Administration::LeadsController < Administration::AdministrationController
   def collection
     @search = Lead.scoped_search(params[:search])
     @leads = @search.paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)
+  end
+
+  def resource
+    @lead = Lead.find(params[:id])
   end
 
 end

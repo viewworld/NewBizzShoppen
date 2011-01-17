@@ -74,11 +74,11 @@ Scenario: I can sort by columns (those that do match to database columns)
   Then I should see "PurchaseValue1999Lead" before "PurchaseValue1000Lead"
 
 @ao @_done @_tested
-Scenario: I can go to lead details by clicking on the show link
+Scenario: I can go to lead details by clicking on the edit link
   Given pagination page size for leads is set to 1
   And lead AwesomeLead exists within category TestShowLink
   When I follow translated "layout.main_menu.admin.leads"
   And I select "TestShowLink" from "search_with_category"
   And I press translated "leads.index.search.search_button"
-  And I click hidden translated link "administration.leads.index.view.show"
-  Then I should be on the AwesomeLead lead page
+  And I click hidden translated link "administration.leads.index.view.edit"
+  Then I should see translated "administration.leads.edit.view.header"
