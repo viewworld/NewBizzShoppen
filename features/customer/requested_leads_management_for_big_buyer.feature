@@ -7,6 +7,7 @@ Background:
   Given Category named "Sample category" already exists
   Given Category named "Another sample category" already exists within category named "Sample category"
   Given I am signed up and confirmed as user with email john@doe.com and password secret and role customer
+  And user "john@doe.com" has team buyers enabled
   And an user with role lead_buyer and email lead_buyer1@person.com exists as subaccount for customer john@doe.com
   And Lead named "Super printers" exists within "Another sample category" category
   And Lead named "Ultra printers" exists within "Another sample category" category
@@ -26,3 +27,12 @@ Scenario: I can bulk add selected leads to my lead list
   Given I check "mark_all"
   Then I follow translated "customer.lead_requests.index.view.button_bulk_create_lead_request"
   And I should see translated "flash.bulk_lead_requests.actions.update.notice"
+
+@added @_done
+Scenario: I should not have access to subaccounts without team buyers flag
+  Given I am signed up and confirmed as user with email no_flag@nbs.com and password secret and role customer
+  And User no_flag@nbs.com with role customer is big buyer
+  And I sign out
+  And I sign in as no_flag@nbs.com with password secret
+  And I go to customers lead requests
+  Then I should see "You are not authorized"

@@ -42,6 +42,10 @@ Given /^(?:|I am |someone is )signed up and confirmed as user with email ([^"]*)
   u.confirm!
 end
 
+Given /^user "([^"]*)" has team buyers enabled$/ do |email|
+  User::Customer.where(:email => email).first.update_attribute(:team_buyers, true)
+end
+
 Then /^I have user with email (.+) and role (.+)$/ do |email, role|
   u = "User::#{role.camelize}".constantize.make!(:email => email)
   u.confirm!

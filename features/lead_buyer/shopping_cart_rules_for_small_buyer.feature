@@ -12,6 +12,7 @@ Background:
   And Lead named "Keyboards deal" exists within "Another sample category" category
   And Lead named "Ultra new printers" exists within "Computers" category
   Given I am signed up and confirmed as user with email john@doe.com and password secret and role customer
+  And user "john@doe.com" has team buyers enabled
   And an user with role lead_user and email lead_user2@person.com exists as subaccount for customer customer@person.com
   And lead "Keyboards deal" was requested by user "lead_user2@person.com" with role "lead_user" and is owned by user "john@doe.com"
   And I sign in as john@doe.com with password secret
