@@ -1,4 +1,4 @@
-@m5
+@m5 @tgn
 Feature: Leads managements for call centre agent
 
 Scenario: I can browse leads with pagination
