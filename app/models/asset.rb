@@ -35,7 +35,7 @@ class Asset < ActiveRecord::Base
   end
 
   def self.s3_storage?
-    true
+    Rails.env == 'production'
   end
 
   def self.attachment_options
