@@ -41,8 +41,8 @@ Scenario: I should see hottness, novelty, exposure, clicks
   And I should see "887"
   And I should see "17"
 
-@m5 @added @lead_templates
+@m5 @added @lead_templates @tgn
 Scenario: I can see lead template fields with public values for each lead
 
-@m5 @added @lead_templates
+@m5 @added @lead_templates @tgn
 Scenario: I can see only lead template fields' names (not values) for hidden fields
