@@ -26,7 +26,7 @@ Scenario: Invoice lines are marked as paid after payment has been processed by p
   And user with email "gerard.jones@paerson22.com" and role "customer" has invoice for lead "Monitors deal" and transaction created by paypal
   Then invoice lines for last invoice are paid for user with email "gerard.jones@paerson22.com" and role "customer"
 
-@_tested
+@_done
 Scenario: Invoice lines are marked as paid after invoice has been marked as paid by administrator (multiple types of  “payment” object)
   Given I have user with email gerard.jones@paerson22.com and role customer
   And I have user with email lead_user.jones@paerson22.com and role lead_user
@@ -37,6 +37,4 @@ Scenario: Invoice lines are marked as paid after invoice has been marked as paid
   Then I sign in as bob@person.com with password supersecret
   And I go to administration invoices
   And I follow translated "administration.invoices.index.view.set_as_paid"
-  And I fill in "invoice_cash_flow" with "302"
-  And I press translated "administration.invoices.cash_flow.view.save_button"
   Then invoice lines for last invoice are paid for user with email "gerard.jones@paerson22.com" and role "customer"

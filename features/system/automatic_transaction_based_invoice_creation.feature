@@ -19,10 +19,10 @@ Background:
 @_done @tested_elsewhere
 Scenario: Create an invoice if a new paypal transaction (payment for cart content has been confirmed) is created in the system
 
-@_tested
+@_done
 Scenario: Invoice lines for manually created invoice should be automatically generated
   When I go to administration invoices
   And I select "John Kohen" from "invoice_user_id"
   And I press translated "administration.invoices.index.view.create_invoice"
-  Then I should see "Monitors deal"
-  And I should see "Printers deal"
+  Then the "invoice_invoice_lines_attributes_0_name" field should contain "Monitors deal"
+  And the "invoice_invoice_lines_attributes_1_name" field should contain "Printers deal"

@@ -66,11 +66,23 @@ module ApplicationHelper
   end
 
   def as_currency(number,currency)
-    number_to_currency(number, :format => currency.format, :unit => currency.symbol)
+    if currency
+      number_to_currency(number, :format => currency.format, :unit => currency.symbol)
+    else
+      number_to_currency(number, :unit => "")
+    end
   end
 
   def current_user_has_role?(r)
     current_user && current_user.has_role?(r)
+  end
+
+  def main_menu_link_to_role_specific_home_page
+    if !user_signed_in? or (['buyer_home', 'agent_home', 'purchase_manager_home'].include?(params[:controller]) and params[:action] == "show")
+      main_menu_link_to(user_signed_in? ? t("layout.main_menu.shared.site_home") : t("layout.main_menu.shared.home"), root_path, :tab => "home")
+    else
+      main_menu_link_to(t("layout.main_menu.shared.home"), self.send((current_user.has_any_role?(:customer, :lead_buyer, :lead_user)) ? :buyer_home_path : "#{current_user.role.to_s}_home_path".to_sym), :tab => "home")
+    end
   end
 
 end

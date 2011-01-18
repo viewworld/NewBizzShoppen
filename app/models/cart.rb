@@ -61,7 +61,7 @@ class Cart
   end
 
   def currency
-    items.any? ? items.first.currency : ""
+    items.any? ? items.first.currency : nil
   end
 
 end
