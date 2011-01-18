@@ -1,4 +1,4 @@
-<tr>
+<tr class="<%= cycle("odd", "even") %>">
   <td class="cl"></td>
   <td class="no_pdd_lr"><%= check_box_tag("invoice_ids[]", invoice.id) %></td>
   <td><%= invoice.sale_date %></td>

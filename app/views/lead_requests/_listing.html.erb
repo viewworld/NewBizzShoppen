@@ -7,9 +7,8 @@
       <%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %>
     </th>
 
-    <th style="width: 350px;"><%= t("leads.listing.lead_description_label") %></th>
-    <th style="width: 200px"><%= t("leads.listing.lead_details_label") %></th>
-    <th style="width: 200px"><%= t("lead_requests.listing.requested_by") %></th>
+    <th style="width: 500px;"><%= t("leads.listing.lead_description_label") %></th>    
+    <th style="width: 150px"><%= t("lead_requests.listing.requested_by") %></th>
     <th>Stats</th>
     <th class="ta_r">Actions</th>
     <th class="hr"></th>
@@ -18,7 +17,7 @@
   <tfoot>
   <tr>
     <td class="fl"></td>
-    <td colspan="6"></td>
+    <td colspan="5"></td>
     <td class="fr"></td>
   </tr>
   </tfoot>
@@ -37,9 +36,6 @@
           <% if block_general %>
               <%= with_output_buffer { block_general.call(lead_request) } %>
           <% end %>
-        </td>
-        <td>
-          <b><%= lead_request.lead.creator_name %></b>
         </td>
         <td>
           <b><%= lead_request.requestee.full_name %></b>          
@@ -62,7 +58,7 @@
       </tr>
   <% end %>
   <tr class="pagination">
-    <td colspan="8" class="ta_c">
+    <td colspan="7" class="ta_c">
       <% if show_checkboxes %>
           <div class="td_select_all">
             <%= check_box_tag "td_mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %>
@@ -74,7 +70,7 @@
   <% if block_bottom %>
       <tr class="main_actions">
         <td class="cl"></td>
-        <td colspan="6" class="no_pdd_lr">
+        <td colspan="5" class="no_pdd_lr">
           <%= with_output_buffer { block_bottom.call } %>
         </td>
         <td class="cr"></td>

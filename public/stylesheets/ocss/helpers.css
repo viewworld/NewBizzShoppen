@@ -13,6 +13,11 @@
     position: relative;
 }
 
+.pointer
+{
+    cursor: pointer;
+}
+
 
 /* --- text / font -------------------------------------------------------------- */
 

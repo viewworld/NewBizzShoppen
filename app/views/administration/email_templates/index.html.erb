@@ -20,7 +20,7 @@
     </tfoot>
     <tbody>
     <% @email_templates.each do |email_template| %>
-        <tr>
+        <tr class="<%= cycle("odd", "even") %>">
           <td class="cl"></td>
           <td><%= email_template.uniq_id %></td>
           <td><%= email_template.subject %></td>

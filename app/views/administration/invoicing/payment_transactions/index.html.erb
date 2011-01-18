@@ -47,7 +47,7 @@
     </tfoot>
     <tbody id="invoices_list">
     <% @payment_transactions.each do |payment_transaction| %>
-        <tr>
+        <tr class="<%= cycle("odd", "even") %>">
           <td class="cl"></td>          
           <td><%= payment_transaction.class.to_s == "PaypalTransaction" ? t("administration.payment_transactions.index.view.transaction_type_paypal") : t("administration.payment_transactions.index.view.transaction_type_manual") %></td>
           <td><%= payment_transaction.invoice.number %></td>

@@ -87,7 +87,7 @@
     </tfoot>
     <tbody>
     <% @users.each do |user| %>
-        <tr>
+        <tr class="<%= cycle("odd", "even") %>">
           <td class="cl"></td>
           <td><%= user.id %></td>
           <td><%= user.roles_as_text %></td>

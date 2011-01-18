@@ -6,20 +6,27 @@
     </param:content>
 
     <param:actions>
-    <ul class="header_actions">
-      <li class="last">
-        <%= bt_link_to :plus, t("purchase_manager_home.show.view.create_new_purchase_manager_account"), new_purchase_manager_account_path %>
-      </li>
-    </ul>
+      <ul class="header_actions">
+        <li class="last">
+          <%= bt_link_to :plus, t("purchase_manager_home.show.view.create_new_purchase_manager_account"), new_purchase_manager_account_path %>
+        </li>
+      </ul>
     </param:actions>
-  </header> 
+  </header>
 
-  <p><%= t("purchase_manager_home.show.view.header_welcome") %>
-    <%= link_to t("purchase_manager_home.show.view.agent_link"), agent_home_path %>
-    <%= link_to t("purchase_manager_home.show.view.buyer_link"), buyer_home_path %>
-  </p>
+  <div class="pdd_5 no_pdd_b">
+    <h2><%= t("agent_home.show.view.header_welcome") %></h2>
 
-  <p><%= blurb("blurb_purchase_manager_home") %></p>
+    <p>- <%= link_to t("purchase_manager_home.show.view.agent_link"), agent_home_path %></p>
+
+    <p>- <%= link_to t("purchase_manager_home.show.view.buyer_link"), buyer_home_path %></p>
+    <br/>
+
+    <p><%= blurb("blurb_purchase_manager_home") %></p>
+
+  </div>
+
+  <hl pdd="15"></hl>
 
   <div id="leads_summary">
     <div class="column_1to3 fltl" id="news">
@@ -30,7 +37,7 @@
         <param:content>
           <ul class="solid_list">
             <%= render :partial => 'news', :collection => @news, :as => :news %>
-          </ul>              
+          </ul>
         </param:content>
 
       </frm>
@@ -69,8 +76,8 @@
 
       jQuery(document).ready(function() {
           jQuery(".solid_list li").bind("click", function() {
-                  window.location = $(this).find('a.read_more').attr("href");
-              });
+              window.location = $(this).find('a.read_more').attr("href");
+          });
       });
 
   </script>

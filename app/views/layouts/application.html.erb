@@ -37,7 +37,7 @@
           </div>
       <% end %>
     </div>
-    <h1 class="logo"><%= link_to "Fairleads", root_path %></h1>
+    <%= link_to image_tag("logo_fairleads.png"), root_path, :class => "logo" %>    
   </div>
 
   <%= render('/layouts/cart') if current_user && current_user.has_role?(:lead_buyer) %>

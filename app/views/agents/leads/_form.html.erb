@@ -71,7 +71,7 @@
     <ol class="align_inputs">
       <%= form.input :notify_buyers_after_update, :as => :boolean unless @lead.lead_purchases.empty? %>
       <%= form.input :sale_limit, :as => :select, :collection => (0..10) %>
-      <%= form.input :purchase_decision_date, :as => :string, :input_html => {:id => "datepicker"} %>
+      <%= form.input :purchase_decision_date, :as => :string, :input_html => {:id => "datepicker"}, :wrapper_html => { :class => "date" } %>
     </ol>
   </fieldset>
 </div>

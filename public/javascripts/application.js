@@ -7,16 +7,9 @@ function mark_all_cbs_with_selector(t)
 {
     var tr = $(t).parents('table').find("tr");
 
-    if($(t).is(":checked"))
-    {
-        $("input=[type=checkbox]:not(:checked)", tr).attr("checked", "checked").parents('tr.lead').addClass("highlight_row");
-
-    }
-    else
-    {
-        $("input=[type=checkbox]:checked", tr).attr("checked", "").parents('tr.lead').removeClass("highlight_row");
-    }
-};
+    $(t).is(":checked") ? $("input=[type=checkbox]:not(:checked)", tr).attr("checked", "checked")
+                        : $("input=[type=checkbox]:checked", tr).attr("checked", "");
+}
 
 submitBulkForm = function(url, target) {
     $('#route_to').val(url);
@@ -34,30 +27,24 @@ jQuery(document).ready(function()
 
     /*--- clickable tr in leads browsing --- */
 
-    $('tr:not(.pagination)', 'table.leads_table tbody').bind("click", function()
-    {        
-        var chbox = $(this).find("input[type=checkbox]");
+    if( $('table').has("a.default_action").length != 0 )
+    {
+        $('td:not(.cl, .cr, .tda)', 'table tbody tr:not(.pagination, .main_actions)').filter(":not(:has(:checkbox, select, a))")
+        .addClass("pointer")
+        .click(function()
+        {            
+            var link = $(this).parent().find('a.default_action');
+            if(link.attr("data-method"))
+            {
+                link.trigger("click");
+            }
+            else
+            {
+                window.location = link.attr("href");
+            }
 
-        
-
-        chbox.bind("click", function(e) {
-            e.stopPropagation();
-//            $(this).parent('tr').toggleClass("highlight_row");
         });
-
-        if( chbox.is(":checked") )
-        {
-            $('input[type=checkbox]', this).attr("checked", "");
-        }
-        else
-        {
-            $('input[type=checkbox]', this).attr("checked", "checked");
-        }
-
-        $(this).toggleClass("highlight_row");
-
-
-    });
+    }
 
 
     /* --- other --- */
