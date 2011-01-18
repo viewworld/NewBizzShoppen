@@ -1,4 +1,4 @@
-@lead_manager @$_admin @m5
+@lead_manager @$_admin @m5 @ao
 Feature: Administrative lead management
   
 Background:
