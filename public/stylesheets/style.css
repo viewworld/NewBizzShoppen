@@ -22,6 +22,17 @@ body
     height: 218px;
 }
 
+#head #global_loader
+{
+    background: url(/images/global_loader.gif) no-repeat;
+    position: fixed;
+    width: 32px;
+    height: 32px;
+    top: 5px;
+    right: 5px;
+    display: none;
+}
+
 #container
 {
     padding: 0 30px;
