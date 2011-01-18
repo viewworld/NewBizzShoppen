@@ -1,4 +1,4 @@
-@$_anybody @m5 @progress_indicators
+@$_anybody @m5 @progress_indicators @ao
 Feature: Ajax spinners
 
 @bk
