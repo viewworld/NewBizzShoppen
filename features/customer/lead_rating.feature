@@ -103,5 +103,5 @@ Scenario: As admin I can view all 'unsatisfactory' ratings
   Then I should see translated "agent.leads.show.view.rating_reason"
 
 # email or internal messages?
-@m5
+@m5 @tgn
 Scenario: As admin I can reply to 'unsatisfactory' rating
