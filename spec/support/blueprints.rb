@@ -127,6 +127,7 @@ end
   county { Faker::Address.uk_county }
   country { 1 }
   roles_mask { 112 }
+  team_buyers { false }
 end
 
 ::User::PurchaseManager.blueprint do
