@@ -1,22 +1,28 @@
 <column-mc:>
-  <header>Resend confirmation instructions</header>
+  <header back="true">Resend confirmation instructions</header>
 
   <%= form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => {:method => :post}) do |f| %>
       <%= devise_error_messages! %>
-      <fieldset class="inputs labels_100">
-        <ol class="align_inputs">
-          <li class="string">
-            <%= f.label :email %>
-            <%= f.text_field :email %>
-          </li>
-          <li class="commit">
-            <ibt>
-              <%= f.submit t("devise.confirmations.resend_confirmation_link") %>
-            </ibt>
-          </li>
-        </ol>
-      </fieldset>
+      <div class="grid_420">
+        <frm title="Type your email">
+          <div class="pdd_10">
+            <fieldset class="inputs labels_100 no_pdd">
+              <ol class="align_inputs no_pdd">
+                <li class="string">
+                  <%= f.label :email %>
+                  <%= f.text_field :email %>
+                </li>
+                <li class="commit">
+                  <ibt>
+                    <%= f.submit t("devise.confirmations.resend_confirmation_link") %>
+                  </ibt>
+                </li>
+              </ol>
+            </fieldset>
+          </div>
+        </frm>
+      </div>
   <% end %>
 
-  <%= render :partial => "devise/shared/links" %>
+  <%#= render :partial => "devise/shared/links" %>
 </column-mc:>

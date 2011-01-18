@@ -5,12 +5,13 @@
     <div class="search_content">
 
       <%= form_for @search, :url => lead_users_lead_requests_path do |f| %>
-          <fieldset class="inputs labels_auto inline_li no_pdd rltv">
+          <fieldset class="inputs_vertical">
             <ol class="no_pdd">
               <li class="string">
+                <%= f.label :with_keyword, t("lead_user.lead_requests.index.view.search.keyword_label") %>
                 <%= f.text_field :with_keyword %>
               </li>
-              <li class="select no_pdd_l">
+              <li class="select">
                 <%= f.label :with_category, t("lead_user.lead_requests.index.view.search.category_label") %>
                 <%= f.select :with_category, @categories, {:include_blank => true} %>
               </li>
@@ -18,7 +19,7 @@
                 <%= f.label :with_deal_value_from, t("lead_user.lead_requests.index.view.search.deal_value_from_label") %>
                 <%= f.select :with_deal_value_from, User::DEAL_VALUE_RANGE, {:include_blank => true} %>
               </li>
-              <li class="select no_pdd_l">
+              <li class="select">
                 <%= f.label :with_deal_value_to, t("lead_user.lead_requests.index.view.search.deal_value_to_label") %>
                 <%= f.select :with_deal_value_to, User::DEAL_VALUE_RANGE, {:include_blank => true} %>
               </li>
@@ -27,7 +28,7 @@
                 <%= f.select :with_country, @countries, {:include_blank => true} %>
               </li>
               <li class="commit">
-                <ibt c="bt_green right" icon="magnify">
+                <ibt c="bt_green" icon="magnify">
                   <%= submit_tag t("lead_user.lead_requests.index.view.search.search_button") %>
                 </ibt>
               </li>
@@ -47,11 +48,7 @@
           <% blocks.tools do |lead| %>
               <% if current_user %>
                   <% if current_user.has_role?(:lead_user) %>
-                      <ul-actions>
-                        <li>
-                          <%= link_to t("lead_user.lead_requests.index.view.destroy_lead_request"), lead_users_lead_request_path(:id => lead.id), :method => :delete %>
-                        </li>
-                      </ul-actions>
+                    <%= bt_link_to nil, t("lead_user.lead_requests.index.view.destroy_lead_request"), lead_users_lead_request_path(:id => lead.id), :method => :delete %>
                   <% end %>
               <% end %>
 

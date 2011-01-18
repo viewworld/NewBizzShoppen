@@ -42,6 +42,10 @@ Given /^(?:|I am |someone is )signed up and confirmed as user with email ([^"]*)
   u.confirm!
 end
 
+Given /^user "([^"]*)" has team buyers enabled$/ do |email|
+  User::Customer.where(:email => email).first.update_attribute(:team_buyers, true)
+end
+
 Then /^I have user with email (.+) and role (.+)$/ do |email, role|
   u = "User::#{role.camelize}".constantize.make!(:email => email)
   u.confirm!
@@ -166,10 +170,25 @@ Given /^all users have refreshed cache counters$/ do
     User::Abstract.where("parent_id is not null").each do |user|
       user.refresh_subaccounts_counters!
     end
+
+    (User::Agent.all + User::CallCentreAgent.all).each do |user|
+      user.refresh_agent_counters!
+    end
 end
 
 Given /^user "([^"]*)" with role "([^"]*)" has interest in following categories "([^"]*)"$/ do |email, role, category_names|
   user = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
   user.categories = category_names.split(",").map { |name| Category.find_by_name(name).last }
+  user.save
+end
+
+Given /^user "([^"]*)" with role "([^"]*)" has certification level (\d+)$/ do |email, role, c_level|
+  user = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
+  assert user.read_attribute(:certification_level).to_i == c_level.to_i
+end
+
+Given /^user "([^"]*)" with role "([^"]*)" has certification level set to (\d+)$/ do |email, role, c_level|
+  user = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
+  user.certification_level = c_level.to_i
   user.save
 end

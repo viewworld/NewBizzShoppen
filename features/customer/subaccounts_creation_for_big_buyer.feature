@@ -4,6 +4,7 @@ Background:
   Given I am on the homepage
   And I make sure current locale is English
   Given I am signed up and confirmed as user with email customer@person.com and password supersecret and role customer
+  And user "customer@person.com" has team buyers enabled
   And User customer@person.com with role customer is big buyer
   Then I sign in as customer@person.com with password supersecret
   Then I go to customers subaccounts
@@ -33,3 +34,14 @@ Scenario: Account have to be activated through activation email
   And a confirmation message to driscoll@person.noserver.com should include confirmation link
   Then confirmation link should confirm account for driscoll@person.noserver.com
   And I should see translated "devise.confirmations.confirmed"
+
+@added @_done
+Scenario: I should not have access to subaccounts without team buyers flag
+  Given I am signed up and confirmed as user with email no_flag@nbs.com and password secret and role customer
+  And User no_flag@nbs.com with role customer is big buyer
+  And I sign out
+  And I sign in as no_flag@nbs.com with password secret
+  And I go to customers subaccounts
+  Then I should see "You are not authorized"
+
+

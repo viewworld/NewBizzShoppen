@@ -5,6 +5,7 @@ Background:
   Given I am on the homepage
   And I make sure current locale is English
   Given I am signed up and confirmed as user with email customer@person.com and password supersecret and role customer
+  And user "customer@person.com" has team buyers enabled
   And user customer@person.com with role customer exists with attributes "screen_name:Liane Young,first_name:Liane,last_name:Young"
   And an user with role lead_user and email lead_user2@person.com exists as subaccount for customer customer@person.com
   And an user with role lead_user and email lead_user3@person.com exists as subaccount for customer customer@person.com
@@ -98,15 +99,15 @@ Scenario: I can scope down requested leads listing with filter
 Scenario: I should see lead header, lead price, purchase value and public description for each requested lead
   Then I go to customers lead requests
   And I should see "Keyboards deal"
-  And I should see "9893.56"
-  And I should see "4002.21"
+  And I should see "9,893.56"
+  And I should see "4,002.21"
   And I should see "Public description for keyboards"
 
 @tgn @_tested
 Scenario: I should see created by and certification level for each requested lead
   Then I go to customers lead requests
   And I should see "Philip Glass"
-  And I should see translated "models.lead.novelty.lvl0"
+  And I should see translated "models.lead.certification.lvl0"
 
 @m0 @_added
 Scenario: I should see rating % for each requested lead
@@ -145,7 +146,7 @@ Scenario: I can bulk set response deadlines for lead
 @ao @nontestable  @noguess
 Scenario: I am notified by email when dealine expires and status of lead has not changed
 
-@m0  @noguess
+@m5  @noguess
 Scenario: I can create a comment for lead that I have access for
 
 #Accessible from owned leads listing
@@ -180,11 +181,11 @@ Scenario: I can bulk send selected leads by email
   Then I should see translated "flash.bulk_lead_share_by_email.actions.create.notice"
 
 #Adjust to current requirements first
-@m4 @tgn @tbd @non_testable
+@m4 @tgn @_done @non_testable
 Scenario: I can rate lead that I have access for (good, bad, fake)
 
 #Adjust to current requirements first
-@m4 @tgn @tbd @non_testable
+@m4 @tgn @_done @non_testable
 Scenario: I can bulk rate leads that I have access for (good, bad, fake)
 
 @ao @_tested @selenium
@@ -202,3 +203,9 @@ Scenario: I can bulk set status of leads
   And I check "mark_all"
   And I follow translated "lead_buyer.lead_purchases.index.view.bulk_update_button"
   Then "state" should be selected for value translated "lead_purchases.statuses.contacted"
+
+@m5 @added @lead_templates
+Scenario: I can see lead template fields with public values for each lead
+
+@m5 @added @lead_templates
+Scenario: I can see lead template fields with hidden values for each lead that I have bought

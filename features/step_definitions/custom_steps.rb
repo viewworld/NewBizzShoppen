@@ -67,3 +67,11 @@ end
 Given /^I click hidden link by url regex "([^"]*)"$/ do |regex|
   visit page.all(:css, 'a').detect { |l| !(l[:href] =~ eval(regex)).nil? }[:href]
 end
+
+Given /^I (should not|should) see link with label "([^"]*)"$/ do |should_be_visible, label|
+  if should_be_visible == "should"
+    assert !page.all(:css, 'a').detect { |l| l.text == label }.nil?
+  else
+    assert page.all(:css, 'a').detect { |l| l.text == label }.nil?
+  end
+end

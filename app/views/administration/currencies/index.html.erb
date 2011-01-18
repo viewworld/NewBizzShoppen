@@ -42,7 +42,7 @@
         </tfoot>
         <tbody>
         <% @currencies.each do |currency| %>
-            <tr id="currency_<%= currency.id %>">
+            <tr id="currency_<%= currency.id %>" class="<%= cycle("odd", "even") %>">
               <td class="cl"></td>
               <td><%= currency.id %></td>
               <td><%= currency.name %></td>

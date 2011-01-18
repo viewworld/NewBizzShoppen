@@ -18,8 +18,19 @@
       <%= form.input :contact_name %>
       <%= form.input :phone_number %>
       <%= form.input :email_address %>
-      <%= form.input :address, :input_html => { :style => "height: 80px; width: 600px" } %>
-      <%= form.input :published %>
+      <%= form.input :linkedin_url %>
+      <%= form.input :facebook_url %>
+      <%= form.input :address_line_1 %>
+      <%= form.input :address_line_2 %>
+      <%= form.input :address_line_3 %>
+      <%= form.input :city %>
+      <%= form.input :county %>
+      <%= form.input :zip_code %>
+      <% if current_user.can_publish_leads? %>
+        <%= form.input :published %>
+      <% else %>
+        <%= form.input :published, :as => :hidden %>
+      <% end %>
     </ol>
   </fieldset>
 </div>
@@ -60,7 +71,7 @@
     <ol class="align_inputs">
       <%= form.input :notify_buyers_after_update, :as => :boolean unless @lead.lead_purchases.empty? %>
       <%= form.input :sale_limit, :as => :select, :collection => (0..10) %>
-      <%= form.input :purchase_decision_date, :as => :string, :input_html => {:id => "datepicker"} %>
+      <%= form.input :purchase_decision_date, :as => :string, :input_html => {:id => "datepicker"}, :wrapper_html => { :class => "date" } %>
     </ol>
   </fieldset>
 </div>

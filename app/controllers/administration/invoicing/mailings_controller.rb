@@ -2,23 +2,17 @@ class Administration::Invoicing::MailingsController < Administration::Administra
   before_filter :get_invoice
 
   def new
-    @mailing = Mailing.new
-    respond_to do |format|
-      format.js
-    end
+    @email_template_preview = EmailTemplatePreview.new(:invoice, {:invoice => @invoice})
+    @email_template_preview.invoice_filename = @invoice.store_pdf.basename
   end
 
-
   def create
-    params[:mailing][:filepaths] = [[@invoice.store_pdf, @invoice.filename+".pdf"]]
-
-    if Mailing.create(params[:mailing])
-      @invoice.update_attribute(:emailed_at, Time.now)
+    params[:email_template_preview].tap do |email_params|
+      invoice_path = Pathname.new(File.join(RAILS_ROOT,'public/html2pdf/invoice_cache',email_params[:invoice_filename]))
+      ApplicationMailer.generic_email(email_params[:recipients], email_params[:subject], email_params[:body], nil, invoice_path.to_a).deliver
     end
-
-    respond_to do |format|
-      format.html {redirect_to invoicing_invoice_path(@invoice)}
-    end
+    flash[:notice] = I18n.t("flash.bulk_lead_share_by_email.actions.create.notice")
+    redirect_to administration_invoicing_invoice_path(@invoice)
   end
 
   private

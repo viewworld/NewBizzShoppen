@@ -1,0 +1,68 @@
+<search-box:>
+  <div class="search_box">
+    <h2><%= t("administration.payment_transactions.index.view.search_label") %></h2>
+
+    <div class="search_content">
+      <%= form_for @search, :url => administration_invoicing_payment_transactions_path do |f| %>
+          <fieldset class="inputs_vertical">
+            <ol class="no_pdd">
+              <li class="string">
+                <%= f.label :with_keyword, t("administration.payment_transactions.index.view.search.with_keyword") %>
+                <%= f.text_field :with_keyword %>
+              </li>
+              <li class="commit">
+                <ibt c="bt_green" icon="magnify">
+                  <%= submit_tag t("administration.payment_transactions.index.view.search_button") %>
+                </ibt>
+              </li>
+            </ol>
+          </fieldset>
+      <% end %>
+    </div>
+  </div>
+</search-box:>
+
+<column-mc:>
+  <header><%= t("administration.payment_transactions.index.view.header") %></header>
+
+  <table class="generic" cellspacing="0" cellpadding="0">
+    <thead>
+    <tr>
+      <th class="hl"></th>
+      <th><%= t("administration.payment_transactions.index.view.transaction_type") %></th>
+      <th><%= t("administration.payment_transactions.index.view.invoice_number") %>
+      <th id="invoice_number_header"><%= t("administration.payment_transactions.index.view.customer_name") %></th>
+      <th><%= t("administration.payment_transactions.index.view.customer_address") %></th>
+      <th><%= t("administration.payment_transactions.index.view.amount") %></th>
+      <th class="ta_r"><%= t("administration.payment_transactions.index.view.actions") %></th>
+      <th class="hr"></th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+      <td class="fl"></td>
+      <td colspan="6"></td>
+      <td class="fr"></td>
+    </tr>
+    </tfoot>
+    <tbody id="invoices_list">
+    <% @payment_transactions.each do |payment_transaction| %>
+        <tr class="<%= cycle("odd", "even") %>">
+          <td class="cl"></td>          
+          <td><%= payment_transaction.class.to_s == "PaypalTransaction" ? t("administration.payment_transactions.index.view.transaction_type_paypal") : t("administration.payment_transactions.index.view.transaction_type_manual") %></td>
+          <td><%= payment_transaction.invoice.number %></td>
+          <td><%= payment_transaction.invoice.customer_name %></td>
+          <td><%= payment_transaction.invoice.customer_address %></td>
+          <td><%= payment_transaction.amount %></td>
+          <td class="tda ta_r">
+            <% if payment_transaction.can_be_edited? %>
+                <%= bt_link_to nil, t("administration.payment_transactions.index.view.edit"), edit_administration_invoicing_payment_transaction_path(payment_transaction) %>
+            <% end %>
+          </td>
+          <td class="cr"></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <%= will_paginate @payment_transactions %>
+</column-mc:>

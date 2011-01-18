@@ -21,7 +21,7 @@ describe User do
 
       @lead_user3.lead_requests.create!(:lead_id => @lead1.id)
       @lead_buyer3.lead_purchases.create!(:lead_id => @lead1.id).tap do |purchase|
-        purchase.update_attribute(:accessible, true)
+        purchase.update_attribute(:accessible_from, Time.now)
       end
 
     end
@@ -75,9 +75,9 @@ describe User do
 
       it "should be true if one lead buyer has purchased 2 leads" do
         lp = @lead_buyer1.lead_purchases.create!(:lead_id => @lead1.id)
-        lp.update_attribute(:accessible, true)
+        lp.update_attribute(:accessible_from, Time.now)
         lp = @lead_buyer1.lead_purchases.create!(:lead_id => @lead2.id)
-        lp.update_attribute(:accessible, true)
+        lp.update_attribute(:accessible_from, Time.now)
 
 
         lead_ids = [@lead1, @lead2].map(&:id)
@@ -90,11 +90,11 @@ describe User do
 
       it "should be true if two lead users has purchased total of 3 leads" do
         lp = @lead_buyer1.lead_purchases.create!(:lead_id => @lead1.id)
-        lp.update_attribute(:accessible, true)
+        lp.update_attribute(:accessible_from, Time.now)
         lp = @lead_buyer1.lead_purchases.create!(:lead_id => @lead2.id)
-        lp.update_attribute(:accessible, true)
+        lp.update_attribute(:accessible_from, Time.now)
         lp = @lead_buyer2.lead_purchases.create!(:lead_id => @lead3.id)
-        lp.update_attribute(:accessible, true)
+        lp.update_attribute(:accessible_from, Time.now)
 
 
         lead_ids = [@lead1, @lead2, @lead3].map(&:id)
@@ -107,11 +107,11 @@ describe User do
 
       it "should be true if two lead users and customer has purchased total of 3 leads" do
         lp = @lead_buyer1.lead_purchases.create!(:lead_id => @lead1.id)
-        lp.update_attribute(:accessible, true)
+        lp.update_attribute(:accessible_from, Time.now)
         lp = @lead_buyer2.lead_purchases.create!(:lead_id => @lead2.id)
-        lp.update_attribute(:accessible, true)
+        lp.update_attribute(:accessible_from, Time.now)
         lp = @customer.lead_purchases.create!(:lead_id => @lead3.id)
-        lp.update_attribute(:accessible, true)
+        lp.update_attribute(:accessible_from, Time.now)
 
 
         lead_ids = [@lead1, @lead2, @lead3].map(&:id)

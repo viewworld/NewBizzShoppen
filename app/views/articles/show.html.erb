@@ -1,9 +1,14 @@
 <column-mc:>
 
   <frm title="#{@article.title}">
-    <div class="pdd_10">
-      <%= raw @article.content %>
-    </div>        
+    <param:header>
+      <%= bt_link_to nil, t("common.edit_link"), edit_administration_article_path, :class => "fltr" if current_user_has_role? :admin %>
+    </param:header>
+    <param:content>
+        <div class="pdd_10">
+          <%= raw @article.content %>
+        </div>
+    </param:content>
   </frm>
 
 </column-mc:>

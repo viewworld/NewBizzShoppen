@@ -27,7 +27,7 @@ Scenario: I should see created by and certification level for each lead
   And I should see "John McCain"
   And I should see translated "models.lead.novelty.lvl0"
 
-@m4 @tgn @tbd @added
+@m4 @tgn @_tested @added
 Scenario: I should see rating %
   Given I have user with email bob@person.com and role customer
   And a lead Printers ultimate deal exists within category Computers and is bought by user bob@person.com with role customer
@@ -40,7 +40,7 @@ Scenario: I should see rating %
 Scenario: I should see lead header, lead price, purchase value and public description
   Then I should see "Printers ultimate deal"
   And I should see "989.78"
-  And I should see "3030.03"
+  And I should see "3,030.03"
   And I should see "Lorem ipsum public desc"
 
 @tgn @_tested

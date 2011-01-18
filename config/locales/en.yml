@@ -11,34 +11,40 @@ en:
     help_link: 'Help'
     yes_label: 'Yes'
     no_label: 'No'
+    read_more: 'read more'
+    all_label: 'All'    
   layout:
     main_menu:
       admin:
         users: Users
         categories: Categories
-        email_templates: Email templates
+        email_templates: Emails
         settings: Settings
         leads: Leads
         articles: Articles
         news: News
         currencies: Currencies
         invoices: Invoices
+        upcoming_invoices: Upcoming
+        payment_transactions: 'Transactions'
       agent:
         leads: My created leads
       call_centre:
+        call_centre_agents: 'Agents'
       call_centre_agent:
       customer:
-        subaccounts: Subaccounts
+        subaccounts: Team
         lead_requests: Requested leads
         interests: 'Interests settings'
       lead_buyer:
-        lead_purchases: My owned leads
+        lead_purchases: My leads
       lead_user:
         lead_purchases: My assigned leads
         lead_requests: My requested leads
       shared:
         browse_leads: Browse leads
         home: Home
+        site_home: 'Site home'
       purchase_manager:
         leads: My created leads
     my_profile_link: My profile
@@ -56,6 +62,10 @@ en:
       not_found: "not found"
       already_confirmed: "was already confirmed"
       not_locked: "was not locked"
+      user:
+        team_buyers:
+          has_subaccounts: "Team buyers can't be disabled as you have already created some subaccounts"
+          has_lead_requests: "Team buyers can't be disabled because there are some Requested Leads"
 
   locales:
     en_locale: 'EN'
@@ -116,10 +126,14 @@ en:
       exposures_count_label: 'Exposures:'
       average_rating_label: 'Rating:'
       sale_limit_label: 'Uniqueness:'
-      novelty_label: 'Novelty:'
-      hotness_label: 'Hotness:'
-      certification_label: 'Certification:'
+      novelty_label: 'Publish date:'
+      hotness_label: 'Deadline:'
+      certification_label: 'Agent certification level:'
       created_by_label: 'Created by:'
+      linkedin_url: 'LinkedIn'
+      facebook_url: 'Facebook'
+      linkedin_profile: 'LinkedIn profile'
+      facebook_profile: 'Facebook profile'
     statuses:
       not_contacted: Not contacted
       contacted: Contacted
@@ -145,7 +159,6 @@ en:
     listing:
       purchase_value_label: 'Purchase value:'
       lead_price_label: 'Lead price:'
-      lead_currency_label: 'Lead currency:'
       description_label: 'Lead description:'
       lead_details_label: 'Leads details'
       lead_description_label: 'Leads description'
@@ -167,7 +180,7 @@ en:
       hottness: 'Hotness'
       novelty: 'Novelty'
       sale_limit: 'Uniqueness'
-      price: 'Price'
+      price: 'Lead price'
       sold: 'Sold'
       purchase_value: 'Value'
       paid_out: 'Paid out'
@@ -196,25 +209,30 @@ en:
     index:
       view:
         agents_header: 'AGENTS NEWS'
-        buyers_header: 'BUYERS NEWS'
+        buyers_header: 'SALES MANAGER NEWS'
+        purchase_managers_header: 'PURCHASE MANAGERS NEWS'
         read_more_link: 'read more'
         newer_link: 'Newer'
         older_link: 'Older'
+    show:
+      view:
+        header: 'News'
 
   home:
     show:
       view:
         header: 'Home'
-        buyer: 'Buyer'
+        buyer: 'Sales manager'
         agent: 'Agent'
+        purchase_manager: 'Purchase manager'
         remember_me: 'Remember me'
         sign_in: 'Sign in'
         signup_message: "Don't have an account yet"
         agent_signup: 'Freelance agent signup'
-        buyer_signup: 'Lead buyer signup'
+        buyer_signup: 'Sales manager signup'
         purchase_manager_signup: 'Purchase Manager signup'
-        _signup: 'Lead buyer signup'
-        forgotten_password_link: "Forgot your password?"
+        _signup: 'Sales manager signup'
+        forgotten_password_link: "Forgot password?"
         resend_confirmation_instructions: "Didn't receive confirmation instructions?"
 
   password:
@@ -252,6 +270,7 @@ en:
           lock: 'Lock'
           unlock: 'Unlock'
           subaccounts: 'Subaccounts'
+          create_invoice: 'Create invoice'
           edit: 'Edit'
           subaccounts_for_user: 'Subaccounts of user %{user_name}'
           show_all_users: 'Show all users'
@@ -267,6 +286,9 @@ en:
       create:
         flash:
           user_creation_successful: User has been created successfuly
+      update:
+        flash:
+          user_update_successful: User has been updated successfuly
       destroy:
         flash:
           user_deletion_successful: 'User was successfully deleted!'
@@ -318,7 +340,7 @@ en:
           search_button: 'Search'
           edit: 'Edit'
           destroy: 'Destroy'
-          show: 'Show'
+          edit: 'Edit'
           destroy_confirmation: 'Are you sure?'
           option_published: 'published'
           option_not_published: 'not published'
@@ -334,6 +356,7 @@ en:
           category_label: Category
           status_label: Status
           owner_type_label: Owner type
+          article_label: Article
         ajax:
           not_updated: Lead was not updated
       show:
@@ -341,7 +364,13 @@ en:
           header: 'Ratings for lead: %{lead_header}'
           rating_level: 'Rating:'
           rating_reason: 'Reason:'
-          view_all_leads_link: 'View all leads'          
+          view_all_leads_link: 'View all leads'
+      edit:
+        view:
+          header: 'Edit lead'
+          rating_header: 'Ratings'
+          button_update: 'Save'
+          button_cancel: 'Cancel'
     articles:
       show:
         view:
@@ -363,10 +392,11 @@ en:
           new_article: 'New article'
           search_button: 'Search'
           id: 'ID'
+          type: 'Type'
           title: 'Title'
-          main_page_articles: 'main page articles'
-          interface_content_texts: 'interface content texts'
-          help_popups: 'help popups'
+          main_page_articles: 'Main page article'
+          interface_content_texts: 'Interface content text'
+          help_popups: 'Help popup'
           show_link: 'Show'
           edit_link: 'Edit'
           delete_link: 'Delete'
@@ -376,8 +406,9 @@ en:
       index:
         view:
           header: 'News'
-          buyers: 'buyers'
+          buyers: 'sales managers'
           agents: 'agents'
+          purchase_managers: 'purchase managers'
           new_news: 'New news'
           search_button: 'Search'
           id: 'ID'
@@ -433,6 +464,7 @@ en:
         view:
           cash: 'Cash'
           bank_transfer: 'Bank transfer'
+          na: N/A
       show:
         view:
           print_invoice: 'Print invoice'
@@ -472,13 +504,29 @@ en:
           cashflow: 'Cashflow'
           yes_label: 'Yes'
           no_label: 'No'
+          payment_transactions:
+            header: 'Transactions'
+            type: 'Type'
+            paid_at: 'Paid at'
+            type_paypal: 'PayPal'
+            type_manual: 'Manual'
+            amount: 'Amount'
       edit:
         view:
           header: 'Edit invoice'
           save_button: 'Save'
+          save_changes: 'Save changes'
           add_line: 'Add line'
-          import_lines: 'Import lines'
           remove_line: 'Remove line'
+          set_as_paid: 'Set as paid'
+          show_invoice: 'Show invoice'
+          go_back: 'Go back'
+          set_payable_for_invoice_items: 'Set payable for invoice items'
+          form:
+            general_information: 'General information'
+            customer_information: 'Customer information'
+            seller_information: 'Seller information'
+            payment_information: 'Payment information'
       destroy:
         view:
           confirmation: 'Are you sure?'
@@ -490,19 +538,74 @@ en:
           invoice_number: 'Invoice number'
           customer: 'Customer'
           revenue_frozen: 'Revenue frozen'
-          paid_at: 'Paid at'
+          status: 'Status'
           search_label: 'Search'
           create_invoice: 'Create invoice'
           show_invoice: 'Show'
           edit_invoice: 'Edit'
           remove_invoice: 'Delete'
           set_as_paid: 'Set as paid'
+          bulk_set_as_paid: 'Set all as paid'
+          add_transaction: 'Add transaction'
           paid: 'Paid'
+          not_paid: 'Not paid'
+          total: 'Total'
+          actions: Actions
           search:
             with_keyword: 'Keyword'
             with_sale_date_after_and_including: 'Sale date after and including'
             with_sale_date_before_and_including: 'Sale date before and including'
             not_paid: 'Not paid only'
+            payment_status: 'Payment status'
+      cash_flow:
+        view:
+          header: 'New payment'
+          save_button: 'Save'
+      mailing:
+        new:
+          view:
+            attachment: 'Attachment'
+            send: 'Send'
+            recipeints: 'Recipeints'
+            subject: 'Subject'
+            body: 'Body'
+
+    payment_transactions:
+      index:
+        view:
+          header: 'Payment transactions'
+          search_label: 'Search'
+          edit: 'Edit'
+          invoice_number: 'Invoice number'
+          transaction_type: 'Type'
+          transaction_type_paypal: 'Paypal'
+          transaction_type_manual: 'Manual'
+          customer_name: 'Customer name'
+          customer_address: 'Customer address'
+          amount: 'Amount'
+          actions: 'Actions'
+          manually_register_transaction: 'Manually register a transaction'
+          search_button: 'Search'
+          search:
+            with_keyword: 'Keyword:'
+      new:
+        view:
+          header: 'New transaction'
+          button_create: 'Create'
+      edit:
+        view:
+          header: 'Edit transaction'
+          button_update: 'Save'
+    upcoming_invoices:
+      index:
+        view:
+          header: Upcoming invoices
+          customer_first_name: First name
+          customer_last_name: Last name
+          customer_screen_name: 'Screen name'
+          not_invoiced_count: Leads
+          not_invoiced_sum: Total
+          create_invoice: Create invoice
 
   agent:
     leads:
@@ -538,6 +641,56 @@ en:
         view:
           title: 'Edit lead'
           button_update: 'Save'
+
+  call_centre:
+    call_centre_agents:
+      index:
+        view:
+          title: 'Manage agents'
+          new_agent: 'Create agent'
+          per_page_selection: 'Per page:'
+          none_per_page: 'None'
+          first_name_column: 'First name'
+          last_name_column: 'Last name'
+          created_leads_column: 'Created leads'
+          volume_sold_column: 'Volume sold'
+          mobile_phone_column: 'Mobile phone'
+          revenue_column: 'Revenue'
+          purchased_month_ago_column: 'Purchased 30 days ago'
+          purchased_year_ago_column: 'Purchased 12 months ago'
+          good_leads_column: 'Good'
+          bad_leads_column: 'Bad'
+          fake_leads_column: 'Fake'
+          not_rated_leads_column: 'Not rated'
+          rating_percent_column: 'Rating %'
+          certification_lvl_column: 'Certif. level'
+          actions_column: 'Actions'
+          lock: 'Lock'
+          unlock: 'Unlock'
+          edit: 'Edit'
+          delete: 'Delete'
+          delete_confirmation_message: 'Are you sure?'
+          button_bulk_subbaccounts_update: 'Save'
+      new:
+        view:
+          title: 'New call centre agent'
+          button_create: 'Create'
+          button_cancel: 'Cancel'
+      edit:
+        view:
+          title: 'Edit call centre agent'
+          button_update: 'Save'
+          button_cancel: 'Cancel'
+      create:
+        flash:
+          call_centre_agent_creation_successful: 'Call centre agent has been created successfully!'
+      update:
+        flash:
+          call_centre_agent_update_successful: 'Call centre agent has been updated successfully!'
+      destroy:
+        flash:
+          call_centre_agent_deletion_successful: 'Call centre agent has been successfully deleted'
+          call_centre_agent_deletion_failure: 'Call centre agent could not be deleted'
 
   purchase_manager:
     leads:
@@ -605,7 +758,7 @@ en:
         view:
           header: Cart
           lead_name_header: Lead name
-          lead_price_header: Price
+          lead_price_header: Lead price
           total_label: Total
           remove_item_link: Remove item
           checkout_link: Checkout
@@ -632,14 +785,16 @@ en:
   buyer_accounts:
     new:
       view:
-        title: 'Lead Buyer signup'
+        title: 'Sales manager signup'
         button_create_account: 'Create'
+        enable_team_buyers: 'Enable team buyers'
 
   buyer_home:
     show:
       view:
         header_welcome: 'Welcome to our site'
         agent_link: 'click here if you are an agent'
+        purchase_manager_link: 'click here if you are a purchase manager'
         header_best_sellers: 'Best sellers'
         header_latest_leads: 'Latest leads'
         header_news: 'News'
@@ -648,14 +803,14 @@ en:
         description_label: 'Description:'
         read_more_link: 'read more'
         complete_list_link: 'complete list'
-        create_new_buyer_account: 'Create new buyer account'
-
+        create_new_buyer_account: 'Create new sales manager account'
 
   agent_home:
     show:
       view:
         header_welcome: 'Welcome to our site'
-        buyer_link: 'click here if you are a buyer'
+        buyer_link: 'click here if you are a sales manager'
+        purchase_manager_link: 'click here if you are a purchase manager'
         header_best_sellers: 'Best sellers'
         header_latest_leads: 'Latest leads'
         header_news: 'News'
@@ -665,6 +820,22 @@ en:
         read_more_link: 'read more'
         complete_list_link: 'complete list'
         create_new_agent_account: 'Create new agent account'
+
+  purchase_manager_home:
+    show:
+      view:
+        header_welcome: 'Welcome to our site'
+        agent_link: 'click here if you are an agent'
+        buyer_link: 'click here if you are a sales manager'
+        header_best_sellers: 'Best sellers'
+        header_latest_leads: 'Latest leads'
+        header_news: 'News'
+        purchase_value_label: 'Purchase value:'
+        lead_price_label: 'Lead price:'
+        description_label: 'Description:'
+        read_more_link: 'read more'
+        complete_list_link: 'complete list'
+        create_new_purchase_manager_account: 'Create new purchase manager account'
 
   customer:
     interests:
@@ -762,7 +933,7 @@ en:
           print_link: 'Print'
           bulk_print_link: 'Print all selected leads'
           bulk_print_link_short: 'Print selected'
-          email_lead: Email Lead
+          email_lead: Contact lead
           search:
             keyword_label: 'Keyword'
             search_button: 'Search'
@@ -813,7 +984,9 @@ en:
           bulk_print_link: Print all selected leads
           bulk_print_link_short: Print selected
           bulk_state_field: State
+          bulk_clear_response_dates: Clear response dates
           bulk_assigned_field: Assigned to
+          bulk_rating: 'Rating'
           bulk_update_button: Update all selected leads
           lead_response_date: 'Response date:'
           rating_level: 'Rating:'
@@ -821,7 +994,7 @@ en:
           rating_reason_empty: 'You have to provide reson for your rating!'
           update_rating_button: 'Save rating'
           view_lead: View Details
-          email_lead: Email Lead
+          email_lead: Contact lead
           search:
             keyword_label: 'Keyword'
             category_label: 'Category'
@@ -852,6 +1025,7 @@ en:
     edit:
       view:
         change_password: 'Change password'
+        enable_team_buyers: 'Enable team buyers'
     update:
       controller:
         successful_update_notice: 'Your profile has been successfully updated!'
@@ -863,7 +1037,7 @@ en:
         send_email_button: 'Send'
         email_subjects:
           agent_inquiry: 'Agent inquiry'
-          buyer_inquiry: 'Buyer inquiry'
+          buyer_inquiry: 'Sales manager inquiry'
     create:
       flash:
         email_sent_successfully: 'Your email was sent successfully to staff at NBS'
@@ -882,9 +1056,12 @@ en:
         lvl1: Stable
         lvl2: Classic
       certification:
-        lvl0: New
-        lvl1: Experienced
-        lvl2: Expert
+        lvl0: Not certified
+        lvl1: Silver
+        lvl2: Gold
+        lvl10: Not certified (locked)
+        lvl11: Silver (locked)
+        lvl12: Gold (locked)
 
   activerecord:
     attributes:
@@ -917,7 +1094,7 @@ en:
         newsletter_on: 'I want to receive the newsletter'
       lead:
         purchase_decision_date: 'Purchase decision date'
-        notify_buyers_after_update: 'Notify buyers about changes'
+        notify_buyers_after_update: 'Notify sales managers about changes'
     errors:
       models:
         user:
@@ -986,15 +1163,15 @@ en:
     agent_accounts:
       actions:
         create:
-          notice: 'Your account has been successfully created!'
+          notice: 'Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account.'
     buyer_accounts:
       actions:
         create:
-          notice: 'Your account has been successfully created!'
+          notice: 'Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account.'
     purchase_manager_accounts:
       actions:
         create:
-          notice: 'Your account has been successfully created!'
+          notice: 'Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account.'
     categories:
       actions:
         create:
@@ -1038,3 +1215,14 @@ en:
     bulk_subaccounts_update:
       update:
         notice: 'Selected subaccounts have been updated.'
+    bulk_call_centre_agents_update:
+      update:
+        notice: 'Selected call centre agents have been updated.'
+    payment_transactions:
+      create:
+        notice: 'Manual transaction has been successfully created.'
+      update:
+        notice: 'Manual transaction has been successfully updated.'
+    bulk_invoice_update:
+      update:
+        notice: 'Invoices have been successfully updated'

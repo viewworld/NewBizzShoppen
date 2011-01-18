@@ -29,8 +29,8 @@
   <fieldset class="inputs labels_ta_r labels_240">
     <ol class="align_inputs">
       <%= form.input :country, :as => :select, :collection => Country.all %>
-      <%= form.input :linkedin_url %>
       <%= form.input :newsletter_on, :as => :boolean %>
+      <%= form.input :team_buyers, :as => :boolean, :label => t("my_profile.edit.view.enable_team_buyers") if current_user.has_role?(:customer) %>
     </ol>
   </fieldset>
 </div>

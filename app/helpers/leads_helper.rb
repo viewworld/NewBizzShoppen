@@ -37,7 +37,7 @@ module LeadsHelper
   end
 
   def status_or_status_change(lead)
-    if lead.created_by?('PurchaseManager')
+    if lead.created_by?('PurchaseManager') or !lead.creator.can_publish_leads?
       select_tag :published,
                   options_for_select(administration_lead_statuses, lead.published),
                   :onchange => "$.post('#{administration_lead_path(lead)}', {'format':'js', '_method':'put', 'lead[published]':this.value} );"

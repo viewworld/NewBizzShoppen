@@ -30,6 +30,7 @@ class Administration::UsersController < Administration::AdministrationController
     @user.send(:attributes=, params["user_#{@user.role.to_s}"], false)
 
     if @user.save
+      flash[:notice] = t("administration.users.update.flash.user_update_successful")
       redirect_to administration_users_path
     else
       render :action => 'edit'

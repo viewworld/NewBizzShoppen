@@ -17,7 +17,7 @@ class Cart
       if lead.buyable?
         purchase = @buyer.lead_purchases.create(:lead_id => lead.id, :paid => false)
         if @buyer.big_buyer?
-          purchase.update_attribute(:accessible, true)
+          purchase.update_attribute(:accessible_from, Time.now)
           return :bought_successful
         else
           return :creation_successful
@@ -57,7 +57,11 @@ class Cart
   end
 
   def id
-    Date.today.strftime("%y%m%d%S") + @buyer.id.to_s
+    Time.now.strftime("%y%m%d%S") + @buyer.id.to_s
+  end
+
+  def currency
+    items.any? ? items.first.currency : nil
   end
 
 end

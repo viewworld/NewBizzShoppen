@@ -4,13 +4,15 @@
 
     <div class="search_content">
       <%= form_for @search, :url => administration_articles_path do |f| %>
-          <fieldset class="inputs labels_auto inline_li no_pdd">
+          <fieldset class="inputs_vertical">
             <ol class="no_pdd">
               <li class="string">
+                <%= f.label :with_keyword, t("administration.leads.index.search.keyword_label") %>
                 <%= f.text_field :with_keyword %>
               </li>
               <li class="select">
-                <%= f.select :with_scope, Article::Cms::SCOPE, :include_blank => true %>
+                <%= f.label :with_scope, t("administration.leads.index.search.article_label") %>
+                <%= f.select :with_scope, article_scope_for_select, :include_blank => true %>
               </li>
               <li class="commit">
                 <ibt c="bt_green" icon="magnify">
@@ -51,6 +53,7 @@
     <tr>
       <th class="hl"></th>
       <th style="width: 10px"><%= link_to t("administration.articles.index.view.id"), order_for_scoped_search(:id) %></th>
+      <th><%= t("administration.articles.index.view.type") %></th>
       <th><%= link_to t("administration.articles.index.view.title"), order_for_scoped_search(:title) %></th>
       <th class="ta_r"><%= t("administration.articles.index.view.actions") %></th>
       <th class="hr"></th>
@@ -59,15 +62,16 @@
     <tfoot>
     <tr>
       <td class="fl"></td>
-      <td colspan="3"></td>
+      <td colspan="4"></td>
       <td class="fr"></td>
     </tr>
     </tfoot>
     <tbody>
     <% @articles.each do |article| %>
-        <tr>
+        <tr class="<%= cycle("odd", "even") %>">
           <td class="cl"></td>
           <td><%= article.id %></td>
+          <td><%= article.show_type %></td>
           <td><%= article.title %></td>
           <td class="tda ta_r">
             <ul-actions>

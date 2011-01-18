@@ -5,12 +5,13 @@
     <div class="search_content">
 
       <%= form_for @search, :url => buyers_lead_purchases_path do |f| %>
-          <fieldset class="inputs labels_auto inline_li no_pdd rltv">
+          <fieldset class="inputs_vertical">
             <ol class="no_pdd">
               <li class="string">
+                <%= f.label :with_keyword, t("lead_buyer.lead_purchases.index.view.search.keyword_label") %>
                 <%= f.text_field :with_keyword %>
               </li>
-              <li class="select no_pdd_l">
+              <li class="select">
                 <%= f.label :with_category, t("lead_buyer.lead_purchases.index.view.search.category_label") %>
                 <%= f.select :with_category, @categories, {:include_blank => true} %>
               </li>
@@ -18,7 +19,7 @@
                 <%= f.label :with_deal_value_from, t("lead_buyer.lead_purchases.index.view.search.deal_value_from_label") %>
                 <%= f.select :with_deal_value_from, User::DEAL_VALUE_RANGE, {:include_blank => true} %>
               </li>
-              <li class="select no_pdd_l">
+              <li class="select">
                 <%= f.label :with_deal_value_to, t("lead_buyer.lead_purchases.index.view.search.deal_value_to_label") %>
                 <%= f.select :with_deal_value_to, User::DEAL_VALUE_RANGE, {:include_blank => true} %>
               </li>
@@ -26,16 +27,16 @@
                 <%= f.label :with_country, t("lead_buyer.lead_purchases.index.view.search.country_label") %>
                 <%= f.select :with_country, @countries, {:include_blank => true} %>
               </li>
-              <li class="select">
+              <li class="select select_max">
                 <%= f.label :with_assignee, t("lead_buyer.lead_purchases.index.view.search.assignee_label") %>
                 <%= f.select :with_assignee, @assignees, {:include_blank => true} %>
               </li>
               <li class="select">
                 <%= f.label :with_paid, t("lead_buyer.lead_purchases.index.view.search.paid_label") %>
-                <%= f.select :with_paid, paid_values, {:include_blank => true} %>
+                <%= f.select :with_paid, paid_values, {:include_blank => false} %>
               </li>
               <li class="commit">
-                <ibt c="bt_green right" icon="magnify">
+                <ibt c="bt_green" icon="magnify">
                   <%= submit_tag t("lead_buyer.lead_purchases.index.view.search.search_button") %>
                 </ibt>
               </li>
@@ -49,8 +50,11 @@
 <column-mc:>
   <header><%= t("lead_buyer.lead_purchases.index.view.header") %></header>
 
+
+
   <%= bulk_form do %>
-      <fieldset class="inputs labels_auto inline_li">
+
+      <fieldset class="inputs_vertical">
         <ol class="no_pdd">
           <li class="select">
             <%= label_tag :bulk_state, t("lead_buyer.lead_purchases.index.view.bulk_state_field") %>
@@ -63,34 +67,35 @@
                 <%= select_tag :bulk_assignee_id, options_for_select(opts), :include_blank => true, :style => "width: 140px" %>
               </li>
           <% end %>
-          <li class="date">
-            <%= label_tag :bulk_response_deadline, t("lead_buyer.lead_purchases.index.view.lead_response_date") %>
-            <%= text_field_tag :bulk_response_deadline, "", :id => "response_deadline_datepicker_bulk" %>
-          </li>
           <li class="select">
+            <%= label_tag :bulk_rating_level, t("lead_buyer.lead_purchases.index.view.bulk_rating") %>
             <%= select_tag :bulk_rating_level, options_for_select(LeadPurchase::RATING_LEVELS.map { |l| [t("activerecord.attributes.lead_purchase.rating_levels.rating_level#{l}"), l] }, nil), :include_blank => true, :onchange => "set_rating_level(this.value, 'bulk')", :id => "rating_level_bulk", :style => "width: 160px" %>
           </li>
           <li>
             <div id="rating_reson_div_bulk" style="display:none;">
-              <%= t("lead_buyer.lead_purchases.index.view.rating_reason") %>
+              <%= label_tag :bulk_rating_reason, t("lead_buyer.lead_purchases.index.view.rating_reason") %>
               <%= text_area_tag :bulk_rating_reason, "", :id => "rating_reason_bulk" %>
             </div>
           </li>
-          <li class="commit no_pdd_l">
+          <% if current_user.subaccounts.present? %>
+          <li class="date">
+            <%= label_tag :bulk_response_deadline, t("lead_buyer.lead_purchases.index.view.lead_response_date") %>
+            <%= text_field_tag :bulk_response_deadline, "", :id => "response_deadline_datepicker_bulk" %>
+          </li>
+          <% end %>
+          <li class="boolean">
+            <%= check_box_tag :bulk_clear_response_dates, "1", false, :class => "non_selectable"  %>
+            <%= label_tag :bulk_clear_response_dates, t("lead_buyer.lead_purchases.index.view.bulk_clear_response_dates") %>
+          </li>
+          <li class="commit">
             <%= bt_link_to nil, t("lead_buyer.lead_purchases.index.view.bulk_update_button"), "javascript:void(0)", :onclick => "submitBulkForm('#{bulk_lead_purchase_update_path}');" %>
           </li>
         </ol>
       </fieldset>
 
-
       <%= hidden_field_tag :route_to %>
 
       <%= lead_purchases_listing @lead_purchases, :show_checkboxes => true do |blocks| %>
-          <% blocks.contact do |lead_purchase| %>
-              <%= link_to t("lead_buyer.lead_purchases.index.view.view_lead"), buyers_lead_purchase_path(lead_purchase) %>
-              <%= link_to t("lead_buyer.lead_purchases.index.view.email_lead"), new_buyers_lead_purchase_lead_email_path(lead_purchase) if lead_purchase_has_email_address?(lead_purchase) %>
-          <% end %>
-
           <% blocks.assigned_to do |lead_purchase| %>
               <% if @subaccounts.present? %>
                   <% opts = @subaccounts.insert(0, current_user).map { |sa| [sa.screen_name, sa.id] } %>
@@ -116,6 +121,7 @@
               <%= select_tag :state,
                              options_for_select(LeadPurchaseBase.statuses_for_select, lead_purchase.state),
                              :onchange => "$.post('#{buyers_lead_purchase_path(lead_purchase)}', {'_method':'put', 'lead_purchase[state]':this.value} );" %>
+              <% if current_user.subaccounts.present? %>
               <fieldset class="inputs labels_auto inline_li">
                 <ol class="no_pdd">
                   <li class="date">
@@ -124,10 +130,10 @@
                   </li>
                 </ol>
               </fieldset>
-
+              <% end %>
               <%= t("lead_buyer.lead_purchases.index.view.rating_level") %>
               <%= select_tag :rating_level, options_for_select(LeadPurchase::RATING_LEVELS.map { |l| [t("activerecord.attributes.lead_purchase.rating_levels.rating_level#{l}"), l] }, lead_purchase.rating_level), :include_blank => true, :onchange => "set_rating_level(this.value, #{lead_purchase.id})", :id => "rating_level_#{lead_purchase.id}", :style => "width: 140px" %>
-              <div id="rating_reson_div_<%= lead_purchase.id %>" style="display:none;">
+              <div id="rating_reson_div_<%= lead_purchase.id %>" style="<%= 'display:none;' unless lead_purchase.is_rated_as_unsatisfactory? %>">
                 <%= t("lead_buyer.lead_purchases.index.view.rating_reason") %>
                 <%= text_area_tag :rating_reason, lead_purchase.rating_reason, :id => "rating_reason_#{lead_purchase.id}" %>
                 <%= button_to_function t("lead_buyer.lead_purchases.index.view.update_rating_button"), "save_rating(#{lead_purchase.id})" %>
@@ -145,6 +151,11 @@
                 <li>
                   <%= link_to_function t("lead_buyer.lead_purchases.index.view.share_email_link"), "share_lead_by_email(#{lead_purchase.id})" %>
                 </li>
+                <% if lead_purchase_has_email_address?(lead_purchase) %>
+                    <li>
+                        <%= link_to t("lead_buyer.lead_purchases.index.view.email_lead"), new_buyers_lead_purchase_lead_email_path(lead_purchase) %>
+                    </li>
+                <% end %>
               </ul-actions>
           <% end %>
 
@@ -157,6 +168,7 @@
           <% end %>
       <% end %>
   <% end %>
+
 
 
   <script>
@@ -210,7 +222,6 @@
           else
           {
               $.post('/buyers/lead_purchases/' + lead_purchase_id.toString(), {'_method':'put', 'lead_purchase[rating_reason]':$('#rating_reason_' + lead_purchase_id.toString()).val(), 'lead_purchase[rating_level]':$('#rating_level_' + lead_purchase_id.toString()).val()});
-              $('#rating_reson_div_' + lead_purchase_id.toString()).hide();
           }
       }
   </script>

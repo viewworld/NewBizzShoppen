@@ -11,3 +11,7 @@ end
 Then /^last payment notification is marked as "([^"]*)"$/ do |status|
   assert PaymentNotification.last.status == status
 end
+
+Then /^last payment notification is linked to invoice$/ do
+  assert PaymentNotification.last.payment_transaction.invoice.present? == true
+end

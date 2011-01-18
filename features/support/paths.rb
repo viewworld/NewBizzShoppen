@@ -26,12 +26,20 @@ module NavigationHelpers
         '/administration/setting/edit'
     when /administration leads/
         '/administration/leads'
+    when /administration transactions/
+        '/administration/invoicing/payment_transactions'
+    when /administration invoices/
+        '/administration/invoicing/invoices/'
+    when /administration upcoming invoices/
+        '/administration/invoicing/upcoming_invoices'
     when /agents leads/
         '/agents/leads'
     when /browse leads/
         '/categories'
     when /buyer cart items/
         '/buyers/cart_items'
+    when /call centre agents/
+        '/call_centres/call_centre_agents'
     when /customer interests/
         '/customers/interests/edit'
     when /lead user lead purchases/
@@ -77,6 +85,9 @@ module NavigationHelpers
       when /(.*) news page/
         news = Article::News.find_by_title($1)
         news_path(news)
+      when /(.*) article page/
+        news = Article::Cms.find_by_title($1)
+        article_path(news)
       when /administration currencies/
         administration_currencies_path
 

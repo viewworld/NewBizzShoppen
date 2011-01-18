@@ -1,5 +1,5 @@
 <%   
-   cols = 3
+   cols = 2
    cols += 1 if show_checkboxes
    cols += 1 if not block_tools.nil?
 -%>
@@ -9,10 +9,9 @@
   <tr>
     <th class="hl"></th>
     <% if show_checkboxes %>
-        <th class="no_pdd_lr" style="width: 10px;"><%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this.checked,'input:checkbox')" %></th>
+        <th class="no_pdd_lr" style="width: 10px;"><%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %></th>
     <% end %>
-    <th style="width: 350px;"><%= t("leads.listing.lead_description_label") %></th>
-    <th style="width: 200px"><%= t("leads.listing.lead_details_label") %></th>
+    <th style="width: 550px;"><%= t("leads.listing.lead_description_label") %></th>    
     <th>Stats</th>
 
     <% if block_tools %>
@@ -43,25 +42,20 @@
 
         <td>
           <h4><%= lead.header %></h4>
-          <p class="element"><%= t("leads.listing.purchase_value_label") %><span class="green"><%= as_currency(lead.purchase_value,lead.currency) %></span></p>
+          <p class="element"><%= t("leads.listing.purchase_value_label") %> <span class="green"><%= as_currency(lead.purchase_value,lead.currency) %></span></p>
           <p class="element"><%= t("leads.listing.lead_price_label") %> <span class="green"><%= as_currency(lead.price,lead.currency) %></span></p>
-          <p class="element"><%= t("leads.listing.lead_currency_label") %> <span class="green"><%= lead.currency.name %></span></p>
           <p class="element_description i"><%= lead.description %></p>
           <%= block_lead_details && with_output_buffer { lead_details.call(lead) } %>
         </td>
 
         <td>
-          <b><%= lead.creator_name %></b>
-        </td>
-
-        <td>
-          <p><%= t("leads.listing.clicks_count_label") %><b><%= lead.clicks_count %></b></p>
-          <p><%= t("leads.listing.exposures_count_label") %><b><%= lead.exposures_count %></b></p>
-          <p><%= t("leads.listing.average_rating_label") %><b><%= lead.average_rating == -1 ? t("leads.listing.average_rating_none_label") : lead.average_rating_as_text %></b></p>
-          <p><%= t("leads.listing.sale_limit_label") %><b><%= lead.sale_limit %></b></p>
-          <p><%= t("leads.listing.novelty_label") %><b><%= t("models.lead.novelty.lvl#{lead.novelty_level}") %></b></p>
-          <p><%= t("leads.listing.hotness_label") %><b><%= t("models.lead.hotness.lvl#{lead.hotness_level}") %></b></p>
-          <p><%= t("leads.listing.certification_label") %><b><%= t("models.lead.certification.lvl#{lead.certification_level}") %></b></p>
+          <p><%= t("leads.listing.clicks_count_label") %><b> <%= lead.clicks_count %></b></p>
+          <p><%= t("leads.listing.exposures_count_label") %><b> <%= lead.exposures_count %></b></p>
+          <p><%= t("leads.listing.average_rating_label") %><b> <%= lead.average_rating == -1 ? t("leads.listing.average_rating_none_label") : lead.average_rating_as_text %></b></p>
+          <p><%= t("leads.listing.sale_limit_label") %><b> <%= lead.sale_limit %></b></p>
+          <p><%= t("leads.listing.novelty_label") %><b> <%= t("models.lead.novelty.lvl#{lead.novelty_level}") %></b></p>
+          <p><%= t("leads.listing.hotness_label") %><b> <%= t("models.lead.hotness.lvl#{lead.hotness_level}") %></b></p>
+          <p><%= t("leads.listing.certification_label") %><b> <%= t("models.lead.certification.lvl#{lead.certification_level}") %></b></p>
         </td>
 
         <% if block_tools %>
@@ -79,14 +73,13 @@
     <td colspan="<%= cols + 2 %>" class="ta_c">
       <% if show_checkboxes %>
           <div class="td_select_all">
-            <%= check_box_tag "td_mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this.checked,'input:checkbox')" %>
+            <%= check_box_tag "td_mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %>
             <%= label_tag "td_mark_all", "select all" %>
           </div>
       <% end %>
       <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
     </td>
   </tr>
-
 
 
   <% if block_bottom %>

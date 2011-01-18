@@ -12,11 +12,12 @@ Background:
   And Lead named "Keyboards deal" exists within "Another sample category" category
   And Lead named "Ultra new printers" exists within "Computers" category
   Given I am signed up and confirmed as user with email john@doe.com and password secret and role customer
+  And user "john@doe.com" has team buyers enabled
   And an user with role lead_user and email lead_user2@person.com exists as subaccount for customer customer@person.com
   And lead "Keyboards deal" was requested by user "lead_user2@person.com" with role "lead_user" and is owned by user "john@doe.com"
   And I sign in as john@doe.com with password secret
 
-@tgn @tbd
+@tgn @_tested
 Scenario: I cannot buy a lead skipping checkout
   Given I go to browse leads
   And I follow "Computers"
@@ -24,7 +25,7 @@ Scenario: I cannot buy a lead skipping checkout
   When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
   Then I should not see "Ultra new printers" within ".leads_table"
 
-@tgn @tbd
+@tgn @_tested
 Scenario: I can buy lead through checkout
   And I go to browse leads
   And I follow "Computers"
@@ -34,7 +35,7 @@ Scenario: I can buy lead through checkout
   And paypal payment for user with email "john@doe.com" and role "customer"
   And lead named "Ultra new printers" is owned by user "john@doe.com" with role "customer"
 
-@tgn @tbd
+@tgn @_tested
 Scenario: Lead purchase is not marked with "has access" after creation
   Given I go to browse leads
   And I follow "Computers"
@@ -43,7 +44,7 @@ Scenario: Lead purchase is not marked with "has access" after creation
   Then I should not see "Ultra new printers" within ".leads_table"
 
 #after AO finishes invoicing subsystem
-@tgn @tbd
+@tgn @_tested
 Scenario: Invoice is auto-created if a new paypal transaction (payment for cart content has been confirmed) is created in the system
   And I go to browse leads
   And I follow "Computers"
@@ -54,7 +55,7 @@ Scenario: Invoice is auto-created if a new paypal transaction (payment for cart 
   Then invoice is created for user with email "john@doe.com" and role "customer"
   And invoice line is created for lead "Ultra new printers" and user with email "john@doe.com" and role "customer"
 
-@tgn @tbd @added
+@tgn @_tested @added
 Scenario: Invoice is NOT created when payment notification is duplicated
   And I go to browse leads
   And I follow "Computers"
@@ -68,14 +69,14 @@ Scenario: Invoice is NOT created when payment notification is duplicated
   Then last payment notification is marked as "Duplicated"
   And invoices count for user with email "john@doe.com" and role "customer" is 1
 
-@tgn @tbd
+@tgn @_tested
 Scenario: I can add to cart lead requested by lead user that belongs to my account
   When I go to customers lead requests
   Then I follow translated "customer.lead_requests.index.view.accept_lead_request_link"
   When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
   Then I should not see "Keyboards deal" within ".leads_table"
 
-@tgn @tbd @selenium
+@tgn @_tested @selenium
 Scenario: I can bulk add to cart leads requested by lead user that belongs to my account
   When I go to customers lead requests
   Then I check "mark_all"

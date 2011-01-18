@@ -8,7 +8,7 @@ Background:
   And an user with role lead_user and email lead_user2@person.com exists as subaccount for customer customer@person.com
   And an user with role lead_user and email lead_user44@person.com exists as subaccount for customer customer@person.com
   And lead Printers ultimate deal exists within category Computers
-  And lead Printers ultimate deal exists with attributes "creator_name:Johan Printing,email_address:john.printer@fghprintesrs.noserver.com,address:London 847-387 Veilingstreet 46,clicks_count:17,exposures_count:887,company_name:FGH Printers,contact_name:John Printer,hidden_description:Hidden description for this lead,purchase_value:3034.87,description:Public desc for printers deal"
+  And lead Printers ultimate deal exists with attributes "creator_name:Johan Printing,email_address:john.printer@fghprintesrs.noserver.com,city:London,zip_code:847-387,address_line_1:Veilingstreet 46,clicks_count:17,exposures_count:887,company_name:FGH Printers,contact_name:John Printer,hidden_description:Hidden description for this lead,purchase_value:3034.87,description:Public desc for printers deal,published_at:01-01-2011"
   And lead Monitors LCD deal exists within category Computers
   And lead Monitors LCD deal exists with attributes "hidden_description:Hidden description for this lead,purchase_value:2002.87"
   And lead Keyboards deal exists within category Office
@@ -21,7 +21,7 @@ Background:
 
 @tgn @_done @_tested
 Scenario: I can see details of lead that is assigned to me
-  Given I follow translated "lead_user.lead_purchases.index.view.view_lead"
+  Given I follow "Printers ultimate deal"
   Then I should see translated "lead_user.lead_purchases.show.view.header"
   And I should see "Hidden description for this lead"
 
@@ -53,7 +53,7 @@ Scenario: I can scope down leads listing with filter
 @tgn @_tested
 Scenario: I can see lead header, purchase value, description, contact info
   Given I should see "Printers ultimate deal"
-  And I should see "3034.87"
+  And I should see "3,034.87"
   And I should see "Public desc for printers deal"
   And I should see "John Printer"
   And I should see "john.printer@fghprintesrs.noserver.com"
@@ -98,22 +98,24 @@ Scenario: I should see created by and certification level for each lead
   Then I should see "Johan Printing"
   And I should see translated "models.lead.certification.lvl0"
 
-@m4 @tgn @tbd @added
+@m4 @tgn @_tested @added @deprecated
 Scenario: I should see rating % for each lead
-  Given a lead "Printers ultimate deal" has good rating
-  Given All leads have refreshed average ratings
-  Given I go to lead user lead purchases
-  Then I should see "100%"
+#  Given a lead "Printers ultimate deal" has good rating
+#  Given All leads have refreshed average ratings
+#  Given I go to lead user lead purchases
+#  Then I should see "100%"
 
 @_tgn @_tested
 Scenario: I can see company contact on lead details page
   When I fill in "search_with_keyword" with "printers"
   And I press translated "lead_user.lead_purchases.index.view.search.search_button"
-  Then I follow translated "lead_user.lead_purchases.index.view.view_lead"
+  Then I follow "Printers ultimate deal"
   Then I should see "John Printer"
   And I should see "john.printer@fghprintesrs.noserver.com"
   And I should see "FGH Printers"
-  And I should see "London 847-387 Veilingstreet 46"
+  And I should see "London"
+  And I should see "847-387"
+  And I should see "Veilingstreet 46"
 
 #Accessible from my (assigned) leads listing
 #Just prepare interface for sending an email (based on email template as ususal) with recipient field read-only and prepopulated
@@ -131,15 +133,15 @@ Scenario: I can email the lead if email information were provided
   Then I should see translated "flash.contact_lead_by_email.actions.create.notice"
 
 @tgn @_done @_tested
-Scenario: I should see hottness, novelty, exposure, clicks
-  Then I should see translated "models.lead.hotness.lvl1"
-  And I should see translated "models.lead.novelty.lvl0"
-  And I should see "887"
-  And I should see "17"
+Scenario: I should see hottness, publish date, exposure, clicks
+  Then I should see translated "models.lead.hotness.lvl2"
+  And I should see "01-01-2011"
 
 @tgn @_tested
 Scenario: I can see company contact
-  Then I should see "London 847-387 Veilingstreet 46"
+  Then I should see "London"
+  And I should see "847-387"
+  And I should see "Veilingstreet 46"
 
 @tgn @_tested @selenium
 Scenario: I can toggle select leads

@@ -7,32 +7,18 @@ class InvoiceLine < ActiveRecord::Base
   belongs_to :invoice
 
   after_save :update_frozen_revenue
-  after_validation_on_update :switch_project_or_version_id_from_redmine_to_diamond_mine
-  after_validation_on_create :switch_project_or_version_id_from_redmine_to_diamond_mine
-
-  named_scope :for_project, lambda{|project| {:select => "invoice_lines.*",
-                                                     :conditions => ["(payable_type = 'Project' AND payable_id = :project_id) OR " +
-                                                                     "(payable_type = 'Version' AND payable_id IN (:version_ids))",
-                                                                     {:project_id => project.id, :version_ids => project.versions.map(&:id)}]}}
+  before_save :mark_as_paid
+  before_create :calculate_additional_values
 
   private
 
-  def calculated_revenue_in_pln
-    return brutto_value
-  end
-
   def update_frozen_revenue
-    InvoiceLine.update_all "revenue_frozen = brutto_value", ["id = ?",id]
+    InvoiceLine.update_all "revenue_frozen = brutto_value", ["id = ?", id]
   end
 
-  def switch_project_or_version_id_from_redmine_to_diamond_mine
-    if self.payable_id_changed?
-      if payable_type == "Project"
-        self.payable_id = Project.find_by_redmine_project_id(self.payable_id).id unless Project.find_by_redmine_project_id(self.payable_id).nil?
-      end
-      if payable_type == "Version"
-        self.payable_id = Version.find_by_redmine_version_id(self.payable_id).id unless Version.find_by_redmine_version_id(self.payable_id).nil?
-      end
+  def mark_as_paid
+    if !invoice.paid_at.blank? and paid_at.blank?
+      self.paid_at = invoice.paid_at
     end
   end
 
@@ -54,7 +40,27 @@ class InvoiceLine < ActiveRecord::Base
     (payable_id && payable.to_s)
   end
 
- def payable_name_for_hint
-     payable_id ? payable_name :  "&nbsp;"
- end
+  def payable_name_for_hint
+    payable_id ? payable_name : "&nbsp;"
+  end
+
+  def calculate_netto_value
+    self.netto_value = quantity * netto_price
+  end
+
+  def calculate_vat_value
+    self.vat_value = netto_value * vat_rate
+  end
+
+  def calculate_brutto_value
+    self.brutto_value = netto_value + vat_value
+  end
+
+  def calculate_additional_values
+    if netto_value.blank? or vat_value.blank? or brutto_value.blank?
+      calculate_netto_value
+      calculate_vat_value
+      calculate_brutto_value
+    end
+  end
 end

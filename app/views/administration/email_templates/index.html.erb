@@ -1,6 +1,5 @@
 <column-mc:>
   <header><%= t("administration.email_templates.index.view.title") %></header>
-
   
     <table id="users_table" class="generic">
     <thead>
@@ -21,16 +20,12 @@
     </tfoot>
     <tbody>
     <% @email_templates.each do |email_template| %>
-        <tr>
+        <tr class="<%= cycle("odd", "even") %>">
           <td class="cl"></td>
           <td><%= email_template.uniq_id %></td>
           <td><%= email_template.subject %></td>
           <td class="tda ta_r">
-            <ul-actions>
-              <li>
-                <%= link_to t("administration.email_templates.index.view.edit"), edit_administration_email_template_path(email_template) %>
-              </li>
-            </ul-actions>
+            <%= bt_link_to nil, t("administration.email_templates.index.view.edit"), edit_administration_email_template_path(email_template) %>
           </td>
           <td class="cr"></td>
         </tr>

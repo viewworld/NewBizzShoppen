@@ -19,6 +19,7 @@ class Nbs < Thor
     Settings.invoicing_seller_address                = "Streeet\nPost Code City\nCounty\nCountry"
     Settings.invoicing_seller_vat_number             = "123-456-789"
     Settings.invoicing_seller_payment_account        = "0011400000000000000000001"
+    Settings.invoicing_default_vat_rate              = 0.15
 
     Country.find_or_create_by_name("Denmark")
     Country.find_or_create_by_name("United Kingdom")
@@ -91,6 +92,14 @@ class Nbs < Thor
           :en => {:subject => "Question",
                   :body => "<p></p>"},
           :dk => {:subject => "[DK] Question",
+                  :body => "<p></p>"}
+        },
+
+        { :name => "Invoice",
+            :uniq_id => "invoice",
+          :en => {:subject => "Invoice",
+                  :body => "<p></p>"},
+          :dk => {:subject => "[DK] Invoice",
                   :body => "<p></p>"}
         }
     ]
@@ -189,7 +198,11 @@ class Nbs < Thor
     end
 
     puts "Creating default main page articles..."
-    ['About us','Privacy','Terms & Conditions'].each do |title|
+    [
+        'About us',
+        'Privacy',
+        'Terms & Conditions'
+    ].each do |title|
       unless Article::Cms.main_page_articles.includes(:translations).where(:article_translations => {:title => title}).first
         article = Article::Cms.make!(:scope => Article::Cms::MAIN_PAGE_ARTICLE, :title => title, :content => title, :key => title.parameterize('_'))
         [:en, :dk].each do |locale|
@@ -203,7 +216,14 @@ class Nbs < Thor
     end
 
     puts "Creating default interface content texts (blurbs)..."
-    ['blurb_sign_up','blurb_buyer_home','blurb_agent_home','blurb_start_page_role_selection','blurb_currencies'].each do |key|
+    [
+        'blurb_sign_up',
+        'blurb_buyer_home',
+        'blurb_agent_home',
+        'blurb_purchase_manager_home',
+        'blurb_start_page_role_selection',
+        'blurb_currencies'
+    ].each do |key|
       unless Article::Cms.interface_content_texts.where(:key => key).first
         article = Article::Cms.make!(:scope => Article::Cms::INTERFACE_CONTENT_TEXT, :title => key.humanize, :content => key.humanize, :key => key)
         [:en, :dk].each do |locale|
@@ -217,7 +237,9 @@ class Nbs < Thor
     end
 
     puts "Creating default help popups..."
-    ['reset_password'].each do |key|
+    [
+        'reset_password'
+    ].each do |key|
       unless Article::Cms.help_popups.where(:key => key).first
         article = Article::Cms.make!(:scope => Article::Cms::HELP_POPUP, :title => key.humanize, :content => key.humanize, :key => key)
         [:en, :dk].each do |locale|
@@ -238,6 +260,22 @@ class Nbs < Thor
     Lead.all(:conditions => ["published = ? and users.locked_at is NULL", true], :joins => "INNER JOIN users ON users.id=leads.creator_id", :readonly => false).each do |lead|
       lead.calculate_average_rating
       lead.save
+    end
+  end
+
+  desc "refresh_subaccounts_counters", ""
+
+  def refresh_subaccounts_counters
+    User::Abstract.where("parent_id is not null").each do |user|
+      user.refresh_subaccounts_counters!
+    end
+  end
+
+  desc "refresh_agent_counters", ""
+
+  def refresh_agent_counters
+    (User::Agent.all + User::CallCentreAgent.all).each do |user|
+      user.refresh_agent_counters!
     end
   end
 end

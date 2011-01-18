@@ -30,11 +30,12 @@ Nbs::Application.routes.draw do
       resources :invoices do
         resources :invoice_lines
         resource :cash_flow, :only => [:new, :create], :controller => "CashFlow"
-        resource :invoice_lines_import, :only => [:new, :create], :controller => "InvoiceLinesImport"
-        resource :payable, :only => :new, :controller => "Payable"
         resource :invoice_lines_payable, :only => :new, :controller => "InvoiceLinesPayable"
         resources :mailings, :only => [:new, :create]
       end
+      resource :bulk_invoice_update, :controller => "bulk_invoice_update", :only => [:update]
+      resources :upcoming_invoices, :only => [:index]
+      resources :payment_transactions
     end
   end
 
@@ -56,6 +57,12 @@ Nbs::Application.routes.draw do
   match 'buyers/bulk_lead_share_by_email' => 'buyers/bulk_lead_share_by_email#new', :as => "bulk_lead_share_by_email"
   match 'buyers/create_bulk_lead_share_by_email' => 'buyers/bulk_lead_share_by_email#create', :as => "create_bulk_lead_share_by_email"
 
+  namespace :call_centres do
+    root :to => "call_centre_agents#index"
+    resources :call_centre_agents
+    resource :bulk_call_centre_agents_update, :controller => "bulk_call_centre_agents_update", :only => [:update]
+  end
+
   namespace :lead_users do
     root :to => "lead_purchases#index"
     resources :lead_purchases do
@@ -69,7 +76,7 @@ Nbs::Application.routes.draw do
   end
 
   namespace :customers do
-    root :to => "lead_requests#index"
+    root :to => redirect("/buyers/lead_purchases")
     resource :interests, :only => [:edit, :update]
     resources :subaccounts
     resources :lead_requests, :only => [:index, :update, :destroy]
@@ -89,6 +96,7 @@ Nbs::Application.routes.draw do
 
   match 'buyer_home' => 'buyer_home#show', :as => "buyer_home"
   match 'agent_home' => 'agent_home#show', :as => "agent_home"
+  match 'purchase_manager_home' => 'purchase_manager_home#show', :as => "purchase_manager_home"
 
   resources :leads, :only => [:index, :show]
 

@@ -22,7 +22,10 @@ Lead.blueprint do
   contact_name { Faker::Name.name }
   phone_number { Faker::PhoneNumber.phone_number }
   email_address { Faker::Internet.email }
-  address { Faker::Address.street_address }
+  address_line_1 { Faker::Address.street_address }
+  city { Faker::Address.city }
+  zip_code { Faker::Address.zip_code }
+  county { Faker::Address.uk_county }
   creator_id { User::Agent.make!.id }
   creator_type { "User::Agent" }
   category_id { Category.make!.id }
@@ -43,7 +46,10 @@ Lead.blueprint(:featured) do
   contact_name { Faker::Name.name }
   phone_number { Faker::PhoneNumber.phone_number }
   email_address { Faker::Internet.email }
-  address { Faker::Address.street_address }
+  address_line_1 { Faker::Address.street_address }
+  city { Faker::Address.city }
+  zip_code { Faker::Address.zip_code }
+  county { Faker::Address.uk_county }
   creator_id { User::Agent.make!.id }
   creator_type { "User::Agent" }
   category_id { Category.make!.id }
@@ -61,14 +67,14 @@ end
 
 LeadPurchase.blueprint do
   paid { false }
-  accessible { false }
+  accessible_from { nil }
   lead_id { Lead.make! }
   owner_id { User::Customer.make!.id }
 end
 
 LeadRequest.blueprint do
   paid { false }
-  accessible { false }
+  accessible_from { nil }
   requested_by { User::LeadBuyer.make!.id }
   lead_id { Lead.make! }
 end
@@ -121,6 +127,7 @@ end
   county { Faker::Address.uk_county }
   country { 1 }
   roles_mask { 112 }
+  team_buyers { false }
 end
 
 ::User::PurchaseManager.blueprint do
@@ -191,6 +198,41 @@ end
   roles_mask { 2 }
 end
 
+::User::CallCentre.blueprint do
+  email { Faker::Internet.email }
+  password { "secret" }
+  password_confirmation { "secret" }
+  phone { Faker::PhoneNumber.phone_number }
+  screen_name { Faker::Name.name + Time.now.to_f.to_s.sub('.','') }
+  street { Faker::Address.street_name }
+  first_name { Faker::Name.first_name + Time.now.to_f.to_s.sub('.','') }
+  last_name { Faker::Name.last_name }
+  agreement_read { true }
+  city { Faker::Address.city }
+  zip_code { Faker::Address.zip_code }
+  county { Faker::Address.uk_county }
+  country { Country.make!.id }
+  payout { rand(100) }
+  roles_mask { 4 }
+end
+
+::User::CallCentreAgent.blueprint do
+  email { Faker::Internet.email }
+  password { "secret" }
+  password_confirmation { "secret" }
+  phone { Faker::PhoneNumber.phone_number }
+  screen_name { Faker::Name.name + Time.now.to_f.to_s.sub('.','') }
+  street { Faker::Address.street_name }
+  first_name { Faker::Name.first_name + Time.now.to_f.to_s.sub('.','') }
+  last_name { Faker::Name.last_name }
+  agreement_read { true }
+  city { Faker::Address.city }
+  zip_code { Faker::Address.zip_code }
+  county { Faker::Address.uk_county }
+  country { Country.make!.id }
+  roles_mask { 8 }
+end
+
 ::Article::Cms.blueprint do
   title { Faker::Lorem.words(4).to_s.capitalize }
   content { Faker::Lorem.sentences(2).to_s }
@@ -205,4 +247,11 @@ end
 
 Invoice.blueprint do
   user { User::Agent.make! }
+end
+
+InvoiceLine.blueprint do
+  invoice { Invoice.make! }
+  name { Faker::Lorem.words(4).to_s }
+  netto_price { rand(10000) }
+  quantity { rand(100) }
 end

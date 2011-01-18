@@ -2,10 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-  <title>Nbs</title>
-  <%= stylesheet_link_tag "ocss_core", "style", "jquery-ui-1.8.5.custom", "colorbox", "invoice", "invoice_lines_edit" %>
+  <title>Fairleads</title>
+  <%= stylesheet_link_tag "ocss_core", "style", "jquery-ui-1.8.5.custom", "colorbox", "invoice", "_invoice_lines_edit" %>
   <%= javascript_include_tag :defaults %>
   <%= javascript_include_tag 'jquery.colorbox-min' %>
+  <%= javascript_include_tag 'jquery.printElement' %>
+  <%= javascript_include_tag 'jquery.qtip.min' %>
   <%= javascript_include_tag 'custom' %>
   <%= javascript_include_tag :ckeditor %>
   <%= csrf_meta_tag %>
@@ -15,18 +17,17 @@
 <div id="head">
   <div id="head_bg"></div>
 </div>
-    
+
 <div id="container" class="c">
   <div id="top">
 
-        <div id="user_panel">
-          <%= render '/layouts/locale_selection' %>
-           <% if user_signed_in? %>
-            <%= link_to t("layout.my_profile_link"), my_profile_path, :class => "sl" %>
-            <%= link_to t("layout.logout_link", :user_email => current_user.email), '/logout', :class => "sl" %>
-          <% end %>
-        </div>
-
+    <div id="user_panel">
+      <%= render '/layouts/locale_selection' %>
+      <% if user_signed_in? %>
+          <%= link_to t("layout.my_profile_link"), my_profile_path, :class => "sl" %>
+          <%= link_to t("layout.logout_link", :user_email => current_user.email), '/logout', :class => "sl" %>
+      <% end %>
+    </div>
 
 
     <div style="position: absolute;right:30px; top:52px">
@@ -36,12 +37,23 @@
           </div>
       <% end %>
     </div>
-    <h1 class="logo"><%= link_to "New Bizz Shoppen", root_path %></h1>
-    <%= render('/layouts/cart') if current_user && current_user.has_role?(:lead_buyer) %>
+    <%= link_to image_tag("logo_fairleads.png"), self.send(url_to_role_specific_home_page), :class => "logo" %>
   </div>
 
-  <div id="nav">
+  <%= render('/layouts/cart') if current_user && current_user.has_role?(:lead_buyer) %>
+
+  <div id="user_menu">
     <%= render "layouts/main_menu" %>
+
+    <% if current_user && current_user.has_role?(:lead_buyer) %>
+        <div id="cart">
+          <ul class="nav">
+            <li>
+              <%= link_to(content_tag(:span, image_tag("icons/basket.png") + t("layout.cart.cart_header", :count => current_user.cart.count)), "#", :id => "basket_bt") %>
+            </li>
+          </ul>
+        </div>
+    <% end %>
   </div>
 
   <div id="content">

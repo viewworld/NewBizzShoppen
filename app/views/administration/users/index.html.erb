@@ -6,12 +6,13 @@
 
       <%= form_for @search, :url => administration_users_path do |f| %>
           <%= f.hidden_field :with_subaccounts %>
-          <fieldset class="inputs labels_auto inline_li no_pdd">
+          <fieldset class="inputs_vertical">
             <ol class="no_pdd">
               <li class="string">
+                <%= f.label :with_keyword, t("administration.leads.index.search.keyword_label") %>
                 <%= f.text_field :with_keyword %>
               </li>
-              <li class="select no_pdd_l">
+              <li class="select">
                 <%= f.label "User Role" %>
                 <%= f.select :with_role, User::BASIC_USER_ROLES_WITH_LABELS, :include_blank => true %>
               </li>
@@ -86,7 +87,7 @@
     </tfoot>
     <tbody>
     <% @users.each do |user| %>
-        <tr>
+        <tr class="<%= cycle("odd", "even") %>">
           <td class="cl"></td>
           <td><%= user.id %></td>
           <td><%= user.roles_as_text %></td>
@@ -115,6 +116,9 @@
                   <li>
                     <%= link_to t("administration.users.index.view.subaccounts"), administration_users_path({:search => {:with_subaccounts => user.id}}) %>
                   </li>
+              <% end %>
+              <% if user.has_role?(:customer) %>
+                  <li><%= link_to t("administration.users.index.view.create_invoice"), new_administration_invoicing_invoice_path(:invoice => {:user_id => user.id}) %></li>
               <% end %>
             </ul-actions>
           </td>

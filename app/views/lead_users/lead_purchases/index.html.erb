@@ -4,9 +4,10 @@
 
     <div class="search_content">
       <%= form_for @search, :url => lead_users_lead_purchases_path do |f| %>
-          <fieldset class="inputs labels_auto inline_li no_pdd rltv">
+          <fieldset class="inputs_vertical">
             <ol class="no_pdd">
               <li class="string">
+                <%= f.label :with_keyword, t("lead_buyer.lead_purchases.index.view.search.keyword_label") %>
                 <%= f.text_field :with_keyword %>
               </li>
               <li class="select">
@@ -17,7 +18,7 @@
                 <%= f.label :with_deal_value_from, t("lead_user.lead_purchases.index.view.search.deal_value_from_label") %>
                 <%= f.select :with_deal_value_from, User::DEAL_VALUE_RANGE, {:include_blank => true} %>
               </li>
-              <li class="select no_pdd_l">
+              <li class="select">
                 <%= f.label :with_deal_value_to, t("lead_user.lead_purchases.index.view.search.deal_value_to_label") %>
                 <%= f.select :with_deal_value_to, User::DEAL_VALUE_RANGE, {:include_blank => true} %>
               </li>
@@ -25,7 +26,7 @@
                 <%= f.label :with_country, t("lead_user.lead_purchases.index.view.search.country_label") %>
                 <%= f.select :with_country, @countries, {:include_blank => true} %>
               <li class="commit">
-                <ibt c="bt_green right" icon="magnify">
+                <ibt c="bt_green" icon="magnify">
                   <%= submit_tag t("lead_user.lead_purchases.index.view.search.search_button") %>
                 </ibt>
               </li>
@@ -57,11 +58,6 @@
       <%= hidden_field_tag :route_to %>
 
       <%= lead_purchases_listing @lead_purchases, :show_checkboxes => true do |blocks| %>
-          <% blocks.contact do |lead_purchase| %>
-              <%= link_to t("lead_user.lead_purchases.index.view.view_lead"), lead_users_lead_purchase_path(lead_purchase) %>
-              <%= link_to t("lead_user.lead_purchases.index.view.email_lead"), new_lead_users_lead_purchase_lead_email_path(lead_purchase) if lead_purchase_has_email_address?(lead_purchase) %>
-          <% end %>
-
            <% blocks.assigned_to do |lead_purchase| %>
               <% if @subaccounts.present? %>
                   <%= select_tag :assignee_id,
@@ -79,6 +75,11 @@
                 <li>
                   <%= link_to t("lead_user.lead_purchases.index.view.print_link"), lead_users_lead_purchase_path(lead_purchase, :format => :print), :target => "_blank" %>
                 </li>
+                <% if lead_purchase_has_email_address?(lead_purchase) %>
+                    <li>
+                        <%= link_to t("lead_user.lead_purchases.index.view.email_lead"), new_lead_users_lead_purchase_lead_email_path(lead_purchase) %>
+                    </li>
+                <% end %>
               </ul-actions>
           <% end %>
 

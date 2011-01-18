@@ -1,6 +1,16 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  before_filter :authorize_with_http_basic_for_staging
+
+  def authorize_with_http_basic_for_staging
+    if Rails.env.staging?
+      authenticate_or_request_with_http_basic do |user_name, password|
+        user_name == "fairleads" && password == "staging"
+      end
+      warden.custom_failure! if performed?
+    end
+  end
   before_filter :set_locale
 
   helper_method :locale

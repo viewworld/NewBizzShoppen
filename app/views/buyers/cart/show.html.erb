@@ -1,39 +1,60 @@
 <column-mc:>
-  <h1><%= t("buyer.cart.show.view.header") %></h1>
+  <header back="true"><%= t("buyer.cart.show.view.header") %></header>
 
-  <table class="cart">
+  <table class="cart_table">
+    <cols>
+      <col style="width: 50px"/>
+      <col style="width: auto"/>
+      <col style="width: 100px"/>
+      <col style="width: 15px"/>
+      <col style="width: 100px"/>
+      <col style="width: 15px"/>
+      <col style="width: 100px"/>
+      <col style="width: 120px"/>
+    </cols>
     <thead>
     <tr>
       <th>#</th>
-      <th><%= t("buyer.cart.show.view.lead_name_header") %></th>
+      <th class="ta_l"><%= t("buyer.cart.show.view.lead_name_header") %></th>
       <th><%= t("buyer.cart.show.view.lead_price_header") %></th>
+      <th></th>
+      <th>Quantity</th>
+      <th></th>
+      <th>Total</th>
       <th></th>
     </tr>
     </thead>
     <tbody>
     <% @cart.items.each_with_index do |lead, i| %>
-        <tr>
-          <td><%= i+1 %></td>
+        <tr class="<%= cycle("odd", "even") %>">
+          <td class="ta_c"><%= i+1 %></td>
           <td><%= lead.header %></td>
-          <td><%= as_currency(lead.price,lead.currency) %></td>
-          <td><%= link_to t("buyer.cart.show.view.remove_item_link"), buyers_cart_item_path(lead.id), :method => :delete %></td>
+          <td class="ta_c"><%= as_currency(lead.price, lead.currency) %></td>
+          <td class="ta_c sign">x</td>
+          <td class="ta_c">1</td>
+          <td class="ta_c sign">=</td>
+          <td class="ta_c"><%= as_currency(lead.price, lead.currency) %></td>
+          <td class="ta_r"><%= bt_link_to nil, t("buyer.cart.show.view.remove_item_link"), buyers_cart_item_path(lead.id), :method => :delete, :class => "bt_grey_small" %></td>
         </tr>
     <% end %>
-    </tbody>
-    <tfoot>
-    <tr>
-      <td></td>
-      <td><%= t("buyer.cart.show.view.total_label") %></td>
-      <td><%= @cart.total %></td>
-      <td></td>
-    </tr>
-    </tfoot>
-  </table>
 
-  <% form_tag APP_CONFIG[:paypal_url] do %>
-      <%= hidden_field_tag :cmd, "_s-xclick" %>
-      <%= hidden_field_tag :encrypted, @cart.paypal_encrypted(categories_url, payment_notifications_url(:secret => APP_CONFIG[:paypal_secret])) %>
-      <p><%= submit_tag t("buyer.cart.show.view.checkout_link") %></p>
-  <% end %>
+    <tr class="total_row">
+      <td colspan="4"></td>
+      <td class="ta_c"><%= t("buyer.cart.show.view.total_label") %></td>
+      <td class="sign">=</td>
+      <td class="ta_c">
+        <span class="green"><%= as_currency(@cart.total, @cart.currency) %></span></td>
+      <td class="ta_r">
+        <%= form_tag APP_CONFIG[:paypal_url] do %>
+            <%= hidden_field_tag :cmd, "_s-xclick" %>
+            <%= hidden_field_tag :encrypted, @cart.paypal_encrypted(buyers_lead_purchases_path, payment_notifications_url(:secret => APP_CONFIG[:paypal_secret])) %>
+            <ibt c="fltri">
+              <%= submit_tag t("buyer.cart.show.view.checkout_link") %>
+            </ibt>
+        <% end %>
+      </td>
+    </tr>
+    </tbody>
+  </table>
 
 </column-mc:>

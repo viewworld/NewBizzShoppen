@@ -5,6 +5,7 @@ Background:
   Given I am on the homepage
   And I make sure current locale is English
   And I am signed up and confirmed as user with email customer@person.com and password supersecret and role customer
+  And user "customer@person.com" has team buyers enabled
   And User customer@person.com with role customer is big buyer
   And lead Printers ultimate deal exists within category Computers
   And I sign in as customer@person.com with password supersecret
@@ -21,8 +22,8 @@ Scenario: I cannot buy lead through checkout
   When I go to leads
   And I follow "Computers"
   And I follow translated "leads.index.buy_lead"
-  And I follow translated "layout.cart.show_cart"
-  Then I should see "0.0" within ".cart"
+  And I click hidden translated link "layout.cart.show_cart"
+  Then I should see "0.0"
 
 @_done
 Scenario: Lead purchase is marked with "has access" after creation

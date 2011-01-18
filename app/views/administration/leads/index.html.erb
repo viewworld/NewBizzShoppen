@@ -4,13 +4,13 @@
 
     <div class="search_content">
       <%= form_for @search, :url => administration_leads_path do |f| %>
-          <fieldset class="inputs no_pdd labels_auto inline_li">
+          <fieldset class="inputs_vertical">
             <ol class="no_pdd">
               <li class="string">
                 <%= f.label :with_keyword, t("administration.leads.index.search.keyword_label") %>
                 <%= f.text_field :with_keyword %>
               </li>
-              <li class="select no_pdd_l">
+              <li class="select">
                 <%= f.label :with_category, t("administration.leads.index.search.category_label") %>
                 <%= f.select :with_category, categories_for_select, :include_blank => true %>
               </li>
@@ -18,45 +18,46 @@
                 <%= f.label :with_status, t("administration.leads.index.search.status_label") %>
                 <%= f.select :with_status, statuses_for_select, :include_blank => true %>
               </li>
-              <li class="string no_pdd_l">
+              <li class="select">
                 <%= f.label :with_creator_type, t("administration.leads.index.search.owner_type_label") %>
                 <%= f.select :with_creator_type, creator_types, :include_blank => true %>
               </li>
+              <li class="string range">
+                <%= f.hidden_field :price_from %>
+                <%= f.hidden_field :price_to %>
+                <%= f.label :price_from_to, "Price range" %>
+                <%= text_field_tag :price_from_to, '', {:readonly => "readonly", :id => "price_from_to"} %>
+                <div class="range_container">
+                  <div id="price_range" class="slider-range"></div>
+                </div>
+              </li>
+
+              <li class="string range">
+                <%= f.hidden_field :lead_purchases_counter_from %>
+                <%= f.hidden_field :lead_purchases_counter_to %>
+                <%= f.label :lead_purchases_counter_from, "Sold range" %>
+                <%= text_field_tag :lead_purchases_counter_from_to, '', { :readonly => "readonly", :id => "lead_purchases_counter_from_to" } %>
+                <div class="range_container">
+                  <div id="sold_range" class="slider-range"></div>
+                </div>
+              </li>
+
+              <li class="string range">
+                <%= f.hidden_field :purchase_value_from %>
+                <%= f.hidden_field :purchase_value_to %>
+                <%= f.label :purchase_value_from, "Value range" %>
+                <%= text_field_tag :purchase_value_from_to, '', { :readonly => "readonly", :id => "purchase_value_from_to" } %>
+                <div class="range_container">
+                  <div id="value_range" class="slider-range"></div>
+                </div>
+              </li>              
+
               <li class="boolean">
                 <%= f.check_box :purchased, {}, "true", "false" %>
                 <%= f.label :purchased, t("administration.leads.index.view.filter_purchased") %>
-              </li>
-            </ol>
-          </fieldset>
-
-          <fieldset class="inputs no_pdd labels_auto inline_li inputs_60 rltv">
-            <ol class="no_pdd">
-              <li class="string">
-                <%= f.label :price_from, t("administration.leads.index.search.price_from_label") %>
-                <%= f.text_field :price_from %>
-              </li>
-              <li class="string no_pdd_l">
-                <%= f.label :price_to, t("administration.leads.index.search.price_to_label") %>
-                <%= f.text_field :price_to %>
-              </li>
-              <li class="string">
-                <%= f.label :lead_purchases_counter_from, t("administration.leads.index.search.lead_purchases_counter_from_label") %>
-                <%= f.text_field :lead_purchases_counter_from %>
-              </li>
-              <li class="string no_pdd_l">
-                <%= f.label :lead_purchases_counter_to, t("administration.leads.index.search.lead_purchases_counter_to_label") %>
-                <%= f.text_field :lead_purchases_counter_to %>
-              </li>
-              <li class="string">
-                <%= f.label :purchase_value_from, t("administration.leads.index.search.purchase_value_from_label") %>
-                <%= f.text_field :purchase_value_from %>
-              </li>
-              <li class="string no_pdd_l">
-                <%= f.label :purchase_value_to, t("administration.leads.index.search.purchase_value_to_label") %>
-                <%= f.text_field :purchase_value_to %>
-              </li>
+              </li>              
               <li class="commit">
-                <ibt c="bt_green right" icon="magnify">
+                <ibt c="bt_green" icon="magnify">
                   <%= submit_tag t("administration.leads.index.view.search_button") %>
                 </ibt>
               </li>
@@ -74,14 +75,71 @@
 
   <%= leads_table @leads, :show_checkboxes => false do |blocks| %>
       <% blocks.tools do |lead| %>
-          <ul-actions>
-            <li>
-              <%= link_to t("administration.leads.index.view.show"), lead_path(lead) %>
-            </li>
-          </ul-actions>
+        <%= bt_link_to nil, t("administration.leads.index.view.edit"), edit_administration_lead_path(lead), :class => "default_action" %>
       <% end %>
       <% blocks.status_column do |lead| %>
          <%= status_or_status_change(lead) %>
       <% end %>
   <% end %>
 </column-mc:>
+
+<js:>
+<script type="text/javascript">
+    jQuery(document).ready(function()
+    {
+        $("#price_range").slider({
+            min: 0,
+            max: 10000,
+            values: [ 0, 10000 ],
+            slide: function(event, ui) {
+                $('#search_price_from').val(ui.values[ 0 ]);
+                $('#search_price_to').val(ui.values[ 1 ]);
+                $(this).parents().prev().val("$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ]);
+
+            }
+        });
+
+        $("#sold_range").slider({
+            min: 0,
+            max: 20,
+            values: [ 0, 20 ],
+            slide: function(event, ui) {
+                $('#search_lead_purchases_counter_from').val(ui.values[ 0 ]);
+                $('#search_lead_purchases_counter_to').val(ui.values[ 1 ]);
+                $(this).parents().prev().val(ui.values[ 0 ] + " - " + ui.values[ 1 ]);
+            }
+        });
+
+        $("#value_range").slider({
+            min: 1000,
+            max: 300000,
+            values: [ 1000, 300000 ],
+            slide: function(event, ui) {
+                $('#search_purchase_value_from').val(ui.values[ 0 ]);
+                $('#search_purchase_value_to').val(ui.values[ 1 ]);
+                $(this).parents().prev().val("$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ]);
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        if($('#search_price_from').val() != "" && $('#search_price_to').val() != "")
+        {
+            $( "#price_range" ).slider( "option", "values", [parseInt($('#search_price_from').val()), parseInt($('#search_price_to').val())] );
+            $('#price_from_to').val("$" + $('#search_price_from').val() + " - $" + $('#search_price_to').val());
+        }
+
+        if($('#search_lead_purchases_counter_from').val() != "" && $('#search_lead_purchases_counter_to').val() != "")
+        {
+            $( "#sold_range" ).slider( "option", "values", [parseInt($('#search_lead_purchases_counter_from').val()), parseInt($('#search_lead_purchases_counter_to').val())] );
+            $('#lead_purchases_counter_from_to').val($('#search_lead_purchases_counter_from').val() + " - " + $('#search_lead_purchases_counter_to').val());
+        }
+
+        if($('#search_purchase_value_from').val() != "" && $('#search_purchase_value_to').val() != "")
+        {
+            $( "#value_range" ).slider( "option", "values", [parseInt($('#search_purchase_value_from').val()), parseInt($('#search_purchase_value_to').val())] );
+            $('#purchase_value_from_to').val($('#search_purchase_value_from').val() + " - " + $('#search_purchase_value_to').val());
+        }
+    });
+</script>
+</js:>

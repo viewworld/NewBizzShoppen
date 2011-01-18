@@ -22,7 +22,7 @@ namespace :nbs do
     end
 
     (0..2).each do |i|
-      LeadPurchase.make!(:owner => customer, :lead => leads[i], :paid =>  true, :accessible => true)
+      LeadPurchase.make!(:owner => customer, :lead => leads[i], :paid =>  true, :accessible_from => Time.now)
     end
 
   end

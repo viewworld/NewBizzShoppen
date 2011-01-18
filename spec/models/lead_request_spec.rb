@@ -44,7 +44,7 @@ describe Lead do
       }.should change(LeadPurchase, :count).by(1)
 
       (lead_purchase = LeadPurchase.find_by_id(lead_request.id)).should_not be nil
-      lead_purchase.accessible?.should be false
+      lead_purchase.accessible_from.should be nil
       lead_purchase.assignee_id.should be lead_user.id
     end
 
@@ -57,7 +57,7 @@ describe Lead do
       lead_request.accept!
 
       (lead_purchase =  LeadPurchase.find_by_id(lead_request.id)).should_not be nil
-      lead_purchase.accessible?.should be true
+      lead_purchase.accessible_from.should_not be nil
     end
 
     it "should be rejected properly" do

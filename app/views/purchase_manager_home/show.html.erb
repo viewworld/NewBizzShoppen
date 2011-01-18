@@ -1,0 +1,85 @@
+<column-mc:>
+
+  <header>
+    <param:content>
+      <%= "Welcome" %>
+    </param:content>
+
+    <param:actions>
+      <ul class="header_actions">
+        <li class="last">
+          <%= bt_link_to :plus, t("purchase_manager_home.show.view.create_new_purchase_manager_account"), new_purchase_manager_account_path %>
+        </li>
+      </ul>
+    </param:actions>
+  </header>
+
+  <div class="pdd_5 no_pdd_b">
+    <h2><%= t("agent_home.show.view.header_welcome") %></h2>
+
+    <p>- <%= link_to t("purchase_manager_home.show.view.agent_link"), agent_home_path %></p>
+
+    <p>- <%= link_to t("purchase_manager_home.show.view.buyer_link"), buyer_home_path %></p>
+    <br/>
+
+    <p><%= blurb("blurb_purchase_manager_home") %></p>
+
+  </div>
+
+  <hl pdd="15"></hl>
+
+  <div id="leads_summary">
+    <div class="column_1to3 fltl" id="news">
+      <frm title="#{t('purchase_manager_home.show.view.header_news')}">
+        <param:header>
+          <%= bt_link_to nil, t("purchase_manager_home.show.view.complete_list_link"), news_index_path(:search => {:for_purchase_manager => true}), :class => "fltr" %>
+        </param:header>
+        <param:content>
+          <ul class="solid_list">
+            <%= render :partial => 'news', :collection => @news, :as => :news %>
+          </ul>
+        </param:content>
+
+      </frm>
+    </div>
+    <div class="column_1to3 fltl" style="padding: 0 15px" id="best_sellers">
+      <frm title="#{t('purchase_manager_home.show.view.header_best_sellers')}">
+        <param:header>
+          <%= bt_link_to nil, t("purchase_manager_home.show.view.complete_list_link"), leads_path(:search => {:bestsellers => true}), :class => "fltr" %>
+        </param:header>
+        <param:content>
+          <ul class="solid_list">
+            <%= render :partial => 'lead', :collection => @best_sellers, :as => :lead %>
+          </ul>
+        </param:content>
+      </frm>
+    </div>
+    <div class="column_1to3 fltl" id="latest_leads">
+      <frm title="#{t('purchase_manager_home.show.view.header_latest_leads')}">
+        <param:header>
+          <%= bt_link_to nil, t("purchase_manager_home.show.view.complete_list_link"), leads_path(:search => {:latest => true}), :class => "fltr" %>
+        </param:header>
+        <param:content>
+          <ul class="solid_list">
+            <%= render :partial => 'lead', :collection => @latest_leads, :as => :lead %>
+          </ul>
+        </param:content>
+      </frm>
+    </div>
+    <clb/>
+  </div>
+
+</column-mc:>
+
+<js:>
+  <script type="text/javascript">
+
+      jQuery(document).ready(function() {
+          jQuery(".solid_list li").bind("click", function() {
+              window.location = $(this).find('a.read_more').attr("href");
+          });
+      });
+
+  </script>
+</js:>
+

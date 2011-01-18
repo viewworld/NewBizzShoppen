@@ -7,7 +7,7 @@ Background:
   Given Category named "Computers" already exists
   And Lead named "Super printers" exists within "Computers" category
 
-@tbd
+@_tested
 Scenario: When I buy a lead it is automatically assigned to me
   Given I am signed up and confirmed as user with email buyer.jim.jones@nbs.com and password secret and role customer
   And an user with role lead_buyer and email leadbuyer.jon@nbs.com exists as subaccount for customer buyer.jim.jones@nbs.com
@@ -20,7 +20,7 @@ Scenario: When I buy a lead it is automatically assigned to me
   And paypal payment for user with email "buyer.jim.jones@nbs.com" and role "customer"
   And lead named "Super printers" is owned by user "buyer.jim.jones@nbs.com" with role "customer"
 
-@tbd
+@_tested
 Scenario: Lead purchases are assigned to topmost owner (to customer, if exists, otherwise to self)
   Given someone is signed up and confirmed as user with email buyer.jim.jones@nbs.com and password secret and role customer
   And I am signed up and confirmed as user with email leadbuyer.jon@nbs.com and password secret and role lead_buyer

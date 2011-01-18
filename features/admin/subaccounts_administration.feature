@@ -16,7 +16,7 @@ Given I am on the homepage
   And I press translated "administration.users.index.view.search_button"
   And I follow translated "administration.users.index.view.subaccounts"
 
-@m0
+@m5
 Scenario: I can display a list of subaccounts of call centre account
 
 @tgn @_done @_tested

@@ -4,11 +4,33 @@
 
     <div class="search_content">
       <%= form_for @search, :url => administration_invoicing_invoices_path do |f| %>
-          <%= f.label :with_keyword, t("administration.invoices.index.view.search.with_keyword")%><%= f.text_field :with_keyword %>
-          <%= f.label :with_sale_date_after_and_including, t("administration.invoices.index.view.search.with_sale_date_after_and_including")%><%= f.text_field :with_sale_date_after_and_including, :class => "datepicker" %>
-          <%= f.label :with_sale_date_before_and_including, t("administration.invoices.index.view.search.with_sale_date_before_and_including")%><%= f.text_field :with_sale_date_before_and_including, :class => "datepicker" %>
-          <%= f.label :not_paid, t("administration.invoices.index.view.search.not_paid")%><%= f.check_box :not_paid %>
-          <%= submit_tag t("administration.invoices.index.view.search_button") %>
+          <fieldset class="inputs_vertical">
+            <ol class="no_pdd">
+              <li class="string">
+                <%= f.label :with_keyword, t("administration.invoices.index.view.search.with_keyword") %>
+                <%= f.text_field :with_keyword %>
+              </li>
+              <li class="date">
+                <%= f.label :with_sale_date_after_and_including, t("administration.invoices.index.view.search.with_sale_date_after_and_including") %>
+                <%= f.text_field :with_sale_date_after_and_including, :class => "datepicker" %>
+              </li>
+              <li class="date">
+                <%= f.label :with_sale_date_before_and_including, t("administration.invoices.index.view.search.with_sale_date_before_and_including") %>
+                <%= f.text_field :with_sale_date_before_and_including, :class => "datepicker" %>
+              </li>
+              <li class="select">
+                <%= f.label :with_paid, t("administration.invoices.index.view.search.payment_status") %>
+                <%= f.select :with_paid, options_for_with_paid, :include_blank => true %>
+              </li>
+              <li class="commit">
+                <ibt c="bt_green" icon="magnify">
+                  <%= submit_tag t("administration.invoices.index.view.search_button") %>
+                </ibt>
+              </li>
+            </ol>
+          </fieldset>
+
+
       <% end %>
     </div>
   </div>
@@ -19,31 +41,69 @@
   <header><%= t("administration.invoices.index.view.header") %></header>
 
   <%= semantic_form_for [:administration, :invoicing, Invoice.new] do |form| %>
-      <%= form.inputs do %>
+      <fieldset class="inputs_vertical">
+        <ol>
           <%= form.input :user, :include_blank => false %>
-      <% end %>
-      <%= form.commit_button t("administration.invoices.index.view.create_invoice") %>
+          <li class="commit">
+            <ibt class="commit">
+              <%= form.submit t("administration.invoices.index.view.create_invoice") %>
+            </ibt>
+          </li>
+        </ol>
+      </fieldset>
   <% end %>
 
-    <table class="generic" cellspacing="0" cellpadding="0">
-      <thead>
+  <%= bulk_form do %>
+      <table class="generic" cellspacing="0" cellpadding="0" id="invoices">
+        <thead>
         <tr>
+          <th class="hl"></th>
+          <th class="no_pdd_lr" style="width:10px">
+            <%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %>
+          </th>
           <th><%= link_to t("administration.invoices.index.view.sale_date"), order_for_scoped_search(:sale_date) %>
-          <th id="invoice_number_header"><%= t("administration.invoices.index.view.invoice_number") %></th>
-          <th><%= t("administration.invoices.index.view.customer") %></th>
-          <th><%= link_to t("administration.invoices.index.view.revenue_frozen"), order_for_scoped_search(:revenue_frozen) %></th>
-          <th id="invoice_payment_status_header"><%= link_to t("administration.invoices.index.view.paid_at"), order_for_scoped_search(:paid_at) %></th>
-          <th>actions</th>
-      </thead>
-      <tbody id="invoices_list">
-      <%= render @invoices %>
-      </tbody>
-    </table>
-    <%= will_paginate @invoices %>
+          <th id="invoice_number_header"><%= link_to t("administration.invoices.index.view.invoice_number"), order_for_scoped_search(:number) %></th>
+          <th><%= link_to t("administration.invoices.index.view.customer"), order_for_scoped_search(:customer) %></th>
+          <th><%= link_to t("administration.invoices.index.view.total"), order_for_scoped_search(:total) %></th>
+          <th class="ta_c" id="invoice_payment_status_header"><%= link_to t("administration.invoices.index.view.status"), order_for_scoped_search(:paid_at) %></th>
+          <th class="ta_r"><%= t("administration.invoices.index.view.actions") %></th>
+          <th class="hr"></th>
+        </tr>
+        </thead>
+        <tbody id="invoices_list">
+        <%= render @invoices %>
+        <tr class="pagination">
+          <td colspan="9">
+            <div class="td_select_all">
+              <%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %>
+              <%= label_tag "mark_all", "select all" %>
+            </div>
+          </td>
+        </tr>
+        <tr class="main_actions">
+          <td class="cl"></td>
+          <td colspan="7" class="no_pdd_lr">
+            <%= hidden_field_tag :route_to %>
+
+            <%= bt_link_to nil, t("administration.invoices.index.view.bulk_set_as_paid"), "javascript:void(0)", :onclick => "submitBulkForm('#{administration_invoicing_bulk_invoice_update_path}#PUT');" %>
+          </td>
+          <td class="cr"></td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+          <td class="fl"></td>
+          <td colspan="7"></td>
+          <td class="fr"></td>
+        </tr>
+        </tfoot>
+      </table>
+  <% end %>
+  <%= will_paginate @invoices %>
 
   <script>
-    $(function() {
-        $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
-    });
+      $(function() {
+          $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+      });
   </script>
 </column-mc:>

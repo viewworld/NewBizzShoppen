@@ -28,6 +28,10 @@ Given /^published buyer news exists with attributes "([^"]*)"$/ do |options|
   Article::News.make!(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys.merge(:scope => 1)).publish!
 end
 
+Given /^published purchase manager news exists with attributes "([^"]*)"$/ do |options|
+  Article::News.make!(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys.merge(:scope => 2)).publish!
+end
+
 Given /^pagination page size for news is set to (\d+)$/ do |n|
   Settings.stubs(:default_news_per_page).returns(n)
 end

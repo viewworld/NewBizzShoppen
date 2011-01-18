@@ -1,5 +1,6 @@
 class Customers::SubaccountsController < Customers::CustomerController
   before_filter :check_roles_selection, :only => [:new, :create]
+  before_filter :authorize_for_team_buyers
 
   set_tab "subaccounts"
 

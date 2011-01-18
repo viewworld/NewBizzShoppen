@@ -41,7 +41,7 @@ Scenario: I should see created by
   Then I follow "Computers"
   And I should see "John Dulinky"
 
-@m4 @tgn @tbd  @added
+@m4 @tgn @_tested  @added
 Scenario: I should see rating % and certification level for each lead
   Given I have user with email bob@person.com and role customer
   And a lead Printers ultimate deal exists within category Computers and is bought by user bob@person.com with role customer
@@ -60,7 +60,7 @@ Scenario: I should see lead header, lead price, purchase value and public descri
   And I should see "Printers ultimate deal"
   And I should see "Public desc about printers deal"
 
-@m4 @tgn @tbd
+@m4 @tgn @_tested
 Scenario: I should see hottness, novelty, exposure, clicks
   When I follow "Computers"
   Then I should see translated "models.lead.hotness.lvl1"
@@ -75,6 +75,5 @@ Scenario: I should see currency in which lead is being sold
   And I follow "Computers"
   And I fill in "search_with_keyword" with "Printers"
   And I press translated "leads.index.search.search_button"
-  Then I should see "Euro" within "table"
   And I should see "€989.39" within "table"
 

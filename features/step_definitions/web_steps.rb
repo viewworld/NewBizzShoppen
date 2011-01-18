@@ -298,6 +298,10 @@ Then /^I run javascript (.+)$/ do |js_code|
   page.evaluate_script(js_code)
 end
 
+Then /^I fill in hidden field "([^"]*)" with "([^"]*)"$/ do |field, value|
+  page.evaluate_script("document.getElementById('#{field}').value = '#{value}'")
+end
+
 Then /^I should see "([^"]*)" items on a list(?: within "([^"]*)")?$/ do |number, selector|
   with_scope(selector) do
     page.all(:css, 'li').size.should eql(number.to_i)

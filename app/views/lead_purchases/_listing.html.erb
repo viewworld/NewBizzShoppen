@@ -11,7 +11,7 @@
   <tr>
     <th class="hl"></th>
     <% if show_checkboxes %>
-        <th class="no_pdd_lr" style="width: 10px;"><%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this.checked,'input:checkbox')" %></th>
+        <th class="no_pdd_lr" style="width: 10px;"><%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %></th>
     <% end %>
     <th style="width: 350px;"><%= t("leads.listing.lead_description_label") %></th>
     <th style="width: 200px"><%= t("leads.listing.lead_details_label") %></th>
@@ -48,11 +48,11 @@
         <% end %>
 
         <td>
-          <h4><%= lead_purchase.header %></h4>
+          <h4><%= link_to lead_purchase.header, current_user.has_role?(:lead_buyer) ? buyers_lead_purchase_path(lead_purchase) : lead_users_lead_purchase_path(lead_purchase) %></h4>
           <% if block_contact %>
               <%= with_output_buffer { block_contact.call(lead_purchase) } if block_contact %>
           <% end %>
-          <p class="element"><%= t("lead_purchases.listing.purchase_value_label") %><span class="green"><%= lead_purchase.purchase_value %></span></p>
+          <p class="element"><%= t("lead_purchases.listing.purchase_value_label") %><span class="green"><%= as_currency(lead_purchase.purchase_value, lead_purchase.lead.currency) %></span></p>
           <p class="element_description i"><%= lead_purchase.description %></p>
           <% if block_general %>
               <%= with_output_buffer { block_general.call(lead_purchase) } %>
@@ -75,11 +75,8 @@
         </td>
 
         <td>
-          <p><%= t("lead_purchases.listing.clicks_count_label") %><b><%= lead_purchase.clicks_count %></b></p>
-          <p><%= t("lead_purchases.listing.exposures_count_label") %><b><%= lead_purchase.exposures_count %></b></p>
-          <p><%= t("lead_purchases.listing.average_rating_label") %><b><%= lead_purchase.lead.average_rating == -1 ? t("leads.listing.average_rating_none_label") : lead_purchase.lead.average_rating_as_text %></b></p>
           <p><%= t("lead_purchases.listing.sale_limit_label") %><b><%= lead_purchase.sale_limit %></b></p>
-          <p><%= t("lead_purchases.listing.novelty_label") %><b><%= t("models.lead.novelty.lvl#{lead_purchase.novelty_level}") %></b></p>
+          <p><%= t("lead_purchases.listing.novelty_label") %><b><%= lead_purchase.lead.published ? lead_purchase.lead.published_at.strftime("%d-%m-%Y") : "-" %></b></p>
           <p><%= t("lead_purchases.listing.hotness_label") %><b><%= t("models.lead.hotness.lvl#{lead_purchase.hotness_level}") %></b></p>
           <p><%= t("lead_purchases.listing.certification_label") %><b><%= t("models.lead.certification.lvl#{lead_purchase.certification_level}") %></b></p>
         </td>
@@ -110,7 +107,7 @@
     <td colspan="<%= cols + 2 %>" class="ta_c">
       <% if show_checkboxes %>
           <div class="td_select_all">
-            <%= check_box_tag "td_mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this.checked,'input:checkbox')" %>
+            <%= check_box_tag "td_mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %>
             <%= label_tag "td_mark_all", "select all" %>
           </div>
       <% end %>

@@ -7,7 +7,7 @@ class ::User::LeadBuyer < ::User
   has_many :leads_in_cart,
            :class_name => "Lead",
            :through => :lead_purchases,
-           :conditions => {"lead_purchases.accessible" => false, "lead_purchases.paid" => false, "lead_purchases.requested_by" => nil},
+           :conditions => {"lead_purchases.accessible_from" => nil, "lead_purchases.paid" => false, "lead_purchases.requested_by" => nil},
            :source => :lead
   has_many :invoices, :foreign_key => "user_id"
 end

@@ -12,6 +12,7 @@ module LeadPurchasesHelper
 
   def paid_values
     [
+        [I18n.t('common.all_label'), nil],
         [I18n.t('common.yes_label'),true],
         [I18n.t('common.no_label'),false]
     ]

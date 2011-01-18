@@ -1,7 +1,8 @@
 class Lead < ActiveRecord::Base
   INFINITY             = 1.0/0
   NOVELTY_LEVEL_RANGES = [(0..8), (9..30), (31..INFINITY)]
-  HOTNESS_LEVEL_RANGES = [(29..INFINITY), (7..28), (-INFINITY..6)]  
+  HOTNESS_LEVEL_RANGES = [(29..INFINITY), (7..28), (-INFINITY..6)]
+  BLACK_LISTED_ATTRIBUTES = [:published]
 
   translates :header, :description, :hidden_description
 
@@ -40,33 +41,57 @@ class Lead < ActiveRecord::Base
   scope :bestsellers, order("lead_purchases_counter DESC")
   scope :latest, order("created_at DESC")
 
-  validates_presence_of :header, :description, :purchase_value, :price, :company_name, :contact_name, :phone_number, :sale_limit, :category_id, :address, :purchase_decision_date, :country_id, :currency
+  scope :joins_on_lead_purchases , joins("INNER JOIN lead_purchases ON lead_purchases.lead_id=leads.id")
+  scope :with_created_by, lambda { |agent| where("creator_id = ?", agent.id) }
+  scope :with_revenue_by, lambda { |agent| select("sum(price) as id").where("creator_id = ? and requested_by IS NULL", agent.id).joins_on_lead_purchases }
+  scope :with_rated_good_by, lambda { |agent| where("creator_id = ? and lead_purchases.rating_level > -1 and lead_purchases.rating_level <= ? and requested_by IS NULL", agent.id, LeadPurchase::RATING_SATISFACTORY).joins_on_lead_purchases }
+  scope :with_rated_bad_by, lambda { |agent| where("creator_id = ? and lead_purchases.rating_level > ? and requested_by IS NULL", agent.id, LeadPurchase::RATING_SATISFACTORY).joins_on_lead_purchases }
+  scope :with_not_rated_by, lambda { |agent| where("creator_id = ? and (lead_purchases.rating_level = -1 or lead_purchases.rating_level is NULL) and requested_by IS NULL", agent.id).joins_on_lead_purchases }
+
+
+
+  validates_presence_of :header, :description, :purchase_value, :price, :company_name, :contact_name, :phone_number, :sale_limit, :category_id, :purchase_decision_date, :country_id, :currency, :address_line_1, :city, :zip_code
   validates_presence_of :hidden_description, :unless => Proc.new{|l| l.created_by?('PurchaseManager')}
   validates_inclusion_of :sale_limit, :in => 0..10
 
 
   liquid_methods :header, :description, :company_name, :contact_name, :phone_number, :email_address, :address, :www_address
-
+  #TODO ???
   liquid :header
+
+  delegate :certification_level, :to => :creator
 
   accepts_nested_attributes_for :lead_translations, :allow_destroy => true
 
   scoped_order :id, :header, :sale_limit, :price, :lead_purchases_counter, :published, :has_unsatisfactory_rating, :purchase_value
 
+  attr_protected :published
+
+  attr_accessor :current_user
   attr_accessor :notify_buyers_after_update
   after_create :cache_creator_name
   before_destroy :can_be_removed?
   after_find :set_buyers_notification
   before_update :notify_buyers_about_changes
+  before_save :set_published_at
 
   private
+
+  def mass_assignment_authorizer
+    if self.current_user and current_user.can_publish_leads?
+      self.class.protected_attributes.reject! { |a| BLACK_LISTED_ATTRIBUTES.include?(a.to_sym)  }
+      self.class.protected_attributes
+    else
+      super
+    end
+  end
 
   def cache_creator_name
     update_attribute(:creator_name, creator.name) unless creator_name
   end
 
   def novelty_ratio
-    (Date.today - created_at.to_date).to_i
+    (Date.today - published_at.to_date).to_i
   end
 
   def hotness_ratio
@@ -79,8 +104,10 @@ class Lead < ActiveRecord::Base
     end
   end
 
-  def certification_level_ratio
-    Lead.joins(:lead_purchases).where(:creator_id => creator_id, :creator_type => creator_type).count
+  def set_published_at
+    if published_changed?
+      self.published_at = published ? Time.now : nil
+    end
   end
 
     def can_be_removed?
@@ -115,16 +142,6 @@ class Lead < ActiveRecord::Base
     NOVELTY_LEVEL_RANGES.each_with_index { |range, i| return i if range.include?(novelty_ratio) }
   end
 
-  def certification_level
-    if certification_level_ratio >= Settings.certification_level_2.to_i
-      2
-    elsif certification_level_ratio >= Settings.certification_level_1.to_i
-      1
-    else
-      0
-    end
-  end
-
   def buyable?
     true #Some more complex logic here...
   end
@@ -144,5 +161,9 @@ class Lead < ActiveRecord::Base
 
   def created_by?(creator_type)
     self.creator_type == "User::#{creator_type}"
+  end
+
+  def address
+    [address_line_1, address_line_2, address_line_3, zip_code, city, county].join(" ")
   end
 end

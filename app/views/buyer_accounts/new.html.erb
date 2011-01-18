@@ -1,10 +1,14 @@
 <column-mc:>
-  <header><%= t("buyer_accounts.new.view.title") %></header>
+  <header back="true"><%= t("buyer_accounts.new.view.title") %></header>
 
-  <%= blurb('blurb_sign_up') %>
+  <div class="pdd_5 no_pdd_b">
+    <%= blurb('blurb_sign_up') %>
+  </div>
+  
+  <hl pdd="15"/>
 
   <%= semantic_form_for @user, :url => buyer_accounts_path do |form| %>
-      <frm title="Create new account">
+      <frm title="Create new account" c="no_marg">
         <param:content>
           <div class="pdd_10 no_pdd_t">
             <fieldset class="inputs labels_ta_r labels_240">
@@ -39,6 +43,7 @@
             <fieldset class="inputs labels_ta_r labels_240">
               <ol class="align_inputs">
                 <%= form.input :country, :as => :select, :collection => Country.all %>
+                <%= form.input :team_buyers, :as => :boolean, :label => t("buyer_accounts.new.view.enable_team_buyers") %>
                 <%= form.input :agreement_read, :as => :boolean %>
                 <%= form.input :newsletter_on, :as => :boolean %>
               </ol>

@@ -1,12 +1,28 @@
-<div class="cart">
-  <h3><%= t("layout.cart.cart_header", :count => current_user.cart.count) %></h3>
-  <ul>
-    <% current_user.cart.items.each do |lead| %>
-        <li><%= lead.header %> x 1 -
-          <b><%= as_currency(lead.price,lead.currency) %></b><%= link_to t("layout.cart.remove_item_link"), buyers_cart_item_path(lead.id), :method => :delete %></li>
-    <% end %>
-  </ul>
-  <b><%= t("layout.cart.total_label") %></b><i><%= current_user.cart.total %></i>
-  <%= link_to t("layout.cart.empty_cart"), buyers_cart_path, :method => :delete, :confirm => t("common.confirmation") %>
-  <%= link_to t("layout.cart.show_cart"), buyers_cart_path %>
+<div id="cart_details">
+  <div class="cart_header">
+    <h3><%= t("layout.cart.cart_header", :count => current_user.cart.count) %></h3>
+    <%= image_tag("icons/basket.png") %>
+  </div>
+  <div class="cart_content">
+    <ul>
+      <% current_user.cart.items.each do |lead| %>
+          <li>
+            <p><strong><%= lead.header %></strong></p>
+
+            <p class="price ta_r"><%= link_to t("layout.cart.remove_item_link"), buyers_cart_item_path(lead.id), :method => :delete, :class => "fltl fs_11" %> 1 x <%= as_currency(lead.price, lead.currency) %></p>
+          </li>
+      <% end %>
+      <li>
+        <p class="ta_r">
+          <span class="grey"><%= t("layout.cart.total_label") %>: </span><span class="green">&euro;<%= current_user.cart.total %></span>
+        </p>
+      </li>      
+    </ul>
+  </div>
+  <div class="cart_footer">
+    <p class="ta_r">
+      <%= bt_link_to nil, t("layout.cart.empty_cart"), buyers_cart_path, :method => :delete, :confirm => t("common.confirmation"), :class => "bt_grey_small" %>
+      <%= bt_link_to nil, t("layout.cart.show_cart"), buyers_cart_path %>
+    </p>
+  </div>
 </div>
