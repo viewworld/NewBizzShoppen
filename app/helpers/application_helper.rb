@@ -66,7 +66,11 @@ module ApplicationHelper
   end
 
   def as_currency(number,currency)
-    number_to_currency(number, :format => currency.format, :unit => currency.symbol)
+    if currency
+      number_to_currency(number, :format => currency.format, :unit => currency.symbol)
+    else
+      number_to_currency(number, :unit => "")
+    end
   end
 
   def current_user_has_role?(r)
