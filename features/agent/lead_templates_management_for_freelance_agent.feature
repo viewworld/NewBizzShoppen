@@ -1,4 +1,4 @@
-@lead_templates @$_freelance_agent @m5
+@lead_templates @$_freelance_agent @m5 @tgn
 Feature: Lead templates management for freelance agent
 
 @added
