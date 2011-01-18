@@ -23,7 +23,7 @@
     </tfoot>
     <tbody id="invoices_list">
     <% @lead_purchases.each do |lead_purchase| %>
-        <tr>
+        <tr class="<%= cycle("odd", "even") %>">
           <td class="cl"></td>
           <td><%= lead_purchase.owner.first_name %></td>
           <td><%= lead_purchase.owner.last_name %></td>

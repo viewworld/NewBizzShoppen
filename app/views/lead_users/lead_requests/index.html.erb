@@ -48,11 +48,7 @@
           <% blocks.tools do |lead| %>
               <% if current_user %>
                   <% if current_user.has_role?(:lead_user) %>
-                      <ul-actions>
-                        <li>
-                          <%= link_to t("lead_user.lead_requests.index.view.destroy_lead_request"), lead_users_lead_request_path(:id => lead.id), :method => :delete %>
-                        </li>
-                      </ul-actions>
+                    <%= bt_link_to nil, t("lead_user.lead_requests.index.view.destroy_lead_request"), lead_users_lead_request_path(:id => lead.id), :method => :delete %>
                   <% end %>
               <% end %>
 

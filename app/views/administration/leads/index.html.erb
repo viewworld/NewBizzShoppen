@@ -75,11 +75,7 @@
 
   <%= leads_table @leads, :show_checkboxes => false do |blocks| %>
       <% blocks.tools do |lead| %>
-          <ul-actions>
-            <li>
-              <%= link_to t("administration.leads.index.view.edit"), edit_administration_lead_path(lead) %>
-            </li>
-          </ul-actions>
+        <%= bt_link_to nil, t("administration.leads.index.view.edit"), edit_administration_lead_path(lead), :class => "default_action" %>
       <% end %>
       <% blocks.status_column do |lead| %>
          <%= status_or_status_change(lead) %>

@@ -245,11 +245,19 @@
 /* --- inline_errors & hints ---
 --------------------------------------------------------------------------------- */
 
+.inputs ol li p.inline-hints
+{
+    float: left;
+    line-height: 16px;
+    padding: 6px 0 0 8px;    
+    font-size: 11px;
+}
+
 .inputs ol li p.inline-errors
 {
     float: left;
     line-height: 16px;
-    padding: 8px 0 0 8px;
+    padding: 7px 0 0 8px;
     color: #f10000;
     font-size: 11px;
 }

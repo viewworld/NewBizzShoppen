@@ -68,7 +68,7 @@
     </tfoot>
     <tbody>
     <% @news.each do |news| %>
-        <tr>
+        <tr class="<%= cycle("odd", "even") %>">
           <td class="cl"></td>
           <td><%= news.id %></td>
           <td><%= news.title %></td>
