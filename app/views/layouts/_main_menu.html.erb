@@ -1,5 +1,5 @@
 <ul class="nav">
-  <%= main_menu_link_to t("layout.main_menu.shared.home"), root_path, :tab => "home" %>
+  <%= main_menu_link_to_role_specific_home_page %>
   <%= main_menu_link_to t("layout.main_menu.shared.browse_leads"), categories_path, :tab => "browse_leads" %>
   <% if current_user %>
       <% current_user.roles.each do |role| %>

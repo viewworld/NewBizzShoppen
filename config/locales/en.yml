@@ -44,6 +44,7 @@ en:
       shared:
         browse_leads: Browse leads
         home: Home
+        site_home: 'Site home'
       purchase_manager:
         leads: My created leads
     my_profile_link: My profile
