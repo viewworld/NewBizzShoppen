@@ -1,4 +1,4 @@
-@comments @$_freelance_agent @m5  @noguess
+@comments @$_freelance_agent @m5  @noguess @ao
 Feature: Comments administration as freelance agent
 
 Scenario: I can see the amount of comments per lead on Lead created by my agents listing
