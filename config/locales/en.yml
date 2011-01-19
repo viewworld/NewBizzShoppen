@@ -607,6 +607,14 @@ en:
           not_invoiced_count: Leads
           not_invoiced_sum: Total
           create_invoice: Create invoice
+          search_label: Search
+          search_button: Search
+          search:
+            with_keyword: Keyword
+            with_assigned_at_date_after_and_including: Assigned date after and including
+            with_assigned_at_date_before_and_including: Assigned date before and including
+            payment_status: Payment status
+
 
   agent:
     leads:

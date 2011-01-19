@@ -1,3 +1,37 @@
+<search-box:>
+  <div class="search_box">
+    <h2><%= t("administration.upcoming_invoices.index.view.search_label") %></h2>
+
+    <div class="search_content">
+      <%= form_for @search, :url => administration_invoicing_upcoming_invoices_path do |f| %>
+          <fieldset class="inputs_vertical">
+            <ol class="no_pdd">
+              <li class="string">
+                <%= f.label :with_not_invoiced_keyword, t("administration.upcoming_invoices.index.view.search.with_keyword") %>
+                <%= f.text_field :with_not_invoiced_keyword %>
+              </li>
+              <li class="date">
+                <%= f.label :with_assigned_at_date_after_and_including, t("administration.upcoming_invoices.index.view.search.with_assigned_at_date_after_and_including") %>
+                <%= f.text_field :with_assigned_at_date_after_and_including, :class => "datepicker" %>
+              </li>
+              <li class="date">
+                <%= f.label :with_assigned_at_date_before_and_including, t("administration.upcoming_invoices.index.view.search.with_assigned_at_date_before_and_including") %>
+                <%= f.text_field :with_assigned_at_date_before_and_including, :class => "datepicker" %>
+              </li>
+              <li class="commit">
+                <ibt c="bt_green" icon="magnify">
+                  <%= submit_tag t("administration.upcoming_invoices.index.view.search_button") %>
+                </ibt>
+              </li>
+            </ol>
+          </fieldset>
+
+
+      <% end %>
+    </div>
+  </div>
+</search-box:>
+
 <column-mc:>
 
   <header><%= t("administration.upcoming_invoices.index.view.header") %></header>
@@ -42,4 +76,10 @@
     </tr>
     </tbody>
   </table>
+
+  <script>
+      $(function() {
+          $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+      });
+  </script>
 </column-mc:>

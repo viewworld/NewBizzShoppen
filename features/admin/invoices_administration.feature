@@ -62,10 +62,40 @@ Scenario: I can search for invoices by a combination of keywords: contact name, 
   When I fill in "search_with_keyword" with "2"
   And I press translated "administration.invoices.index.view.search_button"
   Then I should see "2/"
-  And I open page in browser
 
-@m5 @added @tgn @sprint_5_corrections
-Scenario: I can search for invoices pending creation by a combination of keywords: contact name, company name, lead name, invoice number and a specific time period (date from to date to)
+@m5 @added @tgn @sprint_5_corrections @_tested
+Scenario: I can search for invoices pending creation by a combination of keywords: contact name, company name, lead name and a specific time period (date from to date to)
+  Given I have user with email bigbuyer1@person.com and role customer
+  And User bigbuyer1@person.com with role customer is big buyer
+  Given a lead Monitors ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role customer
+  And lead Monitors ultimate deal exists with attributes "price:77.99,contact_name:Jill Johanssen,company_name:AIG Inc"
+  And a lead purchase for lead "Monitors ultimate deal" by user "bigbuyer1@person.com" with role "customer" exists with attributes "assigned_at:2011-01-01"
+  Given I have user with email bigbuyer2@person.com and role customer
+  And User bigbuyer2@person.com with role customer is big buyer
+  Given a lead Mouses ultimate deal exists within category Computers and is bought by user bigbuyer2@person.com with role customer
+  And lead Mouses ultimate deal exists with attributes "price:88.32,contact_name:Tom Blanq,company_name:Xerox"
+  And a lead purchase for lead "Mouses ultimate deal" by user "bigbuyer2@person.com" with role "customer" exists with attributes "assigned_at:2011-01-10"
+  Given I am not sign in
+  Then I sign in as jon@lajoie.ca with password secret
+  And I go to administration upcoming invoices
+  When I fill in "search_with_not_invoiced_keyword" with "jill johanssen"
+  And I press translated "administration.upcoming_invoices.index.view.search_button"
+  Then I should see "77.99"
+  Then I should not see "88.32"
+  When I fill in "search_with_not_invoiced_keyword" with "xerox"
+  And I press translated "administration.upcoming_invoices.index.view.search_button"
+  Then I should not see "77.99"
+  Then I should see "88.32"
+  When I fill in "search_with_not_invoiced_keyword" with "monitors ultimate"
+  And I press translated "administration.upcoming_invoices.index.view.search_button"
+  Then I should see "77.99"
+  Then I should not see "88.32"
+  When I fill in "search_with_not_invoiced_keyword" with ""
+  And I fill in "search_with_assigned_at_date_after_and_including" with "2011-01-05"
+  And I fill in "search_with_assigned_at_date_before_and_including" with "2011-01-11"
+  And I press translated "administration.upcoming_invoices.index.view.search_button"
+  Then I should not see "77.99"
+  Then I should see "88.32"
 
 @m5 @added @tgn @sprint_5_corrections
 Scenario: I should see on the upper right corner there should be a total of the upcoming invoices
