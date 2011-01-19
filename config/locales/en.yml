@@ -591,6 +591,8 @@ en:
           search_button: 'Search'
           search:
             with_keyword: 'Keyword:'
+            with_sale_date_after_and_including: Sale date after and including
+            with_sale_date_before_and_including: Sale date before and including
       new:
         view:
           header: 'New transaction'
