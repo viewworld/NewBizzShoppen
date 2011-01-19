@@ -85,7 +85,7 @@ function recalc_netto_value() {
                 // sum the total of the $("[id^=total_item]") selector
 
                  var sum = $this.filter(":visible").sum();
-                 $("#total_netto_value span").text(
+                 $("#total_netto_value").text(
                  // round the results to 2 digits
                  sum.toFixed(2)  + ""
                  );
@@ -109,7 +109,7 @@ function recalc_vat_value() {
                     // sum the total of the $("[id^=total_item]") selector
 
                  var sum = $this.filter(":visible").sum();
-                 $("#total_vat_value span").text(
+                 $("#total_vat_value").text(
                  // round the results to 2 digits
                  sum.toFixed(2)  + ""
                  );
@@ -133,7 +133,7 @@ function recalc_brutto_value() {
                     // sum the total of the $("[id^=total_item]") selector
 
                  var sum = $this.filter(":visible").sum();
-                 $("#total_brutto_value span").text(
+                 $("#total_brutto_value").text(
                  // round the results to 2 digits
                  sum.toFixed(2)  + ""
                  );
