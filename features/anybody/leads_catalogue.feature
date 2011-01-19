@@ -6,7 +6,7 @@ Background:
   And I make sure current locale is English
   And I am not sign in
   And lead Printers ultimate deal exists within category Computers
-  And lead Printers ultimate deal exists with attributes "creator_name:John Dulinky,price:989.39,purchase_value:7843.99,description:Public desc about printers deal,exposures_count:887,clicks_count:17"
+  And lead Printers ultimate deal exists with attributes "creator_name:Jacek Smietana,price:989.39,purchase_value:7843.99,description:Public desc about printers deal,exposures_count:887,clicks_count:17"
   And lead Faxes ultimate deal exists within category Computers
   And lead Monitors ultimate deal exists within category Computers
   And lead Cheap mouses ultimate deal exists within category Computers
@@ -36,10 +36,8 @@ Scenario: I can browse leads in a given category with pagination
   Then I follow "Computers"
   And I follow "2"
 
-@_tested
+@deprecated
 Scenario: I should see created by
-  Then I follow "Computers"
-  And I should see "John Dulinky"
 
 @m4 @tgn @_tested  @added
 Scenario: I should see rating % and certification level for each lead

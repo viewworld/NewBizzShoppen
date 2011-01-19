@@ -1,7 +1,5 @@
 <div class="invoice_show <%= version == :original ? "original" : "copy" %>">
 
-  <div class="type"><%= version == :original ? (t("administration.invoices.show.view.original")) : (t("administration.invoices.show.view.copy")) %></div>
-
   <div class="general_data">
     <table cellpadding="0" cellspacing="0">
       <tr><td class="h"><%= t("administration.invoices.show.view.number") %>: </td><td><%= invoice.number %>/<%=invoice.creation_date.year%></td></tr>
@@ -18,6 +16,9 @@
         <tr><td class="h"><%= invoice.seller_name %></td><td class="h"><%= invoice.customer_name %></td></tr>
         <tr><td><%= invoice.seller_address %></td><td><%= invoice.customer_address %></td></tr>
         <tr><td><%= invoice.seller_vat_no %></td><td><%= invoice.customer_vat_no %></td></tr>
+        <% if invoice.ean_number.present? %>
+          <tr><td></td><td><%= t("administration.invoices.show.view.ean_number") %>: <%= invoice.ean_number %></td></tr>
+        <% end %>
         </table>
   </div>
 
@@ -41,10 +42,10 @@
             <td><%= index + 1 %></td>
             <td><%= invoice_line.name %></td>
             <td><%= invoice_line.quantity %> <%= invoice_line.unit %></td>
-            <td><%= number_to_currency(invoice_line.netto_price, :unit => "") %></td>
+            <td><%= number_to_currency(invoice_line.netto_price, :unit => invoice.currency.symbol) %></td>
             <td><%= invoice_line.vat_rate.zero? ? (t :na, :scope => "administration.invoices.common.view") : number_to_percentage(invoice_line.vat_rate*100, :precision => 0) %></td>
-            <td><%= number_to_currency(invoice_line.vat_value, :unit => "") %></td>
-            <td class="r"><%= number_to_currency(invoice_line.brutto_value, :unit=>"") %></td>
+            <td><%= number_to_currency(invoice_line.vat_value, :unit => invoice.currency.symbol) %></td>
+            <td class="r"><%= number_to_currency(invoice_line.brutto_value, :unit=>invoice.currency.symbol) %></td>
           </tr>
       <% end %>
 

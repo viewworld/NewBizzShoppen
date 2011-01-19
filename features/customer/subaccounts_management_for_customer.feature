@@ -170,7 +170,7 @@ Scenario: I can sort by name, last name, department
   And I follow translated "customer.subaccounts.index.view.department_column"
   Then I should have value "QA" in the css path "tr:nth-child(1) td:nth-child(5)"
 
-@_tested @added
+@added @_tested
 Scenario: I can sort by completed leads, new leads requested, num. of leads assigned last 30days, num. of leads assigned last 12months, num. of leads assigned last total
   Given an user with role lead_buyer and email lead_buyer1@person.com exists as subaccount for customer bob@person.com
   And an user with role lead_buyer and email lead_buyer2@person.com exists as subaccount for customer bob@person.com

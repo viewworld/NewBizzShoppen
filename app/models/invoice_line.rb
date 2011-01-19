@@ -8,7 +8,7 @@ class InvoiceLine < ActiveRecord::Base
 
   after_save :update_frozen_revenue
   before_save :mark_as_paid
-  before_create :calculate_additional_values
+  before_save :calculate_additional_values
 
   private
 
@@ -20,6 +20,17 @@ class InvoiceLine < ActiveRecord::Base
     if !invoice.paid_at.blank? and paid_at.blank?
       self.paid_at = invoice.paid_at
     end
+  end
+
+  def calculate_additional_values
+    calculate_netto_value
+    calculate_vat_value
+    calculate_brutto_value
+    calculate_vat_rate
+  end
+
+  def calculate_vat_rate
+    self.vat_rate = 0 if invoice.vat_paid_in_customer_country?
   end
 
   public
@@ -49,18 +60,15 @@ class InvoiceLine < ActiveRecord::Base
   end
 
   def calculate_vat_value
-    self.vat_value = netto_value * vat_rate
+    self.vat_value = (invoice.vat_paid_in_customer_country? ? 0 : netto_value * vat_rate)
   end
 
   def calculate_brutto_value
-    self.brutto_value = netto_value + vat_value
+    self.brutto_value = (invoice.vat_paid_in_customer_country? ? netto_value : netto_value + vat_value)
   end
 
-  def calculate_additional_values
-    if netto_value.blank? or vat_value.blank? or brutto_value.blank?
-      calculate_netto_value
-      calculate_vat_value
-      calculate_brutto_value
-    end
+  def calculate_additional_values!
+    calculate_additional_values && save
   end
+
 end
