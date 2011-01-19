@@ -62,19 +62,21 @@
 
       <tr class="space"><td colspan="7"></td></tr>
 
-      <% invoice.invoice_lines_grouped_by_vat_rate.each_with_index do |invoice_line, index| %>
-          <tr class="totals">
-            <td class="empty" colspan="2"></td>
-            <% if index.zero? %>
-                <td class="totals_h h r"><%= t("administration.invoices.show.view.including") %></td>
-            <% else %>
-                <td class="empty"></td>
-            <% end %>
-            <td><%= number_to_currency(invoice_line.netto_value_sum, :unit => invoice.currency.symbol) %></td>
-            <td><%= invoice_line.vat_rate.zero? ? (t :na, :scope => "administration.invoices.common.view") : number_to_percentage(invoice_line.vat_rate*100, :precision => 0) %></td>
-            <td><%= number_to_currency(invoice_line.vat_value_sum, :unit => invoice.currency.symbol) %></td>
-            <td class="r"><%= number_to_currency(invoice_line.brutto_value_sum, :unit => invoice.currency.symbol) %></td>
-          </tr>
+      <% unless invoice.vat_paid_in_customer_country? %>
+          <% invoice.invoice_lines_grouped_by_vat_rate.each_with_index do |invoice_line, index| %>
+              <tr class="totals">
+                <td class="empty" colspan="2"></td>
+                <% if index.zero? %>
+                    <td class="totals_h h r"><%= t("administration.invoices.show.view.including") %></td>
+                <% else %>
+                    <td class="empty"></td>
+                <% end %>
+                <td><%= number_to_currency(invoice_line.netto_value_sum, :unit => invoice.currency.symbol) %></td>
+                <td><%= invoice_line.vat_rate.zero? ? (t :na, :scope => "administration.invoices.common.view") : number_to_percentage(invoice_line.vat_rate*100, :precision => 0) %></td>
+                <td><%= number_to_currency(invoice_line.vat_value_sum, :unit => invoice.currency.symbol) %></td>
+                <td class="r"><%= number_to_currency(invoice_line.brutto_value_sum, :unit => invoice.currency.symbol) %></td>
+              </tr>
+          <% end %>
       <% end %>
 
       </tbody>
