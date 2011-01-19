@@ -1008,11 +1008,6 @@ a.bt_max
 
 
 
-
-
-
-
-
 .frm .frm_head .frm_hc a.bt
 {
     margin-top: 6px;
@@ -1023,6 +1018,7 @@ a.bt_max
 .frm .frm_head .frm_hc a.bt.fltr
 {
     margin-right: -4px;
+    margin-left: 8px;
 }
 
 
@@ -1180,4 +1176,44 @@ span.cke_skin_kama
 {
     padding: 0 !important;
     margin-left: 5px;
+}
+
+
+/* ---- invoices ---
+--------------------------------------------------------------------------------- */
+
+.invoice_inline_inputs
+{
+    width:100%;
+    margin: 10px 0;
+}
+
+.invoice_inline_inputs thead tr th
+{
+    text-align: left;
+    padding: 2px 4px;
+}
+
+.invoice_inline_inputs tbody tr td
+{
+    vertical-align: middle;
+    padding: 2px 1px;
+}
+
+.invoice_inline_inputs tbody tr td input
+{
+    width: 88px;
+}
+
+.invoice_inline_inputs tbody tr.total td
+{
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 4px;
+    text-align: center;
+}
+
+.invoice_inline_inputs tbody tr td:first-child input
+{
+    width: auto;
 }

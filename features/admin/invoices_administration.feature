@@ -33,6 +33,46 @@ Scenario: I can see list of invoices pending creation
   Then I should see "304.35"
   Then I should see "41.22"
 
+@m5 @added @tgn @sprint_5_corrections @_tested
+Scenario: I can search for invoices by a combination of keywords: contact name, company name, lead name, invoice number
+  Given VAT ratio is set to 0.0
+  Given I have user with email bigbuyer1@person.com and role customer
+  And User bigbuyer1@person.com with role customer is big buyer
+  Given a lead Monitors ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role customer
+  And lead Monitors ultimate deal exists with attributes "price:77.99,contact_name:Jill Johanssen,company_name:AIG Inc"
+  And user with email "bigbuyer1@person.com" and role "customer" has invoice generated for all unpaid leads
+  Given a lead Mouses ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role customer
+  And lead Mouses ultimate deal exists with attributes "price:88.32,contact_name:Tom Blanq,company_name:Xerox"
+  And user with email "bigbuyer1@person.com" and role "customer" has invoice generated for all unpaid leads
+  Given I am not sign in
+  Then I sign in as jon@lajoie.ca with password secret
+  And I go to administration invoices
+  When I fill in "search_with_keyword" with "jill johanssen"
+  And I press translated "administration.invoices.index.view.search_button"
+  Then I should see "77.99"
+  Then I should not see "88.32"
+  When I fill in "search_with_keyword" with "xerox"
+  And I press translated "administration.invoices.index.view.search_button"
+  Then I should not see "77.99"
+  Then I should see "88.32"
+  When I fill in "search_with_keyword" with "monitors ultimate"
+  And I press translated "administration.invoices.index.view.search_button"
+  Then I should see "77.99"
+  Then I should not see "88.32"
+  When I fill in "search_with_keyword" with "2"
+  And I press translated "administration.invoices.index.view.search_button"
+  Then I should see "2/"
+  And I open page in browser
+
+@m5 @added @tgn @sprint_5_corrections
+Scenario: I can search for invoices pending creation by a combination of keywords: contact name, company name, lead name, invoice number and a specific time period (date from to date to)
+
+@m5 @added @tgn @sprint_5_corrections
+Scenario: I should see on the upper right corner there should be a total of the upcoming invoices
+
+@m5 @added @tgn @sprint_5_corrections
+Scenario: I should be able to write a custom text on the invoice
+
 @tgn @_tested
 Scenario: I can create new invoice from suggestion on invoices pending creation listing
   Given I am not sign in

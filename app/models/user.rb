@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
   GOLD_CERTIFICATION_LOCKED   = 12
   CERTIFICATION_LEVELS = [NOT_CERTIFIED, SILVER_CERTIFICATION, GOLD_CERTIFICATION, NOT_CERTIFIED_LOCKED, SILVER_CERTIFICATION_LOCKED, GOLD_CERTIFICATION_LOCKED]
 
+  BLACK_LISTED_ATTRIBUTES = [:paypal_email, :bank_swift_number, :bank_iban_number]
+
   include RoleModel
   include ScopedSearch::Model
 
@@ -26,6 +28,7 @@ class User < ActiveRecord::Base
 
   validates_presence_of :email, :screen_name
   validates_uniqueness_of :email, :screen_name
+  validate :payout_information_is_complete
 
   has_many :subaccounts, :class_name => "User", :foreign_key => "parent_id"
   has_many :owned_lead_requests, :class_name => 'LeadRequest', :foreign_key => :owner_id
@@ -67,6 +70,24 @@ class User < ActiveRecord::Base
   liquid :email, :first_name, :last_name, :confirmation_instructions_url, :reset_password_instructions_url
 
   private
+
+  def mass_assignment_authorizer
+    if self.can_edit_payout_information
+      self.class.protected_attributes.reject! { |a| BLACK_LISTED_ATTRIBUTES.include?(a.to_sym)  }
+      self.class.protected_attributes
+    else
+      super
+    end
+  end
+
+  def payout_information_is_complete
+    if paypal_email.present? and bank_swift_number.present? and bank_iban_number.present?
+      errors.add(:paypal_email, :invalid)
+    elsif paypal_email.blank? and ((bank_swift_number.present? and bank_iban_number.blank?) or (bank_swift_number.blank? and bank_iban_number.present?))
+      errors.add(:bank_swift_number, :blank) if bank_swift_number.blank?
+      errors.add(:bank_iban_number, :blank) if bank_iban_number.blank?
+    end
+  end
 
   def can_be_removed
     casted_obj = self.send(:casted_class).find(id)

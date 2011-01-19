@@ -63,3 +63,6 @@ Scenario: I can create more than one transaction for given invoice
 
 @m0
 Scenario: I can refund a transaction manually (what is the implication??)
+
+@m5 @added @tgn @sprint_5_corrections
+Scenario: I can search for a transaction by a combination of keyword: contact name, company name, lead name, invoice number and a specific time period (date from to date to)

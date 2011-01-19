@@ -37,7 +37,7 @@ class Invoice < ActiveRecord::Base
   scope :with_sale_date_after_and_including, lambda{ |date| where(["sale_date >= ?",date])}
   scope :with_sale_date_before_and_including, lambda{ |date| where(["sale_date <= ?",date])}
   scope :not_paid, where(:paid_at => nil)
-  scope :with_keyword, lambda{ |keyword| where("number::TEXT LIKE :keyword OR lower(customer_name) LIKE :keyword OR lower(customer_address) LIKE :keyword OR lower(customer_vat_no) LIKE :keyword", {:keyword => "%#{keyword.downcase}%"}) }
+  scope :with_keyword, lambda{ |keyword| where("invoices.number::TEXT = :number_keyword OR lower(customer_name) LIKE :keyword OR lower(customer_address) LIKE :keyword OR lower(leads.header) LIKE :keyword OR lower(leads.contact_name) LIKE :keyword OR lower(leads.company_name) LIKE :keyword", {:keyword => "%#{keyword.downcase}%", :number_keyword => "#{keyword.downcase}"}).joins("INNER JOIN invoice_lines ON invoices.id=invoice_lines.invoice_id INNER JOIN lead_purchases ON invoice_lines.payable_id=lead_purchases.id INNER JOIN leads ON lead_purchases.lead_id=leads.id") }
   scope :ascend_by_customer, joins(:user).order("users.first_name||' '||users.last_name ASC")
   scope :descend_by_customer, joins(:user).order("users.first_name||' '||users.last_name DESC")
   scope :ascend_by_total, joins("LEFT JOIN invoice_lines ON invoice_lines.invoice_id = invoices.id").group(column_names.map{|c| 'invoices.'+c}.join(',')).order("SUM(invoice_lines.brutto_value) ASC")
