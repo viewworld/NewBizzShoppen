@@ -191,6 +191,7 @@ en:
       actions: 'Actions'
     index:
       header: Leads
+      header_for: 'for'
       search:
         search_button: Search
         keyword_label: Keyword
