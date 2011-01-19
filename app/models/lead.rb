@@ -34,6 +34,7 @@ class Lead < ActiveRecord::Base
   scope :published_only, where(:published => true)
   scope :with_creator_type, lambda {|creator_type| where(["leads.creator_type = ?", "User::#{creator_type}"]) }
   scope :within_accessible_categories, lambda { |accessible_categories_ids| where("category_id IN (?)", accessible_categories_ids) }
+  scope :with_call_centre, lambda { |call_centre_id| where(["users.parent_id = ?", call_centre_id]).joins("INNER JOIN users ON leads.creator_id=users.id") }
   #====================
   scope :featured, where(:featured => true)
   scope :purchased, where("lead_purchases_counter > 0")

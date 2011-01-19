@@ -31,6 +31,7 @@ en:
         leads: My created leads
       call_centre:
         call_centre_agents: 'Agents'
+        leads: 'Leads'
       call_centre_agent:
       customer:
         subaccounts: Team
