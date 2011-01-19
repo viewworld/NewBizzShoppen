@@ -1,5 +1,6 @@
-When /^invoice exists for user "([^"]*)"$/ do |email|
-  Invoice.make!(:user => User.where(:email => email).first)
+When /^invoice exists for user "([^"]*)"(?: with attributes "([^"]*)")?$/ do |email,options|
+  attrs = options ? Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys.merge(:user => User.where(:email => email).first) : {:user => User.where(:email => email).first}
+  Invoice.make!(attrs)
 end
 
 When /^invoice line for first invoice exists for user "([^"]*)"(?: with attributes "([^"]*)")?$/ do |email,options|

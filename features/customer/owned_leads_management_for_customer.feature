@@ -104,9 +104,8 @@ Scenario: I should see lead header, lead price, purchase value and public descri
   And I should see "Public description for keyboards"
 
 @tgn @_tested
-Scenario: I should see created by and certification level for each requested lead
+Scenario: I should see certification level for each requested lead
   Then I go to customers lead requests
-  And I should see "Philip Glass"
   And I should see translated "models.lead.certification.lvl0"
 
 @m0 @_added

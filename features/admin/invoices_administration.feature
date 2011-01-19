@@ -232,9 +232,9 @@ Scenario: I can filter invoices list by following parameters - creation range, p
   Then I should see "Ferdek Kiepski" within "#invoices"
   And I should not see "Janko Muzykant" within "#invoices"
 
-@_done @ao
+@ao @_done
 Scenario: I can download invoice as PDF file
-  When invoice exists for user "kastomer@nbs.fake"
+  When invoice exists for user "kastomer@nbs.fake" with attributes "vat_paid_in_customer_country:0"
   And invoice line for first invoice exists for user "kastomer@nbs.fake" with attributes "quantity:1,netto_price:100,vat_rate:0.22,netto_value:100,brutto_value:122"
   And I follow translated "layout.main_menu.admin.invoices"
   And I follow translated "administration.invoices.index.view.show_invoice"
@@ -276,3 +276,37 @@ Scenario: I can create invoice for any customer from users tab
   And I click hidden translated link "administration.users.index.view.create_invoice"
   Then I press "Create Invoice"
   And I should see translated "administration.invoices.edit.view.header"
+
+@added @m4b @_done
+Scenario: EAN should be visible if filled
+  When invoice exists for user "kastomer@nbs.fake" with attributes "ean_number:123456"
+  And invoice line for first invoice exists for user "kastomer@nbs.fake" with attributes "quantity:1,netto_price:100,vat_rate:0.22,netto_value:100,brutto_value:122"
+  And I follow translated "layout.main_menu.admin.invoices"
+  And I follow translated "administration.invoices.index.view.show_invoice"
+  Then I should see translated "administration.invoices.show.view.ean_number"
+
+@added @m4b @_done
+Scenario: EAN should not be visible if not filled
+  When invoice exists for user "kastomer@nbs.fake"
+  And invoice line for first invoice exists for user "kastomer@nbs.fake" with attributes "quantity:1,netto_price:100,vat_rate:0.22,netto_value:100,brutto_value:122"
+  And I follow translated "layout.main_menu.admin.invoices"
+  And I follow translated "administration.invoices.index.view.show_invoice"
+  Then I should not see translated "administration.invoices.show.view.ean_number"
+
+@added @m4b @_done
+Scenario: I should not see amounts grouped by vat rate when vat is paid in customer country
+  When invoice exists for user "kastomer@nbs.fake" with attributes "vat_paid_in_customer_country:1"
+  And invoice line for first invoice exists for user "kastomer@nbs.fake" with attributes "quantity:1,netto_price:100,vat_rate:0.22,netto_value:100,brutto_value:122"
+  And I follow translated "layout.main_menu.admin.invoices"
+  And I follow translated "administration.invoices.index.view.show_invoice"
+  Then I should not see translated "administration.invoices.show.view.including"
+  And I should not see "122" within ".totals"
+
+@added @m4b @_done
+Scenario: I should not see amounts grouped by vat rate when vat is paid in customer country
+  When invoice exists for user "kastomer@nbs.fake" with attributes "vat_paid_in_customer_country:0"
+  And invoice line for first invoice exists for user "kastomer@nbs.fake" with attributes "quantity:1,netto_price:100,vat_rate:0.22,netto_value:100,brutto_value:122"
+  And I follow translated "layout.main_menu.admin.invoices"
+  And I follow translated "administration.invoices.index.view.show_invoice"
+  Then I should see translated "administration.invoices.show.view.including"
+  And I should see "122" within ".totals"

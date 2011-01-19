@@ -53,6 +53,7 @@ class Invoice < ActiveRecord::Base
   after_create :generate_invoice_lines_for_big_buyer
   before_update :generate_manual_transaction_for_big_buyer
   before_save :mark_all_invoice_lines_as_paid
+  after_save :recalculate_invoice_items
 
   #Uncomment reject_if, if not validating invoice lines
   accepts_nested_attributes_for :invoice_lines, :allow_destroy => true #,:reject_if => lambda { |a| a[:name].blank? }
@@ -128,6 +129,10 @@ class Invoice < ActiveRecord::Base
     end
   end
 
+  def recalculate_invoice_items
+    invoice_lines.each{|ii| ii.calculate_additional_values! }
+  end
+
   public
 
   #-------------------------------------------------------------------
@@ -151,7 +156,7 @@ class Invoice < ActiveRecord::Base
     end
 
     html_template = get_template_source
-    html_markup = [:original, :copy].map do |version|
+    html_markup = [:original].map do |version|
       av.render(:inline => html_template, :type => :erb, :layout => '/app/views/layouts/pdf', :locals => {:version => version, :invoice => self})
     end.join
 
