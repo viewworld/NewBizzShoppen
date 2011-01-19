@@ -94,3 +94,6 @@ Scenario: I should be able to click "Add to cart button" that will redirect me t
 
 @m5 @tgn
 Scenario: If I sucessfully login after requesting a lead being added to a cart, that lead should be added to cart (or bought if I am big buyer)
+
+@m5 @added @tgn @sprint_5_corrections
+Scenario: When I browse a lead category, the lead category should be displayed very clear beside the "Leads flag" on the upper left side of the screen

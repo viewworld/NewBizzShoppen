@@ -33,6 +33,18 @@ Scenario: I can see list of invoices pending creation
   Then I should see "304.35"
   Then I should see "41.22"
 
+@m5 @added @tgn @sprint_5_corrections
+Scenario: I can search for invoices by a combination of keywords: contact name, company name, lead name, invoice number and a specific time period (date from to date to)
+
+@m5 @added @tgn @sprint_5_corrections
+Scenario: I can search for invoices pending creation by a combination of keywords: contact name, company name, lead name, invoice number and a specific time period (date from to date to)
+
+@m5 @added @tgn @sprint_5_corrections
+Scenario: I should see on the upper right corner there should be a total of the upcoming invoices
+
+@m5 @added @tgn @sprint_5_corrections
+Scenario: I should be able to write a custom text on the invoice
+
 @tgn @_tested
 Scenario: I can create new invoice from suggestion on invoices pending creation listing
   Given I am not sign in
