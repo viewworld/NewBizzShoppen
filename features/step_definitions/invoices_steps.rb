@@ -34,6 +34,11 @@ Then /^invoices count for user with email "([^"]*)" and role "([^"]*)" is (\d+)$
   assert customer.invoices.size == count.to_i
 end
 
+Then /^user with email "([^"]*)" and role "([^"]*)" has invoice generated for all unpaid leads$/ do |email, role|
+  customer = "User::#{role.camelize}".constantize.find_by_email(email)
+  Invoice.create(:user_id => customer.id, :paid_at =>  nil)
+end
+
 Then /^user with email "([^"]*)" and role "([^"]*)" has invoice for lead "([^"]*)" and transaction created (by paypal|manually)$/ do |email, role, header, transaction_type|
   customer = "User::#{role.camelize}".constantize.find_by_email(email)
   lead = Lead.find_by_header(header).first
@@ -57,4 +62,8 @@ Then /^invoice lines for last invoice are paid for user with email "([^"]*)" and
   invoice = customer.invoices.last
   assert !invoice.paid_at.blank?
   assert invoice.invoice_lines.detect { |il| il.paid_at.blank? }.nil?
+end
+
+Then /^VAT ratio is set to (.+)$/ do |vat_rate|
+  Settings.invoicing_default_vat_rate = vat_rate.to_f
 end
