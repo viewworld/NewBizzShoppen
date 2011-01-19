@@ -25,8 +25,8 @@ en:
         news: News
         currencies: Currencies
         invoices: Invoices
-        upcoming_invoices: Upcoming
-        payment_transactions: 'Transactions'
+        upcoming_invoices: Debtors
+        payment_transactions: 'Payments'
       agent:
         leads: My created leads
       call_centre:
@@ -478,18 +478,18 @@ en:
           number: 'Number'
           sale_date: 'Sale date'
           payment_deadline: 'Payment deadline date'
-          creation_date: 'Creation date'
+          creation_date: 'Invoice date'
           original: 'Original'
           copy: 'Copy'
           from: 'From'
           to: 'To'
           name: 'Name'
-          quantity: 'Quantity'
-          netto_price: 'Netto price'
+          quantity: '#'
+          netto_price: 'Price'
           netto_value: 'Netto value'
-          vat: 'VAT'
-          vat_value: 'VAT value'
-          brutto_value: 'Brutto value'
+          vat: 'VAT%'
+          vat_value: 'VAT'
+          brutto_value: 'Inc. VAT'
           total: 'Total'
           including: 'Including'
           total_in_words: 'Total in words'
@@ -600,7 +600,7 @@ en:
     upcoming_invoices:
       index:
         view:
-          header: Upcoming invoices
+          header: Debtors
           customer_first_name: First name
           customer_last_name: Last name
           customer_screen_name: 'Screen name'
