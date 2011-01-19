@@ -37,10 +37,8 @@ Scenario: I can browse leads in a given category with pagination
   Then I follow "Computers"
   And I follow "2"
 
-@_tested
+@deprecated
 Scenario: I should see created by
-  Then I follow "Computers"
-  And I should see "John Dulinky"
 
 @m4 @tgn @_tested @added
 Scenario: I should see rating % and certification level for each lead

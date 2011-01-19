@@ -272,7 +272,7 @@ Scenario: I can sort invoices listing by following columns -  number, customer, 
   When I follow translated "administration.invoices.index.view.customer"
   Then I should see "Janko Muzykant" before "Ferdek Kiepski"
 
-@_done @ao
+@ao @_done
 Scenario: I can filter invoices list by following parameters - creation range, payment status, customer
   When invoice exists for user "kastomer@nbs.fake"
   And invoice line for first invoice exists for user "kastomer@nbs.fake" with attributes "quantity:1,netto_price:100,vat_rate:0.22,netto_value:100,brutto_value:122"
@@ -373,7 +373,7 @@ Scenario: I should not see amounts grouped by vat rate when vat is paid in custo
   And I should not see "122" within ".totals"
 
 @added @m4b @_done
-Scenario: I should not see amounts grouped by vat rate when vat is paid in customer country
+Scenario: I should see amounts grouped by vat rate when vat is paid in customer country
   When invoice exists for user "kastomer@nbs.fake" with attributes "vat_paid_in_customer_country:0"
   And invoice line for first invoice exists for user "kastomer@nbs.fake" with attributes "quantity:1,netto_price:100,vat_rate:0.22,netto_value:100,brutto_value:122"
   And I follow translated "layout.main_menu.admin.invoices"

@@ -108,20 +108,8 @@
               </thead>
               <tbody>
 
-              <% 2.times do %>
-                  <tr>
-                    <td class="ta_c"><%= check_box_tag "test", false %></td>
-                    <td><%= text_field_tag "test" %></td>
-                    <td><%= text_field_tag "test" %></td>
-                    <td><%= text_field_tag "test" %></td>
-                    <td><%= text_field_tag "test" %></td>
-                    <td><%= text_field_tag "test" %></td>
-                    <td><%= text_field_tag "test" %></td>
-                    <td><%= text_field_tag "test" %></td>
-                    <td><%= text_field_tag "test" %></td>
-                    <td><%= text_field_tag "test" %></td>
-                    <td class="ta_r"><%= bt_link_to nil, "remove line", "javascript:void(0)", :onclick => "remove_fields(this);", :class => "bt_grey_small bt_max" %></td>
-                  </tr>
+              <%= form.fields_for :invoice_lines do |invoice_line| %>
+                  <%= render :partial => "/administration/invoicing/invoice_lines/invoice_line_fields", :locals => {:f => invoice_line} %>
               <% end %>
 
               <%#= form.semantic_fields_for :invoice_lines do |invoice_line| %>
@@ -140,14 +128,9 @@
             <br/>
             <hl/>
 
-            <%= form.semantic_fields_for :invoice_lines do |invoice_line| %>
-                <%= render :partial => "/administration/invoicing/invoice_lines/invoice_line_fields", :locals => {:f => invoice_line} %>
-            <% end %>
-
-
-            <div class="add_invoice_line_btns">
-              <%= link_to_add_fields t("administration.invoices.edit.view.add_line"), form, :invoice_lines %>
-            </div>
+            <!--<div class="add_invoice_line_btns">-->
+              <%#= link_to_add_fields t("administration.invoices.edit.view.add_line"), form, :invoice_lines %>
+            <!--</div>-->
 
           </div>
         </param:content>
