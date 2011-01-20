@@ -30,6 +30,16 @@ Scenario: I can add lead to basket
   Then I follow translated "leads.index.add_to_cart_link"
   And I should see translated "buyer.cart_items.create.flash.cart_item_creation_successful"
 
+@tgn @_tested @added @sprint_5_corrections
+Scenario: I can view details of leads added to the basket
+  Given I fill in "search_with_keyword" with "printers"
+  And I press translated "leads.index.search.search_button"
+  Then I follow translated "leads.index.add_to_cart_link"
+  And I click hidden link "Printers ultimate deal"
+  Then I should see translated "leads.show.view.header"
+  And I should see "Printers ultimate deal"
+
+
 @tgn @_done @_tested @selenium
 Scenario: I can see basket summary before I go to checkout and I can see a total for all leads to be bought
   Given I check "mark_all"

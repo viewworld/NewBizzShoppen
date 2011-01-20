@@ -211,6 +211,17 @@ en:
       bestsellers_header: Best sellers
       latest_header: Latest leads
       featured_header: Featured leads
+    show:
+      view:
+        header: Lead details
+        clicks_label: Cliks
+        exposures_label: Exposures
+        rating_label: Lead rating
+        sale_limit_label: Uniqueness
+        novelty_label: Novelty
+        hotness_label: Hotness
+        certification_label: Certification
+
   news:
     index:
       view:
