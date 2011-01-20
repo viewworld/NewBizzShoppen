@@ -616,7 +616,42 @@ en:
             with_assigned_at_date_after_and_including: Assigned date after and including
             with_assigned_at_date_before_and_including: Assigned date before and including
             payment_status: Payment status
-
+    bank_accounts:
+      index:
+        view:
+          country: 'Country'
+          bank_name: 'Bank name'
+          bank_address: 'Bank address'
+          iban_no: 'IBAN number'
+          local_bank_number: 'Local bank number'
+          swift: 'SWIFT'
+          default_bank: 'Default bank'
+          actions: 'Actions'
+          edit: 'Edit'
+          show: 'Show'
+          add_bank: 'Add bank'
+      edit:
+        view:
+          header: 'Edit bank account'
+          button_save: 'Save'
+      new:
+        view:
+          header: 'New bank account'
+          button_create: 'Create bank account'
+      show:
+        view:
+          header: 'Bank account'
+          country: 'Country'
+          bank_name: 'Bank name'
+          bank_address: 'Bank address'
+          iban_no: 'IBAN number'
+          local_bank_number: 'Local bank number'
+          swift: 'SWIFT'
+          default_bank: 'Default bank'
+          payment_conditions: 'Payment conditions'
+      form:
+        view:
+          default_bank_for_country: 'Default bank account for country'
 
   agent:
     leads:

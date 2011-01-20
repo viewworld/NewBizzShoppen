@@ -4,6 +4,7 @@ class Administration::SettingsController < Administration::AdministrationControl
 
   def edit
     @settings = Settings.where({})
+    @bank_accounts = BankAccount.all
   end
 
   def update

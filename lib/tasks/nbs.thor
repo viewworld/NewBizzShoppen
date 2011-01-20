@@ -24,6 +24,18 @@ class Nbs < Thor
     Country.find_or_create_by_name("Denmark")
     Country.find_or_create_by_name("United Kingdom")
 
+    if BankAccount.count == 0
+      BankAccount.create(
+          :country => Country.where(:name => 'Denmark').first,
+          :bank_name => 'Default Bank',
+          :bank_address => 'Default Location',
+          :iban_no => 'DK00 0000 0000 0000 00',
+          :local_bank_number => '0',
+          :swift => 'DKDKDK',
+          :default_bank => true
+      )
+    end
+
     email_templates_array = [
         {:name    => "confirmation instructions",
          :uniq_id => "confirmation_instructions",

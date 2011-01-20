@@ -1,0 +1,38 @@
+<column-mc:>
+  <header back="true"><%= t('administration.bank_accounts.show.view.header') %></header>
+
+  <frm title="#{@bank_account.bank_name}">
+    <param:header>
+      <%= bt_link_to nil, t("common.edit_link"), edit_administration_bank_account_path(@bank_account), :class => "fltr" %>
+    </param:header>
+    <param:content>
+      <div class="pdd_10">
+        <p>
+          <%= t("administration.bank_accounts.show.view.country") %>: <%= @bank_account.country.name %>
+        </p><br/>
+        <p>
+          <%= t("administration.bank_accounts.show.view.bank_name") %>: <%= @bank_account.bank_name %>
+        </p><br/>
+        <p>
+          <%= t("administration.bank_accounts.show.view.bank_address") %>: <%= @bank_account.bank_address %>
+        </p><br/>
+        <p>
+          <%= t("administration.bank_accounts.show.view.iban_no") %>: <%= @bank_account.iban_no %>
+        </p><br/>
+        <p>
+          <%= t("administration.bank_accounts.show.view.local_bank_number") %>: <%= @bank_account.local_bank_number %>
+        </p><br/>
+        <p>
+          <%= t("administration.bank_accounts.show.view.swift") %>: <%= @bank_account.swift %>
+        </p><br/>
+        <p>
+          <%= t("administration.bank_accounts.show.view.default_bank") %>: <%= @bank_account.default_bank %>
+        </p><br/>
+        <p>
+          <%= t("administration.bank_accounts.show.view.payment_conditions") %>: <%= @bank_account.payment_conditions %>
+        </p>
+      </div>
+    </param:content>
+  </frm>
+
+</column-mc:>

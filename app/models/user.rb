@@ -32,9 +32,10 @@ class User < ActiveRecord::Base
 
   has_many :subaccounts, :class_name => "User", :foreign_key => "parent_id"
   has_many :owned_lead_requests, :class_name => 'LeadRequest', :foreign_key => :owner_id
-  belongs_to :user, :class_name => "User", :foreign_key => "parent_id", :counter_cache => :subaccounts_counter
-#  belongs_to :country, :foreign_key => "country"
   has_many :invoices
+  belongs_to :user, :class_name => "User", :foreign_key => "parent_id", :counter_cache => :subaccounts_counter
+  belongs_to :country, :foreign_key => "country"
+  belongs_to :bank_account, :foreign_key => :country, :primary_key => :country_id
   alias_method :parent, :user
 
   scope :with_role, lambda { |role| where("roles_mask & #{2**User.valid_roles.index(role.to_sym)} > 0 ") }
@@ -274,6 +275,10 @@ class User < ActiveRecord::Base
 
   def to_s
     full_name
+  end
+
+  def payment_account
+
   end
 
 end

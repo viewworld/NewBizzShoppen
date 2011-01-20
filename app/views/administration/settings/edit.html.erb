@@ -27,4 +27,54 @@
         </param:actions>
       </frm>
   <% end %>
+
+  <table class="generic" cellspacing="0" cellpadding="0">
+    <thead>
+        <tr>
+          <th class="hl"></th>
+          <th><%= t("administration.bank_accounts.index.view.country") %></th>
+          <th><%= t("administration.bank_accounts.index.view.bank_name") %></th>
+          <th><%= t("administration.bank_accounts.index.view.bank_address") %></th>
+          <th><%= t("administration.bank_accounts.index.view.iban_no") %></th>
+          <th><%= t("administration.bank_accounts.index.view.local_bank_number") %></th>
+          <th><%= t("administration.bank_accounts.index.view.swift") %></th>
+          <th><%= t("administration.bank_accounts.index.view.default_bank") %></th>
+          <th><%= t("administration.bank_accounts.index.view.actions") %></th>
+          <th class="hr"></th>
+        </tr>
+    </thead>
+    <tbody>
+      <% @bank_accounts.each do |ba| %>
+        <tr>
+          <td class="cl"></td>
+          <td><%= ba.country.name %></td>
+          <td><%= ba.bank_name %></td>
+          <td><%= ba.bank_address %></td>
+          <td><%= ba.iban_no %></td>
+          <td><%= ba.local_bank_number %></td>
+          <td><%= ba.swift %></td>
+          <td><%= check_box_tag ba.id, 1, ba.default_bank?, :disabled => true %></td>
+          <td>
+            <ul-actions>
+              <li><%= link_to t("administration.bank_accounts.index.view.show"), administration_bank_account_path(ba) %></li>
+              <li><%= link_to t("administration.bank_accounts.index.view.edit"), edit_administration_bank_account_path(ba) %></li>
+            </ul-actions>
+          </td>
+          <td class="cr"></td>
+        </tr>
+      <% end %>
+      <tr class="main_actions">
+        <td colspan="10">
+          <%= bt_link_to nil, t("administration.bank_accounts.index.view.add_bank"), new_administration_bank_account_path %>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+      <td class="fl"></td>
+      <td colspan="8"></td>
+      <td class="fr"></td>
+    </tr>
+    </tfoot>
+  </table>
 </column-mc:>

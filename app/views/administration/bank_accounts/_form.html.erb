@@ -1,0 +1,14 @@
+<div class="pdd_10 no_pdd_t">
+  <fieldset class="inputs">
+    <ol>
+      <%= form.input :country, :include_blank => false %>
+      <%= form.input :bank_name %>
+      <%= form.input :bank_address %>
+      <%= form.input :iban_no %>
+      <%= form.input :local_bank_number %>
+      <%= form.input :swift %>
+      <%= form.input :payment_conditions %>
+      <%= form.input :default_bank, :label => t("administration.bank_accounts.form.view.default_bank_for_country") %>
+    </ol>
+  </fieldset>
+</div>
