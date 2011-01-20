@@ -2,7 +2,7 @@ class CreateVatRates < ActiveRecord::Migration
   def self.up
     create_table :vat_rates do |t|
       t.integer :country_id
-      t.number :rate
+      t.decimal :rate
 
       t.timestamps
     end
