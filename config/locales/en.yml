@@ -201,6 +201,9 @@ en:
         country_label: 'Country'
       add_to_cart_link: Add to cart
       buy_lead: Buy lead
+      buy_lead_confirm_msg: Do you want to buy this lead?
+      add_to_cart_lead_confirm_msg: Do you want to add this lead to cart?
+      request_lead_confirm_msg: Do you want to request this lead?
       request_lead: Request lead
       button_bulk_create_lead_request: 'Request leads'
       button_bulk_create_cart_item: 'Add to cart'
