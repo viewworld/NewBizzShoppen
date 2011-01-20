@@ -3,7 +3,7 @@
 
   <% semantic_form_for [:administration, :invoicing, @invoice] do |form| %>
       <% form.inputs :name => "Basic information" do %>
-          <%= form.input :user %>
+          <%= form.input :user, :include_blank => false %>
       <% end %>
       <%= form.buttons %>
   <% end %>

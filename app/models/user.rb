@@ -35,6 +35,7 @@ class User < ActiveRecord::Base
   belongs_to :user, :class_name => "User", :foreign_key => "parent_id", :counter_cache => :subaccounts_counter
 #  belongs_to :country, :foreign_key => "country"
   has_many :invoices
+  belongs_to :vat_rate, :foreign_key => :country, :primary_key => :country_id
   alias_method :parent, :user
 
   scope :with_role, lambda { |role| where("roles_mask & #{2**User.valid_roles.index(role.to_sym)} > 0 ") }
@@ -274,6 +275,10 @@ class User < ActiveRecord::Base
 
   def to_s
     full_name
+  end
+
+  def country_vat_rate
+    vat_rate ? (vat_rate.rate/100) : 0.0
   end
 
 end

@@ -27,4 +27,43 @@
         </param:actions>
       </frm>
   <% end %>
+
+  <table class="generic" cellspacing="0" cellpadding="0">
+    <thead>
+        <tr>
+          <th class="hl"></th>
+          <th><%= t("administration.vat_rates.index.view.country") %></th>
+          <th><%= t("administration.vat_rates.index.view.rate") %></th>
+          <th><%= t("administration.vat_rates.index.view.actions") %></th>
+          <th class="hr"></th>
+        </tr>
+    </thead>
+    <tbody>
+      <% @vat_rates.each do |vr| %>
+        <tr>
+          <td class="cl"></td>
+          <td><%= vr.country.name %></td>
+          <td><%= number_to_percentage(vr.rate, :precision => 2) %></td>
+          <td class="tda ta_r">
+            <ul-actions>
+              <li><%= link_to t("administration.vat_rates.index.view.edit"), edit_administration_vat_rate_path(vr) %></li>
+            </ul-actions>
+          </td>
+          <td class="cr"></td>
+        </tr>
+      <% end %>
+      <tr class="main_actions">
+        <td colspan="5">
+          <%= bt_link_to nil, t("administration.vat_rates.index.view.add_vat_rate"), new_administration_vat_rate_path %>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+      <td class="fl"></td>
+      <td colspan="3"></td>
+      <td class="fr"></td>
+    </tr>
+    </tfoot>
+  </table>
 </column-mc:>

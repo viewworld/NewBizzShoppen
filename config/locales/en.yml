@@ -286,6 +286,7 @@ en:
           button_update_user: Save
           button_cancel: Cancel
           reset_password_link: Reset password
+          not_charge_vat: 'Do not charge VAT'
       create:
         flash:
           user_creation_successful: User has been created successfuly
@@ -629,6 +630,22 @@ en:
             with_assigned_at_date_after_and_including: Assigned after
             with_assigned_at_date_before_and_including: Assigned before
             payment_status: Payment status
+    vat_rates:
+      index:
+        view:
+          country: 'Country'
+          rate: 'Rate'
+          actions: 'Actions'
+          edit: 'Edit'
+          add_vat_rate: 'Add VAT rate'
+      new:
+        view:
+          header: 'New VAT rate'
+          button_create: 'Create'
+      edit:
+        view:
+          header: 'Edit VAT rate'
+          button_save: 'Save'
 
 
   agent:
