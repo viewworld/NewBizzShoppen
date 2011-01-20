@@ -202,13 +202,13 @@ Scenario: I can add custom invoice line to invoice
   And I follow translated "administration.invoices.index.view.edit_invoice"
   Then the "invoice_invoice_lines_attributes_0_name" field should contain "AddedLineOne"
 
-@_done @ao
+@_done @ao @selenium
 Scenario: I can remove invoice line from invoice
   When invoice exists for user "kastomer@nbs.fake"
   And invoice line for first invoice exists for user "kastomer@nbs.fake"
   And I follow translated "layout.main_menu.admin.invoices"
-  And I follow translated "administration.invoices.index.view.edit_invoice"
-  And I follow translated "administration.invoices.edit.view.remove_line"
+  And I click hidden link by url regex "/administration\/invoicing\/invoices\/\d+\/edit/"
+  And I click hidden link "remove line"
   And I press translated "administration.invoices.edit.view.save_button"
   And I follow translated "administration.invoices.index.view.edit_invoice"
   Then the "invoice_invoice_lines_attributes_0_name" field should contain ""
