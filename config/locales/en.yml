@@ -129,7 +129,7 @@ en:
       sale_limit_label: 'Uniqueness:'
       novelty_label: 'Publish date:'
       hotness_label: 'Deadline:'
-      certification_label: 'Agent certification level:'
+      certification_label: 'Agent certification:'
       created_by_label: 'Created by:'
       linkedin_url: 'LinkedIn'
       facebook_url: 'Facebook'
@@ -170,7 +170,7 @@ en:
       novelty_label: 'Novelty:'
       hotness_label: 'Hotness:'
       certification_label: 'Certification:'
-      average_rating_label: 'Rating:'
+      average_rating_label: 'Lead rating:'
       average_rating_none_label: 'None'
       has_unsatisfactory_rating_yes: 'Yes'
       has_unsatisfactory_rating_no: 'No'
@@ -191,6 +191,7 @@ en:
       actions: 'Actions'
     index:
       header: Leads
+      header_for: 'for'
       search:
         search_button: Search
         keyword_label: Keyword
@@ -525,6 +526,15 @@ en:
           show_invoice: 'Show invoice'
           go_back: 'Go back'
           set_payable_for_invoice_items: 'Set payable for invoice items'
+          name: Name
+          pkwiu: Pkwiu
+          unit: Unit
+          quantity: '#'
+          vat_rate: VAT%
+          netto_price: Netto price
+          netto_value: Netto value
+          vat_value: VAT
+          brutto_value: Incl. VAT
           form:
             general_information: 'General information'
             customer_information: 'Customer information'
@@ -556,8 +566,8 @@ en:
           actions: Actions
           search:
             with_keyword: 'Keyword'
-            with_sale_date_after_and_including: 'Sale date after and including'
-            with_sale_date_before_and_including: 'Sale date before and including'
+            with_sale_date_after_and_including: 'Sale after'
+            with_sale_date_before_and_including: 'Sale before'
             not_paid: 'Not paid only'
             payment_status: 'Payment status'
       cash_flow:
@@ -591,6 +601,8 @@ en:
           search_button: 'Search'
           search:
             with_keyword: 'Keyword:'
+            with_sale_date_after_and_including: Sale after
+            with_sale_date_before_and_including: Sale before
       new:
         view:
           header: 'New transaction'
@@ -603,6 +615,7 @@ en:
       index:
         view:
           header: Debtors
+          total: Total
           customer_first_name: First name
           customer_last_name: Last name
           customer_screen_name: 'Screen name'
@@ -613,8 +626,8 @@ en:
           search_button: Search
           search:
             with_keyword: Keyword
-            with_assigned_at_date_after_and_including: Assigned date after and including
-            with_assigned_at_date_before_and_including: Assigned date before and including
+            with_assigned_at_date_after_and_including: Assigned after
+            with_assigned_at_date_before_and_including: Assigned before
             payment_status: Payment status
     bank_accounts:
       index:

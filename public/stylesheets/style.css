@@ -1202,7 +1202,7 @@ span.cke_skin_kama
 
 .invoice_inline_inputs tbody tr td input
 {
-    width: 88px;
+    width: 93px;
 }
 
 .invoice_inline_inputs tbody tr.total td
@@ -1211,9 +1211,4 @@ span.cke_skin_kama
     font-weight: bold;
     padding: 10px 4px;
     text-align: center;
-}
-
-.invoice_inline_inputs tbody tr td:first-child input
-{
-    width: auto;
 }

@@ -9,6 +9,11 @@ When /^invoice line for first invoice exists for user "([^"]*)"(?: with attribut
   InvoiceLine.make!(attrs)
 end
 
+When /^first invoice for user "([^"]*)" exists with attributes "([^"]*)"$/ do |email, options|
+  invoice = User::Abstract.where(:email => email).first.invoices.first
+  invoice.update_attributes(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys)
+end
+
 When /^first invoice for user "([^"]*)" is created at "([^"]*)"$/ do |email, date|
   invoice = User.where(:email => email).first.invoices.first
   Invoice.update_all(["created_at = :date, sale_date = :date",{:date => date}], ["id=?",invoice.id])
@@ -37,7 +42,9 @@ end
 
 Then /^user with email "([^"]*)" and role "([^"]*)" has invoice generated for all unpaid leads$/ do |email, role|
   customer = "User::#{role.camelize}".constantize.find_by_email(email)
-  Invoice.create(:user_id => customer.id, :paid_at =>  nil)
+  invoice = Invoice.create(:user_id => customer.id, :paid_at =>  Time.now)
+  invoice.reload
+  ManualTransaction.create(:invoice => invoice, :amount => invoice.total, :paid_at => Time.now)
 end
 
 Then /^user with email "([^"]*)" and role "([^"]*)" has invoice for lead "([^"]*)" and transaction created (by paypal|manually)$/ do |email, role, header, transaction_type|
