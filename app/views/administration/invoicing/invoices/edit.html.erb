@@ -124,6 +124,9 @@
           <ibt c="fltri" icon="save">
             <%= form.submit t("administration.invoices.edit.view.save_button") %>
           </ibt>
+          <ibt c="fltri bt_grey">
+            <%= button_to_function t("common.cancel_link"), "history.go(-1)" %>
+          </ibt>
         </param:actions>
       </frm>
   <% end %>
