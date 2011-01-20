@@ -93,7 +93,6 @@
             <table class="invoice_inline_inputs">
               <thead>
               <tr>
-                <th><%= check_box_tag "check_all_invoice_lines", false %></th>
                 <th>Name</th>
                 <th>Pkwiu</th>
                 <th>Unit</th>
@@ -112,27 +111,14 @@
                   <%= render :partial => "/administration/invoicing/invoice_lines/invoice_line_fields", :locals => {:f => invoice_line} %>
               <% end %>
 
-              <%#= form.semantic_fields_for :invoice_lines do |invoice_line| %>
-              <%#= render :partial => "/administration/invoicing/invoice_lines/invoice_line_fields", :locals => {:f => invoice_line} %>
-              <%# end %>
-
               <tr class="total">
-                <%= render "totals" %>
+                <%= render "totals", :form => form %>
               </tr>
               </tbody>
             </table>
 
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <hl/>
-
-            <!--<div class="add_invoice_line_btns">-->
-              <%#= link_to_add_fields t("administration.invoices.edit.view.add_line"), form, :invoice_lines %>
-            <!--</div>-->
-
           </div>
+          <br/>
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="save">

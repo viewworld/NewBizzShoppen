@@ -1,16 +1,15 @@
 <tr>
-    <%= f.hidden_field :payable_type %>
-    <%= f.hidden_field :payable_id %>
-    <td class="ta_c"><%= f.check_box :payable_update, :class => "invoice_line_payable_update", :onclick => "addIdToPayablesSet(this);" %></td>
-    <td><%= f.text_field :name, :onKeyDown => "extendedNavigation(event)", :class => "invoice_line_name" %></td>
-    <td><%= f.text_field :pkwiu, :onKeyDown => "extendedNavigation(event)", :class => "invoice_line_pkwiu" %></td>
-    <td><%= f.text_field :unit, :onKeyDown => "extendedNavigation(event)", :class => "invoice_line_unit" %></td>
-    <td><%= f.text_field :quantity, :onKeyDown => "extendedNavigation(event)", :class => "invoice_line_quantity" %></td>
-    <td><%= f.text_field :vat_rate, :onKeyDown => "extendedNavigation(event)", :class => "invoice_line_vat_rate" %></td>
-    <td><%= f.text_field :netto_price, :onKeyDown => "extendedNavigation(event)", :class => "invoice_line_netto_price" %></td>
-    <td><%= f.text_field :netto_value, :class => "readonly invoice_line_netto_value" %></td>
-    <td><%= f.text_field :vat_value, :readonly => true, :class => "readonly invoice_line_vat_value" %></td>
-    <td><%= f.text_field :brutto_value, :onKeyDown => "extendedNavigation(event)", :class => "invoice_line_brutto_value" %></td>
+  <td><%= f.text_field :name, :onKeyDown => "extendedNavigation(event)", :autocomplete => "off" %></td>
+  <td><%= f.text_field :pkwiu, :onKeyDown => "extendedNavigation(event)", :autocomplete => "off" %></td>
+  <td><%= f.text_field :unit, :onKeyDown => "extendedNavigation(event)", :autocomplete => "off" %></td>
+  <td><%= f.text_field :quantity, :onKeyDown => "extendedNavigation(event)", :autocomplete => "off" %></td>
+  <td><%= f.text_field :vat_rate, :onKeyDown => "extendedNavigation(event)", :autocomplete => "off" %></td>
+  <td><%= f.text_field :netto_price, :onKeyDown => "extendedNavigation(event)", :autocomplete => "off" %></td>
+  <td><%= f.text_field :netto_value, :readonly => true %></td>
+  <td><%= f.text_field :vat_value, :readonly => true %></td>
+  <td><%= f.text_field :brutto_value, :readonly => true %></td>
+  <td class="ta_r">
     <%= f.hidden_field :_destroy %>
-    <td class="ta_r"><%= bt_link_to nil, "remove line", "javascript:void(0)", :onclick => "remove_fields(this);recalcValues();", :class => "bt_grey_small bt_max" %></td>
+    <%= bt_link_to nil, "remove line", "javascript:void(0)", :onclick => "remove_fields(this);", :class => "bt_grey_small bt_max" %>
+  </td>
 </tr>
