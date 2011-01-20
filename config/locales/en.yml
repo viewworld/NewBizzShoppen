@@ -526,6 +526,15 @@ en:
           show_invoice: 'Show invoice'
           go_back: 'Go back'
           set_payable_for_invoice_items: 'Set payable for invoice items'
+          name: Name
+          pkwiu: Pkwiu
+          unit: Unit
+          quantity: '#'
+          vat_rate: VAT%
+          netto_price: Netto price
+          netto_value: Netto value
+          vat_value: VAT
+          brutto_value: Incl. VAT
           form:
             general_information: 'General information'
             customer_information: 'Customer information'
