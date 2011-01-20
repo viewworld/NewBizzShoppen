@@ -606,6 +606,7 @@ en:
       index:
         view:
           header: Debtors
+          total: Total
           customer_first_name: First name
           customer_last_name: Last name
           customer_screen_name: 'Screen name'

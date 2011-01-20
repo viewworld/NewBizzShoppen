@@ -34,7 +34,20 @@
 
 <column-mc:>
 
-  <header><%= t("administration.upcoming_invoices.index.view.header") %></header>
+
+  <header>
+    <param:content>
+      <%= t("administration.upcoming_invoices.index.view.header") %>
+    </param:content>
+
+    <param:actions>
+      <ul class="header_actions">
+        <li class="last">
+          <%= t("administration.upcoming_invoices.index.view.total") %>: <%= @lead_purchases_count %>
+        </li>
+      </ul>
+    </param:actions>
+  </header>
 
   <table class="generic" cellspacing="0" cellpadding="0">
     <thead>

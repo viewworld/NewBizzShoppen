@@ -97,8 +97,11 @@ Scenario: I can search for invoices pending creation by a combination of keyword
   Then I should not see "77.99"
   Then I should see "88.32"
 
-@m5 @added @tgn @sprint_5_corrections
+@m5 @added @tgn @sprint_5_corrections @_tested
 Scenario: I should see on the upper right corner there should be a total of the upcoming invoices
+  Given I go to administration upcoming invoices
+  And I should see translated "administration.upcoming_invoices.index.view.total"
+  And I should see "2"
 
 @m5 @added @tgn @sprint_5_corrections
 Scenario: I should be able to write a custom text on the invoice
