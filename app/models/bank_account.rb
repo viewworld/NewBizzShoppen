@@ -24,8 +24,8 @@ class BankAccount < ActiveRecord::Base
 
   public
 
-#  def to_s
-#    "#{country.name} / #{bank_name}"
-#  end
+  def to_s
+    "#{country.name} / #{bank_name}"
+  end
 
 end

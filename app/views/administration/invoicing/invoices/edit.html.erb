@@ -76,7 +76,10 @@
                 <%= form.input :payment_deadline_date,
                                :as => :string,
                                :input_html => {:class => "datepicker"}, :wrapper_html => {:class => "date"} %>
-                <%= form.input :payment_account_information, :input_html => {:style => "width: 230px;height: 80px"} %>
+                <%#= form.fields_for @invoice.user.bank_account do |form_ba| %>
+                    <%#= form_ba.input :bank_name %>
+                <%# end %>
+                <%#= form.input :payment_account_information, :input_html => {:style => "width: 230px;height: 80px"} %>
                 <%= form.input :payment_method,
                                :as => :select,
                                :collection => Invoice::PAYMENT_METHODS.map { |pm| [t("administration.invoices.common.view.#{pm}"), pm.to_s] },

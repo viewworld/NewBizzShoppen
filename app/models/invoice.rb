@@ -87,8 +87,7 @@ class Invoice < ActiveRecord::Base
             :seller_name => Settings.invoicing_seller_name,
             :seller_vat_no => Settings.invoicing_seller_vat_number,
             :seller_first_name => Settings.invoicing_seller_first_name,
-            :seller_last_name => Settings.invoicing_seller_last_name,
-            :payment_account_information => Settings.invoicing_seller_payment_account
+            :seller_last_name => Settings.invoicing_seller_last_name
     })
   end
 

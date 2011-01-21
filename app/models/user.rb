@@ -34,8 +34,8 @@ class User < ActiveRecord::Base
   has_many :owned_lead_requests, :class_name => 'LeadRequest', :foreign_key => :owner_id
   has_many :invoices
   belongs_to :user, :class_name => "User", :foreign_key => "parent_id", :counter_cache => :subaccounts_counter
-  belongs_to :country, :foreign_key => "country"
-  belongs_to :bank_account, :foreign_key => :country, :primary_key => :country_id
+  belongs_to :user_country, :foreign_key => "country", :class_name => 'Country'
+  belongs_to :bank_account, :foreign_key => :bank_account_id, :primary_key => :id, :class_name => 'BankAccount'
   alias_method :parent, :user
 
   scope :with_role, lambda { |role| where("roles_mask & #{2**User.valid_roles.index(role.to_sym)} > 0 ") }
@@ -140,7 +140,7 @@ class User < ActiveRecord::Base
   end
 
   def set_bank_account
-    self.bank_account_id = if country and country_default = country.default_bank_account
+    self.bank_account_id = if user_country and country_default = user_country.default_bank_account
       country_default.id
     elsif global_default = BankAccount.global_default_bank_account.first
       global_default.id
