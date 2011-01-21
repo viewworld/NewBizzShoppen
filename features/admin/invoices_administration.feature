@@ -368,7 +368,8 @@ Scenario: EAN should not be visible if not filled
 
 @added @m4b @_done
 Scenario: I should not see amounts grouped by vat rate when vat is paid in customer country
-  When invoice exists for user "kastomer@nbs.fake" with attributes "vat_paid_in_customer_country:1"
+  When user "kastomer@nbs.fake" with role "customer" has attributes "not_charge_vat:1"
+  And invoice exists for user "kastomer@nbs.fake"
   And invoice line for first invoice exists for user "kastomer@nbs.fake" with attributes "quantity:1,netto_price:100,vat_rate:0.22,netto_value:100,brutto_value:122"
   And I follow translated "layout.main_menu.admin.invoices"
   And I follow translated "administration.invoices.index.view.show_invoice"
@@ -376,8 +377,9 @@ Scenario: I should not see amounts grouped by vat rate when vat is paid in custo
   And I should not see "122" within ".totals"
 
 @added @m4b @_done
-Scenario: I should see amounts grouped by vat rate when vat is paid in customer country
-  When invoice exists for user "kastomer@nbs.fake" with attributes "vat_paid_in_customer_country:0"
+Scenario: I should see amounts grouped by vat rate when vat is not paid in customer country
+  When user "kastomer@nbs.fake" with role "customer" has attributes "not_charge_vat:0"
+  And invoice exists for user "kastomer@nbs.fake"
   And invoice line for first invoice exists for user "kastomer@nbs.fake" with attributes "quantity:1,netto_price:100,vat_rate:0.22,netto_value:100,brutto_value:122"
   And I follow translated "layout.main_menu.admin.invoices"
   And I follow translated "administration.invoices.index.view.show_invoice"

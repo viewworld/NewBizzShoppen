@@ -1,6 +1,7 @@
 class Country < ActiveRecord::Base
   has_many :country_interest
   has_many :leads
+  has_one :vat_rate
 
   validates_uniqueness_of :name
 
