@@ -5,6 +5,7 @@ class Administration::SettingsController < Administration::AdministrationControl
   def edit
     @settings = Settings.where({})
     @bank_accounts = BankAccount.joins(:country).order("countries.name ASC, bank_name ASC")
+    @vat_rates = VatRate.all    
   end
 
   def update

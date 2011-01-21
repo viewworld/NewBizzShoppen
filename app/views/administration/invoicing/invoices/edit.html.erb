@@ -21,6 +21,7 @@
                 </li>
                 <%= form.input :number %>
                 <%= form.input :ean_number %>
+                <%= form.input :details, :input_html => {:style => "width: 230px; height: 80px"} %>
               </ol>
             </fieldset>
 
@@ -129,6 +130,9 @@
           </ibt>
           <ibt c="fltri" icon="save">
             <%= form.submit t("administration.invoices.edit.view.save_button") %>
+          </ibt>
+          <ibt c="fltri bt_grey">
+            <%= button_to_function t("common.cancel_link"), "history.go(-1)" %>
           </ibt>
         </param:actions>
       </frm>

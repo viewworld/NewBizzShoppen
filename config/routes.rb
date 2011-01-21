@@ -38,6 +38,7 @@ Nbs::Application.routes.draw do
       resources :payment_transactions
     end
     resources :bank_accounts
+    resources :vat_rates    
   end
 
   namespace :buyers do

@@ -18,6 +18,9 @@
       <%= form.input :city %>
       <%= form.input :zip_code %>
       <%= form.input :county %>
+      <% if ['lead_buyer', 'customer'].include?(params[:role]) or @user.has_any_role?(:lead_buyer, :customer) %>
+        <%= form.input :vat_number %>
+      <% end %>
     </ol>
   </fieldset>
 </div>
@@ -60,6 +63,9 @@
       <% if ['lead_buyer', 'customer'].include?(params[:role]) or @user.has_any_role?(:lead_buyer, :customer) %>
           <%= form.input :big_buyer, :as => :boolean %>
       <% end %>      
+      <% if @user.vat_number.present? and (['lead_buyer', 'customer'].include?(params[:role]) or @user.has_any_role?(:lead_buyer, :customer)) %>
+          <%= form.input :not_charge_vat, :as => :boolean, :label => t("administration.users.edit.view.not_charge_vat") %>
+      <% end %>
     </ol>
   </fieldset>
 </div>

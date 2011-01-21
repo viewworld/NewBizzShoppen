@@ -201,6 +201,9 @@ en:
         country_label: 'Country'
       add_to_cart_link: Add to cart
       buy_lead: Buy lead
+      buy_lead_confirm_msg: Do you want to buy this lead?
+      add_to_cart_lead_confirm_msg: Do you want to add this lead to cart?
+      request_lead_confirm_msg: Do you want to request this lead?
       request_lead: Request lead
       button_bulk_create_lead_request: 'Request leads'
       button_bulk_create_cart_item: 'Add to cart'
@@ -208,6 +211,17 @@ en:
       bestsellers_header: Best sellers
       latest_header: Latest leads
       featured_header: Featured leads
+    show:
+      view:
+        header: Lead details
+        clicks_label: Cliks
+        exposures_label: Exposures
+        rating_label: Lead rating
+        sale_limit_label: Uniqueness
+        novelty_label: Novelty
+        hotness_label: Hotness
+        certification_label: Certification
+
   news:
     index:
       view:
@@ -286,6 +300,7 @@ en:
           button_update_user: Save
           button_cancel: Cancel
           reset_password_link: Reset password
+          not_charge_vat: 'Do not charge VAT'
       create:
         flash:
           user_creation_successful: User has been created successfuly
@@ -668,6 +683,23 @@ en:
         view:
           country_default: 'Country default'
           global_default: 'Global default'
+          
+    vat_rates:
+      index:
+        view:
+          country: 'Country'
+          rate: 'Rate'
+          actions: 'Actions'
+          edit: 'Edit'
+          add_vat_rate: 'Add VAT rate'
+      new:
+        view:
+          header: 'New VAT rate'
+          button_create: 'Create'
+      edit:
+        view:
+          header: 'Edit VAT rate'
+          button_save: 'Save'          
 
   agent:
     leads:

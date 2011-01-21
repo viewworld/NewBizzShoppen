@@ -82,12 +82,14 @@ class Invoice < ActiveRecord::Base
     self.update_attributes({
             :customer_name => user.full_name,
             :customer_address => user.address,
-            :customer_vat_no => "User vat",
+            :customer_vat_no => user.vat_number,
             :seller_address => Settings.invoicing_seller_address,
             :seller_name => Settings.invoicing_seller_name,
             :seller_vat_no => Settings.invoicing_seller_vat_number,
             :seller_first_name => Settings.invoicing_seller_first_name,
-            :seller_last_name => Settings.invoicing_seller_last_name
+            :seller_last_name => Settings.invoicing_seller_last_name,
+            :payment_account_information => Settings.invoicing_seller_payment_account,
+            :vat_paid_in_customer_country => user.not_charge_vat?
     })
   end
 
@@ -109,7 +111,7 @@ class Invoice < ActiveRecord::Base
   def generate_invoice_lines_for_big_buyer
     if user and user.big_buyer?
       User::Customer.find(user_id).lead_purchases.select { |lp| lp.invoice_line.blank? }.each do |lead_purchase|
-        InvoiceLine.create(:invoice => self, :payable => lead_purchase, :name => lead_purchase.lead.header, :netto_price => lead_purchase.lead.price, :vat_rate => Settings.invoicing_default_vat_rate.to_f)
+        InvoiceLine.create(:invoice => self, :payable => lead_purchase, :name => lead_purchase.lead.header, :netto_price => lead_purchase.lead.price, :vat_rate => user.country_vat_rate)
       end
     end
   end

@@ -19,6 +19,7 @@
       <%= form.input :city %>
       <%= form.input :zip_code %>
       <%= form.input :county %>
+      <%= form.input :vat_number if current_user.has_role?(:customer) %>
     </ol>
   </fieldset>
 </div>

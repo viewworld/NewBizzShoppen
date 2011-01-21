@@ -36,6 +36,7 @@ class User < ActiveRecord::Base
   belongs_to :user, :class_name => "User", :foreign_key => "parent_id", :counter_cache => :subaccounts_counter
   belongs_to :user_country, :foreign_key => "country", :class_name => 'Country'
   belongs_to :bank_account, :foreign_key => :bank_account_id, :primary_key => :id, :class_name => 'BankAccount'
+  belongs_to :vat_rate, :foreign_key => :country, :primary_key => :country_id
   alias_method :parent, :user
 
   scope :with_role, lambda { |role| where("roles_mask & #{2**User.valid_roles.index(role.to_sym)} > 0 ") }
@@ -284,8 +285,12 @@ class User < ActiveRecord::Base
     full_name
   end
 
+  def country_vat_rate
+    vat_rate ? (vat_rate.rate/100) : 0.0
+  end
+  
   def payment_account
 
-  end
+  end  
 
 end

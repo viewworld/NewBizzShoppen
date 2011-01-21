@@ -103,8 +103,14 @@ Scenario: I should see on the upper right corner there should be a total of the 
   And I should see translated "administration.upcoming_invoices.index.view.total"
   And I should see "2"
 
-@m5 @added @tgn @sprint_5_corrections
+@m5 @added @tgn @sprint_5_corrections @_tested
 Scenario: I should be able to write a custom text on the invoice
+  Given invoice exists for user "kastomer@nbs.fake" with attributes "vat_paid_in_customer_country:1"
+  And I go to administration invoices
+  And I follow translated "administration.invoices.index.view.edit_invoice"
+  And I fill in "invoice_details" with "Some details for invoice"
+  And I press translated "administration.invoices.edit.view.save_button"
+  Then I should see "Some details for invoice"
 
 @tgn @_tested
 Scenario: I can create new invoice from suggestion on invoices pending creation listing
@@ -368,7 +374,8 @@ Scenario: EAN should not be visible if not filled
 
 @added @m4b @_done
 Scenario: I should not see amounts grouped by vat rate when vat is paid in customer country
-  When invoice exists for user "kastomer@nbs.fake" with attributes "vat_paid_in_customer_country:1"
+  When user "kastomer@nbs.fake" with role "customer" has attributes "not_charge_vat:1"
+  And invoice exists for user "kastomer@nbs.fake"
   And invoice line for first invoice exists for user "kastomer@nbs.fake" with attributes "quantity:1,netto_price:100,vat_rate:0.22,netto_value:100,brutto_value:122"
   And I follow translated "layout.main_menu.admin.invoices"
   And I follow translated "administration.invoices.index.view.show_invoice"
@@ -376,8 +383,9 @@ Scenario: I should not see amounts grouped by vat rate when vat is paid in custo
   And I should not see "122" within ".totals"
 
 @added @m4b @_done
-Scenario: I should see amounts grouped by vat rate when vat is paid in customer country
-  When invoice exists for user "kastomer@nbs.fake" with attributes "vat_paid_in_customer_country:0"
+Scenario: I should see amounts grouped by vat rate when vat is not paid in customer country
+  When user "kastomer@nbs.fake" with role "customer" has attributes "not_charge_vat:0"
+  And invoice exists for user "kastomer@nbs.fake"
   And invoice line for first invoice exists for user "kastomer@nbs.fake" with attributes "quantity:1,netto_price:100,vat_rate:0.22,netto_value:100,brutto_value:122"
   And I follow translated "layout.main_menu.admin.invoices"
   And I follow translated "administration.invoices.index.view.show_invoice"
