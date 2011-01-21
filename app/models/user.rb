@@ -63,10 +63,9 @@ class User < ActiveRecord::Base
 
   attr_accessor :agreement_read, :locked
 
-  before_save :handle_locking
-  before_create :set_rss_token, :set_role
+  before_save :handle_locking, :handle_team_buyers_flag
+  before_create :set_rss_token, :set_role, :set_bank_account
   before_destroy :can_be_removed
-  before_save :handle_team_buyers_flag
 
   liquid :email, :first_name, :last_name, :confirmation_instructions_url, :reset_password_instructions_url
 
@@ -138,6 +137,14 @@ class User < ActiveRecord::Base
 
   def deliver_email_template(uniq_id)
     ApplicationMailer.email_template(email, EmailTemplate.find_by_uniq_id(uniq_id), {:user => self}).deliver
+  end
+
+  def set_bank_account
+    self.bank_account_id = if country and country_default = country.default_bank_account
+      country_default.id
+    elsif global_default = BankAccount.global_default_bank_account.first
+      global_default.id
+    end
   end
 
   public

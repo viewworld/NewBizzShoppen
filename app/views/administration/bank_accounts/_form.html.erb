@@ -8,7 +8,8 @@
       <%= form.input :local_bank_number %>
       <%= form.input :swift %>
       <%= form.input :payment_conditions %>
-      <%= form.input :default_bank, :label => t("administration.bank_accounts.form.view.default_bank_for_country") %>
+      <%= form.input :country_default, :label => t("administration.bank_accounts.form.view.country_default") %>
+      <%= form.input :global_default, :label => t("administration.bank_accounts.form.view.global_default") %>
     </ol>
   </fieldset>
 </div>

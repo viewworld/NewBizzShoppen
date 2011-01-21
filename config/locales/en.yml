@@ -632,16 +632,18 @@ en:
     bank_accounts:
       index:
         view:
+          header: 'Bank accounts'
           country: 'Country'
           bank_name: 'Bank name'
           bank_address: 'Bank address'
           iban_no: 'IBAN number'
           local_bank_number: 'Local bank number'
           swift: 'SWIFT'
-          default_bank: 'Default bank'
+          country_default: 'Default bank for country'
           actions: 'Actions'
           edit: 'Edit'
           show: 'Show'
+          delete: 'Delete'
           add_bank: 'Add bank'
       edit:
         view:
@@ -660,11 +662,12 @@ en:
           iban_no: 'IBAN number'
           local_bank_number: 'Local bank number'
           swift: 'SWIFT'
-          default_bank: 'Default bank'
+          country_default: 'Default bank for country'
           payment_conditions: 'Payment conditions'
       form:
         view:
-          default_bank_for_country: 'Default bank account for country'
+          country_default: 'Country default'
+          global_default: 'Global default'
 
   agent:
     leads:

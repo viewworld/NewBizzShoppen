@@ -17,4 +17,10 @@ class Administration::BankAccountsController < Administration::AdministrationCon
     end
   end
 
+  def destroy
+    destroy! do
+      redirect_to edit_administration_setting_path
+    end
+  end
+
 end

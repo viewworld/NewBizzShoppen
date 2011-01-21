@@ -32,7 +32,8 @@ class Nbs < Thor
           :iban_no => 'DK00 0000 0000 0000 00',
           :local_bank_number => '0',
           :swift => 'DKDKDK',
-          :default_bank => true
+          :country_default => true,
+          :global_default => true
       )
     end
 

@@ -4,7 +4,7 @@ class Administration::SettingsController < Administration::AdministrationControl
 
   def edit
     @settings = Settings.where({})
-    @bank_accounts = BankAccount.all
+    @bank_accounts = BankAccount.joins(:country).order("countries.name ASC, bank_name ASC")
   end
 
   def update

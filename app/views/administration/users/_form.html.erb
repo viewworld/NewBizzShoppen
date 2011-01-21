@@ -64,3 +64,12 @@
   </fieldset>
 </div>
 
+<% if ['lead_buyer', 'customer'].include?(params[:role]) or @user.has_any_role?(:lead_buyer, :customer) %>
+    <div class="pdd_10 no_pdd_t">
+      <fieldset class="inputs labels_ta_r labels_240">
+        <ol class="align_inputs">
+          <%= form.input :bank_account %>
+        </ol>
+      </fieldset>
+    </div>
+<% end %>
