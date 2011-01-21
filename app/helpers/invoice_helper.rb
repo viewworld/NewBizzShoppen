@@ -9,7 +9,7 @@ module InvoiceHelper
     fields = f.fields_for(association, new_object, :child_index => "new_#{association}") do |builder|
       render("/administration/invoicing/invoice_lines/"+association.to_s.singularize + "_fields", :f => builder)
     end
-    bt_link_to(:plus, name, "javascript:void(0)", :onclick => "add_fields(this, '#{association}', '#{escape_javascript(fields)}')", :id => "add_fields_#{association}", :class => "bt_max")
+    bt_link_to(:plus, name, "javascript:void(0)", :onclick => "add_fields(this, '#{association}', '#{escape_javascript(fields)}');change_vat_fields_availibility($('#invoice_vat_paid_in_customer_country')[0].checked)", :id => "add_fields_#{association}", :class => "bt_max")
   end
 
   def options_for_with_paid

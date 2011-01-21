@@ -3,9 +3,12 @@ var bIsFirebugReady = (!!window.console && !!window.console.log);
 function initInvoiceCalculations() {
     $("input[name$='[quantity]'], input[name$='[netto_price]'], input[name$='[vat_rate]']").bind("keyup", recalcValues);
     $("input[name$='[netto_value]']").bind("change", recalcValues);
+    $("#invoice_vat_paid_in_customer_country").bind("change", change_vat_fields_availibility);
+    $("#invoice_vat_paid_in_customer_country").bind("change", recalcValues);
     $("input[name$='[brutto_value]']").bind("keyup", recalcBruttoValuesWithoutBruttoUpdate);
     $("input[name$='[brutto_value]']").bind("change", recalcBruttoValues);
     // run the calculation function now
+    change_vat_fields_availibility();
     recalcValues();
 }
 
@@ -139,4 +142,14 @@ function recalc_brutto_value() {
                  );
             }
             );
+}
+
+function change_vat_fields_availibility() {
+    val = $("#invoice_vat_paid_in_customer_country")[0].checked;
+    $("input[id$='_vat_rate']").each(function(){
+        if (val == true) {
+            this.value = '0';
+        }
+        this.disabled = val;
+    });
 }

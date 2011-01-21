@@ -4,6 +4,7 @@ class Administration::SettingsController < Administration::AdministrationControl
 
   def edit
     @settings = Settings.where({})
+    @vat_rates = VatRate.all
   end
 
   def update
