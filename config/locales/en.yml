@@ -703,11 +703,25 @@ en:
       index:
         view:
           header: Leads
+          edit: Edit
+          destroy: Destroy
+          destroy_confirmation: Are you sure?
           search_label: Search
           search:
             with_keyword: Keyword
             with_created_by: Created by
           search_button: Search
+          option_published: published
+          option_not_published: not published
+      edit:
+        view:
+          title: Edit lead
+          button_update: Save
+          button_cancel: Cancel
+      destroy:
+        flash:
+          lead_deletion_successful: Lead has been successfully deleted!
+          lead_deletion_failure: Lead could not be deleted!
 
   call_centre_agent:
     leads:
