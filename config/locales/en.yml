@@ -648,6 +648,7 @@ en:
       index:
         view:
           header: 'Bank accounts'
+          id: 'ID'
           country: 'Country'
           bank_name: 'Bank name'
           bank_address: 'Bank address'

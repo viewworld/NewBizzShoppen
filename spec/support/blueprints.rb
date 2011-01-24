@@ -255,3 +255,12 @@ InvoiceLine.blueprint do
   netto_price { rand(10000) }
   quantity { rand(100) }
 end
+
+BankAccount.blueprint do
+  country { Country.make! }
+  bank_name { Faker::Lorem.words(2).to_s }
+  bank_address { "#{Faker::Address.street_name}\n#{Faker::Address.zip_code} #{Faker::Address.city}\n#{Faker::Address.city}" }
+  iban_no { Faker.numerify('###################') }
+  local_bank_number { Faker.numerify('#########') }
+  swift { Faker.letterify('????????').upcase }
+end

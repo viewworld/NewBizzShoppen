@@ -391,3 +391,23 @@ Scenario: I should see amounts grouped by vat rate when vat is not paid in custo
   And I follow translated "administration.invoices.index.view.show_invoice"
   Then I should see translated "administration.invoices.show.view.including"
   And I should see "122" within ".totals"
+
+@added @m4b @_done
+Scenario: We do not need to generate a copy of the invoice, just the orininal
+  When invoice exists for user "kastomer@nbs.fake" with attributes "vat_paid_in_customer_country:0"
+  And invoice line for first invoice exists for user "kastomer@nbs.fake" with attributes "quantity:1,netto_price:100,vat_rate:0.22,netto_value:100,brutto_value:122"
+  And I follow translated "layout.main_menu.admin.invoices"
+  And I follow translated "administration.invoices.index.view.show_invoice"
+  And I follow translated PDF link "administration.invoices.show.view.download_pdf"
+  Then I should not see "ORIGINAL"
+  And I should not see "COPY"
+
+@added @m4b @selenium @_done
+  Scenario: When you edit an invoice you should have the option to cancel the edit invoice
+  When invoice exists for user "kastomer@nbs.fake" with attributes "vat_paid_in_customer_country:0"
+  And invoice line for first invoice exists for user "kastomer@nbs.fake" with attributes "quantity:1,netto_price:100,vat_rate:0.22,netto_value:100,brutto_value:122"
+  And I follow translated "layout.main_menu.admin.invoices"
+  And I click hidden link by url regex "/administration\/invoicing\/invoices\/(\d+)\/edit/"
+  And I press translated "common.cancel_link"
+  Then I should be on administration invoices page
+

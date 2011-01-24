@@ -4,8 +4,10 @@ class Administration::SettingsController < Administration::AdministrationControl
 
   def edit
     @settings = Settings.where({})
-    @bank_accounts = BankAccount.joins(:country).order("countries.name ASC, bank_name ASC")
-    @vat_rates = VatRate.all    
+    @bank_accounts_search = BankAccount.scoped_search(params[:bank_accounts])
+    @bank_accounts_search.ascend_by_country_id = true unless params[:bank_accounts]
+    @bank_accounts = @bank_accounts_search.all.paginate :page => params[:page], :per_page => 20
+    @vat_rates = VatRate.all
   end
 
   def update

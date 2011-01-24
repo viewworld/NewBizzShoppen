@@ -1,5 +1,7 @@
 class BankAccount < ActiveRecord::Base
 
+  include ScopedSearch::Model
+
   belongs_to :country
 
   validates_presence_of :country, :bank_name, :bank_address, :iban_no, :local_bank_number, :swift
@@ -8,6 +10,8 @@ class BankAccount < ActiveRecord::Base
 
   scope :global_default_bank_account, where(:global_default => true)
   scope :country_default_bank_account, lambda{|country_id| where(:country_id => country_id, :country_default => true)}
+
+  scoped_order :id, :country_id
 
   private
 

@@ -2,6 +2,7 @@ class Country < ActiveRecord::Base
   has_many :country_interest
   has_many :leads
   has_one :default_bank_account, :class_name => 'BankAccount', :foreign_key => :country_id, :primary_key => :id, :conditions => {:country_default => true}
+  has_many :bank_accounts
   has_one :vat_rate
   
   validates_uniqueness_of :name
