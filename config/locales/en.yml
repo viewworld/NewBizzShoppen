@@ -713,6 +713,7 @@ en:
     leads:
       index:
         view:
+          title: My created leads
           new_lead: New lead
           edit: Edit
           destroy: Destroy
