@@ -16,7 +16,7 @@ Given I am on the homepage
   And I press translated "administration.users.index.view.search_button"
   And I follow translated "administration.users.index.view.subaccounts"
 
-@m5 @tgn
+@m5 @tgn @_tested
 Scenario: I can display a list of subaccounts of call centre account
   Given I am not sign in
   Given I have user with email call_centre@person.com and role call_centre
