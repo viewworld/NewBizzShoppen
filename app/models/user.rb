@@ -281,4 +281,8 @@ class User < ActiveRecord::Base
     vat_rate ? (vat_rate.rate/100) : 0.0
   end
 
+  def to_i
+    id
+  end
+
 end
