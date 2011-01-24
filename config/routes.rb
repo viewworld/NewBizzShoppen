@@ -64,6 +64,11 @@ Nbs::Application.routes.draw do
     resources :leads
   end
 
+  namespace :call_centre_agents do
+    root :to => "leads#index"
+    resources :leads
+  end
+
   namespace :lead_users do
     root :to => "lead_purchases#index"
     resources :lead_purchases do

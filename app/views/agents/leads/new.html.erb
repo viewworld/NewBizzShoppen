@@ -4,7 +4,7 @@
   <%= semantic_form_for [:agents, @lead], :method => :post do |form| %>
       <frm title="Create new">
         <param:content>
-          <%= render :partial => 'form', :locals => {:form => form, :lead => @lead} %>
+          <%= render :partial => '/shared/leads/form', :locals => {:form => form, :lead => @lead} %>
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="save">

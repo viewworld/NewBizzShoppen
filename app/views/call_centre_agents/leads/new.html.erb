@@ -1,0 +1,22 @@
+<column-mc:>
+  <header back="true"><%= t("call_centre_agent.leads.new.view.title") %></header>
+
+  <%= semantic_form_for [:call_centre_agents, @lead], :method => :post do |form| %>
+      <frm title="Create new">
+        <param:content>
+          <%= render :partial => '/shared/leads/form', :locals => {:form => form, :lead => @lead} %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("call_centre_agent.leads.new.view.button_create_and_continue"), :name => "commit_continue" %>
+          </ibt>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("call_centre_agent.leads.new.view.button_create"), :name => "commit_create" %>
+          </ibt>
+          <ibt c="bt_grey fltri">
+            <%= button_to_function t("call_centre_agent.leads.new.view.button_cancel"), "history.go(-1)" %>
+          </ibt>
+        </param:actions>
+      </frm>
+  <% end %>
+</column-mc:>

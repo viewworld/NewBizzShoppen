@@ -26,10 +26,12 @@
       <%= form.input :city %>
       <%= form.input :county %>
       <%= form.input :zip_code %>
-      <% if current_user.can_publish_leads? %>
-        <%= form.input :published %>
-      <% else %>
-        <%= form.input :published, :as => :hidden %>
+      <% unless current_user.has_role?(:purchase_manager) %>
+          <% if current_user.can_publish_leads? %>
+            <%= form.input :published %>
+          <% else %>
+            <%= form.input :published, :as => :hidden %>
+          <% end %>
       <% end %>
     </ol>
   </fieldset>
@@ -41,7 +43,9 @@
     <ol class="align_inputs">
       <%= form.input :header %>
       <%= form.input :description, :input_html => {:style => "height: 140px; width: 600px"} %>
-      <%= form.input :hidden_description, :input_html => {:style => "height: 140px; width: 600px"} %>
+      <% unless current_user.has_role?(:purchase_manager) %>
+        <%= form.input :hidden_description, :input_html => {:style => "height: 140px; width: 600px"} %>
+      <% end %>
     </ol>
   </fieldset>
 </div>
@@ -50,7 +54,7 @@
 <div class="nested_locale_container"></div>
 
 <%= form.fields_for :lead_translations, @lead.lead_translations.select { |lt| lt.locale != I18n.locale.to_s } do |builder| %>
-    <%= render :partial => "lead_fields", :locals => {:f => builder} %>
+    <%= render :partial => "/shared/leads/lead_fields", :locals => {:f => builder} %>
 <% end %>
 
 <div class="pdd_10 no_pdd_t">

@@ -33,6 +33,7 @@ en:
         call_centre_agents: 'Agents'
         leads: 'Leads'
       call_centre_agent:
+        leads: Leads
       customer:
         subaccounts: Team
         lead_requests: Requested leads
@@ -707,6 +708,33 @@ en:
             with_keyword: Keyword
             with_created_by: Created by
           search_button: Search
+
+  call_centre_agent:
+    leads:
+      index:
+        view:
+          new_lead: New lead
+          edit: Edit
+          destroy: Destroy
+          destroy_confirmation: Are you sure?
+          option_published: published
+          option_not_published: not published
+      new:
+        view:
+          title: New lead
+          button_create_and_continue: Create & continue
+          button_create: Create
+          button_cancel: Cancel
+      edit:
+        view:
+          title: Edit lead
+          button_update: Save
+          button_cancel: Cancel
+      destroy:
+        flash:
+          lead_deletion_successful: Lead has been successfully deleted!
+          lead_deletion_failure: Lead could not be deleted!
+
   purchase_manager:
     leads:
       index:

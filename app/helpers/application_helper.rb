@@ -21,7 +21,7 @@ module ApplicationHelper
     new_object = current_user.has_role?(:admin) ? Lead.new : current_user.leads.build
     new_object.lead_translations = [LeadTranslation.new]
     fields = f.fields_for :lead_translations, new_object.lead_translations do |builder|
-       render("lead_fields", :f => builder)
+       render("/shared/leads/lead_fields", :f => builder)
     end
     "add_fields(this, \"#{escape_javascript(fields)}\")"
   end
