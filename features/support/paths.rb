@@ -40,6 +40,8 @@ module NavigationHelpers
         '/buyers/cart_items'
     when /call centre agents/
         '/call_centres/call_centre_agents'
+    when /call centre leads/
+        '/call_centres/leads'
     when /customer interests/
         '/customers/interests/edit'
     when /lead user lead purchases/

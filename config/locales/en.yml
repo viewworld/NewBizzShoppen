@@ -184,10 +184,15 @@ en:
       price: 'Lead price'
       sold: 'Sold'
       purchase_value: 'Value'
+      description: Description
       paid_out: 'Paid out'
       unsatisfactory_rating: 'Unsatisfactory rating'
       status: 'Status'
       actions: 'Actions'
+      created_by: Created by
+      rating: Lead rating
+      average_rating_none_label: None
+      certification: Certification
     index:
       header: Leads
       search:
@@ -672,6 +677,7 @@ en:
           delete: 'Delete'
           delete_confirmation_message: 'Are you sure?'
           button_bulk_subbaccounts_update: 'Save'
+          view_leads: View leads
       new:
         view:
           title: 'New call centre agent'
@@ -692,7 +698,15 @@ en:
         flash:
           call_centre_agent_deletion_successful: 'Call centre agent has been successfully deleted'
           call_centre_agent_deletion_failure: 'Call centre agent could not be deleted'
-
+    leads:
+      index:
+        view:
+          header: Leads
+          search_label: Search
+          search:
+            with_keyword: Keyword
+            with_created_by: Created by
+          search_button: Search
   purchase_manager:
     leads:
       index:
