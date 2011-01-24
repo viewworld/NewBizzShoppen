@@ -720,6 +720,11 @@ en:
           destroy_confirmation: Are you sure?
           option_published: published
           option_not_published: not published
+          search_button: Search
+          search:
+            keyword_label: Keyword
+            filter_with_inactive: Skip inactive
+            filter_with_outdated: Skip outdated
       new:
         view:
           title: New lead
