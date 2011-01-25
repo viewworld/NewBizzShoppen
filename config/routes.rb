@@ -19,6 +19,7 @@ Nbs::Application.routes.draw do
     resources :users do
       resource :password, :controller => 'password'
     end
+    resource :bulk_users_update, :controller => "bulk_users_update", :only => [:update]
     resources :categories
     resource :setting, :only => [:edit, :update]
     resources :email_templates

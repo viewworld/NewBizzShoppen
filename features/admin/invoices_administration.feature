@@ -269,10 +269,3 @@ Scenario: I can bulk set selected invoices as paid
   And I follow translated "administration.invoices.index.view.bulk_set_as_paid"
   Then I should see translated "flash.bulk_invoice_update.update.notice"
   Then I should see "Paid"
-
-@tgn @added @_tested
-Scenario: I can create invoice for any customer from users tab
-  Given I go to administration users
-  And I click hidden translated link "administration.users.index.view.create_invoice"
-  Then I press "Create Invoice"
-  And I should see translated "administration.invoices.edit.view.header"

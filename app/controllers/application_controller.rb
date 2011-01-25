@@ -67,7 +67,7 @@ class ApplicationController < ActionController::Base
     params = Rack::Request.new(env).params
     session = env['rack.session']
     session[:user_requested_url] = params["requested_url"]
-    session[:lead_id] = params["id"] if params["requested_url"].include?("/categories")
+    session[:lead_id] = params["id"] if params["requested_url"].to_s.include?("/categories")
 
     params[:action] = :unauthenticated
     params[:warden_failure] = opts

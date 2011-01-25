@@ -276,6 +276,7 @@ en:
           locked: 'Locked'
           lock: 'Lock'
           unlock: 'Unlock'
+          button_bulk_update_users: Save
           subaccounts: 'Subaccounts'
           create_invoice: 'Create invoice'
           edit: 'Edit'
@@ -1291,3 +1292,6 @@ en:
     bulk_invoice_update:
       update:
         notice: 'Invoices have been successfully updated'
+    bulk_users_update:
+      update:
+        notice: 'Users has been updated'
