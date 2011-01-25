@@ -10,9 +10,6 @@ Background:
   And lead Wires ultimate deal is created by user call_centre_agent@person.com with role call_centre_agent
   And lead Routers ultimate deal is created by user call_centre_agent@person.com with role call_centre_agent
   And lead Touchpads ultimate deal is created by user call_centre_agent@person.com with role call_centre_agent
-  Given lead Monitors ultimate deal exists with attributes "purchase_decision_date:2009-09-01"
-  Given lead Wires ultimate deal exists with attributes "sale_limit:1"
-  And a lead Wires ultimate deal exists within category Computers and is bought by user jim.doe.buyer@person.com with role customer
   And an user with role call_centre_agent and email call_centre_agent@person.com belongs to call centre call_centre@person.com
   Then I sign in as call_centre_agent@person.com with password supersecret
 
@@ -22,20 +19,23 @@ Scenario: I can browse leads with pagination
   And I follow translated "layout.main_menu.call_centre_agent.leads"
   And I follow "2"
 
-@_tested
+@_tested @_tested
 Scenario: I can search leads with filtering by: show active (default), show all, show outdated
-  Given I fill in "search_with_keyword" with "wires ultimate"
-  And I press translated "call_centre_agent.leads.index.view.search_button"
-  Then I should see "Wires ultimate"
-  And I should not see "Routers ultimate deal"
-  And I should not see "Touchpads ultimate deal"
-  Then I fill in "search_with_keyword" with ""
-  And I check "search_without_inactive"
-  And I press translated "call_centre_agent.leads.index.view.search_button"
-  Then I should not see "Wires ultimate"
-  Then I check "search_without_outdated"
-  And I press translated "call_centre_agent.leads.index.view.search_button"
-  And I should not see "Monitors ultimate deal"
+  Given lead Monitors ultimate deal exists with attributes "purchase_decision_date:2009-09-01"
+  Given lead Wires ultimate deal exists with attributes "sale_limit:1"
+  And a lead Wires ultimate deal exists within category Computers and is bought by user jim.doe.buyer@person.com with role customer
+  And I follow translated "layout.main_menu.call_centre_agent.leads"
+  Then I should see "Routers ultimate deal"
+  And I should see "Touchpads ultimate deal"
+  Then I should not see "Monitors ultimate deal"
+  And I should not see "Wires ultimate deal"
+  When I uncheck "search_without_outdated"
+  And I press translated "call_centre.leads.index.view.search_button"
+  Then I should see "Monitors ultimate deal"
+  When I uncheck "search_without_inactive"
+  And I press translated "call_centre.leads.index.view.search_button"
+  Then I should see "Wires ultimate deal"
+
 
 @_tested @selenium
 Scenario: I can change lead status from lead list
@@ -50,11 +50,13 @@ Scenario: I can change lead status from lead list
 
 @_tested
 Scenario: I can delete lead if the lead is not sold yet
+  Given a lead Wires ultimate deal exists within category Computers and is bought by user jim.doe.buyer@person.com with role customer
   Given I fill in "search_with_keyword" with "monitors ultimate deal"
   And I press translated "call_centre_agent.leads.index.view.search_button"
   And I follow translated "call_centre_agent.leads.index.view.destroy"
   Then I should see translated "call_centre_agent.leads.destroy.flash.lead_deletion_successful"
   Given I fill in "search_with_keyword" with "wires ultimate deal"
+  And I uncheck "search_without_inactive"
   And I press translated "call_centre_agent.leads.index.view.search_button"
   And I follow translated "call_centre_agent.leads.index.view.destroy"
   Then I should see translated "call_centre_agent.leads.destroy.flash.lead_deletion_failure"

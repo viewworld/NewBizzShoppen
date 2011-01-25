@@ -38,7 +38,6 @@ Scenario: I can search leads with filtering by: show active (default), show all,
   When I uncheck "search_without_inactive"
   And I press translated "call_centre.leads.index.view.search_button"
   Then I should see "Ultimate doors deal"
-  And I open page in browser
 
 @_tested @selenium
 Scenario: I can change lead status from lead list
