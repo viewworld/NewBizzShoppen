@@ -1,5 +1,4 @@
-@lead_templates @$_admin @m0
-
+@lead_templates @$_admin @m5 @tgn
 Feature: Category lead templates management
 
 @added
