@@ -13,7 +13,6 @@ Background:
   Given lead Ultimate wires deal is created by user ccagent01@nbs.com with role call_centre_agent
   Given lead Ultimate desks deal is created by user ccagent02@nbs.com with role call_centre_agent
   Given lead Ultimate doors deal is created by user ccagent02@nbs.com with role call_centre_agent
-  And a lead Ultimate doors deal exists within category Computers and is bought by user jim.doe.buyer@person.com with role customer
   Then I sign in as call_centre@person.com with password supersecret
   And I go to call centre leads
 
@@ -23,7 +22,23 @@ Scenario: I can browse leads with pagination
   And I go to call centre leads
   Then I follow "2"
 
+@_tested
 Scenario: I can search leads with filtering by: show active (default), show all, show outdated
+  Given a lead Ultimate doors deal exists within category Computers and is bought by user jim.doe.buyer@person.com with role customer
+  Given lead Ultimate desks deal exists with attributes "purchase_decision_date:2009-09-01"
+  Given lead Ultimate doors deal exists with attributes "sale_limit:1"
+  And I go to call centre leads
+  Then I should see "Ultimate mouses deal"
+  And I should see "Ultimate wires deal"
+  Then I should not see "Ultimate doors deal"
+  And I should not see "Ultimate desks deal"
+  When I uncheck "search_without_outdated"
+  And I press translated "call_centre.leads.index.view.search_button"
+  Then I should see "Ultimate desks deal"
+  When I uncheck "search_without_inactive"
+  And I press translated "call_centre.leads.index.view.search_button"
+  Then I should see "Ultimate doors deal"
+  And I open page in browser
 
 @_tested @selenium
 Scenario: I can change lead status from lead list
@@ -42,7 +57,10 @@ Scenario: I can delete lead if the lead is not sold yet
   And I press translated "call_centre.leads.index.view.search_button"
   And I follow translated "call_centre.leads.index.view.destroy"
   Then I should see translated "call_centre.leads.destroy.flash.lead_deletion_successful"
+  Given a lead Ultimate doors deal exists within category Computers and is bought by user jim.doe.buyer@person.com with role customer
+  And I go to call centre leads
   Given I fill in "search_with_keyword" with "Ultimate doors deal"
+  And I uncheck "search_without_inactive"
   And I press translated "call_centre.leads.index.view.search_button"
   And I follow translated "call_centre.leads.index.view.destroy"
   Then I should see translated "call_centre.leads.destroy.flash.lead_deletion_failure"

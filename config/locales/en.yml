@@ -710,6 +710,8 @@ en:
           search:
             with_keyword: Keyword
             with_created_by: Created by
+            filter_with_inactive: Skip inactive
+            filter_with_outdated: Skip outdated
           search_button: Search
           option_published: published
           option_not_published: not published

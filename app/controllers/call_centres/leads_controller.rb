@@ -31,6 +31,8 @@ class CallCentres::LeadsController < CallCentres::CallCentreController
     params[:search][:with_call_centre] = current_user.id
 
     @search = Lead.scoped_search(params[:search])
+    @search.without_inactive = true if params[:search][:without_inactive].nil?
+    @search.without_outdated = true if params[:search][:without_outdated].nil?
     @leads = @search.paginate(:page => params[:page], :per_page => Lead.per_page)
     @call_centre_agents = User.with_lead_creators_for(current_user).map{ |u| [u.full_name, u.id] }
   end
