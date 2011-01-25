@@ -92,5 +92,13 @@ Scenario: I should be able to click "Add to cart button" that will redirect me t
   And I press translated "home.show.view.sign_in"
   Then I should see "Lead 392S2"
 
-@m5 @tgn
-Scenario: If I sucessfully login after requesting a lead being added to a cart, that lead should be added to cart (or bought if I am big buyer)
+@m5 @tgn @_tested
+Scenario: If I successfully login after requesting a lead being added to a cart, that lead should be added to cart (or bought if I am big buyer)
+  Given I am signed up and confirmed as user with email buyer21@person.com and password supersecret and role customer
+  Given lead Great marketing deal exists within category VariousLeads
+  And I go to browse leads
+  And I follow "VariousLeads"
+  And I follow translated "leads.index.add_to_cart_link"
+  And I sign in as buyer21@person.com with password supersecret
+  And I follow translated "layout.cart.show_cart"
+  Then I should see "Great marketing deal"
