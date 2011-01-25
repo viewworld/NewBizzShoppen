@@ -2,6 +2,7 @@ class Category < ActiveRecord::Base
   translates :name, :description
 
   acts_as_nested_set
+  has_many :lead_templates
   has_many :category_translations
   has_one :image,
           :class_name => "Asset::CategoryImage",
