@@ -524,6 +524,8 @@ en:
           cashflow: 'Cashflow'
           yes_label: 'Yes'
           no_label: 'No'
+          swift_code: 'SWIFT code'
+          iban_number: 'IBAN number'
           payment_transactions:
             header: 'Transactions'
             type: 'Type'
@@ -662,6 +664,7 @@ en:
           show: 'Show'
           delete: 'Delete'
           add_bank: 'Add bank'
+          no_bank_accounts_defined: 'No bank accounts defined'
       edit:
         view:
           header: 'Edit bank account'
@@ -689,11 +692,13 @@ en:
     vat_rates:
       index:
         view:
+          header: 'VAT rates'
           country: 'Country'
           rate: 'Rate'
           actions: 'Actions'
           edit: 'Edit'
           add_vat_rate: 'Add VAT rate'
+          no_rates_defined: 'No VAT rates defined'
       new:
         view:
           header: 'New VAT rate'
@@ -1312,6 +1317,10 @@ en:
               blank: "can't be blank"
             hidden_description:
               blank: "can't be blank"
+        bank_account:
+          attributes:
+            global_default:
+              cannot_be_disabled: "can't be disabled"
 
   activemodel:
     errors:

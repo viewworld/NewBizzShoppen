@@ -93,11 +93,6 @@
       <p><span class="h"><%= t("customer.invoices.show.view.payment_method") %>
         :</span> <%= invoice.payment_method == "cash" ? t("customer.invoices.common.view.cash") : t("customer.invoices.common.view.bank_transfer") %>
       </p>
-      <% if not invoice.payment_method == "cash" %>
-          <p><span class="h"><%= t("customer.invoices.show.view.payment_account") %>
-            :</span> <%= invoice.payment_account_information.blank? ? "-" : invoice.payment_account_information %>
-          </p>
-      <% end %>
     </ul>
     <% if invoice.details.present? %>
         <br />

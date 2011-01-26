@@ -18,7 +18,6 @@ Feature: Bank Accounts
     And there is a bank account for country "Denmark"
     And I follow translated "layout.main_menu.admin.settings"
     Then I should see "4" rows in a table within "#bank_accounts"
-  And I open page in browser
 
   @added @m4b @_done
   Scenario: Only one bank account for each country can be a default bank account
@@ -41,12 +40,13 @@ Feature: Bank Accounts
     Then checkbox with name like "country_default" should be checked in the "1" row of table "#bank_accounts"
     And checkbox with name like "country_default" should be checked in the "2" row of table "#bank_accounts"
 
-  @added @m4b @_done
+  @added @m4b @wip
   Scenario: Only one bank account can be a global default
     Given there is a bank account for country "Denmark" with attributes "global_default:1"
     And there is a bank account for country "United Kingdom" with attributes "global_default:1"
     And I follow translated "layout.main_menu.admin.settings"
     And I follow translated "administration.bank_accounts.index.view.id"
+  And I open page in browser
     Then checkbox with name like "global_default" should be checked in the "3" row of table "#bank_accounts"
     And checkbox with name like "global_default" should not be checked in the "2" row of table "#bank_accounts"
     And checkbox with name like "global_default" should not be checked in the "1" row of table "#bank_accounts"

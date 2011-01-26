@@ -288,9 +288,9 @@ class User < ActiveRecord::Base
   def country_vat_rate
     vat_rate ? (vat_rate.rate/100) : 0.0
   end
-  
-  def payment_account
 
+  def payment_bank_account
+    bank_account || BankAccount.country_default_bank_account(country).first || BankAccount.global_default_bank_account.first
   end  
 
   def to_i

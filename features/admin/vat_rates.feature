@@ -126,7 +126,7 @@ Feature: VAT rates
     And I follow translated "administration.invoices.edit.view.show_invoice"
     Then I should not see "27%" within ".product_data"
 
-   @_done
+   @selenium @_done
    Scenario: When creating invoice manually by admin, VAT field should be prepopulated if country has vat rate set and user doesnt pay vat in his country
      When VAT rate for "Denmark" is set to "27"
      And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
@@ -135,7 +135,8 @@ Feature: VAT rates
      And I follow translated "layout.main_menu.admin.invoices"
      And I select "Wielki Szu" from "invoice_user_id"
      And I press translated "administration.invoices.index.view.create_invoice"
-     Then the "invoice_invoice_lines_attributes_0_vat_rate" field should contain "0.27"
+     And I follow "add_fields_invoice_lines"
+     Then the "1" field with id like "_vat_rate" should contain "0.27"
      And the "invoice_vat_paid_in_customer_country" checkbox should not be checked
 
   @selenium @_done
@@ -147,5 +148,6 @@ Feature: VAT rates
     And I follow translated "layout.main_menu.admin.invoices"
     And I select "Wielki Szu" from "invoice_user_id"
     And I press translated "administration.invoices.index.view.create_invoice"
-    Then the "invoice_invoice_lines_attributes_0_vat_rate" field should contain "0"
+    And I follow "add_fields_invoice_lines"
+    Then the "1" field with id like "_vat_rate" should contain "0"
     And the "invoice_vat_paid_in_customer_country" checkbox should be checked

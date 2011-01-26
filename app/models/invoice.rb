@@ -23,6 +23,7 @@ class Invoice < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :currency
+  belongs_to :bank_account
 
   has_many :payment_transactions
   has_many :invoice_lines, :dependent => :destroy
@@ -89,8 +90,8 @@ class Invoice < ActiveRecord::Base
             :seller_vat_no => Settings.invoicing_seller_vat_number,
             :seller_first_name => Settings.invoicing_seller_first_name,
             :seller_last_name => Settings.invoicing_seller_last_name,
-            :payment_account_information => Settings.invoicing_seller_payment_account,
-            :vat_paid_in_customer_country => user.not_charge_vat?
+            :vat_paid_in_customer_country => user.not_charge_vat?,
+            :bank_account => user.payment_bank_account
     })
   end
 
@@ -106,7 +107,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def get_template_source
-    File.open(File.join(RAILS_ROOT, "app", "views", "administration", "invoicing", "invoices", "_invoice_preview.erb")){|file| file.read}
+    File.open(File.join(::Rails.root.to_s, "app", "views", "administration", "invoicing", "invoices", "_invoice_preview.erb")){|file| file.read}
   end
 
   def generate_invoice_lines_for_big_buyer
@@ -132,7 +133,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def recalculate_invoice_items
-    invoice_lines.each{|ii| ii.calculate_additional_values! }
+    invoice_lines.reload && invoice_lines.each{|ii| ii.calculate_additional_values! }
   end
 
   public
