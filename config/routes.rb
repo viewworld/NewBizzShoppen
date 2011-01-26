@@ -38,6 +38,7 @@ Nbs::Application.routes.draw do
       resources :upcoming_invoices, :only => [:index]
       resources :payment_transactions
     end
+    resources :lead_templates
   end
 
   namespace :buyers do

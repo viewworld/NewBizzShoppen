@@ -40,7 +40,6 @@ class Category < ActiveRecord::Base
   before_destroy :check_if_category_is_empty
 
   accepts_nested_attributes_for :image
-  accepts_nested_attributes_for :lead_templates, :allow_destroy => true
 
   private
 

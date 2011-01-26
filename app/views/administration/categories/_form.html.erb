@@ -18,64 +18,21 @@
     </ol>
   </fieldset>
 </div>
+
+<%= link_to t("administration.categories.edit.view.new_template"), new_administration_lead_template_path(:category_id => @category.id) %>
+
+<% unless @category.lead_templates.empty? %>
 <hl/>
 
-<%= link_to_function t("administration.categories.new.view.new_lead_template"), fields_for_leads_templates(form) %>
-
-<div class="nested_template_container"></div>
-
-<%= form.fields_for :lead_templates, @category.lead_templates do |builder| %>
-    <%= render :partial => "lead_template_fields", :locals => {:f => builder} %>
+<ul>
+  <% @category.lead_templates.each do |lead_template| %>
+    <li>
+      <%= lead_template.name %>
+      <%= link_to t("administration.categories.edit.view.edit_template"), edit_administration_lead_template_path(lead_template) %>
+      <%= link_to t("administration.categories.edit.view.destroy_template"), administration_lead_template_path(lead_template), :method => :delete, :confirm => t("administration.categories.edit.view.destroy_template_confirmation_message") %>
+    </li>
+  <% end %>
+</ul>
 <% end %>
 
-<script>
-    var nestedFormsCount = <%= @category.lead_templates.size %>;
-    var nestedFieldFormsCount = 0;
 
-    function add_lead_template(link, content) {
-            var new_id = new Date().getTime();
-            content = content.replace(/category_lead_templates_attributes_0/g, "category_lead_templates_attributes_" + nestedFormsCount.toString());
-            content = content.replace(/category\[lead_templates_attributes\]\[0\]/g, "category[lead_templates_attributes][" + new_id.toString() + "]");
-            $('.nested_template_container:last').append(content);
-            nestedFormsCount = nestedFormsCount + 1;
-    }
-
-    function remove_lead_template(id, record_id) {
-        nestedFormsCount = nestedFormsCount - 1;
-
-        if (record_id == null)
-        {
-            $('#lead_template_form_' + id).remove();
-        }
-        else
-        {
-            $('#lead_template_form_' + id).hide();
-            $('#destroy_hidden_field_' + record_id.toString()).val('true')
-        }
-
-    }
-
-    function add_lead_template_field(record_id, content) {
-            var new_id = new Date().getTime();
-            record_id = record_id.replace(/lead_template_fields_attributes_0/g, "lead_template_fields_attributes_" + nestedFieldFormsCount.toString());
-            content = content.replace(/lead_template_fields_attributes_0/g, "lead_template_fields_attributes_" + nestedFieldFormsCount.toString());
-            content = content.replace(/\[lead_template_fields_attributes\]\[0\]/g, "[lead_template_fields_attributes][" + new_id.toString() + "]");
-            $('.nested_template_field_container_' + record_id + ':last').append(content);
-            nestedFieldFormsCount = nestedFieldFormsCount + 1;
-    }
-
-    function remove_lead_template_field(id, record_id) {
-        nestedFieldFormsCount = nestedFieldFormsCount - 1;
-
-        if (record_id == null)
-        {
-            $('#lead_template_field_form_' + id).remove();
-        }
-        else
-        {
-            $('#lead_template_field_form_' + id).hide();
-            $('#destroy_hidden_field_field_' + record_id.toString()).val('true')
-        }
-
-    }
-</script>

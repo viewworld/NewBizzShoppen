@@ -301,6 +301,24 @@ en:
         flash:
           user_deletion_successful: 'User was successfully deleted!'
           user_deletion_failure: 'User could not be deleted!'
+    lead_templates:
+      form:
+        new_lead_template_field: New field
+        remove_lead_template_field: Remove
+      new:
+        view:
+          header: New lead template
+          button_create: Create
+          button_cancel: Cancel
+      edit:
+        view:
+          header: Edit lead template
+          button_update: Save
+          button_cancel: Cancel
+      destroy:
+        flash:
+          deletion_successful:  Lead template has been successfully deleted!
+          deletion_failure: Lead template could not be deleted
     categories:
       form:
         no_parent_category: No parent category
@@ -312,15 +330,15 @@ en:
       new:
         view:
           button_create: 'Create'
-          new_lead_template: New template
-          remove_lead_template: Remove
-          new_lead_template_field: New field
-          remove_lead_template_field: Remove field
       edit:
         view:
           header: "Editing category: %{category_name}"
           upload_image: 'Upload image'
           button_update: 'Save'
+          new_template: New template
+          edit_template: Edit
+          destroy_template: Destroy
+          destroy_template_confirmation_message: Are you sure?
     settings:
       edit:
         view:
