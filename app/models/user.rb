@@ -293,4 +293,8 @@ class User < ActiveRecord::Base
 
   end  
 
+  def to_i
+    id
+  end
+
 end

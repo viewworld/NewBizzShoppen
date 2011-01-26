@@ -36,6 +36,7 @@ en:
       customer:
         subaccounts: Team
         lead_requests: Requested leads
+        invoices: 'Invoices'
         interests: 'Interests settings'
       lead_buyer:
         lead_purchases: My leads
@@ -1013,6 +1014,76 @@ en:
         flash:
           lead_request_accepted_successfully: 'You added lead to your list'
           lead_request_rejected_successfully: Lead request rejected
+    invoices:
+      common:
+        view:
+          cash: 'Cash'
+          bank_transfer: 'Bank transfer'
+          na: N/A
+      index:
+        view:
+          header: 'Invoices'
+          search_button: 'Search'
+          sale_date: 'Sale date'
+          invoice_number: 'Invoice number'
+          customer: 'Customer'
+          status: 'Status'
+          search_label: 'Search'
+          create_invoice: 'Create invoice'
+          show_invoice: 'Show'
+          set_as_paid: 'Set as paid'
+          paid: 'Paid'
+          not_paid: 'Not paid'
+          total: 'Total'
+          actions: Actions
+          no_invoices: 'There are no invoices for your account'
+          search:
+            with_keyword: 'Keyword'
+            with_sale_date_after_and_including: 'Sale after'
+            with_sale_date_before_and_including: 'Sale before'
+            not_paid: 'Not paid only'
+            payment_status: 'Payment status'
+      show:
+        view:
+          download_pdf: 'Download PDF'
+          go_back: 'Go back'
+          header: 'Invoice'
+          number: 'Number'
+          sale_date: 'Sale date'
+          payment_deadline: 'Payment deadline date'
+          creation_date: 'Invoice date'
+          ean_number: 'EAN Number'
+          from: 'From'
+          to: 'To'
+          name: 'Name'
+          quantity: '#'
+          netto_price: 'Price'
+          netto_value: 'Netto value'
+          vat: 'VAT%'
+          vat_value: 'VAT'
+          brutto_value: 'Inc. VAT'
+          total: 'Total'
+          including: 'Including'
+          total_in_words: 'Total in words'
+          vat_paid: 'VAT paid'
+          payment_method: 'Payment method'
+          payment_account: 'Payment account'
+          seller: 'Seller'
+          customer: 'Customer'
+          status: 'Status'
+          creation_place: 'Creation place'
+          emailed_at: 'Emailed at'
+          paid_at: 'Paid at'
+          cashflow: 'Cashflow'
+          yes_label: 'Yes'
+          no_label: 'No'
+          payment_transactions:
+            header: 'Transactions'
+            type: 'Type'
+            paid_at: 'Paid at'
+            type_paypal: 'PayPal'
+            type_manual: 'Manual'
+            amount: 'Amount'
 
   lead_user:
     lead_purchases:
