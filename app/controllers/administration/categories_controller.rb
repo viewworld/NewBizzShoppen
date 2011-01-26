@@ -4,6 +4,8 @@ class Administration::CategoriesController < Administration::AdministrationContr
   set_tab "categories"
 
   def create
+    @category = Category.new(params[:category])
+    @category.lead_templates.select { |lt| lt.new_record? }.each { |lt| lt.creator = current_user }
     create! do |success, failure|
       success.html { redirect_to administration_categories_path }
       failure.html { render 'new' }
@@ -11,9 +13,15 @@ class Administration::CategoriesController < Administration::AdministrationContr
   end
 
   def update
-    update! do |success, failure|
-      success.html { redirect_to administration_categories_path }
-      failure.html { render 'edit' }
+    @category = Category.find(params[:id])
+    @category.attributes = params[:category]
+    @category.lead_templates.select { |lt| lt.new_record? }.each { |lt| lt.creator = current_user }
+    respond_to do |format|
+      if @category.save
+        format.html { redirect_to administration_categories_path }
+      else
+        format.html { render 'edit' }
+      end
     end
   end
 

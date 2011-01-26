@@ -35,6 +35,9 @@ class User < ActiveRecord::Base
   belongs_to :user, :class_name => "User", :foreign_key => "parent_id", :counter_cache => :subaccounts_counter
 #  belongs_to :country, :foreign_key => "country"
   has_many :invoices
+  has_many :lead_templates,
+           :as => :creator,
+           :dependent => :destroy
   alias_method :parent, :user
 
   scope :with_role, lambda { |role| where("roles_mask & #{2**User.valid_roles.index(role.to_sym)} > 0 ") }

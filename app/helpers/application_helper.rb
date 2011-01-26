@@ -26,6 +26,22 @@ module ApplicationHelper
     "add_fields(this, \"#{escape_javascript(fields)}\")"
   end
 
+  def fields_for_leads_templates(f)
+    lead_template = LeadTemplate.new
+    fields = f.fields_for :lead_templates, lead_template do |builder|
+       render("lead_template_fields", :f => builder)
+    end
+    "add_lead_template(this, \"#{escape_javascript(fields)}\")"
+  end
+
+  def fields_for_leads_template_fields(f, record_id)
+    lead_template_field = LeadTemplateField.new
+    fields = f.fields_for :lead_template_fields, lead_template_field do |builder|
+       render("lead_template_field_fields", :f => builder)
+    end
+    "add_lead_template_field('#{record_id}', \"#{escape_javascript(fields)}\")"
+  end
+
   def custom_error_for_field(form, field)
     if form.object.errors[field].present?
       content_tag(:p, form.object.errors[field], :class => "inline-errors") + tag("br")

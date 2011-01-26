@@ -312,6 +312,10 @@ en:
       new:
         view:
           button_create: 'Create'
+          new_lead_template: New template
+          remove_lead_template: Remove
+          new_lead_template_field: New field
+          remove_lead_template_field: Remove field
       edit:
         view:
           header: "Editing category: %{category_name}"
@@ -1128,6 +1132,11 @@ en:
         lvl10: Not certified (locked)
         lvl11: Silver (locked)
         lvl12: Gold (locked)
+    lead_template_field:
+      field_type:
+        type0: Text
+        type1: Number
+        type2: Date
 
   activerecord:
     attributes:
