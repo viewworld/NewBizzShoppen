@@ -18,8 +18,8 @@ class Administration::BankAccountsController < Administration::AdministrationCon
   end
 
   def destroy
-    destroy! do
-      redirect_to edit_administration_setting_path
+    destroy! do |format|
+      format.html { redirect_to edit_administration_setting_path }
     end
   end
 

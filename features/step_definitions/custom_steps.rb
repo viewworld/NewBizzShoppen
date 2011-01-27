@@ -75,3 +75,7 @@ Given /^I (should not|should) see link with label "([^"]*)"$/ do |should_be_visi
     assert page.all(:css, 'a').detect { |l| l.text == label }.nil?
   end
 end
+
+When /^I fill in the last field with id like "([^"]*)" with "([^"]*)"(?: within "([^"]*)")?$/ do |id_like, val,selector|
+  page.all(:css, "#{selector} input:last-of-type[id*='#{id_like}']").first.set(val)
+end
