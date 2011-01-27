@@ -7,7 +7,7 @@ gem 'railties'
 
 gem 'mongrel'
 gem 'pg', '0.9.0'
-gem 'inherited_resources'
+gem 'inherited_resources', '1.1.2'
 gem 'will_paginate', '3.0.pre2', :branch => "rails3"
 gem 'formtastic', '1.1.0'
 gem 'liquid'
