@@ -233,17 +233,18 @@ Scenario: I can edit invoice line within invoice
   And I follow translated "administration.invoices.index.view.edit_invoice"
   Then the "invoice_invoice_lines_attributes_0_name" field should contain "EditedLine"
 
-@selenium @_done @ao
+@selenium @ao @_done
 Scenario: Invoice line’s netto/brutto fields are automatically updated on edit
   When invoice exists for user "kastomer@nbs.fake"
   And I follow translated "layout.main_menu.admin.invoices"
   And I click hidden link by url regex "/administration\/invoicing\/invoices\/\d+\/edit/"
-  And I fill in "invoice_invoice_lines_attributes_0_quantity" with "2"
-  And I fill in "invoice_invoice_lines_attributes_0_netto_price" with "100"
-  And I fill in "invoice_invoice_lines_attributes_0_vat_rate" with "0.22"
-  Then the "invoice_invoice_lines_attributes_0_netto_value" field should contain "200.00"
-  And the "invoice_invoice_lines_attributes_0_vat_value" field should contain "44.00"
-  And the "invoice_invoice_lines_attributes_0_brutto_value" field should contain "244.00"
+  And I follow "add_fields_invoice_lines"
+  And I fill in the last field with id like "_quantity" with "2" within ".invoice_inline_inputs"
+  And I fill in the last field with id like "_netto_price" with "100" within ".invoice_inline_inputs"
+  And I fill in the last field with id like "_vat_rate" with "0.22" within ".invoice_inline_inputs"
+  Then the "1" field with id like "_netto_value" should contain "200.00"
+  And the "1" field with id like "_vat_value" should contain "44.00"
+  And the "1" field with id like "_brutto_value" should contain "244.00"
 
 @_done @ao
 Scenario: I can mark an invoice as paid by clicking on Set as paid shortcut

@@ -5,14 +5,3 @@ Given /^there is a bank account for country "([^"]*)"(?: with attributes "([^"]*
   BankAccount.make!(attrs)
 end
 
-Then /^checkbox with name like "([^"]*)" should be checked in the "([^"]*)" row of table "([^"]*)"$/ do |cb_name, row_num, table_selector|
-  page.all(:css, "#{table_selector} tr:nth-of-type(#{row_num}) input[name*='#{cb_name}']").first['checked'].should eql(true)
-end
-
-Then /^checkbox with name like "([^"]*)" should not be checked in the "([^"]*)" row of table "([^"]*)"$/ do |cb_name, row_num, table_selector|
-  page.all(:css, "#{table_selector} tr:nth-of-type(#{row_num}) input[name*='#{cb_name}']").first['checked'].should eql(false)
-end
-
-Then /^the "([^"]*)" field with id like "([^"]*)" should contain "([^"]*)"$/ do |num,id_like,val|
-  page.all(:css, "input:nth-of-type(#{num})[id*='#{id_like}']").first['value'].should eql(val)
-end

@@ -24,7 +24,7 @@ class BankAccount < ActiveRecord::Base
   end
 
   def change_default_country_bank
-    if country_default?
+    if country_default? and country_default_changed?
       BankAccount.country_default_bank_account(country.id).each do |ba|
         ba.update_attribute(:country_default, false) unless ba.eql?(self)
       end
@@ -32,7 +32,7 @@ class BankAccount < ActiveRecord::Base
   end
 
   def change_default_global_bank
-    if global_default?
+    if global_default? and global_default_changed?
       BankAccount.global_default_bank_account.each do |ba|
         ba.update_attribute(:global_default, false) unless ba.eql?(self)
       end
