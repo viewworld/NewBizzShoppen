@@ -19,20 +19,5 @@
   </fieldset>
 </div>
 
-<%= link_to t("administration.categories.edit.view.new_template"), new_administration_lead_template_path(:category_id => @category.id) %>
-
-<% unless @category.lead_templates.empty? %>
-<hl/>
-
-<ul>
-  <% @category.lead_templates.each do |lead_template| %>
-    <li>
-      <%= lead_template.name %>
-      <%= link_to t("administration.categories.edit.view.edit_template"), edit_administration_lead_template_path(lead_template) %>
-      <%= link_to t("administration.categories.edit.view.destroy_template"), administration_lead_template_path(lead_template), :method => :delete, :confirm => t("administration.categories.edit.view.destroy_template_confirmation_message") %>
-    </li>
-  <% end %>
-</ul>
-<% end %>
 
 

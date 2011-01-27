@@ -43,7 +43,7 @@ Scenario: I can edit a category and add new lead templates to it which I can mar
   And I fill in "lead_template_lead_template_fields_attributes_1_name" with "example attr 2"
   And I check "lead_template_lead_template_fields_attributes_1_is_hidden"
   Then I press translated "administration.lead_templates.new.view.button_create"
-  And I follow translated "administration.categories.index.view.edit_link"
+  And I click hidden link by url regex "/administration\/lead_templates\/\d+\/edit/"
   Then the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 1"
   Then the "lead_template_lead_template_fields_attributes_2_name" field should contain "example attr 2"
 
@@ -64,7 +64,7 @@ Scenario: I can edit lead templates that were created by me
   Given template named "Computer details" for category "Computers" is created by user "bob@person.com" with role "admin"
   Then I go to administration categories
   And I follow translated "administration.categories.index.view.edit_link"
-  And I follow translated "administration.categories.edit.view.edit_template"
+  And I click hidden link by url regex "/administration\/lead_templates\/\d+\/edit/"
   And I should see translated "administration.lead_templates.form.new_lead_template_field"
   And I follow translated "administration.lead_templates.form.new_lead_template_field"
   And I fill in "lead_template_lead_template_fields_attributes_0_name" with "example attr 1"
@@ -72,7 +72,7 @@ Scenario: I can edit lead templates that were created by me
   And I fill in "lead_template_lead_template_fields_attributes_1_name" with "example attr 2"
   And I check "lead_template_lead_template_fields_attributes_1_is_hidden"
   Then I press translated "administration.lead_templates.edit.view.button_update"
-  And I follow translated "administration.categories.index.view.edit_link"
+  And I click hidden link by url regex "/administration\/lead_templates\/\d+\/edit/"
   Then the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 1"
   Then the "lead_template_lead_template_fields_attributes_2_name" field should contain "example attr 2"
 
