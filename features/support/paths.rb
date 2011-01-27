@@ -44,6 +44,8 @@ module NavigationHelpers
         '/call_centre_agents/leads'
     when /call centre leads/
         '/call_centres/leads'
+    when /call centre lead templates/
+        '/call_centres/lead_templates'
     when /customer interests/
         '/customers/interests/edit'
     when /lead user lead purchases/

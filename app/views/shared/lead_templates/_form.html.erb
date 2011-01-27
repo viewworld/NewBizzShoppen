@@ -10,7 +10,7 @@
         <%= form.input :category_id, :collection => Category.all.map { |c| [c.name, c.id] }, :include_blank => false  %>
       <% end  %>
 
-      <%= link_to_function t("administration.lead_templates.form.new_lead_template_field"), fields_for_leads_template_fields(form) if @lead_template.new_record? or current_user == @lead_template.creator %>
+      <%= link_to_function t("shared.lead_templates.form.new_lead_template_field"), fields_for_leads_template_fields(form) if @lead_template.new_record? or current_user == @lead_template.creator %>
 
       <div class="nested_template_fields_container"></div>
 

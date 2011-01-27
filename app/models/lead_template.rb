@@ -22,7 +22,7 @@ class LeadTemplate < ActiveRecord::Base
   private
 
   def is_filled_out?
-    LeadTemplateValue.first(:conditions => ["lead_template_fields.lead_template_id = ?", id], :joins => :lead_template_field)
+    !LeadTemplateValue.first(:conditions => ["lead_template_field_id in (?)", lead_template_fields.map(&:id)]).nil?
   end
 
   def can_be_removed

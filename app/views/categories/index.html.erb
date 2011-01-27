@@ -2,6 +2,6 @@
   <header><%= t("categories.index.view.header") %></header>
 
   <%= all_categories_tree(:category_label => lambda { |c| link_to "#{c.name}", "/categories/#{c.cached_slug}?search[with_category]=#{c.id}" },
-                          :after_category => lambda { |c| "<span class='total_leads'>(#{c.published_leads_count})</span> #{link_to(t("categories.index.view.view_lead_templates"), call_centres_lead_templates_path(:search => { :with_category => c.id }))}" }) %>
+                          :after_category => lambda { |c| "<span class='total_leads'>(#{c.published_leads_count})</span> #{link_to(t("categories.index.view.view_lead_templates"), call_centres_lead_templates_path(:search => { :with_category => c.id })) if current_user and current_user.has_role?(:call_centre)}" }) %>
   <clb/>
 </column-mc:>

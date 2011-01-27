@@ -7,3 +7,10 @@ Given /^template named "([^"]*)" for category "([^"]*)" is created by user "([^"
   template.attributes = { :name => name }
   template.save!
 end
+
+Given /^template named "([^"]*)" is filled out by someone$/ do |name|
+  template = LeadTemplate.find_by_name(name)
+  template.lead_template_fields.create(:name => "Some field", :field_type => 0) if template.lead_template_fields.empty?
+  template.reload
+  LeadTemplateValue.create(:lead_template_field => template.lead_template_fields.first, :value => "Some value")
+end

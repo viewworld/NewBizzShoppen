@@ -311,9 +311,6 @@ en:
           user_deletion_successful: 'User was successfully deleted!'
           user_deletion_failure: 'User could not be deleted!'
     lead_templates:
-      form:
-        new_lead_template_field: New field
-        remove_lead_template_field: Remove
       new:
         view:
           header: New lead template
@@ -687,7 +684,7 @@ en:
         view:
           header: Lead templates
           edit: Edit
-          destroy_template: Destroy
+          destroy: Destroy
           destroy_template_confirmation_message: Are you sure?
           new_template: New template
           search_button: Search
@@ -1165,6 +1162,12 @@ en:
     create:
       flash:
         email_sent_successfully: 'Your email was sent successfully to staff at NBS'
+
+  shared:
+    lead_templates:
+      form:
+        new_lead_template_field: New field
+        remove_lead_template_field: Remove
 
   models:
     user:
