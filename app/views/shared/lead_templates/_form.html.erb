@@ -4,13 +4,18 @@
       <%= form.input :name, :input_html => { :disabled => (!@lead_template.new_record? and current_user != @lead_template.creator) } %>
       <%= form.input :is_mandatory %>
       <%= form.input :is_active if current_user.has_role?(:call_centre) %>
-      <%= form.hidden_field :category_id %>
+      <% if current_user.has_role?(:admin) %>
+        <%= form.hidden_field :category_id %>
+      <% else %>
+        <%= form.input :category_id, :collection => Category.all.map { |c| [c.name, c.id] }, :include_blank => false  %>
+      <% end  %>
+
       <%= link_to_function t("administration.lead_templates.form.new_lead_template_field"), fields_for_leads_template_fields(form) if @lead_template.new_record? or current_user == @lead_template.creator %>
 
       <div class="nested_template_fields_container"></div>
 
       <%= form.fields_for :lead_template_fields, @lead_template.lead_template_fields do |builder| %>
-        <%= render :partial => "lead_template_field_fields", :locals => {:f => builder} %>
+        <%= render :partial => "/shared/lead_templates/lead_template_field_fields", :locals => {:f => builder} %>
       <% end %>
     </ol>
   </fieldset>

@@ -3,6 +3,12 @@ class LeadTemplate < ActiveRecord::Base
   belongs_to :category
   has_many :lead_template_fields, :dependent => :destroy
 
+  scope :with_creator, lambda { |creator_id| where("creator_id = ?", creator_id) }
+  scope :with_keyword, lambda { |q| where("lower(name) like :keyword", {:keyword => "%#{q.downcase}%"}) }
+  scope :with_category, lambda { |category_id| where("category_id = ?", category_id) }
+
+  include ScopedSearch::Model
+
   before_destroy :can_be_removed
 
   validates_presence_of :name

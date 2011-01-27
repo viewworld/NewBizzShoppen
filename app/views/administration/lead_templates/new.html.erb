@@ -3,7 +3,7 @@
   <%= semantic_form_for [:administration, @lead_template], :method => :put, :html => {:multipart => true} do |form| %>
       <frm title="">
         <param:content>
-          <%= render :partial => 'form', :locals => {:form => form} %>
+          <%= render :partial => '/shared/lead_templates/form', :locals => {:form => form} %>
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="plus">
