@@ -1,4 +1,5 @@
 class PaymentNotificationsController < ApplicationController
+  include ActionView::Helpers::NumberHelper
   protect_from_forgery :except => [:create]
   before_filter :authorize_with_http_basic_for_staging, :except => [:create]
 
@@ -8,7 +9,7 @@ class PaymentNotificationsController < ApplicationController
     if payment_notification.status == "Completed" &&
         params[:secret] == APP_CONFIG[:paypal_secret] &&
         params[:receiver_email] == APP_CONFIG[:paypal_email] &&
-        params[:mc_gross] == payment_notification.buyer.cart.total.to_s
+        params[:mc_gross] == ActionView::Helpers::NumberHelper.number_with_precision(payment_notification.buyer.cart.total, :precision => 2)
       payment_notification.buyer.cart.paid!
     end
     render :nothing => true
