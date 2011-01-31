@@ -7,8 +7,16 @@ Background:
   Given I am signed up and confirmed as user with email admin2@person.com and password supersecret and role admin
   Then I sign in as admin2@person.com with password supersecret
 
-@_done
+# https://redmine.selleo.com/issues/3494
+@deprecated
 Scenario: I can edit lead if the lead is not sold yet
+
+# https://redmine.selleo.com/issues/3494
+@deprecated
+Scenario: I can’t edit lead if the lead was already sold
+
+@added @_done
+Scenario: I can edit lead information if lead has not been sold yet
   When there are no leads
   And lead Monitors ultimate deal exists within category Computers
   And I follow translated "layout.main_menu.admin.leads"
@@ -20,8 +28,8 @@ Scenario: I can edit lead if the lead is not sold yet
   And I should see /666\.00/
   And I should see "Changed header"
 
-@_done
-Scenario: I can’t edit lead if the lead was already sold
+@added @_done
+Scenario: I can edit lead information if lead has been sold
   When there are no leads
   And I have user with email bigbuyer1@person.com and role customer
   And User bigbuyer1@person.com with role customer is big buyer
@@ -31,9 +39,9 @@ Scenario: I can’t edit lead if the lead was already sold
   And I fill in "lead_price" with "666"
   And I fill in "lead_header" with "Changed header"
   And I press translated "administration.leads.edit.view.button_update"
-  And I am on administration leads page
-  And I should not see /666\.00/
-  And I should not see "Changed header"
+  Then I should be on administration leads page
+  And I should see /666\.00/
+  And I should see "Changed header"
 
 @selenium @_done
 Scenario: I can add a language

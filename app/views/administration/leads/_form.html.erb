@@ -1,8 +1,8 @@
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs labels_ta_r labels_240">
     <ol>
-      <%= form.input :category_id, :as => :select, :collection => Category.without_locked, :input_html => { :disabled => form.object.sold? } %>
-      <%= form.input :country_id, :as => :select, :collection => Country.all, :input_html => { :disabled => form.object.sold? } %>
+      <%= form.input :category_id, :as => :select, :collection => Category.without_locked %>
+      <%= form.input :country_id, :as => :select, :collection => Country.all %>
     </ol>
   </fieldset>
 </div>
@@ -11,25 +11,25 @@
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs labels_ta_r labels_240">
     <ol class="align_inputs">
-      <%= form.input :purchase_value, :input_html => { :disabled => form.object.sold? } %>
-      <%= form.input :price, :input_html => { :disabled => form.object.sold? } %>
-      <%= form.input :currency, :collection => currencies_for_select, :include_blank => false, :input_html => { :disabled => form.object.sold? } %>
-      <%= form.input :company_name, :input_html => { :disabled => form.object.sold? } %>
-      <%= form.input :contact_name, :input_html => { :disabled => form.object.sold? } %>
-      <%= form.input :phone_number, :input_html => { :disabled => form.object.sold? } %>
-      <%= form.input :email_address, :input_html => { :disabled => form.object.sold? } %>
-      <%= form.input :linkedin_url, :input_html => { :disabled => form.object.sold? } %>
-      <%= form.input :facebook_url, :input_html => { :disabled => form.object.sold? } %>
-      <%= form.input :address_line_1, :input_html => { :disabled => form.object.sold? } %>
-      <%= form.input :address_line_2, :input_html => { :disabled => form.object.sold? } %>
-      <%= form.input :address_line_3, :input_html => { :disabled => form.object.sold? } %>
-      <%= form.input :city, :input_html => { :disabled => form.object.sold? } %>
-      <%= form.input :county, :input_html => { :disabled => form.object.sold? } %>
-      <%= form.input :zip_code, :input_html => { :disabled => form.object.sold? } %>
+      <%= form.input :purchase_value %>
+      <%= form.input :price %>
+      <%= form.input :currency, :collection => currencies_for_select, :include_blank => false %>
+      <%= form.input :company_name %>
+      <%= form.input :contact_name %>
+      <%= form.input :phone_number %>
+      <%= form.input :email_address %>
+      <%= form.input :linkedin_url %>
+      <%= form.input :facebook_url %>
+      <%= form.input :address_line_1 %>
+      <%= form.input :address_line_2 %>
+      <%= form.input :address_line_3 %>
+      <%= form.input :city %>
+      <%= form.input :county %>
+      <%= form.input :zip_code %>
       <% if current_user.can_publish_leads? %>
-        <%= form.input :published, :input_html => { :disabled => form.object.sold? } %>
+        <%= form.input :published %>
       <% else %>
-        <%= form.input :published, :as => :hidden, :input_html => { :disabled => form.object.sold? } %>
+        <%= form.input :published, :as => :hidden %>
       <% end %>
     </ol>
   </fieldset>
@@ -39,9 +39,9 @@
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs labels_ta_r labels_240">
     <ol class="align_inputs">
-      <%= form.input :header, :input_html => { :disabled => form.object.sold? } %>
-      <%= form.input :description, :input_html => {:style => "height: 140px; width: 600px", :disabled => form.object.sold? } %>
-      <%= form.input :hidden_description, :input_html => {:style => "height: 140px; width: 600px", :disabled => form.object.sold? } %>
+      <%= form.input :header %>
+      <%= form.input :description, :input_html => {:style => "height: 140px; width: 600px"} %>
+      <%= form.input :hidden_description, :input_html => {:style => "height: 140px; width: 600px"} %>
     </ol>
   </fieldset>
 </div>

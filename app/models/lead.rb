@@ -75,7 +75,6 @@ class Lead < ActiveRecord::Base
   after_find :set_buyers_notification
   before_update :notify_buyers_about_changes
   before_save :set_published_at
-  before_save :admin_editing
 
   private
 
@@ -132,13 +131,6 @@ class Lead < ActiveRecord::Base
 
   def deliver_email_template(email, uniq_id)
     ApplicationMailer.email_template(email, EmailTemplate.find_by_uniq_id(uniq_id), {:lead => self}).deliver
-  end
-
-  def admin_editing
-    if sold? and self.changed? and self.current_user and self.current_user.has_role?(:admin)
-      self.errors.add(:base, 'Can\'t edit sold lead')
-      false
-    end
   end
 
   public
