@@ -1,7 +1,7 @@
 <column-mc:>
   <header back="true"><%= t("administration.payment_transactions.new.view.header") %></header>
 
-  <% semantic_form_for @payment_transaction, :url => administration_invoicing_payment_transactions_path do |form| %>
+  <%= semantic_form_for @payment_transaction, :url => administration_invoicing_payment_transactions_path do |form| %>
       <%= render :partial => 'form', :locals => { :form => form } %>
       <%= form.submit t("administration.payment_transactions.new.view.button_create") %>
   <% end %>

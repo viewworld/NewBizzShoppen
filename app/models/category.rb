@@ -14,6 +14,7 @@ class Category < ActiveRecord::Base
   before_save :handle_locking_for_descendants
 
   validates_presence_of :name
+  validates_uniqueness_of :name, :scope => :parent_id
 
   has_many :leads do
     def including_subcategories
@@ -42,14 +43,18 @@ class Category < ActiveRecord::Base
 
   private
 
-  def id_and_name
+  def seo_name(add_id = false)
     name_en = CategoryTranslation.first(:conditions => ["category_id = ? and locale = ?", self.id, "en"])
-    "#{id} #{name_en.blank? ? '' : name_en.name}".to_url
+    "#{add_id ? id : ''} #{name_en.blank? ? '' : name_en.name}".to_url
+  end
+
+  def seo_name_with_id
+    seo_name(true)
   end
 
   def set_cached_slug
-    if cached_slug.blank? or cached_slug != id_and_name
-      self.cached_slug = id_and_name
+    if cached_slug.blank? or cached_slug != seo_name
+      self.cached_slug = seo_name
       self.save
     end
   end

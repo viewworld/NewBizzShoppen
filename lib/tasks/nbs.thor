@@ -234,7 +234,8 @@ class Nbs < Thor
         'blurb_agent_home',
         'blurb_purchase_manager_home',
         'blurb_start_page_role_selection',
-        'blurb_currencies'
+        'blurb_currencies',
+        'blurb_category_home'
     ].each do |key|
       unless Article::Cms.interface_content_texts.where(:key => key).first
         article = Article::Cms.make!(:scope => Article::Cms::INTERFACE_CONTENT_TEXT, :title => key.humanize, :content => key.humanize, :key => key)

@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  before_filter :authorize_with_http_basic_for_staging
+  before_filter :authorize_with_http_basic_for_staging, :for_category_buyer
 
   def authorize_with_http_basic_for_staging
     if Rails.env.staging?
@@ -32,6 +32,8 @@ class ApplicationController < ActionController::Base
         edit_customers_interests_path
       elsif resource.role == :lead_buyer
         buyers_root_path
+      elsif resource.has_role? :category_buyer
+        "/#{resource.category.cached_slug}"
       else
         self.send "#{resource.role.to_s.pluralize}_root_path"
       end
@@ -55,6 +57,15 @@ class ApplicationController < ActionController::Base
       method_path = current_user.has_role?(:admin) ? "administration_root_path" : "#{current_user.role.to_s.pluralize}_root_path"
       redirect_to self.send(method_path)
     end
+  end
+
+  def for_category_buyer
+    @home_category = if params[:slug]
+      Category.where(:cached_slug => params[:slug]).first
+    elsif current_user and current_user.has_role?(:category_buyer)
+      current_user.category
+    end
+    redirect_to "/#{@current_user.category.cached_slug}" if @home_category and current_user and current_user.category != @home_category
   end
 
   Warden::Manager.before_failure do |env, opts|

@@ -348,3 +348,7 @@ Then /^"([^"]*)" dropdown should not have values "([^"]*)"$/ do |field, values|
     assert !page.has_xpath?("//option[contains(string(), '#{value}')]")
   end
 end
+
+When /^I visit URL "([^"]*)"$/ do |url|
+  visit url
+end
