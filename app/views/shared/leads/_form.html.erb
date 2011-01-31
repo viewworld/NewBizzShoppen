@@ -122,4 +122,17 @@
         }
 
     }
+
+    function set_beginnings_of_urls(fields_array){
+        $.each(fields_array, function(index, value) {
+          if($('#' + value).val() == "") {
+          $('#' + value).val("http://")
+          }
+        });
+
+    }
+
+    <% if params[:action] == "new" or params[:action] == "create" %>
+        set_beginnings_of_urls(["lead_linkedin_url", "lead_facebook_url", "lead_company_website"]);
+    <% end %>
 </script>
