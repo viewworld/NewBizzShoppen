@@ -34,6 +34,8 @@ module NavigationHelpers
         '/administration/invoicing/upcoming_invoices'
     when /agents leads/
         '/agents/leads'
+    when /agents lead templates/
+        '/agents/lead_templates'
     when /browse leads/
         '/categories'
     when /buyer cart items/

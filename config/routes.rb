@@ -96,6 +96,7 @@ Nbs::Application.routes.draw do
   namespace :agents do
     root :to => "leads#index"
     resources :leads
+    resources :lead_templates
   end
 
   namespace :purchase_managers do

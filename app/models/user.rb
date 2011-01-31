@@ -280,4 +280,8 @@ class User < ActiveRecord::Base
     full_name
   end
 
+  def can_create_lead_templates?
+    has_any_role?(:admin, :call_centre, :agent)
+  end
+
 end
