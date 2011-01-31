@@ -31,6 +31,7 @@ class PurchaseManagers::LeadsController < PurchaseManagers::PurchaseManagerContr
 
   def new
     @lead = Lead.new(default_params_hash)
+    @lead.duplicate_fields(current_user.leads.find_by_id(params[:lead_id]))
   end
 
   def create
