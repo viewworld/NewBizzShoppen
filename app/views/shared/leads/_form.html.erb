@@ -1,8 +1,31 @@
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs labels_ta_r labels_240">
     <ol>
-      <%= form.input :category_id, :as => :select, :collection => Category.without_locked %>
+      <%= form.input :company_name %>
+      <%= form.input :company_phone_number %>
+      <%= form.input :company_website %>
+      <%= form.input :address_line_1 %>
+      <%= form.input :address_line_2 %>
+      <%= form.input :address_line_3 %>
+      <%= form.input :zip_code %>
+      <%= form.input :city %>
+      <%= form.input :county %>
       <%= form.input :country_id, :as => :select, :collection => Country.all %>
+      <%= form.input :company_ean_number %>
+    </ol>
+  </fieldset>
+</div>
+<hl/>
+
+<div class="pdd_10 no_pdd_t">
+  <fieldset class="inputs labels_ta_r labels_240">
+    <ol>
+      <%= form.input :contact_name %>
+      <%= form.input :direct_phone_number %>
+      <%= form.input :phone_number %>
+      <%= form.input :email_address %>
+      <%= form.input :linkedin_url %>
+      <%= form.input :facebook_url %>
     </ol>
   </fieldset>
 </div>
@@ -11,40 +34,22 @@
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs labels_ta_r labels_240">
     <ol class="align_inputs">
+      <%= form.input :category_id, :as => :select, :collection => Category.without_locked %>
+      <%= form.input :is_international, :as => :select, :collection => [[t("shared.leads.form.country_local_label"), 0], [t("shared.leads.form.country_international"), 1]], :include_blank => false %>
+      <%= form.input :header %>
+      <%= form.input :description, :input_html => {:style => "height: 140px; width: 600px"} %>
+      <% unless current_user.has_role?(:purchase_manager) %>
+        <%= form.input :hidden_description, :input_html => {:style => "height: 140px; width: 600px"} %>
+      <% end %>
       <%= form.input :purchase_value %>
       <%= form.input :price %>
       <%= form.input :currency, :collection => currencies_for_select, :include_blank => false %>
-      <%= form.input :company_name %>
-      <%= form.input :contact_name %>
-      <%= form.input :phone_number %>
-      <%= form.input :email_address %>
-      <%= form.input :linkedin_url %>
-      <%= form.input :facebook_url %>
-      <%= form.input :address_line_1 %>
-      <%= form.input :address_line_2 %>
-      <%= form.input :address_line_3 %>
-      <%= form.input :city %>
-      <%= form.input :county %>
-      <%= form.input :zip_code %>
       <% unless current_user.has_role?(:purchase_manager) %>
           <% if current_user.can_publish_leads? %>
             <%= form.input :published %>
           <% else %>
             <%= form.input :published, :as => :hidden %>
           <% end %>
-      <% end %>
-    </ol>
-  </fieldset>
-</div>
-<hl/>
-
-<div class="pdd_10 no_pdd_t">
-  <fieldset class="inputs labels_ta_r labels_240">
-    <ol class="align_inputs">
-      <%= form.input :header %>
-      <%= form.input :description, :input_html => {:style => "height: 140px; width: 600px"} %>
-      <% unless current_user.has_role?(:purchase_manager) %>
-        <%= form.input :hidden_description, :input_html => {:style => "height: 140px; width: 600px"} %>
       <% end %>
     </ol>
   </fieldset>
@@ -74,7 +79,7 @@
   <fieldset class="inputs labels_ta_r labels_240">
     <ol class="align_inputs">
       <%= form.input :notify_buyers_after_update, :as => :boolean unless @lead.lead_purchases.empty? %>
-      <%= form.input :sale_limit, :as => :select, :collection => (0..10) %>
+      <%= form.input :sale_limit, :as => :select, :collection => (1..10) %>
       <%= form.input :purchase_decision_date, :as => :string, :input_html => {:id => "datepicker"}, :wrapper_html => { :class => "date" } %>
     </ol>
   </fieldset>

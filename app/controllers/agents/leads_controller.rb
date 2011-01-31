@@ -18,6 +18,7 @@ class Agents::LeadsController < Agents::AgentController
 
   def new
     @lead = Lead.new(:current_user => current_user)
+    @lead.duplicate_fields(current_user.leads.find_by_id(params[:lead_id]))
     @lead.published = current_user.can_publish_leads?
   end
 
@@ -27,7 +28,9 @@ class Agents::LeadsController < Agents::AgentController
 
     create! do |success, failure|
       success.html {
-        unless params[:commit_continue].blank?
+        if !params[:commit_duplicate].blank?
+          redirect_to new_agents_lead_path(:lead_id => @lead.id)
+        elsif !params[:commit_continue].blank?
           redirect_to new_agents_lead_path
         else
           redirect_to agents_leads_path

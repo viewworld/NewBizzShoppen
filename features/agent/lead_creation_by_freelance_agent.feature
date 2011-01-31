@@ -182,3 +182,57 @@ Scenario: I cannot publish leads if my certification level is Not Certified or L
   Given Category Test category 1 is created
   And I follow translated "agent.leads.index.view.new_lead"
   Then I should not see "Published"
+
+@m5 @added @tgn @non_testable
+Scenario: Fields on the form are placed in defined order
+
+@m5 @added @tgn @_tested
+Scenario: I can add contact direct phone number, company phone number, company ean number, contact direct phone number, country is international, company website
+  When I follow translated "agent.leads.index.view.new_lead"
+  Then I fill in "lead_company_phone_number" with "34234234234234"
+  Then I fill in "lead_company_website" with "http://falsecompanyurl.com"
+  Then I fill in "lead_company_ean_number" with "ERH342342342342"
+  Then I fill in "lead_direct_phone_number" with "424234324234"
+  Then I select translated "shared.leads.form.country_international" from "lead_is_international"
+
+@m5 @added @tgn @_tested
+Scenario: I can create a new lead and duplicate company\contact info to another new lead
+  Given Category Test category 1 is created
+  And I follow translated "agent.leads.index.view.new_lead"
+  And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
+  And I fill in "lead_description" with "Lorem ipsum"
+  And I fill in "lead_hidden_description" with "Lorem ipsum hidden"
+  And I fill in "lead_purchase_value" with "10000"
+  And I fill in "lead_price" with "100"
+  And I select "3" from "lead_sale_limit"
+  #And I fill in "area" with "global"
+  And I select "Test category 1" from "lead_category_id"
+  And I select "Denmark" from "lead_country_id"
+  And I fill in "lead_company_name" with "Printing company"
+  And I fill in "lead_contact_name" with "Marek Kowalski"
+  And I fill in "lead_phone_number" with "123456789"
+  And I fill in "lead_direct_phone_number" with "2039282882"
+  And I fill in "lead_email_address" with "my@email.com"
+  And I fill in "lead_address_line_1" with "Kaminskiego 19"
+  And I fill in "lead_city" with "Bielsko-Biała"
+  And I fill in "lead_county" with "Freesdas"
+  And I fill in "lead_zip_code" with "23-2911"
+  And I fill in "datepicker" with "2011-02-20"
+  And I fill in "lead_company_phone_number" with "34234234234234"
+  And I fill in "lead_company_website" with "http://falsecompanyurl.com"
+  And I fill in "lead_linkedin_url" with "http://linkedin.com/pekdkdkd"
+  And I fill in "lead_facebook_url" with "http://facebook.com/fkdjdjd-fjehjhd"
+  And I press translated "agent.leads.new.view.button_create_and_duplicate"
+  Then the "lead_company_name" field should contain "Printing company"
+  And the "lead_address_line_1" field should contain "Kaminskiego 19"
+  And the "lead_zip_code" field should contain "23-2911"
+  And the "lead_company_phone_number" field should contain "34234234234234"
+  And the "lead_company_website" field should contain "http://falsecompanyurl.com"
+  And the "lead_contact_name" field should contain "Marek Kowalski"
+  And the "lead_direct_phone_number" field should contain "2039282882"
+  And the "lead_phone_number" field should contain "123456789"
+  And the "lead_linkedin_url" field should contain "http://linkedin.com/pekdkdkd"
+  And the "lead_facebook_url" field should contain "http://facebook.com/fkdjdjd-fjehjhd"
+
+@m0 @added
+Scenario: I can pick region for a country from dropdown

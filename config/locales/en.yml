@@ -673,6 +673,7 @@ en:
           title: 'New lead'
           button_create: 'Create'
           button_create_and_continue: 'Create & continue'
+          button_create_and_duplicate: 'Create & duplicate'
           remove_language: 'Remove'
       edit:
         view:
@@ -1195,6 +1196,10 @@ en:
       form:
         new_lead_template_field: New field
         remove_lead_template_field: Remove
+    leads:
+      form:
+        country_local_label: Local
+        country_international: International
 
   models:
     user:
