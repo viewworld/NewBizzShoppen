@@ -9,4 +9,6 @@ class LeadTemplateField < ActiveRecord::Base
   has_many :lead_template_value
 
   validates_presence_of :name, :field_type
+
+  translates :name
 end

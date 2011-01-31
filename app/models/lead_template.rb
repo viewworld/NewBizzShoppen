@@ -19,6 +19,8 @@ class LeadTemplate < ActiveRecord::Base
   attr_protected :name, :is_mandatory, :is_active
   BLACK_LISTED_ATTRIBUTES = [:name, :is_mandatory, :is_active].freeze
 
+  translates :name
+
   private
 
   def is_filled_out?
