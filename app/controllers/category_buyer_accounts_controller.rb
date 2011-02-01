@@ -11,7 +11,7 @@ class CategoryBuyerAccountsController < ApplicationController
     respond_to do  |format|
       if @user.save
         flash[:notice] = I18n.t("flash.category_buyer_accounts.actions.create.notice")
-        format.html { redirect_to "/#{@home_category.cached_slug}"}
+        format.html { redirect_to category_home_page_path(@home_category.cached_slug) }
       else
         format.html { render("new")}
       end

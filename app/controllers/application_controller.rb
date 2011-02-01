@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  before_filter :authorize_with_http_basic_for_staging, :for_category_buyer
+  before_filter :authorize_with_http_basic_for_staging, :check_category_buyer
 
   def authorize_with_http_basic_for_staging
     if Rails.env.staging?
@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
       elsif resource.role == :lead_buyer
         buyers_root_path
       elsif resource.has_role? :category_buyer
-        "/#{resource.category.cached_slug}"
+        category_home_page_path(resource.category.cached_slug)
       else
         self.send "#{resource.role.to_s.pluralize}_root_path"
       end
@@ -59,13 +59,17 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def for_category_buyer
-    @home_category = if params[:slug]
-      Category.where(:cached_slug => params[:slug]).first
-    elsif current_user and current_user.has_role?(:category_buyer)
+  def check_category_buyer
+    category_from_slug = params[:slug] ? Category.where(:cached_slug => params[:slug]).first : nil
+    @home_category = if current_user and current_user.has_role?(:category_buyer)
+      redirect_to category_home_page_path(current_user.category.cached_slug) if (category_from_slug and category_from_slug != current_user.category) or (params[:slug] and !category_from_slug)
       current_user.category
+    elsif params[:slug] and !category_from_slug
+      redirect_to root_path
+    elsif category_from_slug
+      category_from_slug
     end
-    redirect_to "/#{@current_user.category.cached_slug}" if @home_category and current_user and current_user.category != @home_category
+
   end
 
   Warden::Manager.before_failure do |env, opts|

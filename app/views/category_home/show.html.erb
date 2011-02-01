@@ -28,7 +28,7 @@
 
       </frm>
     </div>
-    <div class="column_1to3 fltl" style="padding: 0 15px" id="best_sellers">
+    <div class="column_1to3 fltl" style="padding: 0 15px" id="sign_up_sign_in">
       <% unless user_signed_in? %>
           <frm title="#{t('category_home.show.view.i_have_an_account')}" c="no_marg">
             <div class="pdd_10">
@@ -50,7 +50,7 @@
           </frm>
           <frm title="#{t('category_home.show.view.i_want_to_register')}" c="10">
             <div class="pdd_10">
-              <%= link_to t("category_home.show.view.category_buyer_signup"), "#{@home_category.cached_slug}/account/new" %>
+              <%= link_to t("category_home.show.view.category_buyer_signup"), new_category_home_page_account_path %>
             </div>
           </frm>
       <% else %>
@@ -63,11 +63,11 @@
     <div class="column_1to3 fltl" id="latest_leads">
       <frm title="#{t('category_home.show.view.header_latest_leads')}" c="no_marg">
         <param:header>
-          <%= bt_link_to nil, t("category_home.show.view.complete_list_link"), leads_path(:search => {:latest => true}), :class => "fltr" %>
+          <%= bt_link_to nil, t("category_home.show.view.complete_list_link"), category_home_page_leads_path(@home_category.cached_slug, :search => {:latest => true}), :class => "fltr" %>
         </param:header>
         <param:content>
           <ul class="solid_list">
-            <%#= render :partial => 'lead', :collection => @latest_leads, :as => :lead %>
+            <%= render :partial => 'lead', :collection => @latest_leads, :as => :lead %>
           </ul>
         </param:content>
       </frm>

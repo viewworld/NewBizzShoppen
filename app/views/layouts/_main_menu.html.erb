@@ -1,7 +1,7 @@
 <ul class="nav">
   <%= main_menu_link_to_role_specific_home_page %>
-  <% if params[:slug] or current_user_has_role?(:category_buyer)%>
-      <%= main_menu_link_to t("layout.main_menu.shared.browse_leads"), "/#{@home_category.cached_slug}/leads", :tab => "browse_leads" %>
+  <% if @home_category %>
+      <%= main_menu_link_to t("layout.main_menu.shared.browse_leads"), category_home_page_leads_path(@home_category.cached_slug), :tab => "browse_leads" %>
   <% else %>
       <%= main_menu_link_to t("layout.main_menu.shared.browse_leads"), categories_path, :tab => "browse_leads" %>
   <% end %>

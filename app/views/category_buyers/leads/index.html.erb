@@ -3,7 +3,7 @@
     <h2>Search</h2>
 
     <div class="search_content">
-      <%= form_for @search, :url => "/#{@home_category.cached_slug}/leads" do |f| %>
+      <%= form_for @search, :url => category_home_page_leads_path(@home_category.cached_slug) do |f| %>
           <fieldset class="inputs_vertical">
             <ol class="no_pdd">
               <li class="string">

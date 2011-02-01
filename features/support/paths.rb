@@ -96,6 +96,8 @@ module NavigationHelpers
       administration_currencies_path
     when /category home page for (.*)/
       "/#{$1.to_url}"
+    when /category home leads page for (.*)/
+    "/#{$1.to_url}/leads"
 
 
     # Add more mappings here.

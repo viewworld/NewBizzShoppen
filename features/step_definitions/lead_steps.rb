@@ -126,6 +126,13 @@ Given /^there are "([^"]*)" sold leads$/ do |num|
   num.to_i.times{LeadPurchase.make!(:lead => Lead.make!, :owner => User::Customer.make!, :paid => true, :accessible_from => Time.now)}
 end
 
+Given /^there are "([^"]*)" leads in category "([^"]*)"$/ do |num,category_name|
+  category = Category.where(:name => category_name).first
+  num.to_i.times do
+    Lead.make!(:category => category)
+  end
+end
+
 Given /^(.+) is a best seller$/ do |header|
   lead = Lead.find_by_header(header).first
   (Lead.maximum(:lead_purchases_counter)+1).times do

@@ -26,6 +26,7 @@ class CategoryBuyers::LeadsController < ApplicationController
     params[:search][:with_category] = @home_category.id
     params[:search][:without_locked_users] = "1"
     params[:search][:published_only] = "1"
+    params[:search][:ascend_by_header] = true
 
     @countries = (current_user and current_user.has_accessible_categories?) ? Country.with_leads.within_accessible_categories(current_user) : Country.with_leads
 

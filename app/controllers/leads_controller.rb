@@ -3,6 +3,7 @@ class LeadsController < ApplicationController
   actions :index, :show
   set_tab "browse_leads"
 
+  before_filter :check_category_buyer
   before_filter :check_search, :only => :index
 
   def show
@@ -41,6 +42,12 @@ class LeadsController < ApplicationController
 
   def check_search
     redirect_to categories_path unless params[:search]
+  end
+
+  def check_category_buyer
+    if current_user and current_user.has_role?(:category_buyer)
+      redirect_to category_home_page_path(current_user.category.cached_slug)
+    end
   end
 
 end
