@@ -32,6 +32,10 @@ module NavigationHelpers
         '/administration/invoicing/invoices'
     when /administration upcoming invoices/
         '/administration/invoicing/upcoming_invoices'
+    when /category home leads page for (.*)/
+        "/#{$1.to_url}/leads"
+    when /category home page for (.*)/
+        "/#{$1.to_url}"
     when /agents leads/
         '/agents/leads'
     when /browse leads/
@@ -90,14 +94,10 @@ module NavigationHelpers
       news = Article::News.find_by_title($1)
       news_path(news)
     when /(.*) article page/
-      news = Article::Cms.find_by_title($1)
+      news = Article.find_by_title($1)
       article_path(news)
     when /administration currencies/
       administration_currencies_path
-    when /category home page for (.*)/
-      "/#{$1.to_url}"
-    when /category home leads page for (.*)/
-    "/#{$1.to_url}/leads"
 
 
     # Add more mappings here.

@@ -1,17 +1,29 @@
 Given /^main page article exists with attributes "([^"]*)"$/ do |options|
-  Article::Cms.make!(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys.merge(:scope => 0))
+  Article::Cms::MainPageArticle.make!(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys)
 end
 
 Given /^interface content text exists with attributes "([^"]*)"$/ do |options|
-  Article::Cms.make!(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys.merge(:scope => 1))
+  Article::Cms::InterfaceContentText.make!(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys)
 end
 
 Given /^help popup exists with attributes "([^"]*)"$/ do |options|
-  Article::Cms.make!(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys.merge(:scope => 2))
+  Article::Cms::HelpPopup.make!(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys)
 end
 
-When /^there are (\d+) random cms articles$/ do |num|
+When /^there are (\d+) main page articles$/ do |num|
   num.to_i.times do
-    Article::Cms.make!(:key => ActiveSupport::SecureRandom.hex(16))
+    Article::Cms::MainPageArticle.make!(:key => ActiveSupport::SecureRandom.hex(16))
+  end
+end
+
+When /^there are (\d+) interface content texts$/ do |num|
+  num.to_i.times do
+    Article::Cms::InterfaceContentText.make!(:key => ActiveSupport::SecureRandom.hex(16))
+  end
+end
+
+When /^there are (\d+) help popups$/ do |num|
+  num.to_i.times do
+    Article::Cms::HelpPopup.make!(:key => ActiveSupport::SecureRandom.hex(16))
   end
 end

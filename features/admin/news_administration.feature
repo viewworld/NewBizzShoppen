@@ -9,14 +9,15 @@ Background: I am logged in as a system admin
 
 @_done
 Scenario: I can see a listing of all news
-  When there are 5 random news
+  When there are 3 agent news
+  And there are 2 purchase manager news
   And I follow translated "layout.main_menu.admin.news"
   Then I should see "5" rows in a table within "#news_table"
 
 @_done
 Scenario: I can sort listing of all news by creation date and title
-  When news exists with attributes "title:AAANews"
-  And news exists with attributes "title:BBBNews"
+  When agent news exists with attributes "title:AAANews"
+  And agent news exists with attributes "title:BBBNews"
   And I follow translated "layout.main_menu.admin.news"
   And I follow translated "administration.news.index.view.title"
   Then I should see "AAANews" before "BBBNews"
@@ -34,18 +35,18 @@ Scenario: I can filter listing of all news by scope (buyers, agents, both) and b
   And I follow translated "layout.main_menu.admin.news"
   Then I should see "AgentNews"
   And I should see "BuyerNews"
-  When I select translated "administration.news.index.view.agents" from "search_with_scope"
+  When I select translated "administration.news.index.view.agents" from "search_with_subclass"
   And I press translated "administration.news.index.view.search_button"
   Then I should see "AgentNews"
   And I should not see "BuyerNews"
-  When I select translated "administration.news.index.view.buyers" from "search_with_scope"
+  When I select translated "administration.news.index.view.buyers" from "search_with_subclass"
   And I press translated "administration.news.index.view.search_button"
   Then I should see "BuyerNews"
   And I should not see "AgentNews"
 
 @_done @selenium
 Scenario: I can edit existing news entry
-  When news exists with attributes "title:FirstNews"
+  When agent news exists with attributes "title:FirstNews"
   And I follow translated "layout.main_menu.admin.news"
   And I click hidden link by url regex "/administration\/news\/\d+\/edit/"
   And I fill in "news_title" with "OtherTitle"
@@ -95,14 +96,14 @@ Scenario: I can filter between agent and buyer
   When published agent news exists with attributes "title:AgentNews"
   And published buyer news exists with attributes "title:BuyerNews"
   And I follow translated "layout.main_menu.admin.news"
-  And I select translated "administration.news.index.view.agents" from "search_with_scope"
+  And I select translated "administration.news.index.view.agents" from "search_with_subclass"
   And I press translated "administration.news.index.view.search_button"
   Then I should see "AgentNews"
   And I should not see "BuyerNews"
 
 @added @_done
 Scenario: I can destroy news
-  When news exists with attributes "title:FirstNews"
+  When agent news exists with attributes "title:FirstNews"
   And I follow translated "layout.main_menu.admin.news"
   Then I should see "FirstNews"
   And I follow translated "administration.news.index.view.delete_link"

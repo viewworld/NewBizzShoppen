@@ -227,7 +227,7 @@ en:
     index:
       view:
         agents_header: 'AGENTS NEWS'
-        buyers_header: 'SALES MANAGER NEWS'
+        sales_managers_header: 'SALES MANAGER NEWS'
         purchase_managers_header: 'PURCHASE MANAGERS NEWS'
         read_more_link: 'read more'
         newer_link: 'Newer'

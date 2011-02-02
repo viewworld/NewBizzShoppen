@@ -94,7 +94,7 @@ module ApplicationHelper
       if @home_category and current_user.has_role?(:category_buyer)
         category_home_page_path(@home_category.cached_slug)
       elsif current_user.has_any_role?(:customer, :lead_buyer, :lead_user, :agent, :purchase_manager)
-        (current_user.has_any_role?(:customer, :lead_buyer, :lead_user)) ? :buyer_home_path : "#{current_user.role.to_s}_home_path".to_sym
+        (current_user.has_any_role?(:customer, :lead_buyer, :lead_user)) ? buyer_home_path : self.send("#{current_user.role.to_s}_home_path")
       else
         root_path
       end

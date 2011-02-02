@@ -251,16 +251,34 @@ end
   roles_mask { 304 }
 end
 
-::Article::Cms.blueprint do
+::Article::Cms::InterfaceContentText.blueprint do
   title { Faker::Lorem.words(4).to_s.capitalize }
   content { Faker::Lorem.sentences(2).to_s }
-  scope { rand(3) }
 end
 
-::Article::News.blueprint do
+::Article::Cms::MainPageArticle.blueprint do
   title { Faker::Lorem.words(4).to_s.capitalize }
   content { Faker::Lorem.sentences(2).to_s }
-  scope { rand(2) }
+end
+
+::Article::Cms::HelpPopup.blueprint do
+  title { Faker::Lorem.words(4).to_s.capitalize }
+  content { Faker::Lorem.sentences(2).to_s }
+end
+
+::Article::News::Agent.blueprint do
+  title { Faker::Lorem.words(4).to_s.capitalize }
+  content { Faker::Lorem.sentences(2).to_s }
+end
+
+::Article::News::SalesManager.blueprint do
+  title { Faker::Lorem.words(4).to_s.capitalize }
+  content { Faker::Lorem.sentences(2).to_s }
+end
+
+::Article::News::PurchaseManager.blueprint do
+  title { Faker::Lorem.words(4).to_s.capitalize }
+  content { Faker::Lorem.sentences(2).to_s }
 end
 
 Invoice.blueprint do

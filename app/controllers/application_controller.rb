@@ -61,7 +61,7 @@ class ApplicationController < ActionController::Base
 
   def check_category_buyer
     category_from_slug = params[:slug] ? Category.where(:cached_slug => params[:slug]).first : nil
-    @home_category = if current_user and current_user.has_role?(:category_buyer)
+    @home_category = if user_signed_in? and current_user and current_user.has_role?(:category_buyer)
       redirect_to category_home_page_path(current_user.category.cached_slug) if (category_from_slug and category_from_slug != current_user.category) or (params[:slug] and !category_from_slug)
       current_user.category
     elsif params[:slug] and !category_from_slug

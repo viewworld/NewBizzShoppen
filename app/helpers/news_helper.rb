@@ -1,17 +1,15 @@
 module NewsHelper
   def news_header
-    if params[:search].is_a?(Hash)
-      if common = (['for_purchase_manager','for_agent','for_buyer'] & params[:search].keys) and common.any?
-        t("news.index.view.#{common.first.sub(/for_/,'').pluralize}_header")
-      end
+    if params[:search].is_a?(Hash) and params[:search][:with_subclass].present?
+      t("news.index.view.#{params[:search][:with_subclass].underscore.pluralize}_header")
     end
   end
 
   def news_scope_for_select
     [
-      [I18n.t('administration.news.index.view.agents'),Article::News::AGENT],
-      [I18n.t('administration.news.index.view.buyers'),Article::News::BUYER],
-      [I18n.t('administration.news.index.view.purchase_managers'),Article::News::PURCHASE_MANAGER]
+      [I18n.t('administration.news.index.view.agents'),'Agent'],
+      [I18n.t('administration.news.index.view.buyers'),'SalesManager'],
+      [I18n.t('administration.news.index.view.purchase_managers'),'PurchaseManager']
     ]
   end
 

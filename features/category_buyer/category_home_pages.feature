@@ -211,7 +211,7 @@ Feature: Category home pages
     Then I should see translated "customer.subaccounts.create.flash.subaccount_creation_successful"
     And user "driscoll@person.noserver.com" should have role "category_buyer"
 
-  @wip
+  @_done
   Scenario: Subaccounts should have access only to parents category
     When Category named "Best Leads" already exists
     And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Best Leads" with attributes "team_buyers:1"

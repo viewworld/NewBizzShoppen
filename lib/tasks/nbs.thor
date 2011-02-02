@@ -215,8 +215,8 @@ class Nbs < Thor
         'Privacy',
         'Terms & Conditions'
     ].each do |title|
-      unless Article::Cms.main_page_articles.includes(:translations).where(:article_translations => {:title => title}).first
-        article = Article::Cms.make!(:scope => Article::Cms::MAIN_PAGE_ARTICLE, :title => title, :content => title, :key => title.parameterize('_'))
+      unless Article::Cms::MainPageArticle.includes(:translations).where(:article_translations => {:title => title}).first
+        article = Article::Cms::MainPageArticle.make!(:title => title, :content => title, :key => title.parameterize('_'))
         [:en, :dk].each do |locale|
           I18n.locale = locale
           article.title = title
@@ -237,8 +237,8 @@ class Nbs < Thor
         'blurb_currencies',
         'blurb_category_home'
     ].each do |key|
-      unless Article::Cms.interface_content_texts.where(:key => key).first
-        article = Article::Cms.make!(:scope => Article::Cms::INTERFACE_CONTENT_TEXT, :title => key.humanize, :content => key.humanize, :key => key)
+      unless Article::Cms::InterfaceContentText.where(:key => key).first
+        article = Article::Cms::InterfaceContentText.make!(:title => key.humanize, :content => key.humanize, :key => key)
         [:en, :dk].each do |locale|
           I18n.locale = locale
           article.title = key.humanize
@@ -253,8 +253,8 @@ class Nbs < Thor
     [
         'reset_password'
     ].each do |key|
-      unless Article::Cms.help_popups.where(:key => key).first
-        article = Article::Cms.make!(:scope => Article::Cms::HELP_POPUP, :title => key.humanize, :content => key.humanize, :key => key)
+      unless Article::Cms::HelpPopup.where(:key => key).first
+        article = Article::Cms::HelpPopup.make!(:title => key.humanize, :content => key.humanize, :key => key)
         [:en, :dk].each do |locale|
           I18n.locale = locale
           article.title = key.humanize
