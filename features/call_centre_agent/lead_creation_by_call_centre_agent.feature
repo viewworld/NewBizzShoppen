@@ -90,3 +90,15 @@ Scenario: I can add an extra language while creating lead. This will include lea
   Then I click hidden link by url regex "/call_centre_agents\/leads\/\d+\/edit/"
   And I should see "DK description"
   And I should see "DK hidden description"
+
+@m5 @added @lead_templates @tgn @selenium
+Scenario: I have to fill out the templates which are mandatory
+
+@m5 @added @lead_templates @tgn @selenium
+Scenario: I can select additional templates that are optional
+
+@m5 @added @lead_templates @tgn @selenium
+Scenario: I can use lead templates that were created by other agents that belongs to my call centre
+
+@m5 @added @lead_templates @tgn @selenium
+Scenario: When new translation to lead is added I can also write translation for the templates
