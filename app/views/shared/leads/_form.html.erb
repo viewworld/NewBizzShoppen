@@ -34,7 +34,7 @@
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs labels_ta_r labels_240">
     <ol class="align_inputs">
-      <%= form.input :category_id, :as => :select, :collection => Category.without_locked %>
+      <%= form.input :category_id, :as => :hidden %>
       <%= form.input :is_international, :as => :select, :collection => [[t("shared.leads.form.country_local_label"), 0], [t("shared.leads.form.country_international"), 1]], :include_blank => false %>
       <%= form.input :header %>
       <%= form.input :description, :input_html => {:style => "height: 140px; width: 600px"} %>

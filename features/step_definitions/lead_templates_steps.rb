@@ -17,7 +17,7 @@ end
 Given /^template named "([^"]*)" has following fields "([^"]*)"$/ do |name, fields|
   template = LeadTemplate.find_by_name(name).first
   fields.split(",").map { |f| f.to_s.strip.split(':') }.each do |f_name, f_is_hidden|
-    template.lead_template_fields.create(:name => f_name, :is_hidden => f_is_hidden == "true" ? true : false)
+    template.lead_template_fields.create(:name => f_name, :is_hidden => f_is_hidden == "true" ? true : false, :field_type => 0)
   end
 end
 
