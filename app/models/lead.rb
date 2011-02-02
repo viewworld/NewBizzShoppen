@@ -14,6 +14,7 @@ class Lead < ActiveRecord::Base
   belongs_to :currency
   has_many :lead_translations, :dependent => :destroy
   has_many :lead_purchases
+  has_many :lead_template_values
 
   scope :with_keyword, lambda { |q| where("lower(header) like :keyword OR lower(description) like :keyword OR lower(creator_name) like :keyword", {:keyword => "%#{q.downcase}%"}) }
   scope :deal_value_from, lambda { |q| where(["purchase_value >= ?", q]) }
@@ -61,6 +62,7 @@ class Lead < ActiveRecord::Base
   delegate :certification_level, :to => :creator
 
   accepts_nested_attributes_for :lead_translations, :allow_destroy => true
+  accepts_nested_attributes_for :lead_template_values, :allow_destroy => true
 
   scoped_order :id, :header, :sale_limit, :price, :lead_purchases_counter, :published, :has_unsatisfactory_rating, :purchase_value
 
@@ -173,5 +175,25 @@ class Lead < ActiveRecord::Base
         self.send("#{field}=".to_sym, lead.send(field.to_sym))
       end
     end
+  end
+
+  def lead_templates(with_mandatory_only=nil)
+    self.creator = current_user if creator.nil?
+    templates = LeadTemplate.with_category_and_its_ancestors(category).
+        where("((creator_id = ? and creator_type = ?) or (creator_id = ? and creator_type = ?) or creator_type = ?)",
+                 creator.parent_id, creator.parent.nil? ? "" : creator.parent.class.to_s, creator.id, creator.class.to_s, "User::Admin")
+    templates = templates.where("is_mandatory = ?", with_mandatory_only) unless with_mandatory_only.nil?
+    templates
+  end
+
+  def all_lead_template_values(selected_template=nil)
+    templates = selected_template.nil? ? lead_templates : [LeadTemplate.find(selected_template)]
+    templates.map do |template|
+      template.lead_template_fields.map do |field|
+        lead_template_value = lead_template_values.detect { |ltv| ltv.lead_template_field == field }
+        lead_template_value = LeadTemplateValue.new(:lead_template_field => field) if lead_template_value.nil?
+        lead_template_value
+      end
+    end.flatten.compact
   end
 end

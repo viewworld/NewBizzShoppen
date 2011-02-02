@@ -34,6 +34,10 @@ module ApplicationHelper
     "add_lead_template_field(this, \"#{escape_javascript(fields)}\")"
   end
 
+  def available_templates_list(lead)
+    lead.lead_templates(false).reject { |lt| lt.is_filled_out_for(lead) }
+  end
+
   def custom_error_for_field(form, field)
     if form.object.errors[field].present?
       content_tag(:p, form.object.errors[field], :class => "inline-errors") + tag("br")

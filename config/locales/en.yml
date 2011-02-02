@@ -1202,6 +1202,7 @@ en:
       form:
         country_local_label: Local
         country_international: International
+        remove_template: Remove
 
   models:
     user:

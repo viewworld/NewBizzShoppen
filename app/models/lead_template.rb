@@ -6,6 +6,7 @@ class LeadTemplate < ActiveRecord::Base
   scope :with_creator, lambda { |creator_id| where("creator_id = ?", creator_id) }
   scope :with_keyword, lambda { |q| where("lower(name) like :keyword", {:keyword => "%#{q.downcase}%"}) }
   scope :with_category, lambda { |category_id| where("category_id = ?", category_id) }
+  scope :with_category_and_its_ancestors, lambda { |category| where("lead_templates.category_id in (?)", category.self_and_ancestors.map(&:id)).joins(:category) }
 
   include ScopedSearch::Model
 
@@ -39,5 +40,12 @@ class LeadTemplate < ActiveRecord::Base
     else
       super
     end
+  end
+
+  public
+
+  def is_filled_out_for(lead)
+    values = lead.lead_template_values.select { |ltv| ltv.lead_template_field.lead_template_id == id }
+    !values.map(&:value).detect { |v| !v.blank? }.nil?
   end
 end

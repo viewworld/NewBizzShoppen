@@ -54,6 +54,9 @@
     </ol>
   </fieldset>
 </div>
+<% unless @lead.lead_templates.empty? %>
+    <%= render :partial => "/shared/leads/lead_template_fields", :locals => { :lead => @lead, :form => form } %>
+<% end %>
 <hl/>
 
 <div class="nested_locale_container"></div>
@@ -103,6 +106,8 @@
             $('.nested_locale_container:last').append(content);
             $('.locale_hidden_field:last').val($('#locale_picker').val());
             $('.locale_title:last').html($('#locale_picker').val());
+            $('.lead_template_value_translations_container_' + $('#locale_picker').val()).show();
+            $('.destroy_hidden_field_template_value_tr_' + $('#locale_picker').val()).val('');
             $("option[value=" + $('#locale_picker').val() + "]").remove();
             nestedFormsCount = nestedFormsCount + 1;
         }
@@ -110,6 +115,8 @@
 
     function remove_language(id, locale, record_id) {
         nestedFormsCount = nestedFormsCount - 1;
+        $('.lead_template_value_translations_container_' + locale).hide();
+        $('.destroy_hidden_field_template_value_tr_' + locale).val('true');
         $('#locale_picker').append($("<option></option>").attr("value", locale).text(locale));
         if (record_id == null)
         {
@@ -130,6 +137,18 @@
           }
         });
 
+    }
+
+    function add_template(){
+        $('#lead_template_container_' + $('#optional_templates_picker').val()).show();
+        $('.destroy_hidden_field_lead_template_fields_' + $('#optional_templates_picker').val()).val('');
+        $("option[value=" + $('#optional_templates_picker').val() + "]").remove();
+    }
+
+    function remove_template(template_id, template_name) {
+      $('#lead_template_container_' + template_id.toString()).hide();
+      $('.destroy_hidden_field_lead_template_fields_' + template_id.toString()).val('true');
+      $('#optional_templates_picker').append($("<option></option>").attr("value", template_id).text(template_name));
     }
 
     <% if params[:action] == "new" or params[:action] == "create" %>

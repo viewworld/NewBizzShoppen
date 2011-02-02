@@ -3,7 +3,6 @@ class CreateLeadTemplateValues < ActiveRecord::Migration
     create_table :lead_template_values do |t|
       t.integer :lead_template_field_id
       t.integer :lead_id
-      t.string :name
       t.string :field_type
       t.string :value
 

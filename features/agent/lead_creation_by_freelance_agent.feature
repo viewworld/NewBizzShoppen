@@ -168,14 +168,25 @@ Scenario: I can add linkedin and facebook links to lead's contact information
   And I should be on agents leads
   And I should see translated "flash.leads.actions.create.notice"
 
-@m5 @added @lead_templates @tgn
+@m5 @added @lead_templates @tgn @_wip
 Scenario: I have to fill out the templates which are mandatory
+  #Given template named "Computers details" for category "Computers" is created by user "bob@person.com" with role "agent"
+  #And template named "Computers details" is mandatory
+  #And template named "Computers details" has following fields "computers count:false, operating systems:false"
+  And I go to agents leads
+  And I open page in browser
+  #And I select "Computers" from "category_id"
+  And I follow translated "agent.leads.index.view.new_lead"
+  And I open page in browser
 
 @m5 @added @lead_templates @tgn
 Scenario: I can select additional templates that are optional
 
 @m5 @added @lead_templates @tgn
-Scenario: Lead templates for given category consist of my templates and my call centre's
+Scenario: Lead templates for given category consist of my templates, my call centre's and admin's
+
+@m5 @added @lead_templates @tgn
+Scenario: When new translation to lead is added I can also write translation for the templates
 
 @m4 @added @tgn @agent_certification @_tested
 Scenario: I cannot publish leads if my certification level is Not Certified or Locked

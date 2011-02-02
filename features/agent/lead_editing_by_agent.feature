@@ -73,3 +73,6 @@ Scenario: I have to fill out the templates which are mandatory
 
 @m5 @added @lead_templates @tgn
 Scenario: I can select additional templates that are optional
+
+@m5 @added @lead_templates @tgn
+Scenario: When new translation to lead is added I can also write translation for the templates
