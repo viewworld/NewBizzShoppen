@@ -1,6 +1,6 @@
 <column-mc:>
 
-  <header>
+  <header back="true">
     <%= t('administration.news.edit.view.header') %>
   </header>
 
@@ -18,7 +18,7 @@
             <%= form.submit t("administration.news.edit.view.button_save") %>
           </ibt>
           <ibt c="bt_grey fltri">
-            <% if @news.title.blank? %>
+            <% if @news.just_created %>
                 <%= button_to_function t("common.cancel_link"), "$('#delete_news_form').submit();"  %>
             <% end %>
           </ibt>

@@ -2,6 +2,10 @@
   <fieldset class="inputs">
     <ol>
       <%= form.input :title %>
+      <% if form.object.is_a? Article::News::CategoryHome %>
+        <%= form.input :resource_type, :as => :hidden, :value => "Category" %>
+        <%= form.input :resource, :collection => Category.all, :label => t("administration.news.edit.view.category_label"), :include_blank => false %>
+      <% end %>
       <%= form.input :content,
                         :label => false,
                         :as => :ckeditor,

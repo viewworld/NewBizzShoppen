@@ -281,6 +281,12 @@ end
   content { Faker::Lorem.sentences(2).to_s }
 end
 
+::Article::News::CategoryHome.blueprint do
+  title { Faker::Lorem.words(4).to_s.capitalize }
+  content { Faker::Lorem.sentences(2).to_s }
+  resource { Category.make! }
+end
+
 Invoice.blueprint do
   user { User::Agent.make! }
 end

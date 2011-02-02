@@ -85,7 +85,74 @@ Feature: Category home pages
     And I visit URL "/categories"
     Then I should be on category home page for Best Leads
 
+  @_done
   Scenario: I can see a list of news on category home page
+    When Category named "Best Leads" already exists
+    And there is a published news for category "Best Leads"
+    And I am on category home page for Best Leads
+    Then I should see "1" items on a list within "#news"
+
+  @_done
+  Scenario: I can see only news created for specific category
+    When Category named "Best Leads" already exists
+    And there is a published news for category "Best Leads"
+    And I am on category home page for Best Leads
+    Then I should see "1" items on a list within "#news"
+    When Category named "Worst Leads" already exists
+    And there is a published news for category "Worst Leads"
+    And I am on category home page for Worst Leads
+    Then I should see "1" items on a list within "#news"
+
+  @_done
+  Scenario: As administrator I can see all news for categories
+    When Category named "Best Leads" already exists
+    And there is a published news for category "Best Leads"
+    And Category named "Worst Leads" already exists
+    And there is a published news for category "Worst Leads"
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
+    And I am on the home page
+    And I sign in as jon@lajoie.ca with password secret
+    And I follow translated "layout.main_menu.admin.news"
+    And I select translated "administration.news.index.view.category_homes" from "search_with_subclass"
+    And I press translated "administration.news.index.view.search_button"
+    Then I should see "2" rows in a table within "#news_table"
+
+  @selenium @_done
+  Scenario: As administrator I can update and change category for category news
+    When Category named "Best Leads" already exists
+    And Category named "Worst Leads" already exists
+    And there is a published news for category "Best Leads"
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
+    And I am on the home page
+    And I sign in as jon@lajoie.ca with password secret
+    And I follow translated "layout.main_menu.admin.news"
+    And I select translated "administration.news.index.view.category_homes" from "search_with_subclass"
+    And I press translated "administration.news.index.view.search_button"
+    And I click hidden link by url regex "/administration\/news\/\d+\/edit/"
+    And I fill in "news_title" with "NewsForWorstLeads"
+    And I select "Worst Leads" from "news_resource_id"
+    And I press translated "administration.news.edit.view.button_save"
+    And I am on category home page for Worst Leads
+    Then I should see "1" items on a list within "#news"
+    And I should see "NewsForWorstLeads"
+
+  @selenium @_done
+  Scenario: As administrator I can create news for category
+    When Category named "Best Leads" already exists
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
+    And I am on the home page
+    And I sign in as jon@lajoie.ca with password secret
+    And I follow translated "layout.main_menu.admin.news"
+    And I select translated "administration.news.index.view.category_homes" from "subclass"
+    And I follow translated "administration.news.index.view.new_news"
+    And I fill in "news_title" with "NewsForBestLeads"
+    And I select "Best Leads" from "news_resource_id"
+    And I fill in "news_content_editor" ckeditor with "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+    And I check "news_published"
+    And I press translated "administration.news.edit.view.button_save"
+    And I am on category home page for Best Leads
+    Then I should see "1" items on a list within "#news"
+    And I should see "NewsForBestLeads"
 
   @_done
   Scenario: I can see a list of most recent category leads on category home page

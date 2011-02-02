@@ -36,3 +36,8 @@ Given /^pagination page size for news is set to (\d+)$/ do |n|
   Settings.stubs(:default_news_per_page).returns(n)
 end
 
+When /^there is a published news for category "([^"]*)"$/ do |category_name|
+  Article::News::CategoryHome.make!(:resource => Category.where(:name => category_name).first).publish!
+end
+
+

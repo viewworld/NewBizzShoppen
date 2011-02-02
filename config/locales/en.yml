@@ -428,6 +428,7 @@ en:
           buyers: 'sales managers'
           agents: 'agents'
           purchase_managers: 'purchase managers'
+          category_homes: 'category homes'
           new_news: 'New news'
           search_button: 'Search'
           id: 'ID'
@@ -449,6 +450,7 @@ en:
         view:
           header: 'Edit news'
           button_save: 'Save news'
+          category_label: 'Category'
     currencies:
       index:
         view:

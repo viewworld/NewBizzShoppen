@@ -17,7 +17,7 @@ class Administration::NewsController < Administration::AdministrationController
   def create
     @news = "Article::News::#{params[:subclass]}".constantize.new
     create! do |success,failure|
-      success.html { redirect_to edit_administration_news_path(@news)}
+      success.html { render :action => :edit }
       failure.html { redirect_to administration_news_index_path }
     end
   end

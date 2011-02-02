@@ -1,6 +1,8 @@
 class Article < ActiveRecord::Base
   set_table_name 'articles'
 
+  attr_accessor :just_created
+
   translates :title, :content
 
   validates_presence_of :title, :content, :on => :update
@@ -10,6 +12,7 @@ class Article < ActiveRecord::Base
   scoped_order :id, :title, :created_at
 
   before_save :set_published_date
+  after_create :set_just_created
 
   scope :only_translations, lambda {|locale| includes(:translations).where(:article_translations => {:locale => locale.to_s})}
   scope :with_keyword, lambda { |q| only_translations(I18n.locale).where("lower(article_translations.title) LIKE :keyword OR lower(article_translations.content) LIKE :keyword", {:keyword => "%#{q.downcase}%"}) }
@@ -25,6 +28,10 @@ class Article < ActiveRecord::Base
     if published_changed? and published?
       self.published_date = Time.now
     end
+  end
+
+  def set_just_created
+    self.just_created = true
   end
 
   public

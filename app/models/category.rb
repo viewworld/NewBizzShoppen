@@ -9,6 +9,7 @@ class Category < ActiveRecord::Base
           :conditions => "asset_type = 'Asset::CategoryImage'",
           :dependent  => :destroy
   has_many :category_interests
+  has_many :news, :as => :resource, :class_name => "Article::News::CategoryHome"
 
   after_save :set_cached_slug
   before_save :handle_locking_for_descendants
