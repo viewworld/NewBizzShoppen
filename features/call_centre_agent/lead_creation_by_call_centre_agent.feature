@@ -101,4 +101,7 @@ Scenario: I can select additional templates that are optional
 Scenario: I can use lead templates that were created by other agents that belongs to my call centre
 
 @m5 @added @lead_templates @tgn @selenium
+Scenario: I do not see lead templates created by my call centre that are marked as inactive
+
+@m5 @added @lead_templates @tgn @selenium
 Scenario: When new translation to lead is added I can also write translation for the templates
