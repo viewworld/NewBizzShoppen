@@ -31,6 +31,7 @@ Scenario: I can create new lead template for given category
   And I follow translated "shared.lead_templates.form.new_lead_template_field"
   And I fill in "lead_template_lead_template_fields_attributes_1_name" with "example attr 2"
   And I check "lead_template_lead_template_fields_attributes_1_is_hidden"
+  And I check "lead_template_lead_template_fields_attributes_1_is_mandatory"
   Then I press translated "call_centre_agent.lead_templates.new.view.button_create"
   And I click hidden link by url regex "/call_centre_agents\/lead_templates\/\d+\/edit/"
   Then the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 1"
@@ -39,7 +40,7 @@ Scenario: I can create new lead template for given category
 @added @_done @_tested_elsewhere
 Scenario: During template creation/edition I can mark fields as hidden or public
 
-@added
+@added @_done @_tested_elsewhere
 Scenario: During template creation/editon I can mark fields as mandatory or optional
 
 @added @selenium @_tested
@@ -53,6 +54,7 @@ Scenario: I can edit lead template that was created by me
   And I follow translated "shared.lead_templates.form.new_lead_template_field"
   And I fill in "lead_template_lead_template_fields_attributes_1_name" with "example attr 2"
   And I check "lead_template_lead_template_fields_attributes_1_is_hidden"
+  And I check "lead_template_lead_template_fields_attributes_1_is_mandatory"
   Then I press translated "call_centre_agent.lead_templates.edit.view.button_update"
   And I click hidden link by url regex "/call_centre_agents\/lead_templates\/\d+\/edit/"
   Then the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 1"
