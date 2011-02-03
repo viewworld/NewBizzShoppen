@@ -172,7 +172,7 @@ Scenario: I can add linkedin and facebook links to lead's contact information
 Scenario: I have to fill out the templates which are mandatory
   Given template named "Computers details" for category "Computers" is created by user "bob@person.com" with role "agent"
   And template named "Computers details" is mandatory
-  And template named "Computers details" has following fields "computers count:false, operating systems:false"
+  And template named "Computers details" has following fields "computers count:false:false, operating systems:false:false"
   And I go to agents leads
   And I select "Computers" from "category_id"
   And I follow translated "agent.leads.index.view.new_lead"
@@ -203,10 +203,10 @@ Scenario: I have to fill out the templates which are mandatory
 Scenario: I can select additional templates that are optional
   Given template named "Computers details" for category "Computers" is created by user "bob@person.com" with role "agent"
   And template named "Computers details" is mandatory
-  And template named "Computers details" has following fields "computers count:false, operating systems:false"
+  And template named "Computers details" has following fields "computers count:false:false, operating systems:false:false"
   Given template named "Fax details" for category "Computers" is created by user "bob@person.com" with role "agent"
   And template named "Fax details" is not mandatory
-  And template named "Fax details" has following fields "fax software version:false, date of purchase:false"
+  And template named "Fax details" has following fields "fax software version:false:false, date of purchase:false:false"
   And I go to agents leads
   And I select "Computers" from "category_id"
   And I follow translated "agent.leads.index.view.new_lead"
@@ -274,7 +274,7 @@ Scenario: Lead templates for given category consists of templates from that cate
 Scenario: When new translation to lead is added I can also write translation for the templates
   Given template named "Computers details" for category "Computers" is created by user "bob@person.com" with role "agent"
   And template named "Computers details" is mandatory
-  And template named "Computers details" has following fields "computers count:false, operating systems:false"
+  And template named "Computers details" has following fields "computers count:false:false, operating systems:false:false"
   And I go to agents leads
   And I select "Computers" from "category_id"
   And I follow translated "agent.leads.index.view.new_lead"

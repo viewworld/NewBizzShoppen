@@ -91,11 +91,75 @@ Scenario: I can add an extra language while creating lead. This will include lea
   And I should see "DK description"
   And I should see "DK hidden description"
 
-@m5 @added @lead_templates @tgn @selenium
+@m5 @added @lead_templates @tgn @selenium @_tested
 Scenario: I have to fill out the templates which are mandatory
+  Given template named "Computers details" for category "Computers" is created by user "call_centre_agent@person.com" with role "call_centre_agent"
+  And template named "Computers details" is mandatory
+  And template named "Computers details" has following fields "computers count:false:false, operating systems:false:false"
+  And I follow translated "layout.main_menu.call_centre_agent.leads"
+  And I select "Computers" from "category_id"
+  And I follow translated "call_centre_agent.leads.index.view.new_lead"
+  And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
+  And I fill in "lead_description" with "Lorem ipsum"
+  And I fill in "lead_hidden_description" with "Lorem ipsum hidden"
+  And I fill in "lead_purchase_value" with "10000"
+  And I fill in "lead_price" with "100"
+  And I select "3" from "lead_sale_limit"
+  And I select "Denmark" from "lead_country_id"
+  And I fill in "lead_contact_name" with "Marek Kowalski"
+  And I fill in "lead_phone_number" with "123456789"
+  And I fill in "lead_company_name" with "Printing company"
+  And I fill in "lead_address_line_1" with "Kaminskiego 19"
+  And I fill in "lead_city" with "Bielsko-Biała"
+  And I fill in "lead_county" with "Freesdas"
+  And I fill in "lead_zip_code" with "23-2911"
+  And I fill in "datepicker" with "2011-02-20"
+  And I fill in "lead_lead_template_values_attributes_0_value" with "123"
+  And I fill in "lead_lead_template_values_attributes_1_value" with "Ms Windows Vista"
+  And I press translated "call_centre_agent.leads.new.view.button_create"
+  And I should see translated "flash.leads.actions.create.notice"
+  Then I click hidden link by url regex "/call_centre_agents\/leads\/\d+\/edit/"
+  And the "lead_lead_template_values_attributes_0_value" field should contain "123"
+  And the "lead_lead_template_values_attributes_1_value" field should contain "Ms Windows Vista"
 
-@m5 @added @lead_templates @tgn @selenium
+@m5 @added @lead_templates @tgn @selenium @_tested
 Scenario: I can select additional templates that are optional
+  Given template named "Computers details" for category "Computers" is created by user "call_centre_agent@person.com" with role "call_centre_agent"
+  And template named "Computers details" is mandatory
+  And template named "Computers details" has following fields "computers count:false:false, operating systems:false:false"
+  Given template named "Fax details" for category "Computers" is created by user "call_centre_agent@person.com" with role "call_centre_agent"
+  And template named "Fax details" is not mandatory
+  And template named "Fax details" has following fields "fax software version:false:false, date of purchase:false:false"
+  And I follow translated "layout.main_menu.call_centre_agent.leads"
+  And I select "Computers" from "category_id"
+  And I follow translated "call_centre_agent.leads.index.view.new_lead"
+  And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
+  And I fill in "lead_description" with "Lorem ipsum"
+  And I fill in "lead_hidden_description" with "Lorem ipsum hidden"
+  And I fill in "lead_purchase_value" with "10000"
+  And I fill in "lead_price" with "100"
+  And I select "3" from "lead_sale_limit"
+  And I select "Denmark" from "lead_country_id"
+  And I fill in "lead_contact_name" with "Marek Kowalski"
+  And I fill in "lead_phone_number" with "123456789"
+  And I fill in "lead_company_name" with "Printing company"
+  And I fill in "lead_address_line_1" with "Kaminskiego 19"
+  And I fill in "lead_city" with "Bielsko-Biała"
+  And I fill in "lead_county" with "Freesdas"
+  And I fill in "lead_zip_code" with "23-2911"
+  And I fill in "datepicker" with "2011-02-20"
+  And I fill in "lead_lead_template_values_attributes_0_value" with "123"
+  And I fill in "lead_lead_template_values_attributes_1_value" with "Ms Windows Vista"
+  Then I select "Fax details" from "optional_templates_picker"
+  And I fill in "lead_lead_template_values_attributes_2_value" with "FaxFree v3"
+  And I fill in "lead_lead_template_values_attributes_3_value" with "21-01-2010"
+  And I press translated "call_centre_agent.leads.new.view.button_create"
+  And I should see translated "flash.leads.actions.create.notice"
+  Then I click hidden link by url regex "/call_centre_agents\/leads\/\d+\/edit/"
+  And the "lead_lead_template_values_attributes_0_value" field should contain "123"
+  And the "lead_lead_template_values_attributes_1_value" field should contain "Ms Windows Vista"
+  And the "lead_lead_template_values_attributes_2_value" field should contain "FaxFree v3"
+  And the "lead_lead_template_values_attributes_3_value" field should contain "21-01-2010"
 
 @m5 @added @lead_templates @tgn @selenium @_tested
 Scenario: I can use lead templates that were created by other agents that belongs to my call centre
@@ -109,12 +173,58 @@ Scenario: I can use lead templates that were created by other agents that belong
   Given template named "TV details" for category "Computers" is created by user "call_centre_agent@person.com" with role "call_centre_agent"
   Then I follow translated "layout.main_menu.call_centre_agent.leads"
   And I select "Computers" from "category_id"
-  And I follow translated "agent.leads.index.view.new_lead"
+  And I follow translated "call_centre_agent.leads.index.view.new_lead"
   Then "optional_templates_picker" dropdown should have values "Computers details,Fax details,TV details"
   And "optional_templates_picker" dropdown should not have values "Modems details"
 
-@m5 @added @lead_templates @tgn @selenium
+@m5 @added @lead_templates @tgn @selenium @_tested
 Scenario: I do not see lead templates created by my call centre that are marked as inactive
+  Given template named "TV details" for category "Computers" is created by user "call_centre_agent@person.com" with role "call_centre_agent"
+  And template named "TV details" is mandatory
+  Given template named "Fax details" for category "Computers" is created by user "call_centre_agent@person.com" with role "call_centre_agent"
+  And template named "Fax details" is mandatory
+  And template named "Fax details" is not active
+  Then I follow translated "layout.main_menu.call_centre_agent.leads"
+  And I select "Computers" from "category_id"
+  And I follow translated "call_centre_agent.leads.index.view.new_lead"
+  And I should see "TV details"
+  And I should not see "Fax details"
 
-@m5 @added @lead_templates @tgn @selenium
+@m5 @added @lead_templates @tgn @selenium @_tested
 Scenario: When new translation to lead is added I can also write translation for the templates
+  Given template named "Computers details" for category "Computers" is created by user "call_centre_agent@person.com" with role "call_centre_agent"
+  And template named "Computers details" is mandatory
+  And template named "Computers details" has following fields "computers count:false:false, operating systems:false:false"
+  And I follow translated "layout.main_menu.call_centre_agent.leads"
+  And I select "Computers" from "category_id"
+  And I follow translated "call_centre_agent.leads.index.view.new_lead"
+  And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
+  And I fill in "lead_description" with "Lorem ipsum"
+  And I fill in "lead_hidden_description" with "Lorem ipsum hidden"
+  And I fill in "lead_purchase_value" with "10000"
+  And I fill in "lead_price" with "100"
+  And I select "3" from "lead_sale_limit"
+  And I select "Denmark" from "lead_country_id"
+  And I fill in "lead_contact_name" with "Marek Kowalski"
+  And I fill in "lead_phone_number" with "123456789"
+  And I fill in "lead_company_name" with "Printing company"
+  And I fill in "lead_address_line_1" with "Kaminskiego 19"
+  And I fill in "lead_city" with "Bielsko-Biała"
+  And I fill in "lead_county" with "Freesdas"
+  And I fill in "lead_zip_code" with "23-2911"
+  And I fill in "datepicker" with "2011-02-20"
+  And I fill in "lead_lead_template_values_attributes_0_value" with "123"
+  And I fill in "lead_lead_template_values_attributes_1_value" with "Ms Windows Vista"
+  And I select "dk" from "locale_picker"
+  And I fill in "lead_lead_translations_attributes_0_header" with "DK header"
+  And I fill in "lead_lead_translations_attributes_0_description" with "DK description"
+  And I fill in "lead_lead_translations_attributes_0_hidden_description" with "DK hidden description"
+  And I fill in "lead_lead_template_values_attributes_0_lead_template_value_translations_attributes_0_value" with "123 translated"
+  And I fill in "lead_lead_template_values_attributes_1_lead_template_value_translations_attributes_0_value" with "Ms Windows Vista translated"
+  And I press translated "call_centre_agent.leads.new.view.button_create"
+  And I should see translated "flash.leads.actions.create.notice"
+  Then I click hidden link by url regex "/call_centre_agents\/leads\/\d+\/edit/"
+  And the "lead_lead_template_values_attributes_0_value" field should contain "123"
+  And the "lead_lead_template_values_attributes_1_value" field should contain "Ms Windows Vista"
+  And the "lead_lead_template_values_attributes_0_lead_template_value_translations_attributes_0_value" field should contain "123 translated"
+  And the "lead_lead_template_values_attributes_1_lead_template_value_translations_attributes_0_value" field should contain "Ms Windows Vista translated"
