@@ -7,7 +7,7 @@ class LeadTemplateValue < ActiveRecord::Base
                                 :reject_if => proc { |attrs| attrs['value'].blank? }
 
 
-  validates_presence_of :value, :if => Proc.new { |ltv| ltv.lead_template_field.lead_template.is_mandatory }
+  validates_presence_of :value, :if => Proc.new { |ltv| ltv.lead_template_field.is_mandatory }
   translates :value
 
   before_create :duplicate_field_type

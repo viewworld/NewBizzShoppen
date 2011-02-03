@@ -18,6 +18,11 @@ Given /^template named "([^"]*)" (is|is not) active$/ do |name, is_active|
   template.update_attributes(:is_active => is_active != "is not" )
 end
 
+Given /^template named "([^"]*)" (is|is not) global$/ do |name, is_global|
+  template = LeadTemplate.find_by_name(name).first
+  template.update_attributes(:is_global => is_global != "is not" )
+end
+
 #fields are entered as triplets: name:is_hidden:is_mandatory :  computer count:false:true, conditions:true:false
 Given /^template named "([^"]*)" has following fields "([^"]*)"$/ do |name, fields|
   template = LeadTemplate.find_by_name(name).first
