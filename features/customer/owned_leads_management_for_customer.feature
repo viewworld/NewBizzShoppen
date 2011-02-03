@@ -204,7 +204,7 @@ Scenario: I can bulk set status of leads
   And I follow translated "lead_buyer.lead_purchases.index.view.bulk_update_button"
   Then "state" should be selected for value translated "lead_purchases.statuses.contacted"
 
-@m5 @added @lead_templates @tgn @_tested @_wip
+@m5 @added @lead_templates @tgn @_tested
 Scenario: I can see lead template fields with public values for each lead
   Given template named "Printers details" for category "Computers" is created by user "ccagent@person.com" with role "call_centre_agent"
   And template named "Printers details" has following fields "printers protocol:true:false, vendor name:false:false, versions:false:false"
