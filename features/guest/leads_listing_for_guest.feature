@@ -102,3 +102,9 @@ Scenario: If I successfully login after requesting a lead being added to a cart,
   And I sign in as buyer21@person.com with password supersecret
   And I follow translated "layout.cart.show_cart"
   Then I should see "Great marketing deal"
+
+@m5 @added @lead_templates @tgn
+Scenario: I can see lead template fields with public values for each lead
+
+@m5 @added @lead_templates @tgn
+Scenario: I can see only lead template fields' names (not values) for hidden fields

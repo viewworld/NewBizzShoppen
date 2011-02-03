@@ -23,12 +23,22 @@ Given /^template named "([^"]*)" (is|is not) global$/ do |name, is_global|
   template.update_attributes(:is_global => is_global != "is not" )
 end
 
-#fields are entered as triplets: name:is_hidden:is_mandatory :  computer count:false:true, conditions:true:false
+#fields are entered as triplets: name:is_hidden:is_mandatory  example: computer count:false:true, conditions:true:false
 Given /^template named "([^"]*)" has following fields "([^"]*)"$/ do |name, fields|
   template = LeadTemplate.find_by_name(name).first
   fields.split(",").map { |f| f.to_s.strip.split(':') }.each do |f_name, f_is_hidden, f_is_mandatory|
     template.lead_template_fields.create(:name => f_name, :is_hidden => f_is_hidden == "true" ? true : false, :field_type => 0,
                                          :is_mandatory => f_is_mandatory == "true" ? true : false)
+  end
+end
+
+#values are entered as pairs field name:
+Given /^template named "([^"]*)" for lead "([^"]*)" has values "([^"]*)"$/ do |template_name, lead_header, values|
+  lead = Lead.find_by_header(lead_header).first
+  template = LeadTemplate.find_by_name(template_name).first
+  values.split(",").map{ |v| v.to_s.strip.split(":") }.each do |field_name, value|
+    lead_template_field = template.lead_template_fields.detect { |ltf| ltf.name == field_name }
+    LeadTemplateValue.create(:lead_template_field => lead_template_field, :value => value, :lead => lead)
   end
 end
 

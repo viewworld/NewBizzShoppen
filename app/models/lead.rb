@@ -197,4 +197,11 @@ class Lead < ActiveRecord::Base
       end
     end.flatten.compact
   end
+
+  def lead_templates_and_values
+    templates = lead_template_values.map { |ltv| ltv.lead_template_field.lead_template }.uniq
+    templates.map do |template|
+      [template, lead_template_values.select { |ltv| ltv.lead_template_field.lead_template_id == template.id }]
+    end
+  end
 end

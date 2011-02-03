@@ -1222,6 +1222,8 @@ en:
 
   shared:
     lead_templates:
+      listing:
+        hidden_value: (hidden)
       form:
         new_lead_template_field: New field
         remove_lead_template_field: Remove

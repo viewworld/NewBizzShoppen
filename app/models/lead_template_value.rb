@@ -23,4 +23,10 @@ class LeadTemplateValue < ActiveRecord::Base
       translation
     end.flatten
   end
+
+
+  def can_be_viewed_by?(user)
+    lead_purchase = (user and user.has_any_role?(:lead_user, :lead_buyer, :customer)) ? lead.lead_purchases.where("owner_id = :user_id or assignee_id = :user_id", { :user_id => user.id }).first : nil
+    !lead_template_field.is_hidden or (lead_template_field.is_hidden and lead_purchase)
+  end
 end
