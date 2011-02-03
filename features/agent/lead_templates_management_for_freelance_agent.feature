@@ -40,7 +40,7 @@ Scenario: I can create new lead template for given category
 @added @_done @_tested_elsewhere
 Scenario: During template creation/edition I can mark fields as hidden or public
 
-@added
+@added @_done @_tested_elsewhere
 Scenario: During template creation/editon I can mark fields as mandatory or optional
 
 @added @selenium @_tested
