@@ -344,6 +344,34 @@ Scenario: I have to fill out the fields that are mandatory in mandatory or optio
   And the "lead_lead_template_values_attributes_0_value" field should contain "123"
   And the "lead_lead_template_values_attributes_1_value" field should contain "Ms Windows Vista"
 
+@m5 @added @lead_templates @tgn @selenium @_tested
+Scenario: When there is only one template present for a lead and it is optional then it should be displayed by default
+  Given template named "Computers details" for category "Computers" is created by user "bob@person.com" with role "agent"
+  And template named "Computers details" has following fields "computers count:false:true, operating systems:false:true, purchase date:false:false"
+  And template named "Computers details" is not mandatory
+  And I go to agents leads
+  And I select "Computers" from "category_id"
+  And I follow translated "agent.leads.index.view.new_lead"
+  And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
+  And I fill in "lead_description" with "Lorem ipsum"
+  And I fill in "lead_hidden_description" with "Lorem ipsum hidden"
+  And I fill in "lead_purchase_value" with "10000"
+  And I fill in "lead_price" with "100"
+  And I select "3" from "lead_sale_limit"
+  And I select "United Kingdom" from "lead_country_id"
+  And I fill in "lead_contact_name" with "Marek Kowalski"
+  And I fill in "lead_phone_number" with "123456789"
+  And I fill in "lead_company_name" with "Printing company"
+  And I fill in "lead_address_line_1" with "Kaminskiego 19"
+  And I fill in "lead_city" with "Bielsko-Biała"
+  And I fill in "lead_county" with "Freesdas"
+  And I fill in "lead_zip_code" with "23-2911"
+  And I fill in "datepicker" with "2011-02-20"
+  And I fill in "lead_lead_template_values_attributes_0_value" with "123"
+  And I fill in "lead_lead_template_values_attributes_1_value" with "Ms Windows Vista"
+  And I press translated "agent.leads.new.view.button_create"
+  And I should see translated "flash.leads.actions.create.notice"
+
 @m4 @added @tgn @agent_certification @_tested
 Scenario: I cannot publish leads if my certification level is Not Certified or Locked
   Given Category Test category 1 is created
