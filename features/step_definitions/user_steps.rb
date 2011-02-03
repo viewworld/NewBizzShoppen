@@ -207,6 +207,6 @@ end
 
 Given /^user "([^"]*)" with role "([^"]*)" comes from "([^"]*)"$/ do |user_email, role_name, country_name|
   country = Country.where(:name => country_name).first
-  "User::#{role_name.camelize}".constantize.where(:email => user_email).first.update_attribute(:country,country.id)
+  "User::#{role_name.camelize}".constantize.where(:email => user_email).first.address.update_attribute(:country,country.id)
 end
 

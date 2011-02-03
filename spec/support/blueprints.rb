@@ -79,21 +79,24 @@ LeadRequest.blueprint do
   lead_id { Lead.make! }
 end
 
+Address.blueprint do
+  city { Faker::Address.city }
+  zip_code { Faker::Address.zip_code }
+  county { Faker::Address.uk_county }
+  country { Country.first }
+  street { Faker::Address.street_name }
+end
 
 User.blueprint do
   email { Faker::Internet.email }
   password { "secret" }
   password_confirmation { "secret" }
   phone { Faker::PhoneNumber.phone_number }
- screen_name { Faker::Name.name + Time.now.to_f.to_s.sub('.','')}
-  street { Faker::Address.street_name }
+  screen_name { Faker::Name.name + Time.now.to_f.to_s.sub('.','')}
   first_name { Faker::Name.first_name }
   last_name { Faker::Name.last_name }
   agreement_read { true }
-  city { Faker::Address.city }
-  zip_code { Faker::Address.zip_code }
-  county { Faker::Address.uk_county }
-  country { Country.first }
+  address { Address.make! }
 end
 
 ::User::Admin.blueprint do
@@ -101,15 +104,10 @@ end
   password { "secret" }
   password_confirmation { "secret" }
   phone { Faker::PhoneNumber.phone_number }
- screen_name { Faker::Name.name + Time.now.to_f.to_s.sub('.','') }
-  street { Faker::Address.street_name }
+  screen_name { Faker::Name.name + Time.now.to_f.to_s.sub('.','') }
   first_name { Faker::Name.first_name }
   last_name { Faker::Name.last_name }
   agreement_read { true }
-  city { Faker::Address.city }
-  zip_code { Faker::Address.zip_code }
-  county { Faker::Address.uk_county }
-  country { Country.first }
 end
 
 ::User::Customer.blueprint do
@@ -117,15 +115,10 @@ end
   password { "secret" }
   password_confirmation { "secret" }
   phone { Faker::PhoneNumber.phone_number }
- screen_name { Faker::Name.name + Time.now.to_f.to_s.sub('.','') }
-  street { Faker::Address.street_name }
+  screen_name { Faker::Name.name + Time.now.to_f.to_s.sub('.','') }
   first_name { Faker::Name.first_name }
   last_name { Faker::Name.last_name }
   agreement_read { true }
-  city { Faker::Address.city }
-  zip_code { Faker::Address.zip_code }
-  county { Faker::Address.uk_county }
-  country { Country.first }
   roles_mask { 112 }
   team_buyers { false }
 end
@@ -135,15 +128,10 @@ end
   password { "secret" }
   password_confirmation { "secret" }
   phone { Faker::PhoneNumber.phone_number }
- screen_name { Faker::Name.name + Time.now.to_f.to_s.sub('.','') }
-  street { Faker::Address.street_name }
+  screen_name { Faker::Name.name + Time.now.to_f.to_s.sub('.','') }
   first_name { Faker::Name.first_name }
   last_name { Faker::Name.last_name }
   agreement_read { true }
-  city { Faker::Address.city }
-  zip_code { Faker::Address.zip_code }
-  county { Faker::Address.uk_county }
-  country { Country.first }
   roles_mask { 128 }
 end
 
@@ -152,15 +140,10 @@ end
   password { "secret" }
   password_confirmation { "secret" }
   phone { Faker::PhoneNumber.phone_number }
- screen_name { Faker::Name.name + Time.now.to_f.to_s.sub('.','') }
-  street { Faker::Address.street_name }
+  screen_name { Faker::Name.name + Time.now.to_f.to_s.sub('.','') }
   first_name { Faker::Name.first_name }
   last_name { Faker::Name.last_name }
   agreement_read { true }
-  city { Faker::Address.city }
-  zip_code { Faker::Address.zip_code }
-  county { Faker::Address.uk_county }
-  country { Country.first }
   roles_mask { 64 }
 end
 
@@ -169,15 +152,10 @@ end
   password { "secret" }
   password_confirmation { "secret" }
   phone { Faker::PhoneNumber.phone_number }
- screen_name { Faker::Name.name + Time.now.to_f.to_s.sub('.','') }
-  street { Faker::Address.street_name }
+  screen_name { Faker::Name.name + Time.now.to_f.to_s.sub('.','') }
   first_name { Faker::Name.first_name }
   last_name { Faker::Name.last_name }
   agreement_read { true }
-  city { Faker::Address.city }
-  zip_code { Faker::Address.zip_code }
-  county { Faker::Address.uk_county }
-  country { Country.first }
   roles_mask { 96 }
 end
 
@@ -187,14 +165,9 @@ end
   password_confirmation { "secret" }
   phone { Faker::PhoneNumber.phone_number }
   screen_name { Faker::Name.name + Time.now.to_f.to_s.sub('.','') }
-  street { Faker::Address.street_name }
   first_name { Faker::Name.first_name + Time.now.to_f.to_s.sub('.','') }
   last_name { Faker::Name.last_name }
   agreement_read { true }
-  city { Faker::Address.city }
-  zip_code { Faker::Address.zip_code }
-  county { Faker::Address.uk_county }
-  country { Country.make! }
   roles_mask { 2 }
 end
 
@@ -204,14 +177,9 @@ end
   password_confirmation { "secret" }
   phone { Faker::PhoneNumber.phone_number }
   screen_name { Faker::Name.name + Time.now.to_f.to_s.sub('.','') }
-  street { Faker::Address.street_name }
   first_name { Faker::Name.first_name + Time.now.to_f.to_s.sub('.','') }
   last_name { Faker::Name.last_name }
   agreement_read { true }
-  city { Faker::Address.city }
-  zip_code { Faker::Address.zip_code }
-  county { Faker::Address.uk_county }
-  country { Country.make!.id }
   payout { rand(100) }
   roles_mask { 4 }
 end
@@ -222,14 +190,9 @@ end
   password_confirmation { "secret" }
   phone { Faker::PhoneNumber.phone_number }
   screen_name { Faker::Name.name + Time.now.to_f.to_s.sub('.','') }
-  street { Faker::Address.street_name }
   first_name { Faker::Name.first_name + Time.now.to_f.to_s.sub('.','') }
   last_name { Faker::Name.last_name }
   agreement_read { true }
-  city { Faker::Address.city }
-  zip_code { Faker::Address.zip_code }
-  county { Faker::Address.uk_county }
-  country { Country.make!.id }
   roles_mask { 8 }
 end
 
@@ -257,10 +220,9 @@ InvoiceLine.blueprint do
 end
 
 BankAccount.blueprint do
-  country { Country.make! }
   bank_name { Faker::Lorem.words(2).to_s }
-  bank_address { "#{Faker::Address.street_name}\n#{Faker::Address.zip_code} #{Faker::Address.city}\n#{Faker::Address.city}" }
   iban_no { Faker.numerify('###################') }
   local_bank_number { Faker.numerify('#########') }
   swift { Faker.letterify('????????').upcase }
+  address { Address.make! }
 end

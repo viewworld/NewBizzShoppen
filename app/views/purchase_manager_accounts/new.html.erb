@@ -29,10 +29,12 @@
           <div class="pdd_10 no_pdd_t">
             <fieldset class="inputs labels_ta_r labels_240">
               <ol class="align_inputs">
-                <%= form.input :street %>
-                <%= form.input :city %>
-                <%= form.input :zip_code %>
-                <%= form.input :county %>
+              <%= form.fields_for :address do |address_form| %>
+                  <%= address_form.input :street %>
+                  <%= address_form.input :city %>
+                  <%= address_form.input :zip_code %>
+                  <%= address_form.input :county %>
+              <% end %>
               </ol>
             </fieldset>
           </div>
@@ -42,7 +44,9 @@
           <div class="pdd_10 no_pdd_t">
             <fieldset class="inputs labels_ta_r labels_240">
               <ol class="align_inputs">
-                <%= form.input :country, :as => :select, :collection => Country.all %>
+                <%= form.fields_for :address do |address_form| %>
+                    <%= address_form.input :country, :as => :select, :collection => Country.all %>
+                <% end %>
                 <%= form.input :agreement_read, :as => :boolean %>
                 <%= form.input :newsletter_on, :as => :boolean %>
               </ol>

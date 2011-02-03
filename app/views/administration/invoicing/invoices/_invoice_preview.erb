@@ -41,9 +41,9 @@
           <tr>
             <td><%= index + 1 %></td>
             <td><%= invoice_line.name %></td>
-            <td><%= invoice_line.quantity %> <%= invoice_line.unit %></td>
+            <td><%= invoice_line.quantity %></td>
             <td><%= number_to_currency(invoice_line.netto_price, :unit => invoice.currency.symbol) %></td>
-            <td><%= invoice_line.vat_rate.zero? ? (t :na, :scope => "administration.invoices.common.view") : number_to_percentage(invoice_line.vat_rate*100, :precision => 0) %></td>
+            <td><%= invoice_line.vat_rate.zero? ? (t :na, :scope => "administration.invoices.common.view") : number_to_percentage(invoice_line.vat_rate, :precision => 0) %></td>
             <td><%= number_to_currency(invoice_line.vat_value, :unit => invoice.currency.symbol) %></td>
             <td class="r"><%= number_to_currency(invoice_line.brutto_value, :unit=>invoice.currency.symbol) %></td>
           </tr>
@@ -72,7 +72,7 @@
                     <td class="empty"></td>
                 <% end %>
                 <td><%= number_to_currency(invoice_line.netto_value_sum, :unit => invoice.currency.symbol) %></td>
-                <td><%= invoice_line.vat_rate.zero? ? (t :na, :scope => "administration.invoices.common.view") : number_to_percentage(invoice_line.vat_rate*100, :precision => 0) %></td>
+                <td><%= invoice_line.vat_rate.zero? ? (t :na, :scope => "administration.invoices.common.view") : number_to_percentage(invoice_line.vat_rate, :precision => 0) %></td>
                 <td><%= number_to_currency(invoice_line.vat_value_sum, :unit => invoice.currency.symbol) %></td>
                 <td class="r"><%= number_to_currency(invoice_line.brutto_value_sum, :unit => invoice.currency.symbol) %></td>
               </tr>

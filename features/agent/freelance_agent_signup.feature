@@ -24,18 +24,18 @@ Feature: Freelance agent signup
   Scenario: User signs up with valid data as a freelancer
     When I go to agent sign up
     And I fill in the following:
-      | user_agent_first_name            | Bob             |
-      | user_agent_last_name             | Taker           |
-      | user_agent_phone                 | 48928217272     |
-      | user_agent_screen_name           | Bob T           |
-      | user_agent_email                 | user@domain.dom |
-      | user_agent_password              | secret          |
-      | user_agent_password_confirmation | secret          |
-      | user_agent_street                | Sunset Blv 32   |
-      | user_agent_city                  | London          |
-      | user_agent_zip_code              | 43-270          |
-      | user_agent_county                | Wesley          |
-    And I select "Denmark" from "user_agent_country"
+      | user_agent_first_name                                | Bob             |
+      | user_agent_last_name                                 | Taker           |
+      | user_agent_phone                                     | 48928217272     |
+      | user_agent_screen_name                               | Bob T           |
+      | user_agent_email                                     | user@domain.dom |
+      | user_agent_password                                  | secret          |
+      | user_agent_password_confirmation                     | secret          |
+      | user_agent_address_attributes_street                 | Sunset Blv 32   |
+      | user_agent_address_attributes_city                   | London          |
+      | user_agent_address_attributes_zip_code               | 43-270          |
+      | user_agent_address_attributes_county                 | Wesley          |
+    And I select "Denmark" from "user_agent_address_attributes_country_id"
     And I check "user_agent_agreement_read"
     And I press translated "agent_accounts.new.view.button_create_account"
     Then I should see translated "flash.agent_accounts.actions.create.notice"
@@ -45,18 +45,18 @@ Feature: Freelance agent signup
   Scenario: User signs up with valid data as a buyer
     When I go to buyer sign up
     And I fill in the following:
-      | user_customer_first_name            | Bob             |
-      | user_customer_last_name             | Taker           |
-      | user_customer_phone                 | 48928217272     |
-      | user_customer_screen_name           | Bob T           |
-      | user_customer_email                 | user@domain.dom |
-      | user_customer_password              | secret          |
-      | user_customer_password_confirmation | secret          |
-      | user_customer_street                | Sunset Blv 32   |
-      | user_customer_city                  | London          |
-      | user_customer_zip_code              | 43-270          |
-      | user_customer_county                | Wesley          |
-    And I select "Denmark" from "user_customer_country"
+      | user_customer_first_name                               | Bob             |
+      | user_customer_last_name                                | Taker           |
+      | user_customer_phone                                    | 48928217272     |
+      | user_customer_screen_name                              | Bob T           |
+      | user_customer_email                                    | user@domain.dom |
+      | user_customer_password                                 | secret          |
+      | user_customer_password_confirmation                    | secret          |
+      | user_customer_address_attributes_street                | Sunset Blv 32   |
+      | user_customer_address_attributes_city                  | London          |
+      | user_customer_address_attributes_zip_code              | 43-270          |
+      | user_customer_address_attributes_county                | Wesley          |
+    And I select "Denmark" from "user_customer_address_attributes_country_id"
     And I check "user_customer_agreement_read"
     And I press translated "buyer_accounts.new.view.button_create_account"
     Then I should see translated "flash.buyer_accounts.actions.create.notice"
@@ -96,18 +96,18 @@ Scenario: Screen name has to be unique
   Then user agent2jimconnor@person.com with role agent exists with attributes "screen_name:Jim Connor"
   When I go to agent sign up
   And I fill in the following:
-    | user_agent_first_name            | Bob             |
-    | user_agent_last_name             | Taker           |
-    | user_agent_phone                 | 48928217272     |
-    | user_agent_screen_name           | Jim Connor      |
-    | user_agent_email                 | user@domain.dom |
-    | user_agent_password              | secret          |
-    | user_agent_password_confirmation | secret          |
-    | user_agent_street                | Sunset Blv 32   |
-    | user_agent_city                  | London          |
-    | user_agent_zip_code              | 43-270          |
-    | user_agent_county                | Wesley          |
-  And I select "Denmark" from "user_agent_country"
+    | user_agent_first_name                               | Bob             |
+    | user_agent_last_name                                | Taker           |
+    | user_agent_phone                                    | 48928217272     |
+    | user_agent_screen_name                              | Jim Connor      |
+    | user_agent_email                                    | user@domain.dom |
+    | user_agent_password                                 | secret          |
+    | user_agent_password_confirmation                    | secret          |
+    | user_agent_address_attributes_street                | Sunset Blv 32   |
+    | user_agent_address_attributes_city                  | London          |
+    | user_agent_address_attributes_zip_code              | 43-270          |
+    | user_agent_address_attributes_county                | Wesley          |
+  And I select "Denmark" from "user_agent_address_attributes_country_id"
   And I check "user_agent_agreement_read"
   And I press translated "agent_accounts.new.view.button_create_account"
   Then I should see translated "activerecord.errors.models.user/agent.attributes.screen_name.taken"

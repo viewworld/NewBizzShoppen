@@ -29,10 +29,12 @@ class User < ActiveRecord::Base
   validates_presence_of :email, :screen_name
   validates_uniqueness_of :email, :screen_name
   validate :payout_information_is_complete
+  validates_associated :address
 
   has_many :subaccounts, :class_name => "User", :foreign_key => "parent_id"
   has_many :owned_lead_requests, :class_name => 'LeadRequest', :foreign_key => :owner_id
   has_many :invoices
+  has_one :address, :as => :addressable
   belongs_to :user, :class_name => "User", :foreign_key => "parent_id", :counter_cache => :subaccounts_counter
   belongs_to :user_country, :foreign_key => "country", :class_name => 'Country'
   belongs_to :bank_account, :foreign_key => :bank_account_id, :primary_key => :id, :class_name => 'BankAccount'
@@ -64,13 +66,22 @@ class User < ActiveRecord::Base
 
   attr_accessor :agreement_read, :locked
 
+  accepts_nested_attributes_for :address
+
   before_save :handle_locking, :handle_team_buyers_flag
   before_create :set_rss_token, :set_role, :set_bank_account
   before_destroy :can_be_removed
+  after_initialize :build_address_object
 
   liquid :email, :first_name, :last_name, :confirmation_instructions_url, :reset_password_instructions_url
 
   private
+
+  def build_address_object
+    if new_record?
+      build_address
+    end
+  end
 
   def mass_assignment_authorizer
     if self.can_edit_payout_information
@@ -273,10 +284,6 @@ class User < ActiveRecord::Base
     User::Customer.find(parent_id).category_interests.map(&:category_id)
   end
   
-  def address
-    %{#{street}\n#{zip_code} #{city}\n#{county}}
-  end
-
   def has_role?(r)
     roles.include?(r)
   end
@@ -286,7 +293,7 @@ class User < ActiveRecord::Base
   end
 
   def country_vat_rate
-    vat_rate ? (vat_rate.rate/100) : 0.0
+    vat_rate ? vat_rate.rate : 0.0
   end
 
   def payment_bank_account

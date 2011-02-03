@@ -30,11 +30,11 @@ Feature: Customer signup
       | user_customer_email                 | user@domain.dom |
       | user_customer_password              | secret          |
       | user_customer_password_confirmation | secret          |
-      | user_customer_street                | Sunset Blv 32   |
-      | user_customer_city                  | London          |
-      | user_customer_zip_code              | 43-270          |
-      | user_customer_county                | Wesley          |
-    And I select "Denmark" from "user_customer_country"
+      | user_customer_address_attributes_street                | Sunset Blv 32   |
+      | user_customer_address_attributes_city                  | London          |
+      | user_customer_address_attributes_zip_code              | 43-270          |
+      | user_customer_address_attributes_county                | Wesley          |
+    And I select "Denmark" from "user_customer_address_attributes_country_id"
     And I check "user_customer_agreement_read"
     And I press translated "buyer_accounts.new.view.button_create_account"
     Then I should see translated "flash.buyer_accounts.actions.create.notice"
@@ -81,11 +81,11 @@ Feature: Customer signup
       | user_customer_email                 | user@domain.dom |
       | user_customer_password              | secret          |
       | user_customer_password_confirmation | secret          |
-      | user_customer_street                | Sunset Blv 32   |
-      | user_customer_city                  | London          |
-      | user_customer_zip_code              | 43-270          |
-      | user_customer_county                | Wesley          |
-    And I select "Denmark" from "user_customer_country"
+      | user_customer_address_attributes_street                | Sunset Blv 32   |
+      | user_customer_address_attributes_city                  | London          |
+      | user_customer_address_attributes_zip_code              | 43-270          |
+      | user_customer_address_attributes_county                | Wesley          |
+    And I select "Denmark" from "user_customer_address_attributes_country_id"
     And I check "user_customer_agreement_read"
     And I press translated "buyer_accounts.new.view.button_create_account"
     Then I should see translated "activerecord.errors.models.user/customer.attributes.screen_name.taken"

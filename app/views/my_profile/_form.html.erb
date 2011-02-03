@@ -15,10 +15,12 @@
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs labels_ta_r labels_240">
     <ol class="align_inputs">
-      <%= form.input :street %>
-      <%= form.input :city %>
-      <%= form.input :zip_code %>
-      <%= form.input :county %>
+      <%= form.fields_for :address do |address_form| %>
+          <%= address_form.input :street %>
+          <%= address_form.input :city %>
+          <%= address_form.input :zip_code %>
+          <%= address_form.input :county %>
+      <% end %>
       <%= form.input :vat_number if current_user.has_role?(:customer) %>
     </ol>
   </fieldset>
@@ -29,7 +31,9 @@
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs labels_ta_r labels_240">
     <ol class="align_inputs">
-      <%= form.input :country, :as => :select, :collection => Country.all %>
+      <%= form.fields_for :address do |address_form| %>
+          <%= address_form.input :country, :as => :select, :collection => Country.all %>
+      <% end %>
       <%= form.input :newsletter_on, :as => :boolean %>
       <%= form.input :team_buyers, :as => :boolean, :label => t("my_profile.edit.view.enable_team_buyers") if current_user.has_role?(:customer) %>
     </ol>

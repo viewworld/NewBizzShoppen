@@ -8,11 +8,13 @@
       <%= form.input :screen_name %>
       <%= form.input :mobile_phone %>
       <%= form.input :department %>
-      <%= form.input :street %>
-      <%= form.input :city %>
-      <%= form.input :zip_code %>
-      <%= form.input :county %>
-      <%= form.input :country, :as => :select, :collection => Country.all %>
+      <%= form.fields_for :address do |address_form| %>
+          <%= address_form.input :street %>
+          <%= address_form.input :city %>
+          <%= address_form.input :zip_code %>
+          <%= address_form.input :county %>
+          <%= address_form.input :country, :as => :select, :collection => Country.all %>
+      <% end %>
       <%= form.input :payout %>%
       <%= form.input :agreement_read, :as => :hidden, :value => "1" %>
     </ol>

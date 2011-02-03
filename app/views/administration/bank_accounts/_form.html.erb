@@ -1,9 +1,32 @@
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs">
     <ol>
-      <%= form.input :country, :include_blank => false %>
       <%= form.input :bank_name %>
-      <%= form.input :bank_address %>
+    </ol>
+  </fieldset>
+</div>
+
+<hl/>
+
+<div class="pdd_10 no_pdd_t">
+  <fieldset class="inputs">
+    <ol>
+      <%= form.fields_for :address do |address_form| %>
+          <%= address_form.input :country, :as => :select, :collection => Country.all, :include_blank => false %>
+          <%= address_form.input :street %>
+          <%= address_form.input :city %>
+          <%= address_form.input :zip_code %>
+          <%= address_form.input :county %>
+      <% end %>
+    </ol>
+  </fieldset>
+</div>
+
+<hl/>
+
+<div class="pdd_10 no_pdd_t">
+  <fieldset class="inputs">
+    <ol>
       <%= form.input :iban_no %>
       <%= form.input :local_bank_number %>
       <%= form.input :swift %>

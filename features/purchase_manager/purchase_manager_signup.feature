@@ -31,11 +31,11 @@ Feature: Purchase Manager signup
       | user_purchase_manager_email                 | jon@lajoie.ca   |
       | user_purchase_manager_password              | secret          |
       | user_purchase_manager_password_confirmation | secret          |
-      | user_purchase_manager_street                | Sunset Blv 32   |
-      | user_purchase_manager_city                  | Montreal        |
-      | user_purchase_manager_zip_code              | 43-270          |
-      | user_purchase_manager_county                | Quebec          |
-    And I select "Denmark" from "user_purchase_manager_country"
+      | user_purchase_manager_address_attributes_street                | Sunset Blv 32   |
+      | user_purchase_manager_address_attributes_city                  | Montreal        |
+      | user_purchase_manager_address_attributes_zip_code              | 43-270          |
+      | user_purchase_manager_address_attributes_county                | Quebec          |
+    And I select "Denmark" from "user_purchase_manager_address_attributes_country_id"
     And I check "user_purchase_manager_agreement_read"
     And I press translated "purchase_manager_accounts.new.view.button_create_account"
     Then I should see translated "flash.purchase_manager_accounts.actions.create.notice"
