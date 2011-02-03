@@ -204,19 +204,19 @@ Scenario: I can bulk set status of leads
   And I follow translated "lead_buyer.lead_purchases.index.view.bulk_update_button"
   Then "state" should be selected for value translated "lead_purchases.statuses.contacted"
 
-@m5 @added @lead_templates @tgn @_tested
+@m5 @added @lead_templates @tgn @_tested @_wip
 Scenario: I can see lead template fields with public values for each lead
   Given template named "Printers details" for category "Computers" is created by user "ccagent@person.com" with role "call_centre_agent"
-  And template named "Printers details" has following fields "printers count:true:false, vendor name:false:false, versions:false:false"
-  And template named "Printers details" for lead "Printers ultimate deal" has values "printers count:3282, vendor name:Havlett Packard, versions:3983c-39282f"
+  And template named "Printers details" has following fields "printers protocol:true:false, vendor name:false:false, versions:false:false"
+  And template named "Printers details" for lead "Printers ultimate deal" has values "printers protocol:xprinter3, vendor name:Havlett Packard, versions:3983c-39282f"
   Given I go to buyer lead purchases
   Then I should see "PRINTERS DETAILS"
-  And I should see "printers count"
+  And I should see "printers protocol"
   And I should see "vendor name"
   And I should see "versions"
-  And I should see "3282"
+  And I should see "xprinter3"
   And I should see "Havlett Packard"
   And I should see "3983c-39282f"
 
-@m5 @added @lead_templates @tgn @_done @_tested_elsewhere
+@m5 @added @lead_templates @tgn @_done @tested_elsewhere
 Scenario: I can see lead template fields with hidden values for each lead that I have bought
