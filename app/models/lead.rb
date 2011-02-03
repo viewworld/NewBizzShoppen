@@ -180,8 +180,9 @@ class Lead < ActiveRecord::Base
   def lead_templates(with_mandatory_only=nil)
     self.creator = current_user if creator.nil?
     templates = LeadTemplate.with_category_and_its_ancestors(category).
-        where("((creator_id = ? and creator_type = ?) or (creator_id = ? and creator_type = ?) or creator_type = ?)",
-                 creator.parent_id, creator.parent.nil? ? "" : creator.parent.class.to_s, creator.id, creator.class.to_s, "User::Admin")
+        where("((creator_id = ? and creator_type = ?) or (creator_id = ? and creator_type = ?) or creator_type = ? or creator_id in (?))",
+                 creator.parent_id, creator.parent.nil? ? "" : creator.parent.class.to_s, creator.id, creator.class.to_s, "User::Admin",
+                 creator.has_role?(:call_centre_agent) ? creator.parent.send(:casted_class).find(creator.parent_id).subaccounts : [])
     templates = templates.where("is_mandatory = ?", with_mandatory_only) unless with_mandatory_only.nil?
     templates
   end

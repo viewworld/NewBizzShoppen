@@ -39,6 +39,9 @@ Scenario: I can create new lead template for given category
 @added @_done @_tested_elsewhere
 Scenario: During template creation/edition I can mark fields as hidden or public
 
+@added
+Scenario: During template creation/editon I can mark fields as mandatory or optional
+
 @added @selenium @_tested
 Scenario: I can edit lead template that was created by me
   Given template named "Printers details" for category "Computers" is created by user "agent@person.com" with role "agent"

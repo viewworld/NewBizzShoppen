@@ -97,8 +97,21 @@ Scenario: I have to fill out the templates which are mandatory
 @m5 @added @lead_templates @tgn @selenium
 Scenario: I can select additional templates that are optional
 
-@m5 @added @lead_templates @tgn @selenium
+@m5 @added @lead_templates @tgn @selenium @_tested
 Scenario: I can use lead templates that were created by other agents that belongs to my call centre
+  Given I have user with email other_call_centre@person.com and role call_centre
+  Given template named "Computers details" for category "Computers" is created by user "other_call_centre_agent1@person.com" with role "call_centre_agent"
+  And an user with role call_centre_agent and email other_call_centre_agent1@person.com belongs to call centre call_centre@person.com
+  Given template named "Fax details" for category "Computers" is created by user "other_call_centre_agent2@person.com" with role "call_centre_agent"
+  And an user with role call_centre_agent and email other_call_centre_agent2@person.com belongs to call centre call_centre@person.com
+  Given template named "Modems details" for category "Computers" is created by user "other_call_centre_agent3@person.com" with role "call_centre_agent"
+  And an user with role call_centre_agent and email other_call_centre_agent3@person.com belongs to call centre other_call_centre@person.com
+  Given template named "TV details" for category "Computers" is created by user "call_centre_agent@person.com" with role "call_centre_agent"
+  Then I follow translated "layout.main_menu.call_centre_agent.leads"
+  And I select "Computers" from "category_id"
+  And I follow translated "agent.leads.index.view.new_lead"
+  Then "optional_templates_picker" dropdown should have values "Computers details,Fax details,TV details"
+  And "optional_templates_picker" dropdown should not have values "Modems details"
 
 @m5 @added @lead_templates @tgn @selenium
 Scenario: I do not see lead templates created by my call centre that are marked as inactive

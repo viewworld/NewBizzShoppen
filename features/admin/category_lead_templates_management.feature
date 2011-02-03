@@ -91,3 +91,9 @@ Scenario: I can delete lead templates that were created by me and were not fille
 
 @added @_done @tested_elsewhere
 Scenario: During template creation/edition I can mark fields as hidden or public
+
+@added
+Scenario: During template creation/editon I can mark fields as mandatory or optional
+
+@added
+Scenario: I can promote any lead template to global template
