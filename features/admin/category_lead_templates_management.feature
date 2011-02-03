@@ -25,6 +25,7 @@ Scenario: I can create a category and add new lead templates to it which I can m
   And I follow translated "shared.lead_templates.form.new_lead_template_field"
   And I fill in "lead_template_lead_template_fields_attributes_1_name" with "example attr 2"
   And I check "lead_template_lead_template_fields_attributes_1_is_hidden"
+  And I check "lead_template_lead_template_fields_attributes_1_is_mandatory"
   Then I press translated "administration.lead_templates.new.view.button_create"
   And I should see "Editing category: Test category"
   And I should see "Example of template"
@@ -42,6 +43,7 @@ Scenario: I can edit a category and add new lead templates to it which I can mar
   And I follow translated "shared.lead_templates.form.new_lead_template_field"
   And I fill in "lead_template_lead_template_fields_attributes_1_name" with "example attr 2"
   And I check "lead_template_lead_template_fields_attributes_1_is_hidden"
+  And I check "lead_template_lead_template_fields_attributes_1_is_mandatory"
   Then I press translated "administration.lead_templates.new.view.button_create"
   And I click hidden link by url regex "/administration\/lead_templates\/\d+\/edit/"
   Then the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 1"
@@ -92,8 +94,15 @@ Scenario: I can delete lead templates that were created by me and were not fille
 @added @_done @tested_elsewhere
 Scenario: During template creation/edition I can mark fields as hidden or public
 
-@added
+@added @_done @tested_elsewhere
 Scenario: During template creation/editon I can mark fields as mandatory or optional
 
-@added
+@added @_tested
 Scenario: I can promote any lead template to global template
+  Given template named "Computer details" for category "Computers" is created by user "agent.jim@person.com" with role "agent"
+  Then I go to administration categories
+  And I follow translated "administration.categories.index.view.edit_link"
+  And I click hidden link by url regex "/administration\/lead_templates\/\d+\/edit/"
+  And I check "lead_template_is_global"
+  Then I press translated "administration.lead_templates.edit.view.button_update"
+

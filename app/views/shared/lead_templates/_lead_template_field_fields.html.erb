@@ -16,6 +16,10 @@
           <%= f.label :is_hidden %>
           <%= f.check_box :is_hidden %>
         </li>
+        <li class="boolean">
+          <%= f.label :is_mandatory %>
+          <%= f.check_box :is_mandatory %>
+        </li>
         <li class="hidden">
           <% unless f.object.new_record? %>
               <%= f.hidden_field :_destroy, :id => "destroy_hidden_field_#{f.object.id}" %>
