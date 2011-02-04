@@ -1,27 +1,28 @@
 When /^invoice exists for user "([^"]*)" with role "([^"]*)"(?: with attributes "([^"]*)")?$/ do |email,role_name,options|
-  user = "User::#{role_name}"
-  attrs = options ? Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys.merge(:user => User.where(:email => email).first) : {:user => User.where(:email => email).first}
+  user = "User::#{role_name.classify}".constantize.where(:email => email).first
+  attrs = options ? Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys.merge(:user => user) : {:user => user}
   Invoice.make!(attrs)
 end
 
-When /^invoice line for first invoice exists for user "([^"]*)"(?: with attributes "([^"]*)")?$/ do |email,options|
-  invoice = User.where(:email => email).first.invoices.first
+When /^invoice line for first invoice exists for user "([^"]*)" with role "([^"]*)"(?: with attributes "([^"]*)")?$/ do |email,role_name,options|
+  user = "User::#{role_name.classify}".constantize.where(:email => email).first
+  invoice = user.invoices.first
   attrs = options ? Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys.merge(:invoice => invoice) : {:invoice => invoice}
   InvoiceLine.make!(attrs)
 end
 
-When /^first invoice for user "([^"]*)" exists with attributes "([^"]*)"$/ do |email, options|
-  invoice = User::Abstract.where(:email => email).first.invoices.first
+When /^first invoice for user "([^"]*)" with role "([^"]*)" exists with attributes "([^"]*)"$/ do |email, role_name, options|
+  invoice = "User::#{role_name.classify}".constantize.where(:email => email).first.invoices.first
   invoice.update_attributes(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys)
 end
 
-When /^first invoice for user "([^"]*)" is created at "([^"]*)"$/ do |email, date|
-  invoice = User.where(:email => email).first.invoices.first
+When /^first invoice for user "([^"]*)" with role "([^"]*)" is created at "([^"]*)"$/ do |email, role_name, date|
+  invoice = "User::#{role_name.classify}".constantize.where(:email => email).first.invoices.first
   Invoice.update_all(["created_at = :date, sale_date = :date",{:date => date}], ["id=?",invoice.id])
 end
 
-When /^first invoice for user "([^"]*)" is paid$/ do |email|
-  invoice = User.where(:email => email).first.invoices.first
+When /^first invoice for user "([^"]*)" with role "([^"]*)" is paid$/ do |email,role_name|
+  invoice = "User::#{role_name.classify}".constantize.where(:email => email).first.invoices.first
   Invoice.update_all(["paid_at = :date",{:date => Time.now}], ["id=?",invoice.id])
 end
 

@@ -3,5 +3,6 @@ class User::PurchaseManager < ::User
 
   include User::RegistrationValidations
   include User::CommonAgent
+  include Addresses
 
 end

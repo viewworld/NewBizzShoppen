@@ -14,11 +14,13 @@
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs labels_ta_r labels_240">
     <ol class="align_inputs">
-      <%= form.fields_for :address do |address_form| %>
-          <%= address_form.input :street %>
-          <%= address_form.input :city %>
-          <%= address_form.input :zip_code %>
-          <%= address_form.input :county %>
+      <% if defined? @user.address %>
+          <%= form.fields_for :address do |address_form| %>
+              <%= address_form.input :street %>
+              <%= address_form.input :city %>
+              <%= address_form.input :zip_code %>
+              <%= address_form.input :county %>
+          <% end %>
       <% end %>
       <% if ['lead_buyer', 'customer'].include?(params[:role]) or @user.has_any_role?(:lead_buyer, :customer) %>
         <%= form.input :vat_number %>
@@ -56,8 +58,10 @@
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs labels_ta_r labels_240">
     <ol class="align_inputs">
-      <%= form.fields_for :address do |address_form| %>
-          <%= address_form.input :country, :as => :select, :collection => Country.all %>
+      <% if defined? @user.address %>
+          <%= form.fields_for :address do |address_form| %>
+              <%= address_form.input :country, :as => :select, :collection => Country.all %>
+          <% end %>
       <% end %>
       <%= form.input :agreement_read, :as => :hidden %>
       <%= form.input :newsletter_on %>

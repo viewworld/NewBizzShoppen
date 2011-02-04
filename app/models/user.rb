@@ -29,16 +29,12 @@ class User < ActiveRecord::Base
   validates_presence_of :email, :screen_name
   validates_uniqueness_of :email, :screen_name
   validate :payout_information_is_complete
-  validates_associated :address
 
   has_many :subaccounts, :class_name => "User", :foreign_key => "parent_id"
   has_many :owned_lead_requests, :class_name => 'LeadRequest', :foreign_key => :owner_id
   has_many :invoices
-  has_one :address, :as => :addressable
   belongs_to :user, :class_name => "User", :foreign_key => "parent_id", :counter_cache => :subaccounts_counter
-  belongs_to :user_country, :foreign_key => "country", :class_name => 'Country'
   belongs_to :bank_account, :foreign_key => :bank_account_id, :primary_key => :id, :class_name => 'BankAccount'
-  belongs_to :vat_rate, :foreign_key => :country, :primary_key => :country_id
   alias_method :parent, :user
 
   scope :with_role, lambda { |role| where("roles_mask & #{2**User.valid_roles.index(role.to_sym)} > 0 ") }
@@ -66,22 +62,13 @@ class User < ActiveRecord::Base
 
   attr_accessor :agreement_read, :locked
 
-  accepts_nested_attributes_for :address
-
   before_save :handle_locking, :handle_team_buyers_flag
-  before_create :set_rss_token, :set_role, :set_bank_account
+  before_create :set_rss_token, :set_role
   before_destroy :can_be_removed
-  after_initialize :build_address_object
 
   liquid :email, :first_name, :last_name, :confirmation_instructions_url, :reset_password_instructions_url
 
   private
-
-  def build_address_object
-    if new_record? and !address
-      build_address
-    end
-  end
 
   def mass_assignment_authorizer
     if self.can_edit_payout_information
@@ -149,14 +136,6 @@ class User < ActiveRecord::Base
 
   def deliver_email_template(uniq_id)
     ApplicationMailer.email_template(email, EmailTemplate.find_by_uniq_id(uniq_id), {:user => self}).deliver
-  end
-
-  def set_bank_account
-    self.bank_account_id = if user_country and country_default = user_country.default_bank_account
-      country_default.id
-    elsif global_default = BankAccount.global_default_bank_account.first
-      global_default.id
-    end
   end
 
   public
@@ -293,7 +272,8 @@ class User < ActiveRecord::Base
   end
 
   def country_vat_rate
-    vat_rate ? vat_rate.rate : 0.0
+    user_with_role = casted_class.find(id)
+    user_with_role.vat_rate ? user_with_role.vat_rate.rate : 0.0
   end
 
   def payment_bank_account
@@ -302,6 +282,14 @@ class User < ActiveRecord::Base
 
   def to_i
     id
+  end
+
+  def user_country
+    address.country
+  end
+
+  def vat_rate
+    address.country.vat_rate
   end
 
 end

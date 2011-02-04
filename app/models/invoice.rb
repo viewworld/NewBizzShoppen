@@ -81,17 +81,18 @@ class Invoice < ActiveRecord::Base
   end
 
   def duplicate_company_and_customer_information
+    user_with_role = user.send("casted_class").find(user)
     self.update_attributes({
-            :customer_name => user.full_name,
-            :customer_address => user.address,
-            :customer_vat_no => user.vat_number,
+            :customer_name => user_with_role.full_name,
+            :customer_address => user_with_role.address.to_s,
+            :customer_vat_no => user_with_role.vat_number,
             :seller_address => Settings.invoicing_seller_address,
             :seller_name => Settings.invoicing_seller_name,
             :seller_vat_no => Settings.invoicing_seller_vat_number,
             :seller_first_name => Settings.invoicing_seller_first_name,
             :seller_last_name => Settings.invoicing_seller_last_name,
-            :vat_paid_in_customer_country => user.not_charge_vat?,
-            :bank_account => user.payment_bank_account
+            :vat_paid_in_customer_country => user_with_role.not_charge_vat?,
+            :bank_account => user_with_role.payment_bank_account
     })
   end
 

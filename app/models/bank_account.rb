@@ -12,7 +12,7 @@ class BankAccount < ActiveRecord::Base
   after_initialize :build_address_object
 
   scope :global_default_bank_account, where(:global_default => true)
-  scope :country_default_bank_account, lambda{|country_id| joins(:address).where(:addresses => {:country_id => country_id}, :country_default => true)}
+  scope :country_default_bank_account, lambda{|country_id| includes(:address).where(:addresses => {:country_id => country_id}, :country_default => true)}
 
   accepts_nested_attributes_for :address
 

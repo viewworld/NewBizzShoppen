@@ -96,7 +96,6 @@ User.blueprint do
   first_name { Faker::Name.first_name }
   last_name { Faker::Name.last_name }
   agreement_read { true }
-  address { Address.make! }
 end
 
 ::User::Admin.blueprint do
@@ -148,7 +147,6 @@ end
   last_name { Faker::Name.last_name }
   agreement_read { true }
   roles_mask { 64 }
-  address { Address.make! }
 end
 
 ::User::LeadBuyer.blueprint do
@@ -161,7 +159,6 @@ end
   last_name { Faker::Name.last_name }
   agreement_read { true }
   roles_mask { 96 }
-  address { Address.make! }
 end
 
 ::User::Agent.blueprint do
