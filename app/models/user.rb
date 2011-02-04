@@ -78,7 +78,7 @@ class User < ActiveRecord::Base
   private
 
   def build_address_object
-    if new_record?
+    if new_record? and !address
       build_address
     end
   end
@@ -297,7 +297,7 @@ class User < ActiveRecord::Base
   end
 
   def payment_bank_account
-    bank_account || BankAccount.country_default_bank_account(country).first || BankAccount.global_default_bank_account.first
+    bank_account || BankAccount.country_default_bank_account(address.country).first || BankAccount.global_default_bank_account.first
   end  
 
   def to_i

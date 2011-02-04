@@ -380,7 +380,7 @@ Scenario: I should not see amounts grouped by vat rate when vat is paid in custo
   Then I should not see translated "administration.invoices.show.view.including"
   And I should not see "122" within ".totals"
 
-@added @m4b @_done
+@added @m4b @_done @wip
 Scenario: I should see amounts grouped by vat rate when vat is not paid in customer country
   When user "kastomer@nbs.fake" with role "customer" has attributes "not_charge_vat:0"
   And invoice exists for user "kastomer@nbs.fake"

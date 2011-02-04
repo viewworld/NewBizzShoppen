@@ -5,4 +5,9 @@ class Address < ActiveRecord::Base
 
   validates_presence_of :street, :zip_code, :city, :county, :country
 
+
+  def to_s
+    "#{street}, #{zip_code} #{city}, #{county}"
+  end
+
 end

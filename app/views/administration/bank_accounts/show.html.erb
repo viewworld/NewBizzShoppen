@@ -8,13 +8,22 @@
     <param:content>
       <div class="pdd_10">
         <p>
-          <%= t("administration.bank_accounts.show.view.country") %>: <%= @bank_account.country.name %>
+          <%= t("administration.bank_accounts.show.view.country") %>: <%= @bank_account.address.country.name %>
         </p><br/>
         <p>
           <%= t("administration.bank_accounts.show.view.bank_name") %>: <%= @bank_account.bank_name %>
         </p><br/>
         <p>
-          <%= t("administration.bank_accounts.show.view.bank_address") %>: <%= @bank_account.bank_address %>
+          <%= t("administration.bank_accounts.show.view.street") %>: <%= @bank_account.address.street %>
+        </p><br/>
+        <p>
+          <%= t("administration.bank_accounts.show.view.zip_code") %>: <%= @bank_account.address.zip_code %>
+        </p><br/>
+        <p>
+          <%= t("administration.bank_accounts.show.view.city") %>: <%= @bank_account.address.city %>
+        </p><br/>
+        <p>
+          <%= t("administration.bank_accounts.show.view.county") %>: <%= @bank_account.address.county %>
         </p><br/>
         <p>
           <%= t("administration.bank_accounts.show.view.iban_no") %>: <%= @bank_account.iban_no %>

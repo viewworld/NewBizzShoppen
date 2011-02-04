@@ -656,7 +656,6 @@ en:
           id: 'ID'
           country: 'Country'
           bank_name: 'Bank name'
-          bank_address: 'Bank address'
           iban_no: 'IBAN number'
           local_bank_number: 'Local bank number'
           swift: 'SWIFT'
@@ -681,10 +680,15 @@ en:
           country: 'Country'
           bank_name: 'Bank name'
           bank_address: 'Bank address'
+          street: 'Street'
+          zip_code: 'ZIP code'
+          city: 'City'
+          county: 'County'
           iban_no: 'IBAN number'
           local_bank_number: 'Local bank number'
           swift: 'SWIFT'
           country_default: 'Default bank for country'
+          global_default: 'Global default bank'
           payment_conditions: 'Payment conditions'
       form:
         view:

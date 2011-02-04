@@ -108,6 +108,7 @@ end
   first_name { Faker::Name.first_name }
   last_name { Faker::Name.last_name }
   agreement_read { true }
+  address { Address.make! }
 end
 
 ::User::Customer.blueprint do
@@ -121,6 +122,7 @@ end
   agreement_read { true }
   roles_mask { 112 }
   team_buyers { false }
+  address { Address.make! }
 end
 
 ::User::PurchaseManager.blueprint do
@@ -133,6 +135,7 @@ end
   last_name { Faker::Name.last_name }
   agreement_read { true }
   roles_mask { 128 }
+  address { Address.make! }
 end
 
 ::User::LeadUser.blueprint do
@@ -145,6 +148,7 @@ end
   last_name { Faker::Name.last_name }
   agreement_read { true }
   roles_mask { 64 }
+  address { Address.make! }
 end
 
 ::User::LeadBuyer.blueprint do
@@ -157,6 +161,7 @@ end
   last_name { Faker::Name.last_name }
   agreement_read { true }
   roles_mask { 96 }
+  address { Address.make! }
 end
 
 ::User::Agent.blueprint do
@@ -169,6 +174,7 @@ end
   last_name { Faker::Name.last_name }
   agreement_read { true }
   roles_mask { 2 }
+  address { Address.make! }
 end
 
 ::User::CallCentre.blueprint do
@@ -182,6 +188,7 @@ end
   agreement_read { true }
   payout { rand(100) }
   roles_mask { 4 }
+  address { Address.make! }
 end
 
 ::User::CallCentreAgent.blueprint do
@@ -194,6 +201,7 @@ end
   last_name { Faker::Name.last_name }
   agreement_read { true }
   roles_mask { 8 }
+  address { Address.make! }
 end
 
 ::Article::Cms.blueprint do
