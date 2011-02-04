@@ -415,3 +415,8 @@ Scenario: We do not need to generate a copy of the invoice, just the orininal
   And I press translated "common.cancel_link"
   Then I should be on administration invoices page
 
+  @m5 @sellers
+  Scenario: When creating an invoice a Seller for user's country should be selected
+
+  @m5 @sellers
+  Scenario: When there's no Seller for user's country then default Seller should be used
