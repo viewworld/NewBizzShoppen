@@ -14,3 +14,7 @@ Scenario: After a lead that have been bought and I update it. When I click save 
 
 Scenario: Datepicker - after selecting form the select box it should automatically fill in the date
 
+Scenario: I can edit my leads from any page where it's presented
+
+# details in doc
+Scenario: Lead data should be entered in given sequence

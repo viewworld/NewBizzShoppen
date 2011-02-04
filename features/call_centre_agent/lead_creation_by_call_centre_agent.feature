@@ -15,3 +15,6 @@ Scenario: I can create a new lead and close
 Scenario: I can create a new lead and continue (create another one)
 
 Scenario: I can add an extra language while creating lead. This will include lead title, purchase desc, hidden desc
+
+# details in doc
+Scenario: Lead data should be entered in given sequence

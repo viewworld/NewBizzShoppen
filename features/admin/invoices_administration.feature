@@ -419,4 +419,13 @@ Scenario: We do not need to generate a copy of the invoice, just the orininal
   Scenario: When creating an invoice a Seller for user's country should be selected
 
   @m5 @sellers
-  Scenario: When there's no Seller for user's country then default Seller should be used
+  Scenario: If there's no Seller for user's country then default Seller should be used
+
+  @m5
+  Scenario: Include users name, company and user email when filtering invoices
+
+  @m5
+  Scenario: On Invoices listing there should be sums present in top right hand corner (total, total paid, total unpaid)
+
+  @m5
+  Scenario: On Debtors listing there should be sums present in top right hand corner (total)

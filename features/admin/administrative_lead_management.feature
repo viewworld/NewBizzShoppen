@@ -40,3 +40,5 @@ Scenario: I can publish a lead that is not published
   And I press translated "administration.leads.index.view.search_button"
   And I should not see "Monitors ultimate deal"
 
+@m5
+Scenario: I can edit leads from any page where they are presented

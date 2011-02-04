@@ -76,3 +76,10 @@ Scenario: I have to fill out the templates which are mandatory for given categor
 
 @m5 @added @lead_templates @tgn
 Scenario: I can select additional templates that are optional for given category that was added
+
+@m5
+Scenario: I can edit my leads from any page where it's presented
+
+# details in doc
+@m5
+Scenario: Lead data should be entered in given sequence

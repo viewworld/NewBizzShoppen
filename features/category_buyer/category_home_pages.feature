@@ -51,3 +51,6 @@ Feature: Category home pages
 
   Scenario: Subaccounts should have access only to parents category
 
+  Scenario: There should be room for a category picture on the category home pages
+
+  Scenario: When clicking on the row with lead (as customer in leads catalogue), prompt user if he wishes to add a lead to cart (and do so if he agrees)

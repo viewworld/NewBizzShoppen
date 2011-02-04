@@ -75,3 +75,8 @@ Scenario: I should see currency in which lead is being sold
   And I press translated "leads.index.search.search_button"
   And I should see "€989.39" within "table"
 
+@m5
+Scenario: When you click on a lead that you have not bought, and you are not signed up you should be given the opportunity to sign in or create a new account
+
+@m5
+Scenario: Add blurb or info text to leads listing "To view lead details click buy lead"

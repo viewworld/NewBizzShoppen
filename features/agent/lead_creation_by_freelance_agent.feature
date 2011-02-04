@@ -185,3 +185,7 @@ Scenario: I cannot publish leads if my certification level is Not Certified or L
   Given Category Test category 1 is created
   And I follow translated "agent.leads.index.view.new_lead"
   Then I should not see "Published"
+
+# details in doc
+@m5
+Scenario: Lead data should be entered in given sequence

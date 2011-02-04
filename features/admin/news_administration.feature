@@ -108,3 +108,8 @@ Scenario: I can destroy news
   And I follow translated "administration.news.index.view.delete_link"
   Then I should not see "FirstNews"
 
+# It works i you create at new news
+# Right - after creating new news article, the back option should redirect to news listing
+@m5
+Scenario: When you edit a news article you should be able to cancel, and have the back option.
+
