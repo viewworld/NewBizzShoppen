@@ -18,11 +18,23 @@ class Nbs < Thor
     Settings.invoicing_seller_name                   = "Fairleads"
     Settings.invoicing_seller_address                = "Streeet\nPost Code City\nCounty\nCountry"
     Settings.invoicing_seller_vat_number             = "123-456-789"
-    Settings.invoicing_seller_payment_account        = "0011400000000000000000001"
     Settings.invoicing_default_vat_rate              = 0.15
 
     Country.find_or_create_by_name("Denmark")
     Country.find_or_create_by_name("United Kingdom")
+
+    if BankAccount.count == 0
+      BankAccount.create(
+          :country => Country.where(:name => 'Denmark').first,
+          :bank_name => 'Default Bank',
+          :bank_address => 'Default Location',
+          :iban_no => 'DK00 0000 0000 0000 00',
+          :local_bank_number => '0',
+          :swift => 'DKDKDK',
+          :country_default => true,
+          :global_default => true
+      )
+    end
 
     email_templates_array = [
         {:name    => "confirmation instructions",

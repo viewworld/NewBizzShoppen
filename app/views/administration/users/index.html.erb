@@ -58,11 +58,12 @@
     </param:actions>
   </header>
 
-
+  <%= bulk_form do %>
   <table id="users_table" class="generic">
     <thead>
     <tr>
       <th class="hl"></th>
+      <th><%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %></th>
       <th><%= link_to t("administration.users.index.view.id"), order_for_scoped_search(:id) %></th>
       <th><%= link_to t("administration.users.index.view.roles"), order_for_scoped_search(:roles_mask) %></th>
       <th><%= link_to t("administration.users.index.view.first_name"), order_for_scoped_search(:first_name) %></th>
@@ -81,7 +82,7 @@
     <tfoot>
     <tr>
       <td class="fl"></td>
-      <td colspan="12"></td>
+      <td colspan="13"></td>
       <td class="fr"></td>
     </tr>
     </tfoot>
@@ -89,6 +90,7 @@
     <% @users.each do |user| %>
         <tr class="<%= cycle("odd", "even") %>">
           <td class="cl"></td>
+          <td><%= check_box_tag("user_ids[]", user.id) unless user.id == current_user.id %></td>
           <td><%= user.id %></td>
           <td><%= user.roles_as_text %></td>
           <td><%= user.first_name %></td>
@@ -107,7 +109,7 @@
           <td class="tda ta_r">
             <ul-actions>
               <li>
-                <%= link_to t("administration.users.index.view.edit"), edit_administration_user_path(user) %>
+                <%= link_to t("administration.users.index.view.edit"), edit_administration_user_path(user), :class => "default_action" %>
               </li>
               <li>
                 <%= link_to t("administration.users.index.view.delete"), administration_user_path(user), {:method => :delete, :confirm => t("administration.users.index.view.delete_confirmation_message")} %>
@@ -125,9 +127,36 @@
           <td class="cr"></td>
         </tr>
     <% end %>
-    </tbody>
-  </table>
+    <tr class="pagination">
+      <td colspan="15">
+        <div class="td_select_all">
+          <%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %>
+          <%= label_tag "mark_all", "select all" %>
+        </div>
+      </td>
+    </tr>
+    <tr class="main_actions">
+      <td class="cl"></td>
+      <td colspan="13" class="no_pdd_lr">
+        <%= hidden_field_tag :route_to %>
+        <%= select_tag :locking, options_for_select([ ['', nil], [t("administration.users.index.view.lock"), "locked"], [t("administration.users.index.view.unlock"), "unlock"]]) %>
+        <%= check_box_tag "create_invoice", 1, false %>
+        <%= label_tag "create_invoice", t("administration.users.index.view.create_invoice") %>
 
+        <%= bt_link_to nil, t("administration.users.index.view.button_bulk_update_users"), "javascript:void(0)", :onclick => "submitBulkForm('#{administration_bulk_users_update_path}#PUT');" %>
+      </td>
+      <td class="cr"></td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+      <td class="fl"></td>
+      <td colspan="13"></td>
+      <td class="fr"></td>
+    </tr>
+    </tfoot>
+  </table>
+  <% end %>
   <%= will_paginate @users %>
 
 </column-mc:>

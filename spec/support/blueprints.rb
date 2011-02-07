@@ -93,7 +93,7 @@ User.blueprint do
   city { Faker::Address.city }
   zip_code { Faker::Address.zip_code }
   county { Faker::Address.uk_county }
-  country { 1 }
+  country { Country.first }
 end
 
 ::User::Admin.blueprint do
@@ -109,7 +109,7 @@ end
   city { Faker::Address.city }
   zip_code { Faker::Address.zip_code }
   county { Faker::Address.uk_county }
-  country { 1 }
+  country { Country.first }
 end
 
 ::User::Customer.blueprint do
@@ -125,7 +125,7 @@ end
   city { Faker::Address.city }
   zip_code { Faker::Address.zip_code }
   county { Faker::Address.uk_county }
-  country { 1 }
+  country { Country.first }
   roles_mask { 112 }
   team_buyers { false }
 end
@@ -143,7 +143,7 @@ end
   city { Faker::Address.city }
   zip_code { Faker::Address.zip_code }
   county { Faker::Address.uk_county }
-  country { 1 }
+  country { Country.first }
   roles_mask { 128 }
 end
 
@@ -160,7 +160,7 @@ end
   city { Faker::Address.city }
   zip_code { Faker::Address.zip_code }
   county { Faker::Address.uk_county }
-  country { 1 }
+  country { Country.first }
   roles_mask { 64 }
 end
 
@@ -177,7 +177,7 @@ end
   city { Faker::Address.city }
   zip_code { Faker::Address.zip_code }
   county { Faker::Address.uk_county }
-  country { 1 }
+  country { Country.first }
   roles_mask { 96 }
 end
 
@@ -194,7 +194,7 @@ end
   city { Faker::Address.city }
   zip_code { Faker::Address.zip_code }
   county { Faker::Address.uk_county }
-  country { Country.make!.id }
+  country { Country.make! }
   roles_mask { 2 }
 end
 
@@ -254,4 +254,13 @@ InvoiceLine.blueprint do
   name { Faker::Lorem.words(4).to_s }
   netto_price { rand(10000) }
   quantity { rand(100) }
+end
+
+BankAccount.blueprint do
+  country { Country.make! }
+  bank_name { Faker::Lorem.words(2).to_s }
+  bank_address { "#{Faker::Address.street_name}\n#{Faker::Address.zip_code} #{Faker::Address.city}\n#{Faker::Address.city}" }
+  iban_no { Faker.numerify('###################') }
+  local_bank_number { Faker.numerify('#########') }
+  swift { Faker.letterify('????????').upcase }
 end

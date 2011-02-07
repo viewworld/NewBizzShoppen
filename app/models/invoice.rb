@@ -23,6 +23,7 @@ class Invoice < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :currency
+  belongs_to :bank_account
 
   has_many :payment_transactions
   has_many :invoice_lines, :dependent => :destroy
@@ -43,6 +44,7 @@ class Invoice < ActiveRecord::Base
   scope :ascend_by_total, joins("LEFT JOIN invoice_lines ON invoice_lines.invoice_id = invoices.id").group(column_names.map{|c| 'invoices.'+c}.join(',')).order("SUM(invoice_lines.brutto_value) ASC")
   scope :descend_by_total, joins("LEFT JOIN invoice_lines ON invoice_lines.invoice_id = invoices.id").group(column_names.map{|c| 'invoices.'+c}.join(',')).order("SUM(invoice_lines.brutto_value) DESC")
   scope :with_paid, lambda{|paid| paid.to_i==1 ? where("paid_at IS NOT NULL") : where("paid_at IS NULL")}
+  scope :for_user, lambda{|user| where(:user_id => user.to_i)}
 
   validates_presence_of :user_id
   validates_associated :invoice_lines
@@ -82,13 +84,14 @@ class Invoice < ActiveRecord::Base
     self.update_attributes({
             :customer_name => user.full_name,
             :customer_address => user.address,
-            :customer_vat_no => "User vat",
+            :customer_vat_no => user.vat_number,
             :seller_address => Settings.invoicing_seller_address,
             :seller_name => Settings.invoicing_seller_name,
             :seller_vat_no => Settings.invoicing_seller_vat_number,
             :seller_first_name => Settings.invoicing_seller_first_name,
             :seller_last_name => Settings.invoicing_seller_last_name,
-            :payment_account_information => Settings.invoicing_seller_payment_account
+            :vat_paid_in_customer_country => user.not_charge_vat?,
+            :bank_account => user.payment_bank_account
     })
   end
 
@@ -104,13 +107,13 @@ class Invoice < ActiveRecord::Base
   end
 
   def get_template_source
-    File.open(File.join(RAILS_ROOT, "app", "views", "administration", "invoicing", "invoices", "_invoice_preview.erb")){|file| file.read}
+    File.open(File.join(::Rails.root.to_s, "app", "views", "administration", "invoicing", "invoices", "_invoice_preview.erb")){|file| file.read}
   end
 
   def generate_invoice_lines_for_big_buyer
     if user and user.big_buyer?
       User::Customer.find(user_id).lead_purchases.select { |lp| lp.invoice_line.blank? }.each do |lead_purchase|
-        InvoiceLine.create(:invoice => self, :payable => lead_purchase, :name => lead_purchase.lead.header, :netto_price => lead_purchase.lead.price, :vat_rate => Settings.invoicing_default_vat_rate.to_f)
+        InvoiceLine.create(:invoice => self, :payable => lead_purchase, :name => lead_purchase.lead.header, :netto_price => lead_purchase.lead.price, :vat_rate => user.country_vat_rate)
       end
     end
   end
@@ -130,7 +133,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def recalculate_invoice_items
-    invoice_lines.each{|ii| ii.calculate_additional_values! }
+    invoice_lines.reload && invoice_lines.each{|ii| ii.calculate_additional_values! }
   end
 
   public

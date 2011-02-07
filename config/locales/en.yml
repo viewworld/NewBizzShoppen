@@ -29,13 +29,18 @@ en:
         payment_transactions: 'Payments'
       agent:
         leads: My created leads
+        lead_templates: Lead templates
       call_centre:
         call_centre_agents: 'Agents'
         leads: 'Leads'
+        lead_templates: 'Lead templates'
       call_centre_agent:
+        leads: Leads
+        lead_templates: 'Lead templates'
       customer:
         subaccounts: Team
         lead_requests: Requested leads
+        invoices: 'Invoices'
         interests: 'Interests settings'
       lead_buyer:
         lead_purchases: My leads
@@ -48,6 +53,7 @@ en:
         site_home: 'Site home'
       purchase_manager:
         leads: My created leads
+        lead_templates: 'Lead templates'
     my_profile_link: My profile
     logout_link: 'Logout %{user_email}'
 
@@ -111,7 +117,15 @@ en:
         subject: 'Reset password instructions'
       unlock_instructions:
         subject: 'Unlock Instructions'
-
+  lead_templates:
+    table:
+      name: Name
+      is_mandatory: Mandatory?
+      is_active: Active?
+      actions: Actions
+      yes_label: Yes
+      no_label: No
+      category: Category
   lead_purchases:
     listing:
       purchase_value_label: 'Purchase value:'
@@ -129,7 +143,7 @@ en:
       sale_limit_label: 'Uniqueness:'
       novelty_label: 'Publish date:'
       hotness_label: 'Deadline:'
-      certification_label: 'Agent certification level:'
+      certification_label: 'Agent certification:'
       created_by_label: 'Created by:'
       linkedin_url: 'LinkedIn'
       facebook_url: 'Facebook'
@@ -170,7 +184,7 @@ en:
       novelty_label: 'Novelty:'
       hotness_label: 'Hotness:'
       certification_label: 'Certification:'
-      average_rating_label: 'Rating:'
+      average_rating_label: 'Lead rating:'
       average_rating_none_label: 'None'
       has_unsatisfactory_rating_yes: 'Yes'
       has_unsatisfactory_rating_no: 'No'
@@ -185,10 +199,15 @@ en:
       price: 'Lead price'
       sold: 'Sold'
       purchase_value: 'Value'
+      description: Description
       paid_out: 'Paid out'
       unsatisfactory_rating: 'Unsatisfactory rating'
       status: 'Status'
       actions: 'Actions'
+      created_by: Created by
+      rating: Lead rating
+      average_rating_none_label: None
+      certification: Certification
     index:
       header: Leads
       header_for: 'for'
@@ -201,6 +220,9 @@ en:
         country_label: 'Country'
       add_to_cart_link: Add to cart
       buy_lead: Buy lead
+      buy_lead_confirm_msg: Do you want to buy this lead?
+      add_to_cart_lead_confirm_msg: Do you want to add this lead to cart?
+      request_lead_confirm_msg: Do you want to request this lead?
       request_lead: Request lead
       button_bulk_create_lead_request: 'Request leads'
       button_bulk_create_cart_item: 'Add to cart'
@@ -208,6 +230,17 @@ en:
       bestsellers_header: Best sellers
       latest_header: Latest leads
       featured_header: Featured leads
+    show:
+      view:
+        header: Lead details
+        clicks_label: Cliks
+        exposures_label: Exposures
+        rating_label: Lead rating
+        sale_limit_label: Uniqueness
+        novelty_label: Novelty
+        hotness_label: Hotness
+        certification_label: Certification
+
   news:
     index:
       view:
@@ -272,6 +305,7 @@ en:
           locked: 'Locked'
           lock: 'Lock'
           unlock: 'Unlock'
+          button_bulk_update_users: Save
           subaccounts: 'Subaccounts'
           create_invoice: 'Create invoice'
           edit: 'Edit'
@@ -286,6 +320,7 @@ en:
           button_update_user: Save
           button_cancel: Cancel
           reset_password_link: Reset password
+          not_charge_vat: 'Do not charge VAT'
       create:
         flash:
           user_creation_successful: User has been created successfuly
@@ -296,6 +331,21 @@ en:
         flash:
           user_deletion_successful: 'User was successfully deleted!'
           user_deletion_failure: 'User could not be deleted!'
+    lead_templates:
+      new:
+        view:
+          header: New lead template
+          button_create: Create
+          button_cancel: Cancel
+      edit:
+        view:
+          header: Edit lead template
+          button_update: Save
+          button_cancel: Cancel
+      destroy:
+        flash:
+          deletion_successful:  Lead template has been successfully deleted!
+          deletion_failure: Lead template could not be deleted
     categories:
       form:
         no_parent_category: No parent category
@@ -312,6 +362,10 @@ en:
           header: "Editing category: %{category_name}"
           upload_image: 'Upload image'
           button_update: 'Save'
+          new_template: New template
+          edit_template: Edit
+          destroy_template: Destroy
+          destroy_template_confirmation_message: Are you sure?
     settings:
       edit:
         view:
@@ -508,6 +562,12 @@ en:
           cashflow: 'Cashflow'
           yes_label: 'Yes'
           no_label: 'No'
+          bank_name: 'BANK NAME'
+          bank_address: 'BANK ADDRESS'
+          swift_code: 'SWIFT'
+          iban_number: 'IBAN NO'
+          local_bank_number: 'LOCAL BANK NUMBER'
+          payment_conditions: 'PAYMENT CONDITIONS'
           payment_transactions:
             header: 'Transactions'
             type: 'Type'
@@ -526,6 +586,15 @@ en:
           show_invoice: 'Show invoice'
           go_back: 'Go back'
           set_payable_for_invoice_items: 'Set payable for invoice items'
+          name: Name
+          pkwiu: Pkwiu
+          unit: Unit
+          quantity: '#'
+          vat_rate: VAT%
+          netto_price: Netto price
+          netto_value: Netto value
+          vat_value: VAT
+          brutto_value: Incl. VAT
           form:
             general_information: 'General information'
             customer_information: 'Customer information'
@@ -606,6 +675,7 @@ en:
       index:
         view:
           header: Debtors
+          total: Total
           customer_first_name: First name
           customer_last_name: Last name
           customer_screen_name: 'Screen name'
@@ -619,7 +689,66 @@ en:
             with_assigned_at_date_after_and_including: Assigned after
             with_assigned_at_date_before_and_including: Assigned before
             payment_status: Payment status
-
+    bank_accounts:
+      index:
+        view:
+          header: 'Bank accounts'
+          id: 'ID'
+          country: 'Country'
+          bank_name: 'Bank name'
+          bank_address: 'Bank address'
+          iban_no: 'IBAN number'
+          local_bank_number: 'Local bank number'
+          swift: 'SWIFT'
+          country_default: 'Default bank for country'
+          actions: 'Actions'
+          edit: 'Edit'
+          show: 'Show'
+          delete: 'Delete'
+          add_bank: 'Add bank'
+          no_bank_accounts_defined: 'No bank accounts defined'
+      edit:
+        view:
+          header: 'Edit bank account'
+          button_save: 'Save'
+      new:
+        view:
+          header: 'New bank account'
+          button_create: 'Create bank account'
+      show:
+        view:
+          header: 'Bank account'
+          country: 'Country'
+          bank_name: 'Bank name'
+          bank_address: 'Bank address'
+          iban_no: 'IBAN number'
+          local_bank_number: 'Local bank number'
+          swift: 'SWIFT'
+          country_default: 'Default bank for country'
+          payment_conditions: 'Payment conditions'
+      form:
+        view:
+          country_default: 'Country default'
+          global_default: 'Global default'
+          
+    vat_rates:
+      index:
+        view:
+          header: 'VAT rates'
+          country: 'Country'
+          rate: 'Rate'
+          actions: 'Actions'
+          edit: 'Edit'
+          add_vat_rate: 'Add VAT rate'
+          no_rates_defined: 'No VAT rates defined'
+      new:
+        view:
+          header: 'New VAT rate'
+          button_create: 'Create'
+      edit:
+        view:
+          header: 'Edit VAT rate'
+          button_save: 'Save'          
 
   agent:
     leads:
@@ -650,13 +779,66 @@ en:
           title: 'New lead'
           button_create: 'Create'
           button_create_and_continue: 'Create & continue'
+          button_create_and_duplicate: 'Create & duplicate'
           remove_language: 'Remove'
       edit:
         view:
           title: 'Edit lead'
           button_update: 'Save'
+    lead_templates:
+      index:
+        view:
+          header: Lead templates
+          new_template: New template
+          edit: Edit
+          destroy: Destroy
+          search_button: Search
+          search:
+            keyword_label: Keyword
+            category_label: Category
+          destroy_template_confirmation_message: Are you sure?
+      new:
+        view:
+          header: New lead template
+          button_create: Create
+          button_cancel: Cancel
+      edit:
+        view:
+          header: Edit lead template
+          button_update: Save
+          button_cancel: Cancel
+      destroy:
+        flash:
+          deletion_successful: 'Lead template has been deleted successfully.'
+          deletion_failure: 'Lead template could not be deleted'
 
   call_centre:
+    lead_templates:
+      index:
+        view:
+          header: Lead templates
+          edit: Edit
+          destroy: Destroy
+          destroy_template_confirmation_message: Are you sure?
+          new_template: New template
+          search_button: Search
+          search:
+            keyword_label: Keyword
+            category_label: Category
+      new:
+        view:
+          header: New lead template
+          button_create: Create
+          button_cancel: Cancel
+      edit:
+        view:
+          header: Edit lead template
+          button_update: Save
+          button_cancel: Cancel
+      destroy:
+        flash:
+          deletion_successful: Lead template has been deleted successfully!
+          deletion_failure: Lead template could not be deleted!
     call_centre_agents:
       index:
         view:
@@ -685,6 +867,7 @@ en:
           delete: 'Delete'
           delete_confirmation_message: 'Are you sure?'
           button_bulk_subbaccounts_update: 'Save'
+          view_leads: View leads
       new:
         view:
           title: 'New call centre agent'
@@ -705,6 +888,90 @@ en:
         flash:
           call_centre_agent_deletion_successful: 'Call centre agent has been successfully deleted'
           call_centre_agent_deletion_failure: 'Call centre agent could not be deleted'
+    leads:
+      index:
+        view:
+          header: Leads
+          edit: Edit
+          destroy: Destroy
+          destroy_confirmation: Are you sure?
+          search_label: Search
+          search:
+            with_keyword: Keyword
+            with_created_by: Created by
+            filter_with_inactive: Skip inactive
+            filter_with_outdated: Skip outdated
+          search_button: Search
+          option_published: published
+          option_not_published: not published
+      edit:
+        view:
+          title: Edit lead
+          button_update: Save
+          button_cancel: Cancel
+      destroy:
+        flash:
+          lead_deletion_successful: Lead has been successfully deleted!
+          lead_deletion_failure: Lead could not be deleted!
+
+  call_centre_agent:
+    leads:
+      index:
+        view:
+          title: My created leads
+          new_lead: New lead
+          edit: Edit
+          destroy: Destroy
+          destroy_confirmation: Are you sure?
+          option_published: published
+          option_not_published: not published
+          search_button: Search
+          search:
+            keyword_label: Keyword
+            filter_with_inactive: Skip inactive
+            filter_with_outdated: Skip outdated
+      new:
+        view:
+          title: New lead
+          button_create_and_continue: Create & continue
+          button_create_and_duplicate: Create & duplicate
+          button_create: Create
+          button_cancel: Cancel
+      edit:
+        view:
+          title: Edit lead
+          button_update: Save
+          button_cancel: Cancel
+      destroy:
+        flash:
+          lead_deletion_successful: Lead has been successfully deleted!
+          lead_deletion_failure: Lead could not be deleted!
+    lead_templates:
+      index:
+        view:
+          header: Lead templates
+          new_template: New template
+          edit: Edit
+          destroy: Destroy
+          search_button: Search
+          search:
+            keyword_label: Keyword
+            category_label: Category
+          destroy_template_confirmation_message: Are you sure?
+      new:
+        view:
+          header: New lead template
+          button_create: Create
+          button_cancel: Cancel
+      edit:
+        view:
+          header: Edit lead template
+          button_update: Save
+          button_cancel: Cancel
+      destroy:
+        flash:
+          deletion_successful: 'Lead template has been deleted successfully.'
+          deletion_failure: 'Lead template could not be deleted'
 
   purchase_manager:
     leads:
@@ -738,11 +1005,38 @@ en:
           title: 'New lead'
           button_create: 'Create'
           button_create_and_continue: 'Create & continue'
+          button_create_and_duplicate: 'Create & duplicate'
           remove_language: 'Remove'
       edit:
         view:
           title: 'Edit lead'
           button_update: 'Save'
+    lead_templates:
+      index:
+        view:
+          header: Lead templates
+          new_template: New template
+          edit: Edit
+          destroy: Destroy
+          search_button: Search
+          search:
+            keyword_label: Keyword
+            category_label: Category
+          destroy_template_confirmation_message: Are you sure?
+      new:
+        view:
+          header: New lead template
+          button_create: Create
+          button_cancel: Cancel
+      edit:
+        view:
+          header: Edit lead template
+          button_update: Save
+          button_cancel: Cancel
+      destroy:
+        flash:
+          deletion_successful: 'Lead template has been deleted successfully.'
+          deletion_failure: 'Lead template could not be deleted'
 
   agent_accounts:
     new:
@@ -795,6 +1089,7 @@ en:
     index:
       view:
         header: Categories
+        view_lead_templates: View templates
 
   buyer_accounts:
     new:
@@ -932,6 +1227,76 @@ en:
         flash:
           lead_request_accepted_successfully: 'You added lead to your list'
           lead_request_rejected_successfully: Lead request rejected
+    invoices:
+      common:
+        view:
+          cash: 'Cash'
+          bank_transfer: 'Bank transfer'
+          na: N/A
+      index:
+        view:
+          header: 'Invoices'
+          search_button: 'Search'
+          sale_date: 'Sale date'
+          invoice_number: 'Invoice number'
+          customer: 'Customer'
+          status: 'Status'
+          search_label: 'Search'
+          create_invoice: 'Create invoice'
+          show_invoice: 'Show'
+          set_as_paid: 'Set as paid'
+          paid: 'Paid'
+          not_paid: 'Not paid'
+          total: 'Total'
+          actions: Actions
+          no_invoices: 'There are no invoices for your account'
+          search:
+            with_keyword: 'Keyword'
+            with_sale_date_after_and_including: 'Sale after'
+            with_sale_date_before_and_including: 'Sale before'
+            not_paid: 'Not paid only'
+            payment_status: 'Payment status'
+      show:
+        view:
+          download_pdf: 'Download PDF'
+          go_back: 'Go back'
+          header: 'Invoice'
+          number: 'Number'
+          sale_date: 'Sale date'
+          payment_deadline: 'Payment deadline date'
+          creation_date: 'Invoice date'
+          ean_number: 'EAN Number'
+          from: 'From'
+          to: 'To'
+          name: 'Name'
+          quantity: '#'
+          netto_price: 'Price'
+          netto_value: 'Netto value'
+          vat: 'VAT%'
+          vat_value: 'VAT'
+          brutto_value: 'Inc. VAT'
+          total: 'Total'
+          including: 'Including'
+          total_in_words: 'Total in words'
+          vat_paid: 'VAT paid'
+          payment_method: 'Payment method'
+          payment_account: 'Payment account'
+          seller: 'Seller'
+          customer: 'Customer'
+          status: 'Status'
+          creation_place: 'Creation place'
+          emailed_at: 'Emailed at'
+          paid_at: 'Paid at'
+          cashflow: 'Cashflow'
+          yes_label: 'Yes'
+          no_label: 'No'
+          payment_transactions:
+            header: 'Transactions'
+            type: 'Type'
+            paid_at: 'Paid at'
+            type_paypal: 'PayPal'
+            type_manual: 'Manual'
+            amount: 'Amount'
 
   lead_user:
     lead_purchases:
@@ -1056,6 +1421,19 @@ en:
       flash:
         email_sent_successfully: 'Your email was sent successfully to staff at NBS'
 
+  shared:
+    lead_templates:
+      listing:
+        hidden_value: (hidden)
+      form:
+        new_lead_template_field: New field
+        remove_lead_template_field: Remove
+    leads:
+      form:
+        country_local_label: Local
+        country_international: International
+        remove_template: Remove
+
   models:
     user:
       payout_validation_message: 'can only be between 0 and 100'
@@ -1076,6 +1454,11 @@ en:
         lvl10: Not certified (locked)
         lvl11: Silver (locked)
         lvl12: Gold (locked)
+    lead_template_field:
+      field_type:
+        type0: Text
+        type1: Number
+        type2: Date
 
   activerecord:
     attributes:
@@ -1160,6 +1543,10 @@ en:
               blank: "can't be blank"
             hidden_description:
               blank: "can't be blank"
+        bank_account:
+          attributes:
+            global_default:
+              cannot_be_disabled: "can't be disabled"
 
   activemodel:
     errors:
@@ -1240,3 +1627,6 @@ en:
     bulk_invoice_update:
       update:
         notice: 'Invoices have been successfully updated'
+    bulk_users_update:
+      update:
+        notice: 'Users has been updated'

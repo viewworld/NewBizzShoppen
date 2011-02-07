@@ -1,4 +1,4 @@
-@$_anybody @m5 @progress_indicators @ao
+@$_anybody @m6 @progress_indicators @ao
 Feature: Ajax spinners
 
 Scenario: Ajax spinners should be applied to all ajax calling dropdowns

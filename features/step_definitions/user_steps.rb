@@ -192,3 +192,21 @@ Given /^user "([^"]*)" with role "([^"]*)" has certification level set to (\d+)$
   user.certification_level = c_level.to_i
   user.save
 end
+
+When /^user "([^"]*)" with role "([^"]*)" has attributes "([^"]*)"$/ do |email, role_name, options|
+  user = "User::#{role_name.camelize}".constantize.first(:conditions => { :email => email })
+  attrs = Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys
+  user.update_attributes(attrs)
+end
+
+When /^user "([^"]*)" with role "([^"]*)" added lead "([^"]*)" to cart$/ do |email, role_name, lead_name|
+  user = "User::#{role_name.camelize}".constantize.first(:conditions => { :email => email })
+  lead = Lead.where(:header => lead_name).first
+  Cart.new(user).add_lead(lead)
+end
+
+Given /^user "([^"]*)" with role "([^"]*)" comes from "([^"]*)"$/ do |user_email, role_name, country_name|
+  country = Country.where(:name => country_name).first
+  "User::#{role_name.camelize}".constantize.where(:email => user_email).first.update_attribute(:country,country.id)
+end
+

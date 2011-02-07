@@ -21,6 +21,7 @@
                 </li>
                 <%= form.input :number %>
                 <%= form.input :ean_number %>
+                <%= form.input :details, :input_html => {:style => "width: 230px; height: 80px"} %>
               </ol>
             </fieldset>
 
@@ -66,6 +67,7 @@
                 <li class="header">
                   <h3><%= t("administration.invoices.edit.view.form.payment_information") %></h3>
                 </li>
+                <%= form.input :bank_account, :as => :select, :collection => BankAccount.all %>
                 <%= form.input :creation_place %>
                 <%= form.input :creation_date,
                                :as => :string,
@@ -76,7 +78,6 @@
                 <%= form.input :payment_deadline_date,
                                :as => :string,
                                :input_html => {:class => "datepicker"}, :wrapper_html => {:class => "date"} %>
-                <%= form.input :payment_account_information, :input_html => {:style => "width: 230px;height: 80px"} %>
                 <%= form.input :payment_method,
                                :as => :select,
                                :collection => Invoice::PAYMENT_METHODS.map { |pm| [t("administration.invoices.common.view.#{pm}"), pm.to_s] },
@@ -93,22 +94,22 @@
             <table class="invoice_inline_inputs">
               <thead>
               <tr>
-                <th>Name</th>
-                <th>Pkwiu</th>
-                <th>Unit</th>
-                <th>Quantity</th>
-                <th>Vat rate</th>
-                <th>Netto price</th>
-                <th>Netto value</th>
-                <th>Vat value</th>
-                <th>Brutto value</th>
+                <th><%= t("administration.invoices.edit.view.name") %></th>
+                <th><%= t("administration.invoices.edit.view.pkwiu") %></th>
+                <th><%= t("administration.invoices.edit.view.unit") %></th>
+                <th><%= t("administration.invoices.edit.view.quantity") %></th>
+                <th><%= t("administration.invoices.edit.view.vat_rate") %></th>
+                <th><%= t("administration.invoices.edit.view.netto_price") %></th>
+                <th><%= t("administration.invoices.edit.view.netto_value") %></th>
+                <th><%= t("administration.invoices.edit.view.vat_value") %></th>
+                <th><%= t("administration.invoices.edit.view.brutto_value") %></th>
                 <th style="width: 90px;"></th>
               </tr>
               </thead>
               <tbody>
 
               <%= form.fields_for :invoice_lines do |invoice_line| %>
-                  <%= render :partial => "/administration/invoicing/invoice_lines/invoice_line_fields", :locals => {:f => invoice_line} %>
+                  <%= render :partial => "/administration/invoicing/invoice_lines/invoice_line_fields", :locals => {:f => invoice_line} unless invoice_line.object.new_record? %>
               <% end %>
 
               <tr class="total">
@@ -123,6 +124,9 @@
         <param:actions>
           <ibt c="fltri" icon="save">
             <%= form.submit t("administration.invoices.edit.view.save_button") %>
+          </ibt>
+          <ibt c="fltri bt_grey">
+            <%= button_to_function t("common.cancel_link"), "window.location='#{administration_invoicing_invoices_path}'" %>
           </ibt>
         </param:actions>
       </frm>

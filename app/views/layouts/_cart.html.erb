@@ -7,7 +7,7 @@
     <ul>
       <% current_user.cart.items.each do |lead| %>
           <li>
-            <p><strong><%= lead.header %></strong></p>
+            <p><strong><%= link_to lead.header, lead_path(lead) %></strong></p>
 
             <p class="price ta_r"><%= link_to t("layout.cart.remove_item_link"), buyers_cart_item_path(lead.id), :method => :delete, :class => "fltl fs_11" %> 1 x <%= as_currency(lead.price, lead.currency) %></p>
           </li>
