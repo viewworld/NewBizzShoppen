@@ -1,7 +1,5 @@
 <tr>
   <td><%= f.text_field :name, :onKeyDown => "extendedNavigation(event)", :autocomplete => "off" %></td>
-  <td><%= f.text_field :pkwiu, :onKeyDown => "extendedNavigation(event)", :autocomplete => "off" %></td>
-  <td><%= f.text_field :unit, :onKeyDown => "extendedNavigation(event)", :autocomplete => "off" %></td>
   <td><%= f.text_field :quantity, :onKeyDown => "extendedNavigation(event)", :autocomplete => "off" %></td>
   <% if f.object.new_record? %>
     <td><%= f.text_field :vat_rate, :onKeyDown => "extendedNavigation(event)", :autocomplete => "off", :value => @invoice.user.country_vat_rate %></td>

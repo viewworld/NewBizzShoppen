@@ -540,6 +540,7 @@ en:
           from: 'From'
           to: 'To'
           ean_number: 'EAN Number'
+          vat_no: 'VAT/REG'
           name: 'Name'
           quantity: '#'
           netto_price: 'Price'
@@ -587,8 +588,6 @@ en:
           go_back: 'Go back'
           set_payable_for_invoice_items: 'Set payable for invoice items'
           name: Name
-          pkwiu: Pkwiu
-          unit: Unit
           quantity: '#'
           vat_rate: VAT%
           netto_price: Netto price

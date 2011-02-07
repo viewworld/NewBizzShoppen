@@ -101,12 +101,6 @@ fieldset.invoice_line li.invoice_line_unit {
     width: 52px;
 }
 
-/*pkwiu*/
-fieldset.invoice_line_labels label.invoice_pkwiu,
-fieldset.invoice_line li.invoice_line_pkwiu {
-    width: 86px;
-}
-
 /*name*/
 fieldset.invoice_line_labels label.invoice_name,
 fieldset.invoice_line li.invoice_line_name {
