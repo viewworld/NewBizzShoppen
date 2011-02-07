@@ -785,6 +785,9 @@ en:
         view:
           title: 'Edit lead'
           button_update: 'Save'
+          rating_header: Ratings
+          rating_level: Rating
+          rating_reason: Reason
     lead_templates:
       index:
         view:
