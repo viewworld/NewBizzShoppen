@@ -29,17 +29,25 @@ module NavigationHelpers
     when /administration transactions/
         '/administration/invoicing/payment_transactions'
     when /administration invoices/
-        '/administration/invoicing/invoices/'
+        '/administration/invoicing/invoices'
     when /administration upcoming invoices/
         '/administration/invoicing/upcoming_invoices'
     when /agents leads/
         '/agents/leads'
+    when /agents lead templates/
+        '/agents/lead_templates'
     when /browse leads/
         '/categories'
     when /buyer cart items/
         '/buyers/cart_items'
     when /call centre agents/
         '/call_centres/call_centre_agents'
+    when /call centre agents leads/
+        '/call_centre_agents/leads'
+    when /call centre leads/
+        '/call_centres/leads'
+    when /call centre lead templates/
+        '/call_centres/lead_templates'
     when /customer interests/
         '/customers/interests/edit'
     when /lead user lead purchases/
@@ -70,6 +78,8 @@ module NavigationHelpers
         lead_path(Lead.find_by_header($1))
     when /purchase managers leads/
         purchase_managers_leads_path
+    when /purchase managers lead templates/
+        purchase_managers_lead_templates_path
     when /leads/
         leads_path
     when /agent home/

@@ -99,3 +99,37 @@ Scenario: If I sucessfully login after requesting a lead being added to a cart, 
 Scenario: When I browse a lead category, the lead category should be displayed very clear beside the "Leads flag" on the upper left side of the screen
   When I follow "Sample category"
   Then I should see "Leads for Sample category"
+  
+@m5 @added @ao
+Scenario: I should be able to click "Add to cart button" that will redirect me to login page where I can create new account
+
+@m5 @tgn @_tested
+Scenario: If I successfully login after requesting a lead being added to a cart, that lead should be added to cart (or bought if I am big buyer)
+  Given I am signed up and confirmed as user with email buyer21@person.com and password supersecret and role customer
+  Given lead Great marketing deal exists within category VariousLeads
+  And I go to browse leads
+  And I follow "VariousLeads"
+  And I follow translated "leads.index.add_to_cart_link"
+  And I sign in as buyer21@person.com with password supersecret
+  And I follow translated "layout.cart.show_cart"
+  Then I should see "Great marketing deal"
+
+@m5 @added @lead_templates @tgn @_tested
+Scenario: I can see lead template fields with public values for each lead
+  Given lead Printers ultimate deal exists within category Computers
+  And template named "Printers details" for category "Computers" is created by user "ccagent@person.com" with role "call_centre_agent"
+  And template named "Printers details" has following fields "printers protocol:true:false, vendor name:false:false, versions:false:false"
+  And template named "Printers details" for lead "Printers ultimate deal" has values "printers protocol:xprinter3, vendor name:Havlett Packard, versions:3983c-39282f"
+  And I go to browse leads
+  And I follow "Computers"
+  Then I should see "PRINTERS DETAILS"
+  And I should see "printers protocol"
+  And I should see "vendor name"
+  And I should see "versions"
+  And I should see "Havlett Packard"
+  And I should see "3983c-39282f"
+  And I should not see "xprinter3"
+  And I should see translated "shared.lead_templates.listing.hidden_value"
+
+@m5 @added @lead_templates @tgn @_done @tested_elsewhere
+Scenario: I can see only lead template fields' names (not values) for hidden fields

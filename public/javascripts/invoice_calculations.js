@@ -100,7 +100,7 @@ function recalc_vat_value() {
 
     //netto_value
     $("[name$='[vat_value]']").calc(
-            "netto_value * vat_rate",
+            "netto_value * (vat_rate / 100)",
     {
         netto_value: $("input[name$='[netto_value]']"),
         vat_rate: $("[name$='[vat_rate]']")

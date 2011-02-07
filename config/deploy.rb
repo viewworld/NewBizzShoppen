@@ -30,7 +30,7 @@ set :keep_releases, 3
 namespace :deploy do
   desc "Restarting god"
   task :restart, :roles => :app do
-    sudo "/opt/ruby-enterprise-1.8.7-2010.02/bin/god restart nbs_#{stage}"
+    sudo "/opt/ree/bin/god restart nbs_#{stage}"
   end
 end
 
