@@ -45,7 +45,7 @@ Scenario: I can see created by, rating, certification level
   And I should see translated "models.lead.certification.lvl0"
   And I should see "95%"
 
-@noguess
+@m6 @noguess
 Scenario: I can see a link to comment for a lead if there is a conversation started
 
 @_tested
