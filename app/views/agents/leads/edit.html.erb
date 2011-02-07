@@ -3,7 +3,7 @@
 <%= semantic_form_for [:agents, @lead], :method => :put do |form| %>
       <frm title="Edit">
         <param:content>
-          <%= render :partial => 'form', :locals => { :form => form }  %>
+          <%= render :partial => '/shared/leads/form', :locals => { :form => form }  %>
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="save">
@@ -15,4 +15,22 @@
         </param:actions>
       </frm>
 <% end %>
+
+<a name="lead_rating"></a>
+<frm title="#{t('agent.leads.edit.view.rating_header')}">
+<param:content>
+  <div class="pdd_10">
+    <ul>
+    <% @lead.lead_purchases.each do |lead_purchase| %>
+          <% unless lead_purchase.rating_level.nil? %>
+          <li>
+            <b><%= t("agent.leads.edit.view.rating_level") %><%= lead_purchase.rating_level_as_text %></b><br />
+            <%= t("agent.leads.edit.view.rating_reason") %><%= lead_purchase.rating_reason %><br /><br />
+          </li>
+          <% end %>
+    <% end %>
+    </ul>
+  </div>
+</param:content>
+</frm>
 </column-mc:>

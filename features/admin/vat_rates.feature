@@ -151,3 +151,10 @@ Feature: VAT rates
     And I follow "add_fields_invoice_lines"
     Then the "1" field with id like "_vat_rate" should contain "0"
     And the "invoice_vat_paid_in_customer_country" checkbox should be checked
+
+  # Make country a textfield (we won’t create a new VAT for existing country, so it should be ok just to create both new country and VAT)
+  @m5 @ao
+  Scenario: I can create a new country when adding a VAT rate
+
+  @m5 @ao
+  Scenario: The new country created should have VAT rate assigned

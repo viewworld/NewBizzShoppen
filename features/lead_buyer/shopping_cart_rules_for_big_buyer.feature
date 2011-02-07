@@ -99,3 +99,6 @@ Scenario: I can filter the list of my leads by "paid" column
   When I select translated "common.yes_label" from "search_with_paid"
   And I press translated "lead_buyer.lead_purchases.index.view.search.search_button"
   Then I should not see "Printers ultimate deal"
+
+@m5 @ao
+Scenario: I should not see the cart when I'm a big buyer

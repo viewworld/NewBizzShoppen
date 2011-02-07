@@ -67,6 +67,7 @@
                   <li><%= link_to call_centre_agent.locked_at.blank? ? t("call_centre.call_centre_agents.index.view.lock") : t("call_centre.call_centre_agents.index.view.unlock"), call_centres_call_centre_agent_path(call_centre_agent, {"user_call_centre_agent".to_sym  => {:locked =>  call_centre_agent.locked_at.blank? ? "lock" : "unlock"}}), {:method => :put} %></li>
                   <li><%= link_to t("call_centre.call_centre_agents.index.view.edit"), edit_call_centres_call_centre_agent_path(call_centre_agent) %></li>
                   <li><%= link_to t("call_centre.call_centre_agents.index.view.delete"), call_centres_call_centre_agent_path(call_centre_agent), {:method => :delete, :confirm => t("call_centre.call_centre_agents.index.view.delete_confirmation_message")} %></li>
+                  <li><%= link_to t("call_centre.call_centre_agents.index.view.view_leads"), call_centres_leads_path(:search => { :with_created_by => call_centre_agent.id }) %></li>
                 </ul-actions>
               </td>
               <td class="cr"></td>

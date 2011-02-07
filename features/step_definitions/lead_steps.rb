@@ -213,3 +213,7 @@ Given /^lead named "([^"]*)" (is published|is not published)$/ do |header, is_pu
   lead.published = (is_published == "is published")
   lead.save
 end
+
+Given /^there are no leads$/ do
+  Lead.delete_all
+end

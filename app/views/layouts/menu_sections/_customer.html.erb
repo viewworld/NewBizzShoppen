@@ -3,4 +3,7 @@
     <%= main_menu_link_to t("layout.main_menu.customer.subaccounts"), customers_subaccounts_path, :tab => "subaccounts" %>
     <%= main_menu_link_to t("layout.main_menu.customer.lead_requests"), customers_lead_requests_path, :tab => "requested_leads" %>
 <% end %>
-<%#= main_menu_link_to t("layout.main_menu.customer.invoices"), customers_invoices_path, :tab => "invoices" %>
+<% if current_user.big_buyer? %>
+    <%= main_menu_link_to t("layout.main_menu.customer.not_invoiced"), customers_not_invoiced_leads_path, :tab => "not_invoiced_leads" %>
+<% end %>
+<%= main_menu_link_to t("layout.main_menu.customer.invoices"), customers_invoices_path, :tab => "invoices" %>
