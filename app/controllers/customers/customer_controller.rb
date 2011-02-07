@@ -13,4 +13,8 @@ class Customers::CustomerController < SecuredController
   def authorize_for_team_buyers
     raise CanCan::AccessDenied unless current_user.team_buyers?
   end
+
+  def authorize_for_big_buyer
+    raise CanCan::AccessDenied unless current_user.big_buyer?
+  end
 end

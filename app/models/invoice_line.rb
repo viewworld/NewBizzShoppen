@@ -60,7 +60,7 @@ class InvoiceLine < ActiveRecord::Base
   end
 
   def calculate_vat_value
-    self.vat_value = (invoice.vat_paid_in_customer_country? ? 0 : netto_value * vat_rate)
+    self.vat_value = (invoice.vat_paid_in_customer_country? ? 0 : netto_value * BigDecimal(vat_rate.to_s).div(100,2))
   end
 
   def calculate_brutto_value

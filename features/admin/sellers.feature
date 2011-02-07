@@ -1,4 +1,4 @@
-@m5 @sellers
+@m5 @sellers @ao
 Feature: Sellers
 
   Scenario: I can see Sellers list

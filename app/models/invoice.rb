@@ -16,8 +16,6 @@ class Invoice < ActiveRecord::Base
           </body>
         </html>}
 
-  TEMP_INVOICE_MARKUP_PATH = Rails.root.join("public/html2pdf/invoice.html")
-
   include ScopedSearch::Model
   include MultiScopedOrder
 
@@ -166,13 +164,14 @@ class Invoice < ActiveRecord::Base
     MARKUP_SCAFFOLD % html_markup
   end
 
+  def temp_invoice_path
+    Rails.root.join("public/html2pdf/#{filename}.html")
+  end
+
   def store_pdf
-    File.open(TEMP_INVOICE_MARKUP_PATH, 'w') {|f| f.write(markup) }
-    if ENV['OS'] and ENV['OS'].include?("Windows")
-      `xhtml2pdf public/html2pdf/invoice.html #{filepath}`
-    else
-      `python public/html2pdf/pisa.py #{TEMP_INVOICE_MARKUP_PATH} #{filepath}`
-    end
+    File.open(temp_invoice_path, 'w') {|f| f.write(markup) }
+    `python public/html2pdf/pisa.py #{temp_invoice_path} #{filepath}`
+    File.delete(temp_invoice_path)
     filepath
   end
 

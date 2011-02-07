@@ -50,6 +50,8 @@ class Lead < ActiveRecord::Base
   scope :with_rated_bad_by, lambda { |agent| where("creator_id = ? and lead_purchases.rating_level > ? and requested_by IS NULL", agent.id, LeadPurchase::RATING_SATISFACTORY).joins_on_lead_purchases }
   scope :with_not_rated_by, lambda { |agent| where("creator_id = ? and (lead_purchases.rating_level = -1 or lead_purchases.rating_level is NULL) and requested_by IS NULL", agent.id).joins_on_lead_purchases }
 
+  scope :with_not_invoiced_for_user, lambda { |user| joins("RIGHT JOIN lead_purchases ON lead_purchases.lead_id = leads.id LEFT JOIN invoice_lines ON invoice_lines.payable_id = lead_purchases.id LEFT JOIN users ON users.id = lead_purchases.owner_id").where(["invoice_lines.payable_id IS NULL AND users.big_buyer IS TRUE AND users.id = ?", user.to_i]) }
+  
   validates_presence_of :header, :description, :purchase_value, :price, :company_name, :contact_name, :phone_number, :sale_limit, :category_id, :purchase_decision_date, :country_id, :currency, :address_line_1, :city, :zip_code
   validates_presence_of :hidden_description, :unless => Proc.new{|l| l.created_by?('PurchaseManager')}
   validates_inclusion_of :sale_limit, :in => 0..10
@@ -168,6 +170,10 @@ class Lead < ActiveRecord::Base
     [address_line_1, address_line_2, address_line_3, zip_code, city, county].join(" ")
   end
 
+  def sold?
+    lead_purchases_counter > 0
+  end
+  
   def duplicate_fields(lead)
     if lead
       ["company_name", "company_phone_number", "company_website", "address_line_1", "address_line_2", "address_line_3", "zip_code",
@@ -203,5 +209,5 @@ class Lead < ActiveRecord::Base
     templates.map do |template|
       [template, lead_template_values.select { |ltv| ltv.lead_template_field.lead_template_id == template.id }]
     end
-  end
+  end  
 end
