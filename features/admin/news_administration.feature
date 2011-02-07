@@ -113,3 +113,12 @@ Scenario: I can destroy news
 @m5
 Scenario: When you edit a news article you should be able to cancel, and have the back option.
 
+@m5 @category_home_pages
+Scenario: I can see all news for categories
+
+@m5 @category_home_pages
+Scenario: I can update and change category for category news
+
+@m5 @category_home_pages
+Scenario: I can create news for category
+
