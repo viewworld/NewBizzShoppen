@@ -92,6 +92,9 @@ Scenario: I should be able to click "Add to cart button" that will redirect me t
   And I press translated "home.show.view.sign_in"
   Then I should see "Lead 392S2"
 
+@m5 @added
+Scenario: I should be able to click "Add to cart button" that will redirect me to login page where I can create new account
+
 @m5 @tgn @_tested
 Scenario: If I successfully login after requesting a lead being added to a cart, that lead should be added to cart (or bought if I am big buyer)
   Given I am signed up and confirmed as user with email buyer21@person.com and password supersecret and role customer
