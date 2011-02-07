@@ -15,56 +15,56 @@ SET search_path = public, pg_catalog;
 -- Name: addresses_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('addresses_id_seq', 6, true);
+SELECT pg_catalog.setval('addresses_id_seq', 1307, true);
 
 
 --
 -- Name: article_translations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('article_translations_id_seq', 20, true);
+SELECT pg_catalog.setval('article_translations_id_seq', 97, true);
 
 
 --
 -- Name: articles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('articles_id_seq', 10, true);
+SELECT pg_catalog.setval('articles_id_seq', 87, true);
 
 
 --
 -- Name: assets_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('assets_id_seq', 1, false);
+SELECT pg_catalog.setval('assets_id_seq', 5, true);
 
 
 --
 -- Name: bank_accounts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('bank_accounts_id_seq', 1, true);
+SELECT pg_catalog.setval('bank_accounts_id_seq', 20, true);
 
 
 --
 -- Name: categories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('categories_id_seq', 3, true);
+SELECT pg_catalog.setval('categories_id_seq', 861, true);
 
 
 --
 -- Name: category_interests_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('category_interests_id_seq', 1, false);
+SELECT pg_catalog.setval('category_interests_id_seq', 6, true);
 
 
 --
 -- Name: category_translations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('category_translations_id_seq', 6, true);
+SELECT pg_catalog.setval('category_translations_id_seq', 864, true);
 
 
 --
@@ -78,14 +78,14 @@ SELECT pg_catalog.setval('countries_id_seq', 2, true);
 -- Name: country_interests_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('country_interests_id_seq', 1, false);
+SELECT pg_catalog.setval('country_interests_id_seq', 2, true);
 
 
 --
 -- Name: currencies_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('currencies_id_seq', 2, true);
+SELECT pg_catalog.setval('currencies_id_seq', 650, true);
 
 
 --
@@ -106,49 +106,49 @@ SELECT pg_catalog.setval('email_templates_id_seq', 9, true);
 -- Name: invoice_lines_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('invoice_lines_id_seq', 1, false);
+SELECT pg_catalog.setval('invoice_lines_id_seq', 44, true);
 
 
 --
 -- Name: invoices_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('invoices_id_seq', 1, false);
+SELECT pg_catalog.setval('invoices_id_seq', 55, true);
 
 
 --
 -- Name: lead_purchases_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('lead_purchases_id_seq', 1, false);
+SELECT pg_catalog.setval('lead_purchases_id_seq', 300, true);
 
 
 --
 -- Name: lead_translations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('lead_translations_id_seq', 7, true);
+SELECT pg_catalog.setval('lead_translations_id_seq', 662, true);
 
 
 --
 -- Name: leads_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('leads_id_seq', 7, true);
+SELECT pg_catalog.setval('leads_id_seq', 661, true);
 
 
 --
 -- Name: payment_notifications_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('payment_notifications_id_seq', 1, false);
+SELECT pg_catalog.setval('payment_notifications_id_seq', 16, true);
 
 
 --
 -- Name: payment_transactions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('payment_transactions_id_seq', 1, false);
+SELECT pg_catalog.setval('payment_transactions_id_seq', 30, true);
 
 
 --
@@ -183,14 +183,14 @@ SELECT pg_catalog.setval('tolk_translations_id_seq', 1, false);
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('users_id_seq', 5, true);
+SELECT pg_catalog.setval('users_id_seq', 1549, true);
 
 
 --
 -- Name: vat_rates_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('vat_rates_id_seq', 1, false);
+SELECT pg_catalog.setval('vat_rates_id_seq', 4, true);
 
 
 --
