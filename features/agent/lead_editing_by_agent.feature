@@ -124,6 +124,5 @@ Scenario: When new translation to lead is added I can also write translation for
 @m5
 Scenario: I can edit my leads from any page where it's presented
 
-# details in doc
-@m5
+@m5 @added @tgn @non_testable @_done
 Scenario: Lead data should be entered in given sequence

@@ -314,5 +314,5 @@ Scenario: When there is only one template present for a lead and it is optional 
   And I press translated "call_centre_agent.leads.new.view.button_create"
   And I should see translated "flash.leads.actions.create.notice"
   
-# details in doc
+@m5 @added @tgn @non_testable @_done
 Scenario: Lead data should be entered in given sequence
