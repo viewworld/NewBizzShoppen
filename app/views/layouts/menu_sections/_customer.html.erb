@@ -6,4 +6,4 @@
 <% if current_user.big_buyer? %>
     <%= main_menu_link_to t("layout.main_menu.customer.not_invoiced"), customers_not_invoiced_leads_path, :tab => "not_invoiced_leads" %>
 <% end %>
-<%#= main_menu_link_to t("layout.main_menu.customer.invoices"), customers_invoices_path, :tab => "invoices" %>
+<%= main_menu_link_to t("layout.main_menu.customer.invoices"), customers_invoices_path, :tab => "invoices" %>
