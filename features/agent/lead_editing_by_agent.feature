@@ -120,3 +120,10 @@ Scenario: When new translation to lead is added I can also write translation for
   And the "lead_lead_template_values_attributes_1_value" field should contain "Ms Windows Vista"
   And the "lead_lead_template_values_attributes_0_lead_template_value_translations_attributes_0_value" field should contain "123 translated"
   And the "lead_lead_template_values_attributes_1_lead_template_value_translations_attributes_0_value" field should contain "Ms Windows Vista translated"
+  
+@m5
+Scenario: I can edit my leads from any page where it's presented
+
+# details in doc
+@m5
+Scenario: Lead data should be entered in given sequence

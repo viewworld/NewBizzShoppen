@@ -27,4 +27,114 @@
         </param:actions>
       </frm>
   <% end %>
+
+  <header><%= t("administration.bank_accounts.index.view.header") %></header>
+
+  <table class="generic" cellspacing="0" cellpadding="0" id="bank_accounts">
+    <thead>
+        <tr>
+          <th class="hl"></th>
+          <th><%= link_to t("administration.bank_accounts.index.view.id"), order_for_scoped_search(:id, :bank_accounts) %></th>
+          <th><%= t("administration.bank_accounts.index.view.country") %></th>
+          <th><%= t("administration.bank_accounts.index.view.bank_name") %></th>
+          <th><%= t("administration.bank_accounts.index.view.bank_address") %></th>
+          <th><%= t("administration.bank_accounts.index.view.iban_no") %></th>
+          <th><%= t("administration.bank_accounts.index.view.local_bank_number") %></th>
+          <th><%= t("administration.bank_accounts.index.view.swift") %></th>
+          <th><%= t("administration.bank_accounts.form.view.country_default") %></th>
+          <th><%= t("administration.bank_accounts.form.view.global_default") %></th>
+          <th><%= t("administration.bank_accounts.index.view.actions") %></th>
+          <th class="hr"></th>
+        </tr>
+    </thead>
+    <tbody>
+      <% if @bank_accounts.any? %>
+          <% @bank_accounts.each do |ba| %>
+            <tr>
+              <td class="cl"></td>
+              <td><%= ba.id %></td>
+              <td><%= ba.country.name %></td>
+              <td><%= ba.bank_name %></td>
+              <td><%= ba.bank_address %></td>
+              <td><%= ba.iban_no %></td>
+              <td><%= ba.local_bank_number %></td>
+              <td><%= ba.swift %></td>
+              <td><%= check_box_tag "country_default_#{ba.id}", 1, ba.country_default?, :disabled => true %></td>
+              <td><%= check_box_tag "global_default_#{ba.id}", 1, ba.global_default?, :disabled => true %></td>
+              <td>
+                <ul-actions>
+                  <li><%= link_to t("administration.bank_accounts.index.view.show"), administration_bank_account_path(ba) %></li>
+                  <li><%= link_to t("administration.bank_accounts.index.view.edit"), edit_administration_bank_account_path(ba) %></li>
+                  <li><%= link_to t("administration.bank_accounts.index.view.delete"), administration_bank_account_path(ba), :method => :delete, :confirmation => t("common.confirmation") %></li>
+                </ul-actions>
+              </td>
+              <td class="cr"></td>
+            </tr>
+          <% end %>
+      <% else %>
+        <tr>
+          <td colspan="12"><%= t("administration.bank_accounts.index.view.no_bank_accounts_defined") %></td>
+        </tr>
+      <% end %>
+      <tr class="main_actions">
+        <td colspan="12">
+          <%= bt_link_to nil, t("administration.bank_accounts.index.view.add_bank"), new_administration_bank_account_path %>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+      <td class="fl"></td>
+      <td colspan="10"></td>
+      <td class="fr"></td>
+    </tr>
+    </tfoot>
+  </table>
+
+  <header><%= t("administration.vat_rates.index.view.header") %></header>
+
+ <table class="generic" cellspacing="0" cellpadding="0" id="vat_rates">
+    <thead>
+        <tr>
+          <th class="hl"></th>
+          <th><%= t("administration.vat_rates.index.view.country") %></th>
+          <th><%= t("administration.vat_rates.index.view.rate") %></th>
+          <th><%= t("administration.vat_rates.index.view.actions") %></th>
+          <th class="hr"></th>
+        </tr>
+    </thead>
+    <tbody>
+      <% if @vat_rates.any? %>
+          <% @vat_rates.each do |vr| %>
+            <tr>
+              <td class="cl"></td>
+              <td><%= vr.country.name %></td>
+              <td><%= number_to_percentage(vr.rate, :precision => 2) %></td>
+              <td class="tda ta_r">
+                <ul-actions>
+                  <li><%= link_to t("administration.vat_rates.index.view.edit"), edit_administration_vat_rate_path(vr) %></li>
+                </ul-actions>
+              </td>
+              <td class="cr"></td>
+            </tr>
+          <% end %>
+      <% else %>
+        <tr>
+          <td colspan="5"><%= t("administration.vat_rates.index.view.no_rates_defined") %></td>
+        </tr>
+      <% end %>
+      <tr class="main_actions">
+        <td colspan="5">
+          <%= bt_link_to nil, t("administration.vat_rates.index.view.add_vat_rate"), new_administration_vat_rate_path %>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+      <td class="fl"></td>
+      <td colspan="3"></td>
+      <td class="fr"></td>
+    </tr>
+    </tfoot>
+  </table>  
 </column-mc:>

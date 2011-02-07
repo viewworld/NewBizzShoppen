@@ -1,0 +1,19 @@
+<column-mc:>
+  <header><%= t('administration.vat_rates.new.view.header') %></header>
+
+  <%= semantic_form_for @vat_rate, :as => :vat_rate, :url => administration_vat_rates_path, :input_html => {:method => :post} do |form| %>
+      <frm>
+        <param:content>
+          <%= render :partial => 'form', :locals => {:form => form} %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("administration.vat_rates.new.view.button_create") %>
+          </ibt>
+          <ibt c="fltri bt_grey">
+            <%= button_to_function t("common.cancel_link"), "history.go(-1)" %>
+          </ibt>
+        </param:actions>
+      </frm>
+  <% end %>
+</column-mc:>

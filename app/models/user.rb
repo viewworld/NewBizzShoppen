@@ -32,9 +32,11 @@ class User < ActiveRecord::Base
 
   has_many :subaccounts, :class_name => "User", :foreign_key => "parent_id"
   has_many :owned_lead_requests, :class_name => 'LeadRequest', :foreign_key => :owner_id
-  belongs_to :user, :class_name => "User", :foreign_key => "parent_id", :counter_cache => :subaccounts_counter
-#  belongs_to :country, :foreign_key => "country"
   has_many :invoices
+  belongs_to :user, :class_name => "User", :foreign_key => "parent_id", :counter_cache => :subaccounts_counter
+  belongs_to :user_country, :foreign_key => "country", :class_name => 'Country'
+  belongs_to :bank_account, :foreign_key => :bank_account_id, :primary_key => :id, :class_name => 'BankAccount'
+  belongs_to :vat_rate, :foreign_key => :country, :primary_key => :country_id
   has_many :lead_templates,
            :as => :creator,
            :dependent => :destroy
@@ -66,10 +68,9 @@ class User < ActiveRecord::Base
 
   attr_accessor :agreement_read, :locked
 
-  before_save :handle_locking
-  before_create :set_rss_token, :set_role
+  before_save :handle_locking, :handle_team_buyers_flag
+  before_create :set_rss_token, :set_role, :set_bank_account
   before_destroy :can_be_removed
-  before_save :handle_team_buyers_flag
 
   liquid :email, :first_name, :last_name, :confirmation_instructions_url, :reset_password_instructions_url
 
@@ -141,6 +142,14 @@ class User < ActiveRecord::Base
 
   def deliver_email_template(uniq_id)
     ApplicationMailer.email_template(email, EmailTemplate.find_by_uniq_id(uniq_id), {:user => self}).deliver
+  end
+
+  def set_bank_account
+    self.bank_account_id = if user_country and country_default = user_country.default_bank_account
+      country_default.id
+    elsif global_default = BankAccount.global_default_bank_account.first
+      global_default.id
+    end
   end
 
   public
@@ -279,9 +288,20 @@ class User < ActiveRecord::Base
   def to_s
     full_name
   end
-
+  
   def can_create_lead_templates?
     has_any_role?(:admin, :call_centre, :agent, :call_centre_agent, :purchase_manager)
   end
+  
+  def country_vat_rate
+    vat_rate ? (vat_rate.rate/100) : 0.0
+  end
 
+  def payment_bank_account
+    bank_account || BankAccount.country_default_bank_account(country).first || BankAccount.global_default_bank_account.first
+  end  
+
+  def to_i
+    id
+  end
 end

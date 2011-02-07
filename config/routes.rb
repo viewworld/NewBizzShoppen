@@ -38,6 +38,8 @@ Nbs::Application.routes.draw do
       resources :upcoming_invoices, :only => [:index]
       resources :payment_transactions
     end
+    resources :bank_accounts
+    resources :vat_rates
     resources :lead_templates
   end
 
@@ -92,6 +94,7 @@ Nbs::Application.routes.draw do
     resources :lead_requests, :only => [:index, :update, :destroy]
     resource :bulk_lead_requests, :controller => "bulk_lead_requests", :only => [:destroy,:update]
     resource :bulk_subaccounts_update, :controller => "bulk_subaccounts_update", :only => [:update]
+    resources :invoices, :only => [:show,:index]
   end
 
   namespace :agents do

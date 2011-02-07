@@ -390,6 +390,10 @@ Scenario: I cannot publish leads if my certification level is Not Certified or L
   And I follow translated "agent.leads.index.view.new_lead"
   Then I should not see "Published"
 
+# details in doc
+@m5
+Scenario: Lead data should be entered in given sequence
+  
 @m5 @added @tgn @non_testable
 Scenario: Fields on the form are placed in defined order
 

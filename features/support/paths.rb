@@ -29,7 +29,7 @@ module NavigationHelpers
     when /administration transactions/
         '/administration/invoicing/payment_transactions'
     when /administration invoices/
-        '/administration/invoicing/invoices/'
+        '/administration/invoicing/invoices'
     when /administration upcoming invoices/
         '/administration/invoicing/upcoming_invoices'
     when /agents leads/
@@ -92,6 +92,10 @@ module NavigationHelpers
         administration_article_path(Article::Cms.includes(:translations).where(:article_translations => {:title => $1}).first)
       when /administration (.*) news page/
         administration_news_path(Article::News.includes(:translations).where(:article_translations => {:title => $1}).first)
+      when /administration edit user (.*)/
+        edit_administration_user_path(User.where(:email => $1).first)
+      when /administration new vat rate/
+        new_administration_vat_rate_path
       when /(.*) news page/
         news = Article::News.find_by_title($1)
         news_path(news)

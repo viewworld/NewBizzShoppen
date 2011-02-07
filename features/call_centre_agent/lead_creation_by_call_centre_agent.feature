@@ -60,7 +60,7 @@ Scenario: I can create a new lead and continue (create another one)
   And I press translated "call_centre_agent.leads.new.view.button_create_and_continue"
   And I should see translated "flash.leads.actions.create.notice"
   And I should see translated "call_centre_agent.leads.new.view.title"
-
+  
 @_tested @selenium
 Scenario: I can add an extra language while creating lead. This will include lead title, purchase desc, hidden desc
   Given Category Test category 1 is created
@@ -313,3 +313,6 @@ Scenario: When there is only one template present for a lead and it is optional 
   And I fill in "lead_lead_template_values_attributes_1_value" with "Ms Windows Vista"
   And I press translated "call_centre_agent.leads.new.view.button_create"
   And I should see translated "flash.leads.actions.create.notice"
+  
+# details in doc
+Scenario: Lead data should be entered in given sequence

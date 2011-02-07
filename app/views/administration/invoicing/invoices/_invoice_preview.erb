@@ -95,7 +95,17 @@
       </p>
       <% if not invoice.payment_method == "cash" %>
           <p><span class="h"><%= t("administration.invoices.show.view.payment_account") %>
-            :</span> <%= invoice.payment_account_information.blank? ? "-" : invoice.payment_account_information %>
+            :</span>
+            <% if invoice.bank_account %>
+                <br/><%= t("administration.invoices.show.view.bank_name") %>: <%= invoice.bank_account.bank_name %>
+                <br/><%= t("administration.invoices.show.view.bank_address") %>: <%= invoice.bank_account.bank_address %>
+                <br/><%= t("administration.invoices.show.view.iban_number") %>: <%= invoice.bank_account.iban_no %>
+                <br/><%= t("administration.invoices.show.view.local_bank_number") %>: <%= invoice.bank_account.local_bank_number %>
+                <br/><%= t("administration.invoices.show.view.swift_code") %>: <%= invoice.bank_account.swift %>
+                <% if invoice.bank_account.payment_conditions.present? %>
+                  <br/><%= t("administration.invoices.show.view.payment_conditions") %>: <%= invoice.bank_account.payment_conditions %>
+                <% end %>
+            <% end %>
           </p>
       <% end %>
     </ul>
