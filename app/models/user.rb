@@ -35,6 +35,9 @@ class User < ActiveRecord::Base
   belongs_to :user, :class_name => "User", :foreign_key => "parent_id", :counter_cache => :subaccounts_counter
 #  belongs_to :country, :foreign_key => "country"
   has_many :invoices
+  has_many :lead_templates,
+           :as => :creator,
+           :dependent => :destroy
   alias_method :parent, :user
 
   scope :with_role, lambda { |role| where("roles_mask & #{2**User.valid_roles.index(role.to_sym)} > 0 ") }
@@ -50,7 +53,8 @@ class User < ActiveRecord::Base
   scope :with_requested_leads, lambda { |requestee| select("leads.id").where("assignee_id IS NULL and requested_by = ?", requestee.id).joins("INNER JOIN lead_purchases ON lead_purchases.requested_by=users.id").joins("INNER JOIN leads on leads.id=lead_purchases.lead_id") }
   scope :with_assigned_leads_time_ago, lambda { |assignee, time| select("leads.id").where("assignee_id = ? and lead_purchases.assigned_at >= ?", assignee.id, time).join_lead_purchases_and_leads }
   scope :with_assigned_leads_total, lambda { |assignee| select("leads.id").where("assignee_id = ?", assignee.id).join_lead_purchases_and_leads }
-
+  scope :with_lead_creators_for, lambda { |parent| select("DISTINCT(users.id), users.*").where("users.parent_id = ?", parent.id).joins("INNER JOIN leads ON leads.creator_id=users.id") }
+  scope :assignees_for_lead_purchase_owner, lambda { |owner| select("DISTINCT(users.id), users.*").where("requested_by IS NULL and lead_purchases.owner_id = ? and accessible_from IS NOT NULL and users.parent_id = ?", owner.id, owner.id).joins("RIGHT JOIN lead_purchases on lead_purchases.assignee_id=users.id") }
 
   scoped_order :id, :roles_mask, :first_name, :last_name, :email, :age, :department, :mobile_phone, :completed_leads_counter, :leads_requested_counter,
                :leads_assigned_month_ago_counter, :leads_assigned_year_ago_counter, :total_leads_assigned_counter, :leads_created_counter,
@@ -214,7 +218,7 @@ class User < ActiveRecord::Base
   end
 
   def refresh_agent_counters!
-    self.leads_created_counter = Lead.with_created_by(self).size
+    self.leads_created_counter = Lead.with_created_by(id).size
     self.leads_volume_sold_counter = LeadPurchase.with_volume_sold_by(self).size
     self.leads_revenue_counter = Lead.with_revenue_by(self).first.id || 0
     self.leads_purchased_month_ago_counter = LeadPurchase.with_purchased_time_ago_by(self, 30.days.ago).size
@@ -274,6 +278,10 @@ class User < ActiveRecord::Base
 
   def to_s
     full_name
+  end
+
+  def can_create_lead_templates?
+    has_any_role?(:admin, :call_centre, :agent, :call_centre_agent, :purchase_manager)
   end
 
 end

@@ -356,6 +356,13 @@ Scenario: I can create invoice for any customer from users tab
   Then I press "Create Invoice"
   And I should see translated "administration.invoices.edit.view.header"
 
+@tgn @added @_tested
+Scenario: I can create invoice for any customer from users tab
+  Given I go to administration users
+  And I click hidden translated link "administration.users.index.view.create_invoice"
+  Then I press "Create Invoice"
+  And I should see translated "administration.invoices.edit.view.header"
+
 @added @m4b @_done
 Scenario: EAN should be visible if filled
   When invoice exists for user "kastomer@nbs.fake" with attributes "ean_number:123456"
@@ -389,3 +396,37 @@ Scenario: I should see amounts grouped by vat rate when vat is paid in customer 
   And I follow translated "administration.invoices.index.view.show_invoice"
   Then I should see translated "administration.invoices.show.view.including"
   And I should see "122" within ".totals"
+
+@added @m4b @_done
+Scenario: We do not need to generate a copy of the invoice, just the orininal
+When invoice exists for user "kastomer@nbs.fake" with attributes "vat_paid_in_customer_country:0"
+And invoice line for first invoice exists for user "kastomer@nbs.fake" with attributes "quantity:1,netto_price:100,vat_rate:0.22,netto_value:100,brutto_value:122"
+And I follow translated "layout.main_menu.admin.invoices"
+And I follow translated "administration.invoices.index.view.show_invoice"
+And I follow translated PDF link "administration.invoices.show.view.download_pdf"
+Then I should not see "ORIGINAL"
+And I should not see "COPY"
+
+@added @m4b @selenium @_done
+Scenario: When you edit an invoice you should have the option to cancel the edit invoice
+When invoice exists for user "kastomer@nbs.fake" with attributes "vat_paid_in_customer_country:0"
+And invoice line for first invoice exists for user "kastomer@nbs.fake" with attributes "quantity:1,netto_price:100,vat_rate:0.22,netto_value:100,brutto_value:122"
+And I follow translated "layout.main_menu.admin.invoices"
+And I click hidden link by url regex "/administration\/invoicing\/invoices\/(\d+)\/edit/"
+And I press translated "common.cancel_link"
+Then I should be on administration invoices page
+
+@m5 @sellers
+Scenario: When creating an invoice a Seller for user's country should be selected
+
+@m5 @sellers
+Scenario: If there's no Seller for user's country then default Seller should be used
+
+@m5
+Scenario: Include users name, company and user email when filtering invoices
+
+@m5
+Scenario: On Invoices listing there should be sums present in top right hand corner (total, total paid, total unpaid)
+
+@m5
+Scenario: On Debtors listing there should be sums present in top right hand corner (total)
