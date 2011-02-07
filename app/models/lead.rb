@@ -168,6 +168,10 @@ class Lead < ActiveRecord::Base
     [address_line_1, address_line_2, address_line_3, zip_code, city, county].join(" ")
   end
 
+  def sold?
+    lead_purchases_counter > 0
+  end
+  
   def duplicate_fields(lead)
     if lead
       ["company_name", "company_phone_number", "company_website", "address_line_1", "address_line_2", "address_line_3", "zip_code",
@@ -203,5 +207,5 @@ class Lead < ActiveRecord::Base
     templates.map do |template|
       [template, lead_template_values.select { |ltv| ltv.lead_template_field.lead_template_id == template.id }]
     end
-  end
+  end  
 end
