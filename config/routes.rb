@@ -103,6 +103,7 @@ Nbs::Application.routes.draw do
   namespace :purchase_managers do
     root :to => "leads#index"
     resources :leads
+    resources :lead_templates
   end
 
   match 'buyer_home' => 'buyer_home#show', :as => "buyer_home"

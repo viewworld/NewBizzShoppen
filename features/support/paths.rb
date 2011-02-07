@@ -78,6 +78,8 @@ module NavigationHelpers
         lead_path(Lead.find_by_header($1))
     when /purchase managers leads/
         purchase_managers_leads_path
+    when /purchase managers lead templates/
+        purchase_managers_lead_templates_path
     when /leads/
         leads_path
     when /agent home/
