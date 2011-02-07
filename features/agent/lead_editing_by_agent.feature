@@ -89,7 +89,6 @@ Scenario: I can select additional templates that are optional
   And template named "Fax details" has following fields "fax software version:false, date of purchase:false"
   And I go to agents leads
   Then I click hidden link by url regex "/agents\/leads\/\d+\/edit/"
-  And I select "Fax details" from "optional_templates_picker"
   And I fill in "lead_lead_template_values_attributes_0_value" with "FaxFree v3"
   And I fill in "lead_lead_template_values_attributes_1_value" with "21-01-2010"
   And I select "United Kingdom" from "lead_country_id"

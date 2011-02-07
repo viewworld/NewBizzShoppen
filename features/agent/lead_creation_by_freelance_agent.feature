@@ -101,18 +101,22 @@ Scenario: I can add an extra language while creating lead. This will include lea
   And I should see "DK description"
   And I should see "DK hidden description"
 
-@tgn @added @_tested @m1
+@tgn @added @_tested @selenium @m1
 Scenario: Published checkbox should be selected by default
   Given I am not sign in
+  And Category Test category 1 is created
   And user bob@person.com with role agent exists with attributes "certification_level:1"
   Then I sign in as bob@person.com with password supersecret
   And I go to agents leads
-  Given I follow translated "agent.leads.index.view.new_lead"
-  Then the "lead_published" checkbox should be checked
+  And I select "Test category 1" from "category_id"
+  Then I follow translated "agent.leads.index.view.new_lead"
+  And the "lead_published" checkbox should be checked
 
-@tgn @_tested @m1
+@tgn @_tested @selenium @m1
 Scenario: All fields for new lead have to be filled in beside email address
   Given Category Test category 1 is created
+  And I go to agents leads
+  And I select "Test category 1" from "category_id"
   And I follow translated "agent.leads.index.view.new_lead"
   And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
   And I fill in "lead_description" with "Lorem ipsum"
@@ -121,7 +125,6 @@ Scenario: All fields for new lead have to be filled in beside email address
   And I fill in "lead_price" with "100"
   And I select "3" from "lead_sale_limit"
   #And I fill in "area" with "global"
-  And I select "Test category 1" from "lead_category_id"
   And I select "Denmark" from "lead_country_id"
   And I fill in "lead_company_name" with "Printing company"
   And I fill in "lead_contact_name" with "Marek Kowalski"
@@ -136,17 +139,22 @@ Scenario: All fields for new lead have to be filled in beside email address
   And I should be on agents leads
   And I should see translated "flash.leads.actions.create.notice"
 
-@m3 @ao @_done
+@m3 @ao @_done @selenium
 Scenario: I should be able to specify currency in which Lead will be sold (from dropdown)
+  Given Category Test category 1 is created
+  And I go to agents leads
+  And I select "Test category 1" from "category_id"
   When I follow translated "agent.leads.index.view.new_lead"
   Then I select "Euro" from "lead_currency_id"
 
 @m3 @tgn @_done @non_testable
 Scenario: When lead is published then the published_at time is recorded
 
-@m4 @_tested @tgn
+@m4 @_tested @tgn @selenium
 Scenario: I can add linkedin and facebook links to lead's contact information
   Given Category Test category 1 is created
+  And I go to agents leads
+  And I select "Test category 1" from "category_id"
   And I follow translated "agent.leads.index.view.new_lead"
   And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
   And I fill in "lead_description" with "Lorem ipsum"
@@ -154,7 +162,6 @@ Scenario: I can add linkedin and facebook links to lead's contact information
   And I fill in "lead_purchase_value" with "10000"
   And I fill in "lead_price" with "100"
   And I select "3" from "lead_sale_limit"
-  And I select "Test category 1" from "lead_category_id"
   And I select "Denmark" from "lead_country_id"
   And I fill in "lead_company_name" with "Printing company"
   And I fill in "lead_contact_name" with "Marek Kowalski"
@@ -375,17 +382,22 @@ Scenario: When there is only one template present for a lead and it is optional 
   And I press translated "agent.leads.new.view.button_create"
   And I should see translated "flash.leads.actions.create.notice"
 
-@m4 @added @tgn @agent_certification @_tested
+@m4 @added @tgn @agent_certification @_tested @selenium
 Scenario: I cannot publish leads if my certification level is Not Certified or Locked
   Given Category Test category 1 is created
+  And I go to agents leads
+  And I select "Test category 1" from "category_id"
   And I follow translated "agent.leads.index.view.new_lead"
   Then I should not see "Published"
 
 @m5 @added @tgn @non_testable
 Scenario: Fields on the form are placed in defined order
 
-@m5 @added @tgn @_tested
+@m5 @added @tgn @_tested @selenium
 Scenario: I can add contact direct phone number, company phone number, company ean number, contact direct phone number, country is international, company website
+  Given Category Test category 1 is created
+  And I go to agents leads
+  And I select "Test category 1" from "category_id"
   When I follow translated "agent.leads.index.view.new_lead"
   Then I fill in "lead_company_phone_number" with "34234234234234"
   Then I fill in "lead_company_website" with "http://falsecompanyurl.com"

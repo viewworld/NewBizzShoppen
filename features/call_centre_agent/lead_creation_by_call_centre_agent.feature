@@ -10,9 +10,11 @@ Background:  Sign in user and set locale
   Then I sign in as call_centre_agent@person.com with password supersecret
 
 
-@_tested
+@_tested @selenium
 Scenario: I can create a new lead and close
   Given Category Test category 1 is created
+  And I follow translated "layout.main_menu.call_centre_agent.leads"
+  And I select "Test category 1" from "category_id"
   And I follow translated "call_centre_agent.leads.index.view.new_lead"
   And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
   And I fill in "lead_description" with "Lorem ipsum"
@@ -20,7 +22,6 @@ Scenario: I can create a new lead and close
   And I fill in "lead_purchase_value" with "10000"
   And I fill in "lead_price" with "100"
   And I select "3" from "lead_sale_limit"
-  And I select "Test category 1" from "lead_category_id"
   And I select "Denmark" from "lead_country_id"
   And I fill in "lead_company_name" with "Printing company"
   And I fill in "lead_contact_name" with "Marek Kowalski"
@@ -34,9 +35,11 @@ Scenario: I can create a new lead and close
   And I press translated "call_centre_agent.leads.new.view.button_create"
   And I should see translated "flash.leads.actions.create.notice"
 
-@_tested
+@_tested @selenium
 Scenario: I can create a new lead and continue (create another one)
   Given Category Test category 1 is created
+  And I follow translated "layout.main_menu.call_centre_agent.leads"
+  And I select "Test category 1" from "category_id"
   And I follow translated "call_centre_agent.leads.index.view.new_lead"
   And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
   And I fill in "lead_description" with "Lorem ipsum"
@@ -44,7 +47,6 @@ Scenario: I can create a new lead and continue (create another one)
   And I fill in "lead_purchase_value" with "10000"
   And I fill in "lead_price" with "100"
   And I select "3" from "lead_sale_limit"
-  And I select "Test category 1" from "lead_category_id"
   And I select "Denmark" from "lead_country_id"
   And I fill in "lead_company_name" with "Printing company"
   And I fill in "lead_contact_name" with "Marek Kowalski"
@@ -63,6 +65,8 @@ Scenario: I can create a new lead and continue (create another one)
 Scenario: I can add an extra language while creating lead. This will include lead title, purchase desc, hidden desc
   Given Category Test category 1 is created
   And Country Denmark is created
+  And I follow translated "layout.main_menu.call_centre_agent.leads"
+  And I select "Test category 1" from "category_id"
   Given I follow translated "call_centre_agent.leads.index.view.new_lead"
   And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
   And I fill in "lead_description" with "Lorem ipsum"
@@ -70,7 +74,6 @@ Scenario: I can add an extra language while creating lead. This will include lea
   And I fill in "lead_purchase_value" with "10000"
   And I fill in "lead_price" with "100"
   And I select "3" from "lead_sale_limit"
-  And I select "Test category 1" from "lead_category_id"
   And I select "Denmark" from "lead_country_id"
   And I fill in "lead_company_name" with "Printing company"
   And I fill in "lead_contact_name" with "Marek Kowalski"
