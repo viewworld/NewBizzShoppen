@@ -104,15 +104,15 @@ Scenario: In bestsellers and latest listings I should not see leads which I've a
   Then I should see "AwesomeLead"
   And I should not see "BoughtLead"
 
-@m5
+@m5 @ao
 Scenario: I can see latest leads in my categories (interests)
 
 # including hidden descriptions
-@m5
+@m5 @ao
 Scenario: I can see my leads
 
-@m5
+@m5 @ao
 Scenario: I can add team members
 
-@m5
+@m5 @ao
 Scenario: I can sign out

@@ -1,4 +1,4 @@
-@m5 @category_home_pages
+@m5 @category_home_pages @ao
 Feature: Category buyer rules
 
   Scenario: I can't access category home pages other than the one I registered from

@@ -42,6 +42,7 @@ en:
         lead_requests: Requested leads
         invoices: 'Invoices'
         interests: 'Interests settings'
+        not_invoiced: 'Not Invoiced Leads'
       lead_buyer:
         lead_purchases: My leads
       lead_user:
@@ -1299,6 +1300,22 @@ en:
             type_paypal: 'PayPal'
             type_manual: 'Manual'
             amount: 'Amount'
+
+    not_invoiced:
+      index:
+        view:
+          header: Not Invoiced Leads
+          lead_header: 'Lead'
+          lead_price: 'Price'
+          create_invoice: Create invoice
+          search_label: Search
+          search_button: Search
+          no_leads_to_display: 'No leads to display'
+          search:
+            with_keyword: Keyword
+            with_assigned_at_date_after_and_including: Assigned after
+            with_assigned_at_date_before_and_including: Assigned before
+            payment_status: Payment status
 
   lead_user:
     lead_purchases:

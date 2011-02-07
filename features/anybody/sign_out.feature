@@ -1,4 +1,4 @@
-@m5
+@m5 @ao
 Feature: Sign out
 
   # Before logout, store in session the logout page (which will become login page after logout)
