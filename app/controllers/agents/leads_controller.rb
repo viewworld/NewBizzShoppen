@@ -32,7 +32,7 @@ class Agents::LeadsController < Agents::AgentController
         if !params[:commit_duplicate].blank?
           redirect_to new_agents_lead_path(:lead_id => @lead.id)
         elsif !params[:commit_continue].blank?
-          redirect_to new_agents_lead_path
+          redirect_to new_agents_lead_path(:category_id => @lead.category_id)
         else
           redirect_to agents_leads_path
         end

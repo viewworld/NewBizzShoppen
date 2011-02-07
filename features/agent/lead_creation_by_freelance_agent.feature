@@ -12,9 +12,11 @@ Background:
     Then I sign in as bob@person.com with password supersecret
     And I go to agents leads
 
-@_tested
+@_tested @selenium
 Scenario: I can create a new lead and close
   Given Category Test category 1 is created
+  And I go to agents leads
+  And I select "Test category 1" from "category_id"
   And I follow translated "agent.leads.index.view.new_lead"
   And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
   And I fill in "lead_description" with "Lorem ipsum"
@@ -23,7 +25,6 @@ Scenario: I can create a new lead and close
   And I fill in "lead_price" with "100"
   And I select "3" from "lead_sale_limit"
   #And I fill in "area" with "global"
-  And I select "Test category 1" from "lead_category_id"
   And I select "Denmark" from "lead_country_id"
   And I fill in "lead_company_name" with "Printing company"
   And I fill in "lead_contact_name" with "Marek Kowalski"
@@ -38,9 +39,11 @@ Scenario: I can create a new lead and close
   And I should be on agents leads
   And I should see translated "flash.leads.actions.create.notice"
 
-@_tested @noguess
+@_tested @noguess @selenium
 Scenario: I can create a new lead and continue (create another one)
   Given Category Test category 1 is created
+  And I go to agents leads
+  And I select "Test category 1" from "category_id"
   And I follow translated "agent.leads.index.view.new_lead"
   And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
   And I fill in "lead_description" with "Lorem ipsum"
@@ -49,7 +52,6 @@ Scenario: I can create a new lead and continue (create another one)
   And I fill in "lead_price" with "100"
   And I select "3" from "lead_sale_limit"
   #And I fill in "area" with "global"
-  And I select "Test category 1" from "lead_category_id"
   And I select "Denmark" from "lead_country_id"
   And I fill in "lead_company_name" with "Printing company"
   And I fill in "lead_contact_name" with "Marek Kowalski"
@@ -68,6 +70,8 @@ Scenario: I can create a new lead and continue (create another one)
 Scenario: I can add an extra language while creating lead. This will include lead title, purchase desc, hidden desc
   Given Category Test category 1 is created
   And Country Denmark is created
+  And I go to agents leads
+  And I select "Test category 1" from "category_id"
   Given I follow translated "agent.leads.index.view.new_lead"
   And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
   And I fill in "lead_description" with "Lorem ipsum"
@@ -76,7 +80,6 @@ Scenario: I can add an extra language while creating lead. This will include lea
   And I fill in "lead_price" with "100"
   And I select "3" from "lead_sale_limit"
   #And I fill in "area" with "global"
-  And I select "Test category 1" from "lead_category_id"
   And I select "Denmark" from "lead_country_id"
   And I fill in "lead_company_name" with "Printing company"
   And I fill in "lead_contact_name" with "Marek Kowalski"
@@ -390,9 +393,11 @@ Scenario: I can add contact direct phone number, company phone number, company e
   Then I fill in "lead_direct_phone_number" with "424234324234"
   Then I select translated "shared.leads.form.country_international" from "lead_is_international"
 
-@m5 @added @tgn @_tested
+@m5 @added @tgn @_tested  @_wip
 Scenario: I can create a new lead and duplicate company\contact info to another new lead
   Given Category Test category 1 is created
+  And I go to agents leads
+  And I select "Test category 1" from "category_id"
   And I follow translated "agent.leads.index.view.new_lead"
   And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
   And I fill in "lead_description" with "Lorem ipsum"
