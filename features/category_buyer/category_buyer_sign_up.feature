@@ -1,4 +1,4 @@
-@m5 @category_home_pages
+@m5 @category_home_pages @ao
 Feature: Category buyer sign up
 
   Scenario: I can create new Category Buyer account from category home page

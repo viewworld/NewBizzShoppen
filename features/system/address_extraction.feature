@@ -1,4 +1,4 @@
-@m5
+@m5 @ao
 Feature: Address extraction
 
   Scenario: When address is attached to person it should contain: First name, Last name, Address line 1, Address line 2, Address line 3, ZIP, Country

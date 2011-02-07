@@ -416,17 +416,17 @@ Scenario: We do not need to generate a copy of the invoice, just the orininal
   And I press translated "common.cancel_link"
   Then I should be on administration invoices page
 
-@m5 @sellers
+@m5 @sellers @ao
 Scenario: When creating an invoice a Seller for user's country should be selected
 
-@m5 @sellers
+@m5 @sellers @ao
 Scenario: If there's no Seller for user's country then default Seller should be used
 
-@m5
+@m5 @ao
 Scenario: Include users name, company and user email when filtering invoices
 
-@m5
+@m5 @ao
 Scenario: On Invoices listing there should be sums present in top right hand corner (total, total paid, total unpaid)
 
-@m5
+@m5 @ao
 Scenario: On Debtors listing there should be sums present in top right hand corner (total)

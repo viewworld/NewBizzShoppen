@@ -149,5 +149,5 @@ Scenario: I can see type of article on the listing
   And I follow translated "layout.main_menu.admin.articles"
   Then I should see translated "administration.articles.index.view.type"
 
-@m5
+@m5 @ao
 Scenario: As admin, it should be possible to edit all kind of articles by displaying Edit link in interface when articles is listed or displayed

@@ -100,7 +100,7 @@ Scenario: When I browse a lead category, the lead category should be displayed v
   When I follow "Sample category"
   Then I should see "Leads for Sample category"
   
-@m5 @added
+@m5 @added @ao
 Scenario: I should be able to click "Add to cart button" that will redirect me to login page where I can create new account
 
 @m5 @tgn @_tested

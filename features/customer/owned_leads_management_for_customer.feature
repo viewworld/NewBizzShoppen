@@ -145,7 +145,7 @@ Scenario: I can bulk set response deadlines for lead
 @ao @nontestable  @noguess
 Scenario: I am notified by email when dealine expires and status of lead has not changed
 
-@m5  @noguess
+@m6  @noguess
 Scenario: I can create a comment for lead that I have access for
 
 #Accessible from owned leads listing
