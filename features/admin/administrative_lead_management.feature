@@ -1,6 +1,6 @@
 @lead_manager @$_admin @m5 @ao
 Feature: Administrative lead management
-  
+
 Background:
   Given I am on the homepage
   And I make sure current locale is English
@@ -8,11 +8,11 @@ Background:
   Then I sign in as admin2@person.com with password supersecret
 
 # https://redmine.selleo.com/issues/3494
-@deprecated
+@_deprecated
 Scenario: I can edit lead if the lead is not sold yet
 
 # https://redmine.selleo.com/issues/3494
-@deprecated
+@_deprecated
 Scenario: I can’t edit lead if the lead was already sold
 
 @added @_done
@@ -98,3 +98,5 @@ Scenario: I can publish a lead that is not published
   And I press translated "administration.leads.index.view.search_button"
   And I should not see "Monitors ultimate deal"
 
+@m5
+Scenario: I can edit leads from any page where they are presented

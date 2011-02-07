@@ -2,6 +2,6 @@
   <header><%= t("categories.index.view.header") %></header>
 
   <%= all_categories_tree(:category_label => lambda { |c| link_to "#{c.name}", "/categories/#{c.cached_slug}?search[with_category]=#{c.id}" },
-                          :after_category => lambda { |c| "<span class='total_leads'>(#{c.published_leads_count})</span>" }) %>
+                          :after_category => lambda { |c| "<span class='total_leads'>(#{c.published_leads_count})</span> #{link_to_view_templates(c)}" }) %>
   <clb/>
 </column-mc:>

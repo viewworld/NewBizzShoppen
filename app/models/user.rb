@@ -32,10 +32,14 @@ class User < ActiveRecord::Base
 
   has_many :subaccounts, :class_name => "User", :foreign_key => "parent_id"
   has_many :owned_lead_requests, :class_name => 'LeadRequest', :foreign_key => :owner_id
-  belongs_to :user, :class_name => "User", :foreign_key => "parent_id", :counter_cache => :subaccounts_counter
-#  belongs_to :country, :foreign_key => "country"
   has_many :invoices
+  belongs_to :user, :class_name => "User", :foreign_key => "parent_id", :counter_cache => :subaccounts_counter
+  belongs_to :user_country, :foreign_key => "country", :class_name => 'Country'
+  belongs_to :bank_account, :foreign_key => :bank_account_id, :primary_key => :id, :class_name => 'BankAccount'
   belongs_to :vat_rate, :foreign_key => :country, :primary_key => :country_id
+  has_many :lead_templates,
+           :as => :creator,
+           :dependent => :destroy
   alias_method :parent, :user
 
   scope :with_role, lambda { |role| where("roles_mask & #{2**User.valid_roles.index(role.to_sym)} > 0 ") }
@@ -51,7 +55,8 @@ class User < ActiveRecord::Base
   scope :with_requested_leads, lambda { |requestee| select("leads.id").where("assignee_id IS NULL and requested_by = ?", requestee.id).joins("INNER JOIN lead_purchases ON lead_purchases.requested_by=users.id").joins("INNER JOIN leads on leads.id=lead_purchases.lead_id") }
   scope :with_assigned_leads_time_ago, lambda { |assignee, time| select("leads.id").where("assignee_id = ? and lead_purchases.assigned_at >= ?", assignee.id, time).join_lead_purchases_and_leads }
   scope :with_assigned_leads_total, lambda { |assignee| select("leads.id").where("assignee_id = ?", assignee.id).join_lead_purchases_and_leads }
-
+  scope :with_lead_creators_for, lambda { |parent| select("DISTINCT(users.id), users.*").where("users.parent_id = ?", parent.id).joins("INNER JOIN leads ON leads.creator_id=users.id") }
+  scope :assignees_for_lead_purchase_owner, lambda { |owner| select("DISTINCT(users.id), users.*").where("requested_by IS NULL and lead_purchases.owner_id = ? and accessible_from IS NOT NULL and users.parent_id = ?", owner.id, owner.id).joins("RIGHT JOIN lead_purchases on lead_purchases.assignee_id=users.id") }
 
   scoped_order :id, :roles_mask, :first_name, :last_name, :email, :age, :department, :mobile_phone, :completed_leads_counter, :leads_requested_counter,
                :leads_assigned_month_ago_counter, :leads_assigned_year_ago_counter, :total_leads_assigned_counter, :leads_created_counter,
@@ -63,10 +68,9 @@ class User < ActiveRecord::Base
 
   attr_accessor :agreement_read, :locked
 
-  before_save :handle_locking
-  before_create :set_rss_token, :set_role
+  before_save :handle_locking, :handle_team_buyers_flag
+  before_create :set_rss_token, :set_role, :set_bank_account
   before_destroy :can_be_removed
-  before_save :handle_team_buyers_flag
 
   liquid :email, :first_name, :last_name, :confirmation_instructions_url, :reset_password_instructions_url
 
@@ -138,6 +142,14 @@ class User < ActiveRecord::Base
 
   def deliver_email_template(uniq_id)
     ApplicationMailer.email_template(email, EmailTemplate.find_by_uniq_id(uniq_id), {:user => self}).deliver
+  end
+
+  def set_bank_account
+    self.bank_account_id = if user_country and country_default = user_country.default_bank_account
+      country_default.id
+    elsif global_default = BankAccount.global_default_bank_account.first
+      global_default.id
+    end
   end
 
   public
@@ -215,7 +227,7 @@ class User < ActiveRecord::Base
   end
 
   def refresh_agent_counters!
-    self.leads_created_counter = Lead.with_created_by(self).size
+    self.leads_created_counter = Lead.with_created_by(id).size
     self.leads_volume_sold_counter = LeadPurchase.with_volume_sold_by(self).size
     self.leads_revenue_counter = Lead.with_revenue_by(self).first.id || 0
     self.leads_purchased_month_ago_counter = LeadPurchase.with_purchased_time_ago_by(self, 30.days.ago).size
@@ -276,9 +288,20 @@ class User < ActiveRecord::Base
   def to_s
     full_name
   end
-
+  
+  def can_create_lead_templates?
+    has_any_role?(:admin, :call_centre, :agent, :call_centre_agent, :purchase_manager)
+  end
+  
   def country_vat_rate
-    vat_rate ? (vat_rate.rate/100) : 0.0
+    vat_rate ? vat_rate.rate : 0.0
   end
 
+  def payment_bank_account
+    bank_account || BankAccount.country_default_bank_account(country).first || BankAccount.global_default_bank_account.first
+  end  
+
+  def to_i
+    id
+  end
 end

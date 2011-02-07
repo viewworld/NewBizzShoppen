@@ -3,7 +3,7 @@
 <%= semantic_form_for [:agents, @lead], :method => :put do |form| %>
       <frm title="Edit">
         <param:content>
-          <%= render :partial => 'form', :locals => { :form => form }  %>
+          <%= render :partial => '/shared/leads/form', :locals => { :form => form }  %>
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="save">
