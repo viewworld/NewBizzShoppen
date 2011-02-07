@@ -92,8 +92,25 @@ Scenario: I should be able to click "Add to cart button" that will redirect me t
   And I press translated "home.show.view.sign_in"
   Then I should see "Lead 392S2"
 
-@m5 @tgn
-Scenario: If I sucessfully login after requesting a lead being added to a cart, that lead should be added to cart (or bought if I am big buyer)
+@m5 @tgn @_tested
+Scenario: If I successfully login after requesting a lead being added to a cart, that lead should be added to cart (or bought if I am big buyer)
+  Given I am signed up and confirmed as user with email johnbuyer3434@person.com and password secret and role customer
+  Given Lead named "Lead sample" exists within "Sample category" category
+  And I follow "Sample category"
+  Then I click hidden translated link "leads.index.add_to_cart_link"
+  And I sign in as johnbuyer3434@person.com with password secret
+  And I click hidden translated link "layout.cart.show_cart"
+  Then I should see "Lead sample"
+  Given I am not sign in
+  Given I am signed up and confirmed as user with email johnbigbuyer343888@person.com and password secret and role customer
+  And User johnbigbuyer343888@person.com with role customer is big buyer
+  And I follow translated "layout.main_menu.shared.browse_leads"
+  And I follow "Sample category"
+  Then I click hidden translated link "leads.index.add_to_cart_link"
+  And I sign in as johnbigbuyer343888@person.com with password secret
+  Then I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  And I should see "Lead sample"
+
 
 @m5 @added @tgn @sprint_5_corrections @_tested
 Scenario: When I browse a lead category, the lead category should be displayed very clear beside the "Leads flag" on the upper left side of the screen
