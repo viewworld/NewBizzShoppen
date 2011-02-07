@@ -286,7 +286,7 @@ class User < ActiveRecord::Base
   end
 
   def country_vat_rate
-    vat_rate ? (vat_rate.rate/100) : 0.0
+    vat_rate ? vat_rate.rate : 0.0
   end
 
   def payment_bank_account
