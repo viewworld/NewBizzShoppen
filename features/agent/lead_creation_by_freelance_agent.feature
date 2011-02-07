@@ -393,7 +393,7 @@ Scenario: I can add contact direct phone number, company phone number, company e
   Then I fill in "lead_direct_phone_number" with "424234324234"
   Then I select translated "shared.leads.form.country_international" from "lead_is_international"
 
-@m5 @added @tgn @_tested  @_wip
+@m5 @added @tgn @_tested @selenium
 Scenario: I can create a new lead and duplicate company\contact info to another new lead
   Given Category Test category 1 is created
   And I go to agents leads
@@ -406,7 +406,6 @@ Scenario: I can create a new lead and duplicate company\contact info to another 
   And I fill in "lead_price" with "100"
   And I select "3" from "lead_sale_limit"
   #And I fill in "area" with "global"
-  And I select "Test category 1" from "lead_category_id"
   And I select "Denmark" from "lead_country_id"
   And I fill in "lead_company_name" with "Printing company"
   And I fill in "lead_contact_name" with "Marek Kowalski"
