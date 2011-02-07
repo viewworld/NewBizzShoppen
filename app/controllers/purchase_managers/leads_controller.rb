@@ -23,7 +23,8 @@ class PurchaseManagers::LeadsController < PurchaseManagers::PurchaseManagerContr
         :city           => current_user.city,
         :zip_code       => current_user.zip_code,
         :county         => current_user.county,
-        :published      => false
+        :published      => false,
+        :current_user   => current_user
     })
   end
 
@@ -31,6 +32,7 @@ class PurchaseManagers::LeadsController < PurchaseManagers::PurchaseManagerContr
 
   def new
     @lead = Lead.new(default_params_hash)
+    @lead.category_id = params[:category_id]
     @lead.duplicate_fields(current_user.leads.find_by_id(params[:lead_id]))
   end
 
