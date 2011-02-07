@@ -12,9 +12,11 @@ Background:
     Then I sign in as jon@lajoie.ca with password secret
     And I go to purchase managers leads
 
-@added @_done
+@added @_done @selenium @selenium
 Scenario: I can create a new lead and close
   Given Category PMCategory is created
+  And I go to purchase managers leads
+  And I select "PMCategory" from "category_id"
   And I follow translated "purchase_manager.leads.index.view.new_lead"
   And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
   And I fill in "lead_description" with "Lorem ipsum"
@@ -22,16 +24,17 @@ Scenario: I can create a new lead and close
   And I fill in "lead_price" with "100"
   And I fill in "lead_company_name" with "Llorem Inc"
   And I select "3" from "lead_sale_limit"
-  And I select "PMCategory" from "lead_category_id"
   And I select "Denmark" from "lead_country_id"
   And I fill in "datepicker" with "2012-02-20"
   And I press translated "purchase_manager.leads.new.view.button_create"
   And I should be on purchase managers leads
   And I should see translated "flash.leads.actions.create.notice"
 
-@added @_done
+@added @_done @selenium
 Scenario: I can create a new lead and continue (create another one)
   Given Category PMCategory is created
+  And I go to purchase managers leads
+  And I select "PMCategory" from "category_id"
   And I follow translated "purchase_manager.leads.index.view.new_lead"
   And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
   And I fill in "lead_description" with "Lorem ipsum"
@@ -39,7 +42,6 @@ Scenario: I can create a new lead and continue (create another one)
   And I fill in "lead_price" with "100"
   And I fill in "lead_company_name" with "Llorem Inc"
   And I select "3" from "lead_sale_limit"
-  And I select "PMCategory" from "lead_category_id"
   And I select "Denmark" from "lead_country_id"
   And I fill in "datepicker" with "2012-02-20"
   And I press translated "purchase_manager.leads.new.view.button_create_and_continue"
@@ -50,6 +52,8 @@ Scenario: I can create a new lead and continue (create another one)
 Scenario: I can add an extra language while creating lead. This will include lead title, purchase desc but no hidden desc
   Given Category PMCategory is created
   And Country Denmark is created
+  And I go to purchase managers leads
+  And I select "PMCategory" from "category_id"
   Given I follow translated "purchase_manager.leads.index.view.new_lead"
   And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
   And I fill in "lead_description" with "Lorem ipsum"
@@ -57,7 +61,6 @@ Scenario: I can add an extra language while creating lead. This will include lea
   And I fill in "lead_price" with "100"
   And I fill in "lead_company_name" with "Llorem Inc"
   And I select "3" from "lead_sale_limit"
-  And I select "PMCategory" from "lead_category_id"
   And I select "Denmark" from "lead_country_id"
   And I fill in "datepicker" with "2011-02-20"
   And I select "dk" from "locale_picker"
@@ -69,9 +72,12 @@ Scenario: I can add an extra language while creating lead. This will include lea
   Then I click hidden link by url regex "/purchase_managers\/leads\/\d+\/edit/"
   And I should see "DK description"
 
-@added @_done
+@added @_done @selenium
 Scenario: Contact information should be prepopulated
-  Given I follow translated "agent.leads.index.view.new_lead"
+  Given Category PMCategory is created
+  And I go to purchase managers leads
+  And I select "PMCategory" from "category_id"
+  Given I follow translated "purchase_manager.leads.index.view.new_lead"
   Then the "lead_email_address" field should contain "jon@lajoie.ca"
   And the "lead_contact_name" field should contain any value
   And the "lead_phone_number" field should contain any value
@@ -80,20 +86,28 @@ Scenario: Contact information should be prepopulated
   And the "lead_county" field should contain any value
   And the "lead_zip_code" field should contain any value
 
-@added @_done
+@added @_done @selenium
 Scenario: Published checkbox should not be visible
-  Given I follow translated "agent.leads.index.view.new_lead"
+  Given Category PMCategory is created
+  And I go to purchase managers leads
+  And I select "PMCategory" from "category_id"
+  Given I follow translated "purchase_manager.leads.index.view.new_lead"
   Then I should not see field "lead_published"
 
-@added @_done
+@added @_done @selenium
 Scenario: Hidden description should not be visible
-  Given I follow translated "agent.leads.index.view.new_lead"
+  Given Category PMCategory is created
+  And I go to purchase managers leads
+  And I select "PMCategory" from "category_id"
+  Given I follow translated "purchase_manager.leads.index.view.new_lead"
   Then I should not see field "lead_hidden_description"
 
-@added @_done
+@added @_done @selenium
 Scenario: Created leads should not be published (not listed)
   Given Category PMCategory is created
   And Country Denmark is created
+  And I go to purchase managers leads
+  And I select "PMCategory" from "category_id"
   Given I follow translated "purchase_manager.leads.index.view.new_lead"
   And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
   And I fill in "lead_description" with "Lorem ipsum"
@@ -101,7 +115,6 @@ Scenario: Created leads should not be published (not listed)
   And I fill in "lead_price" with "100"
   And I fill in "lead_company_name" with "Llorem Inc"
   And I select "3" from "lead_sale_limit"
-  And I select "PMCategory" from "lead_category_id"
   And I select "Denmark" from "lead_country_id"
   And I fill in "datepicker" with "2011-02-20"
   And I press translated "purchase_manager.leads.new.view.button_create"

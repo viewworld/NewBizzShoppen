@@ -41,8 +41,10 @@ class PurchaseManagers::LeadsController < PurchaseManagers::PurchaseManagerContr
 
     create! do |success, failure|
       success.html {
-        unless params[:commit_continue].blank?
-          redirect_to new_purchase_managers_lead_path
+        if !params[:commit_duplicate].blank?
+          redirect_to new_purchase_managers_lead_path(:lead_id => @lead.id, :category_id => @lead.category_id)
+        elsif !params[:commit_continue].blank?
+          redirect_to new_purchase_managers_lead_path(:category_id => @lead.category_id)
         else
           redirect_to purchase_managers_leads_path
         end
