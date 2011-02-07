@@ -23,8 +23,14 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     if resource.is_a?(User)
       if session[:user_requested_url].present?
+        if session[:lead_id].to_i > 0 and resource.has_any_role?(:customer, :lead_buyer)
+          lead = Lead.find_by_id(session[:lead_id])
+          buyer = User::LeadBuyer.find(resource.id)
+          buyer.cart.add_lead(lead) if lead
+        end
         requested_path = session[:user_requested_url]
         session[:user_requested_url] = nil
+        session[:lead_id] = nil
         requested_path
       elsif resource.has_role? :admin
         administration_root_path
@@ -61,6 +67,7 @@ class ApplicationController < ActionController::Base
     params = Rack::Request.new(env).params
     session = env['rack.session']
     session[:user_requested_url] = params["requested_url"]
+    session[:lead_id] = params["id"] if params["requested_url"].to_s.include?("/categories")
 
     params[:action] = :unauthenticated
     params[:warden_failure] = opts

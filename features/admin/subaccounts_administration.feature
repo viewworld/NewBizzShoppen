@@ -16,8 +16,22 @@ Given I am on the homepage
   And I press translated "administration.users.index.view.search_button"
   And I follow translated "administration.users.index.view.subaccounts"
 
-@m5 @tgn
+@m5 @tgn @_tested
 Scenario: I can display a list of subaccounts of call centre account
+  Given I am not sign in
+  Given I have user with email call_centre@person.com and role call_centre
+  Given I have user with email ccagent01@nbs.com and role call_centre_agent
+  And user ccagent01@nbs.com with role call_centre_agent exists with attributes "first_name:Greg,last_name:Foam"
+  And an user with role call_centre_agent and email ccagent01@nbs.com belongs to call centre call_centre@person.com
+  Given I have user with email ccagent02@nbs.com and role call_centre_agent
+  And user ccagent02@nbs.com with role call_centre_agent exists with attributes "first_name:Ann,last_name:Dryan"
+  And an user with role call_centre_agent and email ccagent02@nbs.com belongs to call centre call_centre@person.com
+  Then I sign in as admin_user@person.com with password supersecret
+  And I fill in "search_with_keyword" with "call_centre@person.com"
+  And I press translated "administration.users.index.view.search_button"
+  Then I follow translated "administration.users.index.view.subaccounts"
+  And I should see "Foam"
+  And I should see "Dryan"
 
 @tgn @_done @_tested
 Scenario: I can display a list of subaccounts of small-buyer account

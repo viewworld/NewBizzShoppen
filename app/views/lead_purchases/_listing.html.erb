@@ -54,6 +54,8 @@
           <% end %>
           <p class="element"><%= t("lead_purchases.listing.purchase_value_label") %><span class="green"><%= as_currency(lead_purchase.purchase_value, lead_purchase.lead.currency) %></span></p>
           <p class="element_description i"><%= lead_purchase.description %></p>
+
+          <p class="element_templates"><%= render :partial => "/shared/lead_templates/listing", :locals => { :lead => lead_purchase.lead } %></p>
           <% if block_general %>
               <%= with_output_buffer { block_general.call(lead_purchase) } %>
           <% end %>

@@ -18,12 +18,24 @@ module ApplicationHelper
   end
   
   def fields_for_leads_translations(f)
-    new_object = current_user.has_role?(:admin) ? Lead.new : current_user.leads.build
+    new_object = current_user.has_any_role?(:admin, :call_centre) ? Lead.new : current_user.leads.build
     new_object.lead_translations = [LeadTranslation.new]
     fields = f.fields_for :lead_translations, new_object.lead_translations do |builder|
-       render("lead_fields", :f => builder)
+       render("/shared/leads/lead_fields", :f => builder)
     end
     "add_fields(this, \"#{escape_javascript(fields)}\")"
+  end
+
+  def fields_for_leads_template_fields(f)
+    lead_template_field = LeadTemplateField.new
+    fields = f.fields_for :lead_template_fields, lead_template_field do |builder|
+       render("/shared/lead_templates/lead_template_field_fields", :f => builder)
+    end
+    "add_lead_template_field(this, \"#{escape_javascript(fields)}\")"
+  end
+
+  def available_templates_list(lead)
+    lead.lead_templates(false).reject { |lt| lt.is_filled_out_for(lead) }
   end
 
   def custom_error_for_field(form, field)
@@ -94,6 +106,13 @@ module ApplicationHelper
       else
         :root_path
       end
+    end
+  end
+
+  def link_to_view_templates(category)
+    if user_signed_in? and current_user.can_create_lead_templates?
+      role = current_user.has_role?(:admin) ? "administration" : current_user.role.to_s.pluralize
+      link_to(t("categories.index.view.view_lead_templates"), self.send("#{role}_lead_templates_path", :search => { :with_category => category.id }))
     end
   end
 

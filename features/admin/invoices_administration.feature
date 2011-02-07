@@ -354,6 +354,13 @@ Scenario: I can create invoice for any customer from users tab
   Then I press "Create Invoice"
   And I should see translated "administration.invoices.edit.view.header"
 
+@tgn @added @_tested
+Scenario: I can create invoice for any customer from users tab
+  Given I go to administration users
+  And I click hidden translated link "administration.users.index.view.create_invoice"
+  Then I press "Create Invoice"
+  And I should see translated "administration.invoices.edit.view.header"
+
 @added @m4b @_done
 Scenario: EAN should be visible if filled
   When invoice exists for user "kastomer@nbs.fake" with attributes "ean_number:123456"
@@ -409,17 +416,17 @@ Scenario: We do not need to generate a copy of the invoice, just the orininal
   And I press translated "common.cancel_link"
   Then I should be on administration invoices page
 
-  @m5 @sellers
-  Scenario: When creating an invoice a Seller for user's country should be selected
+@m5 @sellers
+Scenario: When creating an invoice a Seller for user's country should be selected
 
-  @m5 @sellers
-  Scenario: If there's no Seller for user's country then default Seller should be used
+@m5 @sellers
+Scenario: If there's no Seller for user's country then default Seller should be used
 
-  @m5
-  Scenario: Include users name, company and user email when filtering invoices
+@m5
+Scenario: Include users name, company and user email when filtering invoices
 
-  @m5
-  Scenario: On Invoices listing there should be sums present in top right hand corner (total, total paid, total unpaid)
+@m5
+Scenario: On Invoices listing there should be sums present in top right hand corner (total, total paid, total unpaid)
 
-  @m5
-  Scenario: On Debtors listing there should be sums present in top right hand corner (total)
+@m5
+Scenario: On Debtors listing there should be sums present in top right hand corner (total)

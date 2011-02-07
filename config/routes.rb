@@ -19,6 +19,7 @@ Nbs::Application.routes.draw do
     resources :users do
       resource :password, :controller => 'password'
     end
+    resource :bulk_users_update, :controller => "bulk_users_update", :only => [:update]
     resources :categories
     resource :setting, :only => [:edit, :update]
     resources :email_templates
@@ -38,7 +39,8 @@ Nbs::Application.routes.draw do
       resources :payment_transactions
     end
     resources :bank_accounts
-    resources :vat_rates    
+    resources :vat_rates
+    resources :lead_templates
   end
 
   namespace :buyers do
@@ -64,6 +66,13 @@ Nbs::Application.routes.draw do
     resources :call_centre_agents
     resource :bulk_call_centre_agents_update, :controller => "bulk_call_centre_agents_update", :only => [:update]
     resources :leads
+    resources :lead_templates
+  end
+
+  namespace :call_centre_agents do
+    root :to => "leads#index"
+    resources :leads
+    resources :lead_templates
   end
 
   namespace :lead_users do
@@ -91,11 +100,13 @@ Nbs::Application.routes.draw do
   namespace :agents do
     root :to => "leads#index"
     resources :leads
+    resources :lead_templates
   end
 
   namespace :purchase_managers do
     root :to => "leads#index"
     resources :leads
+    resources :lead_templates
   end
 
   match 'buyer_home' => 'buyer_home#show', :as => "buyer_home"
