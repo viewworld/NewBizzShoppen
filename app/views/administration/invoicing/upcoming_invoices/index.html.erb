@@ -72,8 +72,8 @@
     <% @lead_purchases.each do |lead_purchase| %>
         <tr class="<%= cycle("odd", "even") %>">
           <td class="cl"></td>
-          <td><%= lead_purchase.owner.first_name %></td>
-          <td><%= lead_purchase.owner.last_name %></td>
+          <td><%= lead_purchase.owner.address.first_name %></td>
+          <td><%= lead_purchase.owner.address.last_name %></td>
           <td><%= lead_purchase.owner.screen_name %></td>
           <td><%= lead_purchase.not_invoiced_count %></td>
           <td><%= lead_purchase.not_invoiced_sum %></td>

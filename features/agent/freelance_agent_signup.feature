@@ -31,10 +31,10 @@ Feature: Freelance agent signup
       | user_agent_email                                     | user@domain.dom |
       | user_agent_password                                  | secret          |
       | user_agent_password_confirmation                     | secret          |
-      | user_agent_address_attributes_street                 | Sunset Blv 32   |
-      | user_agent_address_attributes_city                   | London          |
+      | user_agent_address_attributes_address_line_1         | Sunset Blv 32   |
+      | user_agent_address_attributes_address_line_2         | London          |
       | user_agent_address_attributes_zip_code               | 43-270          |
-      | user_agent_address_attributes_county                 | Wesley          |
+      | user_agent_address_attributes_address_line_3         | Wesley          |
     And I select "Denmark" from "user_agent_address_attributes_country_id"
     And I check "user_agent_agreement_read"
     And I press translated "agent_accounts.new.view.button_create_account"
@@ -52,10 +52,10 @@ Feature: Freelance agent signup
       | user_customer_email                                    | user@domain.dom |
       | user_customer_password                                 | secret          |
       | user_customer_password_confirmation                    | secret          |
-      | user_customer_address_attributes_street                | Sunset Blv 32   |
-      | user_customer_address_attributes_city                  | London          |
+      | user_customer_address_attributes_address_line_1        | Sunset Blv 32   |
+      | user_customer_address_attributes_address_line_2        | London          |
       | user_customer_address_attributes_zip_code              | 43-270          |
-      | user_customer_address_attributes_county                | Wesley          |
+      | user_customer_address_attributes_address_line_3        | Wesley          |
     And I select "Denmark" from "user_customer_address_attributes_country_id"
     And I check "user_customer_agreement_read"
     And I press translated "buyer_accounts.new.view.button_create_account"
@@ -103,10 +103,10 @@ Scenario: Screen name has to be unique
     | user_agent_email                                    | user@domain.dom |
     | user_agent_password                                 | secret          |
     | user_agent_password_confirmation                    | secret          |
-    | user_agent_address_attributes_street                | Sunset Blv 32   |
-    | user_agent_address_attributes_city                  | London          |
+    | user_agent_address_attributes_address_line_1        | Sunset Blv 32   |
+    | user_agent_address_attributes_address_line_2        | London          |
     | user_agent_address_attributes_zip_code              | 43-270          |
-    | user_agent_address_attributes_county                | Wesley          |
+    | user_agent_address_attributes_address_line_3        | Wesley          |
   And I select "Denmark" from "user_agent_address_attributes_country_id"
   And I check "user_agent_agreement_read"
   And I press translated "agent_accounts.new.view.button_create_account"

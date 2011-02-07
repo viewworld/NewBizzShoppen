@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
   alias_method :parent, :user
 
   scope :with_role, lambda { |role| where("roles_mask & #{2**User.valid_roles.index(role.to_sym)} > 0 ") }
-  scope :with_keyword, lambda { |q| where("lower(first_name) like :keyword OR lower(last_name) like :keyword OR lower(email) like :keyword", {:keyword => "%#{q.downcase}%"}) }
+  scope :with_keyword, lambda { |q| joins(:address).where("lower(addresses.first_name) like :keyword OR lower(addresses.last_name) like :keyword OR lower(email) like :keyword", {:keyword => "%#{q.downcase}%"}) }
   scope :with_subaccounts, lambda { |parent_id| where("parent_id = ?", parent_id) }
 
   scope :requestees_for_lead_request_owner, lambda { |owner| select("DISTINCT(users.id), users.*").where("requested_by IS NOT NULL and lead_purchases.owner_id = ? and users.parent_id = ?", owner.id, owner.id).joins("RIGHT JOIN lead_purchases on lead_purchases.requested_by=users.id") }
@@ -52,7 +52,7 @@ class User < ActiveRecord::Base
   scope :with_assigned_leads_total, lambda { |assignee| select("leads.id").where("assignee_id = ?", assignee.id).join_lead_purchases_and_leads }
 
 
-  scoped_order :id, :roles_mask, :first_name, :last_name, :email, :age, :department, :mobile_phone, :completed_leads_counter, :leads_requested_counter,
+  scoped_order :id, :roles_mask, :email, :age, :department, :mobile_phone, :completed_leads_counter, :leads_requested_counter,
                :leads_assigned_month_ago_counter, :leads_assigned_year_ago_counter, :total_leads_assigned_counter, :leads_created_counter,
                :leads_volume_sold_counter, :leads_revenue_counter, :leads_purchased_month_ago_counter, :leads_purchased_year_ago_counter,
                :leads_rated_good_counter, :leads_rated_bad_counter, :leads_not_rated_counter, :leads_rating_avg, :certification
@@ -66,7 +66,7 @@ class User < ActiveRecord::Base
   before_create :set_rss_token, :set_role
   before_destroy :can_be_removed
 
-  liquid :email, :first_name, :last_name, :confirmation_instructions_url, :reset_password_instructions_url
+  liquid :email, :confirmation_instructions_url, :reset_password_instructions_url
 
   private
 
@@ -172,7 +172,7 @@ class User < ActiveRecord::Base
   end
 
   def full_name
-    "#{first_name} #{last_name}"
+    "#{address.first_name} #{address.last_name}"
   end
 
   def send_confirmation_instructions

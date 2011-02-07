@@ -80,11 +80,11 @@ LeadRequest.blueprint do
 end
 
 Address.blueprint do
-  city { Faker::Address.city }
+  address_line_1 { Faker::Address.street_name }
+  address_line_2 { Faker::Address.city }
+  address_line_3 { Faker::Address.uk_county }
   zip_code { Faker::Address.zip_code }
-  county { Faker::Address.uk_county }
   country { Country.first }
-  street { Faker::Address.street_name }
 end
 
 User.blueprint do

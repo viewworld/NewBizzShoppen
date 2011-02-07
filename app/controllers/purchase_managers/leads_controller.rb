@@ -19,10 +19,10 @@ class PurchaseManagers::LeadsController < PurchaseManagers::PurchaseManagerContr
         :contact_name   => current_user.full_name,
         :phone_number   => current_user.phone,
         :email_address  => current_user.email,
-        :address_line_1 => current_user.address.street,
-        :city           => current_user.address.city,
+        :address_line_1 => current_user.address.address_line_1,
+        :city           => current_user.address.address_line_2,
         :zip_code       => current_user.address.zip_code,
-        :county         => current_user.address.county,
+        :county         => current_user.address.address_line_3,
         :published      => false
     })
   end

@@ -9,10 +9,10 @@
       <%= form.input :mobile_phone %>
       <%= form.input :department %>
       <%= form.fields_for :address do |address_form| %>
-          <%= address_form.input :street %>
-          <%= address_form.input :city %>
+          <%= address_form.input :address_line_1 %>
+          <%= address_form.input :address_line_2 %>
+          <%= address_form.input :address_line_3 %>
           <%= address_form.input :zip_code %>
-          <%= address_form.input :county %>
           <%= address_form.input :country, :as => :select, :collection => Country.all %>
       <% end %>
       <%= form.input :payout %>%

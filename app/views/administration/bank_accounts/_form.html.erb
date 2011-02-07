@@ -13,10 +13,10 @@
     <ol>
       <%= form.fields_for :address do |address_form| %>
           <%= address_form.input :country, :as => :select, :collection => Country.all, :include_blank => false %>
-          <%= address_form.input :street %>
-          <%= address_form.input :city %>
+          <%= address_form.input :address_line_1 %>
+          <%= address_form.input :address_line_2 %>
+          <%= address_form.input :address_line_3 %>
           <%= address_form.input :zip_code %>
-          <%= address_form.input :county %>
       <% end %>
     </ol>
   </fieldset>

@@ -14,16 +14,16 @@
           <%= t("administration.bank_accounts.show.view.bank_name") %>: <%= @bank_account.bank_name %>
         </p><br/>
         <p>
-          <%= t("administration.bank_accounts.show.view.street") %>: <%= @bank_account.address.street %>
+          <%= t("administration.bank_accounts.show.view.address_line_1") %>: <%= @bank_account.address.address_line_1 %>
+        </p><br/>
+        <p>
+          <%= t("administration.bank_accounts.show.view.address_line_2") %>: <%= @bank_account.address.address_line_2 %>
+        </p><br/>
+        <p>
+          <%= t("administration.bank_accounts.show.view.address_line_3") %>: <%= @bank_account.address.address_line_3 %>
         </p><br/>
         <p>
           <%= t("administration.bank_accounts.show.view.zip_code") %>: <%= @bank_account.address.zip_code %>
-        </p><br/>
-        <p>
-          <%= t("administration.bank_accounts.show.view.city") %>: <%= @bank_account.address.city %>
-        </p><br/>
-        <p>
-          <%= t("administration.bank_accounts.show.view.county") %>: <%= @bank_account.address.county %>
         </p><br/>
         <p>
           <%= t("administration.bank_accounts.show.view.iban_no") %>: <%= @bank_account.iban_no %>
