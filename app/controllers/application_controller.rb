@@ -32,6 +32,8 @@ class ApplicationController < ActionController::Base
         session[:user_requested_url] = nil
         session[:lead_id] = nil
         requested_path
+      elsif resource.has_role? :customer and resource.sign_in_count <= 1
+        edit_customers_interests_path
       elsif resource.has_role? :category_buyer
         category_home_page_path(resource.category.cached_slug)
       elsif session[:last_url_before_logout].present?
@@ -40,8 +42,6 @@ class ApplicationController < ActionController::Base
         last_url
       elsif resource.has_role? :admin
         administration_root_path
-      elsif resource.has_role? :customer and resource.sign_in_count <= 1
-        edit_customers_interests_path
       elsif resource.role == :lead_buyer
         buyers_root_path
       else
