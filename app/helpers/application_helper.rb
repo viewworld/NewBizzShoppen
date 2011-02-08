@@ -120,4 +120,9 @@ module ApplicationHelper
     end
   end
 
+  def link_to_edit_lead(lead)
+    if current_user and (current_user == lead.creator or current_user.has_role?(:admin))
+      link_to(t("leads.listing.edit_label"), send("edit_#{current_user.has_role?(:admin) ? "administration" : current_user.role.to_s.pluralize}_lead_path".to_sym, lead.id))
+    end
+  end
 end

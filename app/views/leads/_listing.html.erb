@@ -41,7 +41,7 @@
         <% end %>
 
         <td>
-          <h4><%= lead.header %> <%= link_to(t("leads.listing.edit_label"), send("edit_#{current_user.role.to_s.pluralize}_lead_path".to_sym, lead.id)) if current_user and current_user == lead.creator %></h4>
+          <h4><%= lead.header %> <%= link_to_edit_lead(lead) %></h4>
           <p class="element"><%= t("leads.listing.purchase_value_label") %> <span class="green"><%= as_currency(lead.purchase_value,lead.currency) %></span></p>
           <p class="element"><%= t("leads.listing.lead_price_label") %> <span class="green"><%= as_currency(lead.price,lead.currency) %></span></p>
           <p class="element_description i"><%= lead.description %></p>

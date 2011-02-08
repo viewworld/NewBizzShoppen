@@ -98,5 +98,13 @@ Scenario: I can publish a lead that is not published
   And I press translated "administration.leads.index.view.search_button"
   And I should not see "Monitors ultimate deal"
 
-@m5 @ao
+@m5 @tgn @_tested
 Scenario: I can edit leads from any page where they are presented
+  Given lead New lead exists within category Computers
+  When I go to browse leads
+  And I follow "Computers"
+  Then I follow translated "leads.listing.edit_label"
+  And I should see translated "agent.leads.edit.view.title"
+  When I go to agent home
+  Then I follow translated "leads.listing.edit_label"
+  And I should see translated "agent.leads.edit.view.title"
