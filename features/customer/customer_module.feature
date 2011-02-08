@@ -60,5 +60,8 @@ Scenario: I can select multiple lead areas/countries that I am interested in
   And I press translated "customer.interests.edit.view.button_update"
   Then I should see translated "customer.interests.update.flash.interests_update_successful"
 
-@m5 @ao
+@m5 @tgn @_tested
 Scenario: I can select "all" as a Deal value
+  And I check "user_all_deal_values_enabled"
+  And I press translated "customer.interests.edit.view.button_update"
+  Then I should see translated "customer.interests.update.flash.interests_update_successful"

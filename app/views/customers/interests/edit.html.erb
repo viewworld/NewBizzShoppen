@@ -46,11 +46,15 @@
                   </li>
                   <li class="select">
                     <%= select "user", "deal_value_range_start", User::DEAL_VALUE_RANGE.collect { |d| ["$#{d}", d] }, {:selected => current_user.deal_value_range_start.to_i.to_s} %>
-                    <%= label_tag "deal_value_range_start", "From" %>
+                    <%= label_tag "deal_value_range_start", t("customer.interests.edit.view.deal_range_from") %>
                   </li>
                   <li class="select">
                     <%= select "user", "deal_value_range_end", User::DEAL_VALUE_RANGE.collect { |d| ["$#{d}", d] }, :selected => current_user.deal_value_range_end.to_i.to_s %>
-                    <%= label_tag "deal_value_range_end", "Tp" %>
+                    <%= label_tag "deal_value_range_end", t("customer.interests.edit.view.deal_range_to") %>
+                  </li>
+                  <li class="checkbox">
+                    <%= check_box "user", "all_deal_values_enabled", {:checked => current_user.all_deal_values_enabled} %>
+                    <%= label_tag "all_deal_values_enabled", t("customer.interests.edit.view.all_deal_values_enabled") %>
                   </li>
                 </ol>
               </fieldset>
