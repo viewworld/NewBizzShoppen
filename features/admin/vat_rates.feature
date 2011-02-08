@@ -145,7 +145,7 @@ Feature: VAT rates
     And the "invoice_vat_paid_in_customer_country" checkbox should be checked
 
   # Make country a textfield (we won’t create a new VAT for existing country, so it should be ok just to create both new country and VAT)
-  @m5 @ao
+  @m5 @ao @_done
   Scenario: I can create a new country when adding a VAT rate
     When I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
     And I sign in as jon@lajoie.ca with password secret
@@ -158,7 +158,7 @@ Feature: VAT rates
     And I should see "23.00%" within "#vat_rates"
     And I should see "Poland" within "#vat_rates"
 
-  @m5 @ao
+  @m5 @ao @_done
   Scenario: The new country created should have VAT rate assigned
     When I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
     And I sign in as jon@lajoie.ca with password secret
