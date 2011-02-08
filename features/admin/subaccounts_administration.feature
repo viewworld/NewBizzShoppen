@@ -27,6 +27,7 @@ Scenario: I can display a list of subaccounts of call centre account
   And user ccagent02@nbs.com with role call_centre_agent exists with attributes "first_name:Ann,last_name:Dryan"
   And an user with role call_centre_agent and email ccagent02@nbs.com belongs to call centre call_centre@person.com
   Then I sign in as admin_user@person.com with password supersecret
+  And I follow translated "layout.main_menu.admin.users"
   And I fill in "search_with_keyword" with "call_centre@person.com"
   And I press translated "administration.users.index.view.search_button"
   Then I follow translated "administration.users.index.view.subaccounts"

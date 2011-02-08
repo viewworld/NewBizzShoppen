@@ -79,8 +79,8 @@ Scenario: I have to specify both title and content for news entry
 Scenario: I can specify if news should be displayed for buyers, agents or both(?)
   When I follow translated "layout.main_menu.admin.news"
   And I follow translated "administration.news.index.view.new_news"
-  And I select translated "administration.news.index.view.agents" from "news_scope"
-  And I select translated "administration.news.index.view.buyers" from "news_scope"
+  And I select translated "administration.news.index.view.agents" from "subclass"
+  And I select translated "administration.news.index.view.buyers" from "subclass"
 
 @selenium @_done
 Scenario: I can use WYSIWYG to edit news entry content
@@ -158,3 +158,9 @@ Scenario: I can create news for category
   And I am on category home page for Best Leads
   Then I should see "1" items on a list within "#news"
   And I should see "NewsForBestLeads"
+
+@m5 @ao
+Scenario: When you look at the news tab, the list of news should contain the following columns: Published (the date should be shown), Creation date, # of times read
+  When Category named "Best Leads" already exists
+  And I am on the home page
+  And I follow translated "layout.main_menu.admin.news"

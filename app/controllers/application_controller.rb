@@ -32,6 +32,8 @@ class ApplicationController < ActionController::Base
         session[:user_requested_url] = nil
         session[:lead_id] = nil
         requested_path
+      elsif resource.has_role? :category_buyer
+        category_home_page_path(resource.category.cached_slug)
       elsif session[:last_url_before_logout].present?
         last_url = session[:last_url_before_logout]
         session[:last_url_before_logout] = nil
@@ -42,8 +44,6 @@ class ApplicationController < ActionController::Base
         edit_customers_interests_path
       elsif resource.role == :lead_buyer
         buyers_root_path
-      elsif resource.has_role? :category_buyer
-        category_home_page_path(resource.category.cached_slug)
       else
         self.send "#{resource.role.to_s.pluralize}_root_path"
       end
