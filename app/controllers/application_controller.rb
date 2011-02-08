@@ -32,6 +32,10 @@ class ApplicationController < ActionController::Base
         session[:user_requested_url] = nil
         session[:lead_id] = nil
         requested_path
+      elsif session[:last_url_before_logout].present?
+        last_url = session[:last_url_before_logout]
+        session[:last_url_before_logout] = nil
+        last_url
       elsif resource.has_role? :admin
         administration_root_path
       elsif resource.has_role? :customer and resource.sign_in_count <= 1
@@ -88,5 +92,9 @@ class ApplicationController < ActionController::Base
     params[:warden_failure] = opts
   end
 
+  Warden::Manager.before_logout do |user,auth,opts|
+    session = auth.request.env['rack.session']
+    session[:last_url_before_logout] = auth.request.headers["Referer"]
+  end
 end
 
