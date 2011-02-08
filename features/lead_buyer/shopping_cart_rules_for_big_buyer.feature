@@ -100,5 +100,6 @@ Scenario: I can filter the list of my leads by "paid" column
   And I press translated "lead_buyer.lead_purchases.index.view.search.search_button"
   Then I should not see "Printers ultimate deal"
 
-@m5 @ao
+@m5 @tgn @_tested
 Scenario: I should not see the cart when I'm a big buyer
+  Then I should not see translated "layout.cart.cart_header" with options "count:0"
