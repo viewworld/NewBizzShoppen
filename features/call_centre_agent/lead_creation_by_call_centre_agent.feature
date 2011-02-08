@@ -180,7 +180,6 @@ Scenario: Lead templates for given category consist of my templates, my call cen
   And I follow translated "layout.main_menu.call_centre_agent.leads"
   And I select "Computers" from "category_id"
   And I follow translated "call_centre_agent.leads.index.view.new_lead"
-  And I open page in browser
   Then I should see "Computers details"
   And I should see "Phones details"
   And I should see "Monitors details"

@@ -5,4 +5,6 @@ class VatRate < ActiveRecord::Base
   validates_presence_of :country, :rate
   validates_uniqueness_of :country_id
 
+  accepts_nested_attributes_for :country
+
 end
