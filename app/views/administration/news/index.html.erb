@@ -54,6 +54,7 @@
       <th><%= link_to t("administration.news.index.view.id"), order_for_scoped_search(:id) %></th>
       <th><%= link_to t("administration.news.index.view.title"), order_for_scoped_search(:title) %></th>
       <th><%= link_to t("administration.news.index.view.created_at"), order_for_scoped_search(:created_at) %></th>
+      <th><%= link_to t("administration.news.index.view.published"), order_for_scoped_search(:published_date) %></th>
       <th class="ta_r"><%= t("administration.news.index.view.actions") %></th>
       <th class="hr"></th>
     </tr>
@@ -61,7 +62,7 @@
     <tfoot>
     <tr>
       <td class="fl"></td>
-      <td colspan="4"></td>
+      <td colspan="5"></td>
       <td class="fr"></td>
     </tr>
     </tfoot>
@@ -72,6 +73,7 @@
           <td><%= news.id %></td>
           <td><%= news.title %></td>
           <td><%= news.created_at %></td>
+          <td><%= news.published_date %></td>
           <td class="tda ta_r">
             <ul-actions>
               <li>

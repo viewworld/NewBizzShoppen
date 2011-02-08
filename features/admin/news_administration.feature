@@ -157,8 +157,24 @@ Scenario: I can create news for category
   Then I should see "1" items on a list within "#news"
   And I should see "NewsForBestLeads"
 
-@m5 @ao
-Scenario: When you look at the news tab, the list of news should contain the following columns: Published (the date should be shown), Creation date, # of times read
+@m5 @ao @_done
+Scenario: When you look at the news tab, the list of news should contain the following columns: Creation date
   When Category named "Best Leads" already exists
   And I am on the home page
   And I follow translated "layout.main_menu.admin.news"
+  Then I should see translated "administration.news.index.view.created_at"
+
+@added @m5 @ao @selenium @_done
+Scenario: When you look at the news tab, the list of news should contain the following columns: Published (the date should be shown)
+  When I follow translated "layout.main_menu.admin.news"
+  And I follow translated "administration.news.index.view.new_news"
+  And I fill in "news_title" with "FirstNews"
+  And I fill in "news_content_editor" ckeditor with "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+  And I check "news_published"
+  And I press translated "administration.news.edit.view.button_save"
+  And I should be on administration FirstNews news page
+  When I follow translated "layout.main_menu.admin.news"
+  Then I should see /\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/
+
+@added @m5 @ao
+Scenario: When you look at the news tab, the list of news should contain the following columns: Published # of times read

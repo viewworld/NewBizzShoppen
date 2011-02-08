@@ -27,6 +27,8 @@ class Article < ActiveRecord::Base
   def set_published_date
     if published_changed? and published?
       self.published_date = Time.now
+    elsif published_changed?
+      self.published_date = nil
     end
   end
 

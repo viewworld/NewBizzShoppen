@@ -474,6 +474,7 @@ en:
           id: 'ID'
           title: 'Title'
           created_at: 'Created at'
+          published: 'Published'
           actions: 'Actions'
           show_link: 'Show'
           edit_link: 'Edit'
