@@ -626,6 +626,8 @@ en:
           paid: 'Paid'
           not_paid: 'Not paid'
           total: 'Total'
+          total_paid: Paid
+          total_unpaid: Unpaid
           actions: Actions
           search:
             with_keyword: 'Keyword'

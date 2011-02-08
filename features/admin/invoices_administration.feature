@@ -422,11 +422,51 @@ Scenario: When creating an invoice a Seller for user's country should be selecte
 @m5 @sellers @ao
 Scenario: If there's no Seller for user's country then default Seller should be used
 
-@m5 @ao
+@m5 @tgn @_tested
 Scenario: Include users name, company and user email when filtering invoices
+  Given I have user with email bigbuyer1@person.com and role customer
+  And user bigbuyer1@person.com with role customer exists with attributes "first_name:John, last_name:Havranek"
+  And User bigbuyer1@person.com with role customer is big buyer
+  Given a lead Monitors ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role customer
+  And lead Monitors ultimate deal exists with attributes "price:77.99,contact_name:Jill Johanssen,company_name:AIG Inc"
+  And user with email "bigbuyer1@person.com" and role "customer" has invoice generated for all unpaid leads
+  Given I have user with email bigbuyer2@person.com and role customer
+  And user bigbuyer2@person.com with role customer exists with attributes "first_name:Albert, last_name:Bohema"
+  And User bigbuyer2@person.com with role customer is big buyer
+  Given a lead Mouses 2 ultimate deal exists within category Computers and is bought by user bigbuyer2@person.com with role customer
+  And lead Mouses 2 ultimate deal exists with attributes "price:88.32,contact_name:Tom Blanq,company_name:Xerox"
+  And user with email "bigbuyer2@person.com" and role "customer" has invoice generated for all unpaid leads
+  And first invoice for user "bigbuyer2@person.com" exists with attributes "customer_name: Jared Diamond"
+  And I go to administration invoices
+  When I fill in "search_with_keyword" with "havranek"
+  And I press translated "administration.invoices.index.view.search_button"
+  Then I should see "77.99"
+  And I should not see "88.32"
+  When I fill in "search_with_keyword" with "bigbuyer2@person.com"
+  And I press translated "administration.invoices.index.view.search_button"
+  Then I should see "88.32"
+  And I should not see "77.99"
+  When I fill in "search_with_keyword" with "jared diamond"
+  And I press translated "administration.invoices.index.view.search_button"
+  Then I should see "88.32"
+  And I should not see "77.99"
 
-@m5 @ao
+@m5 @tgn @_tested
 Scenario: On Invoices listing there should be sums present in top right hand corner (total, total paid, total unpaid)
-
-@m5 @ao
-Scenario: On Debtors listing there should be sums present in top right hand corner (total)
+  Given I have user with email bigbuyer1@person.com and role customer
+  And User bigbuyer1@person.com with role customer is big buyer
+  Given a lead Monitors ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role customer
+  And user with email "bigbuyer1@person.com" and role "customer" has invoice generated for all unpaid leads
+  Given I have user with email bigbuyer2@person.com and role customer
+  And User bigbuyer2@person.com with role customer is big buyer
+  Given a lead Mouses 2 ultimate deal exists within category Computers and is bought by user bigbuyer2@person.com with role customer
+  And user with email "bigbuyer2@person.com" and role "customer" has invoice generated for all unpaid leads
+   Given I have user with email bigbuyer3@person.com and role customer
+  And User bigbuyer3@person.com with role customer is big buyer
+  Given a lead Mouses 3 ultimate deal exists within category Computers and is bought by user bigbuyer3@person.com with role customer
+  And user with email "bigbuyer3@person.com" and role "customer" has invoice generated for all unpaid leads
+  And first invoice for user "bigbuyer3@person.com" is not paid
+  And I go to administration invoices
+  Then I should see "Total: 3"
+  And I should see "Paid: 2"
+  And I should see "Unpaid: 1"

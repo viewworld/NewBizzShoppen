@@ -36,7 +36,20 @@
 
 <column-mc:>
 
-  <header><%= t("administration.invoices.index.view.header") %></header>
+  <header>
+      <param:content>
+      <%= t("administration.invoices.index.view.header") %>
+      </param:content>
+      <param:actions>
+      <ul class="header_actions">
+        <li class="last">
+          <%= t("administration.invoices.index.view.total") %>: <%= @total_invoices %>
+          <%= t("administration.invoices.index.view.total_paid") %>: <%= @total_paid_invoices %>
+          <%= t("administration.invoices.index.view.total_unpaid") %>: <%= @total_unpaid_invoices %>
+        </li>
+      </ul>
+    </param:actions>
+  </header>
 
   <%= semantic_form_for [:administration, :invoicing, Invoice.new] do |form| %>
       <fieldset class="inputs_vertical">
