@@ -32,6 +32,7 @@ group :development do
   gem 'diff-lcs'
   gem 'tolk', :path => "vendor/gems/tolk"
   gem "nifty-generators"
+  gem "bullet"
 end
 
 group :test do
