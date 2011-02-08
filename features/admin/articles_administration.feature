@@ -28,10 +28,11 @@ Scenario: I can edit article
 
 @_done
 Scenario: I can browse articles with pagination
-  When there are 3 random cms articles
-  And pagination per page size in model Article::Cms is set to 1
+  When there are 5 main page articles
+  And there are 10 interface content texts
+  And there are 5 help popups
   And I follow translated "layout.main_menu.admin.articles"
-  Then I should see "3" within ".pagination"
+  Then I should see "2" within ".pagination"
 
 @_done
 Scenario: I can search through the articles
@@ -49,7 +50,7 @@ Scenario: I can filter articles to articles only
   And interface content text exists with attributes "title:InterfaceContentText,content:lorem,key:inter_1"
   And help popup exists with attributes "title:HelpPopup,content:lorem,key:help_1"
   And I follow translated "layout.main_menu.admin.articles"
-  And I select translated "administration.articles.index.view.main_page_articles" from "search_with_scope"
+  And I select translated "administration.articles.index.view.main_page_articles" from "search_with_subclass"
   And I press translated "administration.articles.index.view.search_button"
   Then I should see "MainPageArticle"
   And I should not see "InterfaceContentText"
@@ -61,7 +62,7 @@ Scenario: I can filter articles to blurb only
   And interface content text exists with attributes "title:InterfaceContentText,content:lorem,key:inter_1"
   And help popup exists with attributes "title:HelpPopup,content:lorem,key:help_1"
   And I follow translated "layout.main_menu.admin.articles"
-  And I select translated "administration.articles.index.view.interface_content_texts" from "search_with_scope"
+  And I select translated "administration.articles.index.view.interface_content_texts" from "search_with_subclass"
   And I press translated "administration.articles.index.view.search_button"
   Then I should see "InterfaceContentText"
   And I should not see "MainPageArticle"
@@ -73,7 +74,7 @@ Scenario: I can filter articles to help only
   And interface content text exists with attributes "title:InterfaceContentText,content:lorem,key:inter_1"
   And help popup exists with attributes "title:HelpPopup,content:lorem,key:help_1"
   And I follow translated "layout.main_menu.admin.articles"
-  And I select translated "administration.articles.index.view.help_popups" from "search_with_scope"
+  And I select translated "administration.articles.index.view.help_popups" from "search_with_subclass"
   And I press translated "administration.articles.index.view.search_button"
   Then I should see "HelpPopup"
   And I should not see "InterfaceContentText"

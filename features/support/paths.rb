@@ -32,6 +32,10 @@ module NavigationHelpers
         '/administration/invoicing/invoices'
     when /administration upcoming invoices/
         '/administration/invoicing/upcoming_invoices'
+    when /category home leads page for (.*)/
+        "/#{$1.to_url}/leads"
+    when /category home page for (.*)/
+        "/#{$1.to_url}"
     when /agents leads/
         '/agents/leads'
     when /agents lead templates/
@@ -88,22 +92,22 @@ module NavigationHelpers
         buyer_home_path
     when /administration articles page/
         administration_articles_path
-      when /administration (.*) article page/
-        administration_article_path(Article::Cms.includes(:translations).where(:article_translations => {:title => $1}).first)
-      when /administration (.*) news page/
-        administration_news_path(Article::News.includes(:translations).where(:article_translations => {:title => $1}).first)
-      when /administration edit user (.*)/
-        edit_administration_user_path(User.where(:email => $1).first)
-      when /administration new vat rate/
-        new_administration_vat_rate_path
-      when /(.*) news page/
-        news = Article::News.find_by_title($1)
-        news_path(news)
-      when /(.*) article page/
-        news = Article::Cms.find_by_title($1)
-        article_path(news)
-      when /administration currencies/
-        administration_currencies_path
+    when /administration (.*) article page/
+      administration_article_path(Article::Cms.includes(:translations).where(:article_translations => {:title => $1}).first)
+    when /administration (.*) news page/
+      administration_news_path(Article::News.includes(:translations).where(:article_translations => {:title => $1}).first)
+    when /administration edit user (.*)/
+      edit_administration_user_path(User.where(:email => $1).first)
+    when /administration new vat rate/
+      new_administration_vat_rate_path
+    when /(.*) news page/
+      news = Article::News.find_by_title($1)
+      news_path(news)
+    when /(.*) article page/
+      news = Article.find_by_title($1)
+      article_path(news)
+    when /administration currencies/
+      administration_currencies_path
 
 
     # Add more mappings here.

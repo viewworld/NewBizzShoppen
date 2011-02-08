@@ -11,8 +11,8 @@
                 <%= f.text_field :with_keyword %>
               </li>
               <li class="select">
-                <%= f.label :with_scope, t("administration.leads.index.search.article_label") %>
-                <%= f.select :with_scope, article_scope_for_select, :include_blank => true %>
+                <%= f.label :with_subclass, t("administration.leads.index.search.article_label") %>
+                <%= f.select :with_subclass, article_scope_for_select, :include_blank => true %>
               </li>
               <li class="commit">
                 <ibt c="bt_green" icon="magnify">
@@ -34,19 +34,15 @@
     </param:content>
 
     <param:actions>
-      <ul class="header_actions">
-        <li class="last">
-          <%= bt_link_to :plus, t("administration.articles.index.view.new_article"), "javascript:void(0)", :onclick => "$('#form_new_article').submit()" %>
-        </li>
-      </ul>
+      <%= form_tag administration_articles_path, :method => :post, :id => "form_new_article" do %>
+          <ul class="header_actions">
+            <li class="last">
+              <%= bt_link_to :plus, t("administration.articles.index.view.new_article"), "javascript:void(0)", :onclick => "$('#form_new_article').submit()" %>
+            </li>
+          </ul>
+      <% end %>
     </param:actions>
   </header>
-
-  <div class="hidden">
-    <%= form_tag administration_articles_path, :id => "form_new_article" do %>
-        <%= submit_tag t("administration.articles.index.view.new_article") %>
-    <% end %>
-  </div>
 
   <table id="articles_table" class="generic">
     <thead>

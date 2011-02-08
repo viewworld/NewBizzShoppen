@@ -247,7 +247,7 @@ en:
     index:
       view:
         agents_header: 'AGENTS NEWS'
-        buyers_header: 'SALES MANAGER NEWS'
+        sales_managers_header: 'SALES MANAGER NEWS'
         purchase_managers_header: 'PURCHASE MANAGERS NEWS'
         read_more_link: 'read more'
         newer_link: 'Newer'
@@ -468,6 +468,7 @@ en:
           buyers: 'sales managers'
           agents: 'agents'
           purchase_managers: 'purchase managers'
+          category_homes: 'category homes'
           new_news: 'New news'
           search_button: 'Search'
           id: 'ID'
@@ -489,6 +490,7 @@ en:
         view:
           header: 'Edit news'
           button_save: 'Save news'
+          category_label: 'Category'
     currencies:
       index:
         view:
@@ -1102,6 +1104,13 @@ en:
         button_create_account: 'Create'
         enable_team_buyers: 'Enable team buyers'
 
+  category_buyer_accounts:
+    new:
+      view:
+        title: 'Category buyer signup'
+        button_create_account: 'Create'
+        enable_team_buyers: 'Enable team buyers'
+
   buyer_home:
     show:
       view:
@@ -1149,6 +1158,22 @@ en:
         read_more_link: 'read more'
         complete_list_link: 'complete list'
         create_new_purchase_manager_account: 'Create new purchase manager account'
+
+  category_home:
+    show:
+      view:
+        header_welcome: 'Welcome to our site'
+        header_news: 'News'
+        complete_list_link: 'complete list'
+        sign_up_sign_in: 'Sign up or sign in'
+        latest_leads: 'Latest leads'
+        header_latest_leads: 'Latest leads'
+        i_have_an_account: 'I have an account'
+        sign_in: 'Sign in'
+        remember_me: 'Remember me'
+        forgotten_password_link: 'Forgot password?'
+        i_want_to_register: 'I want to register a new account'
+        category_buyer_signup: 'Category buyer signup'
 
   customer:
     interests:
@@ -1586,6 +1611,10 @@ en:
         create:
           notice: 'Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account.'
     buyer_accounts:
+      actions:
+        create:
+          notice: 'Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account.'
+    category_buyer_accounts:
       actions:
         create:
           notice: 'Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account.'

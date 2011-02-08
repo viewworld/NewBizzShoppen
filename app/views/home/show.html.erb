@@ -13,6 +13,14 @@
 
   <hl pdd="15"/>
 
+  <ul>
+    <% @categories.each do |category| %>
+      <%= link_to category.name, category.cached_slug %>
+    <% end %>
+  </ul>
+
+  <hl pdd="15"/>
+
   <% unless user_signed_in? %>
       <div class="grid_750 grid_c">
 

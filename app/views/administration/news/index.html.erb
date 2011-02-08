@@ -11,8 +11,8 @@
                 <%= f.text_field :with_keyword %>
               </li>
               <li class="select">
-                <%= f.label :with_scope, t("administration.leads.index.search.owner_type_label") %>
-                <%= f.select :with_scope, news_scope_for_select, :include_blank => true %>
+                <%= f.label :with_subclass, t("administration.leads.index.search.owner_type_label") %>
+                <%= f.select :with_subclass, news_scope_for_select, :include_blank => true %>
               </li>
               <li class="commit">
                 <ibt c="bt_green" icon="magnify">
@@ -34,19 +34,18 @@
     </param:content>
 
     <param:actions>
-      <ul class="header_actions">
-        <li class="last">
-          <%= bt_link_to :plus, t("administration.news.index.view.new_news"), "javascript:void(0)", :onclick => "$('#form_new_news').submit()" %>
-        </li>
-      </ul>
+        <%= form_tag administration_news_index_path, :method => :post, :id => "form_new_news" do %>
+            <span style="position:absolute;top: 5px; right: 110px;">
+              <%= select_tag "subclass", options_for_select(news_scope_for_select), {} %>
+            </span>
+            <ul class="header_actions">
+              <li class="last">
+                <%= bt_link_to :plus, t("administration.news.index.view.new_news"), "javascript:void(0)", :onclick => "$('#form_new_news').submit()" %>
+              </li>
+            </ul>
+        <% end %>
     </param:actions>
   </header>
-
-  <div class="hidden">
-    <%= form_tag administration_news_index_path, :id => "form_new_news" do %>
-        <%= submit_tag t("administration.news.index.view.new_news") %>
-    <% end %>
-  </div>
 
   <table id="news_table" class="generic">
     <thead>

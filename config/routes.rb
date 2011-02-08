@@ -123,6 +123,7 @@ Nbs::Application.routes.draw do
   resources :agent_accounts, :only => [:new, :create]
   resources :buyer_accounts, :only => [:new, :create]
   resources :purchase_manager_accounts, :only => [:new, :create]
+  resources :category_buyer_accounts, :only => [:new, :create]
   resources :locales
 
   resources :news
@@ -138,6 +139,11 @@ Nbs::Application.routes.draw do
 
   resource :contact_us, :controller => "contact_us", :as => "contact_us", :only => [:new, :create]
   match 'contact_us' => 'contact_us#new', :as => 'contact_us'
+
+  match ':slug' => 'category_home#show', :as => :category_home_page
+  match ':slug/account/new' => 'category_buyer_accounts#new', :as => :new_category_home_page_account
+  match ':slug/account' => 'category_buyer_accounts#create', :as => :category_home_page_account
+  match ':slug/leads' => 'category_buyers/leads#index', :as => :category_home_page_leads
 
   root :to => "home#show"
 

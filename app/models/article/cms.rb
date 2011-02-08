@@ -1,24 +1,6 @@
 class Article::Cms < ::Article
 
-  MAIN_PAGE_ARTICLE = 0.freeze
-  INTERFACE_CONTENT_TEXT = 1.freeze
-  HELP_POPUP = 2.freeze
-
-  has_many :assets, :as => :resource, :dependent => :destroy, :finder_sql =>
-      'SELECT "assets".*' +
-      'FROM "assets"' +
-      'WHERE ("assets".resource_id = #{id} AND "assets".resource_type = \'Article::Cms\')'
-
-  validates_presence_of :key, :if => Proc.new{|a| [INTERFACE_CONTENT_TEXT,HELP_POPUP].include?(a.scope)}
-  validates_uniqueness_of :key, :scope => :scope, :allow_nil => true
-
-  scoped_order :id, :title
-
-  scope :main_page_articles, where(:scope => MAIN_PAGE_ARTICLE)
-  scope :interface_content_texts, where(:scope => INTERFACE_CONTENT_TEXT)
-  scope :help_popups, where(:scope => HELP_POPUP)
-  scope :ascend_by_title, only_translations(I18n.locale).order("article_translations.title ASC")
-  scope :descend_by_title, only_translations(I18n.locale).order("article_translations.title DESC")
+  validates_uniqueness_of :key, :scope => :type, :allow_nil => true
 
   before_destroy :can_be_destroyed?
 
@@ -27,11 +9,7 @@ class Article::Cms < ::Article
   end
 
   def show_type
-    case scope
-      when MAIN_PAGE_ARTICLE then I18n.t('administration.articles.index.view.main_page_articles')
-      when INTERFACE_CONTENT_TEXT then I18n.t('administration.articles.index.view.interface_content_texts')
-      when HELP_POPUP then I18n.t('administration.articles.index.view.help_popups')
-    end
+    I18n.t("administration.articles.index.view.#{self.class.name.split('::').last.underscore.pluralize}")
   end
 
 end

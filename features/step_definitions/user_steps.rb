@@ -214,3 +214,20 @@ Given /^user "([^"]*)" with role "([^"]*)" comes from "([^"]*)"$/ do |user_email
   "User::#{role_name.camelize}".constantize.where(:email => user_email).first.update_attribute(:country,country.id)
 end
 
+When /^I am signed up and confirmed as user with email "([^"]*)" and password "([^"]*)" and role "([^"]*)" for category "([^"]*)"(?: with attributes "([^"]*)")?$/ do |email, password, role_name, category_name, options|
+  std_opts = {:email => email, :password => password, :password_confirmation => password, :category_id => Category.where(:name => category_name).first.id}
+  opts = options ? Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys.merge(std_opts) : std_opts
+  u = "User::#{role_name.camelize}".constantize.make!(opts)
+  u.confirm!
+end
+
+Then /^user "([^"]*)" should have role "([^"]*)"$/ do |email, role_name|
+  User.where(:email => email).first.roles.should include(role_name.to_sym)
+end
+
+And /^user "([^"]*)" is confirmed/ do |email|
+  User.where(:email => email).first.confirm!
+end
+
+
+
