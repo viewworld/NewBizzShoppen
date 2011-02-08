@@ -1186,6 +1186,9 @@ en:
           notify_about_new_leads: 'Notify me about new leads via email'
           button_update: 'Save'
           rss_feed_url: 'RSS Feed'
+          deal_range_from: From
+          deal_range_to: To
+          all_deal_values_enabled: All values
       update:
         flash:
           interests_update_successful: Interest settings have been saved successfuly
