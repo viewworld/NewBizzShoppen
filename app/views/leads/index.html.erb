@@ -42,6 +42,8 @@
 
   <header back="true"><%= leads_listing_header %><%= " #{t("leads.index.header_for")} #{@category.name}" if @category %></header>
 
+  <%= blurb(:blurb_leads_listing) %>
+
   <%= form_tag bulk_action_path do %>
       <%= leads_listing @leads, :show_checkboxes => true do |blocks| %>
 

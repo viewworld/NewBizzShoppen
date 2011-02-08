@@ -36,13 +36,15 @@ class Invoice < ActiveRecord::Base
   scope :with_sale_date_after_and_including, lambda{ |date| where(["sale_date >= ?",date])}
   scope :with_sale_date_before_and_including, lambda{ |date| where(["sale_date <= ?",date])}
   scope :not_paid, where(:paid_at => nil)
-  scope :with_keyword, lambda{ |keyword| where("invoices.number::TEXT = :number_keyword OR lower(invoices.customer_name) LIKE :keyword OR lower(invoices.customer_address) LIKE :keyword OR lower(leads.header) LIKE :keyword OR lower(leads.contact_name) LIKE :keyword OR lower(leads.company_name) LIKE :keyword", {:keyword => "%#{keyword.downcase}%", :number_keyword => "#{keyword.downcase}"}).joins("LEFT JOIN invoice_lines ON invoices.id=invoice_lines.invoice_id LEFT JOIN lead_purchases ON invoice_lines.payable_id=lead_purchases.id LEFT JOIN leads ON lead_purchases.lead_id=leads.id") }
+  scope :with_keyword, lambda{ |keyword| where("users.email like :keyword OR users.first_name like :keyword OR users.last_name like :keyword OR invoices.number::TEXT = :number_keyword OR lower(invoices.customer_name) LIKE :keyword OR lower(invoices.customer_address) LIKE :keyword OR lower(leads.header) LIKE :keyword OR lower(leads.contact_name) LIKE :keyword OR lower(leads.company_name) LIKE :keyword OR lower(leads.email_address) LIKE :keyword", {:keyword => "%#{keyword.downcase}%", :number_keyword => "#{keyword.downcase}"}).joins("LEFT JOIN invoice_lines ON invoices.id=invoice_lines.invoice_id LEFT JOIN lead_purchases ON invoice_lines.payable_id=lead_purchases.id LEFT JOIN leads ON lead_purchases.lead_id=leads.id").joins(:user) }
   scope :ascend_by_customer, joins(:user).order("users.first_name||' '||users.last_name ASC")
   scope :descend_by_customer, joins(:user).order("users.first_name||' '||users.last_name DESC")
   scope :ascend_by_total, joins("LEFT JOIN invoice_lines ON invoice_lines.invoice_id = invoices.id").group(column_names.map{|c| 'invoices.'+c}.join(',')).order("SUM(invoice_lines.brutto_value) ASC")
   scope :descend_by_total, joins("LEFT JOIN invoice_lines ON invoice_lines.invoice_id = invoices.id").group(column_names.map{|c| 'invoices.'+c}.join(',')).order("SUM(invoice_lines.brutto_value) DESC")
   scope :with_paid, lambda{|paid| paid.to_i==1 ? where("paid_at IS NOT NULL") : where("paid_at IS NULL")}
   scope :for_user, lambda{|user| where(:user_id => user.to_i)}
+  scope :total_paid, where("paid_at IS NOT NULL")
+  scope :total_not_paid, where("paid_at IS NULL")
 
   validates_presence_of :user_id
   validates_associated :invoice_lines

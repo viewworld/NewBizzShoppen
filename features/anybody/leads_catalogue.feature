@@ -85,5 +85,10 @@ Scenario: When you click on a lead that you have not bought, and you are not sig
   And I should see "Sign in"
   Then I follow translated "buyer_home.show.view.create_new_buyer_account"
 
-@m5 @ao
+@m5 @tgn @_tested
 Scenario: Add blurb or info text to leads listing "To view lead details click buy lead"
+  Given Category named "Sample category" already exists
+  And Lead named "Lead sample" exists within "Sample category" category
+  And I go to browse leads
+  And I follow "Sample category"
+  Then I should see "Blurb leads listing"

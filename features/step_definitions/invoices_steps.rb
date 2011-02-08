@@ -12,6 +12,8 @@ end
 When /^first invoice for user "([^"]*)" exists with attributes "([^"]*)"$/ do |email, options|
   invoice = User::Abstract.where(:email => email).first.invoices.first
   invoice.update_attributes(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys)
+  invoice.reload
+  puts invoice.inspect
 end
 
 When /^first invoice for user "([^"]*)" is created at "([^"]*)"$/ do |email, date|
@@ -22,6 +24,11 @@ end
 When /^first invoice for user "([^"]*)" is paid$/ do |email|
   invoice = User.where(:email => email).first.invoices.first
   Invoice.update_all(["paid_at = :date",{:date => Time.now}], ["id=?",invoice.id])
+end
+
+When /^first invoice for user "([^"]*)" is not paid$/ do |email|
+  invoice = User.where(:email => email).first.invoices.first
+  Invoice.update_all(["paid_at = :date",{:date => nil}], ["id=?",invoice.id])
 end
 
 Then /^invoice is created for user with email "([^"]*)" and role "([^"]*)"$/ do |email, role|
