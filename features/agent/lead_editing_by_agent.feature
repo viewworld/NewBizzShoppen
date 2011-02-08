@@ -121,8 +121,15 @@ Scenario: When new translation to lead is added I can also write translation for
   And the "lead_lead_template_values_attributes_0_lead_template_value_translations_attributes_0_value" field should contain "123 translated"
   And the "lead_lead_template_values_attributes_1_lead_template_value_translations_attributes_0_value" field should contain "Ms Windows Vista translated"
   
-@m5 @ao
+@m5 @tgn @_tested
 Scenario: I can edit my leads from any page where it's presented
+  When I go to browse leads
+  And I follow "Computers"
+  Then I follow translated "leads.listing.edit_label"
+  And I should see translated "agent.leads.edit.view.title"
+  When I go to agent home
+  Then I follow translated "leads.listing.edit_label"
+  And I should see translated "agent.leads.edit.view.title"
 
 @m5 @added @tgn @non_testable @_done
 Scenario: Lead data should be entered in given sequence

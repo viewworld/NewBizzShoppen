@@ -75,8 +75,15 @@ Scenario: I should see currency in which lead is being sold
   And I press translated "leads.index.search.search_button"
   And I should see "€989.39" within "table"
 
-@m5 @ao
+@m5 @tgn @_tested
 Scenario: When you click on a lead that you have not bought, and you are not signed up you should be given the opportunity to sign in or create a new account
+  Given Category named "Sample category" already exists
+  And Lead named "Lead sample" exists within "Sample category" category
+  And I go to browse leads
+  And I follow "Sample category"
+  Then I click hidden translated link "leads.index.add_to_cart_link"
+  And I should see "Sign in"
+  Then I follow translated "buyer_home.show.view.create_new_buyer_account"
 
 @m5 @ao
 Scenario: Add blurb or info text to leads listing "To view lead details click buy lead"

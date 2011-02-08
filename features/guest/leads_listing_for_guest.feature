@@ -117,8 +117,30 @@ Scenario: When I browse a lead category, the lead category should be displayed v
   When I follow "Sample category"
   Then I should see "Leads for Sample category"
   
-@m5 @added @ao
+@m5 @added @tgn @_tested
 Scenario: I should be able to click "Add to cart button" that will redirect me to login page where I can create new account
+  Given lead Great marketing deal exists within category VariousLeads
+  And I go to browse leads
+  And I follow "VariousLeads"
+  Then I click hidden translated link "leads.index.add_to_cart_link"
+  And I follow translated "buyer_home.show.view.create_new_buyer_account"
+  Then I fill in "user_customer_first_name" with "John"
+  And I fill in "user_customer_last_name" with "Doe"
+  And I fill in "user_customer_phone" with "31242342424234"
+  And I fill in "user_customer_email" with "johndoecustomer@person.com"
+  And I fill in "user_customer_screen_name" with "John D."
+  And I fill in "user_customer_password" with "secret"
+  And I fill in "user_customer_password_confirmation" with "secret"
+  And I fill in "user_customer_street" with "Ferterds"
+  And I fill in "user_customer_city" with "Boston"
+  And I fill in "user_customer_zip_code" with "12421S"
+  And I select "Denmark" from "user_customer_country"
+  And I check "user_customer_agreement_read"
+  And I press translated "buyer_accounts.new.view.button_create_account"
+  And user "johndoecustomer@person.com" with role "customer" is confirmed
+  And I sign in as johndoecustomer@person.com with password secret
+  And I click hidden translated link "layout.cart.show_cart"
+  Then I should see "Great marketing deal"
 
 @m5 @tgn @_tested
 Scenario: If I successfully login after requesting a lead being added to a cart, that lead should be added to cart (or bought if I am big buyer)

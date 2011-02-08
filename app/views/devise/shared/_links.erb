@@ -17,3 +17,4 @@
 <%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
   <%= link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name) %><br />
 <% end -%>
+<%= bt_link_to nil, t("buyer_home.show.view.create_new_buyer_account"), new_buyer_account_path %>
