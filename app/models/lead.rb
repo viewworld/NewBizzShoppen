@@ -42,6 +42,7 @@ class Lead < ActiveRecord::Base
   scope :without_bought_and_requested_by, lambda {|u| joins("LEFT JOIN lead_purchases lp ON lp.lead_id = leads.id").where(["(lp.owner_id <> ? OR lp.owner_id IS NULL) AND (lp.assignee_id <> ? OR lp.assignee_id IS NULL) AND (lp.requested_by <> ? OR lp.requested_by IS NULL)", u.id, u.id, u.id]) if u}
   scope :bestsellers, order("lead_purchases_counter DESC")
   scope :latest, order("created_at DESC")
+  scope :interesting_for_user, lambda { |user| joins(:category => {:category_interests => :user}).where(["users.id = ?",user.to_i])}
 
   scope :joins_on_lead_purchases , joins("INNER JOIN lead_purchases ON lead_purchases.lead_id=leads.id")
   scope :with_created_by, lambda { |agent_id| where("creator_id = ?", agent_id) }

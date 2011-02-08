@@ -1122,6 +1122,8 @@ en:
         purchase_manager_link: 'click here if you are a purchase manager'
         header_best_sellers: 'Best sellers'
         header_latest_leads: 'Latest leads'
+        header_latest_leads_in_my_categories: 'Latest leads in my categories'
+        header_my_leads: 'My leads'
         header_news: 'News'
         purchase_value_label: 'Purchase value:'
         lead_price_label: 'Lead price:'
@@ -1129,6 +1131,8 @@ en:
         read_more_link: 'read more'
         complete_list_link: 'complete list'
         create_new_buyer_account: 'Create new sales manager account'
+        sign_out: 'Sign out'
+        add_team_member: 'Add team member'
 
   agent_home:
     show:
