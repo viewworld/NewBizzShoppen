@@ -58,6 +58,8 @@ module NavigationHelpers
         '/lead_users/lead_purchases'
     when /customers subaccounts/
         '/customers/subaccounts'
+    when /customers new subaccount/
+        '/customers/subaccounts/new'
     when /customers lead requests/
         '/customers/lead_requests'
     when /buyer lead purchases/
