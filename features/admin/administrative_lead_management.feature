@@ -8,11 +8,11 @@ Background:
   Then I sign in as admin2@person.com with password supersecret
 
 # https://redmine.selleo.com/issues/3494
-@_deprecated
+@_done @_deprecated
 Scenario: I can edit lead if the lead is not sold yet
 
 # https://redmine.selleo.com/issues/3494
-@_deprecated
+@_done @_deprecated
 Scenario: I can’t edit lead if the lead was already sold
 
 @added @_done
