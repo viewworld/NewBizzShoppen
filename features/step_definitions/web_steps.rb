@@ -352,3 +352,7 @@ end
 When /^I visit URL "([^"]*)"$/ do |url|
   visit url
 end
+
+Then /^I should see CSS path "([^"]*)"$/ do |selector|
+  page.all(:css, selector).size.should eql(1)
+end

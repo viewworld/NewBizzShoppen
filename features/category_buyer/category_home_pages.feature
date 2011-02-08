@@ -82,6 +82,19 @@ Feature: Category home pages
     Then I should see translated "activerecord.attributes.user.email"
     And I should see translated "activerecord.attributes.user.password"
 
+  @_done
   Scenario: There should be room for a category picture on the category home pages
+    When I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
+    And I am on the home page
+    And I sign in as jon@lajoie.ca with password secret
+    And I go to administration categories
+    And I follow translated "administration.categories.index.view.new_category"
+    And I fill in "category_name" with "CategoryWithImage"
+    And I fill in "category_description" with "Description"
+    And attach the file "sample image" to "category_image_attributes_asset"
+    And I press translated "administration.categories.new.view.button_create"
+    And I am on category home page for CategoryWithImage
+    Then I should see CSS path "#category_image"
 
+  @_done @tested_elsewhere
   Scenario: When clicking on the row with lead (as customer in leads catalogue), prompt user if he wishes to add a lead to cart (and do so if he agrees)

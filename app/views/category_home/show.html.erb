@@ -6,10 +6,12 @@
   </header>
 
   <div class="pdd_5 no_pdd_b">
+
     <h2><%= t("category_home.show.view.header_welcome") %></h2>
 
     <p><%= blurb("blurb_category_home") %></p>
 
+    <%= image_tag(@home_category.image.url, :id => 'category_image') unless @home_category.image.nil? %>
   </div>
 
   <hl pdd="15"></hl>
