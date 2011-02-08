@@ -2,7 +2,7 @@
   <div class="lead_content">
     <h4>
       <%= link_to lead.header, lead_path(lead) %>
-      <%= link_to("(#{t("leads.listing.edit_label")})", send("edit_#{current_user.role.to_s.pluralize}_lead_path".to_sym, lead.id)) if current_user and current_user == lead.creator %>
+      <%= link_to_edit_lead(lead) %>
     </h4>
 
     <p class="element">
