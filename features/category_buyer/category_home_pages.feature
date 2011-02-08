@@ -29,7 +29,7 @@ Feature: Category home pages
     And I follow translated "layout.main_menu.shared.home"
     Then I should see "1" items on a list within "#latest_leads"
     And I should see "LeadOne" within "#latest_leads"
-    
+
   @_done
   Scenario: I can't see leads from other categories on recent leads
     When Category named "Best Leads" already exists
@@ -43,7 +43,7 @@ Feature: Category home pages
     Then I should see "1" items on a list within "#latest_leads"
     And I should see "BestLead" within "#latest_leads"
     And I should not see "WorstLead" within "#latest_leads"
-    
+
   @_done
   Scenario: I can see complete list of category leads
     When Category named "Best Leads" already exists
@@ -56,7 +56,7 @@ Feature: Category home pages
     When I follow translated "category_home.show.view.complete_list_link" within "#latest_leads"
     And I follow "3" within ".pagination"
     Then I should see "1" rows in a table within ".leads_table tbody"
-    
+
   @_done
   Scenario: I can buy selected leads from this category
     When Category named "Best Leads" already exists
@@ -74,7 +74,7 @@ Feature: Category home pages
     When Category named "Best Leads" already exists
     And I am on category home page for Best Leads
     Then I should see translated "category_home.show.view.category_buyer_signup"
-    
+
   @_done
   Scenario: I can see log in panel on category home page when I'm a guest
     When Category named "Best Leads" already exists

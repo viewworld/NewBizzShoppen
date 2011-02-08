@@ -120,9 +120,7 @@ Scenario: I can see all news for categories
   And there is a published news for category "Best Leads"
   And Category named "Worst Leads" already exists
   And there is a published news for category "Worst Leads"
-  And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
   And I am on the home page
-  And I sign in as jon@lajoie.ca with password secret
   And I follow translated "layout.main_menu.admin.news"
   And I select translated "administration.news.index.view.category_homes" from "search_with_subclass"
   And I press translated "administration.news.index.view.search_button"
@@ -133,9 +131,7 @@ Scenario: I can update and change category for category news
   When Category named "Best Leads" already exists
   And Category named "Worst Leads" already exists
   And there is a published news for category "Best Leads"
-  And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
   And I am on the home page
-  And I sign in as jon@lajoie.ca with password secret
   And I follow translated "layout.main_menu.admin.news"
   And I select translated "administration.news.index.view.category_homes" from "search_with_subclass"
   And I press translated "administration.news.index.view.search_button"
@@ -150,9 +146,7 @@ Scenario: I can update and change category for category news
 @m5 @category_home_pages @ao @selenium @_done
 Scenario: I can create news for category
   When Category named "Best Leads" already exists
-  And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
   And I am on the home page
-  And I sign in as jon@lajoie.ca with password secret
   And I follow translated "layout.main_menu.admin.news"
   And I select translated "administration.news.index.view.category_homes" from "subclass"
   And I follow translated "administration.news.index.view.new_news"
@@ -164,4 +158,3 @@ Scenario: I can create news for category
   And I am on category home page for Best Leads
   Then I should see "1" items on a list within "#news"
   And I should see "NewsForBestLeads"
-
