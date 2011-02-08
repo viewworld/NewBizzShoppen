@@ -189,6 +189,7 @@ en:
       average_rating_none_label: 'None'
       has_unsatisfactory_rating_yes: 'Yes'
       has_unsatisfactory_rating_no: 'No'
+      edit_label: Edit
     table:
       id: 'ID'
       header: 'Lead title'
