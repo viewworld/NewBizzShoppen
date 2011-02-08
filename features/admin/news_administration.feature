@@ -78,9 +78,7 @@ Scenario: I have to specify both title and content for news entry
 @_done @selenium
 Scenario: I can specify if news should be displayed for buyers, agents or both(?)
   When I follow translated "layout.main_menu.admin.news"
-  And I follow translated "administration.news.index.view.new_news"
-  And I select translated "administration.news.index.view.agents" from "subclass"
-  And I select translated "administration.news.index.view.buyers" from "subclass"
+  Then I should see CSS path "#subclass"
 
 @selenium @_done
 Scenario: I can use WYSIWYG to edit news entry content
