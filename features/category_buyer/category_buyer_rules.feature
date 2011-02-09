@@ -82,6 +82,4 @@ Feature: Category buyer rules
     Then I should be on category home page for Best Leads
     When I visit URL "/leads"
     Then I should be on category home page for Best Leads
-    When I follow translated "layout.main_menu.shared.home"
-    Then I should be on category home page for Best Leads
 
