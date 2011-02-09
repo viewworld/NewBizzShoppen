@@ -9,7 +9,7 @@ class Article < ActiveRecord::Base
 
   include ScopedSearch::Model
 
-  scoped_order :id, :title, :created_at
+  scoped_order :id, :title, :created_at, :published_date, :views_count
 
   before_save :set_published_date
   after_create :set_just_created

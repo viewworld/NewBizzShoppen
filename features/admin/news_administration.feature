@@ -176,5 +176,13 @@ Scenario: When you look at the news tab, the list of news should contain the fol
   When I follow translated "layout.main_menu.admin.news"
   Then I should see /\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/
 
-@added @m5 @ao
+@added @m5 @ao @_done
 Scenario: When you look at the news tab, the list of news should contain the following columns: Published # of times read
+  When agent news exists with attributes "title:AAANews,published:1"
+  And agent news exists with attributes "title:BBBNews,published:1"
+  And I am on the home page
+  When I follow translated "home.show.view.agent"
+  And I follow translated "agent_home.show.view.complete_list_link" within "#news"
+  And I follow translated "news.index.view.read_more_link"
+  And I follow translated "layout.main_menu.admin.news"
+  Then I should see "1" within ".even td:nth-child(6)"

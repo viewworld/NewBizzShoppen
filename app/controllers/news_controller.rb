@@ -2,7 +2,9 @@ class NewsController < ApplicationController
   inherit_resources
 
   def show
-    unless @news = Article.published.where(:id => params[:id]).first
+    if @news = Article.published.where(:id => params[:id]).first
+      @news.increment!(:views_count)
+    else
       redirect_to root_path
     end
   end

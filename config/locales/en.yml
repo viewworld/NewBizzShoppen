@@ -474,6 +474,7 @@ en:
           id: 'ID'
           title: 'Title'
           created_at: 'Created at'
+          times_read: '# of times read'
           published: 'Published'
           actions: 'Actions'
           show_link: 'Show'
