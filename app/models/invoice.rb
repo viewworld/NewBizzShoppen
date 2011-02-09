@@ -22,6 +22,7 @@ class Invoice < ActiveRecord::Base
   belongs_to :user
   belongs_to :currency
   belongs_to :bank_account
+  belongs_to :seller
 
   has_many :payment_transactions
   has_many :invoice_lines, :dependent => :destroy
@@ -46,8 +47,8 @@ class Invoice < ActiveRecord::Base
   scope :total_paid, where("paid_at IS NOT NULL")
   scope :total_not_paid, where("paid_at IS NULL")
 
-  validates_presence_of :user_id
-  validates_associated :invoice_lines
+  validates_presence_of :user_id, :seller
+  validates_associated :invoice_lines, :seller
 
   after_create :duplicate_company_and_customer_information, :set_year
   after_validation :set_default_currency, :if => Proc.new{ |i| i.new_record? }

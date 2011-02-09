@@ -1,0 +1,49 @@
+<column-mc:>
+  <header><%= t("administration.sellers.index.view.header") %></header>
+
+ <table class="generic" cellspacing="0" cellpadding="0" id="sellers">
+    <thead>
+        <tr>
+          <th class="hl"></th>
+          <th><%= t("administration.sellers.index.view.country") %></th>
+          <th><%= t("administration.sellers.index.view.first_name") %></th>
+          <th><%= t("administration.sellers.index.view.last_name") %></th>
+          <th class="hr"></th>
+        </tr>
+    </thead>
+    <tbody>
+      <% if @sellers.any? %>
+          <% @sellers.each do |s| %>
+            <tr>
+              <td class="cl"></td>
+              <td><%= s.country.name %></td>
+              <td><%= s.first_name %></td>
+              <td><%= s.last_name %></td>
+              <td class="tda ta_r">
+                <ul-actions>
+                  <li><%= link_to t("administration.sellers.index.view.edit"), edit_administration_seller_path(s) %></li>
+                </ul-actions>
+              </td>
+              <td class="cr"></td>
+            </tr>
+          <% end %>
+      <% else %>
+        <tr>
+          <td colspan="5"><%= t("administration.sellers.index.view.no_sellers_defined") %></td>
+        </tr>
+      <% end %>
+      <tr class="main_actions">
+        <td colspan="5">
+          <%= bt_link_to nil, t("administration.sellers.index.view.add_seller"), new_administration_seller_path %>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+      <td class="fl"></td>
+      <td colspan="3"></td>
+      <td class="fr"></td>
+    </tr>
+    </tfoot>
+  </table>
+</column-mc:>

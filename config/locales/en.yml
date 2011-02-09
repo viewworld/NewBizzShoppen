@@ -27,6 +27,7 @@ en:
         invoices: Invoices
         upcoming_invoices: Debtors
         payment_transactions: 'Payments'
+        sellers: 'Sellers'
       agent:
         leads: My created leads
         lead_templates: Lead templates
@@ -649,6 +650,16 @@ en:
             recipeints: 'Recipeints'
             subject: 'Subject'
             body: 'Body'
+    sellers:
+      index:
+        view:
+          header: 'Sellers'
+          country: 'Country'
+          first_name: 'First name'
+          last_name: 'Last name'
+          edit: 'Edit'
+          no_sellers_defined: 'No sellers defined'
+          add_seller: 'Add seller'
 
     payment_transactions:
       index:
