@@ -92,6 +92,8 @@ module NavigationHelpers
         agent_home_path
     when /buyer home/
         buyer_home_path
+    when /purchase manager home/
+        purchase_manager_home_path
     when /administration articles page/
         administration_articles_path
     when /administration news page/

@@ -3,6 +3,17 @@
     <param:content>
       <%= "Welcome" %>
     </param:content>
+
+    <% if user_signed_in? %>
+        <param:actions>
+          <ul class="header_actions">
+            <li class="last">
+              <%= bt_link_to :plus, t("category_home.show.view.sign_out"), '/logout' %>
+            </li>
+          </ul>
+        </param:actions>
+    <% end %>
+
   </header>
 
   <div class="pdd_5 no_pdd_b">

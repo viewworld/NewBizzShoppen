@@ -1137,6 +1137,7 @@ en:
         create_new_buyer_account: 'Create new sales manager account'
         sign_out: 'Sign out'
         add_team_member: 'Add team member'
+        i_have_an_account: 'I have an account'
 
   agent_home:
     show:
@@ -1153,6 +1154,7 @@ en:
         read_more_link: 'read more'
         complete_list_link: 'complete list'
         create_new_agent_account: 'Create new agent account'
+        i_have_an_account: 'I have an account'
 
   purchase_manager_home:
     show:
@@ -1169,11 +1171,13 @@ en:
         read_more_link: 'read more'
         complete_list_link: 'complete list'
         create_new_purchase_manager_account: 'Create new purchase manager account'
+        i_have_an_account: 'I have an account'
 
   category_home:
     show:
       view:
         header_welcome: 'Welcome to our site'
+        sign_out: 'Sign out'
         header_news: 'News'
         complete_list_link: 'complete list'
         sign_up_sign_in: 'Sign up or sign in'
