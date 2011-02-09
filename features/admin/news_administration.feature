@@ -109,8 +109,13 @@ Scenario: I can destroy news
 
 # It works i you create at new news
 # Right - after creating new news article, the back option should redirect to news listing
-@m5 @ao
+@m5 @ao @selenium @_done
 Scenario: When you edit a news article you should be able to cancel, and have the back option.
+  When I follow translated "layout.main_menu.admin.news"
+  And I follow translated "administration.news.index.view.new_news"
+  And I press translated "common.cancel_link"
+  Then I should be on administration news page
+  And I should see "0" rows in a table within "#news_table"
 
 @m5 @category_home_pages @ao @_done
 Scenario: I can see all news for categories

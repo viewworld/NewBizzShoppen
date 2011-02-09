@@ -94,6 +94,8 @@ module NavigationHelpers
         buyer_home_path
     when /administration articles page/
         administration_articles_path
+    when /administration news page/
+        administration_news_index_path
     when /administration (.*) article page/
       administration_article_path(Article::Cms.includes(:translations).where(:article_translations => {:title => $1}).first)
     when /administration (.*) news page/

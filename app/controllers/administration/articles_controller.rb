@@ -18,7 +18,7 @@ class Administration::ArticlesController < Administration::AdministrationControl
     params[:article_cms] ||= {}
     @article = Article::Cms::MainPageArticle.new(params[:article])
     create! do |success,failure|
-      success.html { redirect_to edit_administration_article_path(@article)}
+      success.html { render :action => :edit }
       failure.html { redirect_to administration_articles_path }
     end
   end
