@@ -13,6 +13,6 @@ Scenario: During template creation/edition I can mark fields as hidden or public
 @added
 Scenario: I can edit lead template that was created by me
 
-@added
+ @added
 Scenario: I can delete lead template that was created by me and was not filled out by anyone
 
