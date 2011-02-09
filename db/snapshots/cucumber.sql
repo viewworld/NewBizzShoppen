@@ -264,19 +264,19 @@ COPY article_translations (id, article_id, locale, title, content, created_at, u
 -- Data for Name: articles; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY articles (id, type, created_at, updated_at, key, published, published_date, resource_type, resource_id) FROM stdin;
-1	Article::Cms::MainPageArticle	2011-02-08 13:56:57.157173	2011-02-08 13:56:57.183162	about_us	t	2011-02-08 13:56:57.183081	\N	\N
-2	Article::Cms::MainPageArticle	2011-02-08 13:56:57.207574	2011-02-08 13:56:57.371606	privacy	t	2011-02-08 13:56:57.371529	\N	\N
-3	Article::Cms::MainPageArticle	2011-02-08 13:56:57.395908	2011-02-08 13:56:57.415017	terms_conditions	t	2011-02-08 13:56:57.414933	\N	\N
-4	Article::Cms::InterfaceContentText	2011-02-08 13:56:57.442863	2011-02-08 13:56:57.464626	blurb_sign_up	t	2011-02-08 13:56:57.464553	\N	\N
-5	Article::Cms::InterfaceContentText	2011-02-08 13:56:57.486654	2011-02-08 13:56:57.505548	blurb_buyer_home	t	2011-02-08 13:56:57.505475	\N	\N
-6	Article::Cms::InterfaceContentText	2011-02-08 13:56:57.529431	2011-02-08 13:56:57.548005	blurb_agent_home	t	2011-02-08 13:56:57.54793	\N	\N
-7	Article::Cms::InterfaceContentText	2011-02-08 13:56:57.569583	2011-02-08 13:56:57.58844	blurb_purchase_manager_home	t	2011-02-08 13:56:57.588366	\N	\N
-8	Article::Cms::InterfaceContentText	2011-02-08 13:56:57.610733	2011-02-08 13:56:57.631829	blurb_start_page_role_selection	t	2011-02-08 13:56:57.631756	\N	\N
-9	Article::Cms::InterfaceContentText	2011-02-08 13:56:57.654059	2011-02-08 13:56:57.673401	blurb_currencies	t	2011-02-08 13:56:57.673327	\N	\N
-10	Article::Cms::InterfaceContentText	2011-02-08 13:56:57.695453	2011-02-08 13:56:57.714887	blurb_category_home	t	2011-02-08 13:56:57.714816	\N	\N
-11	Article::Cms::InterfaceContentText	2011-02-08 13:56:57.900091	2011-02-08 13:56:57.919195	blurb_leads_listing	t	2011-02-08 13:56:57.919117	\N	\N
-12	Article::Cms::HelpPopup	2011-02-08 13:56:57.947792	2011-02-08 13:56:57.968786	reset_password	t	2011-02-08 13:56:57.968709	\N	\N
+COPY articles (id, type, created_at, updated_at, key, published, published_date, resource_type, resource_id, views_count) FROM stdin;
+1	Article::Cms::MainPageArticle	2011-02-08 13:56:57.157173	2011-02-08 13:56:57.183162	about_us	t	2011-02-08 13:56:57.183081	\N	\N	0
+2	Article::Cms::MainPageArticle	2011-02-08 13:56:57.207574	2011-02-08 13:56:57.371606	privacy	t	2011-02-08 13:56:57.371529	\N	\N	0
+3	Article::Cms::MainPageArticle	2011-02-08 13:56:57.395908	2011-02-08 13:56:57.415017	terms_conditions	t	2011-02-08 13:56:57.414933	\N	\N	0
+4	Article::Cms::InterfaceContentText	2011-02-08 13:56:57.442863	2011-02-08 13:56:57.464626	blurb_sign_up	t	2011-02-08 13:56:57.464553	\N	\N	0
+5	Article::Cms::InterfaceContentText	2011-02-08 13:56:57.486654	2011-02-08 13:56:57.505548	blurb_buyer_home	t	2011-02-08 13:56:57.505475	\N	\N	0
+6	Article::Cms::InterfaceContentText	2011-02-08 13:56:57.529431	2011-02-08 13:56:57.548005	blurb_agent_home	t	2011-02-08 13:56:57.54793	\N	\N	0
+7	Article::Cms::InterfaceContentText	2011-02-08 13:56:57.569583	2011-02-08 13:56:57.58844	blurb_purchase_manager_home	t	2011-02-08 13:56:57.588366	\N	\N	0
+8	Article::Cms::InterfaceContentText	2011-02-08 13:56:57.610733	2011-02-08 13:56:57.631829	blurb_start_page_role_selection	t	2011-02-08 13:56:57.631756	\N	\N	0
+9	Article::Cms::InterfaceContentText	2011-02-08 13:56:57.654059	2011-02-08 13:56:57.673401	blurb_currencies	t	2011-02-08 13:56:57.673327	\N	\N	0
+10	Article::Cms::InterfaceContentText	2011-02-08 13:56:57.695453	2011-02-08 13:56:57.714887	blurb_category_home	t	2011-02-08 13:56:57.714816	\N	\N	0
+11	Article::Cms::InterfaceContentText	2011-02-08 13:56:57.900091	2011-02-08 13:56:57.919195	blurb_leads_listing	t	2011-02-08 13:56:57.919117	\N	\N	0
+12	Article::Cms::HelpPopup	2011-02-08 13:56:57.947792	2011-02-08 13:56:57.968786	reset_password	t	2011-02-08 13:56:57.968709	\N	\N	0
 \.
 
 
@@ -363,25 +363,25 @@ COPY currencies (id, name, symbol, format, active, created_at, updated_at) FROM 
 -- Data for Name: email_template_translations; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY email_template_translations (id, email_template_id, locale, subject, body, created_at, updated_at) FROM stdin;
-1	1	en	Confirmation instructions	<p>Welcome {{user.email}}!</p><p>You can confirm your account through the link below:</p><p><a href="{{user.confirmation_instructions_url}}">Confirm my account</a></p>	2011-02-08 13:56:55.175602	2011-02-08 13:56:55.175602
-2	1	dk	[DK] Confirmation instructions	<p>Welcome {{user.email}}!</p><p>You can confirm your account through the link below:</p><p><a href="{{user.confirmation_instructions_url}}">Confirm my account</a></p>	2011-02-08 13:56:55.190203	2011-02-08 13:56:55.190203
-3	2	en	Reset password instructions	<p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href="{{ user.reset_password_instructions_url }}">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>	2011-02-08 13:56:55.203346	2011-02-08 13:56:55.203346
-4	2	dk	[DK] Reset password instructions	<p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href="{{ user.reset_password_instructions_url }}">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>	2011-02-08 13:56:55.216204	2011-02-08 13:56:55.216204
-5	3	en	Somebody shared leads with you	{% for lead in leads %}\n<p>{{lead.header}}<br />\n{{lead.description}}<br /></p>\n{% endfor %}	2011-02-08 13:56:55.231068	2011-02-08 13:56:55.231068
-6	3	dk	[DK] Somebody shared leads with you	{% for lead in leads %}\n<p>{{lead.header}}<br />\n{{lead.description}}<br /></p>\n{% endfor %}	2011-02-08 13:56:55.244095	2011-02-08 13:56:55.244095
-7	4	en	Contact regarding lead	<p>{{lead.id}}</p>	2011-02-08 13:56:55.256999	2011-02-08 13:56:55.256999
-8	4	dk	[DK] Contact regarding lead	<p>{{lead.id}}</p>	2011-02-08 13:56:55.269446	2011-02-08 13:56:55.269446
-9	5	en	Lead Purchase is about to expire	<p>{{lead_purchase.id}}</p>	2011-02-08 13:56:55.28247	2011-02-08 13:56:55.28247
-10	5	dk	[DK] Lead Purchase is about to expire	<p>{{lead_purchase.id}}</p>	2011-02-08 13:56:55.295064	2011-02-08 13:56:55.295064
-11	6	en	Lead has been rated as unsatisfactory	<p>Lead {{lead_purchase.header}} has been rated as {{lead_purchase.rating_level_as_text}} with the following reason: {{lead_purchase.rating_reason}}.</p>	2011-02-08 13:56:55.307896	2011-02-08 13:56:55.307896
-12	6	dk	[DK] Lead has been rated as unsatisfactory	<p>Lead {{lead_purchase.header}} has been rated as {{lead_purchase.rating_level_as_text}} with the following reason: {{lead_purchase.rating_reason}}.</p>	2011-02-08 13:56:55.4649	2011-02-08 13:56:55.4649
-13	7	en	Lead has been updated	<p>Lead {{lead.header}} has been updated by agent.</p>	2011-02-08 13:56:55.477296	2011-02-08 13:56:55.477296
-14	7	dk	[DK] Lead has been updated	<p>Lead {{lead.header}} has been updated by agent.</p>	2011-02-08 13:56:55.489159	2011-02-08 13:56:55.489159
-15	8	en	Question	<p></p>	2011-02-08 13:56:55.501387	2011-02-08 13:56:55.501387
-16	8	dk	[DK] Question	<p></p>	2011-02-08 13:56:55.513204	2011-02-08 13:56:55.513204
-17	9	en	Invoice	<p></p>	2011-02-08 13:56:55.525447	2011-02-08 13:56:55.525447
-18	9	dk	[DK] Invoice	<p></p>	2011-02-08 13:56:55.539063	2011-02-08 13:56:55.539063
+COPY email_template_translations (id, email_template_id, locale, body, subject, created_at, updated_at) FROM stdin;
+1	1	en	<p>Welcome {{user.email}}!</p><p>You can confirm your account through the link below:</p><p><a href="{{user.confirmation_instructions_url}}">Confirm my account</a></p>	Confirmation instructions	2011-02-08 13:56:55.175602	2011-02-08 13:56:55.175602
+2	1	dk	<p>Welcome {{user.email}}!</p><p>You can confirm your account through the link below:</p><p><a href="{{user.confirmation_instructions_url}}">Confirm my account</a></p>	[DK] Confirmation instructions	2011-02-08 13:56:55.190203	2011-02-08 13:56:55.190203
+3	2	en	<p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href="{{ user.reset_password_instructions_url }}">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>	Reset password instructions	2011-02-08 13:56:55.203346	2011-02-08 13:56:55.203346
+4	2	dk	<p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href="{{ user.reset_password_instructions_url }}">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>	[DK] Reset password instructions	2011-02-08 13:56:55.216204	2011-02-08 13:56:55.216204
+5	3	en	{% for lead in leads %}\n<p>{{lead.header}}<br />\n{{lead.description}}<br /></p>\n{% endfor %}	Somebody shared leads with you	2011-02-08 13:56:55.231068	2011-02-08 13:56:55.231068
+6	3	dk	{% for lead in leads %}\n<p>{{lead.header}}<br />\n{{lead.description}}<br /></p>\n{% endfor %}	[DK] Somebody shared leads with you	2011-02-08 13:56:55.244095	2011-02-08 13:56:55.244095
+7	4	en	<p>{{lead.id}}</p>	Contact regarding lead	2011-02-08 13:56:55.256999	2011-02-08 13:56:55.256999
+8	4	dk	<p>{{lead.id}}</p>	[DK] Contact regarding lead	2011-02-08 13:56:55.269446	2011-02-08 13:56:55.269446
+9	5	en	<p>{{lead_purchase.id}}</p>	Lead Purchase is about to expire	2011-02-08 13:56:55.28247	2011-02-08 13:56:55.28247
+10	5	dk	<p>{{lead_purchase.id}}</p>	[DK] Lead Purchase is about to expire	2011-02-08 13:56:55.295064	2011-02-08 13:56:55.295064
+11	6	en	<p>Lead {{lead_purchase.header}} has been rated as {{lead_purchase.rating_level_as_text}} with the following reason: {{lead_purchase.rating_reason}}.</p>	Lead has been rated as unsatisfactory	2011-02-08 13:56:55.307896	2011-02-08 13:56:55.307896
+12	6	dk	<p>Lead {{lead_purchase.header}} has been rated as {{lead_purchase.rating_level_as_text}} with the following reason: {{lead_purchase.rating_reason}}.</p>	[DK] Lead has been rated as unsatisfactory	2011-02-08 13:56:55.4649	2011-02-08 13:56:55.4649
+13	7	en	<p>Lead {{lead.header}} has been updated by agent.</p>	Lead has been updated	2011-02-08 13:56:55.477296	2011-02-08 13:56:55.477296
+14	7	dk	<p>Lead {{lead.header}} has been updated by agent.</p>	[DK] Lead has been updated	2011-02-08 13:56:55.489159	2011-02-08 13:56:55.489159
+15	8	en	<p></p>	Question	2011-02-08 13:56:55.501387	2011-02-08 13:56:55.501387
+16	8	dk	<p></p>	[DK] Question	2011-02-08 13:56:55.513204	2011-02-08 13:56:55.513204
+17	9	en	<p></p>	Invoice	2011-02-08 13:56:55.525447	2011-02-08 13:56:55.525447
+18	9	dk	<p></p>	[DK] Invoice	2011-02-08 13:56:55.539063	2011-02-08 13:56:55.539063
 \.
 
 
@@ -478,14 +478,14 @@ COPY lead_templates (id, category_id, name, is_active, is_mandatory, creator_id,
 -- Data for Name: lead_translations; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY lead_translations (id, lead_id, locale, description, hidden_description, header, created_at, updated_at) FROM stdin;
-1	1	dk	Sint quod praesentium doloribus nihil qui rem.Perferendis voluptatem ullam aspernatur nam consequatur vero.	Maxime quia omnis libero mollitia nobis tenetur.Quis dolores sint ipsa maiores.	Big deal on printers	2011-02-08 13:56:56.066984	2011-02-08 13:56:56.066984
-2	2	dk	A ullam velit nihil provident.Est explicabo rerum aliquam omnis minima id ea.	Totam similique ducimus et.Et dolorem nesciunt et.	Drills required	2011-02-08 13:56:56.140672	2011-02-08 13:56:56.140672
-3	3	dk	Occaecati beatae eius quo itaque esse.Quidem exercitationem officiis perferendis quaerat amet tempore asperiores qui.	Aut delectus laboriosam nihil consectetur enim officiis in.Placeat enim enim error optio minima incidunt aut.	Need assistance in selling a car	2011-02-08 13:56:56.208723	2011-02-08 13:56:56.208723
-4	4	dk	Aut in et unde rerum sequi quod autem.Adipisci enim quam alias et dolores expedita nam ea.	Consequatur suscipit ut enim.Et aut quia in exercitationem.	Ipod shipment	2011-02-08 13:56:56.280172	2011-02-08 13:56:56.280172
-5	5	dk	Placeat ut accusantium in ad eum.Minus ratione quo est rerum ut maxime nesciunt quia.	Dolorem molestiae iure tenetur architecto esse non modi.Dignissimos dolores voluptatibus suscipit tempore neque.	Trip to amazonia - looking for offer	2011-02-08 13:56:56.498069	2011-02-08 13:56:56.498069
-6	6	dk	Et quis dolorem aut dolor.Dolor eius quia earum laboriosam error.	Nostrum omnis natus qui.Aliquid quia quis ut.	LCD - Huge amounts	2011-02-08 13:56:56.569088	2011-02-08 13:56:56.569088
-7	7	dk	Deleniti molestiae libero quod.Expedita ratione quis sint dicta harum et et.	Ratione et ipsa ullam dolor saepe magni explicabo.Aliquid placeat explicabo pariatur ut rerum sit est minus.	GPS receivers required	2011-02-08 13:56:56.642959	2011-02-08 13:56:56.642959
+COPY lead_translations (id, lead_id, locale, header, description, hidden_description, created_at, updated_at) FROM stdin;
+1	1	dk	Big deal on printers	Sint quod praesentium doloribus nihil qui rem.Perferendis voluptatem ullam aspernatur nam consequatur vero.	Maxime quia omnis libero mollitia nobis tenetur.Quis dolores sint ipsa maiores.	2011-02-08 13:56:56.066984	2011-02-08 13:56:56.066984
+2	2	dk	Drills required	A ullam velit nihil provident.Est explicabo rerum aliquam omnis minima id ea.	Totam similique ducimus et.Et dolorem nesciunt et.	2011-02-08 13:56:56.140672	2011-02-08 13:56:56.140672
+3	3	dk	Need assistance in selling a car	Occaecati beatae eius quo itaque esse.Quidem exercitationem officiis perferendis quaerat amet tempore asperiores qui.	Aut delectus laboriosam nihil consectetur enim officiis in.Placeat enim enim error optio minima incidunt aut.	2011-02-08 13:56:56.208723	2011-02-08 13:56:56.208723
+4	4	dk	Ipod shipment	Aut in et unde rerum sequi quod autem.Adipisci enim quam alias et dolores expedita nam ea.	Consequatur suscipit ut enim.Et aut quia in exercitationem.	2011-02-08 13:56:56.280172	2011-02-08 13:56:56.280172
+5	5	dk	Trip to amazonia - looking for offer	Placeat ut accusantium in ad eum.Minus ratione quo est rerum ut maxime nesciunt quia.	Dolorem molestiae iure tenetur architecto esse non modi.Dignissimos dolores voluptatibus suscipit tempore neque.	2011-02-08 13:56:56.498069	2011-02-08 13:56:56.498069
+6	6	dk	LCD - Huge amounts	Et quis dolorem aut dolor.Dolor eius quia earum laboriosam error.	Nostrum omnis natus qui.Aliquid quia quis ut.	2011-02-08 13:56:56.569088	2011-02-08 13:56:56.569088
+7	7	dk	GPS receivers required	Deleniti molestiae libero quod.Expedita ratione quis sint dicta harum et et.	Ratione et ipsa ullam dolor saepe magni explicabo.Aliquid placeat explicabo pariatur ut rerum sit est minus.	2011-02-08 13:56:56.642959	2011-02-08 13:56:56.642959
 \.
 
 

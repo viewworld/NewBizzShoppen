@@ -91,7 +91,11 @@ module ApplicationHelper
 
   def main_menu_link_to_role_specific_home_page
     if @home_category
-      main_menu_link_to(t("layout.main_menu.shared.home"), category_home_page_path(@home_category.cached_slug), :tab => "home")
+      if controller.class.name =~ /CategoryHome/
+        main_menu_link_to(t("layout.main_menu.shared.site_home"), root_path, :tab => "home")
+      else
+        main_menu_link_to(t("layout.main_menu.shared.home"), category_home_page_path(@home_category.cached_slug), :tab => "home")
+      end
     elsif !user_signed_in? or (['buyer_home', 'agent_home', 'purchase_manager_home'].include?(params[:controller]) and params[:action] == "show")
       main_menu_link_to(user_signed_in? ? t("layout.main_menu.shared.site_home") : t("layout.main_menu.shared.home"), root_path, :tab => "home")
     else
