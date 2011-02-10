@@ -1190,6 +1190,7 @@ en:
         i_want_to_register: 'I want to register a new account'
         category_buyer_signup: 'Category buyer signup'
         header_my_leads: 'My leads'
+        read_more_link: 'read more'
 
   customer:
     interests:

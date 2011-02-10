@@ -94,6 +94,17 @@ Feature: Category home pages
     And I should see "1" items on a list within "#my_leads ul"
     And I should see "Best Lead" within "#my_leads"
 
+  @added @_done
+  Scenario: I can access details of latest leads on category home page
+    When Category named "Best Leads" already exists
+    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Best Leads"
+    And lead Best Lead exists within category Best Leads
+    And I am on the home page
+    And I sign in as jon@lajoie.ca with password secret
+    And I follow translated "layout.main_menu.shared.home"
+    And I follow translated "category_home.show.view.read_more_link" within "#latest_leads"
+    Then I should be on the Best Lead lead page
+
   @_done
   Scenario: There should be room for a category picture on the category home pages
     When I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
