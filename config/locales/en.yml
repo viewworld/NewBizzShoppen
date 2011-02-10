@@ -660,6 +660,10 @@ en:
           edit: 'Edit'
           no_sellers_defined: 'No sellers defined'
           add_seller: 'Add seller'
+      new:
+        view:
+          header: 'New seller'
+          button_create: 'Create'
 
     payment_transactions:
       index:
