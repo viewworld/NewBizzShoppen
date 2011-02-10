@@ -447,3 +447,9 @@ Scenario: I can create a new lead and duplicate company\contact info to another 
 
 @m0 @added
 Scenario: I can pick region for a country from dropdown
+
+@m5 @unique_categories
+Scenario: I can't publish a lead in unique category if I'm not assigned to it
+
+@m5 @unique_categories
+Scenario: I can publish leads only in unique categories if I'm assigned at least to one

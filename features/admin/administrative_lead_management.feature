@@ -108,3 +108,6 @@ Scenario: I can edit leads from any page where they are presented
   When I go to agent home
   Then I follow translated "leads.listing.edit_label"
   And I should see translated "agent.leads.edit.view.title"
+
+@m5 @added
+Scenario: I can clear the filter when browsing leads
