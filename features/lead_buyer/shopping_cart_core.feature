@@ -40,7 +40,7 @@ Scenario: I can view details of leads added to the basket
   And I should see "Printers ultimate deal"
 
 
-@tgn @_done @_tested @selenium
+@tgn @_done @_tested @selenium @wip
 Scenario: I can see basket summary before I go to checkout and I can see a total for all leads to be bought
   Given I check "mark_all"
   And I press translated "leads.index.button_bulk_create_cart_item"
@@ -50,7 +50,7 @@ Scenario: I can see basket summary before I go to checkout and I can see a total
   And  I should see "Monitors LCD deal"
   And  I should see "Keyboards deal"
   And I should see "Mouses deal"
-  And I should see "6000"
+  And I should see "6,000"
 
 @tgn @_done @_tested
 Scenario: I can access my basket after I logout and login again
