@@ -41,8 +41,8 @@
 
       </frm>
     </div>
-    <div class="column_1to3 fltl" style="padding: 0 15px" id="sign_up_sign_in">
-      <% unless user_signed_in? %>
+    <% if !user_signed_in? %>
+        <div class="column_1to3 fltl" style="padding: 0 15px" id="sign_up_sign_in">
           <frm title="#{t('category_home.show.view.i_have_an_account')}" c="no_marg">
             <div class="pdd_10">
               <%= semantic_form_for(:user, :url => session_path(:user)) do |f| %>
@@ -66,13 +66,21 @@
               <%= link_to t("category_home.show.view.category_buyer_signup"), new_category_home_page_account_path %>
             </div>
           </frm>
-      <% else %>
-          <frm title="Thanks for signing in" c="no_marg">
-            <div class="pdd_10">
-            </div>
+        </div>
+      <% elsif user_signed_in? and current_user.has_role? :category_buyer %>
+        <div class="column_1to3 fltl" style="padding: 0 15px" id="my_leads">
+          <frm title="#{t('category_home.show.view.header_my_leads')}" c="no_marg">
+            <param:header>
+              <%= bt_link_to nil, t("category_home.show.view.complete_list_link"), buyers_lead_purchases_path, :class => "fltr" %>
+            </param:header>
+            <param:content>
+              <ul class="solid_list">
+                <%= render :partial => 'my_lead', :collection => @my_leads, :as => :lead %>
+              </ul>
+            </param:content>
           </frm>
+        </div>
       <% end %>
-    </div>
     <div class="column_1to3 fltl" id="latest_leads">
       <frm title="#{t('category_home.show.view.header_latest_leads')}" c="no_marg">
         <param:header>

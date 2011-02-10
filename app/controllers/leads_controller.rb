@@ -3,7 +3,7 @@ class LeadsController < ApplicationController
   actions :index, :show
   set_tab "browse_leads"
 
-  before_filter :check_category_buyer
+  before_filter :check_category_buyer, :only => [:index]
   before_filter :check_search, :only => :index
 
   def show
