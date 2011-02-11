@@ -1,4 +1,4 @@
-class AddSellerToInvoice < ActiveRecord::Migration
+class AddSellerIdToInvoice < ActiveRecord::Migration
   def self.up
     add_column :invoices, :seller_id, :integer
   end

@@ -8,6 +8,8 @@
           <th><%= t("administration.sellers.index.view.country") %></th>
           <th><%= t("administration.sellers.index.view.first_name") %></th>
           <th><%= t("administration.sellers.index.view.last_name") %></th>
+          <th><%= t("administration.sellers.index.view.default") %></th>
+          <th></th>
           <th class="hr"></th>
         </tr>
     </thead>
@@ -19,6 +21,7 @@
               <td><%= s.country.name %></td>
               <td><%= s.first_name %></td>
               <td><%= s.last_name %></td>
+              <td><%= check_box_tag "default_#{s.id}", 1, s.default?, :disabled => true %></td>
               <td class="tda ta_r">
                 <ul-actions>
                   <li><%= link_to t("administration.sellers.index.view.edit"), edit_administration_seller_path(s) %></li>
@@ -29,11 +32,12 @@
           <% end %>
       <% else %>
         <tr>
-          <td colspan="5"><%= t("administration.sellers.index.view.no_sellers_defined") %></td>
+          <td colspan="7"><%= t("administration.sellers.index.view.no_sellers_defined") %></td>
         </tr>
       <% end %>
       <tr class="main_actions">
-        <td colspan="5">
+        <td colspan="7">
+          <%= bt_link_to nil, t("administration.sellers.index.view.add_seller"), new_administration_seller_path %>
           <%= bt_link_to nil, t("administration.sellers.index.view.add_seller"), new_administration_seller_path %>
         </td>
       </tr>
@@ -41,7 +45,7 @@
     <tfoot>
     <tr>
       <td class="fl"></td>
-      <td colspan="3"></td>
+      <td colspan="5"></td>
       <td class="fr"></td>
     </tr>
     </tfoot>

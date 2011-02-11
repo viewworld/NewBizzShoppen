@@ -1,7 +1,13 @@
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs">
     <ol>
-      <%= form.inputs %>
+      <%= form.input :name %>
+      <%= form.input :first_name %>
+      <%= form.input :last_name %>
+      <%= form.input :address %>
+      <%= form.input :country_id, :collection => Country.all, :include_blank => false %>
+      <%= form.input :vat_no %>
+      <%= form.input :default %>
     </ol>
   </fieldset>
 </div>

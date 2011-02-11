@@ -6,12 +6,14 @@ Background:
   And I make sure current locale is English
   And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
   And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role customer with attributes "first_name:Janko,last_name:Muzykant"
+  And a seller exists with attributes "name:DannyTheSeller,first_name:Danny,last_name:DeVito,address:USA,country_id:1,vat_no:123"
   Then I sign in as jon@lajoie.ca with password secret
 
 @_done @ao
 Scenario: I can create new invoice for user
   When I follow translated "layout.main_menu.admin.invoices"
   And I select "Janko Muzykant" from "invoice_user_id"
+  And I select "DannyTheSeller" from "invoice_seller_id"
   And I press translated "administration.invoices.index.view.create_invoice"
   Then I should see "was successfully created"
 

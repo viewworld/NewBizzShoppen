@@ -616,6 +616,7 @@ en:
           sale_date: 'Sale date'
           invoice_number: 'Invoice number'
           customer: 'Customer'
+          seller: 'Seller'
           revenue_frozen: 'Revenue frozen'
           status: 'Status'
           search_label: 'Search'
@@ -657,6 +658,7 @@ en:
           country: 'Country'
           first_name: 'First name'
           last_name: 'Last name'
+          default: 'Default'
           edit: 'Edit'
           no_sellers_defined: 'No sellers defined'
           add_seller: 'Add seller'
@@ -664,6 +666,21 @@ en:
         view:
           header: 'New seller'
           button_create: 'Create'
+      show:
+        view:
+          header: 'Seller'
+          name: 'Name'
+          first_name: 'First name'
+          last_name: 'Last name'
+          address: 'Address'
+          vat_no: 'Vat number'
+          country: 'Country'
+          default: 'Default'
+      edit:
+        view:
+          header: 'Edit seller'
+          button_update: 'Save'
+
 
     payment_transactions:
       index:
@@ -1626,6 +1643,10 @@ en:
         bank_account:
           attributes:
             global_default:
+              cannot_be_disabled: "can't be disabled"
+        seller:
+          attributes:
+            default:
               cannot_be_disabled: "can't be disabled"
 
   activemodel:
