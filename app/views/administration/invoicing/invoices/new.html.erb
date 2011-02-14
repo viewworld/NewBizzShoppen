@@ -1,11 +1,24 @@
 <column-mc:>
-  <h1>New invoice</h1>
+  <header back="true">New invoice</header>
 
   <%= semantic_form_for [:administration, :invoicing, @invoice] do |form| %>
-      <%= form.inputs :name => "Basic information" do %>
-          <%= form.input :user, :include_blank => false %>
-      <% end %>
-      <%= form.buttons %>
+      <frm title="Basic information">
+        <param:content>
+          <div class="pdd_10 no_pdd_t">
+            <%= form.inputs :class => "inputs labels_ta_r labels_220" do %>
+                <%= form.input :user, :include_blank => false %>
+            <% end %>
+          </div>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri">
+            <%= form.submit %>
+          </ibt>
+          <ibt c="fltri bt_grey">
+            <%= button_to_function t("common.cancel_link"), "history.go(-1)" %>
+          </ibt>
+        </param:actions>
+      </frm>
   <% end %>
-  <%= link_to 'Back', administration_invoicing_invoices_path %>
+
 </column-mc:>

@@ -30,71 +30,80 @@
 
   <header>
     <param:content>
-      <%= t("administration.news.index.view.header") %>
+      <%= render "shared/blank_data", :msg => t("administration.news.index.view.header") %>
     </param:content>
 
     <param:actions>
-        <%= form_tag administration_news_index_path, :method => :post, :id => "form_new_news" do %>
+      <%= form_tag administration_news_index_path, :method => :post, :id => "form_new_news" do %>
             <span style="position:absolute;top: 5px; right: 110px;">
               <%= select_tag "subclass", options_for_select(news_scope_for_select), {} %>
             </span>
-            <ul class="header_actions">
-              <li class="last">
-                <%= bt_link_to :plus, t("administration.news.index.view.new_news"), "javascript:void(0)", :onclick => "$('#form_new_news').submit()" %>
-              </li>
-            </ul>
-        <% end %>
+          <ul class="header_actions">
+            <li class="last">
+              <%= bt_link_to :plus, t("administration.news.index.view.new_news"), "javascript:void(0)", :onclick => "$('#form_new_news').submit()" %>
+            </li>
+          </ul>
+      <% end %>
     </param:actions>
   </header>
 
-  <table id="news_table" class="generic">
-    <thead>
-    <tr>
-      <th class="hl"></th>
-      <th><%= link_to t("administration.news.index.view.id"), order_for_scoped_search(:id) %></th>
-      <th><%= link_to t("administration.news.index.view.title"), order_for_scoped_search(:title) %></th>
-      <th><%= link_to t("administration.news.index.view.created_at"), order_for_scoped_search(:created_at) %></th>
-      <th><%= link_to t("administration.news.index.view.published"), order_for_scoped_search(:published_date) %></th>
-      <th><%= link_to t("administration.news.index.view.times_read"), order_for_scoped_search(:views_count) %></th>
-      <th class="ta_r"><%= t("administration.news.index.view.actions") %></th>
-      <th class="hr"></th>
-    </tr>
-    </thead>
-    <tfoot>
-    <tr>
-      <td class="fl"></td>
-      <td colspan="6"></td>
-      <td class="fr"></td>
-    </tr>
-    </tfoot>
-    <tbody>
-    <% @news.each do |news| %>
-        <tr class="<%= cycle("odd", "even") %>">
-          <td class="cl"></td>
-          <td><%= news.id %></td>
-          <td><%= news.title %></td>
-          <td><%= news.created_at %></td>
-          <td><%= news.published_date ? news.published_date : '-' %></td>
-          <td><%= news.views_count %></td>
-          <td class="tda ta_r">
-            <ul-actions>
-              <li>
-                <%= link_to t("administration.news.index.view.edit_link"), edit_administration_news_path(news) %>
-              </li>
-              <li>
-                <%= link_to t("administration.news.index.view.show_link"), administration_news_path(news) %>
-              </li>
-              <li>
-                <%= link_to t("administration.news.index.view.delete_link"), administration_news_path(news), :method => :delete, :confirm => t("administration.news.index.view.delete_confirmation") %>
-              </li>
-            </ul-actions>
-          </td>
-          <td class="cr"></td>
+  <% if @news.blank? %>
+      <%= render "shared/blank_data" %>
+  <% else %>
+      <table id="news_table" class="generic">
+        <thead>
+        <tr>
+          <th class="hl"></th>
+          <th><%= link_to t("administration.news.index.view.id"), order_for_scoped_search(:id) %></th>
+          <th><%= link_to t("administration.news.index.view.title"), order_for_scoped_search(:title) %></th>
+          <th><%= link_to t("administration.news.index.view.created_at"), order_for_scoped_search(:created_at) %></th>
+          <th><%= link_to t("administration.news.index.view.published"), order_for_scoped_search(:published_date) %></th>
+          <th class="ta_c"><%= link_to t("administration.news.index.view.times_read"), order_for_scoped_search(:views_count) %></th>
+          <th class="ta_r"><%= t("administration.news.index.view.actions") %></th>
+          <th class="hr"></th>
         </tr>
-    <% end %>
-    </tbody>
-  </table>
-
-  <%= will_paginate @news %>
+        </thead>
+        <tfoot>
+        <tr>
+          <td class="fl"></td>
+          <td colspan="6"></td>
+          <td class="fr"></td>
+        </tr>
+        </tfoot>
+        <tbody>
+        <% @news.each do |news| %>
+            <tr class="<%= cycle("odd", "even") %>">
+              <td class="cl"></td>
+              <td><%= news.id %></td>
+              <td><%= news.title %></td>
+              <td><%= news.created_at %></td>
+              <td><%= news.published_date ? news.published_date : '-' %></td>
+              <td class="ta_c"><%= news.views_count %></td>
+              <td class="tda ta_r">
+                <ul-actions>
+                  <li>
+                    <%= link_to t("administration.news.index.view.edit_link"), edit_administration_news_path(news) %>
+                  </li>
+                  <li>
+                    <%= link_to t("administration.news.index.view.show_link"), administration_news_path(news) %>
+                  </li>
+                  <li>
+                    <%= link_to t("administration.news.index.view.delete_link"), administration_news_path(news), :method => :delete, :confirm => t("administration.news.index.view.delete_confirmation") %>
+                  </li>
+                </ul-actions>
+              </td>
+              <td class="cr"></td>
+            </tr>
+        <% end %>
+        <% if will_paginate %>
+            <tr class="pagination">
+              <td colspan="8" class="ta_c">
+                <%= will_paginate @news, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+              </td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+  <% end %>
 
 </column-mc:>

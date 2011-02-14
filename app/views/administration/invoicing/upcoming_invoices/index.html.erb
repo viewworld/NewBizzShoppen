@@ -39,60 +39,71 @@
     <param:content>
       <%= t("administration.upcoming_invoices.index.view.header") %>
     </param:content>
-
     <param:actions>
-      <ul class="header_actions">
-        <li class="last">
-          <%= t("administration.upcoming_invoices.index.view.total") %>: <%= @lead_purchases_count %>
-        </li>
-      </ul>
+      <div class="frm_tiny fltr">
+        <div class="pdd_10">
+          <%= t("administration.upcoming_invoices.index.view.total") %>: <strong><%= @lead_purchases_count %></strong>
+        </div>
+      </div>
     </param:actions>
   </header>
 
-  <table class="generic" cellspacing="0" cellpadding="0">
-    <thead>
-    <tr>
-    <th class="hl"></th>
-    <th><%= t("administration.upcoming_invoices.index.view.customer_first_name") %></th>
-    <th><%= t("administration.upcoming_invoices.index.view.customer_last_name") %></th>
-    <th><%= t("administration.upcoming_invoices.index.view.customer_screen_name") %></th>
-    <th><%= t("administration.upcoming_invoices.index.view.not_invoiced_count") %></th>
-    <th><%= t("administration.upcoming_invoices.index.view.not_invoiced_sum") %></th>
-    <th></th>
-    <th class="hr"></th>
-    </thead>
-    <tfoot>
-    <tr>
-      <td class="fl"></td>
-      <td colspan="6"></td>
-      <td class="fr"></td>
-    </tr>
-    </tfoot>
-    <tbody id="invoices_list">
-    <% @lead_purchases.each do |lead_purchase| %>
-        <tr class="<%= cycle("odd", "even") %>">
-          <td class="cl"></td>
-          <td><%= lead_purchase.owner.first_name %></td>
-          <td><%= lead_purchase.owner.last_name %></td>
-          <td><%= lead_purchase.owner.screen_name %></td>
-          <td><%= lead_purchase.not_invoiced_count %></td>
-          <td><%= lead_purchase.not_invoiced_sum %></td>
-          <td><%= link_to t("administration.upcoming_invoices.index.view.create_invoice"), new_administration_invoicing_invoice_path(:invoice => {:user_id => lead_purchase.owner_id}) %></td>
-          <td class="cr"></td>
+  <% if @lead_purchases.blank? %>
+      <%= render "shared/blank_data" %>
+  <% else %>
+      <table class="generic" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+        <th class="hl"></th>
+        <th><%= t("administration.upcoming_invoices.index.view.customer_first_name") %></th>
+        <th><%= t("administration.upcoming_invoices.index.view.customer_last_name") %></th>
+        <th><%= t("administration.upcoming_invoices.index.view.customer_screen_name") %></th>
+        <th><%= t("administration.upcoming_invoices.index.view.not_invoiced_count") %></th>
+        <th><%= t("administration.upcoming_invoices.index.view.not_invoiced_sum") %></th>
+        <th></th>
+        <th class="hr"></th>
+        </thead>
+        <tfoot>
+        <tr>
+          <td class="fl"></td>
+          <td colspan="6"></td>
+          <td class="fr"></td>
         </tr>
-    <% end %>
+        </tfoot>
+        <tbody id="invoices_list">
+        <% @lead_purchases.each do |lead_purchase| %>
+            <tr class="<%= cycle("odd", "even") %>">
+              <td class="cl"></td>
+              <td><%= lead_purchase.owner.first_name %></td>
+              <td><%= lead_purchase.owner.last_name %></td>
+              <td><%= lead_purchase.owner.screen_name %></td>
+              <td><%= lead_purchase.not_invoiced_count %></td>
+              <td><%= lead_purchase.not_invoiced_sum %></td>
+              <td class="tda ta_r">
+                <%= bt_link_to nil, t("administration.upcoming_invoices.index.view.create_invoice"), new_administration_invoicing_invoice_path(:invoice => {:user_id => lead_purchase.owner_id}) %>
+              </td>
+              <td class="cr"></td>
+            </tr>
+        <% end %>
 
-    <tr class="pagination">
-      <td colspan="8" class="ta_c">
-        <%= will_paginate @lead_purchases, :previous_label => '&laquo;', :next_label => '&raquo;' %>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+        <% if will_paginate %>
+            <tr class="pagination">
+              <td colspan="8" class="ta_c">
+                <%= will_paginate @lead_purchases, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+              </td>
+            </tr>
+        <% else %>
+            </tbody>
+            </table>
+        <% end %>
+  <% end %>
 
-  <script>
+</column-mc:>
+
+<js:>
+  <script type="text/javascript">
       $(function() {
           $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
       });
   </script>
-</column-mc:>
+</js:>

@@ -120,13 +120,13 @@ module ApplicationHelper
   def link_to_view_templates(category)
     if user_signed_in? and current_user.can_create_lead_templates?
       role = current_user.has_role?(:admin) ? "administration" : current_user.role.to_s.pluralize
-      link_to(t("categories.index.view.view_lead_templates"), self.send("#{role}_lead_templates_path", :search => { :with_category => category.id }))
+      link_to(t("categories.index.view.view_lead_templates"), self.send("#{role}_lead_templates_path", :search => { :with_category => category.id }), :class => "text_action")
     end
   end
 
   def link_to_edit_lead(lead)
     if current_user and (current_user == lead.creator or current_user.has_role?(:admin))
-      link_to(t("leads.listing.edit_label"), send("edit_#{current_user.has_role?(:admin) ? "administration" : current_user.role.to_s.pluralize}_lead_path".to_sym, lead.id))
+      link_to(t("leads.listing.edit_label"), send("edit_#{current_user.has_role?(:admin) ? "administration" : current_user.role.to_s.pluralize}_lead_path".to_sym, lead.id), :class => "text_action")
     end
   end
 end

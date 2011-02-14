@@ -1,7 +1,13 @@
 <column-mc:>
+
+
+
   <header back="true">Create new category</header>
   <%= semantic_form_for [:administration, @category], :method => :put, :html => {:multipart => true} do |form| %>
-      <frm title="">
+      <frm>
+        <param:header>
+            <%= bt_link_to nil, t("administration.categories.edit.view.new_template"), new_administration_lead_template_path(:category_id => @category.id), :class => "fltr" %>        
+        </param:header>
         <param:content>
           <%= render :partial => 'form', :locals => {:form => form} %>
         </param:content>
@@ -17,8 +23,6 @@
   <% end %>
 
 <hl/>
-
-<%= link_to t("administration.categories.edit.view.new_template"), new_administration_lead_template_path(:category_id => @category.id) %>
 
 <% unless @category.lead_templates.empty? %>
 

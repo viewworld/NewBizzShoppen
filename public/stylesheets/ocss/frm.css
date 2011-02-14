@@ -182,3 +182,24 @@
     padding: 5px;
     background: url(/images/frm/hl.png) repeat-x bottom left;
 }
+
+
+/* --- frame tiny version ---
+--------------------------------------------------------------------------------- */
+
+.frm_tiny
+{
+    border: 1px solid #e3e3e3;
+    background-color: #f5f5f5;
+
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+}
+
+.frm_tiny h3
+{
+    font-size: 14px;
+    padding-bottom: 7px;
+    padding-left: 5px;
+}

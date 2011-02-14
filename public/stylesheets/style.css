@@ -1,3 +1,11 @@
+.ui-widget
+{
+    font-family: Arial, Helvetica, Verdana, Tahoma, sans-serif !important;    
+}
+
+/* ---- global ---------------------------------------------------------------------------------------- */
+
+
 body
 {
     background: url(/images/bg_body.png) repeat 0 0 #ededed;
@@ -64,6 +72,21 @@ body
     margin: 0 auto;
     width: 300px;
     position: relative;
+}
+
+.dev_info
+{
+    background: red;
+    text-shadow: 0 -1px 0 #520000;
+    color: #fff;
+    padding: 4px 8px;
+
+    font-weight: bold;
+
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+
 }
 
 
@@ -192,6 +215,9 @@ h4
 
     display: none;
 
+    -moz-box-shadow: 0 5px 50px #666;
+    -webkit-box-shadow: 0 5px 50px #666;
+    box-shadow: 0 5px 50px #666;
 
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
@@ -692,6 +718,7 @@ textarea, select
 select
 {
     padding: 5px 6px;
+    height: 28px;
 }
 
 input:focus, textarea:focus, select:focus
@@ -834,6 +861,11 @@ p.element
     color: #5cbf1a;
 }
 
+.red
+{
+    color: #f20505;
+}
+
 .grey
 {
     font-size: 14px;
@@ -853,10 +885,16 @@ div.element_description p
     padding: 0 0 5px;
 }
 
+div.element_description h2
+{
+    font-size: 18px;
+    padding-bottom: 10px;
+}
+
 div.element_description h3
 {
-    font-size: 15px;
-    padding: 5px 0 10px;
+    font-size: 14px;
+    padding: 5px 0;
 }
 
 
@@ -891,6 +929,17 @@ a
 {
     color: #008fff;
     text-decoration: underline;
+}
+
+a:hover
+{
+    text-decoration: none;
+}
+
+a.text_action
+{
+    font-size: 85%;
+    color: #008fff !important;
 }
 
 
@@ -1171,12 +1220,20 @@ div.bt_green:hover span
     background: url(/images/frm/hl.png) repeat-x center center;
 }
 
+.thumb
+{
+    border: 1px solid #ddd;
+    padding: 1px;
+    background-color: #fff;
+}
 
 span.cke_skin_kama
 {
     padding: 0 !important;
     margin-left: 5px;
 }
+
+
 
 
 /* ---- invoices ---
@@ -1202,7 +1259,7 @@ span.cke_skin_kama
 
 .invoice_inline_inputs tbody tr td input
 {
-    width: 93px;
+    width: 122px;
 }
 
 .invoice_inline_inputs tbody tr.total td

@@ -13,12 +13,12 @@
       <% if show_checkboxes %>
           <th></th>
       <% end %>
-      <th class="ta_c"><%= link_to t("lead_templates.table.name"), order_for_scoped_search(:name) %></th>
-      <th class="ta_c"><%= t("lead_templates.table.category") %></th>
-      <th class="ta_c"><%= t("lead_templates.table.is_mandatory") %></th>
+      <th class="ta_l"><%= link_to t("lead_templates.table.name"), order_for_scoped_search(:name) %></th>
+      <th class="ta_l"><%= t("lead_templates.table.category") %></th>
+      <th class="ta_l"><%= t("lead_templates.table.is_mandatory") %></th>
 
       <% if show_active_column %>
-        <th class="ta_c"><%= t("lead_templates.table.is_active") %></th>
+        <th class="ta_l"><%= t("lead_templates.table.is_active") %></th>
       <% end %>
 
       <% if block_tools %>
@@ -32,7 +32,7 @@
   <tfoot>
   <tr>
     <td class="fl"></td>
-    <td colspan="<%= cols + 1 %>"></td>
+    <td colspan="<%= cols %>"></td>
     <td class="fr"></td>
   </tr>
   </tfoot>
@@ -47,7 +47,7 @@
           <td><%= lead_template.category.name %></td>
           <td><%= lead_template.is_mandatory ? t("lead_templates.table.yes_label") : t("lead_templates.table.no_label")%></td>
           <% if show_active_column %>
-            <td class="ta_c"><%= lead_template.is_active ? t("lead_templates.table.yes_label") : t("lead_templates.table.no_label") %></td>
+            <td class="ta_l"><%= lead_template.is_active ? t("lead_templates.table.yes_label") : t("lead_templates.table.no_label") %></td>
           <% end %>
 
           <% if block_tools %>

@@ -44,52 +44,61 @@
     </param:actions>
   </header>
 
-  <table id="articles_table" class="generic">
-    <thead>
-    <tr>
-      <th class="hl"></th>
-      <th style="width: 10px"><%= link_to t("administration.articles.index.view.id"), order_for_scoped_search(:id) %></th>
-      <th><%= t("administration.articles.index.view.type") %></th>
-      <th><%= link_to t("administration.articles.index.view.title"), order_for_scoped_search(:title) %></th>
-      <th class="ta_r"><%= t("administration.articles.index.view.actions") %></th>
-      <th class="hr"></th>
-    </tr>
-    </thead>
-    <tfoot>
-    <tr>
-      <td class="fl"></td>
-      <td colspan="4"></td>
-      <td class="fr"></td>
-    </tr>
-    </tfoot>
-    <tbody>
-    <% @articles.each do |article| %>
-        <tr class="<%= cycle("odd", "even") %>">
-          <td class="cl"></td>
-          <td><%= article.id %></td>
-          <td><%= article.show_type %></td>
-          <td><%= article.title %></td>
-          <td class="tda ta_r">
-            <ul-actions>
-              <li>
-                <%= link_to t("administration.articles.index.view.edit_link"), edit_administration_article_path(article) %>
-              </li>
-              <li>
-                <%= link_to t("administration.articles.index.view.show_link"), administration_article_path(article) %>
-              </li>
-              <% if article.can_be_destroyed? %>
-                  <li>
-                    <%= link_to t("administration.articles.index.view.delete_link"), administration_article_path(article), :method => :delete, :confirm => t("administration.articles.index.view.delete_confirmation") %>
-                  </li>
-              <% end %>
-            </ul-actions>
-          </td>
-          <td class="cr"></td>
+  <% if @articles.blank? %>
+      <%= render "shared/blank_data" %>
+  <% else %>
+
+      <table id="articles_table" class="generic">
+        <thead>
+        <tr>
+          <th class="hl"></th>
+          <th style="width: 10px"><%= link_to t("administration.articles.index.view.id"), order_for_scoped_search(:id) %></th>
+          <th><%= t("administration.articles.index.view.type") %></th>
+          <th><%= link_to t("administration.articles.index.view.title"), order_for_scoped_search(:title) %></th>
+          <th class="ta_r"><%= t("administration.articles.index.view.actions") %></th>
+          <th class="hr"></th>
         </tr>
-    <% end %>
-    </tbody>
-  </table>
-
-  <%= will_paginate @articles %>
-
+        </thead>
+        <tfoot>
+        <tr>
+          <td class="fl"></td>
+          <td colspan="4"></td>
+          <td class="fr"></td>
+        </tr>
+        </tfoot>
+        <tbody>
+        <% @articles.each do |article| %>
+            <tr class="<%= cycle("odd", "even") %>">
+              <td class="cl"></td>
+              <td><%= article.id %></td>
+              <td><%= article.show_type %></td>
+              <td><%= article.title %></td>
+              <td class="tda ta_r">
+                <ul-actions>
+                  <li>
+                    <%= link_to t("administration.articles.index.view.edit_link"), edit_administration_article_path(article) %>
+                  </li>
+                  <li>
+                    <%= link_to t("administration.articles.index.view.show_link"), administration_article_path(article) %>
+                  </li>
+                  <% if article.can_be_destroyed? %>
+                      <li>
+                        <%= link_to t("administration.articles.index.view.delete_link"), administration_article_path(article), :method => :delete, :confirm => t("administration.articles.index.view.delete_confirmation") %>
+                      </li>
+                  <% end %>
+                </ul-actions>
+              </td>
+              <td class="cr"></td>
+            </tr>
+        <% end %>
+        <% if will_paginate %>
+            <tr class="pagination">
+              <td colspan="6" class="ta_c">
+                <%= will_paginate @articles, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+              </td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+  <% end %>
 </column-mc:>

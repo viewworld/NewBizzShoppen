@@ -1,9 +1,10 @@
 <div id="lead_template_field_form_<%= f.object.new_record? ? 'lead_template_lead_template_fields_attributes_0' : f.object.id %>">
-      <%= bt_link_to :remove, t("shared.lead_templates.form.remove_lead_template_field"), "javascript:void(0)", :onclick => "remove_lead_template_field('#{f.object.new_record? ? 'lead_template_lead_template_fields_attributes_0' : f.object.id}', #{f.object.new_record? ? 'null' : f.object.id})", :style => "position: relative; left:8px; top:2px" %>
-  <fieldset class="inputs labels_ta_r">
-    <ol class="align_inputs">
-          <li class="string">
-          <%= f.label :name %>
+  <hl/>
+  <div class="pdd_10 no_pdd_t">
+    <fieldset class="inputs_vertical">
+      <ol>
+        <li class="string required">          
+          <label>Name<abbr title="required">*</abbr></label>
           <%= f.text_field :name %>
           <%= custom_error_for_field(f, :name) %>
         </li>
@@ -25,6 +26,10 @@
               <%= f.hidden_field :_destroy, :id => "destroy_hidden_field_#{f.object.id}" %>
           <% end %>
         </li>
-    </ol>
-  </fieldset>
+        <li class="commit">
+          <%= bt_link_to :remove, t("shared.lead_templates.form.remove_lead_template_field"), "javascript:void(0)", :onclick => "remove_lead_template_field('#{f.object.new_record? ? 'lead_template_lead_template_fields_attributes_0' : f.object.id}', #{f.object.new_record? ? 'null' : f.object.id})" %>
+        </li>
+      </ol>
+    </fieldset>
+  </div>
 </div>

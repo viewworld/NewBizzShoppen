@@ -1,13 +1,16 @@
 <div class="pdd_10 no_pdd_t">
-  <fieldset class="inputs">
-    <ol>
+  <fieldset class="inputs labels_ta_r labels_240">
+    <ol class="align_inputs">
       <%= form.input :country, :include_blank => false %>
       <%= form.input :bank_name %>
-      <%= form.input :bank_address %>
+      <%= form.input :bank_address, :input_html => { :style => "width: 230px; height: 80px" } %>
       <%= form.input :iban_no %>
       <%= form.input :local_bank_number %>
       <%= form.input :swift %>
-      <%= form.input :payment_conditions %>
+      <li class="no_pdd">
+        <hl pdd="5"/>
+      </li>
+      <%= form.input :payment_conditions, :input_html => { :style => "width: 400px; height: 150px" } %>
       <%= form.input :country_default, :label => t("administration.bank_accounts.form.view.country_default") %>
       <%= form.input :global_default, :label => t("administration.bank_accounts.form.view.global_default") %>
     </ol>

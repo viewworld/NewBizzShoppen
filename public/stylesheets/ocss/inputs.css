@@ -83,6 +83,19 @@
     padding-left: 6px;
 }
 
+.inputs ol li.commit p
+{
+    float: left;
+    padding-left: 5px;
+    line-height: 30px;
+    font-size: 12px;
+}
+
+.inputs ol li.commit p a
+{
+    padding-left: 3px;
+}
+
 .inputs ol li span.label_link
 {
     position: absolute;
@@ -139,6 +152,7 @@
 .inputs ol li.select select
 {
     width: auto;
+    float: left;
 }
 
 .inputs ol li.multiple
@@ -569,6 +583,16 @@
 	width: 152px;
 }
 
+.inputs_150 ol li.string input,
+.inputs_150 ol li.password input
+{
+	width: 150px;
+}
+.inputs_150 ol li.select select
+{
+	width: 162px;
+}
+
 
 .inputs_160 ol li.string input,
 .inputs_160 ol li.password input
@@ -769,12 +793,40 @@
 /* --- extend ---
 ------------------------------------------------------------------------------------------ */
 
-.inputs_vertical li
+.inputs_vertical ol li label abbr
+{
+    color: red;
+    padding-left: 3px;
+}
+
+
+.inputs_vertical ol li
 {
     display: block;
     float: left;    
     padding: 0 3px 5px 10px;
 }
+
+
+
+/* --- errors --------------------------------------------------------------- */
+
+.inputs_vertical ol li p.inline-errors
+{
+    padding: 3px 0 0 3px;
+    color: #f10000;
+    font-size: 11px;
+}
+
+.inputs_vertical ol li.error input
+{
+    border-color: #ff6060;
+    -moz-box-shadow: 0 0 2px #ff6060;
+    -webkit-box-shadow: 0 0 2px #ff6060;
+    box-shadow: 0 0 2px #ff6060;
+}
+
+/* --- labels --------------------------------------------------------------- */
 
 .inputs_vertical li.string label,
 .inputs_vertical li.select label,
@@ -794,12 +846,13 @@
 
 .inputs_vertical li.select
 {    
-    max-width: 164px;
+    max-width: 170px;
 }
 
 .inputs_vertical li.select select
 {
-    min-width: 80px;
+    min-width: 100px;
+    max-width: 164px;
     margin: 0;
 }
 
@@ -843,7 +896,7 @@
 
 .inputs_vertical li.string.range input
 {
-    width: 90px;    
+    width: 95px;    
 }
 
 .inputs_vertical li.string.range .range_container
@@ -881,6 +934,8 @@
 {
     margin-top: 2px;
 }
+
+
 
 
 
