@@ -45,3 +45,6 @@ Scenario: I should be able to destroy currency unless there are leads defined wi
   And I follow translated "layout.main_menu.admin.currencies"
   And I delete "PLN" currency
   Then I should see "PLN"
+
+@tgn @m5 @added @non_testable @_done
+Scenario: There are currencies already defined in the system that are accepted by PayPal
