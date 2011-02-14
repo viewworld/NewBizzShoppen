@@ -1,8 +1,3 @@
-When /^invoice exists for user "([^"]*)"(?: with attributes "([^"]*)")?$/ do |email,options|
-  attrs = options ? Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys.merge(:user => User.where(:email => email).first) : {:user => User.where(:email => email).first}
-  Invoice.make!(attrs)
-end
-
 When /^invoice line for first invoice exists for user "([^"]*)"(?: with attributes "([^"]*)")?$/ do |email,options|
   invoice = User.where(:email => email).first.invoices.first
   attrs = options ? Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys.merge(:invoice => invoice) : {:invoice => invoice}
@@ -49,7 +44,7 @@ end
 
 Then /^user with email "([^"]*)" and role "([^"]*)" has invoice generated for all unpaid leads$/ do |email, role|
   customer = "User::#{role.camelize}".constantize.find_by_email(email)
-  invoice = Invoice.create(:user_id => customer.id, :paid_at =>  Time.now)
+  invoice = Invoice.create(:user_id => customer.id, :paid_at =>  Time.now, :seller => Seller.make!)
   invoice.reload
   ManualTransaction.create(:invoice => invoice, :amount => invoice.total, :paid_at => Time.now)
 end
@@ -63,7 +58,7 @@ Then /^user with email "([^"]*)" and role "([^"]*)" has invoice for lead "([^"]*
   else
     payment_notification = nil
   end
-  invoice = Invoice.create(:user_id => customer.id, :paid_at => transaction_type == "by paypal" ? Time.now : nil)
+  invoice = Invoice.create(:user_id => customer.id, :seller => Seller.make!, :paid_at => transaction_type == "by paypal" ? Time.now : nil)
   if transaction_type == "by paypal"
     PaypalTransaction.create(:invoice => invoice, :payment_notification => payment_notification, :amount => lead.price, :paid_at => Time.now)
   else

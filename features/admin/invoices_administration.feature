@@ -128,7 +128,7 @@ Scenario: I can create new invoice from suggestion on invoices pending creation 
   Then I sign in as jon@lajoie.ca with password secret
   And I go to administration upcoming invoices
   And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
-  And I press "Create Invoice"
+  Then I press translated "administration.invoices.new.view.button_create"
   Then I should see translated "administration.invoices.show.view.header"
   And I go to administration invoices
   And I follow translated "administration.invoices.index.view.show_invoice"
@@ -353,14 +353,14 @@ Scenario: I can bulk set selected invoices as paid
 Scenario: I can create invoice for any customer from users tab
   Given I go to administration users
   And I click hidden translated link "administration.users.index.view.create_invoice"
-  Then I press "Create Invoice"
+  Then I press translated "administration.invoices.new.view.button_create"
   And I should see translated "administration.invoices.edit.view.header"
 
 @tgn @added @_tested
 Scenario: I can create invoice for any customer from users tab
   Given I go to administration users
   And I click hidden translated link "administration.users.index.view.create_invoice"
-  Then I press "Create Invoice"
+  Then I press translated "administration.invoices.new.view.button_create"
   And I should see translated "administration.invoices.edit.view.header"
 
 @added @m4b @_done

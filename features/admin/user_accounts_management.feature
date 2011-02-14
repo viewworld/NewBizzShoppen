@@ -79,11 +79,12 @@ Feature: User accounts management
 @m5 @tgn @_tested
 Scenario: I can invoice an account
   Given I have user with email bigbuyer1@person.com and role customer
+  And a seller exists with attributes "name:DannyTheSeller,first_name:Danny,last_name:DeVito,address:USA,country_id:1,vat_no:123"
   And User bigbuyer1@person.com with role customer is big buyer
   And a lead Monitors ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role customer
   Given I go to administration users
   And I click hidden translated link "administration.users.index.view.create_invoice"
-  Then I press "Create Invoice"
+  Then I press translated "administration.invoices.new.view.button_create"
   And I should see translated "administration.invoices.edit.view.header"
 
 @m5 @tgn @selenium @_tested

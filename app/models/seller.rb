@@ -29,4 +29,8 @@ class Seller < ActiveRecord::Base
 
   public
 
+  def self.default
+    default_seller.first || first
+  end
+
 end

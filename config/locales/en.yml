@@ -529,6 +529,11 @@ en:
           cash: 'Cash'
           bank_transfer: 'Bank transfer'
           na: N/A
+      new:
+        view:
+          header: 'New invoice'
+          button_create: 'Create'
+          basic_information: 'Basic information'
       show:
         view:
           print_invoice: 'Print invoice'

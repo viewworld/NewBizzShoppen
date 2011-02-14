@@ -57,6 +57,7 @@ class Invoice < ActiveRecord::Base
   before_update :generate_manual_transaction_for_big_buyer
   before_save :mark_all_invoice_lines_as_paid
   after_save :recalculate_invoice_items
+  after_initialize :set_seller
 
   #Uncomment reject_if, if not validating invoice lines
   accepts_nested_attributes_for :invoice_lines, :allow_destroy => true #,:reject_if => lambda { |a| a[:name].blank? }
@@ -65,6 +66,10 @@ class Invoice < ActiveRecord::Base
   multi_scoped_order :sale_date_and_number
 
   protected
+
+  def set_seller
+    self.seller = Seller.default if new_record? or !seller
+  end
 
   def update_revenue_frozen
     Invoice.update_all ["revenue_frozen = (select sum(revenue_frozen) from invoice_lines where invoice_id = ?)",id], ["id = ?",id]

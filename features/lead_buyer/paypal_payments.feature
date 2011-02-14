@@ -3,6 +3,7 @@ Feature: Paypal payments
 
 Background:
   Given I am on the homepage
+  And a seller exists with attributes "name:DannyTheSeller,first_name:Danny,last_name:DeVito,address:USA,country_id:1,vat_no:123"
   And I make sure current locale is English
   Given Category named "Computers" already exists
   And Lead named "Super printers" exists within "Computers" category
