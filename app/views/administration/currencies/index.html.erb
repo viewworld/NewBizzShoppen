@@ -1,4 +1,4 @@
-<column-mc:> 
+<column-mc:>
   <header>
     <param:content>
       <%= t("administration.currencies.index.view.title") %>
@@ -14,12 +14,14 @@
   </header>
 
   <div class="hidden">
-  <%= form_tag new_administration_currency_path, :method => :get, :id => "form_new_currency" do %>
-    <%= submit_tag t("administration.currencies.index.view.new_currency") %>
-  <% end %>
+    <%= form_tag new_administration_currency_path, :method => :get, :id => "form_new_currency" do %>
+        <%= submit_tag t("administration.currencies.index.view.new_currency") %>
+    <% end %>
   </div>
 
-  <% if @currencies.any? %>
+  <% if @currencies.blank? %>
+      <%= render "shared/blank_data", :msg => t("administration.currencies.index.view.no_currencies_defined") %>
+  <% else %>
       <table id="currencies_table" class="generic">
         <thead>
         <tr>
@@ -64,7 +66,5 @@
         <% end %>
         </tbody>
       </table>
-  <% else %>
-    <p><%= t("administration.currencies.index.view.no_currencies_defined") %></p>
   <% end %>
 </column-mc:>

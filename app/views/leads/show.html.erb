@@ -1,63 +1,67 @@
 <column-mc:>
 
-<header back="true"><%= t("leads.show.view.header") %></header>
+  <header back="true"><%= t("leads.show.view.header") %></header>
 
-  <h2><%= @lead.header %></h2>
-
-  <div class="grid_280 fltl pdd_10 no_pdd_lr">
-    <ul class="elements_list">
-      <li>
-        <div>
-          <span class="label"><%= t("leads.show.view.clicks_label") %></span>
-          <%= @lead.clicks_count %>
-        </div>
-      </li>
-      <li>
-        <div>
-          <span class="label"><%= t("leads.show.view.exposures_label") %></span>
-          <%= @lead.exposures_count %>
-        </div>
-      </li>
-      <li>
-        <div>
-          <span class="label"><%= t("leads.show.view.rating_label") %></span>
-          <%= @lead.average_rating == -1 ? t("leads.listing.average_rating_none_label") : @lead.average_rating_as_text %>
-        </div>
-      </li>
-      <li>
-        <div>
-          <span class="label"><%= t("leads.show.view.sale_limit_label") %></span>
-          <%= @lead.sale_limit %>
-        </div>
-      </li>
-      <li>
-        <div>
-          <span class="label"><%= t("leads.show.view.novelty_label") %></span>
-           <%= t("models.lead.novelty.lvl#{@lead.novelty_level}") %>
-        </div>
-      </li>
-      <li>
-        <div>
-          <span class="label"><%= t("leads.show.view.hotness_label") %></span>
-           <%= t("models.lead.hotness.lvl#{@lead.hotness_level}") %>
-        </div>
-      </li>
-      <li>
-        <div>
-          <span class="label"><%= t("leads.show.view.certification_label") %></span>
-           <%= t("models.lead.certification.lvl#{@lead.certification_level}") %>
-        </div>
-      </li>
-    </ul>
-  </div>
-
-  <div class="grid_800 fltr pdd_10 no_pdd_r">
+  <div class="grid_800 fltl pdd_10 no_pdd_r">
     <div class="element_description">
-      <h3><%=  t("lead_purchases.listing.description_label") %></h3>
+      <h2><%= @lead.header %></h2>      
+
+      <h3><%= t("lead_purchases.listing.description_label") %></h3>
 
       <p><%= @lead.description %></p>
     </div>
   </div>
+
+  <div class="grid_280 fltr pdd_10 no_pdd_lr">
+    <div class="frm_tiny">
+      <div class="pdd_10">
+        <ul class="elements_list">
+          <li>
+            <div>
+              <span class="label"><%= t("leads.show.view.clicks_label") %></span>
+              <%= @lead.clicks_count %>
+            </div>
+          </li>
+          <li>
+            <div>
+              <span class="label"><%= t("leads.show.view.exposures_label") %></span>
+              <%= @lead.exposures_count %>
+            </div>
+          </li>
+          <li>
+            <div>
+              <span class="label"><%= t("leads.show.view.rating_label") %></span>
+              <%= @lead.average_rating == -1 ? t("leads.listing.average_rating_none_label") : @lead.average_rating_as_text %>
+            </div>
+          </li>
+          <li>
+            <div>
+              <span class="label"><%= t("leads.show.view.sale_limit_label") %></span>
+              <%= @lead.sale_limit %>
+            </div>
+          </li>
+          <li>
+            <div>
+              <span class="label"><%= t("leads.show.view.novelty_label") %></span>
+              <%= t("models.lead.novelty.lvl#{@lead.novelty_level}") %>
+            </div>
+          </li>
+          <li>
+            <div>
+              <span class="label"><%= t("leads.show.view.hotness_label") %></span>
+              <%= t("models.lead.hotness.lvl#{@lead.hotness_level}") %>
+            </div>
+          </li>
+          <li>
+            <div>
+              <span class="label"><%= t("leads.show.view.certification_label") %></span>
+              <%= t("models.lead.certification.lvl#{@lead.certification_level}") %>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>  
 
   <clb/>
 

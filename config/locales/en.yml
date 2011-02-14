@@ -57,6 +57,7 @@ en:
         lead_templates: 'Lead templates'
     my_profile_link: My profile
     logout_link: 'Logout %{user_email}'
+    login_link: 'Login'
 
     cart:
       cart_header: Cart (%{count} items)
@@ -246,9 +247,9 @@ en:
   news:
     index:
       view:
-        agents_header: 'AGENTS NEWS'
-        sales_managers_header: 'SALES MANAGER NEWS'
-        purchase_managers_header: 'PURCHASE MANAGERS NEWS'
+        agents_header: 'Agents news'
+        sales_managers_header: 'Sales manager news'
+        purchase_managers_header: 'Purchase manager news'
         read_more_link: 'read more'
         newer_link: 'Newer'
         older_link: 'Older'
