@@ -1,3 +1,4 @@
+@$_admin @m5
 Feature: Unique customer categories
 
   @m5 @unique_categories
