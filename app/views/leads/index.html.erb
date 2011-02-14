@@ -44,7 +44,7 @@
 
   <%= blurb(:blurb_leads_listing) %>
 
-  <% if @lead_purchases.blank? %>
+  <% if @leads.blank? %>
       <%= render "shared/blank_data" %>
   <% else %>
       <%= form_tag bulk_action_path do %>

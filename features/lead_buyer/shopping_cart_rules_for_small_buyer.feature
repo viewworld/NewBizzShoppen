@@ -82,3 +82,20 @@ Scenario: I can bulk add to cart leads requested by lead user that belongs to my
   Then I check "mark_all"
   And I follow translated "customer.lead_requests.index.view.button_bulk_create_lead_request"
   And I should see translated "flash.bulk_lead_requests.actions.update.notice"
+
+@tgn @m5 @added @_tested
+Scenario: Item cannot be added to the cart if its currency does not match items' currencies already added to the cart
+  Given Category named "Super Computers" already exists
+  Given Category named "Awesome Computers" already exists
+  Given Lead named "Super joysticks" exists within "Super Computers" category
+  And lead "Super joysticks" has currency "DKK"
+  Given Lead named "Super keyboards" exists within "Awesome Computers" category
+  And lead "Super keyboards" has currency "EUR"
+  Then I go to browse leads
+  And I follow "Super Computers"
+  Then I follow translated "leads.index.add_to_cart_link"
+  And I should see translated "buyer.cart_items.create.flash.cart_item_creation_successful"
+  Then I go to browse leads
+  And I follow "Awesome Computers"
+  Then I follow translated "leads.index.add_to_cart_link"
+  And I should see translated "buyer.cart_items.create.flash.cart_item_currencies_mismatch"

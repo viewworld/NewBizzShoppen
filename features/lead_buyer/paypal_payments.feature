@@ -42,3 +42,6 @@ Scenario: Paypal's IPN marks all related lead purchases as paid and accessible
 
 @_done @non_testable
 Scenario: Data is transfererd to paypal in encrypted form
+
+@tgn @m5 @added @_non_testable @_done
+Scenario: Currency code from cart is passed to PayPal
