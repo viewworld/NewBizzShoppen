@@ -38,26 +38,24 @@
 
   <header><%= t("administration.invoices.index.view.header") %></header>
 
-
+  <div class="fltl">
+    <%= semantic_form_for [:administration, :invoicing, Invoice.new] do |form| %>
+        <fieldset class="inputs_vertical">
+          <ol>
+            <%= form.input :user, :include_blank => false %>
+            <li class="commit">
+              <ibt class="commit">
+                <%= form.submit t("administration.invoices.index.view.create_invoice") %>
+              </ibt>
+            </li>
+          </ol>
+        </fieldset>
+    <% end %>
+  </div>
 
   <% if @invoices.blank? %>
       <%= render "shared/blank_data" %>
   <% else %>
-      <div class="fltl">
-        <%= semantic_form_for [:administration, :invoicing, Invoice.new] do |form| %>
-            <fieldset class="inputs_vertical">
-              <ol>
-                <%= form.input :user, :include_blank => false %>
-                <li class="commit">
-                  <ibt class="commit">
-                    <%= form.submit t("administration.invoices.index.view.create_invoice") %>
-                  </ibt>
-                </li>
-              </ol>
-            </fieldset>
-        <% end %>
-      </div>
-
       <div class="fltr">
         <div class="frm_tiny fltr" style="margin-top: 22px">
           <div class="pdd_10">

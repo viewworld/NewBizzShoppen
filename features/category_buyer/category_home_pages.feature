@@ -49,7 +49,6 @@ Feature: Category home pages
     When Category named "Best Leads" already exists
     And there are "11" leads in category "Best Leads"
     And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Best Leads"
-    And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
     And I follow translated "layout.main_menu.shared.home"
     Then I should see "10" items on a list within "#latest_leads"

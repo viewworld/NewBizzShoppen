@@ -86,7 +86,7 @@
             </tr>
         <% end %>
 
-        <% if will_paginate %>
+        <% if @lead_purchases.total_pages > 1 %>
             <tr class="pagination">
               <td colspan="8" class="ta_c">
                 <%= will_paginate @lead_purchases, :previous_label => '&laquo;', :next_label => '&raquo;' %>

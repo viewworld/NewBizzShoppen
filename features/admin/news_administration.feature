@@ -165,6 +165,7 @@ Scenario: I can create news for category
 @m5 @ao @_done
 Scenario: When you look at the news tab, the list of news should contain the following columns: Creation date
   When Category named "Best Leads" already exists
+  And agent news exists with attributes "title:AAANews,published:1"
   And I am on the home page
   And I follow translated "layout.main_menu.admin.news"
   Then I should see translated "administration.news.index.view.created_at"
