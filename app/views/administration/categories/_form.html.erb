@@ -8,6 +8,14 @@
       </li>
       <%= form.input :description, :as => :text, :input_html => { :style => "width:400px;height:150px" } %>
       <%= form.input :is_locked %>
+      <%= form.input :is_customer_unique %>
+
+      <%= render :partial => "users_selection", :locals => { :users_type => "customers", :form => form } %>
+
+      <%= form.input :is_agent_unique %>
+
+      <%= render :partial => "users_selection", :locals => { :users_type => "agents", :form => form } %>
+
       <%= form.semantic_fields_for :image, @category.image || Asset::CategoryImage.new do |image| %>
           <%= image.input :asset,
                           :as => :file,
@@ -24,5 +32,36 @@
   </fieldset>
 </div>
 
+
+<script type="text/javascript">
+  function move_users_to_all(users_type){
+    $("#all_" + users_type + " option:selected").each(function()
+    {
+        $("#selected_" + users_type).
+                append($("<option></option>").
+                attr("value", $(this).val()).
+                text($(this).text()));
+        $(this).remove();
+    });
+  }
+
+  function move_users_to_selected(users_type){
+    $("#selected_" + users_type + " option:selected").each(function()
+    {
+        $("#all_" + users_type).
+                append($("<option></option>").
+                attr("value", $(this).val()).
+                text($(this).text()));
+        $(this).remove();
+    });
+  }
+
+  function select_all_options(users_type){
+    $("#selected_" + users_type + " option").each(function()
+    {
+        $(this).attr("selected","selected");
+    });
+  }
+</script>
 
 
