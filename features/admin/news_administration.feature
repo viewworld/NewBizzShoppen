@@ -115,7 +115,7 @@ Scenario: When you edit a news article you should be able to cancel, and have th
   And I follow translated "administration.news.index.view.new_news"
   And I press translated "common.cancel_link"
   Then I should be on administration news page
-  And I should see "0" rows in a table within "#news_table"
+  And I should see translated "common.nothing_to_display"
 
 @m5 @category_home_pages @ao @_done
 Scenario: I can see all news for categories
@@ -165,6 +165,7 @@ Scenario: I can create news for category
 @m5 @ao @_done
 Scenario: When you look at the news tab, the list of news should contain the following columns: Creation date
   When Category named "Best Leads" already exists
+  And agent news exists with attributes "title:AAANews,published:1"
   And I am on the home page
   And I follow translated "layout.main_menu.admin.news"
   Then I should see translated "administration.news.index.view.created_at"

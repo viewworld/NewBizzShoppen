@@ -14,14 +14,18 @@ class Cart
 
   def add_lead(lead)
     unless items.include?(lead)
-      if lead.buyable?
-        purchase = @buyer.lead_purchases.create(:lead_id => lead.id, :paid => false)
-        if @buyer.big_buyer?
-          purchase.update_attribute(:accessible_from, Time.now)
-          return :bought_successful
-        else
-          return :creation_successful
+      if currency_matches?(lead)
+        if lead.buyable?
+          purchase = @buyer.lead_purchases.create(:lead_id => lead.id, :paid => false)
+          if @buyer.big_buyer?
+            purchase.update_attribute(:accessible_from, Time.now)
+            return :bought_successful
+          else
+            return :creation_successful
+          end
         end
+      else
+        :currencies_mismatch
       end
     else
       :already_in_cart
@@ -29,7 +33,7 @@ class Cart
   end
 
   def add_leads(*ids)
-    Lead.where(:id => ids.flatten).map { |lead| add_lead(lead) }.select { |r| r != :already_in_cart }
+    Lead.where(:id => ids.flatten).map { |lead| add_lead(lead) }.select { |r| r != :already_in_cart and r != :currencies_mismatch }
   end
 
   def remove_leads(*ids)
@@ -62,6 +66,13 @@ class Cart
 
   def currency
     items.any? ? items.first.currency : nil
+  end
+
+  def currency_matches?(lead)
+    unless empty?
+      return currency == lead.currency
+    end
+    true
   end
 
 end

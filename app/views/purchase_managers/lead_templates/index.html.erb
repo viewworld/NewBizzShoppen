@@ -37,18 +37,22 @@
 
       <ul class="header_actions">
         <li class="last">
-          <%= bt_link_to :plus, t("purchase_manager.lead_templates.index.view.new_template"), new_purchase_managers_lead_template_path(:lead_template => { :category_id => @search.with_category }) %>
+          <%= bt_link_to :plus, t("purchase_manager.lead_templates.index.view.new_template"), new_purchase_managers_lead_template_path(:lead_template => {:category_id => @search.with_category}) %>
         </li>
       </ul>
     </param:actions>
   </header>
 
-  <%= lead_templates_table @lead_templates, :show_checkboxes => false, :show_active_column => true, :paginate_table => true do |blocks| %>
-      <% blocks.tools do |lead_template| %>
-        <ul-actions>
-          <li><%= link_to t("purchase_manager.lead_templates.index.view.edit"), edit_purchase_managers_lead_template_path(lead_template), :class => "default_action" %></li>
-          <li><%= link_to t("purchase_manager.lead_templates.index.view.destroy"), purchase_managers_lead_template_path(lead_template), :method => :delete, :confirm => t("purchase_manager.lead_templates.index.view.destroy_template_confirmation_message") %></li>
-        </ul-actions>
+  <% if @lead_templates.blank? %>
+      <%= render "shared/blank_data" %>
+  <% else %>
+      <%= lead_templates_table @lead_templates, :show_checkboxes => false, :show_active_column => true, :paginate_table => true do |blocks| %>
+          <% blocks.tools do |lead_template| %>
+              <ul-actions>
+                <li><%= link_to t("purchase_manager.lead_templates.index.view.edit"), edit_purchase_managers_lead_template_path(lead_template), :class => "default_action" %></li>
+                <li><%= link_to t("purchase_manager.lead_templates.index.view.destroy"), purchase_managers_lead_template_path(lead_template), :method => :delete, :confirm => t("purchase_manager.lead_templates.index.view.destroy_template_confirmation_message") %></li>
+              </ul-actions>
+          <% end %>
       <% end %>
   <% end %>
 

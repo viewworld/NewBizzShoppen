@@ -12,7 +12,8 @@ en:
     yes_label: 'Yes'
     no_label: 'No'
     read_more: 'read more'
-    all_label: 'All'    
+    all_label: 'All'
+    nothing_to_display: 'Nothing to display'
   layout:
     main_menu:
       admin:
@@ -58,6 +59,7 @@ en:
         lead_templates: 'Lead templates'
     my_profile_link: My profile
     logout_link: 'Logout %{user_email}'
+    login_link: 'Login'
 
     cart:
       cart_header: Cart (%{count} items)
@@ -247,9 +249,9 @@ en:
   news:
     index:
       view:
-        agents_header: 'AGENTS NEWS'
-        sales_managers_header: 'SALES MANAGER NEWS'
-        purchase_managers_header: 'PURCHASE MANAGERS NEWS'
+        agents_header: 'Agents news'
+        sales_managers_header: 'Sales manager news'
+        purchase_managers_header: 'Purchase manager news'
         read_more_link: 'read more'
         newer_link: 'Newer'
         older_link: 'Older'
@@ -1108,6 +1110,7 @@ en:
           cart_item_creation_successful: Lead has been added to cart
           cart_item_bought_successful: Lead has been bought
           cart_item_already_in_basket: Lead has already been added to cart
+          cart_item_currencies_mismatch: Lead's currency is different from other items in the cart
       destroy:
         flash:
           cart_item_destruction_successful: Lead has been removed from cart

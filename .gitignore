@@ -14,3 +14,4 @@ Gemfile.lock
 .rvmrc
 .livereload
 /tmp/*
+/public/assets/*

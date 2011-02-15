@@ -137,15 +137,31 @@ class Nbs < Thor
       u.save
     end
 
-    puts "Creating default currency..."
+    puts "Creating default PayPal currencies..."
     [
-        {:name => 'Euro', :symbol => '&euro;', :format => '%u%n', :active => true}
+        {:name => 'AUD', :symbol => 'A &#36;', :format => '%u%n', :active => false},
+        {:name => 'CAD', :symbol => 'C &#36;', :format => '%u%n', :active => false},
+        {:name => 'EUR', :symbol => '&euro;', :format => '%u%n', :active => true},
+        {:name => 'GBP', :symbol => '&pound;', :format => '%u%n', :active => false},
+        {:name => 'JPY', :symbol => '&yen;', :format => '%u%n', :active => false},
+        {:name => 'USD', :symbol => '&#36;', :format => '%u%n', :active => false},
+        {:name => 'NZD', :symbol => '&#36;', :format => '%u%n', :active => false},
+        {:name => 'CHF', :symbol => 'CHF', :format => '%u %n', :active => false},
+        {:name => 'HKD', :symbol => '&#36;', :format => '%u%n', :active => false},
+        {:name => 'SGD', :symbol => '&#36;', :format => '%u%n', :active => false},
+        {:name => 'SEK', :symbol => 'SEK', :format => '%u %n', :active => false},
+        {:name => 'DKK', :symbol => 'DKK', :format => '%u %n', :active => true},
+        {:name => 'PLN', :symbol => 'PLN', :format => '%u %n', :active => ENV["RAILS_ENV"] == 'test' ? true : false},
+        {:name => 'NOK', :symbol => 'NOK', :format => '%u %n', :active => false},
+        {:name => 'HUF', :symbol => 'HUF', :format => '%u %n', :active => false},
+        {:name => 'CZK', :symbol => 'CZK', :format => '%u %n', :active => false},
+        {:name => 'ILS', :symbol => 'ILS', :format => '%u %n', :active => false},
+        {:name => 'MXN', :symbol => 'MXN', :format => '%u %n', :active => false},
+        {:name => 'PHP', :symbol => 'PHP', :format => '%u %n', :active => false},
+        {:name => 'TWD', :symbol => 'TWD', :format => '%u %n', :active => false},
+        {:name => 'THB', :symbol => 'THB', :format => '%u %n', :active => false}
     ].each do |params|
       Currency.create!(params)
-    end
-
-    if ENV["RAILS_ENV"] == 'test'
-      Currency.create!(:name => 'PLN', :symbol => '&pln;', :format => '%u%n', :active => true)
     end
 
     unless Rails.env.production?
@@ -173,7 +189,7 @@ class Nbs < Thor
       if Lead.count.zero?
         agent = User::Agent.find_by_email("agent@nbs.com")
         ["Big deal on printers", "Drills required", "Need assistance in selling a car", "Ipod shipment", "Trip to amazonia - looking for offer", "LCD - Huge amounts", "GPS receivers required"].each do |header|
-          Lead.make!(:category_id => Category.last.id, :header => header, :creator_id => agent.id, :currency => Currency.where(:name => "Euro").first)
+          Lead.make!(:category_id => Category.last.id, :header => header, :creator_id => agent.id, :currency => Currency.where(:name => "EUR").first)
         end
       end
 

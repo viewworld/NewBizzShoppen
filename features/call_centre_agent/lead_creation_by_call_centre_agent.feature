@@ -315,3 +315,9 @@ Scenario: When there is only one template present for a lead and it is optional 
   
 @m5 @added @tgn @non_testable @_done
 Scenario: Lead data should be entered in given sequence
+
+@m5 @unique_categories
+Scenario: I can't publish a lead in unique category if I'm not assigned to it
+
+@m5 @unique_categories
+Scenario: I can publish leads only in unique categories if I'm assigned at least to one

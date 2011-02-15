@@ -145,7 +145,7 @@ Scenario: I should be able to specify currency in which Lead will be sold (from 
   And I go to agents leads
   And I select "Test category 1" from "category_id"
   When I follow translated "agent.leads.index.view.new_lead"
-  Then I select "Euro" from "lead_currency_id"
+  Then I select "EUR" from "lead_currency_id"
 
 @m3 @tgn @_done @non_testable
 Scenario: When lead is published then the published_at time is recorded
@@ -447,3 +447,9 @@ Scenario: I can create a new lead and duplicate company\contact info to another 
 
 @m0 @added
 Scenario: I can pick region for a country from dropdown
+
+@m5 @unique_categories
+Scenario: I can't publish a lead in unique category if I'm not assigned to it
+
+@m5 @unique_categories
+Scenario: I can publish leads only in unique categories if I'm assigned at least to one

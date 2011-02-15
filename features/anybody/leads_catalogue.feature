@@ -66,10 +66,9 @@ Scenario: I should see hottness, novelty, exposure, clicks
   And I should see "887"
   And I should see "17"
 
-
 @m3 @ao @_done
 Scenario: I should see currency in which lead is being sold
-  When lead "Printers ultimate deal" has currency "Euro"
+  When lead "Printers ultimate deal" has currency "EUR"
   And I follow "Computers"
   And I fill in "search_with_keyword" with "Printers"
   And I press translated "leads.index.search.search_button"

@@ -106,3 +106,27 @@ Scenario: In bestsellers and latest listings I should not see leads which I've a
   And I follow translated "home.show.view.agent"
   Then I should see "AwesomeLead"
   And I should not see "BoughtLead"
+
+@m5 @unique_categories
+Scenario: I should not see leads from customer unique categories I'm not assigned to on Latest leads listing
+
+@m5 @unique_categories
+Scenario: I should not see leads from agent unique categories I'm not assigned to on Latest leads listing
+
+@m5 @unique_categories
+Scenario: I should not see leads from customer unique categories I'm not assigned to on Bestsellers listing
+
+@m5 @unique_categories
+Scenario: I should not see leads from agent unique categories I'm not assigned to on Bestsellers listing
+
+@m5 @unique_categories
+Scenario: I should see leads from customer unique categories I'm assigned to on Latest leads listing
+
+@m5 @unique_categories
+Scenario: I should see leads from agent unique categories I'm assigned to on Latest leads listing
+
+@m5 @unique_categories
+Scenario: I should see leads from customer unique categories I'm assigned to on Bestsellers listing
+
+@m5 @unique_categories
+Scenario: I should see leads from agent unique categories I'm assigned to on Bestsellers listing

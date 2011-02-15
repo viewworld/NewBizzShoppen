@@ -120,7 +120,7 @@ Scenario: Created leads should not be published (not listed)
   And I press translated "purchase_manager.leads.new.view.button_create"
   And I am on browse leads
   And I follow "PMCategory"
-  Then I should see "0" rows with id like "lead_" in a table within ".leads_table"
+  Then I should see translated "common.nothing_to_display"
 
 @m5 @added @lead_templates @tgn @selenium @_tested
 Scenario: I have to fill out the templates which are mandatory

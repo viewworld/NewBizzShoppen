@@ -8,7 +8,9 @@ Background:
   Given Category named "Another sample category" already exists within category named "Sample category"
 
   And Lead named "Super printers" exists within "Another sample category" category
+  And lead Super printers exists with attributes "currency_id:1"
   And Lead named "Ultra printers" exists within "Another sample category" category
+  And lead Ultra printers exists with attributes "currency_id:1"
 
   Given I am signed up and confirmed as user with email john@doe.com and password secret and role customer
 

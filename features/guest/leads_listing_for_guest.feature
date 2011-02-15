@@ -172,3 +172,21 @@ Scenario: I can see lead template fields with public values for each lead
 
 @m5 @added @lead_templates @tgn @_done @tested_elsewhere
 Scenario: I can see only lead template fields' names (not values) for hidden fields
+
+@m5 @unique_categories
+Scenario: I should not see customer unique categories on 'Browse leads' categories listing
+
+@m5 @unique_categories
+Scenario: I should not see agent unique categories on 'Browse leads' categories listing
+
+@m5 @unique_categories
+Scenario: I should not see leads from customer unique categories
+
+@m5 @unique_categories
+Scenario: I should not see leads from agent unique categories
+
+@m5 @unique_categories
+Scenario: I should not see customer unique categories in a search filter
+
+@m5 @unique_categories
+Scenario: I should not see agent unique categories in a search filter

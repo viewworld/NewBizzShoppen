@@ -114,3 +114,8 @@ Feature: Home pages
     When I visit URL "/best-leads"
     Then I should be on the home page
 
+  @m5 @unique_categories
+  Scenario: I should not see links to Category home pages for categories which are customer unique
+
+  @m5 @unique_categories
+  Scenario: I should not see links to Category home pages for categories which are agent unique
