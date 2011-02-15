@@ -23,7 +23,7 @@ Scenario: I cannot buy a lead skipping checkout
   And I follow "Computers"
   Then I follow translated "leads.index.add_to_cart_link"
   When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
-  Then I should not see "Ultra new printers" within ".leads_table"
+  Then I should see translated "common.nothing_to_display"
 
 @tgn @_tested
 Scenario: I can buy lead through checkout
@@ -41,7 +41,7 @@ Scenario: Lead purchase is not marked with "has access" after creation
   And I follow "Computers"
   Then I follow translated "leads.index.add_to_cart_link"
   When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
-  Then I should not see "Ultra new printers" within ".leads_table"
+  Then I should see translated "common.nothing_to_display"
 
 #after AO finishes invoicing subsystem
 @tgn @_tested

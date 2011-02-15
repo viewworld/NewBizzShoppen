@@ -38,7 +38,7 @@
 
   <header back="true"><%= leads_listing_header %><%= " #{t("leads.index.header_for")} #{@home_category.name}" %></header>
 
-  <% if @lead_purchases.blank? %>
+  <% if @leads.empty? %>
       <%= render "shared/blank_data" %>
   <% else %>
       <%= form_tag bulk_action_path do %>
