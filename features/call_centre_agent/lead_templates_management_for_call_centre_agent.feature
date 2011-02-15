@@ -34,8 +34,8 @@ Scenario: I can create new lead template for given category
   And I check "lead_template_lead_template_fields_attributes_1_is_mandatory"
   Then I press translated "call_centre_agent.lead_templates.new.view.button_create"
   And I click hidden link by url regex "/call_centre_agents\/lead_templates\/\d+\/edit/"
-  Then the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 1"
-  And the "lead_template_lead_template_fields_attributes_2_name" field should contain "example attr 2"
+  Then the "lead_template_lead_template_fields_attributes_0_name" field should contain "example attr 1"
+  And the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 2"
 
 @added @_done @_tested_elsewhere
 Scenario: During template creation/edition I can mark fields as hidden or public
@@ -57,8 +57,8 @@ Scenario: I can edit lead template that was created by me
   And I check "lead_template_lead_template_fields_attributes_1_is_mandatory"
   Then I press translated "call_centre_agent.lead_templates.edit.view.button_update"
   And I click hidden link by url regex "/call_centre_agents\/lead_templates\/\d+\/edit/"
-  Then the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 1"
-  Then the "lead_template_lead_template_fields_attributes_2_name" field should contain "example attr 2"
+  Then the "lead_template_lead_template_fields_attributes_0_name" field should contain "example attr 1"
+  Then the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 2"
 
 @added @_tested
 Scenario: I can delete lead template that was created by me and was not filled out by anyone
@@ -86,5 +86,5 @@ Scenario: I can add translation for the lead template name and its fields
   And I check "lead_template_lead_template_fields_attributes_1_is_hidden"
   Then I press translated "call_centre_agent.lead_templates.new.view.button_create"
   And I click hidden link by url regex "/call_centre_agents\/lead_templates\/\d+\/edit/"
-  Then the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 1"
-  And the "lead_template_lead_template_fields_attributes_2_name" field should contain "example attr 2"
+  Then the "lead_template_lead_template_fields_attributes_0_name" field should contain "example attr 1"
+  And the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 2"

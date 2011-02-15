@@ -46,8 +46,8 @@ Scenario: I can edit a category and add new lead templates to it which I can mar
   And I check "lead_template_lead_template_fields_attributes_1_is_mandatory"
   Then I press translated "administration.lead_templates.new.view.button_create"
   And I click hidden link by url regex "/administration\/lead_templates\/\d+\/edit/"
-  Then the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 1"
-  Then the "lead_template_lead_template_fields_attributes_2_name" field should contain "example attr 2"
+  Then the "lead_template_lead_template_fields_attributes_0_name" field should contain "example attr 1"
+  Then the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 2"
 
 @added @_tested
 Scenario: I can mark templates as mandatory or optional for given category even if they were created by agents
@@ -75,8 +75,8 @@ Scenario: I can edit lead templates that were created by me
   And I check "lead_template_lead_template_fields_attributes_1_is_hidden"
   Then I press translated "administration.lead_templates.edit.view.button_update"
   And I click hidden link by url regex "/administration\/lead_templates\/\d+\/edit/"
-  Then the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 1"
-  Then the "lead_template_lead_template_fields_attributes_2_name" field should contain "example attr 2"
+  Then the "lead_template_lead_template_fields_attributes_0_name" field should contain "example attr 1"
+  Then the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 2"
 
 @added @_tested
 Scenario: I can delete lead templates that were created by me and were not filled out by anyone
