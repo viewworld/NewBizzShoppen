@@ -68,7 +68,7 @@ class Invoice < ActiveRecord::Base
   protected
 
   def set_seller
-    self.seller = Seller.default if new_record? or !seller
+   self.seller = Seller.default_for_country(user.country) if !seller
   end
 
   def update_revenue_frozen

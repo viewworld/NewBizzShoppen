@@ -418,8 +418,23 @@ Scenario: We do not need to generate a copy of the invoice, just the orininal
   And I press translated "common.cancel_link"
   Then I should be on administration invoices page
 
-@m5 @sellers @ao
+@selenium @m5 @sellers @ao @wip
 Scenario: When creating an invoice a Seller for user's country should be selected
+  When a seller exists with attributes "name:SellerTwo,country_id:2"
+  And someone is signed up and confirmed as user with email customer_one@nbs.fake and password secret and role customer with attributes "first_name:John 1,last_name:Smith,country:1"
+  And User customer_one@nbs.fake with role customer is big buyer
+  And a lead LeadOne exists within category Computers and is bought by user customer_one@nbs.fake with role customer
+  And I follow translated "layout.main_menu.admin.upcoming_invoices"
+  And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
+  And I press translated "administration.invoices.new.view.button_create"
+  Then the "invoice_seller_name" field should contain "DannyTheSeller"
+  When someone is signed up and confirmed as user with email customer_two@nbs.fake and password secret and role customer with attributes "first_name:John 2,last_name:Smith,country:2"
+  And User customer_two@nbs.fake with role customer is big buyer
+  And a lead LeadTwo exists within category Computers and is bought by user customer_one@nbs.fake with role customer
+  And I follow translated "layout.main_menu.admin.upcoming_invoices"
+  And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
+  And I press translated "administration.invoices.new.view.button_create"
+  Then the "invoice_seller_name" field should contain "SellerTwo"
 
 @m5 @sellers @ao
 Scenario: If there's no Seller for user's country then default Seller should be used

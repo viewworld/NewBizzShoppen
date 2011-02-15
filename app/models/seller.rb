@@ -7,8 +7,10 @@ class Seller < ActiveRecord::Base
 
   before_save :assure_default
   after_save :change_default
+  before_destroy :assure_at_least_one
 
   scope :default_seller, where(:default => true)
+  scope :for_country, lambda { |country_id| where(:country_id => country_id) }
 
   private
 
@@ -27,10 +29,21 @@ class Seller < ActiveRecord::Base
     end
   end
 
+  def assure_at_least_one
+    unless Seller.count > 1
+      self.errors.add(:base, I18n.t("activerecord.errors.models.seller.must_be_at_least_one"))
+      false
+    end
+  end
+
   public
 
   def self.default
     default_seller.first || first
+  end
+
+  def self.default_for_country(country_id)
+    for_country(country_id.to_i).first || default
   end
 
 end

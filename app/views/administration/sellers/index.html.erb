@@ -1,5 +1,20 @@
 <column-mc:>
-  <header><%= t("administration.sellers.index.view.header") %></header>
+
+  <header>
+    <param:content>
+      <%= t("administration.sellers.index.view.header") %>
+    </param:content>
+
+    <param:actions>
+      <%= form_tag new_administration_seller_path, :method => :get, :id => "form_new_seller" do %>
+        <ul class="header_actions">
+          <li class="last">
+            <%= bt_link_to :plus, t("administration.sellers.index.view.add_seller"), "javascript:void(0)", :onclick => "$('#form_new_seller').submit()" %>
+          </li>
+        </ul>
+      <% end %>
+    </param:actions>
+  </header>
 
  <table class="generic" cellspacing="0" cellpadding="0" id="sellers">
     <thead>
@@ -24,7 +39,9 @@
               <td><%= check_box_tag "default_#{s.id}", 1, s.default?, :disabled => true %></td>
               <td class="tda ta_r">
                 <ul-actions>
+                  <li><%= link_to t("administration.sellers.index.view.show"), administration_seller_path(s) %></li>
                   <li><%= link_to t("administration.sellers.index.view.edit"), edit_administration_seller_path(s) %></li>
+                  <li><%= link_to t("administration.sellers.index.view.delete"), administration_seller_path(s), :method => :delete, :confirmation => t("common.confirmation") %></li>
                 </ul-actions>
               </td>
               <td class="cr"></td>
@@ -35,12 +52,6 @@
           <td colspan="7"><%= t("administration.sellers.index.view.no_sellers_defined") %></td>
         </tr>
       <% end %>
-      <tr class="main_actions">
-        <td colspan="7">
-          <%= bt_link_to nil, t("administration.sellers.index.view.add_seller"), new_administration_seller_path %>
-          <%= bt_link_to nil, t("administration.sellers.index.view.add_seller"), new_administration_seller_path %>
-        </td>
-      </tr>
     </tbody>
     <tfoot>
     <tr>

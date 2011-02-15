@@ -667,6 +667,8 @@ en:
           last_name: 'Last name'
           default: 'Default'
           edit: 'Edit'
+          show: 'Show'
+          delete: 'Delete'
           no_sellers_defined: 'No sellers defined'
           add_seller: 'Add seller'
       new:
@@ -1653,6 +1655,7 @@ en:
             global_default:
               cannot_be_disabled: "can't be disabled"
         seller:
+          must_be_at_least_one: "There must be at least one Seller in the system"
           attributes:
             default:
               cannot_be_disabled: "can't be disabled"
