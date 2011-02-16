@@ -9,7 +9,7 @@ Feature: Agent campaign - calling session
     Scenario: I can see list of campaigns which I belong to
 
 
-    #
+    #test
     #
     #calling session
     Scenario: New contacts should be assigned to agent automatically
