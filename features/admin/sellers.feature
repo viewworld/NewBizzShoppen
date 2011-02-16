@@ -8,8 +8,7 @@ Feature: Sellers
 
   @_done
   Scenario: I can see Sellers list
-    When there is a seller
-    And I follow translated "layout.main_menu.admin.sellers"
+    When I follow translated "layout.main_menu.admin.sellers"
     Then I should see "1" rows in a table within "#sellers"
 
   @selenium @_done

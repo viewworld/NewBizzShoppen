@@ -79,9 +79,9 @@ Scenario: I can search for a transaction by a combination of keyword: contact na
   And I am not sign in
   Then I sign in as bob@person.com with password supersecret
   And I go to administration transactions
-  When I fill in "search_with_keyword" with "4"
+  When I fill in "search_with_keyword" with "1"
   And I press translated "administration.payment_transactions.index.view.search_button"
-  Then I should see "4/"
+  Then I should see "1/201"
   When I fill in "search_with_keyword" with "jill johanssen"
   And I press translated "administration.payment_transactions.index.view.search_button"
   Then I should see "77.99"
