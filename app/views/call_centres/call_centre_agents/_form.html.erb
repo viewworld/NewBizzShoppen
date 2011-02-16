@@ -3,11 +3,6 @@
     <ol class="align_inputs">
       <%= form.input :first_name %>
       <%= form.input :last_name %>
-      <%= form.input :phone %>
-      <%= form.input :email %>
-      <%= form.input :screen_name %>
-      <%= form.input :mobile_phone %>
-      <%= form.input :department %>
       <%= form.fields_for :address do |address_form| %>
           <%= address_form.input :address_line_1 %>
           <%= address_form.input :address_line_2 %>
@@ -15,6 +10,29 @@
           <%= address_form.input :zip_code %>
           <%= address_form.input :country, :as => :select, :collection => Country.all %>
       <% end %>
+    </ol>
+  </fieldset>
+</div>
+
+<hl/>
+
+<div class="pdd_10 no_pdd_t">
+  <fieldset class="inputs labels_ta_r labels_240">
+    <ol class="align_inputs">
+      <%= form.input :screen_name %>
+      <%= form.input :phone %>
+      <%= form.input :mobile_phone %>
+      <%= form.input :email %>
+    </ol>
+  </fieldset>
+</div>
+
+<hl/>
+
+<div class="pdd_10 no_pdd_t">
+  <fieldset class="inputs labels_ta_r labels_240">
+    <ol class="align_inputs">
+      <%= form.input :department %>
       <%= form.input :payout %>%
       <%= form.input :agreement_read, :as => :hidden, :value => "1" %>
     </ol>

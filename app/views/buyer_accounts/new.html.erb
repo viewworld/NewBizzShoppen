@@ -15,25 +15,12 @@
               <ol>
                 <%= form.input :first_name %>
                 <%= form.input :last_name %>
-                <%= form.input :phone %>
-                <%= form.input :email %>
-                <%= form.input :screen_name %>
-                <%= form.input :password %>
-                <%= form.input :password_confirmation %>
-              </ol>
-            </fieldset>
-          </div>
-
-          <hl/>
-
-          <div class="pdd_10 no_pdd_t">
-            <fieldset class="inputs labels_ta_r labels_240">
-              <ol class="align_inputs">
                 <%= form.fields_for :address do |address_form| %>
                     <%= address_form.input :address_line_1 %>
                     <%= address_form.input :address_line_2 %>
                     <%= address_form.input :address_line_3 %>
                     <%= address_form.input :zip_code %>
+                    <%= address_form.input :country, :as => :select, :collection => Country.all %>
                 <% end %>
                 <%= form.input :vat_number %>
               </ol>
@@ -45,9 +32,29 @@
           <div class="pdd_10 no_pdd_t">
             <fieldset class="inputs labels_ta_r labels_240">
               <ol class="align_inputs">
-                <%= form.fields_for :address do |address_form| %>
-                    <%= address_form.input :country, :as => :select, :collection => Country.all %>
-                <% end %>
+                <%= form.input :screen_name %>
+                <%= form.input :phone %>
+                <%= form.input :email %>
+              </ol>
+            </fieldset>
+          </div>
+
+          <hl/>
+
+          <div class="pdd_10 no_pdd_t">
+            <fieldset class="inputs labels_ta_r labels_240">
+              <ol class="align_inputs">
+                <%= form.input :password %>
+                <%= form.input :password_confirmation %>
+              </ol>
+            </fieldset>
+          </div>
+
+          <hl/>
+
+          <div class="pdd_10 no_pdd_t">
+            <fieldset class="inputs labels_ta_r labels_240">
+              <ol class="align_inputs">
                 <%= form.input :team_buyers, :as => :boolean, :label => t("buyer_accounts.new.view.enable_team_buyers") %>
                 <%= form.input :agreement_read, :as => :boolean %>
                 <%= form.input :newsletter_on, :as => :boolean %>

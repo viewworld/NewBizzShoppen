@@ -4,6 +4,7 @@ class ::User::CategoryBuyer < ::User
   after_create :set_interests
 
   include User::RegistrationValidations
+  include Addresses
 
   has_many :lead_purchases, :foreign_key => "owner_id"
   has_many :lead_requests, :foreign_key => "owner_id"

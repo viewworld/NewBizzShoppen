@@ -70,7 +70,7 @@ class Invoice < ActiveRecord::Base
   def set_seller
     if !seller
       self.seller = if user
-        Seller.default_for_country(user.country)
+        Seller.default_for_country(user.with_role.address.country)
       else
         Seller.default
       end

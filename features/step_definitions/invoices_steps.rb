@@ -1,7 +1,6 @@
 When /^invoice exists for user "([^"]*)" with role "([^"]*)"(?: with attributes "([^"]*)")?$/ do |email,role_name,options|
-  invoice = User.where(:email => email).first.invoices.first
   user = "User::#{role_name.classify}".constantize.where(:email => email).first
-  attrs = options ? Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys.merge(:invoice => invoice, :user => user) : {:invoice => invoice, :user => user}
+  attrs = options ? Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys.merge(:user => user) : {:user => user}
   Invoice.make!(attrs)
 end
 

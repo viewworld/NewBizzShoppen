@@ -18,4 +18,8 @@ class Country < ActiveRecord::Base
     BankAccount.country_default_bank_account(id).first
   end
 
+  def to_i
+    id
+  end
+
 end

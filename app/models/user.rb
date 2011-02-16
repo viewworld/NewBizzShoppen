@@ -43,7 +43,7 @@ class User < ActiveRecord::Base
   alias_method :parent, :user
 
   scope :with_role, lambda { |role| where("roles_mask & #{2**User.valid_roles.index(role.to_sym)} > 0 ") }
-  scope :with_keyword, lambda { |q| joins(:address).where("lower(addresses.first_name) like :keyword OR lower(addresses.last_name) like :keyword OR lower(email) like :keyword", {:keyword => "%#{q.downcase}%"}) }
+  scope :with_keyword, lambda { |q| where("lower(first_name) like :keyword OR lower(last_name) like :keyword OR lower(email) like :keyword", {:keyword => "%#{q.downcase}%"}) }
   scope :with_subaccounts, lambda { |parent_id| where("parent_id = ?", parent_id) }
 
   scope :requestees_for_lead_request_owner, lambda { |owner| select("DISTINCT(users.id), users.*").where("requested_by IS NOT NULL and lead_purchases.owner_id = ? and users.parent_id = ?", owner.id, owner.id).joins("RIGHT JOIN lead_purchases on lead_purchases.requested_by=users.id") }
@@ -282,8 +282,7 @@ class User < ActiveRecord::Base
   end
   
   def country_vat_rate
-    user_with_role = casted_class.find(id)
-    user_with_role.vat_rate ? user_with_role.vat_rate.rate : 0.0
+    with_role.vat_rate ? with_role.vat_rate.rate : 0.0
   end
 
   def payment_bank_account
@@ -300,6 +299,10 @@ class User < ActiveRecord::Base
 
   def vat_rate
     address.country.vat_rate
+  end
+
+  def with_role
+    casted_class.find(id)
   end
 
 end

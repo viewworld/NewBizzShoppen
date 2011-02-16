@@ -11,7 +11,6 @@ Background:
 
 @_done @ao
 Scenario: I can create new invoice for user
-  And I open page in browser
   When I follow translated "layout.main_menu.admin.invoices"
   And I select "Janko Muzykant" from "invoice_user_id"
   And I select "DannyTheSeller" from "invoice_seller_id"
@@ -246,7 +245,7 @@ Scenario: Invoice line’s netto/brutto fields are automatically updated on edit
 @_done @ao
 Scenario: I can mark an invoice as paid by clicking on Set as paid shortcut
   When invoice exists for user "kastomer@nbs.fake" with role "customer"
-  And invoice line for first invoice exists for user "kastomer@nbs.fake" with attributes "netto_price:100,quantity:1,vat_rate:22,netto_value:100,brutto_value:122"
+  And invoice line for first invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "netto_price:100,quantity:1,vat_rate:22,netto_value:100,brutto_value:122"
   And I follow translated "layout.main_menu.admin.invoices"
   And I follow translated "administration.invoices.index.view.set_as_paid"
   And I follow translated "layout.main_menu.admin.invoices"
@@ -265,7 +264,7 @@ Scenario: I can list all invoices an see following columns -  number, customer, 
 @_done @ao
 Scenario: I can sort invoices listing by following columns -  number, customer, total
   When invoice exists for user "kastomer@nbs.fake" with role "customer"
-  And invoice line for first invoice exists for user "kastomer@nbs.fake" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
+  And invoice line for first invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
   And someone is signed up and confirmed as user with email ader_kastomer@nbs.fake and password secret and role customer with attributes "first_name:Ferdek,last_name:Kiepski"
   And invoice exists for user "ader_kastomer@nbs.fake" with role "customer"
   And I follow translated "layout.main_menu.admin.invoices"
@@ -285,7 +284,7 @@ Scenario: I can sort invoices listing by following columns -  number, customer, 
 @ao @_done
 Scenario: I can filter invoices list by following parameters - creation range, payment status, customer
   When invoice exists for user "kastomer@nbs.fake" with role "customer"
-  And invoice line for first invoice exists for user "kastomer@nbs.fake" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
+  And invoice line for first invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
   And someone is signed up and confirmed as user with email ader_kastomer@nbs.fake and password secret and role customer with attributes "first_name:Ferdek,last_name:Kiepski"
   And invoice exists for user "ader_kastomer@nbs.fake" with role "customer"
   And first invoice for user "ader_kastomer@nbs.fake" with role "customer" is created at "2000-01-01"
@@ -315,7 +314,7 @@ Scenario: I can filter invoices list by following parameters - creation range, p
 @ao @_done
 Scenario: I can download invoice as PDF file
   When invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "vat_paid_in_customer_country:0"
-  And invoice line for first invoice exists for user "kastomer@nbs.fake" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
+  And invoice line for first invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
   And I follow translated "layout.main_menu.admin.invoices"
   And I follow translated "administration.invoices.index.view.show_invoice"
   And I follow translated PDF link "administration.invoices.show.view.download_pdf"
@@ -325,7 +324,7 @@ Scenario: I can download invoice as PDF file
 @_done @ao @_tested
 Scenario: I can send invoice to given email address (as an attachment)
   When invoice exists for user "kastomer@nbs.fake" with role "customer"
-  And invoice line for first invoice exists for user "kastomer@nbs.fake" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
+  And invoice line for first invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
   And I follow translated "layout.main_menu.admin.invoices"
   And I follow translated "administration.invoices.index.view.show_invoice"
   And I follow translated "administration.invoices.show.view.send"
@@ -367,7 +366,7 @@ Scenario: I can create invoice for any customer from users tab
 @added @m4b @_done
 Scenario: EAN should be visible if filled
   When invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "ean_number:123456"
-  And invoice line for first invoice exists for user "kastomer@nbs.fake" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
+  And invoice line for first invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
   And I follow translated "layout.main_menu.admin.invoices"
   And I follow translated "administration.invoices.index.view.show_invoice"
   Then I should see translated "administration.invoices.show.view.ean_number"
@@ -375,7 +374,7 @@ Scenario: EAN should be visible if filled
 @added @m4b @_done
 Scenario: EAN should not be visible if not filled
   When invoice exists for user "kastomer@nbs.fake" with role "customer"
-  And invoice line for first invoice exists for user "kastomer@nbs.fake" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
+  And invoice line for first invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
   And I follow translated "layout.main_menu.admin.invoices"
   And I follow translated "administration.invoices.index.view.show_invoice"
   Then I should not see translated "administration.invoices.show.view.ean_number"
@@ -384,7 +383,7 @@ Scenario: EAN should not be visible if not filled
 Scenario: I should not see amounts grouped by vat rate when vat is paid in customer country
   When user "kastomer@nbs.fake" with role "customer" has attributes "not_charge_vat:1"
   And invoice exists for user "kastomer@nbs.fake" with role "customer"
-  And invoice line for first invoice exists for user "kastomer@nbs.fake" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
+  And invoice line for first invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
   And I follow translated "layout.main_menu.admin.invoices"
   And I follow translated "administration.invoices.index.view.show_invoice"
   Then I should not see translated "administration.invoices.show.view.including"
@@ -394,7 +393,7 @@ Scenario: I should not see amounts grouped by vat rate when vat is paid in custo
 Scenario: I should see amounts grouped by vat rate when vat is not paid in customer country
   When user "kastomer@nbs.fake" with role "customer" has attributes "not_charge_vat:0"
   And invoice exists for user "kastomer@nbs.fake" with role "customer"
-  And invoice line for first invoice exists for user "kastomer@nbs.fake" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
+  And invoice line for first invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
   And I follow translated "layout.main_menu.admin.invoices"
   And I follow translated "administration.invoices.index.view.show_invoice"
   Then I should see translated "administration.invoices.show.view.including"
@@ -403,7 +402,7 @@ Scenario: I should see amounts grouped by vat rate when vat is not paid in custo
 @added @m4b @_done
 Scenario: We do not need to generate a copy of the invoice, just the orininal
   When invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "vat_paid_in_customer_country:0"
-  And invoice line for first invoice exists for user "kastomer@nbs.fake" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
+  And invoice line for first invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
   And I follow translated "layout.main_menu.admin.invoices"
   And I follow translated "administration.invoices.index.view.show_invoice"
   And I follow translated PDF link "administration.invoices.show.view.download_pdf"
@@ -413,7 +412,7 @@ Scenario: We do not need to generate a copy of the invoice, just the orininal
 @added @m4b @selenium @_done
   Scenario: When you edit an invoice you should have the option to cancel the edit invoice
   When invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "vat_paid_in_customer_country:0"
-  And invoice line for first invoice exists for user "kastomer@nbs.fake" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
+  And invoice line for first invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
   And I follow translated "layout.main_menu.admin.invoices"
   And I click hidden link by url regex "/administration\/invoicing\/invoices\/(\d+)\/edit/"
   And I press translated "common.cancel_link"
@@ -464,7 +463,7 @@ Scenario: Include users name, company and user email when filtering invoices
   Given a lead Mouses 2 ultimate deal exists within category Computers and is bought by user bigbuyer2@person.com with role customer
   And lead Mouses 2 ultimate deal exists with attributes "price:88.32,contact_name:Tom Blanq,company_name:Xerox"
   And user with email "bigbuyer2@person.com" and role "customer" has invoice generated for all unpaid leads
-  And first invoice for user "bigbuyer2@person.com" exists with attributes "customer_name: Jared Diamond"
+  And first invoice for user "bigbuyer2@person.com" with role "customer" exists with attributes "customer_name: Jared Diamond"
   And I go to administration invoices
   When I fill in "search_with_keyword" with "havranek"
   And I press translated "administration.invoices.index.view.search_button"

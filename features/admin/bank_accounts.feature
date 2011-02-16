@@ -1,3 +1,4 @@
+@bank_accounts
 Feature: Bank Accounts
 
   Background:
@@ -57,7 +58,6 @@ Feature: Bank Accounts
     And invoice exists for user "kastomer2@nbs.fake" with role "customer"
     And I follow translated "layout.main_menu.admin.invoices"
     And I follow translated "administration.invoices.index.view.edit_invoice"
-    And I open page in browser
     Then "invoice_bank_account_id" should be selected for value "United Kingdom"
 
   @added @m4b @_done
@@ -69,7 +69,6 @@ Feature: Bank Accounts
     And invoice exists for user "kastomer2@nbs.fake" with role "customer"
     And I follow translated "layout.main_menu.admin.invoices"
     And I follow translated "administration.invoices.index.view.edit_invoice"
-    And I open page in browser
     Then "invoice_bank_account_id" should be selected for value "United Kingdom"
     And "invoice_bank_account_id" should be selected for value "Second"
 
