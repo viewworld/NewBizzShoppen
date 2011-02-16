@@ -13,8 +13,6 @@ Feature: Agent campaign - calling session
     #
     #calling session
     Scenario: New contacts should be assigned to agent automatically
-      # when available_contacts_count == max_visible_contacts_count then available_contacts_count = 2 * max_visible_contacts_count
-      # when available_contacts_count == 0                          then available_contacts_count = 2 * max_visible_contacts_count
 
     Scenario: I can enable/disable dynamic calling
 
