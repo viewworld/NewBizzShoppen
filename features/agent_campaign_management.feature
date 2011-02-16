@@ -1,5 +1,5 @@
 @m5 @agent_campaign
-Feature: agent campaign management
+Feature: Agent campaign - management
 
 # As campaign administrator
 
