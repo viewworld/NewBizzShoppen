@@ -49,6 +49,10 @@ Given /^user "([^"]*)" has team buyers enabled$/ do |email|
   User::Customer.where(:email => email).first.update_attribute(:team_buyers, true)
 end
 
+Given /^user "([^"]*)" with role "([^"]*)" is confirmed$/ do |email, role|
+  "User::#{role.camelize}".constantize.where(:email => email).first.confirm!
+end
+
 Then /^I have user with email (.+) and role (.+)$/ do |email, role|
   u = "User::#{role.camelize}".constantize.make!(:email => email)
   u.confirm!
@@ -213,5 +217,21 @@ Given /^user "([^"]*)" with role "([^"]*)" comes from "([^"]*)"$/ do |email,role
   address.country = Country.where(:name => country_name).first
   address.save
 end
+
+When /^I am signed up and confirmed as user with email "([^"]*)" and password "([^"]*)" and role "([^"]*)" for category "([^"]*)"(?: with attributes "([^"]*)")?$/ do |email, password, role_name, category_name, options|
+  std_opts = {:email => email, :password => password, :password_confirmation => password, :category_id => Category.where(:name => category_name).first.id}
+  opts = options ? Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys.merge(std_opts) : std_opts
+  u = "User::#{role_name.camelize}".constantize.make!(opts)
+  u.confirm!
+end
+
+Then /^user "([^"]*)" should have role "([^"]*)"$/ do |email, role_name|
+  User.where(:email => email).first.roles.should include(role_name.to_sym)
+end
+
+And /^user "([^"]*)" is confirmed/ do |email|
+  User.where(:email => email).first.confirm!
+end
+
 
 

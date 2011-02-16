@@ -3,7 +3,7 @@
 <header back="true"><%= t("administration.leads.edit.view.header", :lead_header => @lead.header) %></header>
       <frm title="Edit">
         <param:content>
-          <%= render :partial => 'form', :locals => { :form => form }  %>
+          <%= render :partial => '/shared/leads/form', :locals => { :form => form }  %>
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="save">

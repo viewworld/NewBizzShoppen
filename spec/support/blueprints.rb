@@ -201,20 +201,63 @@ end
   address { Address.make! }
 end
 
-::Article::Cms.blueprint do
-  title { Faker::Lorem.words(4).to_s.capitalize }
-  content { Faker::Lorem.sentences(2).to_s }
-  scope { rand(3) }
+::User::CategoryBuyer.blueprint do
+  email { Faker::Internet.email }
+  password { "secret" }
+  password_confirmation { "secret" }
+  phone { Faker::PhoneNumber.phone_number }
+  screen_name { Faker::Name.name + Time.now.to_f.to_s.sub('.','') }
+  street { Faker::Address.street_name }
+  first_name { Faker::Name.first_name + Time.now.to_f.to_s.sub('.','') }
+  last_name { Faker::Name.last_name }
+  agreement_read { true }
+  city { Faker::Address.city }
+  zip_code { Faker::Address.zip_code }
+  county { Faker::Address.uk_county }
+  country { Country.make!.id }
+  category_id { Category.make!.id }
+  roles_mask { 304 }
 end
 
-::Article::News.blueprint do
+::Article::Cms::InterfaceContentText.blueprint do
   title { Faker::Lorem.words(4).to_s.capitalize }
   content { Faker::Lorem.sentences(2).to_s }
-  scope { rand(2) }
+end
+
+::Article::Cms::MainPageArticle.blueprint do
+  title { Faker::Lorem.words(4).to_s.capitalize }
+  content { Faker::Lorem.sentences(2).to_s }
+end
+
+::Article::Cms::HelpPopup.blueprint do
+  title { Faker::Lorem.words(4).to_s.capitalize }
+  content { Faker::Lorem.sentences(2).to_s }
+end
+
+::Article::News::Agent.blueprint do
+  title { Faker::Lorem.words(4).to_s.capitalize }
+  content { Faker::Lorem.sentences(2).to_s }
+end
+
+::Article::News::SalesManager.blueprint do
+  title { Faker::Lorem.words(4).to_s.capitalize }
+  content { Faker::Lorem.sentences(2).to_s }
+end
+
+::Article::News::PurchaseManager.blueprint do
+  title { Faker::Lorem.words(4).to_s.capitalize }
+  content { Faker::Lorem.sentences(2).to_s }
+end
+
+::Article::News::CategoryHome.blueprint do
+  title { Faker::Lorem.words(4).to_s.capitalize }
+  content { Faker::Lorem.sentences(2).to_s }
+  resource { Category.make! }
 end
 
 Invoice.blueprint do
-  user { User::Agent.make! }
+  user { User::Customer.make! }
+  seller { Seller.make! }
 end
 
 InvoiceLine.blueprint do
@@ -230,4 +273,13 @@ BankAccount.blueprint do
   local_bank_number { Faker.numerify('#########') }
   swift { Faker.letterify('????????').upcase }
   address { Address.make! }
+end
+
+Seller.blueprint do
+  country_id { Country.make!.id }
+  name { Faker::Lorem.words(2).to_s }
+  first_name { Faker::Lorem.words(1).to_s }
+  last_name { Faker::Lorem.words(1).to_s }
+  address { "#{Faker::Address.street_name}\n#{Faker::Address.zip_code} #{Faker::Address.city}\n#{Faker::Address.city}" }
+  vat_no { Faker.numerify('#########') }
 end

@@ -59,3 +59,19 @@ Scenario: I can select multiple lead areas/countries that I am interested in
   Given I select "United Kingdom" from "countries"
   And I press translated "customer.interests.edit.view.button_update"
   Then I should see translated "customer.interests.update.flash.interests_update_successful"
+
+@m5 @tgn @_tested
+Scenario: I can select "all" as a Deal value
+  And I check "user_all_deal_values_enabled"
+  And I press translated "customer.interests.edit.view.button_update"
+  Then I should see translated "customer.interests.update.flash.interests_update_successful"
+
+@m5 @unique_categories
+Scenario: I should not see unique categories I'm not assigned to on my interests page
+
+@m5 @unique_categories
+Scenario: I should not see categories on my interests page when I'm assigned to unique category
+
+@m5 @unique_categories
+Scenario: I should have my interests fixed to the unique category I'm assigned to
+

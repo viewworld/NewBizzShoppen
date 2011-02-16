@@ -41,10 +41,11 @@
         <% end %>
 
         <td>
-          <h4><%= lead.header %></h4>
+          <h4><%= lead.header %> <%= link_to_edit_lead(lead) %></h4>
           <p class="element"><%= t("leads.listing.purchase_value_label") %> <span class="green"><%= as_currency(lead.purchase_value,lead.currency) %></span></p>
           <p class="element"><%= t("leads.listing.lead_price_label") %> <span class="green"><%= as_currency(lead.price,lead.currency) %></span></p>
           <p class="element_description i"><%= lead.description %></p>
+          <p class="element_templates"><%= render :partial => "/shared/lead_templates/listing", :locals => { :lead => lead } %></p>
           <%= block_lead_details && with_output_buffer { lead_details.call(lead) } %>
         </td>
 

@@ -3,7 +3,8 @@ class Country < ActiveRecord::Base
   has_many :leads
   has_many :bank_accounts
   has_one :vat_rate
-  
+
+  validates_presence_of :name
   validates_uniqueness_of :name
 
   scope :with_leads, select("DISTINCT(name), countries.*").joins("RIGHT JOIN leads on countries.id=leads.country_id")

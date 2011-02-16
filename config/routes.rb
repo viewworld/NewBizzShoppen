@@ -19,6 +19,7 @@ Nbs::Application.routes.draw do
     resources :users do
       resource :password, :controller => 'password'
     end
+    resource :bulk_users_update, :controller => "bulk_users_update", :only => [:update]
     resources :categories
     resource :setting, :only => [:edit, :update]
     resources :email_templates
@@ -38,7 +39,9 @@ Nbs::Application.routes.draw do
       resources :payment_transactions
     end
     resources :bank_accounts
-    resources :vat_rates    
+    resources :vat_rates
+    resources :lead_templates
+    resources :sellers
   end
 
   namespace :buyers do
@@ -64,6 +67,13 @@ Nbs::Application.routes.draw do
     resources :call_centre_agents
     resource :bulk_call_centre_agents_update, :controller => "bulk_call_centre_agents_update", :only => [:update]
     resources :leads
+    resources :lead_templates
+  end
+
+  namespace :call_centre_agents do
+    root :to => "leads#index"
+    resources :leads
+    resources :lead_templates
   end
 
   namespace :lead_users do
@@ -85,17 +95,20 @@ Nbs::Application.routes.draw do
     resources :lead_requests, :only => [:index, :update, :destroy]
     resource :bulk_lead_requests, :controller => "bulk_lead_requests", :only => [:destroy,:update]
     resource :bulk_subaccounts_update, :controller => "bulk_subaccounts_update", :only => [:update]
+    resources :not_invoiced_leads, :only => [:index]
     resources :invoices, :only => [:show,:index]
   end
 
   namespace :agents do
     root :to => "leads#index"
     resources :leads
+    resources :lead_templates
   end
 
   namespace :purchase_managers do
     root :to => "leads#index"
     resources :leads
+    resources :lead_templates
   end
 
   match 'buyer_home' => 'buyer_home#show', :as => "buyer_home"
@@ -111,6 +124,7 @@ Nbs::Application.routes.draw do
   resources :agent_accounts, :only => [:new, :create]
   resources :buyer_accounts, :only => [:new, :create]
   resources :purchase_manager_accounts, :only => [:new, :create]
+  resources :category_buyer_accounts, :only => [:new, :create]
   resources :locales
 
   resources :news
@@ -126,6 +140,11 @@ Nbs::Application.routes.draw do
 
   resource :contact_us, :controller => "contact_us", :as => "contact_us", :only => [:new, :create]
   match 'contact_us' => 'contact_us#new', :as => 'contact_us'
+
+  match ':slug' => 'category_home#show', :as => :category_home_page
+  match ':slug/account/new' => 'category_buyer_accounts#new', :as => :new_category_home_page_account
+  match ':slug/account' => 'category_buyer_accounts#create', :as => :category_home_page_account
+  match ':slug/leads' => 'category_buyers/leads#index', :as => :category_home_page_leads
 
   root :to => "home#show"
 

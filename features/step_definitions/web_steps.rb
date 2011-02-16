@@ -348,3 +348,11 @@ Then /^"([^"]*)" dropdown should not have values "([^"]*)"$/ do |field, values|
     assert !page.has_xpath?("//option[contains(string(), '#{value}')]")
   end
 end
+
+When /^I visit URL "([^"]*)"$/ do |url|
+  visit url
+end
+
+Then /^I should see CSS path "([^"]*)"$/ do |selector|
+  page.all(:css, selector).size.should eql(1)
+end

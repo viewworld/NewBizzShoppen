@@ -5,7 +5,7 @@
       <frm title="">
         <param:content>
           <div class="pdd_10 no_pdd_t">
-            <fieldset class="inputs labels_ta_r labels_240">
+            <fieldset class="inputs_vertical inputs_150">
               <ol>
                 <% @settings.each_with_index do |setting, i| %>
                     <li class="string">
@@ -28,6 +28,7 @@
       </frm>
   <% end %>
 
+  <br/>
   <header><%= t("administration.bank_accounts.index.view.header") %></header>
 
   <table class="generic" cellspacing="0" cellpadding="0" id="bank_accounts">
@@ -40,8 +41,8 @@
           <th><%= t("administration.bank_accounts.index.view.iban_no") %></th>
           <th><%= t("administration.bank_accounts.index.view.local_bank_number") %></th>
           <th><%= t("administration.bank_accounts.index.view.swift") %></th>
-          <th><%= t("administration.bank_accounts.form.view.country_default") %></th>
-          <th><%= t("administration.bank_accounts.form.view.global_default") %></th>
+          <th class="ta_c"><%= t("administration.bank_accounts.form.view.country_default") %></th>
+          <th class="ta_c"><%= t("administration.bank_accounts.form.view.global_default") %></th>
           <th><%= t("administration.bank_accounts.index.view.actions") %></th>
           <th class="hr"></th>
         </tr>
@@ -57,9 +58,9 @@
               <td><%= ba.iban_no %></td>
               <td><%= ba.local_bank_number %></td>
               <td><%= ba.swift %></td>
-              <td><%= check_box_tag "country_default_#{ba.id}", 1, ba.country_default?, :disabled => true %></td>
-              <td><%= check_box_tag "global_default_#{ba.id}", 1, ba.global_default?, :disabled => true %></td>
-              <td>
+              <td class="ta_c"><%= check_box_tag "country_default_#{ba.id}", 1, ba.country_default?, :disabled => true %></td>
+              <td class="ta_c"><%= check_box_tag "global_default_#{ba.id}", 1, ba.global_default?, :disabled => true %></td>
+              <td class="tda ta_r">
                 <ul-actions>
                   <li><%= link_to t("administration.bank_accounts.index.view.show"), administration_bank_account_path(ba) %></li>
                   <li><%= link_to t("administration.bank_accounts.index.view.edit"), edit_administration_bank_account_path(ba) %></li>
@@ -75,7 +76,7 @@
         </tr>
       <% end %>
       <tr class="main_actions">
-        <td colspan="11">
+        <td colspan="11" class="ta_r">
           <%= bt_link_to nil, t("administration.bank_accounts.index.view.add_bank"), new_administration_bank_account_path %>
         </td>
       </tr>
@@ -89,13 +90,14 @@
     </tfoot>
   </table>
 
+  <br/>
   <header><%= t("administration.vat_rates.index.view.header") %></header>
 
  <table class="generic" cellspacing="0" cellpadding="0" id="vat_rates">
     <thead>
         <tr>
           <th class="hl"></th>
-          <th><%= t("administration.vat_rates.index.view.country") %></th>
+          <th style="width: 200px"><%= t("administration.vat_rates.index.view.country") %></th>
           <th><%= t("administration.vat_rates.index.view.rate") %></th>
           <th><%= t("administration.vat_rates.index.view.actions") %></th>
           <th class="hr"></th>
@@ -122,7 +124,7 @@
         </tr>
       <% end %>
       <tr class="main_actions">
-        <td colspan="5">
+        <td colspan="5" class="ta_r">
           <%= bt_link_to nil, t("administration.vat_rates.index.view.add_vat_rate"), new_administration_vat_rate_path %>
         </td>
       </tr>

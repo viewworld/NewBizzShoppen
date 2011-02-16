@@ -1,8 +1,9 @@
-@added @m4b @ao
+@added @m4b @ao @vat_rates
 Feature: VAT rates
 
   Background: I am on the home page
-    Given I am on the home page
+    Given there is a seller with attributes "name:DannyTheSeller,first_name:Danny,last_name:DeVito,address:USA,country_id:1,vat_no:123"
+    And I am on the home page
 
   @_done
   Scenario: I can fill in VAT number when creating new buyer account
@@ -72,17 +73,9 @@ Feature: VAT rates
     And I am on administration edit user kastomer@nbs.fake
     Then I should not see translated "administration.users.edit.view.not_charge_vat"
 
-  @_done
+  # https://redmine.selleo.com/issues/3660
+  @_deprecated
   Scenario: Administrator can add vat rate for each country
-    When I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
-    And I sign in as jon@lajoie.ca with password secret
-    And I follow translated "layout.main_menu.admin.settings"
-    And I follow translated "administration.vat_rates.index.view.add_vat_rate"
-    And I select "Denmark" from "vat_rate_country_id"
-    And I fill in "vat_rate_rate" with "25"
-    And I press translated "administration.vat_rates.new.view.button_create"
-    Then I should be on administration settings page
-    And I should see "25.00%" within "#vat_rates"
 
   @_done
   Scenario: Administrator can't set more than 1 rate per country
@@ -91,7 +84,7 @@ Feature: VAT rates
     And I sign in as jon@lajoie.ca with password secret
     And I follow translated "layout.main_menu.admin.settings"
     And I follow translated "administration.vat_rates.index.view.add_vat_rate"
-    And I select "Denmark" from "vat_rate_country_id"
+    And I fill in "vat_rate_country_attributes_name" with "Denmark"
     And I fill in "vat_rate_rate" with "15"
     And I press translated "administration.vat_rates.new.view.button_create"
     Then I should see "has already been taken"
@@ -107,7 +100,7 @@ Feature: VAT rates
     And I sign in as jon@lajoie.ca with password secret
     And I follow translated "layout.main_menu.admin.upcoming_invoices"
     And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
-    And I press "Create Invoice"
+    And I press translated "administration.invoices.new.view.button_create"
     And I follow translated "administration.invoices.edit.view.show_invoice"
     Then I should see "27%" within ".product_data"
 
@@ -122,7 +115,7 @@ Feature: VAT rates
     And I sign in as jon@lajoie.ca with password secret
     And I follow translated "layout.main_menu.admin.upcoming_invoices"
     And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
-    And I press "Create Invoice"
+    And I press translated "administration.invoices.new.view.button_create"
     And I follow translated "administration.invoices.edit.view.show_invoice"
     Then I should not see "27%" within ".product_data"
 
@@ -136,7 +129,7 @@ Feature: VAT rates
      And I select "Wielki Szu" from "invoice_user_id"
      And I press translated "administration.invoices.index.view.create_invoice"
      And I follow "add_fields_invoice_lines"
-     Then the "1" field with id like "_vat_rate" should contain "0.27"
+     Then the "1" field with id like "_vat_rate" should contain "27.0"
      And the "invoice_vat_paid_in_customer_country" checkbox should not be checked
 
   @selenium @_done
@@ -151,3 +144,28 @@ Feature: VAT rates
     And I follow "add_fields_invoice_lines"
     Then the "1" field with id like "_vat_rate" should contain "0"
     And the "invoice_vat_paid_in_customer_country" checkbox should be checked
+
+  # Make country a textfield (we won’t create a new VAT for existing country, so it should be ok just to create both new country and VAT)
+  @m5 @ao @_done
+  Scenario: I can create a new country when adding a VAT rate
+    When I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
+    And I sign in as jon@lajoie.ca with password secret
+    And I follow translated "layout.main_menu.admin.settings"
+    And I follow translated "administration.vat_rates.index.view.add_vat_rate"
+    And I fill in "vat_rate_country_attributes_name" with "Poland"
+    And I fill in "vat_rate_rate" with "23"
+    And I press translated "administration.vat_rates.new.view.button_create"
+    Then I should be on administration settings page
+    And I should see "23.00%" within "#vat_rates"
+    And I should see "Poland" within "#vat_rates"
+
+  @m5 @ao @_done
+  Scenario: The new country created should have VAT rate assigned
+    When I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
+    And I sign in as jon@lajoie.ca with password secret
+    And I follow translated "layout.main_menu.admin.settings"
+    And I follow translated "administration.vat_rates.index.view.add_vat_rate"
+    And I fill in "vat_rate_country_attributes_name" with "Poland"
+    And I fill in "vat_rate_rate" with "23"
+    And I press translated "administration.vat_rates.new.view.button_create"
+    Then country "Poland" should have VAT rate of "23"

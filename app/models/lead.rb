@@ -14,6 +14,7 @@ class Lead < ActiveRecord::Base
   belongs_to :currency
   has_many :lead_translations, :dependent => :destroy
   has_many :lead_purchases
+  has_many :lead_template_values
 
   scope :with_keyword, lambda { |q| where("lower(header) like :keyword OR lower(description) like :keyword OR lower(creator_name) like :keyword", {:keyword => "%#{q.downcase}%"}) }
   scope :deal_value_from, lambda { |q| where(["purchase_value >= ?", q]) }
@@ -33,7 +34,7 @@ class Lead < ActiveRecord::Base
   scope :with_status, lambda { |q| where(["leads.published = ?", q]) }
   scope :published_only, where(:published => true)
   scope :with_creator_type, lambda {|creator_type| where(["leads.creator_type = ?", "User::#{creator_type}"]) }
-  scope :within_accessible_categories, lambda { |accessible_categories_ids| where("category_id IN (?)", accessible_categories_ids) }
+  scope :within_accessible_categories, lambda { |accessible_categories_ids| where("leads.category_id IN (?)", accessible_categories_ids) }
   scope :with_call_centre, lambda { |call_centre_id| where(["users.parent_id = ?", call_centre_id]).joins("INNER JOIN users ON leads.creator_id=users.id") }
   #====================
   scope :featured, where(:featured => true)
@@ -41,15 +42,18 @@ class Lead < ActiveRecord::Base
   scope :without_bought_and_requested_by, lambda {|u| joins("LEFT JOIN lead_purchases lp ON lp.lead_id = leads.id").where(["(lp.owner_id <> ? OR lp.owner_id IS NULL) AND (lp.assignee_id <> ? OR lp.assignee_id IS NULL) AND (lp.requested_by <> ? OR lp.requested_by IS NULL)", u.id, u.id, u.id]) if u}
   scope :bestsellers, order("lead_purchases_counter DESC")
   scope :latest, order("created_at DESC")
+  scope :interesting_for_user, lambda { |user| joins(:category => {:category_interests => :user}).where(["users.id = ?",user.to_i])}
 
   scope :joins_on_lead_purchases , joins("INNER JOIN lead_purchases ON lead_purchases.lead_id=leads.id")
-  scope :with_created_by, lambda { |agent| where("creator_id = ?", agent.id) }
+  scope :with_created_by, lambda { |agent_id| where("creator_id = ?", agent_id) }
   scope :with_revenue_by, lambda { |agent| select("sum(price) as id").where("creator_id = ? and requested_by IS NULL", agent.id).joins_on_lead_purchases }
   scope :with_rated_good_by, lambda { |agent| where("creator_id = ? and lead_purchases.rating_level > -1 and lead_purchases.rating_level <= ? and requested_by IS NULL", agent.id, LeadPurchase::RATING_SATISFACTORY).joins_on_lead_purchases }
   scope :with_rated_bad_by, lambda { |agent| where("creator_id = ? and lead_purchases.rating_level > ? and requested_by IS NULL", agent.id, LeadPurchase::RATING_SATISFACTORY).joins_on_lead_purchases }
   scope :with_not_rated_by, lambda { |agent| where("creator_id = ? and (lead_purchases.rating_level = -1 or lead_purchases.rating_level is NULL) and requested_by IS NULL", agent.id).joins_on_lead_purchases }
 
+  scope :with_not_invoiced_for_user, lambda { |user| joins("RIGHT JOIN lead_purchases ON lead_purchases.lead_id = leads.id LEFT JOIN invoice_lines ON invoice_lines.payable_id = lead_purchases.id LEFT JOIN users ON users.id = lead_purchases.owner_id").where(["invoice_lines.payable_id IS NULL AND users.big_buyer IS TRUE AND users.id = ?", user.to_i]) }
 
+  scope :owned_by, lambda { |user| where("lead_purchases.accessible_from IS NOT NULL and lead_purchases.owner_id = ?", user.id).joins(:lead_purchases) }
 
   validates_presence_of :header, :description, :purchase_value, :price, :company_name, :contact_name, :phone_number, :sale_limit, :category_id, :purchase_decision_date, :country_id, :currency, :address_line_1, :city, :zip_code
   validates_presence_of :hidden_description, :unless => Proc.new{|l| l.created_by?('PurchaseManager')}
@@ -63,6 +67,7 @@ class Lead < ActiveRecord::Base
   delegate :certification_level, :to => :creator
 
   accepts_nested_attributes_for :lead_translations, :allow_destroy => true
+  accepts_nested_attributes_for :lead_template_values, :allow_destroy => true
 
   scoped_order :id, :header, :sale_limit, :price, :lead_purchases_counter, :published, :has_unsatisfactory_rating, :purchase_value
 
@@ -167,4 +172,45 @@ class Lead < ActiveRecord::Base
   def address
     [address_line_1, address_line_2, address_line_3, zip_code, city, county].join(" ")
   end
+
+  def sold?
+    lead_purchases_counter > 0
+  end
+  
+  def duplicate_fields(lead)
+    if lead
+      ["company_name", "company_phone_number", "company_website", "address_line_1", "address_line_2", "address_line_3", "zip_code",
+      "county", "country_id", "company_ean_number", "contact_name", "direct_phone_number", "phone_number", "email_address", "linkedin_url", "facebook_url"].each do |field|
+        self.send("#{field}=".to_sym, lead.send(field.to_sym))
+      end
+    end
+  end
+
+  def lead_templates(with_mandatory_only=nil)
+    self.creator = current_user if creator.nil?
+    templates = LeadTemplate.with_category_and_its_ancestors(category).where("is_active = ?", true).
+        where("(is_global = ? or (creator_id = ? and creator_type = ?) or (creator_id = ? and creator_type = ?) or creator_type = ? or creator_id in (?))",
+                 true, creator.parent_id, creator.parent.nil? ? "" : creator.parent.send(:casted_class).to_s, creator.id, creator.class.to_s, "User::Admin",
+                 creator.has_role?(:call_centre_agent) ? creator.parent.send(:casted_class).find(creator.parent_id).subaccounts : [])
+    templates = templates.where("is_mandatory = ?", with_mandatory_only) unless with_mandatory_only.nil?
+    templates
+  end
+
+  def all_lead_template_values(selected_template=nil)
+    templates = selected_template.nil? ? lead_templates : [LeadTemplate.find(selected_template)]
+    templates.map do |template|
+      template.lead_template_fields.map do |field|
+        lead_template_value = lead_template_values.detect { |ltv| ltv.lead_template_field == field }
+        lead_template_value = LeadTemplateValue.new(:lead_template_field => field) if lead_template_value.nil?
+        lead_template_value
+      end
+    end.flatten.compact
+  end
+
+  def lead_templates_and_values
+    templates = lead_template_values.map { |ltv| ltv.lead_template_field.lead_template }.uniq
+    templates.map do |template|
+      [template, lead_template_values.select { |ltv| ltv.lead_template_field.lead_template_id == template.id }]
+    end
+  end  
 end

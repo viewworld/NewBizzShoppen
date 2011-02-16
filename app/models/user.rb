@@ -1,9 +1,9 @@
 class User < ActiveRecord::Base
   self.abstract_class = true
 
-  ROLES_PRIORITY = [:admin, :call_centre, :agent, :call_centre_agent, :purchase_manager, :customer, :lead_buyer, :lead_user]
+  ROLES_PRIORITY = [:admin, :call_centre, :agent, :call_centre_agent, :purchase_manager, :customer, :category_buyer, :lead_buyer, :lead_user]
   DEAL_VALUE_RANGE = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000]
-  BASIC_USER_ROLES_WITH_LABELS = [['Administrator', 'admin'], ['Agent', 'agent'], ['Buyer', 'customer'], ['Call centre', 'call_centre'], ['Purchase Manager', 'purchase_manager']]
+  BASIC_USER_ROLES_WITH_LABELS = [['Administrator', 'admin'], ['Agent', 'agent'], ['Buyer', 'customer'], ['Call centre', 'call_centre'], ['Purchase Manager', 'purchase_manager'], ['Category Buyer', 'category_buyer']]
   ADDITIONAL_USER_ROLES_WITH_LABELS = [['Lead user', "lead_user"], ['Lead buyer', "lead_buyer"], ["Call centre agent", "call_centre_agent"]]
 
   NOT_CERTIFIED               = 0
@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
 
   # declare the valid roles -- do not change the order if you add more
   # roles later, always append them at the end!
-  roles :admin, :agent, :call_centre, :call_centre_agent, :customer, :lead_buyer, :lead_user, :purchase_manager
+  roles :admin, :agent, :call_centre, :call_centre_agent, :customer, :lead_buyer, :lead_user, :purchase_manager, :category_buyer
 
   validates_presence_of :email, :screen_name
   validates_uniqueness_of :email, :screen_name
@@ -35,6 +35,11 @@ class User < ActiveRecord::Base
   has_many :invoices
   belongs_to :user, :class_name => "User", :foreign_key => "parent_id", :counter_cache => :subaccounts_counter
   belongs_to :bank_account, :foreign_key => :bank_account_id, :primary_key => :id, :class_name => 'BankAccount'
+  belongs_to :vat_rate, :foreign_key => :country, :primary_key => :country_id
+  belongs_to :category
+  has_many :lead_templates,
+           :as => :creator,
+           :dependent => :destroy
   alias_method :parent, :user
 
   scope :with_role, lambda { |role| where("roles_mask & #{2**User.valid_roles.index(role.to_sym)} > 0 ") }
@@ -50,9 +55,10 @@ class User < ActiveRecord::Base
   scope :with_requested_leads, lambda { |requestee| select("leads.id").where("assignee_id IS NULL and requested_by = ?", requestee.id).joins("INNER JOIN lead_purchases ON lead_purchases.requested_by=users.id").joins("INNER JOIN leads on leads.id=lead_purchases.lead_id") }
   scope :with_assigned_leads_time_ago, lambda { |assignee, time| select("leads.id").where("assignee_id = ? and lead_purchases.assigned_at >= ?", assignee.id, time).join_lead_purchases_and_leads }
   scope :with_assigned_leads_total, lambda { |assignee| select("leads.id").where("assignee_id = ?", assignee.id).join_lead_purchases_and_leads }
+  scope :with_lead_creators_for, lambda { |parent| select("DISTINCT(users.id), users.*").where("users.parent_id = ?", parent.id).joins("INNER JOIN leads ON leads.creator_id=users.id") }
+  scope :assignees_for_lead_purchase_owner, lambda { |owner| select("DISTINCT(users.id), users.*").where("requested_by IS NULL and lead_purchases.owner_id = ? and accessible_from IS NOT NULL and users.parent_id = ?", owner.id, owner.id).joins("RIGHT JOIN lead_purchases on lead_purchases.assignee_id=users.id") }
 
-
-  scoped_order :id, :roles_mask, :email, :age, :department, :mobile_phone, :completed_leads_counter, :leads_requested_counter,
+  scoped_order :id, :roles_mask, :first_name, :last_name, :email, :age, :department, :mobile_phone, :completed_leads_counter, :leads_requested_counter,
                :leads_assigned_month_ago_counter, :leads_assigned_year_ago_counter, :total_leads_assigned_counter, :leads_created_counter,
                :leads_volume_sold_counter, :leads_revenue_counter, :leads_purchased_month_ago_counter, :leads_purchased_year_ago_counter,
                :leads_rated_good_counter, :leads_rated_bad_counter, :leads_not_rated_counter, :leads_rating_avg, :certification
@@ -213,7 +219,7 @@ class User < ActiveRecord::Base
   end
 
   def refresh_agent_counters!
-    self.leads_created_counter = Lead.with_created_by(self).size
+    self.leads_created_counter = Lead.with_created_by(id).size
     self.leads_volume_sold_counter = LeadPurchase.with_volume_sold_by(self).size
     self.leads_revenue_counter = Lead.with_revenue_by(self).first.id || 0
     self.leads_purchased_month_ago_counter = LeadPurchase.with_purchased_time_ago_by(self, 30.days.ago).size
@@ -270,7 +276,11 @@ class User < ActiveRecord::Base
   def to_s
     full_name
   end
-
+  
+  def can_create_lead_templates?
+    has_any_role?(:admin, :call_centre, :agent, :call_centre_agent, :purchase_manager)
+  end
+  
   def country_vat_rate
     user_with_role = casted_class.find(id)
     user_with_role.vat_rate ? user_with_role.vat_rate.rate : 0.0

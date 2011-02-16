@@ -92,10 +92,101 @@ Scenario: I should be able to click "Add to cart button" that will redirect me t
   And I press translated "home.show.view.sign_in"
   Then I should see "Lead 392S2"
 
-@m5 @tgn
-Scenario: If I sucessfully login after requesting a lead being added to a cart, that lead should be added to cart (or bought if I am big buyer)
+@m5 @tgn @_tested
+Scenario: If I successfully login after requesting a lead being added to a cart, that lead should be added to cart (or bought if I am big buyer)
+  Given I am signed up and confirmed as user with email johnbuyer3434@person.com and password secret and role customer
+  Given Lead named "Lead sample" exists within "Sample category" category
+  And I follow "Sample category"
+  Then I click hidden translated link "leads.index.add_to_cart_link"
+  And I sign in as johnbuyer3434@person.com with password secret
+  And I click hidden translated link "layout.cart.show_cart"
+  Then I should see "Lead sample"
+  Given I am not sign in
+  Given I am signed up and confirmed as user with email johnbigbuyer343888@person.com and password secret and role customer
+  And User johnbigbuyer343888@person.com with role customer is big buyer
+  And I follow translated "layout.main_menu.shared.browse_leads"
+  And I follow "Sample category"
+  Then I click hidden translated link "leads.index.add_to_cart_link"
+  And I sign in as johnbigbuyer343888@person.com with password secret
+  Then I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  And I should see "Lead sample"
+
 
 @m5 @added @tgn @sprint_5_corrections @_tested
 Scenario: When I browse a lead category, the lead category should be displayed very clear beside the "Leads flag" on the upper left side of the screen
   When I follow "Sample category"
   Then I should see "Leads for Sample category"
+  
+@m5 @added @tgn @_tested
+Scenario: I should be able to click "Add to cart button" that will redirect me to login page where I can create new account
+  Given lead Great marketing deal exists within category VariousLeads
+  And I go to browse leads
+  And I follow "VariousLeads"
+  Then I click hidden translated link "leads.index.add_to_cart_link"
+  And I follow translated "buyer_home.show.view.create_new_buyer_account"
+  Then I fill in "user_customer_first_name" with "John"
+  And I fill in "user_customer_last_name" with "Doe"
+  And I fill in "user_customer_phone" with "31242342424234"
+  And I fill in "user_customer_email" with "johndoecustomer@person.com"
+  And I fill in "user_customer_screen_name" with "John D."
+  And I fill in "user_customer_password" with "secret"
+  And I fill in "user_customer_password_confirmation" with "secret"
+  And I fill in "user_customer_street" with "Ferterds"
+  And I fill in "user_customer_city" with "Boston"
+  And I fill in "user_customer_zip_code" with "12421S"
+  And I select "Denmark" from "user_customer_country"
+  And I check "user_customer_agreement_read"
+  And I press translated "buyer_accounts.new.view.button_create_account"
+  And user "johndoecustomer@person.com" with role "customer" is confirmed
+  And I sign in as johndoecustomer@person.com with password secret
+  And I click hidden translated link "layout.cart.show_cart"
+  Then I should see "Great marketing deal"
+
+@m5 @tgn @_tested
+Scenario: If I successfully login after requesting a lead being added to a cart, that lead should be added to cart (or bought if I am big buyer)
+  Given I am signed up and confirmed as user with email buyer21@person.com and password supersecret and role customer
+  Given lead Great marketing deal exists within category VariousLeads
+  And I go to browse leads
+  And I follow "VariousLeads"
+  And I follow translated "leads.index.add_to_cart_link"
+  And I sign in as buyer21@person.com with password supersecret
+  And I follow translated "layout.cart.show_cart"
+  Then I should see "Great marketing deal"
+
+@m5 @added @lead_templates @tgn @_tested
+Scenario: I can see lead template fields with public values for each lead
+  Given lead Printers ultimate deal exists within category Computers
+  And template named "Printers details" for category "Computers" is created by user "ccagent@person.com" with role "call_centre_agent"
+  And template named "Printers details" has following fields "printers protocol:true:false, vendor name:false:false, versions:false:false"
+  And template named "Printers details" for lead "Printers ultimate deal" has values "printers protocol:xprinter3, vendor name:Havlett Packard, versions:3983c-39282f"
+  And I go to browse leads
+  And I follow "Computers"
+  Then I should see "PRINTERS DETAILS"
+  And I should see "printers protocol"
+  And I should see "vendor name"
+  And I should see "versions"
+  And I should see "Havlett Packard"
+  And I should see "3983c-39282f"
+  And I should not see "xprinter3"
+  And I should see translated "shared.lead_templates.listing.hidden_value"
+
+@m5 @added @lead_templates @tgn @_done @tested_elsewhere
+Scenario: I can see only lead template fields' names (not values) for hidden fields
+
+@m5 @unique_categories
+Scenario: I should not see customer unique categories on 'Browse leads' categories listing
+
+@m5 @unique_categories
+Scenario: I should not see agent unique categories on 'Browse leads' categories listing
+
+@m5 @unique_categories
+Scenario: I should not see leads from customer unique categories
+
+@m5 @unique_categories
+Scenario: I should not see leads from agent unique categories
+
+@m5 @unique_categories
+Scenario: I should not see customer unique categories in a search filter
+
+@m5 @unique_categories
+Scenario: I should not see agent unique categories in a search filter

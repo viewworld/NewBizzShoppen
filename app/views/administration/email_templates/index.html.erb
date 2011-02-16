@@ -1,7 +1,7 @@
 <column-mc:>
   <header><%= t("administration.email_templates.index.view.title") %></header>
-  
-    <table id="users_table" class="generic">
+
+  <table id="users_table" class="generic">
     <thead>
     <tr>
       <th class="hl"></th>
@@ -30,8 +30,13 @@
           <td class="cr"></td>
         </tr>
     <% end %>
+    <% if will_paginate %>
+        <tr class="pagination">
+          <td colspan="5" class="ta_c">
+            <%= will_paginate @email_templates, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+          </td>
+        </tr>
+    <% end %>
     </tbody>
   </table>
-  <%= will_paginate @email_templates %>
-  
 </column-mc:>

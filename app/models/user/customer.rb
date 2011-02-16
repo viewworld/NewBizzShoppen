@@ -6,6 +6,7 @@ class ::User::Customer < ::User
 
   has_many :lead_purchases, :foreign_key => "owner_id"
   has_many :lead_requests, :foreign_key => "owner_id"
+  has_many :bought_leads, :through => :lead_purchases, :class_name => "Lead", :source => :lead
 
   has_many :country_interests, :foreign_key => 'user_id'
   has_many :category_interests, :foreign_key => 'user_id'

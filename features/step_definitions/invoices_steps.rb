@@ -1,6 +1,7 @@
 When /^invoice exists for user "([^"]*)" with role "([^"]*)"(?: with attributes "([^"]*)")?$/ do |email,role_name,options|
+  invoice = User.where(:email => email).first.invoices.first
   user = "User::#{role_name.classify}".constantize.where(:email => email).first
-  attrs = options ? Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys.merge(:user => user) : {:user => user}
+  attrs = options ? Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys.merge(:invoice => invoice, :user => user) : {:invoice => invoice, :user => user}
   Invoice.make!(attrs)
 end
 
@@ -14,6 +15,8 @@ end
 When /^first invoice for user "([^"]*)" with role "([^"]*)" exists with attributes "([^"]*)"$/ do |email, role_name, options|
   invoice = "User::#{role_name.classify}".constantize.where(:email => email).first.invoices.first
   invoice.update_attributes(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys)
+  invoice.reload
+  puts invoice.inspect
 end
 
 When /^first invoice for user "([^"]*)" with role "([^"]*)" is created at "([^"]*)"$/ do |email, role_name, date|
@@ -24,6 +27,11 @@ end
 When /^first invoice for user "([^"]*)" with role "([^"]*)" is paid$/ do |email,role_name|
   invoice = "User::#{role_name.classify}".constantize.where(:email => email).first.invoices.first
   Invoice.update_all(["paid_at = :date",{:date => Time.now}], ["id=?",invoice.id])
+end
+
+When /^first invoice for user "([^"]*)" is not paid$/ do |email|
+  invoice = User.where(:email => email).first.invoices.first
+  Invoice.update_all(["paid_at = :date",{:date => nil}], ["id=?",invoice.id])
 end
 
 Then /^invoice is created for user with email "([^"]*)" and role "([^"]*)"$/ do |email, role|
@@ -44,7 +52,7 @@ end
 
 Then /^user with email "([^"]*)" and role "([^"]*)" has invoice generated for all unpaid leads$/ do |email, role|
   customer = "User::#{role.camelize}".constantize.find_by_email(email)
-  invoice = Invoice.create(:user_id => customer.id, :paid_at =>  Time.now)
+  invoice = Invoice.create(:user_id => customer.id, :paid_at =>  Time.now, :seller => Seller.make!)
   invoice.reload
   ManualTransaction.create(:invoice => invoice, :amount => invoice.total, :paid_at => Time.now)
 end
@@ -58,7 +66,7 @@ Then /^user with email "([^"]*)" and role "([^"]*)" has invoice for lead "([^"]*
   else
     payment_notification = nil
   end
-  invoice = Invoice.create(:user_id => customer.id, :paid_at => transaction_type == "by paypal" ? Time.now : nil)
+  invoice = Invoice.create(:user_id => customer.id, :seller => Seller.make!, :paid_at => transaction_type == "by paypal" ? Time.now : nil)
   if transaction_type == "by paypal"
     PaypalTransaction.create(:invoice => invoice, :payment_notification => payment_notification, :amount => lead.price, :paid_at => Time.now)
   else

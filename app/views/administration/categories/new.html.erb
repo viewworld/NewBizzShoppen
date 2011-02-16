@@ -1,7 +1,13 @@
 <column-mc:>
+
+
+
   <header back="true">Create new category</header>
   <%= semantic_form_for [:administration, @category], :method => :put, :html => {:multipart => true} do |form| %>
-      <frm title="">
+      <frm>
+        <param:header>
+            <%= bt_link_to nil, t("administration.categories.edit.view.new_template"), new_administration_lead_template_path(:category_id => @category.id), :class => "fltr" %>        
+        </param:header>
         <param:content>
           <%= render :partial => 'form', :locals => {:form => form} %>
         </param:content>
@@ -15,4 +21,18 @@
         </param:actions>
       </frm>
   <% end %>
+
+<hl/>
+
+<% unless @category.lead_templates.empty? %>
+
+  <%= lead_templates_table @category.lead_templates, :show_checkboxes => false, :show_active_column => false, :paginate_table => false do |blocks| %>
+      <% blocks.tools do |lead_template| %>
+        <ul-actions>
+            <li><%= link_to t("administration.categories.edit.view.edit_template"), edit_administration_lead_template_path(lead_template) %></li>
+            <li><%= link_to t("administration.categories.edit.view.destroy_template"), administration_lead_template_path(lead_template), :method => :delete, :confirm => t("administration.categories.edit.view.destroy_template_confirmation_message") %></li>
+        </ul-actions>
+      <% end %>
+  <% end %>
+<% end %>
 </column-mc:>

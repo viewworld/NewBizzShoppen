@@ -6,7 +6,7 @@
         <label></label>
         <%= form.select :parent_id, nested_set_options(Category, @category) { |name, level| "#{'-' * level} #{name}" }, {:include_blank => t("administration.categories.form.no_parent_category")} %>  
       </li>
-      <%= form.input :description, :as => :text %>
+      <%= form.input :description, :as => :text, :input_html => { :style => "width:400px;height:150px" } %>
       <%= form.input :is_locked %>
       <%= form.semantic_fields_for :image, @category.image || Asset::CategoryImage.new do |image| %>
           <%= image.input :asset,
@@ -15,6 +15,14 @@
                           :label => I18n.t("administration.categories.edit.view.upload_image"),
                           :name => "category[image_attributes][asset]" %>
       <% end %>
+      <li class="string">
+        <label>&nbsp;</label>
+        <%= image_tag(@category.image.url, :class => "thumb") unless @category.image.nil? %>
+      </li>
+
     </ol>
   </fieldset>
 </div>
+
+
+

@@ -28,11 +28,11 @@ gem 'thor'
 gem 'ckeditor', '3.4.3.pre'
 gem 'aws-s3'
 
-
 group :development do
   gem 'diff-lcs'
   gem 'tolk', :path => "vendor/gems/tolk"
   gem "nifty-generators"
+  gem "bullet"
 end
 
 group :test do
@@ -60,3 +60,4 @@ end
 
 gem 'capistrano'
 gem 'capistrano-ext', '>= 1.2.1'
+

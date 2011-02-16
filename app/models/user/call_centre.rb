@@ -10,4 +10,8 @@ class ::User::CallCentre < ::User
   def allow_payout_information_editing
     self.can_edit_payout_information = true
   end
+
+  def can_publish_leads?
+    true
+  end
 end

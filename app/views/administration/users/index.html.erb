@@ -58,76 +58,104 @@
     </param:actions>
   </header>
 
-
-  <table id="users_table" class="generic">
-    <thead>
-    <tr>
-      <th class="hl"></th>
-      <th><%= link_to t("administration.users.index.view.id"), order_for_scoped_search(:id) %></th>
-      <th><%= link_to t("administration.users.index.view.roles"), order_for_scoped_search(:roles_mask) %></th>
-      <th><%= link_to t("administration.users.index.view.first_name"), order_for_scoped_search(:first_name) %></th>
-      <th><%= link_to t("administration.users.index.view.last_name"), order_for_scoped_search(:last_name) %></th>
-      <th><%= link_to t("administration.users.index.view.email"), order_for_scoped_search(:email) %></th>
-      <th><%= link_to t("administration.users.index.view.age"), order_for_scoped_search(:age) %></th>
-      <th><%= t("administration.users.index.view.leads_bought") %></th>
-      <th><%= t("administration.users.index.view.leads_sold") %></th>
-      <th><%= t("administration.users.index.view.revenue") %></th>
-      <th><%= t("administration.users.index.view.payout") %></th>
-      <th class="ta_c"><%= t("administration.users.index.view.locked") %></th>
-      <th class="ta_r"><%= t("administration.users.index.view.actions") %></th>
-      <th class="hr"></th>
-    </tr>
-    </thead>
-    <tfoot>
-    <tr>
-      <td class="fl"></td>
-      <td colspan="12"></td>
-      <td class="fr"></td>
-    </tr>
-    </tfoot>
-    <tbody>
-    <% @users.each do |user| %>
-        <tr class="<%= cycle("odd", "even") %>">
-          <td class="cl"></td>
-          <td><%= user.id %></td>
-          <td><%= user.roles_as_text %></td>
-          <td><%= user.address.first_name %></td>
-          <td><%= user.address.last_name %></td>
-          <td><%= user.email %></td>
-          <td><%= user.age %></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td class="ta_c">
-            <% unless user.id == current_user.id %>
-                <%= link_to user.locked_at.blank? ? t("administration.users.index.view.lock") : t("administration.users.index.view.unlock"), administration_user_path(user, {"user_#{user.role.to_s}".to_sym  => {:locked =>  user.locked_at.blank? ? "lock" : "unlock"}}), {:method => :put} %>
+  <% if @users.blank? %>
+      <%= render "shared/blank_data" %>
+  <% else %>
+      <%= bulk_form do %>
+          <table id="users_table" class="generic">
+            <thead>
+            <tr>
+              <th class="hl"></th>
+              <th class="no_pdd_lr"><%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %></th>
+              <th><%= link_to t("administration.users.index.view.id"), order_for_scoped_search(:id) %></th>
+              <th><%= link_to t("administration.users.index.view.roles"), order_for_scoped_search(:roles_mask) %></th>
+              <th><%= link_to t("administration.users.index.view.first_name"), order_for_scoped_search(:first_name) %></th>
+              <th><%= link_to t("administration.users.index.view.last_name"), order_for_scoped_search(:last_name) %></th>
+              <th><%= link_to t("administration.users.index.view.email"), order_for_scoped_search(:email) %></th>
+              <th><%= link_to t("administration.users.index.view.age"), order_for_scoped_search(:age) %></th>
+              <th><%= t("administration.users.index.view.leads_bought") %></th>
+              <th><%= t("administration.users.index.view.leads_sold") %></th>
+              <th><%= t("administration.users.index.view.revenue") %></th>
+              <th><%= t("administration.users.index.view.payout") %></th>
+              <th class="ta_c"><%= t("administration.users.index.view.locked") %></th>
+              <th class="ta_r"><%= t("administration.users.index.view.actions") %></th>
+              <th class="hr"></th>
+            </tr>
+            </thead>
+            <tfoot>
+            <tr>
+              <td class="fl"></td>
+              <td colspan="13"></td>
+              <td class="fr"></td>
+            </tr>
+            </tfoot>
+            <tbody>
+            <% @users.each do |user| %>
+                <tr class="<%= cycle("odd", "even") %>">
+                  <td class="cl"></td>
+                  <td class="no_pdd_lr"><%= check_box_tag("user_ids[]", user.id) unless user.id == current_user.id %></td>
+                  <td><%= user.id %></td>
+                  <td><%= user.roles_as_text %></td>
+                  <td><%= user.first_name %></td>
+                  <td><%= user.last_name %></td>
+                  <td><%= user.email %></td>
+                  <td><%= user.age %></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td class="ta_c">
+                    <% unless user.id == current_user.id %>
+                        <%= link_to user.locked_at.blank? ? t("administration.users.index.view.lock") : t("administration.users.index.view.unlock"), administration_user_path(user, {"user_#{user.role.to_s}".to_sym  => {:locked =>  user.locked_at.blank? ? "lock" : "unlock"}}), {:method => :put} %>
+                    <% end %>
+                  </td>
+                  <td class="tda ta_r">
+                    <ul-actions>
+                      <li>
+                        <%= link_to t("administration.users.index.view.edit"), edit_administration_user_path(user), :class => "default_action" %>
+                      </li>
+                      <li>
+                        <%= link_to t("administration.users.index.view.delete"), administration_user_path(user), {:method => :delete, :confirm => t("administration.users.index.view.delete_confirmation_message")} %>
+                      </li>
+                      <% unless user.subaccounts.empty? %>
+                          <li>
+                            <%= link_to t("administration.users.index.view.subaccounts"), administration_users_path({:search => {:with_subaccounts => user.id}}) %>
+                          </li>
+                      <% end %>
+                      <% if user.has_role?(:customer) %>
+                          <li><%= link_to t("administration.users.index.view.create_invoice"), new_administration_invoicing_invoice_path(:invoice => {:user_id => user.id}) %></li>
+                      <% end %>
+                    </ul-actions>
+                  </td>
+                  <td class="cr"></td>
+                </tr>
             <% end %>
-          </td>
-          <td class="tda ta_r">
-            <ul-actions>
-              <li>
-                <%= link_to t("administration.users.index.view.edit"), edit_administration_user_path(user) %>
-              </li>
-              <li>
-                <%= link_to t("administration.users.index.view.delete"), administration_user_path(user), {:method => :delete, :confirm => t("administration.users.index.view.delete_confirmation_message")} %>
-              </li>
-              <% unless user.subaccounts.empty? %>
-                  <li>
-                    <%= link_to t("administration.users.index.view.subaccounts"), administration_users_path({:search => {:with_subaccounts => user.id}}) %>
-                  </li>
-              <% end %>
-              <% if user.has_role?(:customer) %>
-                  <li><%= link_to t("administration.users.index.view.create_invoice"), new_administration_invoicing_invoice_path(:invoice => {:user_id => user.id}) %></li>
-              <% end %>
-            </ul-actions>
-          </td>
-          <td class="cr"></td>
-        </tr>
-    <% end %>
-    </tbody>
-  </table>
-
-  <%= will_paginate @users %>
-
+            <tr class="pagination">
+              <td colspan="15" class="ta_c">
+                <div class="td_select_all">
+                  <%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %>
+                  <%= label_tag "mark_all", "select all" %>
+                </div>
+                <%= will_paginate @users %>
+              </td>
+            </tr>
+            <tr class="main_actions">
+              <td class="cl"></td>
+              <td colspan="11" class="no_pdd_lr ta_r">
+                <%= hidden_field_tag :route_to %>
+                <%= check_box_tag "create_invoice", 1, false %>
+                <%= label_tag "create_invoice", t("administration.users.index.view.create_invoice") %>
+              </td>
+              <td class="ta_c">
+                <%= select_tag :locking, options_for_select([['', nil], [t("administration.users.index.view.lock"), "locked"], [t("administration.users.index.view.unlock"), "unlock"]]) %>
+              </td>
+              <td class="ta_r">
+                <%= bt_link_to nil, t("administration.users.index.view.button_bulk_update_users"), "javascript:void(0)", :onclick => "submitBulkForm('#{administration_bulk_users_update_path}#PUT');" %>
+              </td>
+              <td class="cr"></td>
+            </tr>
+            </tbody>
+          </table>
+      <% end %>
+  <% end %>
 </column-mc:>

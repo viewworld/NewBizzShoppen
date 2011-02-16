@@ -1,0 +1,163 @@
+<div class="pdd_10 no_pdd_t">
+  <fieldset class="inputs labels_ta_r labels_240">
+    <ol>
+      <%= form.input :company_name %>
+      <%= form.input :company_phone_number %>
+      <%= form.input :company_website %>
+      <%= form.input :address_line_1 %>
+      <%= form.input :address_line_2 %>
+      <%= form.input :address_line_3 %>
+      <%= form.input :zip_code %>
+      <%= form.input :city %>
+      <%= form.input :county %>
+      <%= form.input :country_id, :as => :select, :collection => Country.all %>
+      <%= form.input :company_ean_number %>
+    </ol>
+  </fieldset>
+</div>
+<hl/>
+
+<div class="pdd_10 no_pdd_t">
+  <fieldset class="inputs labels_ta_r labels_240">
+    <ol>
+      <%= form.input :contact_name %>
+      <%= form.input :direct_phone_number %>
+      <%= form.input :phone_number %>
+      <%= form.input :email_address %>
+      <%= form.input :linkedin_url %>
+      <%= form.input :facebook_url %>
+    </ol>
+  </fieldset>
+</div>
+<hl/>
+
+<div class="pdd_10 no_pdd_t">
+  <fieldset class="inputs labels_ta_r labels_240">
+    <ol class="align_inputs">
+      <%= form.input :category_id, :as => :hidden %>
+      <%= form.input :is_international, :as => :select, :collection => [[t("shared.leads.form.country_local_label"), 0], [t("shared.leads.form.country_international"), 1]], :include_blank => false %>
+      <%= form.input :header %>
+      <%= form.input :description, :input_html => {:style => "height: 140px; width: 600px"} %>
+      <% unless current_user.has_role?(:purchase_manager) %>
+        <%= form.input :hidden_description, :input_html => {:style => "height: 140px; width: 600px"} %>
+      <% end %>
+      <%= form.input :purchase_value %>
+      <%= form.input :price %>
+      <%= form.input :currency, :collection => currencies_for_select, :include_blank => false %>
+      <% unless current_user.has_role?(:purchase_manager) %>
+          <% if current_user.can_publish_leads? %>
+            <%= form.input :published %>
+          <% else %>
+            <%= form.input :published, :as => :hidden %>
+          <% end %>
+      <% end %>
+    </ol>
+  </fieldset>
+</div>
+<% unless @lead.lead_templates.empty? %>
+    <%= render :partial => "/shared/leads/lead_template_fields", :locals => { :lead => @lead, :form => form } %>
+<% end %>
+<hl/>
+
+<div class="nested_locale_container"></div>
+
+<%= form.fields_for :lead_translations, @lead.lead_translations.select { |lt| lt.locale != I18n.locale.to_s } do |builder| %>
+    <%= render :partial => "/shared/leads/lead_fields", :locals => {:f => builder} %>
+<% end %>
+
+<div class="pdd_10 no_pdd_t">
+  <fieldset class="inputs labels_ta_r labels_240">
+    <ol class="align_inputs">
+      <li class="select">
+      <%= form.label :locale, "New translation" %>
+      <%= select_tag :locale, options_for_select(available_locales_list(@lead.lead_translations)),
+               {:id => "locale_picker", :include_blank => true, :onchange => fields_for_leads_translations(form)} %>
+      </li>
+    </ol>
+  </fieldset>
+</div>
+<hl/>
+
+<div class="pdd_10 no_pdd_t">
+  <fieldset class="inputs labels_ta_r labels_240">
+    <ol class="align_inputs">
+      <%= form.input :notify_buyers_after_update, :as => :boolean unless @lead.lead_purchases.empty? %>
+      <%= form.input :sale_limit, :as => :select, :collection => (1..10) %>
+      <%= form.input :purchase_decision_date, :as => :string, :input_html => {:id => "datepicker"}, :wrapper_html => { :class => "date" } %>
+    </ol>
+  </fieldset>
+</div>
+
+
+
+<script>
+    var nestedFormsCount = <%= @lead.lead_translations.reject{ |lt| lt.locale == I18n.locale.to_s }.size %>;
+    $(function() {
+        $("#datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+    });
+    function add_fields(link, content) {
+        if ($('#locale_picker').text() != null)
+        {
+            var new_id = new Date().getTime();
+            var regexp = new RegExp("");
+            content = content.replace(/lead_lead_translations_attributes_0/g, "lead_lead_translations_attributes_" + nestedFormsCount.toString());
+            content = content.replace(/lead\[lead_translations_attributes\]\[0\]/g, "lead[lead_translations_attributes][" + new_id.toString() + "]");
+            content = content.replace(/LOCALE_LANG/, $('#locale_picker').val());
+            $('.nested_locale_container:last').append(content);
+            $('.locale_hidden_field:last').val($('#locale_picker').val());
+            $('.locale_title:last').html($('#locale_picker').val());
+            $('.lead_template_value_translations_container_' + $('#locale_picker').val()).show();
+            $('.destroy_hidden_field_template_value_tr_' + $('#locale_picker').val()).val('');
+            $("option[value=" + $('#locale_picker').val() + "]").remove();
+            nestedFormsCount = nestedFormsCount + 1;
+        }
+    }
+
+    function remove_language(id, locale, record_id) {
+        nestedFormsCount = nestedFormsCount - 1;
+        $('.lead_template_value_translations_container_' + locale).hide();
+        $('.destroy_hidden_field_template_value_tr_' + locale).val('true');
+        $('#locale_picker').append($("<option></option>").attr("value", locale).text(locale));
+        if (record_id == null)
+        {
+            $('#lead_translation_form_' + id).remove();
+        }
+        else
+        {
+            $('#lead_translation_form_' + id).hide();
+            $('#destroy_hidden_field_' + record_id.toString()).val('true')
+        }
+
+    }
+
+    function set_beginnings_of_urls(fields_array){
+        $.each(fields_array, function(index, value) {
+          if($('#' + value).val() == "") {
+          $('#' + value).val("http://")
+          }
+        });
+
+    }
+
+    function add_template(){
+        $('#lead_template_container_' + $('#optional_templates_picker').val()).show();
+        $('.destroy_hidden_field_lead_template_fields_' + $('#optional_templates_picker').val()).val('');
+        $("option[value=" + $('#optional_templates_picker').val() + "]").remove();
+    }
+
+    function remove_template(template_id, template_name) {
+      $('#lead_template_container_' + template_id.toString()).hide();
+      $('.destroy_hidden_field_lead_template_fields_' + template_id.toString()).val('true');
+      $('#optional_templates_picker').append($("<option></option>").attr("value", template_id).text(template_name));
+    }
+
+    <% if params[:action] == "new" or params[:action] == "create" %>
+        set_beginnings_of_urls(["lead_linkedin_url", "lead_facebook_url", "lead_company_website"]);
+    <% end %>
+
+    <% lead_templates = @lead.lead_templates %>
+    <% if lead_templates.size == 1 and !lead_templates.first.is_mandatory %>
+        $('#optional_templates_picker').val('<%= lead_templates.first.id -%>');
+        add_template();
+    <% end %>
+</script>

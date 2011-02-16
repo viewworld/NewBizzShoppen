@@ -91,3 +91,7 @@ end
 Then /^the "([^"]*)" field with id like "([^"]*)" should contain "([^"]*)"$/ do |num,id_like,val|
   page.all(:css, "input:nth-of-type(#{num})[id*='#{id_like}']").first['value'].should eql(val)
 end
+
+Then /^I should see "([^"]*)" in the "([^"]*)" row of table "([^"]*)"$/ do |text, row_num, table_selector|
+  page.all(:css, "#{table_selector} tr:nth-of-type(#{row_num})").first.text.should match(/#{text}/)
+end

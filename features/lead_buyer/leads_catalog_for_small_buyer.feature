@@ -5,10 +5,13 @@ Background:
   Given I am on the homepage
   And I make sure current locale is English
   And lead Printers ultimate deal exists within category Computers
-  And lead Printers ultimate deal exists with attributes "creator_name:John Dulinky,price:989.39,purchase_value:7843.99,description:Public desc about printers deal,exposures_count:887,clicks_count:17"
+  And lead Printers ultimate deal exists with attributes "creator_name:John Dulinky,price:989.39,purchase_value:7843.99,description:Public desc about printers deal,exposures_count:887,clicks_count:17,currency_id:1"
   And lead Faxes ultimate deal exists within category Computers
+  And lead Faxes ultimate deal exists with attributes "currency_id:1"
   And lead Monitors ultimate deal exists within category Computers
+  And lead Monitors ultimate deal exists with attributes "currency_id:1"
   And lead Cheap mouses ultimate deal exists within category Computers
+  And lead Cheap mouses ultimate deal exists with attributes "currency_id:1"
   And I have user with email jim.jones@person.com and role agent
   And lead Cheap mouses ultimate deal is created by user jim.jones@person.com with role agent
   And User jim.jones@person.com with role agent is blocked

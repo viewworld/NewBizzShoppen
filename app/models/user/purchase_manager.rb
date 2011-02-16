@@ -5,4 +5,7 @@ class User::PurchaseManager < ::User
   include User::CommonAgent
   include Addresses
 
+  def can_publish_leads?
+    false
+  end
 end

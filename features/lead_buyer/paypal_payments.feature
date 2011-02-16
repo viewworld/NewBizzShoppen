@@ -3,6 +3,7 @@ Feature: Paypal payments
 
 Background:
   Given I am on the homepage
+  And there is a seller with attributes "name:DannyTheSeller,first_name:Danny,last_name:DeVito,address:USA,country_id:1,vat_no:123"
   And I make sure current locale is English
   Given Category named "Computers" already exists
   And Lead named "Super printers" exists within "Computers" category
@@ -42,3 +43,6 @@ Scenario: Paypal's IPN marks all related lead purchases as paid and accessible
 
 @_done @non_testable
 Scenario: Data is transfererd to paypal in encrypted form
+
+@tgn @m5 @added @_non_testable @_done
+Scenario: Currency code from cart is passed to PayPal
