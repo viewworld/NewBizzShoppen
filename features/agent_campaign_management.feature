@@ -6,7 +6,7 @@ Feature: agent campaign management
     #
     #
     #campaigns::index
-	Scenario: I can see campaigns list
+ 	  Scenario: I can see campaigns list
 
     Scenario: I can filter campaigns by active/inactive status
 
