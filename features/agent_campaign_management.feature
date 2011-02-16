@@ -21,9 +21,8 @@ Feature: Agent campaign - management
 
     Scenario: I can see agents list
 
-    @question
     Scenario: I can assign selected contacts to selected agent
-      # may agent have more assigned contacts then visible contacts number
+      # question: may agent have more assigned contacts then visible contacts number
 
     Scenario: I can remove contact from campaign
 
@@ -46,9 +45,8 @@ Feature: Agent campaign - management
     #
     #
     #campaigns::contacts::new (popup?)
-    @question
     Scenario: I can import contacts as excel formatted list
-      # creating multiple contacts to single lead (on different campaigns)
+      # question: creating multiple contacts to single lead (on different campaigns)
 
     Scenario: I can create contact
 
@@ -69,31 +67,25 @@ Feature: Agent campaign - management
 
 
     #call results
-    @question
     Scenario: I can set call back datetime for contact when result is "call back"
-      #contact returns to pool and might be assigned to other agent at given date?
+      #question: contact returns to pool and might be assigned to other agent at given date?
 
-    @question
     Scenario: contact is moved to bottom of call list when result is "not in"
-      #deassign from agent and move to bottom or just to bottom of call sheet?
+      #question: deassign from agent and move to bottom or just to bottom of call sheet?
 
-    @question
     Scenario: contact deassigned from agent when result is "Not interested"
-      #should not contact be assignable or other agents?
+      #question: should not contact be assignable or other agents?
 
-    @question
     Scenario: call back date is set automatically based on fixed number of days when result is "Not interested now"
-      #number of days needed. Should be assignable when call back date is out of campaign period?
+      #question: number of days needed. Should be assignable when call back date is out of campaign period?
 
-    @question
     Scenario: new lead should be created based on contact when result is "Upgrade to lead"
-      #should form for editing new lead appear in popup?
+      #question: should form for editing new lead appear in popup?
 
     Scenario: I can set meeting datetime for contact when result is "Meeting booked"
 
-    @question
     Scenario: I can enter text information on result when result is "Custom result"
-      #should not contact be assignable or other agents?
+      #question: should not contact be assignable or other agents?
 
 
     #
