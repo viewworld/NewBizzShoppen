@@ -1,4 +1,4 @@
-When /^a seller exists(?: with attributes "([^"]*)")?$/ do |options|
+When /^there is a seller(?: with attributes "([^"]*)")?$/ do |options|
   attrs = options ? Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys : {}
   Seller.make!(attrs)
 end

@@ -6,7 +6,7 @@ Background:
   And I make sure current locale is English
   And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
   And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role customer with attributes "first_name:Janko,last_name:Muzykant"
-  And a seller exists with attributes "name:DannyTheSeller,first_name:Danny,last_name:DeVito,address:USA,country_id:1,vat_no:123"
+  And there is a seller with attributes "name:DannyTheSeller,first_name:Danny,last_name:DeVito,address:USA,country_id:1,vat_no:123"
   Then I sign in as jon@lajoie.ca with password secret
 
 @_done @ao
@@ -420,7 +420,7 @@ Scenario: We do not need to generate a copy of the invoice, just the orininal
 
 @m5 @sellers @ao @_done
 Scenario: When creating an invoice a Seller for user's country should be selected
-  When a seller exists with attributes "name:SellerTwo,country_id:2"
+  When there is a seller with attributes "name:SellerTwo,country_id:2"
   And someone is signed up and confirmed as user with email customer_one@nbs.fake and password secret and role customer with attributes "first_name:John 1,last_name:Smith,country:1"
   And User customer_one@nbs.fake with role customer is big buyer
   And a lead LeadOne exists within category Computers and is bought by user customer_one@nbs.fake with role customer
@@ -438,9 +438,9 @@ Scenario: When creating an invoice a Seller for user's country should be selecte
 
 @m5 @sellers @ao @_done
 Scenario: If there's no Seller for user's country then default Seller should be used
-  When a seller exists with attributes "name:SellerOne,country_id:1"
-  And a seller exists with attributes "name:DefaultSeller,country_id:1,default:1"
-  And a seller exists with attributes "name:SellerThree,country_id:1"
+  When there is a seller with attributes "name:SellerOne,country_id:1"
+  And there is a seller with attributes "name:DefaultSeller,country_id:1,default:1"
+  And there is a seller with attributes "name:SellerThree,country_id:1"
   And someone is signed up and confirmed as user with email customer_one@nbs.fake and password secret and role customer with attributes "first_name:John 1,last_name:Smith,country:2"
   And User customer_one@nbs.fake with role customer is big buyer
   And a lead LeadOne exists within category Computers and is bought by user customer_one@nbs.fake with role customer

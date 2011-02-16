@@ -8,7 +8,7 @@ Feature: Sellers
 
   @_done
   Scenario: I can see Sellers list
-    When a seller exists
+    When there is a seller
     And I follow translated "layout.main_menu.admin.sellers"
     Then I should see "1" rows in a table within "#sellers"
 
@@ -29,7 +29,7 @@ Feature: Sellers
   # Address, Name, Email, Bank account, Payment deadline, Default VAT rate (from created), Invoice information -> There should be a custom text in the bottom of invoice page.
   @_done
   Scenario: Seller should contain all information required to generate invoices
-    When a seller exists
+    When there is a seller
     And I follow translated "layout.main_menu.admin.sellers"
     And I follow translated "administration.sellers.index.view.show"
     Then I should see translated "administration.sellers.show.view.name"
@@ -41,8 +41,8 @@ Feature: Sellers
 
   @_done
   Scenario: Invoice number should be scoped to Seller
-    When a seller exists with attributes "name:SellerOne"
-    And a seller exists with attributes "name:SellerTwo"
+    When there is a seller with attributes "name:SellerOne"
+    And there is a seller with attributes "name:SellerTwo"
     And I follow translated "layout.main_menu.admin.invoices"
     And I select "SellerOne" from "invoice_seller_id"
     And I press translated "administration.invoices.index.view.create_invoice"
@@ -55,8 +55,8 @@ Feature: Sellers
 
   @selenium @_done
   Scenario: One seller can be selected as default
-    When a seller exists with attributes "name:SellerOne"
-    And a seller exists with attributes "name:SellerTwo"
+    When there is a seller with attributes "name:SellerOne"
+    And there is a seller with attributes "name:SellerTwo"
     And I follow translated "layout.main_menu.admin.sellers"
     And I click hidden link by url regex "/administration\/sellers\/1\/edit/"
     And I check "seller_default"
