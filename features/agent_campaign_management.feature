@@ -48,6 +48,8 @@ Feature: Agent campaign - management
     #campaigns::contacts::new (popup?)
     Scenario: I can import contacts as excel formatted list
       # question: creating multiple contacts to single lead (on different campaigns)
+      # - a lead only has one contact, but if the same contact information is importet twice- in two different campiangs, it the same contact information can be assigend to to different leads
+      
 
     Scenario: I can create contact
 
@@ -69,24 +71,25 @@ Feature: Agent campaign - management
 
     #call results
     Scenario: I can set call back datetime for contact when result is "call back"
-      #question: contact returns to pool and might be assigned to other agent at given date?
+      #question: contact returns to pool and might be assigned to other agent at given date? - yes
 
     Scenario: contact is moved to bottom of call list when result is "not in"
-      #question: deassign from agent and move to bottom or just to bottom of call sheet?
+      #question: deassign from agent and move to bottom or just to bottom of call sheet? - just to the bottom of call sheet
 
     Scenario: contact deassigned from agent when result is "Not interested"
-      #question: should not contact be assignable or other agents?
+      #question: should not contact be assignable or other agents? - no they shuld be moved to the result list- with the result not interested
 
     Scenario: call back date is set automatically based on fixed number of days when result is "Not interested now"
-      #question: number of days needed. Should be assignable when call back date is out of campaign period?
+      #question: number of days needed. Should be assignable when call back date is out of campaign period?- The result not interested now should registere a call back date, and remove the contact from the campaign in the call back date is outside the campaing period
 
     Scenario: new lead should be created based on contact when result is "Upgrade to lead"
-      #question: should form for editing new lead appear in popup?
+      #question: should form for editing new lead appear in popup? - no in same interface. - a smart - dynamic solution would be nice
 
     Scenario: I can set meeting datetime for contact when result is "Meeting booked"
 
     Scenario: I can enter text information on result when result is "Custom result"
-      #question: should not contact be assignable or other agents?
+      #question: should not contact be assignable or other agents?- 
+      # - when the custom result is registered the contact should be removed from call list and put into the reslt list.
 
 
     #
