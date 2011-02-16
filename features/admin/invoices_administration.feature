@@ -418,7 +418,7 @@ Scenario: We do not need to generate a copy of the invoice, just the orininal
   And I press translated "common.cancel_link"
   Then I should be on administration invoices page
 
-@selenium @m5 @sellers @ao @wip
+@m5 @sellers @ao @_done
 Scenario: When creating an invoice a Seller for user's country should be selected
   When a seller exists with attributes "name:SellerTwo,country_id:2"
   And someone is signed up and confirmed as user with email customer_one@nbs.fake and password secret and role customer with attributes "first_name:John 1,last_name:Smith,country:1"
@@ -430,14 +430,24 @@ Scenario: When creating an invoice a Seller for user's country should be selecte
   Then the "invoice_seller_name" field should contain "DannyTheSeller"
   When someone is signed up and confirmed as user with email customer_two@nbs.fake and password secret and role customer with attributes "first_name:John 2,last_name:Smith,country:2"
   And User customer_two@nbs.fake with role customer is big buyer
-  And a lead LeadTwo exists within category Computers and is bought by user customer_one@nbs.fake with role customer
+  And a lead LeadTwo exists within category Computers and is bought by user customer_two@nbs.fake with role customer
   And I follow translated "layout.main_menu.admin.upcoming_invoices"
   And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
   And I press translated "administration.invoices.new.view.button_create"
   Then the "invoice_seller_name" field should contain "SellerTwo"
 
-@m5 @sellers @ao
+@m5 @sellers @ao @_done
 Scenario: If there's no Seller for user's country then default Seller should be used
+  When a seller exists with attributes "name:SellerOne,country_id:1"
+  And a seller exists with attributes "name:DefaultSeller,country_id:1,default:1"
+  And a seller exists with attributes "name:SellerThree,country_id:1"
+  And someone is signed up and confirmed as user with email customer_one@nbs.fake and password secret and role customer with attributes "first_name:John 1,last_name:Smith,country:2"
+  And User customer_one@nbs.fake with role customer is big buyer
+  And a lead LeadOne exists within category Computers and is bought by user customer_one@nbs.fake with role customer
+  And I follow translated "layout.main_menu.admin.upcoming_invoices"
+  And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
+  And I press translated "administration.invoices.new.view.button_create"
+  Then the "invoice_seller_name" field should contain "DefaultSeller"
 
 @m5 @tgn @_tested
 Scenario: Include users name, company and user email when filtering invoices
