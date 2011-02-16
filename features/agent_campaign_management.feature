@@ -9,6 +9,8 @@ Feature: Agent campaign - management
  	  Scenario: I can see campaigns list
 
     Scenario: I can filter campaigns by active/inactive status
+    
+    Scenario: I can sort campaigns
 
     Scenario: I can remove selected campaign
 
@@ -28,6 +30,8 @@ Feature: Agent campaign - management
     Scenario: I can remove contact from campaign
 
     Scenario: I can remove agent from campaign
+    
+    Scenario: I can deassign agents from selected contacts
 
 
     #
@@ -38,9 +42,11 @@ Feature: Agent campaign - management
     Scenario: I can assign selected agents to campaign
 
     #campaigns::agents::show
-    Scenario: I can see agent details
+    Scenario: I can see agent results statistics in campaign
 
-    Scenario: I can see agent recent calls and current call sheet
+    Scenario: I can see agent recent results and current call sheet
+    
+    Scenario: I can deassign contact from agent
 
 
     #
@@ -51,22 +57,18 @@ Feature: Agent campaign - management
       # - a lead only has one contact, but if the same contact information is importet twice- in two different campiangs, it the same contact information can be assigend to to different leads
       
 
-    Scenario: I can create contact
+    Scenario: I can create single contact
 
     #campaigns::contacts::show
     Scenario: I can see contact details
 
-    Scenario: I can see contact calling list with call results
+    Scenario: I can see contact results
 
     Scenario: I can see current contact assignment
-
-
-    #
-    #
-    #campaigns::contacts::calls::show/edit
-    Scenario: I can see call details
-
-    Scenario: I can change call result
+    
+    Scenario: I can add new result
+    
+    Scenario: I can remove result
 
 
     #call results
@@ -100,7 +102,7 @@ Feature: Agent campaign - management
 
     Scenario: I can see results statistics for given time range
 
-    Scenario: I can select time range from predefined ones: today, this week, this month
+    Scenario: I can select time range from predefined ones: whole campaign, today, this week, this month
 
-    Scenario: I can see custom results list for given time range
+    Scenario: I can see results list for given date and result type
 
