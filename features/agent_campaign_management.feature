@@ -22,7 +22,7 @@ Feature: Agent campaign - management
     Scenario: I can see agents list
 
     Scenario: I can assign selected contacts to selected agent
-      # question: may agent have more assigned contacts then visible contacts number
+      # question: may agent have more assigned contacts then visible contacts number- no but when the agent registre a result for a contact- the contact is removed from the agens active calling list and asign to the reslt list. Then the agent is dynamicly assign a new contact.
 
     Scenario: I can remove contact from campaign
 
