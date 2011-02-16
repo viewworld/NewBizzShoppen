@@ -1,7 +1,7 @@
 @m5 @agent_campaign
 Feature: Agent campaign - management
 
-# As campaign administrator
+# As campaign administrator - admin or call centere
 
     #
     #
