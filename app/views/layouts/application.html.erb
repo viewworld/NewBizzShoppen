@@ -32,7 +32,7 @@
       <% end %>
     </div>
 
-    <% if user_signed_in? and RAILS_ENV == "development" %>
+    <% if user_signed_in? and ::Rails.env == "development" %>
         <div style="position: absolute;right:30px; top:45px">
           <div class="dev_info">
             <p>You are now: <%= current_user.class.name %> ::: (<%= current_user.roles.to_a.map(& :to_s).to_sentence %>)</p>

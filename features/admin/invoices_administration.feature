@@ -61,9 +61,9 @@ Scenario: I can search for invoices by a combination of keywords: contact name, 
   And I press translated "administration.invoices.index.view.search_button"
   Then I should see "77.99"
   Then I should not see "88.32"
-  When I fill in "search_with_keyword" with "2"
+  When I fill in "search_with_keyword" with "1"
   And I press translated "administration.invoices.index.view.search_button"
-  Then I should see "2/"
+  Then I should see "1/201"
 
 @m5 @added @tgn @sprint_5_corrections @_tested
 Scenario: I can search for invoices pending creation by a combination of keywords: contact name, company name, lead name and a specific time period (date from to date to)
@@ -427,7 +427,7 @@ Scenario: When creating an invoice a Seller for user's country should be selecte
   And I follow translated "layout.main_menu.admin.upcoming_invoices"
   And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
   And I press translated "administration.invoices.new.view.button_create"
-  Then the "invoice_seller_name" field should contain "DannyTheSeller"
+  Then the "invoice_seller_name" field should contain "Default Seller"
   When someone is signed up and confirmed as user with email customer_two@nbs.fake and password secret and role customer with attributes "first_name:John 2,last_name:Smith,country:2"
   And User customer_two@nbs.fake with role customer is big buyer
   And a lead LeadTwo exists within category Computers and is bought by user customer_two@nbs.fake with role customer

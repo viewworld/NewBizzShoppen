@@ -288,7 +288,8 @@ end
 end
 
 Invoice.blueprint do
-  user { User::Agent.make! }
+  user { User::Customer.make! }
+  seller { Seller.make! }
 end
 
 InvoiceLine.blueprint do
