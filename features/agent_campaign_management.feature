@@ -1,4 +1,4 @@
-@m5 @agent_campaign
+@m5 @agent_campaign @$_administrator @$_call_centre @tbo
 Feature: Agent campaign - management
 
 # As campaign administrator - admin or call centere
