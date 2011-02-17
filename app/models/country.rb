@@ -1,7 +1,6 @@
 class Country < ActiveRecord::Base
   has_many :country_interest
   has_many :leads
-  has_one :default_bank_account, :class_name => 'BankAccount', :foreign_key => :country_id, :primary_key => :id, :conditions => {:country_default => true}
   has_many :bank_accounts
   has_one :vat_rate
 
@@ -14,5 +13,13 @@ class Country < ActiveRecord::Base
   scope :with_lead_purchase_owner, lambda { |owner| select("DISTINCT(name), countries.*").where("requested_by IS NULL and lead_purchases.owner_id = ? and accessible_from IS NOT NULL", owner.id).joins("RIGHT JOIN leads on countries.id=leads.country_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
   scope :with_lead_purchase_assignee, lambda { |assignee| select("DISTINCT(name), countries.*").where("lead_purchases.assignee_id = ? and accessible_from IS NOT NULL", assignee.id).joins("RIGHT JOIN leads on countries.id=leads.country_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
   scope :within_accessible_categories, lambda { |customer| where("leads.category_id NOT IN (?)", customer.accessible_categories_ids) }
+
+  def default_bank_account
+    BankAccount.country_default_bank_account(id).first
+  end
+
+  def to_i
+    id
+  end
 
 end

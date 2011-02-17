@@ -38,7 +38,6 @@
           <th><%= link_to t("administration.bank_accounts.index.view.id"), order_for_scoped_search(:id, :bank_accounts) %></th>
           <th><%= t("administration.bank_accounts.index.view.country") %></th>
           <th><%= t("administration.bank_accounts.index.view.bank_name") %></th>
-          <th><%= t("administration.bank_accounts.index.view.bank_address") %></th>
           <th><%= t("administration.bank_accounts.index.view.iban_no") %></th>
           <th><%= t("administration.bank_accounts.index.view.local_bank_number") %></th>
           <th><%= t("administration.bank_accounts.index.view.swift") %></th>
@@ -54,9 +53,8 @@
             <tr>
               <td class="cl"></td>
               <td><%= ba.id %></td>
-              <td><%= ba.country.name %></td>
+              <td><%= ba.address.country.name %></td>
               <td><%= ba.bank_name %></td>
-              <td><%= ba.bank_address %></td>
               <td><%= ba.iban_no %></td>
               <td><%= ba.local_bank_number %></td>
               <td><%= ba.swift %></td>
@@ -74,11 +72,11 @@
           <% end %>
       <% else %>
         <tr>
-          <td colspan="12"><%= t("administration.bank_accounts.index.view.no_bank_accounts_defined") %></td>
+          <td colspan="11"><%= t("administration.bank_accounts.index.view.no_bank_accounts_defined") %></td>
         </tr>
       <% end %>
       <tr class="main_actions">
-        <td colspan="12" class="ta_r">
+        <td colspan="11" class="ta_r">
           <%= bt_link_to nil, t("administration.bank_accounts.index.view.add_bank"), new_administration_bank_account_path %>
         </td>
       </tr>
@@ -86,7 +84,7 @@
     <tfoot>
     <tr>
       <td class="fl"></td>
-      <td colspan="10"></td>
+      <td colspan="9"></td>
       <td class="fr"></td>
     </tr>
     </tfoot>

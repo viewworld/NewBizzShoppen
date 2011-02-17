@@ -43,7 +43,7 @@
         <% @sellers.each do |s| %>
             <tr>
               <td class="cl"></td>
-              <td><%= s.country.name %></td>
+              <td><%= s.address.country.name %></td>
               <td><%= s.first_name %></td>
               <td><%= s.last_name %></td>
               <td><%= check_box_tag "default_#{s.id}", 1, s.default?, :disabled => true %></td>

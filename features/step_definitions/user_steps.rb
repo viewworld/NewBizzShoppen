@@ -38,6 +38,9 @@ end
 Given /^(?:|I am |someone is )signed up and confirmed as user with email ([^"]*) and password ([^"]*) and role ([^"]*)(?: with attributes "([^"]*)")?$/ do |email, password, role, options|
   std_opts = {:email => email, :password => password, :password_confirmation => password}
   opts = options ? Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys.merge(std_opts) : std_opts
+  if country_id = opts.delete(:country) and country = Country.find(country_id)
+    opts.merge!(:address => Address.make!(:country => country))
+  end
   u = "User::#{role.camelize}".constantize.make!(opts)
   u.confirm!
 end
@@ -209,9 +212,10 @@ When /^user "([^"]*)" with role "([^"]*)" added lead "([^"]*)" to cart$/ do |ema
   Cart.new(user).add_lead(lead)
 end
 
-Given /^user "([^"]*)" with role "([^"]*)" comes from "([^"]*)"$/ do |user_email, role_name, country_name|
-  country = Country.where(:name => country_name).first
-  "User::#{role_name.camelize}".constantize.where(:email => user_email).first.update_attribute(:country,country.id)
+Given /^user "([^"]*)" with role "([^"]*)" comes from "([^"]*)"$/ do |email,role_name,country_name|
+  address = "User::#{role_name.camelize}".constantize.where(:email => email).first.address
+  address.country = Country.where(:name => country_name).first
+  address.save
 end
 
 When /^I am signed up and confirmed as user with email "([^"]*)" and password "([^"]*)" and role "([^"]*)" for category "([^"]*)"(?: with attributes "([^"]*)")?$/ do |email, password, role_name, category_name, options|

@@ -17,16 +17,25 @@
           <%= t("administration.sellers.show.view.last_name") %>: <%= @seller.last_name %>
         </p><br/>
         <p>
-          <%= t("administration.sellers.show.view.address") %>: <%= @seller.address %>
+          <%= t("administration.sellers.show.view.address_line_1") %>: <%= @seller.address.address_line_1 %>
         </p><br/>
         <p>
-          <%= t("administration.sellers.show.view.country") %>: <%= @seller.country.name %>
+          <%= t("administration.sellers.show.view.address_line_2") %>: <%= @seller.address.address_line_2 %>
+        </p><br/>
+        <p>
+          <%= t("administration.sellers.show.view.address_line_3") %>: <%= @seller.address.address_line_3 %>
+        </p><br/>
+        <p>
+          <%= t("administration.sellers.show.view.zip_code") %>: <%= @seller.address.zip_code %>
+        </p><br/>
+        <p>
+          <%= t("administration.sellers.show.view.country") %>: <%= @seller.address.country.name %>
         </p><br/>
         <p>
           <%= t("administration.sellers.show.view.vat_no") %>: <%= @seller.vat_no %>
         </p><br/>
         <p>
-          <%= t("administration.sellers.show.view.default") %>: <%= @seller.default %>
+          <%= t("administration.sellers.show.view.default") %>: <%= check_box_tag "default", 1, @seller.default?, :disabled => true %>
         </p>
       </div>
     </param:content>

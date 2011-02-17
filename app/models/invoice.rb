@@ -31,13 +31,16 @@ class Invoice < ActiveRecord::Base
                                                            SUM(invoice_lines.brutto_value) as brutto_value_sum",
            :group => "vat_rate", :class_name => "InvoiceLine"
 
+  has_one :customer_address, :class_name => 'Address', :as => :addressable
+  has_one :seller_address, :class_name => 'Address', :as => :addressable
+
   scope :ascend_by_invoice_number, order("YEAR(invoices.creation_date) ASC, invoices.number ASC, company_id ASC")
   scope :descend_by_invoice_number, order("YEAR(invoices.creation_date) DESC, invoices.number DESC, company_id ASC")
   scope :creation_date_in_year, lambda{ |date| where(["(date_part('year', created_at) = ?)", date.year]) }
   scope :with_sale_date_after_and_including, lambda{ |date| where(["sale_date >= ?",date])}
   scope :with_sale_date_before_and_including, lambda{ |date| where(["sale_date <= ?",date])}
   scope :not_paid, where(:paid_at => nil)
-  scope :with_keyword, lambda{ |keyword| where("users.email like :keyword OR users.first_name like :keyword OR users.last_name like :keyword OR invoices.seller_name like :keyword OR invoices.number::TEXT = :number_keyword OR lower(invoices.customer_name) LIKE :keyword OR lower(invoices.customer_address) LIKE :keyword OR lower(leads.header) LIKE :keyword OR lower(leads.contact_name) LIKE :keyword OR lower(leads.company_name) LIKE :keyword OR lower(leads.email_address) LIKE :keyword", {:keyword => "%#{keyword.downcase}%", :number_keyword => "#{keyword.downcase}"}).joins("LEFT JOIN invoice_lines ON invoices.id=invoice_lines.invoice_id LEFT JOIN lead_purchases ON invoice_lines.payable_id=lead_purchases.id LEFT JOIN leads ON lead_purchases.lead_id=leads.id").joins(:user) }
+  scope :with_keyword, lambda{ |keyword| joins(:customer_address).where("users.email like :keyword OR users.first_name like :keyword OR users.last_name like :keyword OR invoices.seller_name like :keyword OR invoices.number::TEXT = :number_keyword OR lower(invoices.customer_name) LIKE :keyword OR lower(addresses.address_line_1) LIKE :keyword OR lower(addresses.address_line_2) LIKE :keyword OR lower(addresses.address_line_3) LIKE :keyword OR lower(addresses.zip_code) LIKE :keyword OR lower(leads.header) LIKE :keyword OR lower(leads.contact_name) LIKE :keyword OR lower(leads.company_name) LIKE :keyword OR lower(leads.email_address) LIKE :keyword", {:keyword => "%#{keyword.downcase}%", :number_keyword => "#{keyword.downcase}"}).joins("LEFT JOIN invoice_lines ON invoices.id=invoice_lines.invoice_id LEFT JOIN lead_purchases ON invoice_lines.payable_id=lead_purchases.id LEFT JOIN leads ON lead_purchases.lead_id=leads.id").joins(:user) }
   scope :ascend_by_customer, joins(:user).order("users.first_name||' '||users.last_name ASC")
   scope :descend_by_customer, joins(:user).order("users.first_name||' '||users.last_name DESC")
   scope :ascend_by_total, joins("LEFT JOIN invoice_lines ON invoice_lines.invoice_id = invoices.id").group(column_names.map{|c| 'invoices.'+c}.join(',')).order("SUM(invoice_lines.brutto_value) ASC")
@@ -61,6 +64,7 @@ class Invoice < ActiveRecord::Base
 
   #Uncomment reject_if, if not validating invoice lines
   accepts_nested_attributes_for :invoice_lines, :allow_destroy => true #,:reject_if => lambda { |a| a[:name].blank? }
+  accepts_nested_attributes_for :customer_address, :seller_address
 
   scoped_order :revenue_frozen, :paid_at, :number, :sale_date, :seller_name
   multi_scoped_order :sale_date_and_number
@@ -70,7 +74,7 @@ class Invoice < ActiveRecord::Base
   def set_seller
     if !seller
       self.seller = if user
-        Seller.default_for_country(user.country)
+        Seller.default_for_country(user.with_role.address.country)
       else
         Seller.default
       end
@@ -94,16 +98,16 @@ class Invoice < ActiveRecord::Base
 
   def duplicate_company_and_customer_information
     self.update_attributes({
-            :customer_name => user.full_name,
-            :customer_address => user.address,
-            :customer_vat_no => user.vat_number,
-            :seller_address => seller.address,
+            :customer_name => user.with_role.full_name,
+            :customer_address => user.with_role.address.clone,
+            :customer_vat_no => user.with_role.vat_number,
+            :seller_address => seller.address.clone,
             :seller_name => seller.name,
             :seller_vat_no => seller.vat_no,
             :seller_first_name => seller.first_name,
             :seller_last_name => seller.last_name,
-            :vat_paid_in_customer_country => user.not_charge_vat?,
-            :bank_account => user.payment_bank_account
+            :vat_paid_in_customer_country => user.with_role.not_charge_vat?,
+            :bank_account => user.with_role.payment_bank_account
     })
   end
 

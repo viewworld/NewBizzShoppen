@@ -40,16 +40,42 @@
         <hl pdd="5"/>
 
         <p>
-          <%= t("administration.bank_accounts.show.view.iban_no") %>: <strong><%= @bank_account.iban_no %></strong>
-        </p>
-
+          <%= t("administration.bank_accounts.show.view.country") %>: <%= @bank_account.address.country.name %>
+        </p><br/>
         <p>
           <%= t("administration.bank_accounts.show.view.local_bank_number") %>:
           <strong><%= @bank_account.local_bank_number %></strong>
         </p>
 
         <p>
-          <%= t("administration.bank_accounts.show.view.swift") %>: <strong><%= @bank_account.swift %></strong>
+          <%= t("administration.bank_accounts.show.view.address_line_1") %>: <%= @bank_account.address.address_line_1 %>
+        </p><br/>
+        <p>
+          <%= t("administration.bank_accounts.show.view.address_line_2") %>: <%= @bank_account.address.address_line_2 %>
+        </p><br/>
+        <p>
+          <%= t("administration.bank_accounts.show.view.address_line_3") %>: <%= @bank_account.address.address_line_3 %>
+        </p><br/>
+        <p>
+          <%= t("administration.bank_accounts.show.view.zip_code") %>: <%= @bank_account.address.zip_code %>
+        </p><br/>
+        <p>
+          <%= t("administration.bank_accounts.show.view.iban_no") %>: <%= @bank_account.iban_no %>
+        </p><br/>
+        <p>
+          <%= t("administration.bank_accounts.show.view.local_bank_number") %>: <%= @bank_account.local_bank_number %>
+        </p><br/>
+        <p>
+          <%= t("administration.bank_accounts.show.view.swift") %>: <%= @bank_account.swift %>
+        </p><br/>
+        <p>
+          <%= t("administration.bank_accounts.show.view.country_default") %>: <%= @bank_account.country_default %>
+        </p><br/>
+        <p>
+          <%= t("administration.bank_accounts.show.view.global_default") %>: <%= @bank_account.global_default %>
+        </p><br/>
+        <p>
+          <%= t("administration.bank_accounts.show.view.payment_conditions") %>: <%= @bank_account.payment_conditions %>
         </p>
         <hl pdd="5"/>
 

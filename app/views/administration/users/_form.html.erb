@@ -3,9 +3,18 @@
     <ol>
       <%= form.input :first_name %>
       <%= form.input :last_name %>
-      <%= form.input :phone %>
-      <%= form.input :email %>
-      <%= form.input :screen_name %>
+      <% if defined? form.object.address %>
+          <%= form.fields_for :address do |address_form| %>
+              <%= address_form.input :address_line_1 %>
+              <%= address_form.input :address_line_2 %>
+              <%= address_form.input :address_line_3 %>
+              <%= address_form.input :zip_code %>
+              <%= address_form.input :country, :as => :select, :collection => Country.all %>
+          <% end %>
+      <% end %>
+      <% if ['lead_buyer', 'customer'].include?(params[:role]) or @user.has_any_role?(:lead_buyer, :customer) %>
+        <%= form.input :vat_number %>
+      <% end %>
     </ol>
   </fieldset>
 </div>
@@ -14,13 +23,9 @@
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs labels_ta_r labels_240">
     <ol class="align_inputs">
-      <%= form.input :street %>
-      <%= form.input :city %>
-      <%= form.input :zip_code %>
-      <%= form.input :county %>
-      <% if ['lead_buyer', 'customer'].include?(params[:role]) or @user.has_any_role?(:lead_buyer, :customer) %>
-        <%= form.input :vat_number %>
-      <% end %>
+      <%= form.input :screen_name %>
+      <%= form.input :phone %>
+      <%= form.input :email %>
     </ol>
   </fieldset>
 </div>
@@ -49,12 +54,20 @@
       </fieldset>
     </div>
     <hl/>
+<% elsif !form.object.new_record? and (['lead_buyer', 'customer'].include?(params[:role]) or @user.has_any_role?(:lead_buyer, :customer)) %>
+    <div class="pdd_10 no_pdd_t">
+      <fieldset class="inputs labels_ta_r labels_240">
+        <ol class="align_inputs">
+          <%= form.input :bank_account, :as => :select, :collection => BankAccount.all %>
+        </ol>
+      </fieldset>
+    </div>
+    <hl/>
 <% end %>
 
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs labels_ta_r labels_240">
     <ol class="align_inputs">
-      <%= form.input :country, :as => :select, :collection => Country.all %>
       <%= form.input :agreement_read, :as => :hidden %>
       <%= form.input :newsletter_on %>
       <% if ['agent', 'call_centre_agent'].include?(params[:role]) or @user.has_any_role?(:agent, :call_centre_agent) %>
@@ -70,12 +83,3 @@
   </fieldset>
 </div>
 
-<% if !form.object.new_record? and (['lead_buyer', 'customer'].include?(params[:role]) or @user.has_any_role?(:lead_buyer, :customer)) %>
-    <div class="pdd_10 no_pdd_t">
-      <fieldset class="inputs labels_ta_r labels_240">
-        <ol class="align_inputs">
-          <%= form.input :bank_account, :as => :select, :collection => BankAccount.all %>
-        </ol>
-      </fieldset>
-    </div>
-<% end %>

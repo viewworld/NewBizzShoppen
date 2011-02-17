@@ -3,6 +3,8 @@ class User::PurchaseManager < ::User
 
   include User::RegistrationValidations
   include User::CommonAgent
+  include Addresses
+  include BankAccounts
 
   def can_publish_leads?
     false

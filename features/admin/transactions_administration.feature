@@ -72,7 +72,7 @@ Scenario: I can search for a transaction by a combination of keyword: contact na
   Given a lead TV ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role customer
   And lead TV ultimate deal exists with attributes "price:77.99,contact_name:Jill Johanssen,company_name:AIG Inc"
   And user with email "bigbuyer1@person.com" and role "customer" has invoice generated for all unpaid leads
-  Given first invoice for user "bigbuyer1@person.com" exists with attributes "sale_date:2010-12-11"
+  Given first invoice for user "bigbuyer1@person.com" with role "customer" exists with attributes "sale_date:2010-12-11"
   Given a lead Wires ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role customer
   And lead Wires ultimate deal exists with attributes "price:88.32,contact_name:Tom Blanq,company_name:Xerox"
   And user with email "bigbuyer1@person.com" and role "customer" has invoice generated for all unpaid leads

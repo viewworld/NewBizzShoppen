@@ -79,7 +79,7 @@ Feature: User accounts management
 @m5 @tgn @_tested
 Scenario: I can invoice an account
   Given I have user with email bigbuyer1@person.com and role customer
-  And there is a seller with attributes "name:DannyTheSeller,first_name:Danny,last_name:DeVito,address:USA,country_id:1,vat_no:123"
+  And there is a seller with attributes "name:DannyTheSeller,first_name:Danny,last_name:DeVito,address:USA,vat_no:123" for country "Denmark"
   And User bigbuyer1@person.com with role customer is big buyer
   And a lead Monitors ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role customer
   Given I go to administration users

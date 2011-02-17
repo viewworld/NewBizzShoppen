@@ -19,8 +19,11 @@ Feature: Sellers
     And I fill in "seller_name" with "SellerOne"
     And I fill in "seller_first_name" with "Danny"
     And I fill in "seller_last_name" with "DeVito"
-    And I fill in "seller_address" with "Holiłoód, Kalifornia"
-    And I select "Denmark" from "seller_country_id"
+    And I fill in "seller_address_attributes_address_line_1" with "Szwarcenegera 1"
+    And I fill in "seller_address_attributes_address_line_2" with "Holiłód"
+    And I fill in "seller_address_attributes_address_line_3" with "Kalifornia"
+    And I fill in "seller_address_attributes_zip_code" with "01-123"
+    And I select "Denmark" from "seller_address_attributes_country_id"
     And I fill in "seller_vat_no" with "666-66-66-66"
     And I press translated "administration.sellers.new.view.button_create"
     And I am on administration sellers page
@@ -29,13 +32,15 @@ Feature: Sellers
   # Address, Name, Email, Bank account, Payment deadline, Default VAT rate (from created), Invoice information -> There should be a custom text in the bottom of invoice page.
   @_done
   Scenario: Seller should contain all information required to generate invoices
-    When there is a seller
-    And I follow translated "layout.main_menu.admin.sellers"
+    When I follow translated "layout.main_menu.admin.sellers"
     And I follow translated "administration.sellers.index.view.show"
     Then I should see translated "administration.sellers.show.view.name"
     And I should see translated "administration.sellers.show.view.first_name"
     And I should see translated "administration.sellers.show.view.last_name"
-    And I should see translated "administration.sellers.show.view.address"
+    And I should see translated "administration.sellers.show.view.address_line_1"
+    And I should see translated "administration.sellers.show.view.address_line_2"
+    And I should see translated "administration.sellers.show.view.address_line_3"
+    And I should see translated "administration.sellers.show.view.zip_code"
     And I should see translated "administration.sellers.show.view.vat_no"
     And I should see translated "administration.sellers.show.view.country"
 
@@ -58,17 +63,16 @@ Feature: Sellers
     When there is a seller with attributes "name:SellerOne"
     And there is a seller with attributes "name:SellerTwo"
     And I follow translated "layout.main_menu.admin.sellers"
-    And I click hidden link by url regex "/administration\/sellers\/1\/edit/"
+    And I am on administration seller SellerOne edit page
     And I check "seller_default"
     And I press translated "administration.sellers.edit.view.button_update"
-    And I follow translated "layout.main_menu.admin.sellers"
-    Then the "default_1" checkbox should be checked
-    When I click hidden link by url regex "/administration\/sellers\/2\/edit/"
+    Then the "default" checkbox should be checked
+    And I am on administration seller SellerTwo edit page
     And I check "seller_default"
     And I press translated "administration.sellers.edit.view.button_update"
-    And I follow translated "layout.main_menu.admin.sellers"
-    Then the "default_1" checkbox should not be checked
-    Then the "default_2" checkbox should be checked
+    Then the "default" checkbox should be checked
+    When I am on administration SellerOne seller page
+    Then the "default" checkbox should not be checked
 
 
 

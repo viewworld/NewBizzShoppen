@@ -3,10 +3,29 @@
     <ol class="align_inputs">
       <%= form.input :first_name %>
       <%= form.input :last_name %>
+      <%= form.input :mobile_phone %>
+    </ol>
+  </fieldset>
+</div>
+
+<hl/>
+
+<div class="pdd_10 no_pdd_t">
+  <fieldset class="inputs labels_ta_r labels_240">
+    <ol class="align_inputs">
+      <%= form.input :screen_name %>
       <%= form.input :phone %>
       <%= form.input :email %>
-      <%= form.input :screen_name %>
       <%= form.input :mobile_phone %>
+    </ol>
+  </fieldset>
+</div>
+
+<hl/>
+
+<div class="pdd_10 no_pdd_t">
+  <fieldset class="inputs labels_ta_r labels_240">
+    <ol class="align_inputs">
       <%= form.input :department %>
       <%= form.input :lead_buyer_role_enabled, :as => :boolean %>
       <%= form.input :agreement_read, :as => :hidden, :value => "1" %>

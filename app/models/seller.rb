@@ -1,16 +1,19 @@
 class Seller < ActiveRecord::Base
 
+  include Addresses
+
   belongs_to :country
+
   has_many :invoices
 
-  validates_presence_of :name, :address, :first_name, :last_name, :vat_no, :country
+  validates_presence_of :name, :address, :first_name, :last_name, :vat_no
 
   before_save :assure_default
   after_save :change_default
   before_destroy :assure_at_least_one
 
   scope :default_seller, where(:default => true)
-  scope :for_country, lambda { |country_id| where(:country_id => country_id) }
+  scope :for_country, lambda { |country_id| joins(:address).where(:addresses => {:country_id => country_id}) }
 
   private
 

@@ -34,7 +34,6 @@ class User < ActiveRecord::Base
   has_many :owned_lead_requests, :class_name => 'LeadRequest', :foreign_key => :owner_id
   has_many :invoices
   belongs_to :user, :class_name => "User", :foreign_key => "parent_id", :counter_cache => :subaccounts_counter
-  belongs_to :user_country, :foreign_key => "country", :class_name => 'Country'
   belongs_to :bank_account, :foreign_key => :bank_account_id, :primary_key => :id, :class_name => 'BankAccount'
   belongs_to :vat_rate, :foreign_key => :country, :primary_key => :country_id
   belongs_to :category
@@ -70,10 +69,10 @@ class User < ActiveRecord::Base
   attr_accessor :agreement_read, :locked
 
   before_save :handle_locking, :handle_team_buyers_flag
-  before_create :set_rss_token, :set_role, :set_bank_account
+  before_create :set_rss_token, :set_role
   before_destroy :can_be_removed
 
-  liquid :email, :first_name, :last_name, :confirmation_instructions_url, :reset_password_instructions_url
+  liquid :email, :confirmation_instructions_url, :reset_password_instructions_url
 
   private
 
@@ -143,14 +142,6 @@ class User < ActiveRecord::Base
 
   def deliver_email_template(uniq_id)
     ApplicationMailer.email_template(email, EmailTemplate.find_by_uniq_id(uniq_id), {:user => self}).deliver
-  end
-
-  def set_bank_account
-    self.bank_account_id = if user_country and country_default = user_country.default_bank_account
-      country_default.id
-    elsif global_default = BankAccount.global_default_bank_account.first
-      global_default.id
-    end
   end
 
   public
@@ -278,10 +269,6 @@ class User < ActiveRecord::Base
     User::Customer.find(parent_id).category_interests.map(&:category_id)
   end
   
-  def address
-    %{#{street}\n#{zip_code} #{city}\n#{county}}
-  end
-
   def has_role?(r)
     roles.include?(r)
   end
@@ -295,14 +282,27 @@ class User < ActiveRecord::Base
   end
   
   def country_vat_rate
-    vat_rate ? vat_rate.rate : 0.0
+    with_role.vat_rate ? with_role.vat_rate.rate : 0.0
   end
 
   def payment_bank_account
-    bank_account || BankAccount.country_default_bank_account(country).first || BankAccount.global_default_bank_account.first
+    bank_account || BankAccount.country_default_bank_account(address.country).first || BankAccount.global_default_bank_account.first
   end  
 
   def to_i
     id
   end
+
+  def user_country
+    address.country
+  end
+
+  def vat_rate
+    address.country.vat_rate
+  end
+
+  def with_role
+    casted_class.find(id)
+  end
+
 end

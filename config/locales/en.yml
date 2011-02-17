@@ -681,7 +681,10 @@ en:
           name: 'Name'
           first_name: 'First name'
           last_name: 'Last name'
-          address: 'Address'
+          address_line_1: 'Address line 1'
+          address_line_2: 'Address line 2'
+          address_line_3: 'Address line 3'
+          zip_code: 'Zip code'
           vat_no: 'Vat number'
           country: 'Country'
           default: 'Default'
@@ -744,7 +747,6 @@ en:
           id: 'ID'
           country: 'Country'
           bank_name: 'Bank name'
-          bank_address: 'Bank address'
           iban_no: 'IBAN number'
           local_bank_number: 'Local bank number'
           swift: 'SWIFT'
@@ -769,10 +771,15 @@ en:
           country: 'Country'
           bank_name: 'Bank name'
           bank_address: 'Bank address'
+          address_line_1: 'Address line 1'
+          address_line_2: 'Address line 2'
+          address_line_3: 'Address line 3'
+          zip_code: 'ZIP code'
           iban_no: 'IBAN number'
           local_bank_number: 'Local bank number'
           swift: 'SWIFT'
           country_default: 'Default bank for country'
+          global_default: 'Global default bank'
           payment_conditions: 'Payment conditions'
       form:
         view:
@@ -1540,6 +1547,18 @@ en:
         country_local_label: Local
         country_international: International
         remove_template: Remove
+        company_information: 'Company information'
+        contact_information: 'Contact information'
+        company_ean_reg: 'Company EAN / Reg'
+        contact_direct_phone_number: 'Contact direct phone number'
+        contact_mobile_number: 'Contact mobile number'
+        lead_information: 'Lead information'
+        is_international: 'Country'
+        header: 'Public header'
+        description: 'Public description'
+        additional_language: 'Additional language'
+        sales_information: 'Sales information'
+
 
   models:
     user:
@@ -1589,10 +1608,10 @@ en:
         screen_name: 'Screen name'
         password: 'Password'
         password_confirmation: 'Password confirmation'
-        street: 'Street'
-        city: 'City'
+        address_line_1: 'Address line 1'
+        address_line_1: 'Address line 2'
         zip_code: 'Zip code'
-        county: 'County'
+        address_line_1: 'Address line 3'
         country: 'Country'
         agreement_read: "I have read and agree to Associated Content's Terms of Use and Privacy Policy"
         newsletter_on: 'I want to receive the newsletter'

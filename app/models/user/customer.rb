@@ -2,6 +2,8 @@ class ::User::Customer < ::User
   ROLES = [:customer, :lead_buyer]
 
   include User::RegistrationValidations
+  include Addresses
+  include BankAccounts
 
   has_many :lead_purchases, :foreign_key => "owner_id"
   has_many :lead_requests, :foreign_key => "owner_id"
@@ -13,4 +15,5 @@ class ::User::Customer < ::User
   has_many :categories, :through => :category_interests
   has_many :invoices, :foreign_key => "user_id"
   accepts_nested_attributes_for :lead_purchases
+
 end
