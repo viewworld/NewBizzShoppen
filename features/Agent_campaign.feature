@@ -17,12 +17,14 @@ Feature: Agent campaign - calling session
     Scenario: I can enable/disable dynamic calling
 
     Scenario: I can navigate through contacts on call sheet when call is over
+    
+    Scenario: I can navigate through contacts details / results history / add result
 
     Scenario: I can see current call sheet
 
     Scenario: I can see contact form based on currently selected contact
 
-    Scenario: I can see current call form for specifying notes and result
+    Scenario: I can see new result form for specifying notes and result
 
     Scenario: I can see new lead form for specifying information based on currently selected contact
 
