@@ -58,6 +58,7 @@ class Lead < ActiveRecord::Base
   validates_presence_of :header, :description, :purchase_value, :price, :company_name, :contact_name, :phone_number, :sale_limit, :category_id, :purchase_decision_date, :country_id, :currency, :address_line_1, :city, :zip_code
   validates_presence_of :hidden_description, :unless => Proc.new{|l| l.created_by?('PurchaseManager')}
   validates_inclusion_of :sale_limit, :in => 0..10
+  validate :check_category
 
 
   liquid_methods :header, :description, :company_name, :contact_name, :phone_number, :email_address, :address, :www_address
@@ -136,6 +137,13 @@ class Lead < ActiveRecord::Base
 
   def deliver_email_template(email, uniq_id)
     ApplicationMailer.email_template(email, EmailTemplate.find_by_uniq_id(uniq_id), {:lead => self}).deliver
+  end
+
+  def check_category
+    self.creator = current_user if creator.nil?
+    if category and category.is_agent_unique and creator.unique_categories.include?(category)
+      self.errors.add(:category_id, "Incorrect category!")
+    end
   end
 
   public

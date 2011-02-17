@@ -6,6 +6,7 @@ module User::CommonAgent
       has_many :leads,
                :as => :creator,
                :dependent => :destroy
+      has_many :unique_categories, :through => :category_users, :foreign_key => "user_id", :source => :category
 
       validates_inclusion_of :payout, :in => 0..100, :message =>   I18n.t("models.user.payout_validation_message")
 
