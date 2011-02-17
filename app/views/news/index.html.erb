@@ -2,7 +2,7 @@
   <header back="true"><%= news_header %></header>
 
   <% if @news.blank? %>
-      <%= render "shared/blank_data" %>
+      <%= blank_state_message %>
   <% else %>
       <table class="generic">
         <thead>

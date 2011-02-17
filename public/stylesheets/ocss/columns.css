@@ -54,6 +54,11 @@
     display: block;
 }
 
+.grid_1to2
+{
+    width: 49.5%;
+}
+
 .grid_c
 {
     margin: 0 auto;

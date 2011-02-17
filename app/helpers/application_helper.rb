@@ -16,7 +16,7 @@ module ApplicationHelper
       end
     end
   end
-  
+
   def fields_for_leads_translations(f)
     new_object = current_user.has_any_role?(:admin, :call_centre) ? Lead.new : current_user.leads.build
     new_object.lead_translations = [LeadTranslation.new]
@@ -127,6 +127,14 @@ module ApplicationHelper
   def link_to_edit_lead(lead)
     if current_user and (current_user == lead.creator or current_user.has_role?(:admin))
       link_to(t("leads.listing.edit_label"), send("edit_#{current_user.has_role?(:admin) ? "administration" : current_user.role.to_s.pluralize}_lead_path".to_sym, lead.id), :class => "text_action")
+    end
+  end
+
+  def blank_state_message(msg = t("common.nothing_to_display"))
+    content_tag(:div, :class => "frm_tiny") do
+      content_tag(:div, :class => "pdd_10") do
+        content_tag(:p, msg, :class => "ta_c")
+     end
     end
   end
 end

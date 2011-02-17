@@ -39,7 +39,7 @@
   <header><%= t("customer.invoices.index.view.header") %></header>
 
   <% unless @invoices.any? %>
-      <%= render "shared/blank_data", :msg => t("customer.invoices.index.view.no_invoices") %>
+      <%= blank_state_message(t("customer.invoices.index.view.no_invoices")) %>
   <% else %>
       <table class="generic" cellspacing="0" cellpadding="0" id="invoices">
         <thead>
@@ -55,11 +55,13 @@
         </thead>
         <tbody id="invoices_list">
         <%= render(@invoices) %>
-        <tr class="pagination">
-          <td colspan="7">
-            <%= will_paginate @invoices %>
-          </td>
-        </tr>
+        <% if will_paginate %>
+            <tr class="pagination">
+              <td colspan="7">
+                <%= will_paginate @invoices %>
+              </td>
+            </tr>
+        <% end %>
         </tbody>
         <tfoot>
         <tr>

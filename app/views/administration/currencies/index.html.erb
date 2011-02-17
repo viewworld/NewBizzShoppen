@@ -20,7 +20,7 @@
   </div>
 
   <% if @currencies.blank? %>
-      <%= render "shared/blank_data", :msg => t("administration.currencies.index.view.no_currencies_defined") %>
+      <%= blank_state_message( t("administration.currencies.index.view.no_currencies_defined") ) %>
   <% else %>
       <table id="currencies_table" class="generic">
         <thead>

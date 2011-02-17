@@ -2,14 +2,14 @@
   <fieldset class="inputs_vertical">
     <ol>
       <%= form.input :name, :input_html => {:disabled => (!@lead_template.new_record? and current_user != @lead_template.creator)} %>
-      <%= form.input :is_mandatory %>
-      <%= form.input :is_active if current_user.has_role?(:call_centre) %>
       <% if current_user.has_role?(:admin) %>
           <%= form.hidden_field :category_id %>
           <%= form.input :is_global %>
       <% else %>
           <%= form.input :category_id, :collection => Category.all.map { |c| [c.name, c.id] }, :include_blank => false %>
       <% end %>
+      <%= form.input :is_mandatory %>
+      <%= form.input :is_active if current_user.has_role?(:call_centre) %>
     </ol>
   </fieldset>
 </div>

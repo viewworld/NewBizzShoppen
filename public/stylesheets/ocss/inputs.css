@@ -804,7 +804,7 @@
 {
     display: block;
     float: left;    
-    padding: 0 3px 5px 10px;
+    padding: 0 3px 5px 5px;
 }
 
 
@@ -830,29 +830,35 @@
 
 .inputs_vertical li.string label,
 .inputs_vertical li.select label,
-.inputs_vertical li.date label
+.inputs_vertical li.date label,
+.inputs_vertical li.text label
 {
     display: block;
     padding: 10px 0 3px 5px;
     line-height: 14px;
 }
 
+.inputs_vertical li:first-child
+{
+    padding-left: 10px;
+}
+
 
 .inputs_vertical li.string input
 {
-    width: 170px;
+    width: 160px;
     margin: 0;
 }
 
 .inputs_vertical li.select
 {    
-    max-width: 170px;
+    max-width: 160px;
 }
 
 .inputs_vertical li.select select
 {
     min-width: 100px;
-    max-width: 164px;
+    max-width: 154px;
     margin: 0;
 }
 

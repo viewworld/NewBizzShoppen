@@ -69,6 +69,7 @@
               <%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %>
               <%= label_tag "mark_all", "select all" %>
             </div>
+            <%= will_paginate @users unless params[:per_page].to_i == 0 %>
           </td>
         </tr>
         <tr class="main_actions">
@@ -90,5 +91,4 @@
         </tfoot>
       </table>
   <% end %>
-  <%= will_paginate @users unless params[:per_page].to_i == 0 %>
 </column-mc:>

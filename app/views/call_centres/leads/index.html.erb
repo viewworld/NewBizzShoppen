@@ -41,7 +41,7 @@
   <header><%= t("call_centre.leads.index.view.header") %></header>
 
   <% if @leads.blank? %>
-      <%= render "shared/blank_data" %>
+      <%= blank_state_message %>
   <% else %>
 
       <% cols = 12 -%>

@@ -59,7 +59,7 @@
   </header>
 
   <% if @users.blank? %>
-      <%= render "shared/blank_data" %>
+      <%= blank_state_message %>
   <% else %>
       <%= bulk_form do %>
           <table id="users_table" class="generic">

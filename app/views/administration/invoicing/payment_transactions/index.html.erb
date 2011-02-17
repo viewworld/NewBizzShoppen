@@ -33,8 +33,8 @@
 <column-mc:>
   <header><%= t("administration.payment_transactions.index.view.header") %></header>
 
-  <% if @payment_transactions.blank? %>
-      <%= render "shared/blank_data" %>
+  <% if @payment_transactions.blank?  %>     
+      <%= blank_state_message %>
   <% else %>
       <table class="generic" cellspacing="0" cellpadding="0">
         <thead>
