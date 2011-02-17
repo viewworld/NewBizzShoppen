@@ -94,6 +94,7 @@ Scenario: In bestsellers and latest listings I should not see leads which I've a
   When I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
   And a lead BoughtLead exists within category Test and is bought by user jon@lajoie.ca with role customer
   And lead AwesomeLead exists within category Test
+  And user "jon@lajoie.ca" with role "customer" has interest in following categories "Test"
   And I follow translated "home.show.view.buyer"
   Then I should see "AwesomeLead"
   And I should see "BoughtLead"
@@ -101,29 +102,5 @@ Scenario: In bestsellers and latest listings I should not see leads which I've a
   And I sign in as jon@lajoie.ca with password secret
   And I am on the home page
   And I follow translated "home.show.view.buyer"
-  Then I should see "AwesomeLead"
-  And I should not see "BoughtLead"
-
-@m5 @unique_categories
-Scenario: I should not see leads from customer unique categories I'm not assigned to on Latest leads listing
-
-@m5 @unique_categories
-Scenario: I should not see leads from agent unique categories I'm not assigned to on Latest leads listing
-
-@m5 @unique_categories
-Scenario: I should not see leads from customer unique categories I'm not assigned to on Bestsellers listing
-
-@m5 @unique_categories
-Scenario: I should not see leads from agent unique categories I'm not assigned to on Bestsellers listing
-
-@m5 @unique_categories
-Scenario: I should see leads from customer unique categories I'm assigned to on Latest leads listing
-
-@m5 @unique_categories
-Scenario: I should see leads from agent unique categories I'm assigned to on Latest leads listing
-
-@m5 @unique_categories
-Scenario: I should see leads from customer unique categories I'm assigned to on Bestsellers listing
-
-@m5 @unique_categories
-Scenario: I should see leads from agent unique categories I'm assigned to on Bestsellers listing
+  Then I should see "AwesomeLead" within "#latest_leads"
+  And I should not see "BoughtLead" within "#latest_leads"

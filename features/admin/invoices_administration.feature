@@ -6,12 +6,14 @@ Background:
   And I make sure current locale is English
   And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
   And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role customer with attributes "first_name:Janko,last_name:Muzykant"
+  And there is a seller with attributes "name:DannyTheSeller,first_name:Danny,last_name:DeVito,address:USA,country_id:1,vat_no:123"
   Then I sign in as jon@lajoie.ca with password secret
 
 @_done @ao
 Scenario: I can create new invoice for user
   When I follow translated "layout.main_menu.admin.invoices"
   And I select "Janko Muzykant" from "invoice_user_id"
+  And I select "DannyTheSeller" from "invoice_seller_id"
   And I press translated "administration.invoices.index.view.create_invoice"
   Then I should see "was successfully created"
 
@@ -59,9 +61,9 @@ Scenario: I can search for invoices by a combination of keywords: contact name, 
   And I press translated "administration.invoices.index.view.search_button"
   Then I should see "77.99"
   Then I should not see "88.32"
-  When I fill in "search_with_keyword" with "2"
+  When I fill in "search_with_keyword" with "1"
   And I press translated "administration.invoices.index.view.search_button"
-  Then I should see "2/"
+  Then I should see "1/201"
 
 @m5 @added @tgn @sprint_5_corrections @_tested
 Scenario: I can search for invoices pending creation by a combination of keywords: contact name, company name, lead name and a specific time period (date from to date to)
@@ -126,7 +128,7 @@ Scenario: I can create new invoice from suggestion on invoices pending creation 
   Then I sign in as jon@lajoie.ca with password secret
   And I go to administration upcoming invoices
   And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
-  And I press "Create Invoice"
+  Then I press translated "administration.invoices.new.view.button_create"
   Then I should see translated "administration.invoices.show.view.header"
   And I go to administration invoices
   And I follow translated "administration.invoices.index.view.show_invoice"
@@ -351,14 +353,14 @@ Scenario: I can bulk set selected invoices as paid
 Scenario: I can create invoice for any customer from users tab
   Given I go to administration users
   And I click hidden translated link "administration.users.index.view.create_invoice"
-  Then I press "Create Invoice"
+  Then I press translated "administration.invoices.new.view.button_create"
   And I should see translated "administration.invoices.edit.view.header"
 
 @tgn @added @_tested
 Scenario: I can create invoice for any customer from users tab
   Given I go to administration users
   And I click hidden translated link "administration.users.index.view.create_invoice"
-  Then I press "Create Invoice"
+  Then I press translated "administration.invoices.new.view.button_create"
   And I should see translated "administration.invoices.edit.view.header"
 
 @added @m4b @_done
@@ -416,11 +418,36 @@ Scenario: We do not need to generate a copy of the invoice, just the orininal
   And I press translated "common.cancel_link"
   Then I should be on administration invoices page
 
-@m5 @sellers @ao
+@m5 @sellers @ao @_done
 Scenario: When creating an invoice a Seller for user's country should be selected
+  When there is a seller with attributes "name:SellerTwo,country_id:2"
+  And someone is signed up and confirmed as user with email customer_one@nbs.fake and password secret and role customer with attributes "first_name:John 1,last_name:Smith,country:1"
+  And User customer_one@nbs.fake with role customer is big buyer
+  And a lead LeadOne exists within category Computers and is bought by user customer_one@nbs.fake with role customer
+  And I follow translated "layout.main_menu.admin.upcoming_invoices"
+  And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
+  And I press translated "administration.invoices.new.view.button_create"
+  Then the "invoice_seller_name" field should contain "Default Seller"
+  When someone is signed up and confirmed as user with email customer_two@nbs.fake and password secret and role customer with attributes "first_name:John 2,last_name:Smith,country:2"
+  And User customer_two@nbs.fake with role customer is big buyer
+  And a lead LeadTwo exists within category Computers and is bought by user customer_two@nbs.fake with role customer
+  And I follow translated "layout.main_menu.admin.upcoming_invoices"
+  And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
+  And I press translated "administration.invoices.new.view.button_create"
+  Then the "invoice_seller_name" field should contain "SellerTwo"
 
-@m5 @sellers @ao
+@m5 @sellers @ao @_done
 Scenario: If there's no Seller for user's country then default Seller should be used
+  When there is a seller with attributes "name:SellerOne,country_id:1"
+  And there is a seller with attributes "name:DefaultSeller,country_id:1,default:1"
+  And there is a seller with attributes "name:SellerThree,country_id:1"
+  And someone is signed up and confirmed as user with email customer_one@nbs.fake and password secret and role customer with attributes "first_name:John 1,last_name:Smith,country:2"
+  And User customer_one@nbs.fake with role customer is big buyer
+  And a lead LeadOne exists within category Computers and is bought by user customer_one@nbs.fake with role customer
+  And I follow translated "layout.main_menu.admin.upcoming_invoices"
+  And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
+  And I press translated "administration.invoices.new.view.button_create"
+  Then the "invoice_seller_name" field should contain "DefaultSeller"
 
 @m5 @tgn @_tested
 Scenario: Include users name, company and user email when filtering invoices

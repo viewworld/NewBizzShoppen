@@ -157,6 +157,11 @@ h4
     padding: 0 15px;
 }
 
+#user_menu ul.nav.admin_nav li a span
+{
+    padding: 0 12px;
+}
+
 #user_menu ul.nav li a:hover
 {
     background-position: 0 -72px;    

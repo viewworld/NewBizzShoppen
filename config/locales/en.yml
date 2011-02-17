@@ -28,6 +28,7 @@ en:
         invoices: Invoices
         upcoming_invoices: Debtors
         payment_transactions: 'Payments'
+        sellers: 'Sellers'
       agent:
         leads: My created leads
         lead_templates: Lead templates
@@ -530,6 +531,11 @@ en:
           cash: 'Cash'
           bank_transfer: 'Bank transfer'
           na: N/A
+      new:
+        view:
+          header: 'New invoice'
+          button_create: 'Create'
+          basic_information: 'Basic information'
       show:
         view:
           print_invoice: 'Print invoice'
@@ -617,6 +623,7 @@ en:
           sale_date: 'Sale date'
           invoice_number: 'Invoice number'
           customer: 'Customer'
+          seller: 'Seller'
           revenue_frozen: 'Revenue frozen'
           status: 'Status'
           search_label: 'Search'
@@ -651,6 +658,38 @@ en:
             recipeints: 'Recipeints'
             subject: 'Subject'
             body: 'Body'
+    sellers:
+      index:
+        view:
+          header: 'Sellers'
+          country: 'Country'
+          first_name: 'First name'
+          last_name: 'Last name'
+          default: 'Default'
+          edit: 'Edit'
+          show: 'Show'
+          delete: 'Delete'
+          no_sellers_defined: 'No sellers defined'
+          add_seller: 'Add seller'
+      new:
+        view:
+          header: 'New seller'
+          button_create: 'Create'
+      show:
+        view:
+          header: 'Seller'
+          name: 'Name'
+          first_name: 'First name'
+          last_name: 'Last name'
+          address: 'Address'
+          vat_no: 'Vat number'
+          country: 'Country'
+          default: 'Default'
+      edit:
+        view:
+          header: 'Edit seller'
+          button_update: 'Save'
+
 
     payment_transactions:
       index:
@@ -1614,6 +1653,11 @@ en:
         bank_account:
           attributes:
             global_default:
+              cannot_be_disabled: "can't be disabled"
+        seller:
+          must_be_at_least_one: "There must be at least one Seller in the system"
+          attributes:
+            default:
               cannot_be_disabled: "can't be disabled"
 
   activemodel:

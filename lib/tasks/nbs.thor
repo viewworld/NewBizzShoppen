@@ -36,6 +36,18 @@ class Nbs < Thor
       )
     end
 
+    if Seller.count == 0
+      Seller.create(
+          :country => Country.where(:name => 'Denmark').first,
+          :name => "Default Seller",
+          :first_name => "Change",
+          :last_name => "Change",
+          :vat_no => '111',
+          :address => 'Change',
+          :default => true
+      )
+    end
+
     email_templates_array = [
         {:name    => "confirmation instructions",
          :uniq_id => "confirmation_instructions",

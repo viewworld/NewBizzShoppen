@@ -2,7 +2,8 @@
 Feature: VAT rates
 
   Background: I am on the home page
-    Given I am on the home page
+    Given there is a seller with attributes "name:DannyTheSeller,first_name:Danny,last_name:DeVito,address:USA,country_id:1,vat_no:123"
+    And I am on the home page
 
   @_done
   Scenario: I can fill in VAT number when creating new buyer account
@@ -99,7 +100,7 @@ Feature: VAT rates
     And I sign in as jon@lajoie.ca with password secret
     And I follow translated "layout.main_menu.admin.upcoming_invoices"
     And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
-    And I press "Create Invoice"
+    And I press translated "administration.invoices.new.view.button_create"
     And I follow translated "administration.invoices.edit.view.show_invoice"
     Then I should see "27%" within ".product_data"
 
@@ -114,7 +115,7 @@ Feature: VAT rates
     And I sign in as jon@lajoie.ca with password secret
     And I follow translated "layout.main_menu.admin.upcoming_invoices"
     And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
-    And I press "Create Invoice"
+    And I press translated "administration.invoices.new.view.button_create"
     And I follow translated "administration.invoices.edit.view.show_invoice"
     Then I should not see "27%" within ".product_data"
 

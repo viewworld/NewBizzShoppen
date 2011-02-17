@@ -3,6 +3,7 @@
   <td class="no_pdd_lr"><%= check_box_tag("invoice_ids[]", invoice.id) %></td>
   <td><%= invoice.sale_date %></td>
   <td><%= link_to invoice.full_number, [:administration, :invoicing, invoice] %></td>
+  <td><%= invoice.seller_name %></td>
   <td><%= invoice.user %></td>
   <td><%= number_to_currency(invoice.total, :unit => invoice.currency.symbol) %></td>
   <td class="ta_c"><%= payment_status(invoice.paid?, invoice.status.to_s.capitalize, invoice.status.to_s.capitalize) %></td>

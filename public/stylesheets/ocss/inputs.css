@@ -127,6 +127,15 @@
     margin-top: 7px;    
 }
 
+/* --- textarea ---
+--------------------------------------------------------------------------------- */
+
+.inputs ol li.text textarea
+{
+    float: left;
+    margin-bottom: 5px;
+}
+
 
 /* --- select ---
 --------------------------------------------------------------------------------- */
@@ -276,7 +285,8 @@
     font-size: 11px;
 }
 
-.inputs ol li.error input
+.inputs ol li.error input,
+.inputs ol li.error textarea
 {
     border-color: #ff6060;
     -moz-box-shadow: 0 0 2px #ff6060;

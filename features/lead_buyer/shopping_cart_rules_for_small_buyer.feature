@@ -4,6 +4,7 @@ Feature: Shopping cart rules for small buyer
 Background:
   Given I am on the homepage
   And I make sure current locale is English
+  And there is a seller with attributes "name:DannyTheSeller,first_name:Danny,last_name:DeVito,address:USA,country_id:1,vat_no:123"
   Given Category named "Computers" already exists
   Given Category named "Sample category" already exists
   Given Category named "Another sample category" already exists within category named "Sample category"

@@ -34,7 +34,6 @@ Scenario: I can create new lead template for given category
   And I check "lead_template_lead_template_fields_attributes_1_is_mandatory"
   Then I press translated "agent.lead_templates.new.view.button_create"
   And I click hidden link by url regex "/agents\/lead_templates\/\d+\/edit/"
-  And I open page in browser
   Then the "lead_template_lead_template_fields_attributes_0_name" field should contain "example attr 1"
   And the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 2"
 

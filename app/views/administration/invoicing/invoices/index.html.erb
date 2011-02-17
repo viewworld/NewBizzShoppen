@@ -43,6 +43,7 @@
         <fieldset class="inputs_vertical">
           <ol>
             <%= form.input :user, :include_blank => false %>
+            <%= form.input :seller, :include_blank => false %>
             <li class="commit">
               <ibt class="commit">
                 <%= form.submit t("administration.invoices.index.view.create_invoice") %>
@@ -84,6 +85,7 @@
               </th>
               <th><%= link_to t("administration.invoices.index.view.sale_date"), order_for_scoped_search(:sale_date) %>
               <th id="invoice_number_header"><%= link_to t("administration.invoices.index.view.invoice_number"), order_for_scoped_search(:number) %></th>
+              <th><%= link_to t("administration.invoices.index.view.seller"), order_for_scoped_search(:seller_name) %></th>
               <th><%= link_to t("administration.invoices.index.view.customer"), order_for_scoped_search(:customer) %></th>
               <th><%= link_to t("administration.invoices.index.view.total"), order_for_scoped_search(:total) %></th>
               <th class="ta_c" id="invoice_payment_status_header"><%= link_to t("administration.invoices.index.view.status"), order_for_scoped_search(:paid_at) %></th>
@@ -94,14 +96,14 @@
             <tfoot>
             <tr>
               <td class="fl"></td>
-              <td colspan="7"></td>
+              <td colspan="8"></td>
               <td class="fr"></td>
             </tr>
             </tfoot>
             <tbody id="invoices_list">
             <%= render @invoices %>
             <tr class="pagination">
-              <td colspan="9" class="ta_c">
+              <td colspan="10" class="ta_c">
                 <div class="td_select_all">
                   <%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %>
                   <%= label_tag "mark_all", "select all" %>
@@ -111,7 +113,7 @@
             </tr>
             <tr class="main_actions">
               <td class="cl"></td>
-              <td colspan="7" class="no_pdd_lr">
+              <td colspan="8" class="no_pdd_lr">
                 <%= hidden_field_tag :route_to %>
 
                 <%= bt_link_to nil, t("administration.invoices.index.view.bulk_set_as_paid"), "javascript:void(0)", :onclick => "submitBulkForm('#{administration_invoicing_bulk_invoice_update_path}#PUT');" %>

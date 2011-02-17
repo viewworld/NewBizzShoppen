@@ -288,7 +288,8 @@ end
 end
 
 Invoice.blueprint do
-  user { User::Agent.make! }
+  user { User::Customer.make! }
+  seller { Seller.make! }
 end
 
 InvoiceLine.blueprint do
@@ -305,4 +306,13 @@ BankAccount.blueprint do
   iban_no { Faker.numerify('###################') }
   local_bank_number { Faker.numerify('#########') }
   swift { Faker.letterify('????????').upcase }
+end
+
+Seller.blueprint do
+  country_id { Country.make!.id }
+  name { Faker::Lorem.words(2).to_s }
+  first_name { Faker::Lorem.words(1).to_s }
+  last_name { Faker::Lorem.words(1).to_s }
+  address { "#{Faker::Address.street_name}\n#{Faker::Address.zip_code} #{Faker::Address.city}\n#{Faker::Address.city}" }
+  vat_no { Faker.numerify('#########') }
 end

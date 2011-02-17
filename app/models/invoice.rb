@@ -22,6 +22,7 @@ class Invoice < ActiveRecord::Base
   belongs_to :user
   belongs_to :currency
   belongs_to :bank_account
+  belongs_to :seller
 
   has_many :payment_transactions
   has_many :invoice_lines, :dependent => :destroy
@@ -36,7 +37,7 @@ class Invoice < ActiveRecord::Base
   scope :with_sale_date_after_and_including, lambda{ |date| where(["sale_date >= ?",date])}
   scope :with_sale_date_before_and_including, lambda{ |date| where(["sale_date <= ?",date])}
   scope :not_paid, where(:paid_at => nil)
-  scope :with_keyword, lambda{ |keyword| where("users.email like :keyword OR users.first_name like :keyword OR users.last_name like :keyword OR invoices.number::TEXT = :number_keyword OR lower(invoices.customer_name) LIKE :keyword OR lower(invoices.customer_address) LIKE :keyword OR lower(leads.header) LIKE :keyword OR lower(leads.contact_name) LIKE :keyword OR lower(leads.company_name) LIKE :keyword OR lower(leads.email_address) LIKE :keyword", {:keyword => "%#{keyword.downcase}%", :number_keyword => "#{keyword.downcase}"}).joins("LEFT JOIN invoice_lines ON invoices.id=invoice_lines.invoice_id LEFT JOIN lead_purchases ON invoice_lines.payable_id=lead_purchases.id LEFT JOIN leads ON lead_purchases.lead_id=leads.id").joins(:user) }
+  scope :with_keyword, lambda{ |keyword| where("users.email like :keyword OR users.first_name like :keyword OR users.last_name like :keyword OR invoices.seller_name like :keyword OR invoices.number::TEXT = :number_keyword OR lower(invoices.customer_name) LIKE :keyword OR lower(invoices.customer_address) LIKE :keyword OR lower(leads.header) LIKE :keyword OR lower(leads.contact_name) LIKE :keyword OR lower(leads.company_name) LIKE :keyword OR lower(leads.email_address) LIKE :keyword", {:keyword => "%#{keyword.downcase}%", :number_keyword => "#{keyword.downcase}"}).joins("LEFT JOIN invoice_lines ON invoices.id=invoice_lines.invoice_id LEFT JOIN lead_purchases ON invoice_lines.payable_id=lead_purchases.id LEFT JOIN leads ON lead_purchases.lead_id=leads.id").joins(:user) }
   scope :ascend_by_customer, joins(:user).order("users.first_name||' '||users.last_name ASC")
   scope :descend_by_customer, joins(:user).order("users.first_name||' '||users.last_name DESC")
   scope :ascend_by_total, joins("LEFT JOIN invoice_lines ON invoice_lines.invoice_id = invoices.id").group(column_names.map{|c| 'invoices.'+c}.join(',')).order("SUM(invoice_lines.brutto_value) ASC")
@@ -46,8 +47,8 @@ class Invoice < ActiveRecord::Base
   scope :total_paid, where("paid_at IS NOT NULL")
   scope :total_not_paid, where("paid_at IS NULL")
 
-  validates_presence_of :user_id
-  validates_associated :invoice_lines
+  validates_presence_of :user, :seller
+  validates_associated :invoice_lines, :seller
 
   after_create :duplicate_company_and_customer_information, :set_year
   after_validation :set_default_currency, :if => Proc.new{ |i| i.new_record? }
@@ -56,14 +57,25 @@ class Invoice < ActiveRecord::Base
   before_update :generate_manual_transaction_for_big_buyer
   before_save :mark_all_invoice_lines_as_paid
   after_save :recalculate_invoice_items
+  after_initialize :set_seller
 
   #Uncomment reject_if, if not validating invoice lines
   accepts_nested_attributes_for :invoice_lines, :allow_destroy => true #,:reject_if => lambda { |a| a[:name].blank? }
 
-  scoped_order :revenue_frozen, :paid_at, :number, :sale_date
+  scoped_order :revenue_frozen, :paid_at, :number, :sale_date, :seller_name
   multi_scoped_order :sale_date_and_number
 
   protected
+
+  def set_seller
+    if !seller
+      self.seller = if user
+        Seller.default_for_country(user.country)
+      else
+        Seller.default
+      end
+    end
+  end
 
   def update_revenue_frozen
     Invoice.update_all ["revenue_frozen = (select sum(revenue_frozen) from invoice_lines where invoice_id = ?)",id], ["id = ?",id]
@@ -85,11 +97,11 @@ class Invoice < ActiveRecord::Base
             :customer_name => user.full_name,
             :customer_address => user.address,
             :customer_vat_no => user.vat_number,
-            :seller_address => Settings.invoicing_seller_address,
-            :seller_name => Settings.invoicing_seller_name,
-            :seller_vat_no => Settings.invoicing_seller_vat_number,
-            :seller_first_name => Settings.invoicing_seller_first_name,
-            :seller_last_name => Settings.invoicing_seller_last_name,
+            :seller_address => seller.address,
+            :seller_name => seller.name,
+            :seller_vat_no => seller.vat_no,
+            :seller_first_name => seller.first_name,
+            :seller_last_name => seller.last_name,
             :vat_paid_in_customer_country => user.not_charge_vat?,
             :bank_account => user.payment_bank_account
     })
@@ -103,7 +115,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def update_number_according_to_year
-    self.update_attribute(:number, (Invoice.creation_date_in_year(creation_date).maximum(:number) || 0)+1)
+    self.update_attribute(:number, (seller.invoices.creation_date_in_year(creation_date).maximum(:number) || 0)+1)
   end
 
   def get_template_source
