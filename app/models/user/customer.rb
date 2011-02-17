@@ -12,5 +12,8 @@ class ::User::Customer < ::User
   has_many :countries, :through => :country_interests
   has_many :categories, :through => :category_interests
   has_many :invoices, :foreign_key => "user_id"
+  has_many :category_users, :foreign_key => "user_id"
+  has_many :unique_categories, :through => :category_users, :foreign_key => "user_id", :source => :category
+
   accepts_nested_attributes_for :lead_purchases
 end

@@ -66,12 +66,35 @@ Scenario: I can select "all" as a Deal value
   And I press translated "customer.interests.edit.view.button_update"
   Then I should see translated "customer.interests.update.flash.interests_update_successful"
 
-@m5 @unique_categories
+@m5 @unique_categories @added @_tested
 Scenario: I should not see unique categories I'm not assigned to on my interests page
+  Given Category Computers is created
+  And category "Computers" is unique for user with email "bob@person.com" role "customer"
+  And I go to customer interests
+  And I should see "Electronics"
+  And I should see "Business"
+  And I should see "Leisure"
+  And I should see "Computers"
 
-@m5 @unique_categories
+@m5 @unique_categories @added @_tested
 Scenario: I should not see categories on my interests page when I'm assigned to unique category
+  Given I have user with email other_buyer34525biz@nbs.com and role customer
+  And Category OthersBuyerCategory is created
+  And category "OthersBuyerCategory" is unique for user with email "other_buyer34525biz@nbs.com" role "customer"
+  Given Category Computers is created
+  And category "Computers" is unique for user with email "bob@person.com" role "customer"
+  And I go to customer interests
+  And I should see "Electronics"
+  And I should see "Business"
+  And I should see "Leisure"
+  And I should see "Computers"
+  And I should not see "OthersBuyerCategory"
 
-@m5 @unique_categories
+@m5 @unique_categories @added @_tested
 Scenario: I should have my interests fixed to the unique category I'm assigned to
+  Given there are no categories
+  Given Category Computers is created
+  And category "Computers" is unique for user with email "bob@person.com" role "customer"
+  And I go to customer interests
+  Then checkbox named "category_" should be checked
 

@@ -1,4 +1,4 @@
-@$_admin @m5 @tgn @unique_categories
+@$_admin @m5 @tgn @unique_categories @added
 Feature: Unique customer categories
 
 Background:
@@ -53,3 +53,6 @@ Scenario: I can search customers by first name, last name and email
   Then I follow translated "administration.categories.index.view.edit_link"
   And I open page in browser
   And "all_customers" should be selected for value "nbsbuyer3483434biz@nbs.com"
+
+@_done @non_testable
+Scenario: Each category marked as unique for certain customer is added to that customer's interests

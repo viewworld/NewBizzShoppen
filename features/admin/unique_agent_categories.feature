@@ -1,4 +1,4 @@
-@$_admin @m5 @tgn @unique_categories
+@$_admin @m5 @tgn @unique_categories @added
 Feature: Unique agent categories
 
 Background:

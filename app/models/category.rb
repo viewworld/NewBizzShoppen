@@ -44,6 +44,8 @@ class Category < ActiveRecord::Base
   scope :with_lead_purchase_owner, lambda { |owner| select("DISTINCT(name), categories.*").where("requested_by IS NULL and lead_purchases.owner_id = ? and accessible_from IS NOT NULL", owner.id).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
   scope :with_lead_purchase_assignee, lambda { |assignee| select("DISTINCT(name), categories.*").where("lead_purchases.assignee_id = ? and accessible_from IS NOT NULL", assignee.id).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
   scope :with_lead_templates_created_by, lambda { |creator| select("DISTINCT(categories.name), categories.*").where("lead_templates.creator_id = ?", creator.id).joins(:lead_templates) }
+  scope :without_customer_unique, where("is_customer_unique = ?", false)
+  scope :with_customer_unique, lambda { |customer| where("(is_customer_unique = ? and category_users.user_id is NULL) or (is_customer_unique = ? and category_users.user_id = ?)", false, true, customer.id).joins("LEFT JOIN category_users ON categories.id=category_users.category_id") }
 
   before_destroy :check_if_category_is_empty
 

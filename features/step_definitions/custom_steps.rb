@@ -91,3 +91,7 @@ end
 Then /^the "([^"]*)" field with id like "([^"]*)" should contain "([^"]*)"$/ do |num,id_like,val|
   page.all(:css, "input:nth-of-type(#{num})[id*='#{id_like}']").first['value'].should eql(val)
 end
+
+Then /^checkbox named "([^"]*)" should (be|not be) checked$/ do |cb_name, is_checked|
+  page.all(:css, "input[id*='#{cb_name}']").first['checked'].should eql(is_checked == "be")
+end
