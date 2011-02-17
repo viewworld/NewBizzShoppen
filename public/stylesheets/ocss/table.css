@@ -129,7 +129,7 @@
 .generic tbody tr td.tda
 {
     padding: 4px;
-    width: 60px;
+    min-width: 60px;
 }
 
 td.tda a.bt

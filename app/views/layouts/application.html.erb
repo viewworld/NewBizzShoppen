@@ -22,7 +22,7 @@
 <div id="container" class="c">
   <div id="top">
 
-    <div id="user_panel">
+    <div id="user_panel">      
       <%= render '/layouts/locale_selection' %>
       <% if user_signed_in? %>
           <%= link_to t("layout.my_profile_link"), my_profile_path, :class => "sl" %>
@@ -31,14 +31,6 @@
           <%= link_to t("layout.login_link"), url_to_role_specific_home_page, :class => "sl" %>
       <% end %>
     </div>
-
-    <% if user_signed_in? and ::Rails.env == "development" %>
-        <div style="position: absolute;right:30px; top:45px">
-          <div class="dev_info">
-            <p>You are now: <%= current_user.class.name %> ::: (<%= current_user.roles.to_a.map(& :to_s).to_sentence %>)</p>
-          </div>
-        </div>
-    <% end %>
 
     <%= link_to image_tag("logo_fairleads.png"), url_to_role_specific_home_page, :class => "logo" %>
   </div>

@@ -119,7 +119,7 @@
               <tbody>
 
               <%= form.fields_for :invoice_lines do |invoice_line| %>
-                  <%= render :partial => "/administration/invoicing/invoice_lines/invoice_line_fields", :locals => {:f => invoice_line} unless invoice_line.object.new_record? %>
+                  <%= render :partial => "/administration/invoicing/invoice_lines/invoice_line_fields", :locals => {:f => invoice_line} %>
               <% end %>
 
               <tr class="total">

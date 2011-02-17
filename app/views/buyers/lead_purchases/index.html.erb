@@ -52,7 +52,7 @@
 
 
   <% if @lead_purchases.blank? %>
-      <%= render "shared/blank_data" %>
+      <%= blank_state_message %>
   <% else %>
 
       <%= bulk_form do %>
@@ -73,11 +73,9 @@
                 <%= label_tag :bulk_rating_level, t("lead_buyer.lead_purchases.index.view.bulk_rating") %>
                 <%= select_tag :bulk_rating_level, options_for_select(LeadPurchase::RATING_LEVELS.map { |l| [t("activerecord.attributes.lead_purchase.rating_levels.rating_level#{l}"), l] }, nil), :include_blank => true, :onchange => "set_rating_level(this.value, 'bulk')", :id => "rating_level_bulk", :style => "width: 160px" %>
               </li>
-              <li>
-                <div id="rating_reson_div_bulk" style="display:none;">
-                  <%= label_tag :bulk_rating_reason, t("lead_buyer.lead_purchases.index.view.rating_reason") %>
-                  <%= text_area_tag :bulk_rating_reason, "", :id => "rating_reason_bulk" %>
-                </div>
+              <li class="text" id="rating_reson_div_bulk" style="display:none;">
+                <%= label_tag :bulk_rating_reason, t("lead_buyer.lead_purchases.index.view.rating_reason") %>
+                <%= text_area_tag :bulk_rating_reason, "", :id => "rating_reason_bulk" %>
               </li>
               <% if current_user.subaccounts.present? %>
                   <li class="date">

@@ -43,7 +43,7 @@
   <header><%= t("lead_user.lead_requests.index.view.header") %></header>
 
   <% if @lead_requests.blank? %>
-      <%= render "shared/blank_data" %>
+      <%= blank_state_message %>
   <% else %>
       <%= bulk_form do %>
           <%= lead_requests_listing @lead_requests, :show_checkboxes => true do |blocks| %>

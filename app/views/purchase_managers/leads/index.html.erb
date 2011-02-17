@@ -55,7 +55,7 @@
   </header>
 
   <% if @leads.blank? %>
-      <%= render "shared/blank_data" %>
+      <%= blank_state_message %>
   <% else %>
       <%= leads_table @leads, :show_checkboxes => false do |blocks| %>
           <% blocks.tools do |lead| %>

@@ -15,7 +15,7 @@
 
 
   <% if @call_centre_agents.blank? %>
-      <%= render "shared/blank_data" %>
+      <%= blank_state_message %>
   <% else %>
       <%= t("call_centre.call_centre_agents.index.view.per_page_selection") %>
       <% [10, 25, 50, 0].each do |per_page| %>

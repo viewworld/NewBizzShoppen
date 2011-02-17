@@ -44,7 +44,7 @@
   </header>
 
   <% if @lead_templates.blank? %>
-      <%= render "shared/blank_data" %>
+      <%= blank_state_message %>
   <% else %>
       <%= lead_templates_table @lead_templates, :show_checkboxes => false, :show_active_column => true, :paginate_table => true do |blocks| %>
           <% blocks.tools do |lead_template| %>

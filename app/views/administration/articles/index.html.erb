@@ -45,9 +45,8 @@
   </header>
 
   <% if @articles.blank? %>
-      <%= render "shared/blank_data" %>
+      <%= blank_state_message %>
   <% else %>
-
       <table id="articles_table" class="generic">
         <thead>
         <tr>

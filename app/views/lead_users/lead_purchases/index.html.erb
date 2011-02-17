@@ -42,7 +42,7 @@
   <header><%= t("lead_user.lead_purchases.index.view.header") %></header>
 
   <% if @lead_purchases.blank? %>
-      <%= render "shared/blank_data" %>
+      <%= blank_state_message %>
   <% else %>
       <%= bulk_form do %>
 

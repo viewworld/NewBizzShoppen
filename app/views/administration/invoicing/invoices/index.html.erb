@@ -55,7 +55,7 @@
   </div>
 
   <% if @invoices.blank? %>
-      <%= render "shared/blank_data" %>
+    <%= blank_state_message %>
   <% else %>
       <div class="fltr">
         <div class="frm_tiny fltr" style="margin-top: 22px">

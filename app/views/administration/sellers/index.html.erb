@@ -7,17 +7,21 @@
 
     <param:actions>
       <%= form_tag new_administration_seller_path, :method => :get, :id => "form_new_seller" do %>
-        <ul class="header_actions">
-          <li class="last">
-            <%= bt_link_to :plus, t("administration.sellers.index.view.add_seller"), "javascript:void(0)", :onclick => "$('#form_new_seller').submit()" %>
-          </li>
-        </ul>
+          <ul class="header_actions">
+            <li class="last">
+              <%= bt_link_to :plus, t("administration.sellers.index.view.add_seller"), "javascript:void(0)", :onclick => "$('#form_new_seller').submit()" %>
+            </li>
+          </ul>
       <% end %>
     </param:actions>
   </header>
 
- <table class="generic" cellspacing="0" cellpadding="0" id="sellers">
-    <thead>
+  <% unless @sellers.any? %>
+      <%= blank_state_message :msg => t("administration.sellers.index.view.no_sellers_defined") %>
+  <% else %>
+
+      <table class="generic" cellspacing="0" cellpadding="0" id="sellers">
+        <thead>
         <tr>
           <th class="hl"></th>
           <th><%= t("administration.sellers.index.view.country") %></th>
@@ -27,10 +31,16 @@
           <th></th>
           <th class="hr"></th>
         </tr>
-    </thead>
-    <tbody>
-      <% if @sellers.any? %>
-          <% @sellers.each do |s| %>
+        </thead>
+        <tfoot>
+        <tr>
+          <td class="fl"></td>
+          <td colspan="5"></td>
+          <td class="fr"></td>
+        </tr>
+        </tfoot>
+        <tbody>
+        <% @sellers.each do |s| %>
             <tr>
               <td class="cl"></td>
               <td><%= s.address.country.name %></td>
@@ -46,19 +56,8 @@
               </td>
               <td class="cr"></td>
             </tr>
-          <% end %>
-      <% else %>
-        <tr>
-          <td colspan="7"><%= t("administration.sellers.index.view.no_sellers_defined") %></td>
-        </tr>
-      <% end %>
-    </tbody>
-    <tfoot>
-    <tr>
-      <td class="fl"></td>
-      <td colspan="5"></td>
-      <td class="fr"></td>
-    </tr>
-    </tfoot>
-  </table>
+        <% end %>
+        </tbody>
+      </table>
+  <% end %>
 </column-mc:>
