@@ -48,7 +48,9 @@ Feature: Agent campaign - calling session
     Scenario: I can see current call duration
 
     @3
-    Scenario: I can connect with my snom phone using its ip address
+    Scenario: I can connect my snom phone using its ip address
+      # http://kb.snom.com/kb/index.php?View=entry&CategoryID=21&EntryID=40
 
     @3
     Scenario: I can control my snom phone remotely through its http interface
+      # http://kb.snom.com/kb/index.php?View=entry&CategoryID=21&EntryID=40    
