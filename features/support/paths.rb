@@ -116,6 +116,10 @@ module NavigationHelpers
       article_path(news)
     when /administration currencies/
       administration_currencies_path
+    when /administration seller (.*) edit/
+      edit_administration_seller_path(Seller.where(:name => $1).first)
+    when /administration (.*) seller/
+      administration_seller_path(Seller.where(:name => $1).first)
 
 
     # Add more mappings here.

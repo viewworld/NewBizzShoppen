@@ -37,12 +37,11 @@ class Nbs < Thor
 
     if Seller.count == 0
       Seller.create(
-          :country => Country.where(:name => 'Denmark').first,
           :name => "Default Seller",
           :first_name => "Change",
           :last_name => "Change",
           :vat_no => '111',
-          :address => 'Change',
+          :address => Address.make!(:country => Country.where(:name => 'Denmark').first),
           :default => true
       )
     end

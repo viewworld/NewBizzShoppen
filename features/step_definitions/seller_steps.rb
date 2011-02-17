@@ -1,5 +1,7 @@
-When /^there is a seller(?: with attributes "([^"]*)")?$/ do |options|
+When /^there is a seller(?: with attributes "([^"]*)")(?: for country "([^"]*)")?$/ do |options,country_name|
+  country = country_name ? Country.where(:name => country_name).first : Country.make!
   attrs = options ? Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys : {}
+  attrs.merge!(:address => Address.make!(:country => country))
   Seller.make!(attrs)
 end
 

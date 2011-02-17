@@ -3,6 +3,7 @@ class ::User::CallCentreAgent < ::User
 
   include User::CommonAgent
   include Addresses
+  include BankAccounts
 
   def can_publish_leads?
     true

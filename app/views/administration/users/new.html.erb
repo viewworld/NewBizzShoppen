@@ -6,6 +6,16 @@
         <param:content>
           <%= render :partial => 'form', :locals => {:form => form} %>
 
+          <hl/>
+
+          <div class="pdd_10 no_pdd_t">
+            <fieldset class="inputs labels_ta_r labels_240">
+              <ol class="align_inputs">
+                <%= form.inputs :password, :password_confirmation %>
+              </ol>
+            </fieldset>
+          </div>
+
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="save">

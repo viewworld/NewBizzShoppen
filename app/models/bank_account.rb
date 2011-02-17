@@ -1,8 +1,7 @@
 class BankAccount < ActiveRecord::Base
 
   include ScopedSearch::Model
-
-  has_one :address, :as => :addressable
+  include Addresses
 
   validates_presence_of :bank_name, :iban_no, :local_bank_number, :swift, :address
   validates_associated :address
@@ -13,8 +12,6 @@ class BankAccount < ActiveRecord::Base
 
   scope :global_default_bank_account, where(:global_default => true)
   scope :country_default_bank_account, lambda{|country_id| includes(:address).where(:addresses => {:country_id => country_id}, :country_default => true)}
-
-  accepts_nested_attributes_for :address
 
   scoped_order :id, :country_id
 

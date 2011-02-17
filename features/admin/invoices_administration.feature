@@ -6,7 +6,7 @@ Background:
   And I make sure current locale is English
   And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
   And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role customer with attributes "first_name:Janko,last_name:Muzykant"
-  And there is a seller with attributes "name:DannyTheSeller,first_name:Danny,last_name:DeVito,address:USA,country_id:1,vat_no:123"
+  And there is a seller with attributes "name:DannyTheSeller,first_name:Danny,last_name:DeVito,vat_no:123" for country "Denmark"
   Then I sign in as jon@lajoie.ca with password secret
 
 @_done @ao
@@ -149,7 +149,10 @@ Scenario: I can edit invoice’s customer information - name, address, vat no
   And I follow translated "layout.main_menu.admin.invoices"
   And I click hidden link by url regex "/administration\/invoicing\/invoices\/\d+\/edit/"
   And I fill in "invoice_customer_name" with "NewCustomerName"
-  And I fill in "invoice_customer_address" with "NewAddress"
+  And I fill in "invoice_customer_address_attributes_address_line_1" with "NewStreet"
+  And I fill in "invoice_customer_address_attributes_address_line_2" with "NewCity"
+  And I fill in "invoice_customer_address_attributes_address_line_3" with "NewCounty"
+  And I fill in "invoice_customer_address_attributes_zip_code" with "NewZipCode"
   And I fill in "invoice_customer_vat_no" with "NewVatNo"
   And I follow "add_fields_invoice_lines"
   And I fill in the last field with id like "_name" with "Lead" within ".invoice_inline_inputs"
@@ -159,7 +162,10 @@ Scenario: I can edit invoice’s customer information - name, address, vat no
   And I press translated "administration.invoices.edit.view.save_button"
   Then I should see "successfully updated"
   And I should see "NewCustomerName"
-  And I should see "NewAddress"
+  And I should see "NewStreet"
+  And I should see "NewCity"
+  And I should see "NewCounty"
+  And I should see "NewZipCode"
   And I should see "NewVatNo"
 
 @selenium @ao @_done
@@ -168,7 +174,10 @@ Scenario: I can edit invoice’s seller information - name, address, vat no
   And I follow translated "layout.main_menu.admin.invoices"
   And I click hidden link by url regex "/administration\/invoicing\/invoices\/\d+\/edit/"
   And I fill in "invoice_seller_name" with "NewSellerName"
-  And I fill in "invoice_seller_address" with "NewSellerAddress"
+  And I fill in "invoice_seller_address_attributes_address_line_1" with "NewStreet"
+  And I fill in "invoice_seller_address_attributes_address_line_2" with "NewCity"
+  And I fill in "invoice_seller_address_attributes_address_line_3" with "NewCounty"
+  And I fill in "invoice_seller_address_attributes_zip_code" with "NewZipCode"
   And I fill in "invoice_seller_first_name" with "NewFirstName"
   And I fill in "invoice_seller_last_name" with "NewLastName"
   And I fill in "invoice_seller_vat_no" with "NewSellerVatNo"
@@ -180,7 +189,10 @@ Scenario: I can edit invoice’s seller information - name, address, vat no
   And I press translated "administration.invoices.edit.view.save_button"
   Then I should see "successfully updated"
   And I should see "NewSellerName"
-  And I should see "NewSellerAddress"
+  And I should see "NewStreet"
+  And I should see "NewCity"
+  And I should see "NewCounty"
+  And I should see "NewZipCode"
   And I should see "NewSellerVatNo"
 
 @_done @ao
@@ -420,7 +432,7 @@ Scenario: We do not need to generate a copy of the invoice, just the orininal
 
 @m5 @sellers @ao @_done
 Scenario: When creating an invoice a Seller for user's country should be selected
-  When there is a seller with attributes "name:SellerTwo,country_id:2"
+  When there is a seller with attributes "name:SellerTwo" for country "United Kingdom"
   And someone is signed up and confirmed as user with email customer_one@nbs.fake and password secret and role customer with attributes "first_name:John 1,last_name:Smith,country:1"
   And User customer_one@nbs.fake with role customer is big buyer
   And a lead LeadOne exists within category Computers and is bought by user customer_one@nbs.fake with role customer
@@ -438,9 +450,9 @@ Scenario: When creating an invoice a Seller for user's country should be selecte
 
 @m5 @sellers @ao @_done
 Scenario: If there's no Seller for user's country then default Seller should be used
-  When there is a seller with attributes "name:SellerOne,country_id:1"
-  And there is a seller with attributes "name:DefaultSeller,country_id:1,default:1"
-  And there is a seller with attributes "name:SellerThree,country_id:1"
+  When there is a seller with attributes "name:SellerOne" for country "Denmark"
+  And there is a seller with attributes "name:DefaultSeller,default:1" for country "Denmark"
+  And there is a seller with attributes "name:SellerThree" for country "Denmark"
   And someone is signed up and confirmed as user with email customer_one@nbs.fake and password secret and role customer with attributes "first_name:John 1,last_name:Smith,country:2"
   And User customer_one@nbs.fake with role customer is big buyer
   And a lead LeadOne exists within category Computers and is bought by user customer_one@nbs.fake with role customer

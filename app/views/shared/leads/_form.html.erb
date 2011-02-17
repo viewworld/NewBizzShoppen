@@ -1,6 +1,9 @@
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs labels_ta_r labels_240">
-    <ol>
+    <ol class="align_inputs">
+      <li class="header">
+        <h3><%= t("shared.leads.form.company_information") %></h3>
+      </li>
       <%= form.input :company_name %>
       <%= form.input :company_phone_number %>
       <%= form.input :company_website %>
@@ -11,7 +14,7 @@
       <%= form.input :city %>
       <%= form.input :county %>
       <%= form.input :country_id, :as => :select, :collection => Country.all %>
-      <%= form.input :company_ean_number %>
+      <%= form.input :company_ean_number, :label => t("shared.leads.form.company_ean_reg") %>
     </ol>
   </fieldset>
 </div>
@@ -19,10 +22,13 @@
 
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs labels_ta_r labels_240">
-    <ol>
+    <ol class="align_inputs">
+      <li class="header">
+        <h3><%= t("shared.leads.form.contact_information") %></h3>
+      </li>
       <%= form.input :contact_name %>
-      <%= form.input :direct_phone_number %>
-      <%= form.input :phone_number %>
+      <%= form.input :direct_phone_number, :label => t("shared.leads.form.contact_direct_phone_number") %>
+      <%= form.input :phone_number, :label => t("shared.leads.form.contact_mobile_number") %>
       <%= form.input :email_address %>
       <%= form.input :linkedin_url %>
       <%= form.input :facebook_url %>
@@ -34,10 +40,13 @@
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs labels_ta_r labels_240">
     <ol class="align_inputs">
-      <%= form.input :category_id, :as => :hidden %>
-      <%= form.input :is_international, :as => :select, :collection => [[t("shared.leads.form.country_local_label"), 0], [t("shared.leads.form.country_international"), 1]], :include_blank => false %>
-      <%= form.input :header %>
-      <%= form.input :description, :input_html => {:style => "height: 140px; width: 600px"} %>
+      <li class="header">
+        <h3><%= t("shared.leads.form.lead_information") %></h3>
+      </li>
+      <%= form.input :category_id, :as => :hidden  %>
+      <%= form.input :is_international, :as => :select, :collection => [[t("shared.leads.form.country_local_label"), 0], [t("shared.leads.form.country_international"), 1]], :include_blank => false, :label => t("shared.leads.form.is_international") %>
+      <%= form.input :header, :label => t("shared.leads.form.header") %>
+      <%= form.input :description, :input_html => {:style => "height: 140px; width: 600px"}, :label => t("shared.leads.form.description") %>
       <% unless current_user.has_role?(:purchase_manager) %>
         <%= form.input :hidden_description, :input_html => {:style => "height: 140px; width: 600px"} %>
       <% end %>
@@ -68,6 +77,9 @@
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs labels_ta_r labels_240">
     <ol class="align_inputs">
+      <li class="header">
+        <h3><%= t("shared.leads.form.additional_language") %></h3>
+      </li>
       <li class="select">
       <%= form.label :locale, "New translation" %>
       <%= select_tag :locale, options_for_select(available_locales_list(@lead.lead_translations)),
@@ -81,8 +93,11 @@
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs labels_ta_r labels_240">
     <ol class="align_inputs">
+      <li class="header">
+        <h3><%= t("shared.leads.form.sales_information") %></h3>
+      </li>
       <%= form.input :notify_buyers_after_update, :as => :boolean unless @lead.lead_purchases.empty? %>
-      <%= form.input :sale_limit, :as => :select, :collection => (1..10) %>
+      <%= form.input :sale_limit, :as => :select, :collection => (1..10), :include_blank => false %>
       <%= form.input :purchase_decision_date, :as => :string, :input_html => {:id => "datepicker"}, :wrapper_html => { :class => "date" } %>
     </ol>
   </fieldset>

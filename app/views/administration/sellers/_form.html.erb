@@ -4,8 +4,13 @@
       <%= form.input :name %>
       <%= form.input :first_name %>
       <%= form.input :last_name %>
-      <%= form.input :address %>
-      <%= form.input :country_id, :collection => Country.all, :include_blank => false %>
+      <%= form.fields_for :address do |address_form| %>
+          <%= address_form.input :address_line_1 %>
+          <%= address_form.input :address_line_2 %>
+          <%= address_form.input :address_line_3 %>
+          <%= address_form.input :zip_code %>
+          <%= address_form.input :country_id, :collection => Country.all, :include_blank => false %>
+      <% end %>
       <%= form.input :vat_no %>
       <%= form.input :default %>
     </ol>

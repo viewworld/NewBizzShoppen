@@ -37,7 +37,13 @@
                   <%= form.input :seller_vat_no %>
                   <%= form.input :seller_first_name %>
                   <%= form.input :seller_last_name %>
-                  <%= form.input :seller_address, :input_html => {:style => "width: 230px;height: 80px"} %>
+                  <%= form.fields_for :seller_address do |address_form| %>
+                      <%= address_form.input :address_line_1 %>
+                      <%= address_form.input :address_line_2 %>
+                      <%= address_form.input :address_line_3 %>
+                      <%= address_form.input :zip_code %>
+                      <%= address_form.input :country, :as => :select, :collection => Country.all, :include_blank => false %>
+                  <% end %>
                 </ol>
               </fieldset>
 
@@ -51,7 +57,13 @@
                   </li>
                   <%= form.input :customer_name %>
                   <%= form.input :customer_vat_no %>
-                  <%= form.input :customer_address, :input_html => {:style => "width: 230px; height: 80px"} %>
+                  <%= form.fields_for :customer_address do |address_form| %>
+                      <%= address_form.input :address_line_1 %>
+                      <%= address_form.input :address_line_2 %>
+                      <%= address_form.input :address_line_3 %>
+                      <%= address_form.input :zip_code %>
+                      <%= address_form.input :country, :as => :select, :collection => Country.all, :include_blank => false %>
+                  <% end %>
                   <%= form.input :ean_number %>
                 </ol>
               </fieldset>
