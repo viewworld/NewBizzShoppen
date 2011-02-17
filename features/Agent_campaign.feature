@@ -44,4 +44,11 @@ Feature: Agent campaign - calling session
     Scenario: system can make a call automatically for next contact on the list if dynamic calling is enabled
       #when current call is over and result has been given
 
-    Scenario: system can call using http call for SNOME phones
+    @2
+    Scenario: I can see current call duration
+
+    @3
+    Scenario: I can connect with my snom phone using its ip address
+
+    @3
+    Scenario: I can control my snom phone remotely through its http interface
