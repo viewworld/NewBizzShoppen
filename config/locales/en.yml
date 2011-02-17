@@ -354,6 +354,7 @@ en:
         no_parent_category: No parent category
         move_users_right: Move >>
         move_users_left: << Move
+        search: Search
       index:
         view:
           new_category: 'New category'
