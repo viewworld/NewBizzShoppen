@@ -13,11 +13,9 @@
 
   <hl pdd="15"/>
 
-  <p>
-    <% @categories.each do |category| %>
-        <%= link_to category.name, category.cached_slug %>
-    <% end %>
-  </p>
+  <div class="home_categories_tree">
+    <%= all_categories_tree(:category_label => lambda { |c| link_to "#{c.name}", "/categories/#{c.cached_slug}?search[with_category]=#{c.id}" }) %>  
+  </div>
 
   <hl pdd="15"/>
 

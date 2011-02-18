@@ -42,7 +42,9 @@
 
   <header back="true"><%= leads_listing_header %><%= " #{t("leads.index.header_for")} #{@category.name}" if @category %></header>
 
-  <%= blurb(:blurb_leads_listing) %>
+  <% unless blurb(:blurb_leads_listing).blank? %>
+      <div class="pdd_10 no_pdd_lr"><%= blurb(:blurb_leads_listing) %></div>
+  <% end %>
 
   <% if @leads.empty? %>
       <%= blank_state_message %>

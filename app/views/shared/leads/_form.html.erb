@@ -63,6 +63,7 @@
     </ol>
   </fieldset>
 </div>
+<hl/>
 <% unless @lead.lead_templates.empty? %>
     <%= render :partial => "/shared/leads/lead_template_fields", :locals => { :lead => @lead, :form => form } %>
 <% end %>

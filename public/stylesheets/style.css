@@ -211,7 +211,7 @@ h4
 #cart_details
 {
     position: absolute;
-    top: 80px;
+    top: 60px;
     right: 40px;
     width: 250px;
     background: #fff;    
@@ -740,33 +740,39 @@ input:focus, textarea:focus, select:focus
     padding: 0 10px;
 }
 
-.categories_tree li
+.categories_tree li.categories_node
 {
-    display: block;
-    float: left;
+    display: inline-block;
+    vertical-align: top;
     width: 24%;
-    padding-right: 10px;
-    line-height: 26px;
+    padding: 0 10px 30px 0;
     font-size: 14px;
     font-weight: bold;
 }
 
-.categories_tree li a
+.home_categories_tree .categories_tree li.categories_node
 {
+    padding-bottom: 15px;
+}
+
+
+.categories_tree li a.text_action
+{
+    color: #666 !important;
+    white-space: nowrap;
     font-weight: normal;
 }
 
+
 .category_children_tree
 {
-    padding-left: 20px;
+    padding: 5px 0 0 15px;
 }
 
-.category_children_tree li
+.category_children_tree li.category_child_node
 {
-    width: auto;
-    float: none;
     line-height: 20px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: normal;
 }
 

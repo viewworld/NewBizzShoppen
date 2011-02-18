@@ -26,7 +26,7 @@
         <thead>
         <tr>
           <th class="hl"></th>
-          <th><%= t("administration.currencies.index.view.table.id") %></th>
+          <th style="width:10px"><%= t("administration.currencies.index.view.table.id") %></th>
           <th><%= t("administration.currencies.index.view.table.name") %></th>
           <th><%= t("administration.currencies.index.view.table.symbol") %></th>
           <th><%= t("administration.currencies.index.view.table.format") %></th>
@@ -46,7 +46,7 @@
         <% @currencies.each do |currency| %>
             <tr id="currency_<%= currency.id %>" class="<%= cycle("odd", "even") %>">
               <td class="cl"></td>
-              <td><%= currency.id %></td>
+              <td class="ta_c"><%= currency.id %></td>
               <td><%= currency.name %></td>
               <td><%= currency.symbol %> (<%= raw currency.symbol %>)</td>
               <td><%= currency.format %> (<%= raw number_to_currency(100, :format => currency.format, :unit => currency.symbol) %>)</td>

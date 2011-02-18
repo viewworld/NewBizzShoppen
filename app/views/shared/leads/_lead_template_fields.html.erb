@@ -4,7 +4,7 @@
           <div id="lead_template_container_<%= lead_template.id %>" style="<%= "display: none;" if !lead_template.is_mandatory and !lead_template.is_filled_out_for(lead) %>">
            <ol class="align_inputs">
             <li class="header">
-              <%= bt_link_to(:remove, t("shared.leads.form.remove_template"), "javascript:void(0)", :onclick => "remove_template(#{lead_template.id}, '#{lead_template.name}')", :style => "position: relative; left:8px; top:2px") unless lead_template.is_mandatory %>
+              <%= bt_link_to(:remove, t("shared.leads.form.remove_template"), "javascript:void(0)", :onclick => "remove_template(#{lead_template.id}, '#{lead_template.name}')", :style => "position: absolute; left:8px; top:2px") unless lead_template.is_mandatory %>
               <h3 class="locale_title">
                 <%= lead_template.name %>
               </h3>

@@ -72,8 +72,8 @@
 
 
 
-<def tag="frm" attrs="title,c">
-  <div class="frm<%= c.nil? ? "" : " #{c}" %>">
+<def tag="frm" attrs="title,c,id">
+  <div class="frm<%= c.nil? ? "" : " #{c}" %>"<%= id.nil? ? "" : " id='#{id}'" %>>
     <div class="frm_head">
       <div class="frm_hl"></div>
       <div class="frm_hr"></div>
