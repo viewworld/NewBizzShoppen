@@ -168,7 +168,7 @@ Scenario: I can edit invoice’s customer information - name, address, vat no
   And I should see "NewZipCode"
   And I should see "NewVatNo"
 
-@selenium @ao @_done
+@selenium @ao @_done @wip
 Scenario: I can edit invoice’s seller information - name, address, vat no
   When invoice exists for user "kastomer@nbs.fake" with role "customer"
   And I follow translated "layout.main_menu.admin.invoices"
