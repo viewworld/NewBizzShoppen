@@ -56,3 +56,27 @@ Scenario: I can see lead template fields with public values for each lead
 
 @m5 @added @lead_templates @tgn @_done @tested_elsewhere
 Scenario: I can see only lead template fields' names (not values) for hidden fields
+
+@m5 @added @unique_categories @tgn @_tested
+Scenario: I can see unique categories assigned to me in Browse leads
+  Given Category This Customer Unique Category is created
+  And category "This Customer Unique Category" is unique for user with email "john@doe.com" role "customer"
+  When I go to browse leads
+  Then I should see "This Customer Unique Category"
+
+@m5 @added @unique_categories @tgn @_tested
+Scenario: I should be able to browse leads in unique category assigned to me
+Given Category This Customer Unique Category is created
+  And category "This Customer Unique Category" is unique for user with email "john@doe.com" role "customer"
+  And Lead named "Lead Unique 1" exists within "This Customer Unique Category" category
+  When I go to browse leads
+  Then I follow "This Customer Unique Category"
+  And I should see "Lead Unique 1"
+
+@m5 @added @unique_categories @tgn @_tested
+Scenario: I cannot see unique categories not assigned to me in Browse leads
+  Given Category This Customer Unique Category is created
+  And I have user with email other_john@doe.com and role customer
+  And category "This Customer Unique Category" is unique for user with email "other_john@doe.com" role "customer"
+  When I go to browse leads
+  Then I should not see "This Customer Unique Category"

@@ -30,10 +30,10 @@ class Category < ActiveRecord::Base
     end
   end
 
-  has_many :category_users
-  has_many :users, :through => :category_users
-  has_many :customers, :through => :category_users, :conditions => "user_type = 'customer'", :source => :user
-  has_many :agents, :through => :category_users, :conditions => "user_type = 'agent' or user_type = 'call_centre_agent'", :source => :user
+  has_many :category_customers
+  has_many :category_agents
+  has_many :customers, :through => :category_customers, :source => :user
+  has_many :agents, :through => :category_agents, :source => :user
 
   scope :without_locked_and_not_published, where("is_locked = ? or (is_locked = ? and published_leads_count > 0)", false, true)
   scope :within_accessible, lambda { |customer| where("categories.id IN (?)", customer.accessible_categories_ids) }
@@ -44,9 +44,9 @@ class Category < ActiveRecord::Base
   scope :with_lead_purchase_owner, lambda { |owner| select("DISTINCT(name), categories.*").where("requested_by IS NULL and lead_purchases.owner_id = ? and accessible_from IS NOT NULL", owner.id).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
   scope :with_lead_purchase_assignee, lambda { |assignee| select("DISTINCT(name), categories.*").where("lead_purchases.assignee_id = ? and accessible_from IS NOT NULL", assignee.id).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
   scope :with_lead_templates_created_by, lambda { |creator| select("DISTINCT(categories.name), categories.*").where("lead_templates.creator_id = ?", creator.id).joins(:lead_templates) }
-  scope :without_customer_unique, where("is_customer_unique = ?", false)
-  scope :with_customer_unique, lambda { |customer| where("(is_customer_unique = ? and category_users.user_id is NULL) or (is_customer_unique = ? and category_users.user_id = ?)", false, true, customer.id).joins("LEFT JOIN category_users ON categories.id=category_users.category_id") }
-  scope :with_agent_unique, lambda { |agent| where("(is_agent_unique = ? and category_users.user_id is NULL) or (is_agent_unique = ? and category_users.user_id = ?)", false, true, agent.id).joins("LEFT JOIN category_users ON categories.id=category_users.category_id") }
+  scope :without_unique, where("is_customer_unique = ? and is_agent_unique = ?", false, false)
+  scope :with_customer_unique, lambda { |customer| where("(is_customer_unique = ? and category_customers.user_id is NULL) or (is_customer_unique = ? and category_customers.user_id = ?)", false, true, customer.id).joins("LEFT JOIN category_customers ON categories.id=category_customers.category_id") }
+  scope :with_agent_unique, lambda { |agent| where("(is_agent_unique = ? and category_agents.user_id is NULL) or (is_agent_unique = ? and category_agents.user_id = ?)", false, true, agent.id).joins("LEFT JOIN category_agents ON categories.id=category_agents.category_id") }
 
   before_destroy :check_if_category_is_empty
 
