@@ -85,14 +85,6 @@ module ApplicationHelper
     end
   end
 
-  def as_date(date)
-    if date
-      date.strftime("%Y-%m-%d")
-    else
-      "-"
-    end
-  end
-
   def current_user_has_role?(r)
     current_user && current_user.has_role?(r)
   end
