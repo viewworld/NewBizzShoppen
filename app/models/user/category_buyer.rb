@@ -16,6 +16,9 @@ class ::User::CategoryBuyer < ::User
   has_many :categories, :through => :category_interests
   has_many :invoices, :foreign_key => "user_id"
   has_many :bought_leads, :through => :lead_purchases, :class_name => "Lead", :source => :lead
+
+  validates_presence_of :category_id
+
   accepts_nested_attributes_for :lead_purchases
 
   private
