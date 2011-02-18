@@ -608,6 +608,7 @@ en:
           netto_value: Netto value
           vat_value: VAT
           brutto_value: Incl. VAT
+          remove_line: 'REMOVE LINE'
           form:
             general_information: 'General information'
             customer_information: 'Customer information'

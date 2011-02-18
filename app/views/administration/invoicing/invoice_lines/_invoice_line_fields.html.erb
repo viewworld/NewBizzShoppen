@@ -1,17 +1,17 @@
 <tr>
-  <td><%= f.text_field :name, :onKeyDown => "extendedNavigation(event)", :autocomplete => "off" %></td>
-  <td><%= f.text_field :quantity, :onKeyDown => "extendedNavigation(event)", :autocomplete => "off" %></td>
+  <td><%= f.text_field :name, :onKeyDown => "extendedNavigation(event)", :autocomplete => "off" %><%= f.errors_on :name %></td>
+  <td><%= f.text_field :quantity, :onKeyDown => "extendedNavigation(event)", :autocomplete => "off" %><%= f.errors_on :quantity %></td>
   <% if f.object.new_record? %>
-      <td><%= f.text_field :vat_rate, :onKeyDown => "extendedNavigation(event)", :autocomplete => "off", :value => @invoice.user.country_vat_rate %></td>
+      <td><%= f.text_field :vat_rate, :onKeyDown => "extendedNavigation(event)", :autocomplete => "off", :value => @invoice.user.country_vat_rate %><%= f.errors_on :vat_rate %></td>
   <% else %>
-      <td><%= f.text_field :vat_rate, :onKeyDown => "extendedNavigation(event)", :autocomplete => "off" %></td>
+      <td><%= f.text_field :vat_rate, :onKeyDown => "extendedNavigation(event)", :autocomplete => "off" %><%= f.errors_on :vat_rate %></td>
   <% end %>
-  <td><%= f.text_field :netto_price, :onKeyDown => "extendedNavigation(event)", :autocomplete => "off" %></td>
-  <td><%= f.text_field :netto_value, :readonly => true %></td>
-  <td><%= f.text_field :vat_value, :readonly => true %></td>
-  <td><%= f.text_field :brutto_value, :readonly => true %></td>
+  <td><%= f.text_field :netto_price, :onKeyDown => "extendedNavigation(event)", :autocomplete => "off" %><%= f.errors_on :netto_price %></td>
+  <td><%= f.text_field :netto_value, :readonly => true %><%= f.errors_on :netto_value %></td>
+  <td><%= f.text_field :vat_value, :readonly => true %><%= f.errors_on :vat_value %></td>
+  <td><%= f.text_field :brutto_value, :readonly => true %><%= f.errors_on :brutto_value %></td>
   <td class="ta_r">
     <%= f.hidden_field :_destroy %>
-    <%= bt_link_to nil, "remove line", "javascript:void(0)", :onclick => "remove_fields(this);", :class => "bt_grey_small bt_max" %>
+    <%= bt_link_to nil, t("administration.invoices.edit.view.remove_line"), "javascript:void(0)", :onclick => "remove_fields(this);", :class => "bt_grey_small bt_max" %>
   </td>
 </tr>
