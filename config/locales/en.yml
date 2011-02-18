@@ -1588,6 +1588,18 @@ en:
         type2: Date
 
   activerecord:
+    models:
+      article:
+        news:
+          agent: 'Agent news'
+          sales_manager: 'Sales manager news'
+          purchase_manager: 'Purchase manager news'
+          category_home: 'Category home news'
+        cms:
+          help_popup: 'Help popup'
+          interface_content_text: 'Interface content text'
+          main_page_article: 'Main page article'
+
     attributes:
       lead_purchase:
         rating_levels:
