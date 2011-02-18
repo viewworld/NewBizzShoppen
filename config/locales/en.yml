@@ -30,14 +30,14 @@ en:
         payment_transactions: 'Payments'
         sellers: 'Sellers'
       agent:
-        leads: My created leads
+        leads: My leads
         lead_templates: Lead templates
       call_centre:
-        call_centre_agents: 'Agents'
-        leads: 'Leads'
+        call_centre_agents: 'Team'
+        leads: 'My leads'
         lead_templates: 'Lead templates'
       call_centre_agent:
-        leads: Leads
+        leads: 'My leads'
         lead_templates: 'Lead templates'
       customer:
         subaccounts: Team
@@ -55,7 +55,7 @@ en:
         home: Home
         site_home: 'Site home'
       purchase_manager:
-        leads: My created leads
+        leads: My leads
         lead_templates: 'Lead templates'
     my_profile_link: My profile
     logout_link: 'Logout %{user_email}'
@@ -980,7 +980,7 @@ en:
     leads:
       index:
         view:
-          title: My created leads
+          title: My leads
           new_lead: New lead
           edit: Edit
           destroy: Destroy
