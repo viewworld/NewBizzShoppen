@@ -173,7 +173,7 @@ Scenario: I can see lead template fields with public values for each lead
 @m5 @added @lead_templates @tgn @_done @tested_elsewhere
 Scenario: I can see only lead template fields' names (not values) for hidden fields
 
-@m5 @unique_categories @added @_tested
+@m5 @unique_categories @added @_tested @tgn
 Scenario: I should not see customer unique categories on 'Browse leads' categories listing
   Given I have user with email other_customer@nbs.com and role customer
   And Category Other Customer Unique Category is created
@@ -181,7 +181,7 @@ Scenario: I should not see customer unique categories on 'Browse leads' categori
   When I go to browse leads
   Then I should not see "Other Customer Unique Category"
 
-@m5 @unique_categories @added @_tested
+@m5 @unique_categories @added @_tested @tgn
 Scenario: I should not see agent unique categories on 'Browse leads' categories listing
   Given I have user with email other_agent@nbs.com and role agent
   And Category Other Agent Unique Category is created

@@ -104,26 +104,61 @@ Scenario: In bestsellers and latest listings I should not see leads which I've a
   Then I should see "AwesomeLead"
   And I should not see "BoughtLead"
 
-@m5 @unique_categories
+@m5 @unique_categories @tgn @added @_tested
+Scenario: When I am not logged in I should not see any leads from unique categories on Latest & Bestsellers lists
+  Given lead CommonLead1 exists within category Common Category1
+  And CommonLead1 is a best seller
+  And lead CommonLead2 exists within category Common Category2
+  And lead UniqueLead1 exists within category Unique Category1
+  And UniqueLead1 is a best seller
+  And I have user with email other_agent@nbs.com and role agent
+  And category "Unique Category1" is unique for user with email "other_agent@nbs.com" role "agent"
+  And lead UniqueLead2 exists within category Unique Category2
+  And I have user with email other_customer@nbs.com and role customer
+  And category "Unique Category2" is unique for user with email "other_customer@nbs.com" role "customer"
+  Then I follow translated "home.show.view.buyer"
+  And I should see "CommonLead1" within "#best_sellers"
+  And I should not see "UniqueLead1" within "#best_sellers"
+  And I should see "CommonLead1" within "#latest_leads"
+  And I should see "CommonLead2" within "#latest_leads"
+  And I should not see "UniqueLead1" within "#latest_leads"
+  And I should not see "UniqueLead2" within "#latest_leads"
+
+@m5 @unique_categories @tgn @added @_tested
 Scenario: I should not see leads from customer unique categories I'm not assigned to on Latest leads listing
+  Given I am signed up and confirmed as user with email customer23424342@nbs.com and password secret and role customer
+  Given lead CommonLead1 exists within category Common Category1
+  And lead CommonLead2 exists within category Common Category2
+  And lead UniqueLead1 exists within category Unique Category1
+  And I have user with email other_agent@nbs.com and role agent
+  And category "Unique Category1" is unique for user with email "other_agent@nbs.com" role "agent"
+  And lead UniqueLead2 exists within category Unique Category2
+  And I have user with email other_customer@nbs.com and role customer
+  And category "Unique Category2" is unique for user with email "other_customer@nbs.com" role "customer"
+  Given user "customer23424342@nbs.com" with role "customer" has interest in following categories "Common Category1,Common Category2,Unique Category1"
+  Then I sign in as customer23424342@nbs.com with password secret
+  And I go to the home page
+  And I follow translated "home.show.view.buyer"
+  And I should see "CommonLead1" within "#latest_leads"
+  And I should see "CommonLead2" within "#latest_leads"
+  And I should see "UniqueLead1" within "#latest_leads"
+  And I should not see "UniqueLead2" within "#latest_leads"
 
-@m5 @unique_categories
-Scenario: I should not see leads from agent unique categories I'm not assigned to on Latest leads listing
-
-@m5 @unique_categories
-Scenario: I should not see leads from customer unique categories I'm not assigned to on Bestsellers listing
-
-@m5 @unique_categories
-Scenario: I should not see leads from agent unique categories I'm not assigned to on Bestsellers listing
-
-@m5 @unique_categories
+@m5 @unique_categories @tgn @added @_tested
 Scenario: I should see leads from customer unique categories I'm assigned to on Latest leads listing
-
-@m5 @unique_categories
-Scenario: I should see leads from agent unique categories I'm assigned to on Latest leads listing
-
-@m5 @unique_categories
-Scenario: I should see leads from customer unique categories I'm assigned to on Bestsellers listing
-
-@m5 @unique_categories
-Scenario: I should see leads from agent unique categories I'm assigned to on Bestsellers listing
+  Given I am signed up and confirmed as user with email customer23424342@nbs.com and password secret and role customer
+  Given lead CommonLead1 exists within category Common Category1
+  And lead CommonLead2 exists within category Common Category2
+  And lead UniqueLead1 exists within category Unique Category1
+  And I have user with email other_customer@nbs.com and role customer
+  And category "Unique Category1" is unique for user with email "other_customer@nbs.com" role "customer"
+  And lead UniqueLead2 exists within category Unique Category2
+  And category "Unique Category2" is unique for user with email "customer23424342@nbs.com" role "customer"
+  Given user "customer23424342@nbs.com" with role "customer" has interest in following categories "Common Category1,Common Category2,Unique Category2"
+  Then I sign in as customer23424342@nbs.com with password secret
+  And I go to the home page
+  And I follow translated "home.show.view.buyer"
+  And I should see "CommonLead1" within "#latest_leads"
+  And I should see "CommonLead2" within "#latest_leads"
+  And I should not see "UniqueLead1" within "#latest_leads"
+  And I should see "UniqueLead2" within "#latest_leads"

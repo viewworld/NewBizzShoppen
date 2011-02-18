@@ -448,7 +448,7 @@ Scenario: I can create a new lead and duplicate company\contact info to another 
 @m0 @added
 Scenario: I can pick region for a country from dropdown
 
-@m5 @unique_categories @added @_tested
+@m5 @unique_categories @added @_tested @tgn
 Scenario: I can't publish a lead in unique category if I'm not assigned to it
   Given there are no categories
   And Category Test category 1 is created
@@ -457,7 +457,7 @@ Scenario: I can't publish a lead in unique category if I'm not assigned to it
   And I go to agents leads
   Then "category_id" dropdown should have values "Test category 1,Agent Unique Category"
 
-@m5 @unique_categories @added @_tested
+@m5 @unique_categories @added @_tested @tgn
 Scenario: I can publish leads only in unique categories if I'm assigned at least to one
   Given there are no categories
   And Category Test category 1 is created

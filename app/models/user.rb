@@ -277,7 +277,7 @@ class User < ActiveRecord::Base
   end
 
   def accessible_categories_ids
-    User::Customer.find(parent_id).category_interests.map(&:category_id)
+    User::Customer.find(parent_id.blank? ? id : parent_id).category_interests.map(&:category_id)
   end
   
   def address
