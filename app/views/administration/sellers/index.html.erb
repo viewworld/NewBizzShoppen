@@ -27,7 +27,7 @@
           <th><%= t("administration.sellers.index.view.country") %></th>
           <th><%= t("administration.sellers.index.view.first_name") %></th>
           <th><%= t("administration.sellers.index.view.last_name") %></th>
-          <th><%= t("administration.sellers.index.view.default") %></th>
+          <th class="ta_c"><%= t("administration.sellers.index.view.default") %></th>
           <th></th>
           <th class="hr"></th>
         </tr>
@@ -46,7 +46,7 @@
               <td><%= s.address.country.name %></td>
               <td><%= s.first_name %></td>
               <td><%= s.last_name %></td>
-              <td><%= check_box_tag "default_#{s.id}", 1, s.default?, :disabled => true %></td>
+              <td class="ta_c"><%= check_box_tag "default_#{s.id}", 1, s.default?, :disabled => true %></td>
               <td class="tda ta_r">
                 <ul-actions>
                   <li><%= link_to t("administration.sellers.index.view.show"), administration_seller_path(s) %></li>

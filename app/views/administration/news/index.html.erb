@@ -56,9 +56,9 @@
           <th class="hl"></th>
           <th><%= link_to t("administration.news.index.view.id"), order_for_scoped_search(:id) %></th>
           <th><%= link_to t("administration.news.index.view.title"), order_for_scoped_search(:title) %></th>
-          <th><%= link_to t("administration.news.index.view.created_at"), order_for_scoped_search(:created_at) %></th>
-          <th><%= link_to t("administration.news.index.view.published"), order_for_scoped_search(:published_date) %></th>
-          <th class="ta_c"><%= link_to t("administration.news.index.view.times_read"), order_for_scoped_search(:views_count) %></th>
+          <th class="ta_r"><%= link_to t("administration.news.index.view.created_at"), order_for_scoped_search(:created_at) %></th>
+          <th class="ta_r"><%= link_to t("administration.news.index.view.published"), order_for_scoped_search(:published_date) %></th>
+          <th class="ta_r"><%= link_to t("administration.news.index.view.times_read"), order_for_scoped_search(:views_count) %></th>
           <th class="ta_r"><%= t("administration.news.index.view.actions") %></th>
           <th class="hr"></th>
         </tr>
@@ -76,9 +76,9 @@
               <td class="cl"></td>
               <td><%= news.id %></td>
               <td><%= news.title %></td>
-              <td><%= news.created_at %></td>
-              <td><%= news.published_date ? news.published_date : '-' %></td>
-              <td class="ta_c"><%= news.views_count %></td>
+              <td class="ta_r"><%= news.created_at %></td>
+              <td class="ta_r"><%= news.published_date ? news.published_date : '-' %></td>
+              <td class="ta_r"><%= news.views_count %></td>
               <td class="tda ta_r">
                 <ul-actions>
                   <li>

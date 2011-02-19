@@ -30,7 +30,7 @@
           <th><%= t("administration.currencies.index.view.table.name") %></th>
           <th><%= t("administration.currencies.index.view.table.symbol") %></th>
           <th><%= t("administration.currencies.index.view.table.format") %></th>
-          <th><%= t("administration.currencies.index.view.table.active") %></th>
+          <th class="ta_c"><%= t("administration.currencies.index.view.table.active") %></th>
           <th class="ta_r"><%= t("administration.currencies.index.view.actions") %></th>
           <th class="hr"></th>
         </tr>
@@ -50,7 +50,7 @@
               <td><%= currency.name %></td>
               <td><%= currency.symbol %> (<%= raw currency.symbol %>)</td>
               <td><%= currency.format %> (<%= raw number_to_currency(100, :format => currency.format, :unit => currency.symbol) %>)</td>
-              <td><%= currency.active %></td>
+              <td class="ta_c"><%= currency.active %></td>
               <td class="tda ta_r">
                 <ul-actions>
                   <li>
