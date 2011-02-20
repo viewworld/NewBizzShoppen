@@ -6,8 +6,8 @@
 
     <param:actions>
       <ul class="header_actions">
-        <li>
-          <%= bt_link_to :plus, t("call_centre.call_centre_agents.index.view.new_agent"), new_call_centres_call_centre_agent_path %>
+        <li class="last">
+          <%= bt_link_to :user, t("call_centre.call_centre_agents.index.view.new_agent"), new_call_centres_call_centre_agent_path %>
         </li>
       </ul>
     </param:actions>
@@ -30,17 +30,17 @@
               <th class="no_pdd_lr" style="width:10px"><%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %></th>
               <th><%= link_to t("call_centre.call_centre_agents.index.view.first_name_column"), order_for_scoped_search(:first_name) %></th>
               <th><%= link_to t("call_centre.call_centre_agents.index.view.last_name_column"), order_for_scoped_search(:last_name) %></th>
-              <th><%= link_to t("call_centre.call_centre_agents.index.view.created_leads_column"), order_for_scoped_search(:leads_created_counter) %></th>
-              <th><%= link_to t("call_centre.call_centre_agents.index.view.volume_sold_column"), order_for_scoped_search(:leads_volume_sold_counter) %></th>
-              <th><%= link_to t("call_centre.call_centre_agents.index.view.mobile_phone_column"), order_for_scoped_search(:mobile_phone) %></th>
-              <th><%= link_to t("call_centre.call_centre_agents.index.view.revenue_column"), order_for_scoped_search(:leads_revenue_counter) %></th>
-              <th><%= link_to t("call_centre.call_centre_agents.index.view.purchased_month_ago_column"), order_for_scoped_search(:leads_purchased_month_ago_counter) %></th>
-              <th><%= link_to t("call_centre.call_centre_agents.index.view.purchased_year_ago_column"), order_for_scoped_search(:leads_purchased_year_ago_counter) %></th>
-              <th><%= link_to t("call_centre.call_centre_agents.index.view.good_leads_column"), order_for_scoped_search(:leads_rated_good_counter) %></th>
-              <th><%= link_to t("call_centre.call_centre_agents.index.view.bad_leads_column"), order_for_scoped_search(:leads_rated_bad_counter) %></th>
-              <th><%= t("call_centre.call_centre_agents.index.view.fake_leads_column") %></th>
-              <th><%= link_to t("call_centre.call_centre_agents.index.view.not_rated_leads_column"), order_for_scoped_search(:leads_not_rated_counter) %></th>
-              <th><%= link_to t("call_centre.call_centre_agents.index.view.rating_percent_column"), order_for_scoped_search(:leads_rating_avg) %></th>
+              <th class="ta_r"><%= link_to t("call_centre.call_centre_agents.index.view.created_leads_column"), order_for_scoped_search(:leads_created_counter) %></th>
+              <th class="ta_r"><%= link_to t("call_centre.call_centre_agents.index.view.volume_sold_column"), order_for_scoped_search(:leads_volume_sold_counter) %></th>
+              <th class="ta_r"><%= link_to t("call_centre.call_centre_agents.index.view.mobile_phone_column"), order_for_scoped_search(:mobile_phone) %></th>
+              <th class="ta_r"><%= link_to t("call_centre.call_centre_agents.index.view.revenue_column"), order_for_scoped_search(:leads_revenue_counter) %></th>
+              <th class="ta_r"><%= link_to t("call_centre.call_centre_agents.index.view.purchased_month_ago_column"), order_for_scoped_search(:leads_purchased_month_ago_counter) %></th>
+              <th class="ta_r"><%= link_to t("call_centre.call_centre_agents.index.view.purchased_year_ago_column"), order_for_scoped_search(:leads_purchased_year_ago_counter) %></th>
+              <th class="ta_r"><%= link_to t("call_centre.call_centre_agents.index.view.good_leads_column"), order_for_scoped_search(:leads_rated_good_counter) %></th>
+              <th class="ta_r"><%= link_to t("call_centre.call_centre_agents.index.view.bad_leads_column"), order_for_scoped_search(:leads_rated_bad_counter) %></th>
+              <th class="ta_r"><%= t("call_centre.call_centre_agents.index.view.fake_leads_column") %></th>
+              <th class="ta_r"><%= link_to t("call_centre.call_centre_agents.index.view.not_rated_leads_column"), order_for_scoped_search(:leads_not_rated_counter) %></th>
+              <th class="ta_r"><%= link_to t("call_centre.call_centre_agents.index.view.rating_percent_column"), order_for_scoped_search(:leads_rating_avg) %></th>
               <th><%= link_to t("call_centre.call_centre_agents.index.view.certification_lvl_column"), order_for_scoped_search(:certification_level) %></th>
               <th class="ta_r"><%= t("call_centre.call_centre_agents.index.view.actions_column") %></th>
               <th class="hr"></th>
@@ -54,17 +54,17 @@
                   <td class="no_pdd_lr"><%= check_box_tag "call_centre_agent_ids[]", call_centre_agent.id %></td>
                   <td><%= call_centre_agent.first_name %></td>
                   <td><%= call_centre_agent.last_name %></td>
-                  <td><%= call_centre_agent.leads_created_counter %></td>
-                  <td><%= call_centre_agent.leads_volume_sold_counter %></td>
-                  <td><%= call_centre_agent.mobile_phone %></td>
-                  <td><%= call_centre_agent.leads_revenue_counter %></td>
-                  <td><%= call_centre_agent.leads_purchased_month_ago_counter %></td>
-                  <td><%= call_centre_agent.leads_purchased_year_ago_counter %></td>
-                  <td><%= call_centre_agent.leads_rated_good_counter %></td>
-                  <td><%= call_centre_agent.leads_rated_bad_counter %></td>
-                  <td></td>
-                  <td><%= call_centre_agent.leads_not_rated_counter %></td>
-                  <td><%= call_centre_agent.leads_rating_avg %>%</td>
+                  <td class="ta_r"><%= call_centre_agent.leads_created_counter %></td>
+                  <td class="ta_r"><%= call_centre_agent.leads_volume_sold_counter %></td>
+                  <td class="ta_r"><%= call_centre_agent.mobile_phone %></td>
+                  <td class="ta_r"><%= call_centre_agent.leads_revenue_counter %></td>
+                  <td class="ta_r"><%= call_centre_agent.leads_purchased_month_ago_counter %></td>
+                  <td class="ta_r"><%= call_centre_agent.leads_purchased_year_ago_counter %></td>
+                  <td class="ta_r"><%= call_centre_agent.leads_rated_good_counter %></td>
+                  <td class="ta_r"><%= call_centre_agent.leads_rated_bad_counter %></td>
+                  <td class="ta_r" ></td>
+                  <td class="ta_r"><%= call_centre_agent.leads_not_rated_counter %></td>
+                  <td class="ta_r"><%= call_centre_agent.leads_rating_avg %>%</td>
                   <td><%= t("models.lead.certification.lvl#{call_centre_agent.certification_level}") %></td>
                   <td class="tda ta_r">
                     <ul-actions>

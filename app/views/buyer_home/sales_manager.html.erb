@@ -8,7 +8,7 @@
     <param:actions>
       <ul class="header_actions">
         <% if current_user.team_buyers? %>
-            <li><%= bt_link_to :add, t("buyer_home.show.view.add_team_member"), new_customers_subaccount_path(:role => "lead_user") %></li>
+            <li><%= bt_link_to :users, t("buyer_home.show.view.add_team_member"), new_customers_subaccount_path(:role => "lead_user") %></li>
         <% end %>
         <li class="last"><%= bt_link_to :key, t("buyer_home.show.view.sign_out"), '/logout' %></li>
       </ul>

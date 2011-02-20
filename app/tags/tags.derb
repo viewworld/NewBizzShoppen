@@ -1,6 +1,6 @@
 <def tag="lbuilder_layout">
   <div class="clc" style="clear:both;">
-    <% %w(         t m b         ).each do |row_code| %>
+    <% %w(          t m b          ).each do |row_code| %>
         <%= render :partial => "/layouts/row", :locals => {:row_code => row_code} %>
     <% end %>
   </div>
@@ -100,5 +100,25 @@
           <div class="frm_fc"></div>
         </div>
     <% end %>
+  </div>
+</def>
+
+<def tag="frm-reverse" attrs="c,id">
+  <div class="frm_reverse<%= c.nil? ? "" : " #{c}" %>"<%= id.nil? ? "" : " id='#{id}'" %>>
+    <div class="frm_head">
+      <div class="frm_hl"></div>
+      <div class="frm_hr"></div>
+      <div class="frm_hc"></div>
+    </div>
+    <div class="frm_content">
+      <param:content/>
+    </div>
+    <div class="frm_foot">
+      <div class="frm_fl"></div>
+      <div class="frm_fr"></div>
+      <div class="frm_fc">
+        <param:header/>        
+      </div>
+    </div>
   </div>
 </def>

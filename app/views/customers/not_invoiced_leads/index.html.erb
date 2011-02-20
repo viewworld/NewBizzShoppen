@@ -13,7 +13,7 @@
         <tr>
         <th class="hl"></th>
         <th><%= t("customer.not_invoiced.index.view.lead_header") %></th>
-        <th><%= t("customer.not_invoiced.index.view.lead_price") %></th>
+        <th class="ta_r"><%= t("customer.not_invoiced.index.view.lead_price") %></th>
         <th class="hr"></th>
         </thead>
         <tfoot>
@@ -28,7 +28,7 @@
             <tr class="<%= cycle("odd", "even") %>">
               <td class="cl"></td>
               <td><%= lead.header %></td>
-              <td><%= as_currency(lead.price, lead.currency) %></td>
+              <td class="ta_r"><%= as_currency(lead.price, lead.currency) %></td>
               <td class="cr"></td>
             </tr>
         <% end %>

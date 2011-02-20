@@ -50,7 +50,7 @@
       <%= blank_state_message %>
   <% else %>
       <%= form_tag bulk_action_path do %>
-          <%= leads_listing @leads, :show_checkboxes => true do |blocks| %>
+          <%= leads_listing @leads, :show_checkboxes => user_signed_in?  do |blocks| %>
 
               <% blocks.tools do |lead| %>
                   <% if user_signed_in? %>

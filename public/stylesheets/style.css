@@ -748,6 +748,9 @@ input:focus, textarea:focus, select:focus
     padding: 0 10px 30px 0;
     font-size: 14px;
     font-weight: bold;
+
+    display: inline !ie7;
+    zoom: 1 !ie7;    
 }
 
 .home_categories_tree .categories_tree li.categories_node
@@ -961,6 +964,7 @@ div.element_description h3
     color: #ff7200;
     text-shadow: 1px 1px 0 #fff;
 }
+
 
 
 /* --- links ---

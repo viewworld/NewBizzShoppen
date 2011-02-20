@@ -9,7 +9,7 @@
       <%= form_tag new_administration_seller_path, :method => :get, :id => "form_new_seller" do %>
           <ul class="header_actions">
             <li class="last">
-              <%= bt_link_to :plus, t("administration.sellers.index.view.add_seller"), "javascript:void(0)", :onclick => "$('#form_new_seller').submit()" %>
+              <%= bt_link_to :user, t("administration.sellers.index.view.add_seller"), "javascript:void(0)", :onclick => "$('#form_new_seller').submit()" %>
             </li>
           </ul>
       <% end %>
