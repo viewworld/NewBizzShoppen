@@ -269,6 +269,10 @@ en:
         remember_me: 'Remember me'
         sign_in: 'Sign in'
         signup_message: "Don't have an account yet"
+        signup_sales_manger: If you want to buy hot leads for your business
+        signup_purchase_manager: If you want a quote on your business
+        signup_agent: If you can create new leads
+        signup_here: sign up here
         agent_signup: 'Freelance agent signup'
         buyer_signup: 'Sales manager signup'
         purchase_manager_signup: 'Purchase Manager signup'
