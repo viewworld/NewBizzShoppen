@@ -4,9 +4,18 @@ class Administration::CategoriesController < Administration::AdministrationContr
   set_tab "categories"
 
   def create
-    create! do |success, failure|
-      success.html { redirect_to administration_categories_path }
-      failure.html { render 'new' }
+    @category = Category.new(params[:category])
+    @category.customers = []
+    @category.agents = []
+    respond_to do |format|
+      if @category.save
+        @category.customer_ids = params[:category][:customer_ids]
+        @category.agent_ids = params[:category][:agent_ids]
+        @category.save
+        format.html { redirect_to administration_categories_path }
+      else
+        format.html { render 'new' }
+      end
     end
   end
 

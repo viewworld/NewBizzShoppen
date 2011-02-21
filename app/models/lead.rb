@@ -42,7 +42,7 @@ class Lead < ActiveRecord::Base
   scope :without_bought_and_requested_by, lambda {|u| joins("LEFT JOIN lead_purchases lp ON lp.lead_id = leads.id").where(["(lp.owner_id <> ? OR lp.owner_id IS NULL) AND (lp.assignee_id <> ? OR lp.assignee_id IS NULL) AND (lp.requested_by <> ? OR lp.requested_by IS NULL)", u.id, u.id, u.id]) if u}
   scope :bestsellers, order("lead_purchases_counter DESC")
   scope :latest, order("created_at DESC")
-  scope :interesting_for_user, lambda { |user| joins(:category => {:category_interests => :user}).where(["users.id = ?",user.to_i])}
+  scope :interesting_for_user, lambda { |user| where("leads.category_id IN (?)", user.accessible_categories_ids) }
 
   scope :joins_on_lead_purchases , joins("INNER JOIN lead_purchases ON lead_purchases.lead_id=leads.id")
   scope :with_created_by, lambda { |agent_id| where("creator_id = ?", agent_id) }
@@ -54,10 +54,14 @@ class Lead < ActiveRecord::Base
   scope :with_not_invoiced_for_user, lambda { |user| joins("RIGHT JOIN lead_purchases ON lead_purchases.lead_id = leads.id LEFT JOIN invoice_lines ON invoice_lines.payable_id = lead_purchases.id LEFT JOIN users ON users.id = lead_purchases.owner_id").where(["invoice_lines.payable_id IS NULL AND users.big_buyer IS TRUE AND users.id = ?", user.to_i]) }
 
   scope :owned_by, lambda { |user| where("lead_purchases.accessible_from IS NOT NULL and lead_purchases.owner_id = ?", user.id).joins(:lead_purchases) }
+  scope :without_unique_categories, where("categories.is_agent_unique = ? and categories.is_customer_unique = ?", false, false).joins(:category)
+  scope :with_customer_unique_categories, lambda { |customer_id| where("(is_customer_unique = ? and category_customers.user_id is NULL) or (is_customer_unique = ? and category_customers.user_id = ?)", false, true, customer_id).joins("INNER JOIN categories on categories.id=leads.category_id LEFT JOIN category_customers ON categories.id=category_customers.category_id") }
+  scope :with_agent_unique_categories, lambda { |agent_id| where("(is_agent_unique = ? and category_agents.user_id is NULL) or (is_agent_unique = ? and category_agents.user_id = ?)", false, true, agent_id).joins("INNER JOIN categories on categories.id=leads.category_id LEFT JOIN category_agents ON categories.id=category_agents.category_id") }
 
   validates_presence_of :header, :description, :purchase_value, :price, :company_name, :contact_name, :phone_number, :sale_limit, :category_id, :purchase_decision_date, :country_id, :currency, :address_line_1, :city, :zip_code
   validates_presence_of :hidden_description, :unless => Proc.new{|l| l.created_by?('PurchaseManager')}
   validates_inclusion_of :sale_limit, :in => 0..10
+  validate :check_category
 
 
   liquid_methods :header, :description, :company_name, :contact_name, :phone_number, :email_address, :address, :www_address
@@ -136,6 +140,13 @@ class Lead < ActiveRecord::Base
 
   def deliver_email_template(email, uniq_id)
     ApplicationMailer.email_template(email, EmailTemplate.find_by_uniq_id(uniq_id), {:lead => self}).deliver
+  end
+
+  def check_category
+    self.creator = current_user if creator.nil?
+    if category and category.is_agent_unique and creator.unique_categories.include?(category)
+      self.errors.add(:category_id, "Incorrect category!")
+    end
   end
 
   public

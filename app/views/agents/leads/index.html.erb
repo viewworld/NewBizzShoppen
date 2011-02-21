@@ -40,7 +40,7 @@
     <param:actions>
       <%= form_tag new_agents_lead_path, :method => :get, :id => "form_new_lead" do %>
           <span style="position:absolute;top: 5px; right: 110px;">
-            <%= select_tag :category_id, options_for_select(Category.without_locked.map { |c| [c.name, c.id] }) %>
+            <%= select_tag :category_id, options_for_select(Category.without_locked.with_agent_unique(current_user).map { |c| [c.name, c.id] }) %>
           </span>
           <ul class="header_actions">
             <li class="last">

@@ -42,6 +42,8 @@ class User < ActiveRecord::Base
            :dependent => :destroy
   alias_method :parent, :user
 
+  scope :with_customers, where("roles_mask & #{2**User.valid_roles.index(:customer)} > 0 ")
+  scope :with_agents, where("(roles_mask & #{2**User.valid_roles.index(:agent)} > 0) or (roles_mask & #{2**User.valid_roles.index(:call_centre_agent)} > 0) or (roles_mask & #{2**User.valid_roles.index(:purchase_manager)} > 0)")
   scope :with_role, lambda { |role| where("roles_mask & #{2**User.valid_roles.index(role.to_sym)} > 0 ") }
   scope :with_keyword, lambda { |q| where("lower(first_name) like :keyword OR lower(last_name) like :keyword OR lower(email) like :keyword", {:keyword => "%#{q.downcase}%"}) }
   scope :with_subaccounts, lambda { |parent_id| where("parent_id = ?", parent_id) }
@@ -266,7 +268,7 @@ class User < ActiveRecord::Base
   end
 
   def accessible_categories_ids
-    User::Customer.find(parent_id).category_interests.map(&:category_id)
+    User::Customer.find(parent_id.blank? ? id : parent_id).category_interests.map(&:category_id)
   end
   
   def has_role?(r)
