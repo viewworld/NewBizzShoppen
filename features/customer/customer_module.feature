@@ -10,7 +10,7 @@ Background:  Sign in user and set locale
 @_tested
 Scenario: I create account through signup
   Given I am not sign in
-  Then I follow translated "home.show.view.buyer_signup"
+  Then I follow translated "home.show.view.sign_up_here" within "#buyer_sign_up"
   And I fill in "user_customer_first_name" with "Bob"
   And I fill in "user_customer_last_name" with "Geldof"
   And I fill in "user_customer_phone" with "244224242424"

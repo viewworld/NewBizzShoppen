@@ -16,3 +16,4 @@ Gemfile.lock
 .livereload
 /tmp/*
 /public/assets/*
+/db/snapshots/cucumber.sql
