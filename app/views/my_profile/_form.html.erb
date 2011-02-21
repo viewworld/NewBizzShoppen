@@ -49,9 +49,12 @@
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs labels_ta_r labels_240">
     <ol class="align_inputs">
+      <%= form.input :bank_name if current_user.has_role?(:call_centre) %>
+      <%= form.input :bank_address if current_user.has_role?(:call_centre) %>
       <%= form.input :paypal_email %>
       <%= form.input :bank_swift_number %>
       <%= form.input :bank_iban_number %>
+      <%= form.input :payout, :hint => "%" if current_user.has_role?(:call_centre) %>
     </ol>
   </fieldset>
 </div>
