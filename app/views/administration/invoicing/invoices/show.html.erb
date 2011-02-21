@@ -22,8 +22,6 @@
 
     <div class="invoice_container" id="invoice_container">
       <%= render :partial => "administration/invoicing/invoices/invoice_preview", :locals => {:version => :original, :invoice => @invoice} %>
-      <hl pdd="10"/>
-      <%= render :partial => "administration/invoicing/invoices/invoice_preview", :locals => {:version => :copy, :invoice => @invoice} %>
     </div>
 
     <% unless @invoice.payment_transactions.empty? %>
