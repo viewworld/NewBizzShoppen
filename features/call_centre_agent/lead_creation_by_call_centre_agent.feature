@@ -316,8 +316,24 @@ Scenario: When there is only one template present for a lead and it is optional 
 @m5 @added @tgn @non_testable @_done
 Scenario: Lead data should be entered in given sequence
 
-@m5 @unique_categories
+@m5 @unique_categories @added @_tested
 Scenario: I can't publish a lead in unique category if I'm not assigned to it
+  Given there are no categories
+  And Category Test category 1 is created
+  And Category Agent Unique Category is created
+  And category "Agent Unique Category" is unique for user with email "call_centre_agent@person.com" role "call_centre_agent"
+  And I follow translated "layout.main_menu.call_centre_agent.leads"
+  Then "category_id" dropdown should have values "Test category 1,Agent Unique Category"
 
-@m5 @unique_categories
+@m5 @unique_categories @added @_tested
 Scenario: I can publish leads only in unique categories if I'm assigned at least to one
+  Given there are no categories
+  And Category Test category 1 is created
+  And Category Agent Unique Category is created
+  And category "Agent Unique Category" is unique for user with email "call_centre_agent@person.com" role "call_centre_agent"
+  Given I have user with email other_call_centre_agent@nbs.com and role call_centre_agent
+  And Category Other Agent Unique Category is created
+  And category "Other Agent Unique Category" is unique for user with email "other_call_centre_agent@nbs.com" role "call_centre_agent"
+  And I follow translated "layout.main_menu.call_centre_agent.leads"
+  Then "category_id" dropdown should have values "Test category 1,Agent Unique Category"
+  And "category_id" dropdown should not have values "Other Agent Unique Category"

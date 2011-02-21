@@ -11,6 +11,7 @@ Gemfile.lock
 /capybara/**/*
 .idea
 /public/system/assets
+/public/assets/*
 .rvmrc
 .livereload
 /tmp/*

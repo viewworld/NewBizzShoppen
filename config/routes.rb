@@ -42,6 +42,7 @@ Nbs::Application.routes.draw do
     resources :vat_rates
     resources :lead_templates
     resources :sellers
+    resources :category_users
   end
 
   namespace :buyers do

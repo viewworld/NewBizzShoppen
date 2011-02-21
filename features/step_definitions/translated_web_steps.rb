@@ -20,9 +20,13 @@ Then /^I should not see translated "([^"]*)"(?: with options "([^"]*)")?$/ do |k
 end
 
 
-When /^I press translated "([^"]*)"$/ do |key|
+When /^I press translated "([^"]*)"(?: within "([^"]*)")?$/ do |key,selector|
   I18n.locale = :en
-  Then %{I press "#{I18n.t(key)}"}
+  if selector.present?
+    Then %{I press "#{I18n.t(key)}" within "#{selector}"}
+  else
+    Then %{I press "#{I18n.t(key)}"}
+  end
 end
 
 Given /^I follow translated "([^"]*)"(?: within "([^"]*)")$/ do |key,selector|

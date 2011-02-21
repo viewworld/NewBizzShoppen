@@ -95,3 +95,7 @@ end
 Then /^I should see "([^"]*)" in the "([^"]*)" row of table "([^"]*)"$/ do |text, row_num, table_selector|
   page.all(:css, "#{table_selector} tr:nth-of-type(#{row_num})").first.text.should match(/#{text}/)
 end
+
+Then /^checkbox named "([^"]*)" should (be|not be) checked$/ do |cb_name, is_checked|
+  page.all(:css, "input[id*='#{cb_name}']").first['checked'].should eql(is_checked == "be")
+end
