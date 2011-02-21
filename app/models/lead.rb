@@ -62,7 +62,7 @@ class Lead < ActiveRecord::Base
   validates_presence_of :header, :description, :purchase_value, :price, :company_name, :contact_name, :phone_number, :sale_limit, :category_id, :purchase_decision_date, :country_id, :currency, :address_line_1, :city, :zip_code
   validates_presence_of :hidden_description, :unless => Proc.new{|l| l.created_by?('PurchaseManager')}
   validates_inclusion_of :sale_limit, :in => 0..10
-  validate :check_category
+  validate :check_category, :check_lead_templates
 
 
   liquid_methods :header, :description, :company_name, :contact_name, :phone_number, :email_address, :address, :www_address
@@ -87,6 +87,14 @@ class Lead < ActiveRecord::Base
   before_save :set_published_at
 
   private
+  def check_lead_templates
+    if category_id_changed?
+      lead_template_fields = lead_templates(true).map{ |lt| lt.lead_template_fields }.flatten.select { |f| f.is_mandatory }
+      unless lead_template_values.select { |ltv| lead_template_fields.map(&:id).include?(ltv.lead_template_field_id) }.size == lead_template_fields.size
+        self.errors.add(:category_id, I18n.t("shared.leads.form.not_all_templates_filled"))
+      end
+    end
+  end
 
   def mass_assignment_authorizer
     if self.current_user and current_user.can_publish_leads?
