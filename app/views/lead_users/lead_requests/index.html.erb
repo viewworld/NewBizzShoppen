@@ -16,12 +16,8 @@
                 <%= f.select :with_category, @categories, {:include_blank => true} %>
               </li>
               <li class="select">
-                <%= f.label :with_deal_value_from, t("lead_user.lead_requests.index.view.search.deal_value_from_label") %>
-                <%= f.select :with_deal_value_from, User::DEAL_VALUE_RANGE, {:include_blank => true} %>
-              </li>
-              <li class="select">
-                <%= f.label :with_deal_value_to, t("lead_user.lead_requests.index.view.search.deal_value_to_label") %>
-                <%= f.select :with_deal_value_to, User::DEAL_VALUE_RANGE, {:include_blank => true} %>
+                <%= f.label :with_zip_code, t("lead_user.lead_requests.index.view.search.zip_code") %>
+                <%= f.text_field :with_zip_code %>
               </li>
               <li class="select">
                 <%= f.label :with_country, t("lead_user.lead_requests.index.view.search.country_label") %>

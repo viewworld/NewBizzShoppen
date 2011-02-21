@@ -13,7 +13,7 @@ Background: Sign in user and set English locale
   And lead Faxes ultimate deal exists within category Office
   And lead Faxes ultimate deal exists with attributes "purchase_value:3291.99"
   And lead Copy machines ultimate deal exists within category Office
-  And lead Copy machines ultimate deal exists with attributes "purchase_value:7080.99"
+  And lead Copy machines ultimate deal exists with attributes "purchase_value:7080.99,zip_code:123"
   And lead "Printers ultimate deal" was requested by user "lead_user2@person.com" with role "lead_user"
   And lead "Monitors LCD deal" was requested by user "lead_user2@person.com" with role "lead_user"
   And lead "Keyboards deal" was requested by user "lead_user2@person.com" with role "lead_user"
@@ -86,8 +86,7 @@ Scenario: I can narrow down the results by filters and search box
   And I press translated "lead_user.lead_requests.index.view.search.search_button"
   Then I should see "Copy machines ultimate deal"
   And I should not see "Monitors LCD deal"
-  Then I select "4000" from "search_with_deal_value_from"
-  And I select "8000" from "search_with_deal_value_to"
+  And I fill in "search_with_zip_code" with "123"
   And I press translated "lead_user.lead_requests.index.view.search.search_button"
   Then I should see "Copy machines ultimate deal"
   And I should not see "Faxes ultimate deal"
