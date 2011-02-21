@@ -12,4 +12,8 @@ class PaymentTransaction < ActiveRecord::Base
   scope :with_sale_date_before_and_including, lambda{ |date| where(["invoices.sale_date <= ?",date]).joins("INNER JOIN invoices ON payment_transactions.invoice_id=invoices.id") }
 
   validates_presence_of :invoice_id, :amount, :paid_at
+
+  def paid_at_date
+    paid_at ? paid_at.to_date : '-'
+  end
 end
