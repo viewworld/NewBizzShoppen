@@ -175,6 +175,16 @@
     width: 180px;
 }
 
+.inputs ol li.select.unique
+{
+    height: auto;
+}
+
+.inputs ol li.select.unique .users_search
+{
+    vertical-align:top !ie7;
+}
+
 
 /* --- boolean + radio ---
 --------------------------------------------------------------------------------- */

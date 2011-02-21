@@ -1,0 +1,51 @@
+@page
+{
+    margin: 15mm;
+}
+
+body
+{
+    font: 10pt Arial, Helvetica, Verdana, Tahoma, sans-serif;
+}
+
+ul.leads
+{
+    list-style: none;
+}
+
+ul.leads li
+{
+    padding-bottom: 35px;
+    padding-top: 30px;
+    border-top: 1px dashed #bbb;
+}
+
+ul.leads li:first-child
+{
+    border-top: none;
+    padding-top: 0;
+}
+
+ul.leads li .lead h2
+{
+    font-size: 20px;
+    font-weight: bold;
+    padding-bottom: 5px;
+}
+
+ul.leads li .lead_value
+{
+    float: right;
+    padding: 4px 6px;
+    font-size: 11pt;
+}
+
+ul.leads li .lead p
+{
+    padding: 4px 0;
+}
+
+ul.leads li .lead p.lead_desc
+{
+    padding: 8px 0 10px;
+}
