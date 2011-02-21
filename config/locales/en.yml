@@ -223,6 +223,7 @@ en:
         deal_value_to_label: Deal value to
         category_label: 'Category'
         country_label: 'Country'
+        zip_code: 'Zip code'
       add_to_cart_link: Add to cart
       buy_lead: Buy lead
       buy_lead_confirm_msg: Do you want to buy this lead?
@@ -1442,6 +1443,7 @@ en:
             deal_value_from_label: 'From'
             deal_value_to_label: 'To'
             country_label: 'Country'
+            zip_code: 'Zip code'
       show:
         view:
           header: 'Lead details'
@@ -1458,6 +1460,7 @@ en:
             deal_value_to_label: 'To'
             country_label: 'Country'
             search_button: 'Search'
+            zip_code: 'Zip code'
     bulk_lead_purchase_update:
       create:
         flash:
@@ -1505,6 +1508,7 @@ en:
             assignee_label: 'Assignee'
             paid_label: 'Paid'
             search_button: 'Search'
+            zip_code: 'Zip code'
     bulk_lead_share_by_email:
       new:
         view:

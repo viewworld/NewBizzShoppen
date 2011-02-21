@@ -104,7 +104,7 @@ Feature: VAT rates
     And I follow translated "administration.invoices.edit.view.show_invoice"
     Then I should see "27%" within ".invoice_data"
 
-  @_done @wip
+  @_done
   Scenario: When VAT rate for a country is set, clients from this country should not have this rate applied on invoice if they are paying VAT in their country
     When VAT rate for "Denmark" is set to "27"
     And lead Awesome Lead exists within category Computers

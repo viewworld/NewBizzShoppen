@@ -27,6 +27,7 @@ class Lead < ActiveRecord::Base
   scope :purchase_value_to, lambda { |q| where(["purchase_value <= ?", q]) }
   scope :with_category, lambda { |q| where(:category_id => Category.find_by_id(q).self_and_descendants.map(&:id)) }
   scope :with_country, lambda { |country_id| where(:country_id => country_id) }
+  scope :with_zip_code, lambda { |zip_code| where(:zip_code => zip_code)}
   scope :with_ids_not_in, lambda { |q| where(["leads.id NOT IN (?)", q]) }
   scope :without_inactive, where("lead_purchases_counter < sale_limit")
   scope :without_outdated, lambda { where("purchase_decision_date >= ?", Date.today.to_s ) }

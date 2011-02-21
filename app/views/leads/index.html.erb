@@ -15,12 +15,8 @@
                 <%= f.select :with_category, @categories.map { |c| [c.name, c.id] }, :include_blank => true %>
               </li>
               <li class="string">
-                <%= f.label t("leads.index.search.deal_value_from_label") %>
-                <%= f.text_field :deal_value_from, :style => "width: 90px" %>
-              </li>
-              <li class="string">
-                <%= f.label t("leads.index.search.deal_value_to_label") %>
-                <%= f.text_field :deal_value_to, :style => "width: 90px" %>
+                <%= f.label t("leads.index.search.zip_code") %>
+                <%= f.text_field :with_zip_code, :style => "width: 90px" %>
               </li>
               <li class="select">
                 <%= f.label t("leads.index.search.country_label") %>
