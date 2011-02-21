@@ -17,7 +17,7 @@ class CreateAddresses < ActiveRecord::Migration
           :address_line_3 => user.county,
           :zip_code => user.zip_code,
           :country_id => user.country
-      )
+      ) if defined?(user.with_role.address)
     end
     remove_columns :users, :street, :city, :zip_code, :county, :country
     remove_columns :bank_accounts, :bank_address, :country_id
