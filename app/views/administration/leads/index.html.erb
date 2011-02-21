@@ -23,7 +23,13 @@
                 <%= f.select :with_creator_type, creator_types, :include_blank => true %>
               </li>
               <li class="string range">
-                <%= price_range :search, :price %>
+                <%= f.hidden_field :price_from %>
+                <%= f.hidden_field :price_to %>
+                <%= f.label :price_from_to, "Price range" %>
+                <%= text_field_tag :price_from_to, '', {:readonly => "readonly", :id => "price_from_to", :style => "width: 75px"} %>
+                <div class="range_container">
+                  <div id="price_range" class="slider-range"></div>
+                </div>
               </li>
 
               <li class="string range">
