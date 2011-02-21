@@ -51,5 +51,4 @@ Scenario: I can search agents by first name, last name and email
   Then I press translated "administration.categories.edit.view.button_update"
   And I should see translated "flash.categories.actions.update.notice"
   Then I follow translated "administration.categories.index.view.edit_link"
-  And I open page in browser
   And "all_agents" should be selected for value "nbsagent3483434biz@nbs.com"
