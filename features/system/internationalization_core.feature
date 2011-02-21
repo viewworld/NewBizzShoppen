@@ -42,4 +42,4 @@ Scenario: Default language is displayed if active language translation is not pr
   When locale is set to "en" for translation "home.show.view.sign_up_here"
   And I follow translated "locales.dk_locale"
   Then locale is set to "dk" for translation "home.show.view.sign_up_here"
-  And I should see translated "home.show.view.signup_here"
+  And I should see translated "home.show.view.sign_up_here"
