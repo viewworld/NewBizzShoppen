@@ -45,9 +45,9 @@
           <% end %>
           <td><%= lead_template.name %></td>
           <td><%= lead_template.category.name %></td>
-          <td><%= lead_template.is_mandatory ? t("lead_templates.table.yes_label") : t("lead_templates.table.no_label")%></td>
+          <td><%= translate_boolean(lead_template.is_mandatory?) %></td>
           <% if show_active_column %>
-            <td class="ta_l"><%= lead_template.is_active ? t("lead_templates.table.yes_label") : t("lead_templates.table.no_label") %></td>
+            <td class="ta_l"><%= translate_boolean(lead_template.is_active?) %></td>
           <% end %>
 
           <% if block_tools %>
