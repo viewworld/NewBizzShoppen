@@ -97,7 +97,7 @@
   }
 
   function add_option_to_select(users_type, select_type, name, value){
-      if($("#selected_customers option[value=" + value + "]").length == 0)
+      if($("#selected_" + users_type + " option[value=" + value + "]").length == 0)
       {
       $("#" + select_type + "_" + users_type).
                 append($("<option></option>").
