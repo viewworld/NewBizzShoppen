@@ -917,6 +917,17 @@ div.element_description h3
 }
 
 
+div.element_templates .lead_template
+{
+    padding-bottom: 8px;
+    padding-top: 2px;
+}
+
+div.element_templates .lead_template p
+{
+    color: #555;
+}
+
 
 /* --- elements_list ---
 --------------------------------------------------------------------------------- */
