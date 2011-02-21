@@ -30,3 +30,24 @@ Scenario: I can update my payout information if I am a Call Center
   And I press translated "password.edit.view.button_update_user"
   And the "user_call_centre_bank_swift_number" field should contain "ABNAPLPW"
   And the "user_call_centre_bank_iban_number" field should contain "AT123456789012345678"
+
+@m5 @tgn @added @_tested
+Scenario: I can define payout for the whole call centre
+  Given I am not sign in
+  And I am signed up and confirmed as user with email bob2@person.com and password supersecret and role call_centre
+  Then I sign in as bob2@person.com with password supersecret
+  When I go to my profile page
+  Then I fill in "user_call_centre_payout" with "21"
+  When I press translated "password.edit.view.button_update_user"
+  Then I should see translated "my_profile.update.controller.successful_update_notice"
+
+@m5 @tgn @added @_tested
+Scenario: I can enter bank name and address
+  Given I am not sign in
+  And I am signed up and confirmed as user with email bob2@person.com and password supersecret and role call_centre
+  Then I sign in as bob2@person.com with password supersecret
+  When I go to my profile page
+  Then I fill in "user_call_centre_bank_name" with "Int Bank de Geneve"
+  Then I fill in "user_call_centre_bank_address" with "Grjdjde street 392a, Zurich"
+  When I press translated "password.edit.view.button_update_user"
+  Then I should see translated "my_profile.update.controller.successful_update_notice"

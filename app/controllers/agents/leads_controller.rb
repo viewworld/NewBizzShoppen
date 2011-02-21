@@ -11,7 +11,7 @@ class Agents::LeadsController < Agents::AgentController
 
   def collection
     @search = Lead.scoped_search(params[:search])
-    @leads = @search.where(:creator_id => current_user.id).paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)
+    @leads = @search.where(:creator_id => current_user.id).order("id DESC").paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)
   end
 
   public

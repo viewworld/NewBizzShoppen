@@ -117,7 +117,7 @@ Feature: VAT rates
     And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
     And I press translated "administration.invoices.new.view.button_create"
     And I follow translated "administration.invoices.edit.view.show_invoice"
-    Then I should not see "27%" within ".product_data"
+    Then I should not see "27%" within ".invoice_data"
 
    @selenium @_done
    Scenario: When creating invoice manually by admin, VAT field should be prepopulated if country has vat rate set and user doesnt pay vat in his country

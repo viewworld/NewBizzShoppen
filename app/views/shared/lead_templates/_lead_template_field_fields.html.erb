@@ -4,7 +4,7 @@
     <fieldset class="inputs_vertical">
       <ol>
         <li class="string required <%= 'error' if f.object.errors[:name].present?%>">
-          <label>Name<abbr title="required">*</abbr></label>
+          <label><%= t("shared.lead_templates.form.field_name") %><abbr title="required">*</abbr></label>
           <%= f.text_field :name %>
           <%= custom_error_for_field(f, :name) %>
         </li>

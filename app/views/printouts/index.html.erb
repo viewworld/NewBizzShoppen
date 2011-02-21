@@ -9,12 +9,10 @@
 <body>
 <% unless @print.blank? %>
 <ul class="leads <%= @print.respond_to?(:each) ? 'collection' : 'object' %> <%= @print.respond_to?(:each) ? dom_class(@print.first) : dom_class(@print) %>">
-  <% 2.times do %>
   <% (@print.respond_to?(:each) ? @print : [@print]).each do |print| %>
-      <li>
+      <li class="lead">
         <%= render :partial => "printouts/#{dom_class(print)}", :locals => {:print => print} %>
       </li>
-  <% end %>
   <% end %>
 </ul>
 <% end %>

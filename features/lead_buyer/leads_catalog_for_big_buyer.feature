@@ -25,3 +25,12 @@ Scenario: I can click bulk add leads and I will see a notification “You added 
   When I check "mark_all"
   And I press translated "leads.index.button_bulk_buy_leads"
   Then I should see translated "buyer.bulk_cart_items.create.flash.n_leads_bought" with options "count:2"
+
+@ao @m5 @added @_done @_tested
+Scenario: I should not see leads that I've bought
+  Given I go to browse leads
+  And I follow "Another sample category"
+  Then I should see "Super printers" within ".leads_table"
+  And I should see "Ultra printers" within ".leads_table"
+  When I follow translated "leads.index.buy_lead" for lead "Super printers"
+  Then I should not see "Printers ultimate deal" within ".leads_table"

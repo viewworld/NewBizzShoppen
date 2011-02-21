@@ -109,6 +109,8 @@ module ApplicationHelper
     else
       if @home_category and current_user.has_role?(:category_buyer)
         category_home_page_path(@home_category.cached_slug)
+      elsif current_user.has_role?(:call_centre)
+        agent_home_path
       elsif current_user.has_any_role?(:customer, :lead_buyer, :lead_user, :agent, :purchase_manager)
         (current_user.has_any_role?(:customer, :lead_buyer, :lead_user)) ? buyer_home_path : self.send("#{current_user.role.to_s}_home_path")
       else
@@ -118,8 +120,8 @@ module ApplicationHelper
   end
 
   def link_to_view_templates(category)
-    if user_signed_in? and current_user.can_create_lead_templates?
-      role = current_user.has_role?(:admin) ? "administration" : current_user.role.to_s.pluralize
+    if user_signed_in? and current_user.can_create_lead_templates? and !current_user.has_role?(:admin)
+      role = current_user.role.to_s.pluralize
       link_to(t("categories.index.view.view_lead_templates"), self.send("#{role}_lead_templates_path", :search => { :with_category => category.id }), :class => "text_action")
     end
   end

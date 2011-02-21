@@ -11,4 +11,9 @@ class LeadTemplateField < ActiveRecord::Base
   validates_presence_of :name, :field_type
 
   translates :name
+
+  def value_for_lead(lead)
+    ltv = LeadTemplateValue.first(:conditions => ["lead_id = ? and lead_template_field_id = ?", lead.id, id])
+    ltv.nil? ? "" : ltv.value
+  end
 end

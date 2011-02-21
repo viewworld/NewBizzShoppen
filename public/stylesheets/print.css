@@ -13,39 +13,53 @@ ul.leads
     list-style: none;
 }
 
-ul.leads li
+ul.leads li.lead
 {
     padding-bottom: 35px;
     padding-top: 30px;
     border-top: 1px dashed #bbb;
 }
 
-ul.leads li:first-child
+ul.leads li.lead:first-child
 {
     border-top: none;
     padding-top: 0;
 }
 
-ul.leads li .lead h2
+ul.leads li.lead h2
 {
     font-size: 20px;
     font-weight: bold;
     padding-bottom: 5px;
 }
 
-ul.leads li .lead_value
+ul.leads li.lead .lead_value
 {
     float: right;
     padding: 4px 6px;
     font-size: 11pt;
 }
 
-ul.leads li .lead p
+ul.leads li.lead p
 {
     padding: 4px 0;
 }
 
-ul.leads li .lead p.lead_desc
+ul.leads li.lead p.lead_desc
 {
     padding: 8px 0 10px;
+}
+
+ul.leads li.lead .lead_template
+{
+    display: inline !ie7;
+    zoom: 1 !ie7;
+    display: inline-block;
+    vertical-align: top;
+    width: 49.5%;
+}
+
+ul.leads li.lead .lead_template h3
+{
+    padding: 5px 0;    
 }
