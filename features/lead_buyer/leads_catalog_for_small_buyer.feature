@@ -89,3 +89,12 @@ Scenario: I can bulk add leads to my basket and I will get a notification “Lea
   Then I check "mark_all"
   And I press translated "leads.index.button_bulk_create_cart_item"
   Then I should see translated "buyer.bulk_cart_items.create.flash.n_cart_items_added" with options "count:3"
+
+@ao @m5 @added @_done @_tested
+Scenario: I should not see leads that I've added to cart
+  Given I go to browse leads
+  And I follow "Computers"
+  Then I should see "Printers ultimate deal" within ".leads_table"
+  And I follow translated "leads.index.add_to_cart_link" for lead "Printers ultimate deal"
+  Then I should not see "Printers ultimate deal" within ".leads_table"
+  And I should see "Printers ultimate deal" within "#cart_details"

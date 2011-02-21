@@ -28,6 +28,7 @@ class LeadsController < ApplicationController
       params[:search][:within_accessible_categories] = current_user.accessible_categories_ids if current_user.has_accessible_categories?
       params[:search][:with_customer_unique_categories] = current_user.id if !current_user.has_accessible_categories? and current_user.has_role?(:customer)
       params[:search][:with_agent_unique_categories] = current_user.id if current_user.has_any_role?(:agent, :call_centre_agent)
+      params[:search][:without_bought_and_requested_by] = current_user
     else
       params[:search][:without_unique_categories] = "1"
     end
