@@ -7,7 +7,7 @@
 
   <hl pdd="15"/>
 
-  <div class="grid_250 fltl" style="margin-right: 10px">
+  <div class="grid_250 fltl" style="margin-right: 10px" id="buyer_sign_up">
     <frm-reverse c="home_cells">
       <param:content>
         <%= link_to image_tag("homepage/sales_manager.jpg"), buyer_home_path %>
@@ -21,12 +21,12 @@
         <div class="frm_tiny frm_tip">
           <span class="tip"></span>
 
-          <p>If you want to buy hot leads for your business, <%= link_to "sign up here", new_buyer_account_path %>.</p>
+          <p><%= t("home.show.view.buyer_sign_up_text") %>, <%= link_to t("home.show.view.sign_up_here"), new_buyer_account_path %>.</p>
         </div>
     <% end %>
   </div>
 
-  <div class="grid_250 fltl" style="margin-right: 10px">
+  <div class="grid_250 fltl" style="margin-right: 10px" id="purchase_manager_sign_up">
     <frm-reverse c="home_cells">
       <param:content>
         <%= link_to image_tag("homepage/purchase_manager.jpg"), purchase_manager_home_path %>
@@ -40,13 +40,13 @@
         <div class="frm_tiny frm_tip">
           <span class="tip"></span>
 
-          <p>If you want a quote on your business,<br/><%= link_to "sign up here", new_purchase_manager_account_path %>.
+          <p><%= t("home.show.view.purchase_manager_sign_up_text") %>,<br/><%= link_to t("home.show.view.sign_up_here"), new_purchase_manager_account_path %>.
           </p>
         </div>
     <% end %>
   </div>
 
-  <div class="grid_250 fltl">
+  <div class="grid_250 fltl" id="agent_sign_up">
     <frm-reverse c="home_cells">
       <param:content>
         <%= link_to image_tag("homepage/agent.jpg"), agent_home_path %>
@@ -60,7 +60,7 @@
         <div class="frm_tiny frm_tip">
           <span class="tip"></span>
 
-          <p>If you can create new leads,<br/><%= link_to "sign up here", new_agent_account_path %>.</p>
+          <p>%= t("home.show.view.agent_sign_up_text") %>,<br/><%= link_to t("home.show.view.sign_up_here"), new_agent_account_path %>.</p>
         </div>
     <% end %>
 

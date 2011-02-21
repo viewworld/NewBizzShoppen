@@ -7,15 +7,15 @@ Feature: VAT rates
 
   @_done
   Scenario: I can fill in VAT number when creating new buyer account
-    When I follow translated "home.show.view.buyer_signup"
+    When I follow translated "home.show.view.sign_up_here" within "#buyer_sign_up"
     Then I should see "Vat number"
 
   @_done
   Scenario: I can't fill in VAT number when creating new agent or purchase manager account
-    When I follow translated "home.show.view.agent_signup"
+    When I follow translated "home.show.view.sign_up_here" within "#agent_sign_up"
     Then I should not see "Vat number"
     When I am on the home page
-    And I follow translated "home.show.view.purchase_manager_signup"
+    And I follow translated "home.show.view.sign_up_here" within "#purchase_manager_sign_up"
     Then I should not see "Vat number"
 
   @_done

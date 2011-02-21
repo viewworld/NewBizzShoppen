@@ -275,6 +275,10 @@ en:
         _signup: 'Sales manager signup'
         forgotten_password_link: "Forgot password?"
         resend_confirmation_instructions: "Didn't receive confirmation instructions?"
+        sign_up_here: 'sign up here'
+        buyer_sign_up_text: 'If you want to buy hot leads for your business'
+        purchase_manager_sign_up_text: 'If you want a quote on your business'
+        agent_sign_up_text: 'If you can create new leads'
 
   password:
     update:
