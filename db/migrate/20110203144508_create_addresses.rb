@@ -11,7 +11,7 @@ class CreateAddresses < ActiveRecord::Migration
       t.timestamps
     end
     User.all.each do |user|
-      user.create_address(
+      user.with_role.create_address(
           :address_line_1 => user.street,
           :address_line_2 => user.city,
           :address_line_3 => user.county,
