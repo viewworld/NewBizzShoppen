@@ -1572,7 +1572,7 @@ en:
         description: 'Public description'
         additional_language: 'Additional language'
         sales_information: 'Sales information'
-
+        not_all_templates_filled: All mandatory templates must be filled!
 
   models:
     user:
