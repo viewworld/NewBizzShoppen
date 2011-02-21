@@ -114,8 +114,11 @@ class LeadPurchase < LeadPurchaseBase
 
     def to_csv(*ids)
       FasterCSV.generate(:force_quotes => true) do |csv|
-        csv << CSV_ATTRS.map(&:humanize)
-        find(ids).each { |lp| csv << CSV_ATTRS.map { |attr| lp.lead[attr] } }
+        lead_purchases = find(ids)
+        templates = lead_purchases.map { |lp| lp.lead.lead_templates }.flatten.uniq
+        template_fields = templates.map { |t| t.lead_template_fields }.flatten
+        csv << CSV_ATTRS.map(&:humanize) + template_fields.map(&:name)
+        lead_purchases.each { |lp| csv << CSV_ATTRS.map { |attr| lp.lead[attr] } + template_fields.map { |tf| tf.value_for_lead(lp.lead) } }
       end
     end
 
