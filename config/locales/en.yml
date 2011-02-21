@@ -1550,6 +1550,8 @@ en:
       form:
         new_lead_template_field: New field
         remove_lead_template_field: Remove
+        template_name: Template name
+        field_name: Field name
     leads:
       form:
         country_local_label: Local
