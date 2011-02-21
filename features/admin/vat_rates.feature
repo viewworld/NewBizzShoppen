@@ -102,7 +102,7 @@ Feature: VAT rates
     And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
     And I press translated "administration.invoices.new.view.button_create"
     And I follow translated "administration.invoices.edit.view.show_invoice"
-    Then I should see "27%" within ".product_data"
+    Then I should see "27%" within ".invoice_data"
 
   @_done
   Scenario: When VAT rate for a country is set, clients from this country should not have this rate applied on invoice if they are paying VAT in their country
