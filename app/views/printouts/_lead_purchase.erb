@@ -6,3 +6,16 @@
 <%= t("lead_purchases.listing.www_address") %><%= print.lead.www_address %>
 <%= t("lead_purchases.listing.email_address") %><%= print.lead.email_address %>
 <%= t("lead_purchases.listing.contact_name") %><%= print.lead.contact_name %>
+<ul>
+<% print.lead.lead_templates_and_values.each do |lead_template, values| %>
+    <li><b><%= lead_template.name.upcase %></b></li>
+    <li>
+      <ul>
+        <% values.each do |value| %>
+            <li><b><%= value.lead_template_field.name %>:</b> <%= value.can_be_viewed_by?(current_user) ? value.value : t("shared.lead_templates.listing.hidden_value") %></li>
+        <% end %>
+        <li>&nbsp;</li>
+      </ul>
+    </li>
+<% end %>
+</ul>
