@@ -61,7 +61,7 @@
           <% blocks.tools do |lead| %>
               <ul-actions>
                 <li>
-                  <%= link_to t("agent.leads.index.view.edit"), edit_agents_lead_path(lead) %>
+                  <%= link_to t("agent.leads.index.view.edit"), edit_agents_lead_path(lead), :class => "default_action" %>
                 </li>
                 <li>
                   <%= link_to t("agent.leads.index.view.destroy"), agents_lead_path(lead), :confirm => t("agent.leads.index.view.destroy_confirmation"), :method => :delete %>
