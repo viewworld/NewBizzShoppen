@@ -38,7 +38,6 @@ Feature: Category buyer sign up
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
     Then I should be on customer interests
-    And I should see translated "customer.interests.edit.view.deal_values"
     And I should see translated "customer.interests.edit.view.countries"
 
   @_done
