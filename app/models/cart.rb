@@ -68,6 +68,10 @@ class Cart
     items.any? ? items.first.currency : nil
   end
 
+  def currency_name
+    currency ? currency.name : ''
+  end
+
   def currency_matches?(lead)
     unless empty?
       return currency == lead.currency
