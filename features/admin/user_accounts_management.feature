@@ -95,8 +95,7 @@ Scenario: I can toggle select/deselect accounts on active page
 @m5 @tgn @selenium @_tested
 Scenario: I can perform a bulk block action
   Then I check "mark_all"
-  And I select translated "administration.users.index.view.lock" from "locking"
-  And I follow translated "administration.users.index.view.button_bulk_update_users"
+  And I follow "lock_selected"
   And I should see translated "flash.bulk_users_update.update.notice"
 
 @m5 @noguess @tgn @_tested @selenium
@@ -108,9 +107,8 @@ Scenario: I can perform a bulk invoice action
   When I go to administration users
   Then I fill in "search_with_keyword" with "bigbuyer1@person.com"
   And I press translated "administration.users.index.view.search_button"
-  And I check "create_invoice"
   And I check "mark_all"
-  And I follow translated "administration.users.index.view.button_bulk_update_users"
+  And I follow "invoice_selected"
   And I should see translated "flash.bulk_users_update.update.notice"
   And I go to administration upcoming invoices
   And I should not see "John von Buyer"
