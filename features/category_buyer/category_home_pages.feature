@@ -19,6 +19,27 @@ Feature: Category home pages
     And I am on category home page for Worst Leads
     Then I should see "1" items on a list within "#news"
 
+  @added @_done @_tested
+  Scenario: I can't see agent,buyer,purchase manager news
+    When Category named "Best Leads" already exists
+    And there are 1 agent news
+    And there are 1 buyer news
+    And there are 1 purchase manager news
+    And there is a published news for category "Best Leads"
+    And I am on category home page for Best Leads
+    Then I should see "1" items on a list within "#news"
+
+  @added @_done @_tested
+  Scenario: I can see only news created for specific category on complete list
+    When Category named "Best Leads" already exists
+    And there is a published news for category "Best Leads"
+    And there are 1 agent news
+    And there are 1 buyer news
+    And there are 1 purchase manager news
+    And I am on category home page for Best Leads
+    And I follow translated "category_home.show.view.complete_list_link" within "#news"
+    Then I should see "1" rows in a table within "table.generic"
+
   @_done
   Scenario: I can see a list of most recent category leads on category home page
     When Category named "Best Leads" already exists

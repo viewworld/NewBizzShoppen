@@ -253,6 +253,7 @@ en:
         agents_header: 'Agents news'
         sales_managers_header: 'Sales manager news'
         purchase_managers_header: 'Purchase manager news'
+        category_homes_header: 'Category news'
         read_more_link: 'read more'
         newer_link: 'Newer'
         older_link: 'Older'

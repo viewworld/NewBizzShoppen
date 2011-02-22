@@ -35,11 +35,11 @@
 
   <hl pdd="15"></hl>
 
-  <div id="leads_summary">
+  <div id="category_news">
     <div class="column_1to3 fltl" id="news" style="padding-right: 15px">
       <frm title="#{t('category_home.show.view.header_news')}" c="no_marg">
         <param:header>
-          <%= bt_link_to nil, t("category_home.show.view.complete_list_link"), news_index_path(:search => {:for_agent => true}), :class => "fltr" %>
+          <%= bt_link_to nil, t("category_home.show.view.complete_list_link"), news_index_path(:search => {:with_subclass =>  'CategoryHome', :for_category => @home_category.id}), :class => "fltr" %>
         </param:header>
         <param:content>
           <ul class="solid_list">
