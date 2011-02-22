@@ -3,12 +3,10 @@ class Administration::BulkUsersUpdateController < Administration::Administration
   def update
     if params[:user_ids]
       User::Abstract.where(:id => params[:user_ids]).each do |user|
-        if params[:create_invoice] == "1" and user.big_buyer?
+        if params[:bulk_action_type] == "create_invoice" and user.big_buyer?
            Invoice.create(:user_id => user.id)
-        end
-
-        if params[:locking].present?
-          user.locked = params[:locking]
+        elsif params[:bulk_action_type].to_s.include?("lock")
+          user.locked = params[:bulk_action_type]
           user.save
         end
       end
