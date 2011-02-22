@@ -232,5 +232,13 @@ class Lead < ActiveRecord::Base
     templates.map do |template|
       [template, lead_template_values.select { |ltv| ltv.lead_template_field.lead_template_id == template.id }]
     end
-  end  
+  end
+
+  def facebook_url_present?
+    !facebook_url.blank? and facebook_url != "http://"
+  end
+
+  def linkedin_url_present?
+    !linkedin_url.blank? and linkedin_url != "http://"
+  end
 end
