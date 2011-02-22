@@ -24,9 +24,9 @@ Feature: User accounts management
 @_tested
  Scenario: I can sort users
   Given I follow translated "administration.users.index.view.email"
-  Then I should have value "aaaaaaaagent.tom.blank@paerson22.com" in the css path "tr:nth-child(1) td:nth-child(6)"
+  Then I should have value "aaaaaaaagent.tom.blank@paerson22.com" in the css path "tr:nth-child(1) td:nth-child(7)"
   Given I follow translated "administration.users.index.view.email"
-  Then I should have value "zzzenon.tom.blank@paerson22.com" in the css path "tr:nth-child(1) td:nth-child(6)"
+  Then I should have value "zzzenon.tom.blank@paerson22.com" in the css path "tr:nth-child(1) td:nth-child(7)"
 
  @_tested
  Scenario: I can filter users [...]
@@ -76,17 +76,44 @@ Feature: User accounts management
    And I sign in as deleted_person@domain.dom with password secret
    Then I should see translated "devise.failure.invalid"
 
-@m5
+@m5 @tgn @_tested
 Scenario: I can invoice an account
+  Given I have user with email bigbuyer1@person.com and role customer
+  And there is a seller with attributes "name:DannyTheSeller,first_name:Danny,last_name:DeVito,address:USA,vat_no:123" for country "Denmark"
+  And User bigbuyer1@person.com with role customer is big buyer
+  And a lead Monitors ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role customer
+  Given I go to administration users
+  And I click hidden translated link "administration.users.index.view.create_invoice"
+  Then I press translated "administration.invoices.new.view.button_create"
+  And I should see translated "administration.invoices.edit.view.header"
 
-@m5
+@m5 @tgn @selenium @_tested
 Scenario: I can toggle select/deselect accounts on active page
+  Then I check "mark_all"
+  And I uncheck "mark_all"
 
-@m5
+@m5 @tgn @selenium @_tested
 Scenario: I can perform a bulk block action
+  Then I check "mark_all"
+  And I select translated "administration.users.index.view.lock" from "locking"
+  And I follow translated "administration.users.index.view.button_bulk_update_users"
+  And I should see translated "flash.bulk_users_update.update.notice"
 
-@m5 @noguess
+@m5 @noguess @tgn @_tested @selenium
 Scenario: I can perform a bulk invoice action
+  Given I have user with email bigbuyer1@person.com and role customer
+  And User bigbuyer1@person.com with role customer is big buyer
+  And user bigbuyer1@person.com with role customer exists with attributes "screen_name:John von Buyer"
+  And a lead Monitors ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role customer
+  When I go to administration users
+  Then I fill in "search_with_keyword" with "bigbuyer1@person.com"
+  And I press translated "administration.users.index.view.search_button"
+  And I check "create_invoice"
+  And I check "mark_all"
+  And I follow translated "administration.users.index.view.button_bulk_update_users"
+  And I should see translated "flash.bulk_users_update.update.notice"
+  And I go to administration upcoming invoices
+  And I should not see "John von Buyer"
 
 @m4 @added @agent_certification @tgn @_tested
 Scenario: I can override the certification level of any (call center-) agent

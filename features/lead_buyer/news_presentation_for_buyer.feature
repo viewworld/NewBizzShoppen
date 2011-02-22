@@ -10,7 +10,7 @@ Feature: News presentation for buyer
 Scenario: I can see list of news for buyer (to jest scopnięte, czy też zwykli użytkownicy też mogą się tu dostać)
   When I follow translated "home.show.view.buyer"
   And I follow translated "buyer_home.show.view.complete_list_link" within "#news"
-  Then I should see translated "news.index.view.buyers_header"
+  Then I should see translated "news.index.view.sales_managers_header"
   And I should see "1" div blocks with class like "news_element"
 
 @_done

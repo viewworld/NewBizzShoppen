@@ -38,3 +38,7 @@ Given /^category named "([^"]*)" (should|should not) be locked$/ do |name, is_lo
   category = Category.find_by_name(name).last
   assert category.is_locked == (is_locked == "should not" ? false : true)
 end
+
+Given /^there are no categories$/ do
+  Category.delete_all
+end

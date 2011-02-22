@@ -1,6 +1,9 @@
 <li>
   <div class="lead_content">
-    <h4><%= link_to lead.header, lead_path(lead) %></h4>
+    <h4>
+      <%= link_to lead.header, lead_path(lead) %>
+      <%= link_to_edit_lead(lead) %>
+    </h4>
 
     <p class="element">
       <%= t("buyer_home.show.view.purchase_value_label") %>

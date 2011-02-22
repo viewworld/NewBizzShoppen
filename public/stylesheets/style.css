@@ -1,3 +1,11 @@
+.ui-widget
+{
+    font-family: Arial, Helvetica, Verdana, Tahoma, sans-serif !important;    
+}
+
+/* ---- global ---------------------------------------------------------------------------------------- */
+
+
 body
 {
     background: url(/images/bg_body.png) repeat 0 0 #ededed;
@@ -30,13 +38,13 @@ body
 
 #top
 {
-    height: 82px;
+    height: 62px;
 }
 
 #top .logo
 {
     position: absolute;
-    top: 18px;
+    top: 9px;
     left: 45px;
 }
 
@@ -64,6 +72,21 @@ body
     margin: 0 auto;
     width: 300px;
     position: relative;
+}
+
+.dev_info
+{
+    background: red;
+    text-shadow: 0 -1px 0 #520000;
+    color: #fff;
+    padding: 4px 8px;
+
+    font-weight: bold;
+
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+
 }
 
 
@@ -99,7 +122,7 @@ h4
 #user_menu
 {
     background: url(/images/bg_nav.png) no-repeat top left;
-    height: 50px;    
+    height: 45px;    
     position: relative;
 }
 
@@ -132,6 +155,11 @@ h4
     height: 36px;
     line-height: 36px;
     padding: 0 15px;
+}
+
+#user_menu ul.nav.admin_nav li a span
+{
+    padding: 0 12px;
 }
 
 #user_menu ul.nav li a:hover
@@ -183,7 +211,7 @@ h4
 #cart_details
 {
     position: absolute;
-    top: 80px;
+    top: 60px;
     right: 40px;
     width: 250px;
     background: #fff;    
@@ -192,6 +220,9 @@ h4
 
     display: none;
 
+    -moz-box-shadow: 0 5px 50px #666;
+    -webkit-box-shadow: 0 5px 50px #666;
+    box-shadow: 0 5px 50px #666;
 
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
@@ -692,6 +723,7 @@ textarea, select
 select
 {
     padding: 5px 6px;
+    height: 28px;
 }
 
 input:focus, textarea:focus, select:focus
@@ -708,33 +740,42 @@ input:focus, textarea:focus, select:focus
     padding: 0 10px;
 }
 
-.categories_tree li
+.categories_tree li.categories_node
 {
-    display: block;
-    float: left;
+    display: inline-block;
+    vertical-align: top;
     width: 24%;
-    padding-right: 10px;
-    line-height: 26px;
+    padding: 0 10px 30px 0;
     font-size: 14px;
     font-weight: bold;
+
+    display: inline !ie7;
+    zoom: 1 !ie7;    
 }
 
-.categories_tree li a
+.home_categories_tree .categories_tree li.categories_node
 {
+    padding-bottom: 15px;
+}
+
+
+.categories_tree li a.text_action
+{
+    color: #666 !important;
+    white-space: nowrap;
     font-weight: normal;
 }
 
+
 .category_children_tree
 {
-    padding-left: 20px;
+    padding: 5px 0 0 15px;
 }
 
-.category_children_tree li
+.category_children_tree li.category_child_node
 {
-    width: auto;
-    float: none;
     line-height: 20px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: normal;
 }
 
@@ -827,11 +868,21 @@ p.element
     line-height: 14px;
 }
 
+p.element b
+{
+    color: #555;
+}
+
 .green
 {
     font-size: 14px;
     font-weight: bold;
     color: #5cbf1a;
+}
+
+.red
+{
+    color: #f20505;
 }
 
 .grey
@@ -853,12 +904,29 @@ div.element_description p
     padding: 0 0 5px;
 }
 
-div.element_description h3
+div.element_description h2
 {
-    font-size: 15px;
-    padding: 5px 0 10px;
+    font-size: 18px;
+    padding-bottom: 10px;
 }
 
+div.element_description h3
+{
+    font-size: 14px;
+    padding: 5px 0;
+}
+
+
+div.element_templates .lead_template
+{
+    padding-bottom: 8px;
+    padding-top: 2px;
+}
+
+div.element_templates .lead_template p
+{
+    color: #555;
+}
 
 
 /* --- elements_list ---
@@ -884,6 +952,32 @@ div.element_description h3
 }
 
 
+/* --- rating_element ---
+--------------------------------------------------------------------------------- */
+
+.rating_element
+{
+    padding: 15px;
+}
+
+.rating_element h3
+{
+    padding-bottom: 10px;
+    font-size: 14px;
+    color: #333;
+    font-weight: normal;
+}
+
+.rating_element h3 span.rating_level
+{
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #ff7200;
+    text-shadow: 1px 1px 0 #fff;
+}
+
+
+
 /* --- links ---
 --------------------------------------------------------------------------------- */
 
@@ -891,6 +985,17 @@ a
 {
     color: #008fff;
     text-decoration: underline;
+}
+
+a:hover
+{
+    text-decoration: none;
+}
+
+a.text_action
+{
+    font-size: 85%;
+    color: #008fff !important;
 }
 
 
@@ -1008,11 +1113,6 @@ a.bt_max
 
 
 
-
-
-
-
-
 .frm .frm_head .frm_hc a.bt
 {
     margin-top: 6px;
@@ -1023,6 +1123,7 @@ a.bt_max
 .frm .frm_head .frm_hc a.bt.fltr
 {
     margin-right: -4px;
+    margin-left: 8px;
 }
 
 
@@ -1175,9 +1276,52 @@ div.bt_green:hover span
     background: url(/images/frm/hl.png) repeat-x center center;
 }
 
+.thumb
+{
+    border: 1px solid #ddd;
+    padding: 1px;
+    background-color: #fff;
+}
 
 span.cke_skin_kama
 {
     padding: 0 !important;
     margin-left: 5px;
+}
+
+
+
+
+/* ---- invoices ---
+--------------------------------------------------------------------------------- */
+
+.invoice_inline_inputs
+{
+    width:100%;
+    margin: 10px 0;
+}
+
+.invoice_inline_inputs thead tr th
+{
+    text-align: left;
+    padding: 2px 4px;
+}
+
+.invoice_inline_inputs tbody tr td
+{
+    vertical-align: middle;
+    padding: 2px 1px;
+}
+
+.invoice_inline_inputs tbody tr td input
+{
+    width: 122px;
+}
+
+.invoice_inline_inputs tbody tr.total td
+{
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 4px;
+    text-align: center;
 }

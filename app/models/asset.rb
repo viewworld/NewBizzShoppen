@@ -34,12 +34,44 @@ class Asset < ActiveRecord::Base
     I18n.l(self.created_at, :format=>"%d.%m.%Y %H:%M")
   end
 
+  def self.s3_storage?
+    Rails.env == 'production'
+  end
+
+  def self.attachment_options
+    if self.s3_storage?
+      {
+        :storage        => :s3,
+        :s3_credentials => "#{Rails.root}/config/s3.yml",
+        :s3_permissions => :public_read,
+        :bucket         => "fairleads",
+        :url            => "http://fairleads.s3.amazonaws.com/assets/:id/:style/:basename.:extension",
+        :path           => "assets/:id/:style/:basename.:extension"
+      }
+    else
+      {
+        :url  => "/assets/:id_:style.:extension",
+        :path => ":rails_root/public/assets/:id_:style.:extension"
+      }
+    end
+  end
+
 end
 
 class Asset::CategoryImage < Asset
   belongs_to :category, :foreign_key => "resource_id"
-  has_attached_file :asset, :styles => {:original => "100x150>", :thumb => "32x32"}
+  has_attached_file :asset, attachment_options.merge(:styles => {:original => "100x150>", :thumb => "32x32"})
   validates_attachment_presence :asset
   validates_attachment_size :asset, :less_than => 1.megabyte
   validates_attachment_content_type :asset, :content_type => Asset::IMAGE_FILE_TYPES, :message => " - #{I18n.t(:validation_asset_images_type)}"
+
+  # TODO there must be a better way..
+  def url(style=nil)
+    if self.class.s3_storage?
+      super.gsub('//s3','//fairleads.s3').gsub('/fairleads/','/')
+    else
+      super
+    end
+  end
+
 end

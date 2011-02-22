@@ -19,11 +19,12 @@ class PurchaseManagers::LeadsController < PurchaseManagers::PurchaseManagerContr
         :contact_name   => current_user.full_name,
         :phone_number   => current_user.phone,
         :email_address  => current_user.email,
-        :address_line_1 => current_user.street,
-        :city           => current_user.city,
-        :zip_code       => current_user.zip_code,
-        :county         => current_user.county,
-        :published      => false
+        :address_line_1 => current_user.address.address_line_1,
+        :city           => current_user.address.address_line_2,
+        :zip_code       => current_user.address.zip_code,
+        :county         => current_user.address.address_line_3,
+        :published      => false,
+        :current_user   => current_user    
     })
   end
 
@@ -31,6 +32,8 @@ class PurchaseManagers::LeadsController < PurchaseManagers::PurchaseManagerContr
 
   def new
     @lead = Lead.new(default_params_hash)
+    @lead.category_id = params[:category_id]
+    @lead.duplicate_fields(current_user.leads.find_by_id(params[:lead_id]))
   end
 
   def create
@@ -38,8 +41,10 @@ class PurchaseManagers::LeadsController < PurchaseManagers::PurchaseManagerContr
 
     create! do |success, failure|
       success.html {
-        unless params[:commit_continue].blank?
-          redirect_to new_purchase_managers_lead_path
+        if !params[:commit_duplicate].blank?
+          redirect_to new_purchase_managers_lead_path(:lead_id => @lead.id, :category_id => @lead.category_id)
+        elsif !params[:commit_continue].blank?
+          redirect_to new_purchase_managers_lead_path(:category_id => @lead.category_id)
         else
           redirect_to purchase_managers_leads_path
         end

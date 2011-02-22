@@ -5,10 +5,13 @@ Background:
   Given I am on the homepage
   And I make sure current locale is English
   And lead Printers ultimate deal exists within category Computers
-  And lead Printers ultimate deal exists with attributes "creator_name:John Dulinky,price:989.39,purchase_value:7843.99,description:Public desc about printers deal,exposures_count:887,clicks_count:17"
+  And lead Printers ultimate deal exists with attributes "creator_name:John Dulinky,price:989.39,purchase_value:7843.99,description:Public desc about printers deal,exposures_count:887,clicks_count:17,currency_id:1"
   And lead Faxes ultimate deal exists within category Computers
+  And lead Faxes ultimate deal exists with attributes "currency_id:1"
   And lead Monitors ultimate deal exists within category Computers
+  And lead Monitors ultimate deal exists with attributes "currency_id:1"
   And lead Cheap mouses ultimate deal exists within category Computers
+  And lead Cheap mouses ultimate deal exists with attributes "currency_id:1"
   And I have user with email jim.jones@person.com and role agent
   And lead Cheap mouses ultimate deal is created by user jim.jones@person.com with role agent
   And User jim.jones@person.com with role agent is blocked
@@ -37,10 +40,8 @@ Scenario: I can browse leads in a given category with pagination
   Then I follow "Computers"
   And I follow "2"
 
-@_tested
+@deprecated
 Scenario: I should see created by
-  Then I follow "Computers"
-  And I should see "John Dulinky"
 
 @m4 @tgn @_tested @added
 Scenario: I should see rating % and certification level for each lead
@@ -88,3 +89,12 @@ Scenario: I can bulk add leads to my basket and I will get a notification “Lea
   Then I check "mark_all"
   And I press translated "leads.index.button_bulk_create_cart_item"
   Then I should see translated "buyer.bulk_cart_items.create.flash.n_cart_items_added" with options "count:3"
+
+@ao @m5 @added @_done @_tested
+Scenario: I should not see leads that I've added to cart
+  Given I go to browse leads
+  And I follow "Computers"
+  Then I should see "Printers ultimate deal" within ".leads_table"
+  And I follow translated "leads.index.add_to_cart_link" for lead "Printers ultimate deal"
+  Then I should not see "Printers ultimate deal" within ".leads_table"
+  And I should see "Printers ultimate deal" within "#cart_details"

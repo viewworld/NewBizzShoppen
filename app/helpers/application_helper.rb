@@ -16,14 +16,26 @@ module ApplicationHelper
       end
     end
   end
-  
+
   def fields_for_leads_translations(f)
-    new_object = current_user.has_role?(:admin) ? Lead.new : current_user.leads.build
+    new_object = current_user.has_any_role?(:admin, :call_centre) ? Lead.new : current_user.leads.build
     new_object.lead_translations = [LeadTranslation.new]
     fields = f.fields_for :lead_translations, new_object.lead_translations do |builder|
-       render("lead_fields", :f => builder)
+       render("/shared/leads/lead_fields", :f => builder)
     end
     "add_fields(this, \"#{escape_javascript(fields)}\")"
+  end
+
+  def fields_for_leads_template_fields(f)
+    lead_template_field = LeadTemplateField.new
+    fields = f.fields_for :lead_template_fields, lead_template_field do |builder|
+       render("/shared/lead_templates/lead_template_field_fields", :f => builder)
+    end
+    "add_lead_template_field(this, \"#{escape_javascript(fields)}\")"
+  end
+
+  def available_templates_list(lead)
+    lead.lead_templates(false).reject { |lt| lt.is_filled_out_for(lead) }
   end
 
   def custom_error_for_field(form, field)
@@ -78,23 +90,53 @@ module ApplicationHelper
   end
 
   def main_menu_link_to_role_specific_home_page
-    if !user_signed_in? or (['buyer_home', 'agent_home', 'purchase_manager_home'].include?(params[:controller]) and params[:action] == "show")
+    if @home_category
+      if controller.class.name =~ /CategoryHome/
+        main_menu_link_to(t("layout.main_menu.shared.site_home"), root_path, :tab => "home")
+      else
+        main_menu_link_to(t("layout.main_menu.shared.home"), category_home_page_path(@home_category.cached_slug), :tab => "home")
+      end
+    elsif !user_signed_in? or (['buyer_home', 'agent_home', 'purchase_manager_home'].include?(params[:controller]) and params[:action] == "show")
       main_menu_link_to(user_signed_in? ? t("layout.main_menu.shared.site_home") : t("layout.main_menu.shared.home"), root_path, :tab => "home")
     else
-      main_menu_link_to(t("layout.main_menu.shared.home"), self.send(url_to_role_specific_home_page), :tab => "home")
+      main_menu_link_to(t("layout.main_menu.shared.home"), url_to_role_specific_home_page, :tab => "home")
     end
   end
 
   def url_to_role_specific_home_page
     if !user_signed_in? or (['buyer_home', 'agent_home', 'purchase_manager_home'].include?(params[:controller]) and params[:action] == "show")
-      :root_path
+      root_path
     else
-      if current_user.has_any_role?(:customer, :lead_buyer, :lead_user, :agent, :purchase_manager)
-        (current_user.has_any_role?(:customer, :lead_buyer, :lead_user)) ? :buyer_home_path : "#{current_user.role.to_s}_home_path".to_sym
+      if @home_category and current_user.has_role?(:category_buyer)
+        category_home_page_path(@home_category.cached_slug)
+      elsif current_user.has_role?(:call_centre)
+        agent_home_path
+      elsif current_user.has_any_role?(:customer, :lead_buyer, :lead_user, :agent, :purchase_manager)
+        (current_user.has_any_role?(:customer, :lead_buyer, :lead_user)) ? buyer_home_path : self.send("#{current_user.role.to_s}_home_path")
       else
-        :root_path
+        root_path
       end
     end
   end
 
+  def link_to_view_templates(category)
+    if user_signed_in? and current_user.can_create_lead_templates? and !current_user.has_role?(:admin)
+      role = current_user.role.to_s.pluralize
+      link_to(t("categories.index.view.view_lead_templates"), self.send("#{role}_lead_templates_path", :search => { :with_category => category.id }), :class => "text_action")
+    end
+  end
+
+  def link_to_edit_lead(lead)
+    if current_user and (current_user == lead.creator or current_user.has_role?(:admin))
+      link_to(t("leads.listing.edit_label"), send("edit_#{current_user.has_role?(:admin) ? "administration" : current_user.role.to_s.pluralize}_lead_path".to_sym, lead.id), :class => "text_action")
+    end
+  end
+
+  def blank_state_message(msg = t("common.nothing_to_display"))
+    content_tag(:div, :class => "frm_tiny") do
+      content_tag(:div, :class => "pdd_10") do
+        content_tag(:p, msg, :class => "ta_c")
+     end
+    end
+  end
 end

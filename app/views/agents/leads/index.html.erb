@@ -38,32 +38,44 @@
     </param:content>
 
     <param:actions>
-      <ul class="header_actions">
-        <li class="last">
-          <%= bt_link_to :plus, t("agent.leads.index.view.new_lead"), new_agents_lead_path %>
-        </li>
-      </ul>
+      <%= form_tag new_agents_lead_path, :method => :get, :id => "form_new_lead" do %>
+          <span style="position:absolute;top: 5px; right: 110px;">
+            <%= select_tag :category_id, options_for_select(Category.without_locked.with_agent_unique(current_user).map { |c| [c.name, c.id] }) %>
+          </span>
+          <ul class="header_actions">
+            <li class="last">
+              <div class="hidden">
+                <%= submit_tag "New" %>
+              </div>
+              <%= bt_link_to :plus, t("agent.leads.index.view.new_lead"), "javascript:void", :onclick => "$('#form_new_lead').submit()" %>
+            </li>
+          </ul>
+      <% end %>
     </param:actions>
   </header>
 
-  <%= leads_table @leads, :show_checkboxes => false do |blocks| %>
-      <% blocks.tools do |lead| %>
-            <ul-actions>
-              <li>
-                <%= link_to t("agent.leads.index.view.edit"), edit_agents_lead_path(lead) %>
-              </li>
-              <li>
-                <%= link_to t("agent.leads.index.view.destroy"), agents_lead_path(lead), :confirm => t("agent.leads.index.view.destroy_confirmation"), :method => :delete %>
-              </li>
-            </ul-actions>
-      <% end %>
-      <% blocks.status_column do |lead| %>
-          <% if current_user.can_publish_leads? %>
-            <%= form_for [:agents, lead], :method => :put do |f| %>
-                <%= f.select :published, [[t("agent.leads.index.view.option_published"), 1], [t("agent.leads.index.view.option_not_published"), 0]], {:selected => lead.published ? 1 : 0}, {:onchange => "jQuery(this.form).callRemote()"} %>
-            <% end %>
-          <% else %>
-              <%= lead.published ? t("agent.leads.index.view.option_published") : t("agent.leads.index.view.option_not_published") %>
+  <% if @leads.blank? %>
+      <%= blank_state_message %>
+  <% else %>
+      <%= leads_table @leads, :show_checkboxes => false do |blocks| %>
+          <% blocks.tools do |lead| %>
+              <ul-actions>
+                <li>
+                  <%= link_to t("agent.leads.index.view.edit"), edit_agents_lead_path(lead), :class => "default_action" %>
+                </li>
+                <li>
+                  <%= link_to t("agent.leads.index.view.destroy"), agents_lead_path(lead), :confirm => t("agent.leads.index.view.destroy_confirmation"), :method => :delete %>
+                </li>
+              </ul-actions>
+          <% end %>
+          <% blocks.status_column do |lead| %>
+              <% if current_user.can_publish_leads? %>
+                  <%= form_for [:agents, lead], :method => :put do |f| %>
+                      <%= f.select :published, [[t("agent.leads.index.view.option_published"), 1], [t("agent.leads.index.view.option_not_published"), 0]], {:selected => lead.published ? 1 : 0}, {:onchange => "jQuery(this.form).callRemote()"} %>
+                  <% end %>
+              <% else %>
+                  <%= lead.published ? t("agent.leads.index.view.option_published") : t("agent.leads.index.view.option_not_published") %>
+              <% end %>
           <% end %>
       <% end %>
   <% end %>

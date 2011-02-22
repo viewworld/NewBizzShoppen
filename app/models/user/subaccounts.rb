@@ -6,6 +6,7 @@ module User::Subaccounts
 
       before_update :check_lead_buyer_role
       after_find :set_lead_buyer_role_enabled
+      before_create :check_parent_for_category_buyer
     end
     base.send(:include, InstanceMethods)
   end
@@ -26,5 +27,13 @@ module User::Subaccounts
         end
       end
     end
+
+    def check_parent_for_category_buyer
+      if parent and parent.has_role?(:category_buyer)
+        self.category = parent.category
+        self.roles << :category_buyer
+      end
+    end
+
   end
 end

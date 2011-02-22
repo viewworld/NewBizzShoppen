@@ -8,7 +8,7 @@ test:
   paypal_email: test@example.com
   paypal_secret: testsecret
   paypal_cert_id: 123456789
-  paypal_url: testpaypalurl
+  paypal_url: "test/paypal/url"
 
 production:
   paypal_email:

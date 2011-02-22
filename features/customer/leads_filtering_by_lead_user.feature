@@ -16,8 +16,8 @@ Background:
   And lead Monitors LCD deal exists within category Computers
   And lead Keyboards deal exists within category Office
   And lead Mouses deal exists within category Office
-  And lead Keyboards deal exists with attributes "purchase_value:3001.99"
-  And lead Mouses deal exists with attributes "purchase_value:4400.99"
+  And lead Keyboards deal exists with attributes "purchase_value:3001.99,zip_code:123"
+  And lead Mouses deal exists with attributes "purchase_value:4400.99,zip_code:456"
   And lead Printers ultimate deal is bought by user customer@person.com with role customer and is assigned to user lead_user2@person.com with role lead_user
   And lead Monitors LCD deal is bought by user customer@person.com with role customer and is assigned to user lead_user44@person.com with role lead_user
   And lead Keyboards deal is bought by user customer@person.com with role customer and is assigned to user lead_user2@person.com with role lead_user
@@ -56,8 +56,7 @@ Scenario: I can filter leads
   And I press translated "lead_user.lead_purchases.index.view.search.search_button"
   Then I should not see "Printers ultimate deal"
   And I should not see "Monitors LCD deal"
-  Then I select "2000" from "search_with_deal_value_from"
-  Then I select "4000" from "search_with_deal_value_to"
+  And I fill in "search_with_zip_code" with "123"
   And I press translated "lead_user.lead_purchases.index.view.search.search_button"
   Then I should see "Keyboards deal"
   And I should not see "Mouses deal"

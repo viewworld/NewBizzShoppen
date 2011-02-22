@@ -1,0 +1,55 @@
+<div class="pdd_10 no_pdd_t">
+  <fieldset class="inputs_vertical">
+    <ol>
+      <%= form.input :name, :label => t("shared.lead_templates.form.template_name"), :input_html => {:disabled => (!@lead_template.new_record? and current_user != @lead_template.creator)} %>
+      <% if current_user.has_role?(:admin) %>
+          <%= form.hidden_field :category_id %>
+          <%= form.input :is_global %>
+      <% else %>
+          <%= form.input :category_id, :collection => Category.all.map { |c| [c.name, c.id] }, :include_blank => false %>
+      <% end %>
+      <%= form.input :is_mandatory %>
+      <%= form.input :is_active if current_user.has_role?(:call_centre) %>
+    </ol>
+  </fieldset>
+</div>
+
+<%= form.fields_for :lead_template_fields, @lead_template.lead_template_fields do |builder| %>
+    <%= render :partial => "/shared/lead_templates/lead_template_field_fields", :locals => {:f => builder} %>
+<% end %>
+
+<div class="nested_template_fields_container"></div>
+
+<hl/>
+<div class="pdd_20" style="padding-top:10px">
+  <%= bt_link_to :plus, t("shared.lead_templates.form.new_lead_template_field"), "javascript:void(0)", :onclick => "#{fields_for_leads_template_fields(form)}" if @lead_template.new_record? or current_user == @lead_template.creator %>
+</div>
+
+
+
+<script>
+    var nestedFormsCount = <%= @lead_template.lead_template_fields.size %>;
+
+    function add_lead_template_field(link, content) {
+        var new_id = new Date().getTime();
+        content = content.replace(/lead_template_lead_template_fields_attributes_0/g, "lead_template_lead_template_fields_attributes_" + nestedFormsCount.toString());
+        content = content.replace(/lead_template\[lead_template_fields_attributes\]\[0\]/g, "lead_template[lead_template_fields_attributes][" + new_id.toString() + "]");
+        $('.nested_template_fields_container:last').append(content);
+        nestedFormsCount = nestedFormsCount + 1;
+    }
+
+    function remove_lead_template_field(id, record_id) {
+        nestedFormsCount = nestedFormsCount - 1;
+
+        if (record_id == null)
+        {
+            $('#lead_template_field_form_' + id).remove();
+        }
+        else
+        {
+            $('#lead_template_field_form_' + id).hide();
+            $('#destroy_hidden_field_' + record_id.toString()).val('true')
+        }
+
+    }
+</script>

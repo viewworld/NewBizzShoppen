@@ -5,7 +5,7 @@
 
 function mark_all_cbs_with_selector(t)
 {
-    var tr = $(t).parents('table').find("tr");
+    var tr = $(t).parents('table').find("tr:not(.main_actions)");
 
     $(t).is(":checked") ? $("input=[type=checkbox]:not(:checked)", tr).attr("checked", "checked")
                         : $("input=[type=checkbox]:checked", tr).attr("checked", "");
@@ -34,9 +34,17 @@ jQuery(document).ready(function()
         .click(function()
         {            
             var link = $(this).parent().find('a.default_action');
+            var link_confirm_msg = $(this).parent().find('input.default_action_confirmation_msg');
             if(link.attr("data-method"))
             {
-                link.trigger("click");
+                if(link_confirm_msg.val() == undefined)
+                {
+                    link.trigger("click");
+                }
+                else
+                {
+                    if(confirm(link_confirm_msg.val())) {link.trigger("click");}
+                }
             }
             else
             {
@@ -100,7 +108,7 @@ jQuery(document).ready(function()
 
     $("#basket_bt").bind("mouseenter", function()
     {
-        $("#cart_details").slideDown(350);
+        $("#cart_details").slideDown(250);
     });
 
     $("#cart_details").bind("mouseleave", function()

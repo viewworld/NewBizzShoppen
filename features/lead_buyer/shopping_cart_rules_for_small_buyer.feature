@@ -4,6 +4,7 @@ Feature: Shopping cart rules for small buyer
 Background:
   Given I am on the homepage
   And I make sure current locale is English
+  And there is a seller with attributes "name:DannyTheSeller,first_name:Danny,last_name:DeVito,address:USA,vat_no:123" for country "Denmark"
   Given Category named "Computers" already exists
   Given Category named "Sample category" already exists
   Given Category named "Another sample category" already exists within category named "Sample category"
@@ -23,7 +24,7 @@ Scenario: I cannot buy a lead skipping checkout
   And I follow "Computers"
   Then I follow translated "leads.index.add_to_cart_link"
   When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
-  Then I should not see "Ultra new printers" within ".leads_table"
+  Then I should see translated "common.nothing_to_display"
 
 @tgn @_tested
 Scenario: I can buy lead through checkout
@@ -41,7 +42,7 @@ Scenario: Lead purchase is not marked with "has access" after creation
   And I follow "Computers"
   Then I follow translated "leads.index.add_to_cart_link"
   When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
-  Then I should not see "Ultra new printers" within ".leads_table"
+  Then I should see translated "common.nothing_to_display"
 
 #after AO finishes invoicing subsystem
 @tgn @_tested
@@ -74,7 +75,7 @@ Scenario: I can add to cart lead requested by lead user that belongs to my accou
   When I go to customers lead requests
   Then I follow translated "customer.lead_requests.index.view.accept_lead_request_link"
   When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
-  Then I should not see "Keyboards deal" within ".leads_table"
+  And I should see translated "common.nothing_to_display"
 
 @tgn @_tested @selenium
 Scenario: I can bulk add to cart leads requested by lead user that belongs to my account
@@ -82,3 +83,20 @@ Scenario: I can bulk add to cart leads requested by lead user that belongs to my
   Then I check "mark_all"
   And I follow translated "customer.lead_requests.index.view.button_bulk_create_lead_request"
   And I should see translated "flash.bulk_lead_requests.actions.update.notice"
+
+@tgn @m5 @added @_tested
+Scenario: Item cannot be added to the cart if its currency does not match items' currencies already added to the cart
+  Given Category named "Super Computers" already exists
+  Given Category named "Awesome Computers" already exists
+  Given Lead named "Super joysticks" exists within "Super Computers" category
+  And lead "Super joysticks" has currency "DKK"
+  Given Lead named "Super keyboards" exists within "Awesome Computers" category
+  And lead "Super keyboards" has currency "EUR"
+  Then I go to browse leads
+  And I follow "Super Computers"
+  Then I follow translated "leads.index.add_to_cart_link"
+  And I should see translated "buyer.cart_items.create.flash.cart_item_creation_successful"
+  Then I go to browse leads
+  And I follow "Awesome Computers"
+  Then I follow translated "leads.index.add_to_cart_link"
+  And I should see translated "buyer.cart_items.create.flash.cart_item_currencies_mismatch"

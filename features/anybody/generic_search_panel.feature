@@ -5,9 +5,9 @@ Background:
   Given I am on the homepage
   And I make sure current locale is English
   And lead Printers ultimate deal exists within category Computers
-  And lead Printers ultimate deal exists with attributes "purchase_value:1000"
+  And lead Printers ultimate deal exists with attributes "purchase_value:1000,zip_code:123"
   And lead Monitors LCD deal exists within category Computers
-  And lead Monitors LCD deal exists with attributes "purchase_value:2022"
+  And lead Monitors LCD deal exists with attributes "purchase_value:2022,zip_code:456"
   And lead Keyboards deal exists within category Computers
   And lead Keyboards deal exists with attributes "purchase_value:3042"
   And lead Mouses deal exists within category Computers
@@ -21,8 +21,7 @@ Background:
 
 @tgn @_done @_tested
 Scenario: I can see search panel on leads listing page
-  Then I should see translated "leads.index.search.deal_value_from_label"
-  And I should see translated "leads.index.search.deal_value_to_label"
+  Then I should see CSS path ".search_content .inputs_vertical ol"
 
 @tgn @_done @_tested
 Scenario: I can filter leads based on category
@@ -32,15 +31,17 @@ Scenario: I can filter leads based on category
   Then I should see "Furniture for office deal"
   Then I should not see "Mouses deal"
 
-@tgn @_done @_tested
+# see https://redmine.selleo.com/issues/3805
+@tgn @_done @_tested @_deprecated
 Scenario: I can filter leads based on deal value range
-  When I fill in "search_deal_value_from" with "2000"
-  And I fill in "search_deal_value_to" with "4000"
+
+@ao @added @_done @_tested
+Scenario: I can filter leads based on zip code
+  When I fill in "search_with_zip_code" with "123"
   And I press translated "leads.index.search.search_button"
-  Then I should see "Monitors LCD deal"
-  And I should see "Keyboards deal"
-  And I should not see "Printers ultimate deal"
-  And I should not see "Mouses deal"
+  Then I should see "Printers ultimate deal"
+  And I should not see "Monitors LCD deal"
+  And I should see "1" rows in a table within "table.leads_table"
 
 @tgn @_tested
 Scenario: I can filter leads based on country

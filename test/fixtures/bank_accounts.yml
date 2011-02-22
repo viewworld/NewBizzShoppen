@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  bank_name: 
+  bank_address: MyText
+  iban_no: MyString
+  local_bank_number: MyString
+  swift: MyString
+  payment_conditions: MyText
+
+two:
+  bank_name: 
+  bank_address: MyText
+  iban_no: MyString
+  local_bank_number: MyString
+  swift: MyString
+  payment_conditions: MyText

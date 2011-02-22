@@ -83,12 +83,30 @@
     padding-left: 6px;
 }
 
+.inputs ol li.commit p
+{
+    float: left;
+    padding-left: 5px;
+    line-height: 30px;
+    font-size: 12px;
+}
+
+.inputs ol li.commit p a
+{
+    padding-left: 3px;
+}
+
 .inputs ol li span.label_link
 {
     position: absolute;
     left: 0;
     top: 25px;
     font-size: 10px;
+}
+
+.inputs ol li div.txt
+{
+    margin-top: 7px;
 }
 
 
@@ -112,6 +130,16 @@
 {
     float: left;
     margin-top: 7px;    
+}
+
+
+/* --- textarea ---
+--------------------------------------------------------------------------------- */
+
+.inputs ol li.text textarea
+{
+    float: left;
+    margin-bottom: 5px;
 }
 
 
@@ -139,6 +167,7 @@
 .inputs ol li.select select
 {
     width: auto;
+    float: left;
 }
 
 .inputs ol li.multiple
@@ -150,6 +179,16 @@
 {
     height: 80px;
     width: 180px;
+}
+
+.inputs ol li.select.unique
+{
+    height: auto;
+}
+
+.inputs ol li.select.unique .users_search
+{
+    vertical-align:top !ie7;
 }
 
 
@@ -262,7 +301,8 @@
     font-size: 11px;
 }
 
-.inputs ol li.error input
+.inputs ol li.error input,
+.inputs ol li.error textarea
 {
     border-color: #ff6060;
     -moz-box-shadow: 0 0 2px #ff6060;
@@ -569,6 +609,16 @@
 	width: 152px;
 }
 
+.inputs_150 ol li.string input,
+.inputs_150 ol li.password input
+{
+	width: 150px;
+}
+.inputs_150 ol li.select select
+{
+	width: 162px;
+}
+
 
 .inputs_160 ol li.string input,
 .inputs_160 ol li.password input
@@ -769,37 +819,77 @@
 /* --- extend ---
 ------------------------------------------------------------------------------------------ */
 
-.inputs_vertical li
+.inputs_vertical ol li label abbr
+{
+    color: red;
+    padding-left: 3px;
+}
+
+
+.inputs_vertical ol li
 {
     display: block;
     float: left;    
-    padding: 0 3px 5px 10px;
+    padding: 0 3px 5px 5px;
 }
+
+
+
+/* --- errors --------------------------------------------------------------- */
+
+.inputs_vertical ol li p.inline-errors
+{
+    padding: 3px 0 0 3px;
+    color: #f10000;
+    font-size: 11px;
+}
+
+.inputs_vertical ol li.error input
+{
+    border-color: #ff6060;
+    -moz-box-shadow: 0 0 2px #ff6060;
+    -webkit-box-shadow: 0 0 2px #ff6060;
+    box-shadow: 0 0 2px #ff6060;
+}
+
+/* --- labels --------------------------------------------------------------- */
 
 .inputs_vertical li.string label,
 .inputs_vertical li.select label,
-.inputs_vertical li.date label
+.inputs_vertical li.date label,
+.inputs_vertical li.text label
 {
     display: block;
     padding: 10px 0 3px 5px;
     line-height: 14px;
 }
 
+.inputs_vertical li:first-child
+{
+    padding-left: 10px;
+}
+
+.inputs_vertical.no_pdd_first li:first-child
+{
+    padding-left: 5px;
+}
+
 
 .inputs_vertical li.string input
 {
-    width: 170px;
+    width: 160px;
     margin: 0;
 }
 
 .inputs_vertical li.select
 {    
-    max-width: 164px;
+    max-width: 160px;
 }
 
 .inputs_vertical li.select select
 {
-    min-width: 80px;
+    min-width: 100px;
+    max-width: 154px;
     margin: 0;
 }
 
@@ -843,7 +933,7 @@
 
 .inputs_vertical li.string.range input
 {
-    width: 90px;    
+    width: 95px;    
 }
 
 .inputs_vertical li.string.range .range_container
@@ -881,6 +971,8 @@
 {
     margin-top: 2px;
 }
+
+
 
 
 

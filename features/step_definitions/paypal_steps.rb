@@ -5,7 +5,7 @@ Given /^paypal payment for user with email "([^"]*)" and role "([^"]*)"$/ do |em
 end
 
 Then /^I should be redirected to paypal page$/ do
-  assert current_path.include?("testpaypalurl")
+  assert current_path.include?("test/paypal/url")
 end
 
 Then /^last payment notification is marked as "([^"]*)"$/ do |status|

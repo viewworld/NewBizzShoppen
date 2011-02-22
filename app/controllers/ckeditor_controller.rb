@@ -1,5 +1,6 @@
 class CkeditorController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:create]
+  before_filter :authorize_with_http_basic_for_staging, :except => [:create,:destroy]
   before_filter :swf_options, :only => [:images, :files, :create]
   respond_to :html, :xml, :json
   layout "ckeditor"

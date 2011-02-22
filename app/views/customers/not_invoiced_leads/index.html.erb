@@ -1,0 +1,45 @@
+<column-mc:>
+  <header>
+    <param:content>
+      <%= t("customer.not_invoiced.index.view.header") %>
+    </param:content>
+  </header>
+
+  <% unless @leads.any? %>
+    <%= blank_state_message(t("customer.not_invoiced.index.view.no_leads_to_display")) %>
+  <% else %>
+      <table class="generic" cellspacing="0" cellpadding="0" id="not_invoiced_leads">
+        <thead>
+        <tr>
+        <th class="hl"></th>
+        <th><%= t("customer.not_invoiced.index.view.lead_header") %></th>
+        <th class="ta_r"><%= t("customer.not_invoiced.index.view.lead_price") %></th>
+        <th class="hr"></th>
+        </thead>
+        <tfoot>
+        <tr>
+          <td class="fl"></td>
+          <td colspan="2"></td>
+          <td class="fr"></td>
+        </tr>
+        </tfoot>
+        <tbody id="invoices_list">
+        <% @leads.each do |lead| %>
+            <tr class="<%= cycle("odd", "even") %>">
+              <td class="cl"></td>
+              <td><%= lead.header %></td>
+              <td class="ta_r"><%= as_currency(lead.price, lead.currency) %></td>
+              <td class="cr"></td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+  <% end %>
+
+
+  <script>
+      $(function() {
+          $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+      });
+  </script>
+</column-mc:>

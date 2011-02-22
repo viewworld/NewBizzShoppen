@@ -6,7 +6,7 @@ Background:
   And I make sure current locale is English
   And I am not sign in
   And lead Printers ultimate deal exists within category Computers
-  And lead Printers ultimate deal exists with attributes "creator_name:John Dulinky,price:989.39,purchase_value:7843.99,description:Public desc about printers deal,exposures_count:887,clicks_count:17"
+  And lead Printers ultimate deal exists with attributes "creator_name:Jacek Smietana,price:989.39,purchase_value:7843.99,description:Public desc about printers deal,exposures_count:887,clicks_count:17"
   And lead Faxes ultimate deal exists within category Computers
   And lead Monitors ultimate deal exists within category Computers
   And lead Cheap mouses ultimate deal exists within category Computers
@@ -36,10 +36,8 @@ Scenario: I can browse leads in a given category with pagination
   Then I follow "Computers"
   And I follow "2"
 
-@_tested
+@deprecated
 Scenario: I should see created by
-  Then I follow "Computers"
-  And I should see "John Dulinky"
 
 @m4 @tgn @_tested  @added
 Scenario: I should see rating % and certification level for each lead
@@ -68,12 +66,28 @@ Scenario: I should see hottness, novelty, exposure, clicks
   And I should see "887"
   And I should see "17"
 
-
 @m3 @ao @_done
 Scenario: I should see currency in which lead is being sold
-  When lead "Printers ultimate deal" has currency "Euro"
+  When lead "Printers ultimate deal" has currency "EUR"
   And I follow "Computers"
   And I fill in "search_with_keyword" with "Printers"
   And I press translated "leads.index.search.search_button"
   And I should see "€989.39" within "table"
 
+@m5 @tgn @_tested
+Scenario: When you click on a lead that you have not bought, and you are not signed up you should be given the opportunity to sign in or create a new account
+  Given Category named "Sample category" already exists
+  And Lead named "Lead sample" exists within "Sample category" category
+  And I go to browse leads
+  And I follow "Sample category"
+  Then I click hidden translated link "leads.index.add_to_cart_link"
+  And I should see "Sign in"
+  Then I follow translated "buyer_home.show.view.create_new_buyer_account"
+
+@m5 @tgn @_tested
+Scenario: Add blurb or info text to leads listing "To view lead details click buy lead"
+  Given Category named "Sample category" already exists
+  And Lead named "Lead sample" exists within "Sample category" category
+  And I go to browse leads
+  And I follow "Sample category"
+  Then I should see "Blurb leads listing"

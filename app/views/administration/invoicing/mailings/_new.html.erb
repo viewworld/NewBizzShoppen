@@ -1,17 +1,37 @@
 <%= form_for @email_template_preview, :as => :email_template_preview, :url => administration_invoicing_invoice_mailings_path(@invoice) do |f| %>
-    <p>
-      <%= f.label :recipeints, t("administration.invoices.mailing.new.view.recipeints") %> <%= f.text_field :recipients,
-                     :value => @invoice.user.email
-                   %>
-    </p>
-    <p>
-      <%= f.label :subject, t("administration.invoices.mailing.new.view.subject") %> <%= f.text_field :subject %>
-    </p>
-    <p>
-      <%= f.label :body, t("administration.invoices.mailing.new.view.body") %> <%= f.text_area :body %>
-    </p>
-    <p><%= t("administration.invoices.mailing.new.view.attachment") %></p>
-    <p><%= link_to @email_template_preview.invoice_filename, invoice_preview_path(@email_template_preview.invoice_filename) %></p>
-    <%= f.hidden_field :invoice_filename, :value => @email_template_preview.invoice_filename.basename %>
-    <p><%= f.submit t("administration.invoices.mailing.new.view.send") %></p>
+    <frm>
+      <param:content>
+        <div class="pdd_10 no_pdd_t">
+          <fieldset class="inputs labels_ta_r labels_220">
+            <ol class="align_inputs">
+              <li class="string">
+                <%= f.label :recipeints, t("administration.invoices.mailing.new.view.recipeints") %>
+                <%= f.text_field :recipients, :value => @invoice.user.email %>
+              </li>
+              <li class="string">
+                <%= f.label :subject, t("administration.invoices.mailing.new.view.subject") %>
+                <%= f.text_field :subject %>
+              </li>
+              <li class="text">
+                <%= f.label :body, t("administration.invoices.mailing.new.view.body") %>
+                <%= f.text_area :body, :style => "width: 450px;height:250px" %>
+              </li>
+
+              <li class="file">
+                <%= f.label t("administration.invoices.mailing.new.view.attachment") %>
+                <div class="txt">
+                  <p><%= link_to @email_template_preview.invoice_filename, invoice_preview_path(@email_template_preview.invoice_filename) %></p>
+                </div>
+              </li>
+            </ol>
+          </fieldset>
+          <%= f.hidden_field :invoice_filename, :value => @email_template_preview.invoice_filename.basename %>
+        </div>
+      </param:content>
+      <param:actions>
+        <ibt c="fltri" icon="save">
+          <%= f.submit t("administration.invoices.mailing.new.view.send") %>
+        </ibt>
+      </param:actions>
+    </frm>
 <% end %>

@@ -1,21 +1,36 @@
-When /^invoice exists for user "([^"]*)"$/ do |email|
-  Invoice.make!(:user => User.where(:email => email).first)
+When /^invoice exists for user "([^"]*)" with role "([^"]*)"(?: with attributes "([^"]*)")?$/ do |email,role_name,options|
+  user = "User::#{role_name.classify}".constantize.where(:email => email).first
+  attrs = options ? Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys.merge(:user => user) : {:user => user}
+  Invoice.make!(attrs)
 end
 
-When /^invoice line for first invoice exists for user "([^"]*)"(?: with attributes "([^"]*)")?$/ do |email,options|
-  invoice = User.where(:email => email).first.invoices.first
+When /^invoice line for first invoice exists for user "([^"]*)" with role "([^"]*)"(?: with attributes "([^"]*)")?$/ do |email,role_name,options|
+  user = "User::#{role_name.classify}".constantize.where(:email => email).first
+  invoice = user.invoices.first
   attrs = options ? Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys.merge(:invoice => invoice) : {:invoice => invoice}
   InvoiceLine.make!(attrs)
 end
 
-When /^first invoice for user "([^"]*)" is created at "([^"]*)"$/ do |email, date|
-  invoice = User.where(:email => email).first.invoices.first
+When /^first invoice for user "([^"]*)" with role "([^"]*)" exists with attributes "([^"]*)"$/ do |email, role_name, options|
+  invoice = "User::#{role_name.classify}".constantize.where(:email => email).first.invoices.first
+  invoice.update_attributes(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys)
+  invoice.reload
+  puts invoice.inspect
+end
+
+When /^first invoice for user "([^"]*)" with role "([^"]*)" is created at "([^"]*)"$/ do |email, role_name, date|
+  invoice = "User::#{role_name.classify}".constantize.where(:email => email).first.invoices.first
   Invoice.update_all(["created_at = :date, sale_date = :date",{:date => date}], ["id=?",invoice.id])
 end
 
-When /^first invoice for user "([^"]*)" is paid$/ do |email|
-  invoice = User.where(:email => email).first.invoices.first
+When /^first invoice for user "([^"]*)" with role "([^"]*)" is paid$/ do |email,role_name|
+  invoice = "User::#{role_name.classify}".constantize.where(:email => email).first.invoices.first
   Invoice.update_all(["paid_at = :date",{:date => Time.now}], ["id=?",invoice.id])
+end
+
+When /^first invoice for user "([^"]*)" is not paid$/ do |email|
+  invoice = User.where(:email => email).first.invoices.first
+  Invoice.update_all(["paid_at = :date",{:date => nil}], ["id=?",invoice.id])
 end
 
 Then /^invoice is created for user with email "([^"]*)" and role "([^"]*)"$/ do |email, role|
@@ -34,6 +49,13 @@ Then /^invoices count for user with email "([^"]*)" and role "([^"]*)" is (\d+)$
   assert customer.invoices.size == count.to_i
 end
 
+Then /^user with email "([^"]*)" and role "([^"]*)" has invoice generated for all unpaid leads$/ do |email, role|
+  customer = "User::#{role.camelize}".constantize.find_by_email(email)
+  invoice = Invoice.create(:user_id => customer.id, :paid_at =>  Time.now, :seller => Seller.make!)
+  invoice.reload
+  ManualTransaction.create(:invoice => invoice, :amount => invoice.total, :paid_at => Time.now)
+end
+
 Then /^user with email "([^"]*)" and role "([^"]*)" has invoice for lead "([^"]*)" and transaction created (by paypal|manually)$/ do |email, role, header, transaction_type|
   customer = "User::#{role.camelize}".constantize.find_by_email(email)
   lead = Lead.find_by_header(header).first
@@ -43,7 +65,7 @@ Then /^user with email "([^"]*)" and role "([^"]*)" has invoice for lead "([^"]*
   else
     payment_notification = nil
   end
-  invoice = Invoice.create(:user_id => customer.id, :paid_at => transaction_type == "by paypal" ? Time.now : nil)
+  invoice = Invoice.create(:user_id => customer.id, :seller => Seller.make!, :paid_at => transaction_type == "by paypal" ? Time.now : nil)
   if transaction_type == "by paypal"
     PaypalTransaction.create(:invoice => invoice, :payment_notification => payment_notification, :amount => lead.price, :paid_at => Time.now)
   else
@@ -57,4 +79,8 @@ Then /^invoice lines for last invoice are paid for user with email "([^"]*)" and
   invoice = customer.invoices.last
   assert !invoice.paid_at.blank?
   assert invoice.invoice_lines.detect { |il| il.paid_at.blank? }.nil?
+end
+
+Then /^VAT ratio is set to (.+)$/ do |vat_rate|
+  Settings.invoicing_default_vat_rate = vat_rate.to_f
 end

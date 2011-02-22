@@ -4,21 +4,21 @@ class Administration::ArticlesController < Administration::AdministrationControl
   set_tab "articles"
 
   def edit
-    @article = Article::Cms.find(params[:id])
+    @article = Article.find(params[:id])
     edit!
   end
 
   def update
-    @article = Article::Cms.find(params[:id])
-    @article.attributes = params[:article_cms]
+    @article = Article.find(params[:id])
+    @article.attributes = params[:article]
     update!
   end
 
   def create
     params[:article_cms] ||= {}
-    @article = Article::Cms.new(params[:article_cms].merge(:scope => Article::Cms::MAIN_PAGE_ARTICLE))
+    @article = Article::Cms::MainPageArticle.new(params[:article])
     create! do |success,failure|
-      success.html { redirect_to edit_administration_article_path(@article)}
+      success.html { render :action => :edit }
       failure.html { redirect_to administration_articles_path }
     end
   end
@@ -26,7 +26,9 @@ class Administration::ArticlesController < Administration::AdministrationControl
   protected
 
   def collection
-    @search = Article::Cms.scoped_search(params[:search])
+    params[:search] ||= {}
+    params[:search][:with_subclass] = "Article::Cms" unless params[:search][:with_subclass].present?
+    @search = Article.scoped_search(params[:search])
     @articles = @search.paginate(:page => params[:page])
   end
 

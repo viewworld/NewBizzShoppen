@@ -1,0 +1,123 @@
+<search-box:>
+  <div class="search_box">
+    <h2><%= t("call_centre.leads.index.view.search_label") %></h2>
+
+    <div class="search_content">
+      <%= form_for @search, :url => call_centres_leads_path do |f| %>
+          <fieldset class="inputs_vertical">
+            <ol class="no_pdd">
+              <li class="string">
+                <%= f.label :with_keyword, t("call_centre.leads.index.view.search.with_keyword") %>
+                <%= f.text_field :with_keyword %>
+              </li>
+              <li class="select">
+                <%= f.label :with_created_by, t("call_centre.leads.index.view.search.with_created_by") %>
+                <%= f.select :with_created_by, options_for_select(@call_centre_agents, @search.with_created_by), :include_blank => true %>
+              </li>
+              <li class="boolean">
+                <%= f.check_box :without_inactive, {}, "true", "false" %>
+                <%= f.label :without_inactive, t("call_centre.leads.index.view.search.filter_with_inactive") %>
+              </li>
+              <li class="boolean">
+                <%= f.check_box :without_outdated, {}, "true", "false" %>
+                <%= f.label :without_outdated, t("call_centre.leads.index.view.search.filter_with_outdated") %>
+              </li>
+              <li class="commit">
+                <ibt c="bt_green" icon="magnify">
+                  <%= submit_tag t("call_centre.leads.index.view.search_button") %>
+                </ibt>
+              </li>
+            </ol>
+          </fieldset>
+
+
+      <% end %>
+    </div>
+  </div>
+</search-box:>
+
+<column-mc:>
+
+  <header><%= t("call_centre.leads.index.view.header") %></header>
+
+  <% if @leads.blank? %>
+      <%= blank_state_message %>
+  <% else %>
+
+      <% cols = 12 -%>
+      <table id="leads" class="generic">
+        <thead>
+        <tr>
+          <th class="hl"></th>
+          <th><%= link_to t("leads.table.header"), order_for_scoped_search(:header) %></th>
+          <th class="ta_c"><%= t("leads.table.description") %></th>
+          <th class="ta_c"><%= link_to t("leads.table.purchase_value"), order_for_scoped_search(:purchase_value) %></th>
+          <th class="ta_c"><%= link_to t("leads.table.price"), order_for_scoped_search(:price) %></th>
+          <th class="ta_c"><%= t("leads.table.clicks") %></th>
+          <th class="ta_c"><%= t("leads.table.exposures") %></th>
+          <th class="ta_c"><%= t("leads.table.hottness") %></th>
+          <th class="ta_c"><%= t("leads.table.novelty") %></th>
+          <th class="ta_c"><%= t("leads.table.created_by") %></th>
+          <th class="ta_c"><%= t("leads.table.rating") %></th>
+          <th class="ta_c"><%= t("leads.table.certification") %></th>
+          <th class="ta_c"><%= t("leads.table.certification") %></th>
+          <th class="ta_r">
+            <%= t("leads.table.actions") %>
+          </th>
+
+          <th class="hr"></th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+          <td class="fl"></td>
+          <td colspan="<%= cols + 1 %>"></td>
+          <td class="fr"></td>
+        </tr>
+        </tfoot>
+        <tbody>
+        <% @leads.each do |lead| %>
+            <tr id="lead_<%= lead.id %>" class="<%= cycle("odd", "even") %>">
+              <td class="cl"></td>
+              <td><%= lead.header %></td>
+              <td class="ta_c"><%= lead.description %></td>
+              <td class="ta_c"><%= as_currency(lead.purchase_value, lead.currency) %></td>
+              <td class="ta_c"><%= as_currency(lead.price, lead.currency) %></td>
+              <td class="ta_c"><%= lead.clicks_count %></td>
+              <td class="ta_c"><%= lead.exposures_count %></td>
+              <td class="ta_c"><%= t("models.lead.hotness.lvl#{lead.hotness_level}") %></td>
+              <td class="ta_c"><%= lead.published ? t("models.lead.novelty.lvl#{lead.novelty_level}") : "-" %></td>
+              <td class="ta_c"><%= lead.creator_name %></td>
+              <td class="ta_c"><%= lead.average_rating == -1 ? t("leads.table.average_rating_none_label") : lead.average_rating_as_text %></td>
+              <td class="ta_c"><%= t("models.lead.certification.lvl#{lead.certification_level}") %></td>
+              <td class="ta_c">
+                <%= form_for [:call_centres, lead], :method => :put do |f| %>
+                    <%= f.select :published, [[t("call_centre.leads.index.view.option_published"), 1], [t("call_centre.leads.index.view.option_not_published"), 0]], {:selected => lead.published ? 1 : 0}, {:onchange => "jQuery(this.form).callRemote()"} %>
+                <% end %>
+              </td>
+              <td class="tda ta_r">
+                <ul-actions>
+                  <li>
+                    <%= link_to t("call_centre.leads.index.view.edit"), edit_call_centres_lead_path(lead), :class => "default_action" %>
+                  </li>
+                  <li>
+                    <%= link_to t("call_centre.leads.index.view.destroy"), call_centres_lead_path(lead), :confirm => t("call_centre.leads.index.view.destroy_confirmation"), :method => :delete %>
+                  </li>
+                </ul-actions>
+              </td>
+              <td class="cr"></td>
+            </tr>
+        <% end %>
+
+        <% if will_paginate %>
+            <tr class="pagination">
+              <td colspan="<%= cols + 3 %>" class="ta_c">
+                <%= will_paginate @leads, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+              </td>
+            </tr>
+        <% end %>
+
+        </tbody>
+      </table>
+  <% end %>
+</column-mc:>
