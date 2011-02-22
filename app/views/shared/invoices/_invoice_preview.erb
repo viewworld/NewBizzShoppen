@@ -143,7 +143,11 @@
         <% if invoice.bank_account %>
             <p>
               <%= t("administration.invoices.show.view.bank_name") %>: <%= invoice.bank_account.bank_name %><br/>
-              <%= t("administration.invoices.show.view.bank_address") %>: <%= invoice.bank_account.bank_address %><br/>
+              <%= t("administration.invoices.show.view.bank_address_line_1") %>: <%= invoice.bank_account.address.address_line_1 %><br/>
+              <%= t("administration.invoices.show.view.bank_address_line_2") %>: <%= invoice.bank_account.address.address_line_2 %><br/>
+              <%= t("administration.invoices.show.view.bank_address_line_3") %>: <%= invoice.bank_account.address.address_line_3 %><br/>
+              <%= t("administration.invoices.show.view.bank_zip_code") %>: <%= invoice.bank_account.address.zip_code %><br/>
+              <%= t("administration.invoices.show.view.bank_country") %>: <%= invoice.bank_account.address.country.name %><br/>
               <%= t("administration.invoices.show.view.iban_number") %>: <%= invoice.bank_account.iban_no %><br/>
               <%= t("administration.invoices.show.view.local_bank_number") %>: <%= invoice.bank_account.local_bank_number %>
               <br/>
