@@ -21,6 +21,7 @@ class Article < ActiveRecord::Base
   scope :with_subclass, lambda { |s| where(["type LIKE ?","%#{s}%"])}
   scope :ascend_by_title, only_translations(I18n.locale).order("article_translations.title ASC")
   scope :descend_by_title, only_translations(I18n.locale).order("article_translations.title DESC")
+  scope :for_category, lambda { |category| where(:resource_type => 'Category', :resource_id => category.to_i) }
 
   private
 
