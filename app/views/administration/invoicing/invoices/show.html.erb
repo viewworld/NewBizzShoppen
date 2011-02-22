@@ -21,6 +21,9 @@
 
 
     <div class="invoice_container" id="invoice_container">
+        <style type="text/css">
+            @import url("/stylesheets/invoice.css") print;
+        </style>
       <%= render :partial => "administration/invoicing/invoices/invoice_preview", :locals => {:version => :original, :invoice => @invoice} %>
     </div>
 

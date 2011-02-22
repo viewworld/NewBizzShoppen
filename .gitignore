@@ -17,3 +17,4 @@ Gemfile.lock
 /tmp/*
 /public/assets/*
 /db/snapshots/cucumber.sql
+/public/html2pdf/invoice_cache

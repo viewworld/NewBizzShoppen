@@ -12,6 +12,8 @@
       <h3><%= t("lead_purchases.listing.hidden_description_label") %></h3>
 
       <p><%= @lead_purchase.hidden_description %></p>
+
+      <div class="element_templates"><%= render :partial => "/shared/lead_templates/listing", :locals => { :lead => @lead_purchase.lead } %></div>
     </div>
   </div>
 
