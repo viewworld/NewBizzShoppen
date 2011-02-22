@@ -34,35 +34,8 @@
                 </div>
             <% end %>
 
-            <div class="column_left">
 
-              <div class="column_left">
-                <fieldset class="inputs">
-                  <ol>
-                    <li class="header">
-                      <h3>
-                        <%= t("customer.interests.edit.view.deal_values") %>
-                      </h3>
-                    </li>
-                  </ol>
-                </fieldset>
-                <fieldset class="inputs_vertical">
-                  <ol>
-                    <li class="select">
-                      <%= label_tag "deal_value_range_start", t("customer.interests.edit.view.deal_range_from") %>
-                      <%= select "user", "deal_value_range_start", User::DEAL_VALUE_RANGE.collect { |d| ["$#{d}", d] }, {:selected => current_user.deal_value_range_start.to_i.to_s} %>
-                    </li>
-                    <li class="select">
-                      <%= label_tag "deal_value_range_end", t("customer.interests.edit.view.deal_range_to") %>
-                      <%= select "user", "deal_value_range_end", User::DEAL_VALUE_RANGE.collect { |d| ["$#{d}", d] }, :selected => current_user.deal_value_range_end.to_i.to_s %>
-                    </li>
-                    <li class="boolean" style="clear:both;padding-top:5px;padding-left: 10px;">
-                      <%= check_box "user", "all_deal_values_enabled", {:checked => current_user.all_deal_values_enabled} %>
-                      <%= label_tag "all_deal_values_enabled", t("customer.interests.edit.view.all_deal_values_enabled") %>
-                    </li>
-                  </ol>
-                </fieldset>
-              </div>
+            <div class="column_left">
               <div class="column_right">
                 <fieldset class="inputs labels_ta_r labels_80">
                   <ol>
@@ -72,7 +45,7 @@
                       </h3>
                     </li>
                     <li class="select multiple">
-                      <%= select_tag "countries", options_for_select(@countries.collect { |c| [c.name, c.id] }, current_user.countries.collect { |c| c.id.to_s }), :multiple => true %>
+                      <%= select_tag "countries", options_for_select(@countries.collect { |c| [c.name, c.id] }, current_user.countries.empty? ? @countries.detect { |c| c.locale == I18n.locale.to_s }.to_a.compact.map(&:id) : current_user.countries.collect { |c| c.id.to_s }), :multiple => true %>
                     </li>
                   </ol>
                 </fieldset>
