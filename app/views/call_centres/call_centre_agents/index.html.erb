@@ -90,8 +90,8 @@
               <td colspan="16">
                 <%= hidden_field_tag :route_to %>
                 <%= hidden_field_tag :bulk_action_type %>
-                <%= bt_link_to nil, t("call_centre.call_centre_agents.index.view.unlock"), "javascript:void(0)", :onclick => "$('#bulk_action_type').val('unlock'); submitBulkForm('#{call_centres_bulk_call_centre_agents_update_path}#PUT');" %>
-                <%= bt_link_to nil, t("call_centre.call_centre_agents.index.view.lock"), "javascript:void(0)", :onclick => "$('#bulk_action_type').val('lock'); submitBulkForm('#{call_centres_bulk_call_centre_agents_update_path}#PUT');" %>
+                <%= bt_link_to nil, t("call_centre.call_centre_agents.index.view.unlock"), "javascript:void(0)", :onclick => "$('#bulk_action_type').val('unlock'); submitBulkForm('#{call_centres_bulk_call_centre_agents_update_path}#PUT');", :id => "unlock_selected" %>
+                <%= bt_link_to nil, t("call_centre.call_centre_agents.index.view.lock"), "javascript:void(0)", :onclick => "$('#bulk_action_type').val('lock'); submitBulkForm('#{call_centres_bulk_call_centre_agents_update_path}#PUT');", :id => "lock_selected" %>
               </td>
               <td class="cr"></td>
             </tr>
