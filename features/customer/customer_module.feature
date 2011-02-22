@@ -46,12 +46,12 @@ Scenario: I can select multiple lead categories that I am interested in
   And I press translated "customer.interests.edit.view.button_update"
   Then I should see translated "customer.interests.update.flash.interests_update_successful"
 
-@_tested
+@_tested @deprecated
 Scenario: I can select lead purchase value range that I am interested in
-  Given I select "3000" from "user_deal_value_range_start"
-  And I select "6000" from "user_deal_value_range_end"
-  And I press translated "customer.interests.edit.view.button_update"
-  Then I should see translated "customer.interests.update.flash.interests_update_successful"
+#  Given I select "3000" from "user_deal_value_range_start"
+#  And I select "6000" from "user_deal_value_range_end"
+#  And I press translated "customer.interests.edit.view.button_update"
+#  Then I should see translated "customer.interests.update.flash.interests_update_successful"
 
 @_tested @noguess
 Scenario: I can select multiple lead areas/countries that I am interested in
