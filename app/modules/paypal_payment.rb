@@ -11,7 +11,7 @@ module PaypalPayment
 
   def paypal_encrypted(return_url, notify_url)
     values = {
-        :currency_code => items.first.currency.name,
+        :currency_code => currency_name,
         :business   => APP_CONFIG[:paypal_email],
         :cmd        => '_cart',
         :upload     => 1,
