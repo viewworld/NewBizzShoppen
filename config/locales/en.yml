@@ -315,9 +315,11 @@ en:
           locked: 'Locked'
           lock: 'Lock'
           unlock: 'Unlock'
+          lock_selected: 'Lock Selected'
+          unlock_selected: 'Unock Selected'
           button_bulk_update_users: Save
           subaccounts: 'Subaccounts'
-          create_invoice: 'Create invoice'
+          create_invoice: 'Create invoice from selected'
           edit: 'Edit'
           subaccounts_for_user: 'Subaccounts of user %{user_name}'
           show_all_users: 'Show all users'
