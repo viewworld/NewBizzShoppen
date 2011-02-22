@@ -98,5 +98,8 @@ Scenario: I should have my interests fixed to the unique category I'm assigned t
   And I go to customer interests
   Then checkbox named "category_" should be checked
 
-@added
+@added @m0
 Scenario: If customer is category buyer he/she can see also unique categories
+
+@added @tgn @_wip
+Scenario: On the interests page the country should be selected based on current locale

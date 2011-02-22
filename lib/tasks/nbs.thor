@@ -20,8 +20,8 @@ class Nbs < Thor
     Settings.invoicing_seller_vat_number             = "123-456-789"
     Settings.invoicing_default_vat_rate              = 0.15
 
-    Country.find_or_create_by_name("Denmark")
-    Country.find_or_create_by_name("United Kingdom")
+    Country.find_or_create_by_name("Denmark", :locale => "dk")
+    Country.find_or_create_by_name("United Kingdom", :locale => "en")
 
     if BankAccount.count == 0
       BankAccount.create(
