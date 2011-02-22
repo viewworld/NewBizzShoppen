@@ -144,13 +144,13 @@
               <td colspan="11" class="no_pdd_lr ta_r">
                 <%= hidden_field_tag :route_to %>
                 <%= hidden_field_tag :bulk_action_type %>
-                <%= bt_link_to nil, t("administration.users.index.view.create_invoice"), "javascript:void(0)", :onclick => "$('#bulk_action_type').val('create_invoice'); submitBulkForm('#{administration_bulk_users_update_path}#PUT');" %>
+                <%= bt_link_to nil, t("administration.users.index.view.create_invoice"), "javascript:void(0)", :onclick => "$('#bulk_action_type').val('create_invoice'); submitBulkForm('#{administration_bulk_users_update_path}#PUT');", :id => "invoice_selected" %>
               </td>
               <td class="ta_c">
-                <%= bt_link_to nil, t("administration.users.index.view.lock"), "javascript:void(0)", :onclick => "$('#bulk_action_type').val('lock'); submitBulkForm('#{administration_bulk_users_update_path}#PUT');" %>
+                <%= bt_link_to nil, t("administration.users.index.view.lock"), "javascript:void(0)", :onclick => "$('#bulk_action_type').val('lock'); submitBulkForm('#{administration_bulk_users_update_path}#PUT');", :id => "lock_selected" %>
               </td>
               <td class="ta_r">
-                <%= bt_link_to nil, t("administration.users.index.view.unlock"), "javascript:void(0)", :onclick => "$('#bulk_action_type').val('unlock'); submitBulkForm('#{administration_bulk_users_update_path}#PUT');" %>
+                <%= bt_link_to nil, t("administration.users.index.view.unlock"), "javascript:void(0)", :onclick => "$('#bulk_action_type').val('unlock'); submitBulkForm('#{administration_bulk_users_update_path}#PUT');", :id => "unlock_selected" %>
               </td>
               <td class="cr"></td>
             </tr>
