@@ -15,7 +15,7 @@
   <div class="pdd_10">
 
     <div class="invoice_container" id="invoice_container">
-      <%= render :partial => "customers/invoices/invoice_preview", :locals => {:version => :original, :invoice => @invoice} %>
+      <%= render :partial => "shared/invoices/invoice_preview", :locals => {:version => :original, :invoice => @invoice} %>
     </div>
 
     <% unless @invoice.payment_transactions.empty? %>

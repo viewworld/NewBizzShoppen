@@ -24,7 +24,7 @@
         <style type="text/css">
             @import url("/stylesheets/invoice.css") print;
         </style>
-      <%= render :partial => "administration/invoicing/invoices/invoice_preview", :locals => {:version => :original, :invoice => @invoice} %>
+      <%= render :partial => "shared/invoices/invoice_preview", :locals => {:version => :original, :invoice => @invoice} %>
     </div>
 
     <% unless @invoice.payment_transactions.empty? %>

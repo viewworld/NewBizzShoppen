@@ -121,7 +121,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def get_template_source
-    File.open(File.join(::Rails.root.to_s, "app", "views", "administration", "invoicing", "invoices", "_invoice_preview.erb")){|file| file.read}
+    File.open(File.join(::Rails.root.to_s, "app", "views", "shared", "invoices", "_invoice_preview.erb")){|file| file.read}
   end
 
   def generate_invoice_lines_for_big_buyer
