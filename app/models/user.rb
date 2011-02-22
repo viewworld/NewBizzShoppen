@@ -175,6 +175,11 @@ class User < ActiveRecord::Base
     subclass.send(:default_scope, with_role(subclass.name.split('::').last.tableize.singularize)) unless subclass.name.split('::').last.tableize.singularize == "abstract"
   end
 
+  # TODO find out which roles are invoiceable
+  def self.invoiceable
+    all.reject{|u| !defined? u.with_role.address}
+  end
+
   def role
     roles.sort_by { |r| User::ROLES_PRIORITY.index(r) }.first
   end

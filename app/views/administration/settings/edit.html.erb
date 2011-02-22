@@ -9,7 +9,11 @@
               <ol>
                 <% @settings.each_with_index do |setting, i| %>
                     <li class="string">
-                      <%= label_tag setting.var.humanize %>
+                      <% if setting.var == "invoicing_default_payment_deadline_date" %>
+                        <%= label_tag "Invoicing payment deadline date" %>
+                      <% else %>
+                        <%= label_tag setting.var.humanize %>
+                      <% end %>
                       <%= text_field "settings", setting.id, :value => setting.value, :id => "setting_#{i}" %>
                     </li>
                 <% end %>

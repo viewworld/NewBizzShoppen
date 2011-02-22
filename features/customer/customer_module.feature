@@ -46,12 +46,12 @@ Scenario: I can select multiple lead categories that I am interested in
   And I press translated "customer.interests.edit.view.button_update"
   Then I should see translated "customer.interests.update.flash.interests_update_successful"
 
-@_tested
+@_tested @deprecated
 Scenario: I can select lead purchase value range that I am interested in
-  Given I select "3000" from "user_deal_value_range_start"
-  And I select "6000" from "user_deal_value_range_end"
-  And I press translated "customer.interests.edit.view.button_update"
-  Then I should see translated "customer.interests.update.flash.interests_update_successful"
+#  Given I select "3000" from "user_deal_value_range_start"
+#  And I select "6000" from "user_deal_value_range_end"
+#  And I press translated "customer.interests.edit.view.button_update"
+#  Then I should see translated "customer.interests.update.flash.interests_update_successful"
 
 @_tested @noguess
 Scenario: I can select multiple lead areas/countries that I am interested in
@@ -60,11 +60,11 @@ Scenario: I can select multiple lead areas/countries that I am interested in
   And I press translated "customer.interests.edit.view.button_update"
   Then I should see translated "customer.interests.update.flash.interests_update_successful"
 
-@m5 @tgn @_tested
+@m5 @tgn @_tested @deprecated
 Scenario: I can select "all" as a Deal value
-  And I check "user_all_deal_values_enabled"
-  And I press translated "customer.interests.edit.view.button_update"
-  Then I should see translated "customer.interests.update.flash.interests_update_successful"
+#  And I check "user_all_deal_values_enabled"
+#  And I press translated "customer.interests.edit.view.button_update"
+#  Then I should see translated "customer.interests.update.flash.interests_update_successful"
 
 @m5 @unique_categories @added @_tested @tgn
 Scenario: I should not see unique categories I'm not assigned to on my interests page
@@ -98,5 +98,14 @@ Scenario: I should have my interests fixed to the unique category I'm assigned t
   And I go to customer interests
   Then checkbox named "category_" should be checked
 
-@added
+@added @m0
 Scenario: If customer is category buyer he/she can see also unique categories
+
+@added @tgn @_tested
+Scenario: On the interests page the country should be selected based on current locale
+  When I follow translated "locales.en_locale"
+  And I follow translated "layout.main_menu.customer.interests"
+  Then "countries" should be selected for value "United Kingdom"
+  When I follow translated "locales.dk_locale"
+  And I follow translated "layout.main_menu.customer.interests"
+  Then "countries" should be selected for value "Denmark"

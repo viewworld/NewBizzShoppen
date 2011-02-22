@@ -12,6 +12,8 @@
       <h3><%= t("lead_purchases.listing.hidden_description_label") %></h3>
 
       <p><%= @lead_purchase.hidden_description %></p>
+
+      <div class="element_templates"><%= render :partial => "/shared/lead_templates/listing", :locals => { :lead => @lead_purchase.lead } %></div>
     </div>
   </div>
 
@@ -49,7 +51,7 @@
               <%= @lead_purchase.lead.contact_name %>
             </div>
           </li>
-          <% if @lead_purchase.lead.linkedin_url.present? %>
+          <% if @lead_purchase.lead.linkedin_url_present? %>
               <li>
                 <div>
                   <span class="label"><%= t("lead_purchases.listing.linkedin_url") %></span>
@@ -58,7 +60,7 @@
                 </div>
               </li>
           <% end %>
-          <% if @lead_purchase.lead.facebook_url.present? %>
+          <% if @lead_purchase.lead.facebook_url_present? %>
               <li>
                 <div>
                   <span class="label"><%= t("lead_purchases.listing.facebook_url") %></span>
