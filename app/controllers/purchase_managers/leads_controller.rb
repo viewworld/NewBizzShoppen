@@ -38,6 +38,7 @@ class PurchaseManagers::LeadsController < PurchaseManagers::PurchaseManagerContr
 
   def create
     @lead = current_user.leads.build(default_params_hash(params[:lead]))
+    session[:selected_category] = @lead.category_id
 
     create! do |success, failure|
       success.html {
