@@ -79,8 +79,9 @@
               <td class="cl"></td>
               <td colspan="10">
                 <%= hidden_field_tag :route_to %>
-                <%= select_tag :locked, options_for_select([[t("customer.subaccounts.index.view.lock"), "locked"], [t("customer.subaccounts.index.view.unlock"), "unlock"]]) %>
-                <%= bt_link_to nil, t("customer.subaccounts.index.view.button_bulk_subbaccounts_update"), "javascript:void(0)", :onclick => "submitBulkForm('#{customers_bulk_subaccounts_update_path}#PUT');" %>
+                <%= hidden_field_tag :bulk_action_type %>
+                <%= bt_link_to nil, t("customer.subaccounts.index.view.unlock"), "javascript:void(0)", :onclick => "$('#bulk_action_type').val('unlock'); submitBulkForm('#{customers_bulk_subaccounts_update_path}#PUT');" %>
+                <%= bt_link_to nil, t("customer.subaccounts.index.view.lock"), "javascript:void(0)", :onclick => "$('#bulk_action_type').val('lock'); submitBulkForm('#{customers_bulk_subaccounts_update_path}#PUT');" %>
               </td>
               <td class="cr"></td>
             </tr>
