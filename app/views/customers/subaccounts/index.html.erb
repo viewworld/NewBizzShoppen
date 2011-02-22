@@ -80,8 +80,8 @@
               <td colspan="10">
                 <%= hidden_field_tag :route_to %>
                 <%= hidden_field_tag :bulk_action_type %>
-                <%= bt_link_to nil, t("customer.subaccounts.index.view.unlock"), "javascript:void(0)", :onclick => "$('#bulk_action_type').val('unlock'); submitBulkForm('#{customers_bulk_subaccounts_update_path}#PUT');" %>
-                <%= bt_link_to nil, t("customer.subaccounts.index.view.lock"), "javascript:void(0)", :onclick => "$('#bulk_action_type').val('lock'); submitBulkForm('#{customers_bulk_subaccounts_update_path}#PUT');" %>
+                <%= bt_link_to nil, t("customer.subaccounts.index.view.unlock"), "javascript:void(0)", :onclick => "$('#bulk_action_type').val('unlock'); submitBulkForm('#{customers_bulk_subaccounts_update_path}#PUT');", :id => "unlock_selected" %>
+                <%= bt_link_to nil, t("customer.subaccounts.index.view.lock"), "javascript:void(0)", :onclick => "$('#bulk_action_type').val('lock'); submitBulkForm('#{customers_bulk_subaccounts_update_path}#PUT');", :id => "lock_selected" %>
               </td>
               <td class="cr"></td>
             </tr>
