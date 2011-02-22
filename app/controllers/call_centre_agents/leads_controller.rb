@@ -13,6 +13,7 @@ class CallCentreAgents::LeadsController < CallCentreAgents::CallCentreAgentContr
   def create
     @lead = current_user.leads.build(params[:lead])
     @lead.published = params[:lead][:published] if current_user.can_publish_leads?
+    session[:selected_category] = @lead.category_id
 
     create! do |success, failure|
       success.html {
