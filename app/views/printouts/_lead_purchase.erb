@@ -1,6 +1,6 @@
 <div class="lead_wrapper">
   <div class="lead_value"><%= t("lead_purchases.listing.purchase_value_label") %>
-    <strong><%= print.purchase_value %></strong></div>
+    <strong><%= as_currency(print.purchase_value, print.lead.currency) %></strong></div>
 
   <h2><%= print.header %></h2>
 
