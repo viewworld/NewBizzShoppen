@@ -6,7 +6,8 @@ module LinksHelper
                           else
                             ["main_menu_item", :tab]
                           end
-    content_tag(:li, link_to(* args, & block), :class => "#{class_name}#{' active' if self.send(tab_key) == (options[:tab] || args.first.gsub(' ', '_').downcase)}")
+
+    content_tag(:li, link_to(* args, & block), :class => "#{options[:additional_class]} #{'link ' if tab_key == :subtab}#{class_name unless options[:additional_class] == "first"}#{' active' if self.send(tab_key) == (options[tab_key] || args.first.gsub(' ', '_').downcase)}")
   end
 
   def main_menu_link_to(*args, &block)

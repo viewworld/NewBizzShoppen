@@ -1,7 +1,8 @@
 class Administration::EmailTemplatesController < Administration::AdministrationController
   inherit_resources
 
-  set_tab "email_templates"
+  set_tab "settings"
+  set_subtab "email_templates"
 
   def update
     update! do |success, failure|
