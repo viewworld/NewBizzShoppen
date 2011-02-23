@@ -125,7 +125,7 @@ Feature: VAT rates
      And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
      And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role customer with attributes "first_name:Wielki,last_name:Szu"
      And I sign in as jon@lajoie.ca with password secret
-     And I follow translated "layout.main_menu.admin.invoices"
+     And I click hidden link by url regex "/administration\/invoicing\/invoices/"
      And I select "Wielki Szu" from "invoice_user_id"
      And I press translated "administration.invoices.index.view.create_invoice"
      And I follow "add_fields_invoice_lines"
@@ -138,7 +138,7 @@ Feature: VAT rates
     And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
     And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role customer with attributes "first_name:Wielki,last_name:Szu,not_charge_vat:1"
     And I sign in as jon@lajoie.ca with password secret
-    And I follow translated "layout.main_menu.admin.invoices"
+    And I click hidden link by url regex "/administration\/invoicing\/invoices/"
     And I select "Wielki Szu" from "invoice_user_id"
     And I press translated "administration.invoices.index.view.create_invoice"
     And I follow "add_fields_invoice_lines"
