@@ -99,3 +99,7 @@ end
 Then /^checkbox named "([^"]*)" should (be|not be) checked$/ do |cb_name, is_checked|
   page.all(:css, "input[id*='#{cb_name}']").first['checked'].should eql(is_checked == "be")
 end
+
+Given /^I fill in "([^"]*)" with date that is "([^"]*)" days from now$/ do |field_name, days|
+  And %{I fill in "#{field_name}" with "#{(Date.today+days.to_i.days).to_s}"}
+end

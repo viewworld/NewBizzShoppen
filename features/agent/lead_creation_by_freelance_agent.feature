@@ -34,7 +34,7 @@ Scenario: I can create a new lead and close
   And I fill in "lead_city" with "Bielsko-Biała"
   And I fill in "lead_county" with "Freesdas"
   And I fill in "lead_zip_code" with "23-2911"
-  And I fill in "datepicker" with "2011-02-20"
+  And I fill in "datepicker" with date that is "5" days from now
   And I press translated "agent.leads.new.view.button_create"
   And I should be on agents leads
   And I should see translated "flash.leads.actions.create.notice"
@@ -61,7 +61,7 @@ Scenario: I can create a new lead and continue (create another one)
   And I fill in "lead_city" with "Bielsko-Biała"
   And I fill in "lead_county" with "Freesdas"
   And I fill in "lead_zip_code" with "23-2911"
-  And I fill in "datepicker" with "2011-02-20"
+  And I fill in "datepicker" with date that is "5" days from now
   And I press translated "agent.leads.new.view.button_create_and_continue"
   And I should see translated "flash.leads.actions.create.notice"
   And I should see translated "agent.leads.new.view.title"
@@ -89,7 +89,7 @@ Scenario: I can add an extra language while creating lead. This will include lea
   And I fill in "lead_city" with "Bielsko-Biała"
   And I fill in "lead_county" with "Freesdas"
   And I fill in "lead_zip_code" with "23-2911"
-  And I fill in "datepicker" with "2011-02-20"
+  And I fill in "datepicker" with date that is "5" days from now
   And I select "dk" from "locale_picker"
   And I fill in "lead_lead_translations_attributes_0_header" with "DK header"
   And I fill in "lead_lead_translations_attributes_0_description" with "DK description"
@@ -134,7 +134,7 @@ Scenario: All fields for new lead have to be filled in beside email address
   And I fill in "lead_city" with "Bielsko-Biała"
   And I fill in "lead_county" with "Freesdas"
   And I fill in "lead_zip_code" with "23-2911"
-  And I fill in "datepicker" with "2011-02-20"
+  And I fill in "datepicker" with date that is "5" days from now
   And I press translated "agent.leads.new.view.button_create"
   And I should be on agents leads
   And I should see translated "flash.leads.actions.create.notice"
@@ -171,7 +171,7 @@ Scenario: I can add linkedin and facebook links to lead's contact information
   And I fill in "lead_city" with "Bielsko-Biała"
   And I fill in "lead_county" with "Freesdas"
   And I fill in "lead_zip_code" with "23-2911"
-  And I fill in "datepicker" with "2011-02-20"
+  And I fill in "datepicker" with date that is "5" days from now
   And I fill in "lead_facebook_url" with "http://www.facebook.com/myfakefacebookprofile"
   And I fill in "lead_linkedin_url" with "http://www.linkedin.com/myfakelinkedinprofile"
   And I press translated "agent.leads.new.view.button_create"
@@ -200,7 +200,7 @@ Scenario: I have to fill out the templates which are mandatory
   And I fill in "lead_city" with "Bielsko-Biała"
   And I fill in "lead_county" with "Freesdas"
   And I fill in "lead_zip_code" with "23-2911"
-  And I fill in "datepicker" with "2011-02-20"
+  And I fill in "datepicker" with date that is "5" days from now
   And I fill in "lead_lead_template_values_attributes_0_value" with "123"
   And I fill in "lead_lead_template_values_attributes_1_value" with "Ms Windows Vista"
   And I press translated "agent.leads.new.view.button_create"
@@ -234,7 +234,7 @@ Scenario: I can select additional templates that are optional
   And I fill in "lead_city" with "Bielsko-Biała"
   And I fill in "lead_county" with "Freesdas"
   And I fill in "lead_zip_code" with "23-2911"
-  And I fill in "datepicker" with "2011-02-20"
+  And I fill in "datepicker" with date that is "5" days from now
   And I fill in "lead_lead_template_values_attributes_0_value" with "123"
   And I fill in "lead_lead_template_values_attributes_1_value" with "Ms Windows Vista"
   Then I select "Fax details" from "optional_templates_picker"
@@ -306,7 +306,7 @@ Scenario: When new translation to lead is added I can also write translation for
   And I fill in "lead_city" with "Bielsko-Biała"
   And I fill in "lead_county" with "Freesdas"
   And I fill in "lead_zip_code" with "23-2911"
-  And I fill in "datepicker" with "2011-02-20"
+  And I fill in "datepicker" with date that is "5" days from now
   And I fill in "lead_lead_template_values_attributes_0_value" with "123"
   And I fill in "lead_lead_template_values_attributes_1_value" with "Ms Windows Vista"
   And I select "dk" from "locale_picker"
@@ -345,7 +345,7 @@ Scenario: I have to fill out the fields that are mandatory in mandatory or optio
   And I fill in "lead_city" with "Bielsko-Biała"
   And I fill in "lead_county" with "Freesdas"
   And I fill in "lead_zip_code" with "23-2911"
-  And I fill in "datepicker" with "2011-02-20"
+  And I fill in "datepicker" with date that is "5" days from now
   And I fill in "lead_lead_template_values_attributes_0_value" with "123"
   And I fill in "lead_lead_template_values_attributes_1_value" with "Ms Windows Vista"
   And I press translated "agent.leads.new.view.button_create"
@@ -376,7 +376,7 @@ Scenario: When there is only one template present for a lead and it is optional 
   And I fill in "lead_city" with "Bielsko-Biała"
   And I fill in "lead_county" with "Freesdas"
   And I fill in "lead_zip_code" with "23-2911"
-  And I fill in "datepicker" with "2011-02-20"
+  And I fill in "datepicker" with date that is "5" days from now
   And I fill in "lead_lead_template_values_attributes_0_value" with "123"
   And I fill in "lead_lead_template_values_attributes_1_value" with "Ms Windows Vista"
   And I press translated "agent.leads.new.view.button_create"
@@ -428,7 +428,7 @@ Scenario: I can create a new lead and duplicate company\contact info to another 
   And I fill in "lead_city" with "Bielsko-Biała"
   And I fill in "lead_county" with "Freesdas"
   And I fill in "lead_zip_code" with "23-2911"
-  And I fill in "datepicker" with "2011-02-20"
+  And I fill in "datepicker" with date that is "5" days from now
   And I fill in "lead_company_phone_number" with "34234234234234"
   And I fill in "lead_company_website" with "http://falsecompanyurl.com"
   And I fill in "lead_linkedin_url" with "http://linkedin.com/pekdkdkd"
