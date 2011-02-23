@@ -269,7 +269,7 @@ class User < ActiveRecord::Base
   end
 
   def has_accessible_categories?
-    parent.present? and User::Customer.find(parent_id).category_interests.present?
+    parent.present? and has_any_role?(:lead_buyer, :lead_user) and User::Customer.find(parent_id).category_interests.present?
   end
 
   def accessible_categories_ids
