@@ -623,7 +623,7 @@ en:
           set_payable_for_invoice_items: 'Set payable for invoice items'
           name: Name
           quantity: '#'
-          vat_rate: VAT%
+          vat_rate: VAT
           netto_price: Netto price
           netto_value: Netto value
           vat_value: VAT

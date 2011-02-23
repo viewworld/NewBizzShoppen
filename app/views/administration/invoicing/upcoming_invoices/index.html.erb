@@ -78,9 +78,9 @@
               <td><%= lead_purchase.owner.last_name %></td>
               <td><%= lead_purchase.owner.screen_name %></td>
               <td><%= lead_purchase.not_invoiced_count %></td>
-              <td><%= lead_purchase.not_invoiced_sum %></td>
+              <td><%= as_currency(lead_purchase.not_invoiced_sum, Currency.where(:id => lead_purchase.currency_id).first) %></td>
               <td class="tda ta_r">
-                <%= bt_link_to nil, t("administration.upcoming_invoices.index.view.create_invoice"), new_administration_invoicing_invoice_path(:invoice => {:user_id => lead_purchase.owner_id}) %>
+                <%= bt_link_to nil, t("administration.upcoming_invoices.index.view.create_invoice"), new_administration_invoicing_invoice_path(:invoice => {:user_id => lead_purchase.owner_id, :currency_id => lead_purchase.currency_id}) %>
               </td>
               <td class="cr"></td>
             </tr>
