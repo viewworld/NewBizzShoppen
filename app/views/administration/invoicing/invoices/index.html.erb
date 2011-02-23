@@ -118,7 +118,7 @@
               <td colspan="8" class="no_pdd_lr">
                 <%= hidden_field_tag :route_to %>
 
-                <%= bt_link_to nil, t("administration.invoices.index.view.bulk_set_as_paid"), "javascript:void(0)", :onclick => "submitBulkForm('#{administration_invoicing_bulk_invoice_update_path}#PUT');" %>
+                <%= bt_link_to :chbox_selected, t("administration.invoices.index.view.bulk_set_as_paid"), "javascript:void(0)", :onclick => "submitBulkForm('#{administration_invoicing_bulk_invoice_update_path}#PUT');" %>
               </td>
               <td class="cr"></td>
             </tr>
