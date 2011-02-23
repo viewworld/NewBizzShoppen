@@ -9,9 +9,9 @@
 <li class="has_child">
   <%= link_to content_tag(:span, "Financial"), "#" %>
   <ul class="subnav">
-    <li class="first"><%= link_to content_tag(:span, "Financial"), "#" %></li>
+    <li class="first"><%= link_to content_tag(:span, t("layout.main_menu.admin.financial")), "#" %></li>
     <li class="link"><%= link_to content_tag(:span, t("layout.main_menu.admin.upcoming_invoices")), administration_invoicing_upcoming_invoices_path %></li>
-    <li class="link"><%= link_to content_tag(:span, "Creditors"), "#" %></li>
+    <li class="link"><%= link_to content_tag(:span, t("layout.main_menu.admin.creditors")), "#" %></li>
     <li class="link"><%= link_to content_tag(:span, t("layout.main_menu.admin.invoices")), administration_invoicing_invoices_path %></li>
     <li class="link last"><%= link_to content_tag(:span, t("layout.main_menu.admin.payment_transactions")), administration_invoicing_payment_transactions_path %></li>
   </ul>
@@ -20,7 +20,7 @@
 <li class="has_child">
   <%= link_to content_tag(:span, "Content"), "#" %>
   <ul class="subnav">
-    <li class="first"><%= link_to content_tag(:span, "Content"), "#" %></li>
+    <li class="first"><%= link_to content_tag(:span, t("layout.main_menu.admin.content")), "#" %></li>
     <li class="link"><%= link_to content_tag(:span, t("layout.main_menu.admin.articles")), administration_articles_path %></li>
     <li class="link last"><%= link_to content_tag(:span, t("layout.main_menu.admin.news")), administration_news_index_path %></li>    
   </ul>
@@ -29,8 +29,8 @@
 <li class="has_child">
   <%= link_to content_tag(:span, "Settings"), "#" %>
   <ul class="subnav">
-    <li class="first"><%= link_to content_tag(:span, "Settings"), "#" %></li>
-    <li class="link"><%= link_to content_tag(:span, "Global"), edit_administration_setting_path %></li>
+    <li class="first"><%= link_to content_tag(:span, t("layout.main_menu.admin.settings")), "#" %></li>
+    <li class="link"><%= link_to content_tag(:span, t("layout.main_menu.admin.global")), edit_administration_setting_path %></li>
     <li class="link"><%= link_to content_tag(:span, t("layout.main_menu.admin.email_templates")), administration_email_templates_path %></li>
     <li class="link last"><%= link_to content_tag(:span, t("layout.main_menu.admin.currencies")), administration_currencies_path %></li>
   </ul>

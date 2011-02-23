@@ -82,7 +82,7 @@ Feature: VAT rates
     When VAT rate for "Denmark" is set to "25"
     And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
     And I sign in as jon@lajoie.ca with password secret
-    And I follow translated "layout.main_menu.admin.settings"
+    And I follow translated "layout.main_menu.admin.global"
     And I follow translated "administration.vat_rates.index.view.add_vat_rate"
     And I fill in "vat_rate_country_attributes_name" with "Denmark"
     And I fill in "vat_rate_rate" with "15"
