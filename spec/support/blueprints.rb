@@ -29,7 +29,7 @@ Lead.blueprint do
   creator_id { User::Agent.make!.id }
   creator_type { "User::Agent" }
   category_id { Category.make!.id }
-  sale_limit { 1 }
+  sale_limit { 10 }
   purchase_decision_date { (Date.today+5) }
   published { true }
   currency { Currency.make!}
@@ -53,7 +53,7 @@ Lead.blueprint(:featured) do
   creator_id { User::Agent.make!.id }
   creator_type { "User::Agent" }
   category_id { Category.make!.id }
-  sale_limit { 1 }
+  sale_limit { 10 }
   purchase_decision_date { (Date.today+5) }
   featured { true }
   currency { Currency.make!}
