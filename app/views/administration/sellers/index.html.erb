@@ -25,6 +25,8 @@
         <tr>
           <th class="hl"></th>
           <th><%= t("administration.sellers.index.view.country") %></th>
+          <th><%= t("administration.sellers.index.view.name") %></th>
+          <th><%= t("administration.sellers.index.view.company_name") %></th>
           <th><%= t("administration.sellers.index.view.first_name") %></th>
           <th><%= t("administration.sellers.index.view.last_name") %></th>
           <th class="ta_c"><%= t("administration.sellers.index.view.default") %></th>
@@ -35,7 +37,7 @@
         <tfoot>
         <tr>
           <td class="fl"></td>
-          <td colspan="5"></td>
+          <td colspan="7"></td>
           <td class="fr"></td>
         </tr>
         </tfoot>
@@ -44,6 +46,8 @@
             <tr>
               <td class="cl"></td>
               <td><%= s.address.country.name %></td>
+              <td><%= s.name %></td>
+              <td><%= s.company_name %></td>
               <td><%= s.first_name %></td>
               <td><%= s.last_name %></td>
               <td class="ta_c"><%= check_box_tag "default_#{s.id}", 1, s.default?, :disabled => true %></td>

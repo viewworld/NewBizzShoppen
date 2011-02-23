@@ -683,6 +683,8 @@ en:
         view:
           header: 'Sellers'
           country: 'Country'
+          name: 'Name'
+          company_name: 'Company name'
           first_name: 'First name'
           last_name: 'Last name'
           default: 'Default'

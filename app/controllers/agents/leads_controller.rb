@@ -38,6 +38,9 @@ class Agents::LeadsController < Agents::AgentController
           redirect_to agents_leads_path
         end
       }
+      failure.html {
+        render :action => :new
+      }
       end
   end
 

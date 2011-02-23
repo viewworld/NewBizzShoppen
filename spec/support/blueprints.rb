@@ -264,7 +264,7 @@ InvoiceLine.blueprint do
 end
 
 BankAccount.blueprint do
-  bank_name { Faker::Lorem.words(2).to_s }
+  bank_name { Faker::Company.name }
   iban_no { Faker.numerify('###################') }
   local_bank_number { Faker.numerify('#########') }
   swift { Faker.letterify('????????').upcase }
@@ -273,8 +273,9 @@ end
 
 Seller.blueprint do
   name { Faker::Lorem.words(2).to_s }
-  first_name { Faker::Lorem.words(1).to_s }
-  last_name { Faker::Lorem.words(1).to_s }
+  company_name { Faker::Company.name}
+  first_name { Faker::Name.first_name }
+  last_name { Faker::Name.last_name }
   address { Address.make! }
   vat_no { Faker.numerify('#########') }
 end
