@@ -116,7 +116,7 @@ Feature: Bank Accounts
     Given there is a bank account for country "United Kingdom" with attributes "country_default:1,bank_name:First UK Bank,iban_no:UK123123123,swift:UKBNK"
     And someone is signed up and confirmed as user with email kastomer2@nbs.fake and password secret and role customer with attributes "first_name:John,last_name:Rambo,country:2"
     And invoice exists for user "kastomer2@nbs.fake" with role "customer"
-    And I follow translated "layout.main_menu.admin.invoices"
+    And I click hidden link by url regex "/administration\/invoicing\/invoices/"
     And I click hidden link by url regex "/administration\/invoicing\/invoices\/\d{1,}/"
     Then I should see "First UK Bank"
     When I follow translated "administration.invoices.index.view.edit_invoice"
@@ -124,7 +124,7 @@ Feature: Bank Accounts
     And I follow translated "administration.invoices.edit.view.remove_line"
     And I wait 1 second
     And I press translated "administration.invoices.edit.view.save_button"
-    And I follow translated "layout.main_menu.admin.invoices"
+    And I click hidden link by url regex "/administration\/invoicing\/invoices/"
     And I click hidden link by url regex "/administration\/invoicing\/invoices\/\d{1,}/"
     Then I should see "Default Bank"
 
