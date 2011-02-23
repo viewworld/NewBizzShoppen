@@ -7,36 +7,55 @@
     </param:header>
     <param:content>
       <div class="pdd_10">
-        <p>
-          <%= t("administration.sellers.show.view.name") %>: <%= @seller.name %>
-        </p><br/>
-        <p>
-          <%= t("administration.sellers.show.view.first_name") %>: <%= @seller.first_name %>
-        </p><br/>
-        <p>
-          <%= t("administration.sellers.show.view.last_name") %>: <%= @seller.last_name %>
-        </p><br/>
-        <p>
-          <%= t("administration.sellers.show.view.address_line_1") %>: <%= @seller.address.address_line_1 %>
-        </p><br/>
-        <p>
-          <%= t("administration.sellers.show.view.address_line_2") %>: <%= @seller.address.address_line_2 %>
-        </p><br/>
-        <p>
-          <%= t("administration.sellers.show.view.address_line_3") %>: <%= @seller.address.address_line_3 %>
-        </p><br/>
-        <p>
-          <%= t("administration.sellers.show.view.zip_code") %>: <%= @seller.address.zip_code %>
-        </p><br/>
-        <p>
-          <%= t("administration.sellers.show.view.country") %>: <%= @seller.address.country.name %>
-        </p><br/>
-        <p>
-          <%= t("administration.sellers.show.view.vat_no") %>: <%= @seller.vat_no %>
-        </p><br/>
-        <p>
-          <%= t("administration.sellers.show.view.default") %>: <%= check_box_tag "default", 1, @seller.default?, :disabled => true %>
-        </p>
+        <h2>
+          <%= t("administration.sellers.show.view.name") %>: <strong><%= @seller.name %></strong>
+        </h2>
+        <hl pdd="8"/>
+        <div class="grid_1to3 fltl">
+          <p>
+            <%= t("administration.sellers.show.view.first_name") %>: <strong><%= @seller.first_name %></strong>
+          </p>
+
+          <p>
+            <%= t("administration.sellers.show.view.last_name") %>: <strong><%= @seller.last_name %></strong>
+          </p>
+
+          <br/>
+
+          <p>
+            <%= t("administration.sellers.show.view.address_line_1") %>:
+            <strong><%= @seller.address.address_line_1 %></strong>
+          </p>
+
+          <p>
+            <%= t("administration.sellers.show.view.address_line_2") %>:
+            <strong><%= @seller.address.address_line_2 %></strong>
+          </p>
+
+          <p>
+            <%= t("administration.sellers.show.view.address_line_3") %>:
+            <strong><%= @seller.address.address_line_3 %></strong>
+          </p>
+        </div>
+        <div class="grid_1to3 fltl">
+          <p>
+            <%= t("administration.sellers.show.view.zip_code") %>: <strong><%= @seller.address.zip_code %></strong>
+          </p>
+
+          <p>
+            <%= t("administration.sellers.show.view.country") %>: <strong><%= @seller.address.country.name %></strong>
+          </p>
+
+          <p>
+            <%= t("administration.sellers.show.view.vat_no") %>: <strong><%= @seller.vat_no %></strong>
+          </p>
+          <br/>
+
+          <p>
+            <%= t("administration.sellers.show.view.default") %>: <%= check_box_tag "default", 1, @seller.default?, :disabled => true %>
+          </p>
+        </div>
+        <clb/>
       </div>
     </param:content>
   </frm>
