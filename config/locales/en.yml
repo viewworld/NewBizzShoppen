@@ -380,6 +380,7 @@ en:
       edit:
         view:
           header: "Editing category: %{category_name}"
+          header_templates: Lead templates
           upload_image: 'Upload image'
           button_update: 'Save'
           new_template: New template
