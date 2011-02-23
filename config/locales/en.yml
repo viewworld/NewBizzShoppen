@@ -17,18 +17,22 @@ en:
   layout:
     main_menu:
       admin:
-        users: Users
-        categories: Categories
-        email_templates: Emails
-        settings: Settings
-        leads: Leads
-        articles: Articles
-        news: News
-        currencies: Currencies
-        invoices: Invoices
-        upcoming_invoices: Debtors
+        users: 'Users'
+        categories: 'Categories'
+        email_templates: 'Emails'
+        settings: 'Settings'
+        leads: 'Leads'
+        articles: 'Articles'
+        news: 'News'
+        currencies: 'Currencies'
+        invoices: 'Invoices'
+        upcoming_invoices: 'Debtors'
         payment_transactions: 'Payments'
         sellers: 'Sellers'
+        financial: 'Financial'
+        creditors: 'Creditors'
+        content: 'Content'
+        global: 'Global'
       agent:
         leads: My leads
         lead_templates: Lead templates

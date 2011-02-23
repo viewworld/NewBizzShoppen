@@ -82,7 +82,7 @@ Feature: VAT rates
     When VAT rate for "Denmark" is set to "25"
     And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
     And I sign in as jon@lajoie.ca with password secret
-    And I follow translated "layout.main_menu.admin.settings"
+    And I follow translated "layout.main_menu.admin.global"
     And I follow translated "administration.vat_rates.index.view.add_vat_rate"
     And I fill in "vat_rate_country_attributes_name" with "Denmark"
     And I fill in "vat_rate_rate" with "15"
@@ -150,7 +150,7 @@ Feature: VAT rates
   Scenario: I can create a new country when adding a VAT rate
     When I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
     And I sign in as jon@lajoie.ca with password secret
-    And I follow translated "layout.main_menu.admin.settings"
+    And I follow translated "layout.main_menu.admin.global"
     And I follow translated "administration.vat_rates.index.view.add_vat_rate"
     And I fill in "vat_rate_country_attributes_name" with "Poland"
     And I fill in "vat_rate_rate" with "23"
@@ -163,7 +163,7 @@ Feature: VAT rates
   Scenario: The new country created should have VAT rate assigned
     When I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
     And I sign in as jon@lajoie.ca with password secret
-    And I follow translated "layout.main_menu.admin.settings"
+    And I follow translated "layout.main_menu.admin.global"
     And I follow translated "administration.vat_rates.index.view.add_vat_rate"
     And I fill in "vat_rate_country_attributes_name" with "Poland"
     And I fill in "vat_rate_rate" with "23"
