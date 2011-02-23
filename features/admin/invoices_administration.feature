@@ -6,7 +6,7 @@ Background:
   And I make sure current locale is English
   And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
   And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role customer with attributes "first_name:Janko,last_name:Muzykant"
-  And there is a seller with attributes "name:DannyTheSeller,first_name:Danny,last_name:DeVito,vat_no:123" for country "Denmark"
+  And there is a seller with attributes "company_name:DannyTheSeller,name:DannyTheSeller,first_name:Danny,last_name:DeVito,vat_no:123" for country "Denmark"
   Then I sign in as jon@lajoie.ca with password secret
 
 @_done @ao
@@ -146,7 +146,7 @@ Scenario: I can see invoice details
 @selenium @ao @_done
 Scenario: I can edit invoice’s customer information - name, address, vat no
   When invoice exists for user "kastomer@nbs.fake" with role "customer"
-  And I follow translated "layout.main_menu.admin.invoices"
+  And I click hidden link by url regex "/administration\/invoicing\/invoices/"
   And I click hidden link by url regex "/administration\/invoicing\/invoices\/\d+\/edit/"
   And I fill in "invoice_customer_name" with "NewCustomerName"
   And I fill in "invoice_customer_address_attributes_address_line_1" with "NewStreet"
@@ -170,7 +170,7 @@ Scenario: I can edit invoice’s customer information - name, address, vat no
 @selenium @ao @_done
 Scenario: I can edit invoice’s seller information - name, address, vat no
   When invoice exists for user "kastomer@nbs.fake" with role "customer"
-  And I follow translated "layout.main_menu.admin.invoices"
+  And I click hidden link by url regex "/administration\/invoicing\/invoices/"
   And I click hidden link by url regex "/administration\/invoicing\/invoices\/\d+\/edit/"
   And I fill in "invoice_seller_name" with "NewSellerName"
   And I fill in "invoice_seller_address_attributes_address_line_1" with "NewStreet"
@@ -205,7 +205,7 @@ Scenario: I can edit following additional information-  need example of norwegia
 @selenium @ao @_done
 Scenario: I can add custom invoice line to invoice
   When invoice exists for user "kastomer@nbs.fake" with role "customer"
-  And I follow translated "layout.main_menu.admin.invoices"
+  And I click hidden link by url regex "/administration\/invoicing\/invoices/"
   And I click hidden link by url regex "/administration\/invoicing\/invoices\/\d+\/edit/"
   And I fill in the last field with id like "_name" with "AddedLineOne" within ".invoice_inline_inputs"
   And I fill in the last field with id like "_quantity" with "1" within ".invoice_inline_inputs"
@@ -220,7 +220,7 @@ Scenario: I can add custom invoice line to invoice
 Scenario: I can remove invoice line from invoice
   When invoice exists for user "kastomer@nbs.fake" with role "customer"
   And invoice line for first invoice exists for user "kastomer@nbs.fake" with role "customer"
-  And I follow translated "layout.main_menu.admin.invoices"
+  And I click hidden link by url regex "/administration\/invoicing\/invoices/"
   And I click hidden link by url regex "/administration\/invoicing\/invoices\/\d+\/edit/"
   And I follow translated "administration.invoices.edit.view.remove_line"
   And I press translated "administration.invoices.edit.view.save_button"
@@ -241,7 +241,7 @@ Scenario: I can edit invoice line within invoice
 @selenium @ao @_done
 Scenario: Invoice line’s netto/brutto fields are automatically updated on edit
   When invoice exists for user "kastomer@nbs.fake" with role "customer"
-  And I follow translated "layout.main_menu.admin.invoices"
+  And I click hidden link by url regex "/administration\/invoicing\/invoices/"
   And I click hidden link by url regex "/administration\/invoicing\/invoices\/\d+\/edit/"
   And I follow "add_fields_invoice_lines"
   And I fill in the last field with id like "_quantity" with "2" within ".invoice_inline_inputs"
@@ -352,7 +352,7 @@ Scenario: I can credit an invoice ...
 Scenario: I can bulk set selected invoices as paid
   Given invoice exists for user "kastomer@nbs.fake" with role "customer"
   And invoice exists for user "kastomer@nbs.fake" with role "customer"
-  When I follow translated "layout.main_menu.admin.invoices"
+  When I click hidden link by url regex "/administration\/invoicing\/invoices/"
   Then I check "mark_all"
   And I follow translated "administration.invoices.index.view.bulk_set_as_paid"
   Then I should see translated "flash.bulk_invoice_update.update.notice"
@@ -422,14 +422,14 @@ Scenario: We do not need to generate a copy of the invoice, just the orininal
   Scenario: When you edit an invoice you should have the option to cancel the edit invoice
   When invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "vat_paid_in_customer_country:0"
   And invoice line for first invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
-  And I follow translated "layout.main_menu.admin.invoices"
+  And I click hidden link by url regex "/administration\/invoicing\/invoices/"
   And I click hidden link by url regex "/administration\/invoicing\/invoices\/(\d+)\/edit/"
   And I press translated "common.cancel_link"
   Then I should be on administration invoices page
 
 @m5 @sellers @ao @_done
 Scenario: When creating an invoice a Seller for user's country should be selected
-  When there is a seller with attributes "name:SellerTwo" for country "United Kingdom"
+  When there is a seller with attributes "company_name:SellerTwo" for country "United Kingdom"
   And someone is signed up and confirmed as user with email customer_one@nbs.fake and password secret and role customer with attributes "first_name:John 1,last_name:Smith,country:1"
   And User customer_one@nbs.fake with role customer is big buyer
   And a lead LeadOne exists within category Computers and is bought by user customer_one@nbs.fake with role customer
@@ -447,9 +447,9 @@ Scenario: When creating an invoice a Seller for user's country should be selecte
 
 @m5 @sellers @ao @_done
 Scenario: If there's no Seller for user's country then default Seller should be used
-  When there is a seller with attributes "name:SellerOne" for country "Denmark"
-  And there is a seller with attributes "name:DefaultSeller,default:1" for country "Denmark"
-  And there is a seller with attributes "name:SellerThree" for country "Denmark"
+  When there is a seller with attributes "company_name:SellerOne" for country "Denmark"
+  And there is a seller with attributes "company_name:DefaultSeller,default:1" for country "Denmark"
+  And there is a seller with attributes "company_name:SellerThree" for country "Denmark"
   And someone is signed up and confirmed as user with email customer_one@nbs.fake and password secret and role customer with attributes "first_name:John 1,last_name:Smith,country:2"
   And User customer_one@nbs.fake with role customer is big buyer
   And a lead LeadOne exists within category Computers and is bought by user customer_one@nbs.fake with role customer

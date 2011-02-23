@@ -12,8 +12,7 @@ Background:
 
 @_tested
 Scenario: I can edit lead
-  Given I go to agents leads
-  Then I follow translated "agent.leads.index.view.edit"
+  When I follow translated "agent.leads.index.view.edit"
   And I fill in "lead_header" with "New lead updated"
   And I press translated "agent.leads.edit.view.button_update"
   Then I should see translated "flash.leads.actions.update.notice"

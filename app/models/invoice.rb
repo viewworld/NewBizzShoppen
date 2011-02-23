@@ -100,7 +100,7 @@ class Invoice < ActiveRecord::Base
             :customer_address => user.with_role.address.clone,
             :customer_vat_no => user.with_role.vat_number,
             :seller_address => seller.address.clone,
-            :seller_name => seller.name,
+            :seller_name => seller.company_name,
             :seller_vat_no => seller.vat_no,
             :seller_first_name => seller.first_name,
             :seller_last_name => seller.last_name,

@@ -15,7 +15,7 @@ class ::User::CategoryBuyer < ::User
   has_many :countries, :through => :country_interests
   has_many :categories, :through => :category_interests
   has_many :invoices, :foreign_key => "user_id"
-  has_many :bought_leads, :through => :lead_purchases, :class_name => "Lead", :source => :lead
+  has_many :bought_leads, :through => :lead_purchases, :class_name => "Lead", :source => :lead, :conditions => "accessible_from IS NOT NULL"
 
   validates_presence_of :category_id
 

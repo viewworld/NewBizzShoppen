@@ -66,7 +66,7 @@ class Category < ActiveRecord::Base
   def set_cached_slug
     if cached_slug.blank? or cached_slug != seo_name
       self.cached_slug = seo_name
-      self.save
+      self.save unless seo_name.blank?
     end
   end
 
