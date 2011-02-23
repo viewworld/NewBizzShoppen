@@ -10,6 +10,7 @@ class Agents::LeadsController < Agents::AgentController
   end
 
   def collection
+    params[:search] ||= {}
     @search = Lead.scoped_search(params[:search])
     @search.without_inactive = true if params[:search][:without_inactive].nil?
     @search.without_outdated = true if params[:search][:without_outdated].nil?
