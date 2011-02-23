@@ -2,7 +2,7 @@
 Feature: VAT rates
 
   Background: I am on the home page
-    Given there is a seller with attributes "name:DannyTheSeller,first_name:Danny,last_name:DeVito,address:USA,vat_no:123" for country "Denmark"
+    Given there is a seller with attributes "company_name:DannyTheSeller,first_name:Danny,last_name:DeVito,address:USA,vat_no:123" for country "Denmark"
     And I am on the home page
 
   @_done

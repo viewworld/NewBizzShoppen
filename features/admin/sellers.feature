@@ -17,6 +17,7 @@ Feature: Sellers
     When I follow translated "layout.main_menu.admin.sellers"
     And I follow translated "administration.sellers.index.view.add_seller"
     And I fill in "seller_name" with "SellerOne"
+    And I fill in "seller_company_name" with "SellerOne"
     And I fill in "seller_first_name" with "Danny"
     And I fill in "seller_last_name" with "DeVito"
     And I fill in "seller_address_attributes_address_line_1" with "Szwarcenegera 1"
@@ -46,8 +47,8 @@ Feature: Sellers
 
   @_done
   Scenario: Invoice number should be scoped to Seller
-    When there is a seller with attributes "name:SellerOne"
-    And there is a seller with attributes "name:SellerTwo"
+    When there is a seller with attributes "company_name:SellerOne,name:SellerOne"
+    And there is a seller with attributes "company_name:SellerTwo,name:SellerTwo"
     And I follow translated "layout.main_menu.admin.invoices"
     And I select "SellerOne" from "invoice_seller_id"
     And I press translated "administration.invoices.index.view.create_invoice"
@@ -60,8 +61,8 @@ Feature: Sellers
 
   @selenium @_done
   Scenario: One seller can be selected as default
-    When there is a seller with attributes "name:SellerOne"
-    And there is a seller with attributes "name:SellerTwo"
+    When there is a seller with attributes "company_name:SellerOne,name:SellerOne"
+    And there is a seller with attributes "company_name:SellerTwo,name:SellerTwo"
     And I follow translated "layout.main_menu.admin.sellers"
     And I am on administration seller SellerOne edit page
     And I check "seller_default"
@@ -73,6 +74,12 @@ Feature: Sellers
     Then the "default" checkbox should be checked
     When I am on administration SellerOne seller page
     Then the "default" checkbox should not be checked
+
+  @added @selenium @_done @_tested
+  Scenario: I can specify company name when creating new seller
+    When I follow translated "layout.main_menu.admin.sellers"
+    And I follow translated "administration.sellers.index.view.add_seller"
+    Then I should see CSS path "#seller_company_name"
 
 
 
