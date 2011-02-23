@@ -2,6 +2,8 @@ class Administration::Invoicing::InvoicesController < Administration::Administra
   inherit_resources
 #  defaults :redirects => {:create => :edit, :update => :show}
 #  set_search_persistence :name => "invoices_filter"
+  set_tab "financial"
+  set_subtab "invoices"
 
   def create
     @invoice = Invoice.new(params[:invoice])
