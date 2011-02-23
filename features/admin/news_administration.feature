@@ -47,7 +47,7 @@ Scenario: I can filter listing of all news by scope (buyers, agents, both) and b
 @_done @selenium
 Scenario: I can edit existing news entry
   When agent news exists with attributes "title:FirstNews"
-  And I follow translated "layout.main_menu.admin.news"
+  And I click hidden link by url regex "/administration\/news/"
   And I click hidden link by url regex "/administration\/news\/\d+\/edit/"
   And I fill in "news_title" with "OtherTitle"
   And I fill in "news_content_editor" ckeditor with "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
@@ -56,7 +56,7 @@ Scenario: I can edit existing news entry
 
 @selenium @_done
 Scenario: I can create new news entry
-  When I follow translated "layout.main_menu.admin.news"
+  When I click hidden link by url regex "/administration\/news/"
   And I follow translated "administration.news.index.view.new_news"
   And I fill in "news_title" with "FirstNews"
   And I fill in "news_content_editor" ckeditor with "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
@@ -65,7 +65,7 @@ Scenario: I can create new news entry
 
 @selenium @_done
 Scenario: I have to specify both title and content for news entry
-  When I follow translated "layout.main_menu.admin.news"
+  When I click hidden link by url regex "/administration\/news/"
   And I follow translated "administration.news.index.view.new_news"
   And I fill in "news_title" with "FirstNews"
   And I press translated "administration.news.edit.view.button_save"
@@ -77,12 +77,12 @@ Scenario: I have to specify both title and content for news entry
 
 @_done @selenium
 Scenario: I can specify if news should be displayed for buyers, agents or both(?)
-  When I follow translated "layout.main_menu.admin.news"
+  When I click hidden link by url regex "/administration\/news/"
   Then I should see CSS path "#subclass"
 
 @selenium @_done
 Scenario: I can use WYSIWYG to edit news entry content
-  When I follow translated "layout.main_menu.admin.news"
+  When I click hidden link by url regex "/administration\/news/"
   And I follow translated "administration.news.index.view.new_news"
   Then I should see ckeditor on the page
 
@@ -111,7 +111,7 @@ Scenario: I can destroy news
 # Right - after creating new news article, the back option should redirect to news listing
 @m5 @ao @selenium @_done
 Scenario: When you edit a news article you should be able to cancel, and have the back option.
-  When I follow translated "layout.main_menu.admin.news"
+  When I click hidden link by url regex "/administration\/news/"
   And I follow translated "administration.news.index.view.new_news"
   And I press translated "common.cancel_link"
   Then I should be on administration news page
@@ -135,7 +135,7 @@ Scenario: I can update and change category for category news
   And Category named "Worst Leads" already exists
   And there is a published news for category "Best Leads"
   And I am on the home page
-  And I follow translated "layout.main_menu.admin.news"
+  And I click hidden link by url regex "/administration\/news/"
   And I select translated "administration.news.index.view.category_homes" from "search_with_subclass"
   And I press translated "administration.news.index.view.search_button"
   And I click hidden link by url regex "/administration\/news\/\d+\/edit/"
@@ -150,7 +150,7 @@ Scenario: I can update and change category for category news
 Scenario: I can create news for category
   When Category named "Best Leads" already exists
   And I am on the home page
-  And I follow translated "layout.main_menu.admin.news"
+  And I click hidden link by url regex "/administration\/news/"
   And I select translated "administration.news.index.view.category_homes" from "subclass"
   And I follow translated "administration.news.index.view.new_news"
   And I fill in "news_title" with "NewsForBestLeads"
@@ -172,14 +172,14 @@ Scenario: When you look at the news tab, the list of news should contain the fol
 
 @added @m5 @ao @selenium @_done
 Scenario: When you look at the news tab, the list of news should contain the following columns: Published (the date should be shown)
-  When I follow translated "layout.main_menu.admin.news"
+  When I click hidden link by url regex "/administration\/news/"
   And I follow translated "administration.news.index.view.new_news"
   And I fill in "news_title" with "FirstNews"
   And I fill in "news_content_editor" ckeditor with "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   And I check "news_published"
   And I press translated "administration.news.edit.view.button_save"
   And I should be on administration FirstNews news page
-  When I follow translated "layout.main_menu.admin.news"
+  When I click hidden link by url regex "/administration\/news/"
   Then I should see /\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/
 
 @added @m5 @ao @_done
