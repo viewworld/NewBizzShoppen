@@ -15,7 +15,6 @@ When /^first invoice for user "([^"]*)" with role "([^"]*)" exists with attribut
   invoice = "User::#{role_name.classify}".constantize.where(:email => email).first.invoices.first
   invoice.update_attributes(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys)
   invoice.reload
-  puts invoice.inspect
 end
 
 When /^first invoice for user "([^"]*)" with role "([^"]*)" is created at "([^"]*)"$/ do |email, role_name, date|
@@ -51,9 +50,11 @@ end
 
 Then /^user with email "([^"]*)" and role "([^"]*)" has invoice generated for all unpaid leads$/ do |email, role|
   customer = "User::#{role.camelize}".constantize.find_by_email(email)
-  invoice = Invoice.create(:user_id => customer.id, :paid_at =>  Time.now, :seller => Seller.make!)
-  invoice.reload
-  ManualTransaction.create(:invoice => invoice, :amount => invoice.total, :paid_at => Time.now)
+  customer.lead_purchases.map{|lp| lp.lead.currency}.uniq.each do |currency|
+    invoice = Invoice.create(:user_id => customer.id, :paid_at =>  Time.now, :seller => Seller.make!, :currency => currency)
+    invoice.reload
+    ManualTransaction.create(:invoice => invoice, :amount => invoice.total, :paid_at => Time.now)
+  end
 end
 
 Then /^user with email "([^"]*)" and role "([^"]*)" has invoice for lead "([^"]*)" and transaction created (by paypal|manually)$/ do |email, role, header, transaction_type|
