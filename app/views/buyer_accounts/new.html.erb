@@ -15,6 +15,7 @@
               <ol>
                 <%= form.input :first_name %>
                 <%= form.input :last_name %>
+                <%= form.input :company_name %>
                 <%= form.fields_for :address do |address_form| %>
                     <%= address_form.input :address_line_1 %>
                     <%= address_form.input :address_line_2 %>

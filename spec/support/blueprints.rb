@@ -121,6 +121,7 @@ end
   agreement_read { true }
   roles_mask { 112 }
   team_buyers { false }
+  company_name { Faker::Company.name }
   address { Address.make! }
 end
 
@@ -212,6 +213,7 @@ end
   agreement_read { true }
   category_id { Category.make!.id }
   roles_mask { 304 }
+  company_name { Faker::Company.name }
   address { Address.make! }
 end
 

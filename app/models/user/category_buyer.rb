@@ -17,7 +17,7 @@ class ::User::CategoryBuyer < ::User
   has_many :invoices, :foreign_key => "user_id"
   has_many :bought_leads, :through => :lead_purchases, :class_name => "Lead", :source => :lead, :conditions => "accessible_from IS NOT NULL"
 
-  validates_presence_of :category_id
+  validates_presence_of :category_id, :company_name
 
   accepts_nested_attributes_for :lead_purchases
 

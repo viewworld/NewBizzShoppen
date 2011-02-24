@@ -20,4 +20,5 @@ class ::User::Customer < ::User
 
   accepts_nested_attributes_for :lead_purchases
 
+  validates_presence_of :company_name
 end

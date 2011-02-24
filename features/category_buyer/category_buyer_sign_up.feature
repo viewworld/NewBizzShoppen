@@ -10,6 +10,7 @@ Feature: Category buyer sign up
     When I fill in "user_category_buyer_first_name" with "Jon"
     And I fill in "user_category_buyer_last_name" with "Lajoie"
     And I fill in "user_category_buyer_phone" with "123123123"
+    And I fill in "user_category_buyer_company_name" with "eXtreme Ltd"
     And I fill in "user_category_buyer_email" with "cb@nbs.fake"
     And I fill in "user_category_buyer_screen_name" with "Normal Guy"
     And I fill in "user_category_buyer_password" with "secret"
