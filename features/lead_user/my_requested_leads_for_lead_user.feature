@@ -4,7 +4,7 @@ Feature: My requested leads for lead user
 Background: Sign in user and set English locale
   Given I am on the homepage
   And I make sure current locale is English
-  Given I am signed up and confirmed as user with email lead_user2@person.com and password supersecret and role lead_user
+  Given I am signed up and confirmed as user with email lead_user2@person.com and password supersecret and role lead_user with attributes "first_name:Jacek,last_name:Smietana"
   And an user with role lead_user and email lead_user2@person.com exists as subaccount for customer customer@person.com
   And lead Printers ultimate deal exists within category Computers
   And lead Printers ultimate deal exists with attributes "creator_name:John McCain,clicks_count:17,exposures_count:887,price:989.78,purchase_value:3030.03,description:Lorem ipsum public desc"
@@ -13,7 +13,7 @@ Background: Sign in user and set English locale
   And lead Faxes ultimate deal exists within category Office
   And lead Faxes ultimate deal exists with attributes "purchase_value:3291.99"
   And lead Copy machines ultimate deal exists within category Office
-  And lead Copy machines ultimate deal exists with attributes "purchase_value:7080.99"
+  And lead Copy machines ultimate deal exists with attributes "purchase_value:7080.99,zip_code:123"
   And lead "Printers ultimate deal" was requested by user "lead_user2@person.com" with role "lead_user"
   And lead "Monitors LCD deal" was requested by user "lead_user2@person.com" with role "lead_user"
   And lead "Keyboards deal" was requested by user "lead_user2@person.com" with role "lead_user"
@@ -23,8 +23,7 @@ Background: Sign in user and set English locale
   And I go to lead user lead requests
 
 @tgn @_tested
-Scenario: I should see created by and certification level for each lead
-  And I should see "John McCain"
+Scenario: I should see certification level for each lead
   And I should see translated "models.lead.novelty.lvl0"
 
 @m4 @tgn @_tested @added
@@ -87,8 +86,7 @@ Scenario: I can narrow down the results by filters and search box
   And I press translated "lead_user.lead_requests.index.view.search.search_button"
   Then I should see "Copy machines ultimate deal"
   And I should not see "Monitors LCD deal"
-  Then I select "4000" from "search_with_deal_value_from"
-  And I select "8000" from "search_with_deal_value_to"
+  And I fill in "search_with_zip_code" with "123"
   And I press translated "lead_user.lead_requests.index.view.search.search_button"
   Then I should see "Copy machines ultimate deal"
   And I should not see "Faxes ultimate deal"

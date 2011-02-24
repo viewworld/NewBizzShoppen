@@ -1,8 +1,30 @@
-<h2><%= print.header %></h2>
-<%= t("lead_purchases.listing.purchase_value_label") %> <%= print.purchase_value %>
-<%= t("lead_purchases.listing.description_label") %><%= print.description %>
-<%= t("lead_purchases.listing.company_name") %><%= print.lead.company_name %>
-<%= t("lead_purchases.listing.phone_number") %><%= print.lead.phone_number %>
-<%= t("lead_purchases.listing.www_address") %><%= print.lead.www_address %>
-<%= t("lead_purchases.listing.email_address") %><%= print.lead.email_address %>
-<%= t("lead_purchases.listing.contact_name") %><%= print.lead.contact_name %>
+<div class="lead_wrapper">
+  <div class="lead_value"><%= t("lead_purchases.listing.purchase_value_label") %>
+    <strong><%= as_currency(print.purchase_value, print.lead.currency) %></strong></div>
+
+  <h2><%= print.header %></h2>
+
+  <p class="lead_desc"><%#= t("lead_purchases.listing.description_label") %><%= print.description %></p>
+
+  <div class="grid_1to2 fltl">
+    <%= t("lead_purchases.listing.company_name") %> <strong><%= print.lead.company_name %></strong><br/>
+    <%= t("lead_purchases.listing.contact_name") %> <strong><%= print.lead.contact_name %></strong><br/>
+    <%= t("lead_purchases.listing.phone_number") %> <strong><%= print.lead.phone_number %></strong><br/>
+  </div>
+  <div class="grid_1to2 fltl">
+    <%= t("lead_purchases.listing.www_address") %> <strong><%= print.lead.www_address %></strong><br/>
+    <%= t("lead_purchases.listing.email_address") %> <strong><%= print.lead.email_address %></strong>
+  </div>
+  <clb/>
+
+    <% print.lead.lead_templates_and_values.each do |lead_template, values| %>
+      <div class="lead_template">
+        <h3><%= lead_template.name.upcase %></h3>
+        <p>
+            <% values.each do |value| %>
+                <strong><%= value.lead_template_field.name %>:</strong> <%= value.can_be_viewed_by?(current_user) ? value.value : t("shared.lead_templates.listing.hidden_value") %><br/>                
+            <% end %>            
+        </p>
+      </div>
+    <% end %>
+</div>

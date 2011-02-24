@@ -48,12 +48,26 @@
         <% end %>
 
         <td>
-          <h4><%= link_to lead_purchase.header, current_user.has_role?(:lead_buyer) ? buyers_lead_purchase_path(lead_purchase) : lead_users_lead_purchase_path(lead_purchase) %></h4>
+          <h4><%= link_to lead_purchase.header, current_user.has_role?(:lead_buyer) ? buyers_lead_purchase_path(lead_purchase) : lead_users_lead_purchase_path(lead_purchase), :class => "default_action" %></h4>
           <% if block_contact %>
               <%= with_output_buffer { block_contact.call(lead_purchase) } if block_contact %>
           <% end %>
-          <p class="element"><%= t("lead_purchases.listing.purchase_value_label") %><span class="green"><%= as_currency(lead_purchase.purchase_value, lead_purchase.lead.currency) %></span></p>
+          <p class="element"><%= t("lead_purchases.listing.purchase_value_label") %><span class="green"> <%= as_currency(lead_purchase.purchase_value, lead_purchase.lead.currency) %></span></p>
           <p class="element_description i"><%= lead_purchase.description %></p>
+          <p class="element_description i"><%= lead_purchase.hidden_description %></p>
+
+          <div class="element_templates"><%= render :partial => "/shared/lead_templates/listing", :locals => { :lead => lead_purchase.lead } %></div>
+
+          <% if lead_purchase.lead.linkedin_url_present? %>
+          <p><%= link_to t("lead_purchases.listing.linkedin_profile"), lead_purchase.lead.linkedin_url %>
+             <%= link_to image_tag("icons/in_icon.png", :style => "vertical-align: top;"), lead_purchase.lead.linkedin_url %></p>
+          <% end %>
+
+          <% if lead_purchase.lead.facebook_url_present? %>
+          <p><%= link_to t("lead_purchases.listing.facebook_profile"), lead_purchase.lead.facebook_url %>
+             <%= link_to image_tag("icons/fb_icon.png", :style => "vertical-align: top;"), lead_purchase.lead.facebook_url %></p>
+          <% end %>
+
           <% if block_general %>
               <%= with_output_buffer { block_general.call(lead_purchase) } %>
           <% end %>

@@ -47,7 +47,7 @@
       <td class="ta_r">
         <%= form_tag APP_CONFIG[:paypal_url] do %>
             <%= hidden_field_tag :cmd, "_s-xclick" %>
-            <%= hidden_field_tag :encrypted, @cart.paypal_encrypted(buyers_lead_purchases_path, payment_notifications_url(:secret => APP_CONFIG[:paypal_secret])) %>
+            <%= hidden_field_tag :encrypted, @cart.paypal_encrypted(buyers_lead_purchases_url, payment_notifications_url(:secret => APP_CONFIG[:paypal_secret])) %>
             <ibt c="fltri">
               <%= submit_tag t("buyer.cart.show.view.checkout_link") %>
             </ibt>

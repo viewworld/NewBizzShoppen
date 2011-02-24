@@ -3,5 +3,6 @@ class User::Agent < ::User
 
   include User::RegistrationValidations
   include User::CommonAgent
-
+  include Addresses
+  include BankAccounts
 end

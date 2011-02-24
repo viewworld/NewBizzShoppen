@@ -3,10 +3,10 @@
 
 
   <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-      <div class="grid_420">
+      <div class="grid_440 grid_c">
         <frm title="Type your email">
           <div class="pdd_10">
-            <fieldset class="inputs labels_100">
+            <fieldset class="inputs labels_100 inputs_280">
               <ol class="align_inputs">
                 <li class="string">
                   <%= f.label :email %>
@@ -26,6 +26,7 @@
                   <ibt>
                     <%= f.submit "Sign in" %>
                   </ibt>
+                  <p>or <%= link_to t("buyer_home.show.view.create_new_buyer_account"), new_buyer_account_path %></p>
                 </li>
               </ol>
             </fieldset>

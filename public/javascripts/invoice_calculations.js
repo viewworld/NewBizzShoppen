@@ -3,9 +3,12 @@ var bIsFirebugReady = (!!window.console && !!window.console.log);
 function initInvoiceCalculations() {
     $("input[name$='[quantity]'], input[name$='[netto_price]'], input[name$='[vat_rate]']").bind("keyup", recalcValues);
     $("input[name$='[netto_value]']").bind("change", recalcValues);
+    $("#invoice_vat_paid_in_customer_country").bind("change", change_vat_fields_availibility);
+    $("#invoice_vat_paid_in_customer_country").bind("change", recalcValues);
     $("input[name$='[brutto_value]']").bind("keyup", recalcBruttoValuesWithoutBruttoUpdate);
     $("input[name$='[brutto_value]']").bind("change", recalcBruttoValues);
     // run the calculation function now
+    change_vat_fields_availibility();
     recalcValues();
 }
 
@@ -85,7 +88,7 @@ function recalc_netto_value() {
                 // sum the total of the $("[id^=total_item]") selector
 
                  var sum = $this.filter(":visible").sum();
-                 $("#total_netto_value span").text(
+                 $("#total_netto_value").text(
                  // round the results to 2 digits
                  sum.toFixed(2)  + ""
                  );
@@ -97,7 +100,7 @@ function recalc_vat_value() {
 
     //netto_value
     $("[name$='[vat_value]']").calc(
-            "netto_value * vat_rate",
+            "netto_value * (vat_rate / 100)",
     {
         netto_value: $("input[name$='[netto_value]']"),
         vat_rate: $("[name$='[vat_rate]']")
@@ -109,7 +112,7 @@ function recalc_vat_value() {
                     // sum the total of the $("[id^=total_item]") selector
 
                  var sum = $this.filter(":visible").sum();
-                 $("#total_vat_value span").text(
+                 $("#total_vat_value").text(
                  // round the results to 2 digits
                  sum.toFixed(2)  + ""
                  );
@@ -133,10 +136,20 @@ function recalc_brutto_value() {
                     // sum the total of the $("[id^=total_item]") selector
 
                  var sum = $this.filter(":visible").sum();
-                 $("#total_brutto_value span").text(
+                 $("#total_brutto_value").text(
                  // round the results to 2 digits
                  sum.toFixed(2)  + ""
                  );
             }
             );
+}
+
+function change_vat_fields_availibility() {
+    val = $("#invoice_vat_paid_in_customer_country")[0].checked;
+    $("input[id$='_vat_rate']").each(function(){
+        if (val == true) {
+            this.value = '0';
+        }
+        this.disabled = val;
+    });
 }

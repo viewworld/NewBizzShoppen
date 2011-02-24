@@ -12,6 +12,8 @@ class ::User::LeadUser < ::User
            :conditions => "accessible_from IS NOT NULL",
            :include => :lead
 
+  alias_method :accessible_lead_purchases, :lead_purchases
+
   private
 
   def set_owner(lead_request)

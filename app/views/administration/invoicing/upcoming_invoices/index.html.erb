@@ -1,45 +1,109 @@
+<search-box:>
+  <div class="search_box">
+    <h2><%= t("administration.upcoming_invoices.index.view.search_label") %></h2>
+
+    <div class="search_content">
+      <%= form_for @search, :url => administration_invoicing_upcoming_invoices_path do |f| %>
+          <fieldset class="inputs_vertical">
+            <ol class="no_pdd">
+              <li class="string">
+                <%= f.label :with_not_invoiced_keyword, t("administration.upcoming_invoices.index.view.search.with_keyword") %>
+                <%= f.text_field :with_not_invoiced_keyword %>
+              </li>
+              <li class="date">
+                <%= f.label :with_assigned_at_date_after_and_including, t("administration.upcoming_invoices.index.view.search.with_assigned_at_date_after_and_including") %>
+                <%= f.text_field :with_assigned_at_date_after_and_including, :class => "datepicker" %>
+              </li>
+              <li class="date">
+                <%= f.label :with_assigned_at_date_before_and_including, t("administration.upcoming_invoices.index.view.search.with_assigned_at_date_before_and_including") %>
+                <%= f.text_field :with_assigned_at_date_before_and_including, :class => "datepicker" %>
+              </li>
+              <li class="commit">
+                <ibt c="bt_green" icon="magnify">
+                  <%= submit_tag t("administration.upcoming_invoices.index.view.search_button") %>
+                </ibt>
+              </li>
+            </ol>
+          </fieldset>
+
+
+      <% end %>
+    </div>
+  </div>
+</search-box:>
+
 <column-mc:>
 
-  <header><%= t("administration.upcoming_invoices.index.view.header") %></header>
 
-  <table class="generic" cellspacing="0" cellpadding="0">
-    <thead>
-    <tr>
-    <th class="hl"></th>
-    <th><%= t("administration.upcoming_invoices.index.view.customer_first_name") %></th>
-    <th><%= t("administration.upcoming_invoices.index.view.customer_last_name") %></th>
-    <th><%= t("administration.upcoming_invoices.index.view.customer_screen_name") %></th>
-    <th><%= t("administration.upcoming_invoices.index.view.not_invoiced_count") %></th>
-    <th><%= t("administration.upcoming_invoices.index.view.not_invoiced_sum") %></th>
-    <th></th>
-    <th class="hr"></th>
-    </thead>
-    <tfoot>
-    <tr>
-      <td class="fl"></td>
-      <td colspan="6"></td>
-      <td class="fr"></td>
-    </tr>
-    </tfoot>
-    <tbody id="invoices_list">
-    <% @lead_purchases.each do |lead_purchase| %>
-        <tr class="<%= cycle("odd", "even") %>">
-          <td class="cl"></td>
-          <td><%= lead_purchase.owner.first_name %></td>
-          <td><%= lead_purchase.owner.last_name %></td>
-          <td><%= lead_purchase.owner.screen_name %></td>
-          <td><%= lead_purchase.not_invoiced_count %></td>
-          <td><%= lead_purchase.not_invoiced_sum %></td>
-          <td><%= link_to t("administration.upcoming_invoices.index.view.create_invoice"), new_administration_invoicing_invoice_path(:invoice => {:user_id => lead_purchase.owner_id}) %></td>
-          <td class="cr"></td>
+  <header>
+    <param:content>
+      <%= t("administration.upcoming_invoices.index.view.header") %>
+    </param:content>
+    <param:actions>
+      <div class="frm_tiny fltr">
+        <div class="pdd_10">
+          <%= t("administration.upcoming_invoices.index.view.total") %>: <strong><%= @lead_purchases_count %></strong>
+        </div>
+      </div>
+    </param:actions>
+  </header>
+
+  <% if @lead_purchases.blank? %>
+      <%= blank_state_message %>
+  <% else %>
+      <table class="generic" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+        <th class="hl"></th>
+        <th><%= t("administration.upcoming_invoices.index.view.customer_first_name") %></th>
+        <th><%= t("administration.upcoming_invoices.index.view.customer_last_name") %></th>
+        <th><%= t("administration.upcoming_invoices.index.view.customer_screen_name") %></th>
+        <th><%= t("administration.upcoming_invoices.index.view.not_invoiced_count") %></th>
+        <th><%= t("administration.upcoming_invoices.index.view.not_invoiced_sum") %></th>
+        <th></th>
+        <th class="hr"></th>
+        </thead>
+        <tfoot>
+        <tr>
+          <td class="fl"></td>
+          <td colspan="6"></td>
+          <td class="fr"></td>
         </tr>
-    <% end %>
+        </tfoot>
+        <tbody id="invoices_list">
+        <% @lead_purchases.each do |lead_purchase| %>
+            <tr class="<%= cycle("odd", "even") %>">
+              <td class="cl"></td>
+              <td><%= lead_purchase.owner.first_name %></td>
+              <td><%= lead_purchase.owner.last_name %></td>
+              <td><%= lead_purchase.owner.screen_name %></td>
+              <td><%= lead_purchase.not_invoiced_count %></td>
+              <td><%= as_currency(lead_purchase.not_invoiced_sum, Currency.where(:id => lead_purchase.currency_id).first) %></td>
+              <td class="tda ta_r">
+                <%= bt_link_to nil, t("administration.upcoming_invoices.index.view.create_invoice"), new_administration_invoicing_invoice_path(:invoice => {:user_id => lead_purchase.owner_id, :currency_id => lead_purchase.currency_id}) %>
+              </td>
+              <td class="cr"></td>
+            </tr>
+        <% end %>
 
-    <tr class="pagination">
-      <td colspan="8" class="ta_c">
-        <%= will_paginate @lead_purchases, :previous_label => '&laquo;', :next_label => '&raquo;' %>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+        <% if @lead_purchases.total_pages > 1 %>
+            <tr class="pagination">
+              <td colspan="8" class="ta_c">
+                <%= will_paginate @lead_purchases, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+              </td>
+            </tr>
+        <% else %>
+            </tbody>
+            </table>
+        <% end %>
+  <% end %>
+
 </column-mc:>
+
+<js:>
+  <script type="text/javascript">
+      $(function() {
+          $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+      });
+  </script>
+</js:>

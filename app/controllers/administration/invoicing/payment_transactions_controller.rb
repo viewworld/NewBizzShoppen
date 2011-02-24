@@ -1,7 +1,8 @@
 class Administration::Invoicing::PaymentTransactionsController < Administration::AdministrationController
   inherit_resources
 
-  set_tab "payment_transactions"
+  set_tab "financial"
+  set_subtab "payment_transactions"
 
   def new
     @payment_transaction = ManualTransaction.new(:invoice_id => params[:invoice_id])
@@ -16,7 +17,8 @@ class Administration::Invoicing::PaymentTransactionsController < Administration:
   end
 
   def update
-    @payment_transaction = ManualTransaction.new(params[:manual_transaction])
+#    @payment_transaction = ManualTransaction.find(params[:id])
+#    if @payment_transaction.update_attributes(params[:manual_transaction])
     update! do |success, failure|
       success.html { redirect_to administration_invoicing_payment_transactions_path }
       failure.html { render(:action => "edit") }

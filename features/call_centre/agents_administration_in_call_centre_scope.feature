@@ -140,7 +140,7 @@ Scenario: I can bulk block users
   Given an user with role call_centre_agent and email ccagent02@person.com belongs to call centre call_centre@person.com
   And I go to call centre agents
   Then I check "mark_all"
-  And I follow translated "call_centre.call_centre_agents.index.view.button_bulk_subbaccounts_update"
+  And I follow "lock_selected"
   Then I should see translated "flash.bulk_call_centre_agents_update.update.notice"
 
 @_tested @selenium
@@ -151,6 +151,5 @@ Scenario: I can bulk unblock users
   And User ccagent02@person.com with role call_centre_agent is blocked
   And I go to call centre agents
   Then I check "mark_all"
-  And I select translated "call_centre.call_centre_agents.index.view.unlock" from "locked"
-  And I follow translated "call_centre.call_centre_agents.index.view.button_bulk_subbaccounts_update"
+  And I follow "unlock_selected"
   Then I should see translated "flash.bulk_call_centre_agents_update.update.notice"

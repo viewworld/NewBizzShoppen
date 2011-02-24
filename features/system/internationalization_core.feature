@@ -39,7 +39,7 @@ Scenario: Preparation of search and sort name scopes for translated models (lead
 #for now home.show.view.signup_message doesn't have translation to dk
 @tgn @_done @_tested
 Scenario: Default language is displayed if active language translation is not present in the database
-  When locale is set to "en" for translation "home.show.view.signup_message"
+  When locale is set to "en" for translation "home.show.view.sign_up_here"
   And I follow translated "locales.dk_locale"
-  Then locale is set to "dk" for translation "home.show.view.signup_message"
-  And I should see translated "home.show.view.signup_message"
+  Then locale is set to "dk" for translation "home.show.view.sign_up_here"
+  And I should see translated "home.show.view.sign_up_here"

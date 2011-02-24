@@ -3,67 +3,104 @@
 
   <div class="pdd_5 no_pdd_b">
     <p><%= blurb("blurb_start_page_role_selection") %></p>
-
-    <p>
-      <%= link_to t("home.show.view.buyer"), buyer_home_path %>
-      <%= link_to t("home.show.view.agent"), agent_home_path %>
-      <%= link_to t("home.show.view.purchase_manager"), purchase_manager_home_path %>
-    </p>
   </div>
 
   <hl pdd="15"/>
 
+  <div class="grid_250 fltl" style="margin-right: 10px" id="buyer_sign_up">
+    <frm-reverse c="home_cells">
+      <param:content>
+        <%= link_to image_tag("homepage/sales_manager.jpg"), buyer_home_path %>
+      </param:content>
+      <param:header>
+        <%= link_to t("home.show.view.buyer"), buyer_home_path %>
+      </param:header>
+    </frm-reverse>
+
+    <% unless user_signed_in? %>
+        <div class="frm_tiny frm_tip">
+          <span class="tip"></span>
+
+          <p><%= t("home.show.view.buyer_sign_up_text") %>, <%= link_to t("home.show.view.sign_up_here"), new_buyer_account_path %>.</p>
+        </div>
+    <% end %>
+  </div>
+
+  <div class="grid_250 fltl" style="margin-right: 10px" id="purchase_manager_sign_up">
+    <frm-reverse c="home_cells">
+      <param:content>
+        <%= link_to image_tag("homepage/purchase_manager.jpg"), purchase_manager_home_path %>
+      </param:content>
+      <param:header>
+        <%= link_to t("home.show.view.purchase_manager"), purchase_manager_home_path %>
+      </param:header>
+    </frm-reverse>
+
+    <% unless user_signed_in? %>
+        <div class="frm_tiny frm_tip">
+          <span class="tip"></span>
+
+          <p><%= t("home.show.view.purchase_manager_sign_up_text") %>,<br/><%= link_to t("home.show.view.sign_up_here"), new_purchase_manager_account_path %>.
+          </p>
+        </div>
+    <% end %>
+  </div>
+
+  <div class="grid_250 fltl" id="agent_sign_up">
+    <frm-reverse c="home_cells">
+      <param:content>
+        <%= link_to image_tag("homepage/agent.jpg"), agent_home_path %>
+      </param:content>
+      <param:header>
+        <%= link_to t("home.show.view.agent"), agent_home_path %>
+      </param:header>
+    </frm-reverse>
+
+    <% unless user_signed_in? %>
+        <div class="frm_tiny frm_tip">
+          <span class="tip"></span>
+
+          <p><%= t("home.show.view.agent_sign_up_text") %>,<br/><%= link_to t("home.show.view.sign_up_here"), new_agent_account_path %>.</p>
+        </div>
+    <% end %>
+
+  </div>
+
   <% unless user_signed_in? %>
-      <div class="grid_750 grid_c">
-
-        <div class="grid_300 fltl">
-          <frm title="#{t('home.show.view.signup_message')}?" c="no_marg">
-            <div class="pdd_10">
-              <p>
-                <%= link_to t("home.show.view.agent_signup"), new_agent_account_path %>
-              </p>
-
-              <p>
-                <%= link_to t("home.show.view.buyer_signup"), new_buyer_account_path %>
-              </p>
-
-              <p>
-                <%= link_to t("home.show.view.purchase_manager_signup"), new_purchase_manager_account_path %>
-              </p>
-
-              <hl pdd="10"/>
-
-              <p>
-                <%= link_to t("home.show.view.resend_confirmation_instructions"), new_confirmation_path(User) %>
-              </p>
-
-            </div>
-          </frm>
-
-        </div>
-        <div class="grid_430 fltr">
-          <frm title="I have an account" c="no_marg">
-            <div class="pdd_10">
-              <%= semantic_form_for(:user, :url => session_path(:user)) do |f| %>
-                  <fieldset class="inputs labels_100 inputs_240 no_pdd">
-                    <ol class="align_inputs no_pdd">
-                      <%= f.input :email, :label => I18n.t("activerecord.attributes.user.email"), :input_html => {:tabindex => 1} %>
-                      <%= f.input :password, :label => raw(I18n.t("activerecord.attributes.user.password") + content_tag(:span, link_to(t("home.show.view.forgotten_password_link"), new_password_path(User)), :class => "label_link")), :input_html => {:tabindex => 2}, :wrapper_html => { :class => "rltv" } %>
-                      <%= f.input :remember_me, :as => :boolean, :required => false, :label => I18n.t("home.show.view.remember_me"), :input_html => {:tabindex => 3} %>
-                      <li class="commit">
-                        <ibt>
-                          <%= f.submit t("home.show.view.sign_in"), :tabindex => 4 %>
-                        </ibt>
-                      </li>
-                    </ol>
-                  </fieldset>
-              <% end %>
-            </div>
-          </frm>
-        </div>
-        <clb/>
-
+      <div class="grid_340 fltr">
+        <frm title="I have an account" c="no_marg">
+          <div class="pdd_10">
+            <%= semantic_form_for(:user, :url => session_path(:user)) do |f| %>
+                <fieldset class="inputs labels_100 inputs_180 no_pdd">
+                  <ol class="align_inputs no_pdd">
+                    <%= f.input :email, :label => I18n.t("activerecord.attributes.user.email"), :input_html => {:tabindex => 1} %>
+                    <%= f.input :password, :label => raw(I18n.t("activerecord.attributes.user.password") + content_tag(:span, link_to(t("home.show.view.forgotten_password_link"), new_password_path(User)), :class => "label_link")), :input_html => {:tabindex => 2}, :wrapper_html => {:class => "rltv"} %>
+                    <%= f.input :remember_me, :as => :boolean, :required => false, :label => I18n.t("home.show.view.remember_me"), :input_html => {:tabindex => 3} %>
+                    <li class="commit">
+                      <ibt>
+                        <%= f.submit t("home.show.view.sign_in"), :tabindex => 4 %>
+                      </ibt>
+                    </li>
+                  </ol>
+                </fieldset>
+            <% end %>
+          </div>
+          <hl/>
+          <div style="padding:5px 10px">
+            <p>
+              <%= link_to t("home.show.view.resend_confirmation_instructions"), new_confirmation_path(User) %>
+            </p>
+          </div>
+        </frm>
       </div>
   <% end %>
+
+  <clb/>
+
+  <hl pdd="15"/>
+
+  <div class="home_categories_tree">
+    <%= all_categories_tree(:category_label => lambda { |c| link_to "#{c.name}", c.cached_slug }) %>
+  </div>
 
 </column-mc:>

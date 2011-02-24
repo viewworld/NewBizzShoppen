@@ -1,9 +1,9 @@
 <column-mc:>
-<%= semantic_form_for [:administration, @lead], :method => :put do |form| %>
-<header back="true"><%= t("administration.leads.edit.view.header", :lead_header => @lead.header) %></header>
+  <%= semantic_form_for [:administration, @lead], :method => :put do |form| %>
+      <header back="true"><%= t("administration.leads.edit.view.header", :lead_header => @lead.header) %></header>
       <frm title="Edit">
         <param:content>
-          <%= render :partial => 'form', :locals => { :form => form }  %>
+          <%= render :partial => '/shared/leads/form', :locals => {:form => form} %>
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="save">
@@ -14,23 +14,19 @@
           </ibt>
         </param:actions>
       </frm>
-<% end %>
+  <% end %>  
 
-<a name="lead_rating"></a>
-<frm title="#{t('administration.leads.edit.view.rating_header')}">
-<param:content>
-  <div class="pdd_10">
-    <ul>
+  <frm title="#{t('administration.leads.edit.view.rating_header')}" id="lead_rating">
     <% @lead.lead_purchases.each do |lead_purchase| %>
-          <% unless lead_purchase.rating_level.nil? %>
-          <li>
-            <b><%= t("administration.leads.show.view.rating_level") %><%= lead_purchase.rating_level_as_text %></b><br />
-            <%= t("administration.leads.show.view.rating_reason") %><%= lead_purchase.rating_reason %><br /><br />
-          </li>
-          <% end %>
+        <% unless lead_purchase.rating_level.nil? %>
+            <div class="rating_element">
+              <h3><%= t("administration.leads.show.view.rating_level") %>
+                <span class="rating_level"><%= lead_purchase.rating_level_as_text %></span></h3>
+
+              <p><%#= t("administration.leads.show.view.rating_reason") %><%= lead_purchase.rating_reason %></p>
+            </div>
+            <hl/>
+        <% end %>
     <% end %>
-    </ul>
-  </div>
-</param:content>
-</frm>
+  </frm>
 </column-mc:>

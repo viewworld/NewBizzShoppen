@@ -22,6 +22,7 @@ Scenario: As an administrator I can allow user freelance agent to change his/her
   Given I am not sign in
   And I am signed up and confirmed as user with email nbsadmin@person.com and password secret and role admin
   And I sign in as nbsadmin@person.com with password secret
+  And I follow translated "layout.main_menu.admin.users"
   Then I fill in "search_with_keyword" with "agent@nbs.com"
   And I press translated "administration.users.index.view.search_button"
   And I follow translated "administration.users.index.view.edit"

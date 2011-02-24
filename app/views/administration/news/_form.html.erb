@@ -1,8 +1,11 @@
 <div class="pdd_10 no_pdd_t">
-  <fieldset class="inputs">
+  <fieldset class="inputs labels_100 labels_ta_r">
     <ol>
-      <%= form.input :scope, :collection => news_scope_for_select, :as => :select, :include_blank => false %>
       <%= form.input :title %>
+      <% if form.object.is_a? Article::News::CategoryHome %>
+        <%= form.input :resource_type, :as => :hidden, :value => "Category" %>
+        <%= form.input :resource, :collection => Category.all, :label => t("administration.news.edit.view.category_label"), :include_blank => false %>
+      <% end %>
       <%= form.input :content,
                         :label => false,
                         :as => :ckeditor,

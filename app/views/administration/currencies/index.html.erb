@@ -1,4 +1,4 @@
-<column-mc:> 
+<column-mc:>
   <header>
     <param:content>
       <%= t("administration.currencies.index.view.title") %>
@@ -14,21 +14,23 @@
   </header>
 
   <div class="hidden">
-  <%= form_tag new_administration_currency_path, :method => :get, :id => "form_new_currency" do %>
-    <%= submit_tag t("administration.currencies.index.view.new_currency") %>
-  <% end %>
+    <%= form_tag new_administration_currency_path, :method => :get, :id => "form_new_currency" do %>
+        <%= submit_tag t("administration.currencies.index.view.new_currency") %>
+    <% end %>
   </div>
 
-  <% if @currencies.any? %>
+  <% if @currencies.blank? %>
+      <%= blank_state_message( t("administration.currencies.index.view.no_currencies_defined") ) %>
+  <% else %>
       <table id="currencies_table" class="generic">
         <thead>
         <tr>
           <th class="hl"></th>
-          <th><%= t("administration.currencies.index.view.table.id") %></th>
+          <th style="width:10px"><%= t("administration.currencies.index.view.table.id") %></th>
           <th><%= t("administration.currencies.index.view.table.name") %></th>
           <th><%= t("administration.currencies.index.view.table.symbol") %></th>
           <th><%= t("administration.currencies.index.view.table.format") %></th>
-          <th><%= t("administration.currencies.index.view.table.active") %></th>
+          <th class="ta_c"><%= t("administration.currencies.index.view.table.active") %></th>
           <th class="ta_r"><%= t("administration.currencies.index.view.actions") %></th>
           <th class="hr"></th>
         </tr>
@@ -44,11 +46,11 @@
         <% @currencies.each do |currency| %>
             <tr id="currency_<%= currency.id %>" class="<%= cycle("odd", "even") %>">
               <td class="cl"></td>
-              <td><%= currency.id %></td>
+              <td class="ta_c"><%= currency.id %></td>
               <td><%= currency.name %></td>
               <td><%= currency.symbol %> (<%= raw currency.symbol %>)</td>
               <td><%= currency.format %> (<%= raw number_to_currency(100, :format => currency.format, :unit => currency.symbol) %>)</td>
-              <td><%= currency.active %></td>
+              <td class="ta_c"><%= currency.active %></td>
               <td class="tda ta_r">
                 <ul-actions>
                   <li>
@@ -64,7 +66,5 @@
         <% end %>
         </tbody>
       </table>
-  <% else %>
-    <p><%= t("administration.currencies.index.view.no_currencies_defined") %></p>
   <% end %>
 </column-mc:>

@@ -17,13 +17,9 @@ Scenario: I can buy a lead skipping checkout
   And I follow translated "leads.index.buy_lead"
   Then I should not see "Printers ultimate deal"
 
-@_done
+# cart is no longer displayed for big buyer
+@_done @_deprecated
 Scenario: I cannot buy lead through checkout
-  When I go to leads
-  And I follow "Computers"
-  And I follow translated "leads.index.buy_lead"
-  And I click hidden translated link "layout.cart.show_cart"
-  Then I should see "0.0"
 
 @_done
 Scenario: Lead purchase is marked with "has access" after creation
@@ -99,3 +95,7 @@ Scenario: I can filter the list of my leads by "paid" column
   When I select translated "common.yes_label" from "search_with_paid"
   And I press translated "lead_buyer.lead_purchases.index.view.search.search_button"
   Then I should not see "Printers ultimate deal"
+
+@m5 @tgn @_tested
+Scenario: I should not see the cart when I'm a big buyer
+  Then I should not see translated "layout.cart.cart_header" with options "count:0"

@@ -41,10 +41,11 @@ Scenario: I can create transaction (manual) for given invoice (need to supply am
 @_tested @added
 Scenario: I can edit transaction (manual) for given invoice
   Then I follow translated "administration.payment_transactions.index.view.edit"
-  And I fill in "manual_transaction_amount" with "121.99"
-  And I fill in "manual_transaction_paid_at" with "01-12-2010 00:00:00"
+  And I fill in "payment_transaction_amount" with "121.99"
+  And I fill in "payment_transaction_paid_at" with "01-12-2010 00:00:00"
   And I press translated "administration.payment_transactions.edit.view.button_update"
   Then I should see translated "flash.payment_transactions.update.notice"
+  And I should see "121.99"
 
 @_tested
 Scenario: I can create more than one transaction for given invoice
@@ -63,3 +64,40 @@ Scenario: I can create more than one transaction for given invoice
 
 @m0
 Scenario: I can refund a transaction manually (what is the implication??)
+
+@m5 @added @tgn @sprint_5_corrections @_tested
+Scenario: I can search for a transaction by a combination of keyword: contact name, company name, lead name, invoice number and a specific time period (date from to date to)
+  Given VAT ratio is set to 0.0
+  Given I have user with email bigbuyer1@person.com and role customer
+  And User bigbuyer1@person.com with role customer is big buyer
+  Given a lead TV ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role customer
+  And lead TV ultimate deal exists with attributes "price:77.99,contact_name:Jill Johanssen,company_name:AIG Inc"
+  And user with email "bigbuyer1@person.com" and role "customer" has invoice generated for all unpaid leads
+  Given first invoice for user "bigbuyer1@person.com" with role "customer" exists with attributes "sale_date:2010-12-11"
+  Given a lead Wires ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role customer
+  And lead Wires ultimate deal exists with attributes "price:88.32,contact_name:Tom Blanq,company_name:Xerox"
+  And user with email "bigbuyer1@person.com" and role "customer" has invoice generated for all unpaid leads
+  And I am not sign in
+  Then I sign in as bob@person.com with password supersecret
+  And I go to administration transactions
+  When I fill in "search_with_keyword" with "1"
+  And I press translated "administration.payment_transactions.index.view.search_button"
+  Then I should see "1/201"
+  When I fill in "search_with_keyword" with "jill johanssen"
+  And I press translated "administration.payment_transactions.index.view.search_button"
+  Then I should see "77.99"
+  Then I should not see "88.32"
+  When I fill in "search_with_keyword" with "xerox"
+  And I press translated "administration.payment_transactions.index.view.search_button"
+  Then I should not see "77.99"
+  Then I should see "88.32"
+  When I fill in "search_with_keyword" with "tv ultimate"
+  And I press translated "administration.payment_transactions.index.view.search_button"
+  Then I should see "77.99"
+  Then I should not see "88.32"
+  When I fill in "search_with_keyword" with ""
+  And I fill in "search_with_sale_date_after_and_including" with "2010-12-10"
+  And I fill in "search_with_sale_date_before_and_including" with "2011-01-10"
+  And I press translated "administration.payment_transactions.index.view.search_button"
+  Then I should see "77.99"
+  Then I should not see "88.32"

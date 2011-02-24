@@ -10,7 +10,11 @@ module ActionController
         when String
           request.protocol + request.host_with_port + options
         when :back
-          raise RedirectBackError unless refer = request.headers["Referer"]
+          if request.headers["Referer"].blank?
+            refer = "/"
+          else
+            refer = request.headers["Referer"]
+          end
           if refer.include?("/bulk_action")
             refer = session[:bulk_action_back].blank? ? root_url : session[:bulk_action_back]
           end

@@ -2,6 +2,7 @@ class Category < ActiveRecord::Base
   translates :name, :description
 
   acts_as_nested_set
+  has_many :lead_templates
   has_many :category_translations
   has_one :image,
           :class_name => "Asset::CategoryImage",
@@ -9,11 +10,13 @@ class Category < ActiveRecord::Base
           :conditions => "asset_type = 'Asset::CategoryImage'",
           :dependent  => :destroy
   has_many :category_interests
+  has_many :news, :as => :resource, :class_name => "Article::News::CategoryHome"
 
   after_save :set_cached_slug
   before_save :handle_locking_for_descendants
 
   validates_presence_of :name
+  validates_uniqueness_of :name, :scope => :parent_id
 
   has_many :leads do
     def including_subcategories
@@ -27,6 +30,11 @@ class Category < ActiveRecord::Base
     end
   end
 
+  has_many :category_customers
+  has_many :category_agents
+  has_many :customers, :through => :category_customers, :source => :user
+  has_many :agents, :through => :category_agents, :source => :user
+
   scope :without_locked_and_not_published, where("is_locked = ? or (is_locked = ? and published_leads_count > 0)", false, true)
   scope :within_accessible, lambda { |customer| where("categories.id IN (?)", customer.accessible_categories_ids) }
   scope :without_locked, where("is_locked = ?", false)
@@ -35,6 +43,11 @@ class Category < ActiveRecord::Base
   scope :with_lead_request_requested_by, lambda { |requested_by| select("DISTINCT(name), categories.*").where("lead_purchases.requested_by = ?", requested_by.id).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
   scope :with_lead_purchase_owner, lambda { |owner| select("DISTINCT(name), categories.*").where("requested_by IS NULL and lead_purchases.owner_id = ? and accessible_from IS NOT NULL", owner.id).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
   scope :with_lead_purchase_assignee, lambda { |assignee| select("DISTINCT(name), categories.*").where("lead_purchases.assignee_id = ? and accessible_from IS NOT NULL", assignee.id).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
+  scope :with_lead_templates_created_by, lambda { |creator| select("DISTINCT(categories.name), categories.*").where("lead_templates.creator_id = ?", creator.id).joins(:lead_templates) }
+  scope :without_unique, where("is_customer_unique = ? and is_agent_unique = ?", false, false)
+  scope :with_customer_unique, lambda { |customer| where("(is_customer_unique = ? and category_customers.user_id is NULL) or (is_customer_unique = ? and category_customers.user_id = ?)", false, true, customer.id).joins("LEFT JOIN category_customers ON categories.id=category_customers.category_id") }
+  scope :with_agent_unique, lambda { |agent| where("(is_agent_unique = ? and category_agents.user_id is NULL) or (is_agent_unique = ? and category_agents.user_id = ?)", false, true, agent.id).joins("LEFT JOIN category_agents ON categories.id=category_agents.category_id") }
+  scope :with_call_centre_unique, lambda { |call_centre| where("(is_agent_unique = ? and category_agents.user_id is NULL) or (is_agent_unique = ? and category_agents.user_id IN (?))", false, true, call_centre.subaccounts.map(&:id)).joins("LEFT JOIN category_agents ON categories.id=category_agents.category_id") }
 
   before_destroy :check_if_category_is_empty
 
@@ -42,15 +55,19 @@ class Category < ActiveRecord::Base
 
   private
 
-  def id_and_name
+  def seo_name(add_id = false)
     name_en = CategoryTranslation.first(:conditions => ["category_id = ? and locale = ?", self.id, "en"])
-    "#{id} #{name_en.blank? ? '' : name_en.name}".to_url
+    "#{add_id ? id : ''} #{name_en.blank? ? '' : name_en.name}".to_url
+  end
+
+  def seo_name_with_id
+    seo_name(true)
   end
 
   def set_cached_slug
-    if cached_slug.blank? or cached_slug != id_and_name
-      self.cached_slug = id_and_name
-      self.save
+    if cached_slug.blank? or cached_slug != seo_name
+      self.cached_slug = seo_name
+      self.save unless seo_name.blank?
     end
   end
 
