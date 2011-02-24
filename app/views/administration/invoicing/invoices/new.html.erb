@@ -1,6 +1,4 @@
 <column-mc:>
-  <h1>New invoice</h1>
-
   <header back="true"><%= t("administration.invoices.new.view.header") %></header>
 
   <clb/>
@@ -17,6 +15,7 @@
               <%= form.inputs do %>
                   <%= form.input :user, :include_blank => false %>
                   <%= form.input :seller, :collection => Seller.all, :include_blank => false %>
+                  <%= form.input :currency_id, :as => :hidden%>
               <% end %>
             </ol>
           </fieldset>

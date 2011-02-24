@@ -6,7 +6,7 @@
     <ul>
     <% @categories.each_with_index do |category, index| %>
         <li>
-          <%= check_box_tag("categories[]", category.id, current_user.restricted_category_ids.to_a.include?(category.id), :id => "category_#{index}") %>
+          <%= check_box_tag("categories[]", category.id, Array(current_user.restricted_category_ids).include?(category.id), :id => "category_#{index}") %>
           <%= category.name %>
         </li>
     <% end %>

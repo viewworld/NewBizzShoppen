@@ -126,7 +126,7 @@ class Invoice < ActiveRecord::Base
 
   def generate_invoice_lines_for_big_buyer
     if user and user.big_buyer?
-      User::Customer.find(user_id).lead_purchases.select { |lp| lp.invoice_line.blank? }.each do |lead_purchase|
+      User::Customer.find(user_id).lead_purchases.select { |lp| lp.invoice_line.blank? and lp.lead.currency_id == currency_id }.each do |lead_purchase|
         InvoiceLine.create(:invoice => self, :payable => lead_purchase, :name => lead_purchase.lead.header, :netto_price => lead_purchase.lead.price, :vat_rate => user.country_vat_rate)
       end
     end
