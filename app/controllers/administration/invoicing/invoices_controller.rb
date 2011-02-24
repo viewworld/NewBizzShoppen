@@ -21,7 +21,7 @@ class Administration::Invoicing::InvoicesController < Administration::Administra
   def show
     super do |format|
       format.html
-      format.pdf { send_file @invoice.store_pdf, :type => 'application/pdf'}
+      format.pdf { send_file @invoice.store_pdf(current_user), :type => 'application/pdf'}
     end
   end
 

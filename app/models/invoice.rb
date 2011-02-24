@@ -164,7 +164,7 @@ class Invoice < ActiveRecord::Base
   #---------------------- { INSTANCE METHODS } -----------------------
   #-------------------------------------------------------------------
 
-  def markup
+  def markup(current_user)
     av = ActionView::Base.new
     av.assigns[:invoice] = self
     av.instance_eval do
@@ -174,7 +174,7 @@ class Invoice < ActiveRecord::Base
 
     html_template = get_template_source
     html_markup = [:original].map do |version|
-      av.render(:inline => html_template, :type => :erb, :layout => '/app/views/layouts/pdf', :locals => {:version => version, :invoice => self})
+      av.render(:inline => html_template, :type => :erb, :layout => '/app/views/layouts/pdf', :locals => {:version => version, :invoice => self, :current_user => current_user})
     end.join
 
     MARKUP_SCAFFOLD % html_markup
@@ -184,8 +184,8 @@ class Invoice < ActiveRecord::Base
     Rails.root.join("public/html2pdf/#{filename}.html")
   end
 
-  def store_pdf
-    File.open(temp_invoice_path, 'w') {|f| f.write(markup) }
+  def store_pdf(current_user)
+    File.open(temp_invoice_path, 'w') {|f| f.write(markup(current_user)) }
     `python public/html2pdf/pisa.py #{temp_invoice_path} #{filepath}`
     File.delete(temp_invoice_path)
     filepath

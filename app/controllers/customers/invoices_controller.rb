@@ -5,7 +5,7 @@ class Customers::InvoicesController < Customers::CustomerController
     @invoice = Invoice.for_user(current_user).find(params[:id])
     super do |format|
       format.html
-      format.pdf { send_file @invoice.store_pdf, :type => 'application/pdf'}
+      format.pdf { send_file @invoice.store_pdf(current_user), :type => 'application/pdf'}
     end
   end
 
