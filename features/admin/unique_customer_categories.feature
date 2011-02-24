@@ -35,7 +35,7 @@ Scenario: I can assign one or more sales managers to category marked as customer
   And "selected_customers" should be selected for value "lead_buyer3483434biz@nbs.com"
   And "selected_customers" should be selected for value "buyer93928biz@nbs.com"
 
-@_tested @selenium @wip
+@_tested @selenium
 Scenario: I can search customers by first name, last name and email
   Given I have user with email buyer93928biz@nbs.com and role customer
   And I have user with email lead_buyer3483434biz@nbs.com and role customer
