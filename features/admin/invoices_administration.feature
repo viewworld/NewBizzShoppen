@@ -528,3 +528,14 @@ Scenario: On Invoices listing there should be sums present in top right hand cor
   Then I should see "Total: 3"
   And I should see "Paid: 2"
   And I should see "Unpaid: 1"
+
+@added @m5 @ao @_done @_tested
+Scenario: I should see payment details
+  Given I have user with email bigbuyer1@person.com and role customer
+  And User bigbuyer1@person.com with role customer is big buyer
+  And a lead Monitors ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role customer
+  And lead Monitors ultimate deal exists with attributes "price:304.35,currency_id:1"
+  And user with email "bigbuyer1@person.com" and role "customer" has invoice generated for all unpaid leads
+  And I go to administration invoices
+  And I follow translated "administration.invoices.index.view.show_invoice"
+  Then I should see CSS path "div.status_data"

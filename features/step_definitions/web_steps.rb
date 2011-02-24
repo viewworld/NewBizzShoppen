@@ -356,3 +356,7 @@ end
 Then /^I should see CSS path "([^"]*)"$/ do |selector|
   page.all(:css, selector).size.should eql(1)
 end
+
+Then /^I should not see CSS path "([^"]*)"$/ do |selector|
+  page.all(:css, selector).size.should eql(0)
+end
