@@ -126,6 +126,7 @@ Scenario: I should be able to click "Add to cart button" that will redirect me t
   And I follow translated "buyer_home.show.view.create_new_buyer_account"
   Then I fill in "user_customer_first_name" with "John"
   And I fill in "user_customer_last_name" with "Doe"
+  And I fill in "user_customer_company_name" with "Doe Ltd"
   And I fill in "user_customer_phone" with "31242342424234"
   And I fill in "user_customer_email" with "johndoecustomer@person.com"
   And I fill in "user_customer_screen_name" with "John D."
