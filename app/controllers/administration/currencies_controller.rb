@@ -3,7 +3,7 @@ class Administration::CurrenciesController < Administration::AdministrationContr
   actions :all, :except => [:show]
 
   set_tab "settings"
-  set_tab "currencies"
+  set_subtab "currencies"
 
   def create
     create! do |success,failure|

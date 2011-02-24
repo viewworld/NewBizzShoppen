@@ -2,34 +2,22 @@
 <%= main_menu_link_to t("layout.main_menu.admin.categories"), administration_categories_path, :tab => "categories" %>
 <%= main_menu_link_to t("layout.main_menu.admin.leads"), administration_leads_path, :tab => "leads" %>
 
-<li class="has_child">
-  <%= link_to content_tag(:span, t("layout.main_menu.admin.financial")), "#" %>
-  <ul class="subnav">
-    <%= main_menu_link_to t("layout.main_menu.admin.financial"), "#", :additional_class => "first", :tab => "financial" %>
+<%= main_menu_link_with_subtabs_to :title => t("layout.main_menu.admin.financial"), :tab => "financial" do  %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.upcoming_invoices")), administration_invoicing_upcoming_invoices_path, :subtab => "upcoming_invoices" %>
     <li class="link"><%= link_to content_tag(:span, t("layout.main_menu.admin.creditors")), "#" %></li>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.invoices")), administration_invoicing_invoices_path, :subtab => "invoices" %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.payment_transactions")), administration_invoicing_payment_transactions_path, :additional_class => "last", :subtab => "payment_transactions", :additional_class => "last" %>
-  </ul>
-</li>
+<% end %>
 
-<li class="has_child">
-  <%= link_to content_tag(:span, t("layout.main_menu.admin.content")), "#" %>
-  <ul class="subnav">
-    <%= main_menu_link_to t("layout.main_menu.admin.content"), "#", :additional_class => "first", :tab => "content" %>
+<%= main_menu_link_with_subtabs_to :title => t("layout.main_menu.admin.content"), :tab => "content" do  %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.articles")), administration_articles_path, :subtab => "articles" %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.news")), administration_news_index_path, :subtab => "news", :additional_class => "last" %>
-  </ul>
-</li>
+<% end %>
 
-<li class="has_child">
-  <%= link_to content_tag(:span, t("layout.main_menu.admin.settings")), "#" %>
-  <ul class="subnav">
-    <%= main_menu_link_to t("layout.main_menu.admin.settings"), "#", :additional_class => "first", :tab => "settings" %>
+<%= main_menu_link_with_subtabs_to :title => t("layout.main_menu.admin.settings"), :tab => "settings" do  %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.global")), edit_administration_setting_path, :subtab => "global" %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.email_templates")), administration_email_templates_path, :subtab => "email_templates" %>
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.currencies")), administration_currencies_path, :subtab => "currencies", :additional_class => "last" %>
-  </ul>
-</li>
+<% end %>
 
 <%= main_menu_link_to t("layout.main_menu.admin.sellers"), administration_sellers_path, :tab => "sellers" %>

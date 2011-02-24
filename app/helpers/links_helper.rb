@@ -20,4 +20,12 @@ module LinksHelper
   def sub_menu_link_to(*args, &block)
     menu_link_to(true, *args, &block)
   end
+
+  def main_menu_link_with_subtabs_to(*args, &block)
+    options = args.clone.extract_options!
+
+    content_tag(:li, :class => "has_child#{' active' if self.send(:tab) == options[:tab]}") do
+      content_tag(:a, content_tag(:span, options[:title])) +  content_tag(:ul, main_menu_link_to(options[:title], "#", :additional_class => "first", :tab => options[:tab]) + capture(&block), :class => "subnav")
+    end
+  end
 end
