@@ -47,6 +47,7 @@ Feature: Freelance agent signup
     And I fill in the following:
       | user_customer_first_name                               | Bob             |
       | user_customer_last_name                                | Taker           |
+      | user_customer_company_name                             | Taker Ltd       |
       | user_customer_phone                                    | 48928217272     |
       | user_customer_screen_name                              | Bob T           |
       | user_customer_email                                    | user@domain.dom |
