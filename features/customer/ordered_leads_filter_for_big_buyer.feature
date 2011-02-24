@@ -1,7 +1,7 @@
 @lead_manager @$_big_buyer @m5 @ao
 Feature: Ordered leads filter for big buyer
 
-  @_done @wip
+  @_done
   Scenario: I can browse not paginated list of lead ordered and not invoiced
     Given I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
     And User jon@lajoie.ca with role customer is big buyer
