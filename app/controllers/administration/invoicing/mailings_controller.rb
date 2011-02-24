@@ -3,7 +3,7 @@ class Administration::Invoicing::MailingsController < Administration::Administra
 
   def new
     @email_template_preview = EmailTemplatePreview.new(:invoice, {:invoice => @invoice})
-    @email_template_preview.invoice_filename = @invoice.store_pdf.basename
+    @email_template_preview.invoice_filename = @invoice.store_pdf(current_user).basename
   end
 
   def create
