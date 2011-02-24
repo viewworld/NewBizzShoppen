@@ -35,7 +35,7 @@ Scenario: I can assign one or more sales managers to category marked as customer
   And "selected_customers" should be selected for value "lead_buyer3483434biz@nbs.com"
   And "selected_customers" should be selected for value "buyer93928biz@nbs.com"
 
-@_tested @selenium
+@_tested @selenium @wip
 Scenario: I can search customers by first name, last name and email
   Given I have user with email buyer93928biz@nbs.com and role customer
   And I have user with email lead_buyer3483434biz@nbs.com and role customer
@@ -51,7 +51,7 @@ Scenario: I can search customers by first name, last name and email
   Then I press translated "administration.categories.edit.view.button_update"
   And I should see translated "flash.categories.actions.update.notice"
   Then I follow translated "administration.categories.index.view.edit_link"
-  And "all_customers" should be selected for value "nbsbuyer3483434biz@nbs.com"
+  And "selected_customers" should be selected for value "nbsbuyer3483434biz@nbs.com"
 
 @_done @non_testable
 Scenario: Each category marked as unique for certain customer is added to that customer's interests
