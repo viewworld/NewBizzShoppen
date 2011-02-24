@@ -25,7 +25,7 @@ module LinksHelper
     options = args.clone.extract_options!
 
     content_tag(:li, :class => "has_child#{' active' if self.send(:tab) == options[:tab]}") do
-      content_tag(:a, content_tag(:span, options[:title])) +  content_tag(:ul, main_menu_link_to(options[:title], "#", :additional_class => "first", :tab => options[:tab]) + capture(&block), :class => "subnav")
+      content_tag(:a, content_tag(:span, options[:title]), :href => "#") + content_tag(:ul, main_menu_link_to(options[:title], "#", :additional_class => "first", :tab => options[:tab]) + capture(&block), :class => "subnav")
     end
   end
 end
