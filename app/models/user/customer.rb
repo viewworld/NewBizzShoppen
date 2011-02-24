@@ -16,6 +16,7 @@ class ::User::Customer < ::User
   has_many :invoices, :foreign_key => "user_id"
   has_many :category_customers, :foreign_key => "user_id"
   has_many :unique_categories, :through => :category_customers, :foreign_key => "user_id", :source => :category
+  has_many :accessible_lead_purchases, :foreign_key => :owner_id, :class_name => "LeadPurchase", :conditions => "accessible_from IS NOT NULL"
 
   accepts_nested_attributes_for :lead_purchases
 
