@@ -37,6 +37,11 @@ Feature: Invoices administration as customer
     And I should see translated "customer.invoices.show.view.payment_method"
     And I should see translated "customer.invoices.show.view.status"
 
+  @added @m5 @ao @_done @_tested
+  Scenario: I should not see payment details
+    When I follow translated "customer.invoices.index.view.show_invoice"
+    Then I should not see CSS path "div.status_data"
+
   @_done
   Scenario: I can download invoice as PDF file
     When I follow translated "customer.invoices.index.view.show_invoice"

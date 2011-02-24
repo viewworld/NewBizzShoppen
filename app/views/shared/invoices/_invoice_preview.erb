@@ -163,18 +163,21 @@
     <% end %>
   </div>
 
-  <div class="status_data">
-    <h2><%= t("administration.invoices.show.view.status") %></h2>
-    <table>
-      <tbody>
-       <tr>
-         <td><strong><%= t("administration.invoices.show.view.creation_place") %></strong> <%= invoice.creation_place %></td>
-         <td><strong><%= t("administration.invoices.show.view.emailed_at") %></strong> <%= invoice.emailed_at or "-" %></td>
-         <td><strong><%= t("administration.invoices.show.view.paid_at") %></strong> <%= invoice.paid_at or "-" %></td>
-         <td><strong><%= t("administration.invoices.show.view.paid_at") %></strong> <%= invoice.paid_at or "-" %></td>
-         <td><strong><%= t("administration.invoices.show.view.cashflow") %></strong> <%= number_to_currency(invoice.cash_flow, :unit => invoice.currency.symbol) %></td>
-       </tr>
-      </tbody>
-    </table>
-  </div>
+  <% if current_user.has_role? :admin %>
+      <div class="status_data">
+        <h2><%= t("administration.invoices.show.view.status") %></h2>
+        <table>
+          <tbody>
+           <tr>
+             <td><strong><%= t("administration.invoices.show.view.creation_place") %></strong> <%= invoice.creation_place %></td>
+             <td><strong><%= t("administration.invoices.show.view.emailed_at") %></strong> <%= invoice.emailed_at or "-" %></td>
+             <td><strong><%= t("administration.invoices.show.view.paid_at") %></strong> <%= invoice.paid_at or "-" %></td>
+             <td><strong><%= t("administration.invoices.show.view.paid_at") %></strong> <%= invoice.paid_at or "-" %></td>
+             <td><strong><%= t("administration.invoices.show.view.cashflow") %></strong> <%= number_to_currency(invoice.cash_flow, :unit => invoice.currency.symbol) %></td>
+           </tr>
+          </tbody>
+        </table>
+      </div>
+  <% end %>
+
 </div>
