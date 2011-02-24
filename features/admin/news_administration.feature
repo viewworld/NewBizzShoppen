@@ -66,7 +66,6 @@ Scenario: I can create new news entry
 @selenium @_done
 Scenario: I have to specify both title and content for news entry
   When I click hidden link by url regex "/administration\/news/"
-  And I open page in browser
   And I follow translated "administration.news.index.view.new_news"
   And I fill in "news_title" with "FirstNews"
   And I press translated "administration.news.edit.view.button_save"
