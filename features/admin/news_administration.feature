@@ -63,7 +63,7 @@ Scenario: I can create new news entry
   And I press translated "administration.news.edit.view.button_save"
   And I should be on administration FirstNews news page
 
-@selenium @_done @_wip
+@selenium @_done
 Scenario: I have to specify both title and content for news entry
   When I click hidden link by url regex "/administration\/news/"
   And I open page in browser
