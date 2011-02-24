@@ -26,7 +26,7 @@ class Buyers::LeadPurchasesController < Buyers::BuyerController
   public
 
   def show
-    #@lead_purchase = current_user.accessible_lead_purchases.find(params[:id])
+    @lead_purchase = current_user.accessible_lead_purchases.find(params[:id])
     super do |format|
       format.csv { send_data @lead_purchase.to_csv, :filename => "lead-#{@lead_purchase.lead.header.parameterize}.csv" }
       format.print {
