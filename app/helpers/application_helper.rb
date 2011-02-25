@@ -139,4 +139,8 @@ module ApplicationHelper
      end
     end
   end
+
+  def bt_clear_filter(url=nil)
+    button_to_function t("common.clear_filter"), "document.location = '#{url || request.path}'"
+  end
 end

@@ -1,6 +1,6 @@
 <search-box:>
   <div class="search_box">
-    <h2>Search</h2>
+    <h2><%= t("common.search") %></h2>
 
     <div class="search_content">
       <%= form_for @search, :url => administration_articles_path do |f| %>
@@ -14,9 +14,13 @@
                 <%= f.label :with_subclass, t("administration.leads.index.search.article_label") %>
                 <%= f.select :with_subclass, article_scope_for_select, :include_blank => true %>
               </li>
+
               <li class="commit">
                 <ibt c="bt_green" icon="magnify">
                   <%= submit_tag t("administration.articles.index.view.search_button") %>
+                </ibt>
+                <ibt c="fltri bt_grey">
+                  <%= bt_clear_filter %>
                 </ibt>
               </li>
             </ol>

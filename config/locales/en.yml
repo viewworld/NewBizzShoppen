@@ -14,6 +14,8 @@ en:
     read_more: 'read more'
     all_label: 'All'
     nothing_to_display: 'Nothing to display'
+    search: 'Search'
+    clear_filter: 'Clear filter'
   layout:
     main_menu:
       admin:
