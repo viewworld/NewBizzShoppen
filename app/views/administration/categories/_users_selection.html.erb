@@ -15,7 +15,7 @@
       <%= select_tag "all_#{users_type}", options_for_select((users_type == "customers" ? (User.with_customers - @category.customers) : User.with_agents - @category.agents).map { |u| [unique_category_select_name(u), u.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
     </div>
 
-    <div class="grid_160 fltl" style="margin-right: 10px;margin-top:30px;">
+    <div class="grid_160 fltl" style="margin-right: 10px;,margin-top:30px;">
       <p class="ta_c pdd_5 no_pdd_lr"><%= bt_link_to nil, t("administration.categories.form.move_users_right"), "javascript:move_users_to_all('#{users_type}')", :id => "move_right" %></p>
       <p class="ta_c"><%= bt_link_to nil, t("administration.categories.form.move_users_left"), "javascript:move_users_to_selected('#{users_type}')", :id => "move_left" %></p>
     </div>
