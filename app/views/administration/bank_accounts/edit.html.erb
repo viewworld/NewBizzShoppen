@@ -1,5 +1,5 @@
 <column-mc:>
-  <header><%= t('administration.bank_accounts.edit.view.header') %></header>
+  <header><%= t('administration.bank_accounts.edit.view.header', :name => @bank_account.bank_name) %></header>
 
   <%= semantic_form_for @bank_account, :as => :bank_account, :url => administration_bank_account_path(@bank_account), :input_html => {:method => :put} do |form| %>
       <frm title="#{@bank_account.bank_name}">

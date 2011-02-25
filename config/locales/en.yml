@@ -335,7 +335,7 @@ en:
           delete_confirmation_message: 'Are you sure?'
       edit:
         view:
-          title: Edit user
+          title: 'Editing user: %{name}'
           button_update_user: Save
           button_cancel: Cancel
           reset_password_link: Reset password
@@ -358,7 +358,7 @@ en:
           button_cancel: Cancel
       edit:
         view:
-          header: Edit lead template
+          header: 'Editing lead template: %{name}'
           button_update: Save
           button_cancel: Cancel
       destroy:
@@ -416,7 +416,7 @@ en:
           actions_column: 'Actions'
       edit:
         view:
-          title: 'Edit template'
+          title: 'Editing template: %{name}'
           button_update: 'Save'
 
     leads:
@@ -453,7 +453,7 @@ en:
           view_all_leads_link: 'View all leads'
       edit:
         view:
-          header: 'Edit lead'
+          header: 'Editing lead: %{lead_header}'
           rating_header: 'Ratings'
           button_update: 'Save'
           button_cancel: 'Cancel'
@@ -470,7 +470,7 @@ en:
           button_create: 'Create article'
       edit:
         view:
-          header: 'Edit article'
+          header: 'Editing article %{name}'
           button_save: 'Save article'
       index:
         view:
@@ -517,7 +517,7 @@ en:
           header: 'News'
       edit:
         view:
-          header: 'Edit news'
+          header: 'Editing news %{name}'
           button_save: 'Save news'
           category_label: 'Category'
     currencies:
@@ -543,7 +543,7 @@ en:
           button_cancel: 'Cancel'
       edit:
         view:
-          header: 'Edit currency'
+          header: 'Editing currency: %{name}'
           button_update_currency: 'Update currency'
           button_cancel: 'Cancel'
       destroy:
@@ -620,7 +620,7 @@ en:
             amount: 'Amount'
       edit:
         view:
-          header: 'Edit invoice'
+          header: 'Editing invoice #%{number} for %{name}'
           save_button: 'Save'
           save_changes: 'Save changes'
           add_line: 'Add line'
@@ -721,7 +721,7 @@ en:
           default: 'Default'
       edit:
         view:
-          header: 'Edit seller'
+          header: 'Editing seller: %{name}'
           button_update: 'Save'
 
 
@@ -751,7 +751,7 @@ en:
           button_create: 'Create'
       edit:
         view:
-          header: 'Edit transaction'
+          header: 'Editing invoice #%{number} transaction for %{name}'
           button_update: 'Save'
     upcoming_invoices:
       index:
@@ -790,7 +790,7 @@ en:
           no_bank_accounts_defined: 'No bank accounts defined'
       edit:
         view:
-          header: 'Edit bank account'
+          header: 'Editing bank account: %{name}'
           button_save: 'Save'
       new:
         view:
@@ -833,7 +833,7 @@ en:
           button_create: 'Create'
       edit:
         view:
-          header: 'Edit VAT rate'
+          header: 'Editing VAR rate for:  %{name}'
           button_save: 'Save'
       common:
         view:
@@ -872,7 +872,7 @@ en:
           remove_language: 'Remove'
       edit:
         view:
-          title: 'Edit lead'
+          title: 'Editing lead: %{name}'
           button_update: 'Save'
           rating_header: Ratings
           rating_level: Rating
@@ -896,7 +896,7 @@ en:
           button_cancel: Cancel
       edit:
         view:
-          header: Edit lead template
+          header: 'Editing lead template: %{name}'
           button_update: Save
           button_cancel: Cancel
       destroy:
@@ -924,7 +924,7 @@ en:
           button_cancel: Cancel
       edit:
         view:
-          header: Edit lead template
+          header: 'Editing lead template: %{name}'
           button_update: Save
           button_cancel: Cancel
       destroy:
@@ -967,7 +967,7 @@ en:
           button_cancel: 'Cancel'
       edit:
         view:
-          title: 'Edit call centre agent'
+          title: 'Editing call centre agent: %{name}'
           button_update: 'Save'
           button_cancel: 'Cancel'
       create:
@@ -998,7 +998,7 @@ en:
           option_not_published: not published
       edit:
         view:
-          title: Edit lead
+          title: 'Editing lead: %{name}'
           button_update: Save
           button_cancel: Cancel
       destroy:
@@ -1031,7 +1031,7 @@ en:
           button_cancel: Cancel
       edit:
         view:
-          title: Edit lead
+          title: 'Editing lead: %{name}'
           button_update: Save
           button_cancel: Cancel
       destroy:
@@ -1057,7 +1057,7 @@ en:
           button_cancel: Cancel
       edit:
         view:
-          header: Edit lead template
+          header: 'Editing lead template: %{name}'
           button_update: Save
           button_cancel: Cancel
       destroy:
@@ -1101,7 +1101,7 @@ en:
           remove_language: 'Remove'
       edit:
         view:
-          title: 'Edit lead'
+          title: 'Editing lead: %{name}'
           button_update: 'Save'
     lead_templates:
       index:
@@ -1122,7 +1122,7 @@ en:
           button_cancel: Cancel
       edit:
         view:
-          header: Edit lead template
+          header: 'Editing lead template: %{name}'
           button_update: Save
           button_cancel: Cancel
       destroy:
@@ -1323,7 +1323,7 @@ en:
           button_create: 'Create'
       edit:
         view:
-          title: 'Edit'
+          title: 'Editing user %{name}'
           button_update: 'Save'
       update:
         flash:

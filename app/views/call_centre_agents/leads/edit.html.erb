@@ -1,6 +1,6 @@
 <column-mc:>
-  <header back="true"><%= t("call_centre_agent.leads.edit.view.title") %></header>
-<%= semantic_form_for [:call_centre_agents, @lead], :method => :put do |form| %>
+  <header back="true"><%= t("call_centre_agent.leads.edit.view.title", :name => @lead.header) %></header>
+    <%= semantic_form_for [:call_centre_agents, @lead], :method => :put do |form| %>
       <frm title="Edit">
         <param:content>
           <%= render :partial => '/shared/leads/form', :locals => { :form => form }  %>
@@ -14,5 +14,5 @@
           </ibt>
         </param:actions>
       </frm>
-<% end %>
+    <% end %>
 </column-mc:>

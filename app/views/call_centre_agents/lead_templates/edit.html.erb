@@ -1,5 +1,5 @@
 <column-mc:>
-  <header back="true"><%= t("call_centre_agent.lead_templates.edit.view.header") %></header>
+  <header back="true"><%= t("call_centre_agent.lead_templates.edit.view.header", :name => @lead_template.name) %></header>
   <%= semantic_form_for [:call_centre_agents, @lead_template], :method => :put do |form| %>
       <frm title="">
         <param:content>

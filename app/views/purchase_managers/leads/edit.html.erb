@@ -1,5 +1,5 @@
 <column-mc:>
-  <header back="true"><%= t("purchase_manager.leads.edit.view.title") %></header>
+  <header back="true"><%= t("purchase_manager.leads.edit.view.title", :name => @lead.header) %></header>
 <%= semantic_form_for [:purchase_managers, @lead], :method => :put do |form| %>
       <frm title="Edit">
         <param:content>

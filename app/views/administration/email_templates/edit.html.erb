@@ -1,5 +1,5 @@
 <column-mc:>
-  <header back="true"><%= t("administration.email_templates.edit.view.title") %></header>
+  <header back="true"><%= t("administration.email_templates.edit.view.title", :name => @email_template.subject) %></header>
 
   <%= semantic_form_for [:administration, @email_template], :url => administration_email_template_path(@email_template), :method => :put do |form| %>
       <frm title="Edit">

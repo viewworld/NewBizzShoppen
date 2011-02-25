@@ -1,7 +1,7 @@
 <column-mc:>
 
   <header back="true">
-    <%= t('administration.news.edit.view.header') %>
+    <%= t('administration.news.edit.view.header', :name => @news.title) %>
   </header>
 
   <%#= link_to t("common.back_link"), administration_news_index_path %>

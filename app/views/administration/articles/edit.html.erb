@@ -1,6 +1,6 @@
 <column-mc:>
   <header back="true">
-    <%= t('administration.articles.edit.view.header') %>
+    <%= t('administration.articles.edit.view.header', :name => @article.title) %>
   </header>
 
   <%= form_for @article, :as => :article, :url => administration_article_path(@article), :html => {:method => :delete, :id => "delete_article_form"} do |form| %>

@@ -2,7 +2,7 @@
 
   <%= javascript_include_tag "jquery.field.min.js", "jquery.calculation.min.js", "invoice_calculations.js", "invoice_navigation.js" %>
 
-  <header back="true"><%= t("administration.invoices.edit.view.header") %> #<%= @invoice.id %></header>
+  <header back="true"><%= t("administration.invoices.edit.view.header", :number => @invoice.id, :name => @invoice.customer_name) %></header>
 
   <%= semantic_form_for [:administration, :invoicing, @invoice] do |form| %>
       <frm title="Edit">
