@@ -368,9 +368,15 @@ en:
     categories:
       form:
         no_parent_category: No parent category
-        move_users_right: Move >
-        move_users_left: < Move
+        move_users_right: 'Grant Access >'
+        move_users_left: '< Remove Access'
         search: Search
+        customers_header: 'Buyer access management'
+        agents_header: 'Agent access management'
+        customers_without_access: 'Buyers without access'
+        agents_without_access: 'Agents without access'
+        customers_with_access: 'Buyers with access'
+        agents_with_access: 'Agent with access'
       index:
         view:
           new_category: 'New category'
