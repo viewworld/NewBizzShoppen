@@ -51,7 +51,7 @@ Scenario: I can search customers by first name, last name and email
   Then I press translated "administration.categories.edit.view.button_update"
   And I should see translated "flash.categories.actions.update.notice"
   Then I follow translated "administration.categories.index.view.edit_link"
-  And "all_customers" should be selected for value "nbsbuyer3483434biz@nbs.com"
+  And "selected_customers" should be selected for value "nbsbuyer3483434biz@nbs.com"
 
 @_done @non_testable
 Scenario: Each category marked as unique for certain customer is added to that customer's interests

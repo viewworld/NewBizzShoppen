@@ -287,7 +287,7 @@ Then /^select with id "([^"]*)" should be selected for translated "([^"]*)" with
 end
 
 Then /^"([^"]*)" should be selected for value "([^"]*)"$/ do |field, value|
-  assert page.has_xpath?("//option[@selected = 'selected' and contains(string(), '#{value}')]")
+  assert page.has_xpath?("//select[@id='#{field}'] //option[@selected = 'selected' and contains(string(), '#{value}')]")
 end
 
 Then /^I should not see field "([^"]*)"$/ do |field|
