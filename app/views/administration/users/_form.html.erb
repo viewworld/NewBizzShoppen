@@ -88,7 +88,7 @@
     <div class="pdd_10 no_pdd_t">
       <fieldset class="inputs labels_ta_r labels_240">
         <ol class="align_inputs">
-          <%= form.input :category_id, :collection => Category.without_locked, :include_blank => false %>
+          <%= form.input :category_id, :collection => Category.roots.without_locked, :include_blank => false %>
         </ol>
       </fieldset>
     </div>

@@ -54,6 +54,13 @@ module CategoriesHelper
 
   end
 
+  def only_root_categories(options={})
+    root_categories = Category.roots.without_locked_and_not_published
+    content_tag(:ul, root_categories.map { |c| content_tag(:li, category_label(c, options).html_safe, :class => "categories_node", :id => dom_id(c)) }.join.html_safe, :class => "categories_tree", :id => "categories_main_tree")
+
+  end
+
+
   def category_tree(category, options={})
     [category_label(category, options), (category_children(category, options))].compact.join.html_safe
   end
