@@ -1,4 +1,4 @@
-@m5b @agent_campaign @$_administrator @$_call_centre @tbo
+@m5b @agent_campaign @$_administrator @$_call_centre @tbr
 Feature: Agent campaign - management
 
 # As campaign administrator - admin or call centere
@@ -16,6 +16,9 @@ Feature: Agent campaign - management
     Scenario: I can sort campaigns
 
     @1
+    Scenario: I can filter campaigns by name
+
+    @1
     Scenario: I can remove selected campaign
 
 
@@ -26,9 +29,9 @@ Feature: Agent campaign - management
 
     @3
     Scenario: I can see contacts list
-
-    @3
-    Scenario: I can see agents list
+    
+    @1
+    Scenario: I can sort contacts list    
 
     @3
     Scenario: I can assign selected contacts to selected agent
@@ -37,13 +40,15 @@ Feature: Agent campaign - management
 
     @2
     Scenario: I can remove contact from campaign
-
-    @2
-    Scenario: I can remove agent from campaign
     
     @1
     Scenario: I can deassign agents from selected contacts
 
+    @1
+    Scenario: I can filter contacts by its fields
+
+    @3
+    Scenario: I can export selected contacts to CSV
 
     #
     #
@@ -53,20 +58,9 @@ Feature: Agent campaign - management
 
     @2
     Scenario: I can assign selected agents to campaign
-
-    #campaigns::agents::show
-    @1
-    Scenario: I can see agent results statistics in campaign
-
-    @1
-    Scenario: I can see agent recent results
-    
-    @3
-    Scenario: I can see agent current call sheet
     
     @1
-    Scenario: I can deassign contact from agent
-
+    Scenario: I can deassign not selected agents to campaign    
 
     #
     #
@@ -79,7 +73,7 @@ Feature: Agent campaign - management
     @3
     Scenario: I can create single contact
 
-    #campaigns::contacts::show
+    #campaigns::contacts::edit
     @3
     Scenario: I can see contact details
 
@@ -92,8 +86,15 @@ Feature: Agent campaign - management
     @3
     Scenario: I can add new result
     
+    @2
+    Scenario: I can edit result    
+    
     @1
     Scenario: I can remove result
+    
+    @3
+    Scenario: I can see template fields for current category
+    #dynamically loaded via ajax
 
 
     #call results
@@ -141,4 +142,10 @@ Feature: Agent campaign - management
 
     @3
     Scenario: I can see results list for given date and result type
+    
+    @2
+    Scenario: I can see results list for given agent list
+    
+    @2
+    Scenario: I can see results list for completed contacts only
 
