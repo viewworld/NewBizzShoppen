@@ -26,7 +26,7 @@
       <li class="header">
         <h3><%= t("shared.leads.form.contact_information") %></h3>
       </li>
-      <%= form.input :contact_name %>
+      <%= form.input :contact_name, :label => t("shared.leads.form.contact_name") %>
       <%= form.input :direct_phone_number, :label => t("shared.leads.form.contact_direct_phone_number") %>
       <%= form.input :phone_number, :label => t("shared.leads.form.contact_mobile_number") %>
       <%= form.input :email_address %>
@@ -48,7 +48,7 @@
       <%= form.input :header, :label => t("shared.leads.form.header") %>
       <%= form.input :description, :input_html => {:style => "height: 140px; width: 600px"}, :label => t("shared.leads.form.description") %>
       <% unless current_user.has_role?(:purchase_manager) %>
-          <%= form.input :hidden_description, :input_html => {:style => "height: 140px; width: 600px"} %>
+          <%= form.input :hidden_description, :input_html => {:style => "height: 140px; width: 600px"}, :label => t("shared.leads.form.hidden_description") %>
       <% end %>
       <%= form.input :purchase_value %>
       <%= form.input :price %>
