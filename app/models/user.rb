@@ -43,7 +43,7 @@ class User < ActiveRecord::Base
   alias_method :parent, :user
 
   scope :with_customers, where("roles_mask & #{2**User.valid_roles.index(:customer)} > 0 ")
-  scope :with_agents, where("(roles_mask & #{2**User.valid_roles.index(:agent)} > 0) or (roles_mask & #{2**User.valid_roles.index(:call_centre_agent)} > 0) or (roles_mask & #{2**User.valid_roles.index(:purchase_manager)} > 0)")
+  scope :with_agents, where("(roles_mask & #{2**User.valid_roles.index(:agent)} > 0) or (roles_mask & #{2**User.valid_roles.index(:call_centre_agent) } > 0) or (roles_mask & #{2**User.valid_roles.index(:purchase_manager)} > 0) or (roles_mask & #{2**User.valid_roles.index(:call_centre) } > 0)")
   scope :with_role, lambda { |role| where("roles_mask & #{2**User.valid_roles.index(role.to_sym)} > 0 ") }
   scope :with_keyword, lambda { |q| where("lower(first_name) like :keyword OR lower(last_name) like :keyword OR lower(email) like :keyword", {:keyword => "%#{q.downcase}%"}) }
   scope :with_subaccounts, lambda { |parent_id| where("parent_id = ?", parent_id) }
@@ -240,14 +240,14 @@ class User < ActiveRecord::Base
   end
 
   def self.refresh_agents_certification_level
-    (User::Agent.all + User::CallCentreAgent.all).each do |user|
+    (User::Agent.all + User::CallCentre.all).each do |user|
       user.refresh_certification_level
       user.save
     end
   end
 
   def certification_level
-    read_attribute(:certification_level) % 10
+    has_role?(:call_centre_agent) ? parent.certification_level : read_attribute(:certification_level) % 10
   end
 
   def refresh_certification_level
@@ -255,7 +255,7 @@ class User < ActiveRecord::Base
   end
 
   def certification_level_ratio
-    Lead.joins(:lead_purchases).where(:creator_id => id, :creator_type => self.class.to_s).count
+    Lead.joins(:lead_purchases).where(:creator_id => has_role?(:call_centre_agent) ? parent.subaccount_ids : id, :creator_type => has_role?(:call_centre_agent) ? "User::CallCentreAgent" : self.class.to_s).count
   end
 
   def calculate_certification_level
