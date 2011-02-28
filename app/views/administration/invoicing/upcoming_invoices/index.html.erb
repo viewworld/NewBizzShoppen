@@ -80,7 +80,7 @@
               <td><%= lead_purchase.not_invoiced_count %></td>
               <td><%= as_currency(lead_purchase.not_invoiced_sum, Currency.where(:id => lead_purchase.currency_id).first) %></td>
               <td class="tda ta_r">
-                <%= bt_link_to nil, t("administration.upcoming_invoices.index.view.create_invoice"), new_administration_invoicing_invoice_path(:invoice => {:user_id => lead_purchase.owner_id, :currency_id => lead_purchase.currency_id}) %>
+                <%= bt_link_to nil, t("administration.upcoming_invoices.index.view.create_invoice"), new_administration_invoicing_invoice_path(:invoice => {:user_id => lead_purchase.owner_id, :currency_id => lead_purchase.currency_id}), :class => "default_action" %>
               </td>
               <td class="cr"></td>
             </tr>

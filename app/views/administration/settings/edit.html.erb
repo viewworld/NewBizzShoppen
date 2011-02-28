@@ -70,7 +70,7 @@
               <td class="tda ta_r">
                 <ul-actions>
                   <li><%= link_to t("administration.bank_accounts.index.view.show"), administration_bank_account_path(ba) %></li>
-                  <li><%= link_to t("administration.bank_accounts.index.view.edit"), edit_administration_bank_account_path(ba) %></li>
+                  <li><%= link_to t("administration.bank_accounts.index.view.edit"), edit_administration_bank_account_path(ba), :class => "default_action" %></li>
                   <li><%= link_to t("administration.bank_accounts.index.view.delete"), administration_bank_account_path(ba), :method => :delete, :confirmation => t("common.confirmation") %></li>
                 </ul-actions>
               </td>
@@ -119,7 +119,7 @@
               <td><%= number_to_percentage(vr.rate, :precision => 2) %></td>
               <td class="tda ta_r">
                 <ul-actions>
-                  <li><%= link_to t("administration.vat_rates.index.view.edit"), edit_administration_vat_rate_path(vr) %></li>
+                  <li><%= link_to t("administration.vat_rates.index.view.edit"), edit_administration_vat_rate_path(vr), :class => "default_action" %></li>
                 </ul-actions>
               </td>
               <td class="cr"></td>
