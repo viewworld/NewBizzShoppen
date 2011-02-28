@@ -144,7 +144,7 @@
         nestedFormsCount = nestedFormsCount - 1;
         $('.lead_template_value_translations_container_' + locale).hide();
         $('.destroy_hidden_field_template_value_tr_' + locale).val('true');
-        $('#locale_picker').append($("<option></option>").attr("value", locale).text(locale));
+        $('#locale_picker').append($("<option></option>").attr("value", locale).text(language_names[locale]));
         if (record_id == null)
         {
             $('#lead_translation_form_' + id).remove();
@@ -201,5 +201,10 @@
     <% if lead_templates.size == 1 and !lead_templates.first.is_mandatory %>
     $('#optional_templates_picker').val('<%= lead_templates.first.id -%>');
     add_template();
+    <% end %>
+
+    var language_names = [];
+    <% Locale.all.each do |locale| %>
+        <%= "language_names['#{locale.code}'] = '#{t('models.locale.' + locale.code)}';" -%>
     <% end %>
 </script>

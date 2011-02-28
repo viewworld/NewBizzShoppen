@@ -1615,6 +1615,9 @@ en:
         type0: Text
         type1: Number
         type2: Date
+    locale:
+      en: English
+      dk: Danish
 
   activerecord:
     models:
