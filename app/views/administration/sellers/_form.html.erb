@@ -13,6 +13,13 @@
       <% end %>
       <%= form.input :vat_no %>
       <%= form.input :default %>
+      <%= label_tag :note, t("administration.sellers.form.note") %>
+      <%= form.input :note,
+                     :label => false,
+                     :as => :ckeditor,
+                     :input_html => {
+                         :width => '1085px',
+                         :height => '150px' } %>
     </ol>
   </fieldset>
 </div>

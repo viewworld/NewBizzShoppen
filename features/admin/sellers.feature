@@ -80,5 +80,11 @@ Feature: Sellers
     And I follow translated "administration.sellers.index.view.add_seller"
     Then I should see CSS path "#seller_company_name"
 
+  @added @selenium @_done @_tested
+  Scenario: Sellers should have invoice note information
+    When I follow translated "layout.main_menu.admin.sellers"
+    And I follow translated "administration.sellers.index.view.add_seller"
+    Then I should see CSS path "#seller_note_input"
+
 
 

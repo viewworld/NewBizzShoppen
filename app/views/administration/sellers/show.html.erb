@@ -55,6 +55,14 @@
             <%= t("administration.sellers.show.view.default") %>: <%= check_box_tag "default", 1, @seller.default?, :disabled => true %>
           </p>
         </div>
+        <div class="grid_1to3 fltl">
+          <p>
+            <strong><%= t("administration.sellers.show.view.note") %>:</strong>
+          </p>
+          <p>
+            <%= raw @seller.note %>
+          </p>
+        </div>
         <clb/>
       </div>
     </param:content>

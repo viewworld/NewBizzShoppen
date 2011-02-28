@@ -611,6 +611,7 @@ en:
           iban_number: 'IBAN No'
           local_bank_number: 'Local bank number'
           payment_conditions: 'Payment conditions'
+          note: 'Invoice note'
           payment_transactions:
             header: 'Transactions'
             type: 'Type'
@@ -718,10 +719,13 @@ en:
           country: 'Country'
           default: 'Default'
           company_name: 'Company'
+          note: 'Invoice note'
       edit:
         view:
           header: 'Editing seller: %{name}'
           button_update: 'Save'
+      form:
+        note: 'Invoice note'
 
 
     payment_transactions:

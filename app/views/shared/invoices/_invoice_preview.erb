@@ -173,6 +173,10 @@
     <% if invoice.details.present? %>
         <p style="padding-top:5px"><%= invoice.details %></p>
     <% end %>
+    <% if invoice.seller.note.present? %>
+        <p><%= t("administration.invoices.show.view.note") %></p>
+        <p style="padding-top:5px"><%= raw invoice.seller.note %></p>
+    <% end %>
   </div>
 
   <% if current_user.has_role? :admin %>
