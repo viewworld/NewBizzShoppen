@@ -1,5 +1,5 @@
 <column-mc:>
-  <header back="true"><%= t("administration.users.edit.view.title") %>: <%= @user.role %></header>
+  <header back="true"><%= t("administration.users.edit.view.title") %>: <%= @user.role.to_s.humanize.downcase %></header>
 
   <%= semantic_form_for @user, :url => administration_user_path, :method => :put do |form| %>
       <frm title="">

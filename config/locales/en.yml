@@ -446,6 +446,7 @@ en:
       edit:
         view:
           header: 'Edit lead'
+          created_by: Created by
           rating_header: 'Ratings'
           button_update: 'Save'
           button_cancel: 'Cancel'
@@ -991,6 +992,7 @@ en:
       edit:
         view:
           title: Edit lead
+          created_by: Created by
           button_update: Save
           button_cancel: Cancel
       destroy:

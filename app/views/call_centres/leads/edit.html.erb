@@ -1,7 +1,7 @@
 <column-mc:>
   <header back="true"><%= t("call_centre.leads.edit.view.title") %></header>
 <%= semantic_form_for [:call_centres, @lead], :method => :put do |form| %>
-      <frm title="Edit">
+      <frm title="#{t('call_centre.leads.edit.view.created_by')} #{@lead.creator.company_name} - #{@lead.creator.email}">
         <param:content>
           <%= render :partial => '/shared/leads/form', :locals => { :form => form }  %>
         </param:content>
