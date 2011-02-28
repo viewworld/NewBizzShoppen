@@ -1195,7 +1195,7 @@ en:
   buyer_home:
     show:
       view:
-        header_welcome: 'Welcome to our site'
+        header: 'Welcome sales manager'
         agent_link: 'click here if you are an agent'
         purchase_manager_link: 'click here if you are a purchase manager'
         header_best_sellers: 'Best sellers'
@@ -1216,7 +1216,7 @@ en:
   agent_home:
     show:
       view:
-        header_welcome: 'Welcome to our site'
+        header: 'Welcome agent'
         buyer_link: 'click here if you are a sales manager'
         purchase_manager_link: 'click here if you are a purchase manager'
         header_best_sellers: 'Best sellers'
@@ -1233,7 +1233,7 @@ en:
   purchase_manager_home:
     show:
       view:
-        header_welcome: 'Welcome to our site'
+        header: 'Welcome purchase manager'
         agent_link: 'click here if you are an agent'
         buyer_link: 'click here if you are a sales manager'
         header_best_sellers: 'Best sellers'
@@ -1250,7 +1250,7 @@ en:
   category_home:
     show:
       view:
-        header_welcome: 'Welcome to our site'
+        header: 'Welcome to category'
         sign_out: 'Sign out'
         header_news: 'News'
         complete_list_link: 'complete list'

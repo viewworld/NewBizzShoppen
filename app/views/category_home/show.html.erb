@@ -1,7 +1,7 @@
 <column-mc:>
   <header>
     <param:content>
-      <%= "Welcome" %>
+      <%= t("category_home.show.view.header") %> <%= @home_category.name %>
     </param:content>
 
     <% if user_signed_in? %>
@@ -17,8 +17,6 @@
   </header>
 
   <div class="pdd_5 no_pdd_b">
-
-    <h2><%= t("category_home.show.view.header_welcome") %></h2>
     <% unless @home_category.image.nil? %>
       <br/>
       <div class="grid_120 fltl">

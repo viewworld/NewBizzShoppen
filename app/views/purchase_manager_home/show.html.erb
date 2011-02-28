@@ -2,7 +2,7 @@
 
   <header>
     <param:content>
-      <%= "Welcome" %>
+      <%= t("purchase_manager_home.show.view.header") %>
     </param:content>
 
     <param:actions>
@@ -44,13 +44,6 @@
     <% end %>
 
     <div class="<%= "grid_730 fltl" unless user_signed_in? %>">
-      <h2><%= t("agent_home.show.view.header_welcome") %></h2>
-
-      <p>- <%= link_to t("purchase_manager_home.show.view.agent_link"), agent_home_path %></p>
-
-      <p>- <%= link_to t("purchase_manager_home.show.view.buyer_link"), buyer_home_path %></p>
-      <br/>
-
       <p><%= blurb("blurb_purchase_manager_home") %></p>
 
     </div>
