@@ -75,7 +75,7 @@
     <%= render :partial => "/shared/leads/lead_fields", :locals => {:f => builder} %>
 <% end %>
 
-<div class="pdd_10 no_pdd_t">
+<div class="pdd_10 no_pdd_t" id="locale_picker_div">
   <fieldset class="inputs labels_ta_r labels_240">
     <ol class="align_inputs">
       <li class="header">
@@ -126,6 +126,9 @@
             $('.destroy_hidden_field_template_value_tr_' + $('#locale_picker').val()).val('');
             $("option[value=" + $('#locale_picker').val() + "]").remove();
             nestedFormsCount = nestedFormsCount + 1;
+            if ($("#locale_picker option[value!='']").size()==0) {
+                $("#locale_picker_div").hide();
+            }
         }
     }
 
@@ -143,7 +146,7 @@
             $('#lead_translation_form_' + id).hide();
             $('#destroy_hidden_field_' + record_id.toString()).val('true')
         }
-
+        $("#locale_picker_div").show();
     }
 
     function set_beginnings_of_urls(fields_array) {
