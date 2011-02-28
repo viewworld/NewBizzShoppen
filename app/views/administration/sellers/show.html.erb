@@ -1,14 +1,14 @@
 <column-mc:>
   <header back="true"><%= t('administration.sellers.show.view.header') %></header>
 
-  <frm title="#{@seller.name}">
+  <frm title="#{@seller.company_name}">
     <param:header>
       <%= bt_link_to nil, t("common.edit_link"), edit_administration_seller_path(@seller), :class => "fltr" %>
     </param:header>
     <param:content>
       <div class="pdd_10">
         <h2>
-          <%= t("administration.sellers.show.view.name") %>: <strong><%= @seller.name %></strong>
+          <%= t("administration.sellers.show.view.company_name") %>: <strong><%= @seller.company_name %></strong>
         </h2>
         <hl pdd="8"/>
         <div class="grid_1to3 fltl">
