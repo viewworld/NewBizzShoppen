@@ -312,4 +312,12 @@ class User < ActiveRecord::Base
     casted_class.find(id)
   end
 
+  #to handle menu chronology correctly
+  def roles_sorted
+    if has_role?(:lead_buyer)
+      [:lead_buyer] + roles.select { |r| r != :lead_buyer }
+    else
+      roles
+    end
+  end
 end

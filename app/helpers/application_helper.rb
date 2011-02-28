@@ -139,4 +139,8 @@ module ApplicationHelper
      end
     end
   end
+
+  def format_date(date, with_time=false)
+    date.strftime("%d-%m-%Y#{' %H:%M' if with_time}")
+  end
 end

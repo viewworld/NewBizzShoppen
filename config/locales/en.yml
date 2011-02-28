@@ -157,6 +157,7 @@ en:
       facebook_url: 'Facebook'
       linkedin_profile: 'LinkedIn profile'
       facebook_profile: 'Facebook profile'
+      purchase_date: 'Purchase date:'
     statuses:
       not_contacted: Not contacted
       contacted: Contacted
