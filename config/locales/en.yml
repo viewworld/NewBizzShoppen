@@ -208,7 +208,7 @@ en:
       price: 'Lead price'
       sold: 'Sold'
       purchase_value: 'Value'
-      description: Description
+      created_at: Created at
       paid_out: 'Paid out'
       unsatisfactory_rating: 'Unsatisfactory rating'
       status: 'Status'

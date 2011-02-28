@@ -74,7 +74,7 @@ class Lead < ActiveRecord::Base
   accepts_nested_attributes_for :lead_translations, :allow_destroy => true
   accepts_nested_attributes_for :lead_template_values, :allow_destroy => true
 
-  scoped_order :id, :header, :sale_limit, :price, :lead_purchases_counter, :published, :has_unsatisfactory_rating, :purchase_value
+  scoped_order :id, :header, :sale_limit, :price, :lead_purchases_counter, :published, :has_unsatisfactory_rating, :purchase_value, :created_at
 
   attr_protected :published
 
