@@ -15,6 +15,8 @@ class Seller < ActiveRecord::Base
   scope :default_seller, where(:default => true)
   scope :for_country, lambda { |country_id| joins(:address).where(:addresses => {:country_id => country_id}) }
 
+  alias_attribute :name, :company_name
+
   private
 
   def assure_default

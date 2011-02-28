@@ -620,7 +620,7 @@ en:
             amount: 'Amount'
       edit:
         view:
-          header: 'Editing invoice #%{number} for %{name}'
+          header: 'Editing invoice for %{name}'
           save_button: 'Save'
           save_changes: 'Save changes'
           add_line: 'Add line'
@@ -692,7 +692,7 @@ en:
         view:
           header: 'Sellers'
           country: 'Country'
-          company_name: 'Company name'
+          company_name: 'Company'
           first_name: 'First name'
           last_name: 'Last name'
           default: 'Default'
@@ -717,7 +717,7 @@ en:
           vat_no: 'Vat number'
           country: 'Country'
           default: 'Default'
-          company_name: 'Company name'
+          company_name: 'Company'
       edit:
         view:
           header: 'Editing seller: %{name}'
