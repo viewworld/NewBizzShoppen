@@ -66,10 +66,16 @@
                   </fieldset>
               <% end %>
             </div>
+            <hl/>
+            <div style="padding:5px 10px">
+            <p>
+              <%= link_to t("home.show.view.resend_confirmation_instructions"), new_confirmation_path(User) %>
+            </p>
+            </div>
           </frm>
           <frm title="#{t('category_home.show.view.i_want_to_register')}" c="10">
             <div class="pdd_10">
-              <%= link_to t("category_home.show.view.category_buyer_signup"), new_category_home_page_account_path %>
+              <%= bt_link_to :user, t("category_home.show.view.category_buyer_signup"), new_category_home_page_account_path %>
             </div>
           </frm>
         </div>

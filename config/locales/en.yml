@@ -1266,6 +1266,7 @@ en:
         category_buyer_signup: 'Category buyer signup'
         header_my_leads: 'My leads'
         read_more_link: 'read more'
+        create_new_account: Create new account
 
   customer:
     interests:
@@ -1548,6 +1549,7 @@ en:
       view:
         change_password: 'Change password'
         enable_team_buyers: 'Enable team buyers'
+        interests_settings: Interests settings
     update:
       controller:
         successful_update_notice: 'Your profile has been successfully updated!'
