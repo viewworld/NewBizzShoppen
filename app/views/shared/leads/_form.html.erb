@@ -64,10 +64,11 @@
   </fieldset>
 </div>
 <hl/>
+
 <% unless @lead.lead_templates.empty? %>
     <%= render :partial => "/shared/leads/lead_template_fields", :locals => {:lead => @lead, :form => form} %>
+    <hl/>
 <% end %>
-<hl/>
 
 <div class="nested_locale_container"></div>
 
@@ -75,6 +76,7 @@
     <%= render :partial => "/shared/leads/lead_fields", :locals => {:f => builder} %>
 <% end %>
 
+<span id="additional_language_span" style="<%= 'display: none;' if available_locales_list(@lead.lead_translations).empty? %>">
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs labels_ta_r labels_240">
     <ol class="align_inputs">
@@ -90,6 +92,7 @@
   </fieldset>
 </div>
 <hl/>
+</span>
 
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs labels_ta_r labels_240">
@@ -124,7 +127,15 @@
             $('.locale_title:last').html($('#locale_picker').val());
             $('.lead_template_value_translations_container_' + $('#locale_picker').val()).show();
             $('.destroy_hidden_field_template_value_tr_' + $('#locale_picker').val()).val('');
-            $("option[value=" + $('#locale_picker').val() + "]").remove();
+            $("#locale_picker option[value=" + $('#locale_picker').val() + "]").remove();
+            if($('#locale_picker option').length == 1)
+            {
+                $('#additional_language_span').hide();
+            }
+            else
+            {
+                $('#additional_language_span').show();
+            }
             nestedFormsCount = nestedFormsCount + 1;
         }
     }
@@ -143,7 +154,10 @@
             $('#lead_translation_form_' + id).hide();
             $('#destroy_hidden_field_' + record_id.toString()).val('true')
         }
-
+        if($('#locale_picker option').length > 1)
+        {
+            $('#additional_language_span').show();
+        }
     }
 
     function set_beginnings_of_urls(fields_array) {
@@ -158,13 +172,25 @@
     function add_template() {
         $('#lead_template_container_' + $('#optional_templates_picker').val()).show();
         $('.destroy_hidden_field_lead_template_fields_' + $('#optional_templates_picker').val()).val('');
-        $("option[value=" + $('#optional_templates_picker').val() + "]").remove();
+        $("#optional_templates_picker option[value=" + $('#optional_templates_picker').val() + "]").remove();
+        if($('#optional_templates_picker option').length == 1)
+        {
+            $('#optional_templates_span').hide();
+        }
+        else
+        {
+            $('#optional_templates_span').show();
+        }
     }
 
     function remove_template(template_id, template_name) {
         $('#lead_template_container_' + template_id.toString()).hide();
         $('.destroy_hidden_field_lead_template_fields_' + template_id.toString()).val('true');
         $('#optional_templates_picker').append($("<option></option>").attr("value", template_id).text(template_name));
+        if($('#optional_templates_picker option').length > 1)
+        {
+            $('#optional_templates_span').show();
+        }
     }
 
     <% if params[:action] == "new" or params[:action] == "create" %>
