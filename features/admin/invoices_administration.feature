@@ -6,7 +6,7 @@ Background:
   And I make sure current locale is English
   And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
   And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role customer with attributes "first_name:Janko,last_name:Muzykant"
-  And there is a seller with attributes "company_name:DannyTheSeller,name:DannyTheSeller,first_name:Danny,last_name:DeVito,vat_no:123" for country "Denmark"
+  And there is a seller with attributes "company_name:DannyTheSeller,first_name:Danny,last_name:DeVito,vat_no:123" for country "Denmark"
   Then I sign in as jon@lajoie.ca with password secret
 
 @_done @ao
@@ -194,7 +194,7 @@ Scenario: I can edit invoice’s seller information - name, address, vat no
   When invoice exists for user "kastomer@nbs.fake" with role "customer"
   And I click hidden link by url regex "/administration\/invoicing\/invoices/"
   And I click hidden link by url regex "/administration\/invoicing\/invoices\/\d+\/edit/"
-  And I fill in "invoice_seller_name" with "NewSellerName"
+  And I fill in "invoice_seller_company_name" with "NewSellerName"
   And I fill in "invoice_seller_address_attributes_address_line_1" with "NewStreet"
   And I fill in "invoice_seller_address_attributes_address_line_2" with "NewCity"
   And I fill in "invoice_seller_address_attributes_address_line_3" with "NewCounty"

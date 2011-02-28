@@ -274,7 +274,6 @@ BankAccount.blueprint do
 end
 
 Seller.blueprint do
-  name { Faker::Lorem.words(2).to_s }
   company_name { Faker::Company.name}
   first_name { Faker::Name.first_name }
   last_name { Faker::Name.last_name }

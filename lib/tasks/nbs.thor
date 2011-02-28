@@ -36,7 +36,6 @@ class Nbs < Thor
 
     if Seller.count == 0
       Seller.create(
-          :name => "Default Seller",
           :company_name => "Default Seller",
           :first_name => "Change",
           :last_name => "Change",

@@ -16,7 +16,7 @@ Background:
   And lead Printers deal is bought by user gerard.jones@paerson22.com with role customer and is assigned to user lead_user.jones@paerson22.com with role lead_user
   And I am signed up and confirmed as user with email bob@person.com and password supersecret and role admin
   Then I sign in as bob@person.com with password supersecret
-  And there is a seller with attributes "company_name:DannyTheSeller,name:DannyTheSeller,first_name:Danny,last_name:DeVito,address:USA,vat_no:123" for country "Denmark"
+  And there is a seller with attributes "company_name:DannyTheSeller,first_name:Danny,last_name:DeVito,address:USA,vat_no:123" for country "Denmark"
 
 @_done @tested_elsewhere
 Scenario: Create an invoice if a new paypal transaction (payment for cart content has been confirmed) is created in the system
