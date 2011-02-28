@@ -50,16 +50,8 @@ module CategoriesHelper
     end
 
     root_categories = root_categories.without_locked_and_not_published unless user_signed_in? and current_user.has_role?(:admin)
-    content_tag(:ul, root_categories.map { |c| content_tag(:li, category_tree(c, options), :class => "categories_node", :id => dom_id(c)) }.join.html_safe, :class => "categories_tree", :id => "categories_main_tree")
-
+    content_tag(:ul, root_categories.map { |c| content_tag(:li, (options[:roots] ? category_label(c, options).html_safe : category_tree(c, options)), :class => "categories_node", :id => dom_id(c)) }.join.html_safe, :class => "categories_tree", :id => "categories_main_tree")
   end
-
-  def only_root_categories(options={})
-    root_categories = Category.roots.without_locked_and_not_published
-    content_tag(:ul, root_categories.map { |c| content_tag(:li, category_label(c, options).html_safe, :class => "categories_node", :id => dom_id(c)) }.join.html_safe, :class => "categories_tree", :id => "categories_main_tree")
-
-  end
-
 
   def category_tree(category, options={})
     [category_label(category, options), (category_children(category, options))].compact.join.html_safe

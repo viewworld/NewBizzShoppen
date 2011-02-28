@@ -100,7 +100,7 @@
   <hl pdd="15"/>
 
   <div class="home_categories_tree">
-    <%= only_root_categories(:category_label => lambda { |c| link_to "#{c.name}", c.cached_slug }) %>
+    <%= all_categories_tree(:roots => true, :category_label => lambda { |c| link_to "#{c.name}", c.cached_slug }) %>
   </div>
 
 </column-mc:>
