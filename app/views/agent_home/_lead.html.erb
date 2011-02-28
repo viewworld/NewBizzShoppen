@@ -5,10 +5,12 @@
       <%= link_to_edit_lead(lead) %>
     </h4>
 
-    <p class="element">
-      <%= t("buyer_home.show.view.purchase_value_label") %>
-      <span class="green"><%= as_currency(lead.purchase_value,lead.currency) %></span>
-    </p>
+    <% unless BigDecimal(lead.purchase_value.to_s).zero? %>
+        <p class="element">
+          <%= t("buyer_home.show.view.purchase_value_label") %>
+          <span class="green"><%= as_currency(lead.purchase_value,lead.currency) %></span>
+        </p>
+    <% end %>
 
     <p class="element">
       <%= t("buyer_home.show.view.lead_price_label") %>

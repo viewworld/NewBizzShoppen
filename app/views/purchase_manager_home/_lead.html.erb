@@ -2,10 +2,12 @@
   <div class="lead_content">
     <h4><%= link_to lead.header, lead_path(lead) %></h4>
 
+  <% unless BigDecimal(lead.purchase_value.to_s).zero? %>
     <p class="element">
       <%= t("purchase_manager_home.show.view.purchase_value_label") %>
       <span class="green"><%= as_currency(lead.purchase_value,lead.currency) %></span>
     </p>
+  <% end %>
 
     <p class="element">
       <%= t("purchase_manager_home.show.view.lead_price_label") %>

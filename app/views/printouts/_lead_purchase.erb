@@ -1,6 +1,9 @@
 <div class="lead_wrapper">
-  <div class="lead_value"><%= t("lead_purchases.listing.purchase_value_label") %>
-    <strong><%= as_currency(print.purchase_value, print.lead.currency) %></strong></div>
+
+  <% unless BigDecimal(print.purchase_value.to_s).zero? %>
+      <div class="lead_value"><%= t("lead_purchases.listing.purchase_value_label") %>
+        <strong><%= as_currency(print.purchase_value, print.lead.currency) %></strong></div>
+  <% end %>
 
   <h2><%= print.header %></h2>
 
