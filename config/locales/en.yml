@@ -587,7 +587,7 @@ en:
           vat_value: 'VAT'
           brutto_value: 'Inc. VAT'
           total: 'Total'
-          including: 'Including'
+          vat_spec: 'VAT spec'
           total_in_words: 'Total in words'
           vat_paid: 'VAT paid'
           payment_method: 'Payment method'
