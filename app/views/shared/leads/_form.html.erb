@@ -12,7 +12,7 @@
       <%= form.input :address_line_3 %>
       <%= form.input :zip_code %>
       <%= form.input :city %>
-      <%= form.input :county %>
+      <%= form.input :county, :label => t("shared.leads.form.county") %>
       <%= form.input :country_id, :as => :select, :collection => Country.all %>
       <%= form.input :company_ean_number, :label => t("shared.leads.form.company_ean_reg") %>
     </ol>
