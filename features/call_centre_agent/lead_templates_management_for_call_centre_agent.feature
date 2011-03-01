@@ -90,3 +90,6 @@ Scenario: I can add translation for the lead template name and its fields
   And I click hidden link by url regex "/call_centre_agents\/lead_templates\/\d+\/edit/"
   Then the "lead_template_lead_template_fields_attributes_0_name" field should contain "example attr 1"
   And the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 2"
+
+@m6
+Scenario: It sohuld be possible to duplicate lead template
