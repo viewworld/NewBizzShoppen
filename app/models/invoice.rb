@@ -29,8 +29,8 @@ class Invoice < ActiveRecord::Base
                                                            SUM(invoice_lines.brutto_value) as brutto_value_sum",
            :group => "vat_rate", :class_name => "InvoiceLine"
 
-  has_one :customer_address, :class_name => 'Address', :as => :addressable
-  has_one :seller_address, :class_name => 'Address', :as => :addressable
+  has_one :customer_address, :class_name => '::Address::InvoiceCustomer', :as => :addressable
+  has_one :seller_address, :class_name => '::Address::InvoiceSeller', :as => :addressable
 
   scope :ascend_by_invoice_number, order("YEAR(invoices.creation_date) ASC, invoices.number ASC, company_id ASC")
   scope :descend_by_invoice_number, order("YEAR(invoices.creation_date) DESC, invoices.number DESC, company_id ASC")
@@ -97,9 +97,9 @@ class Invoice < ActiveRecord::Base
   def duplicate_company_and_customer_information
     self.update_attributes({
             :customer_name => user.with_role.full_name,
-            :customer_address => user.with_role.address.clone,
+            :customer_address => ::Address::InvoiceCustomer.new(user.with_role.address.attributes),
             :customer_vat_no => user.with_role.vat_number,
-            :seller_address => seller.address.clone,
+            :seller_address => ::Address::InvoiceSeller.new(seller.address.attributes),
             :seller_name => seller.company_name,
             :seller_vat_no => seller.vat_no,
             :seller_first_name => seller.first_name,
