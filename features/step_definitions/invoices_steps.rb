@@ -1,3 +1,10 @@
+When /^invoice exists for user "([^"]*)" with role "([^"]*)" with seller "([^"]*)"(?: with attributes "([^"]*)")?$/ do |email,role_name,seller_name, options|
+  seller = Seller.find_by_company_name(seller_name)
+  user = "User::#{role_name.classify}".constantize.where(:email => email).first
+  attrs = options ? Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys.merge(:user => user, :seller => seller) : {:user => user, :seller => seller}
+  Invoice.make!(attrs)
+end
+
 When /^invoice exists for user "([^"]*)" with role "([^"]*)"(?: with attributes "([^"]*)")?$/ do |email,role_name,options|
   user = "User::#{role_name.classify}".constantize.where(:email => email).first
   attrs = options ? Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys.merge(:user => user) : {:user => user}
