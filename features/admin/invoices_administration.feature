@@ -194,7 +194,7 @@ Scenario: I can edit invoice’s seller information - name, address, vat no
   When invoice exists for user "kastomer@nbs.fake" with role "customer"
   And I click hidden link by url regex "/administration\/invoicing\/invoices/"
   And I click hidden link by url regex "/administration\/invoicing\/invoices\/\d+\/edit/"
-  And I fill in "invoice_seller_company_name" with "NewSellerName"
+  And I fill in "invoice_seller_name" with "NewSellerName"
   And I fill in "invoice_seller_address_attributes_address_line_1" with "NewStreet"
   And I fill in "invoice_seller_address_attributes_address_line_2" with "NewCity"
   And I fill in "invoice_seller_address_attributes_address_line_3" with "NewCounty"
