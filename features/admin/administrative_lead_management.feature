@@ -114,3 +114,6 @@ Scenario: I can clear the filter when browsing leads
 
 @m6
 Scenario: When I change the category then I am not redirected back to the listing view
+
+@m6
+Scenario: I can change creator of lead to any other agent

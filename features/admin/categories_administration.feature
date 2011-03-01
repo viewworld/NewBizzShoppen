@@ -103,3 +103,8 @@ Scenario: I can manage categories from Browse categories. Categories tab should 
 @m6
 Scenario: I can make any category country specific (Category can have one or more countries assigned to it)
 
+@m6
+Scenario: I can mark category to allow buyouts
+
+@m6
+Scenario: When creating new category it is marked with buyout flag by default
