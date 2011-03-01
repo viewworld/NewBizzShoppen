@@ -1,4 +1,4 @@
-@comments @$_call_centre @m6  @noguess @ao
+@comments @$_call_centre @m0  @noguess @ao
 Feature: Comments administration as call centre agent
 
 Scenario: I can see the amount of comments per lead on Lead created by my agents listing
