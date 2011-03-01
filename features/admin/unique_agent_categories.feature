@@ -67,4 +67,4 @@ Scenario: I can assign a unique category to the whole call centre
   Then I press translated "administration.categories.edit.view.button_update"
   And I should see translated "flash.categories.actions.update.notice"
   Then I follow translated "administration.categories.index.view.edit_link"
-  And "all_agents" should be selected for value "call_centre93928biz@nbs.com"
+  And "selected_agents" should be selected for value "call_centre93928biz@nbs.com"
