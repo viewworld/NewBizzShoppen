@@ -6,7 +6,7 @@
   <td class="ta_r"><%= number_to_currency(invoice.total, :unit => invoice.currency.symbol) %></td>
   <td class="tda ta_r">
     <ul-actions>
-      <li><%= link_to t("customer.invoices.index.view.show_invoice"), customers_invoice_path(invoice) %></li>
+      <li><%= link_to t("customer.invoices.index.view.show_invoice"), customers_invoice_path(invoice), :class => "default_action" %></li>
     </ul-actions>
   </td>
   <td class="cr"></td>

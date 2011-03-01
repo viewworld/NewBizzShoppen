@@ -52,7 +52,7 @@ module ApplicationHelper
 
   def available_locales_list(translations)
     existing = translations.map(&:locale)
-    Locale.all.map(&:code).reject { |c| c == I18n.locale.to_s or existing.include?(c) }
+    Locale.all.map(&:code).reject { |c| c == I18n.locale.to_s or existing.include?(c) }.map { |c| [t('models.locale.' + c), c] }
   end
 
 
@@ -97,7 +97,7 @@ module ApplicationHelper
         main_menu_link_to(t("layout.main_menu.shared.home"), category_home_page_path(@home_category.cached_slug), :tab => "home")
       end
     elsif !user_signed_in? or (['buyer_home', 'agent_home', 'purchase_manager_home'].include?(params[:controller]) and params[:action] == "show")
-      main_menu_link_to(user_signed_in? ? t("layout.main_menu.shared.site_home") : t("layout.main_menu.shared.home"), root_path, :tab => "home")
+      main_menu_link_to((user_signed_in? or params[:controller].include?("_home")) ? t("layout.main_menu.shared.site_home") : t("layout.main_menu.shared.home"), root_path, :tab => "home")
     else
       main_menu_link_to(t("layout.main_menu.shared.home"), url_to_role_specific_home_page, :tab => "home")
     end
@@ -139,8 +139,12 @@ module ApplicationHelper
      end
     end
   end
-
+  
   def bt_clear_filter(url=nil)
     button_to_function t("common.clear_filter"), "document.location = '#{url || request.path}'"
+  end
+  
+  def format_date(date, with_time=false)
+    date.strftime("%d-%m-%Y#{' %H:%M' if with_time}")
   end
 end

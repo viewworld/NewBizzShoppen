@@ -60,7 +60,7 @@
                     <ul-actions>
                       <li><%= link_to t("customer.subaccounts.index.view.assigned_leads"), buyers_lead_purchases_path(:search => {:with_assignee => user.id}) %></li>
                       <li><%= link_to user.locked_at.blank? ? t("customer.subaccounts.index.view.lock") : t("customer.subaccounts.index.view.unlock"), customers_subaccount_path(user, {"user_#{user.role.to_s}".to_sym  => {:locked =>  user.locked_at.blank? ? "lock" : "unlock"}}), {:method => :put} %></li>
-                      <li><%= link_to t("customer.subaccounts.index.view.edit"), edit_customers_subaccount_path(user) %></li>
+                      <li><%= link_to t("customer.subaccounts.index.view.edit"), edit_customers_subaccount_path(user), :class => "default_action" %></li>
                       <li><%= link_to t("customer.subaccounts.index.view.delete"), customers_subaccount_path(user), {:method => :delete, :confirm => t("customer.subaccounts.index.view.delete_confirmation_message")} %></li>
                     </ul-actions>
                   </td>

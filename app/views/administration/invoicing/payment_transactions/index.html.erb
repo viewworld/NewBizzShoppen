@@ -70,7 +70,7 @@
               <td><%= as_currency(payment_transaction.amount, payment_transaction.invoice.currency)  %></td>
               <td class="tda ta_r">
                 <% if payment_transaction.can_be_edited? %>
-                    <%= bt_link_to nil, t("administration.payment_transactions.index.view.edit"), edit_administration_invoicing_payment_transaction_path(payment_transaction) %>
+                    <%= bt_link_to nil, t("administration.payment_transactions.index.view.edit"), edit_administration_invoicing_payment_transaction_path(payment_transaction), :class => "default_action" %>
                 <% end %>
               </td>
               <td class="cr"></td>

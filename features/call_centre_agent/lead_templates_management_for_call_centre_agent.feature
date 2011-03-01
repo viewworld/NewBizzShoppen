@@ -4,8 +4,10 @@ Feature: Lead templates managements for call centre agent
 Background:
   Given I am on the homepage
   And I make sure current locale is English
+  And I have user with email call_centre91@nbs.com and role call_centre
   And I have user with email other_call_centre@nbs.com and role call_centre
   And I am signed up and confirmed as user with email call_centre_agent@person.com and password supersecret and role call_centre_agent
+  And an user with role call_centre_agent and email call_centre_agent@person.com belongs to call centre call_centre91@nbs.com
   Then I sign in as call_centre_agent@person.com with password supersecret
   And I follow translated "layout.main_menu.call_centre_agent.lead_templates"
 

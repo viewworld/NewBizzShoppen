@@ -74,7 +74,7 @@ class Lead < ActiveRecord::Base
   accepts_nested_attributes_for :lead_translations, :allow_destroy => true
   accepts_nested_attributes_for :lead_template_values, :allow_destroy => true
 
-  scoped_order :id, :header, :sale_limit, :price, :lead_purchases_counter, :published, :has_unsatisfactory_rating, :purchase_value
+  scoped_order :id, :header, :sale_limit, :price, :lead_purchases_counter, :published, :has_unsatisfactory_rating, :purchase_value, :created_at
 
   attr_protected :published
 
@@ -240,5 +240,9 @@ class Lead < ActiveRecord::Base
 
   def linkedin_url_present?
     !linkedin_url.blank? and linkedin_url != "http://"
+  end
+
+  def lead_template_values_present?
+    !LeadTemplateValue.where("lead_templates.id in (?)", lead_templates.map(&:id)).joins("inner join lead_template_fields on lead_template_values.lead_template_field_id=lead_template_fields.id inner join lead_templates on lead_template_fields.lead_template_id=lead_templates.id").limit(1).empty?
   end
 end

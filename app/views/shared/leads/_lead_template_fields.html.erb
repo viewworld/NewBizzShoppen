@@ -17,6 +17,7 @@
         </div>
     <% end %>
 
+    <span id="optional_templates_span" style="<%= 'display: none;' if available_templates_list(lead).empty? %>">
     <ol class="align_inputs">
       <li class="select">
         <%= label_tag :optional_templates %>
@@ -24,5 +25,6 @@
                        {:id => "optional_templates_picker", :include_blank => true, :onchange => "add_template()"} %>
       </li>
     </ol>
+    </span>
   </fieldset>
 </div>

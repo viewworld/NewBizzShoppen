@@ -18,7 +18,7 @@ Scenario: I can’t edit lead if the lead was already sold
 @selenium @_tested
 Scenario: I can add a language - title, purchase, hidden, language
   Then I click hidden link by url regex "/call_centre_agents\/leads\/\d+\/edit/"
-  And I select "dk" from "locale_picker"
+  And I select translated "models.locale.dk" from "locale_picker"
   And I fill in "lead_lead_translations_attributes_0_header" with "DK header"
   And I fill in "lead_lead_translations_attributes_0_description" with "DK description"
   And I fill in "lead_lead_translations_attributes_0_hidden_description" with "DK hidden description"
@@ -28,9 +28,9 @@ Scenario: I can add a language - title, purchase, hidden, language
 @selenium @_tested
 Scenario: I can delete a language
   Then I click hidden link by url regex "/call_centre_agents\/leads\/\d+\/edit/"
-  And I select "dk" from "locale_picker"
+  And I select translated "models.locale.dk" from "locale_picker"
   Then I follow translated "agent.leads.new.view.remove_language"
-  And I select "dk" from "locale_picker"
+  And I select translated "models.locale.dk" from "locale_picker"
   And I fill in "lead_lead_translations_attributes_0_header" with "DK header"
   And I fill in "lead_lead_translations_attributes_0_description" with "DK description"
   And I fill in "lead_lead_translations_attributes_0_hidden_description" with "DK hidden description"

@@ -25,7 +25,7 @@
           <td><%= email_template.uniq_id %></td>
           <td><%= email_template.subject %></td>
           <td class="tda ta_r">
-            <%= bt_link_to nil, t("administration.email_templates.index.view.edit"), edit_administration_email_template_path(email_template) %>
+            <%= bt_link_to nil, t("administration.email_templates.index.view.edit"), edit_administration_email_template_path(email_template), :class => "default_action" %>
           </td>
           <td class="cr"></td>
         </tr>

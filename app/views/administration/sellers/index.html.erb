@@ -52,7 +52,7 @@
               <td class="tda ta_r">
                 <ul-actions>
                   <li><%= link_to t("administration.sellers.index.view.show"), administration_seller_path(s) %></li>
-                  <li><%= link_to t("administration.sellers.index.view.edit"), edit_administration_seller_path(s) %></li>
+                  <li><%= link_to t("administration.sellers.index.view.edit"), edit_administration_seller_path(s), :class => "default_action" %></li>
                   <li><%= link_to t("administration.sellers.index.view.delete"), administration_seller_path(s), :method => :delete, :confirmation => t("common.confirmation") %></li>
                 </ul-actions>
               </td>

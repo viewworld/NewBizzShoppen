@@ -77,11 +77,11 @@ Scenario: I can go to latest leads listing
   Then I should be on the leads page
   And I should see translated "leads.index.latest_header"
 
-@ao @_done @_tested
+@ao @_done @_tested @deprecated
 Scenario: I can go to agent page by clicking “CLICK HERE IF YOU ARE AN AGENT”
-  When I follow translated "home.show.view.buyer"
-  And I follow translated "buyer_home.show.view.agent_link"
-  Then I should be on the agent home page
+#  When I follow translated "home.show.view.buyer"
+#  And I follow translated "buyer_home.show.view.agent_link"
+#  Then I should be on the agent home page
 
 @ao @_done @_tested
 Scenario: I can go to new buyer creation page

@@ -52,3 +52,19 @@ Scenario: I can search agents by first name, last name and email
   And I should see translated "flash.categories.actions.update.notice"
   Then I follow translated "administration.categories.index.view.edit_link"
   And "selected_agents" should be selected for value "nbsagent3483434biz@nbs.com"
+  
+@_tested @selenium
+Scenario: I can assign a unique category to the whole call centre
+  Given I have user with email call_centre93928biz@nbs.com and role call_centre
+  And user "call_centre93928biz@nbs.com" with role "call_centre" has attributes "last_name:Aronofsky Jr"
+  When I follow translated "administration.categories.index.view.edit_link"
+  And I check "category_is_agent_unique"
+  And I fill in "filer_agents" with "Aronofsky Jr" within "#users_selection_agents_div"
+  And I follow translated "administration.categories.form.search" within "#users_selection_agents_div"
+  And I select "call_centre93928biz@nbs.com" from "all_agents"
+  And I follow "move_right" within "#users_selection_agents_div"
+  And attach the file "sample image" to "category_image_attributes_asset"
+  Then I press translated "administration.categories.edit.view.button_update"
+  And I should see translated "flash.categories.actions.update.notice"
+  Then I follow translated "administration.categories.index.view.edit_link"
+  And "all_agents" should be selected for value "call_centre93928biz@nbs.com"

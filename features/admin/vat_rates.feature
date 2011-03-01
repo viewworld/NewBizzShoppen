@@ -123,10 +123,10 @@ Feature: VAT rates
    Scenario: When creating invoice manually by admin, VAT field should be prepopulated if country has vat rate set and user doesnt pay vat in his country
      When VAT rate for "Denmark" is set to "27"
      And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
-     And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role customer with attributes "first_name:Wielki,last_name:Szu"
+     And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role customer with attributes "first_name:Wielki,last_name:Szu,company_name:WielkiSzuLtd"
      And I sign in as jon@lajoie.ca with password secret
      And I click hidden link by url regex "/administration\/invoicing\/invoices/"
-     And I select "Wielki Szu" from "invoice_user_id"
+     And I select "WielkiSzuLtd, kastomer@nbs.fake" from "invoice_user_id"
      And I press translated "administration.invoices.index.view.create_invoice"
      And I follow "add_fields_invoice_lines"
      Then the "1" field with id like "_vat_rate" should contain "27.0"
@@ -136,10 +136,10 @@ Feature: VAT rates
   Scenario: When creating invoice manually by admin, VAT field should be zero and disabled if country has vat rate set but user pays vat in his country
     When VAT rate for "Denmark" is set to "27"
     And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
-    And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role customer with attributes "first_name:Wielki,last_name:Szu,not_charge_vat:1"
+    And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role customer with attributes "first_name:Wielki,last_name:Szu,company_name:WielkiSzuLtd,not_charge_vat:1"
     And I sign in as jon@lajoie.ca with password secret
     And I click hidden link by url regex "/administration\/invoicing\/invoices/"
-    And I select "Wielki Szu" from "invoice_user_id"
+    And I select "WielkiSzuLtd, kastomer@nbs.fake" from "invoice_user_id"
     And I press translated "administration.invoices.index.view.create_invoice"
     And I follow "add_fields_invoice_lines"
     Then the "1" field with id like "_vat_rate" should contain "0"

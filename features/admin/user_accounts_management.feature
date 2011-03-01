@@ -114,10 +114,17 @@ Scenario: I can perform a bulk invoice action
   And I should not see "John von Buyer"
 
 @m4 @added @agent_certification @tgn @_tested
-Scenario: I can override the certification level of any (call center-) agent
+Scenario: I can override the certification level of any agent or call centre
   Then I fill in "search_with_keyword" with "agent@nbs.com"
   And I press translated "administration.users.index.view.search_button"
   And I follow translated "administration.users.index.view.edit"
   And I select translated "models.lead.certification.lvl11" from "user_agent_certification_level"
+  And I press translated "administration.users.edit.view.button_update_user"
+  Then I should see translated "administration.users.update.flash.user_update_successful"
+  Given I have user with email call_centre_348282_biz@nbs.com and role call_centre
+  Then I fill in "search_with_keyword" with "call_centre_348282_biz@nbs.com"
+  And I press translated "administration.users.index.view.search_button"
+  And I follow translated "administration.users.index.view.edit"
+  And I select translated "models.lead.certification.lvl11" from "user_call_centre_certification_level"
   And I press translated "administration.users.edit.view.button_update_user"
   Then I should see translated "administration.users.update.flash.user_update_successful"

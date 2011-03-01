@@ -1,19 +1,7 @@
 <li>
   <div class="lead_content">
     <h4><%= link_to lead.header, lead_path(lead) %></h4>
-
-  <% unless BigDecimal(lead.purchase_value.to_s).zero? %>
-    <p class="element">
-      <%= t("purchase_manager_home.show.view.purchase_value_label") %>
-      <span class="green"><%= as_currency(lead.purchase_value,lead.currency) %></span>
-    </p>
-  <% end %>
-
-    <p class="element">
-      <%= t("purchase_manager_home.show.view.lead_price_label") %>
-      <span class="green"><%= as_currency(lead.price,lead.currency) %></span>
-    </p>
-    <%#= t("purchase_manager_home.show.view.description_label") %> <%#= lead.description %>
+    <%= st(lead.description) %>
     <%= link_to t("purchase_manager_home.show.view.read_more_link"), lead_path(lead), :class => "read_more" %>
   </div>
 </li>

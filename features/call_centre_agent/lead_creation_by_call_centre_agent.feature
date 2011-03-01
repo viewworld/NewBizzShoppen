@@ -84,7 +84,7 @@ Scenario: I can add an extra language while creating lead. This will include lea
   And I fill in "lead_county" with "Freesdas"
   And I fill in "lead_zip_code" with "23-2911"
   And I fill in "datepicker" with date that is "5" days from now
-  And I select "dk" from "locale_picker"
+  And I select translated "models.locale.dk" from "locale_picker"
   And I fill in "lead_lead_translations_attributes_0_header" with "DK header"
   And I fill in "lead_lead_translations_attributes_0_description" with "DK description"
   And I fill in "lead_lead_translations_attributes_0_hidden_description" with "DK hidden description"
@@ -240,7 +240,7 @@ Scenario: When new translation to lead is added I can also write translation for
   And I fill in "datepicker" with date that is "5" days from now
   And I fill in "lead_lead_template_values_attributes_0_value" with "123"
   And I fill in "lead_lead_template_values_attributes_1_value" with "Ms Windows Vista"
-  And I select "dk" from "locale_picker"
+  And I select translated "models.locale.dk" from "locale_picker"
   And I fill in "lead_lead_translations_attributes_0_header" with "DK header"
   And I fill in "lead_lead_translations_attributes_0_description" with "DK description"
   And I fill in "lead_lead_translations_attributes_0_hidden_description" with "DK hidden description"

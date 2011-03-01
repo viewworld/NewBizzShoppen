@@ -1,7 +1,7 @@
 <column-mc:>
   <%= semantic_form_for [:administration, @lead], :method => :put do |form| %>
       <header back="true"><%= t("administration.leads.edit.view.header", :lead_header => @lead.header) %></header>
-      <frm title="Edit">
+      <frm title="#{t('administration.leads.edit.view.created_by')} #{@lead.creator.company_name} - #{@lead.creator.email}">
         <param:content>
           <%= render :partial => '/shared/leads/form', :locals => {:form => form} %>
         </param:content>
@@ -14,7 +14,7 @@
           </ibt>
         </param:actions>
       </frm>
-  <% end %>  
+  <% end %>
 
   <frm title="#{t('administration.leads.edit.view.rating_header')}" id="lead_rating">
     <% @lead.lead_purchases.each do |lead_purchase| %>

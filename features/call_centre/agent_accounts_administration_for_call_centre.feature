@@ -44,3 +44,14 @@ Scenario: Account have to be activated by link in activation email sent to his e
   And I press translated "call_centre.call_centre_agents.new.view.button_create"
   Then I should see translated "call_centre.call_centre_agents.create.flash.call_centre_agent_creation_successful"
   And a confirmation message to callcentreagent93@nbs.com should include confirmation link
+
+@added @m5 @_tested
+Scenario: Agents of given call centre inherit its certification level
+  Given I have user with email call_centre777@nbs.com and role call_centre
+  Given I have user with email call_centre_agent_111@nbs.com and role call_centre_agent
+  And an user with role call_centre_agent and email call_centre_agent_111@nbs.com belongs to call centre call_centre777@nbs.com
+  And I have user with email call_centre_agent_222@nbs.com and role call_centre_agent
+  And an user with role call_centre_agent and email call_centre_agent_222@nbs.com belongs to call centre call_centre777@nbs.com
+  Given user "call_centre777@nbs.com" with role "call_centre" has certification level set to 2
+  Then user "call_centre_agent_111@nbs.com" with role "call_centre_agent" has certification level 2
+  Then user "call_centre_agent_222@nbs.com" with role "call_centre_agent" has certification level 2

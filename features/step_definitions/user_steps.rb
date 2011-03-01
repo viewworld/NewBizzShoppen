@@ -191,7 +191,11 @@ end
 
 Given /^user "([^"]*)" with role "([^"]*)" has certification level (\d+)$/ do |email, role, c_level|
   user = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
-  assert user.read_attribute(:certification_level).to_i == c_level.to_i
+  if user.has_role?(:call_centre_agent)
+    assert user.certification_level == c_level.to_i
+  else
+    assert user.read_attribute(:certification_level).to_i == c_level.to_i
+  end
 end
 
 Given /^user "([^"]*)" with role "([^"]*)" has certification level set to (\d+)$/ do |email, role, c_level|
