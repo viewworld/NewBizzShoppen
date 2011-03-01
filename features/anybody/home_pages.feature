@@ -107,7 +107,7 @@ Feature: Home pages
     When Category named "Best Leads" already exists
     And I visit URL "/best-leads"
     Then I should be on category home page for Best Leads
-    And I should see translated "category_home.show.view.header_welcome"
+    And I should see translated "category_home.show.view.header"
 
   @category_home_pages @_done
   Scenario: I should be redirected to home page when I try to access non-existant category home page

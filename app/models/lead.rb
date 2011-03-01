@@ -241,4 +241,8 @@ class Lead < ActiveRecord::Base
   def linkedin_url_present?
     !linkedin_url.blank? and linkedin_url != "http://"
   end
+
+  def lead_template_values_present?
+    !LeadTemplateValue.all.where("lead_templates.id in (?)", lead_templates.map(&:id)).join("inner join lead_template_fields on lead_template_values.lead_template_field_id=lead_template_fields.id inner join lead_templates on lead_template_fields.lead_template_id=lead_templates.id").limit(1).empty?
+  end
 end

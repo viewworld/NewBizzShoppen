@@ -5,7 +5,7 @@ Background:
   Given I am on the homepage
   And I make sure current locale is English
   And I have user with email gerard.jones@paerson22.com and role customer
-  And user gerard.jones@paerson22.com with role customer exists with attributes "first_name:John,last_name:Kohen"
+  And user gerard.jones@paerson22.com with role customer exists with attributes "first_name:John,last_name:Kohen,company_name:Xerox"
   And User gerard.jones@paerson22.com with role customer is big buyer
   And I have user with email lead_user.jones@paerson22.com and role lead_user
   And lead Monitors deal exists within category Computers
@@ -24,7 +24,7 @@ Scenario: Create an invoice if a new paypal transaction (payment for cart conten
 @_done
 Scenario: Invoice lines for manually created invoice should be automatically generated
   When I go to administration invoices
-  And I select "John Kohen" from "invoice_user_id"
+  And I select "Xerox, gerard.jones@paerson22.com" from "invoice_user_id"
   And I select "DannyTheSeller" from "invoice_seller_id"
   And I press translated "administration.invoices.index.view.create_invoice"
   Then the "invoice_invoice_lines_attributes_0_name" field should contain "Monitors deal"

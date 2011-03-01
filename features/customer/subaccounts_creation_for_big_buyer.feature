@@ -24,6 +24,8 @@ Scenario: I can create a lead user account
 @tgn @_done @_tested
 Scenario: Account have to be activated through activation email
   Then I follow translated "customer.subaccounts.index.view.new_lead_user"
+  And I fill in "user_lead_user_first_name" with "Mark"
+  And I fill in "user_lead_user_last_name" with "Driscoll"
   And I fill in "user_lead_user_email" with "driscoll@person.noserver.com"
   And I fill in "user_lead_user_screen_name" with "ML Driscoll"
   And I fill in "user_lead_user_password" with "secret"

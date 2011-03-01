@@ -104,8 +104,10 @@ Scenario: If customer is category buyer he/she can see also unique categories
 @added @tgn @_tested
 Scenario: On the interests page the country should be selected based on current locale
   When I follow translated "locales.en_locale"
+  And I follow translated "layout.my_profile_link"
   And I follow translated "layout.main_menu.customer.interests"
   Then "countries" should be selected for value "United Kingdom"
   When I follow translated "locales.dk_locale"
+  And I follow translated "layout.my_profile_link"
   And I follow translated "layout.main_menu.customer.interests"
   Then "countries" should be selected for value "Denmark"

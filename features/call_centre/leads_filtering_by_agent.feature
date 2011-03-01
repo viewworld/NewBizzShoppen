@@ -12,7 +12,7 @@ Background:
   And an user with role call_centre_agent and email ccagent02@nbs.com belongs to call centre call_centre@person.com
   And user ccagent02@nbs.com with role call_centre_agent exists with attributes "first_name:Loraine,last_name:Telly"
   Given lead Ultimate monitors deal is created by user ccagent01@nbs.com with role call_centre_agent
-  And lead Ultimate monitors deal exists with attributes "clicks_count:123,exposures_count:85,price:789.68,purchase_value:1029.96,description:monitors custom description,average_rating:95"
+  And lead Ultimate monitors deal exists with attributes "clicks_count:123,exposures_count:85,price:789.68,purchase_value:1029.96,description:monitors custom description,average_rating:95,created_at:12-02-2011"
   Given lead Ultimate mouses deal is created by user ccagent01@nbs.com with role call_centre_agent
   Given lead Ultimate wires deal is created by user ccagent01@nbs.com with role call_centre_agent
   Given lead Ultimate desks deal is created by user ccagent02@nbs.com with role call_centre_agent
@@ -29,15 +29,15 @@ Scenario: I can browse leads created by one of my agents with pagination
   And I follow "2"
 
 @_tested
-Scenario: I can see lead header, purchase value, lead price, description, hottness, novelty, exposures, clicks
+Scenario: I can see lead header, purchase value, lead price, hottness, novelty, exposures, clicks, created at
   Then I should see "Ultimate monitors deal"
   And I should see "1,029.96"
   And I should see "789.68"
-  And I should see "monitors custom description"
   And I should see translated "models.lead.novelty.lvl0"
   And I should see translated "models.lead.hotness.lvl1"
   And I should see "123"
   And I should see "85"
+  And I should see "12-02-2011"
 
 @_tested
 Scenario: I can see created by, rating, certification level
