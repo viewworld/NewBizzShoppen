@@ -87,6 +87,14 @@ Address.blueprint do
   country { Country.first }
 end
 
+Address::Bank.blueprint do
+  address_line_1 { Faker::Address.street_name }
+  address_line_2 { Faker::Address.city }
+  address_line_3 { Faker::Address.uk_county }
+  zip_code { Faker::Address.zip_code }
+  country { Country.first }
+end
+
 User.blueprint do
   email { Faker::Internet.email }
   password { "secret" }
@@ -187,6 +195,7 @@ end
   payout { rand(100) }
   roles_mask { 4 }
   address { Address.make! }
+  bank_address { Address::Bank.make! }
 end
 
 ::User::CallCentreAgent.blueprint do
