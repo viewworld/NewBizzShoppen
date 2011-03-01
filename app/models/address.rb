@@ -16,3 +16,6 @@ end
 
 class Address::InvoiceSeller < Address
 end
+
+class Address::Bank < Address
+end
