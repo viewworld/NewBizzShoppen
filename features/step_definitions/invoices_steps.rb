@@ -58,7 +58,7 @@ end
 Then /^user with email "([^"]*)" and role "([^"]*)" has invoice generated for all unpaid leads$/ do |email, role|
   customer = "User::#{role.camelize}".constantize.find_by_email(email)
   customer.lead_purchases.map{|lp| lp.lead.currency}.uniq.each do |currency|
-    invoice = Invoice.create(:user_id => customer.id, :paid_at =>  Time.now, :seller => Seller.make!, :currency => currency)
+    invoice = Invoice.create(:user_id => customer.id, :paid_at =>  Time.now, :currency => currency)
     invoice.reload
     ManualTransaction.create(:invoice => invoice, :amount => invoice.total, :paid_at => Time.now)
   end

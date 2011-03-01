@@ -452,25 +452,7 @@ Scenario: We do not need to generate a copy of the invoice, just the orininal
   Then I should be on administration invoices page
 
 @m5 @sellers @ao @_done
-Scenario: When creating an invoice a Seller for user's country should be selected
-  When there is a seller with attributes "company_name:SellerTwo" for country "United Kingdom"
-  And someone is signed up and confirmed as user with email customer_one@nbs.fake and password secret and role customer with attributes "first_name:John 1,last_name:Smith,country:1"
-  And User customer_one@nbs.fake with role customer is big buyer
-  And a lead LeadOne exists within category Computers and is bought by user customer_one@nbs.fake with role customer
-  And I follow translated "layout.main_menu.admin.upcoming_invoices"
-  And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
-  And I press translated "administration.invoices.new.view.button_create"
-  Then the "invoice_seller_name" field should contain "Default Seller"
-  When someone is signed up and confirmed as user with email customer_two@nbs.fake and password secret and role customer with attributes "first_name:John 2,last_name:Smith,country:2"
-  And User customer_two@nbs.fake with role customer is big buyer
-  And a lead LeadTwo exists within category Computers and is bought by user customer_two@nbs.fake with role customer
-  And I follow translated "layout.main_menu.admin.upcoming_invoices"
-  And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
-  And I press translated "administration.invoices.new.view.button_create"
-  Then the "invoice_seller_name" field should contain "SellerTwo"
-
-@m5 @sellers @ao @_done
-Scenario: If there's no Seller for user's country then default Seller should be used
+Scenario: When creating new invoice a default seller should be selected
   When there is a seller with attributes "company_name:SellerOne" for country "Denmark"
   And there is a seller with attributes "company_name:DefaultSeller,default:1" for country "Denmark"
   And there is a seller with attributes "company_name:SellerThree" for country "Denmark"
@@ -541,3 +523,17 @@ Scenario: I should see payment details
   And I go to administration invoices
   And I follow translated "administration.invoices.index.view.show_invoice"
   Then I should see CSS path "div.status_data"
+
+@added @ao @m5 @_done @_tested
+Scenario: I can see customer and seller addresses on invoice
+  Given there is a seller with attributes "company_name:Selleo,default:1" for country "Denmark"
+  And seller "Selleo" has address "address_line_1:Kaminskiego"
+  And someone is signed up and confirmed as user with email bigbuyer666@nbs.com and password secret and role customer
+  And User bigbuyer666@nbs.com with role customer is big buyer
+  And user "bigbuyer666@nbs.com" with role "customer" has address "address_line_1:Michalowicza"
+  And a lead Klawiaturyyy exists within category Computers and is bought by user bigbuyer666@nbs.com with role customer
+  And user with email "bigbuyer666@nbs.com" and role "customer" has invoice generated for all unpaid leads
+  And I go to administration invoices
+  And I follow translated "administration.invoices.index.view.show_invoice"
+  Then I should see "Kaminskiego" within ".from_to_table tr:nth-child(2) td:nth-child(1)"
+  And I should see "Michalowicza" within ".from_to_table tr:nth-child(2) td:nth-child(2)"

@@ -319,3 +319,6 @@ Scenario: When there is only one template present for a lead and it is optional 
   And I fill in "lead_lead_template_values_attributes_1_value" with "Ms Windows Vista"
   And I press translated "purchase_manager.leads.new.view.button_create"
   And I should see translated "flash.leads.actions.create.notice"
+
+@m6
+Scenario: I should see hint for every field when creating a lead
