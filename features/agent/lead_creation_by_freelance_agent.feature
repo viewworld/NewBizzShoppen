@@ -474,3 +474,6 @@ Scenario: I can publish leads only in unique categories if I'm assigned at least
   And I go to agents leads
   Then "category_id" dropdown should have values "Test category 1,Agent Unique Category"
   And "category_id" dropdown should not have values "Other Agent Unique Category"
+
+@m6
+Scenario: I should see hint for every field when creating a lead
