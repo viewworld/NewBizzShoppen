@@ -85,5 +85,5 @@ Feature: Sellers
     And I follow translated "administration.sellers.index.view.add_seller"
     Then I should see CSS path "#seller_note_input"
 
-
-
+@m6
+Scenario: I should be able to select bank account for each seller (by default the default bank account for new sellers)

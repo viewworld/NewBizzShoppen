@@ -131,3 +131,19 @@ Scenario: I can override the certification level of any agent or call centre
 
 @m6
 Scenario: In users listing I can see unpaid leads count
+
+@m6
+Scenario: I can change category buyer to regular buyer
+
+@m6
+Scenario: I can change regular buyer to category buyer
+
+@m6
+Scenario: I can specify one or many categories for category buyer
+
+@m6
+Scenario: I can configure buyer category interests when editing it
+
+@m6
+Scenario: I can manage user's access to unique categories as well
+

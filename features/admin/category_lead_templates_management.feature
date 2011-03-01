@@ -106,3 +106,11 @@ Scenario: I can promote any lead template to global template
   And I check "lead_template_is_global"
   Then I press translated "administration.lead_templates.edit.view.button_update"
 
+@m6 @unique_categories
+Scenario: When I edit translated fields, try displaying country flag after the field instead of displaying "dk" in front of that particular field
+
+@m6 @unique_categories
+Scenario: Add new template field type : Note (multiline text) [The lead template type should allow for long text. Basicly a large input filed for 200 words- like the description type]
+
+@m6 @unique_categories
+Scenario: Make it possible to duplicate lead templates (from lead templates listings)
