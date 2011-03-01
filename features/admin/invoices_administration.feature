@@ -385,14 +385,14 @@ Scenario: I can create invoice for any customer from users tab
   Given I go to administration users
   And I click hidden translated link "administration.users.index.view.create_invoice"
   Then I press translated "administration.invoices.new.view.button_create"
-  And I should see translated "administration.invoices.edit.view.header"
+  And I should see translated "administration.invoices.edit.view.form.general_information"
 
 @tgn @added @_tested
 Scenario: I can create invoice for any customer from users tab
   Given I go to administration users
   And I click hidden translated link "administration.users.index.view.create_invoice"
   Then I press translated "administration.invoices.new.view.button_create"
-  And I should see translated "administration.invoices.edit.view.header"
+  And I should see translated "administration.invoices.edit.view.form.general_information"
 
 @added @m4b @_done
 Scenario: EAN should be visible if filled
@@ -427,7 +427,7 @@ Scenario: I should see amounts grouped by vat rate when vat is not paid in custo
   And invoice line for first invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
   And I follow translated "layout.main_menu.admin.invoices"
   And I follow translated "administration.invoices.index.view.show_invoice"
-  Then I should see translated "administration.invoices.show.view.including"
+  Then I should see translated "administration.invoices.show.view.vat_spec"
   And I should see "122" within ".totals"
 
 @added @m4b @_done

@@ -34,8 +34,7 @@ Feature: Sellers
   Scenario: Seller should contain all information required to generate invoices
     When I follow translated "layout.main_menu.admin.sellers"
     And I follow translated "administration.sellers.index.view.show"
-    Then I should see translated "administration.sellers.show.view.name"
-    And I should see translated "administration.sellers.show.view.first_name"
+    Then I should see translated "administration.sellers.show.view.first_name"
     And I should see translated "administration.sellers.show.view.last_name"
     And I should see translated "administration.sellers.show.view.address_line_1"
     And I should see translated "administration.sellers.show.view.address_line_2"

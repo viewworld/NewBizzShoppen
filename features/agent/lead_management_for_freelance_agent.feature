@@ -87,4 +87,4 @@ Scenario: I can see clicks, exposure, hottness, novelty per lead
 @tgn @_tested
 Scenario: clicking on the lead should take to edit page
   Given I follow translated "agent.leads.index.view.edit"
-  Then I should see translated "agent.leads.edit.view.title"
+  Then I should see translated "agent.leads.edit.view.title" with options "name:Lead 4"

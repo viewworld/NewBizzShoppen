@@ -85,7 +85,7 @@ Scenario: I can invoice an account
   Given I go to administration users
   And I click hidden translated link "administration.users.index.view.create_invoice"
   Then I press translated "administration.invoices.new.view.button_create"
-  And I should see translated "administration.invoices.edit.view.header"
+  And I should see translated "administration.invoices.edit.view.form.general_information"
 
 @m5 @tgn @selenium @_tested
 Scenario: I can toggle select/deselect accounts on active page
