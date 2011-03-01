@@ -222,6 +222,12 @@ Given /^user "([^"]*)" with role "([^"]*)" comes from "([^"]*)"$/ do |email,role
   address.save
 end
 
+Given /^user "([^"]*)" with role "([^"]*)" has address "([^"]*)"$/ do |email,role_name,options|
+  user = "User::#{role_name.camelize}".constantize.first(:conditions => { :email => email })
+  attrs = Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys
+  user.address.update_attributes(attrs)
+end
+
 When /^I am signed up and confirmed as user with email "([^"]*)" and password "([^"]*)" and role "([^"]*)" for category "([^"]*)"(?: with attributes "([^"]*)")?$/ do |email, password, role_name, category_name, options|
   std_opts = {:email => email, :password => password, :password_confirmation => password, :category_id => Category.where(:name => category_name).first.id}
   opts = options ? Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys.merge(std_opts) : std_opts
