@@ -108,7 +108,7 @@ Scenario: I should see certification level for each requested lead
   Then I go to customers lead requests
   And I should see translated "models.lead.certification.lvl0"
 
-@m0 @_added
+@m6 @_added
 Scenario: I should see rating % for each requested lead
 
 @tgn @_done @_tested

@@ -62,7 +62,7 @@ Scenario: I can create more than one transaction for given invoice
   And I press translated "administration.payment_transactions.new.view.button_create"
   Then I should see translated "flash.payment_transactions.create.notice"
 
-@m0
+@m6
 Scenario: I can refund a transaction manually (what is the implication??)
 
 @m5 @added @tgn @sprint_5_corrections @_tested

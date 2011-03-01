@@ -31,7 +31,7 @@ Scenario: I can follow "What do you want to do today?" links and they take me to
 @_tested_in_rspec
 Scenario: After signup I am assigned roles of Customer, Lead Buyer and Lead user
 
-@m0 @tested
+@tested
 Scenario: I can see my unique RSS feed URL
   Then I should see translated "customer.interests.edit.view.rss_feed_url"
 
@@ -98,7 +98,7 @@ Scenario: I should have my interests fixed to the unique category I'm assigned t
   And I go to customer interests
   Then checkbox named "category_" should be checked
 
-@added @m0
+@added @m6
 Scenario: If customer is category buyer he/she can see also unique categories
 
 @added @tgn @_tested
