@@ -1,4 +1,4 @@
-@m5b @agent_campaign @$_call_centre_agent @tbo
+@m5b @agent_campaign @$_call_centre_agent @tbr
 Feature: Agent campaign - calling session
 
 # As agent
