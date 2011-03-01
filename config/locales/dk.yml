@@ -3,3 +3,18 @@ dk:
     show:
       view:
         header: 'Hjemmeside'
+
+  number:
+    format:
+      separator: '.'
+      delimiter: ','
+      precision: 3
+      significant: false
+      strip_insignificant_zeros: false
+    percentage:
+      format:
+        separator: '.'
+        delimiter: ','
+        precision: 3
+        significant: false
+        strip_insignificant_zeros: false

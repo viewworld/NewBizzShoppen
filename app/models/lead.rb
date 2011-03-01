@@ -40,7 +40,7 @@ class Lead < ActiveRecord::Base
   #====================
   scope :featured, where(:featured => true)
   scope :purchased, where("lead_purchases_counter > 0")
-  scope :without_bought_and_requested_by, lambda {|u| joins("LEFT JOIN lead_purchases lp ON lp.lead_id = leads.id").where(["(lp.owner_id <> ? OR lp.owner_id IS NULL) AND (lp.assignee_id <> ? OR lp.assignee_id IS NULL) AND (lp.requested_by <> ? OR lp.requested_by IS NULL)", u.id, u.id, u.id]) if u}
+  scope :without_bought_and_requested_by, lambda {|u| select("DISTINCT leads.*").joins("LEFT JOIN lead_purchases lp ON lp.lead_id = leads.id").where(["(lp.owner_id <> ? OR lp.owner_id IS NULL) AND (lp.assignee_id <> ? OR lp.assignee_id IS NULL) AND (lp.requested_by <> ? OR lp.requested_by IS NULL)", u.id, u.id, u.id]) if u}
   scope :bestsellers, order("lead_purchases_counter DESC")
   scope :latest, order("created_at DESC")
   scope :interesting_for_user, lambda { |user| where("leads.category_id IN (?)", user.accessible_categories_ids) }
@@ -211,7 +211,7 @@ class Lead < ActiveRecord::Base
     templates = LeadTemplate.with_category_and_its_ancestors(category).where("is_active = ?", true).
         where("(is_global = ? or (creator_id = ? and creator_type = ?) or (creator_id = ? and creator_type = ?) or creator_type = ? or creator_id in (?))",
                  true, creator.parent_id, creator.parent.nil? ? "" : creator.parent.send(:casted_class).to_s, creator.id, creator.class.to_s, "User::Admin",
-                 creator.has_role?(:call_centre_agent) ? creator.parent.send(:casted_class).find(creator.parent_id).subaccounts : [])
+                 (creator.has_role?(:call_centre_agent) and creator.parent.present?) ? creator.parent.send(:casted_class).find(creator.parent_id).subaccounts : [])
     templates = templates.where("is_mandatory = ?", with_mandatory_only) unless with_mandatory_only.nil?
     templates
   end
@@ -232,5 +232,13 @@ class Lead < ActiveRecord::Base
     templates.map do |template|
       [template, lead_template_values.select { |ltv| ltv.lead_template_field.lead_template_id == template.id }]
     end
-  end  
+  end
+
+  def facebook_url_present?
+    !facebook_url.blank? and facebook_url != "http://"
+  end
+
+  def linkedin_url_present?
+    !linkedin_url.blank? and linkedin_url != "http://"
+  end
 end

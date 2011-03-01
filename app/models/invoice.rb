@@ -100,7 +100,7 @@ class Invoice < ActiveRecord::Base
             :customer_address => user.with_role.address.clone,
             :customer_vat_no => user.with_role.vat_number,
             :seller_address => seller.address.clone,
-            :seller_name => seller.name,
+            :seller_name => seller.company_name,
             :seller_vat_no => seller.vat_no,
             :seller_first_name => seller.first_name,
             :seller_last_name => seller.last_name,
@@ -121,12 +121,12 @@ class Invoice < ActiveRecord::Base
   end
 
   def get_template_source
-    File.open(File.join(::Rails.root.to_s, "app", "views", "administration", "invoicing", "invoices", "_invoice_preview.erb")){|file| file.read}
+    File.open(File.join(::Rails.root.to_s, "app", "views", "shared", "invoices", "_invoice_preview.erb")){|file| file.read}
   end
 
   def generate_invoice_lines_for_big_buyer
     if user and user.big_buyer?
-      User::Customer.find(user_id).lead_purchases.select { |lp| lp.invoice_line.blank? }.each do |lead_purchase|
+      User::Customer.find(user_id).lead_purchases.select { |lp| lp.invoice_line.blank? and lp.lead.currency_id == currency_id }.each do |lead_purchase|
         InvoiceLine.create(:invoice => self, :payable => lead_purchase, :name => lead_purchase.lead.header, :netto_price => lead_purchase.lead.price, :vat_rate => user.country_vat_rate)
       end
     end
@@ -164,7 +164,7 @@ class Invoice < ActiveRecord::Base
   #---------------------- { INSTANCE METHODS } -----------------------
   #-------------------------------------------------------------------
 
-  def markup
+  def markup(current_user)
     av = ActionView::Base.new
     av.assigns[:invoice] = self
     av.instance_eval do
@@ -174,7 +174,7 @@ class Invoice < ActiveRecord::Base
 
     html_template = get_template_source
     html_markup = [:original].map do |version|
-      av.render(:inline => html_template, :type => :erb, :layout => '/app/views/layouts/pdf', :locals => {:version => version, :invoice => self})
+      av.render(:inline => html_template, :type => :erb, :layout => '/app/views/layouts/pdf', :locals => {:version => version, :invoice => self, :current_user => current_user})
     end.join
 
     MARKUP_SCAFFOLD % html_markup
@@ -184,8 +184,8 @@ class Invoice < ActiveRecord::Base
     Rails.root.join("public/html2pdf/#{filename}.html")
   end
 
-  def store_pdf
-    File.open(temp_invoice_path, 'w') {|f| f.write(markup) }
+  def store_pdf(current_user)
+    File.open(temp_invoice_path, 'w') {|f| f.write(markup(current_user)) }
     `python public/html2pdf/pisa.py #{temp_invoice_path} #{filepath}`
     File.delete(temp_invoice_path)
     filepath

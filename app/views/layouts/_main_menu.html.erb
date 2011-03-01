@@ -1,4 +1,4 @@
-<ul class="nav<%= (user_signed_in? and current_user.has_role?(:admin)) ? " admin_nav": "" %>">
+<ul class="nav<%= (user_signed_in? and current_user.has_role?(:admin)) ? " admin_nav" : "" %>">
   <%= main_menu_link_to_role_specific_home_page %>
   <% if @home_category %>
       <%= main_menu_link_to t("layout.main_menu.shared.browse_leads"), category_home_page_leads_path(@home_category.cached_slug), :tab => "browse_leads" %>
@@ -11,3 +11,16 @@
       <% end %>
   <% end %>
 </ul>
+
+<script type="text/javascript">
+    jQuery(document).ready(function()
+    {
+        $('.has_child').each(function() {
+            var t = $(this);
+            if ( t.width() > t.find(".subnav").width())
+            {
+                t.find(".subnav").css("width", t.width());
+            }
+        })
+    })
+</script>

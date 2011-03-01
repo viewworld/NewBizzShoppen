@@ -70,11 +70,21 @@
 
   function select_options_onsubmit(){
     if($('#category_is_customer_unique:checked').val() == "1"){
-    select_all_options("customers")
+        select_all_options("customers")
+    }
+      else
+    {
+        clear_select("customers", "selected");
+        select_all_options("customers")
     }
 
     if($('#category_is_agent_unique:checked').val() == "1"){
-    select_all_options("agents")
+        select_all_options("agents")
+    }
+    else
+    {
+        clear_select("agents", "selected");
+        select_all_options("agents")
     }
   }
 
@@ -89,8 +99,8 @@
       }
   }
 
-  function clear_select(users_type){
-    $("#all_" + users_type + " option").each(function()
+  function clear_select(users_type, select_type){
+    $("#" + select_type + "_" + users_type + " option").each(function()
     {
         $(this).remove();
     });

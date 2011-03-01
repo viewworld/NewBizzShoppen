@@ -1,7 +1,8 @@
 class Administration::Invoicing::PaymentTransactionsController < Administration::AdministrationController
   inherit_resources
 
-  set_tab "payment_transactions"
+  set_tab "financial"
+  set_subtab "payment_transactions"
 
   def new
     @payment_transaction = ManualTransaction.new(:invoice_id => params[:invoice_id])

@@ -1,6 +1,7 @@
 class Administration::SettingsController < Administration::AdministrationController
 
   set_tab "settings"
+  set_subtab "global"
 
   def edit
     @settings = Settings.where({})

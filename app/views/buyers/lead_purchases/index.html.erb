@@ -15,9 +15,9 @@
                 <%= f.label :with_category, t("lead_buyer.lead_purchases.index.view.search.category_label") %>
                 <%= f.select :with_category, @categories, {:include_blank => true} %>
               </li>
-              <li class="select">
+              <li class="string">
                 <%= f.label :with_zip_code, t("lead_buyer.lead_purchases.index.view.search.zip_code") %>
-                <%= f.text_field :with_zip_code %>
+                <%= f.text_field :with_zip_code, :style => "width:100px" %>
               </li>
               <li class="select">
                 <%= f.label :with_country, t("lead_buyer.lead_purchases.index.view.search.country_label") %>
@@ -132,7 +132,7 @@
                   <div id="rating_reson_div_<%= lead_purchase.id %>" style="<%= 'display:none;' unless lead_purchase.is_rated_as_unsatisfactory? %>">
                     <%= t("lead_buyer.lead_purchases.index.view.rating_reason") %>
                     <%= text_area_tag :rating_reason, lead_purchase.rating_reason, :id => "rating_reason_#{lead_purchase.id}" %>
-                    <%= button_to_function t("lead_buyer.lead_purchases.index.view.update_rating_button"), "save_rating(#{lead_purchase.id})" %>
+                    <%= bt_link_to :save, t("lead_buyer.lead_purchases.index.view.update_rating_button"), "javascript:save_rating(#{lead_purchase.id})", :style => "margin-top: 4px;" %>
                   </div>
               <% end %>
 

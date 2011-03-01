@@ -17,18 +17,22 @@ en:
   layout:
     main_menu:
       admin:
-        users: Users
-        categories: Categories
-        email_templates: Emails
-        settings: Settings
-        leads: Leads
-        articles: Articles
-        news: News
-        currencies: Currencies
-        invoices: Invoices
-        upcoming_invoices: Debtors
+        users: 'Users'
+        categories: 'Categories'
+        email_templates: 'Emails'
+        settings: 'Settings'
+        leads: 'Leads'
+        articles: 'Articles'
+        news: 'News'
+        currencies: 'Currencies'
+        invoices: 'Invoices'
+        upcoming_invoices: 'Debtors'
         payment_transactions: 'Payments'
         sellers: 'Sellers'
+        financial: 'Financial'
+        creditors: 'Creditors'
+        content: 'Content'
+        global: 'Global'
       agent:
         leads: My leads
         lead_templates: Lead templates
@@ -253,6 +257,7 @@ en:
         agents_header: 'Agents news'
         sales_managers_header: 'Sales manager news'
         purchase_managers_header: 'Purchase manager news'
+        category_homes_header: 'Category news'
         read_more_link: 'read more'
         newer_link: 'Newer'
         older_link: 'Older'
@@ -315,9 +320,11 @@ en:
           locked: 'Locked'
           lock: 'Lock'
           unlock: 'Unlock'
+          lock_selected: 'Lock Selected'
+          unlock_selected: 'Unock Selected'
           button_bulk_update_users: Save
           subaccounts: 'Subaccounts'
-          create_invoice: 'Create invoice'
+          create_invoice: 'Create invoice from selected'
           edit: 'Edit'
           subaccounts_for_user: 'Subaccounts of user %{user_name}'
           show_all_users: 'Show all users'
@@ -373,6 +380,7 @@ en:
       edit:
         view:
           header: "Editing category: %{category_name}"
+          header_templates: Lead templates
           upload_image: 'Upload image'
           button_update: 'Save'
           new_template: New template
@@ -585,12 +593,16 @@ en:
           cashflow: 'Cashflow'
           yes_label: 'Yes'
           no_label: 'No'
-          bank_name: 'BANK NAME'
-          bank_address: 'BANK ADDRESS'
+          bank_name: 'Bank name'
+          bank_address_line_1: 'Address line 1'
+          bank_address_line_2: 'Address line 2'
+          bank_address_line_3: 'Address line 3'
+          bank_zip_code: 'Zip code'
+          bank_country: 'Country'
           swift_code: 'SWIFT'
-          iban_number: 'IBAN NO'
-          local_bank_number: 'LOCAL BANK NUMBER'
-          payment_conditions: 'PAYMENT CONDITIONS'
+          iban_number: 'IBAN No'
+          local_bank_number: 'Local bank number'
+          payment_conditions: 'Payment conditions'
           payment_transactions:
             header: 'Transactions'
             type: 'Type'
@@ -611,7 +623,7 @@ en:
           set_payable_for_invoice_items: 'Set payable for invoice items'
           name: Name
           quantity: '#'
-          vat_rate: VAT%
+          vat_rate: VAT
           netto_price: Netto price
           netto_value: Netto value
           vat_value: VAT
@@ -672,6 +684,8 @@ en:
         view:
           header: 'Sellers'
           country: 'Country'
+          name: 'Name'
+          company_name: 'Company name'
           first_name: 'First name'
           last_name: 'Last name'
           default: 'Default'

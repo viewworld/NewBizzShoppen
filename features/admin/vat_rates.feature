@@ -2,7 +2,7 @@
 Feature: VAT rates
 
   Background: I am on the home page
-    Given there is a seller with attributes "name:DannyTheSeller,first_name:Danny,last_name:DeVito,address:USA,vat_no:123" for country "Denmark"
+    Given there is a seller with attributes "company_name:DannyTheSeller,first_name:Danny,last_name:DeVito,address:USA,vat_no:123" for country "Denmark"
     And I am on the home page
 
   @_done
@@ -82,7 +82,7 @@ Feature: VAT rates
     When VAT rate for "Denmark" is set to "25"
     And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
     And I sign in as jon@lajoie.ca with password secret
-    And I follow translated "layout.main_menu.admin.settings"
+    And I follow translated "layout.main_menu.admin.global"
     And I follow translated "administration.vat_rates.index.view.add_vat_rate"
     And I fill in "vat_rate_country_attributes_name" with "Denmark"
     And I fill in "vat_rate_rate" with "15"
@@ -125,7 +125,7 @@ Feature: VAT rates
      And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
      And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role customer with attributes "first_name:Wielki,last_name:Szu"
      And I sign in as jon@lajoie.ca with password secret
-     And I follow translated "layout.main_menu.admin.invoices"
+     And I click hidden link by url regex "/administration\/invoicing\/invoices/"
      And I select "Wielki Szu" from "invoice_user_id"
      And I press translated "administration.invoices.index.view.create_invoice"
      And I follow "add_fields_invoice_lines"
@@ -138,7 +138,7 @@ Feature: VAT rates
     And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
     And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role customer with attributes "first_name:Wielki,last_name:Szu,not_charge_vat:1"
     And I sign in as jon@lajoie.ca with password secret
-    And I follow translated "layout.main_menu.admin.invoices"
+    And I click hidden link by url regex "/administration\/invoicing\/invoices/"
     And I select "Wielki Szu" from "invoice_user_id"
     And I press translated "administration.invoices.index.view.create_invoice"
     And I follow "add_fields_invoice_lines"
@@ -150,7 +150,7 @@ Feature: VAT rates
   Scenario: I can create a new country when adding a VAT rate
     When I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
     And I sign in as jon@lajoie.ca with password secret
-    And I follow translated "layout.main_menu.admin.settings"
+    And I follow translated "layout.main_menu.admin.global"
     And I follow translated "administration.vat_rates.index.view.add_vat_rate"
     And I fill in "vat_rate_country_attributes_name" with "Poland"
     And I fill in "vat_rate_rate" with "23"
@@ -163,7 +163,7 @@ Feature: VAT rates
   Scenario: The new country created should have VAT rate assigned
     When I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
     And I sign in as jon@lajoie.ca with password secret
-    And I follow translated "layout.main_menu.admin.settings"
+    And I follow translated "layout.main_menu.admin.global"
     And I follow translated "administration.vat_rates.index.view.add_vat_rate"
     And I fill in "vat_rate_country_attributes_name" with "Poland"
     And I fill in "vat_rate_rate" with "23"

@@ -2,6 +2,8 @@ class Administration::Invoicing::InvoicesController < Administration::Administra
   inherit_resources
 #  defaults :redirects => {:create => :edit, :update => :show}
 #  set_search_persistence :name => "invoices_filter"
+  set_tab "financial"
+  set_subtab "invoices"
 
   def create
     @invoice = Invoice.new(params[:invoice])
@@ -19,7 +21,7 @@ class Administration::Invoicing::InvoicesController < Administration::Administra
   def show
     super do |format|
       format.html
-      format.pdf { send_file @invoice.store_pdf, :type => 'application/pdf'}
+      format.pdf { send_file @invoice.store_pdf(current_user), :type => 'application/pdf'}
     end
   end
 

@@ -15,13 +15,12 @@ class Nbs < Thor
     Settings.contact_us_email = "contact@nbs.fake.com"
     # Invoicing
     Settings.invoicing_default_payment_deadline_date = 14
-    Settings.invoicing_seller_name                   = "Fairleads"
-    Settings.invoicing_seller_address                = "Streeet\nPost Code City\nCounty\nCountry"
-    Settings.invoicing_seller_vat_number             = "123-456-789"
     Settings.invoicing_default_vat_rate              = 0.15
 
-    Country.find_or_create_by_name("Denmark", :locale => "dk")
-    Country.find_or_create_by_name("United Kingdom", :locale => "en")
+    country = Country.find_or_create_by_name("Denmark", :locale => "dk")
+#    VatRate.find_or_create_by_country_id(country.id, :rate => 25)
+    country = Country.find_or_create_by_name("United Kingdom", :locale => "en")
+#    VatRate.find_or_create_by_country_id(country.id, :rate => 20)
 
     if BankAccount.count == 0
       BankAccount.create(
@@ -38,6 +37,7 @@ class Nbs < Thor
     if Seller.count == 0
       Seller.create(
           :name => "Default Seller",
+          :company_name => "Default Seller",
           :first_name => "Change",
           :last_name => "Change",
           :vat_no => '111',

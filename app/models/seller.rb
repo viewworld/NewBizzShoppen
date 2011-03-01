@@ -6,7 +6,7 @@ class Seller < ActiveRecord::Base
 
   has_many :invoices
 
-  validates_presence_of :name, :address, :first_name, :last_name, :vat_no
+  validates_presence_of :name, :company_name, :address, :first_name, :last_name, :vat_no
 
   before_save :assure_default
   after_save :change_default

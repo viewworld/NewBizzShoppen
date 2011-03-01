@@ -62,7 +62,7 @@ Scenario: I can add an extra language while creating lead. This will include lea
   And I fill in "lead_company_name" with "Llorem Inc"
   And I select "3" from "lead_sale_limit"
   And I select "Denmark" from "lead_country_id"
-  And I fill in "datepicker" with "2011-02-20"
+  And I fill in "datepicker" with date that is "5" days from now
   And I select "dk" from "locale_picker"
   And I fill in "lead_lead_translations_attributes_0_header" with "DK header"
   And I fill in "lead_lead_translations_attributes_0_description" with "DK description"
@@ -116,7 +116,7 @@ Scenario: Created leads should not be published (not listed)
   And I fill in "lead_company_name" with "Llorem Inc"
   And I select "3" from "lead_sale_limit"
   And I select "Denmark" from "lead_country_id"
-  And I fill in "datepicker" with "2011-02-20"
+  And I fill in "datepicker" with date that is "5" days from now
   And I press translated "purchase_manager.leads.new.view.button_create"
   And I am on browse leads
   And I follow "PMCategory"
@@ -143,7 +143,7 @@ Scenario: I have to fill out the templates which are mandatory
   And I fill in "lead_city" with "Bielsko-Biała"
   And I fill in "lead_county" with "Freesdas"
   And I fill in "lead_zip_code" with "23-2911"
-  And I fill in "datepicker" with "2011-02-20"
+  And I fill in "datepicker" with date that is "5" days from now
   And I fill in "lead_lead_template_values_attributes_0_value" with "123"
   And I fill in "lead_lead_template_values_attributes_1_value" with "Ms Windows Vista"
   And I press translated "purchase_manager.leads.new.view.button_create"
@@ -176,7 +176,7 @@ Scenario: I can select additional templates that are optional
   And I fill in "lead_city" with "Bielsko-Biała"
   And I fill in "lead_county" with "Freesdas"
   And I fill in "lead_zip_code" with "23-2911"
-  And I fill in "datepicker" with "2011-02-20"
+  And I fill in "datepicker" with date that is "5" days from now
   And I fill in "lead_lead_template_values_attributes_0_value" with "123"
   And I fill in "lead_lead_template_values_attributes_1_value" with "Ms Windows Vista"
   Then I select "Fax details" from "optional_templates_picker"
@@ -247,7 +247,7 @@ Scenario: When new translation to lead is added I can also write translation for
   And I fill in "lead_city" with "Bielsko-Biała"
   And I fill in "lead_county" with "Freesdas"
   And I fill in "lead_zip_code" with "23-2911"
-  And I fill in "datepicker" with "2011-02-20"
+  And I fill in "datepicker" with date that is "5" days from now
   And I fill in "lead_lead_template_values_attributes_0_value" with "123"
   And I fill in "lead_lead_template_values_attributes_1_value" with "Ms Windows Vista"
   And I select "dk" from "locale_picker"
@@ -284,7 +284,7 @@ Scenario: I have to fill out the fields that are mandatory in mandatory or optio
   And I fill in "lead_city" with "Bielsko-Biała"
   And I fill in "lead_county" with "Freesdas"
   And I fill in "lead_zip_code" with "23-2911"
-  And I fill in "datepicker" with "2011-02-20"
+  And I fill in "datepicker" with date that is "5" days from now
   And I fill in "lead_lead_template_values_attributes_0_value" with "123"
   And I fill in "lead_lead_template_values_attributes_1_value" with "Ms Windows Vista"
   And I press translated "purchase_manager.leads.new.view.button_create"
@@ -314,7 +314,7 @@ Scenario: When there is only one template present for a lead and it is optional 
   And I fill in "lead_city" with "Bielsko-Biała"
   And I fill in "lead_county" with "Freesdas"
   And I fill in "lead_zip_code" with "23-2911"
-  And I fill in "datepicker" with "2011-02-20"
+  And I fill in "datepicker" with date that is "5" days from now
   And I fill in "lead_lead_template_values_attributes_0_value" with "123"
   And I fill in "lead_lead_template_values_attributes_1_value" with "Ms Windows Vista"
   And I press translated "purchase_manager.leads.new.view.button_create"

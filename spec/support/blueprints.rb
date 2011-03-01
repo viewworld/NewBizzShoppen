@@ -3,7 +3,7 @@ require 'faker'
 require 'spec/support/overwrites/lorem'
 
 Category.blueprint do
-  name { Faker::Lorem.words(2).to_s }
+  name { Faker::Lorem.words(2).to_s + Time.now.to_f.to_s.sub('.','') }
   description { Faker::Lorem.sentences(2).to_s }
 end
 
@@ -29,7 +29,7 @@ Lead.blueprint do
   creator_id { User::Agent.make!.id }
   creator_type { "User::Agent" }
   category_id { Category.make!.id }
-  sale_limit { 1 }
+  sale_limit { 10 }
   purchase_decision_date { (Date.today+5) }
   published { true }
   currency { Currency.make!}
@@ -53,7 +53,7 @@ Lead.blueprint(:featured) do
   creator_id { User::Agent.make!.id }
   creator_type { "User::Agent" }
   category_id { Category.make!.id }
-  sale_limit { 1 }
+  sale_limit { 10 }
   purchase_decision_date { (Date.today+5) }
   featured { true }
   currency { Currency.make!}
@@ -121,6 +121,7 @@ end
   agreement_read { true }
   roles_mask { 112 }
   team_buyers { false }
+  company_name { Faker::Company.name }
   address { Address.make! }
 end
 
@@ -212,6 +213,7 @@ end
   agreement_read { true }
   category_id { Category.make!.id }
   roles_mask { 304 }
+  company_name { Faker::Company.name }
   address { Address.make! }
 end
 
@@ -264,7 +266,7 @@ InvoiceLine.blueprint do
 end
 
 BankAccount.blueprint do
-  bank_name { Faker::Lorem.words(2).to_s }
+  bank_name { Faker::Company.name }
   iban_no { Faker.numerify('###################') }
   local_bank_number { Faker.numerify('#########') }
   swift { Faker.letterify('????????').upcase }
@@ -273,8 +275,9 @@ end
 
 Seller.blueprint do
   name { Faker::Lorem.words(2).to_s }
-  first_name { Faker::Lorem.words(1).to_s }
-  last_name { Faker::Lorem.words(1).to_s }
+  company_name { Faker::Company.name}
+  first_name { Faker::Name.first_name }
+  last_name { Faker::Name.last_name }
   address { Address.make! }
   vat_no { Faker.numerify('#########') }
 end

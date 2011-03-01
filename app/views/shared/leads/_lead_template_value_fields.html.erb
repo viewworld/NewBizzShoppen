@@ -1,5 +1,6 @@
 <li class="string">
-  <%= f.label :value, f.object.lead_template_field.name %>
+  <% abbr =  f.object.lead_template_field.is_mandatory ? content_tag(:abbr, "*").html_safe : '' -%>
+  <%= raw f.label :value, h(f.object.lead_template_field.name)+(abbr) %>
   <%= f.text_field :value %>
   <%= custom_error_for_field(f, :value) %>
 </li>

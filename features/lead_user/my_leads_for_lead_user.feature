@@ -154,7 +154,7 @@ Scenario: I can set status of lead (not contacted, contacted, meeting, signed)
   And I go to lead user lead purchases
   Given I fill in "search_with_keyword" with "Printers ultimate deal"
   And I press translated "lead_user.lead_purchases.index.view.search.search_button"
-  Then "lead_purchase_state" should be selected for value "Signed"
+  Then "state" should be selected for value "Signed"
 
 @tgn @_tested @selenium
 Scenario: I can bulk set status of leads (not contacted, dontacted, meeting, signed)

@@ -10,7 +10,10 @@ class PurchaseManagers::LeadsController < PurchaseManagers::PurchaseManagerContr
   end
 
   def collection
+    params[:search] ||= {}
     @search = Lead.scoped_search(params[:search])
+    @search.without_inactive = true if params[:search][:without_inactive].nil?
+    @search.without_outdated = true if params[:search][:without_outdated].nil?
     @leads = @search.where(:creator_id => current_user.id).paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)
   end
 
@@ -38,6 +41,7 @@ class PurchaseManagers::LeadsController < PurchaseManagers::PurchaseManagerContr
 
   def create
     @lead = current_user.leads.build(default_params_hash(params[:lead]))
+    session[:selected_category] = @lead.category_id
 
     create! do |success, failure|
       success.html {

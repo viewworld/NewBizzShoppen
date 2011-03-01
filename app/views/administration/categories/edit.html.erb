@@ -20,6 +20,9 @@
   <% end %>
 
   <% unless @category.lead_templates.empty? %>
+      <br />
+      <header><%= t("administration.categories.edit.view.header_templates") %></header>
+
       <%= lead_templates_table @category.lead_templates, :show_checkboxes => false, :show_active_column => false, :paginate_table => false do |blocks| %>
           <% blocks.tools do |lead_template| %>
               <ul-actions>

@@ -36,7 +36,7 @@
 
 
             <div class="column_left">
-              <div class="column_right">
+              <div class="grid_200 fltl">
                 <fieldset class="inputs labels_ta_r labels_80">
                   <ol>
                     <li class="header">
@@ -45,7 +45,25 @@
                       </h3>
                     </li>
                     <li class="select multiple">
-                      <%= select_tag "countries", options_for_select(@countries.collect { |c| [c.name, c.id] }, current_user.countries.empty? ? @countries.detect { |c| c.locale == I18n.locale.to_s }.to_a.compact.map(&:id) : current_user.countries.collect { |c| c.id.to_s }), :multiple => true %>
+                      <%= select_tag "countries", options_for_select(@countries.collect { |c| [c.name, c.id] }, current_user.countries.empty? ? Array(@countries.detect { |c| c.locale == I18n.locale.to_s }).compact.map(& :id) : current_user.countries.collect { |c| c.id.to_s }), :multiple => true %>
+                    </li>
+                  </ol>
+                </fieldset>
+                <fieldset class="inputs labels_auto">
+                  <ol>
+                    <li class="string">
+                      <%= label_tag "rss_url", t("customer.interests.edit.view.rss_feed_url") %>
+                      <%= text_field_tag "rss_url", "http://www.newbizzshoppen.com/rss/#{current_user.rss_token}", :style => "width:450px" %>
+                    </li>
+                  </ol>
+                </fieldset>
+              </div>
+              <div class="fltl" style="padding-top:30px;">
+                <fieldset class="inputs">
+                  <ol>
+                    <li class="boolean">
+                      <%= check_box "user", "notify_about_new_leads", :checked => current_user.notify_about_new_leads %>
+                      <%= label_tag "user_notify_about_new_leads", t("customer.interests.edit.view.notify_about_new_leads") %>
                     </li>
                   </ol>
                 </fieldset>
@@ -53,33 +71,7 @@
               <clb/>
             </div>
             <clb/>
-          </div>
-
-          <hl pdd="8"/>
-
-          <div class="pdd_10 no_pdd_t">
-            <div class="grid_1to2 fltl">
-              <fieldset class="inputs labels_auto no_pdd">
-                <ol class="no_pdd">
-                  <li class="string">
-                    <%= label_tag "rss_url", t("customer.interests.edit.view.rss_feed_url") %>
-                    <%= text_field_tag "rss_url", "http://www.newbizzshoppen.com/rss/#{current_user.rss_token}", :style => "width:370px" %>
-                  </li>
-                </ol>
-              </fieldset>
-            </div>
-
-            <div class="grid_1to2 fltl">
-              <fieldset class="inputs labels_auto no_pdd">
-                <ol class="no_pdd">
-                  <li class="boolean">
-                    <%= check_box "user", "notify_about_new_leads", :checked => current_user.notify_about_new_leads %>
-                    <%= label_tag "user_notify_about_new_leads", t("customer.interests.edit.view.notify_about_new_leads") %>
-                  </li>
-                </ol>
-              </fieldset>
-            </div>
-            <clb/>
+            <br/>
           </div>
         </param:content>
         <param:actions>

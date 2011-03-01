@@ -1,10 +1,10 @@
 <div class="pdd_10 no_pdd_t rltv">
-    <fieldset class="inputs labels_ta_r labels_240">
-        <% lead.lead_templates.each do |lead_template| %>
-          <div id="lead_template_container_<%= lead_template.id %>" style="<%= "display: none;" if !lead_template.is_mandatory and !lead_template.is_filled_out_for(lead) %>">
-           <ol class="align_inputs">
+  <fieldset class="inputs labels_ta_r labels_240">
+    <% lead.lead_templates.each do |lead_template| %>
+        <div id="lead_template_container_<%= lead_template.id %>" style="clear:both; position: relative;<%= "display: none;" if !lead_template.is_mandatory and !lead_template.is_filled_out_for(lead) %>">
+          <ol class="align_inputs">
             <li class="header">
-              <%= bt_link_to(:remove, t("shared.leads.form.remove_template"), "javascript:void(0)", :onclick => "remove_template(#{lead_template.id}, '#{lead_template.name}')", :style => "position: absolute; left:8px; top:2px") unless lead_template.is_mandatory %>
+              <%= bt_link_to(:remove, t("shared.leads.form.remove_template"), "javascript:void(0)", :onclick => "remove_template(#{lead_template.id}, '#{lead_template.name}')", :style => "position: absolute; left:0; top:0") unless lead_template.is_mandatory %>
               <h3 class="locale_title">
                 <%= lead_template.name %>
               </h3>
@@ -14,15 +14,15 @@
                 <%= render :partial => "/shared/leads/lead_template_value_fields", :locals => {:f => builder} %>
             <% end %>
           </ol>
-          </div>
-        <% end %>
+        </div>
+    <% end %>
 
-      <ol class="align_inputs">
-        <li class="select">
-          <%= label_tag :optional_templates %>
-          <%= select_tag :optional_templates, options_for_select(available_templates_list(lead).map { |lt| [lt.name, lt.id] }),
-               {:id => "optional_templates_picker", :include_blank => true, :onchange => "add_template()"} %>
-        </li>
-      </ol>
-    </fieldset>
+    <ol class="align_inputs">
+      <li class="select">
+        <%= label_tag :optional_templates %>
+        <%= select_tag :optional_templates, options_for_select(available_templates_list(lead).map { |lt| [lt.name, lt.id] }),
+                       {:id => "optional_templates_picker", :include_blank => true, :onchange => "add_template()"} %>
+      </li>
+    </ol>
+  </fieldset>
 </div>

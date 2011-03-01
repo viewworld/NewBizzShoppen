@@ -20,10 +20,13 @@ Background:
 @_tested @bk
 Scenario: I can click add lead to my basket and I will get a notification “Lead was added to your basket”
   Given I follow "Another sample category"
-  And I follow translated "leads.index.add_to_cart_link" for lead "Super printers"
+  And I fill in "search_with_keyword" with "Super printers"
+  And I press translated "leads.index.search.search_button"
+  And I follow translated "leads.index.add_to_cart_link"
   Then I should see translated "buyer.cart_items.create.flash.cart_item_creation_successful"
-  And I follow translated "leads.index.add_to_cart_link" for lead "Super printers"
-  Then I should see translated "buyer.cart_items.create.flash.cart_item_already_in_basket"
+  And I fill in "search_with_keyword" with "Super printers"
+  And I press translated "leads.index.search.search_button"
+  Then I should not see translated "leads.index.add_to_cart_link"
 
 @_tested  @selenium
 Scenario: I can toggle select leads on a displayed page

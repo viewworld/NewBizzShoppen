@@ -1,7 +1,8 @@
 class Administration::Invoicing::UpcomingInvoicesController < Administration::AdministrationController
   inherit_resources
 
-  set_tab "upcoming_invoices"
+  set_tab "financial"
+  set_subtab "upcoming_invoices"
 
   protected
 

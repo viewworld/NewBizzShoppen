@@ -144,11 +144,10 @@ Scenario: I can bulk lock/unlock lead buyer/lead user accounts
   And an user with role lead_user and email lead_user@person.com exists as subaccount for customer bob@person.com
   And I go to customers subaccounts
   Then I check "mark_all"
-  And I follow translated "customer.subaccounts.index.view.button_bulk_subbaccounts_update"
+  And I follow "lock_selected"
   And I should see translated "flash.bulk_subaccounts_update.update.notice"
   Then I check "mark_all"
-  And I select translated "customer.subaccounts.index.view.unlock" from "locked"
-  And I follow translated "customer.subaccounts.index.view.button_bulk_subbaccounts_update"
+  And I follow "unlock_selected"
   And I should see translated "flash.bulk_subaccounts_update.update.notice"
 
 @_tested
