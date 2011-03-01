@@ -109,8 +109,19 @@ Scenario: I can edit leads from any page where they are presented
   Then I follow translated "leads.listing.edit_label"
   And I should see translated "agent.leads.edit.view.title" with options "name:Big deal on printers"
 
-@m5 @added
+@m5 @added @selenium @wip
 Scenario: I can clear the filter when browsing leads
+  When lead Monitors ultimate deal exists within category Computers
+  And lead Keyboards ultimate deal exists within category Computers
+  And I go to browse leads
+  And I follow "Computers"
+  And I fill in "search_with_keyword" with "Monitors"
+  And I press translated "administration.leads.index.view.search_button"
+  Then I should see "Monitors"
+  And I should not see "Keyboards"
+  When I press translated "common.clear_filter"
+  Then I should see "Monitors"
+  And I should see "Keyboards"
 
 @m6
 Scenario: When I change the category then I am not redirected back to the listing view
