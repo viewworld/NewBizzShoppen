@@ -222,3 +222,9 @@ Scenario: I can see lead template fields with hidden values for each lead that I
 
 @m6 @added
 Scenario: Hidden description should be truncated and expandable by JS
+
+@m6
+Scenario: I can add note to owned lead
+
+@m6
+Scenario: I should not see show page for owned lead when accordion style listing is used

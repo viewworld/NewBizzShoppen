@@ -69,3 +69,6 @@ Scenario: I can see clicks, exposure, hottness, novelty, unikness, price per lea
 
 @_done @non_testable
 Scenario: clicking on the lead should take to edit page
+
+@m6
+Scenario: I can change a creator of lead to any other user within my call centre
