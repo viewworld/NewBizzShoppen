@@ -10,3 +10,9 @@ class Address < ActiveRecord::Base
   end
 
 end
+
+class Address::InvoiceCustomer < Address
+end
+
+class Address::InvoiceSeller < Address
+end
