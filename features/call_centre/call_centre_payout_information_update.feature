@@ -48,6 +48,8 @@ Scenario: I can enter bank name and address
   Then I sign in as bob2@person.com with password supersecret
   When I go to my profile page
   Then I fill in "user_call_centre_bank_name" with "Int Bank de Geneve"
-  Then I fill in "user_call_centre_bank_address" with "Grjdjde street 392a, Zurich"
+  Then I fill in "user_call_centre_bank_address_attributes_address_line_1" with "Grjdjde street 392a"
+  Then I fill in "user_call_centre_bank_address_attributes_address_line_2" with "Zurich"
+  Then I fill in "user_call_centre_bank_address_attributes_zip_code" with "23-23231"
   When I press translated "password.edit.view.button_update_user"
   Then I should see translated "my_profile.update.controller.successful_update_notice"
