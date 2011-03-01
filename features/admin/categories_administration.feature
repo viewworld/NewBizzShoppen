@@ -96,3 +96,10 @@ Scenario: I can upload a category image
   Then I press translated "administration.categories.edit.view.button_update"
   And I should be on administration categories
   And I should see translated "flash.categories.actions.update.notice"
+
+@m6
+Scenario: I can manage categories from Browse categories. Categories tab should be removed
+
+@m6
+Scenario: I can make any category country specific (Category can have one or more countries assigned to it)
+

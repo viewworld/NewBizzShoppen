@@ -219,3 +219,6 @@ Scenario: I can see lead template fields with public values for each lead
 
 @m5 @added @lead_templates @tgn @_done @tested_elsewhere
 Scenario: I can see lead template fields with hidden values for each lead that I have bought
+
+@m6 @added
+Scenario: Hidden description should be truncated and expandable by JS

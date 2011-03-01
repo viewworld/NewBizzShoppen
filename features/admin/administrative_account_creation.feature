@@ -27,3 +27,6 @@ Scenario: I can create a user account by seleceting its type and filling in the 
   And I check "user_agent_newsletter_on"
   Then I press translated "administration.users.edit.view.button_update_user"
   And I should see translated "administration.users.create.flash.user_creation_successful"
+
+@m6
+Scenario: When I log in I should be redirected to home tab

@@ -111,3 +111,6 @@ Scenario: On the interests page the country should be selected based on current 
   And I follow translated "layout.my_profile_link"
   And I follow translated "layout.main_menu.customer.interests"
   Then "countries" should be selected for value "Denmark"
+
+@m6
+Scenario: I can use "Advanced search" in Browse leads with following fields: Deal value, Agent (creator), Agent’s (creator) rating (all,bronze, silver, gold), Uniqueness, Hotness

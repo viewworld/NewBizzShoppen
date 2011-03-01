@@ -128,3 +128,6 @@ Scenario: I can override the certification level of any agent or call centre
   And I select translated "models.lead.certification.lvl11" from "user_call_centre_certification_level"
   And I press translated "administration.users.edit.view.button_update_user"
   Then I should see translated "administration.users.update.flash.user_update_successful"
+
+@m6
+Scenario: In users listing I can see unpaid leads count

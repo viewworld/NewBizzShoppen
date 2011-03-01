@@ -111,3 +111,6 @@ Scenario: I can edit leads from any page where they are presented
 
 @m5 @added
 Scenario: I can clear the filter when browsing leads
+
+@m6
+Scenario: When I change the category then I am not redirected back to the listing view

@@ -83,3 +83,5 @@ Feature: Category buyer rules
     When I visit URL "/leads"
     Then I should be on category home page for Best Leads
 
+@m6
+Scenario: Category buyers should not have to configure their interest page, but have country selected to the country from which the category was design for.
