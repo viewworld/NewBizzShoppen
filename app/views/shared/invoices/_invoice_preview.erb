@@ -170,12 +170,14 @@
             </p>
         <% end %>
     <% end %>
+
     <% if invoice.details.present? %>
-        <p style="padding-top:5px"><%= invoice.details %></p>
+      <br/><p><strong><%= t("administration.invoices.show.view.note") %></strong></p>
+      <p style="padding-top:5px"><%= invoice.details %></p>
     <% end %>
+
     <% if invoice.seller.note.present? %>
-        <p><%= t("administration.invoices.show.view.note") %></p>
-        <p style="padding-top:5px"><%= raw invoice.seller.note %></p>
+      <br/><p style="padding-top:5px"><%= raw invoice.seller.note %></p>
     <% end %>
   </div>
 
