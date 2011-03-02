@@ -78,6 +78,7 @@ class Lead < ActiveRecord::Base
 
   attr_protected :published
   attr_accessor :category_is_changed
+  attr_accessor :tmp_creator_id
 
   attr_accessor :current_user
   attr_accessor :notify_buyers_after_update
@@ -87,8 +88,15 @@ class Lead < ActiveRecord::Base
   before_update :notify_buyers_about_changes
   before_save :set_published_at
   before_save :handle_category_change
+  before_save :change_creator
 
   private
+
+  def change_creator
+    if tmp_creator_id
+      self.creator = User.find(tmp_creator_id).send(:casted_class).find(tmp_creator_id)
+    end
+  end
 
   #Handling case when category is changed during edit/create to prevent auto save
   def handle_category_change

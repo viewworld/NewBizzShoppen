@@ -133,5 +133,16 @@ Scenario: When I change the category then I am not redirected back to the listin
   And I should see "Editing lead: Super ultra lead #1"
   And I open page in browser
 
-@m6
+@m6 @_tested @tgn
 Scenario: I can change creator of lead to any other agent
+  Given there are no leads
+  And I have user with email agent_999@nbs.com and role agent
+  And I have user with email agent_777@nbs.com and role call_centre_agent
+  And lead Super ultra lead #1 is created by user agent_999@nbs.com with role agent
+  When I follow translated "layout.main_menu.admin.leads"
+  And I follow translated "leads.listing.edit_label"
+  Then I select "agent_777@nbs.com" from "lead_tmp_creator_id"
+  And I press translated "administration.leads.edit.view.button_update"
+  Then I should be on administration leads page
+  And I follow translated "leads.listing.edit_label"
+  And "lead_tmp_creator_id" should be selected for value "agent_777@nbs.com"

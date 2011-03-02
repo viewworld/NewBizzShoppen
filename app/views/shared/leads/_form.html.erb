@@ -15,6 +15,9 @@
       <%= form.input :county, :label => t("shared.leads.form.county") %>
       <%= form.input :country_id, :as => :select, :collection => Country.all %>
       <%= form.input :company_ean_number, :label => t("shared.leads.form.company_ean_reg") %>
+      <% if current_user.has_role?(:admin) %>
+        <%= form.input :tmp_creator_id, :as => :select, :collection => User.with_agents_without_call_centres.map { |u| [u.email, u.id] }, :selected => @lead.creator_id %>
+      <% end %>
     </ol>
   </fieldset>
 </div>
