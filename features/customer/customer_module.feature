@@ -98,7 +98,7 @@ Scenario: I should have my interests fixed to the unique category I'm assigned t
   And I go to customer interests
   Then checkbox named "category_" should be checked
 
-@added @m6
+@added @m6 @ao
 Scenario: If customer is category buyer he/she can see also unique categories
 
 @added @tgn @_tested
@@ -112,5 +112,5 @@ Scenario: On the interests page the country should be selected based on current 
   And I follow translated "layout.main_menu.customer.interests"
   Then "countries" should be selected for value "Denmark"
 
-@m6
+@m6 @tgn
 Scenario: I can use "Advanced search" in Browse leads with following fields: Deal value, Agent (creator), Agent’s (creator) rating (all,bronze, silver, gold), Uniqueness, Hotness

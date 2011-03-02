@@ -1,4 +1,4 @@
-@agent
+@agent @ao
 Feature: Common agent
 
   @m6
