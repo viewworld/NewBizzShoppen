@@ -1,4 +1,4 @@
-@$_admin @m6 @added
+@$_admin @m6 @added @regions_administration
 Feature: Regions administration
 
 Scenario: I can create new region for given country
