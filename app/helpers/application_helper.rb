@@ -143,6 +143,10 @@ module ApplicationHelper
   def bt_clear_filter(url=nil)
     button_to_function t("common.clear_filter"), "document.location = '#{url || request.path}'"
   end
+
+  def bt_clear_filter_safe
+    button_to_function t("common.clear_filter"), "clear_filter()"
+  end
   
   def format_date(date, with_time=false)
     date.strftime("%d-%m-%Y#{' %H:%M' if with_time}")

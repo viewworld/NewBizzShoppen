@@ -118,3 +118,15 @@ jQuery(document).ready(function()
 
 
 });
+
+function clear_filter() {
+    $.each($(".search_box form input"), function(idx,input) {
+        switch (input.type) {
+            case 'text': input.value=''; break;
+        }
+    });
+    $.each($(".search_box form option:selected"), function(idx,option) {
+        option.selected = false;
+    });
+    $('.search_box #search_new').submit();
+}

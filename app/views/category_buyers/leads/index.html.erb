@@ -22,12 +22,13 @@
                 <%= f.label t("leads.index.search.country_label") %>
                 <%= f.select :with_country, @countries.map { |c| [c.name, c.id] }, :include_blank => true %>
               </li>
+              <%= f.hidden_field :latest, :value => @search.latest %>
               <li class="commit">
                 <ibt c="bt_green" icon="magnify">
                   <%= submit_tag t("leads.index.search.search_button") %>
                 </ibt>
                 <ibt c="fltri bt_grey">
-                  <%= bt_clear_filter %>
+                  <%= bt_clear_filter_safe %>
                 </ibt>
               </li>
             </ol>
