@@ -1,3 +1,4 @@
+@agent
 Feature: Common agent
 
   @m6

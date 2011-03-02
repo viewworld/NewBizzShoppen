@@ -1,3 +1,4 @@
+@user_accounts
 Feature: Sign up feature
 
   @m6

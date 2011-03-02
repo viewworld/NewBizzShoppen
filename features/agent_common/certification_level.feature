@@ -1,3 +1,4 @@
+@agent
 Feature: Certification levels
 
   @m6
