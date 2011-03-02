@@ -32,7 +32,8 @@ module CucumberFM
                 '@added',
                 '@nontestable',
                 '@additional-test',
-                '@non_testable'        
+                '@non_testable',
+                '@noguess'
         ]
 
         STATUS_COMPLETE = %w(@_done @_qa @_tested @_accepted)
