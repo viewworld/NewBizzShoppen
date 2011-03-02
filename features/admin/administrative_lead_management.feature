@@ -123,8 +123,8 @@ Scenario: I can clear the filter when browsing leads
   Then I should see "Monitors"
   And I should see "Keyboards"
 
-@m6
+@m6 @tgn
 Scenario: When I change the category then I am not redirected back to the listing view
 
-@m6
+@m6 @tgn
 Scenario: I can change creator of lead to any other agent
