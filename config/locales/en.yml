@@ -728,6 +728,7 @@ en:
           button_update: 'Save'
       form:
         note: 'Invoice note'
+        company_name: 'Company'
 
 
     payment_transactions:
@@ -1196,6 +1197,7 @@ en:
         title: 'Sales manager signup'
         button_create_account: 'Create'
         enable_team_buyers: 'Enable team buyers'
+        company_name: 'Company'
 
   category_buyer_accounts:
     new:
@@ -1203,6 +1205,7 @@ en:
         title: 'Category buyer signup'
         button_create_account: 'Create'
         enable_team_buyers: 'Enable team buyers'
+        company_name: 'Company'
 
   buyer_home:
     show:
@@ -1560,6 +1563,7 @@ en:
       view:
         change_password: 'Change password'
         enable_team_buyers: 'Enable team buyers'
+        company_name: 'Company'
         interests_settings: Interests settings
     update:
       controller:
@@ -1591,9 +1595,11 @@ en:
         country_local_label: Local
         country_international: International
         remove_template: Remove
+        company_name: 'Name'
         company_information: 'Company information'
         contact_information: 'Contact information'
-        company_ean_reg: 'Company EAN / Reg'
+        company_ean_reg: 'Company EAN number'
+        company_vat_no: 'Company VAT number'
         contact_direct_phone_number: 'Direct phone number'
         contact_name: 'Name'
         contact_mobile_number: 'Mobile number'

@@ -4,7 +4,7 @@
       <li class="header">
         <h3><%= t("shared.leads.form.company_information") %></h3>
       </li>
-      <%= form.input :company_name %>
+      <%= form.input :company_name, :label => t("shared.leads.form.company_name") %>
       <%= form.input :company_phone_number %>
       <%= form.input :company_website %>
       <%= form.input :address_line_1 %>
@@ -14,6 +14,7 @@
       <%= form.input :city %>
       <%= form.input :county, :label => t("shared.leads.form.county") %>
       <%= form.input :country_id, :as => :select, :collection => Country.all %>
+      <%= form.input :company_vat_no, :label => t("shared.leads.form.company_vat_no") %>
       <%= form.input :company_ean_number, :label => t("shared.leads.form.company_ean_reg") %>
     </ol>
   </fieldset>
