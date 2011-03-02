@@ -62,5 +62,5 @@ Scenario: I can filter leads
   Then I should see "Keyboards deal"
   And I should not see "Mouses deal"
 
-@m6
+@m6 @tgn
 Scenario: I should be able to click link in subaccounts listing and go straight to that users's leads listing

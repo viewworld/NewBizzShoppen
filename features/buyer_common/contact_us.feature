@@ -1,4 +1,4 @@
-@customer
+@customer @ao
 Feature: Buyer common
 
   @m6

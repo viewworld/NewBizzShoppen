@@ -1,4 +1,4 @@
-@lead_manager @$_customer @m6  @noguess
+@lead_manager @$_customer @m6  @noguess @tgn
 Feature: Requested leads management for customer
 
 Scenario: I should see created by, rating % and certification level for each lead

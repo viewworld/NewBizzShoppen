@@ -1,4 +1,4 @@
-@customer
+@customer @ao
 Feature: Buy out
 
   # pay amount for all available

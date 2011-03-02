@@ -1,4 +1,4 @@
-@user_accounts @$_call_centre @m1
+@user_accounts @$_call_centre @m1 @ao
 Feature: User accounts management
 
  Background: Sign in user and set English locale

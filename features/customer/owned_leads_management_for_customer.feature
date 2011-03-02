@@ -108,7 +108,7 @@ Scenario: I should see certification level for each requested lead
   Then I go to customers lead requests
   And I should see translated "models.lead.certification.lvl0"
 
-@m6 @_added
+@m6 @_added @tgn
 Scenario: I should see rating % for each requested lead
 
 @tgn @_done @_tested
@@ -145,7 +145,7 @@ Scenario: I can bulk set response deadlines for lead
 @ao @nontestable  @noguess
 Scenario: I am notified by email when dealine expires and status of lead has not changed
 
-@m6  @noguess
+@m0  @noguess
 Scenario: I can create a comment for lead that I have access for
 
 #Accessible from owned leads listing
@@ -220,11 +220,11 @@ Scenario: I can see lead template fields with public values for each lead
 @m5 @added @lead_templates @tgn @_done @tested_elsewhere
 Scenario: I can see lead template fields with hidden values for each lead that I have bought
 
-@m6 @added
+@m6 @added @ao
 Scenario: Hidden description should be truncated and expandable by JS
 
-@m6
+@m6 @tgn
 Scenario: I can add note to owned lead
 
-@m6
+@m6 @ao
 Scenario: I should not see show page for owned lead when accordion style listing is used

@@ -1,4 +1,4 @@
-@lead_manager @$_freelance_agent  @m1
+@lead_manager @$_freelance_agent  @m1 @ao
 Feature: Lead creation by freelance agent
 
 In order to create and manage leads I sell
@@ -478,8 +478,8 @@ Scenario: I can publish leads only in unique categories if I'm assigned at least
 @m6
 Scenario: I should see hint for every field when creating a lead
   
-@m6
+@m6 @ao
 Scenario: I can choose region during creation of a lead
 
-@m6
+@m6 @tgn
 Scenario: I have already filled in international dialling codes for telephone numbers (+xx) (xxxxxxxxxxxxxxxxxxxxxx)

@@ -64,8 +64,11 @@ Scenario: I can sort by coulmns type, Name, Last Name, email, age,
   Given I follow translated "administration.users.index.view.age"
   Then I should have value "kirk.lead_user4@person.com" in the css path "tr:nth-child(1) td:nth-child(7)"
 
-@m6 @added
+@m6 @added @ao
 Scenario: I can sort by bought, created, volume sold, revenue, payout %
+
+@m6 @added @ao
+Scenario: I can refresh volume sold and revenue for users by rake task
 
 @tgn @_done @_tested
 Scenario: I can edit a subaccount
