@@ -1,7 +1,7 @@
 class Administration::CategoriesController < Administration::AdministrationController
   inherit_resources
 
-  set_tab "categories"
+  set_tab "browse_leads"
 
   def create
     @category = Category.new(params[:category])
@@ -13,7 +13,7 @@ class Administration::CategoriesController < Administration::AdministrationContr
         @category.agent_ids = params[:category][:agent_ids]
         @category.save
         flash[:notice] = I18n.t("flash.categories.actions.create.notice")
-        format.html { redirect_to administration_categories_path }
+        format.html { redirect_to categories_path }
       else
         format.html { render 'new' }
       end
@@ -22,7 +22,7 @@ class Administration::CategoriesController < Administration::AdministrationContr
 
   def update
     update! do |success, failure|
-      success.html { redirect_to administration_categories_path }
+      success.html { redirect_to categories_path }
       failure.html { render 'edit' }
     end
   end
@@ -31,10 +31,10 @@ class Administration::CategoriesController < Administration::AdministrationContr
     destroy! do |success, failure|
       success.html {
         flash[:notice] = I18n.t("flash.categories.actions.destroy.notice")
-        redirect_to administration_categories_path }
+        redirect_to categories_path }
       failure.html {
         flash[:notice] = I18n.t("flash.categories.actions.destroy.error")
-        redirect_to administration_categories_path }
+        redirect_to categories_path }
     end
   end
 end
