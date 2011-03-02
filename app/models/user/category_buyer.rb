@@ -6,6 +6,7 @@ class ::User::CategoryBuyer < ::User
   include User::RegistrationValidations
   include Addresses
   include BankAccounts
+  include User::CommonBuyer
 
   has_many :lead_purchases, :foreign_key => "owner_id"
   has_many :lead_requests, :foreign_key => "owner_id"
@@ -16,6 +17,7 @@ class ::User::CategoryBuyer < ::User
   has_many :categories, :through => :category_interests
   has_many :invoices, :foreign_key => "user_id"
   has_many :bought_leads, :through => :lead_purchases, :class_name => "Lead", :source => :lead, :conditions => "accessible_from IS NOT NULL"
+  has_and_belongs_to_many :buying_categories, :class_name => 'Category', :join_table => 'categories_users', :foreign_key => :user_id
 
   validates_presence_of :category_id, :company_name
 
@@ -26,4 +28,11 @@ class ::User::CategoryBuyer < ::User
   def set_interests
     categories << category
   end
+
+  public
+
+  def accessible_categories
+    Array(category) + super
+  end
+
 end
