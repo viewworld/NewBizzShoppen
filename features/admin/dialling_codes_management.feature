@@ -1,4 +1,4 @@
-@$_admin @m6
+@settings @$_admin @m6
 Feature: Dialling codes management
 
 Scenario: I can list all dialling code
