@@ -109,7 +109,7 @@ Scenario: I can edit leads from any page where they are presented
   Then I follow translated "leads.listing.edit_label"
   And I should see translated "agent.leads.edit.view.title" with options "name:Big deal on printers"
 
-@m5 @added @selenium @wip
+@m5 @added @selenium
 Scenario: I can clear the filter when browsing leads
   When lead Monitors ultimate deal exists within category Computers
   And lead Keyboards ultimate deal exists within category Computers
@@ -123,8 +123,15 @@ Scenario: I can clear the filter when browsing leads
   Then I should see "Monitors"
   And I should see "Keyboards"
 
-@m6
+@m6 @selenium @_tested @tgn
 Scenario: When I change the category then I am not redirected back to the listing view
+  Given there are no leads
+  And a lead Super ultra lead #1 exists within category Computers and is bought by user tim@nbs.com with role customer
+  When I follow translated "layout.main_menu.admin.leads"
+  And I follow translated "leads.listing.edit_label"
+  Then I select "Electronics" from "lead_category_id"
+  And I should see "Editing lead: Super ultra lead #1"
+  And I open page in browser
 
 @m6
 Scenario: I can change creator of lead to any other agent

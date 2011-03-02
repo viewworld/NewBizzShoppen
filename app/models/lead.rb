@@ -77,6 +77,7 @@ class Lead < ActiveRecord::Base
   scoped_order :id, :header, :sale_limit, :price, :lead_purchases_counter, :published, :has_unsatisfactory_rating, :purchase_value, :created_at
 
   attr_protected :published
+  attr_accessor :category_is_changed
 
   attr_accessor :current_user
   attr_accessor :notify_buyers_after_update
@@ -85,8 +86,17 @@ class Lead < ActiveRecord::Base
   after_find :set_buyers_notification
   before_update :notify_buyers_about_changes
   before_save :set_published_at
+  before_save :handle_category_change
 
   private
+
+  #Handling case when category is changed during edit/create to prevent auto save
+  def handle_category_change
+    if ActiveRecord::ConnectionAdapters::Column.value_to_boolean(category_is_changed)
+      self.errors.add(:category_id, I18n.t("shared.leads.form.category_was_changed"))
+    end
+  end
+
   def check_lead_templates
     if category_id_changed?
       lead_template_fields = lead_templates(true).map{ |lt| lt.lead_template_fields }.flatten.select { |f| f.is_mandatory }
