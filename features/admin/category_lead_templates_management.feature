@@ -109,8 +109,22 @@ Scenario: I can promote any lead template to global template
 @m6 @tgn @non_testable @_done
 Scenario: When I edit translated fields, try displaying country flag after the field instead of displaying "dk" in front of that particular field
 
-@m6 @tgn
+@m6 @tgn @selenium @_tested
 Scenario: Add new template field type : Note (multiline text) [The lead template type should allow for long text. Basicly a large input filed for 200 words- like the description type]
+  Given Category named "Vehicles" already exists
+  Then I go to administration categories
+  And I follow translated "administration.categories.index.view.edit_link"
+  And I follow translated "administration.categories.edit.view.new_template"
+  And I fill in "lead_template_name" with "Example of template"
+  And I check "lead_template_is_mandatory"
+  And I follow translated "shared.lead_templates.form.new_lead_template_field"
+  And I fill in "lead_template_lead_template_fields_attributes_0_name" with "example attr 1"
+  And I follow translated "shared.lead_templates.form.new_lead_template_field"
+  And I fill in "lead_template_lead_template_fields_attributes_1_name" with "example attr 2"
+  And I check "lead_template_lead_template_fields_attributes_1_is_hidden"
+  And I check "lead_template_lead_template_fields_attributes_1_is_mandatory"
+  And I select translated "models.lead_template_field.field_type.type3" from "lead_template_lead_template_fields_attributes_0_field_type"
+  Then I press translated "administration.lead_templates.new.view.button_create"
 
 @m6 @tgn @_tested
 Scenario: Make it possible to duplicate lead templates (from lead templates listings)

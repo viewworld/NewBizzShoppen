@@ -103,3 +103,10 @@ end
 Given /^I fill in "([^"]*)" with date that is "([^"]*)" days from now$/ do |field_name, days|
   And %{I fill in "#{field_name}" with "#{(Date.today+days.to_i.days).to_s}"}
 end
+
+Given /^field "([^"]*)" is of textarea type(?: within "([^"]*)")?$/ do |field_name, selector|
+  with_scope(selector) do
+    field = find_field(field_name)
+    assert field.tag_name == 'textarea'
+  end
+end

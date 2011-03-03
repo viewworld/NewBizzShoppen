@@ -338,5 +338,15 @@ Scenario: I can publish leads only in unique categories if I'm assigned at least
   Then "category_id" dropdown should have values "Test category 1,Agent Unique Category"
   And "category_id" dropdown should not have values "Other Agent Unique Category"
 
+@m6 @tgn @_tested @added @lead_templates @selenium
+Scenario: When the template's field is of the note type then I should see textarea instead of textbox
+  Given template named "Computers details" for category "Computers" is created by user "call_centre_agent@person.com" with role "call_centre_agent"
+  And template named "Computers details" is mandatory
+  And template named "Computers details" has following fields "computers count:false:true, operating systems:false:true:3, purchase date:false:false"
+  And I follow translated "layout.main_menu.call_centre_agent.leads"
+  And I select "Computers" from "category_id"
+  And I follow translated "call_centre_agent.leads.index.view.new_lead"
+  Then field "lead_lead_template_values_attributes_1_value" is of textarea type
+
 @m6
 Scenario: I should see hint for every field when creating a lead

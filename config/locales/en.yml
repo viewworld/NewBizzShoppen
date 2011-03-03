@@ -1643,6 +1643,7 @@ en:
         type0: Text
         type1: Number
         type2: Date
+        type3: Note
     locale:
       en: English
       dk: Danish
