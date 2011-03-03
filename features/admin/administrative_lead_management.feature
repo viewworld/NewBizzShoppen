@@ -131,7 +131,6 @@ Scenario: When I change the category then I am not redirected back to the listin
   And I follow translated "leads.listing.edit_label"
   Then I select "Electronics" from "lead_category_id"
   And I should see "Editing lead: Super ultra lead #1"
-  And I open page in browser
 
 @m6 @_tested @tgn
 Scenario: I can change creator of lead to any other agent

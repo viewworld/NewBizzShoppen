@@ -48,4 +48,19 @@ class LeadTemplate < ActiveRecord::Base
     values = lead.lead_template_values.select { |ltv| ltv.lead_template_field.lead_template_id == id }
     !values.map(&:value).detect { |v| !v.blank? }.nil?
   end
+
+  def duplicate_fields(template)
+    if template
+      ["name", "is_mandatory"].each do |field|
+         self.send("#{field}=".to_sym, template.send(field.to_sym))
+      end
+      template.lead_template_fields.each do |field|
+        lead_template_field = LeadTemplateField.new
+        ["name", "field_type", "is_mandatory", "is_hidden"].each do |f_field|
+          lead_template_field.send("#{f_field}=".to_sym, field.send(f_field.to_sym))
+        end
+        self.lead_template_fields << lead_template_field
+      end
+    end
+  end
 end

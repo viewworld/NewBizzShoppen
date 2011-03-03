@@ -1,7 +1,8 @@
 <div class="lead_template_value_translations_container_<%= f.object.locale %>" style="<%= "display: none;" if @lead.lead_translations.detect { |lt| lt.locale == f.object.locale }.nil? %>">
 <li class="string">
-  <%= f.label :value, f.object.locale %>
+  <%= f.label :value, "&nbsp;" %>
   <%= f.text_field :value %>
+  <%= image_tag("languages/flag_#{f.object.locale}.png", :border => 0) %>
   <%= custom_error_for_field(f, :value) %>
 </li>
 <li class="hidden">

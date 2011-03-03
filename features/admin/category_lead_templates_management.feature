@@ -106,11 +106,29 @@ Scenario: I can promote any lead template to global template
   And I check "lead_template_is_global"
   Then I press translated "administration.lead_templates.edit.view.button_update"
 
-@m6 @unique_categories
+@m6 @tgn @non_testable @_done
 Scenario: When I edit translated fields, try displaying country flag after the field instead of displaying "dk" in front of that particular field
 
-@m6 @unique_categories
+@m6 @tgn
 Scenario: Add new template field type : Note (multiline text) [The lead template type should allow for long text. Basicly a large input filed for 200 words- like the description type]
 
-@m6 @unique_categories
+@m6 @tgn @_tested
 Scenario: Make it possible to duplicate lead templates (from lead templates listings)
+  Given template named "Computer details" for category "Computers" is created by user "bob@person.com" with role "admin"
+  And template named "Computer details" is mandatory
+  And template named "Computer details" has following fields "field #1:true:true,field #2:true:false,field #3:false:false"
+  And I go to browse leads
+  And I follow translated "administration.categories.index.view.edit_link"
+  And I follow translated "administration.categories.edit.view.duplicate_template"
+  Then the "lead_template_name" field should contain "Computer details"
+  And checkbox named "lead_template_is_mandatory" should be checked
+  And the "lead_template_lead_template_fields_attributes_0_name" field should contain "field #1"
+  And the "lead_template_lead_template_fields_attributes_1_name" field should contain "field #2"
+  And the "lead_template_lead_template_fields_attributes_2_name" field should contain "field #3"
+  And checkbox named "lead_template_lead_template_fields_attributes_0_is_hidden" should be checked
+  And checkbox named "lead_template_lead_template_fields_attributes_1_is_hidden" should be checked
+  And checkbox named "lead_template_lead_template_fields_attributes_2_is_hidden" should not be checked
+  And checkbox named "lead_template_lead_template_fields_attributes_0_is_mandatory" should be checked
+  And checkbox named "lead_template_lead_template_fields_attributes_1_is_mandatory" should not be checked
+  And checkbox named "lead_template_lead_template_fields_attributes_2_is_mandatory" should not be checked
+

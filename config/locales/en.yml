@@ -394,6 +394,7 @@ en:
           button_update: 'Save'
           new_template: New template
           edit_template: Edit
+          duplicate_template: Duplicate
           destroy_template: Destroy
           destroy_template_confirmation_message: Are you sure?
     settings:
@@ -889,6 +890,7 @@ en:
           header: Lead templates
           new_template: New template
           edit: Edit
+          duplicate: Duplicate
           destroy: Destroy
           search_button: Search
           search:
@@ -918,6 +920,7 @@ en:
           edit: Edit
           destroy: Destroy
           destroy_template_confirmation_message: Are you sure?
+          duplicate: Duplicate
           new_template: New template
           search_button: Search
           search:
@@ -1052,6 +1055,7 @@ en:
           new_template: New template
           edit: Edit
           destroy: Destroy
+          duplicate: Duplicate
           search_button: Search
           search:
             keyword_label: Keyword
