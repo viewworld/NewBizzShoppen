@@ -36,7 +36,6 @@ class User < ActiveRecord::Base
   belongs_to :user, :class_name => "User", :foreign_key => "parent_id", :counter_cache => :subaccounts_counter
   belongs_to :bank_account, :foreign_key => :bank_account_id, :primary_key => :id, :class_name => 'BankAccount'
   belongs_to :vat_rate, :foreign_key => :country, :primary_key => :country_id
-  belongs_to :category
   has_many :lead_templates,
            :as => :creator,
            :dependent => :destroy

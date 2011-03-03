@@ -1356,6 +1356,7 @@ en:
           button_bulk_create_lead_request: 'Accept lead requests'
           button_bulk_destroy_lead_request: 'Reject lead requests'
           search:
+            header: 'Search'
             keyword_label: 'Keyword'
             category_label: 'Category'
             deal_value_from_label: 'From'

@@ -56,7 +56,7 @@ class LeadsController < ApplicationController
 
   def check_category_buyer
     if current_user and current_user.has_role?(:category_buyer)
-      redirect_to category_home_page_path(current_user.category.cached_slug)
+      redirect_to category_home_page_path(@home_category||current_user.buying_categories.first)
     end
   end
 

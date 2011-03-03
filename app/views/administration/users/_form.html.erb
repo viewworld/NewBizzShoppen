@@ -86,29 +86,19 @@
 <% if ['category_buyer'].include?(params[:role]) or @user.has_any_role?(:category_buyer) %>
     <hl/>
     <div class="pdd_10 no_pdd_t">
-      <fieldset class="inputs labels_ta_r labels_240">
-        <ol class="align_inputs">
-          <%= form.input :category_id, :collection => Category.roots.without_locked, :include_blank => false, :multiple => true %>
-        </ol>
-      </fieldset>
-    </div>
-
-    <hl/>
-
-    <div class="pdd_10 no_pdd_t">
         <div class="grid_240 fltl">
           <h3>Categories</h3>
-          <%= select_tag "all_categories", options_for_select(Category.roots-@user.accessible_categories), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+          <%= select_tag "all_categories", options_for_select((Category.roots.without_unique-@user.buying_categories).map{|c| [c.name,c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
         </div>
 
         <div class="grid_160 fltl" style="margin-right: 10px;,margin-top:30px;">
-          <p class="ta_c pdd_5 no_pdd_lr"><%= bt_link_to nil, t("administration.categories.form.move_users_right"), "javascript:move_users_to_all_categories", :id => "move_right" %></p>
-          <p class="ta_c"><%= bt_link_to nil, t("administration.categories.form.move_users_left"), "javascript:move_users_to_selected_categories", :id => "move_left" %></p>
+          <p class="ta_c pdd_5 no_pdd_lr"><%= bt_link_to nil, t("administration.categories.form.move_users_right"), "javascript:move_selected('all_categories','user_category_buyer_buying_category_ids_')", :id => "move_right" %></p>
+          <p class="ta_c"><%= bt_link_to nil, t("administration.categories.form.move_users_left"), "javascript:move_selected('user_category_buyer_buying_category_ids_','all_categories')", :id => "move_left" %></p>
         </div>
 
         <div class="grid_240 fltl">
-          <h3> Selected Categories</h3>
-          <%= select_tag "selected_categories", options_for_select(@user.accessible_categories), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+          <h3>Selected Categories</h3>
+          <%= select_tag "user_category_buyer[buying_category_ids][]", options_for_select(@user.buying_categories.map{|c| [c.name,c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
         </div>
     </div>
     <div style="clear:both"></div>

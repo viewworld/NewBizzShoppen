@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
       elsif resource.has_role? :customer and resource.sign_in_count <= 1
         edit_customers_interests_path
       elsif resource.has_role? :category_buyer
-        category_home_page_path(resource.category.cached_slug)
+        category_home_page_path(resource.with_role.categories.first.cached_slug)
       elsif session[:last_url_before_logout].present?
         last_url = session[:last_url_before_logout]
         session[:last_url_before_logout] = nil
@@ -72,13 +72,20 @@ class ApplicationController < ActionController::Base
   def check_category_buyer
     category_from_slug = params[:slug] ? Category.where(:cached_slug => params[:slug]).first : nil
     @home_category = if user_signed_in? and current_user and current_user.has_role?(:category_buyer)
-      redirect_to category_home_page_path(current_user.category.cached_slug) if (category_from_slug and category_from_slug != current_user.category) or (params[:slug] and !category_from_slug)
-      current_user.category
-    elsif params[:slug] and !category_from_slug
-      redirect_to root_path
-    elsif category_from_slug
-      category_from_slug
+      if category_from_slug and current_user.with_role.accessible_categories.include?(category_from_slug)
+        category_from_slug
+      else
+        nil
+      end
     end
+#    @home_category = if user_signed_in? and current_user and current_user.has_role?(:category_buyer)
+#      redirect_to category_home_page_path(current_user.with_role.categories.first.cached_slug) if (category_from_slug and category_from_slug != current_user.category) or (params[:slug] and !category_from_slug)
+#      current_user.with_role.categories.first
+#    elsif params[:slug] and !category_from_slug
+#      redirect_to root_path
+#    elsif category_from_slug
+#      category_from_slug
+#    end
 
   end
 
