@@ -109,9 +109,10 @@ Scenario: I can edit leads from any page where they are presented
   Then I follow translated "leads.listing.edit_label"
   And I should see translated "agent.leads.edit.view.title" with options "name:Big deal on printers"
 
-@m5 @added @selenium @wip
+@m5 @added @selenium @_done @_tested
 Scenario: I can clear the filter when browsing leads
-  When lead Monitors ultimate deal exists within category Computers
+  When there are no leads
+  And lead Monitors ultimate deal exists within category Computers
   And lead Keyboards ultimate deal exists within category Computers
   And I go to browse leads
   And I follow "Computers"

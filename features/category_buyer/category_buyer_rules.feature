@@ -11,7 +11,6 @@ Feature: Category buyer rules
     And I visit URL "/worst-leads"
     Then I should be on category home page for Best Leads
 
-
   @_done
   Scenario: I can't see categories other than the one I registered from
     When Category named "Best Leads" already exists
@@ -86,5 +85,15 @@ Feature: Category buyer rules
 @m6
 Scenario: Category buyers should not have to configure their interest page, but have country selected to the country from which the category was design for.
 
-@m6
+@m6 @wip
 Scenario: If category buyer has more than one category assigned, when browsing leads he should see "Category dropdown" which will redirect him to correct category scope when filtering
+  When Category named "Best Leads" already exists
+  And Category named "Worst Leads" already exists
+  And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Best Leads" with attributes "team_buyers:1"
+  And user "jon@lajoie.ca" is assigned to category "Worst Leads" as category buyer
+  And I am on category home page for Best Leads
+  And I sign in as jon@lajoie.ca with password secret
+  And I follow translated "layout.main_menu.shared.browse_leads"
+  Then "category" dropdown should have values "Best Leads,Worst Leads,Dupa Leads"
+
+

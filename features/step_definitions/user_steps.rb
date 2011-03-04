@@ -229,7 +229,7 @@ Given /^user "([^"]*)" with role "([^"]*)" has address "([^"]*)"$/ do |email,rol
 end
 
 When /^I am signed up and confirmed as user with email "([^"]*)" and password "([^"]*)" and role "([^"]*)" for category "([^"]*)"(?: with attributes "([^"]*)")?$/ do |email, password, role_name, category_name, options|
-  std_opts = {:email => email, :password => password, :password_confirmation => password, :category_id => Category.where(:name => category_name).first.id}
+  std_opts = {:email => email, :password => password, :password_confirmation => password, :buying_categories => [Category.where(:name => category_name).first]}
   opts = options ? Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys.merge(std_opts) : std_opts
   u = "User::#{role_name.camelize}".constantize.make!(opts)
   u.confirm!
@@ -242,6 +242,12 @@ end
 And /^user "([^"]*)" is confirmed/ do |email|
   User.where(:email => email).first.confirm!
 end
+
+When /^user "([^"]*)" is assigned to category "([^"]*)" as category buyer$/ do |email,category_name|
+  u = User::CategoryBuyer.where(:email => email).first
+  u.buying_categories << Category.where(:name => category_name)
+end
+
 
 
 

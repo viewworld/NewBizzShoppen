@@ -30,7 +30,6 @@ module User::Subaccounts
 
     def check_parent_for_category_buyer
       if parent and parent.has_role?(:category_buyer)
-        self.category = parent.category
         self.roles << :category_buyer
       end
     end

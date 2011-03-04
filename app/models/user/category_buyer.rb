@@ -32,7 +32,11 @@ class ::User::CategoryBuyer < ::User
   public
 
   def accessible_categories
-    buying_categories + super
+    buying_categories
+  end
+
+  def parent_buying_categories
+    parent ? parent.with_role.buying_categories : buying_categories
   end
 
 end
