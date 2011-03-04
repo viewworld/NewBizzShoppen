@@ -138,8 +138,21 @@ Scenario: I can change category buyer to regular buyer
 @m6
 Scenario: I can change regular buyer to category buyer
 
-@m6
+@m6 @selenium @_done @_tested
 Scenario: I can specify one or many categories for category buyer
+  When Category named "Best Leads" already exists
+  And Category named "Basic Leads" already exists
+  And Category named "Worst Leads" already exists
+  And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Basic Leads"
+  And I am on administration edit user jon@lajoie.ca
+  Then "user_category_buyer_buying_category_ids_" dropdown should have values "Basic Leads"
+  When I select "Best Leads" from "all_categories"
+  And I follow "move_right"
+  And I select "Worst Leads" from "all_categories"
+  And I follow "move_right"
+  And I press translated "administration.users.edit.view.button_update_user"
+  And I am on administration edit user jon@lajoie.ca
+  Then "user_category_buyer_buying_category_ids_" dropdown should have values "Basic Leads,Best Leads,Worst Leads"
 
 @m6
 Scenario: I can configure buyer category interests when editing it

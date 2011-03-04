@@ -33,17 +33,19 @@
               </li>
             </ol>
       <% end %>
-        <%= form_tag '' do %>
-          <ol class="no_pdd">
-              <li class="select" style="float:right">
-                <%= label "category", t("leads.index.search.category_label") %>
-                <%= select_tag "category", options_for_select(current_user.buying_categories.map { |c| [c.name, c.name.downcase] },@home_category.name.downcase),
-                               :include_blank => false,
-                               :onchange => "this.form.action='/'+this.value+'/leads';this.form.submit();"
-                %>
-              </li>
-            </ol>
-          </fieldset>
+        <% if user_signed_in? and current_user and current_user.has_role?(:category_buyer) %>
+            <%= form_tag '' do %>
+              <ol class="no_pdd">
+                  <li class="select" style="float:right">
+                    <%= label "category", t("leads.index.search.category_label") %>
+                    <%= select_tag "category", options_for_select(current_user.buying_categories.map { |c| [c.name, c.cached_slug] },@home_category.name.downcase),
+                                   :include_blank => false,
+                                   :onchange => "this.form.action='/'+this.value+'/leads';this.form.submit();"
+                    %>
+                  </li>
+                </ol>
+              </fieldset>
+            <% end %>
         <% end %>
     </div>
   </div>
