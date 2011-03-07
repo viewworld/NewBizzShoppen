@@ -12,6 +12,7 @@ Background:
   And user lead_user2@person.com with role lead_user exists with attributes "screen_name:John McCoy,first_name:John,last_name:McCoy"
   And user lead_user3@person.com with role lead_user exists with attributes "screen_name:Martin Gleesse,first_name:Martin,last_name:Gleesse"
   And a lead Printers ultimate deal exists within category Computers and is bought by user customer@person.com with role customer
+  And lead "Printers ultimate deal" has attributes "hidden_description:Lorem ipsum dolor sit amet consectetur adipiscing elit Suspendisse posuere turpis eget lorem sollicitudin ac volutpat Suspendisse posuere turpis eget lorem sollicitudin ac volutpat desc_end"
   And lead Keyboards deal exists within category Computers
   And lead Mouses ultimate deal exists within category Computers
   And lead Plotters ultimate deal exists within category Office
@@ -220,8 +221,11 @@ Scenario: I can see lead template fields with public values for each lead
 @m5 @added @lead_templates @tgn @_done @tested_elsewhere
 Scenario: I can see lead template fields with hidden values for each lead that I have bought
 
-@m6 @added @ao
+@m6 @added @ao @selenium @_done @_tested
 Scenario: Hidden description should be truncated and expandable by JS
+  When I go to buyer lead purchases
+  And I follow translated "common.js.read_more"
+  Then I should see translated "common.js.collapse_expanded_text"
 
 @m6 @tgn
 Scenario: I can add note to owned lead

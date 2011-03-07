@@ -9,6 +9,9 @@
   <%= javascript_include_tag 'jquery.colorbox-min' %>
   <%= javascript_include_tag 'jquery.printElement' %>
   <%= javascript_include_tag 'jquery.qtip.min' %>
+  <%= javascript_include_tag 'jquery.expander' %>
+  <%= javascript_include_tag 'i18n' %>
+  <%= javascript_include_tag 'translations' %>
   <%= javascript_include_tag 'custom' %>
   <%= javascript_include_tag :ckeditor %>
   <%= csrf_meta_tag %>
@@ -77,6 +80,11 @@
     <%= render "layouts/footer" %>
   </div>
 </div>
+
+<script type="text/javascript">
+    I18n.defaultLocale = "<%= I18n.default_locale %>";
+    I18n.locale = "<%= I18n.locale %>";
+</script>
 
 <js:/>
 

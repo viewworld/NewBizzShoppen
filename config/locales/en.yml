@@ -16,6 +16,11 @@ en:
     nothing_to_display: 'Nothing to display'
     search: 'Search'
     clear_filter: 'Clear filter'
+    js:
+      read_more: 'read more'
+      collapse_expanded_text: '[collapse expanded text]'
+      expand_prefix: '...  '
+      collapse_prefix: ' '
   layout:
     main_menu:
       admin:

@@ -18,3 +18,4 @@ Gemfile.lock
 /public/assets/*
 /db/snapshots/cucumber.sql
 /public/html2pdf/invoice_cache
+/public/javascripts/translations.js
