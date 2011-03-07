@@ -2,7 +2,7 @@
 Feature: SEO urls
 
 Background:
-  Given I make sure current locale is English
+  Given I make sure current locale is "en"
   And I am on the homepage
 
 @m0 @ao

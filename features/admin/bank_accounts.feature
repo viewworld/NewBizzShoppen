@@ -3,7 +3,7 @@ Feature: Bank Accounts
 
   Background:
     Given I am on the homepage
-    And I make sure current locale is English
+    And I make sure current locale is "en"
     And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
     And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role customer with attributes "first_name:Janko,last_name:Muzykant"
     Then I sign in as jon@lajoie.ca with password secret

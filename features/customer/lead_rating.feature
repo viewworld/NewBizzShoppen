@@ -3,7 +3,7 @@ Feature: Lead Rating
 
 Background:
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   And I am signed up and confirmed as user with email bob@person.com and password supersecret and role customer
   And an user with role lead_user and email lead_user2@person.com exists as subaccount for customer bob@person.com
   And lead Printers ultimate deal exists within category Computers

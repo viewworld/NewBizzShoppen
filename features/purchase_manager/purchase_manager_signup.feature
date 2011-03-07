@@ -7,7 +7,7 @@ Feature: Purchase Manager signup
 
   Background: Set English locale on the home page
     Given I am on the homepage
-    And I make sure current locale is English
+    And I make sure current locale is "en"
 
   @added @_done
   Scenario: User signs up with invalid data as a Purchase Manager

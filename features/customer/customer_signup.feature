@@ -7,7 +7,7 @@ Feature: Customer signup
 
  Background: Set English locale on the home page
     Given I am on the homepage
-    And I make sure current locale is English
+    And I make sure current locale is "en"
 @_tested
   Scenario: User signs up with invalid data
     When I go to buyer sign up

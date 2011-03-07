@@ -3,7 +3,7 @@ Feature: News administration
 
 Background: I am logged in as a system admin
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
   Then I sign in as jon@lajoie.ca with password secret
 

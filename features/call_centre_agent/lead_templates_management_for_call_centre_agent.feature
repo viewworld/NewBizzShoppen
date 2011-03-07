@@ -3,7 +3,7 @@ Feature: Lead templates managements for call centre agent
 
 Background:
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   And I have user with email call_centre91@nbs.com and role call_centre
   And I have user with email other_call_centre@nbs.com and role call_centre
   And I am signed up and confirmed as user with email call_centre_agent@person.com and password supersecret and role call_centre_agent

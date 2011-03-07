@@ -3,7 +3,7 @@ Feature: Invoices administration as customer
 
   Background:
     Given I am on the homepage
-    And I make sure current locale is English
+    And I make sure current locale is "en"
     And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
     Then I sign in as jon@lajoie.ca with password secret
     When invoice exists for user "jon@lajoie.ca" with role "customer"

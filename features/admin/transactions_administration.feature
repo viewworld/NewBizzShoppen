@@ -3,7 +3,7 @@ Feature: Transactions administration
 
 Background:
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   And I have user with email gerard.jones@paerson22.com and role customer
   And user gerard.jones@paerson22.com with role customer exists with attributes "first_name:John,last_name:Kohen"
   And I have user with email lead_user.jones@paerson22.com and role lead_user

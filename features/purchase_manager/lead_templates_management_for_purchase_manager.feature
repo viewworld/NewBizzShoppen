@@ -3,7 +3,7 @@ Feature: Lead templates management for purchase manager
 
 Background:
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   And I have user with email other_purchase_manager@nbs.com and role purchase_manager
   And I am signed up and confirmed as user with email purchase_manager@person.com and password supersecret and role purchase_manager
   Then I sign in as purchase_manager@person.com with password supersecret

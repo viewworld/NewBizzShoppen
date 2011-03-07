@@ -4,7 +4,7 @@ Feature: Category lead templates management
 Background: Set English locale and login
   Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role admin
   And I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   Given there are no categories
   Then I sign in as bob@person.com with password supersecret
   And I go to administration categories

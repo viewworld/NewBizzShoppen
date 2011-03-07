@@ -17,7 +17,7 @@ module Addresses
     private
     def build_address_object
       if new_record? and !address
-        build_address
+        build_address(:country => Country.where(:locale => I18n.locale).first)
       end
     end
   end

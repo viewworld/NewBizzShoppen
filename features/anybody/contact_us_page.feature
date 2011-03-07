@@ -2,7 +2,7 @@
 Feature: Contact Us page
 
 Background:
-  Given I make sure current locale is English
+  Given I make sure current locale is "en"
   And I am on the homepage
 
 @_tested

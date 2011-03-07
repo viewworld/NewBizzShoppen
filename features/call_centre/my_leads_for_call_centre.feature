@@ -3,7 +3,7 @@ Feature: My leads for call centre
 
 Background:
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   And I am signed up and confirmed as user with email call_centre@person.com and password supersecret and role call_centre
   Given I have user with email ccagent01@nbs.com and role call_centre_agent
   And an user with role call_centre_agent and email ccagent01@nbs.com belongs to call centre call_centre@person.com

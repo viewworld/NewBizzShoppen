@@ -3,7 +3,7 @@ Feature: Lead creation by call centre agent
 
 Background:  Sign in user and set locale
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   And I have user with email call_centre@person.com and role call_centre
   And I am signed up and confirmed as user with email call_centre_agent@person.com and password supersecret and role call_centre_agent
   And an user with role call_centre_agent and email call_centre_agent@person.com belongs to call centre call_centre@person.com

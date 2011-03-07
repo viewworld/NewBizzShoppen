@@ -4,7 +4,7 @@ Feature: Paypal payments
 Background:
   Given I am on the homepage
   And there is a seller with attributes "company_name:DannyTheSeller,first_name:Danny,last_name:DeVito,address:USA,vat_no:123" for country "Denmark"
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   Given Category named "Computers" already exists
   And Lead named "Super printers" exists within "Computers" category
   Given I am signed up and confirmed as user with email buyer.jim.jones@nbs.com and password secret and role customer

@@ -3,7 +3,7 @@ Feature: Categories Listing
 
 Background: Set English locale
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
 
 @_tested @bk
 Scenario: I can see all active categories

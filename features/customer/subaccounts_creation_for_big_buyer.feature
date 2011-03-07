@@ -2,7 +2,7 @@
 Feature: Subaccounts creation for big buyer
 Background:
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   Given I am signed up and confirmed as user with email customer@person.com and password supersecret and role customer
   And user "customer@person.com" has team buyers enabled
   And User customer@person.com with role customer is big buyer

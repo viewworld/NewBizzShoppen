@@ -3,7 +3,7 @@ Feature: Owned leads management for customer
 
 Background:
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   Given I am signed up and confirmed as user with email customer@person.com and password supersecret and role customer
   And user "customer@person.com" has team buyers enabled
   And user customer@person.com with role customer exists with attributes "screen_name:Liane Young,first_name:Liane,last_name:Young"

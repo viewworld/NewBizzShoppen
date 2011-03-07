@@ -3,7 +3,7 @@ Feature: Settings administration
 
 Background: Sign in user and set English locale
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   Given I am signed up and confirmed as user with email lead_user2@person.com and password supersecret and role admin
   Then I sign in as lead_user2@person.com with password supersecret
   Then I go to administration settings
