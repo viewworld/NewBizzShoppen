@@ -103,5 +103,5 @@ Scenario: As admin I can view all 'unsatisfactory' ratings
   Then I should see translated "administration.leads.show.view.rating_level"
 
 # by comments
-@m0 @tgn
+@m0
 Scenario: As admin I can reply to 'unsatisfactory' rating
