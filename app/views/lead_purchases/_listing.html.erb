@@ -62,6 +62,8 @@
 
           <div class="element_templates"><%= render :partial => "/shared/lead_templates/listing", :locals => { :lead => lead_purchase.lead } %></div>
 
+          <%= render :partial => "/shared/lead_purchases/owner_note", :locals => { :lead_purchase => lead_purchase } %>
+
           <% if lead_purchase.lead.linkedin_url_present? %>
           <p><%= link_to t("lead_purchases.listing.linkedin_profile"), lead_purchase.lead.linkedin_url %>
              <%= link_to image_tag("icons/in_icon.png", :style => "vertical-align: top;"), lead_purchase.lead.linkedin_url %></p>

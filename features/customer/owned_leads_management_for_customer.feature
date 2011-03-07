@@ -223,8 +223,14 @@ Scenario: I can see lead template fields with hidden values for each lead that I
 @m6 @added @ao
 Scenario: Hidden description should be truncated and expandable by JS
 
-@m6 @tgn
+@m6 @tgn @selenium @_tested
 Scenario: I can add note to owned lead
+  When I go to buyer lead purchases
+  Then I should see translated "lead_buyer.lead_purchases.index.view.owner_note_blank"
+  And I follow translated "lead_buyer.lead_purchases.index.view.owner_note_blank"
+  And I fill in "owner_note_1" with "My custom note"
+  Then I follow translated "lead_buyer.lead_purchases.index.view.update_owner_note"
+  And I should see "My custom note"
 
 @m6 @ao
 Scenario: I should not see show page for owned lead when accordion style listing is used

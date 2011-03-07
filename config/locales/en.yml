@@ -1533,6 +1533,9 @@ en:
           rating_reason: 'Reason:'
           rating_reason_empty: 'You have to provide reson for your rating!'
           update_rating_button: 'Save rating'
+          update_owner_note: Save note
+          cancel_owner_note: Cancel
+          owner_note_blank: '(Click here to add note)'
           view_lead: View Details
           email_lead: Contact lead
           search:
