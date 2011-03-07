@@ -1620,6 +1620,7 @@ en:
         not_all_templates_filled: All mandatory templates must be filled!
         category_was_changed: Category has been changed
         county: Region
+        creator: Creator
 
   models:
     user:
