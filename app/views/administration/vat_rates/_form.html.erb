@@ -1,0 +1,10 @@
+<div class="pdd_10 no_pdd_t">
+  <fieldset class="inputs labels_ta_r labels_240">
+    <ol>
+      <%= form.fields_for :country, form.object.country || Country.new do |country_form| %>
+          <%= country_form.input :name, :input_html => {:disabled => !form.object.new_record?}, :label => t("administration.vat_rates.common.view.country_name") %>
+      <% end %>
+      <%= form.input :rate %>
+    </ol>
+  </fieldset>
+</div>

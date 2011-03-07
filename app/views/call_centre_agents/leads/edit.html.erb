@@ -1,0 +1,18 @@
+<column-mc:>
+  <header back="true"><%= t("call_centre_agent.leads.edit.view.title", :name => @lead.header) %></header>
+    <%= semantic_form_for [:call_centre_agents, @lead], :method => :put do |form| %>
+      <frm title="Edit">
+        <param:content>
+          <%= render :partial => '/shared/leads/form', :locals => { :form => form }  %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("call_centre_agent.leads.edit.view.button_update") %>
+          </ibt>
+          <ibt c="bt_grey fltri">
+            <%= button_to_function t("call_centre_agent.leads.edit.view.button_cancel"), "history.go(-1)" %>
+          </ibt>
+        </param:actions>
+      </frm>
+    <% end %>
+</column-mc:>

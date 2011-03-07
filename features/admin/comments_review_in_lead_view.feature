@@ -1,4 +1,4 @@
-@comments @$_admin @m5 @noguess @ao
+@comments @$_admin @m0 @noguess @ao
 Feature: Comments review in lead view
 
 Scenario: I can see amount of lead comments for each lead on leads listing

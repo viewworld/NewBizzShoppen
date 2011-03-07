@@ -1,0 +1,38 @@
+<li>
+  <div class="lead_content">
+    <h4>
+      <%= link_to lead.header, lead_path(lead) %>
+      <%= link_to_edit_lead(lead) %>
+    </h4>
+
+    <p class="element">
+      <span class="label"><%= t("lead_purchases.listing.company_name") %></span>
+      <%= lead.company_name %>
+    </p>
+
+    <p class="element">
+      <span class="label"><%= t("lead_purchases.listing.contact_name") %></span>
+      <%= lead.contact_name %>
+    </p>
+
+    <p class="element">
+      <span class="label"><%= t("lead_purchases.listing.phone_number") %></span>
+      <%= lead.phone_number %>
+    </p>
+
+    <p class="element">
+      <span class="label"><%= t("lead_purchases.listing.email_address") %></span>
+      <%= mail_to lead.email_address, lead.email_address %>
+    </p>
+
+    <h3><%=  t("lead_purchases.listing.description_label") %></h3>
+
+    <p class="element"><%= lead.description %></p>
+
+
+    <h3><%= t("lead_purchases.listing.hidden_description_label") %></h3>
+    <p class="element"><%= lead.hidden_description %></p>
+
+    <%= link_to t("category_home.show.view.read_more_link"), lead_path(lead), :class => "read_more" %>
+  </div>
+</li>

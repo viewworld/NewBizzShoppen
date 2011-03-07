@@ -1,5 +1,5 @@
 <column-mc:>
-  <header back="true"><%= t("customer.subaccounts.edit.view.title") %> <%= @user.role.to_s.humanize %></header>
+  <header back="true"><%= t("customer.subaccounts.edit.view.title", :name => @user.full_name) %> (<%= @user.role.to_s.humanize %>)</header>
   <%= semantic_form_for [:customers, @user], :url => customers_subaccount_path(@user), :method => :put do |form| %>
       <frm>
         <param:content>

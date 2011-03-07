@@ -1,0 +1,86 @@
+<search-box:>
+  <div class="search_box">
+    <h2><%= t("customer.invoices.index.view.search_label") %></h2>
+
+    <div class="search_content">
+      <%= form_for @search, :url => customers_invoices_path do |f| %>
+          <fieldset class="inputs_vertical">
+            <ol class="no_pdd">
+              <li class="string">
+                <%= f.label :with_keyword, t("customer.invoices.index.view.search.with_keyword") %>
+                <%= f.text_field :with_keyword %>
+              </li>
+              <li class="date">
+                <%= f.label :with_sale_date_after_and_including, t("customer.invoices.index.view.search.with_sale_date_after_and_including") %>
+                <%= f.text_field :with_sale_date_after_and_including, :class => "datepicker" %>
+              </li>
+              <li class="date">
+                <%= f.label :with_sale_date_before_and_including, t("customer.invoices.index.view.search.with_sale_date_before_and_including") %>
+                <%= f.text_field :with_sale_date_before_and_including, :class => "datepicker" %>
+              </li>
+              <li class="select">
+                <%= f.label :with_paid, t("customer.invoices.index.view.search.payment_status") %>
+                <%= f.select :with_paid, options_for_with_paid, :include_blank => true %>
+              </li>
+              <li class="commit">
+                <ibt c="bt_green" icon="magnify">
+                  <%= submit_tag t("customer.invoices.index.view.search_button") %>
+                </ibt>
+                <ibt c="fltri bt_grey">
+                  <%= bt_clear_filter %>
+                </ibt>
+              </li>
+            </ol>
+          </fieldset>
+      <% end %>
+    </div>
+  </div>
+</search-box:>
+
+<column-mc:>
+
+  <header><%= t("customer.invoices.index.view.header") %></header>
+
+  <% unless @invoices.any? %>
+      <%= blank_state_message(t("customer.invoices.index.view.no_invoices")) %>
+  <% else %>
+      <table class="generic" cellspacing="0" cellpadding="0" id="invoices">
+        <thead>
+        <tr>
+          <th class="hl"></th>
+          <th style="width: 150px"><%= link_to t("customer.invoices.index.view.sale_date"), order_for_scoped_search(:sale_date) %>
+          <th style="width: 100px" class="ta_r" id="invoice_number_header"><%= link_to t("customer.invoices.index.view.invoice_number"), order_for_scoped_search(:number) %></th>
+          <th class="ta_c" id="invoice_payment_status_header"><%= link_to t("customer.invoices.index.view.status"), order_for_scoped_search(:paid_at) %></th>
+          <th class="ta_r"><%= link_to t("customer.invoices.index.view.total"), order_for_scoped_search(:total) %></th>
+          <th style="width: 150px" class="ta_r"><%= t("customer.invoices.index.view.actions") %></th>
+          <th class="hr"></th>
+        </tr>
+        </thead>
+        <tbody id="invoices_list">
+        <%= render(@invoices) %>
+        <% if will_paginate %>
+            <tr class="pagination">
+              <td colspan="7">
+                <%= will_paginate @invoices %>
+              </td>
+            </tr>
+        <% end %>
+        </tbody>
+        <tfoot>
+        <tr>
+          <td class="fl"></td>
+          <td colspan="5"></td>
+          <td class="fr"></td>
+        </tr>
+        </tfoot>
+      </table>
+  <% end %>
+</column-mc:>
+
+<js:>
+  <script type="text/javascript">
+      $(function() {
+          $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+      });
+  </script>
+</js:>

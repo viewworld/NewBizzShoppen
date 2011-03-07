@@ -19,6 +19,7 @@ Scenario: I can browse list of my agents without pagination
 
 @_tested
 Scenario: I can sort by Name, Last Name, created, volume sold, revenue, mobile number, num. of leads purchased last 30days, num. of leads purchased last 12months, good, bad, not rated, Rating %, certification lvl.
+  Given user "call_centre@person.com" with role "call_centre" has attributes "certification_level:1"
   Given an user with role call_centre_agent and email ccagent01@person.com belongs to call centre call_centre@person.com
   And an user with role call_centre_agent and email ccagent02@person.com belongs to call centre call_centre@person.com
   And I have user with email bob@person.com and role customer
@@ -140,7 +141,7 @@ Scenario: I can bulk block users
   Given an user with role call_centre_agent and email ccagent02@person.com belongs to call centre call_centre@person.com
   And I go to call centre agents
   Then I check "mark_all"
-  And I follow translated "call_centre.call_centre_agents.index.view.button_bulk_subbaccounts_update"
+  And I follow "lock_selected"
   Then I should see translated "flash.bulk_call_centre_agents_update.update.notice"
 
 @_tested @selenium
@@ -151,6 +152,5 @@ Scenario: I can bulk unblock users
   And User ccagent02@person.com with role call_centre_agent is blocked
   And I go to call centre agents
   Then I check "mark_all"
-  And I select translated "call_centre.call_centre_agents.index.view.unlock" from "locked"
-  And I follow translated "call_centre.call_centre_agents.index.view.button_bulk_subbaccounts_update"
+  And I follow "unlock_selected"
   Then I should see translated "flash.bulk_call_centre_agents_update.update.notice"

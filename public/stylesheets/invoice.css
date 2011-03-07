@@ -1,5 +1,195 @@
+
+.invoice_show
+{
+    padding-top: 20px;    
+}
+
+.invoice_show table
+{
+    width: 100%;
+}
+
+.invoice_show table tbody tr td,
+.invoice_show table thead tr th    
+{
+    vertical-align: middle;
+    padding: 2px 5px;
+}
+
+.invoice_header
+{
+    font-size: 22px;
+    text-align: center;
+    padding: 20px 0;
+    font-weight: bold;
+}
+
+
+
+table.from_to_table
+{
+    margin-bottom: 20px;
+}
+
+table.from_to_table thead tr th
+{
+    font-size: 18px;
+    font-weight:bold;
+    text-align: left;
+}
+
+table.from_to_table tbody tr td
+{
+    padding-right: 15%;
+}
+
+
+.invoice_data table
+{
+    margin-bottom: 25px;
+}
+
+
+.invoice_data table thead tr th
+{
+    background: #eee;
+    border-bottom: 2px solid #ccc;
+    font-weight: bold;
+}
+
+.invoice_data table thead tr th,
+.invoice_data table tbody tr td
+{
+    padding: 10px;
+    text-align: right;
+    vertical-align: middle;
+}
+
+.invoice_data table tbody tr td
+{
+    background: #f8f8f8;
+    border-bottom: 1px solid #eee;
+}
+
+.invoice_data table tbody tr td.empty,
+.invoice_data table tbody tr.space td    
+{
+    background: none;
+    border-bottom: none;
+    padding: 0;
+}
+
+.invoice_data table tbody tr.space td
+{
+    height: 15px;
+}
+
+
+.invoice_data table tbody tr td.h_cell
+{
+    background: #eee;
+    border-right: 2px solid #ccc;
+    font-weight: bold;
+}
+
+.invoice_data table thead tr th.th_id { width: 10px;}
+.invoice_data table thead tr th.th_name { width: 350px;}
+.invoice_data table thead tr th.th_qty { width: 80px;}
+
+.status_data
+{
+    padding-top: 25px;
+}
+
+.status_data table
+{
+    margin-top: 15px;
+}
+
+
+
+@media print
+{
+    @page { margin: 1cm;}
+
+    body, table
+    {
+        font: 12px Arial, Helvetica, Verdana, Tahoma, sans-serif;
+    }
+
+    *
+    {
+        font: 12px Arial, Helvetica, Verdana, Tahoma, sans-serif;
+    }
+
+    div.invoice_show {page-break-after:always;}
+
+    .invoice_show table.invoice_basic_info tbody tr td
+    {
+        padding: 0;
+        vertical-align: top;
+    }
+
+    .invoice_show table.invoice_basic_info tr th.ta_r,
+    .invoice_show table.invoice_basic_info tr td.ta_r
+    {
+        text-align: right;
+        padding-right: 5px;
+    }
+
+
+    table.from_to_table tbody tr td
+    {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+
+
+    .invoice_data table
+    {
+        -pdf-keep-in-frame-mode: shrink;
+    }
+
+    .invoice_data table thead tr th,
+    .invoice_data table tbody tr td
+    {
+        padding: 5px;
+        line-height: normal;
+    }
+
+    .invoice_data table thead tr th.th_id { width: 30px;}
+    .invoice_data table thead tr th.th_name { width: 200px;}
+    .invoice_data table thead tr th.th_qty { width: 80px;}
+
+    .invoice_data table thead tr th.ta_l,
+    .invoice_data table tbody tr td.ta_l
+    {
+        text-align: left;
+    }
+
+    .additional_data p
+    {
+        line-height: 14px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .status_data
+    {
+        display: none;
+    }
+
+
+
+}
+
+
+
 /*****************************************************************************************************************/
 /***************************************** STYLE DLA OGÓLNE ******************************************************/
+
+/*
 
 div.invoice_show label{font-family: "arial_bold", "arial"; font-weight: bold; display: inline-block; padding-right: 10px}
 
@@ -15,9 +205,9 @@ div.invoice_show div.sides .bigger {font-size: 18px;}
 
 div.invoice_show .type {font-size: 16px; font-family: "arial_bold", "arial"; font-weight: bold;}
 
-div.invoice_show div.general_data table  {margin-bottom: 20px; empty-cells:show;}
+div.invoice_show div.general_data table  {margin-bottom: 20px; empty-cells:show; }
 
-div.invoice_show div.general_data table td{width: 150px}
+/*div.invoice_show div.general_data table td{width: 200px}
 
 div.hInvoice {text-align: center; font-size: 22px; font-family: "arial_bold", "arial"; font-weight: bold; margin: 20px 0px;}
 
@@ -44,12 +234,16 @@ div.invoice_show .product_data table td.r {text-align: right;}
 
 div.invoice_show div.product_data table {margin-bottom: 30px}
 
+*/
 
 /*****************************************************************************************************************/
 /***************************************** STYLE DLA STRONY INTERNETOWEJ *****************************************/
+
+/*
+
 @media screen {
 
-    div.invoice_show {padding:40px;}
+    div.invoice_show {padding:30px 0;}
 
     div.copy {display: none ! important;}
 
@@ -57,11 +251,9 @@ div.invoice_show div.product_data table {margin-bottom: 30px}
 
     div.invoice_show .type {display:none}
 
-    div.invoice_show .general_data{padding-left: 630px;}
-
     div.invoice_show .product_data table td {padding: 10px}
 
-    div.invoice_show .product_data table thead td {height: 40px;}
+    /*div.invoice_show .product_data table thead td {height: 40px;}*
 
     div.invoice_show .product_data table tbody tr.space td {height: 15px;}
 
@@ -88,26 +280,25 @@ div.invoice_show div.product_data table {margin-bottom: 30px}
 
     div.invoice_show .additional_data .h {padding-right: 10px}
 
+
 }
 
+*/
 
 /**************************************************************************************************************/
 /******************************************** STYLE DLA DRUKOWANIA ********************************************/
+
+/*
+
 @media print {
 
-    @page { margin: 1cm}
 
-    * {font-size: 11px; margin: 0px; padding: 0px;}
-
-	body {font-family: "arial_reg", "arial";}
-
-	div.invoice_show {page-break-after:always;}
 
     div.invoice_show .h{padding: 0px; padding-right: 5px; margin: 0px}
 
 	div.invoice_show div.sides tr td{width: 320px; padding-right: 20px; vertical-align: top;}
 
-    div.invoice_show div.general_data{margin-left: 410px;}
+    /*div.invoice_show div.general_data{margin-left: 410px;}
 
     div.invoice_show div.product_data table td {padding: 2px 8px; padding-top:6px; margin: 0px; }
 
@@ -116,8 +307,8 @@ div.invoice_show div.product_data table {margin-bottom: 30px}
             div.invoice_show div.product_data table td.field_id{width: 30px}
             div.invoice_show div.product_data table td.product_name{width: 385px}
             div.invoice_show div.product_data table td.qty{width: 40px}
-            div.invoice_show div.product_data table td.netto_price{width: 60px}
-            div.invoice_show div.product_data table td.netto_value{width: 60px}
+            div.invoice_show div.product_data table td.netto_price{width: 80px}
+            div.invoice_show div.product_data table td.netto_value{width: 80px}
             div.invoice_show div.product_data table td.vat{width: 40px}
             div.invoice_show div.product_data table td.vat_value{width: 60px}
             div.invoice_show div.product_data table td.brutto_value{width: 70px}
@@ -134,4 +325,7 @@ div.invoice_show div.product_data table {margin-bottom: 30px}
 
     div.invoice_show div.status_data{display:none}
 
+    .ta_r { text-align: right !important;}
+
 }
+*/

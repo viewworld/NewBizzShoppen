@@ -15,14 +15,35 @@ class Nbs < Thor
     Settings.contact_us_email = "contact@nbs.fake.com"
     # Invoicing
     Settings.invoicing_default_payment_deadline_date = 14
-    Settings.invoicing_seller_name                   = "Fairleads"
-    Settings.invoicing_seller_address                = "Streeet\nPost Code City\nCounty\nCountry"
-    Settings.invoicing_seller_vat_number             = "123-456-789"
-    Settings.invoicing_seller_payment_account        = "0011400000000000000000001"
     Settings.invoicing_default_vat_rate              = 0.15
 
-    Country.find_or_create_by_name("Denmark")
-    Country.find_or_create_by_name("United Kingdom")
+    country = Country.find_or_create_by_name("Denmark", :locale => "dk")
+#    VatRate.find_or_create_by_country_id(country.id, :rate => 25)
+    country = Country.find_or_create_by_name("United Kingdom", :locale => "en")
+#    VatRate.find_or_create_by_country_id(country.id, :rate => 20)
+
+    if BankAccount.count == 0
+      BankAccount.create(
+          :bank_name => 'Default Bank',
+          :iban_no => 'DK00 0000 0000 0000 00',
+          :local_bank_number => '0',
+          :swift => 'DKDKDK',
+          :country_default => true,
+          :global_default => true,
+          :address => Address.make!(:country => Country.where(:name => 'Denmark').first)
+      )
+    end
+
+    if Seller.count == 0
+      Seller.create(
+          :company_name => "Default Seller",
+          :first_name => "Change",
+          :last_name => "Change",
+          :vat_no => '111',
+          :address => Address.make!(:country => Country.where(:name => 'Denmark').first),
+          :default => true
+      )
+    end
 
     email_templates_array = [
         {:name    => "confirmation instructions",
@@ -125,15 +146,31 @@ class Nbs < Thor
       u.save
     end
 
-    puts "Creating default currency..."
+    puts "Creating default PayPal currencies..."
     [
-        {:name => 'Euro', :symbol => '&euro;', :format => '%u%n', :active => true}
+        {:name => 'AUD', :symbol => 'A &#36;', :format => '%u%n', :active => false},
+        {:name => 'CAD', :symbol => 'C &#36;', :format => '%u%n', :active => false},
+        {:name => 'EUR', :symbol => '&euro;', :format => '%u%n', :active => true},
+        {:name => 'GBP', :symbol => '&pound;', :format => '%u%n', :active => false},
+        {:name => 'JPY', :symbol => '&yen;', :format => '%u%n', :active => false},
+        {:name => 'USD', :symbol => '&#36;', :format => '%u%n', :active => false},
+        {:name => 'NZD', :symbol => '&#36;', :format => '%u%n', :active => false},
+        {:name => 'CHF', :symbol => 'CHF', :format => '%u %n', :active => false},
+        {:name => 'HKD', :symbol => '&#36;', :format => '%u%n', :active => false},
+        {:name => 'SGD', :symbol => '&#36;', :format => '%u%n', :active => false},
+        {:name => 'SEK', :symbol => 'SEK', :format => '%u %n', :active => false},
+        {:name => 'DKK', :symbol => 'DKK', :format => '%u %n', :active => true},
+        {:name => 'PLN', :symbol => 'PLN', :format => '%u %n', :active => ENV["RAILS_ENV"] == 'test' ? true : false},
+        {:name => 'NOK', :symbol => 'NOK', :format => '%u %n', :active => false},
+        {:name => 'HUF', :symbol => 'HUF', :format => '%u %n', :active => false},
+        {:name => 'CZK', :symbol => 'CZK', :format => '%u %n', :active => false},
+        {:name => 'ILS', :symbol => 'ILS', :format => '%u %n', :active => false},
+        {:name => 'MXN', :symbol => 'MXN', :format => '%u %n', :active => false},
+        {:name => 'PHP', :symbol => 'PHP', :format => '%u %n', :active => false},
+        {:name => 'TWD', :symbol => 'TWD', :format => '%u %n', :active => false},
+        {:name => 'THB', :symbol => 'THB', :format => '%u %n', :active => false}
     ].each do |params|
       Currency.create!(params)
-    end
-
-    if ENV["RAILS_ENV"] == 'test'
-      Currency.create!(:name => 'PLN', :symbol => '&pln;', :format => '%u%n', :active => true)
     end
 
     unless Rails.env.production?
@@ -161,7 +198,7 @@ class Nbs < Thor
       if Lead.count.zero?
         agent = User::Agent.find_by_email("agent@nbs.com")
         ["Big deal on printers", "Drills required", "Need assistance in selling a car", "Ipod shipment", "Trip to amazonia - looking for offer", "LCD - Huge amounts", "GPS receivers required"].each do |header|
-          Lead.make!(:category_id => Category.last.id, :header => header, :creator_id => agent.id, :currency => Currency.where(:name => "Euro").first)
+          Lead.make!(:category_id => Category.last.id, :header => header, :creator_id => agent.id, :currency => Currency.where(:name => "EUR").first)
         end
       end
 
@@ -203,8 +240,8 @@ class Nbs < Thor
         'Privacy',
         'Terms & Conditions'
     ].each do |title|
-      unless Article::Cms.main_page_articles.includes(:translations).where(:article_translations => {:title => title}).first
-        article = Article::Cms.make!(:scope => Article::Cms::MAIN_PAGE_ARTICLE, :title => title, :content => title, :key => title.parameterize('_'))
+      unless Article::Cms::MainPageArticle.includes(:translations).where(:article_translations => {:title => title}).first
+        article = Article::Cms::MainPageArticle.make!(:title => title, :content => title, :key => title.parameterize('_'))
         [:en, :dk].each do |locale|
           I18n.locale = locale
           article.title = title
@@ -222,10 +259,12 @@ class Nbs < Thor
         'blurb_agent_home',
         'blurb_purchase_manager_home',
         'blurb_start_page_role_selection',
-        'blurb_currencies'
+        'blurb_currencies',
+        'blurb_category_home',
+        'blurb_leads_listing'
     ].each do |key|
-      unless Article::Cms.interface_content_texts.where(:key => key).first
-        article = Article::Cms.make!(:scope => Article::Cms::INTERFACE_CONTENT_TEXT, :title => key.humanize, :content => key.humanize, :key => key)
+      unless Article::Cms::InterfaceContentText.where(:key => key).first
+        article = Article::Cms::InterfaceContentText.make!(:title => key.humanize, :content => key.humanize, :key => key)
         [:en, :dk].each do |locale|
           I18n.locale = locale
           article.title = key.humanize
@@ -240,8 +279,8 @@ class Nbs < Thor
     [
         'reset_password'
     ].each do |key|
-      unless Article::Cms.help_popups.where(:key => key).first
-        article = Article::Cms.make!(:scope => Article::Cms::HELP_POPUP, :title => key.humanize, :content => key.humanize, :key => key)
+      unless Article::Cms::HelpPopup.where(:key => key).first
+        article = Article::Cms::HelpPopup.make!(:title => key.humanize, :content => key.humanize, :key => key)
         [:en, :dk].each do |locale|
           I18n.locale = locale
           article.title = key.humanize

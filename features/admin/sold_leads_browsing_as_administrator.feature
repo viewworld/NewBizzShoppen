@@ -81,4 +81,4 @@ Scenario: I can go to lead details by clicking on the edit link
   And I select "TestShowLink" from "search_with_category"
   And I press translated "leads.index.search.search_button"
   And I click hidden translated link "administration.leads.index.view.edit"
-  Then I should see translated "administration.leads.edit.view.header"
+  Then I should see translated "administration.leads.edit.view.header" with options "lead_header:AwesomeLead"

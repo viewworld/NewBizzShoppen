@@ -4,6 +4,9 @@
   <%= semantic_form_for @user, :url => my_profile_path, :method => :put do |form| %>
       <frm title="Edit account">
         <param:header>
+          <% if current_user.has_role?(:customer) %>
+            <%= bt_link_to nil, t("my_profile.edit.view.interests_settings"), edit_customers_interests_path, :class => "fltr" %>
+          <% end %>
           <%= bt_link_to nil, t("my_profile.edit.view.change_password"), password_path, :class => "fltr" %>
         </param:header>
         <param:content>

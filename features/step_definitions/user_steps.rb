@@ -38,12 +38,19 @@ end
 Given /^(?:|I am |someone is )signed up and confirmed as user with email ([^"]*) and password ([^"]*) and role ([^"]*)(?: with attributes "([^"]*)")?$/ do |email, password, role, options|
   std_opts = {:email => email, :password => password, :password_confirmation => password}
   opts = options ? Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys.merge(std_opts) : std_opts
+  if country_id = opts.delete(:country) and country = Country.find(country_id)
+    opts.merge!(:address => Address.make!(:country => country))
+  end
   u = "User::#{role.camelize}".constantize.make!(opts)
   u.confirm!
 end
 
 Given /^user "([^"]*)" has team buyers enabled$/ do |email|
   User::Customer.where(:email => email).first.update_attribute(:team_buyers, true)
+end
+
+Given /^user "([^"]*)" with role "([^"]*)" is confirmed$/ do |email, role|
+  "User::#{role.camelize}".constantize.where(:email => email).first.confirm!
 end
 
 Then /^I have user with email (.+) and role (.+)$/ do |email, role|
@@ -184,7 +191,11 @@ end
 
 Given /^user "([^"]*)" with role "([^"]*)" has certification level (\d+)$/ do |email, role, c_level|
   user = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
-  assert user.read_attribute(:certification_level).to_i == c_level.to_i
+  if user.has_role?(:call_centre_agent)
+    assert user.certification_level == c_level.to_i
+  else
+    assert user.read_attribute(:certification_level).to_i == c_level.to_i
+  end
 end
 
 Given /^user "([^"]*)" with role "([^"]*)" has certification level set to (\d+)$/ do |email, role, c_level|
@@ -192,3 +203,45 @@ Given /^user "([^"]*)" with role "([^"]*)" has certification level set to (\d+)$
   user.certification_level = c_level.to_i
   user.save
 end
+
+When /^user "([^"]*)" with role "([^"]*)" has attributes "([^"]*)"$/ do |email, role_name, options|
+  user = "User::#{role_name.camelize}".constantize.first(:conditions => { :email => email })
+  attrs = Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys
+  user.update_attributes(attrs)
+end
+
+When /^user "([^"]*)" with role "([^"]*)" added lead "([^"]*)" to cart$/ do |email, role_name, lead_name|
+  user = "User::#{role_name.camelize}".constantize.first(:conditions => { :email => email })
+  lead = Lead.where(:header => lead_name).first
+  Cart.new(user).add_lead(lead)
+end
+
+Given /^user "([^"]*)" with role "([^"]*)" comes from "([^"]*)"$/ do |email,role_name,country_name|
+  address = "User::#{role_name.camelize}".constantize.where(:email => email).first.address
+  address.country = Country.where(:name => country_name).first
+  address.save
+end
+
+Given /^user "([^"]*)" with role "([^"]*)" has address "([^"]*)"$/ do |email,role_name,options|
+  user = "User::#{role_name.camelize}".constantize.first(:conditions => { :email => email })
+  attrs = Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys
+  user.address.update_attributes(attrs)
+end
+
+When /^I am signed up and confirmed as user with email "([^"]*)" and password "([^"]*)" and role "([^"]*)" for category "([^"]*)"(?: with attributes "([^"]*)")?$/ do |email, password, role_name, category_name, options|
+  std_opts = {:email => email, :password => password, :password_confirmation => password, :category_id => Category.where(:name => category_name).first.id}
+  opts = options ? Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys.merge(std_opts) : std_opts
+  u = "User::#{role_name.camelize}".constantize.make!(opts)
+  u.confirm!
+end
+
+Then /^user "([^"]*)" should have role "([^"]*)"$/ do |email, role_name|
+  User.where(:email => email).first.roles.should include(role_name.to_sym)
+end
+
+And /^user "([^"]*)" is confirmed/ do |email|
+  User.where(:email => email).first.confirm!
+end
+
+
+

@@ -37,14 +37,17 @@ Scenario: I can click cancel and go back (browser history)
 
 @m4 @tgn @added @agent_certification @_tested
 Scenario: When I change the certification levels in settings then agents' levels should be refreshed too (unless their certifications are locked)
-  Given I have user with email ccagent01@person.com and role call_centre_agent
-  And I have user with email ccagent02@person.com and role call_centre_agent
-  And user ccagent01@person.com with role call_centre_agent exists with attributes "certification_level:2"
-  And user ccagent02@person.com with role call_centre_agent exists with attributes "certification_level:11"
+  Given I have user with email agent01@person.com and role agent
+  And I have user with email agent02@person.com and role agent
+  And I have user with email call_centre@person.com and role call_centre
+  And user call_centre@person.com with role call_centre exists with attributes "certification_level:2"
+  And user agent01@person.com with role agent exists with attributes "certification_level:2"
+  And user agent02@person.com with role agent exists with attributes "certification_level:11"
   Then I go to administration settings
   And I fill in "setting_2" with "20"
   And I fill in "setting_3" with "40"
   And I press translated "administration.settings.edit.view.button_update_settings"
   And I should see translated "administration.settings.update.controller.successful_update_notice"
-  Then user "ccagent01@person.com" with role "call_centre_agent" has certification level 0
-  And user "ccagent02@person.com" with role "call_centre_agent" has certification level 11
+  Then user "call_centre@person.com" with role "call_centre" has certification level 0
+  Then user "agent01@person.com" with role "agent" has certification level 0
+  And user "agent02@person.com" with role "agent" has certification level 11

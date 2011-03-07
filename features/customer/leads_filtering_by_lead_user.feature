@@ -8,6 +8,7 @@ Background:
   Given I am on the homepage
   And I make sure current locale is English
   Given I am signed up and confirmed as user with email customer@person.com and password supersecret and role customer
+  And user customer@person.com with role customer exists with attributes "team_buyers:true"
   And an user with role lead_user and email lead_user2@person.com exists as subaccount for customer customer@person.com
   And an user with role lead_user and email lead_user44@person.com exists as subaccount for customer customer@person.com
   And user lead_user2@person.com with role lead_user exists with attributes "screen_name:John McCoy,first_name:John,last_name:McCoy"
@@ -16,8 +17,8 @@ Background:
   And lead Monitors LCD deal exists within category Computers
   And lead Keyboards deal exists within category Office
   And lead Mouses deal exists within category Office
-  And lead Keyboards deal exists with attributes "purchase_value:3001.99"
-  And lead Mouses deal exists with attributes "purchase_value:4400.99"
+  And lead Keyboards deal exists with attributes "purchase_value:3001.99,zip_code:123"
+  And lead Mouses deal exists with attributes "purchase_value:4400.99,zip_code:456"
   And lead Printers ultimate deal is bought by user customer@person.com with role customer and is assigned to user lead_user2@person.com with role lead_user
   And lead Monitors LCD deal is bought by user customer@person.com with role customer and is assigned to user lead_user44@person.com with role lead_user
   And lead Keyboards deal is bought by user customer@person.com with role customer and is assigned to user lead_user2@person.com with role lead_user
@@ -56,11 +57,10 @@ Scenario: I can filter leads
   And I press translated "lead_user.lead_purchases.index.view.search.search_button"
   Then I should not see "Printers ultimate deal"
   And I should not see "Monitors LCD deal"
-  Then I select "2000" from "search_with_deal_value_from"
-  Then I select "4000" from "search_with_deal_value_to"
+  And I fill in "search_with_zip_code" with "123"
   And I press translated "lead_user.lead_purchases.index.view.search.search_button"
   Then I should see "Keyboards deal"
   And I should not see "Mouses deal"
 
-@m0
+@m6 @tgn
 Scenario: I should be able to click link in subaccounts listing and go straight to that users's leads listing

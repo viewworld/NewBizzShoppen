@@ -1,6 +1,6 @@
 <search-box:>
   <div class="search_box">
-    <h2>Filter</h2>
+    <h2><%= t("common.search") %></h2>
 
     <div class="search_content">
       <%= form_for @search, :url => administration_leads_path do |f| %>
@@ -26,7 +26,7 @@
                 <%= f.hidden_field :price_from %>
                 <%= f.hidden_field :price_to %>
                 <%= f.label :price_from_to, "Price range" %>
-                <%= text_field_tag :price_from_to, '', {:readonly => "readonly", :id => "price_from_to"} %>
+                <%= text_field_tag :price_from_to, '', {:readonly => "readonly", :id => "price_from_to", :style => "width: 75px"} %>
                 <div class="range_container">
                   <div id="price_range" class="slider-range"></div>
                 </div>
@@ -36,7 +36,7 @@
                 <%= f.hidden_field :lead_purchases_counter_from %>
                 <%= f.hidden_field :lead_purchases_counter_to %>
                 <%= f.label :lead_purchases_counter_from, "Sold range" %>
-                <%= text_field_tag :lead_purchases_counter_from_to, '', { :readonly => "readonly", :id => "lead_purchases_counter_from_to" } %>
+                <%= text_field_tag :lead_purchases_counter_from_to, '', {:readonly => "readonly", :id => "lead_purchases_counter_from_to", :style => "width: 70px"} %>
                 <div class="range_container">
                   <div id="sold_range" class="slider-range"></div>
                 </div>
@@ -46,19 +46,22 @@
                 <%= f.hidden_field :purchase_value_from %>
                 <%= f.hidden_field :purchase_value_to %>
                 <%= f.label :purchase_value_from, "Value range" %>
-                <%= text_field_tag :purchase_value_from_to, '', { :readonly => "readonly", :id => "purchase_value_from_to" } %>
+                <%= text_field_tag :purchase_value_from_to, '', {:readonly => "readonly", :id => "purchase_value_from_to"} %>
                 <div class="range_container">
                   <div id="value_range" class="slider-range"></div>
                 </div>
-              </li>              
+              </li>
 
               <li class="boolean">
                 <%= f.check_box :purchased, {}, "true", "false" %>
                 <%= f.label :purchased, t("administration.leads.index.view.filter_purchased") %>
-              </li>              
+              </li>
               <li class="commit">
                 <ibt c="bt_green" icon="magnify">
                   <%= submit_tag t("administration.leads.index.view.search_button") %>
+                </ibt>
+                <ibt c="fltri bt_grey">
+                  <%= bt_clear_filter %>
                 </ibt>
               </li>
             </ol>
@@ -70,76 +73,79 @@
 
 
 <column-mc:>
-
   <header>Leads</header>
 
-  <%= leads_table @leads, :show_checkboxes => false do |blocks| %>
-      <% blocks.tools do |lead| %>
-        <%= bt_link_to nil, t("administration.leads.index.view.edit"), edit_administration_lead_path(lead), :class => "default_action" %>
-      <% end %>
-      <% blocks.status_column do |lead| %>
-         <%= status_or_status_change(lead) %>
+  <% if @leads.blank? %>
+    <%= blank_state_message %>
+  <% else %>
+      <%= leads_table @leads, :show_checkboxes => false do |blocks| %>
+          <% blocks.tools do |lead| %>
+              <%= bt_link_to nil, t("administration.leads.index.view.edit"), edit_administration_lead_path(lead), :class => "default_action" %>
+          <% end %>
+          <% blocks.status_column do |lead| %>
+              <%= status_or_status_change(lead) %>
+          <% end %>
       <% end %>
   <% end %>
 </column-mc:>
 
 <js:>
-<script type="text/javascript">
-    jQuery(document).ready(function()
-    {
-        $("#price_range").slider({
-            min: 0,
-            max: 10000,
-            values: [ 0, 10000 ],
-            slide: function(event, ui) {
-                $('#search_price_from').val(ui.values[ 0 ]);
-                $('#search_price_to').val(ui.values[ 1 ]);
-                $(this).parents().prev().val("$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ]);
+  <script type="text/javascript">
+      jQuery(document).ready(function()
+      {
+          $("#price_range").slider({
+              min: 0,
+              max: 10000,
+              values: [ 0, 10000 ],
+              slide: function(event, ui) {
+                  $('#search_price_from').val(ui.values[ 0 ]);
+                  $('#search_price_to').val(ui.values[ 1 ]);
+                  $(this).parents().prev().val("$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ]);
 
-            }
-        });
+              }
+          });
 
-        $("#sold_range").slider({
-            min: 0,
-            max: 20,
-            values: [ 0, 20 ],
-            slide: function(event, ui) {
-                $('#search_lead_purchases_counter_from').val(ui.values[ 0 ]);
-                $('#search_lead_purchases_counter_to').val(ui.values[ 1 ]);
-                $(this).parents().prev().val(ui.values[ 0 ] + " - " + ui.values[ 1 ]);
-            }
-        });
+          $("#sold_range").slider({
+              min: 0,
+              max: 20,
+              values: [ 0, 20 ],
+              slide: function(event, ui) {
+                  $('#search_lead_purchases_counter_from').val(ui.values[ 0 ]);
+                  $('#search_lead_purchases_counter_to').val(ui.values[ 1 ]);
+                  $(this).parents().prev().val(ui.values[ 0 ] + " - " + ui.values[ 1 ]);
+              }
+          });
 
-        $("#value_range").slider({
-            min: 1000,
-            max: 300000,
-            values: [ 1000, 300000 ],
-            slide: function(event, ui) {
-                $('#search_purchase_value_from').val(ui.values[ 0 ]);
-                $('#search_purchase_value_to').val(ui.values[ 1 ]);
-                $(this).parents().prev().val("$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ]);
-            }
-        });
-    });
+          $("#value_range").slider({
+              min: 1000,
+              max: 300000,
+              values: [ 1000, 300000 ],
+              slide: function(event, ui) {
+                  $('#search_purchase_value_from').val(ui.values[ 0 ]);
+                  $('#search_purchase_value_to').val(ui.values[ 1 ]);
+                  $(this).parents().prev().val("$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ]);
+              }
+          });
+      });
 
-    $(document).ready(function() {
-        if($('#search_price_from').val() != "" && $('#search_price_to').val() != "")
-        {
-            $( "#price_range" ).slider( "option", "values", [parseInt($('#search_price_from').val()), parseInt($('#search_price_to').val())] );
-            $('#price_from_to').val("$" + $('#search_price_from').val() + " - $" + $('#search_price_to').val());
-        }
+      $(document).ready(function() {
+          if ($('#search_price_from').val() != "" && $('#search_price_to').val() != "")
+          {
+              $("#price_range").slider("option", "values", [parseInt($('#search_price_from').val()), parseInt($('#search_price_to').val())]);
+              $('#price_from_to').val("$" + $('#search_price_from').val() + " - $" + $('#search_price_to').val());
+          }
 
-        if($('#search_lead_purchases_counter_from').val() != "" && $('#search_lead_purchases_counter_to').val() != "")
-        {
-            $( "#sold_range" ).slider( "option", "values", [parseInt($('#search_lead_purchases_counter_from').val()), parseInt($('#search_lead_purchases_counter_to').val())] );
-            $('#lead_purchases_counter_from_to').val($('#search_lead_purchases_counter_from').val() + " - " + $('#search_lead_purchases_counter_to').val());
-        }
+          if ($('#search_lead_purchases_counter_from').val() != "" && $('#search_lead_purchases_counter_to').val() != "")
+          {
+              $("#sold_range").slider("option", "values", [parseInt($('#search_lead_purchases_counter_from').val()), parseInt($('#search_lead_purchases_counter_to').val())]);
+              $('#lead_purchases_counter_from_to').val($('#search_lead_purchases_counter_from').val() + " - " + $('#search_lead_purchases_counter_to').val());
+          }
 
-        if($('#search_purchase_value_from').val() != "" && $('#search_purchase_value_to').val() != "")
-        {
-            $( "#value_range" ).slider( "option", "values", [parseInt($('#search_purchase_value_from').val()), parseInt($('#search_purchase_value_to').val())] );
-            $('#purchase_value_from_to').val($('#search_purchase_value_from').val() + " - " + $('#search_purchase_value_to').val());
-        }
-    });
-</script>
+          if ($('#search_purchase_value_from').val() != "" && $('#search_purchase_value_to').val() != "")
+          {
+              $("#value_range").slider("option", "values", [parseInt($('#search_purchase_value_from').val()), parseInt($('#search_purchase_value_to').val())]);
+              $('#purchase_value_from_to').val($('#search_purchase_value_from').val() + " - " + $('#search_purchase_value_to').val());
+          }
+      });
+  </script>
 </js:>

@@ -10,7 +10,8 @@ Background:
 @ao @_done
 Scenario: I should be able to see all defined currencies listing
   When I follow translated "layout.main_menu.admin.currencies"
-  Then I should see "Euro" within "#currencies_table"
+  Then I should see "EUR" within "#currencies_table"
+  And I should see "DKK" within "#currencies_table"
 
 @ao @_done
 Scenario: I should be able to define new currency with following attributes name:string, symbol:string, format:string, active:boolean
@@ -45,3 +46,6 @@ Scenario: I should be able to destroy currency unless there are leads defined wi
   And I follow translated "layout.main_menu.admin.currencies"
   And I delete "PLN" currency
   Then I should see "PLN"
+
+@tgn @m5 @added @non_testable @_done
+Scenario: There are currencies already defined in the system that are accepted by PayPal

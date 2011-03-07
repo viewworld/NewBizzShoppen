@@ -2,7 +2,8 @@ class Administration::CurrenciesController < Administration::AdministrationContr
   inherit_resources
   actions :all, :except => [:show]
 
-  set_tab "currencies"
+  set_tab "settings"
+  set_subtab "currencies"
 
   def create
     create! do |success,failure|

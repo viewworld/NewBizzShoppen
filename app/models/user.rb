@@ -1,9 +1,9 @@
 class User < ActiveRecord::Base
   self.abstract_class = true
 
-  ROLES_PRIORITY = [:admin, :call_centre, :agent, :call_centre_agent, :purchase_manager, :customer, :lead_buyer, :lead_user]
+  ROLES_PRIORITY = [:admin, :call_centre, :agent, :call_centre_agent, :purchase_manager, :category_buyer, :customer, :lead_buyer, :lead_user]
   DEAL_VALUE_RANGE = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000]
-  BASIC_USER_ROLES_WITH_LABELS = [['Administrator', 'admin'], ['Agent', 'agent'], ['Buyer', 'customer'], ['Call centre', 'call_centre'], ['Purchase Manager', 'purchase_manager']]
+  BASIC_USER_ROLES_WITH_LABELS = [['Administrator', 'admin'], ['Agent', 'agent'], ['Buyer', 'customer'], ['Call centre', 'call_centre'], ['Purchase Manager', 'purchase_manager'], ['Category Buyer', 'category_buyer']]
   ADDITIONAL_USER_ROLES_WITH_LABELS = [['Lead user', "lead_user"], ['Lead buyer', "lead_buyer"], ["Call centre agent", "call_centre_agent"]]
 
   NOT_CERTIFIED               = 0
@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
   GOLD_CERTIFICATION_LOCKED   = 12
   CERTIFICATION_LEVELS = [NOT_CERTIFIED, SILVER_CERTIFICATION, GOLD_CERTIFICATION, NOT_CERTIFIED_LOCKED, SILVER_CERTIFICATION_LOCKED, GOLD_CERTIFICATION_LOCKED]
 
+  BLACK_LISTED_ATTRIBUTES = [:paypal_email, :bank_swift_number, :bank_iban_number]
+
   include RoleModel
   include ScopedSearch::Model
 
@@ -22,18 +24,26 @@ class User < ActiveRecord::Base
 
   # declare the valid roles -- do not change the order if you add more
   # roles later, always append them at the end!
-  roles :admin, :agent, :call_centre, :call_centre_agent, :customer, :lead_buyer, :lead_user, :purchase_manager
+  roles :admin, :agent, :call_centre, :call_centre_agent, :customer, :lead_buyer, :lead_user, :purchase_manager, :category_buyer
 
-  validates_presence_of :email, :screen_name
+  validates_presence_of :email, :screen_name, :first_name, :last_name
   validates_uniqueness_of :email, :screen_name
+  validate :payout_information_is_complete
 
   has_many :subaccounts, :class_name => "User", :foreign_key => "parent_id"
   has_many :owned_lead_requests, :class_name => 'LeadRequest', :foreign_key => :owner_id
-  belongs_to :user, :class_name => "User", :foreign_key => "parent_id", :counter_cache => :subaccounts_counter
-#  belongs_to :country, :foreign_key => "country"
   has_many :invoices
+  belongs_to :user, :class_name => "User", :foreign_key => "parent_id", :counter_cache => :subaccounts_counter
+  belongs_to :bank_account, :foreign_key => :bank_account_id, :primary_key => :id, :class_name => 'BankAccount'
+  belongs_to :vat_rate, :foreign_key => :country, :primary_key => :country_id
+  belongs_to :category
+  has_many :lead_templates,
+           :as => :creator,
+           :dependent => :destroy
   alias_method :parent, :user
 
+  scope :with_customers, where("roles_mask & #{2**User.valid_roles.index(:customer)} > 0 ")
+  scope :with_agents, where("(roles_mask & #{2**User.valid_roles.index(:agent)} > 0) or (roles_mask & #{2**User.valid_roles.index(:call_centre_agent) } > 0) or (roles_mask & #{2**User.valid_roles.index(:purchase_manager)} > 0) or (roles_mask & #{2**User.valid_roles.index(:call_centre) } > 0)")
   scope :with_role, lambda { |role| where("roles_mask & #{2**User.valid_roles.index(role.to_sym)} > 0 ") }
   scope :with_keyword, lambda { |q| where("lower(first_name) like :keyword OR lower(last_name) like :keyword OR lower(email) like :keyword", {:keyword => "%#{q.downcase}%"}) }
   scope :with_subaccounts, lambda { |parent_id| where("parent_id = ?", parent_id) }
@@ -47,10 +57,11 @@ class User < ActiveRecord::Base
   scope :with_requested_leads, lambda { |requestee| select("leads.id").where("assignee_id IS NULL and requested_by = ?", requestee.id).joins("INNER JOIN lead_purchases ON lead_purchases.requested_by=users.id").joins("INNER JOIN leads on leads.id=lead_purchases.lead_id") }
   scope :with_assigned_leads_time_ago, lambda { |assignee, time| select("leads.id").where("assignee_id = ? and lead_purchases.assigned_at >= ?", assignee.id, time).join_lead_purchases_and_leads }
   scope :with_assigned_leads_total, lambda { |assignee| select("leads.id").where("assignee_id = ?", assignee.id).join_lead_purchases_and_leads }
-
+  scope :with_lead_creators_for, lambda { |parent| select("DISTINCT(users.id), users.*").where("users.parent_id = ?", parent.id).joins("INNER JOIN leads ON leads.creator_id=users.id") }
+  scope :assignees_for_lead_purchase_owner, lambda { |owner| select("DISTINCT(users.id), users.*").where("requested_by IS NULL and lead_purchases.owner_id = ? and accessible_from IS NOT NULL and users.parent_id = ?", owner.id, owner.id).joins("RIGHT JOIN lead_purchases on lead_purchases.assignee_id=users.id") }
 
   scoped_order :id, :roles_mask, :first_name, :last_name, :email, :age, :department, :mobile_phone, :completed_leads_counter, :leads_requested_counter,
-               :leads_assigned_month_ago_count, :leads_assigned_year_ago_counter, :total_leads_assigned_counter, :leads_created_counter,
+               :leads_assigned_month_ago_counter, :leads_assigned_year_ago_counter, :total_leads_assigned_counter, :leads_created_counter,
                :leads_volume_sold_counter, :leads_revenue_counter, :leads_purchased_month_ago_counter, :leads_purchased_year_ago_counter,
                :leads_rated_good_counter, :leads_rated_bad_counter, :leads_not_rated_counter, :leads_rating_avg, :certification
 
@@ -59,14 +70,31 @@ class User < ActiveRecord::Base
 
   attr_accessor :agreement_read, :locked
 
-  before_save :handle_locking
+  before_save :handle_locking, :handle_team_buyers_flag
   before_create :set_rss_token, :set_role
   before_destroy :can_be_removed
-  before_save :handle_team_buyers_flag
 
-  liquid :email, :first_name, :last_name, :confirmation_instructions_url, :reset_password_instructions_url
+  liquid :email, :confirmation_instructions_url, :reset_password_instructions_url
 
   private
+
+  def mass_assignment_authorizer
+    if self.can_edit_payout_information
+      self.class.protected_attributes.reject! { |a| BLACK_LISTED_ATTRIBUTES.include?(a.to_sym)  }
+      self.class.protected_attributes
+    else
+      super
+    end
+  end
+
+  def payout_information_is_complete
+    if paypal_email.present? and bank_swift_number.present? and bank_iban_number.present?
+      errors.add(:paypal_email, :invalid)
+    elsif paypal_email.blank? and ((bank_swift_number.present? and bank_iban_number.blank?) or (bank_swift_number.blank? and bank_iban_number.present?))
+      errors.add(:bank_swift_number, :blank) if bank_swift_number.blank?
+      errors.add(:bank_iban_number, :blank) if bank_iban_number.blank?
+    end
+  end
 
   def can_be_removed
     casted_obj = self.send(:casted_class).find(id)
@@ -147,6 +175,11 @@ class User < ActiveRecord::Base
     subclass.send(:default_scope, with_role(subclass.name.split('::').last.tableize.singularize)) unless subclass.name.split('::').last.tableize.singularize == "abstract"
   end
 
+  # TODO find out which roles are invoiceable
+  def self.invoiceable
+    all.reject{|u| !defined? u.with_role.address}
+  end
+
   def role
     roles.sort_by { |r| User::ROLES_PRIORITY.index(r) }.first
   end
@@ -193,7 +226,7 @@ class User < ActiveRecord::Base
   end
 
   def refresh_agent_counters!
-    self.leads_created_counter = Lead.with_created_by(self).size
+    self.leads_created_counter = Lead.with_created_by(id).size
     self.leads_volume_sold_counter = LeadPurchase.with_volume_sold_by(self).size
     self.leads_revenue_counter = Lead.with_revenue_by(self).first.id || 0
     self.leads_purchased_month_ago_counter = LeadPurchase.with_purchased_time_ago_by(self, 30.days.ago).size
@@ -207,14 +240,14 @@ class User < ActiveRecord::Base
   end
 
   def self.refresh_agents_certification_level
-    (User::Agent.all + User::CallCentreAgent.all).each do |user|
+    (User::Agent.all + User::CallCentre.all).each do |user|
       user.refresh_certification_level
       user.save
     end
   end
 
   def certification_level
-    read_attribute(:certification_level) % 10
+    has_role?(:call_centre_agent) ? parent.certification_level : read_attribute(:certification_level) % 10
   end
 
   def refresh_certification_level
@@ -222,7 +255,7 @@ class User < ActiveRecord::Base
   end
 
   def certification_level_ratio
-    Lead.joins(:lead_purchases).where(:creator_id => id, :creator_type => self.class.to_s).count
+    Lead.joins(:lead_purchases).where(:creator_id => has_role?(:call_centre_agent) ? parent.subaccount_ids : id, :creator_type => has_role?(:call_centre_agent) ? "User::CallCentreAgent" : self.class.to_s).count
   end
 
   def calculate_certification_level
@@ -236,17 +269,13 @@ class User < ActiveRecord::Base
   end
 
   def has_accessible_categories?
-    parent.present? and User::Customer.find(parent_id).category_interests.present?
+    parent.present? and has_any_role?(:lead_buyer, :lead_user) and User::Customer.find(parent_id).category_interests.present?
   end
 
   def accessible_categories_ids
-    User::Customer.find(parent_id).category_interests.map(&:category_id)
+    User::Customer.find(parent_id.blank? ? id : parent_id).category_interests.map(&:category_id)
   end
   
-  def address
-    %{#{street}\n#{zip_code} #{city}\n#{county}}
-  end
-
   def has_role?(r)
     roles.include?(r)
   end
@@ -254,5 +283,41 @@ class User < ActiveRecord::Base
   def to_s
     full_name
   end
+  
+  def can_create_lead_templates?
+    has_any_role?(:admin, :call_centre, :agent, :call_centre_agent, :purchase_manager)
+  end
+  
+  def country_vat_rate
+    with_role.vat_rate ? with_role.vat_rate.rate : 0.0
+  end
 
+  def payment_bank_account
+    bank_account || BankAccount.country_default_bank_account(address.country).first || BankAccount.global_default_bank_account.first
+  end  
+
+  def to_i
+    id
+  end
+
+  def user_country
+    address.country
+  end
+
+  def vat_rate
+    address.country.vat_rate
+  end
+
+  def with_role
+    casted_class.find(id)
+  end
+
+  #to handle menu chronology correctly
+  def roles_sorted
+    if has_role?(:lead_buyer)
+      [:lead_buyer] + roles.select { |r| r != :lead_buyer }
+    else
+      roles
+    end
+  end
 end

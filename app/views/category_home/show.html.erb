@@ -1,0 +1,124 @@
+<column-mc:>
+  <header>
+    <param:content>
+      <%= t("category_home.show.view.header") %> <%= @home_category.name %>
+    </param:content>
+
+    <% if user_signed_in? %>
+        <param:actions>
+          <ul class="header_actions">
+            <li class="last">
+              <%= bt_link_to :padlock, t("category_home.show.view.sign_out"), '/logout' %>
+            </li>
+          </ul>
+        </param:actions>
+    <% end %>
+
+  </header>
+
+  <div class="pdd_5 no_pdd_b">
+    <% unless @home_category.image.nil? %>
+      <br/>
+      <div class="grid_120 fltl">
+        <%= image_tag(@home_category.image.url, :id => 'category_image', :class => "thumb") %>
+      </div>
+    <% end %>
+
+    <div style="overflow:hidden">
+      <p><%= blurb("blurb_category_home") %></p>
+    </div>
+
+    <clb/>
+  </div>
+
+  <hl pdd="15"></hl>
+
+  <div id="category_news">
+    <div class="column_1to3 fltl" id="news" style="padding-right: 15px">
+      <frm title="#{t('category_home.show.view.header_news')}" c="no_marg">
+        <param:header>
+          <%= bt_link_to nil, t("category_home.show.view.complete_list_link"), news_index_path(:search => {:with_subclass =>  'CategoryHome', :for_category => @home_category.id}), :class => "fltr" %>
+        </param:header>
+        <param:content>
+          <ul class="solid_list">
+            <%= render :partial => 'news', :collection => @news, :as => :news %>
+          </ul>
+        </param:content>
+
+      </frm>
+    </div>
+    <% if !user_signed_in? %>
+        <div class="column_1to3 fltl" style="padding-right: 15px" id="sign_up_sign_in">
+          <frm title="#{t('category_home.show.view.i_have_an_account')}" c="no_marg">
+            <div class="pdd_10">
+              <%= semantic_form_for(:user, :url => session_path(:user)) do |f| %>
+                  <fieldset class="inputs labels_100 inputs_200 no_pdd">
+                    <ol class="align_inputs no_pdd">
+                      <%= f.input :email, :label => I18n.t("activerecord.attributes.user.email"), :input_html => {:tabindex => 1} %>
+                      <%= f.input :password, :label => raw(I18n.t("activerecord.attributes.user.password") + content_tag(:span, link_to(t("category_home.show.view.forgotten_password_link"), new_password_path(User)), :class => "label_link")), :input_html => {:tabindex => 2}, :wrapper_html => {:class => "rltv"} %>
+                      <%= f.input :remember_me, :as => :boolean, :required => false, :label => I18n.t("category_home.show.view.remember_me"), :input_html => {:tabindex => 3} %>
+                      <li class="commit">
+                        <ibt>
+                          <%= f.submit t("category_home.show.view.sign_in"), :tabindex => 4 %>
+                        </ibt>
+                      </li>
+                    </ol>
+                  </fieldset>
+              <% end %>
+            </div>
+            <hl/>
+            <div style="padding:5px 10px">
+            <p>
+              <%= link_to t("home.show.view.resend_confirmation_instructions"), new_confirmation_path(User) %>
+            </p>
+            </div>
+          </frm>
+          <frm title="#{t('category_home.show.view.i_want_to_register')}" c="10">
+            <div class="pdd_10">
+              <%= bt_link_to :user, t("category_home.show.view.category_buyer_signup"), new_category_home_page_account_path %>
+            </div>
+          </frm>
+        </div>
+    <% elsif user_signed_in? and current_user.has_role? :category_buyer %>
+        <div class="column_1to3 fltl" style="padding-right:15px" id="my_leads">
+          <frm title="#{t('category_home.show.view.header_my_leads')}" c="no_marg">
+            <param:header>
+              <%= bt_link_to nil, t("category_home.show.view.complete_list_link"), buyers_lead_purchases_path, :class => "fltr" %>
+            </param:header>
+            <param:content>
+              <ul class="solid_list">
+                <%= render :partial => 'my_lead', :collection => @my_leads, :as => :lead %>
+              </ul>
+            </param:content>
+          </frm>
+        </div>
+    <% end %>
+    <div class="column_1to3 fltl" id="latest_leads">
+      <frm title="#{t('category_home.show.view.header_latest_leads')}" c="no_marg">
+        <param:header>
+          <%= bt_link_to nil, t("category_home.show.view.complete_list_link"), category_home_page_leads_path(@home_category.cached_slug, :search => {:latest => true}), :class => "fltr" %>
+        </param:header>
+        <param:content>
+          <ul class="solid_list">
+            <%= render :partial => 'lead', :collection => @latest_leads, :as => :lead %>
+          </ul>
+        </param:content>
+      </frm>
+    </div>
+    <clb/>
+  </div>
+
+</column-mc:>
+
+<js:>
+  <script type="text/javascript">
+
+      jQuery(document).ready(function() {
+          jQuery(".solid_list li").bind("click", function() {
+              window.location = $(this).find('a.read_more').attr("href");
+          });
+      });
+
+  </script>
+</js:>
+

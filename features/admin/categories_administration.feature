@@ -31,6 +31,18 @@ Scenario: I can create a category
   And I should be on administration categories
   And I should see translated "flash.categories.actions.create.notice"
 
+@_tested @added @tgn
+Scenario: I can create a category even when I am on DK locales (slug is not set then)
+  Given I click hidden link by url regex "/locales\/dk/"
+  And I go to administration categories
+  And I follow translated "administration.categories.index.view.new_category"
+  And I fill in "category_name" with "Test category"
+  And I fill in "category_description" with "Description"
+  And attach the file "sample image" to "category_image_attributes_asset"
+  Then I press translated "administration.categories.new.view.button_create"
+  And I should be on administration categories
+  And I should see translated "flash.categories.actions.create.notice"
+
 @_tested
 Scenario: I can edit category - name and description
   Given Category named "New test category" already exists
@@ -84,3 +96,15 @@ Scenario: I can upload a category image
   Then I press translated "administration.categories.edit.view.button_update"
   And I should be on administration categories
   And I should see translated "flash.categories.actions.update.notice"
+
+@m6 @tgn
+Scenario: I can manage categories from Browse categories. Categories tab should be removed
+
+@m6 @tgn
+Scenario: I can make any category country specific (Category can have one or more countries assigned to it)
+
+@m6 @ao
+Scenario: I can mark category to allow buyouts
+
+@m6 @ao
+Scenario: When creating new category it is marked with buyout flag by default

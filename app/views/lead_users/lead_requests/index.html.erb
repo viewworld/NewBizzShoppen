@@ -16,12 +16,8 @@
                 <%= f.select :with_category, @categories, {:include_blank => true} %>
               </li>
               <li class="select">
-                <%= f.label :with_deal_value_from, t("lead_user.lead_requests.index.view.search.deal_value_from_label") %>
-                <%= f.select :with_deal_value_from, User::DEAL_VALUE_RANGE, {:include_blank => true} %>
-              </li>
-              <li class="select">
-                <%= f.label :with_deal_value_to, t("lead_user.lead_requests.index.view.search.deal_value_to_label") %>
-                <%= f.select :with_deal_value_to, User::DEAL_VALUE_RANGE, {:include_blank => true} %>
+                <%= f.label :with_zip_code, t("lead_user.lead_requests.index.view.search.zip_code") %>
+                <%= f.text_field :with_zip_code %>
               </li>
               <li class="select">
                 <%= f.label :with_country, t("lead_user.lead_requests.index.view.search.country_label") %>
@@ -30,6 +26,9 @@
               <li class="commit">
                 <ibt c="bt_green" icon="magnify">
                   <%= submit_tag t("lead_user.lead_requests.index.view.search.search_button") %>
+                </ibt>
+                <ibt c="fltri bt_grey">
+                  <%= bt_clear_filter %>
                 </ibt>
               </li>
             </ol>
@@ -42,22 +41,26 @@
 <column-mc:>
   <header><%= t("lead_user.lead_requests.index.view.header") %></header>
 
-  <%= bulk_form do %>
-      <%= lead_requests_listing @lead_requests, :show_checkboxes => true do |blocks| %>
+  <% if @lead_requests.blank? %>
+      <%= blank_state_message %>
+  <% else %>
+      <%= bulk_form do %>
+          <%= lead_requests_listing @lead_requests, :show_checkboxes => true do |blocks| %>
 
-          <% blocks.tools do |lead| %>
-              <% if current_user %>
-                  <% if current_user.has_role?(:lead_user) %>
-                    <%= bt_link_to nil, t("lead_user.lead_requests.index.view.destroy_lead_request"), lead_users_lead_request_path(:id => lead.id), :method => :delete %>
+              <% blocks.tools do |lead| %>
+                  <% if current_user %>
+                      <% if current_user.has_role?(:lead_user) %>
+                          <%= bt_link_to nil, t("lead_user.lead_requests.index.view.destroy_lead_request"), lead_users_lead_request_path(:id => lead.id), :method => :delete %>
+                      <% end %>
                   <% end %>
+
               <% end %>
 
-          <% end %>
-          
-          <% if user_signed_in? && current_user.has_role?(:lead_user) %>
-              <% blocks.bottom do %>
-                  <%= hidden_field_tag :route_to %>
-                    <%= bt_link_to :remove, t("lead_user.lead_requests.index.view.button_bulk_destroy_lead_request"), "javascript:void(0)", :onclick => "submitBulkForm('#{lead_users_bulk_lead_requests_path}#DELETE');" %>
+              <% if user_signed_in? && current_user.has_role?(:lead_user) %>
+                  <% blocks.bottom do %>
+                      <%= hidden_field_tag :route_to %>
+                      <%= bt_link_to :remove, t("lead_user.lead_requests.index.view.button_bulk_destroy_lead_request"), "javascript:void(0)", :onclick => "submitBulkForm('#{lead_users_bulk_lead_requests_path}#DELETE');" %>
+                  <% end %>
               <% end %>
           <% end %>
       <% end %>

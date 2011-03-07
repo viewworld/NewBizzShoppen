@@ -7,7 +7,7 @@ gem 'railties'
 
 gem 'mongrel'
 gem 'pg', '0.9.0'
-gem 'inherited_resources'
+gem 'inherited_resources', '1.1.2'
 gem 'will_paginate', '3.0.pre2', :branch => "rails3"
 gem 'formtastic', '1.1.0'
 gem 'liquid'
@@ -28,11 +28,11 @@ gem 'thor'
 gem 'ckeditor', '3.4.3.pre'
 gem 'aws-s3'
 
-
 group :development do
   gem 'diff-lcs'
   gem 'tolk', :path => "vendor/gems/tolk"
   gem "nifty-generators"
+  gem "bullet"
 end
 
 group :test do
@@ -60,3 +60,4 @@ end
 
 gem 'capistrano'
 gem 'capistrano-ext', '>= 1.2.1'
+

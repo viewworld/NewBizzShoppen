@@ -2,126 +2,148 @@
 
   <%= javascript_include_tag "jquery.field.min.js", "jquery.calculation.min.js", "invoice_calculations.js", "invoice_navigation.js" %>
 
-  <header back="true"><%= t("administration.invoices.edit.view.header") %> #<%= @invoice.id %></header>
+  <header back="true"><%= t("administration.invoices.edit.view.header", :name => @invoice.customer_name) %></header>
 
-  <ul class="actions">
-    <%= link_to_function t("administration.invoices.edit.view.save_changes"), "$('##{dom_id(@invoice, :edit)}').submit()" %>
-    <%= link_to t("administration.invoices.edit.view.show_invoice"), administration_invoicing_invoice_path(@invoice) %>
-  </ul>
+  <%= semantic_form_for [:administration, :invoicing, @invoice] do |form| %>
+      <frm title="Edit">
+        <param:header>
+          <%= bt_link_to nil, t("administration.invoices.edit.view.save_changes"), "javascript:void(0)", :onclick => "$('##{dom_id(@invoice, :edit)}').submit()", :class => "fltr" %>
+          <%= bt_link_to nil, t("administration.invoices.edit.view.show_invoice"), administration_invoicing_invoice_path(@invoice), :class => "fltr" %>
+        </param:header>
+        <param:content>
+          <div class="pdd_10 no_pdd_t">
 
 
-  <frm title="Edit">
-    <div class="pdd_10 no_pdd_t">
-      <%= semantic_form_for [:administration, :invoicing, @invoice] do |form| %>
-
-          <fieldset class="inputs labels_ta_r labels_220">
-            <ol class="align_inputs">
-              <li class="header">
-                <h3><%= t("administration.invoices.edit.view.form.general_information") %></h3>
-              </li>
-              <%= form.input :number %>
-            </ol>
-          </fieldset>
-
-          <hl/>
-
-          <div class="grid_500 fltl">
-
-            <fieldset class="inputs labels_ta_r labels_220" id="customer_information">
+            <fieldset class="inputs labels_ta_r labels_220">
               <ol class="align_inputs">
                 <li class="header">
-                  <h3><%= t("administration.invoices.edit.view.form.customer_information") %></h3>
+                  <h3><%= t("administration.invoices.edit.view.form.general_information") %></h3>
                 </li>
-                <%= form.input :customer_name %>
-                <%= form.input :customer_vat_no %>
-                <%= form.input :customer_address, :input_html => {:style => "width: 230px; height: 80px"} %>
+                <%= form.input :number %>
+                <%= form.input :details, :input_html => {:style => "width: 230px; height: 80px"} %>
               </ol>
             </fieldset>
 
-          </div>
+            <hl/>
 
-          <div class="grid_500 fltl">
-            <fieldset class="inputs labels_ta_r labels_220" id="seller_information">
+            <div class="grid_500 fltl">
+
+              <fieldset class="inputs labels_ta_r labels_220" id="customer_information">
+                <ol class="align_inputs">
+                  <li class="header">
+                    <h3><%= t("administration.invoices.edit.view.form.seller_information") %></h3>
+                  </li>
+                  <%= form.input :seller_name %>
+                  <%= form.input :seller_vat_no %>
+                  <%= form.input :seller_first_name %>
+                  <%= form.input :seller_last_name %>
+                  <%= form.fields_for :seller_address do |address_form| %>
+                      <%= address_form.input :address_line_1 %>
+                      <%= address_form.input :address_line_2 %>
+                      <%= address_form.input :address_line_3 %>
+                      <%= address_form.input :zip_code %>
+                      <%= address_form.input :country, :as => :select, :collection => Country.all, :include_blank => false %>
+                  <% end %>
+                </ol>
+              </fieldset>
+
+            </div>
+
+            <div class="grid_500 fltl">
+              <fieldset class="inputs labels_ta_r labels_220" id="seller_information">
+                <ol class="align_inputs">
+                  <li class="header">
+                    <h3><%= t("administration.invoices.edit.view.form.customer_information") %></h3>
+                  </li>
+                  <%= form.input :customer_name %>
+                  <%= form.input :customer_vat_no %>
+                  <%= form.fields_for :customer_address do |address_form| %>
+                      <%= address_form.input :address_line_1 %>
+                      <%= address_form.input :address_line_2 %>
+                      <%= address_form.input :address_line_3 %>
+                      <%= address_form.input :zip_code %>
+                      <%= address_form.input :country, :as => :select, :collection => Country.all, :include_blank => false %>
+                  <% end %>
+                  <%= form.input :ean_number %>
+                </ol>
+              </fieldset>
+
+            </div>
+
+            <clb/>
+
+            <hl/>
+
+            <fieldset class="inputs labels_ta_r labels_220" id="payment_information">
               <ol class="align_inputs">
                 <li class="header">
-                  <h3><%= t("administration.invoices.edit.view.form.seller_information") %></h3>
+                  <h3><%= t("administration.invoices.edit.view.form.payment_information") %></h3>
                 </li>
-                <%= form.input :seller_name %>
-                <%= form.input :seller_vat_no %>
-                <%= form.input :seller_first_name %>
-                <%= form.input :seller_last_name %>
-                <%= form.input :seller_address, :input_html => {:style => "width: 230px;height: 80px"} %>
+                <%= form.input :bank_account, :as => :select, :collection => BankAccount.all %>
+                <%= form.input :creation_place %>
+                <%= form.input :creation_date,
+                               :as => :string,
+                               :input_html => {:class => "datepicker"}, :wrapper_html => {:class => "date"} %>
+                <%= form.input :sale_date,
+                               :as => :string,
+                               :input_html => {:class => "datepicker"}, :wrapper_html => {:class => "date"} %>
+                <%= form.input :payment_deadline_date,
+                               :as => :string,
+                               :input_html => {:class => "datepicker"}, :wrapper_html => {:class => "date"} %>
+                <%= form.input :payment_method,
+                               :as => :select,
+                               :collection => Invoice::PAYMENT_METHODS.map { |pm| [t("administration.invoices.common.view.#{pm}"), pm.to_s] },
+                               :include_blank => false %>
+                <%= form.input :currency,
+                               :include_blank => false %>
+                <%= form.input :vat_paid_in_customer_country %>
+                <%= form.input :vat_text_in_customer_country, :as => :string %>
               </ol>
             </fieldset>
 
+            <hl/>
+
+            <table class="invoice_inline_inputs">
+              <thead>
+              <tr>
+                <th><%= t("administration.invoices.edit.view.name") %></th>
+                <th><%= t("administration.invoices.edit.view.quantity") %></th>
+                <th><%= t("administration.invoices.edit.view.vat_rate") %></th>
+                <th><%= t("administration.invoices.edit.view.netto_price") %></th>
+                <th><%= t("administration.invoices.edit.view.netto_value") %></th>
+                <th><%= t("administration.invoices.edit.view.vat_value") %></th>
+                <th><%= t("administration.invoices.edit.view.brutto_value") %></th>
+                <th style="width: 90px;"></th>
+              </tr>
+              </thead>
+              <tbody>
+
+              <%= form.fields_for :invoice_lines do |invoice_line| %>
+                <% unless invoice_line.object.new_record? and form.object.invoice_lines.count.eql?(1) %>
+                  <%= render :partial => "/administration/invoicing/invoice_lines/invoice_line_fields", :locals => {:f => invoice_line} %>
+                <% end %>
+              <% end %>
+
+              <tr class="total">
+                <%= render "totals", :form => form %>
+              </tr>
+              </tbody>
+            </table>
+
           </div>
+          <br/>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("administration.invoices.edit.view.save_button") %>
+          </ibt>
+          <ibt c="fltri bt_grey">
+            <%= button_to_function t("common.cancel_link"), "window.location='#{administration_invoicing_invoices_path}'" %>
+          </ibt>
+        </param:actions>
+      </frm>
+  <% end %>
 
-          <clb/>
-
-          <hl/>
-
-          <fieldset class="inputs labels_ta_r labels_220" id="payment_information">
-            <ol class="align_inputs">
-              <li class="header">
-                <h3><%= t("administration.invoices.edit.view.form.payment_information") %></h3>
-              </li>
-              <%= form.input :creation_place %>
-              <%= form.input :creation_date,
-                             :as => :string,
-                             :input_html => {:class => "datepicker"}, :wrapper_html => {:class => "date"} %>
-              <%= form.input :sale_date,
-                             :as => :string,
-                             :input_html => {:class => "datepicker"}, :wrapper_html => {:class => "date"} %>
-              <%= form.input :payment_deadline_date,
-                             :as => :string,
-                             :input_html => {:class => "datepicker"}, :wrapper_html => {:class => "date"} %>
-              <%= form.input :payment_account_information, :input_html => {:style => "width: 230px;height: 80px"} %>
-              <%= form.input :payment_method,
-                             :as => :select,
-                             :collection => Invoice::PAYMENT_METHODS.map { |pm| [t("administration.invoices.common.view.#{pm}"), pm.to_s] },
-                             :include_blank => false %>
-              <%= form.input :currency,
-                             :include_blank => false %>
-              <%= form.input :vat_paid_in_customer_country %>
-              <%= form.input :vat_text_in_customer_country, :as => :string %>
-            </ol>
-          </fieldset>
-
-          <hl/>
-
-          <%= form.inputs :class => "invoice_line_labels" do %>
-              <%= check_box_tag "check_all_invoice_lines", false %>
-              <%= form.label "&nbsp", :class => "invoice_payable_update" %>
-              <%= form.label :name, :class => "invoice_name" %>
-              <%= form.label :pkwiu, :class => "invoice_pkwiu" %>
-              <%= form.label :unit, :class => "invoice_unit" %>
-              <%= form.label :quantity, :class => "invoice_quantity" %>
-              <%= form.label :vat_rate, :class => "invoice_vat_rate" %>
-              <%= form.label :netto_price, :class => "invoice_netto_price" %>
-              <%= form.label :netto_value, :class => "invoice_netto_value" %>
-              <%= form.label :vat_value, :class => "invoice_vat_value" %>
-              <%= form.label :brutto_value, :class => "invoice_brutto_value" %>
-          <% end %>
-
-          <%= form.semantic_fields_for :invoice_lines do |invoice_line| %>
-              <%= render :partial => "/administration/invoicing/invoice_lines/invoice_line_fields", :locals => {:f => invoice_line} %>
-          <% end %>
-
-
-          <div class="add_invoice_line_btns">
-            <%= link_to_add_fields t("administration.invoices.edit.view.add_line"), form, :invoice_lines %>
-          </div>
-
-          <div style="height: 40px;">
-            <div id="link_set_payable"><%= link_to t("administration.invoices.edit.view.set_payable_for_invoice_items"), new_administration_invoicing_invoice_invoice_lines_payable_path(@invoice.id), :remote => true, :method => :get %></div>
-          </div>
-
-          <%= render "totals" %>
-
-          <%= form.commit_button t("administration.invoices.edit.view.save_button") %>
-      <% end %>
-    </div>
-  </frm>
 </column-mc:>
 
 <js:>

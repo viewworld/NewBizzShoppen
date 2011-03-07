@@ -1,7 +1,7 @@
 <column-mc:>
 
-  <header>
-    <%= t('administration.news.edit.view.header') %>
+  <header back="true">
+    <%= t('administration.news.edit.view.header', :name => @news.title) %>
   </header>
 
   <%#= link_to t("common.back_link"), administration_news_index_path %>
@@ -18,8 +18,10 @@
             <%= form.submit t("administration.news.edit.view.button_save") %>
           </ibt>
           <ibt c="bt_grey fltri">
-            <% if @news.title.blank? %>
+            <% if @news.just_created %>
                 <%= button_to_function t("common.cancel_link"), "$('#delete_news_form').submit();"  %>
+            <% else %>
+                <%= button_to_function t("common.cancel_link"), "history.go(-1)"  %>
             <% end %>
           </ibt>
         </param:actions>

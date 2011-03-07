@@ -29,23 +29,39 @@ module NavigationHelpers
     when /administration transactions/
         '/administration/invoicing/payment_transactions'
     when /administration invoices/
-        '/administration/invoicing/invoices/'
+        '/administration/invoicing/invoices'
     when /administration upcoming invoices/
         '/administration/invoicing/upcoming_invoices'
+    when /administration sellers/
+        administration_sellers_path
+    when /category home leads page for (.*)/
+        "/#{$1.to_url}/leads"
+    when /category home page for (.*)/
+        "/#{$1.to_url}"
     when /agents leads/
         '/agents/leads'
+    when /agents lead templates/
+        '/agents/lead_templates'
     when /browse leads/
         '/categories'
     when /buyer cart items/
         '/buyers/cart_items'
     when /call centre agents/
         '/call_centres/call_centre_agents'
+    when /call centre agents leads/
+        '/call_centre_agents/leads'
+    when /call centre leads/
+        '/call_centres/leads'
+    when /call centre lead templates/
+        '/call_centres/lead_templates'
     when /customer interests/
         '/customers/interests/edit'
     when /lead user lead purchases/
         '/lead_users/lead_purchases'
     when /customers subaccounts/
         '/customers/subaccounts'
+    when /customers new subaccount/
+        '/customers/subaccounts/new'
     when /customers lead requests/
         '/customers/lead_requests'
     when /buyer lead purchases/
@@ -70,26 +86,40 @@ module NavigationHelpers
         lead_path(Lead.find_by_header($1))
     when /purchase managers leads/
         purchase_managers_leads_path
+    when /purchase managers lead templates/
+        purchase_managers_lead_templates_path
     when /leads/
         leads_path
     when /agent home/
         agent_home_path
     when /buyer home/
         buyer_home_path
+    when /purchase manager home/
+        purchase_manager_home_path
     when /administration articles page/
         administration_articles_path
-      when /administration (.*) article page/
-        administration_article_path(Article::Cms.includes(:translations).where(:article_translations => {:title => $1}).first)
-      when /administration (.*) news page/
-        administration_news_path(Article::News.includes(:translations).where(:article_translations => {:title => $1}).first)
-      when /(.*) news page/
-        news = Article::News.find_by_title($1)
-        news_path(news)
-      when /(.*) article page/
-        news = Article::Cms.find_by_title($1)
-        article_path(news)
-      when /administration currencies/
-        administration_currencies_path
+    when /administration news page/
+        administration_news_index_path
+    when /administration (.*) article page/
+      administration_article_path(Article::Cms.includes(:translations).where(:article_translations => {:title => $1}).first)
+    when /administration (.*) news page/
+      administration_news_path(Article::News.includes(:translations).where(:article_translations => {:title => $1}).first)
+    when /administration edit user (.*)/
+      edit_administration_user_path(User.where(:email => $1).first)
+    when /administration new vat rate/
+      new_administration_vat_rate_path
+    when /(.*) news page/
+      news = Article::News.find_by_title($1)
+      news_path(news)
+    when /(.*) article page/
+      news = Article.find_by_title($1)
+      article_path(news)
+    when /administration currencies/
+      administration_currencies_path
+    when /administration seller (.*) edit/
+      edit_administration_seller_path(Seller.where(:company_name => $1).first)
+    when /administration (.*) seller/
+      administration_seller_path(Seller.where(:company_name => $1).first)
 
 
     # Add more mappings here.

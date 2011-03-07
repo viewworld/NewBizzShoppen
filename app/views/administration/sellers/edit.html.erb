@@ -1,0 +1,19 @@
+<column-mc:>
+  <header><%= t('administration.sellers.edit.view.header', :name => @seller.company_name) %></header>
+
+  <%= semantic_form_for @seller, :as => :seller, :url => administration_seller_path(@seller), :input_html => {:method => :post} do |form| %>
+      <frm>
+        <param:content>
+          <%= render :partial => 'form', :locals => {:form => form} %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("administration.sellers.edit.view.button_update") %>
+          </ibt>
+          <ibt c="fltri bt_grey">
+            <%= button_to_function t("common.cancel_link"), "history.go(-1)" %>
+          </ibt>
+        </param:actions>
+      </frm>
+  <% end %>
+</column-mc:>

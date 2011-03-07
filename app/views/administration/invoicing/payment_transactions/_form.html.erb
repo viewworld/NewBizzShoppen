@@ -1,8 +1,8 @@
 <div class="pdd_10 no_pdd_t">
-  <fieldset class="inputs">
+  <fieldset class="inputs labels_ta_r labels_240">
     <ol>
       <%= form.input :amount %>
-      <%= form.input :paid_at, :as => :string, :input_html => {:class => "datepicker"}, :wrapper_html => { :class => "date" } %>
+      <%= form.input :paid_at, :as => :string, :input_html => {:value => form.object.paid_at_date, :class => "datepicker"}, :wrapper_html => { :class => "date" } %>
       <%= form.input :invoice_id, :as => :hidden %>
     </ol>
   </fieldset>

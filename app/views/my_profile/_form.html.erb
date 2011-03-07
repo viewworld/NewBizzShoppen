@@ -1,11 +1,14 @@
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs labels_ta_r labels_240">
     <ol>
+      <%= form.input :company_name, :label => t("my_profile.edit.view.company_name") %>
       <%= form.input :first_name %>
       <%= form.input :last_name %>
       <%= form.input :phone %>
       <%= form.input :email %>
       <%= form.input :screen_name %>
+      <%= form.input :company_registration_number %>
+      <%= form.input :company_ean_number %>
     </ol>
   </fieldset>
 </div>
@@ -15,10 +18,13 @@
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs labels_ta_r labels_240">
     <ol class="align_inputs">
-      <%= form.input :street %>
-      <%= form.input :city %>
-      <%= form.input :zip_code %>
-      <%= form.input :county %>
+      <%= form.fields_for :address do |address_form| %>
+          <%= address_form.input :address_line_1, :required => !current_user.has_role?(:call_centre_agent) %>
+          <%= address_form.input :address_line_2 %>
+          <%= address_form.input :address_line_3 %>
+          <%= address_form.input :zip_code, :required => !current_user.has_role?(:call_centre_agent) %>
+      <% end %>
+      <%= form.input :vat_number if current_user.has_role?(:customer) %>
     </ol>
   </fieldset>
 </div>
@@ -28,7 +34,9 @@
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs labels_ta_r labels_240">
     <ol class="align_inputs">
-      <%= form.input :country, :as => :select, :collection => Country.all %>
+      <%= form.fields_for :address do |address_form| %>
+          <%= address_form.input :country, :as => :select, :collection => Country.all %>
+      <% end %>
       <%= form.input :newsletter_on, :as => :boolean %>
       <%= form.input :team_buyers, :as => :boolean, :label => t("my_profile.edit.view.enable_team_buyers") if current_user.has_role?(:customer) %>
     </ol>
@@ -41,9 +49,20 @@
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs labels_ta_r labels_240">
     <ol class="align_inputs">
+      <% if current_user.has_role?(:call_centre) %>
+          <%= form.input :bank_name %>
+          <%= form.fields_for :bank_address do |address_form| %>
+              <%= address_form.input :address_line_1 %>
+              <%= address_form.input :address_line_2 %>
+              <%= address_form.input :address_line_3 %>
+              <%= address_form.input :zip_code %>
+              <%= address_form.input :country, :as => :select, :collection => Country.all, :include_blank => false %>
+          <% end %>
+      <% end %>
       <%= form.input :paypal_email %>
       <%= form.input :bank_swift_number %>
       <%= form.input :bank_iban_number %>
+      <%= form.input :payout, :hint => "%" if current_user.has_role?(:call_centre) %>
     </ol>
   </fieldset>
 </div>

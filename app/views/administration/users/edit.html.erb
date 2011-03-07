@@ -1,5 +1,5 @@
 <column-mc:>
-  <header back="true"><%= t("administration.users.edit.view.title") %></header>
+  <header back="true"><%= t("administration.users.edit.view.title", :name => @user.full_name) %></header>
 
   <%= semantic_form_for @user, :url => administration_user_path, :method => :put do |form| %>
       <frm title="">

@@ -1,0 +1,10 @@
+<% lead.lead_templates_and_values.each do |lead_template, values| %>
+    <div class="lead_template">
+      <h3><%= lead_template.name.upcase %></h3>
+      <p>
+        <% values.each do |value| %>
+            <strong><%= value.lead_template_field.name %>: </strong><%= value.can_be_viewed_by?(current_user) ? value.value : t("shared.lead_templates.listing.hidden_value") %><br/>
+        <% end %>
+      </p>
+    </div>
+<% end %>

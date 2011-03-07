@@ -15,7 +15,7 @@ Background:
 Scenario: I can rate a lead
   Given I select translated "activerecord.attributes.lead_purchase.rating_levels.rating_level1" from "rating_level"
   And I go to buyer lead purchases
-  Then "rating_level" should be selected for value translated "activerecord.attributes.lead_purchase.rating_levels.rating_level1"
+  Then "rating_level_1" should be selected for value translated "activerecord.attributes.lead_purchase.rating_levels.rating_level1"
 
 @_tested @selenium
 Scenario: I can bulk rate a lead
@@ -30,7 +30,7 @@ Scenario: I can bulk rate a lead
 Scenario: I can select from 4 different rating levels: Very good, good, satisfactory, unsatisfactory
   Given I select translated "activerecord.attributes.lead_purchase.rating_levels.rating_level2" from "rating_level"
   And I go to buyer lead purchases
-  Then "rating_level" should be selected for value translated "activerecord.attributes.lead_purchase.rating_levels.rating_level2"
+  Then "rating_level_1" should be selected for value translated "activerecord.attributes.lead_purchase.rating_levels.rating_level2"
 
 # "Incorrect or missing contact information It has been impossible to get in contact with the lead ----- why?"
 # "The information provided in the lead description dos not match the information that the contact person supplied when i contacted him. --- in what way did i differ?"
@@ -40,17 +40,17 @@ Scenario: I can select from 4 different rating levels: Very good, good, satisfac
 Scenario: I can select a reason when I rate lead as 'unsatisfactory'
   Given I select translated "activerecord.attributes.lead_purchase.rating_levels.rating_level12" from "rating_level"
   Then I fill in "rating_reason" with "The reason for unsatisfactory rating"
-  And I press translated "lead_buyer.lead_purchases.index.view.update_rating_button"
+  And I follow translated "lead_buyer.lead_purchases.index.view.update_rating_button"
   And I go to buyer lead purchases
-  Then "rating_level" should be selected for value translated "activerecord.attributes.lead_purchase.rating_levels.rating_level12"
+  Then "rating_level_1" should be selected for value translated "activerecord.attributes.lead_purchase.rating_levels.rating_level12"
 
 @_tested @selenium
 Scenario: I must enter additional explaination for selected reason
   Given I select translated "activerecord.attributes.lead_purchase.rating_levels.rating_level12" from "rating_level"
   Then I fill in "rating_reason" with "The reason for unsatisfactory rating"
-  And I press translated "lead_buyer.lead_purchases.index.view.update_rating_button"
+  And I follow translated "lead_buyer.lead_purchases.index.view.update_rating_button"
   And I go to buyer lead purchases
-  Then "rating_level" should be selected for value translated "activerecord.attributes.lead_purchase.rating_levels.rating_level12"
+  Then "rating_level_1" should be selected for value translated "activerecord.attributes.lead_purchase.rating_levels.rating_level12"
 
 # When a lead is rated as unsatisfactory, the agent should be alerted but he must not be able to reply.
 # Only the admin must be able to reply on the complaint.
@@ -81,7 +81,7 @@ Scenario: As agent I can view 'unsatisfactory' ratings regarding my leads
   Then I follow translated "leads.table.unsatisfactory_rating"
   Then I should have translated value "leads.listing.has_unsatisfactory_rating_yes" in the css path "tr:nth-child(1) td:nth-child(13)"
   Given I follow translated "leads.listing.has_unsatisfactory_rating_yes"
-  Then I should see translated "agent.leads.show.view.rating_reason"
+  Then I should see translated "agent.leads.edit.view.rating_level"
 
 
 # should this listing include all ratings or only unsatisfactory?
@@ -100,8 +100,8 @@ Scenario: As admin I can view all 'unsatisfactory' ratings
   And I follow translated "leads.table.unsatisfactory_rating"
   Then I should have translated value "leads.listing.has_unsatisfactory_rating_yes" in the css path "tr:nth-child(1) td:nth-child(13)"
   Given I follow translated "leads.listing.has_unsatisfactory_rating_yes"
-  Then I should see translated "agent.leads.show.view.rating_reason"
+  Then I should see translated "administration.leads.show.view.rating_level"
 
 # email or internal messages?
-@m5 @tgn
+@m6 @tgn
 Scenario: As admin I can reply to 'unsatisfactory' rating

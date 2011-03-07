@@ -8,6 +8,8 @@ class Buyers::CartItemsController < Buyers::BuyerController
                          t("buyer.cart_items.create.flash.cart_item_creation_successful")
                        when :already_in_cart
                          t("buyer.cart_items.create.flash.cart_item_already_in_basket")
+                       when :currencies_mismatch
+                         t("buyer.cart_items.create.flash.cart_item_currencies_mismatch")
                      end
     redirect_to :back
   end

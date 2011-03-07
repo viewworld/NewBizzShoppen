@@ -2,7 +2,9 @@ class NewsController < ApplicationController
   inherit_resources
 
   def show
-    unless @news = Article::News.published.where(:id => params[:id]).first
+    if @news = Article.published.where(:id => params[:id]).first
+      @news.increment!(:views_count)
+    else
       redirect_to root_path
     end
   end
@@ -10,7 +12,7 @@ class NewsController < ApplicationController
   protected
 
   def collection
-    @search = Article::News.scoped_search(params[:search]).order("created_at DESC").published
+    @search = Article.scoped_search(params[:search]).order("created_at DESC").published
     @news = @search.paginate(:page => params[:page], :per_page => Settings.default_news_per_page)
   end
 end

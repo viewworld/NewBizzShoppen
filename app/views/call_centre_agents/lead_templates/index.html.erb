@@ -1,0 +1,59 @@
+<search-box:>
+  <div class="search_box">
+    <h2>Search</h2>
+
+    <div class="search_content">
+
+      <%= form_for @search, :url => call_centre_agents_lead_templates_path do |f| %>
+          <fieldset class="inputs_vertical">
+            <ol class="no_pdd">
+              <li class="string">
+                <%= f.label :with_keyword, t("call_centre_agent.lead_templates.index.view.search.keyword_label") %>
+                <%= f.text_field :with_keyword %>
+              </li>
+              <li class="select">
+                <%= f.label t("call_centre_agent.lead_templates.index.view.search.category_label") %>
+                <%= f.select :with_category, @categories, :include_blank => true %>
+              </li>
+              <li class="commit">
+                <ibt c="bt_green" icon="magnify">
+                  <%= submit_tag t("call_centre_agent.lead_templates.index.view.search_button") %>
+                </ibt>
+                <ibt c="fltri bt_grey">
+                  <%= bt_clear_filter %>
+                </ibt>
+              </li>
+            </ol>
+          </fieldset>
+      <% end %>
+    </div>
+  </div>
+</search-box:>
+
+<column-mc:>
+
+  <header>
+    <param:content>
+      <%= t("call_centre_agent.lead_templates.index.view.header") %>
+    </param:content>
+    <param:actions>
+
+      <ul class="header_actions">
+        <li class="last">
+          <%= bt_link_to :plus, t("call_centre_agent.lead_templates.index.view.new_template"), new_call_centre_agents_lead_template_path(:lead_template => { :category_id => @search.with_category }) %>
+        </li>
+      </ul>
+    </param:actions>
+  </header>
+
+  <%= lead_templates_table @lead_templates, :show_checkboxes => false, :show_active_column => true, :paginate_table => true do |blocks| %>
+      <% blocks.tools do |lead_template| %>
+        <ul-actions>
+          <li><%= link_to t("call_centre_agent.lead_templates.index.view.edit"), edit_call_centre_agents_lead_template_path(lead_template), :class => "default_action" %></li>
+          <li><%= link_to t("call_centre_agent.lead_templates.index.view.destroy"), call_centre_agents_lead_template_path(lead_template), :method => :delete, :confirm => t("call_centre_agent.lead_templates.index.view.destroy_template_confirmation_message") %></li>
+        </ul-actions>
+      <% end %>
+  <% end %>
+
+
+</column-mc:>

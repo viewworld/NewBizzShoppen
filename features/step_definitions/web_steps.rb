@@ -287,7 +287,7 @@ Then /^select with id "([^"]*)" should be selected for translated "([^"]*)" with
 end
 
 Then /^"([^"]*)" should be selected for value "([^"]*)"$/ do |field, value|
-  assert page.has_xpath?("//option[@selected = 'selected' and contains(string(), '#{value}')]")
+  assert page.has_xpath?("//select[@id='#{field}'] //option[@selected = 'selected' and contains(string(), '#{value}')]")
 end
 
 Then /^I should not see field "([^"]*)"$/ do |field|
@@ -347,4 +347,16 @@ Then /^"([^"]*)" dropdown should not have values "([^"]*)"$/ do |field, values|
   values.split(",").each do |value|
     assert !page.has_xpath?("//option[contains(string(), '#{value}')]")
   end
+end
+
+When /^I visit URL "([^"]*)"$/ do |url|
+  visit url
+end
+
+Then /^I should see CSS path "([^"]*)"$/ do |selector|
+  page.all(:css, selector).size.should eql(1)
+end
+
+Then /^I should not see CSS path "([^"]*)"$/ do |selector|
+  page.all(:css, selector).size.should eql(0)
 end

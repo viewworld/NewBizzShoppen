@@ -21,7 +21,7 @@
               <li class="select">
                 <%= f.label :with_deal_value_to, t("customer.lead_requests.index.view.search.deal_value_to_label") %>
                 <%= f.select :with_deal_value_to, User::DEAL_VALUE_RANGE, {:include_blank => true} %>
-              </li>        
+              </li>
               <li class="select">
                 <%= f.label :with_requested_by, t("customer.lead_requests.index.view.search.requested_by_label") %>
                 <%= f.select :with_requested_by, @requestees, {:include_blank => true} %>
@@ -34,7 +34,10 @@
                 <ibt c="bt_green" icon="magnify">
                   <%= submit_tag t("customer.lead_requests.index.view.search.search_button") %>
                 </ibt>
-              </li>              
+                <ibt c="fltri bt_grey">
+                  <%= bt_clear_filter %>
+                </ibt>
+              </li>
             </ol>
           </fieldset>
       <% end %>
@@ -46,22 +49,26 @@
 
   <header><%= t("customer.lead_requests.index.view.header") %></header>
 
-  <%= bulk_form do %>
-      <%= lead_requests_listing @lead_requests, :show_checkboxes => true do |blocks| %>
-          <% blocks.tools do |lead_request| %>
-              <ul-actions>
-                <li>
-                  <%= link_to t("customer.lead_requests.index.view.accept_lead_request_link"), customers_lead_request_path(lead_request), {:method => :put} %>
-                </li>
-                <li>
-                  <%= link_to t("customer.lead_requests.index.view.reject_lead_request_link"), customers_lead_request_path(lead_request), {:method => :delete, :confirm => t("common.confirmation")} %>
-                </li>
-              </ul-actions>
-          <% end %>
-          <% blocks.bottom do %>
-              <%= hidden_field_tag :route_to %>
-              <%= bt_link_to :undo, t("customer.lead_requests.index.view.button_bulk_create_lead_request"), "javascript:void(0)", :onclick => "submitBulkForm('#{customers_bulk_lead_requests_path}#PUT');" %>
-              <%= bt_link_to :undo, t("customer.lead_requests.index.view.button_bulk_destroy_lead_request"), "javascript:void(0)", :onclick => "submitBulkForm('#{customers_bulk_lead_requests_path}#DELETE');" %>
+  <% unless @lead_requests.any? %>
+      <%= blank_state_message %>
+  <% else %>
+      <%= bulk_form do %>
+          <%= lead_requests_listing @lead_requests, :show_checkboxes => true do |blocks| %>
+              <% blocks.tools do |lead_request| %>
+                  <ul-actions>
+                    <li>
+                      <%= link_to t("customer.lead_requests.index.view.accept_lead_request_link"), customers_lead_request_path(lead_request), {:method => :put} %>
+                    </li>
+                    <li>
+                      <%= link_to t("customer.lead_requests.index.view.reject_lead_request_link"), customers_lead_request_path(lead_request), {:method => :delete, :confirm => t("common.confirmation")} %>
+                    </li>
+                  </ul-actions>
+              <% end %>
+              <% blocks.bottom do %>
+                  <%= hidden_field_tag :route_to %>
+                  <%= bt_link_to :undo, t("customer.lead_requests.index.view.button_bulk_create_lead_request"), "javascript:void(0)", :onclick => "submitBulkForm('#{customers_bulk_lead_requests_path}#PUT');" %>
+                  <%= bt_link_to :undo, t("customer.lead_requests.index.view.button_bulk_destroy_lead_request"), "javascript:void(0)", :onclick => "submitBulkForm('#{customers_bulk_lead_requests_path}#DELETE');" %>
+              <% end %>
           <% end %>
       <% end %>
   <% end %>
