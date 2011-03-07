@@ -320,4 +320,12 @@ class User < ActiveRecord::Base
       roles
     end
   end
+
+  def agent?
+    has_any_role?([:agent,:call_centre,:call_centre_agent])
+  end
+
+  def buyer?
+    has_any_role?([:customer,:purchase_manager,:category_buyer,:lead_buyer])
+  end
 end

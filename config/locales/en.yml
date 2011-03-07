@@ -71,6 +71,7 @@ en:
     my_profile_link: My profile
     logout_link: 'Logout %{user_email}'
     login_link: 'Login'
+    contact_us: 'Contact us'
 
     cart:
       cart_header: Cart (%{count} items)

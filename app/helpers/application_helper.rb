@@ -89,6 +89,10 @@ module ApplicationHelper
     current_user && current_user.has_role?(r)
   end
 
+  def current_user_has_any_role?(r)
+    current_user && current_user.has_any_role?(r)
+  end
+
   def main_menu_link_to_role_specific_home_page
     if @home_category
       if controller.class.name =~ /CategoryHome/
