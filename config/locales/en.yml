@@ -1365,6 +1365,7 @@ en:
             category_label: 'Category'
             deal_value_from_label: 'From'
             deal_value_to_label: 'To'
+            zip_code: Zip code
             country_label: 'Country'
             requested_by_label: 'Requested by'
             search_button: 'Search'

@@ -102,6 +102,6 @@ Scenario: As admin I can view all 'unsatisfactory' ratings
   Given I follow translated "leads.listing.has_unsatisfactory_rating_yes"
   Then I should see translated "administration.leads.show.view.rating_level"
 
-# email or internal messages?
-@m6 @tgn
+# by comments
+@m0 @tgn
 Scenario: As admin I can reply to 'unsatisfactory' rating
