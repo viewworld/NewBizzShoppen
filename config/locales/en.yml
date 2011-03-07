@@ -1120,6 +1120,7 @@ en:
           header: Lead templates
           new_template: New template
           edit: Edit
+          duplicate: Duplicate
           destroy: Destroy
           search_button: Search
           search:
