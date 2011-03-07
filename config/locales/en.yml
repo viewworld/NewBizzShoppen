@@ -1638,11 +1638,13 @@ en:
         lvl2: Classic
       certification:
         lvl0: Not certified
-        lvl1: Silver
-        lvl2: Gold
+        lvl1: Bronze
+        lvl2: Silver
+        lvl3: Gold
         lvl10: Not certified (locked)
-        lvl11: Silver (locked)
-        lvl12: Gold (locked)
+        lvl11: Bronze (locked)
+        lvl12: Silver (locked)
+        lvl13: Gold (locked)
     lead_template_field:
       field_type:
         type0: Text
