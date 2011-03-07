@@ -350,3 +350,16 @@ Scenario: When the template's field is of the note type then I should see textar
 
 @m6
 Scenario: I should see hint for every field when creating a lead
+
+@m6 @tgn @_tested @selenium
+Scenario: I have already filled in international dialling codes for telephone numbers (+xx) (xxxxxxxxxxxxxxxxxxxxxx)
+  Given Category Test category 1 is created
+  And I follow translated "layout.main_menu.call_centre_agent.leads"
+  And I select "Test category 1" from "category_id"
+  And I follow translated "agent.leads.index.view.new_lead"
+  And I select "Denmark" from "lead_country_id"
+  Then the "lead_direct_phone_number" field should contain "\+45"
+  And the "lead_phone_number" field should contain "\+45"
+  And I press translated "agent.leads.new.view.button_create"
+  Then the "lead_direct_phone_number" field should contain "\+45"
+  And the "lead_phone_number" field should contain "\+45"

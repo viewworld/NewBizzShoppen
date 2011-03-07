@@ -13,7 +13,7 @@
       <%= form.input :zip_code %>
       <%= form.input :city %>
       <%= form.input :county, :label => t("shared.leads.form.county") %>
-      <%= form.input :country_id, :as => :select, :collection => Country.all %>
+      <%= form.input :country_id, :as => :select, :collection => Country.all, :input_html => { :onchange => "refresh_phone_codes()" } %>
       <%= form.input :company_vat_no, :label => t("shared.leads.form.company_vat_no") %>
       <%= form.input :company_ean_number, :label => t("shared.leads.form.company_ean_reg") %>
       <% if current_user.has_role?(:admin) %>
@@ -187,6 +187,24 @@
             $('#optional_templates_span').show();
         }
     }
+
+    function refresh_phone_codes(){
+       $.ajax({
+         type: "GET",
+         url: "<%= phone_codes_path -%>",
+         data: "country_id=" + $('#lead_country_id').val()
+       });
+    }
+
+    function set_phone_code(field, code){
+        $('#' + field).val('+' + code)
+    }
+
+
+    <% if !@lead.new_record? or (@lead.new_record? and @lead.country.present?) %>
+        <%= "if($('#lead_direct_phone_number').val() == ''){set_phone_code('lead_direct_phone_number', #{@lead.country.phone_dialling_code})}" -%>
+        <%= "if($('#lead_phone_number').val() == ''){set_phone_code('lead_phone_number', #{@lead.country.phone_dialling_code})}" -%>
+    <% end %>
 
     <% if params[:action] == "new" or params[:action] == "create" %>
     set_beginnings_of_urls(["lead_linkedin_url", "lead_facebook_url", "lead_company_website"]);

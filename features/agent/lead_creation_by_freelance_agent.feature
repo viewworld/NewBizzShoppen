@@ -490,5 +490,15 @@ Scenario: I should see hint for every field when creating a lead
 @m6 @ao
 Scenario: I can choose region during creation of a lead
 
-@m6 @tgn
+@m6 @tgn @selenium @_tested
 Scenario: I have already filled in international dialling codes for telephone numbers (+xx) (xxxxxxxxxxxxxxxxxxxxxx)
+  Given Category Test category 1 is created
+  And I go to agents leads
+  And I select "Test category 1" from "category_id"
+  And I follow translated "agent.leads.index.view.new_lead"
+  And I select "Denmark" from "lead_country_id"
+  Then the "lead_direct_phone_number" field should contain "\+45"
+  And the "lead_phone_number" field should contain "\+45"
+  And I press translated "agent.leads.new.view.button_create"
+  Then the "lead_direct_phone_number" field should contain "\+45"
+  And the "lead_phone_number" field should contain "\+45"

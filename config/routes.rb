@@ -127,6 +127,7 @@ Nbs::Application.routes.draw do
   resources :purchase_manager_accounts, :only => [:new, :create]
   resources :category_buyer_accounts, :only => [:new, :create]
   resources :locales
+  resources :phone_codes
 
   resources :news
   resources :articles

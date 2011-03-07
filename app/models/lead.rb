@@ -89,8 +89,19 @@ class Lead < ActiveRecord::Base
   before_save :set_published_at
   before_save :handle_category_change
   before_save :change_creator
+  before_validation :handle_dialling_codes
 
   private
+
+  #prevent dialling codes from saving when no proper phone number follows them
+  def handle_dialling_codes
+    fields = [:direct_phone_number, :phone_number].select { |pn| self.send(pn).to_s.strip.size <= 3 }
+    unless fields.empty?
+      fields.each do |field|
+        self.send("#{field}=".to_sym, nil)
+      end
+    end
+  end
 
   def change_creator
     if tmp_creator_id

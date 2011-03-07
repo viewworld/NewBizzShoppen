@@ -17,9 +17,9 @@ class Nbs < Thor
     Settings.invoicing_default_payment_deadline_date = 14
     Settings.invoicing_default_vat_rate              = 0.15
 
-    country = Country.find_or_create_by_name("Denmark", :locale => "dk")
+    country = Country.find_or_create_by_name("Denmark", :locale => "dk", :detailed_locale => "dk")
 #    VatRate.find_or_create_by_country_id(country.id, :rate => 25)
-    country = Country.find_or_create_by_name("United Kingdom", :locale => "en")
+    country = Country.find_or_create_by_name("United Kingdom", :locale => "en", :detailed_locale => "uk")
 #    VatRate.find_or_create_by_country_id(country.id, :rate => 20)
 
     if BankAccount.count == 0
