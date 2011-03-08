@@ -57,7 +57,7 @@ Scenario: I should not see categories that I have been restricted access to by c
   Then I should not see "Computers"
   Then I should not see "Building"
  
-@m3 @__category_restrictions @tgn @_done @_tested @noguess
+@m3 @__category_restrictions @tgn @_done @_tested @noguess  @_wip
 Scenario: I should not see categories that I have been restricted access to by customer in filter
     And lead Chairs ultimate deal exists within category Office
   And lead Pipes ultimate deal exists within category Building
