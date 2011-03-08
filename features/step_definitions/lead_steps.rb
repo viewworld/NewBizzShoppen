@@ -218,6 +218,10 @@ Given /^there are no leads$/ do
   Lead.delete_all
 end
 
+Given /^there are no countries$/ do
+  Country.delete_all
+end
+
 When /^lead "([^"]*)" has attributes "([^"]*)"$/ do |lead_header, options|
   lead = Lead.where(:header => lead_header).first
   attrs = Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys

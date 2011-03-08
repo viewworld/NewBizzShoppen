@@ -34,6 +34,14 @@ module ApplicationHelper
     "add_lead_template_field(this, \"#{escape_javascript(fields)}\")"
   end
 
+  def fields_for_region_fields(f)
+    region = Region.new
+    fields = f.fields_for :regions, region do |builder|
+       render("region_fields", :f => builder)
+    end
+    "add_region(this, \"#{escape_javascript(fields)}\")"
+  end
+
   def available_templates_list(lead)
     lead.lead_templates(false).reject { |lt| lt.is_filled_out_for(lead) }
   end

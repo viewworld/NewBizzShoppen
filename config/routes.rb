@@ -43,6 +43,7 @@ Nbs::Application.routes.draw do
     resources :lead_templates
     resources :sellers
     resources :category_users
+    resources :countries
   end
 
   namespace :buyers do

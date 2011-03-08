@@ -1,0 +1,19 @@
+<column-mc:>
+  <header back="true"><%= t("administration.countries.edit.view.header", :name => @country.name) %></header>
+
+  <%= semantic_form_for @country, :url => administration_country_path do |form| %>
+      <frm title="#{@country.name}">
+        <param:content>
+          <%= render :partial => 'form', :locals => {:form => form} %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("administration.countries.edit.view.button_update_country") %>
+          </ibt>
+          <ibt c="bt_grey fltri">
+            <%= button_to_function t("administration.countries.edit.view.button_cancel"), "history.go(-1)" %>
+          </ibt>
+        </param:actions>
+      </frm>
+  <% end %>
+</column-mc:>

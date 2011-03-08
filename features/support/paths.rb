@@ -32,6 +32,8 @@ module NavigationHelpers
         '/administration/invoicing/invoices'
     when /administration upcoming invoices/
         '/administration/invoicing/upcoming_invoices'
+    when /administration countries/
+        '/administration/countries'
     when /administration sellers/
         administration_sellers_path
     when /category home leads page for (.*)/
