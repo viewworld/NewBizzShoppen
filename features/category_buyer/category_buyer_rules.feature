@@ -98,7 +98,7 @@ Scenario: Category buyers should not have to configure their interest page, but 
     And I select "Worst Leads" from "category"
     Then I should be on category leads page for Worst Leads
 
-  @m6 @added @_done @_tested @wip
+  @m6 @added @_done @_tested
   Scenario: If category buyer has more than one category he can access all of them
     When Category named "Basic Leads" already exists
     And Category named "Worst Leads" already exists
@@ -115,7 +115,17 @@ Scenario: Category buyers should not have to configure their interest page, but 
     And I follow translated "category_home.show.view.complete_list_link" within "#latest_leads"
     Then I should be on category leads page for Worst Leads
 
-  @m6 @added @wip
+  @m6 @added @_done @_tested
+  Scenario: Category buyer can't access categories he's not assigned to
+    When Category named "Basic Leads" already exists
+    And Category named "Worst Leads" already exists
+    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Basic Leads" with attributes "team_buyers:1"
+    And I am on the home page
+    And I sign in as jon@lajoie.ca with password secret
+    And I am on category home page for Worst Leads
+    Then I should be on category home page for Basic Leads
+
+  @m6 @added @_done @_tested
   Scenario: Subaccounts should have access to all parents category
     When Category named "Best Leads" already exists
     And Category named "Worst Leads" already exists
@@ -139,7 +149,17 @@ Scenario: Category buyers should not have to configure their interest page, but 
     When I follow translated "layout.main_menu.shared.browse_leads"
     Then I should be on category home leads page for Best Leads
     When I am on the home page
-  And I open page in browser
     And I follow "Worst Leads"
     And I follow translated "category_home.show.view.complete_list_link" within "#latest_leads"
     Then I should be on category leads page for Worst Leads
+
+  @m6 @added @_done @_tested
+  Scenario: Subaccounts for Category buyer can't access categories parent is not assigned to
+    When Category named "Basic Leads" already exists
+    And Category named "Worst Leads" already exists
+    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Basic Leads" with attributes "team_buyers:1"
+    And an user with role lead_buyer and email stiw@lajoie.ca exists as subaccount for customer jon@lajoie.ca
+    And I am on the home page
+    And I sign in as stiw@lajoie.ca with password secret
+    And I am on category home page for Worst Leads
+    Then I should be on category home page for Basic Leads

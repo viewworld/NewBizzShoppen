@@ -38,7 +38,7 @@
               <ol class="no_pdd">
                   <li class="select" style="float:right">
                     <%= label "category", t("leads.index.search.category_label") %>
-                    <%= select_tag "category", options_for_select(current_user.buying_categories.map { |c| [c.name, c.cached_slug] },@home_category.name.downcase),
+                    <%= select_tag "category", options_for_select(current_user.parent_buying_categories.map { |c| [c.name, c.cached_slug] },@home_category.name.downcase),
                                    :include_blank => false,
                                    :onchange => "this.form.action='/'+this.value+'/leads';this.form.submit();"
                     %>

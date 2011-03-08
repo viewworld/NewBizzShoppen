@@ -247,7 +247,3 @@ When /^user "([^"]*)" is assigned to category "([^"]*)" as category buyer$/ do |
   u = User::CategoryBuyer.where(:email => email).first
   u.buying_categories << Category.where(:name => category_name)
 end
-
-
-
-

@@ -154,6 +154,14 @@ Scenario: I can specify one or many categories for category buyer
   And I am on administration edit user jon@lajoie.ca
   Then "user_category_buyer_buying_category_ids_" dropdown should have values "Basic Leads,Best Leads,Worst Leads"
 
+@m6 @added @selenium @_done @_tested
+Scenario: I can't specify categories for category buyer's subaccounts
+  When Category named "Basic Leads" already exists
+  And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Basic Leads"
+  And an user with role lead_buyer and email stiw@lajoie.ca exists as subaccount for customer jon@lajoie.ca
+  And I am on administration edit user stiw@lajoie.ca
+  Then I should not see CSS path "#all_categories"
+
 @m6
 Scenario: I can configure buyer category interests when editing it
 
