@@ -363,3 +363,13 @@ Scenario: I have already filled in international dialling codes for telephone nu
   And I press translated "agent.leads.new.view.button_create"
   Then the "lead_direct_phone_number" field should contain "\+45"
   And the "lead_phone_number" field should contain "\+45"
+
+@m6 @tgn @selenium @_tested
+Scenario: I can choose region during creation of a lead
+  Given country "Denmark" has regions "Region #1, Region #2, Region #3"
+  And Category Test category 1 is created
+  And I follow translated "layout.main_menu.call_centre_agent.leads"
+  And I select "Test category 1" from "category_id"
+  And I follow translated "call_centre_agent.leads.index.view.new_lead"
+  And I select "Denmark" from "lead_country_id"
+  And I select "Region #2" from "lead_region_id"

@@ -129,6 +129,7 @@ Nbs::Application.routes.draw do
   resources :category_buyer_accounts, :only => [:new, :create]
   resources :locales
   resources :phone_codes
+  resources :regions
 
   resources :news
   resources :articles
