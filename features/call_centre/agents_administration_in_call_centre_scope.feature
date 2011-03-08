@@ -92,7 +92,7 @@ Scenario: I can sort by Name, Last Name, created, volume sold, revenue, mobile n
   Then I should have value "33%" in the css path "tr:nth-child(1) td:nth-child(15)"
   When I follow translated "call_centre.call_centre_agents.index.view.certification_lvl_column"
   And I follow translated "call_centre.call_centre_agents.index.view.certification_lvl_column"
-  Then I should have value "Silver" in the css path "tr:nth-child(1) td:nth-child(16)"
+  Then I should have value "Bronze" in the css path "tr:nth-child(1) td:nth-child(16)"
 
 @m0
 Scenario: I can sort by fake

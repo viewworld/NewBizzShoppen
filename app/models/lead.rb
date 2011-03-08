@@ -110,7 +110,7 @@ class Lead < ActiveRecord::Base
   end
 
   def change_creator
-    if tmp_creator_id
+    if tmp_creator_id and tmp_creator_id != creator_id
       self.creator = User.find(tmp_creator_id).send(:casted_class).find(tmp_creator_id)
     end
   end

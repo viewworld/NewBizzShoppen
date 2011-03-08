@@ -48,7 +48,7 @@ Scenario: I should see rating % and certification level for each lead
   Given I go to browse leads
   And I follow "Computers"
   Then I should see "100%"
-  And I should see translated "models.lead.certification.lvl0"
+  And I should see translated "models.lead.certification.lvl1"
 
 @_tested
 Scenario: I should see lead header, lead price, purchase value and public description

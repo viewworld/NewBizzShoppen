@@ -107,7 +107,7 @@ Scenario: I should see lead header, lead price, purchase value and public descri
 @tgn @_tested
 Scenario: I should see certification level for each requested lead
   Then I go to customers lead requests
-  And I should see translated "models.lead.certification.lvl0"
+  And I should see translated "models.lead.certification.lvl1"
 
 @m6 @added @tgn @_done @tested_elsewhere
 Scenario: I should see rating % for each requested lead

@@ -21,7 +21,7 @@ Background:
 
 @tgn @_done @_tested
 Scenario: I can see search panel on leads listing page
-  Then I should see CSS path ".search_content .inputs_vertical ol"
+  Then I should see CSS path ".search_content"
 
 @tgn @_done @_tested
 Scenario: I can filter leads based on category

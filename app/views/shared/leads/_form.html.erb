@@ -17,7 +17,7 @@
       <%= form.input :company_vat_no, :label => t("shared.leads.form.company_vat_no") %>
       <%= form.input :company_ean_number, :label => t("shared.leads.form.company_ean_reg") %>
       <% if current_user.has_any_role?(:admin, :call_centre) %>
-        <%= form.input :tmp_creator_id, :as => :select, :collection => User.with_call_centre_agents(current_user).map { |u| [u.email, u.id] }, :selected => @lead.creator_id, :label => t("shared.leads.form.creator") %>
+        <%= form.input :tmp_creator_id, :as => :select, :collection => (current_user.has_role?(:call_centre) ? User.with_call_centre_agents(current_user) : User.with_agents_without_call_centres).map { |u| [u.email, u.id] }, :selected => @lead.creator_id, :label => t("shared.leads.form.creator") %>
       <% end %>
     </ol>
   </fieldset>
