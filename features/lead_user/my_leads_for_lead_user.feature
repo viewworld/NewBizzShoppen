@@ -95,7 +95,7 @@ Scenario: I can see all leads requested by lead users that belong to my account
 @tgn @_tested
 Scenario: I should see created by and certification level for each lead
   Then I should see "Johan Printing"
-  And I should see translated "models.lead.certification.lvl0"
+  And I should see translated "models.lead.certification.lvl1"
 
 @m4 @tgn @_tested @added @deprecated
 Scenario: I should see rating % for each lead
