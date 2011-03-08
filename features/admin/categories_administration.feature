@@ -102,8 +102,18 @@ Scenario: I can upload a category image
 Scenario: I can manage categories from Browse categories. Categories tab should be removed
   Then I should not see translated "layout.main_menu.admin.categories"
 
-@m6 @tgn
+@m6 @tgn @_tested
 Scenario: I can make any category country specific (Category can have one or more countries assigned to it)
+  Given there are no categories
+  And Category Computers is created
+  When I go to browse leads
+  And I follow translated "administration.categories.index.view.edit_link"
+  And I select "Denmark" from "category_country_ids"
+  And attach the file "sample image" to "category_image_attributes_asset"
+  And I press translated "administration.categories.edit.view.button_update"
+  And I should see translated "flash.categories.actions.update.notice"
+  Then I follow translated "administration.categories.index.view.edit_link"
+  And "category_country_ids" should be selected for value "Denmark"
 
 @m6 @ao
 Scenario: I can mark category to allow buyouts
