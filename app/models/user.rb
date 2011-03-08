@@ -63,6 +63,7 @@ class User < ActiveRecord::Base
   scope :with_assigned_leads_total, lambda { |assignee| select("leads.id").where("assignee_id = ?", assignee.id).join_lead_purchases_and_leads }
   scope :with_lead_creators_for, lambda { |parent| select("DISTINCT(users.id), users.*").where("users.parent_id = ?", parent.id).joins("INNER JOIN leads ON leads.creator_id=users.id") }
   scope :assignees_for_lead_purchase_owner, lambda { |owner| select("DISTINCT(users.id), users.*").where("requested_by IS NULL and lead_purchases.owner_id = ? and accessible_from IS NOT NULL and users.parent_id = ?", owner.id, owner.id).joins("RIGHT JOIN lead_purchases on lead_purchases.assignee_id=users.id") }
+  scope :with_leads, select("DISTINCT(email), users.*").joins("RIGHT JOIN leads on users.id=leads.creator_id")
 
   scoped_order :id, :roles_mask, :first_name, :last_name, :email, :age, :department, :mobile_phone, :completed_leads_counter, :leads_requested_counter,
                :leads_assigned_month_ago_counter, :leads_assigned_year_ago_counter, :total_leads_assigned_counter, :leads_created_counter,
@@ -239,7 +240,11 @@ class User < ActiveRecord::Base
     self.leads_rated_bad_counter = Lead.with_rated_bad_by(self).size
     self.leads_not_rated_counter = Lead.with_not_rated_by(self).size
     self.leads_rating_avg = LeadPurchase.with_rating_avg_by(self).first.id || 0
-    self.refresh_certification_level
+    if has_role?(:call_centre_agent)
+      self.certification_level = parent.read_attribute(:certification_level)
+    else
+      self.refresh_certification_level
+    end
     self.save
   end
 

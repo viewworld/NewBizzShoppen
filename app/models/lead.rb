@@ -59,6 +59,12 @@ class Lead < ActiveRecord::Base
   scope :with_customer_unique_categories, lambda { |customer_id| where("(is_customer_unique = ? and category_customers.user_id is NULL) or (is_customer_unique = ? and category_customers.user_id = ?)", false, true, customer_id).joins("INNER JOIN categories on categories.id=leads.category_id LEFT JOIN category_customers ON categories.id=category_customers.category_id") }
   scope :with_agent_unique_categories, lambda { |agent_id| where("(is_agent_unique = ? and category_agents.user_id is NULL) or (is_agent_unique = ? and category_agents.user_id = ?)", false, true, agent_id).joins("INNER JOIN categories on categories.id=leads.category_id LEFT JOIN category_agents ON categories.id=category_agents.category_id") }
 
+  scope :with_deal_value_from, lambda { |from| where("purchase_value >= ?", from) }
+  scope :with_deal_value_to, lambda { |to| where("purchase_value <= ?", to) }
+  scope :with_certification_level, lambda { |cl| where("certification_level = ? or certification_level = ?", cl.to_i, cl.to_i + 10) }
+  scope :with_sale_limit, lambda { |sale_limit| where("sale_limit = ?", sale_limit.to_i) }
+  scope :with_hotness, lambda { |hotness| where("hotness_counter = ?", hotness) }
+
   validates_presence_of :header, :description, :price, :company_name, :contact_name, :phone_number, :sale_limit, :category_id, :purchase_decision_date, :country_id, :currency, :address_line_1, :city, :zip_code
   validates_presence_of :hidden_description, :unless => Proc.new{|l| l.created_by?('PurchaseManager')}
   validates_inclusion_of :sale_limit, :in => 0..10
@@ -208,6 +214,10 @@ class Lead < ActiveRecord::Base
     else
       self.average_rating = -1
     end
+  end
+
+  def refresh_hotness_counter
+    self.hotness_counter = hotness_level
   end
 
   def average_rating_as_text

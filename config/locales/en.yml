@@ -231,6 +231,10 @@ en:
         category_label: 'Category'
         country_label: 'Country'
         zip_code: 'Zip code'
+        created_by: Created by
+        certification: Certification
+        sale_limit: Uniqueness
+        hotness: Hotness
       add_to_cart_link: Add to cart
       buy_lead: Buy lead
       buy_lead_confirm_msg: Do you want to buy this lead?
