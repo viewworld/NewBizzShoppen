@@ -169,7 +169,7 @@ class Lead < ActiveRecord::Base
   end
 
   def buyable?
-    true #Some more complex logic here...
+    lead_purchases_counter < sale_limit
   end
 
   def calculate_average_rating
@@ -244,5 +244,17 @@ class Lead < ActiveRecord::Base
 
   def lead_template_values_present?
     !LeadTemplateValue.where("lead_templates.id in (?)", lead_templates.map(&:id)).joins("inner join lead_template_fields on lead_template_values.lead_template_field_id=lead_template_fields.id inner join lead_templates on lead_template_fields.lead_template_id=lead_templates.id").limit(1).empty?
+  end
+
+  def bought_by_users_other_than(user)
+    user ? lead_purchases.map(&:owner_id).include?(user.id) : false
+  end
+
+  def buyout_price
+    (sale_limit - lead_purchases_counter) * price
+  end
+
+  def buyout_possible_for?(user)
+    !bought_by_users_other_than(user) and buyable?
   end
 end

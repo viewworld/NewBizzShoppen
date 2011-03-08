@@ -32,6 +32,20 @@ class Cart
     end
   end
 
+  def buyout_lead(lead)
+    if currency_matches?(lead)
+      if lead.buyout_possible_for?(@buyer)
+        (lead.sale_limit - lead.lead_purchases_counter).times do
+          @buyer.lead_purchases.create(:lead_id => lead.id, :paid => false, :accessible_from => (@buyer.big_buyer ? Time.now : nil))
+        end
+      else
+        :bought_by_other_user
+      end
+    else
+      :currencies_mismatch
+    end
+  end
+
   def add_leads(*ids)
     Lead.where(:id => ids.flatten).map { |lead| add_lead(lead) }.select { |r| r != :already_in_cart and r != :currencies_mismatch }
   end

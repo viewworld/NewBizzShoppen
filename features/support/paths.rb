@@ -20,6 +20,8 @@ module NavigationHelpers
         '/administration/users'
     when /administration categories/
         '/administration/categories'
+    when /administration edit category (.*)/
+        edit_administration_category_path(Category.where(:name => $1).first)
     when /administration email templates/
         '/administration/email_templates'
     when /administration settings/

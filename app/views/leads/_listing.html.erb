@@ -51,6 +51,11 @@
           <p class="element"><%= t("leads.listing.lead_price_label") %>
             <span class="green"><%= as_currency(lead.price, lead.currency) %></span></p>
 
+          <% if lead.category.buyout_enabled? and !lead.bought_by_users_other_than(current_user) %>
+              <p class="element"><%= t("leads.listing.buyout_price_label") %>
+                <span class="green"><%= as_currency(lead.buyout_price, lead.currency) %></span></p>
+          <% end %>
+
           <p class="element_description i"><%= lead.description %></p>
 
           <p class="element_templates"><%= render :partial => "/shared/lead_templates/listing", :locals => {:lead => lead} %></p>

@@ -103,8 +103,25 @@ Scenario: I can manage categories from Browse categories. Categories tab should 
 @m6 @tgn
 Scenario: I can make any category country specific (Category can have one or more countries assigned to it)
 
-@m6 @ao
+@m6 @ao @_done @_tested
 Scenario: I can mark category to allow buyouts
+  Given Category named "Sample category" already exists
+  And category "Sample category" has attributes "buyout_enabled:0"
+  And I am on administration edit category Sample category
+  Then checkbox named "category_buyout_enabled" should not be checked
+  When I check "category_buyout_enabled"
+  And I press translated "administration.categories.edit.view.button_update"
+  And I am on administration edit category Sample category
+  Then checkbox named "category_buyout_enabled" should be checked
 
-@m6 @ao
+@m6 @ao @_done @_tested
 Scenario: When creating new category it is marked with buyout flag by default
+  When I go to administration categories
+  And I follow translated "administration.categories.index.view.new_category"
+  And I fill in "category_name" with "New category"
+  And I fill in "category_description" with "Description"
+  And checkbox named "category_buyout_enabled" should be checked
+  Then I press translated "administration.categories.new.view.button_create"
+  And I am on administration edit category New category
+  Then checkbox named "category_buyout_enabled" should be checked
+

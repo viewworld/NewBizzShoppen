@@ -42,3 +42,9 @@ end
 Given /^there are no categories$/ do
   Category.delete_all
 end
+
+Given /^category "([^"]*)" has attributes "([^"]*)"$/ do |category_name, options|
+  category = Category.where(:name => category_name).first
+  attrs = Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys
+  category.update_attributes(attrs)
+end

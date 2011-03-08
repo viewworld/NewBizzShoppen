@@ -8,6 +8,7 @@
       </li>
       <%= form.input :description, :as => :text, :input_html => { :style => "width:400px;height:150px" } %>
       <%= form.input :is_locked %>
+      <%= form.input :buyout_enabled %>
       <%= form.input :is_customer_unique, :onclick => "show_hide_users_selection('customer')" %>
 
       <%= render :partial => "users_selection", :locals => { :users_type => "customers", :form => form } %>
