@@ -3,7 +3,7 @@ Feature: Invoice automatic processing
 
 Background:
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
 
 @_done @tested_elsewhere
 Scenario: Invoice should have invoice lines automatically generated for all non-paid leads for given user when created manually

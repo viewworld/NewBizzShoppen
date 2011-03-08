@@ -3,7 +3,7 @@ Feature: Subaccounts administration
 
 Background:
 Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   Given I am signed up and confirmed as user with email admin_user@person.com and password supersecret and role admin
   And an user with role lead_user and email ann.lead_user2@person.com exists as subaccount for customer customer@person.com
   And an user with role lead_user and email kirk.lead_user4@person.com exists as subaccount for customer customer@person.com

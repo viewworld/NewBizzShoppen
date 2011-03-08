@@ -3,7 +3,7 @@ Feature: My leads for lead user
 
 Background:
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   Given I am signed up and confirmed as user with email lead_user2@person.com and password supersecret and role lead_user
   And an user with role lead_user and email lead_user2@person.com exists as subaccount for customer customer@person.com
   And an user with role lead_user and email lead_user44@person.com exists as subaccount for customer customer@person.com
@@ -95,7 +95,7 @@ Scenario: I can see all leads requested by lead users that belong to my account
 @tgn @_tested
 Scenario: I should see created by and certification level for each lead
   Then I should see "Johan Printing"
-  And I should see translated "models.lead.certification.lvl0"
+  And I should see translated "models.lead.certification.lvl1"
 
 @m4 @tgn @_tested @added @deprecated
 Scenario: I should see rating % for each lead

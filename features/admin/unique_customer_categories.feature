@@ -4,11 +4,11 @@ Feature: Unique customer categories
 Background:
   Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role admin
   And I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   Given there are no categories
   And Category Computers is created
   Then I sign in as bob@person.com with password supersecret
-  And I go to administration categories
+  And I go to browse leads
 
 @_tested
 Scenario: I can mark category as customer unique

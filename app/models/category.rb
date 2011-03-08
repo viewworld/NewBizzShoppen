@@ -36,6 +36,9 @@ class Category < ActiveRecord::Base
   has_many :agents, :through => :category_agents, :source => :user
 #  has_and_belongs_to_many :buying_users, :class_name => "User", :join_table => 'categories_users', :foreign_key => :user_id
 
+  has_many :category_countries
+  has_many :countries, :through => :category_countries, :source => :country
+
   scope :without_locked_and_not_published, where("is_locked = ? or (is_locked = ? and published_leads_count > 0)", false, true)
   scope :within_accessible, lambda { |customer| where("categories.id IN (?)", customer.accessible_categories_ids) }
   scope :without_locked, where("is_locked = ?", false)

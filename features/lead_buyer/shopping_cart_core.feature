@@ -3,7 +3,7 @@ Feature: Shopping cart core
 
 Background:
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   Given I am signed up and confirmed as user with email customer@person.com and password supersecret and role customer
   And lead Printers ultimate deal exists within category Computers
   And lead Printers ultimate deal exists with attributes "price:1000,currency_id:1"

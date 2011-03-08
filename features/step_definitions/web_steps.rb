@@ -256,8 +256,8 @@ Then /^show me the page$/ do
   save_and_open_page
 end
 
-Given /^I make sure current locale is English$/ do
-  visit '/locales/en'
+Given /^I make sure current locale is "([^"]*)"$/ do |locale|
+  visit "/locales/#{locale}"
 end
 
 Then /^The flash message should be set to translated "([^"]*)"$/ do |key|

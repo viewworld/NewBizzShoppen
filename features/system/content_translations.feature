@@ -21,7 +21,7 @@ Scenario: Lead translations
 
 @selenium @m3 @ao @_done
 Scenario: News translations
-  Given I make sure current locale is English
+  Given I make sure current locale is "en"
   And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
   And I sign in as jon@lajoie.ca with password secret
   When I click hidden link by url regex "/administration\/news/"
@@ -46,7 +46,7 @@ Scenario: News translations
 
 @selenium @m3 @ao @_done
 Scenario: Article translations
-  Given I make sure current locale is English
+  Given I make sure current locale is "en"
   And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
   And I sign in as jon@lajoie.ca with password secret
   When I click hidden link by url regex "/administration\/articles/"

@@ -3,7 +3,7 @@ Feature: Leads catalog for small buyer
 
 Background:
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   And lead Printers ultimate deal exists within category Computers
   And lead Printers ultimate deal exists with attributes "creator_name:John Dulinky,price:989.39,purchase_value:7843.99,description:Public desc about printers deal,exposures_count:887,clicks_count:17,currency_id:1"
   And lead Faxes ultimate deal exists within category Computers

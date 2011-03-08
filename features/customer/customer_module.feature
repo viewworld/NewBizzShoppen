@@ -3,7 +3,7 @@ Feature: Customer module
 
 Background:  Sign in user and set locale
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   And I am signed up and confirmed as user with email bob@person.com and password supersecret and role customer
   Then I sign in as bob@person.com with password supersecret
 
@@ -112,5 +112,57 @@ Scenario: On the interests page the country should be selected based on current 
   And I follow translated "layout.main_menu.customer.interests"
   Then "countries" should be selected for value "Denmark"
 
-@m6 @tgn
+@m6 @tgn @_tested
 Scenario: I can use "Advanced search" in Browse leads with following fields: Deal value, Agent (creator), Agent’s (creator) rating (all,bronze, silver, gold), Uniqueness, Hotness
+  Given I have user with email agent01@nbs.com and role agent
+  And user "agent01@nbs.com" with role "agent" has attributes "certification_level:1, company_name:Xerox1"
+  And I have user with email agent02@nbs.com and role agent
+  And user "agent02@nbs.com" with role "agent" has attributes "certification_level:12, company_name:Xerox2"
+  And I have user with email agent03@nbs.com and role agent
+  And user "agent03@nbs.com" with role "agent" has attributes "certification_level:13, company_name:Xerox3"
+  And I have user with email ultimate.buyer@nbs.com and role customer
+
+  Given lead Super printers #1 is created by user agent01@nbs.com with role agent
+  And a lead Super printers #1 exists within category Computers and is bought by user ultimate.buyer@nbs.com with role customer
+  And lead Super printers #1 exists with attributes "hotness_counter:0, sale_limit:9, purchase_value:5200"
+
+  Given lead Super printers #2 is created by user agent02@nbs.com with role agent
+  And a lead Super printers #2 exists within category Computers and is bought by user ultimate.buyer@nbs.com with role customer
+  And lead Super printers #2 exists with attributes "hotness_counter:1, sale_limit:1, purchase_value:5900"
+
+  Given lead Super printers #3 is created by user agent03@nbs.com with role agent
+  And a lead Super printers #3 exists within category Computers and is bought by user ultimate.buyer@nbs.com with role customer
+  And lead Super printers #3 exists with attributes "hotness_counter:2, sale_limit:5, purchase_value:10200"
+
+  And I go to browse leads
+  And I follow "Computers"
+  Then I select "Xerox2, agent02@nbs.com" from "search_with_created_by"
+  And I press translated "leads.index.search.search_button"
+  Then I should see "Super printers #2"
+  And I should not see "Super printers #1"
+  And I should not see "Super printers #3"
+  Then I select "" from "search_with_created_by"
+  And I select translated "models.lead.certification.lvl3" from "search_with_certification_level"
+  And I press translated "leads.index.search.search_button"
+  Then I should see "Super printers #3"
+  And I should not see "Super printers #1"
+  And I should not see "Super printers #2"
+  Then I select "" from "search_with_certification_level"
+  And I select "9" from "search_with_sale_limit"
+  And I press translated "leads.index.search.search_button"
+  Then I should see "Super printers #1"
+  And I should not see "Super printers #2"
+  And I should not see "Super printers #3"
+  Then I select "" from "search_with_sale_limit"
+  And I select translated "models.lead.hotness.lvl1" from "search_with_hotness"
+  And I press translated "leads.index.search.search_button"
+  Then I should see "Super printers #2"
+  And I should not see "Super printers #1"
+  And I should not see "Super printers #3"
+  Then I select "" from "search_with_hotness"
+  And I select "5000" from "search_with_deal_value_from"
+  And I select "6000" from "search_with_deal_value_to"
+  And I press translated "leads.index.search.search_button"
+  Then I should see "Super printers #1"
+  And I should see "Super printers #2"
+  And I should not see "Super printers #3"

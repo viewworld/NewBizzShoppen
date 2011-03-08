@@ -3,7 +3,7 @@ Feature: Call centre payout information update
 
 Background:
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   And I am signed up and confirmed as user with email call_centre@person.com and password supersecret and role call_centre
   Then I sign in as call_centre@person.com with password supersecret
 

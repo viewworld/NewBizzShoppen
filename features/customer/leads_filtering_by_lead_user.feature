@@ -6,7 +6,7 @@ Feature: Leads filtering by lead user
 
 Background:
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   Given I am signed up and confirmed as user with email customer@person.com and password supersecret and role customer
   And user customer@person.com with role customer exists with attributes "team_buyers:true"
   And an user with role lead_user and email lead_user2@person.com exists as subaccount for customer customer@person.com
@@ -62,5 +62,5 @@ Scenario: I can filter leads
   Then I should see "Keyboards deal"
   And I should not see "Mouses deal"
 
-@m6 @tgn
+@m6 @tgn @_done @tested_elsewhere
 Scenario: I should be able to click link in subaccounts listing and go straight to that users's leads listing

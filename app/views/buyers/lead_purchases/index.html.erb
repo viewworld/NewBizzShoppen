@@ -226,5 +226,21 @@
               $.post('/buyers/lead_purchases/' + lead_purchase_id.toString(), {'_method':'put', 'lead_purchase[rating_reason]':$('#rating_reason_' + lead_purchase_id.toString()).val(), 'lead_purchase[rating_level]':$('#rating_level_' + lead_purchase_id.toString()).val()});
           }
       }
+
+      function edit_owner_note(lead_purchase_id){
+          $('#owner_note_readonly_' + lead_purchase_id.toString()).hide();
+          $('#owner_note_form_' + lead_purchase_id.toString()).show();
+      }
+
+      function save_owner_note(lead_purchase_id){
+          $.post('/buyers/lead_purchases/' + lead_purchase_id.toString(), {'_method':'put', 'lead_purchase[owner_note]':$('#owner_note_' + lead_purchase_id.toString()).val(), 'owner_note_changed':1, 'format':'js'});
+          $('#owner_note_form_' + lead_purchase_id.toString()).hide();
+      }
+
+      function cancel_owner_note(lead_purchase_id){
+          $('#owner_note_form_' + lead_purchase_id.toString()).hide();
+          $('#owner_note_readonly_' + lead_purchase_id.toString()).show();
+      }
+
   </script>
 </column-mc:>

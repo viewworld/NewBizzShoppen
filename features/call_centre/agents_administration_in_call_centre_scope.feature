@@ -3,7 +3,7 @@ Feature: Agents administration in call centre scope
 
 Background:  Sign in user and set locale
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   And I am signed up and confirmed as user with email call_centre@person.com and password supersecret and role call_centre
   Then I sign in as call_centre@person.com with password supersecret
   And I go to call centre agents
@@ -92,7 +92,7 @@ Scenario: I can sort by Name, Last Name, created, volume sold, revenue, mobile n
   Then I should have value "33%" in the css path "tr:nth-child(1) td:nth-child(15)"
   When I follow translated "call_centre.call_centre_agents.index.view.certification_lvl_column"
   And I follow translated "call_centre.call_centre_agents.index.view.certification_lvl_column"
-  Then I should have value "Silver" in the css path "tr:nth-child(1) td:nth-child(16)"
+  Then I should have value "Bronze" in the css path "tr:nth-child(1) td:nth-child(16)"
 
 @m0
 Scenario: I can sort by fake

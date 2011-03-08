@@ -3,7 +3,7 @@ Feature: Resend activation link
 
 Background:  Sign up user and set English locale
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
 
 @_tested
 Scenario: I can resend activation email to my email address

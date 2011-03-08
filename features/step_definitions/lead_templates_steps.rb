@@ -23,11 +23,12 @@ Given /^template named "([^"]*)" (is|is not) global$/ do |name, is_global|
   template.update_attributes(:is_global => is_global != "is not" )
 end
 
-#fields are entered as triplets: name:is_hidden:is_mandatory  example: computer count:false:true, conditions:true:false
+#fields are entered as four values: name:is_hidden:is_mandatory :field_type -- example -- computer count:false:true:1, conditions:true:false:3
 Given /^template named "([^"]*)" has following fields "([^"]*)"$/ do |name, fields|
   template = LeadTemplate.find_by_name(name).first
-  fields.split(",").map { |f| f.to_s.strip.split(':') }.each do |f_name, f_is_hidden, f_is_mandatory|
-    template.lead_template_fields.create(:name => f_name, :is_hidden => f_is_hidden == "true" ? true : false, :field_type => 0,
+  fields.split(",").map { |f| f.to_s.strip.split(':') }.each do |f_name, f_is_hidden, f_is_mandatory, f_field_type|
+    template.lead_template_fields.create(:name => f_name, :is_hidden => f_is_hidden == "true" ? true : false,
+                                         :field_type => f_field_type.to_i,
                                          :is_mandatory => f_is_mandatory == "true" ? true : false)
   end
 end

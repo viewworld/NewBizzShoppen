@@ -53,6 +53,7 @@
           <% blocks.tools do |lead_template| %>
               <ul-actions>
                 <li><%= link_to t("agent.lead_templates.index.view.edit"), edit_agents_lead_template_path(lead_template), :class => "default_action" %></li>
+                <li><%= link_to t("agent.lead_templates.index.view.duplicate"), new_agents_lead_template_path(:template_id => lead_template.id, :lead_template => {:category_id => @search.with_category}) %></li>
                 <li><%= link_to t("agent.lead_templates.index.view.destroy"), agents_lead_template_path(lead_template), :method => :delete, :confirm => t("agent.lead_templates.index.view.destroy_template_confirmation_message") %></li>
               </ul-actions>
           <% end %>

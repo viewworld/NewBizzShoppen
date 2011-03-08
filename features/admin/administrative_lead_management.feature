@@ -3,7 +3,7 @@ Feature: Administrative lead management
 
 Background:
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   Given I am signed up and confirmed as user with email admin2@person.com and password supersecret and role admin
   Then I sign in as admin2@person.com with password supersecret
 
@@ -124,8 +124,25 @@ Scenario: I can clear the filter when browsing leads
   Then I should see "Monitors"
   And I should see "Keyboards"
 
-@m6 @tgn
+@m6 @selenium @_tested @tgn
 Scenario: When I change the category then I am not redirected back to the listing view
+  Given there are no leads
+  And a lead Super ultra lead #1 exists within category Computers and is bought by user tim@nbs.com with role customer
+  When I follow translated "layout.main_menu.admin.leads"
+  And I follow translated "leads.listing.edit_label"
+  Then I select "Electronics" from "lead_category_id"
+  And I should see "Editing lead: Super ultra lead #1"
 
-@m6 @tgn
+@m6 @_tested @tgn
 Scenario: I can change creator of lead to any other agent
+  Given there are no leads
+  And I have user with email agent_999@nbs.com and role agent
+  And I have user with email agent_777@nbs.com and role call_centre_agent
+  And lead Super ultra lead #1 is created by user agent_999@nbs.com with role agent
+  When I follow translated "layout.main_menu.admin.leads"
+  And I follow translated "leads.listing.edit_label"
+  Then I select "agent_777@nbs.com" from "lead_tmp_creator_id"
+  And I press translated "administration.leads.edit.view.button_update"
+  Then I should be on administration leads page
+  And I follow translated "leads.listing.edit_label"
+  And "lead_tmp_creator_id" should be selected for value "agent_777@nbs.com"

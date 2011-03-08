@@ -3,7 +3,7 @@ Feature: Requested leads management for big buyer
 
 Background:
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   Given Category named "Sample category" already exists
   Given Category named "Another sample category" already exists within category named "Sample category"
   Given I am signed up and confirmed as user with email john@doe.com and password secret and role customer

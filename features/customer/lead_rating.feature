@@ -3,7 +3,7 @@ Feature: Lead Rating
 
 Background:
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   And I am signed up and confirmed as user with email bob@person.com and password supersecret and role customer
   And an user with role lead_user and email lead_user2@person.com exists as subaccount for customer bob@person.com
   And lead Printers ultimate deal exists within category Computers
@@ -102,6 +102,6 @@ Scenario: As admin I can view all 'unsatisfactory' ratings
   Given I follow translated "leads.listing.has_unsatisfactory_rating_yes"
   Then I should see translated "administration.leads.show.view.rating_level"
 
-# email or internal messages?
-@m6 @tgn
+# by comments
+@m0
 Scenario: As admin I can reply to 'unsatisfactory' rating

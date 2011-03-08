@@ -3,7 +3,7 @@ Feature: Leads filtering by agent
 
 Background:
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   And I am signed up and confirmed as user with email call_centre@person.com and password supersecret and role call_centre
   Given I have user with email ccagent01@nbs.com and role call_centre_agent
   And user ccagent01@nbs.com with role call_centre_agent exists with attributes "first_name:Greg,last_name:Foam"
@@ -45,7 +45,7 @@ Scenario: I can see created by, rating, certification level
   And I should see translated "models.lead.certification.lvl0"
   And I should see "95%"
 
-@m6 @noguess
+@m0 @noguess
 Scenario: I can see a link to comment for a lead if there is a conversation started
 
 @_tested

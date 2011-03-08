@@ -3,7 +3,7 @@ Feature: Shopping cart rules for small buyer
 
 Background:
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   And there is a seller with attributes "company_name:DannyTheSeller,first_name:Danny,last_name:DeVito,address:USA,vat_no:123" for country "Denmark"
   Given Category named "Computers" already exists
   Given Category named "Sample category" already exists

@@ -3,7 +3,7 @@ Feature: Lead Management - My Leads Manage for Freelance Agent
 
 Background:
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   And Category named "Sample category" already exists
   Given I am signed up and confirmed as user with email john@doe.com and password secret and role agent
   And lead Lead 1 is created by user john@doe.com with role agent

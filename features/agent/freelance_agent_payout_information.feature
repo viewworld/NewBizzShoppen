@@ -3,7 +3,7 @@ Feature: Freelance agent payout information
 
 Background:
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   And I am signed up and confirmed as user with email agent@person.com and password secret and role agent
   Then I sign in as agent@person.com with password secret
 

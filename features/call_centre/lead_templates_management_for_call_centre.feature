@@ -3,7 +3,7 @@ Feature: Lead templates management for call centre
 
 Background:  Sign in user and set locale
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   And I have user with email other_call_centre@nbs.com and role call_centre
   And I am signed up and confirmed as user with email call_centre@person.com and password supersecret and role call_centre
   Then I sign in as call_centre@person.com with password supersecret
@@ -87,3 +87,22 @@ Scenario: I can add translation for the lead template name and its fields
   And I click hidden link by url regex "/call_centres\/lead_templates\/\d+\/edit/"
   Then the "lead_template_lead_template_fields_attributes_0_name" field should contain "example attr 1"
   And the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 2"
+
+@m6 @tgn @added @_tested
+Scenario: Make it possible to duplicate lead templates (from lead templates listings)
+  Given template named "Computer details" for category "Computers" is created by user "call_centre@person.com" with role "call_centre"
+  And template named "Computer details" is mandatory
+  And template named "Computer details" has following fields "field #1:true:true,field #2:true:false,field #3:false:false"
+  Then I go to call centre lead templates
+  And I follow translated "call_centre.lead_templates.index.view.duplicate"
+  Then the "lead_template_name" field should contain "Computer details"
+  And checkbox named "lead_template_is_mandatory" should be checked
+  And the "lead_template_lead_template_fields_attributes_0_name" field should contain "field #1"
+  And the "lead_template_lead_template_fields_attributes_1_name" field should contain "field #2"
+  And the "lead_template_lead_template_fields_attributes_2_name" field should contain "field #3"
+  And checkbox named "lead_template_lead_template_fields_attributes_0_is_hidden" should be checked
+  And checkbox named "lead_template_lead_template_fields_attributes_1_is_hidden" should be checked
+  And checkbox named "lead_template_lead_template_fields_attributes_2_is_hidden" should not be checked
+  And checkbox named "lead_template_lead_template_fields_attributes_0_is_mandatory" should be checked
+  And checkbox named "lead_template_lead_template_fields_attributes_1_is_mandatory" should not be checked
+  And checkbox named "lead_template_lead_template_fields_attributes_2_is_mandatory" should not be checked

@@ -3,7 +3,7 @@ Feature: Agent accounts administration for call centre
 
 Background:  Sign in user and set locale
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   And I am signed up and confirmed as user with email call_centre@person.com and password supersecret and role call_centre
   Then I sign in as call_centre@person.com with password supersecret
   And I go to call centre agents

@@ -31,6 +31,34 @@
                 </ibt>
               </li>
             </ol>
+            </fieldset>
+            <fieldset class="inputs_vertical">
+            <ol class="no_pdd">
+              <li class="select">
+                <%= f.label :with_deal_value_from, t("leads.index.search.deal_value_from_label") %>
+                <%= f.select :with_deal_value_from, User::DEAL_VALUE_RANGE, {:include_blank => true} %>
+              </li>
+              <li class="select">
+                <%= f.label :with_deal_value_to, t("leads.index.search.deal_value_to_label") %>
+                <%= f.select :with_deal_value_to, User::DEAL_VALUE_RANGE, {:include_blank => true} %>
+              </li>
+              <li class="select">
+                <%= f.label :with_created_by, t("leads.index.search.created_by") %>
+                <%= f.select :with_created_by, @creators.map { |u| ["#{u.company_name}, #{u.email}", u.id] }, {:include_blank => true} %>
+              </li>
+              <li class="select">
+                <%= f.label :with_certification_level, t("leads.index.search.certification") %>
+                <%= f.select :with_certification_level, User::CERTIFICATION_LEVELS.first(4).map { |cl| [t("models.lead.certification.lvl#{cl}"), cl] }, {:include_blank => true} %>
+              </li>
+              <li class="select">
+                <%= f.label :with_sale_limit, t("leads.index.search.sale_limit") %>
+                <%= f.select :with_sale_limit, (1..10).to_a, {:include_blank => true} %>
+              </li>
+              <li class="select">
+                <%= f.label :with_hotness, t("leads.index.search.hotness") %>
+                <%= f.select :with_hotness, (0..2).to_a.map { |hl| [t("models.lead.hotness.lvl#{hl}"), hl] }, {:include_blank => true} %>
+              </li>
+            </ol>
           </fieldset>
       <% end %>
     </div>

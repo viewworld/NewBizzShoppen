@@ -3,7 +3,7 @@ Feature: Sign out
 
 Background:
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   And I am signed up and confirmed as user with email bob@person.com and password supersecret and role customer
   Then I sign in as bob@person.com with password supersecret
 

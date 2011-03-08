@@ -3,7 +3,7 @@ Feature: Subaccounts management for customer
 
 Background:  Sign in user and set locale
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   And I am signed up and confirmed as user with email bob@person.com and password supersecret and role customer
   And user "bob@person.com" has team buyers enabled
   Then I sign in as bob@person.com with password supersecret

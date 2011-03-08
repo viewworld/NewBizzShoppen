@@ -3,7 +3,7 @@ Feature: Start page role selection
 
 Background:
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   And I am signed up and confirmed as user with email buyer43@person.com and password supersecret and role customer
 
 @m3 @ao @_done

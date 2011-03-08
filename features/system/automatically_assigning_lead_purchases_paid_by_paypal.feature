@@ -3,7 +3,7 @@ Feature: Automatically assigning lead purchases paid by paypal
 
 Background:
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   Given Category named "Computers" already exists
   And Lead named "Super printers" exists within "Computers" category
 

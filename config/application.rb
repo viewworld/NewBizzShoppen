@@ -48,6 +48,10 @@ module Nbs
     require "#{config.root}/app/modules/custom_redirect.rb"
     config.autoload_paths += %W( #{config.root}/app/models/ckeditor )
     require "#{config.root}/lib/settings.rb"
+
+    config.after_initialize do
+      SimplesIdeias::I18n.export!
+    end
   end
 end
 

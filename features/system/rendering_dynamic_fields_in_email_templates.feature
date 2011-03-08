@@ -3,7 +3,7 @@ Feature: Rendering dynamic fields in email templates
 
 Background:
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
 
 @tgn @_done @_tested
 Scenario: Email template should properly render dynamic fields

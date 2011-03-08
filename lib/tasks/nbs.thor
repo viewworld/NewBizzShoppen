@@ -17,9 +17,9 @@ class Nbs < Thor
     Settings.invoicing_default_payment_deadline_date = 14
     Settings.invoicing_default_vat_rate              = 0.15
 
-    country = Country.find_or_create_by_name("Denmark", :locale => "dk")
+    country = Country.find_or_create_by_name("Denmark", :locale => "dk", :detailed_locale => "dk")
 #    VatRate.find_or_create_by_country_id(country.id, :rate => 25)
-    country = Country.find_or_create_by_name("United Kingdom", :locale => "en")
+    country = Country.find_or_create_by_name("United Kingdom", :locale => "en", :detailed_locale => "uk")
 #    VatRate.find_or_create_by_country_id(country.id, :rate => 20)
 
     if BankAccount.count == 0
@@ -261,7 +261,9 @@ class Nbs < Thor
         'blurb_start_page_role_selection',
         'blurb_currencies',
         'blurb_category_home',
-        'blurb_leads_listing'
+        'blurb_leads_listing',
+        'blurb_agent_contact_us',
+        'blurb_buyer_contact_us'
     ].each do |key|
       unless Article::Cms::InterfaceContentText.where(:key => key).first
         article = Article::Cms::InterfaceContentText.make!(:title => key.humanize, :content => key.humanize, :key => key)
@@ -298,6 +300,7 @@ class Nbs < Thor
   def recalculate_leads_average_ratings
     Lead.all(:conditions => ["published = ? and users.locked_at is NULL", true], :joins => "INNER JOIN users ON users.id=leads.creator_id", :readonly => false).each do |lead|
       lead.calculate_average_rating
+      lead.refresh_hotness_counter
       lead.save
     end
   end
@@ -313,6 +316,11 @@ class Nbs < Thor
   desc "refresh_agent_counters", ""
 
   def refresh_agent_counters
+    User::CallCentre.all.each do |user|
+      user.refresh_certification_level
+      user.save
+    end
+
     (User::Agent.all + User::CallCentreAgent.all).each do |user|
       user.refresh_agent_counters!
     end

@@ -6,7 +6,7 @@ Feature: Sign in
   Should be able to login
   Background: Set English locale on the home page
     Given I am on the homepage
-    And I make sure current locale is English
+    And I make sure current locale is "en"
 
 
   @_tested

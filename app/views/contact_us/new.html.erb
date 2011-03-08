@@ -1,0 +1,11 @@
+<column-mc:>
+  <header><%= t("contact_us.new.view.header") %></header>
+
+  <% if user_signed_in? and current_user.agent? %>
+    <%= render :partial => 'agent' %>
+  <% elsif user_signed_in? and current_user.buyer? %>
+      <%= render :partial => 'buyer' %>
+  <% else %>
+      <%= render :partial => 'guest' %>
+  <% end %>
+</column-mc:>

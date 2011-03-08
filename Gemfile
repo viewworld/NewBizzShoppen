@@ -27,6 +27,7 @@ gem 'fastercsv'
 gem 'thor'
 gem 'ckeditor', '3.5.0'
 gem 'aws-s3'
+gem 'i18n-js'
 
 group :development do
   gem 'diff-lcs'

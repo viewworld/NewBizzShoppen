@@ -1,0 +1,4 @@
+
+    page << "set_phone_code('lead_direct_phone_number', #{@country.phone_dialling_code})"
+    page << "set_phone_code('lead_phone_number', #{@country.phone_dialling_code})"
+

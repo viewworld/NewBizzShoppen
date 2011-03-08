@@ -3,7 +3,7 @@ Feature: Lead editing by agent
 
 Background:
     Given I am on the homepage
-    And I make sure current locale is English
+    And I make sure current locale is "en"
     Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role agent
     And lead New lead is created by user bob@person.com with role agent
     And a lead New lead exists within category Computers and is bought by user john.buyer@person.com with role customer

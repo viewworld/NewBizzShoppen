@@ -3,7 +3,7 @@ Feature: Generic search panel
 
 Background:
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   And lead Printers ultimate deal exists within category Computers
   And lead Printers ultimate deal exists with attributes "purchase_value:1000,zip_code:123"
   And lead Monitors LCD deal exists within category Computers
@@ -21,7 +21,7 @@ Background:
 
 @tgn @_done @_tested
 Scenario: I can see search panel on leads listing page
-  Then I should see CSS path ".search_content .inputs_vertical ol"
+  Then I should see CSS path ".search_content"
 
 @tgn @_done @_tested
 Scenario: I can filter leads based on category

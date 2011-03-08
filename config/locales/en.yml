@@ -16,6 +16,11 @@ en:
     nothing_to_display: 'Nothing to display'
     search: 'Search'
     clear_filter: 'Clear filter'
+    js:
+      read_more: 'read more'
+      collapse_expanded_text: '[collapse expanded text]'
+      expand_prefix: '...  '
+      collapse_prefix: ' '
   layout:
     main_menu:
       admin:
@@ -66,6 +71,7 @@ en:
     my_profile_link: My profile
     logout_link: 'Logout %{user_email}'
     login_link: 'Login'
+    contact_us: 'Contact us'
 
     cart:
       cart_header: Cart (%{count} items)
@@ -231,6 +237,10 @@ en:
         category_label: 'Category'
         country_label: 'Country'
         zip_code: 'Zip code'
+        created_by: Created by
+        certification: Certification
+        sale_limit: Uniqueness
+        hotness: Hotness
       add_to_cart_link: Add to cart
       buy_lead: Buy lead
       buy_lead_confirm_msg: Do you want to buy this lead?
@@ -396,6 +406,7 @@ en:
           button_update: 'Save'
           new_template: New template
           edit_template: Edit
+          duplicate_template: Duplicate
           destroy_template: Destroy
           destroy_template_confirmation_message: Are you sure?
     settings:
@@ -891,6 +902,7 @@ en:
           header: Lead templates
           new_template: New template
           edit: Edit
+          duplicate: Duplicate
           destroy: Destroy
           search_button: Search
           search:
@@ -920,6 +932,7 @@ en:
           edit: Edit
           destroy: Destroy
           destroy_template_confirmation_message: Are you sure?
+          duplicate: Duplicate
           new_template: New template
           search_button: Search
           search:
@@ -1054,6 +1067,7 @@ en:
           new_template: New template
           edit: Edit
           destroy: Destroy
+          duplicate: Duplicate
           search_button: Search
           search:
             keyword_label: Keyword
@@ -1118,6 +1132,7 @@ en:
           header: Lead templates
           new_template: New template
           edit: Edit
+          duplicate: Duplicate
           destroy: Destroy
           search_button: Search
           search:
@@ -1363,6 +1378,7 @@ en:
             category_label: 'Category'
             deal_value_from_label: 'From'
             deal_value_to_label: 'To'
+            zip_code: Zip code
             country_label: 'Country'
             requested_by_label: 'Requested by'
             search_button: 'Search'
@@ -1532,6 +1548,9 @@ en:
           rating_reason: 'Reason:'
           rating_reason_empty: 'You have to provide reson for your rating!'
           update_rating_button: 'Save rating'
+          update_owner_note: Save note
+          cancel_owner_note: Cancel
+          owner_note_blank: '(Click here to add note)'
           view_lead: View Details
           email_lead: Contact lead
           search:
@@ -1614,7 +1633,9 @@ en:
         additional_language: 'Additional language'
         sales_information: 'Sales information'
         not_all_templates_filled: All mandatory templates must be filled!
+        category_was_changed: Category has been changed
         county: Region
+        creator: Creator
 
   models:
     user:
@@ -1631,16 +1652,19 @@ en:
         lvl2: Classic
       certification:
         lvl0: Not certified
-        lvl1: Silver
-        lvl2: Gold
+        lvl1: Bronze
+        lvl2: Silver
+        lvl3: Gold
         lvl10: Not certified (locked)
-        lvl11: Silver (locked)
-        lvl12: Gold (locked)
+        lvl11: Bronze (locked)
+        lvl12: Silver (locked)
+        lvl13: Gold (locked)
     lead_template_field:
       field_type:
         type0: Text
         type1: Number
         type2: Date
+        type3: Note
     locale:
       en: English
       dk: Danish

@@ -3,7 +3,7 @@ Feature: User accounts management
 
  Background: Sign in user and set English locale
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   And I have user with email agent.jim.connor@paerson22.com and role agent
   And I have user with email agent.tom.blank@paerson22.com and role agent
   And I have user with email aaaaaaaagent.tom.blank@paerson22.com and role agent

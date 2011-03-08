@@ -3,7 +3,7 @@ Feature: Leads listing for guest
 
 Background:
   Given I am on the homepage
-  And I make sure current locale is English
+  And I make sure current locale is "en"
   And Category named "Sample category" already exists
   And Category named "Another sample category" already exists within category named "Sample category"
   And I follow translated "layout.main_menu.shared.browse_leads"
