@@ -32,6 +32,7 @@ en:
         articles: 'Articles'
         news: 'News'
         currencies: 'Currencies'
+        countries: Countries
         invoices: 'Invoices'
         upcoming_invoices: 'Debtors'
         payment_transactions: 'Payments'
@@ -564,6 +565,34 @@ en:
       destroy:
         errors:
           has_leads: "You can't delete this currency because there are leads using it"
+    countries:
+      form:
+        new_region: New region
+        delete_region: Delete
+      index:
+        view:
+          title: Countries
+          new_country: New country
+          edit: Edit
+          delete: Delete
+          delete_confirmation_message: Are you sure?
+          no_currencies_defined: There are no countries defined
+          table:
+            id: ID
+            name: Name
+            locale: Locale
+            actions: Actions
+      new:
+        view:
+          header: New country
+          button_create_country: Create
+          button_cancel: Cancel
+      edit:
+        view:
+          header: Edit country %{name}
+          button_update_country: Save
+          button_cancel: Cancel
+
     invoices:
       common:
         view:

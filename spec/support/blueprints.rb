@@ -25,7 +25,6 @@ Lead.blueprint do
   address_line_1 { Faker::Address.street_address }
   city { Faker::Address.city }
   zip_code { Faker::Address.zip_code }
-  county { Faker::Address.uk_county }
   creator_id { User::Agent.make!.id }
   creator_type { "User::Agent" }
   category_id { Category.make!.id }
@@ -49,7 +48,6 @@ Lead.blueprint(:featured) do
   address_line_1 { Faker::Address.street_address }
   city { Faker::Address.city }
   zip_code { Faker::Address.zip_code }
-  county { Faker::Address.uk_county }
   creator_id { User::Agent.make!.id }
   creator_type { "User::Agent" }
   category_id { Category.make!.id }

@@ -2,10 +2,13 @@ class Country < ActiveRecord::Base
   has_many :country_interest
   has_many :leads
   has_many :bank_accounts
+  has_many :regions
   has_one :vat_rate
 
   validates_presence_of :name
   validates_uniqueness_of :name
+
+  accepts_nested_attributes_for :regions, :allow_destroy => true
 
   scope :with_leads, select("DISTINCT(name), countries.*").joins("RIGHT JOIN leads on countries.id=leads.country_id")
   scope :with_lead_request_owner, lambda { |owner| select("DISTINCT(name), countries.*").where("requested_by IS NOT NULL and lead_purchases.owner_id = ?", owner.id).joins("RIGHT JOIN leads on countries.id=leads.country_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
@@ -25,6 +28,10 @@ class Country < ActiveRecord::Base
   def phone_dialling_code
     code = PHONE_CODES.detect { |pc| pc.first == detailed_locale.to_s.upcase }
     code.nil? ? "" : code.last
+  end
+
+  def can_be_destroyed?
+    country_interest.empty and leads.empty? and bank_accounts.empty? and !vat_rate.present?
   end
 
   PHONE_CODES = [

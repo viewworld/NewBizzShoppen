@@ -12,8 +12,8 @@
       <%= form.input :address_line_3 %>
       <%= form.input :zip_code %>
       <%= form.input :city %>
-      <%= form.input :county, :label => t("shared.leads.form.county") %>
-      <%= form.input :country_id, :as => :select, :collection => Country.all, :input_html => { :onchange => "refresh_phone_codes()" } %>
+      <%= form.input :country_id, :as => :select, :collection => Country.all, :input_html => { :onchange => "refresh_phone_codes(); refresh_regions_list();" } %>
+      <%= form.input :region_id, :as => :select, :collection => @lead.country.present? ? @lead.country.regions : [] %>
       <%= form.input :company_vat_no, :label => t("shared.leads.form.company_vat_no") %>
       <%= form.input :company_ean_number, :label => t("shared.leads.form.company_ean_reg") %>
       <% if current_user.has_any_role?(:admin, :call_centre) %>
@@ -196,8 +196,33 @@
        });
     }
 
+    function refresh_regions_list(){
+       $.ajax({
+         type: "GET",
+         url: "<%= regions_path -%>",
+         data: "country_id=" + $('#lead_country_id').val()
+       });
+    }
+
     function set_phone_code(field, code){
         $('#' + field).val('+' + code)
+    }
+
+    function clear_regions_select(){
+        $('#lead_region_id option').each(function()
+        {
+
+            if($(this).text() != "") {
+                $(this).remove();
+            }
+        });
+    }
+
+    function add_region(label, value){
+       $('#lead_region_id').
+            append($("<option></option>").
+            attr("value", value).
+            text(label));
     }
 
 
