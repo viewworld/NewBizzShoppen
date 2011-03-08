@@ -34,6 +34,7 @@ class Category < ActiveRecord::Base
   has_many :category_agents
   has_many :customers, :through => :category_customers, :source => :user
   has_many :agents, :through => :category_agents, :source => :user
+#  has_and_belongs_to_many :buying_users, :class_name => "User", :join_table => 'categories_users', :foreign_key => :user_id
 
   has_many :category_countries
   has_many :countries, :through => :category_countries, :source => :country

@@ -103,7 +103,7 @@ Feature: Category home pages
     Then I should see translated "activerecord.attributes.user.email"
     And I should see translated "activerecord.attributes.user.password"
 
-  @added @_done
+  @added
   Scenario: I can see my purchased leads in panel on category home page when I'm logged in
     When Category named "Best Leads" already exists
     And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Best Leads"
@@ -115,7 +115,7 @@ Feature: Category home pages
     And I should see "1" items on a list within "#my_leads ul"
     And I should see "Best Lead" within "#my_leads"
 
-  @added @_done
+  @added
   Scenario: I can access details of latest leads on category home page
     When Category named "Best Leads" already exists
     And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Best Leads"

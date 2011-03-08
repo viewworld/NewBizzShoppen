@@ -220,7 +220,7 @@ end
   first_name { Faker::Name.first_name + Time.now.to_f.to_s.sub('.','') }
   last_name { Faker::Name.last_name }
   agreement_read { true }
-  category_id { Category.make!.id }
+  buying_categories { Array(Category.make!) }
   roles_mask { 304 }
   company_name { Faker::Company.name }
   address { Address.make! }

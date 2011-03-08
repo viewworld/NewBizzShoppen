@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
       elsif resource.has_role? :customer and resource.sign_in_count <= 1
         edit_customers_interests_path
       elsif resource.has_role? :category_buyer
-        category_home_page_path(resource.category.cached_slug)
+        category_home_page_path(resource.with_role.parent_buying_categories.first.cached_slug)
       elsif session[:last_url_before_logout].present?
         last_url = session[:last_url_before_logout]
         session[:last_url_before_logout] = nil
@@ -69,17 +69,27 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def check_category_buyer
-    category_from_slug = params[:slug] ? Category.where(:cached_slug => params[:slug]).first : nil
-    @home_category = if user_signed_in? and current_user and current_user.has_role?(:category_buyer)
-      redirect_to category_home_page_path(current_user.category.cached_slug) if (category_from_slug and category_from_slug != current_user.category) or (params[:slug] and !category_from_slug)
-      current_user.category
-    elsif params[:slug] and !category_from_slug
+  def category_from_slug
+    if params[:slug] and category = Category.where(:cached_slug => params[:slug]).first
+      category
+    elsif params[:slug]
       redirect_to root_path
-    elsif category_from_slug
-      category_from_slug
     end
+  end
 
+  def check_category_buyer
+    requested_category = category_from_slug
+    @home_category = if user_signed_in? and current_user and current_user.has_role?(:category_buyer)
+      if requested_category and current_user.with_role.parent_buying_categories.include?(requested_category)
+        requested_category
+      elsif requested_category
+        redirect_to category_home_page_path(current_user.with_role.parent_buying_categories.first.cached_slug)
+      elsif current_user.has_role?(:category_buyer)
+        current_user.with_role.parent_buying_categories.first
+      end
+    elsif requested_category
+      requested_category
+    end
   end
 
   Warden::Manager.before_failure do |env, opts|

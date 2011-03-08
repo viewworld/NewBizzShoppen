@@ -40,6 +40,8 @@ module NavigationHelpers
         "/#{$1.to_url}/leads"
     when /category home page for (.*)/
         "/#{$1.to_url}"
+    when /category leads page for (.*)/
+        "/#{$1.to_url}/leads"
     when /agents leads/
         '/agents/leads'
     when /agents lead templates/

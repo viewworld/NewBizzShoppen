@@ -352,6 +352,8 @@ en:
           button_cancel: Cancel
           reset_password_link: Reset password
           not_charge_vat: 'Do not charge VAT'
+          available_categories: 'Available categories'
+          selected_categories: 'Selected categories'
       create:
         flash:
           user_creation_successful: User has been created successfuly
@@ -1400,6 +1402,7 @@ en:
           button_bulk_create_lead_request: 'Accept lead requests'
           button_bulk_destroy_lead_request: 'Reject lead requests'
           search:
+            header: 'Search'
             keyword_label: 'Keyword'
             category_label: 'Category'
             deal_value_from_label: 'From'

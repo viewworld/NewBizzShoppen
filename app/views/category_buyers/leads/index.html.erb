@@ -1,6 +1,6 @@
 <search-box:>
   <div class="search_box">
-    <h2>Search</h2>
+    <h2><%= t("customer.lead_requests.index.view.search.header") %></h2>
 
     <div class="search_content">
       <%= form_for @search, :url => category_home_page_leads_path(@home_category.cached_slug) do |f| %>
@@ -32,8 +32,21 @@
                 </ibt>
               </li>
             </ol>
-          </fieldset>
       <% end %>
+        <% if user_signed_in? and current_user and current_user.has_role?(:category_buyer) %>
+            <%= form_tag '' do %>
+              <ol class="no_pdd">
+                  <li class="select" style="float:right">
+                    <%= label "category", t("leads.index.search.category_label") %>
+                    <%= select_tag "category", options_for_select(current_user.parent_buying_categories.map { |c| [c.name, c.cached_slug] },@home_category.name.downcase),
+                                   :include_blank => false,
+                                   :onchange => "this.form.action='/'+this.value+'/leads';this.form.submit();"
+                    %>
+                  </li>
+                </ol>
+              </fieldset>
+            <% end %>
+        <% end %>
     </div>
   </div>
 </search-box:>

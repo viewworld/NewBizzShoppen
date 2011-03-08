@@ -7,4 +7,8 @@ class ::User::Admin < ::User
   def can_publish_leads?
     true
   end
+
+  def accessible_categories
+    Category.all
+  end
 end
