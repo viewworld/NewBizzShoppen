@@ -109,7 +109,7 @@ Scenario: I should see certification level for each requested lead
   Then I go to customers lead requests
   And I should see translated "models.lead.certification.lvl0"
 
-@m6 @_added @tgn
+@m6 @added @tgn @_done @tested_elsewhere
 Scenario: I should see rating % for each requested lead
 
 @tgn @_done @_tested
@@ -227,8 +227,14 @@ Scenario: Hidden description should be truncated and expandable by JS
   And I follow translated "common.js.read_more"
   Then I should see translated "common.js.collapse_expanded_text"
 
-@m6 @tgn
+@m6 @tgn @selenium @_tested
 Scenario: I can add note to owned lead
+  When I go to buyer lead purchases
+  Then I should see translated "lead_buyer.lead_purchases.index.view.owner_note_blank"
+  And I follow translated "lead_buyer.lead_purchases.index.view.owner_note_blank"
+  And I fill in "owner_note_1" with "My custom note"
+  Then I follow translated "lead_buyer.lead_purchases.index.view.update_owner_note"
+  And I should see "My custom note"
 
 @m6 @ao
 Scenario: I should not see show page for owned lead when accordion style listing is used

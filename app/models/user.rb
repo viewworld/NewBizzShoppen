@@ -7,12 +7,14 @@ class User < ActiveRecord::Base
   ADDITIONAL_USER_ROLES_WITH_LABELS = [['Lead user', "lead_user"], ['Lead buyer', "lead_buyer"], ["Call centre agent", "call_centre_agent"]]
 
   NOT_CERTIFIED               = 0
-  SILVER_CERTIFICATION        = 1
-  GOLD_CERTIFICATION          = 2
+  BRONZE_CERTIFICATION        = 1
+  SILVER_CERTIFICATION        = 2
+  GOLD_CERTIFICATION          = 3
   NOT_CERTIFIED_LOCKED        = 10
-  SILVER_CERTIFICATION_LOCKED = 11
-  GOLD_CERTIFICATION_LOCKED   = 12
-  CERTIFICATION_LEVELS = [NOT_CERTIFIED, SILVER_CERTIFICATION, GOLD_CERTIFICATION, NOT_CERTIFIED_LOCKED, SILVER_CERTIFICATION_LOCKED, GOLD_CERTIFICATION_LOCKED]
+  BRONZE_CERTIFICATION_LOCKED = 11
+  SILVER_CERTIFICATION_LOCKED = 12
+  GOLD_CERTIFICATION_LOCKED   = 13
+  CERTIFICATION_LEVELS = [NOT_CERTIFIED, BRONZE_CERTIFICATION, SILVER_CERTIFICATION, GOLD_CERTIFICATION, NOT_CERTIFIED_LOCKED, BRONZE_CERTIFICATION_LOCKED, SILVER_CERTIFICATION_LOCKED, GOLD_CERTIFICATION_LOCKED]
 
   BLACK_LISTED_ATTRIBUTES = [:paypal_email, :bank_swift_number, :bank_iban_number]
 
@@ -44,6 +46,8 @@ class User < ActiveRecord::Base
 
   scope :with_customers, where("roles_mask & #{2**User.valid_roles.index(:customer)} > 0 ")
   scope :with_agents, where("(roles_mask & #{2**User.valid_roles.index(:agent)} > 0) or (roles_mask & #{2**User.valid_roles.index(:call_centre_agent) } > 0) or (roles_mask & #{2**User.valid_roles.index(:purchase_manager)} > 0) or (roles_mask & #{2**User.valid_roles.index(:call_centre) } > 0)")
+  scope :with_agents_without_call_centres, where("(roles_mask & #{2**User.valid_roles.index(:agent)} > 0) or (roles_mask & #{2**User.valid_roles.index(:call_centre_agent) } > 0) or (roles_mask & #{2**User.valid_roles.index(:purchase_manager)} > 0)")
+  scope :with_call_centre_agents, lambda { |call_centre| where("(roles_mask & #{2**User.valid_roles.index(:call_centre_agent)} > 0) and parent_id = ?", call_centre.id) }
   scope :with_role, lambda { |role| where("roles_mask & #{2**User.valid_roles.index(role.to_sym)} > 0 ") }
   scope :with_keyword, lambda { |q| where("lower(first_name) like :keyword OR lower(last_name) like :keyword OR lower(email) like :keyword", {:keyword => "%#{q.downcase}%"}) }
   scope :with_subaccounts, lambda { |parent_id| where("parent_id = ?", parent_id) }
@@ -59,6 +63,7 @@ class User < ActiveRecord::Base
   scope :with_assigned_leads_total, lambda { |assignee| select("leads.id").where("assignee_id = ?", assignee.id).join_lead_purchases_and_leads }
   scope :with_lead_creators_for, lambda { |parent| select("DISTINCT(users.id), users.*").where("users.parent_id = ?", parent.id).joins("INNER JOIN leads ON leads.creator_id=users.id") }
   scope :assignees_for_lead_purchase_owner, lambda { |owner| select("DISTINCT(users.id), users.*").where("requested_by IS NULL and lead_purchases.owner_id = ? and accessible_from IS NOT NULL and users.parent_id = ?", owner.id, owner.id).joins("RIGHT JOIN lead_purchases on lead_purchases.assignee_id=users.id") }
+  scope :with_leads, select("DISTINCT(email), users.*").joins("RIGHT JOIN leads on users.id=leads.creator_id")
 
   scoped_order :id, :roles_mask, :first_name, :last_name, :email, :age, :department, :mobile_phone, :completed_leads_counter, :leads_requested_counter,
                :leads_assigned_month_ago_counter, :leads_assigned_year_ago_counter, :total_leads_assigned_counter, :leads_created_counter,
@@ -235,7 +240,11 @@ class User < ActiveRecord::Base
     self.leads_rated_bad_counter = Lead.with_rated_bad_by(self).size
     self.leads_not_rated_counter = Lead.with_not_rated_by(self).size
     self.leads_rating_avg = LeadPurchase.with_rating_avg_by(self).first.id || 0
-    self.refresh_certification_level
+    if has_role?(:call_centre_agent)
+      self.certification_level = parent.read_attribute(:certification_level)
+    else
+      self.refresh_certification_level
+    end
     self.save
   end
 

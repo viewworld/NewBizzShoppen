@@ -3,7 +3,8 @@ class LeadTemplateField < ActiveRecord::Base
   STRING = 0.freeze
   INTEGER = 1.freeze
   DATE = 2.freeze
-  FIELD_TYPES = [STRING, INTEGER, DATE]
+  NOTE = 3.freeze
+  FIELD_TYPES = [STRING, INTEGER, DATE, NOTE]
 
   belongs_to :lead_template
   has_many :lead_template_value
