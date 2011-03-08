@@ -385,6 +385,7 @@ Scenario: When there is only one template present for a lead and it is optional 
 @m4 @added @tgn @agent_certification @_tested @selenium
 Scenario: I cannot publish leads if my certification level is Not Certified or Locked
   Given Category Test category 1 is created
+  And user "bob@person.com" with role "agent" has attributes "certification_level:0"
   And I go to agents leads
   And I select "Test category 1" from "category_id"
   And I follow translated "agent.leads.index.view.new_lead"
