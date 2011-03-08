@@ -43,7 +43,7 @@ module CategoriesHelper
       root_categories = if current_user.has_role?(:admin)
         Category.roots
       elsif current_user.has_role?(:category_buyer)
-        current_user.parent_buying_categories
+        current_user.parent_accessible_categories
       else
         current_user.has_accessible_categories? ? Category.roots.within_accessible(current_user) : current_user.has_role?(:customer) ? Category.roots.with_customer_unique(current_user) : Category.roots.with_agent_unique(current_user)
       end

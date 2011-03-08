@@ -34,7 +34,8 @@ class Category < ActiveRecord::Base
   has_many :category_agents
   has_many :customers, :through => :category_customers, :source => :user
   has_many :agents, :through => :category_agents, :source => :user
-#  has_and_belongs_to_many :buying_users, :class_name => "User", :join_table => 'categories_users', :foreign_key => :user_id
+  has_many :categories_users
+  has_many :buying_users, :through => :categories_users, :source => :user
 
   has_many :category_countries
   has_many :countries, :through => :category_countries, :source => :country
@@ -51,7 +52,13 @@ class Category < ActiveRecord::Base
   scope :without_unique, where("is_customer_unique = ? and is_agent_unique = ?", false, false)
   scope :with_customer_unique, lambda { |customer| where("(is_customer_unique = ? and category_customers.user_id is NULL) or (is_customer_unique = ? and category_customers.user_id = ?)", false, true, customer.id).joins("LEFT JOIN category_customers ON categories.id=category_customers.category_id") }
   scope :with_agent_unique, lambda { |agent| where("(is_agent_unique = ? and category_agents.user_id is NULL) or (is_agent_unique = ? and category_agents.user_id = ?)#{' or (is_agent_unique = \'t\' and category_agents.user_id = ' + agent.parent_id.to_s + ')' if agent.has_role?(:call_centre_agent)}", false, true, agent.id).joins("LEFT JOIN category_agents ON categories.id=category_agents.category_id") }
+  scope :with_buying, lambda { |user| joins(:buying_users).where(:users => {:id => user.id}) }
   scope :with_call_centre_unique, lambda { |call_centre| where("(is_agent_unique = ? and category_agents.user_id is NULL) or (is_agent_unique = ? and category_agents.user_id IN (?))", false, true, call_centre.subaccounts.map(&:id)).joins("LEFT JOIN category_agents ON categories.id=category_agents.category_id") }
+  scope :category_buyer_accessible_categories, lambda { |user| joins("
+    LEFT JOIN categories_users ON categories.id = categories_users.category_id
+    LEFT JOIN users ON users.id = categories_users.user_id
+    LEFT JOIN category_customers ON categories.id = category_customers.category_id
+  ").where("(categories.is_customer_unique = 't' and category_customers.user_id = :user_id) OR (categories_users.user_id = :user_id)", {:user_id => user.id})}
 
   before_destroy :check_if_category_is_empty
 

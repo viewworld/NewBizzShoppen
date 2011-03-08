@@ -98,8 +98,37 @@ Scenario: I should have my interests fixed to the unique category I'm assigned t
   And I go to customer interests
   Then checkbox named "category_" should be checked
 
-@added @m6 @ao
+@added @m6 @ao @_done @_tested
 Scenario: If customer is category buyer he/she can see also unique categories
+  When I sign out
+  And Category named "Best Leads" already exists
+  And Category named "Unique Leads" already exists
+  And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Best Leads"
+  And category "Unique Leads" is unique for user with email "jon@lajoie.ca" role "customer"
+  And I am on the home page
+  And I sign in as jon@lajoie.ca with password secret
+  And I am on the home page
+  Then I should see "Best Leads"
+  And I should see "Unique Leads"
+
+@added @m6 @ao @_done @_tested
+Scenario: If customer is category buyer with assigned unique categories he can access them
+  When I sign out
+  And Category named "Best Leads" already exists
+  And Category named "Unique Leads" already exists
+  And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Best Leads"
+  And category "Unique Leads" is unique for user with email "jon@lajoie.ca" role "customer"
+  And lead Uniqlead exists within category Unique Leads
+  And I am on the home page
+  And I sign in as jon@lajoie.ca with password secret
+  And I am on the home page
+  And I am on category home page for Unique Leads
+  Then I should be on category home page for Unique Leads
+  And I should see "Uniqlead" within "#latest_leads"
+  When I follow translated "category_home.show.view.complete_list_link" within "#latest_leads"
+  Then I should be on category home leads page for Unique Leads
+  And I should see "Uniqlead"
+  And I should see "1" rows in a table within ".leads_table tbody"
 
 @added @tgn @_tested
 Scenario: On the interests page the country should be selected based on current locale

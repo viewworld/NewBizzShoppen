@@ -80,7 +80,7 @@ class ApplicationController < ActionController::Base
   def check_category_buyer
     requested_category = category_from_slug
     @home_category = if user_signed_in? and current_user and current_user.has_role?(:category_buyer)
-      if requested_category and current_user.with_role.parent_buying_categories.include?(requested_category)
+      if requested_category and current_user.with_role.parent_accessible_categories.include?(requested_category)
         requested_category
       elsif requested_category
         redirect_to category_home_page_path(current_user.with_role.parent_buying_categories.first.cached_slug)
