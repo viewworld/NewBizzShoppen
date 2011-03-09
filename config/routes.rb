@@ -15,7 +15,7 @@ Nbs::Application.routes.draw do
   match 'bulk_action' => 'bulk_actions#create', :as => :bulk_action
 
   namespace :administration do
-    root :to => "users#index"
+    root :to => redirect("/")
     resources :users do
       resource :password, :controller => 'password'
     end
