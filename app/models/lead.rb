@@ -30,7 +30,7 @@ class Lead < ActiveRecord::Base
   scope :with_country, lambda { |country_id| where(:country_id => country_id) }
   scope :with_zip_code, lambda { |zip_code| where(:zip_code => zip_code)}
   scope :with_ids_not_in, lambda { |q| where(["leads.id NOT IN (?)", q]) }
-  scope :without_inactive, joins("LEFT JOIN lead_purchases ON lead_purchases.lead_id = leads.id").having("(SUM(lead_purchases.quantity) < sale_limit) OR SUM(lead_purchases.quantity) IS NULL").group(Lead.column_names.map{|c| 'leads.'+c}.join(','))
+  scope :without_inactive, where("((select sum(quantity) from lead_purchases where lead_id = leads.id group by lead_id) is null or (select sum(quantity) from lead_purchases where lead_id = leads.id group by lead_id) < sale_limit)")
   scope :without_outdated, lambda { where("purchase_decision_date >= ?", Date.today.to_s ) }
   scope :without_locked_users, joins("INNER JOIN users ON users.id=leads.creator_id").where("users.locked_at is NULL")
   scope :with_status, lambda { |q| where(["leads.published = ?", q]) }

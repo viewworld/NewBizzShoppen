@@ -61,7 +61,7 @@ class Cart
   end
 
   def total
-    lead_purchases.sum('price * quantity')
+    BigDecimal.new(lead_purchases.sum('price * quantity'))
   end
 
   def count

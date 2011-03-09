@@ -62,3 +62,25 @@ Scenario: I can access my basket after I logout and login again
   Then I sign in as customer@person.com with password supersecret
   And I follow translated "layout.cart.show_cart"
   And I should see "Printers ultimate deal"
+
+@added @ao @m6 @_done @_tested
+Scenario: I can't buy (see) a lead when sale_limit is reached
+  Given there are no leads
+  And I have user with email agent01@nbs.com and role agent
+  And user "agent01@nbs.com" with role "agent" has attributes "certification_level:1, company_name:Xerox1"
+  And I have user with email agent02@nbs.com and role agent
+  And user "agent02@nbs.com" with role "agent" has attributes "certification_level:12, company_name:Xerox2"
+  And I have user with email agent03@nbs.com and role agent
+
+  Given lead Super printers #1 is created by user agent01@nbs.com with role agent
+  And a lead Super printers #1 exists within category Computers and is bought by user ultimate.buyer@nbs.com with role customer
+  And lead Super printers #1 exists with attributes "hotness_counter:0, sale_limit:1, purchase_value:5200"
+
+  Given lead Super printers #2 is created by user agent02@nbs.com with role agent
+  And a lead Super printers #2 exists within category Computers and is bought by user ultimate.buyer@nbs.com with role customer
+  And lead Super printers #2 exists with attributes "hotness_counter:0, sale_limit:2, purchase_value:5200"
+
+  And I go to browse leads
+  And I follow "Computers"
+  Then I should see "Super printers #2"
+  And I should not see "Super printers #1"
