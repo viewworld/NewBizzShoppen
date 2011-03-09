@@ -31,6 +31,7 @@ en:
         leads: 'Leads'
         articles: 'Articles'
         news: 'News'
+        hints: 'Hints'
         currencies: 'Currencies'
         countries: Countries
         invoices: 'Invoices'
@@ -536,6 +537,20 @@ en:
           header: 'Editing news %{name}'
           button_save: 'Save news'
           category_label: 'Category'
+    hints:
+      index:
+        view:
+          header: Hints
+          search_button: Search
+          id: ID
+          title: Title
+          actions: Actions
+          edit_link: "Edit"
+          show_link: "Show"
+      edit:
+        view:
+          button_save: "Save"
+          header: "Edit hint %{name}"
     currencies:
       index:
         view:

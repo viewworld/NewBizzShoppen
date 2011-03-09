@@ -48,7 +48,7 @@
     </param:actions>
   </header>
 
-  <% if @articles.blank? %>
+  <% if @hints.blank? %>
       <%= blank_state_message %>
   <% else %>
       <table id="articles_table" class="generic">
@@ -70,7 +70,7 @@
         </tr>
         </tfoot>
         <tbody>
-        <% @articles.each do |article| %>
+        <% @hints.each do |article| %>
             <tr class="<%= cycle("odd", "even") %>">
               <td class="cl"></td>
               <td class="ta_c"><%= article.id %></td>
@@ -97,7 +97,7 @@
         <% if will_paginate %>
             <tr class="pagination">
               <td colspan="6" class="ta_c">
-                <%= will_paginate @articles, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+                <%= will_paginate @hints, :previous_label => '&laquo;', :next_label => '&raquo;' %>
               </td>
             </tr>
         <% end %>

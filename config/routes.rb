@@ -26,6 +26,7 @@ Nbs::Application.routes.draw do
     resources :leads
     resources :articles
     resources :news
+    resources :hints
     resources :currencies
     namespace :invoicing do
       resources :invoices do
