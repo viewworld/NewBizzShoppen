@@ -48,7 +48,7 @@
     </param:actions>
   </header>
 
-  <% if @hints.blank? %>
+  <% if @articles.blank? %>
       <%= blank_state_message %>
   <% else %>
       <table id="articles_table" class="generic">
@@ -70,7 +70,7 @@
         </tr>
         </tfoot>
         <tbody>
-        <% @hints.each do |article| %>
+        <% @articles.each do |article| %>
             <tr class="<%= cycle("odd", "even") %>">
               <td class="cl"></td>
               <td class="ta_c"><%= article.id %></td>
