@@ -260,6 +260,11 @@ end
   resource { Category.make! }
 end
 
+::Article::Cms::Hint.blueprint do
+  title { Faker::Lorem.words(4).to_s.capitalize }
+  content { Faker::Lorem.sentences(2).to_s }
+end
+
 Invoice.blueprint do
   user { User::Customer.make! }
   seller { Seller.make! }

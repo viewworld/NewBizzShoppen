@@ -340,8 +340,14 @@ Scenario: When the template's field is of the note type then I should see textar
   And I follow translated "call_centre_agent.leads.index.view.new_lead"
   Then field "lead_lead_template_values_attributes_1_value" is of textarea type
 
-@m6
+@m6 @tgn @selenium @_tested  @_wip
 Scenario: I should see hint for every field when creating a lead
+  Given Category Test category 1 is created
+  And article hint for model "Lead" and method "company_name" has attributes "published:true, content:Tooltip for company name"
+  And I follow translated "layout.main_menu.call_centre_agent.leads"
+  And I select "Test category 1" from "category_id"
+  And I follow translated "agent.leads.index.view.new_lead"
+  And I should see CSS path "p[class*='inline-hints']"
 
 @m6 @tgn @_tested @selenium
 Scenario: I have already filled in international dialling codes for telephone numbers (+xx) (xxxxxxxxxxxxxxxxxxxxxx)

@@ -23,6 +23,10 @@ class Administration::HintsController < Administration::AdministrationController
     end
   end
 
+  def show
+    @hint = Article.find(params[:id])
+  end
+
   protected
 
   def collection

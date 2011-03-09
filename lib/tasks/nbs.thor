@@ -125,6 +125,18 @@ class Nbs < Thor
         }
     ]
 
+    #Hints
+    {:lead => %w{ company_name company_phone_number company_website address_line_1 address_line_2 address_line_3 zip_code city country_id
+              region_id country_id company_vat_no company_ean_number contact_name direct_phone_number phone_number email_address linkedin_url
+              facebook_url category_id is_international header description hidden_description purchase_value price currency_id published
+              notify_buyers_after_update sale_limit purchase_decision_date }
+    }.each_pair do |klass, methods|
+      methods.each do |method|
+        Article::Cms::Hint.create(:key => "#{klass}_#{method}", :published => false, :title => "#{klass.to_s.capitalize}##{method.gsub('_id', '')}",
+        :content => Rails.env.production? ? nil : "Hint for <b>lead's #{method.humanize.downcase.gsub('_id', '')}</b>")
+      end
+    end
+
     email_templates_array.each do |email_template|
       unless EmailTemplate.find_by_uniq_id(email_template[:uniq_id])
         [:en, :dk].each do |locale|
