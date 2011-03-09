@@ -7,8 +7,10 @@ Background: Sign in user and set English locale
   And I am signed up and confirmed as user with email bob@person.com and password supersecret and role admin
   Then I sign in as bob@person.com with password supersecret
 
+
 @_tested
 Scenario: I can create a user account by seleceting its type and filling in the required fields and I can set the payout rate if different than default from system settings
+  When I go to administration users
   Given I select "Agent" from "role"
   And I press translated "administration.users.index.view.new_user"
   Then I fill in "user_agent_first_name" with "Alex"

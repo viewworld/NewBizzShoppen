@@ -7,6 +7,7 @@ Background: Sign in user and set English locale
   And I am signed up and confirmed as user with email bob@person.com and password supersecret and role admin
   Then I sign in as bob@person.com with password supersecret
   And I have user with email aaaaaagent1@person.com and role agent
+  And I go to administration users
 
 @_tested
  Scenario: I can edit user info (no password reset!)
