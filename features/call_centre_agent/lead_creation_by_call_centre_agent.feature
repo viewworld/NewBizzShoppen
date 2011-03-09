@@ -340,7 +340,7 @@ Scenario: When the template's field is of the note type then I should see textar
   And I follow translated "call_centre_agent.leads.index.view.new_lead"
   Then field "lead_lead_template_values_attributes_1_value" is of textarea type
 
-@m6 @tgn @selenium @_tested  @_wip
+@m6 @tgn @selenium @_tested
 Scenario: I should see hint for every field when creating a lead
   Given Category Test category 1 is created
   And article hint for model "Lead" and method "company_name" has attributes "published:true, content:Tooltip for company name"

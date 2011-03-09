@@ -19,6 +19,7 @@ class Article < ActiveRecord::Base
   scope :latest, order("created_at DESC")
   scope :published, where(:published => true)
   scope :with_subclass, lambda { |s| where(["type LIKE ?","%#{s}%"])}
+  scope :without_subclass, lambda { |s| where(["type NOT LIKE ?","%#{s}%"])}
   scope :ascend_by_title, only_translations(I18n.locale).order("article_translations.title ASC")
   scope :descend_by_title, only_translations(I18n.locale).order("article_translations.title DESC")
   scope :for_category, lambda { |category| where(:resource_type => 'Category', :resource_id => category.to_i) }
