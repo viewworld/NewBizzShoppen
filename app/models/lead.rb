@@ -30,7 +30,7 @@ class Lead < ActiveRecord::Base
   scope :with_country, lambda { |country_id| where(:country_id => country_id) }
   scope :with_zip_code, lambda { |zip_code| where(:zip_code => zip_code)}
   scope :with_ids_not_in, lambda { |q| where(["leads.id NOT IN (?)", q]) }
-  scope :without_inactive, where("lead_purchases_counter < sale_limit")
+  scope :without_inactive, joins("LEFT JOIN lead_purchases ON lead_purchases.lead_id = leads.id").having("(SUM(lead_purchases.quantity) < sale_limit) OR SUM(lead_purchases.quantity) IS NULL").group(Lead.column_names.map{|c| 'leads.'+c}.join(','))
   scope :without_outdated, lambda { where("purchase_decision_date >= ?", Date.today.to_s ) }
   scope :without_locked_users, joins("INNER JOIN users ON users.id=leads.creator_id").where("users.locked_at is NULL")
   scope :with_status, lambda { |q| where(["leads.published = ?", q]) }
@@ -205,7 +205,7 @@ class Lead < ActiveRecord::Base
   end
 
   def buyable?
-    lead_purchases_counter < sale_limit
+    lead_purchases.sum("quantity") < sale_limit
   end
 
   def calculate_average_rating
@@ -290,11 +290,24 @@ class Lead < ActiveRecord::Base
     user ? lead_purchases.map(&:owner_id).include?(user.id) : false
   end
 
+  def buyout_quantity
+    sale_limit - lead_purchases.sum("quantity")
+  end
+
   def buyout_price
-    (sale_limit - lead_purchases_counter) * price
+     buyout_quantity * price
   end
 
   def buyout_possible_for?(user)
-    !bought_by_users_other_than(user) and buyable?
+    category.buyout_enabled? and !bought_by_users_other_than(user) and buyable?
+  end
+
+  def buyout!(buyer)
+    if buyer.lead_purchases.create(:lead_id => self.id,
+                                   :paid => false,
+                                   :accessible_from => (buyer.big_buyer ? Time.now : nil),
+                                   :quantity => buyout_quantity)
+      :buyout_successful
+    end
   end
 end

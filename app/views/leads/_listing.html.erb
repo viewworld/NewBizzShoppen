@@ -51,7 +51,7 @@
           <p class="element"><%= t("leads.listing.lead_price_label") %>
             <span class="green"><%= as_currency(lead.price, lead.currency) %></span></p>
 
-          <% if lead.category.buyout_enabled? and !lead.bought_by_users_other_than(current_user) %>
+          <% if lead.buyout_possible_for?(current_user) %>
               <p class="element"><%= t("leads.listing.buyout_price_label") %>
                 <span class="green"><%= as_currency(lead.buyout_price, lead.currency) %></span></p>
           <% end %>

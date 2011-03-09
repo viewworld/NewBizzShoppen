@@ -12,6 +12,10 @@ class Cart
     @buyer.leads_in_cart
   end
 
+  def lead_purchases
+    @buyer.lead_purchases_in_cart
+  end
+
   def add_lead(lead)
     unless items.include?(lead)
       if currency_matches?(lead)
@@ -35,9 +39,7 @@ class Cart
   def buyout_lead(lead)
     if currency_matches?(lead)
       if lead.buyout_possible_for?(@buyer)
-        (lead.sale_limit - lead.lead_purchases_counter).times do
-          @buyer.lead_purchases.create(:lead_id => lead.id, :paid => false, :accessible_from => (@buyer.big_buyer ? Time.now : nil))
-        end
+        lead.buyout!(@buyer)
       else
         :bought_by_other_user
       end
@@ -59,7 +61,7 @@ class Cart
   end
 
   def total
-    items.sum('price')
+    lead_purchases.sum('price * quantity')
   end
 
   def count

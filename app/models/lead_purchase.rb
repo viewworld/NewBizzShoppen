@@ -170,4 +170,8 @@ class LeadPurchase < LeadPurchaseBase
     UNSATISFACTORY_RATING_LEVELS.include?(rating_level)
   end
 
+  def total
+    quantity * lead.price
+  end
+
 end

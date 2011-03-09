@@ -20,12 +20,12 @@ module PaypalPayment
         :notify_url => notify_url,
         :cert_id    => APP_CONFIG[:paypal_cert_id]
     }
-    items.each_with_index do |item, index|
+    lead_purchases.each_with_index do |lp, index|
       values.merge!({
-                        "amount_#{index+1}"      => item.price,
-                        "item_name_#{index+1}"   => item.header,
-                        "item_number_#{index+1}" => item.id,
-                        "quantity_#{index+1}"    => 1
+                        "amount_#{index+1}"      => lp.lead.price,
+                        "item_name_#{index+1}"   => lp.header,
+                        "item_number_#{index+1}" => lp.id,
+                        "quantity_#{index+1}"    => lp.quantity
                     })
     end
     encrypt_for_paypal(values)
