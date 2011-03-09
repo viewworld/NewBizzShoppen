@@ -41,7 +41,7 @@ Feature: Sign in
     Then I should be on "<the page>"
     Examples:
     | login           | password    | role  | the page |
-    | bob@person.com  | supersecret | admin | administration root |
+    | bob@person.com  | supersecret | admin | the homepage |
     | bob2@person.com | supersecret | agent | agents root |
 #    | bob@person.com/supersecret | call_centre | call_centres#index
 #    | bob@person.com/supersecret | call_centre_agent | call_centre_agents#index
