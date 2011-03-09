@@ -44,6 +44,7 @@ class LeadsController < ApplicationController
     end
 
     @countries = (current_user and current_user.has_accessible_categories?) ? Country.with_leads.within_accessible_categories(current_user) : Country.with_leads
+    @creators = (current_user and current_user.has_accessible_categories?) ? User.with_leads.within_accessible_categories(current_user) : User.with_leads
     @search = Lead.scoped_search(params[:search])
     @leads = @search.paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)
     @category = @search.with_category.present? ? Category.find(@search.with_category) : nil
@@ -57,7 +58,7 @@ class LeadsController < ApplicationController
 
   def check_category_buyer
     if current_user and current_user.has_role?(:category_buyer)
-      redirect_to category_home_page_path(current_user.category.cached_slug)
+      redirect_to category_home_page_path(current_user.parent_buying_categories.first.cached_slug)
     end
   end
 

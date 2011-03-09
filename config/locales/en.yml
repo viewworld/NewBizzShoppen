@@ -32,6 +32,7 @@ en:
         articles: 'Articles'
         news: 'News'
         currencies: 'Currencies'
+        countries: Countries
         invoices: 'Invoices'
         upcoming_invoices: 'Debtors'
         payment_transactions: 'Payments'
@@ -238,6 +239,10 @@ en:
         category_label: 'Category'
         country_label: 'Country'
         zip_code: 'Zip code'
+        created_by: Created by
+        certification: Certification
+        sale_limit: Uniqueness
+        hotness: Hotness
       add_to_cart_link: Add to cart
       add_to_cart_buyout_link: 'Buyout'
       buy_lead: Buy lead
@@ -350,6 +355,8 @@ en:
           button_cancel: Cancel
           reset_password_link: Reset password
           not_charge_vat: 'Do not charge VAT'
+          available_categories: 'Available categories'
+          selected_categories: 'Selected categories'
       create:
         flash:
           user_creation_successful: User has been created successfuly
@@ -403,6 +410,7 @@ en:
           button_update: 'Save'
           new_template: New template
           edit_template: Edit
+          duplicate_template: Duplicate
           destroy_template: Destroy
           destroy_template_confirmation_message: Are you sure?
     settings:
@@ -560,6 +568,34 @@ en:
       destroy:
         errors:
           has_leads: "You can't delete this currency because there are leads using it"
+    countries:
+      form:
+        new_region: New region
+        delete_region: Delete
+      index:
+        view:
+          title: Countries
+          new_country: New country
+          edit: Edit
+          delete: Delete
+          delete_confirmation_message: Are you sure?
+          no_currencies_defined: There are no countries defined
+          table:
+            id: ID
+            name: Name
+            locale: Locale
+            actions: Actions
+      new:
+        view:
+          header: New country
+          button_create_country: Create
+          button_cancel: Cancel
+      edit:
+        view:
+          header: Edit country %{name}
+          button_update_country: Save
+          button_cancel: Cancel
+
     invoices:
       common:
         view:
@@ -898,6 +934,7 @@ en:
           header: Lead templates
           new_template: New template
           edit: Edit
+          duplicate: Duplicate
           destroy: Destroy
           search_button: Search
           search:
@@ -927,6 +964,7 @@ en:
           edit: Edit
           destroy: Destroy
           destroy_template_confirmation_message: Are you sure?
+          duplicate: Duplicate
           new_template: New template
           search_button: Search
           search:
@@ -1061,6 +1099,7 @@ en:
           new_template: New template
           edit: Edit
           destroy: Destroy
+          duplicate: Duplicate
           search_button: Search
           search:
             keyword_label: Keyword
@@ -1125,6 +1164,7 @@ en:
           header: Lead templates
           new_template: New template
           edit: Edit
+          duplicate: Duplicate
           destroy: Destroy
           search_button: Search
           search:
@@ -1365,10 +1405,12 @@ en:
           button_bulk_create_lead_request: 'Accept lead requests'
           button_bulk_destroy_lead_request: 'Reject lead requests'
           search:
+            header: 'Search'
             keyword_label: 'Keyword'
             category_label: 'Category'
             deal_value_from_label: 'From'
             deal_value_to_label: 'To'
+            zip_code: Zip code
             country_label: 'Country'
             requested_by_label: 'Requested by'
             search_button: 'Search'
@@ -1538,6 +1580,9 @@ en:
           rating_reason: 'Reason:'
           rating_reason_empty: 'You have to provide reson for your rating!'
           update_rating_button: 'Save rating'
+          update_owner_note: Save note
+          cancel_owner_note: Cancel
+          owner_note_blank: '(Click here to add note)'
           view_lead: View Details
           email_lead: Contact lead
           search:
@@ -1620,7 +1665,9 @@ en:
         additional_language: 'Additional language'
         sales_information: 'Sales information'
         not_all_templates_filled: All mandatory templates must be filled!
+        category_was_changed: Category has been changed
         county: Region
+        creator: Creator
 
   models:
     user:
@@ -1637,16 +1684,19 @@ en:
         lvl2: Classic
       certification:
         lvl0: Not certified
-        lvl1: Silver
-        lvl2: Gold
+        lvl1: Bronze
+        lvl2: Silver
+        lvl3: Gold
         lvl10: Not certified (locked)
-        lvl11: Silver (locked)
-        lvl12: Gold (locked)
+        lvl11: Bronze (locked)
+        lvl12: Silver (locked)
+        lvl13: Gold (locked)
     lead_template_field:
       field_type:
         type0: Text
         type1: Number
         type2: Date
+        type3: Note
     locale:
       en: English
       dk: Danish

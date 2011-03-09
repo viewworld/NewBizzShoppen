@@ -3,6 +3,11 @@ class CallCentreAgents::LeadTemplatesController < CallCentreAgents::CallCentreAg
 
   set_tab "lead_templates"
 
+  def new
+    @lead_template = LeadTemplate.new(:current_user => current_user, :creator => current_user)
+    @lead_template.duplicate_fields(LeadTemplate.with_creator(current_user.id).find_by_id(params[:template_id]))
+  end
+
   def create
     @lead_template = LeadTemplate.new(:current_user => current_user, :creator => current_user)
     @lead_template.attributes = params[:lead_template]

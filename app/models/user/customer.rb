@@ -4,6 +4,7 @@ class ::User::Customer < ::User
   include User::RegistrationValidations
   include Addresses
   include BankAccounts
+  include User::CommonBuyer
 
   has_many :lead_purchases, :foreign_key => "owner_id"
   has_many :lead_requests, :foreign_key => "owner_id"
@@ -14,8 +15,6 @@ class ::User::Customer < ::User
   has_many :countries, :through => :country_interests
   has_many :categories, :through => :category_interests
   has_many :invoices, :foreign_key => "user_id"
-  has_many :category_customers, :foreign_key => "user_id"
-  has_many :unique_categories, :through => :category_customers, :foreign_key => "user_id", :source => :category
   has_many :accessible_lead_purchases, :foreign_key => :owner_id, :class_name => "LeadPurchase", :conditions => "accessible_from IS NOT NULL"
 
   accepts_nested_attributes_for :lead_purchases

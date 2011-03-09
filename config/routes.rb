@@ -43,6 +43,7 @@ Nbs::Application.routes.draw do
     resources :lead_templates
     resources :sellers
     resources :category_users
+    resources :countries
   end
 
   namespace :buyers do
@@ -127,6 +128,8 @@ Nbs::Application.routes.draw do
   resources :purchase_manager_accounts, :only => [:new, :create]
   resources :category_buyer_accounts, :only => [:new, :create]
   resources :locales
+  resources :phone_codes
+  resources :regions
 
   resources :news
   resources :articles

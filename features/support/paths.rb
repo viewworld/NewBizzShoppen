@@ -34,12 +34,16 @@ module NavigationHelpers
         '/administration/invoicing/invoices'
     when /administration upcoming invoices/
         '/administration/invoicing/upcoming_invoices'
+    when /administration countries/
+        '/administration/countries'
     when /administration sellers/
         administration_sellers_path
     when /category home leads page for (.*)/
         "/#{$1.to_url}/leads"
     when /category home page for (.*)/
         "/#{$1.to_url}"
+    when /category leads page for (.*)/
+        "/#{$1.to_url}/leads"
     when /agents leads/
         '/agents/leads'
     when /agents lead templates/

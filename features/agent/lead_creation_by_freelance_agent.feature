@@ -32,7 +32,6 @@ Scenario: I can create a new lead and close
   And I fill in "lead_email_address" with "my@email.com"
   And I fill in "lead_address_line_1" with "Kaminskiego 19"
   And I fill in "lead_city" with "Bielsko-Biała"
-  And I fill in "lead_county" with "Freesdas"
   And I fill in "lead_zip_code" with "23-2911"
   And I fill in "datepicker" with date that is "5" days from now
   And I press translated "agent.leads.new.view.button_create"
@@ -59,7 +58,6 @@ Scenario: I can create a new lead and continue (create another one)
   And I fill in "lead_email_address" with "my@email.com"
   And I fill in "lead_address_line_1" with "Kaminskiego 19"
   And I fill in "lead_city" with "Bielsko-Biała"
-  And I fill in "lead_county" with "Freesdas"
   And I fill in "lead_zip_code" with "23-2911"
   And I fill in "datepicker" with date that is "5" days from now
   And I press translated "agent.leads.new.view.button_create_and_continue"
@@ -87,7 +85,6 @@ Scenario: I can add an extra language while creating lead. This will include lea
   And I fill in "lead_email_address" with "my@email.com"
   And I fill in "lead_address_line_1" with "Kaminskiego 19"
   And I fill in "lead_city" with "Bielsko-Biała"
-  And I fill in "lead_county" with "Freesdas"
   And I fill in "lead_zip_code" with "23-2911"
   And I fill in "datepicker" with date that is "5" days from now
   And I select translated "models.locale.dk" from "locale_picker"
@@ -132,7 +129,6 @@ Scenario: All fields for new lead have to be filled in beside email address
   And I fill in "lead_email_address" with ""
   And I fill in "lead_address_line_1" with "Kaminskiego 19"
   And I fill in "lead_city" with "Bielsko-Biała"
-  And I fill in "lead_county" with "Freesdas"
   And I fill in "lead_zip_code" with "23-2911"
   And I fill in "datepicker" with date that is "5" days from now
   And I press translated "agent.leads.new.view.button_create"
@@ -169,7 +165,6 @@ Scenario: I can add linkedin and facebook links to lead's contact information
   And I fill in "lead_email_address" with "my@email.com"
   And I fill in "lead_address_line_1" with "Kaminskiego 19"
   And I fill in "lead_city" with "Bielsko-Biała"
-  And I fill in "lead_county" with "Freesdas"
   And I fill in "lead_zip_code" with "23-2911"
   And I fill in "datepicker" with date that is "5" days from now
   And I fill in "lead_facebook_url" with "http://www.facebook.com/myfakefacebookprofile"
@@ -198,7 +193,6 @@ Scenario: I have to fill out the templates which are mandatory
   And I fill in "lead_company_name" with "Printing company"
   And I fill in "lead_address_line_1" with "Kaminskiego 19"
   And I fill in "lead_city" with "Bielsko-Biała"
-  And I fill in "lead_county" with "Freesdas"
   And I fill in "lead_zip_code" with "23-2911"
   And I fill in "datepicker" with date that is "5" days from now
   And I fill in "lead_lead_template_values_attributes_0_value" with "123"
@@ -232,7 +226,6 @@ Scenario: I can select additional templates that are optional
   And I fill in "lead_company_name" with "Printing company"
   And I fill in "lead_address_line_1" with "Kaminskiego 19"
   And I fill in "lead_city" with "Bielsko-Biała"
-  And I fill in "lead_county" with "Freesdas"
   And I fill in "lead_zip_code" with "23-2911"
   And I fill in "datepicker" with date that is "5" days from now
   And I fill in "lead_lead_template_values_attributes_0_value" with "123"
@@ -304,7 +297,6 @@ Scenario: When new translation to lead is added I can also write translation for
   And I fill in "lead_company_name" with "Printing company"
   And I fill in "lead_address_line_1" with "Kaminskiego 19"
   And I fill in "lead_city" with "Bielsko-Biała"
-  And I fill in "lead_county" with "Freesdas"
   And I fill in "lead_zip_code" with "23-2911"
   And I fill in "datepicker" with date that is "5" days from now
   And I fill in "lead_lead_template_values_attributes_0_value" with "123"
@@ -343,7 +335,6 @@ Scenario: I have to fill out the fields that are mandatory in mandatory or optio
   And I fill in "lead_company_name" with "Printing company"
   And I fill in "lead_address_line_1" with "Kaminskiego 19"
   And I fill in "lead_city" with "Bielsko-Biała"
-  And I fill in "lead_county" with "Freesdas"
   And I fill in "lead_zip_code" with "23-2911"
   And I fill in "datepicker" with date that is "5" days from now
   And I fill in "lead_lead_template_values_attributes_0_value" with "123"
@@ -374,7 +365,6 @@ Scenario: When there is only one template present for a lead and it is optional 
   And I fill in "lead_company_name" with "Printing company"
   And I fill in "lead_address_line_1" with "Kaminskiego 19"
   And I fill in "lead_city" with "Bielsko-Biała"
-  And I fill in "lead_county" with "Freesdas"
   And I fill in "lead_zip_code" with "23-2911"
   And I fill in "datepicker" with date that is "5" days from now
   And I fill in "lead_lead_template_values_attributes_0_value" with "123"
@@ -385,6 +375,7 @@ Scenario: When there is only one template present for a lead and it is optional 
 @m4 @added @tgn @agent_certification @_tested @selenium
 Scenario: I cannot publish leads if my certification level is Not Certified or Locked
   Given Category Test category 1 is created
+  And user "bob@person.com" with role "agent" has attributes "certification_level:0"
   And I go to agents leads
   And I select "Test category 1" from "category_id"
   And I follow translated "agent.leads.index.view.new_lead"
@@ -426,7 +417,6 @@ Scenario: I can create a new lead and duplicate company\contact info to another 
   And I fill in "lead_email_address" with "my@email.com"
   And I fill in "lead_address_line_1" with "Kaminskiego 19"
   And I fill in "lead_city" with "Bielsko-Biała"
-  And I fill in "lead_county" with "Freesdas"
   And I fill in "lead_zip_code" with "23-2911"
   And I fill in "datepicker" with date that is "5" days from now
   And I fill in "lead_company_phone_number" with "34234234234234"
@@ -474,12 +464,38 @@ Scenario: I can publish leads only in unique categories if I'm assigned at least
   And I go to agents leads
   Then "category_id" dropdown should have values "Test category 1,Agent Unique Category"
   And "category_id" dropdown should not have values "Other Agent Unique Category"
-  
+
+@m6 @tgn @_tested @added @lead_templates @selenium
+Scenario: When the template's field is of the note type then I should see textarea instead of textbox
+  Given template named "Computers details" for category "Computers" is created by user "bob@person.com" with role "agent"
+  And template named "Computers details" is mandatory
+  And template named "Computers details" has following fields "computers count:false:true, operating systems:false:true:3, purchase date:false:false"
+  And I go to agents leads
+  And I select "Computers" from "category_id"
+  And I follow translated "agent.leads.index.view.new_lead"
+  Then field "lead_lead_template_values_attributes_1_value" is of textarea type
 @m6
 Scenario: I should see hint for every field when creating a lead
   
-@m6 @ao
+@m6 @tgn @selenium @_tested
 Scenario: I can choose region during creation of a lead
+  Given country "Denmark" has regions "Region #1, Region #2, Region #3"
+  And Category Test category 1 is created
+  And I go to agents leads
+  And I select "Test category 1" from "category_id"
+  And I follow translated "agent.leads.index.view.new_lead"
+  And I select "Denmark" from "lead_country_id"
+  And I select "Region #2" from "lead_region_id"
 
-@m6 @tgn
+@m6 @tgn @selenium @_tested
 Scenario: I have already filled in international dialling codes for telephone numbers (+xx) (xxxxxxxxxxxxxxxxxxxxxx)
+  Given Category Test category 1 is created
+  And I go to agents leads
+  And I select "Test category 1" from "category_id"
+  And I follow translated "agent.leads.index.view.new_lead"
+  And I select "Denmark" from "lead_country_id"
+  Then the "lead_direct_phone_number" field should contain "\+45"
+  And the "lead_phone_number" field should contain "\+45"
+  And I press translated "agent.leads.new.view.button_create"
+  Then the "lead_direct_phone_number" field should contain "\+45"
+  And the "lead_phone_number" field should contain "\+45"

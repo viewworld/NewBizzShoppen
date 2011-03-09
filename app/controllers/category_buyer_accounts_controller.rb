@@ -3,7 +3,7 @@ class CategoryBuyerAccountsController < ApplicationController
   before_filter :redirect_to_root_path_if_signed_in
 
   def new
-    @user = User::CategoryBuyer.new(:newsletter_on => true, :category => @home_category)
+    @user = User::CategoryBuyer.new(:newsletter_on => true, :buying_categories => [@home_category])
   end
 
   def create

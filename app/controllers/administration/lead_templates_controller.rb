@@ -5,6 +5,7 @@ class Administration::LeadTemplatesController < Administration::AdministrationCo
 
   def new
     @lead_template = LeadTemplate.new(:category_id => params[:category_id])
+    @lead_template.duplicate_fields(LeadTemplate.find_by_id(params[:template_id]))
   end
 
   def create

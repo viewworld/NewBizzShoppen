@@ -98,8 +98,37 @@ Scenario: I should have my interests fixed to the unique category I'm assigned t
   And I go to customer interests
   Then checkbox named "category_" should be checked
 
-@added @m6 @ao
+@added @m6 @ao @_done @_tested
 Scenario: If customer is category buyer he/she can see also unique categories
+  When I sign out
+  And Category named "Best Leads" already exists
+  And Category named "Unique Leads" already exists
+  And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Best Leads"
+  And category "Unique Leads" is unique for user with email "jon@lajoie.ca" role "customer"
+  And I am on the home page
+  And I sign in as jon@lajoie.ca with password secret
+  And I am on the home page
+  Then I should see "Best Leads"
+  And I should see "Unique Leads"
+
+@added @m6 @ao @_done @_tested
+Scenario: If customer is category buyer with assigned unique categories he can access them
+  When I sign out
+  And Category named "Best Leads" already exists
+  And Category named "Unique Leads" already exists
+  And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Best Leads"
+  And category "Unique Leads" is unique for user with email "jon@lajoie.ca" role "customer"
+  And lead Uniqlead exists within category Unique Leads
+  And I am on the home page
+  And I sign in as jon@lajoie.ca with password secret
+  And I am on the home page
+  And I am on category home page for Unique Leads
+  Then I should be on category home page for Unique Leads
+  And I should see "Uniqlead" within "#latest_leads"
+  When I follow translated "category_home.show.view.complete_list_link" within "#latest_leads"
+  Then I should be on category home leads page for Unique Leads
+  And I should see "Uniqlead"
+  And I should see "1" rows in a table within ".leads_table tbody"
 
 @added @tgn @_tested
 Scenario: On the interests page the country should be selected based on current locale
@@ -112,5 +141,57 @@ Scenario: On the interests page the country should be selected based on current 
   And I follow translated "layout.main_menu.customer.interests"
   Then "countries" should be selected for value "Denmark"
 
-@m6 @tgn
+@m6 @tgn @_tested
 Scenario: I can use "Advanced search" in Browse leads with following fields: Deal value, Agent (creator), Agent’s (creator) rating (all,bronze, silver, gold), Uniqueness, Hotness
+  Given I have user with email agent01@nbs.com and role agent
+  And user "agent01@nbs.com" with role "agent" has attributes "certification_level:1, company_name:Xerox1"
+  And I have user with email agent02@nbs.com and role agent
+  And user "agent02@nbs.com" with role "agent" has attributes "certification_level:12, company_name:Xerox2"
+  And I have user with email agent03@nbs.com and role agent
+  And user "agent03@nbs.com" with role "agent" has attributes "certification_level:13, company_name:Xerox3"
+  And I have user with email ultimate.buyer@nbs.com and role customer
+
+  Given lead Super printers #1 is created by user agent01@nbs.com with role agent
+  And a lead Super printers #1 exists within category Computers and is bought by user ultimate.buyer@nbs.com with role customer
+  And lead Super printers #1 exists with attributes "hotness_counter:0, sale_limit:9, purchase_value:5200"
+
+  Given lead Super printers #2 is created by user agent02@nbs.com with role agent
+  And a lead Super printers #2 exists within category Computers and is bought by user ultimate.buyer@nbs.com with role customer
+  And lead Super printers #2 exists with attributes "hotness_counter:1, sale_limit:1, purchase_value:5900"
+
+  Given lead Super printers #3 is created by user agent03@nbs.com with role agent
+  And a lead Super printers #3 exists within category Computers and is bought by user ultimate.buyer@nbs.com with role customer
+  And lead Super printers #3 exists with attributes "hotness_counter:2, sale_limit:5, purchase_value:10200"
+
+  And I go to browse leads
+  And I follow "Computers"
+  Then I select "Xerox2, agent02@nbs.com" from "search_with_created_by"
+  And I press translated "leads.index.search.search_button"
+  Then I should see "Super printers #2"
+  And I should not see "Super printers #1"
+  And I should not see "Super printers #3"
+  Then I select "" from "search_with_created_by"
+  And I select translated "models.lead.certification.lvl3" from "search_with_certification_level"
+  And I press translated "leads.index.search.search_button"
+  Then I should see "Super printers #3"
+  And I should not see "Super printers #1"
+  And I should not see "Super printers #2"
+  Then I select "" from "search_with_certification_level"
+  And I select "9" from "search_with_sale_limit"
+  And I press translated "leads.index.search.search_button"
+  Then I should see "Super printers #1"
+  And I should not see "Super printers #2"
+  And I should not see "Super printers #3"
+  Then I select "" from "search_with_sale_limit"
+  And I select translated "models.lead.hotness.lvl1" from "search_with_hotness"
+  And I press translated "leads.index.search.search_button"
+  Then I should see "Super printers #2"
+  And I should not see "Super printers #1"
+  And I should not see "Super printers #3"
+  Then I select "" from "search_with_hotness"
+  And I select "5000" from "search_with_deal_value_from"
+  And I select "6000" from "search_with_deal_value_to"
+  And I press translated "leads.index.search.search_button"
+  Then I should see "Super printers #1"
+  And I should see "Super printers #2"
+  And I should not see "Super printers #3"

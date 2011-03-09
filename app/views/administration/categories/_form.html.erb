@@ -17,6 +17,8 @@
 
       <%= render :partial => "users_selection", :locals => { :users_type => "agents", :form => form } %>
 
+      <%= form.input :countries, :as => :select, :collection => Country.all.collect { |c| [c.name, c.id] }, :multiple => true, :input_html => { :size => 6, :style => "height:140px; width:200px;" } %>
+
       <%= form.semantic_fields_for :image, @category.image || Asset::CategoryImage.new do |image| %>
           <%= image.input :asset,
                           :as => :file,

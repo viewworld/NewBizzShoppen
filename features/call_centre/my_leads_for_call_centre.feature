@@ -70,5 +70,19 @@ Scenario: I can see clicks, exposure, hottness, novelty, unikness, price per lea
 @_done @non_testable
 Scenario: clicking on the lead should take to edit page
 
-@m6
+@m6 @_tested @tgn
 Scenario: I can change a creator of lead to any other user within my call centre
+  Given there are no leads
+  And I have user with email other_agent@nbs.com and role call_centre_agent
+  And I have user with email agent_555@nbs.com and role call_centre_agent
+  And an user with role call_centre_agent and email agent_555@nbs.com belongs to call centre call_centre@person.com
+  And I have user with email agent_777@nbs.com and role call_centre_agent
+  And an user with role call_centre_agent and email agent_777@nbs.com belongs to call centre call_centre@person.com
+  And lead Super ultra lead #1 is created by user agent_777@nbs.com with role call_centre_agent
+  And I go to call centre leads
+  And I follow translated "leads.listing.edit_label"
+  Then I select "agent_555@nbs.com" from "lead_tmp_creator_id"
+  And "lead_tmp_creator_id" dropdown should not have values "other_agent@nbs.com"
+  And I press translated "administration.leads.edit.view.button_update"
+  And I follow translated "leads.listing.edit_label"
+  And "lead_tmp_creator_id" should be selected for value "agent_555@nbs.com"

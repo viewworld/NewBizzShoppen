@@ -26,6 +26,7 @@ class Lead < ActiveRecord::Base
   scope :purchase_value_from, lambda { |q| where(["purchase_value >= ?", q]) }
   scope :purchase_value_to, lambda { |q| where(["purchase_value <= ?", q]) }
   scope :with_category, lambda { |q| where(:category_id => Category.find_by_id(q).self_and_descendants.map(&:id)) }
+  scope :with_categories, lambda { |arr| where(:category_id => Category.where(:id => arr.map(&:self_and_descendants).flatten.map(&:id))) }
   scope :with_country, lambda { |country_id| where(:country_id => country_id) }
   scope :with_zip_code, lambda { |zip_code| where(:zip_code => zip_code)}
   scope :with_ids_not_in, lambda { |q| where(["leads.id NOT IN (?)", q]) }
@@ -59,6 +60,12 @@ class Lead < ActiveRecord::Base
   scope :with_customer_unique_categories, lambda { |customer_id| where("(is_customer_unique = ? and category_customers.user_id is NULL) or (is_customer_unique = ? and category_customers.user_id = ?)", false, true, customer_id).joins("INNER JOIN categories on categories.id=leads.category_id LEFT JOIN category_customers ON categories.id=category_customers.category_id") }
   scope :with_agent_unique_categories, lambda { |agent_id| where("(is_agent_unique = ? and category_agents.user_id is NULL) or (is_agent_unique = ? and category_agents.user_id = ?)", false, true, agent_id).joins("INNER JOIN categories on categories.id=leads.category_id LEFT JOIN category_agents ON categories.id=category_agents.category_id") }
 
+  scope :with_deal_value_from, lambda { |from| where("purchase_value >= ?", from) }
+  scope :with_deal_value_to, lambda { |to| where("purchase_value <= ?", to) }
+  scope :with_certification_level, lambda { |cl| where("certification_level = ? or certification_level = ?", cl.to_i, cl.to_i + 10) }
+  scope :with_sale_limit, lambda { |sale_limit| where("sale_limit = ?", sale_limit.to_i) }
+  scope :with_hotness, lambda { |hotness| where("hotness_counter = ?", hotness) }
+
   validates_presence_of :header, :description, :price, :company_name, :contact_name, :phone_number, :sale_limit, :category_id, :purchase_decision_date, :country_id, :currency, :address_line_1, :city, :zip_code
   validates_presence_of :hidden_description, :unless => Proc.new{|l| l.created_by?('PurchaseManager')}
   validates_inclusion_of :sale_limit, :in => 0..10
@@ -77,6 +84,8 @@ class Lead < ActiveRecord::Base
   scoped_order :id, :header, :sale_limit, :price, :lead_purchases_counter, :published, :has_unsatisfactory_rating, :purchase_value, :created_at
 
   attr_protected :published
+  attr_accessor :category_is_changed
+  attr_accessor :tmp_creator_id
 
   attr_accessor :current_user
   attr_accessor :notify_buyers_after_update
@@ -85,8 +94,35 @@ class Lead < ActiveRecord::Base
   after_find :set_buyers_notification
   before_update :notify_buyers_about_changes
   before_save :set_published_at
+  before_save :handle_category_change
+  before_save :change_creator
+  before_validation :handle_dialling_codes
 
   private
+
+  #prevent dialling codes from saving when no proper phone number follows them
+  def handle_dialling_codes
+    fields = [:direct_phone_number, :phone_number].select { |pn| self.send(pn).to_s.strip.size <= 3 }
+    unless fields.empty?
+      fields.each do |field|
+        self.send("#{field}=".to_sym, nil)
+      end
+    end
+  end
+
+  def change_creator
+    if tmp_creator_id and tmp_creator_id != creator_id
+      self.creator = User.find(tmp_creator_id).send(:casted_class).find(tmp_creator_id)
+    end
+  end
+
+  #Handling case when category is changed during edit/create to prevent auto save
+  def handle_category_change
+    if ActiveRecord::ConnectionAdapters::Column.value_to_boolean(category_is_changed)
+      self.errors.add(:category_id, I18n.t("shared.leads.form.category_was_changed"))
+    end
+  end
+
   def check_lead_templates
     if category_id_changed?
       lead_template_fields = lead_templates(true).map{ |lt| lt.lead_template_fields }.flatten.select { |f| f.is_mandatory }
@@ -181,6 +217,10 @@ class Lead < ActiveRecord::Base
     end
   end
 
+  def refresh_hotness_counter
+    self.hotness_counter = hotness_level
+  end
+
   def average_rating_as_text
     "#{average_rating}%"
   end
@@ -190,7 +230,7 @@ class Lead < ActiveRecord::Base
   end
 
   def address
-    [address_line_1, address_line_2, address_line_3, zip_code, city, county].join(" ")
+    [address_line_1, address_line_2, address_line_3, zip_code, city].join(" ")
   end
 
   def sold?
@@ -200,7 +240,7 @@ class Lead < ActiveRecord::Base
   def duplicate_fields(lead)
     if lead
       ["company_name", "company_phone_number", "company_website", "address_line_1", "address_line_2", "address_line_3", "zip_code",
-      "county", "country_id", "company_ean_number", "contact_name", "direct_phone_number", "phone_number", "email_address", "linkedin_url", "facebook_url"].each do |field|
+      "country_id", "company_ean_number", "contact_name", "direct_phone_number", "phone_number", "email_address", "linkedin_url", "facebook_url"].each do |field|
         self.send("#{field}=".to_sym, lead.send(field.to_sym))
       end
     end

@@ -1,7 +1,11 @@
-<li class="string">
+<li class="<%= f.object.lead_template_field.field_type.to_i == LeadTemplateField::NOTE ? 'text' : 'string' %>">
   <% abbr =  f.object.lead_template_field.is_mandatory ? content_tag(:abbr, "*").html_safe : '' -%>
   <%= raw f.label :value, h(f.object.lead_template_field.name)+(abbr) %>
-  <%= f.text_field :value %>
+  <% if f.object.lead_template_field.field_type.to_i == LeadTemplateField::NOTE %>
+    <%= f.text_area :value, :style => "height: 100px; width: 230px" %>
+  <% else %>
+    <%= f.text_field :value %>
+  <% end %>
   <%= custom_error_for_field(f, :value) %>
 </li>
 <li class="hidden">

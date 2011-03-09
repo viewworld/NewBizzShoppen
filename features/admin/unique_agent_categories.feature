@@ -8,7 +8,7 @@ Background:
   Given there are no categories
   And Category Computers is created
   Then I sign in as bob@person.com with password supersecret
-  And I go to administration categories
+  And I go to browse leads
 
 @_tested
 Scenario: I can mark category as agent unique

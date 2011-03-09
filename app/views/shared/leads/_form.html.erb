@@ -12,10 +12,13 @@
       <%= form.input :address_line_3 %>
       <%= form.input :zip_code %>
       <%= form.input :city %>
-      <%= form.input :county, :label => t("shared.leads.form.county") %>
-      <%= form.input :country_id, :as => :select, :collection => Country.all %>
+      <%= form.input :country_id, :as => :select, :collection => Country.all, :input_html => { :onchange => "refresh_phone_codes(); refresh_regions_list();" } %>
+      <%= form.input :region_id, :as => :select, :collection => @lead.country.present? ? @lead.country.regions : [] %>
       <%= form.input :company_vat_no, :label => t("shared.leads.form.company_vat_no") %>
       <%= form.input :company_ean_number, :label => t("shared.leads.form.company_ean_reg") %>
+      <% if current_user.has_any_role?(:admin, :call_centre) %>
+        <%= form.input :tmp_creator_id, :as => :select, :collection => (current_user.has_role?(:call_centre) ? User.with_call_centre_agents(current_user) : User.with_agents_without_call_centres).map { |u| [u.email, u.id] }, :selected => @lead.creator_id, :label => t("shared.leads.form.creator") %>
+      <% end %>
     </ol>
   </fieldset>
 </div>
@@ -44,7 +47,8 @@
       <li class="header">
         <h3><%= t("shared.leads.form.lead_information") %></h3>
       </li>
-      <%= form.input :category_id, :collection => Category.without_locked.with_agent_unique(current_user).map { |c| [c.name, c.id] }, :include_blank => false, :input_html => {:disabled => (!@lead.new_record? and @lead.lead_template_values_present?), :onchange => "$('##{dom_id(@lead, @lead.new_record? ? :new : :edit)}').submit()"} %>
+      <%= form.input :category_id, :collection => Category.without_locked.with_agent_unique(current_user).map { |c| [c.name, c.id] }, :include_blank => false, :input_html => {:disabled => (!@lead.new_record? and @lead.lead_template_values_present?), :onchange => "$('#lead_category_is_changed').val('1'); $('##{dom_id(@lead, @lead.new_record? ? :new : :edit)}').submit()"} %>
+      <%= form.input :category_is_changed, :as => :hidden, :value => "0" %>
       <%= form.input :is_international, :as => :select, :collection => [[t("shared.leads.form.country_local_label"), 0], [t("shared.leads.form.country_international"), 1]], :include_blank => false, :label => t("shared.leads.form.is_international") %>
       <%= form.input :header, :label => t("shared.leads.form.header") %>
       <%= form.input :description, :input_html => {:style => "height: 140px; width: 600px"}, :label => t("shared.leads.form.description") %>
@@ -183,6 +187,49 @@
             $('#optional_templates_span').show();
         }
     }
+
+    function refresh_phone_codes(){
+       $.ajax({
+         type: "GET",
+         url: "<%= phone_codes_path -%>",
+         data: "country_id=" + $('#lead_country_id').val()
+       });
+    }
+
+    function refresh_regions_list(){
+       $.ajax({
+         type: "GET",
+         url: "<%= regions_path -%>",
+         data: "country_id=" + $('#lead_country_id').val()
+       });
+    }
+
+    function set_phone_code(field, code){
+        $('#' + field).val('+' + code)
+    }
+
+    function clear_regions_select(){
+        $('#lead_region_id option').each(function()
+        {
+
+            if($(this).text() != "") {
+                $(this).remove();
+            }
+        });
+    }
+
+    function add_region(label, value){
+       $('#lead_region_id').
+            append($("<option></option>").
+            attr("value", value).
+            text(label));
+    }
+
+
+    <% if !@lead.new_record? or (@lead.new_record? and @lead.country.present?) %>
+        <%= "if($('#lead_direct_phone_number').val() == ''){set_phone_code('lead_direct_phone_number', #{@lead.country.phone_dialling_code})}" -%>
+        <%= "if($('#lead_phone_number').val() == ''){set_phone_code('lead_phone_number', #{@lead.country.phone_dialling_code})}" -%>
+    <% end %>
 
     <% if params[:action] == "new" or params[:action] == "create" %>
     set_beginnings_of_urls(["lead_linkedin_url", "lead_facebook_url", "lead_company_website"]);

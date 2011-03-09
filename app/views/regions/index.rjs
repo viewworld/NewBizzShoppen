@@ -1,0 +1,4 @@
+page << "clear_regions_select()"
+@country.regions.each do |region|
+  page << "add_region('#{region.name}', #{region.id})"
+end
