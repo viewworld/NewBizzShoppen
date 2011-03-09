@@ -230,7 +230,7 @@ class Lead < ActiveRecord::Base
   end
 
   def address
-    [address_line_1, address_line_2, address_line_3, zip_code, city, county].join(" ")
+    [address_line_1, address_line_2, address_line_3, zip_code, city].join(" ")
   end
 
   def sold?
@@ -240,7 +240,7 @@ class Lead < ActiveRecord::Base
   def duplicate_fields(lead)
     if lead
       ["company_name", "company_phone_number", "company_website", "address_line_1", "address_line_2", "address_line_3", "zip_code",
-      "county", "country_id", "company_ean_number", "contact_name", "direct_phone_number", "phone_number", "email_address", "linkedin_url", "facebook_url"].each do |field|
+      "country_id", "company_ean_number", "contact_name", "direct_phone_number", "phone_number", "email_address", "linkedin_url", "facebook_url"].each do |field|
         self.send("#{field}=".to_sym, lead.send(field.to_sym))
       end
     end

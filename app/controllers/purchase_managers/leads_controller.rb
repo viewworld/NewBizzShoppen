@@ -25,7 +25,7 @@ class PurchaseManagers::LeadsController < PurchaseManagers::PurchaseManagerContr
         :address_line_1 => current_user.address.address_line_1,
         :city           => current_user.address.address_line_2,
         :zip_code       => current_user.address.zip_code,
-        :county         => current_user.address.address_line_3,
+        :address_line_3 => current_user.address.address_line_3,
         :published      => false,
         :current_user   => current_user    
     })
