@@ -1,0 +1,24 @@
+<column-mc:>
+  <header back="true">
+    <%= t('administration.hints.edit.view.header', :name => @hint.title) %>
+  </header>
+
+  <%= form_for @hint, :as => :article, :url => administration_hint_path(@hint), :html => {:method => :delete, :id => "delete_article_form"} do |form| %>
+  <% end %>
+
+  <%= semantic_form_for @hint, :as => :article, :url => administration_hint_path(@hint), :input_html => {:method => :put} do |form| %>
+      <frm title="#{@hint.title}">
+        <param:content>
+          <%= render :partial => 'form', :locals => {:form => form} %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("administration.hints.edit.view.button_save") %>
+          </ibt>
+          <ibt c="fltri bt_grey">
+              <%= button_to_function t("common.cancel_link"), "history.go(-1)" %>
+            </ibt>
+        </param:actions>
+      </frm>
+  <% end %>
+</column-mc:>
