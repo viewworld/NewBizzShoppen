@@ -554,6 +554,9 @@ en:
         view:
           button_save: "Save"
           header: "Edit hint %{name}"
+      show:
+        view:
+          header: "Show"
     currencies:
       index:
         view:
@@ -1729,6 +1732,7 @@ en:
           help_popup: 'Help popup'
           interface_content_text: 'Interface content text'
           main_page_article: 'Main page article'
+          hint: 'Hint'
 
     attributes:
       lead_purchase:

@@ -314,5 +314,11 @@ Scenario: When there is only one template present for a lead and it is optional 
   And I press translated "purchase_manager.leads.new.view.button_create"
   And I should see translated "flash.leads.actions.create.notice"
 
-@m6
+@m6 @tgn @selenium @_tested
 Scenario: I should see hint for every field when creating a lead
+  Given Category Test category 1 is created
+  And article hint for model "Lead" and method "company_name" has attributes "published:true, content:Tooltip for company name"
+  And I go to purchase managers leads
+  And I select "Test category 1" from "category_id"
+  And I follow translated "agent.leads.index.view.new_lead"
+  And I should see CSS path "p[class*='inline-hints']"

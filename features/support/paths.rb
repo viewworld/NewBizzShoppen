@@ -38,6 +38,8 @@ module NavigationHelpers
         '/administration/countries'
     when /administration sellers/
         administration_sellers_path
+    when /administration hints/
+        administration_hints_path
     when /category home leads page for (.*)/
         "/#{$1.to_url}/leads"
     when /category home page for (.*)/

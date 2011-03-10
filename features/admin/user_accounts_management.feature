@@ -11,6 +11,7 @@ Feature: User accounts management
   And User agent.tom.blank@paerson22.com with role agent is blocked
   And I am signed up and confirmed as user with email bob@person.com and password supersecret and role admin
   Then I sign in as bob@person.com with password supersecret
+  And I go to administration users
 
  @_tested
  Scenario: I can browse users with pagination

@@ -29,6 +29,7 @@ class Administration::ArticlesController < Administration::AdministrationControl
   def collection
     params[:search] ||= {}
     params[:search][:with_subclass] = "Article::Cms" unless params[:search][:with_subclass].present?
+    params[:search][:without_subclass] = "Article::Cms::Hint"
     @search = Article.scoped_search(params[:search])
     @articles = @search.paginate(:page => params[:page])
   end
