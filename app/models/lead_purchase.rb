@@ -20,6 +20,7 @@ class LeadPurchase < LeadPurchaseBase
   RATING_LEVELS = [RATING_EXCELLENT, RATING_VERY_GOOD, RATING_SATISFACTORY] + UNSATISFACTORY_RATING_LEVELS
 
   belongs_to :assignee, :class_name => "User::LeadUser", :foreign_key =>  "assignee_id"
+  belongs_to :purchaser, :class_name => "User::LeadBuyer", :foreign_key =>  "purchased_by"
   belongs_to :lead, :counter_cache => :lead_purchases_counter
   has_one :invoice_line, :as => :payable
 
@@ -39,6 +40,7 @@ class LeadPurchase < LeadPurchaseBase
   scope :with_not_invoiced_keyword, lambda { |keyword| where("lower(leads.header) LIKE :keyword OR lower(leads.contact_name) LIKE :keyword OR lower(leads.company_name) LIKE :keyword", { :keyword => "%#{keyword.downcase}%" }) }
   scope :with_assigned_at_date_after_and_including, lambda{ |date| where(["assigned_at::DATE >= ?",date])}
   scope :with_assigned_at_date_before_and_including, lambda{ |date| where(["assigned_at::DATE <= ?",date])}
+  scope :with_purchased_by, lambda { |buyer| where("requested_by IS NULL and (owner_id = ? or purchased_by = ?)", buyer.id, buyer.id) }
 
   before_save :assign_to_proper_owner_if_accessible
   before_save :assign_to_owner

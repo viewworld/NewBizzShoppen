@@ -76,10 +76,11 @@
               <th><%= link_to t("administration.users.index.view.last_name"), order_for_scoped_search(:last_name) %></th>
               <th><%= link_to t("administration.users.index.view.email"), order_for_scoped_search(:email) %></th>
               <th><%= link_to t("administration.users.index.view.age"), order_for_scoped_search(:age) %></th>
-              <th><%= t("administration.users.index.view.leads_bought") %></th>
-              <th><%= t("administration.users.index.view.leads_sold") %></th>
-              <th><%= t("administration.users.index.view.revenue") %></th>
-              <th><%= t("administration.users.index.view.payout") %></th>
+              <th><%= link_to t("administration.users.index.view.leads_bought"), order_for_scoped_search(:leads_purchased_counter) %></th>
+              <th><%= link_to t("administration.users.index.view.leads_created"), order_for_scoped_search(:leads_created_counter) %></th>
+              <th><%= link_to t("administration.users.index.view.leads_sold"), order_for_scoped_search(:leads_volume_sold_counter) %></th>
+              <th><%= link_to t("administration.users.index.view.revenue"), order_for_scoped_search(:leads_revenue_counter) %></th>
+              <th><%= link_to t("administration.users.index.view.payout"),order_for_scoped_search(:payout) %></th>
               <th class="ta_c"><%= t("administration.users.index.view.locked") %></th>
               <th class="ta_r"><%= t("administration.users.index.view.actions") %></th>
               <th class="hr"></th>
@@ -88,7 +89,7 @@
             <tfoot>
             <tr>
               <td class="fl"></td>
-              <td colspan="13"></td>
+              <td colspan="14"></td>
               <td class="fr"></td>
             </tr>
             </tfoot>
@@ -103,10 +104,11 @@
                   <td><%= user.last_name %></td>
                   <td><%= user.email %></td>
                   <td><%= user.age %></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
+                  <td><%= user.leads_purchased_counter %></td>
+                  <td><%= user.leads_created_counter %></td>
+                  <td><%= user.leads_volume_sold_counter %></td>
+                  <td><%= user.leads_revenue_counter %></td>
+                  <td><%= user.payout %></td>
                   <td class="ta_c">
                     <% unless user.id == current_user.id %>
                         <%= link_to user.locked_at.blank? ? t("administration.users.index.view.lock") : t("administration.users.index.view.unlock"), administration_user_path(user, {"user_#{user.role.to_s}".to_sym  => {:locked =>  user.locked_at.blank? ? "lock" : "unlock"}}), {:method => :put} %>
@@ -134,7 +136,7 @@
                 </tr>
             <% end %>
             <tr class="pagination">
-              <td colspan="15" class="ta_c">
+              <td colspan="16" class="ta_c">
                 <div class="td_select_all">
                   <%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %>
                   <%= label_tag "mark_all", "select all" %>
@@ -144,7 +146,7 @@
             </tr>
             <tr class="main_actions">
               <td class="cl"></td>
-              <td colspan="13" class="no_pdd_lr ta_l">
+              <td colspan="14" class="no_pdd_lr ta_l">
                 <%= hidden_field_tag :route_to %>
                 <%= hidden_field_tag :bulk_action_type %>
                 <%= bt_link_to :invoice, t("administration.users.index.view.create_invoice"), "javascript:void(0)", :onclick => "$('#bulk_action_type').val('create_invoice'); submitBulkForm('#{administration_bulk_users_update_path}#PUT');", :id => "invoice_selected" %>

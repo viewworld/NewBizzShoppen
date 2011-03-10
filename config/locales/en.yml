@@ -346,6 +346,7 @@ en:
           search_button: 'Search'
           delete: 'Delete'
           delete_confirmation_message: 'Are you sure?'
+          leads_created: "Leads created"
       edit:
         view:
           title: 'Editing user: %{name}'

@@ -178,8 +178,17 @@ Given /^all users have refreshed cache counters$/ do
       user.refresh_subaccounts_counters!
     end
 
+    User::CallCentre.all.each do |user|
+      user.refresh_certification_level
+      user.save
+    end
+
     (User::Agent.all + User::CallCentreAgent.all).each do |user|
       user.refresh_agent_counters!
+    end
+
+    User::LeadBuyer.all.each do |user|
+      user.refresh_buyer_counters!
     end
 end
 
@@ -246,4 +255,12 @@ end
 When /^user "([^"]*)" is assigned to category "([^"]*)" as category buyer$/ do |email,category_name|
   u = User::CategoryBuyer.where(:email => email).first
   u.buying_categories << Category.where(:name => category_name)
+end
+
+Given /^customer "([^"]*)" has no subaccounts$/ do |email|
+  customer = User::Customer.find_by_email(email)
+  customer.subaccounts.each do |sa|
+    sa.update_attribute(:parent_id, nil)
+    sa.destroy
+  end
 end

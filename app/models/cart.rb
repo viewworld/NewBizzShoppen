@@ -16,7 +16,7 @@ class Cart
     unless items.include?(lead)
       if currency_matches?(lead)
         if lead.buyable?
-          purchase = @buyer.lead_purchases.create(:lead_id => lead.id, :paid => false)
+          purchase = @buyer.lead_purchases.create(:lead_id => lead.id, :paid => false, :purchased_by => @buyer.id)
           if @buyer.big_buyer?
             purchase.update_attribute(:accessible_from, Time.now)
             return :bought_successful

@@ -67,13 +67,17 @@ Given /^a lead (.+) exists within category (.+) and is bought by user (.+) with 
 
   customer = "User::#{role.camelize}".constantize.find_by_email(email)
   customer = "User::#{role.camelize}".constantize.make!(:email => email) if customer.nil?
+  purchaser = customer.role == "customer" ? customer : User::LeadBuyer.find(customer.id)
+  if role == "lead_buyer"
+    customer = customer.parent.send(:casted_class).find(customer.parent_id)
+  end
   lead = Lead.find_by_header(header).first
   if lead.nil?
     lead = Lead.make!(:header => header, :category => category)
   else
     lead.update_attribute(:category, category)
   end
-  LeadPurchase.make!(:lead_id => lead.id, :owner => customer, :paid => true, :accessible_from => Time.now)
+  LeadPurchase.make!(:lead_id => lead.id, :owner => customer, :paid => true, :accessible_from => Time.now, :purchaser => purchaser)
 end
 
 Given /^lead (.+) is bought by user (.+) with role (.+) and is assigned to user (.+) with role (.+)$/ do |header, email, role, assignee_email, assignee_role|

@@ -337,4 +337,12 @@ class Nbs < Thor
       user.refresh_agent_counters!
     end
   end
+
+  desc "refresh_buyer_counters", ""
+
+  def refresh_buyer_counters
+    User::LeadBuyer.all.each do |user|
+      user.refresh_buyer_counters!
+    end
+  end
 end
