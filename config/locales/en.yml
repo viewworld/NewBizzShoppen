@@ -193,6 +193,7 @@ en:
     listing:
       purchase_value_label: 'Purchase value:'
       lead_price_label: 'Lead price:'
+      buyout_price_label: 'Buyout price'
       description_label: 'Lead description:'
       lead_details_label: 'Leads details'
       created_by: 'Created by'
@@ -244,9 +245,11 @@ en:
         sale_limit: Uniqueness
         hotness: Hotness
       add_to_cart_link: Add to cart
+      add_to_cart_buyout_link: 'Buyout'
       buy_lead: Buy lead
       buy_lead_confirm_msg: Do you want to buy this lead?
       add_to_cart_lead_confirm_msg: Do you want to add this lead to cart?
+      add_to_cart_buyout_lead_confirm_msg: 'Do you want to buyout this lead?'
       request_lead_confirm_msg: Do you want to request this lead?
       request_lead: Request lead
       button_bulk_create_lead_request: 'Request leads'
@@ -1224,8 +1227,9 @@ en:
         flash:
           cart_item_creation_successful: Lead has been added to cart
           cart_item_bought_successful: Lead has been bought
-          cart_item_already_in_basket: Lead has already been added to cart
+          cart_item_already_in_cart: Lead has already been added to cart
           cart_item_currencies_mismatch: Lead's currency is different from other items in the cart
+          cart_item_buyout_successful: 'Lead has been bought out!'
       destroy:
         flash:
           cart_item_destruction_successful: Lead has been removed from cart

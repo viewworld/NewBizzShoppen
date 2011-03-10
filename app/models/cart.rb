@@ -12,6 +12,10 @@ class Cart
     @buyer.leads_in_cart
   end
 
+  def lead_purchases
+    @buyer.lead_purchases_in_cart
+  end
+
   def add_lead(lead)
     unless items.include?(lead)
       if currency_matches?(lead)
@@ -32,6 +36,18 @@ class Cart
     end
   end
 
+  def buyout_lead(lead)
+    if currency_matches?(lead)
+      if lead.buyout_possible_for?(@buyer)
+        lead.buyout!(@buyer)
+      else
+        :bought_by_other_user
+      end
+    else
+      :currencies_mismatch
+    end
+  end
+
   def add_leads(*ids)
     Lead.where(:id => ids.flatten).map { |lead| add_lead(lead) }.select { |r| r != :already_in_cart and r != :currencies_mismatch }
   end
@@ -45,7 +61,7 @@ class Cart
   end
 
   def total
-    items.sum('price')
+    BigDecimal.new(lead_purchases.sum('price * quantity'))
   end
 
   def count

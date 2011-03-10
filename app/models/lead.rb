@@ -30,7 +30,7 @@ class Lead < ActiveRecord::Base
   scope :with_country, lambda { |country_id| where(:country_id => country_id) }
   scope :with_zip_code, lambda { |zip_code| where(:zip_code => zip_code)}
   scope :with_ids_not_in, lambda { |q| where(["leads.id NOT IN (?)", q]) }
-  scope :without_inactive, where("lead_purchases_counter < sale_limit")
+  scope :without_inactive, where("((select sum(quantity) from lead_purchases where lead_id = leads.id group by lead_id) is null or (select sum(quantity) from lead_purchases where lead_id = leads.id group by lead_id) < sale_limit)")
   scope :without_outdated, lambda { where("purchase_decision_date >= ?", Date.today.to_s ) }
   scope :without_locked_users, joins("INNER JOIN users ON users.id=leads.creator_id").where("users.locked_at is NULL")
   scope :with_status, lambda { |q| where(["leads.published = ?", q]) }
@@ -205,7 +205,7 @@ class Lead < ActiveRecord::Base
   end
 
   def buyable?
-    true #Some more complex logic here...
+    lead_purchases.sum("quantity") < sale_limit
   end
 
   def calculate_average_rating
@@ -284,5 +284,34 @@ class Lead < ActiveRecord::Base
 
   def lead_template_values_present?
     !LeadTemplateValue.where("lead_templates.id in (?)", lead_templates.map(&:id)).joins("inner join lead_template_fields on lead_template_values.lead_template_field_id=lead_template_fields.id inner join lead_templates on lead_template_fields.lead_template_id=lead_templates.id").limit(1).empty?
+  end
+
+  def bought_by_anyone?
+    lead_purchases.any?
+  end
+
+  def bought_by_users_other_than(user)
+    user ? lead_purchases.map(&:owner_id).except(user.id).any? : bought_by_anyone?
+  end
+
+  def buyout_quantity
+    sale_limit - lead_purchases.sum("quantity")
+  end
+
+  def buyout_price
+     buyout_quantity * price
+  end
+
+  def buyout_possible_for?(user)
+    category.buyout_enabled? and !bought_by_users_other_than(user) and buyable?
+  end
+
+  def buyout!(buyer)
+    if buyer.lead_purchases.create(:lead_id => self.id,
+                                   :paid => false,
+                                   :accessible_from => (buyer.big_buyer ? Time.now : nil),
+                                   :quantity => buyout_quantity)
+      :buyout_successful
+    end
   end
 end

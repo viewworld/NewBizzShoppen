@@ -25,16 +25,16 @@
     </tr>
     </thead>
     <tbody>
-    <% @cart.items.each_with_index do |lead, i| %>
+    <% @cart.lead_purchases.each_with_index do |lp, i| %>
         <tr class="<%= cycle("odd", "even") %>">
           <td class="ta_c"><%= i+1 %></td>
-          <td><%= lead.header %></td>
-          <td class="ta_c"><%= as_currency(lead.price, lead.currency) %></td>
+          <td><%= lp.lead.header %></td>
+          <td class="ta_c"><%= as_currency(lp.lead.price, lp.lead.currency) %></td>
           <td class="ta_c sign">x</td>
-          <td class="ta_c">1</td>
+          <td class="ta_c"><%= lp.quantity %></td>
           <td class="ta_c sign">=</td>
-          <td class="ta_c"><%= as_currency(lead.price, lead.currency) %></td>
-          <td class="ta_r"><%= bt_link_to nil, t("buyer.cart.show.view.remove_item_link"), buyers_cart_item_path(lead.id), :method => :delete, :class => "bt_grey_small" %></td>
+          <td class="ta_c"><%= as_currency(lp.total, lp.lead.currency) %></td>
+          <td class="ta_r"><%= bt_link_to nil, t("buyer.cart.show.view.remove_item_link"), buyers_cart_item_path(lp.lead.id), :method => :delete, :class => "bt_grey_small" %></td>
         </tr>
     <% end %>
 

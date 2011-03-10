@@ -5,11 +5,11 @@
   </div>
   <div class="cart_content">
     <ul>
-      <% current_user.cart.items.each do |lead| %>
+      <% current_user.cart.lead_purchases.each do |lp| %>
           <li>
-            <p><strong><%= link_to lead.header, lead_path(lead) %></strong></p>
+            <p><strong><%= link_to lp.lead.header, lead_path(lp.lead) %></strong></p>
 
-            <p class="price ta_r"><%= link_to t("layout.cart.remove_item_link"), buyers_cart_item_path(lead.id), :method => :delete, :class => "fltl fs_11" %> 1 x <%= as_currency(lead.price, lead.currency) %></p>
+            <p class="price ta_r"><%= link_to t("layout.cart.remove_item_link"), buyers_cart_item_path(lp.lead_id), :method => :delete, :class => "fltl fs_11" %> <%= lp.quantity %> x <%= as_currency(lp.lead.price, lp.lead.currency) %></p>
           </li>
       <% end %>
       <li>

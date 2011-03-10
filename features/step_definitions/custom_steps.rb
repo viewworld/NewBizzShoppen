@@ -96,6 +96,20 @@ Then /^I should see "([^"]*)" in the "([^"]*)" row of table "([^"]*)"$/ do |text
   page.all(:css, "#{table_selector} tr:nth-of-type(#{row_num})").first.text.should match(/#{text}/)
 end
 
+Then /^I should not see "([^"]*)" in the "([^"]*)" row of table "([^"]*)"$/ do |text, row_num, table_selector|
+  page.all(:css, "#{table_selector} tr:nth-of-type(#{row_num})").first.text.should_not match(/#{text}/)
+end
+
+Then /^I should see translated "([^"]*)" in the "([^"]*)" row of table "([^"]*)"$/ do |key, row_num, table_selector|
+  I18n.locale = :en
+  Then %{I should see "#{I18n.t(key)}" in the "#{row_num}" row of table "#{table_selector}"}
+end
+
+Then /^I should not see translated "([^"]*)" in the "([^"]*)" row of table "([^"]*)"$/ do |key, row_num, table_selector|
+  I18n.locale = :en
+  Then %{I should not see "#{I18n.t(key)}" in the "#{row_num}" row of table "#{table_selector}"}
+end
+
 Then /^checkbox named "([^"]*)" should (be|not be) checked$/ do |cb_name, is_checked|
   page.all(:css, "input[id*='#{cb_name}']").first['checked'].should eql(is_checked == "be")
 end

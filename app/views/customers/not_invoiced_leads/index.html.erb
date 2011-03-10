@@ -5,7 +5,7 @@
     </param:content>
   </header>
 
-  <% unless @leads.any? %>
+  <% unless @lead_purchases.any? %>
     <%= blank_state_message(t("customer.not_invoiced.index.view.no_leads_to_display")) %>
   <% else %>
       <table class="generic" cellspacing="0" cellpadding="0" id="not_invoiced_leads">
@@ -24,11 +24,11 @@
         </tr>
         </tfoot>
         <tbody id="invoices_list">
-        <% @leads.each do |lead| %>
+        <% @lead_purchases.each do |lp| %>
             <tr class="<%= cycle("odd", "even") %>">
               <td class="cl"></td>
-              <td><%= lead.header %></td>
-              <td class="ta_r"><%= as_currency(lead.price, lead.currency) %></td>
+              <td><%= lp.lead.header %></td>
+              <td class="ta_r"><%= as_currency(lp.total, lp.lead.currency) %></td>
               <td class="cr"></td>
             </tr>
         <% end %>

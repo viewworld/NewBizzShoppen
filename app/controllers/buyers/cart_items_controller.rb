@@ -1,16 +1,12 @@
 class Buyers::CartItemsController < Buyers::BuyerController
 
   def create
-    flash[:notice] = case current_user.cart.add_lead(Lead.find_by_id(params[:id]))
-                       when :bought_successful
-                         t("buyer.cart_items.create.flash.cart_item_bought_successful")
-                       when :creation_successful
-                         t("buyer.cart_items.create.flash.cart_item_creation_successful")
-                       when :already_in_cart
-                         t("buyer.cart_items.create.flash.cart_item_already_in_basket")
-                       when :currencies_mismatch
-                         t("buyer.cart_items.create.flash.cart_item_currencies_mismatch")
-                     end
+    status = if params[:buyout] == "true"
+      current_user.cart.buyout_lead(Lead.find_by_id(params[:id]))
+    else
+      current_user.cart.add_lead(Lead.find_by_id(params[:id]))
+    end
+    flash[:notice] = t("buyer.cart_items.create.flash.cart_item_#{status.to_s}")
     redirect_to :back
   end
 

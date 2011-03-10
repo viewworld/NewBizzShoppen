@@ -157,7 +157,7 @@ Scenario: I can use "Advanced search" in Browse leads with following fields: Dea
 
   Given lead Super printers #2 is created by user agent02@nbs.com with role agent
   And a lead Super printers #2 exists within category Computers and is bought by user ultimate.buyer@nbs.com with role customer
-  And lead Super printers #2 exists with attributes "hotness_counter:1, sale_limit:1, purchase_value:5900"
+  And lead Super printers #2 exists with attributes "hotness_counter:1, sale_limit:2, purchase_value:5900"
 
   Given lead Super printers #3 is created by user agent03@nbs.com with role agent
   And a lead Super printers #3 exists within category Computers and is bought by user ultimate.buyer@nbs.com with role customer

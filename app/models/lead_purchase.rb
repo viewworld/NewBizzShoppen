@@ -36,11 +36,12 @@ class LeadPurchase < LeadPurchaseBase
   scope :with_rating_avg_by, lambda { |agent| select("avg(CASE WHEN rating_level in (#{Array(RATING_MISSING_CONTACT_INFO..RATING_OTHER_REASON).join(',')}) THEN 0 WHEN rating_level=2 THEN 0.25 WHEN rating_level=1 THEN 0.5 WHEN rating_level=0 THEN 1 END)*100 as id").where("creator_id = ? and (lead_purchases.rating_level != -1 and lead_purchases.rating_level is NOT NULL)", agent.id).joins("INNER JOIN leads ON lead_purchases.lead_id=leads.id") }
   scope :with_purchased_time_ago_by, lambda { |agent, time| where("creator_id = ? and accessible_from IS NOT NULL and accessible_from >= ?", agent.id, time).joins("INNER JOIN leads ON lead_purchases.lead_id=leads.id") }
 
-  scope :with_not_invoiced, select("lead_purchases.owner_id, leads.currency_id, count(lead_purchases.id) as not_invoiced_count, sum(leads.price) as not_invoiced_sum").joins("inner join leads on leads.id=lead_purchases.lead_id inner join users on users.id=lead_purchases.owner_id left outer join invoice_lines on lead_purchases.id=invoice_lines.payable_id").where("invoice_lines.payable_id is NULL and users.big_buyer = ?", true).group("owner_id,currency_id")
+  scope :with_not_invoiced, select("lead_purchases.owner_id, leads.currency_id, count(lead_purchases.id) as not_invoiced_count, sum(leads.price*lead_purchases.quantity) as not_invoiced_sum").joins("inner join leads on leads.id=lead_purchases.lead_id inner join users on users.id=lead_purchases.owner_id left outer join invoice_lines on lead_purchases.id=invoice_lines.payable_id").where("invoice_lines.payable_id is NULL and users.big_buyer = ?", true).group("owner_id,currency_id")
   scope :with_not_invoiced_keyword, lambda { |keyword| where("lower(leads.header) LIKE :keyword OR lower(leads.contact_name) LIKE :keyword OR lower(leads.company_name) LIKE :keyword", { :keyword => "%#{keyword.downcase}%" }) }
   scope :with_assigned_at_date_after_and_including, lambda{ |date| where(["assigned_at::DATE >= ?",date])}
   scope :with_assigned_at_date_before_and_including, lambda{ |date| where(["assigned_at::DATE <= ?",date])}
   scope :with_purchased_by, lambda { |buyer| where("requested_by IS NULL and (owner_id = ? or purchased_by = ?)", buyer.id, buyer.id) }
+  scope :with_not_invoiced_for_user, lambda { |user| joins("LEFT JOIN invoice_lines ON invoice_lines.payable_id = lead_purchases.id LEFT JOIN users ON users.id = lead_purchases.owner_id").where(["invoice_lines.payable_id IS NULL AND users.big_buyer IS TRUE AND users.id = ?", user.to_i]) }
 
   before_save :assign_to_proper_owner_if_accessible
   before_save :assign_to_owner
@@ -170,6 +171,10 @@ class LeadPurchase < LeadPurchaseBase
 
   def is_rated_as_unsatisfactory?
     UNSATISFACTORY_RATING_LEVELS.include?(rating_level)
+  end
+
+  def total
+    quantity * lead.price
   end
 
 end
