@@ -17,7 +17,7 @@ Scenario: I can browse list of my agents without pagination
   And I go to call centre agents
   Then I should not see link with label "2"
 
-@_tested  @_wip
+@_tested
 Scenario: I can sort by Name, Last Name, created, volume sold, revenue, mobile number, num. of leads purchased last 30days, num. of leads purchased last 12months, good, bad, not rated, Rating %, certification lvl.
   Given user "call_centre@person.com" with role "call_centre" has attributes "certification_level:11"
   Given an user with role call_centre_agent and email ccagent01@person.com belongs to call centre call_centre@person.com
