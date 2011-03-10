@@ -287,7 +287,7 @@ class Lead < ActiveRecord::Base
   end
 
   def bought_by_users_other_than(user)
-    user ? lead_purchases.map(&:owner_id).include?(user.id) : false
+#    user ? lead_purchases.map(&:owner_id). : false
   end
 
   def buyout_quantity
