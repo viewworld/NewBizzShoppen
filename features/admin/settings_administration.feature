@@ -33,7 +33,7 @@ Scenario: Confirmation prompt is being displayed when I try to save changes made
 @tgn @_done @_tested @selenium
 Scenario: I can click cancel and go back (browser history)
   Then I press translated "administration.settings.edit.view.button_cancel"
-  And I should be on administration root
+  And I should be on the homepage
 
 @m4 @tgn @added @agent_certification @_tested
 Scenario: When I change the certification levels in settings then agents' levels should be refreshed too (unless their certifications are locked)
