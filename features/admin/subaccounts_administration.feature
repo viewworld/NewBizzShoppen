@@ -64,10 +64,55 @@ Scenario: I can sort by coulmns type, Name, Last Name, email, age,
   Given I follow translated "administration.users.index.view.age"
   Then I should have value "kirk.lead_user4@person.com" in the css path "tr:nth-child(1) td:nth-child(7)"
 
-@m6 @added @ao
+@m6 @added @tgn @_tested
 Scenario: I can sort by bought, created, volume sold, revenue, payout %
+  Given customer "customer@person.com" has no subaccounts
+  And an user with role lead_buyer and email ann.lead_buyer@person.com exists as subaccount for customer customer@person.com
+  And an user with role lead_buyer and email kirk.lead_buyer@person.com exists as subaccount for customer customer@person.com
+  Given a lead Super printers #1 exists within category Computers and is bought by user ann.lead_buyer@person.com with role lead_buyer
+  And a lead Super printers #2 exists within category Computers and is bought by user kirk.lead_buyer@person.com with role lead_buyer
+  And a lead Super printers #3 exists within category Computers and is bought by user kirk.lead_buyer@person.com with role lead_buyer
+  And all users have refreshed cache counters
+  Then I go to administration users
+  Given I fill in "search_with_keyword" with "customer@person.com"
+  And I press translated "administration.users.index.view.search_button"
+  And I follow translated "administration.users.index.view.subaccounts"
+  And I follow translated "administration.users.index.view.leads_bought"
+  And I follow translated "administration.users.index.view.leads_bought"
+  And I should see "kirk.lead_buyer@person.com" before "ann.lead_buyer@person.com"
 
-@m6 @added @ao
+  Given I have user with email call_centre028@nbs.com and role call_centre
+  And an user with role call_centre_agent and email ccagent01@nbs.com belongs to call centre call_centre028@nbs.com
+  And an user with role call_centre_agent and email ccagent02@nbs.com belongs to call centre call_centre028@nbs.com
+  And user ccagent01@nbs.com with role call_centre_agent exists with attributes "payout:20"
+  And user ccagent02@nbs.com with role call_centre_agent exists with attributes "payout:10"
+  And lead Super monitors #1 is created by user ccagent01@nbs.com with role call_centre_agent
+  And lead Super monitors #2 is created by user ccagent02@nbs.com with role call_centre_agent
+  And lead Super monitors #3 is created by user ccagent02@nbs.com with role call_centre_agent
+  And lead "Super monitors #1" has attributes "price:102"
+  And lead "Super monitors #2" has attributes "price:100"
+  And lead "Super monitors #3" has attributes "price:104.99"
+  And a lead Super monitors #1 exists within category Computers and is bought by user customer@person.com with role customer
+  And a lead Super monitors #2 exists within category Computers and is bought by user customer@person.com with role customer
+  And a lead Super monitors #3 exists within category Computers and is bought by user customer@person.com with role customer
+  And all users have refreshed cache counters
+  Then I go to administration users
+  Given I fill in "search_with_keyword" with "call_centre028@nbs.com"
+  And I press translated "administration.users.index.view.search_button"
+  And I follow translated "administration.users.index.view.subaccounts"
+  And I follow translated "administration.users.index.view.leads_sold"
+  And I follow translated "administration.users.index.view.leads_sold"
+  Then I should see "ccagent02@nbs.com" before "ccagent01@nbs.com"
+  And I follow translated "administration.users.index.view.revenue"
+  And I follow translated "administration.users.index.view.revenue"
+  Then I should see "ccagent02@nbs.com" before "ccagent01@nbs.com"
+  And I follow translated "administration.users.index.view.payout"
+  And I follow translated "administration.users.index.view.payout"
+  Then I should see "ccagent01@nbs.com" before "ccagent02@nbs.com"
+  And I follow translated "administration.users.index.view.leads_created"
+  Then I should see "ccagent01@nbs.com" before "ccagent02@nbs.com"
+
+@m6 @added @tgn @_done @non_testable
 Scenario: I can refresh volume sold and revenue for users by rake task
 
 @tgn @_done @_tested
