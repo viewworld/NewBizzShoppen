@@ -9,10 +9,9 @@ class Customers::NotInvoicedLeadsController < Customers::CustomerController
 
   def collection
     params[:search]||={}
-    params[:search][:with_not_invoiced] = "1"
     params[:search][:with_not_invoiced_for_user] = current_user.id
-    @search = Lead.scoped_search(params[:search])
-    @leads = @search.all
+    @search = LeadPurchase.scoped_search(params[:search])
+    @lead_purchases = @search.all
   end
 
   public

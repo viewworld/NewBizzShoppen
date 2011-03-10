@@ -26,11 +26,18 @@ class ApplicationController < ActionController::Base
         if session[:lead_id].to_i > 0 and resource.has_any_role?(:customer, :lead_buyer)
           lead = Lead.find_by_id(session[:lead_id])
           buyer = User::LeadBuyer.find(resource.id)
-          buyer.cart.add_lead(lead) if lead and !Lead.owned_by(buyer).include?(lead)
+          if lead and !Lead.owned_by(buyer).include?(lead)
+            if session[:buyout] == "true"
+              buyer.cart.buyout_lead(lead)
+            else
+              buyer.cart.add_lead(lead)
+            end
+          end
         end
         requested_path = session[:user_requested_url]
         session[:user_requested_url] = nil
         session[:lead_id] = nil
+        session[:buyout] = nil
         requested_path
       elsif resource.has_role? :customer and resource.sign_in_count <= 1
         edit_customers_interests_path
@@ -96,7 +103,10 @@ class ApplicationController < ActionController::Base
     params = Rack::Request.new(env).params
     session = env['rack.session']
     session[:user_requested_url] = params["requested_url"]
-    session[:lead_id] = params["id"] if params["requested_url"].to_s.include?("/categories") or params["requested_url"].to_s.include?("/leads")
+    if params["requested_url"].to_s.include?("/categories") or params["requested_url"].to_s.include?("/leads")
+      session[:lead_id] = params["id"]
+      session[:buyout] = params["buyout"]
+    end
 
     params[:action] = :unauthenticated
     params[:warden_failure] = opts

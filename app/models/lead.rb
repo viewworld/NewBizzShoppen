@@ -286,8 +286,12 @@ class Lead < ActiveRecord::Base
     !LeadTemplateValue.where("lead_templates.id in (?)", lead_templates.map(&:id)).joins("inner join lead_template_fields on lead_template_values.lead_template_field_id=lead_template_fields.id inner join lead_templates on lead_template_fields.lead_template_id=lead_templates.id").limit(1).empty?
   end
 
+  def bought_by_anyone?
+    lead_purchases.any?
+  end
+
   def bought_by_users_other_than(user)
-#    user ? lead_purchases.map(&:owner_id). : false
+    user ? lead_purchases.map(&:owner_id).except(user.id).any? : bought_by_anyone?
   end
 
   def buyout_quantity
