@@ -39,7 +39,6 @@ Scenario: I can view details of leads added to the basket
   Then I should see translated "leads.show.view.header"
   And I should see "Printers ultimate deal"
 
-
 @tgn @_done @_tested @selenium
 Scenario: I can see basket summary before I go to checkout and I can see a total for all leads to be bought
   Given I check "mark_all"
@@ -71,15 +70,12 @@ Scenario: I can't buy (see) a lead when sale_limit is reached
   And I have user with email agent02@nbs.com and role agent
   And user "agent02@nbs.com" with role "agent" has attributes "certification_level:12, company_name:Xerox2"
   And I have user with email agent03@nbs.com and role agent
-
   Given lead Super printers #1 is created by user agent01@nbs.com with role agent
   And a lead Super printers #1 exists within category Computers and is bought by user ultimate.buyer@nbs.com with role customer
   And lead Super printers #1 exists with attributes "hotness_counter:0, sale_limit:1, purchase_value:5200"
-
   Given lead Super printers #2 is created by user agent02@nbs.com with role agent
   And a lead Super printers #2 exists within category Computers and is bought by user ultimate.buyer@nbs.com with role customer
   And lead Super printers #2 exists with attributes "hotness_counter:0, sale_limit:2, purchase_value:5200"
-
   And I go to browse leads
   And I follow "Computers"
   Then I should see "Super printers #2"
