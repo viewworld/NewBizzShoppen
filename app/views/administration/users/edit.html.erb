@@ -11,7 +11,7 @@
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="save">
-            <%= form.submit t("administration.users.edit.view.button_update_user"), :onclick => "select_options_to_submit('user_category_buyer_buying_category_ids_');" %>
+            <%= form.submit t("administration.users.edit.view.button_update_user"), :onclick => "add_unique_to_interests();select_options_to_submit('user_customer_category_ids_');select_options_to_submit('user_#{@user.role}_unique_category_ids_');select_options_to_submit('user_category_buyer_buying_category_ids_'); " %>
           </ibt>
           <ibt c="bt_grey fltri">
             <%= button_to_function t("administration.users.edit.view.button_cancel"), "history.go(-1)" %>

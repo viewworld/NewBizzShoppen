@@ -50,6 +50,8 @@ class Category < ActiveRecord::Base
   scope :with_lead_purchase_assignee, lambda { |assignee| select("DISTINCT(name), categories.*").where("lead_purchases.assignee_id = ? and accessible_from IS NOT NULL", assignee.id).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
   scope :with_lead_templates_created_by, lambda { |creator| select("DISTINCT(categories.name), categories.*").where("lead_templates.creator_id = ?", creator.id).joins(:lead_templates) }
   scope :without_unique, where("is_customer_unique = ? and is_agent_unique = ?", false, false)
+  scope :with_all_customer_unique, where("is_customer_unique = ?", true)
+  scope :with_all_agent_unique, where("is_agent_unique = ?", true)
   scope :with_customer_unique, lambda { |customer| where("(is_customer_unique = ? and category_customers.user_id is NULL) or (is_customer_unique = ? and category_customers.user_id = ?)", false, true, customer.id).joins("LEFT JOIN category_customers ON categories.id=category_customers.category_id") }
   scope :with_agent_unique, lambda { |agent| where("(is_agent_unique = ? and category_agents.user_id is NULL) or (is_agent_unique = ? and category_agents.user_id = ?)#{' or (is_agent_unique = \'t\' and category_agents.user_id = ' + agent.parent_id.to_s + ')' if agent.has_role?(:call_centre_agent)}", false, true, agent.id).joins("LEFT JOIN category_agents ON categories.id=category_agents.category_id") }
   scope :with_buying, lambda { |user| joins(:buying_users).where(:users => {:id => user.id}) }

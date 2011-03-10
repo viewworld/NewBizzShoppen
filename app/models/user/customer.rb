@@ -20,4 +20,16 @@ class ::User::Customer < ::User
   accepts_nested_attributes_for :lead_purchases
 
   validates_presence_of :company_name
+
+  has_many :category_customers, :foreign_key => "user_id"
+  has_many :unique_categories, :through => :category_customers, :source => :category
+
+  before_save :handle_interests
+
+  private
+  def handle_interests
+    if (categories.select { |c| c.is_customer_unique } - unique_categories).size > 0
+      (categories.select { |c| c.is_customer_unique } - unique_categories).each { |c| category_interests.detect { |ci| ci.category_id == c.id }.destroy }
+    end
+  end
 end

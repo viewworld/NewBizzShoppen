@@ -6,6 +6,9 @@ class ::User::CallCentre < ::User
 
   has_one :bank_address, :class_name => '::Address::Bank', :as => :addressable
 
+  has_many :category_agents, :foreign_key => "user_id"
+  has_many :unique_categories, :through => :category_agents, :source => :category
+
   validates_inclusion_of :payout, :in => 0..100, :message =>   I18n.t("models.user.payout_validation_message")
 
   before_create :allow_payout_information_editing

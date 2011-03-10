@@ -163,9 +163,36 @@ Scenario: I can't specify categories for category buyer's subaccounts
   And I am on administration edit user stiw@lajoie.ca
   Then I should not see CSS path "#all_categories"
 
-@m6
+@m6 @tgn @selenium @_tested
 Scenario: I can configure buyer category interests when editing it
+  Given I have user with email buyer2222@nbs.com and role customer
+  And Category Computers is created
+  And Category Laptops is created
+  Then I fill in "search_with_keyword" with "buyer2222@nbs.com"
+  And I press translated "administration.users.index.view.search_button"
+  And I click hidden link by url regex "/administration\/users\/\d+\/edit/"
+  And I select "Laptops" from "all_categories_for_interests"
+  And I select "Computers" from "all_categories_for_interests"
+  And I follow translated "administration.categories.form.move_users_right" within "#category_interests"
+  And I press translated "administration.users.edit.view.button_update_user"
+  Then I fill in "search_with_keyword" with "buyer2222@nbs.com"
+  And I press translated "administration.users.index.view.search_button"
+  And I click hidden link by url regex "/administration\/users\/\d+\/edit/"
+  And "user_customer_category_ids_" dropdown should have values "Computers,Laptops"
 
-@m6
+@m6 @tgn @selenium @_tested
 Scenario: I can manage user's access to unique categories as well
-
+  Given I have user with email buyer2222@nbs.com and role customer
+  And category "Computers" is unique for user with email "buyer29382.biz@nbs.com" role "customer"
+  And category "Laptops" is unique for user with email "buyer29383.biz@nbs.com" role "customer"
+  Then I fill in "search_with_keyword" with "buyer2222@nbs.com"
+  And I press translated "administration.users.index.view.search_button"
+  And I click hidden link by url regex "/administration\/users\/\d+\/edit/"
+  And I select "Laptops" from "all_categories"
+  And I select "Computers" from "all_categories"
+  And I follow translated "administration.categories.form.move_users_right" within "#unique_categories"
+  And I press translated "administration.users.edit.view.button_update_user"
+  Then I fill in "search_with_keyword" with "buyer2222@nbs.com"
+  And I press translated "administration.users.index.view.search_button"
+  And I click hidden link by url regex "/administration\/users\/\d+\/edit/"
+  And "user_customer_unique_category_ids_" dropdown should have values "Computers,Laptops"

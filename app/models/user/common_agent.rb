@@ -8,6 +8,8 @@ module User::CommonAgent
                :dependent => :destroy
       has_many :category_agents, :foreign_key => "user_id"
       has_many :unique_categories, :through => :category_agents, :foreign_key => "user_id", :source => :category
+      has_many :category_agents, :foreign_key => "user_id"
+      has_many :unique_categories, :through => :category_agents, :source => :category
 
       validates_inclusion_of :payout, :in => 0..100, :message =>   I18n.t("models.user.payout_validation_message")
 
