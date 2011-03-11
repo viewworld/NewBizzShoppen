@@ -1,7 +1,7 @@
 @customer @ao @buyouts
 Feature: Buy out
 
-  @m6 @_done @_tested
+  @m6 @_done @_tested @wip
   Scenario: I can see buy-out links for lead if it's not bought by other buyer and category allows buyouts
     Given there are no leads
     And Category named "Computers" already exists

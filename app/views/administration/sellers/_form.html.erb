@@ -11,6 +11,7 @@
           <%= address_form.input :zip_code %>
           <%= address_form.input :country_id, :collection => Country.all, :include_blank => false %>
       <% end %>
+      <%= form.input :bank_account, :include_blank => false %>
       <%= form.input :vat_no %>
       <%= form.input :default %>
       <%= label_tag :note, t("administration.sellers.form.note") %>

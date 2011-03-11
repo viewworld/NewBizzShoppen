@@ -306,10 +306,6 @@ class User < ActiveRecord::Base
     with_role.vat_rate ? with_role.vat_rate.rate : 0.0
   end
 
-  def payment_bank_account
-    bank_account || BankAccount.country_default_bank_account(address.country).first || BankAccount.global_default_bank_account.first
-  end  
-
   def to_i
     id
   end

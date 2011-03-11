@@ -3,10 +3,11 @@ class Seller < ActiveRecord::Base
   include Addresses
 
   belongs_to :country
+  belongs_to :bank_account
 
   has_many :invoices
 
-  validates_presence_of :company_name, :address, :first_name, :last_name, :vat_no
+  validates_presence_of :company_name, :address, :first_name, :last_name, :vat_no, :bank_account
 
   before_save :assure_default
   after_save :change_default

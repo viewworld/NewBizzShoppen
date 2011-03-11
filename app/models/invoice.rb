@@ -99,8 +99,12 @@ class Invoice < ActiveRecord::Base
             :seller_first_name => seller.first_name,
             :seller_last_name => seller.last_name,
             :vat_paid_in_customer_country => user.with_role.not_charge_vat?,
-            :bank_account => user.with_role.payment_bank_account
+            :bank_account => payment_bank_account
     })
+  end
+
+  def payment_bank_account
+    user.bank_account || seller.bank_account || BankAccount.country_default_bank_account(user.address.country).first || BankAccount.global_default_bank_account.first
   end
 
   def set_year
