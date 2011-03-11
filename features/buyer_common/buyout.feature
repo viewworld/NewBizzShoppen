@@ -1,7 +1,7 @@
 @customer @ao @buyouts
 Feature: Buy out
 
-  @m6 @_done @_tested @wip
+  @m6 @_done @_tested
   Scenario: I can see buy-out links for lead if it's not bought by other buyer and category allows buyouts
     Given there are no leads
     And Category named "Computers" already exists
@@ -15,12 +15,16 @@ Feature: Buy out
     And I sign in as jon@lajoie.ca with password secret
     And I go to browse leads
     And I follow "Computers"
-    Then I should see translated "leads.index.add_to_cart_buyout_link" in the "2" row of table "table.leads_table tbody"
-    And I should see translated "leads.listing.buyout_price_label" in the "2" row of table "table.leads_table tbody"
+    And I fill in "search_with_keyword" with "Printers"
+    And I press translated "leads.index.search.search_button"
+    Then I should see translated "leads.index.add_to_cart_buyout_link" in the "1" row of table "table.leads_table tbody"
+    And I should see translated "leads.listing.buyout_price_label" in the "1" row of table "table.leads_table tbody"
+    When I fill in "search_with_keyword" with "Monitors"
+    And I press translated "leads.index.search.search_button"
     Then I should not see translated "leads.index.add_to_cart_buyout_link" in the "1" row of table "table.leads_table tbody"
     And I should not see translated "leads.listing.buyout_price_label" in the "1" row of table "table.leads_table tbody"
 
-  @added @m6 @_done @_tested
+  @added @m6 @_done @_tested @wip
   Scenario: I can't see buy-out links for lead if category doesn't allow buyouts
     Given there are no leads
     And Category named "Computers" already exists
