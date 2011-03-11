@@ -91,7 +91,7 @@ Feature: Sellers
     And I follow translated "administration.sellers.index.view.add_seller"
     Then I should see CSS path "#seller_bank_account_id"
 
-  @added @m6 @selenium @wip
+  @added @m6 @selenium @_done @_tested
   Scenario: Global default bank should be selected for new seller
     When there is a bank account for country "United Kingdom"
     And bank account for country "Denmark" has attributes "global_default:1"
