@@ -24,7 +24,7 @@ Feature: Buy out
     Then I should not see translated "leads.index.add_to_cart_buyout_link" in the "1" row of table "table.leads_table tbody"
     And I should not see translated "leads.listing.buyout_price_label" in the "1" row of table "table.leads_table tbody"
 
-  @added @m6 @_done @_tested @wip
+  @added @m6 @_done @_tested
   Scenario: I can't see buy-out links for lead if category doesn't allow buyouts
     Given there are no leads
     And Category named "Computers" already exists
