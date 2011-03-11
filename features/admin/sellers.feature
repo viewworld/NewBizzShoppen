@@ -85,5 +85,20 @@ Feature: Sellers
     And I follow translated "administration.sellers.index.view.add_seller"
     Then I should see CSS path "#seller_note_input"
 
-@m6
-Scenario: I should be able to select bank account for each seller (by default the default bank account for new sellers)
+  @m6 @selenium @_done @_tested
+  Scenario: I should be able to select bank account for each seller (by default the default bank account for new sellers)
+    When I follow translated "layout.main_menu.admin.sellers"
+    And I follow translated "administration.sellers.index.view.add_seller"
+    Then I should see CSS path "#seller_bank_account_id"
+
+  @added @m6 @selenium @wip
+  Scenario: Global default bank should be selected for new seller
+    When there is a bank account for country "United Kingdom"
+    And bank account for country "Denmark" has attributes "global_default:1"
+    And I follow translated "layout.main_menu.admin.sellers"
+    And I follow translated "administration.sellers.index.view.add_seller"
+    Then "seller_bank_account_id" should be selected for "1"
+    When bank account for country "United Kingdom" has attributes "global_default:1"
+    And I follow translated "layout.main_menu.admin.sellers"
+    And I follow translated "administration.sellers.index.view.add_seller"
+    Then "seller_bank_account_id" should be selected for "2"
