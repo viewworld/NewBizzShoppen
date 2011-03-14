@@ -10,6 +10,8 @@ class CreditNote < ActiveRecord::Base
     self.update_attribute :number, CreditNote.count(:conditions => ["invoices.seller_id = ?", invoice.seller_id], :joins => :invoice) + 1
   end
 
+  public
+
   def invoice_lines
     invoice.invoice_lines.where("is_credited = ?", true)
   end

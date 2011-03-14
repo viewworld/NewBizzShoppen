@@ -9,8 +9,19 @@ class InvoiceLine < ActiveRecord::Base
   after_save :update_frozen_revenue
   before_save :mark_as_paid
   before_save :calculate_additional_values
+  before_save :handle_refunding
 
   private
+
+  def handle_refunding
+    if is_credited_changed? and is_credited? and paid? and invoice.credit_note.nil?
+      Refund.create(:invoice => invoice)
+    end
+  end
+
+  def paid?
+    !!paid_at
+  end
 
   def update_frozen_revenue
     InvoiceLine.update_all "revenue_frozen = brutto_value", ["id = ?", id]

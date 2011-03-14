@@ -716,6 +716,7 @@ en:
             customer_information: 'Customer information'
             seller_information: 'Seller information'
             payment_information: 'Payment information'
+          is_refunded: "Refunded?"
       destroy:
         view:
           confirmation: 'Are you sure?'
