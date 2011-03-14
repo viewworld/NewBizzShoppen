@@ -86,6 +86,7 @@
 
 <% if ['category_buyer'].include?(params[:role]) or @user.has_roles?(:category_buyer,:customer) %>
     <hl/>
+    <div id="category_buyer_categories">
     <div class="pdd_10 no_pdd_t">
         <div class="grid_240 fltl">
           <h3><%= t("administration.users.edit.view.available_categories") %></h3>
@@ -101,6 +102,7 @@
           <h3><%= t("administration.users.edit.view.selected_categories") %></h3>
           <%= select_tag "user_category_buyer[buying_category_ids][]", options_for_select(@user.buying_categories.map{|c| [c.name,c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
         </div>
+    </div>
     </div>
     <div style="clear:both"></div>
 <% end %>

@@ -264,3 +264,9 @@ Given /^customer "([^"]*)" has no subaccounts$/ do |email|
     sa.destroy
   end
 end
+
+When /^user "([^"]*)" has no buying categories$/ do |email|
+  u = User::CategoryBuyer.where(:email => email).first
+  u.buying_categories = []
+  u.save!
+end

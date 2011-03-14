@@ -21,6 +21,7 @@ en:
       collapse_expanded_text: '[collapse expanded text]'
       expand_prefix: '...  '
       collapse_prefix: ' '
+    no_categories_for_category_buyer: "Your Category Buyer account has no associated categories. You can't sign in."
   layout:
     main_menu:
       admin:
@@ -356,6 +357,8 @@ en:
           button_update_user: Save
           button_cancel: Cancel
           reset_password_link: Reset password
+          change_to_category_buyer: 'Change to category buyer'
+          change_to_regular_buyer: 'Change to regular buyer'
           not_charge_vat: 'Do not charge VAT'
           available_categories: 'Available categories'
           selected_categories: 'Selected categories'

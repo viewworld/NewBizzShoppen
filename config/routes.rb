@@ -18,6 +18,7 @@ Nbs::Application.routes.draw do
     root :to => redirect("/")
     resources :users do
       resource :password, :controller => 'password'
+      resource :roles, :controller => 'users/roles'
     end
     resource :bulk_users_update, :controller => "bulk_users_update", :only => [:update]
     resources :categories

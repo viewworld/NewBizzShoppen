@@ -133,11 +133,71 @@ Scenario: I can override the certification level of any agent or call centre
 @m6
 Scenario: In users listing I can see unpaid leads count
 
-@m6
+@m6 @_done @_tested
 Scenario: I can change category buyer to regular buyer
+  When I follow translated "layout.main_menu.admin.users"
+  And Category CategoryBuyerCategory is created
+  And I am signed up and confirmed as user with email "kategory_bajer@nbs.com" and password "secret" and role "category_buyer" for category "CategoryBuyerCategory"
+  And I fill in "search_with_keyword" with "kategory_bajer"
+  And I press translated "administration.users.index.view.search_button"
+  And I follow translated "administration.users.index.view.edit"
+  Then I should see CSS path "#category_buyer_categories"
+  And I should not see CSS path "#unique_categories"
+  And I should not see CSS path "#category_interests"
+  When I follow translated "administration.users.edit.view.change_to_regular_buyer"
+  Then I should see CSS path "#unique_categories"
+  And I should see CSS path "#category_interests"
+  And I should not see CSS path "#category_buyer_categories"
 
-@m6
+@m6 @added @_done @_tested
+Scenario: User can login after changing his account to regular buyer
+  When I follow translated "layout.main_menu.admin.users"
+  And Category CategoryBuyerCategory is created
+  And Category AnotherCategory is created
+  And I am signed up and confirmed as user with email "kategory_bajer@nbs.com" and password "secret" and role "category_buyer" for category "CategoryBuyerCategory"
+  And I fill in "search_with_keyword" with "kategory_bajer"
+  And I press translated "administration.users.index.view.search_button"
+  And I follow translated "administration.users.index.view.edit"
+  And I follow translated "administration.users.edit.view.change_to_regular_buyer"
+  And I sign out
+  And I sign in as kategory_bajer@nbs.com with password secret
+  And I follow translated "layout.main_menu.shared.browse_leads"
+  Then I should see "AnotherCategory"
+  And I should see "CategoryBuyerCategory"
+
+@m6 @added @selenium @_done @_tested
+Scenario: User can login after changing his account to category buyer
+  When I follow translated "layout.main_menu.admin.users"
+  And Category CategoryBuyerCategory is created
+  And Category AnotherCategory is created
+  And I am signed up and confirmed as user with email kastomer@nbs.com and password secret and role customer
+  And I fill in "search_with_keyword" with "kastomer"
+  And I press translated "administration.users.index.view.search_button"
+  And I click hidden link by url regex "/users\/\d+\/edit/"
+  And I follow translated "administration.users.edit.view.change_to_category_buyer"
+  And I select "CategoryBuyerCategory" from "all_categories"
+  And I follow "move_right" within "#category_buyer_categories"
+  Then I press translated "administration.categories.edit.view.button_update"
+  And I sign out
+  And I sign in as kastomer@nbs.com with password secret
+  And I follow translated "layout.main_menu.shared.browse_leads"
+  Then I should be on category leads page for CategoryBuyerCategory
+
+@m6 @_done @_tested
 Scenario: I can change regular buyer to category buyer
+  When I follow translated "layout.main_menu.admin.users"
+  And Category CategoryBuyerCategory is created
+  And I am signed up and confirmed as user with email "kategory_bajer@nbs.com" and password "secret" and role "category_buyer" for category "CategoryBuyerCategory"
+  And I am signed up and confirmed as user with email kastomer@nbs.com and password secret and role customer
+  And I fill in "search_with_keyword" with "kastomer"
+  And I press translated "administration.users.index.view.search_button"
+  And I follow translated "administration.users.index.view.edit"
+  Then I should see CSS path "#unique_categories"
+  And I should see CSS path "#category_interests"
+  When I follow translated "administration.users.edit.view.change_to_category_buyer"
+  Then I should not see CSS path "#unique_categories"
+  And I should not see CSS path "#category_interests"
+  And I should see CSS path "#category_buyer_categories"
 
 @m6 @selenium @_done @_tested
 Scenario: I can specify one or many categories for category buyer

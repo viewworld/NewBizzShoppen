@@ -163,3 +163,12 @@ Scenario: Category buyers should not have to configure their interest page, but 
     And I sign in as stiw@lajoie.ca with password secret
     And I am on category home page for Worst Leads
     Then I should be on category home page for Basic Leads
+
+  @m6 @added @_done @_tested
+  Scenario: I can't login when I have no categories assigned
+    When Category named "SampleCat" already exists
+    When I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "SampleCat"
+    And user "jon@lajoie.ca" has no buying categories
+    And I am on the home page
+    And I sign in as jon@lajoie.ca with password secret
+    Then I should see translated "common.no_categories_for_category_buyer"
