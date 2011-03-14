@@ -180,6 +180,8 @@ en:
       purchase_value_label: 'Purchase value:'
       description_label: 'Description:'
       requested_by: 'Requested by:'
+      stats_label: 'Stats'
+      actions_label: 'Actions'
       lead_price_label: 'Lead price:'
       description_label: 'Lead description:'
       created_by_label: 'Created by:'
@@ -197,8 +199,12 @@ en:
       buyout_price_label: 'Buyout price'
       description_label: 'Lead description:'
       lead_details_label: 'Leads details'
+      stats_label: 'Stats'
+      actions_label: 'Actions'
+      other_label: 'Other'
       created_by: 'Created by'
       lead_description_label: 'Leads description'
+      stats_label: 'Stats'
       clicks_count_label: 'Clicks:'
       exposures_count_label: 'Exposures:'
       sale_limit_label: 'Uniqueness:'
@@ -314,6 +320,7 @@ en:
       view:
         button_update_user: 'Save'
         change_password: 'Change password'
+        password_label: 'Password'
 
   administration:
     password:
@@ -1246,6 +1253,7 @@ en:
           lead_name_header: Lead name
           lead_price_header: Lead price
           total_label: Total
+          quantity_label: Quantity
           remove_item_link: Remove item
           checkout_link: Checkout
     bulk_cart_items:

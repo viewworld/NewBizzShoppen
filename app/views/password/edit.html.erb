@@ -1,5 +1,5 @@
 <column-mc:>
-  <header>Password</header>
+  <header><%= t("password.edit.view.password_label") %></header>
 
   <%= semantic_form_for @user, :url => password_path, :method => :put do |form| %>
       <frm title="Change your password">
