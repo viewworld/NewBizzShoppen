@@ -29,17 +29,11 @@ Feature: Category buyer sign up
     And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Best Leads"
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
-    Then I should be on customer interests
-    And I should not see translated "customer.interests.edit.view.categories"
+    Then I should be on category home page for Best Leads
 
-  @_done
+  # "Category buyers should not have to configure their interest page, but have country selected to the country from which the category was design for."
+  @_done @wip @_deprecated
   Scenario: Interests other than category should be visible to account registered from category home page
-    When Category named "Best Leads" already exists
-    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Best Leads"
-    And I am on the home page
-    And I sign in as jon@lajoie.ca with password secret
-    Then I should be on customer interests
-    And I should see translated "customer.interests.edit.view.countries"
 
   @_done
   Scenario: I can sign in from category home page
