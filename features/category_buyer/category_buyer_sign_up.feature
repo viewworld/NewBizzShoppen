@@ -32,7 +32,7 @@ Feature: Category buyer sign up
     Then I should be on category home page for Best Leads
 
   # "Category buyers should not have to configure their interest page, but have country selected to the country from which the category was design for."
-  @_done @wip @_deprecated
+  @_done @_deprecated
   Scenario: Interests other than category should be visible to account registered from category home page
 
   @_done
