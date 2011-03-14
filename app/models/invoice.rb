@@ -31,6 +31,7 @@ class Invoice < ActiveRecord::Base
 
   has_one :customer_address, :class_name => '::Address::InvoiceCustomer', :as => :addressable
   has_one :seller_address, :class_name => '::Address::InvoiceSeller', :as => :addressable
+  has_one :credit_note
 
   scope :ascend_by_invoice_number, order("YEAR(invoices.creation_date) ASC, invoices.number ASC, company_id ASC")
   scope :descend_by_invoice_number, order("YEAR(invoices.creation_date) DESC, invoices.number DESC, company_id ASC")
@@ -204,7 +205,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def total
-    invoice_lines.sum('brutto_value')
+    invoice_lines.where("is_credited = ?", false).sum('brutto_value')
   end
 
   def revenue

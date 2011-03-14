@@ -369,8 +369,19 @@ Scenario: I can send invoice to given email address (as an attachment)
 @tgn @_done @non_testable
 Scenario: I can print out invoice (bypassing PDF)
 
-@tgn
+@tgn @m6 @added             @_wip
 Scenario: I can credit an invoice ...
+  Given I have user with email big_buyer.biz@nbs.com and role customer
+  And User big_buyer.biz@nbs.com with role customer is big buyer
+  And a lead Super computers #1 exists within category Computers and is bought by user big_buyer.biz@nbs.com with role customer
+  And a lead Super computers #2 exists within category Computers and is bought by user big_buyer.biz@nbs.com with role customer
+  And a lead Super computers #3 exists within category Computers and is bought by user big_buyer.biz@nbs.com with role customer
+  And a lead Super computers #4 exists within category Computers and is bought by user big_buyer.biz@nbs.com with role customer
+  And a lead Super computers #5 exists within category Computers and is bought by user big_buyer.biz@nbs.com with role customer
+  And user with email "big_buyer.biz@nbs.com" and role "customer" has invoice generated for all unpaid leads
+  And all invoices for user with email "big_buyer.biz@nbs.com" and role "customer" are unpaid
+  When I click hidden link by url regex "/administration\/invoicing\/invoices/"
+  And I open page in browser
 
 @tgn @added @_tested @selenium
 Scenario: I can bulk set selected invoices as paid

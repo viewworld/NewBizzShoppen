@@ -746,6 +746,7 @@ en:
             with_sale_date_before_and_including: 'Sale before'
             not_paid: 'Not paid only'
             payment_status: 'Payment status'
+          credit_invoice: "Credit invoice"
       cash_flow:
         view:
           header: 'New payment'

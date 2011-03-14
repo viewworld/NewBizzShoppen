@@ -13,6 +13,9 @@
       <li><%= link_to t("administration.invoices.index.view.edit_invoice"), edit_administration_invoicing_invoice_path(invoice), :class => "default_action" %></li>
       <li><%= link_to t("administration.invoices.index.view.remove_invoice"), administration_invoicing_invoice_path(invoice), :method => :delete, :confirm => t("administration.invoices.destroy.view.confirmation") %></li>
       <% unless invoice.paid? %>
+          <% if invoice.credit_note.nil? %>
+            <li><%= link_to t("administration.invoices.index.view.credit_invoice"), administration_invoicing_credit_notes_path(:credit_note =>  {:invoice_id => invoice.id}), {:method => :post} %></li>
+          <% end %>
           <li><%= link_to t("administration.invoices.index.view.set_as_paid"), administration_invoicing_invoice_path(invoice.id, {:invoice_id => invoice.id, :invoice => {:paid_at => Time.now, :cash_flow => invoice.total}}), {:method => :put} %></li>
       <% end %>
       <li><%= link_to t("administration.invoices.index.view.add_transaction"), new_administration_invoicing_payment_transaction_path(:invoice_id => invoice.id) %></li>

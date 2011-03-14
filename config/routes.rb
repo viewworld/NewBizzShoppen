@@ -38,6 +38,7 @@ Nbs::Application.routes.draw do
       resource :bulk_invoice_update, :controller => "bulk_invoice_update", :only => [:update]
       resources :upcoming_invoices, :only => [:index]
       resources :payment_transactions
+      resources :credit_notes
     end
     resources :bank_accounts
     resources :vat_rates
