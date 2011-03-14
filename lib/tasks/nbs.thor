@@ -41,7 +41,8 @@ class Nbs < Thor
           :last_name => "Change",
           :vat_no => '111',
           :address => Address.make!(:country => Country.where(:name => 'Denmark').first),
-          :default => true
+          :default => true,
+          :bank_account => BankAccount.first
       )
     end
 

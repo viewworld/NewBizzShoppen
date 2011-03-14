@@ -15,8 +15,12 @@ Feature: Buy out
     And I sign in as jon@lajoie.ca with password secret
     And I go to browse leads
     And I follow "Computers"
-    Then I should see translated "leads.index.add_to_cart_buyout_link" in the "2" row of table "table.leads_table tbody"
-    And I should see translated "leads.listing.buyout_price_label" in the "2" row of table "table.leads_table tbody"
+    And I fill in "search_with_keyword" with "Printers"
+    And I press translated "leads.index.search.search_button"
+    Then I should see translated "leads.index.add_to_cart_buyout_link" in the "1" row of table "table.leads_table tbody"
+    And I should see translated "leads.listing.buyout_price_label" in the "1" row of table "table.leads_table tbody"
+    When I fill in "search_with_keyword" with "Monitors"
+    And I press translated "leads.index.search.search_button"
     Then I should not see translated "leads.index.add_to_cart_buyout_link" in the "1" row of table "table.leads_table tbody"
     And I should not see translated "leads.listing.buyout_price_label" in the "1" row of table "table.leads_table tbody"
 

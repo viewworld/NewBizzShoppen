@@ -291,4 +291,5 @@ Seller.blueprint do
   last_name { Faker::Name.last_name }
   address { Address.make! }
   vat_no { Faker.numerify('#########') }
+  bank_account { BankAccount.make! }
 end
