@@ -130,8 +130,19 @@ Scenario: I can override the certification level of any agent or call centre
   And I press translated "administration.users.edit.view.button_update_user"
   Then I should see translated "administration.users.update.flash.user_update_successful"
 
-@m6
+@m6 @tgn @_tested
 Scenario: In users listing I can see unpaid leads count
+  Given I have user with email big_buyer.biz@nbs.com and role customer
+  And User big_buyer.biz@nbs.com with role customer is big buyer
+  And a lead Super computers #1 exists within category Computers and is bought by user big_buyer.biz@nbs.com with role customer
+  And a lead Super computers #2 exists within category Computers and is bought by user big_buyer.biz@nbs.com with role customer
+  And a lead Super computers #3 exists within category Computers and is bought by user big_buyer.biz@nbs.com with role customer
+  And a lead Super computers #4 exists within category Computers and is bought by user big_buyer.biz@nbs.com with role customer
+  And a lead Super computers #5 exists within category Computers and is bought by user big_buyer.biz@nbs.com with role customer
+  And all users have refreshed cache counters
+  Then I fill in "search_with_keyword" with "big_buyer.biz@nbs.com"
+  And I press translated "administration.users.index.view.search_button"
+  Then I should have value "5" in the css path "tr:nth-child(1) td:nth-child(9)"
 
 @m6 @_done @_tested
 Scenario: I can change category buyer to regular buyer
