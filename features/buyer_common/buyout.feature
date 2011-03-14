@@ -117,7 +117,7 @@ Feature: Buy out
     And I should see "1,230.00" within ".ta_r:nth-child(3)"
     And I should see "1230.0" within "#invoices_table td:nth-child(4)"
 
-  @added @m6 @_done @_wip
+  @added @m6 @_done
   Scenario: I can buyout lead when I'm big buyer
     Given there are no leads
     And Category named "Computers" already exists

@@ -69,7 +69,7 @@ class User < ActiveRecord::Base
                :leads_assigned_month_ago_counter, :leads_assigned_year_ago_counter, :total_leads_assigned_counter, :leads_created_counter,
                :leads_volume_sold_counter, :leads_revenue_counter, :leads_purchased_month_ago_counter, :leads_purchased_year_ago_counter,
                :leads_rated_good_counter, :leads_rated_bad_counter, :leads_not_rated_counter, :leads_rating_avg, :certification, :payout,
-               :revenue_counter, :leads_purchased_counter, :leads_volume_sold_counter, :leads_revenue_counter
+               :revenue_counter, :leads_purchased_counter, :leads_volume_sold_counter, :leads_revenue_counter, :unpaid_leads_counter
 
   attr_protected :payout, :locked, :can_edit_payout_information, :paypal_email, :bank_swift_number, :bank_iban_number
 
@@ -223,6 +223,9 @@ class User < ActiveRecord::Base
 
   def refresh_buyer_counters!
     self.leads_purchased_counter = LeadPurchase.with_purchased_by(self).size
+    if big_buyer?
+      self.unpaid_leads_counter = LeadPurchase.with_not_invoiced.where("owner_id = ?", id).map(&:not_invoiced_count).map(&:to_i).sum
+    end
     self.save
   end
 
