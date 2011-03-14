@@ -756,6 +756,7 @@ en:
             with_sale_date_before_and_including: 'Sale before'
             not_paid: 'Not paid only'
             payment_status: 'Payment status'
+          credit_invoice: "Credit invoice"
       cash_flow:
         view:
           header: 'New payment'
@@ -1928,3 +1929,6 @@ en:
     bulk_users_update:
       update:
         notice: 'Users has been updated'
+    credit_notes:
+      create:
+        notice: "Invoice has bee credited successfully"
