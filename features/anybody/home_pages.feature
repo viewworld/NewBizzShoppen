@@ -17,7 +17,6 @@ Feature: Home pages
     And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Best Leads"
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
-    And I follow translated "layout.main_menu.shared.home"
     Then I should be on category home page for Best Leads
     When I follow translated "layout.main_menu.shared.site_home"
     Then I should be on the home page

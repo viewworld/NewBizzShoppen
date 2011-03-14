@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
 
   include RoleModel
   include ScopedSearch::Model
+  include RoleChange
 
   devise :database_authenticatable, :registerable, :confirmable, :lockable,
          :recoverable, :rememberable, :trackable, :validatable, :timeoutable

@@ -4,7 +4,12 @@
   <%= semantic_form_for @user, :url => administration_user_path, :method => :put do |form| %>
       <frm title="">
         <param:header>
-          <%= bt_link_to nil, t("administration.users.edit.view.reset_password_link"), administration_user_password_path(@user) , :method => :delete, :class => "fltr" %>                      
+          <%= bt_link_to nil, t("administration.users.edit.view.reset_password_link"), administration_user_password_path(@user) , :method => :delete, :class => "fltr" %>
+          <% if @user.has_role?(:category_buyer) %>
+            <%= bt_link_to nil, t("administration.users.edit.view.change_to_regular_buyer"), administration_user_roles_path(@user, :roles => [:category_buyer]) , :method => :delete, :class => "fltr" %>
+          <% elsif @user.has_role?(:customer) %>
+            <%= bt_link_to nil, t("administration.users.edit.view.change_to_category_buyer"), administration_user_roles_path(@user, :roles => [:category_buyer]) , :method => :post, :class => "fltr" %>
+          <% end %>
         </param:header>
         <param:content>
           <%= render :partial => 'form', :locals => { :form => form }  %>

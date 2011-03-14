@@ -39,10 +39,16 @@ class ApplicationController < ActionController::Base
         session[:lead_id] = nil
         session[:buyout] = nil
         requested_path
-      elsif resource.has_role? :customer and resource.sign_in_count <= 1
+      elsif resource.has_role? :customer and !resource.has_role? :category_buyer and resource.sign_in_count <= 1
         edit_customers_interests_path
       elsif resource.has_role? :category_buyer
-        category_home_page_path(resource.with_role.parent_buying_categories.first.cached_slug)
+        if resource.with_role.parent_buying_categories.first
+          category_home_page_path(resource.with_role.parent_buying_categories.first.cached_slug)
+        else
+          flash[:notice] = t("common.no_categories_for_category_buyer")
+          sign_out(resource_name)
+          root_path
+        end
       elsif session[:last_url_before_logout].present?
         last_url = session[:last_url_before_logout]
         session[:last_url_before_logout] = nil
