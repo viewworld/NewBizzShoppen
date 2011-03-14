@@ -15,3 +15,22 @@ class CreditNote < ActiveRecord::Base
   end
 
 end
+
+class Credit < CreditNote
+
+  after_save :set_invoice_as_paid_and_credited
+
+  private
+
+  def set_invoice_as_paid_and_credited
+    invoice.update_attribute(:paid_at, Time.now)
+    invoice.invoice_lines.each do |invoice_line|
+      invoice_line.update_attribute(:is_credited, true)
+    end
+  end
+
+end
+
+class Refund < CreditNote
+
+end

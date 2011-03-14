@@ -1921,3 +1921,6 @@ en:
     bulk_users_update:
       update:
         notice: 'Users has been updated'
+    credit_notes:
+      create:
+        notice: "Invoice has bee credited successfully"

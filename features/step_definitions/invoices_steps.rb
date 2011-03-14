@@ -59,14 +59,12 @@ Then /^user with email "([^"]*)" and role "([^"]*)" has invoice generated for al
   customer = "User::#{role.camelize}".constantize.find_by_email(email)
   customer.lead_purchases.map{|lp| lp.lead.currency}.uniq.each do |currency|
     invoice = Invoice.create(:user_id => customer.id, :paid_at =>  Time.now, :currency => currency, :seller => Seller.first)
-    puts invoice.errors.inspect
-    puts invoice.seller.errors.inspect
     invoice.reload
     ManualTransaction.create(:invoice => invoice, :amount => invoice.total, :paid_at => Time.now)
   end
 end
 
-Given /^all invoices for user with email "([^"]*)" and role "([^"]*)" are unpaid$/ do |user, role|
+Given /^all invoices for user with email "([^"]*)" and role "([^"]*)" are unpaid$/ do |email, role|
   customer = "User::#{role.camelize}".constantize.find_by_email(email)
   Invoice.where("user_id = ?", customer.id).each do |invoice|
     invoice.update_attribute(:paid_at, nil)

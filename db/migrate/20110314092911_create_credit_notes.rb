@@ -4,6 +4,7 @@ class CreateCreditNotes < ActiveRecord::Migration
       t.integer :number
       t.integer :invoice_id
       t.date :paid_at
+      t.string :type
       t.timestamps
     end
 
