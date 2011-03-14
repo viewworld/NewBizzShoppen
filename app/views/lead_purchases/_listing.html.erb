@@ -15,18 +15,18 @@
     <% end %>
     <th style="width: 350px;"><%= t("leads.listing.lead_description_label") %></th>
     <th style="width: 200px"><%= t("leads.listing.lead_details_label") %></th>
-    <th>Stats</th>
+    <th><%= t("leads.listing.stats_label") %></th>
 
     <% if block_assigned_to %>
       <th><%= t("lead_buyer.lead_purchases.index.view.bulk_assigned_field") %></th>
     <% end %>
 
     <% if block_other_actions %>
-      <th>Other</th>
+      <th><%= t("leads.listing.other_label") %></th>
     <% end %>
 
     <% if block_tools %>
-      <th class="ta_r">Actions</th>
+      <th class="ta_r"><%= t("leads.listing.actions_label") %></th>
     <% end %>
     <th class="hr"></th>
   </tr>
