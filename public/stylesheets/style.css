@@ -32,12 +32,21 @@ body
 
 #head #global_loader
 {
-    background: url(/images/global_loader.gif) no-repeat;
+    background: url(/images/global_loader.gif) no-repeat center center #fff;
     position: fixed;
     width: 32px;
     height: 32px;
-    top: 5px;
-    right: 5px;
+    top: 15px;
+    right: 15px;
+
+    -moz-border-radius: 16px;
+    -webkit-border-radius: 16px;
+    border-radius: 16px;
+    
+    -moz-box-shadow: 0 0 10px #999;
+    -webkit-box-shadow: 0 0 10px #999;
+    box-shadow: 0 0 10px #999;
+
     display: none;
 }
 
@@ -207,7 +216,7 @@ h4
     padding-right: 35px;
 }
 
-#user_menu ul.nav li.has_child a:hover span
+#user_menu ul.nav li.has_child a:hover span    
 {
     background-position: right -256px;    
 }
@@ -215,6 +224,11 @@ h4
 #user_menu ul.nav li.has_child:hover ul.subnav
 {
     display: block;
+}
+
+#user_menu ul.nav li.has_child.active span
+{
+    background-position: right -370px;
 }
 
 #user_menu ul.subnav
@@ -255,7 +269,7 @@ h4
 #user_menu ul.subnav li.first a span,
 #user_menu ul.subnav li.first a:hover span
 {
-    background-position: right -331px;
+    background-position: right -331px !important;
     padding: 3px 0 0 15px;
     height: 35px;
     line-height: 35px;
@@ -646,6 +660,16 @@ h4
     background: url(/images/bg_header_ribbon_green.png) no-repeat right -43px;
 }
 
+.header_ribbon h1 span a
+{
+    color: #fff;
+    font-weight: normal;
+    text-decoration: none;
+    border-bottom: 1px dotted #fff;
+    font-size: 16px
+}
+
+
 .header_actions
 {
     position: absolute;
@@ -954,6 +978,27 @@ input:focus, textarea:focus, select:focus
     line-height: 20px;
     font-size: 12px;
     font-weight: normal;
+}
+
+.category_desc
+{
+    font-size: 12px;
+    font-weight: normal;
+    line-height: normal;
+    padding: 7px 0 5px;
+}
+
+.subcategory_btn
+{
+    font-size: 12px;    
+    line-height: normal;
+    padding: 5px 0 0;
+    font-weight: bold;
+}
+
+.subcategory_btn a
+{
+    color: #0669b6;
 }
 
 
