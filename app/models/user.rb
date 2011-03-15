@@ -225,7 +225,7 @@ class User < ActiveRecord::Base
   def refresh_buyer_counters!
     self.leads_purchased_counter = LeadPurchase.with_purchased_by(self).size
     if big_buyer?
-      self.unpaid_leads_counter = LeadPurchase.with_not_invoiced.where("owner_id = ?", id).map(&:not_invoiced_count).map(&:to_i).sum
+      self.unpaid_leads_counter = LeadPurchase.with_not_invoiced.where("owner_id = ?", id).map(&:currency_id).size
     end
     self.save
   end
