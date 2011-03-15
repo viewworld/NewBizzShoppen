@@ -132,6 +132,11 @@
     margin-top: 7px;    
 }
 
+.inputs ol li.string img.icon
+{
+    padding: 8px;
+}
+
 
 /* --- textarea ---
 --------------------------------------------------------------------------------- */
@@ -227,6 +232,12 @@
 .inputs ol li.ckeditor
 {
     padding: 5px 0 8px;    
+}
+
+.inputs ol li.ckeditor.ckeditor_label label
+{
+    float: none;
+    padding: 8px;
 }
 
 
@@ -756,19 +767,22 @@
 }
 
 .labels_160 ol li.commit,
-.labels_160 ol.align_inputs li.boolean
+.labels_160 ol.align_inputs li.boolean,
+.labels_160 ol.align_inputs li.header h3      
 {
     margin-left: 160px;
 }
 
 .labels_180 ol li.commit,
-.labels_180 ol.align_inputs li.boolean
+.labels_180 ol.align_inputs li.boolean,
+.labels_180 ol.align_inputs li.header h3    
 {
     margin-left: 180px;
 }
 
 .labels_200 ol li.commit,
-.labels_200 ol.align_inputs li.boolean
+.labels_200 ol.align_inputs li.boolean,
+.labels_200 ol.align_inputs li.header h3    
 {
     margin-left: 200px;
 }
