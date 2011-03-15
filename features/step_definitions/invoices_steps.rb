@@ -99,3 +99,22 @@ end
 Then /^VAT ratio is set to (.+)$/ do |vat_rate|
   Settings.invoicing_default_vat_rate = vat_rate.to_f
 end
+
+Given /^there are no invoices$/ do
+  Invoice.delete_all
+end
+
+When /^last invoice for user "([^"]*)" with role "([^"]*)" is credited$/ do |email, role|
+  customer = "User::#{role.camelize}".constantize.find_by_email(email)
+  invoice = customer.invoices.last
+  Credit.create(:invoice => invoice)
+end
+
+When /^last invoice for user "([^"]*)" with role "([^"]*)" is refunded for lines "([^"]*)"$/ do |email, role, lead_names|
+  customer = "User::#{role.camelize}".constantize.find_by_email(email)
+  invoice = customer.invoices.last
+  leads = lead_names.split(",").map { |header| Lead.find_by_header(header).first }.map(&:id)
+  invoice.invoice_lines.select { |il| leads.include?(il.payable.lead_id) }.each do |invoice_line|
+    invoice_line.update_attribute(:is_credited, true)
+  end
+end

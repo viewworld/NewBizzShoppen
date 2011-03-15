@@ -6,7 +6,7 @@
   <% else %>
     <%= f.text_field :value %>
   <% end %>
-  <%= image_tag("languages/flag_#{f.object.locale}.png", :border => 0) %>
+  <%= image_tag("languages/flag_#{f.object.locale}.png", :border => 0, :class => "icon") %>
   <%= custom_error_for_field(f, :value) %>
 </li>
 <li class="hidden">

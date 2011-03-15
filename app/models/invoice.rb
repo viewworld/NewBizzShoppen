@@ -204,8 +204,10 @@ class Invoice < ActiveRecord::Base
     "invoice_#{number}_#{creation_date.year}_#{user.full_name.downcase.gsub(/[-&^%$@!~"'* ,.\/\\]/, '_')}"
   end
 
-  def total
-    invoice_lines.where("is_credited = ?", false).sum('brutto_value')
+  def total(without_credited=false)
+    il = invoice_lines.scoped
+    il = il.where("is_credited = ?", false) if without_credited
+    il.sum('brutto_value')
   end
 
   def revenue

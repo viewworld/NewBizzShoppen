@@ -14,9 +14,9 @@
                 <%= f.label :with_category, t("lead_user.lead_purchases.index.view.search.category_label") %>
                 <%= f.select :with_category, @categories, {:include_blank => true} %>
               </li>
-              <li class="select">
+              <li class="string">
                 <%= f.label :with_zip_code, t("lead_user.lead_purchases.index.view.search.zip_code") %>
-                <%= f.text_field :with_zip_code %>
+                <%= f.text_field :with_zip_code, :style => "width: 100px" %>
               </li>
               <li class="select">
                 <%= f.label :with_country, t("lead_user.lead_purchases.index.view.search.country_label") %>
@@ -25,9 +25,9 @@
                 <ibt c="bt_green" icon="magnify">
                   <%= submit_tag t("lead_user.lead_purchases.index.view.search.search_button") %>
                 </ibt>
-                <ibt c="fltri bt_grey">
+                <p>
                   <%= bt_clear_filter %>
-                </ibt>
+                </p>
               </li>
             </ol>
           </fieldset>

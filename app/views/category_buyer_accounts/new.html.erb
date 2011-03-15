@@ -10,8 +10,9 @@
   <%= semantic_form_for @user, :url => "/#{params[:slug]}/account" do |form| %>
       <frm title="Create new account" c="no_marg">
         <param:content>
+          <div class="column_left">
           <div class="pdd_10 no_pdd_t">
-            <fieldset class="inputs labels_ta_r labels_240">
+            <fieldset class="inputs labels_ta_r labels_200">
               <ol>
                 <%= form.input :first_name %>
                 <%= form.input :last_name %>
@@ -27,41 +28,28 @@
               </ol>
             </fieldset>
           </div>
+          </div>
 
-          <hl/>
 
+          <div class="column_right">
           <div class="pdd_10 no_pdd_t">
-            <fieldset class="inputs labels_ta_r labels_240">
+            <fieldset class="inputs labels_ta_r">
               <ol class="align_inputs">
                 <%= form.input :screen_name %>
                 <%= form.input :phone %>
                 <%= form.input :email %>
-              </ol>
-            </fieldset>
-          </div>
-
-          <hl/>
-
-          <div class="pdd_10 no_pdd_t">
-            <fieldset class="inputs labels_ta_r labels_240">
-              <ol class="align_inputs">
                 <%= form.input :password %>
                 <%= form.input :password_confirmation %>
-              </ol>
-            </fieldset>
-          </div>
-
-          <hl/>
-
-          <div class="pdd_10 no_pdd_t">
-            <fieldset class="inputs labels_ta_r labels_240">
-              <ol class="align_inputs">
                 <%= form.input :team_buyers, :as => :boolean, :label => t("category_buyer_accounts.new.view.enable_team_buyers") %>
                 <%= form.input :agreement_read, :as => :boolean %>
                 <%= form.input :newsletter_on, :as => :boolean %>
               </ol>
             </fieldset>
           </div>
+          </div>
+
+          <clb/>
+
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="plus">
