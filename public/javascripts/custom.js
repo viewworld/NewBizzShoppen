@@ -46,3 +46,28 @@ $("#" + select_name + " option").each(function()
     $(this).attr("selected","selected");
 });
 }
+
+function clear_regions_select(field_prefix_id) {
+    $('#' + field_prefix_id + '_region_id' + ' option').each(function()
+    {
+
+        if ($(this).text() != "") {
+            $(this).remove();
+        }
+    });
+}
+
+function add_region(field_prefix_id, label, value) {
+    $('#' + field_prefix_id + '_region_id').
+            append($("<option></option>").
+            attr("value", value).
+            text(label));
+}
+
+function refresh_regions_list(field_prefix_id) {
+    $.ajax({
+        type: "GET",
+        url: "/regions",
+        data: "country_id=" + $('#' + field_prefix_id + '_country_id').val() + "&field_prefix=" + field_prefix_id
+    });
+}
