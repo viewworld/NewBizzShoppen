@@ -653,6 +653,17 @@
 }
 
 
+.inputs_190 ol li.string input,
+.inputs_190 ol li.password input
+{
+	width: 190px;
+}
+.inputs_190 ol li.select select
+{
+	width: 202px;
+}
+
+
 .inputs_200 ol li.string input,
 .inputs_200 ol li.password input
 {
@@ -847,6 +858,17 @@
     padding: 0 3px 5px 5px;
 }
 
+
+
+/* --- commit --------------------------------------------------------------- */
+
+.inputs_vertical ol li.commit p
+{
+    float: left;
+    line-height: 30px;
+    padding-left: 5px;
+    font-size: 12px;
+}
 
 
 /* --- errors --------------------------------------------------------------- */

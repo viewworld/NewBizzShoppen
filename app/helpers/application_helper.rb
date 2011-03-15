@@ -153,11 +153,11 @@ module ApplicationHelper
   end
   
   def bt_clear_filter(url=nil)
-    button_to_function t("common.clear_filter"), "document.location = '#{url || request.path}'"
+    link_to_function t("common.clear_filter"), "document.location = '#{url || request.path}'"
   end
 
   def bt_clear_filter_safe
-    button_to_function t("common.clear_filter"), "clear_filter()"
+    link_to t("common.clear_filter"), "javascript:clear_filter()"
   end
   
   def format_date(date, with_time=false)

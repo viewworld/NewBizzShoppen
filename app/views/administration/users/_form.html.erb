@@ -1,6 +1,6 @@
 <div class="column_left">
   <div class="pdd_10 no_pdd_t">
-    <fieldset class="inputs labels_ta_r labels_240">
+    <fieldset class="inputs labels_ta_r labels_200">
       <ol class="align_inputs">
         <%= form.input :first_name %>
         <%= form.input :last_name %>
@@ -65,7 +65,7 @@
     <hl/>
     <div id="category_buyer_categories">
       <div class="pdd_10">
-        <div class="grid_250 fltl">&nbsp;</div>
+        <div class="grid_210 fltl">&nbsp;</div>
         <div class="grid_240 fltl">
           <h3><%= t("administration.users.edit.view.available_categories") %></h3>
           <%= select_tag "all_categories", options_for_select((Category.roots.without_unique-@user.buying_categories).map { |c| [c.name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
@@ -90,7 +90,7 @@
     <hl/>
     <div id="unique_categories">
       <div class="pdd_10">
-        <div class="grid_250 fltl">&nbsp;</div>
+        <div class="grid_210 fltl">&nbsp;</div>
         <div class="grid_240 fltl">
           <h3><%= t("administration.users.edit.view.available_unique_categories") %></h3>
           <%= select_tag "all_categories", options_for_select((Category.with_all_customer_unique-@user.unique_categories).map { |c| [c.name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
@@ -113,7 +113,7 @@
 
     <div id="category_interests">
       <div class="pdd_10">
-        <div class="grid_250 fltl">&nbsp;</div>
+        <div class="grid_210 fltl">&nbsp;</div>
         <div class="grid_240 fltl">
           <h3><%= t("administration.users.edit.view.available_categories") %></h3>
           <%= select_tag "all_categories_for_interests", options_for_select((Category.without_unique-@user.category_interests).map { |c| [c.name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
@@ -138,7 +138,7 @@
     <% prefix = params[:role].blank? ? @user.role : params[:role] %>
     <hl/>
     <div class="pdd_10">
-      <div class="grid_250 fltl">&nbsp;</div>
+      <div class="grid_210 fltl">&nbsp;</div>
       <div class="grid_240 fltl">
         <h3><%= t("administration.users.edit.view.available_unique_categories") %></h3>
         <%= select_tag "all_categories", options_for_select((Category.with_all_agent_unique-@user.unique_categories).map { |c| [c.name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>

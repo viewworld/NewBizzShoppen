@@ -8,7 +8,7 @@
             <ol class="no_pdd">
               <li class="string">
                 <%= f.label :with_keyword, t("administration.leads.index.search.keyword_label") %>
-                <%= f.text_field :with_keyword %>
+                <%= f.text_field :with_keyword, :style => "width:140px" %>
               </li>
               <li class="select">
                 <%= f.label :with_category, t("administration.leads.index.search.category_label") %>
@@ -36,7 +36,7 @@
                 <%= f.hidden_field :lead_purchases_counter_from %>
                 <%= f.hidden_field :lead_purchases_counter_to %>
                 <%= f.label :lead_purchases_counter_from, "Sold range" %>
-                <%= text_field_tag :lead_purchases_counter_from_to, '', {:readonly => "readonly", :id => "lead_purchases_counter_from_to", :style => "width: 70px"} %>
+                <%= text_field_tag :lead_purchases_counter_from_to, '', {:readonly => "readonly", :id => "lead_purchases_counter_from_to", :style => "width: 60px"} %>
                 <div class="range_container">
                   <div id="sold_range" class="slider-range"></div>
                 </div>
@@ -60,9 +60,9 @@
                 <ibt c="bt_green" icon="magnify">
                   <%= submit_tag t("administration.leads.index.view.search_button") %>
                 </ibt>
-                <ibt c="fltri bt_grey">
+                <p>
                   <%= bt_clear_filter %>
-                </ibt>
+                </p>
               </li>
             </ol>
           </fieldset>
