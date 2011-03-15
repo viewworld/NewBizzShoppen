@@ -1,44 +1,50 @@
-<div class="pdd_10 no_pdd_t">
-  <fieldset class="inputs labels_ta_r labels_240">
-    <ol class="align_inputs">
-      <li class="header">
-        <h3><%= t("shared.leads.form.company_information") %></h3>
-      </li>
-      <%= form.input :company_name, :label => t("shared.leads.form.company_name"), :hint => hint_for(@lead, :company_name) %>
-      <%= form.input :company_phone_number, :hint => hint_for(@lead, :company_phone_number) %>
-      <%= form.input :company_website, :hint => hint_for(@lead, :company_website) %>
-      <%= form.input :address_line_1, :hint => hint_for(@lead, :address_line_1) %>
-      <%= form.input :address_line_2, :hint => hint_for(@lead, :address_line_2) %>
-      <%= form.input :address_line_3, :hint => hint_for(@lead, :address_line_3) %>
-      <%= form.input :zip_code, :hint => hint_for(@lead, :zip_code) %>
-      <%= form.input :city, :hint => hint_for(@lead, :city) %>
-      <%= form.input :country_id, :as => :select, :collection => Country.all, :input_html => { :onchange => "refresh_phone_codes(); refresh_regions_list();" }, :hint => hint_for(@lead, :country_id) %>
-      <%= form.input :region_id, :as => :select, :collection => @lead.country.present? ? @lead.country.regions : [], :hint => hint_for(@lead, :region_id) %>
-      <%= form.input :company_vat_no, :label => t("shared.leads.form.company_vat_no"), :hint => hint_for(@lead, :company_vat_no) %>
-      <%= form.input :company_ean_number, :label => t("shared.leads.form.company_ean_reg"), :hint => hint_for(@lead, :company_ean_number) %>
-      <% if current_user.has_any_role?(:admin, :call_centre) %>
-        <%= form.input :tmp_creator_id, :as => :select, :collection => (current_user.has_role?(:call_centre) ? User.with_call_centre_agents(current_user) : User.with_agents_without_call_centres).map { |u| [u.email, u.id] }, :selected => @lead.creator_id, :label => t("shared.leads.form.creator") %>
-      <% end %>
-    </ol>
-  </fieldset>
+<div class="column_left">
+  <div class="pdd_10 no_pdd_t">
+    <fieldset class="inputs labels_ta_r labels_240">
+      <ol class="align_inputs">
+        <li class="header">
+          <h3><%= t("shared.leads.form.company_information") %></h3>
+        </li>
+        <%= form.input :company_name, :label => t("shared.leads.form.company_name"), :hint => hint_for(@lead, :company_name) %>
+        <%= form.input :company_phone_number, :hint => hint_for(@lead, :company_phone_number) %>
+        <%= form.input :company_website, :hint => hint_for(@lead, :company_website) %>
+        <%= form.input :address_line_1, :hint => hint_for(@lead, :address_line_1) %>
+        <%= form.input :address_line_2, :hint => hint_for(@lead, :address_line_2) %>
+        <%= form.input :address_line_3, :hint => hint_for(@lead, :address_line_3) %>
+        <%= form.input :zip_code, :hint => hint_for(@lead, :zip_code) %>
+        <%= form.input :city, :hint => hint_for(@lead, :city) %>
+        <%= form.input :country_id, :as => :select, :collection => Country.all, :input_html => {:onchange => "refresh_phone_codes(); refresh_regions_list();"}, :hint => hint_for(@lead, :country_id) %>
+        <%= form.input :region_id, :as => :select, :collection => @lead.country.present? ? @lead.country.regions : [], :hint => hint_for(@lead, :region_id) %>
+        <%= form.input :company_vat_no, :label => t("shared.leads.form.company_vat_no"), :hint => hint_for(@lead, :company_vat_no) %>
+        <%= form.input :company_ean_number, :label => t("shared.leads.form.company_ean_reg"), :hint => hint_for(@lead, :company_ean_number) %>
+        <% if current_user.has_any_role?(:admin, :call_centre) %>
+            <%= form.input :tmp_creator_id, :as => :select, :collection => (current_user.has_role?(:call_centre) ? User.with_call_centre_agents(current_user) : User.with_agents_without_call_centres).map { |u| [u.email, u.id] }, :selected => @lead.creator_id, :label => t("shared.leads.form.creator") %>
+        <% end %>
+      </ol>
+    </fieldset>
+  </div>
 </div>
-<hl/>
 
-<div class="pdd_10 no_pdd_t">
-  <fieldset class="inputs labels_ta_r labels_240">
-    <ol class="align_inputs">
-      <li class="header">
-        <h3><%= t("shared.leads.form.contact_information") %></h3>
-      </li>
-      <%= form.input :contact_name, :label => t("shared.leads.form.contact_name"), :hint => hint_for(@lead, :contact_name) %>
-      <%= form.input :direct_phone_number, :label => t("shared.leads.form.contact_direct_phone_number"), :hint => hint_for(@lead, :direct_phone_number) %>
-      <%= form.input :phone_number, :label => t("shared.leads.form.contact_mobile_number"), :hint => hint_for(@lead, :phone_number) %>
-      <%= form.input :email_address, :hint => hint_for(@lead, :email_address) %>
-      <%= form.input :linkedin_url, :hint => hint_for(@lead, :linkedin_url) %>
-      <%= form.input :facebook_url, :hint => hint_for(@lead, :facebook_url) %>
-    </ol>
-  </fieldset>
+<div class="columnr_right">
+  <div class="pdd_10 no_pdd_t">
+    <fieldset class="inputs labels_ta_r labels_160">
+      <ol class="align_inputs">
+        <li class="header">
+          <h3><%= t("shared.leads.form.contact_information") %></h3>
+        </li>
+        <%= form.input :contact_name, :label => t("shared.leads.form.contact_name"), :hint => hint_for(@lead, :contact_name) %>
+        <%= form.input :direct_phone_number, :label => t("shared.leads.form.contact_direct_phone_number"), :hint => hint_for(@lead, :direct_phone_number) %>
+        <%= form.input :phone_number, :label => t("shared.leads.form.contact_mobile_number"), :hint => hint_for(@lead, :phone_number) %>
+        <%= form.input :email_address, :hint => hint_for(@lead, :email_address) %>
+        <%= form.input :linkedin_url, :hint => hint_for(@lead, :linkedin_url) %>
+        <%= form.input :facebook_url, :hint => hint_for(@lead, :facebook_url) %>
+      </ol>
+    </fieldset>
+  </div>
 </div>
+
+<clb/>
+
 <hl/>
 
 <div class="pdd_10 no_pdd_t">
@@ -132,7 +138,7 @@
             $('.destroy_hidden_field_template_value_tr_' + $('#locale_picker').val()).val('');
             $("#locale_picker option[value=" + $('#locale_picker').val() + "]").remove();
             nestedFormsCount = nestedFormsCount + 1;
-            if ($("#locale_picker option[value!='']").size()==0) {
+            if ($("#locale_picker option[value!='']").size() == 0) {
                 $("#locale_picker_div").hide();
             }
         }
@@ -168,7 +174,7 @@
         $('#lead_template_container_' + $('#optional_templates_picker').val()).show();
         $('.destroy_hidden_field_lead_template_fields_' + $('#optional_templates_picker').val()).val('');
         $("#optional_templates_picker option[value=" + $('#optional_templates_picker').val() + "]").remove();
-        if($('#optional_templates_picker option').length == 1)
+        if ($('#optional_templates_picker option').length == 1)
         {
             $('#optional_templates_span').hide();
         }
@@ -182,53 +188,53 @@
         $('#lead_template_container_' + template_id.toString()).hide();
         $('.destroy_hidden_field_lead_template_fields_' + template_id.toString()).val('true');
         $('#optional_templates_picker').append($("<option></option>").attr("value", template_id).text(template_name));
-        if($('#optional_templates_picker option').length > 1)
+        if ($('#optional_templates_picker option').length > 1)
         {
             $('#optional_templates_span').show();
         }
     }
 
-    function refresh_phone_codes(){
-       $.ajax({
-         type: "GET",
-         url: "<%= phone_codes_path -%>",
-         data: "country_id=" + $('#lead_country_id').val()
-       });
+    function refresh_phone_codes() {
+        $.ajax({
+            type: "GET",
+            url: "<%= phone_codes_path -%>",
+            data: "country_id=" + $('#lead_country_id').val()
+        });
     }
 
-    function refresh_regions_list(){
-       $.ajax({
-         type: "GET",
-         url: "<%= regions_path -%>",
-         data: "country_id=" + $('#lead_country_id').val()
-       });
+    function refresh_regions_list() {
+        $.ajax({
+            type: "GET",
+            url: "<%= regions_path -%>",
+            data: "country_id=" + $('#lead_country_id').val()
+        });
     }
 
-    function set_phone_code(field, code){
+    function set_phone_code(field, code) {
         $('#' + field).val('+' + code)
     }
 
-    function clear_regions_select(){
+    function clear_regions_select() {
         $('#lead_region_id option').each(function()
         {
 
-            if($(this).text() != "") {
+            if ($(this).text() != "") {
                 $(this).remove();
             }
         });
     }
 
-    function add_region(label, value){
-       $('#lead_region_id').
-            append($("<option></option>").
-            attr("value", value).
-            text(label));
+    function add_region(label, value) {
+        $('#lead_region_id').
+                append($("<option></option>").
+                attr("value", value).
+                text(label));
     }
 
 
     <% if !@lead.new_record? or (@lead.new_record? and @lead.country.present?) %>
-        <%= "if($('#lead_direct_phone_number').val() == ''){set_phone_code('lead_direct_phone_number', #{@lead.country.phone_dialling_code})}" -%>
-        <%= "if($('#lead_phone_number').val() == ''){set_phone_code('lead_phone_number', #{@lead.country.phone_dialling_code})}" -%>
+    <%= "if($('#lead_direct_phone_number').val() == ''){set_phone_code('lead_direct_phone_number', #{@lead.country.phone_dialling_code})}" -%>
+    <%= "if($('#lead_phone_number').val() == ''){set_phone_code('lead_phone_number', #{@lead.country.phone_dialling_code})}" -%>
     <% end %>
 
     <% if params[:action] == "new" or params[:action] == "create" %>
@@ -243,6 +249,6 @@
 
     var language_names = [];
     <% Locale.all.each do |locale| %>
-        <%= "language_names['#{locale.code}'] = '#{t('models.locale.' + locale.code)}';" -%>
+    <%= "language_names['#{locale.code}'] = '#{t('models.locale.' + locale.code)}';" -%>
     <% end %>
 </script>
