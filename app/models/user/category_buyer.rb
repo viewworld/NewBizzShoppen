@@ -1,7 +1,7 @@
 class ::User::CategoryBuyer < ::User
   ROLES = [:category_buyer, :lead_buyer, :customer]
 
-  after_create :set_interests
+  after_save :set_interests
 
   include User::RegistrationValidations
   include Addresses
@@ -26,7 +26,8 @@ class ::User::CategoryBuyer < ::User
   private
 
   def set_interests
-    categories << buying_categories
+    self.categories = buying_categories
+    self.countries = buying_categories.map(&:countries).flatten
   end
 
   public
