@@ -40,6 +40,7 @@ Nbs::Application.routes.draw do
       resources :upcoming_invoices, :only => [:index]
       resources :payment_transactions
       resources :credit_notes
+      resources :creditors
     end
     resources :bank_accounts
     resources :vat_rates

@@ -62,8 +62,20 @@ Scenario: I can create more than one transaction for given invoice
   And I press translated "administration.payment_transactions.new.view.button_create"
   Then I should see translated "flash.payment_transactions.create.notice"
 
-@m6
+@m6 @tgn @_tested
 Scenario: I can refund a transaction manually (what is the implication??)
+  Given there are no invoices
+  Given I have user with email big_buyer.biz@nbs.com and role customer
+  And User big_buyer.biz@nbs.com with role customer is big buyer
+  And a lead Super computers #1 exists within category Computers and is bought by user big_buyer.biz@nbs.com with role customer
+  And lead "Super computers #1" has attributes "price:99.99"
+  And user with email "big_buyer.biz@nbs.com" and role "customer" has invoice generated for all unpaid leads
+  When I click hidden link by url regex "/administration\/invoicing\/invoices/"
+  Then I follow translated "administration.invoices.index.view.edit_invoice"
+  And I check "invoice_invoice_lines_attributes_0_is_credited"
+  And I press translated "administration.invoices.edit.view.save_button"
+  When I click hidden link by url regex "/administration\/invoicing\/invoices/"
+  Then I should see "0.00"
 
 @m5 @added @tgn @sprint_5_corrections @_tested
 Scenario: I can search for a transaction by a combination of keyword: contact name, company name, lead name, invoice number and a specific time period (date from to date to)

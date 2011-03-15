@@ -1,0 +1,96 @@
+<search-box:>
+  <div class="search_box">
+    <h2><%= t("administration.creditors.index.view.search_label") %></h2>
+
+    <div class="search_content">
+      <%= form_for @search, :url => administration_invoicing_creditors_path do |f| %>
+          <fieldset class="inputs_vertical">
+            <ol class="no_pdd">
+              <li class="string">
+                <%= f.label :with_keyword, t("administration.creditors.index.view.search.with_keyword") %>
+                <%= f.text_field :with_keyword %>
+              </li>
+              <li class="select">
+                <%= f.label :with_type, t("administration.creditors.index.view.search.with_type") %>
+                <%= f.select :with_type, CreditNote::NOTE_TYPES.map { |t| [t("administration.creditors.index.view.type_#{t}"), t] }, :include_blank => true  %>
+              </li>
+              <li class="commit">
+                <ibt c="bt_green" icon="magnify">
+                  <%= submit_tag t("administration.creditors.index.view.search_button") %>
+                </ibt>
+                <ibt c="fltri bt_grey">
+                  <%= bt_clear_filter %>
+                </ibt>
+              </li>
+            </ol>
+          </fieldset>
+      <% end %>
+    </div>
+  </div>
+</search-box:>
+
+<column-mc:>
+
+
+  <header>
+    <param:content>
+      <%= t("administration.creditors.index.view.header") %>
+    </param:content>
+    <param:actions>
+      <div class="frm_tiny fltr">
+        <div class="pdd_10">
+          <%= t("administration.creditors.index.view.total") %>: <strong><%= @credit_notes_count %></strong>
+        </div>
+      </div>
+    </param:actions>
+  </header>
+
+  <% if @credit_notes.blank? %>
+      <%= blank_state_message %>
+  <% else %>
+      <table class="generic" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+        <th class="hl"></th>
+        <th><%= t("administration.creditors.index.view.number") %></th>
+        <th><%= t("administration.creditors.index.view.customer_first_name") %></th>
+        <th><%= t("administration.creditors.index.view.customer_last_name") %></th>
+        <th><%= t("administration.creditors.index.view.customer_screen_name") %></th>
+        <th><%= t("administration.creditors.index.view.type") %></th>
+        <th><%= t("administration.creditors.index.view.total_value") %></th>
+        <th class="hr"></th>
+        </thead>
+        <tfoot>
+        <tr>
+          <td class="fl"></td>
+          <td colspan="6"></td>
+          <td class="fr"></td>
+        </tr>
+        </tfoot>
+        <tbody id="invoices_list">
+        <% @credit_notes.each do |credit_note| %>
+            <tr class="<%= cycle("odd", "even") %>">
+              <td class="cl"></td>
+              <td><%= credit_note.full_number %></td>
+              <td><%= credit_note.customer.first_name %></td>
+              <td><%= credit_note.customer.last_name %></td>
+              <td><%= credit_note.customer.screen_name %></td>
+              <td><%= t("administration.creditors.index.view.type_#{credit_note.type_as_text}") %></td>
+              <td><%= as_currency(credit_note.total, credit_note.invoice.currency) %></td>
+              <td class="cr"></td>
+            </tr>
+        <% end %>
+
+        <% if @credit_notes.total_pages > 1 %>
+            <tr class="pagination">
+              <td colspan="8" class="ta_c">
+                <%= will_paginate @credit_notes, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+              </td>
+            </tr>
+        <% else %>
+            </tbody>
+            </table>
+        <% end %>
+  <% end %>
+
+</column-mc:>
