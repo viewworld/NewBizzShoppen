@@ -925,6 +925,24 @@ en:
         view:
           country_name: 'Country name'
 
+    creditors:
+      index:
+        view:
+          search_label: "Search"
+          search:
+            with_keyword: "Keyword"
+            with_type: "Type"
+          search_button: "Search"
+          header: "Creditors"
+          total: "Total"
+          number: "Number"
+          customer_first_name: "First name"
+          customer_last_name: "Last name"
+          customer_screen_name: "Screen name"
+          total_value: "Total"
+          type: "Type"
+          type_credit: Credit
+          type_refund: Refund
   agent:
     leads:
       index:

@@ -1,13 +1,19 @@
 class CreditNote < ActiveRecord::Base
   belongs_to :invoice
 
+  NOTE_TYPES = ["credit".freeze, "refund".freeze]
+
+  include ScopedSearch::Model
+
+  scope :with_keyword, lambda { |keyword| where("first_name like :q or last_name like :q or number::TEXT like :q", { :q => "%#{keyword}%" }).joins(:user) }
+  scope :with_type, lambda { |type_name| where("lower(type) = ?", type_name) }
+
   after_create :set_number
 
   private
 
   def set_number
-    invoice.seller.invoices.where("credit_note_id IS NOT NULL")
-    self.update_attribute :number, CreditNote.count(:conditions => ["invoices.seller_id = ?", invoice.seller_id], :joins => :invoice) + 1
+    self.update_attribute :number, CreditNote.count(:conditions => ["invoices.seller_id = ?", invoice.seller_id], :joins => :invoice)
   end
 
   public
@@ -16,6 +22,17 @@ class CreditNote < ActiveRecord::Base
     invoice.invoice_lines.where("is_credited = ?", true)
   end
 
+  def customer
+    invoice.user
+  end
+
+  def total
+    invoice_lines.sum('brutto_value')
+  end
+
+  def full_number
+    "#{number}/#{created_at.year}"
+  end
 end
 
 class Credit < CreditNote
@@ -31,8 +48,17 @@ class Credit < CreditNote
     end
   end
 
+  public
+
+  def type_as_text
+    "credit"
+  end
+
 end
 
 class Refund < CreditNote
 
+  def type_as_text
+    "refund"
+  end
 end
