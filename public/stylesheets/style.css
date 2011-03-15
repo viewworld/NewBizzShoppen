@@ -980,6 +980,27 @@ input:focus, textarea:focus, select:focus
     font-weight: normal;
 }
 
+.category_desc
+{
+    font-size: 12px;
+    font-weight: normal;
+    line-height: normal;
+    padding: 7px 0 5px;
+}
+
+.subcategory_btn
+{
+    font-size: 12px;    
+    line-height: normal;
+    padding: 5px 0 0;
+    font-weight: bold;
+}
+
+.subcategory_btn a
+{
+    color: #0278d4;
+}
+
 
 
 

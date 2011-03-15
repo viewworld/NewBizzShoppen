@@ -24,6 +24,25 @@ submitBulkForm = function(url, target) {
 
 jQuery(document).ready(function()
 {
+    /* --- subcategories > show/hide ---*/
+
+    $(".hide_subcategory").bind("click", function()
+    {
+        $(this).hide()
+               .prev().show()
+               .parent().prev(".category_children_tree").slideUp();
+    });
+
+    $(".show_subcategory").bind("click", function()
+    {
+        $(this).hide()
+               .next().show()
+               .parent().prev(".category_children_tree").slideDown();
+    });
+
+
+
+
     /* --- hints for inputs --- */
     $(".inputs_hint").each(function() {
         $(this).qtip({
