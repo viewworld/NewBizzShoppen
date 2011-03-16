@@ -11,18 +11,19 @@
                 <%= address_form.input :address_line_2 %>
                 <%= address_form.input :address_line_3 %>
                 <%= address_form.input :zip_code %>
-                <%= address_form.input :country, :as => :select, :collection => Country.all %>
+                <%= address_form.input :country, :as => :select, :collection => Country.all, :input_html => { :onchange => "refresh_regions_list('user_#{params[:role].present? ? params[:role] : form.object.role}_address_attributes');" } %>
+                <%= address_form.input :region_id, :as => :select, :collection => regions_collection_for(form.object.address.country) %>
             <% end %>
         <% end %>
         <% if ['lead_buyer', 'customer'].include?(params[:role]) or @user.has_any_role?(:lead_buyer, :customer) %>
             <%= form.input :vat_number %>
         <% end %>
-        <% if ['agent'].include?(params[:role]) or @user.has_any_role?(:agent) %>
+        <% if ['agent', 'call_centre'].include?(params[:role]) or @user.has_any_role?(:agent, :call_centre) %>
             <%= form.input :can_edit_payout_information %>
             <%= form.input :paypal_email %>
             <%= form.input :bank_swift_number %>
             <%= form.input :bank_iban_number %>
-        <% elsif !form.object.new_record? and (['lead_buyer', 'customer'].include?(params[:role]) or @user.has_any_role?(:lead_buyer, :customer)) %>
+        <% elsif !form.object.new_record? and (['lead_buyer', 'customer', 'category_buyer'].include?(params[:role]) or @user.has_any_role?(:lead_buyer, :customer, :category_buyer)) %>
             <%= form.input :bank_account_id, :as => :select, :collection => BankAccount.all %>
         <% end %>        
       </ol>

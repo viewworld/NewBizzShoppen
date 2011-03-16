@@ -245,7 +245,8 @@
 --------------------------------------------------------------------------------- */
 
 .inputs ol li.date input,
-.inputs_vertical ol li.date input   
+.inputs_vertical ol li.date input,
+input.date.hasDatepicker
 {
     width: 70px;
     background: url(/images/forms/date.png) no-repeat left center #fff;
@@ -319,6 +320,11 @@
     -moz-box-shadow: 0 0 2px #ff6060;
     -webkit-box-shadow: 0 0 2px #ff6060;
     box-shadow: 0 0 2px #ff6060;
+}
+
+.inputs_hint img
+{
+    display: block;
 }
 
 

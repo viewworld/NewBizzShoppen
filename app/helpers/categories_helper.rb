@@ -33,7 +33,12 @@ module CategoriesHelper
 
 
   def category_label(category, options)
-    abstract_label(category, "category", "name", options)
+    abstract_label(category, "category", "name", options) + unless category.description.blank?
+        content_tag(:p, category.description, :class => "category_desc")
+      else
+        ""
+      end
+
   end
 
   public
@@ -56,7 +61,7 @@ module CategoriesHelper
   end
 
   def category_tree(category, options={})
-    [category_label(category, options), (category_children(category, options))].compact.join.html_safe
+    [category_label(category, options), (category_children(category, options)), category_toggler(category)].compact.join.html_safe
   end
 
 
@@ -82,6 +87,15 @@ module CategoriesHelper
         end.join.html_safe
       end
     end
+  end
+
+  def category_toggler(category)
+      unless category.children.empty?
+        content_tag(:p, :class => "subcategory_btn") do
+          link_to("More", "javascript:void(0)", :class => "show_subcategory")+
+          link_to("Fewer", "javascript:void(0)", :class => "hide_subcategory", :style => "display: none")
+        end
+      end
   end
 
 end

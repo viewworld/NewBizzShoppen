@@ -980,6 +980,39 @@ input:focus, textarea:focus, select:focus
     font-weight: normal;
 }
 
+.category_desc
+{
+    font-size: 12px;
+    font-weight: normal;
+    line-height: normal;
+    padding: 7px 0 5px;
+}
+
+.subcategory_btn
+{
+    font-size: 12px;    
+    line-height: normal;
+    padding: 5px 0 0;
+    font-weight: bold;
+}
+
+.subcategory_btn a
+{
+    color: #0669b6;
+    padding-right: 13px;
+    background: url(/images/icons/toggle.png) no-repeat;
+}
+
+.subcategory_btn a.hide_subcategory
+{
+    background-position: right 3px;
+}
+
+.subcategory_btn a.show_subcategory
+{
+    background-position: right -39px;
+}
+
 
 
 

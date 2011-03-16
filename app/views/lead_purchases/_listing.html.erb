@@ -1,8 +1,7 @@
 <%
-   cols = 3
+   cols = 2
    cols += 1 if show_checkboxes
-   cols += 1 if not block_assigned_to.nil?
-   cols += 1 if not block_other_actions.nil?   
+   cols += 1 if not block_assigned_to.nil? or not block_other_actions.nil?
    cols += 1 if not block_tools.nil?
 -%>
 
@@ -13,20 +12,15 @@
     <% if show_checkboxes %>
         <th class="no_pdd_lr" style="width: 10px;"><%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %></th>
     <% end %>
-    <th style="width: 350px;"><%= t("leads.listing.lead_description_label") %></th>
-    <th style="width: 200px"><%= t("leads.listing.lead_details_label") %></th>
-    <th><%= t("leads.listing.stats_label") %></th>
-
-    <% if block_assigned_to %>
-      <th><%= t("lead_buyer.lead_purchases.index.view.bulk_assigned_field") %></th>
-    <% end %>
+    <th style="width: 520px;"><%= t("leads.listing.lead_description_label") %></th>
+    <th style="width: 250px;"><%= t("leads.listing.lead_details_label") %></th>
 
     <% if block_other_actions %>
-      <th><%= t("leads.listing.other_label") %></th>
+        <th><%= t("leads.listing.other_label") %></th>
     <% end %>
 
     <% if block_tools %>
-      <th class="ta_r"><%= t("leads.listing.actions_label") %></th>
+        <th class="ta_r"><%= t("leads.listing.actions_label") %></th>
     <% end %>
     <th class="hr"></th>
   </tr>
@@ -58,35 +52,90 @@
               </p>
           <% end %>
           <p class="element_description i"><%= lead_purchase.description %></p>
+
           <p class="element_description i expandable"><%= lead_purchase.hidden_description %></p>
 
-          <div class="element_templates"><%= render :partial => "/shared/lead_templates/listing", :locals => { :lead => lead_purchase.lead } %></div>
-
-          <%= render :partial => "/shared/lead_purchases/owner_note", :locals => { :lead_purchase => lead_purchase } %>
-
           <% if lead_purchase.lead.linkedin_url_present? %>
-          <p><%= link_to t("lead_purchases.listing.linkedin_profile"), lead_purchase.lead.linkedin_url %>
-             <%= link_to image_tag("icons/in_icon.png", :style => "vertical-align: top;"), lead_purchase.lead.linkedin_url %></p>
+              <p><%= link_to t("lead_purchases.listing.linkedin_profile"), lead_purchase.lead.linkedin_url %>
+                <%= link_to image_tag("icons/in_icon.png", :style => "vertical-align: top;"), lead_purchase.lead.linkedin_url %></p>
           <% end %>
 
           <% if lead_purchase.lead.facebook_url_present? %>
-          <p><%= link_to t("lead_purchases.listing.facebook_profile"), lead_purchase.lead.facebook_url %>
-             <%= link_to image_tag("icons/fb_icon.png", :style => "vertical-align: top;"), lead_purchase.lead.facebook_url %></p>
+              <p><%= link_to t("lead_purchases.listing.facebook_profile"), lead_purchase.lead.facebook_url %>
+                <%= link_to image_tag("icons/fb_icon.png", :style => "vertical-align: top;"), lead_purchase.lead.facebook_url %></p>
           <% end %>
 
           <% if block_general %>
               <%= with_output_buffer { block_general.call(lead_purchase) } %>
           <% end %>
+
+          <div class="row_tooltip">
+
+            <% if lead_purchase.lead.lead_templates_and_values.any? %>
+                <div class="grid_270 fltl">
+                  <div class="pdd_10">
+                    <div class="element_templates"><%= render :partial => "/shared/lead_templates/listing", :locals => {:lead => lead_purchase.lead} %></div>
+                  </div>
+                </div>
+            <% end %>
+
+            <div class="grid_270 fltl">
+              <div class="pdd_10">
+                <p><%= t("lead_purchases.listing.sale_limit_label") %><b><%= lead_purchase.sale_limit %></b></p>
+
+                <p><%= t("lead_purchases.listing.novelty_label") %>
+                  <b><%= lead_purchase.lead.published ? lead_purchase.lead.published_at.strftime("%d-%m-%Y") : "-" %></b>
+                </p>
+
+                <p><%= t("lead_purchases.listing.hotness_label") %>
+                  <b><%= t("models.lead.hotness.lvl#{lead_purchase.hotness_level}") %></b></p>
+
+                <p><%= t("lead_purchases.listing.certification_label") %>
+                  <b><%= t("models.lead.certification.lvl#{lead_purchase.certification_level}") %></b></p>
+
+                <p><%= t("lead_purchases.listing.purchase_date") %>
+                  <b><%= format_date lead_purchase.accessible_from %></b>
+                </p>
+              </div>
+            </div>
+
+            <div class="grid_280 fltr">
+              <div class="pdd_10">
+                <%= render :partial => "/shared/lead_purchases/owner_note", :locals => {:lead_purchase => lead_purchase} %>
+              </div>
+            </div>
+
+            <div class="grid_270 fltr">
+              <div class="pdd_10">
+                <% if block_hidden_area %>
+                    <%= with_output_buffer { block_hidden_area.call(lead_purchase) } %>
+                <% end %>
+              </div>
+            </div>
+
+            <clb/>
+
+          </div>
+          <div class="row_tooltip_helper"></div>
+
+
         </td>
 
         <td>
           <h3><%= lead_purchase.lead.company_name %></h3>
+
           <p><%= lead_purchase.lead.phone_number %></p>
+
           <p><%= lead_purchase.lead.www_address %></p>
+
           <p><%= lead_purchase.lead.www_address %></p>
+
           <p><%= lead_purchase.lead.email_address %></p>
+
           <p><%= lead_purchase.lead.contact_name %></p>
+
           <p><%= lead_purchase.lead.address %></p>
+
           <p><%= lead_purchase.lead.creator_name %></p>
 
           <% if block_card %>
@@ -94,30 +143,21 @@
           <% end %>
         </td>
 
-        <td>
-          <p><%= t("lead_purchases.listing.sale_limit_label") %><b><%= lead_purchase.sale_limit %></b></p>
-          <p><%= t("lead_purchases.listing.novelty_label") %><b><%= lead_purchase.lead.published ? lead_purchase.lead.published_at.strftime("%d-%m-%Y") : "-" %></b></p>
-          <p><%= t("lead_purchases.listing.hotness_label") %><b><%= t("models.lead.hotness.lvl#{lead_purchase.hotness_level}") %></b></p>
-          <p><%= t("lead_purchases.listing.certification_label") %><b><%= t("models.lead.certification.lvl#{lead_purchase.certification_level}") %></b></p>
-          <p><%= t("lead_purchases.listing.purchase_date") %><b><%= format_date lead_purchase.accessible_from %></b></p>
-        </td>
+        <% if block_assigned_to or block_other_actions %>
+            <td>
+              <% if block_assigned_to %>
+                  <%= with_output_buffer { block_assigned_to.call(lead_purchase) } %>
+              <% end %>
 
-        <% if block_assigned_to %>
-          <td>
-            <%= with_output_buffer { block_assigned_to.call(lead_purchase) } %>
-          </td>
+              <% if block_other_actions %>
+                  <%= with_output_buffer { block_other_actions.call(lead_purchase) } %>
+              <% end %>
+            </td>
         <% end %>
-
-        <% if block_other_actions %>
-          <td>
-            <%= with_output_buffer { block_other_actions.call(lead_purchase) } %>
-          </td>
-        <% end %>
-
         <% if block_tools %>
-          <td class="tda ta_r">
-            <%= with_output_buffer { block_tools.call(lead_purchase) } if block_tools %>
-          </td>
+            <td class="tda ta_r">
+              <%= with_output_buffer { block_tools.call(lead_purchase) } if block_tools %>
+            </td>
         <% end %>
 
         <td class="cr"></td>
@@ -146,3 +186,29 @@
   <% end %>
   </tbody>
 </table>
+
+<script type=text/javascript>
+    jQuery(document).ready(function()
+    {
+        $('table tr.lead').bind("mouseenter", function()
+        {
+            var rt = $(this).find("div.row_tooltip");
+            var rth = $(this).find("div.row_tooltip_helper");
+
+            rth.animate({height: rt.height()}, 250);
+            rt.css({"left": $(this).position().left + "px"}).slideDown(250);
+        });
+
+        $('table tr.lead').bind("mouseleave", function(e)
+        {
+            if ($(e.target).is("select")) {
+                return;
+            }
+            var rt = $(this).find("div.row_tooltip");
+            var rth = $(this).find("div.row_tooltip_helper");
+
+            rt.css({"left": $(this).position().left}).slideUp(250);
+            rth.animate({height: 0}, 250);
+        });
+    })
+</script>

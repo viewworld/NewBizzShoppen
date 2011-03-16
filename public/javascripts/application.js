@@ -8,7 +8,7 @@ function mark_all_cbs_with_selector(t)
     var tr = $(t).parents('table').find("tr:not(.main_actions)");
 
     $(t).is(":checked") ? $("input=[type=checkbox]:not(:checked)", tr).attr("checked", "checked")
-                        : $("input=[type=checkbox]:checked", tr).attr("checked", "");
+            : $("input=[type=checkbox]:checked", tr).attr("checked", "");
 }
 
 submitBulkForm = function(url, target) {
@@ -24,26 +24,81 @@ submitBulkForm = function(url, target) {
 
 jQuery(document).ready(function()
 {
+    /* --- subcategories > show/hide ---*/
+
+    $(".categories_tree > li > ul.category_children_tree").hide();
+
+    $(".hide_subcategory").bind("click", function()
+    {
+        $(this).hide()
+               .prev().show()
+               .parent().prev(".category_children_tree").slideUp();
+    });
+
+    $(".show_subcategory").bind("click", function()
+    {
+        $(this).hide()
+               .next().show()
+               .parent().prev(".category_children_tree").slideDown();
+    });
+
+
+
+
+    /* --- hints for inputs --- */
+    $(".inputs_hint").each(function() {
+        $(this).qtip({
+            content: $(this).parent().next('.hidden'),
+            position: {
+                corner: {
+                    target: 'rightMiddle',
+                    tooltip: 'leftMiddle'
+                },
+                adjust: {
+                    x: 5
+                }
+            },
+            hide: {
+                fixed: true
+            },
+            style: {
+                name: "cream",
+                border: {
+                    radius: 3
+                },
+                tip: {
+                    corner: 'leftMiddle',
+                    size: {
+                        x: 8,
+                        y : 12
+                    }
+                }
+            }
+        });
+    });
+
 
     /*--- clickable tr in leads browsing --- */
 
-    if( $('table').has("a.default_action").length != 0 )
+    if ($('table').has("a.default_action").length != 0)
     {
         $('td:not(.cl, .cr, .tda)', 'table tbody tr:not(.pagination, .main_actions)').filter(":not(:has(:checkbox, select, a))")
-        .addClass("pointer")
-        .click(function()
-        {            
+                .addClass("pointer")
+                .click(function()
+        {
             var link = $(this).parent().find('a.default_action');
             var link_confirm_msg = $(this).parent().find('input.default_action_confirmation_msg');
-            if(link.attr("data-method"))
+            if (link.attr("data-method"))
             {
-                if(link_confirm_msg.val() == undefined)
+                if (link_confirm_msg.val() == undefined)
                 {
                     link.trigger("click");
                 }
                 else
                 {
-                    if(confirm(link_confirm_msg.val())) {link.trigger("click");}
+                    if (confirm(link_confirm_msg.val())) {
+                        link.trigger("click");
+                    }
                 }
             }
             else
@@ -120,12 +175,12 @@ jQuery(document).ready(function()
 });
 
 function clear_filter() {
-    $.each($(".search_box form input"), function(idx,input) {
+    $.each($(".search_box form input"), function(idx, input) {
         switch (input.type) {
-            case 'text': input.value=''; break;
+            case 'text': input.value = ''; break;
         }
     });
-    $.each($(".search_box form option:selected"), function(idx,option) {
+    $.each($(".search_box form option:selected"), function(idx, option) {
         option.selected = false;
     });
     $('.search_box #search_new').submit();
