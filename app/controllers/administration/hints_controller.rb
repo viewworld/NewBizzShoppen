@@ -4,27 +4,21 @@ class Administration::HintsController < Administration::AdministrationController
   set_subtab "hints"
 
   def edit
-    @hint = Article.find(params[:id])
-    edit!
+    @article = Article.find(params[:id])
   end
 
   def update
-    @hint = Article.find(params[:id])
-    @hint.attributes = params[:article]
-    update!
-  end
-
-  def create
-    params[:article_cms] ||= {}
-    @hint = Article::Cms::MainPageArticle.new(params[:article])
-    create! do |success,failure|
-      success.html { render :action => :edit }
-      failure.html { redirect_to administration_hints_path }
+    @article = Article.find(params[:id])
+    @article.attributes = params[:article]
+    if @article.save
+      redirect_to administration_hint_path(@article)
+    else
+      render :action => "edit"
     end
   end
 
   def show
-    @hint = Article.find(params[:id])
+    @article = Article::Cms::Hint.find(params[:id])
   end
 
   protected

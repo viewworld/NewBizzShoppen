@@ -39,7 +39,7 @@ class Buyers::LeadPurchasesController < Buyers::BuyerController
   def update
     update! do |success, _|
       success.html { redirect_to buyers_lead_purchases_path }
-      success.js {  }
+      success.js { render :nothing => true }
     end
   end
 

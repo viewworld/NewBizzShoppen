@@ -1,5 +1,0 @@
-if params[:owner_note_changed] == "1"
-  content = link_to_function(@lead_purchase.owner_note.blank? ? t('lead_buyer.lead_purchases.index.view.owner_note_blank') : @lead_purchase.owner_note, 'edit_owner_note(' + @lead_purchase.id.to_s + ')')
-  page << "$('#owner_note_readonly_#{@lead_purchase.id}').html(\"#{content.gsub("\"", "'")}\")"
-  page << "$('#owner_note_readonly_#{@lead_purchase.id}').show();"
-end

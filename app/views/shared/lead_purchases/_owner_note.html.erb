@@ -1,10 +1,8 @@
-<div id="owner_note_readonly_<%= lead_purchase.id %>">
-  <%= link_to_function lead_purchase.owner_note.blank? ? t("lead_buyer.lead_purchases.index.view.owner_note_blank") : lead_purchase.owner_note, "edit_owner_note(#{lead_purchase.id})" %>
-</div>
-<div id="owner_note_form_<%= lead_purchase.id %>" style="display: none">
-  <%= text_area_tag :owner_note, lead_purchase.owner_note, :id => "owner_note_#{lead_purchase.id}", :style => "width: 210px;height:90px;margin-bottom:5px;" %>
+
+<div id="owner_note_form_<%= lead_purchase.id %>">
+  <%= label_tag :owner_note, t("lead_buyer.lead_purchases.index.view.owner_note") %>
+  <%= text_area_tag :owner_note, lead_purchase.owner_note, :id => "owner_note_#{lead_purchase.id}", :rows => 5, :cols => 40 %>
   <p>
-    <%= bt_link_to :save, t("lead_buyer.lead_purchases.index.view.update_owner_note"), "javascript:save_owner_note(#{lead_purchase.id})" %>
-    <%= bt_link_to nil, t("lead_buyer.lead_purchases.index.view.cancel_owner_note"), "javascript:cancel_owner_note(#{lead_purchase.id})", :class => "bt_grey_small" %>
+  <%= bt_link_to :save, t("lead_buyer.lead_purchases.index.view.update_owner_note"), "javascript:save_owner_note(#{lead_purchase.id})" %>
   </p>
 </div>

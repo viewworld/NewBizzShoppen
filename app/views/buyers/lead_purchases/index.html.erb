@@ -111,7 +111,7 @@
                 <% if @subaccounts.present? %>
                     <p>
                       <% opts = @subaccounts.insert(0, current_user).map { |sa| [sa.screen_name, sa.id] } unless @subaccounts.include?(current_user) %>
-                      <%= t("lead_buyer.lead_purchases.index.view.bulk_assigned_field") %>
+                      <%= label_tag :assignee_id, t("lead_buyer.lead_purchases.index.view.bulk_assigned_field") %>
                       <br/>
                       <%= select_tag :assignee_id,
                                      options_for_select(opts, lead_purchase.assignee_id),
@@ -124,7 +124,7 @@
 
             <% blocks.other_actions do |lead_purchase| %>
                 <p>
-                  <%= "State" %>
+                  <%= label_tag :state, t("lead_user.lead_purchases.index.view.state") %>
                   <br/>
                   <%= select_tag :state,
                                  options_for_select(LeadPurchaseBase.statuses_for_select, lead_purchase.state),
@@ -134,7 +134,7 @@
                     <p>
                       <%= label_tag :response_deadline, t("lead_buyer.lead_purchases.index.view.lead_response_date") %>
                       <br/>
-                      <%= text_field_tag :response_deadline, lead_purchase.response_deadline, :id => "response_deadline_datepicker_#{lead_purchase.id}" %>
+                      <%= text_field_tag :response_deadline, lead_purchase.response_deadline, :id => "response_deadline_datepicker_#{lead_purchase.id}", :class => "date" %>
                     </p>
                 <% end %>
             <% end %>
@@ -240,20 +240,10 @@
         }
     }
 
-    function edit_owner_note(lead_purchase_id) {
-        $('#owner_note_readonly_' + lead_purchase_id.toString()).hide();
-        $('#owner_note_form_' + lead_purchase_id.toString()).show();
-    }
+      function save_owner_note(lead_purchase_id){
+          $.post('/buyers/lead_purchases/' + lead_purchase_id.toString(), {'_method':'put', 'lead_purchase[owner_note]':$('#owner_note_' + lead_purchase_id.toString()).val(), 'owner_note_changed':1, 'format':'js'});
+          $('#owner_note_form_' + lead_purchase_id.toString()).parents(".row_tooltip").effect("highlight", {color: "#d8ff9a"}, 500);
+      }
 
-    function save_owner_note(lead_purchase_id) {
-        $.post('/buyers/lead_purchases/' + lead_purchase_id.toString(), {'_method':'put', 'lead_purchase[owner_note]':$('#owner_note_' + lead_purchase_id.toString()).val(), 'owner_note_changed':1, 'format':'js'});
-        $('#owner_note_form_' + lead_purchase_id.toString()).hide();
-    }
-
-    function cancel_owner_note(lead_purchase_id) {
-        $('#owner_note_form_' + lead_purchase_id.toString()).hide();
-        $('#owner_note_readonly_' + lead_purchase_id.toString()).show();
-    }
-
-</script>
+  </script>
 </column-mc:>

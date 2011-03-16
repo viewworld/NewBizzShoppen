@@ -26,6 +26,8 @@ jQuery(document).ready(function()
 {
     /* --- subcategories > show/hide ---*/
 
+    $(".categories_tree > li > ul.category_children_tree").hide();
+
     $(".hide_subcategory").bind("click", function()
     {
         $(this).hide()

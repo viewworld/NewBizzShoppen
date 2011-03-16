@@ -111,11 +111,12 @@
 {
     position:absolute;
     background:#fff;
-    width:1118px;
+    width:1098px;
     /*margin: 8px 0 0 -36px;*/
     z-index: 9999;
     border: 1px solid #e3e3e3;
     margin-top:7px;
+    padding: 0 10px;
 
     /*-moz-box-shadow: 0 3px 5px #ddd;*/
     /*-webkit-box-shadow: 0 3px 5px #ddd;*/
