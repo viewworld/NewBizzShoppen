@@ -2030,6 +2030,7 @@ en:
         password: "Password"
         password_confirmation: "Password confirmation"
         newsletter_on: "Newsletter on"
+        not_charge_vat: "Do not charge VAT"
         agreement_read: "Agreement read"
       user/agent:
         first_name: "First name"
@@ -2045,6 +2046,7 @@ en:
         password_confirmation: "Password confirmation"
         payout: "Payout"
         newsletter_on: "Newsletter on"
+        not_charge_vat: "Do not charge VAT"
         agreement_read: "Agreement read"
         certification_level: "Certification level"
       user/administrator:
@@ -2056,6 +2058,7 @@ en:
         password: "Password"
         password_confirmation: "Password confirmation"
         newsletter_on: "Newsletter on"
+        not_charge_vat: "Do not charge VAT"
         agreement_read: "Agreement read"
       user/customer:
         first_name: "First name"
@@ -2068,6 +2071,7 @@ en:
         password_confirmation: "Password confirmation"
         newsletter_on: "Newsletter on"
         agreement_read: "Agreement read"
+        not_charge_vat: "Do not charge VAT"
         team_buyers: "Team buyers"
       user/purchase_manager:
         first_name: "First name"
@@ -2078,6 +2082,7 @@ en:
         password: "Password"
         password_confirmation: "Password confirmation"
         newsletter_on: "Newsletter on"
+        not_charge_vat: "Do not charge VAT"
         agreement_read: "Agreement read"
       user/category_buyer:
         first_name: "First name"
@@ -2089,6 +2094,7 @@ en:
         password: "Password"
         password_confirmation: "Password confirmation"
         newsletter_on: "Newsletter on"
+        not_charge_vat: "Do not charge VAT"
         agreement_read: "Agreement read"
         big_buyer: "Big buyer"
       country:
