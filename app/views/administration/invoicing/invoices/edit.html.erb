@@ -96,8 +96,8 @@
                                :as => :select,
                                :collection => Invoice::PAYMENT_METHODS.map { |pm| [t("administration.invoices.common.view.#{pm}"), pm.to_s] },
                                :include_blank => false %>
-                <%= form.input :currency,
-                               :include_blank => false %>
+                <%= form.input :currency_id,
+                               :include_blank => false, :collection => Currency.all %>
                 <%= form.input :vat_paid_in_customer_country %>
                 <%= form.input :vat_text_in_customer_country, :as => :string %>
               </ol>

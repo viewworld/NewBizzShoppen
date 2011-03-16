@@ -210,7 +210,7 @@ Feature: Buy out
     And I follow translated "layout.main_menu.admin.upcoming_invoices"
     Then I should see "1,230.00" within "#invoices_list :nth-child(6)"
 
-  @added @m6 @_done @_tested
+  @added @m6 @_done @_tested @wip
   Scenario: Admin should see correct values on invoice generated for big buyer from buyouts
     Given there are no leads
     And Category named "Computers" already exists
