@@ -4,49 +4,8 @@
 
     <div class="search_content">
       <%= form_for @search, :url => category_home_page_leads_path(@home_category.cached_slug) do |f| %>
-          <fieldset class="inputs_vertical">
-            <ol class="no_pdd">
-              <li class="string">
-                <%= f.label :with_keyword, t("customer.lead_requests.index.view.search.keyword_label") %>
-                <%= f.text_field :with_keyword %>
-              </li>
-              <li class="string">
-                <%= f.label t("leads.index.search.deal_value_from_label") %>
-                <%= f.text_field :deal_value_from, :style => "width: 90px" %>
-              </li>
-              <li class="string">
-                <%= f.label t("leads.index.search.deal_value_to_label") %>
-                <%= f.text_field :deal_value_to, :style => "width: 90px" %>
-              </li>
-              <li class="select">
-                <%= f.label t("leads.index.search.country_label") %>
-                <%= f.select :with_country, @countries.map { |c| [c.name, c.id] }, :include_blank => true %>
-              </li>
-              <%= f.hidden_field :latest, :value => @search.latest %>
-              <li class="commit">
-                <ibt c="bt_green" icon="magnify">
-                  <%= submit_tag t("leads.index.search.search_button") %>
-                </ibt>
-                <p>
-                  <%= bt_clear_filter_safe %>
-                </p>
-              </li>
-            </ol>
+            <%= render :partial => "/shared/leads/search_customer_form", :locals => { :f => f } %>
       <% end %>
-        <% if user_signed_in? and current_user and current_user.has_role?(:category_buyer) %>
-            <%= form_tag '' do %>
-              <ol class="no_pdd">
-                  <li class="select" style="float:right">
-                    <%= label "category", t("leads.index.search.category_label") %>
-                    <%= select_tag "category", options_for_select(current_user.parent_accessible_categories.map { |c| [c.name, c.cached_slug] },@home_category.name.downcase),
-                                   :include_blank => false,
-                                   :onchange => "this.form.action='/'+this.value+'/leads';this.form.submit();"
-                    %>
-                  </li>
-                </ol>
-              </fieldset>
-            <% end %>
-        <% end %>
     </div>
   </div>
 </search-box:>
