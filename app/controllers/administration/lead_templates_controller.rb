@@ -4,7 +4,7 @@ class Administration::LeadTemplatesController < Administration::AdministrationCo
   set_tab "categories"
 
   def new
-    @lead_template = LeadTemplate.new(:category_id => params[:lead_template][:category_id])
+    @lead_template = LeadTemplate.new(:category_id => params[:category_id].blank? ? params[:lead_template][:category_id] : params[:category_id])
     @lead_template.duplicate_fields(LeadTemplate.find_by_id(params[:template_id]))
   end
 
