@@ -120,7 +120,7 @@ Scenario: I can clear the filter when browsing leads
   And I press translated "administration.leads.index.view.search_button"
   Then I should see "Monitors"
   And I should not see "Keyboards"
-  When I press translated "common.clear_filter"
+  When I follow translated "common.clear_filter"
   Then I should see "Monitors"
   And I should see "Keyboards"
 

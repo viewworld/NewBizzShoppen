@@ -16,6 +16,8 @@ en:
     nothing_to_display: "Nothing to display"
     search: "Search"
     clear_filter: "Clear filter"
+    fewer: Fewer
+    more: More
     js:
       read_more: "read more"
       collapse_expanded_text: "[collapse expanded text]"

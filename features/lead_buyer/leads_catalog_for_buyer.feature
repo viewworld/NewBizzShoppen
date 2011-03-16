@@ -31,12 +31,14 @@ Scenario: I can click add lead to my basket and I will get a notification “Lea
 @_tested  @selenium
 Scenario: I can toggle select leads on a displayed page
   Given I go to browse leads
+  And I follow translated "common.more"
   And I follow "Another sample category"
   Then I check "mark_all"
 
 @_tested @selenium @bulk
 Scenario: I can bulk add leads to my basket and I will get a notification “Leads were added to your basket”
   Given I go to browse leads
+  And I follow translated "common.more"
   And I follow "Another sample category"
   Then I check "mark_all"
   And I press translated "leads.index.button_bulk_create_cart_item"
