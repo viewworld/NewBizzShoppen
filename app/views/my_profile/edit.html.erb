@@ -1,5 +1,5 @@
 <column-mc:>
-  <header>My profile</header>
+  <header><%= t("my_profile.edit.view.header") %></header>
 
   <%= semantic_form_for @user, :url => my_profile_path, :method => :put do |form| %>
       <frm title="Edit account">
