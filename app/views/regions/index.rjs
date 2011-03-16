@@ -1,4 +1,6 @@
 page << "clear_regions_select('#{params[:field_prefix]}')"
-@country.regions.each do |region|
-  page << "add_region('#{params[:field_prefix]}', '#{region.name}', #{region.id})"
+if @country
+    @country.regions.each do |region|
+      page << "add_region('#{params[:field_prefix]}', '#{region.name}', #{region.id})"
+    end
 end
