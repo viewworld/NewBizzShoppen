@@ -56,7 +56,7 @@
                 <span class="green"><%= as_currency(lead.buyout_price, lead.currency) %></span></p>
           <% end %>
 
-          <p class="element_description i"><%= lead.description %></p>
+          <p class="element_description i expandable"><%= lead.description %></p>
 
           <p class="element_templates"><%= render :partial => "/shared/lead_templates/listing", :locals => {:lead => lead} %></p>
           <%= block_lead_details && with_output_buffer { lead_details.call(lead) } %>

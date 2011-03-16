@@ -1,0 +1,72 @@
+<fieldset class="inputs_vertical">
+<ol class="no_pdd">
+  <li class="string">
+    <%= f.label :with_keyword, t("customer.lead_requests.index.view.search.keyword_label") %>
+    <%= f.text_field :with_keyword %>
+  </li>
+  <% if !user_signed_in? or (current_user and !current_user.has_role?(:category_buyer)) %>
+  <li class="select">
+    <%= f.label t("leads.index.search.category_label") %>
+    <%= f.select :with_category, @categories.map { |c| [c.name, c.id] }, :include_blank => true %>
+  </li>
+  <% end %>
+  <li class="string">
+    <%= f.label t("leads.index.search.zip_code") %>
+    <%= f.text_field :with_zip_code, :style => "width: 90px" %>
+  </li>
+  <li class="select">
+    <%= f.label t("leads.index.search.country_label") %>
+    <%= f.select :with_country, @countries.map { |c| [c.name, c.id] }, :include_blank => true %>
+  </li>
+  <li class="commit">
+    <ibt c="bt_green" icon="magnify">
+      <%= submit_tag t("leads.index.search.search_button") %>
+    </ibt>
+    <p>
+      <%= bt_clear_filter_safe %>
+    </p>
+  </li>
+</ol>
+
+<% if user_signed_in? and current_user and current_user.has_role?(:category_buyer) %>
+  <ol class="no_pdd">
+      <li class="select" style="float:right">
+        <%= label "category", t("leads.index.search.category_label") %>
+        <%= select_tag "category", options_for_select(current_user.parent_accessible_categories.map { |c| [c.name, c.cached_slug] },@home_category.name.downcase),
+                       :include_blank => false,
+                       :onchange => "this.form.action='/'+this.value+'/leads';this.form.submit();"
+        %>
+      </li>
+    </ol>
+<% end %>
+</fieldset>
+
+
+<fieldset class="inputs_vertical">
+<ol class="no_pdd">
+  <li class="select">
+    <%= f.label :with_deal_value_from, t("leads.index.search.deal_value_from_label") %>
+    <%= f.select :with_deal_value_from, User::DEAL_VALUE_RANGE, {:include_blank => true} %>
+  </li>
+  <li class="select">
+    <%= f.label :with_deal_value_to, t("leads.index.search.deal_value_to_label") %>
+    <%= f.select :with_deal_value_to, User::DEAL_VALUE_RANGE, {:include_blank => true} %>
+  </li>
+  <li class="select">
+    <%= f.label :with_created_by, t("leads.index.search.created_by") %>
+    <%= f.select :with_created_by, @creators.map { |u| ["#{u.company_name}, #{u.email}", u.id] }, {:include_blank => true} %>
+  </li>
+  <li class="select">
+    <%= f.label :with_certification_level, t("leads.index.search.certification") %>
+    <%= f.select :with_certification_level, User::CERTIFICATION_LEVELS.first(4).map { |cl| [t("models.lead.certification.lvl#{cl}"), cl] }, {:include_blank => true} %>
+  </li>
+  <li class="select">
+    <%= f.label :with_sale_limit, t("leads.index.search.sale_limit") %>
+    <%= f.select :with_sale_limit, (1..10).to_a, {:include_blank => true} %>
+  </li>
+  <li class="select">
+    <%= f.label :with_hotness, t("leads.index.search.hotness") %>
+    <%= f.select :with_hotness, (0..2).to_a.map { |hl| [t("models.lead.hotness.lvl#{hl}"), hl] }, {:include_blank => true} %>
+  </li>
+</ol>
+</fieldset>

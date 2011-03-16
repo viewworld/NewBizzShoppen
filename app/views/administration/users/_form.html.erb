@@ -4,7 +4,7 @@
       <ol class="align_inputs">
         <%= form.input :first_name %>
         <%= form.input :last_name %>
-        <%= form.input :company_name if @user.has_role?(:customer) or params[:role] == "customer" %>
+        <%= form.input :company_name if @user.has_any_role?(:customer, :category_buyer) or ["customer", "category_buyer"].include?((params[:role])) %>
         <% if defined? form.object.address %>
             <%= form.fields_for :address do |address_form| %>
                 <%= address_form.input :address_line_1 %>
