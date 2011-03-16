@@ -102,7 +102,7 @@ class Lead < ActiveRecord::Base
 
   #prevent dialling codes from saving when no proper phone number follows them
   def handle_dialling_codes
-    fields = [:direct_phone_number, :phone_number].select { |pn| self.send(pn).to_s.strip.size <= 3 }
+    fields = [:direct_phone_number, :phone_number, :company_phone_number].select { |pn| self.send(pn).to_s.strip.size <= 3 }
     unless fields.empty?
       fields.each do |field|
         self.send("#{field}=".to_sym, nil)
