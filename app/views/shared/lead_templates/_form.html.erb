@@ -3,7 +3,7 @@
     <ol>
       <%= form.input :name, :label => t("shared.lead_templates.form.template_name"), :input_html => {:disabled => (!@lead_template.new_record? and current_user != @lead_template.creator)} %>
       <% if current_user.has_role?(:admin) %>
-          <%= form.hidden_field :category_id %>
+          <%= form.input :category_id, :as => :hidden %>
           <%= form.input :is_global %>
       <% else %>
           <% if current_user.has_role?(:call_centre) %>
