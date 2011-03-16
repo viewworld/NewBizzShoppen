@@ -3,6 +3,8 @@ class CategoryBuyers::LeadsController < ApplicationController
   actions :index, :show
   set_tab "browse_leads"
 
+  before_filter :redirect_if_not_category_buyer
+
   def show
     show! do |format|
       format.html { @lead.increment!(:clicks_count) }
@@ -33,6 +35,12 @@ class CategoryBuyers::LeadsController < ApplicationController
 
     @search = Lead.scoped_search(params[:search])
     @leads = @search.paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)
+  end
+
+  def redirect_if_not_category_buyer
+    if current_user and !current_user.has_role?(:category_buyer)
+      redirect_to categories_path
+    end
   end
 
 end
