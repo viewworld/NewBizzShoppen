@@ -63,7 +63,7 @@
       <% end %>
       <%= form.input :purchase_value, :hint => hint_for(@lead, :purchase_value) %>
       <%= form.input :price, :hint => hint_for(@lead, :price) %>
-      <%= form.input :currency, :collection => currencies_for_select, :include_blank => false, :hint => hint_for(@lead, :currency) %>
+      <%= form.input :currency_id, :collection => currencies_for_select, :include_blank => false, :hint => hint_for(@lead, :currency) %>
       <% unless current_user.has_role?(:purchase_manager) %>
           <% if current_user.can_publish_leads? %>
               <%= form.input :published, :hint => hint_for(@lead, :published) %>
