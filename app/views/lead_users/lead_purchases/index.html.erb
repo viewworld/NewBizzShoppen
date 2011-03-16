@@ -60,13 +60,26 @@
           <%= hidden_field_tag :route_to %>
 
           <%= lead_purchases_listing @lead_purchases, :show_checkboxes => true do |blocks| %>
+
               <% blocks.assigned_to do |lead_purchase| %>
                   <% if @subaccounts.present? %>
-                      <%= select_tag :assignee_id,
-                                     options_for_select([[nil, nil]]+@subaccounts.map { |sa| [sa.screen_name, sa.id] }, lead_purchase.assignee_id),
-                                     :onchange => "$.post('#{lead_users_lead_purchase_path(lead_purchase)}', {'_method':'put', 'lead_purchase[assignee_id]':this.value} );",
-                                     :style => "width: 140px" %>
+                      <p>
+                        <%= label_tag :assignee_id, t("lead_buyer.lead_purchases.index.view.bulk_assigned_field") %>
+                        <br/>
+                        <%= select_tag :assignee_id,
+                                       options_for_select([[nil, nil]]+@subaccounts.map { |sa| [sa.screen_name, sa.id] }, lead_purchase.assignee_id),
+                                       :onchange => "$.post('#{lead_users_lead_purchase_path(lead_purchase)}', {'_method':'put', 'lead_purchase[assignee_id]':this.value} );",
+                                       :style => "width: 140px" %>
+                      </p>
                   <% end %>
+              <% end %>
+
+              <% blocks.other_actions do |lead_purchase| %>
+                  <p>
+                    <%= label_tag :state, t("lead_user.lead_purchases.index.view.state") %>
+                    <br/>
+                    <%= select_tag :state, options_for_select(LeadPurchaseBase.statuses_for_select, lead_purchase.state), :onchange => "$.post('#{lead_users_lead_purchase_path(lead_purchase)}', {'_method':'put', 'lead_purchase[state]':this.value} );" %>
+                  </p>
               <% end %>
 
               <% blocks.tools do |lead_purchase| %>
@@ -83,10 +96,6 @@
                         </li>
                     <% end %>
                   </ul-actions>
-              <% end %>
-
-              <% blocks.other_actions do |lead_purchase| %>
-                  <%= select_tag :state, options_for_select(LeadPurchaseBase.statuses_for_select, lead_purchase.state), :onchange => "$.post('#{lead_users_lead_purchase_path(lead_purchase)}', {'_method':'put', 'lead_purchase[state]':this.value} );" %>
               <% end %>
 
               <% blocks.bottom do |lead_purchase| %>

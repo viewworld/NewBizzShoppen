@@ -18,3 +18,8 @@ dk:
         precision: 3
         significant: false
         strip_insignificant_zeros: false
+  lead_user:
+    lead_purchases:
+      index:
+        view:
+          state: "State"

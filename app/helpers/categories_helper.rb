@@ -92,8 +92,8 @@ module CategoriesHelper
   def category_toggler(category)
       unless category.children.empty?
         content_tag(:p, :class => "subcategory_btn") do
-          link_to("More", "javascript:void(0)", :class => "show_subcategory", :style => "display: none")+
-          link_to("Fewer", "javascript:void(0)", :class => "hide_subcategory")
+          link_to("More", "javascript:void(0)", :class => "show_subcategory")+
+          link_to("Fewer", "javascript:void(0)", :class => "hide_subcategory", :style => "display: none")
         end
       end
   end
