@@ -71,3 +71,7 @@ function refresh_regions_list(field_prefix_id) {
         data: "country_id=" + $('#' + field_prefix_id + '_country_id').val() + "&field_prefix=" + field_prefix_id
     });
 }
+
+function move_mouse_over(selector){
+    $(selector).mouseenter();
+}
