@@ -22,7 +22,8 @@ class Invoice < ActiveRecord::Base
   belongs_to :bank_account
   belongs_to :seller
 
-  has_many :payment_transactions
+  # TODO not sure here if it should be possible to delete paid invoice
+  has_many :payment_transactions, :dependent => :destroy
   has_many :invoice_lines, :dependent => :destroy
   has_many :invoice_lines_grouped_by_vat_rate, :select => "vat_rate, SUM(invoice_lines.netto_value) as netto_value_sum,
                                                            SUM(invoice_lines.vat_value) as vat_value_sum,

@@ -13,8 +13,8 @@
                 <h3><%= t("administration.invoices.new.view.basic_information") %></h3>
               </li>
               <%= form.inputs do %>
-                  <%= form.input :user, :include_blank => false %>
-                  <%= form.input :seller, :collection => Seller.all, :include_blank => false %>
+                  <%= form.input :user_id, :collection => User.all, :include_blank => false %>
+                  <%= form.input :seller_id, :collection => Seller.all, :include_blank => false %>
                   <%= form.input :currency_id, :as => :hidden%>
               <% end %>
             </ol>

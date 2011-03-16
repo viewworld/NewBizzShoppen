@@ -45,8 +45,8 @@
     <%= semantic_form_for [:administration, :invoicing, Invoice.new] do |form| %>
         <fieldset class="inputs_vertical">
           <ol>
-            <%= form.input :user, :collection => User.invoiceable.map { |u| ["#{u.company_name}, #{u.email}", u.id] }, :include_blank => false %>
-            <%= form.input :seller, :include_blank => false %>
+            <%= form.input :user_id, :collection => User.invoiceable.map { |u| ["#{u.company_name}, #{u.email}", u.id] }, :include_blank => false %>
+            <%= form.input :seller_id, :include_blank => false %>
             <li class="commit">
               <ibt class="commit">
                 <%= form.submit t("administration.invoices.index.view.create_invoice") %>

@@ -22,7 +22,7 @@
   <div class="pdd_10 no_pdd_t">
     <fieldset class="inputs labels_ta_r">
       <ol class="align_inputs">
-        <%= form.input :bank_account, :include_blank => false %>
+        <%= form.input :bank_account_id, :collection => BankAccount.all, :include_blank => false %>
         <%= form.input :vat_no %>
         <%= form.input :default %>
       </ol>
@@ -38,7 +38,6 @@
   <fieldset class="inputs labels_ta_r labels_240 no_pdd">
     <ol class="align_inputs no_pdd">
       <%= form.input :note,
-                     :label => t("administration.sellers.form.note"),
                      :as => :ckeditor,
                      :input_html => {
                              :width => '1085px',

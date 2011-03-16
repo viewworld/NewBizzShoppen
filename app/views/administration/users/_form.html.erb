@@ -24,7 +24,7 @@
             <%= form.input :bank_swift_number %>
             <%= form.input :bank_iban_number %>
         <% elsif !form.object.new_record? and (['lead_buyer', 'customer', 'category_buyer'].include?(params[:role]) or @user.has_any_role?(:lead_buyer, :customer, :category_buyer)) %>
-            <%= form.input :bank_account, :as => :select, :collection => BankAccount.all %>
+            <%= form.input :bank_account_id, :as => :select, :collection => BankAccount.all %>
         <% end %>        
       </ol>
     </fieldset>
@@ -52,7 +52,7 @@
             <%= form.input :big_buyer, :as => :boolean %>
         <% end %>
         <% if @user.vat_number.present? and (['lead_buyer', 'customer'].include?(params[:role]) or @user.has_any_role?(:lead_buyer, :customer)) %>
-            <%= form.input :not_charge_vat, :as => :boolean, :label => t("administration.users.edit.view.not_charge_vat") %>
+            <%= form.input :not_charge_vat, :as => :boolean %>
         <% end %>
 
       </ol>
