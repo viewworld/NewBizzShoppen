@@ -124,3 +124,7 @@ Given /^field "([^"]*)" is of textarea type(?: within "([^"]*)")?$/ do |field_na
     assert field.tag_name == 'textarea'
   end
 end
+
+Given /^I move mouse over "([^"]*)"$/ do |selector|
+  page.evaluate_script("move_mouse_over('#{selector}')")
+end

@@ -230,9 +230,11 @@ Scenario: Hidden description should be truncated and expandable by JS
 @m6 @tgn @selenium @_tested
 Scenario: I can add note to owned lead
   When I go to buyer lead purchases
+  And I move mouse over "#lead_purchase_1"
   And I fill in "owner_note_1" with "My custom note"
   Then I follow translated "lead_buyer.lead_purchases.index.view.update_owner_note"
   When I go to buyer lead purchases
+  And I move mouse over "#lead_purchase_1"
   And the "owner_note_1" field should contain "My custom note"
 
 # https://redmine.selleo.com/issues/4021
