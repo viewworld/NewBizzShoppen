@@ -15,9 +15,6 @@ class Administration::UsersController < Administration::AdministrationController
       flash[:notice] = t("administration.users.create.flash.user_creation_successful")
       redirect_to administration_users_path
     else
-          puts  "####################################################"
-    puts "#{@user.errors}"
-    puts  "####################################################"
       render :action => 'new'
     end
   end
