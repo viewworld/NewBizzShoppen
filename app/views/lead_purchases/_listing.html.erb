@@ -69,7 +69,6 @@
               <%= with_output_buffer { block_general.call(lead_purchase) } %>
           <% end %>
 
-
           <div class="row_tooltip">
 
             <% if lead_purchase.lead.lead_templates_and_values.any? %>
@@ -191,25 +190,6 @@
 <script type=text/javascript>
     jQuery(document).ready(function()
     {
-        /* $('table tr.lead').hover(
-         function() {
-         var rt = $(this).find("div.row_tooltip");
-         var rth = $(this).find("div.row_tooltip_helper");
-
-         rth.animate({height: rt.height()}, 250);
-         rt.css({"left": $(this).position().left+"px"}).slideDown(250);
-
-
-         },
-         function(){
-         var rt = $(this).find("div.row_tooltip");
-         var rth = $(this).find("div.row_tooltip_helper");
-
-         rt.css({"left": $(this).position().left}).slideUp(250);
-         rth.animate({height: 0}, 250);
-         }
-         );
-         */
         $('table tr.lead').bind("mouseenter", function()
         {
             var rt = $(this).find("div.row_tooltip");
