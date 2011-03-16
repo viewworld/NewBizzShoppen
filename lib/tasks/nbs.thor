@@ -19,7 +19,7 @@ class Nbs < Thor
 
     country = Country.find_or_create_by_name("Denmark", :locale => "dk", :detailed_locale => "dk")
 #    VatRate.find_or_create_by_country_id(country.id, :rate => 25)
-    country = Country.find_or_create_by_name("United Kingdom", :locale => "en", :detailed_locale => "uk")
+    country = Country.find_or_create_by_name("United Kingdom", :locale => "en", :detailed_locale => "gb")
 #    VatRate.find_or_create_by_country_id(country.id, :rate => 20)
 
     if BankAccount.count == 0
