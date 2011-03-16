@@ -210,6 +210,7 @@
     <% if !@lead.new_record? or (@lead.new_record? and @lead.country.present?) %>
     <%= "if($('#lead_direct_phone_number').val() == ''){set_phone_code('lead_direct_phone_number', #{@lead.country.phone_dialling_code})}" -%>
     <%= "if($('#lead_phone_number').val() == ''){set_phone_code('lead_phone_number', #{@lead.country.phone_dialling_code})}" -%>
+    <%= "if($('#lead_company_phone_number').val() == ''){set_phone_code('lead_company_phone_number', #{@lead.country.phone_dialling_code})}" -%>
     <% end %>
 
     <% if params[:action] == "new" or params[:action] == "create" %>

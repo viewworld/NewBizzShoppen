@@ -33,7 +33,7 @@ module CategoriesHelper
 
 
   def category_label(category, options)
-    abstract_label(category, "category", "name", options) + unless category.description.blank?
+    abstract_label(category, "category", "name", options) + unless category.description.blank? or category.parent.present?
         content_tag(:p, category.description, :class => "category_desc")
       else
         ""
