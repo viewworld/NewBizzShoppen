@@ -82,9 +82,16 @@ Feature: Category buyer rules
     When I visit URL "/leads"
     Then I should be on category home page for Best Leads
 
-  @m6
+  @m6 @_done @_tested
   Scenario: Category buyers should not have to configure their interest page, but have country selected to the country from which the category was design for.
-
+    When Category named "Best Leads" already exists
+    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Best Leads" with attributes "team_buyers:1"
+    And I am on category home page for Best Leads
+    And I sign in as jon@lajoie.ca with password secret
+    And I follow translated "layout.my_profile_link"
+    Then I should not see translated "my_profile.edit.view.interests_settings"
+    When I am on customer interests
+    Then I should see "You are not authorized"
 
   @m6 @selenium @_done @_tested
   Scenario: If category buyer has more than one category assigned, when browsing leads he should see "Category dropdown" which will redirect him to correct category scope when filtering

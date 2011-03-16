@@ -2,9 +2,9 @@
   <header><%= t("my_profile.edit.view.header") %></header>
 
   <%= semantic_form_for @user, :url => my_profile_path, :method => :put do |form| %>
-      <frm title="Edit account">
+      <frm title="#{t('my_profile.edit.view.edit_account')}">
         <param:header>
-          <% if current_user.has_role?(:customer) %>
+          <% if current_user.has_role?(:customer) and !current_user.has_role?(:category_buyer) %>
             <%= bt_link_to nil, t("my_profile.edit.view.interests_settings"), edit_customers_interests_path, :class => "fltr" %>
           <% end %>
           <%= bt_link_to nil, t("my_profile.edit.view.change_password"), password_path, :class => "fltr" %>
