@@ -42,7 +42,7 @@
                       <%= address_form.input :address_line_2 %>
                       <%= address_form.input :address_line_3 %>
                       <%= address_form.input :zip_code %>
-                      <%= address_form.input :country, :as => :select, :collection => Country.all, :include_blank => false %>
+                      <%= address_form.input :country_id, :as => :select, :collection => Country.all, :include_blank => false %>
                   <% end %>
                 </ol>
               </fieldset>
@@ -62,7 +62,7 @@
                       <%= address_form.input :address_line_2 %>
                       <%= address_form.input :address_line_3 %>
                       <%= address_form.input :zip_code %>
-                      <%= address_form.input :country, :as => :select, :collection => Country.all, :include_blank => false %>
+                      <%= address_form.input :country_id, :as => :select, :collection => Country.all, :include_blank => false %>
                   <% end %>
                   <%= form.input :ean_number %>
                 </ol>
@@ -79,7 +79,7 @@
                 <li class="header">
                   <h3><%= t("administration.invoices.edit.view.form.payment_information") %></h3>
                 </li>
-                <%= form.input :bank_account, :as => :select, :collection => BankAccount.all %>
+                <%= form.input :bank_account_id, :as => :select, :collection => BankAccount.all %>
                 <%= form.input :creation_place %>
                 <%= form.input :creation_date,
                                :as => :string,

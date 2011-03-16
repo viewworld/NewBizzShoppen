@@ -4,61 +4,61 @@
 en:
   common:
     back_link: Back
-    edit_link: 'Edit'
-    cancel_link: 'Cancel'
-    delete_link: 'Delete'
+    edit_link: "Edit"
+    cancel_link: "Cancel"
+    delete_link: "Delete"
     confirmation: Are You sure?
-    help_link: 'Help'
-    yes_label: 'Yes'
-    no_label: 'No'
-    read_more: 'read more'
-    all_label: 'All'
-    nothing_to_display: 'Nothing to display'
-    search: 'Search'
-    clear_filter: 'Clear filter'
+    help_link: "Help"
+    yes_label: "Yes"
+    no_label: "No"
+    read_more: "read more"
+    all_label: "All"
+    nothing_to_display: "Nothing to display"
+    search: "Search"
+    clear_filter: "Clear filter"
     js:
-      read_more: 'read more'
-      collapse_expanded_text: '[collapse expanded text]'
-      expand_prefix: '...  '
-      collapse_prefix: ' '
+      read_more: "read more"
+      collapse_expanded_text: "[collapse expanded text]"
+      expand_prefix: "...  "
+      collapse_prefix: " "
     no_categories_for_category_buyer: "Your Category Buyer account has no associated categories. You can't sign in."
   layout:
     main_menu:
       admin:
-        users: 'Users'
-        categories: 'Categories'
-        email_templates: 'Emails'
-        settings: 'Settings'
-        leads: 'Leads'
-        articles: 'Articles'
-        news: 'News'
-        hints: 'Hints'
-        currencies: 'Currencies'
+        users: "Users"
+        categories: "Categories"
+        email_templates: "Emails"
+        settings: "Settings"
+        leads: "Leads"
+        articles: "Articles"
+        news: "News"
+        hints: "Hints"
+        currencies: "Currencies"
         countries: Countries
-        invoices: 'Invoices'
-        upcoming_invoices: 'Debtors'
-        payment_transactions: 'Payments'
-        sellers: 'Sellers'
-        financial: 'Financial'
-        creditors: 'Creditors'
-        content: 'Content'
-        global: 'Global'
+        invoices: "Invoices"
+        upcoming_invoices: "Debtors"
+        payment_transactions: "Payments"
+        sellers: "Sellers"
+        financial: "Financial"
+        creditors: "Creditors"
+        content: "Content"
+        global: "Global"
       agent:
         leads: My leads
         lead_templates: Lead templates
       call_centre:
-        call_centre_agents: 'Team'
-        leads: 'My leads'
-        lead_templates: 'Lead templates'
+        call_centre_agents: "Team"
+        leads: "My leads"
+        lead_templates: "Lead templates"
       call_centre_agent:
-        leads: 'My leads'
-        lead_templates: 'Lead templates'
+        leads: "My leads"
+        lead_templates: "Lead templates"
       customer:
         subaccounts: Team
         lead_requests: Requested leads
-        invoices: 'Invoices'
-        interests: 'Interests settings'
-        not_invoiced: 'Not Invoiced Leads'
+        invoices: "Invoices"
+        interests: "Interests settings"
+        not_invoiced: "Not Invoiced Leads"
       lead_buyer:
         lead_purchases: My leads
       lead_user:
@@ -67,14 +67,14 @@ en:
       shared:
         browse_leads: Browse leads
         home: Home
-        site_home: 'Site home'
+        site_home: "Site home"
       purchase_manager:
         leads: My leads
-        lead_templates: 'Lead templates'
+        lead_templates: "Lead templates"
     my_profile_link: My profile
-    logout_link: 'Logout %{user_email}'
-    login_link: 'Login'
-    contact_us: 'Contact us'
+    logout_link: "Logout %{user_email}"
+    login_link: "Login"
+    contact_us: "Contact us"
 
     cart:
       cart_header: Cart (%{count} items)
@@ -94,81 +94,81 @@ en:
           has_lead_requests: "Team buyers can't be disabled because there are some Requested Leads"
 
   locales:
-    en_locale: 'EN'
-    dk_locale: 'DK'
+    en_locale: "EN"
+    dk_locale: "DK"
 
   devise:
     failure:
-      unauthenticated: 'You need to sign in or sign up before continuing.'
-      unconfirmed: 'You have to confirm your account before continuing.'
-      locked: 'Your account is locked.'
-      invalid: 'Invalid email or password.'
-      invalid_token: 'Invalid authentication token.'
-      timeout: 'Your session expired, please sign in again to continue.'
-      inactive: 'Your account was not activated yet.'
+      unauthenticated: "You need to sign in or sign up before continuing."
+      unconfirmed: "You have to confirm your account before continuing."
+      locked: "Your account is locked."
+      invalid: "Invalid email or password."
+      invalid_token: "Invalid authentication token."
+      timeout: "Your session expired, please sign in again to continue."
+      inactive: "Your account was not activated yet."
     sessions:
-      signed_in: 'Signed in successfully.'
-      signed_out: 'Signed out successfully.'
+      signed_in: "Signed in successfully."
+      signed_out: "Signed out successfully."
     passwords:
-      button_update: 'Change my password'
-      button_create: 'Reset password'
-      send_instructions: 'You will receive an email with instructions about how to reset your password in a few minutes.'
-      updated: 'Your password was changed successfully. You are now signed in.'
+      button_update: "Change my password"
+      button_create: "Reset password"
+      send_instructions: "You will receive an email with instructions about how to reset your password in a few minutes."
+      updated: "Your password was changed successfully. You are now signed in."
     confirmations:
-      send_instructions: 'You will receive an email with instructions about how to confirm your account in a few minutes.'
-      confirmed: 'Your account was successfully confirmed. You are now signed in.'
+      send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
+      confirmed: "Your account was successfully confirmed. You are now signed in."
       resend_confirmation_link: Resend
     registrations:
-      signed_up: 'You have signed up successfully. If enabled, a confirmation was sent to your e-mail.'
-      updated: 'You updated your account successfully.'
-      destroyed: 'Bye! Your account was successfully cancelled. We hope to see you again soon.'
-      edit_page_header: 'Edit %{user_name}'
+      signed_up: "You have signed up successfully. If enabled, a confirmation was sent to your e-mail."
+      updated: "You updated your account successfully."
+      destroyed: "Bye! Your account was successfully cancelled. We hope to see you again soon."
+      edit_page_header: "Edit %{user_name}"
       cancel_account_header: Cancel my account
       cancel_account_link: Cancel my account
       update_button: Update
     unlocks:
-      send_instructions: 'You will receive an email with instructions about how to unlock your account in a few minutes.'
-      unlocked: 'Your account was successfully unlocked. You are now signed in.'
+      send_instructions: "You will receive an email with instructions about how to unlock your account in a few minutes."
+      unlocked: "Your account was successfully unlocked. You are now signed in."
     mailer:
       confirmation_instructions:
-        subject: 'Confirmation instructions'
+        subject: "Confirmation instructions"
       reset_password_instructions:
-        subject: 'Reset password instructions'
+        subject: "Reset password instructions"
       unlock_instructions:
-        subject: 'Unlock Instructions'
+        subject: "Unlock Instructions"
   lead_templates:
     table:
       name: Name
       is_mandatory: Mandatory?
       is_active: Active?
       actions: Actions
-      yes_label: 'Yes'
-      no_label: 'No'
+      yes_label: "Yes"
+      no_label: "No"
       category: Category
   lead_purchases:
     listing:
-      purchase_value_label: 'Purchase value:'
-      description_label: 'Description:'
-      hidden_description_label: 'Detailed description (hidden):'
-      company_name: 'Company:'
-      phone_number: 'Phone number:'
-      www_address: 'www address:'
-      email_address: 'Email:'
-      address_label: 'Address:'
-      contact_name: 'Contact name:'
-      clicks_count_label: 'Clicks:'
-      exposures_count_label: 'Exposures:'
-      average_rating_label: 'Rating:'
-      sale_limit_label: 'Uniqueness:'
-      novelty_label: 'Publish date:'
-      hotness_label: 'Deadline:'
-      certification_label: 'Agent certification:'
-      created_by_label: 'Created by:'
-      linkedin_url: 'LinkedIn'
-      facebook_url: 'Facebook'
-      linkedin_profile: 'LinkedIn profile'
-      facebook_profile: 'Facebook profile'
-      purchase_date: 'Purchase date:'
+      purchase_value_label: "Purchase value:"
+      description_label: "Description:"
+      hidden_description_label: "Detailed description (hidden):"
+      company_name: "Company:"
+      phone_number: "Phone number:"
+      www_address: "www address:"
+      email_address: "Email:"
+      address_label: "Address:"
+      contact_name: "Contact name:"
+      clicks_count_label: "Clicks:"
+      exposures_count_label: "Exposures:"
+      average_rating_label: "Rating:"
+      sale_limit_label: "Uniqueness:"
+      novelty_label: "Publish date:"
+      hotness_label: "Deadline:"
+      certification_label: "Agent certification:"
+      created_by_label: "Created by:"
+      linkedin_url: "LinkedIn"
+      facebook_url: "Facebook"
+      linkedin_profile: "LinkedIn profile"
+      facebook_profile: "Facebook profile"
+      purchase_date: "Purchase date:"
     statuses:
       not_contacted: Not contacted
       contacted: Contacted
@@ -177,91 +177,91 @@ en:
 
   lead_requests:
     listing:
-      purchase_value_label: 'Purchase value:'
-      description_label: 'Description:'
-      requested_by: 'Requested by:'
-      stats_label: 'Stats'
-      actions_label: 'Actions'
-      lead_price_label: 'Lead price:'
-      description_label: 'Lead description:'
-      created_by_label: 'Created by:'
-      clicks_count_label: 'Clicks:'
-      exposures_count_label: 'Exposures:'
-      sale_limit_label: 'Uniqueness:'
-      novelty_label: 'Novelty:'
-      hotness_label: 'Hotness:'
-      certification_label: 'Certification:'
-      rating_level: 'Rating:'
+      purchase_value_label: "Purchase value:"
+      description_label: "Description:"
+      requested_by: "Requested by:"
+      stats_label: "Stats"
+      actions_label: "Actions"
+      lead_price_label: "Lead price:"
+      description_label: "Lead description:"
+      created_by_label: "Created by:"
+      clicks_count_label: "Clicks:"
+      exposures_count_label: "Exposures:"
+      sale_limit_label: "Uniqueness:"
+      novelty_label: "Novelty:"
+      hotness_label: "Hotness:"
+      certification_label: "Certification:"
+      rating_level: "Rating:"
   leads:
     listing:
-      purchase_value_label: 'Purchase value:'
-      lead_price_label: 'Lead price:'
-      buyout_price_label: 'Buyout price'
-      description_label: 'Lead description:'
-      lead_details_label: 'Leads details'
-      stats_label: 'Stats'
-      actions_label: 'Actions'
-      other_label: 'Other'
-      created_by: 'Created by'
-      lead_description_label: 'Leads description'
-      stats_label: 'Stats'
-      clicks_count_label: 'Clicks:'
-      exposures_count_label: 'Exposures:'
-      sale_limit_label: 'Uniqueness:'
-      novelty_label: 'Novelty:'
-      hotness_label: 'Hotness:'
-      certification_label: 'Certification:'
-      average_rating_label: 'Lead rating:'
-      average_rating_none_label: 'None'
-      has_unsatisfactory_rating_yes: 'Yes'
-      has_unsatisfactory_rating_no: 'No'
+      purchase_value_label: "Purchase value:"
+      lead_price_label: "Lead price:"
+      buyout_price_label: "Buyout price"
+      description_label: "Lead description:"
+      lead_details_label: "Leads details"
+      stats_label: "Stats"
+      actions_label: "Actions"
+      other_label: "Other"
+      created_by: "Created by"
+      lead_description_label: "Leads description"
+      stats_label: "Stats"
+      clicks_count_label: "Clicks:"
+      exposures_count_label: "Exposures:"
+      sale_limit_label: "Uniqueness:"
+      novelty_label: "Novelty:"
+      hotness_label: "Hotness:"
+      certification_label: "Certification:"
+      average_rating_label: "Lead rating:"
+      average_rating_none_label: "None"
+      has_unsatisfactory_rating_yes: "Yes"
+      has_unsatisfactory_rating_no: "No"
       edit_label: Edit
     table:
-      id: 'ID'
-      header: 'Lead title'
-      clicks: 'Clicks'
-      exposures: 'Exposures'
-      hottness: 'Hotness'
-      novelty: 'Novelty'
-      sale_limit: 'Uniqueness'
-      price: 'Lead price'
-      sold: 'Sold'
-      purchase_value: 'Value'
+      id: "ID"
+      header: "Lead title"
+      clicks: "Clicks"
+      exposures: "Exposures"
+      hottness: "Hotness"
+      novelty: "Novelty"
+      sale_limit: "Uniqueness"
+      price: "Lead price"
+      sold: "Sold"
+      purchase_value: "Value"
       created_at: Created at
-      paid_out: 'Paid out'
-      unsatisfactory_rating: 'Unsatisfactory rating'
-      status: 'Status'
-      actions: 'Actions'
+      paid_out: "Paid out"
+      unsatisfactory_rating: "Unsatisfactory rating"
+      status: "Status"
+      actions: "Actions"
       created_by: Created by
       rating: Lead rating
       average_rating_none_label: None
       certification: Certification
     index:
       header: Leads
-      header_for: 'for'
+      header_for: "for"
       search:
         search_button: Search
         keyword_label: Keyword
         deal_value_from_label: Deal value from
         deal_value_to_label: Deal value to
-        category_label: 'Category'
-        country_label: 'Country'
-        zip_code: 'Zip code'
+        category_label: "Category"
+        country_label: "Country"
+        zip_code: "Zip code"
         created_by: Created by
         certification: Certification
         sale_limit: Uniqueness
         hotness: Hotness
       add_to_cart_link: Add to cart
-      add_to_cart_buyout_link: 'Buyout'
+      add_to_cart_buyout_link: "Buyout"
       buy_lead: Buy lead
       buy_lead_confirm_msg: Do you want to buy this lead?
       add_to_cart_lead_confirm_msg: Do you want to add this lead to cart?
-      add_to_cart_buyout_lead_confirm_msg: 'Do you want to buyout this lead?'
+      add_to_cart_buyout_lead_confirm_msg: "Do you want to buyout this lead?"
       request_lead_confirm_msg: Do you want to request this lead?
       request_lead: Request lead
-      button_bulk_create_lead_request: 'Request leads'
-      button_bulk_create_cart_item: 'Add to cart'
-      button_bulk_buy_leads: 'Buy leads'
+      button_bulk_create_lead_request: "Request leads"
+      button_bulk_create_cart_item: "Add to cart"
+      button_bulk_buy_leads: "Buy leads"
       bestsellers_header: Best sellers
       latest_header: Latest leads
       featured_header: Featured leads
@@ -279,48 +279,48 @@ en:
   news:
     index:
       view:
-        agents_header: 'Agents news'
-        sales_managers_header: 'Sales manager news'
-        purchase_managers_header: 'Purchase manager news'
-        category_homes_header: 'Category news'
-        read_more_link: 'read more'
-        newer_link: 'Newer'
-        older_link: 'Older'
+        agents_header: "Agents news"
+        sales_managers_header: "Sales manager news"
+        purchase_managers_header: "Purchase manager news"
+        category_homes_header: "Category news"
+        read_more_link: "read more"
+        newer_link: "Newer"
+        older_link: "Older"
     show:
       view:
-        header: 'News'
+        header: "News"
 
   home:
     show:
       view:
-        header: 'Home'
-        buyer: 'Sales manager'
-        agent: 'Agent'
-        purchase_manager: 'Purchase manager'
-        remember_me: 'Remember me'
-        sign_in: 'Sign in'
+        header: "Home"
+        buyer: "Sales manager"
+        agent: "Agent"
+        purchase_manager: "Purchase manager"
+        remember_me: "Remember me"
+        sign_in: "Sign in"
         signup_message: "Don't have an account yet"
-        agent_signup: 'Freelance agent signup'
-        buyer_signup: 'Sales manager signup'
-        purchase_manager_signup: 'Purchase Manager signup'
-        _signup: 'Sales manager signup'
+        agent_signup: "Freelance agent signup"
+        buyer_signup: "Sales manager signup"
+        purchase_manager_signup: "Purchase Manager signup"
+        _signup: "Sales manager signup"
         forgotten_password_link: "Forgot password?"
         resend_confirmation_instructions: "Didn't receive confirmation instructions?"
-        sign_up_here: 'sign up here'
-        buyer_sign_up_text: 'If you want to buy hot leads for your business'
-        purchase_manager_sign_up_text: 'If you want a quote on your business'
-        agent_sign_up_text: 'If you can create new leads'
+        sign_up_here: "sign up here"
+        buyer_sign_up_text: "If you want to buy hot leads for your business"
+        purchase_manager_sign_up_text: "If you want a quote on your business"
+        agent_sign_up_text: "If you can create new leads"
 
   password:
     update:
       controller:
-        successful_update_notice: 'Password has been successfully changed!'
+        successful_update_notice: "Password has been successfully changed!"
         locked_user_notice: "Blocked users cannot change passwords"
     edit:
       view:
-        button_update_user: 'Save'
-        change_password: 'Change password'
-        password_label: 'Password'
+        button_update_user: "Save"
+        change_password: "Change password"
+        password_label: "Password"
 
   administration:
     password:
@@ -330,46 +330,46 @@ en:
     users:
       index:
         view:
-          title: 'Users'
-          id: 'ID'
-          roles: 'Roles'
-          first_name: 'First name'
-          last_name: 'Last name'
-          email: 'E-mail'
-          age: 'Age'
-          leads_bought: 'Leads bought'
-          leads_sold: 'Leads sold'
-          revenue: 'Revenue'
-          payout: 'Payout'
-          actions: 'Actions'
-          new_user: 'New user'
-          locked: 'Locked'
-          lock: 'Lock'
-          unlock: 'Unlock'
-          lock_selected: 'Lock Selected'
-          unlock_selected: 'Unock Selected'
+          title: "Users"
+          id: "ID"
+          roles: "Roles"
+          first_name: "First name"
+          last_name: "Last name"
+          email: "E-mail"
+          age: "Age"
+          leads_bought: "Leads bought"
+          leads_sold: "Leads sold"
+          revenue: "Revenue"
+          payout: "Payout"
+          actions: "Actions"
+          new_user: "New user"
+          locked: "Locked"
+          lock: "Lock"
+          unlock: "Unlock"
+          lock_selected: "Lock Selected"
+          unlock_selected: "Unock Selected"
           button_bulk_update_users: Save
-          subaccounts: 'Subaccounts'
-          create_invoice: 'Create invoice from selected'
-          edit: 'Edit'
-          subaccounts_for_user: 'Subaccounts of user %{user_name}'
-          show_all_users: 'Show all users'
-          search_button: 'Search'
-          delete: 'Delete'
-          delete_confirmation_message: 'Are you sure?'
+          subaccounts: "Subaccounts"
+          create_invoice: "Create invoice from selected"
+          edit: "Edit"
+          subaccounts_for_user: "Subaccounts of user %{user_name}"
+          show_all_users: "Show all users"
+          search_button: "Search"
+          delete: "Delete"
+          delete_confirmation_message: "Are you sure?"
           leads_created: "Leads created"
           unpaid_leads: "Unpaid leads"
       edit:
         view:
-          title: 'Editing user: %{name}'
+          title: "Editing user: %{name}"
           button_update_user: Save
           button_cancel: Cancel
           reset_password_link: Reset password
-          change_to_category_buyer: 'Change to category buyer'
-          change_to_regular_buyer: 'Change to regular buyer'
-          not_charge_vat: 'Do not charge VAT'
-          available_categories: 'Available categories'
-          selected_categories: 'Selected categories'
+          change_to_category_buyer: "Change to category buyer"
+          change_to_regular_buyer: "Change to regular buyer"
+          not_charge_vat: "Do not charge VAT"
+          available_categories: "Available categories"
+          selected_categories: "Selected categories"
           available_unique_categories: "Available unique categories"
           selected_unique_categories: "Selected unique categories"
           selected_interests_categories: "Selected category interests"
@@ -381,8 +381,8 @@ en:
           user_update_successful: User has been updated successfuly
       destroy:
         flash:
-          user_deletion_successful: 'User was successfully deleted!'
-          user_deletion_failure: 'User could not be deleted!'
+          user_deletion_successful: "User was successfully deleted!"
+          user_deletion_failure: "User could not be deleted!"
     lead_templates:
       new:
         view:
@@ -391,7 +391,7 @@ en:
           button_cancel: Cancel
       edit:
         view:
-          header: 'Editing lead template: %{name}'
+          header: "Editing lead template: %{name}"
           button_update: Save
           button_cancel: Cancel
       destroy:
@@ -401,29 +401,29 @@ en:
     categories:
       form:
         no_parent_category: No parent category
-        move_users_right: 'Grant Access >'
-        move_users_left: '< Remove Access'
+        move_users_right: "Grant Access >"
+        move_users_left: "< Remove Access"
         search: Search
-        customers_header: 'Buyer access management'
-        agents_header: 'Agent access management'
-        customers_without_access: 'Buyers without access'
-        agents_without_access: 'Agents without access'
-        customers_with_access: 'Buyers with access'
-        agents_with_access: 'Agent with access'
+        customers_header: "Buyer access management"
+        agents_header: "Agent access management"
+        customers_without_access: "Buyers without access"
+        agents_without_access: "Agents without access"
+        customers_with_access: "Buyers with access"
+        agents_with_access: "Agent with access"
       index:
         view:
-          new_category: 'New category'
-          edit_link: 'Edit'
-          destroy_link: 'Delete'
+          new_category: "New category"
+          edit_link: "Edit"
+          destroy_link: "Delete"
       new:
         view:
-          button_create: 'Create'
+          button_create: "Create"
       edit:
         view:
           header: "Editing category: %{category_name}"
           header_templates: Lead templates
-          upload_image: 'Upload image'
-          button_update: 'Save'
+          upload_image: "Upload image"
+          button_update: "Save"
           new_template: New template
           edit_template: Edit
           duplicate_template: Duplicate
@@ -432,39 +432,39 @@ en:
     settings:
       edit:
         view:
-          title: 'Settings'
-          button_update_settings: 'Save'
-          button_cancel: 'Cancel'
-          confirmation_update_message: 'Are you sure?'
+          title: "Settings"
+          button_update_settings: "Save"
+          button_cancel: "Cancel"
+          confirmation_update_message: "Are you sure?"
       update:
         controller:
-          successful_update_notice: 'Settings were successfully updated.'
+          successful_update_notice: "Settings were successfully updated."
 
     email_templates:
       index:
         view:
-          title: 'Email templates'
-          edit: 'Edit'
-          unique_id_column: 'Name'
-          subject_column: 'Subject'
-          actions_column: 'Actions'
+          title: "Email templates"
+          edit: "Edit"
+          unique_id_column: "Name"
+          subject_column: "Subject"
+          actions_column: "Actions"
       edit:
         view:
-          title: 'Editing template: %{name}'
-          button_update: 'Save'
+          title: "Editing template: %{name}"
+          button_update: "Save"
 
     leads:
       index:
         view:
-          title: 'Leads'
-          search_button: 'Search'
-          edit: 'Edit'
-          destroy: 'Destroy'
-          edit: 'Edit'
-          destroy_confirmation: 'Are you sure?'
-          option_published: 'published'
-          option_not_published: 'not published'
-          filter_purchased: 'Purchased'
+          title: "Leads"
+          search_button: "Search"
+          edit: "Edit"
+          destroy: "Destroy"
+          edit: "Edit"
+          destroy_confirmation: "Are you sure?"
+          option_published: "published"
+          option_not_published: "not published"
+          filter_purchased: "Purchased"
         search:
           keyword_label: Keyword
           price_from_label: Price from
@@ -481,80 +481,80 @@ en:
           not_updated: Lead was not updated
       show:
         view:
-          header: 'Ratings for lead: %{lead_header}'
-          rating_level: 'Rating:'
-          rating_reason: 'Reason:'
-          view_all_leads_link: 'View all leads'
+          header: "Ratings for lead: %{lead_header}"
+          rating_level: "Rating:"
+          rating_reason: "Reason:"
+          view_all_leads_link: "View all leads"
       edit:
         view:
-          header: 'Editing lead: %{lead_header}'
+          header: "Editing lead: %{lead_header}"
           created_by: Created by
-          rating_header: 'Ratings'
-          button_update: 'Save'
-          button_cancel: 'Cancel'
+          rating_header: "Ratings"
+          button_update: "Save"
+          button_cancel: "Cancel"
     articles:
       show:
         view:
-          header: 'Article'
+          header: "Article"
       create:
         flash:
-         article_creation_successful: 'Article was successfully created'
+         article_creation_successful: "Article was successfully created"
       new:
         view:
-          header: 'New article'
-          button_create: 'Create article'
+          header: "New article"
+          button_create: "Create article"
       edit:
         view:
-          header: 'Editing article %{name}'
-          button_save: 'Save article'
+          header: "Editing article %{name}"
+          button_save: "Save article"
       index:
         view:
-          header: 'Articles'
-          new_article: 'New article'
-          search_button: 'Search'
-          id: 'ID'
-          type: 'Type'
-          title: 'Title'
-          main_page_articles: 'Main page article'
-          interface_content_texts: 'Interface content text'
-          help_popups: 'Help popup'
-          show_link: 'Show'
-          edit_link: 'Edit'
-          delete_link: 'Delete'
-          delete_confirmation: 'Are you sure?'
-          actions: 'Actions'
+          header: "Articles"
+          new_article: "New article"
+          search_button: "Search"
+          id: "ID"
+          type: "Type"
+          title: "Title"
+          main_page_articles: "Main page article"
+          interface_content_texts: "Interface content text"
+          help_popups: "Help popup"
+          show_link: "Show"
+          edit_link: "Edit"
+          delete_link: "Delete"
+          delete_confirmation: "Are you sure?"
+          actions: "Actions"
     news:
       index:
         view:
-          header: 'News'
-          buyers: 'sales managers'
-          agents: 'agents'
-          purchase_managers: 'purchase managers'
-          category_homes: 'category homes'
-          new_news: 'New news'
-          search_button: 'Search'
-          id: 'ID'
-          title: 'Title'
-          created_at: 'Created at'
-          times_read: '# of times read'
-          published: 'Published'
-          actions: 'Actions'
-          show_link: 'Show'
-          edit_link: 'Edit'
-          delete_link: 'Delete'
-          delete_confirmation: 'Are you sure?'
+          header: "News"
+          buyers: "sales managers"
+          agents: "agents"
+          purchase_managers: "purchase managers"
+          category_homes: "category homes"
+          new_news: "New news"
+          search_button: "Search"
+          id: "ID"
+          title: "Title"
+          created_at: "Created at"
+          times_read: "# of times read"
+          published: "Published"
+          actions: "Actions"
+          show_link: "Show"
+          edit_link: "Edit"
+          delete_link: "Delete"
+          delete_confirmation: "Are you sure?"
       new:
         view:
-          header: 'New news'
-          button_create: 'Create news'
+          header: "New news"
+          button_create: "Create news"
       show:
         view:
-          header: 'News'
+          header: "News"
       edit:
         view:
-          header: 'Editing news %{name}'
-          button_save: 'Save news'
-          category_label: 'Category'
+          header: "Editing news %{name}"
+          button_save: "Save news"
+          category_label: "Category"
     hints:
       index:
         view:
@@ -575,29 +575,29 @@ en:
     currencies:
       index:
         view:
-          title: 'Currencies'
-          new_currency: 'New currency'
-          edit: 'Edit'
-          delete: 'Delete'
-          delete_confirmation_message: 'Are you sure?'
-          actions: 'Actions'
-          no_currencies_defined: 'There are no currencies defined'
+          title: "Currencies"
+          new_currency: "New currency"
+          edit: "Edit"
+          delete: "Delete"
+          delete_confirmation_message: "Are you sure?"
+          actions: "Actions"
+          no_currencies_defined: "There are no currencies defined"
           table:
-            id: 'ID'
-            name: 'Name'
-            symbol: 'Symbol'
-            format: 'Format'
-            active: 'Active'
+            id: "ID"
+            name: "Name"
+            symbol: "Symbol"
+            format: "Format"
+            active: "Active"
       new:
         view:
-          header: 'New currency'
-          button_create_currency: 'Create currency'
-          button_cancel: 'Cancel'
+          header: "New currency"
+          button_create_currency: "Create currency"
+          button_cancel: "Cancel"
       edit:
         view:
-          header: 'Editing currency: %{name}'
-          button_update_currency: 'Update currency'
-          button_cancel: 'Cancel'
+          header: "Editing currency: %{name}"
+          button_update_currency: "Update currency"
+          button_cancel: "Cancel"
       destroy:
         errors:
           has_leads: "You can't delete this currency because there are leads using it"
@@ -632,213 +632,213 @@ en:
     invoices:
       common:
         view:
-          cash: 'Cash'
-          bank_transfer: 'Bank transfer'
+          cash: "Cash"
+          bank_transfer: "Bank transfer"
           na: N/A
       new:
         view:
-          header: 'New invoice'
-          button_create: 'Create'
-          basic_information: 'Basic information'
+          header: "New invoice"
+          button_create: "Create"
+          basic_information: "Basic information"
       show:
         view:
-          print_invoice: 'Print invoice'
-          download_pdf: 'Download PDF'
-          set_as_paid: 'Set as paid'
-          send: 'Send'
-          edit_invoice: 'Edit invoice'
-          go_back: 'Go back'
-          header: 'Invoice'
-          number: 'Number'
-          sale_date: 'Sale date'
-          payment_deadline: 'Payment deadline date'
-          creation_date: 'Invoice date'
-          original: 'Original'
-          copy: 'Copy'
-          from: 'From'
-          to: 'To'
-          ean_number: 'EAN Number'
-          vat_no: 'VAT/REG'
-          name: 'Name'
-          quantity: 'Quantity'
-          netto_price: 'Price'
-          netto_value: 'Netto value'
-          vat: 'VAT%'
-          vat_value: 'VAT'
-          brutto_value: 'Inc. VAT'
-          total: 'Total'
-          vat_spec: 'VAT spec'
-          total_in_words: 'Total in words'
-          vat_paid: 'VAT paid'
-          payment_method: 'Payment method'
-          payment_account: 'Payment account'
-          seller: 'Seller'
-          customer: 'Customer'
-          status: 'Status'
-          creation_place: 'Creation place'
-          emailed_at: 'Emailed at'
-          paid_at: 'Paid at'
-          cashflow: 'Cashflow'
-          yes_label: 'Yes'
-          no_label: 'No'
-          bank_name: 'Bank name'
-          bank_address_line_1: 'Address line 1'
-          bank_address_line_2: 'Address line 2'
-          bank_address_line_3: 'Address line 3'
-          bank_zip_code: 'Zip code'
-          bank_country: 'Country'
-          swift_code: 'SWIFT'
-          iban_number: 'IBAN No'
-          local_bank_number: 'Local bank number'
-          payment_conditions: 'Payment conditions'
-          note: 'Invoice note'
+          print_invoice: "Print invoice"
+          download_pdf: "Download PDF"
+          set_as_paid: "Set as paid"
+          send: "Send"
+          edit_invoice: "Edit invoice"
+          go_back: "Go back"
+          header: "Invoice"
+          number: "Number"
+          sale_date: "Sale date"
+          payment_deadline: "Payment deadline date"
+          creation_date: "Invoice date"
+          original: "Original"
+          copy: "Copy"
+          from: "From"
+          to: "To"
+          ean_number: "EAN Number"
+          vat_no: "VAT/REG"
+          name: "Name"
+          quantity: "Quantity"
+          netto_price: "Price"
+          netto_value: "Netto value"
+          vat: "VAT%"
+          vat_value: "VAT"
+          brutto_value: "Inc. VAT"
+          total: "Total"
+          vat_spec: "VAT spec"
+          total_in_words: "Total in words"
+          vat_paid: "VAT paid"
+          payment_method: "Payment method"
+          payment_account: "Payment account"
+          seller: "Seller"
+          customer: "Customer"
+          status: "Status"
+          creation_place: "Creation place"
+          emailed_at: "Emailed at"
+          paid_at: "Paid at"
+          cashflow: "Cashflow"
+          yes_label: "Yes"
+          no_label: "No"
+          bank_name: "Bank name"
+          bank_address_line_1: "Address line 1"
+          bank_address_line_2: "Address line 2"
+          bank_address_line_3: "Address line 3"
+          bank_zip_code: "Zip code"
+          bank_country: "Country"
+          swift_code: "SWIFT"
+          iban_number: "IBAN No"
+          local_bank_number: "Local bank number"
+          payment_conditions: "Payment conditions"
+          note: "Invoice note"
           payment_transactions:
-            header: 'Transactions'
-            type: 'Type'
-            paid_at: 'Paid at'
-            type_paypal: 'PayPal'
-            type_manual: 'Manual'
-            amount: 'Amount'
+            header: "Transactions"
+            type: "Type"
+            paid_at: "Paid at"
+            type_paypal: "PayPal"
+            type_manual: "Manual"
+            amount: "Amount"
       edit:
         view:
-          header: 'Editing invoice for %{name}'
-          save_button: 'Save'
-          save_changes: 'Save changes'
-          add_line: 'Add line'
-          remove_line: 'Remove line'
-          set_as_paid: 'Set as paid'
-          show_invoice: 'Show invoice'
-          go_back: 'Go back'
-          set_payable_for_invoice_items: 'Set payable for invoice items'
+          header: "Editing invoice for %{name}"
+          save_button: "Save"
+          save_changes: "Save changes"
+          add_line: "Add line"
+          remove_line: "Remove line"
+          set_as_paid: "Set as paid"
+          show_invoice: "Show invoice"
+          go_back: "Go back"
+          set_payable_for_invoice_items: "Set payable for invoice items"
           name: Name
-          quantity: '#'
+          quantity: "#"
           vat_rate: VAT
           netto_price: Netto price
           netto_value: Netto value
           vat_value: VAT
           brutto_value: Incl. VAT
-          remove_line: 'REMOVE LINE'
+          remove_line: "REMOVE LINE"
           form:
-            general_information: 'General information'
-            customer_information: 'Customer information'
-            seller_information: 'Seller information'
-            payment_information: 'Payment information'
+            general_information: "General information"
+            customer_information: "Customer information"
+            seller_information: "Seller information"
+            payment_information: "Payment information"
           is_refunded: "Refunded?"
       destroy:
         view:
-          confirmation: 'Are you sure?'
+          confirmation: "Are you sure?"
       index:
         view:
-          header: 'Invoices'
-          search_button: 'Search'
-          sale_date: 'Sale date'
-          invoice_number: 'Invoice number'
-          customer: 'Customer'
-          seller: 'Seller'
-          revenue_frozen: 'Revenue frozen'
-          status: 'Status'
-          search_label: 'Search'
-          create_invoice: 'Create invoice'
-          show_invoice: 'Show'
-          edit_invoice: 'Edit'
-          remove_invoice: 'Delete'
-          set_as_paid: 'Set as paid'
-          bulk_set_as_paid: 'Set selected as paid'
-          add_transaction: 'Add transaction'
-          paid: 'Paid'
-          not_paid: 'Not paid'
-          total: 'Total'
+          header: "Invoices"
+          search_button: "Search"
+          sale_date: "Sale date"
+          invoice_number: "Invoice number"
+          customer: "Customer"
+          seller: "Seller"
+          revenue_frozen: "Revenue frozen"
+          status: "Status"
+          search_label: "Search"
+          create_invoice: "Create invoice"
+          show_invoice: "Show"
+          edit_invoice: "Edit"
+          remove_invoice: "Delete"
+          set_as_paid: "Set as paid"
+          bulk_set_as_paid: "Set selected as paid"
+          add_transaction: "Add transaction"
+          paid: "Paid"
+          not_paid: "Not paid"
+          total: "Total"
           total_paid: Paid
           total_unpaid: Unpaid
           actions: Actions
           search:
-            with_keyword: 'Keyword'
-            with_sale_date_after_and_including: 'Sale after'
-            with_sale_date_before_and_including: 'Sale before'
-            not_paid: 'Not paid only'
-            payment_status: 'Payment status'
+            with_keyword: "Keyword"
+            with_sale_date_after_and_including: "Sale after"
+            with_sale_date_before_and_including: "Sale before"
+            not_paid: "Not paid only"
+            payment_status: "Payment status"
           credit_invoice: "Credit invoice"
       cash_flow:
         view:
-          header: 'New payment'
-          save_button: 'Save'
+          header: "New payment"
+          save_button: "Save"
       mailing:
         new:
           view:
-            attachment: 'Attachment'
-            send: 'Send'
-            recipeints: 'Recipeints'
-            subject: 'Subject'
-            body: 'Body'
+            attachment: "Attachment"
+            send: "Send"
+            recipeints: "Recipeints"
+            subject: "Subject"
+            body: "Body"
     sellers:
       index:
         view:
-          header: 'Sellers'
-          country: 'Country'
-          company_name: 'Company'
-          first_name: 'First name'
-          last_name: 'Last name'
-          default: 'Default'
-          edit: 'Edit'
-          show: 'Show'
-          delete: 'Delete'
-          no_sellers_defined: 'No sellers defined'
-          add_seller: 'Add seller'
+          header: "Sellers"
+          country: "Country"
+          company_name: "Company"
+          first_name: "First name"
+          last_name: "Last name"
+          default: "Default"
+          edit: "Edit"
+          show: "Show"
+          delete: "Delete"
+          no_sellers_defined: "No sellers defined"
+          add_seller: "Add seller"
       new:
         view:
-          header: 'New seller'
-          button_create: 'Create'
+          header: "New seller"
+          button_create: "Create"
       show:
         view:
-          header: 'Seller'
-          first_name: 'First name'
-          last_name: 'Last name'
-          address_line_1: 'Address line 1'
-          address_line_2: 'Address line 2'
-          address_line_3: 'Address line 3'
-          zip_code: 'Zip code'
-          vat_no: 'Vat number'
-          country: 'Country'
-          default: 'Default'
-          company_name: 'Company'
-          note: 'Invoice note'
+          header: "Seller"
+          first_name: "First name"
+          last_name: "Last name"
+          address_line_1: "Address line 1"
+          address_line_2: "Address line 2"
+          address_line_3: "Address line 3"
+          zip_code: "Zip code"
+          vat_no: "Vat number"
+          country: "Country"
+          default: "Default"
+          company_name: "Company"
+          note: "Invoice note"
       edit:
         view:
-          header: 'Editing seller: %{name}'
-          button_update: 'Save'
+          header: "Editing seller: %{name}"
+          button_update: "Save"
       form:
-        note: 'Invoice note'
-        company_name: 'Company'
+        note: "Invoice note"
+        company_name: "Company"
 
 
     payment_transactions:
       index:
         view:
-          header: 'Payment transactions'
-          search_label: 'Search'
-          edit: 'Edit'
-          invoice_number: 'Invoice number'
-          transaction_type: 'Type'
-          transaction_type_paypal: 'Paypal'
-          transaction_type_manual: 'Manual'
-          customer_name: 'Customer name'
-          customer_address: 'Customer address'
-          amount: 'Amount'
-          actions: 'Actions'
-          manually_register_transaction: 'Manually register a transaction'
-          search_button: 'Search'
+          header: "Payment transactions"
+          search_label: "Search"
+          edit: "Edit"
+          invoice_number: "Invoice number"
+          transaction_type: "Type"
+          transaction_type_paypal: "Paypal"
+          transaction_type_manual: "Manual"
+          customer_name: "Customer name"
+          customer_address: "Customer address"
+          amount: "Amount"
+          actions: "Actions"
+          manually_register_transaction: "Manually register a transaction"
+          search_button: "Search"
           search:
-            with_keyword: 'Keyword:'
+            with_keyword: "Keyword:"
             with_sale_date_after_and_including: Sale after
             with_sale_date_before_and_including: Sale before
       new:
         view:
-          header: 'New transaction'
-          button_create: 'Create'
+          header: "New transaction"
+          button_create: "Create"
       edit:
         view:
-          header: 'Editing invoice #%{number} transaction for %{name}'
-          button_update: 'Save'
+          header: "Editing invoice #%{number} transaction for %{name}"
+          button_update: "Save"
     upcoming_invoices:
       index:
         view:
@@ -846,7 +846,7 @@ en:
           total: Total
           customer_first_name: First name
           customer_last_name: Last name
-          customer_screen_name: 'Screen name'
+          customer_screen_name: "Screen name"
           not_invoiced_count: Leads
           not_invoiced_sum: Total
           create_invoice: Create invoice
@@ -860,70 +860,66 @@ en:
     bank_accounts:
       index:
         view:
-          header: 'Bank accounts'
-          id: 'ID'
-          country: 'Country'
-          bank_name: 'Bank name'
-          iban_no: 'IBAN number'
-          local_bank_number: 'Local bank number'
-          swift: 'SWIFT'
-          country_default: 'Default bank for country'
-          actions: 'Actions'
-          edit: 'Edit'
-          show: 'Show'
-          delete: 'Delete'
-          add_bank: 'Add bank'
-          no_bank_accounts_defined: 'No bank accounts defined'
+          header: "Bank accounts"
+          id: "ID"
+          country: "Country"
+          bank_name: "Bank name"
+          iban_no: "IBAN number"
+          local_bank_number: "Local bank number"
+          swift: "SWIFT"
+          country_default: "Default bank for country"
+          actions: "Actions"
+          edit: "Edit"
+          show: "Show"
+          delete: "Delete"
+          add_bank: "Add bank"
+          no_bank_accounts_defined: "No bank accounts defined"
       edit:
         view:
-          header: 'Editing bank account: %{name}'
-          button_save: 'Save'
+          header: "Editing bank account: %{name}"
+          button_save: "Save"
       new:
         view:
-          header: 'New bank account'
-          button_create: 'Create bank account'
+          header: "New bank account"
+          button_create: "Create bank account"
       show:
         view:
-          header: 'Bank account'
-          country: 'Country'
-          bank_name: 'Bank name'
-          bank_address: 'Bank address'
-          address_line_1: 'Address line 1'
-          address_line_2: 'Address line 2'
-          address_line_3: 'Address line 3'
-          zip_code: 'ZIP code'
-          iban_no: 'IBAN number'
-          local_bank_number: 'Local bank number'
-          swift: 'SWIFT'
-          country_default: 'Default bank for country'
-          global_default: 'Global default bank'
-          payment_conditions: 'Payment conditions'
-      form:
-        view:
-          country_default: 'Country default'
-          global_default: 'Global default'
-          
+          header: "Bank account"
+          country: "Country"
+          bank_name: "Bank name"
+          bank_address: "Bank address"
+          address_line_1: "Address line 1"
+          address_line_2: "Address line 2"
+          address_line_3: "Address line 3"
+          zip_code: "ZIP code"
+          iban_no: "IBAN number"
+          local_bank_number: "Local bank number"
+          swift: "SWIFT"
+          country_default: "Default bank for country"
+          global_default: "Global default bank"
+          payment_conditions: "Payment conditions"
+
     vat_rates:
       index:
         view:
-          header: 'VAT rates'
-          country: 'Country'
-          rate: 'Rate'
-          actions: 'Actions'
-          edit: 'Edit'
-          add_vat_rate: 'Add VAT rate'
-          no_rates_defined: 'No VAT rates defined'
+          header: "VAT rates"
+          country: "Country"
+          rate: "Rate"
+          actions: "Actions"
+          edit: "Edit"
+          add_vat_rate: "Add VAT rate"
+          no_rates_defined: "No VAT rates defined"
       new:
         view:
-          header: 'New VAT rate'
-          button_create: 'Create'
+          header: "New VAT rate"
+          button_create: "Create"
       edit:
         view:
-          header: 'Editing VAR rate for:  %{name}'
-          button_save: 'Save'
+          header: "Editing VAR rate for:  %{name}"
+          button_save: "Save"
       common:
         view:
-          country_name: 'Country name'
+          country_name: "Country name"
 
     creditors:
       index:
@@ -947,37 +943,37 @@ en:
     leads:
       index:
         view:
-          new_lead: 'New lead'
-          edit: 'Edit'
-          destroy: 'Destroy'
-          destroy_confirmation: 'Are you sure?'
-          search_button: 'Search'
-          option_published: 'published'
-          option_not_published: 'not published'
-          filter_with_inactive: 'Skip inactive'
-          filter_with_outdated: 'Skip outdated'
+          new_lead: "New lead"
+          edit: "Edit"
+          destroy: "Destroy"
+          destroy_confirmation: "Are you sure?"
+          search_button: "Search"
+          option_published: "published"
+          option_not_published: "not published"
+          filter_with_inactive: "Skip inactive"
+          filter_with_outdated: "Skip outdated"
       show:
         view:
-          header: 'Ratings for lead: %{lead_header}'
-          rating_level: 'Rating:'
-          rating_reason: 'Reason:'
-          view_all_leads_link: 'View all leads'
+          header: "Ratings for lead: %{lead_header}"
+          rating_level: "Rating:"
+          rating_reason: "Reason:"
+          view_all_leads_link: "View all leads"
       destroy:
         flash:
-          lead_deletion_successful: 'Lead has been deleted successfully.'
-          lead_deletion_failure: 'Lead could not be deleted'
+          lead_deletion_successful: "Lead has been deleted successfully."
+          lead_deletion_failure: "Lead could not be deleted"
 
       new:
         view:
-          title: 'New lead'
-          button_create: 'Create'
-          button_create_and_continue: 'Create & continue'
-          button_create_and_duplicate: 'Create & duplicate'
-          remove_language: 'Remove'
+          title: "New lead"
+          button_create: "Create"
+          button_create_and_continue: "Create & continue"
+          button_create_and_duplicate: "Create & duplicate"
+          remove_language: "Remove"
       edit:
         view:
-          title: 'Editing lead: %{name}'
-          button_update: 'Save'
+          title: "Editing lead: %{name}"
+          button_update: "Save"
           rating_header: Ratings
           rating_level: Rating
           rating_reason: Reason
@@ -1001,13 +997,13 @@ en:
           button_cancel: Cancel
       edit:
         view:
-          header: 'Editing lead template: %{name}'
+          header: "Editing lead template: %{name}"
           button_update: Save
           button_cancel: Cancel
       destroy:
         flash:
-          deletion_successful: 'Lead template has been deleted successfully.'
-          deletion_failure: 'Lead template could not be deleted'
+          deletion_successful: "Lead template has been deleted successfully."
+          deletion_failure: "Lead template could not be deleted"
 
   call_centre:
     lead_templates:
@@ -1030,7 +1026,7 @@ en:
           button_cancel: Cancel
       edit:
         view:
-          header: 'Editing lead template: %{name}'
+          header: "Editing lead template: %{name}"
           button_update: Save
           button_cancel: Cancel
       destroy:
@@ -1040,52 +1036,52 @@ en:
     call_centre_agents:
       index:
         view:
-          title: 'Manage agents'
-          new_agent: 'Create agent'
-          per_page_selection: 'Per page:'
-          none_per_page: 'None'
-          first_name_column: 'First name'
-          last_name_column: 'Last name'
-          created_leads_column: 'Created leads'
-          volume_sold_column: 'Volume sold'
-          mobile_phone_column: 'Mobile phone'
-          revenue_column: 'Revenue'
-          purchased_month_ago_column: 'Purchased 30 days ago'
-          purchased_year_ago_column: 'Purchased 12 months ago'
-          good_leads_column: 'Good'
-          bad_leads_column: 'Bad'
-          fake_leads_column: 'Fake'
-          not_rated_leads_column: 'Not rated'
-          rating_percent_column: 'Rating %'
-          certification_lvl_column: 'Certif. level'
-          actions_column: 'Actions'
-          lock: 'Lock'
-          unlock: 'Unlock'
-          edit: 'Edit'
-          delete: 'Delete'
-          delete_confirmation_message: 'Are you sure?'
-          button_bulk_subbaccounts_update: 'Save'
+          title: "Manage agents"
+          new_agent: "Create agent"
+          per_page_selection: "Per page:"
+          none_per_page: "None"
+          first_name_column: "First name"
+          last_name_column: "Last name"
+          created_leads_column: "Created leads"
+          volume_sold_column: "Volume sold"
+          mobile_phone_column: "Mobile phone"
+          revenue_column: "Revenue"
+          purchased_month_ago_column: "Purchased 30 days ago"
+          purchased_year_ago_column: "Purchased 12 months ago"
+          good_leads_column: "Good"
+          bad_leads_column: "Bad"
+          fake_leads_column: "Fake"
+          not_rated_leads_column: "Not rated"
+          rating_percent_column: "Rating %"
+          certification_lvl_column: "Certif. level"
+          actions_column: "Actions"
+          lock: "Lock"
+          unlock: "Unlock"
+          edit: "Edit"
+          delete: "Delete"
+          delete_confirmation_message: "Are you sure?"
+          button_bulk_subbaccounts_update: "Save"
           view_leads: View leads
       new:
         view:
-          title: 'New call centre agent'
-          button_create: 'Create'
-          button_cancel: 'Cancel'
+          title: "New call centre agent"
+          button_create: "Create"
+          button_cancel: "Cancel"
       edit:
         view:
-          title: 'Editing call centre agent: %{name}'
-          button_update: 'Save'
-          button_cancel: 'Cancel'
+          title: "Editing call centre agent: %{name}"
+          button_update: "Save"
+          button_cancel: "Cancel"
       create:
         flash:
-          call_centre_agent_creation_successful: 'Call centre agent has been created successfully!'
+          call_centre_agent_creation_successful: "Call centre agent has been created successfully!"
       update:
         flash:
-          call_centre_agent_update_successful: 'Call centre agent has been updated successfully!'
+          call_centre_agent_update_successful: "Call centre agent has been updated successfully!"
       destroy:
         flash:
-          call_centre_agent_deletion_successful: 'Call centre agent has been successfully deleted'
-          call_centre_agent_deletion_failure: 'Call centre agent could not be deleted'
+          call_centre_agent_deletion_successful: "Call centre agent has been successfully deleted"
+          call_centre_agent_deletion_failure: "Call centre agent could not be deleted"
     leads:
       index:
         view:
@@ -1104,7 +1100,7 @@ en:
           option_not_published: not published
       edit:
         view:
-          title: 'Editing lead: %{name}'
+          title: "Editing lead: %{name}"
           created_by: Created by
           button_update: Save
           button_cancel: Cancel
@@ -1138,7 +1134,7 @@ en:
           button_cancel: Cancel
       edit:
         view:
-          title: 'Editing lead: %{name}'
+          title: "Editing lead: %{name}"
           button_update: Save
           button_cancel: Cancel
       destroy:
@@ -1165,52 +1161,52 @@ en:
           button_cancel: Cancel
       edit:
         view:
-          header: 'Editing lead template: %{name}'
+          header: "Editing lead template: %{name}"
           button_update: Save
           button_cancel: Cancel
       destroy:
         flash:
-          deletion_successful: 'Lead template has been deleted successfully.'
-          deletion_failure: 'Lead template could not be deleted'
+          deletion_successful: "Lead template has been deleted successfully."
+          deletion_failure: "Lead template could not be deleted"
 
   purchase_manager:
     leads:
       index:
         view:
-          new_lead: 'New lead'
-          edit: 'Edit'
-          destroy: 'Destroy'
-          destroy_confirmation: 'Are you sure?'
-          search_button: 'Search'
-          option_published: 'published'
-          option_not_published: 'not published'
-          filter_with_inactive: 'Skip inactive'
-          filter_with_outdated: 'Skip outdated'
+          new_lead: "New lead"
+          edit: "Edit"
+          destroy: "Destroy"
+          destroy_confirmation: "Are you sure?"
+          search_button: "Search"
+          option_published: "published"
+          option_not_published: "not published"
+          filter_with_inactive: "Skip inactive"
+          filter_with_outdated: "Skip outdated"
       show:
         view:
-          header: 'Ratings for lead: %{lead_header}'
-          rating_level: 'Rating:'
-          rating_reason: 'Reason:'
-          view_all_leads_link: 'View all leads'
+          header: "Ratings for lead: %{lead_header}"
+          rating_level: "Rating:"
+          rating_reason: "Reason:"
+          view_all_leads_link: "View all leads"
       destroy:
         flash:
-          lead_deletion_successful: 'Lead has been deleted successfully.'
-          lead_deletion_failure: 'Lead could not be deleted'
+          lead_deletion_successful: "Lead has been deleted successfully."
+          lead_deletion_failure: "Lead could not be deleted"
       update:
         errors:
-          only_admin_can_change_status: 'Only administrator can change lead status'
+          only_admin_can_change_status: "Only administrator can change lead status"
 
       new:
         view:
-          title: 'New lead'
-          button_create: 'Create'
-          button_create_and_continue: 'Create & continue'
-          button_create_and_duplicate: 'Create & duplicate'
-          remove_language: 'Remove'
+          title: "New lead"
+          button_create: "Create"
+          button_create_and_continue: "Create & continue"
+          button_create_and_duplicate: "Create & duplicate"
+          remove_language: "Remove"
       edit:
         view:
-          title: 'Editing lead: %{name}'
-          button_update: 'Save'
+          title: "Editing lead: %{name}"
+          button_update: "Save"
     lead_templates:
       index:
         view:
@@ -1231,26 +1227,26 @@ en:
           button_cancel: Cancel
       edit:
         view:
-          header: 'Editing lead template: %{name}'
+          header: "Editing lead template: %{name}"
           button_update: Save
           button_cancel: Cancel
       destroy:
         flash:
-          deletion_successful: 'Lead template has been deleted successfully.'
-          deletion_failure: 'Lead template could not be deleted'
+          deletion_successful: "Lead template has been deleted successfully."
+          deletion_failure: "Lead template could not be deleted"
 
   agent_accounts:
     new:
       view:
-        title: 'Freelancer Agent signup'
-        button_create_account: 'Create my account'
+        title: "Freelancer Agent signup"
+        button_create_account: "Create my account"
 
   purchase_manager_accounts:
     new:
       view:
-        title: 'Purchase Manager signup'
-        header: 'Create new account'
-        button_create_account: 'Create my account'
+        title: "Purchase Manager signup"
+        header: "Create new account"
+        button_create_account: "Create my account"
 
   buyer:
     cart_items:
@@ -1259,8 +1255,8 @@ en:
           cart_item_creation_successful: Lead has been added to cart
           cart_item_bought_successful: Lead has been bought
           cart_item_already_in_cart: Lead has already been added to cart
-          cart_item_currencies_mismatch: Lead's currency is different from other items in the cart
-          cart_item_buyout_successful: 'Lead has been bought out!'
+          cart_item_currencies_mismatch: Lead"s currency is different from other items in the cart
+          cart_item_buyout_successful: "Lead has been bought out!"
       destroy:
         flash:
           cart_item_destruction_successful: Lead has been removed from cart
@@ -1277,17 +1273,17 @@ en:
     bulk_cart_items:
       create:
         flash:
-          n_cart_items_added: '%{count} leads have been added to cart'
-          n_leads_bought: '%{count} leads have been bought'
-          no_cart_items_added: 'No leads added to cart'
+          n_cart_items_added: "%{count} leads have been added to cart"
+          n_leads_bought: "%{count} leads have been bought"
+          no_cart_items_added: "No leads added to cart"
     bulk_lead_purchase_update:
       create:
         flash:
-          lead_purchases_updated_successfully: 'Leads have been updated successfully!'
+          lead_purchases_updated_successfully: "Leads have been updated successfully!"
     lead_purchases:
       show:
         view:
-          header: 'Lead details'
+          header: "Lead details"
 
   categories:
     index:
@@ -1298,105 +1294,105 @@ en:
   buyer_accounts:
     new:
       view:
-        title: 'Sales manager signup'
-        button_create_account: 'Create'
-        enable_team_buyers: 'Enable team buyers'
-        company_name: 'Company'
+        title: "Sales manager signup"
+        button_create_account: "Create"
+        enable_team_buyers: "Enable team buyers"
+        company_name: "Company"
 
   category_buyer_accounts:
     new:
       view:
-        title: 'Category buyer signup'
-        button_create_account: 'Create'
-        enable_team_buyers: 'Enable team buyers'
-        company_name: 'Company'
+        title: "Category buyer signup"
+        button_create_account: "Create"
+        enable_team_buyers: "Enable team buyers"
+        company_name: "Company"
 
   buyer_home:
     show:
       view:
-        header: 'Welcome sales manager'
-        agent_link: 'click here if you are an agent'
-        purchase_manager_link: 'click here if you are a purchase manager'
-        header_best_sellers: 'Best sellers'
-        header_latest_leads: 'Latest leads'
-        header_latest_leads_in_my_categories: 'Latest leads in my categories'
-        header_my_leads: 'My leads'
-        header_news: 'News'
-        purchase_value_label: 'Purchase value:'
-        lead_price_label: 'Lead price:'
-        description_label: 'Description:'
-        read_more_link: 'read more'
-        complete_list_link: 'complete list'
-        create_new_buyer_account: 'Create new sales manager account'
-        sign_out: 'Sign out'
-        add_team_member: 'Add team member'
-        i_have_an_account: 'I have an account'
+        header: "Welcome sales manager"
+        agent_link: "click here if you are an agent"
+        purchase_manager_link: "click here if you are a purchase manager"
+        header_best_sellers: "Best sellers"
+        header_latest_leads: "Latest leads"
+        header_latest_leads_in_my_categories: "Latest leads in my categories"
+        header_my_leads: "My leads"
+        header_news: "News"
+        purchase_value_label: "Purchase value:"
+        lead_price_label: "Lead price:"
+        description_label: "Description:"
+        read_more_link: "read more"
+        complete_list_link: "complete list"
+        create_new_buyer_account: "Create new sales manager account"
+        sign_out: "Sign out"
+        add_team_member: "Add team member"
+        i_have_an_account: "I have an account"
 
   agent_home:
     show:
       view:
-        header: 'Welcome agent'
-        buyer_link: 'click here if you are a sales manager'
-        purchase_manager_link: 'click here if you are a purchase manager'
-        header_best_sellers: 'Best sellers'
-        header_latest_leads: 'Latest leads'
-        header_news: 'News'
-        purchase_value_label: 'Purchase value:'
-        lead_price_label: 'Lead price:'
-        description_label: 'Description:'
-        read_more_link: 'read more'
-        complete_list_link: 'complete list'
-        create_new_agent_account: 'Create new agent account'
-        i_have_an_account: 'I have an account'
+        header: "Welcome agent"
+        buyer_link: "click here if you are a sales manager"
+        purchase_manager_link: "click here if you are a purchase manager"
+        header_best_sellers: "Best sellers"
+        header_latest_leads: "Latest leads"
+        header_news: "News"
+        purchase_value_label: "Purchase value:"
+        lead_price_label: "Lead price:"
+        description_label: "Description:"
+        read_more_link: "read more"
+        complete_list_link: "complete list"
+        create_new_agent_account: "Create new agent account"
+        i_have_an_account: "I have an account"
 
   purchase_manager_home:
     show:
       view:
-        header: 'Welcome purchase manager'
-        agent_link: 'click here if you are an agent'
-        buyer_link: 'click here if you are a sales manager'
-        header_best_sellers: 'Best sellers'
-        header_latest_leads: 'Latest leads'
-        header_news: 'News'
-        purchase_value_label: 'Purchase value:'
-        lead_price_label: 'Lead price:'
-        description_label: 'Description:'
-        read_more_link: 'read more'
-        complete_list_link: 'complete list'
-        create_new_purchase_manager_account: 'Create new purchase manager account'
-        i_have_an_account: 'I have an account'
+        header: "Welcome purchase manager"
+        agent_link: "click here if you are an agent"
+        buyer_link: "click here if you are a sales manager"
+        header_best_sellers: "Best sellers"
+        header_latest_leads: "Latest leads"
+        header_news: "News"
+        purchase_value_label: "Purchase value:"
+        lead_price_label: "Lead price:"
+        description_label: "Description:"
+        read_more_link: "read more"
+        complete_list_link: "complete list"
+        create_new_purchase_manager_account: "Create new purchase manager account"
+        i_have_an_account: "I have an account"
 
   category_home:
     show:
       view:
-        header: 'Welcome to category'
-        sign_out: 'Sign out'
-        header_news: 'News'
-        complete_list_link: 'complete list'
-        sign_up_sign_in: 'Sign up or sign in'
-        latest_leads: 'Latest leads'
-        header_latest_leads: 'Latest leads'
-        i_have_an_account: 'I have an account'
-        sign_in: 'Sign in'
-        remember_me: 'Remember me'
-        forgotten_password_link: 'Forgot password?'
-        i_want_to_register: 'I want to register a new account'
-        category_buyer_signup: 'Category buyer signup'
-        header_my_leads: 'My leads'
-        read_more_link: 'read more'
+        header: "Welcome to category"
+        sign_out: "Sign out"
+        header_news: "News"
+        complete_list_link: "complete list"
+        sign_up_sign_in: "Sign up or sign in"
+        latest_leads: "Latest leads"
+        header_latest_leads: "Latest leads"
+        i_have_an_account: "I have an account"
+        sign_in: "Sign in"
+        remember_me: "Remember me"
+        forgotten_password_link: "Forgot password?"
+        i_want_to_register: "I want to register a new account"
+        category_buyer_signup: "Category buyer signup"
+        header_my_leads: "My leads"
+        read_more_link: "read more"
         create_new_account: Create new account
 
   customer:
     interests:
       edit:
         view:
-          title: 'Configure your interests'
-          categories: 'Categories'
-          deal_values: 'Deal value'
-          countries: 'Countries'
-          notify_about_new_leads: 'Notify me about new leads via email'
-          button_update: 'Save'
-          rss_feed_url: 'RSS Feed'
+          title: "Configure your interests"
+          categories: "Categories"
+          deal_values: "Deal value"
+          countries: "Countries"
+          notify_about_new_leads: "Notify me about new leads via email"
+          button_update: "Save"
+          rss_feed_url: "RSS Feed"
           deal_range_from: From
           deal_range_to: To
           all_deal_values_enabled: All values
@@ -1406,153 +1402,153 @@ en:
     subaccounts:
       index:
         view:
-          title: 'Manage subaccounts'
-          new_lead_buyer: 'Create lead user with buying permission'
-          new_lead_user: 'Create lead user'
-          edit: 'Edit'
-          delete: 'Delete'
-          lock: 'Lock'
-          unlock: 'Unlock'
-          assigned_leads: 'Assigned leads'
-          delete_confirmation_message: 'Are you sure to delete?'
-          first_name_column: 'First name'
-          last_name_column: 'Last name'
-          department_column: 'Department'
-          completed_leads_column: 'Completed'
-          requested_leads_column: 'Requested'
-          assigned_month_ago_column: 'Assigned 30 days ago'
-          assigned_year_ago_column: 'Assigned 12 months ago'
-          total_leads_assigned_column: 'Total assigned'
-          actions_column: 'Actions'
-          completed_leads_column: 'Completed leads'
+          title: "Manage subaccounts"
+          new_lead_buyer: "Create lead user with buying permission"
+          new_lead_user: "Create lead user"
+          edit: "Edit"
+          delete: "Delete"
+          lock: "Lock"
+          unlock: "Unlock"
+          assigned_leads: "Assigned leads"
+          delete_confirmation_message: "Are you sure to delete?"
+          first_name_column: "First name"
+          last_name_column: "Last name"
+          department_column: "Department"
+          completed_leads_column: "Completed"
+          requested_leads_column: "Requested"
+          assigned_month_ago_column: "Assigned 30 days ago"
+          assigned_year_ago_column: "Assigned 12 months ago"
+          total_leads_assigned_column: "Total assigned"
+          actions_column: "Actions"
+          completed_leads_column: "Completed leads"
           email:
-          none_per_page: 'None'
-          button_bulk_subbaccounts_update: 'Save'
+          none_per_page: "None"
+          button_bulk_subbaccounts_update: "Save"
       create:
         flash:
           subaccount_creation_successful: Subaccount has been added succesfully
       new:
         view:
-          title: 'New'
-          button_create: 'Create'
+          title: "New"
+          button_create: "Create"
       edit:
         view:
-          title: 'Editing user %{name}'
-          button_update: 'Save'
+          title: "Editing user %{name}"
+          button_update: "Save"
       update:
         flash:
-          subaccount_update_successful: 'User has been successfully updated.'
+          subaccount_update_successful: "User has been successfully updated."
       destroy:
         flash:
-          subaccount_deletion_successful: 'Subaccount has been successfully deleted'
-          subaccount_deletion_failure: 'Subaccount could not be deleted'
+          subaccount_deletion_successful: "Subaccount has been successfully deleted"
+          subaccount_deletion_failure: "Subaccount could not be deleted"
     lead_purchases:
       index:
         view:
-          header: 'Lead purchases'
+          header: "Lead purchases"
     lead_requests:
       index:
         view:
-          header: 'Requested leads'
+          header: "Requested leads"
           accept_lead_request_link: Accept lead request
           reject_lead_request_link: Reject lead request
-          requested_by: 'Requested by: %{user}'
-          button_bulk_create_lead_request: 'Accept lead requests'
-          button_bulk_destroy_lead_request: 'Reject lead requests'
+          requested_by: "Requested by: %{user}"
+          button_bulk_create_lead_request: "Accept lead requests"
+          button_bulk_destroy_lead_request: "Reject lead requests"
           search:
-            header: 'Search'
-            keyword_label: 'Keyword'
-            category_label: 'Category'
-            deal_value_from_label: 'From'
-            deal_value_to_label: 'To'
+            header: "Search"
+            keyword_label: "Keyword"
+            category_label: "Category"
+            deal_value_from_label: "From"
+            deal_value_to_label: "To"
             zip_code: Zip code
-            country_label: 'Country'
-            requested_by_label: 'Requested by'
-            search_button: 'Search'
+            country_label: "Country"
+            requested_by_label: "Requested by"
+            search_button: "Search"
         flash:
-          lead_request_accepted_successfully: 'You added lead to your list'
+          lead_request_accepted_successfully: "You added lead to your list"
           lead_request_rejected_successfully: Lead request rejected
     invoices:
       common:
         view:
-          cash: 'Cash'
-          bank_transfer: 'Bank transfer'
+          cash: "Cash"
+          bank_transfer: "Bank transfer"
           na: N/A
       index:
         view:
-          header: 'Invoices'
-          search_button: 'Search'
-          sale_date: 'Sale date'
-          invoice_number: 'Invoice number'
-          customer: 'Customer'
-          status: 'Status'
-          search_label: 'Search'
-          create_invoice: 'Create invoice'
-          show_invoice: 'Show'
-          set_as_paid: 'Set as paid'
-          paid: 'Paid'
-          not_paid: 'Not paid'
-          total: 'Total'
+          header: "Invoices"
+          search_button: "Search"
+          sale_date: "Sale date"
+          invoice_number: "Invoice number"
+          customer: "Customer"
+          status: "Status"
+          search_label: "Search"
+          create_invoice: "Create invoice"
+          show_invoice: "Show"
+          set_as_paid: "Set as paid"
+          paid: "Paid"
+          not_paid: "Not paid"
+          total: "Total"
           actions: Actions
-          no_invoices: 'There are no invoices for your account'
+          no_invoices: "There are no invoices for your account"
           search:
-            with_keyword: 'Keyword'
-            with_sale_date_after_and_including: 'Sale after'
-            with_sale_date_before_and_including: 'Sale before'
-            not_paid: 'Not paid only'
-            payment_status: 'Payment status'
+            with_keyword: "Keyword"
+            with_sale_date_after_and_including: "Sale after"
+            with_sale_date_before_and_including: "Sale before"
+            not_paid: "Not paid only"
+            payment_status: "Payment status"
       show:
         view:
-          download_pdf: 'Download PDF'
-          go_back: 'Go back'
-          header: 'Invoice'
-          number: 'Number'
-          sale_date: 'Sale date'
-          payment_deadline: 'Payment deadline date'
-          creation_date: 'Invoice date'
-          ean_number: 'EAN Number'
-          from: 'From'
-          to: 'To'
-          name: 'Name'
-          quantity: 'Quantity'
-          netto_price: 'Price'
-          netto_value: 'Netto value'
-          vat: 'VAT%'
-          vat_value: 'VAT'
-          brutto_value: 'Inc. VAT'
-          total: 'Total'
-          including: 'Including'
-          total_in_words: 'Total in words'
-          vat_paid: 'VAT paid'
-          payment_method: 'Payment method'
-          payment_account: 'Payment account'
-          seller: 'Seller'
-          customer: 'Customer'
-          status: 'Status'
-          creation_place: 'Creation place'
-          emailed_at: 'Emailed at'
-          paid_at: 'Paid at'
-          cashflow: 'Cashflow'
-          yes_label: 'Yes'
-          no_label: 'No'
+          download_pdf: "Download PDF"
+          go_back: "Go back"
+          header: "Invoice"
+          number: "Number"
+          sale_date: "Sale date"
+          payment_deadline: "Payment deadline date"
+          creation_date: "Invoice date"
+          ean_number: "EAN Number"
+          from: "From"
+          to: "To"
+          name: "Name"
+          quantity: "Quantity"
+          netto_price: "Price"
+          netto_value: "Netto value"
+          vat: "VAT%"
+          vat_value: "VAT"
+          brutto_value: "Inc. VAT"
+          total: "Total"
+          including: "Including"
+          total_in_words: "Total in words"
+          vat_paid: "VAT paid"
+          payment_method: "Payment method"
+          payment_account: "Payment account"
+          seller: "Seller"
+          customer: "Customer"
+          status: "Status"
+          creation_place: "Creation place"
+          emailed_at: "Emailed at"
+          paid_at: "Paid at"
+          cashflow: "Cashflow"
+          yes_label: "Yes"
+          no_label: "No"
           payment_transactions:
-            header: 'Transactions'
-            type: 'Type'
-            paid_at: 'Paid at'
-            type_paypal: 'PayPal'
-            type_manual: 'Manual'
-            amount: 'Amount'
+            header: "Transactions"
+            type: "Type"
+            paid_at: "Paid at"
+            type_paypal: "PayPal"
+            type_manual: "Manual"
+            amount: "Amount"
 
     not_invoiced:
       index:
         view:
           header: Not Invoiced Leads
-          lead_header: 'Lead'
-          lead_price: 'Price'
+          lead_header: "Lead"
+          lead_price: "Price"
           create_invoice: Create invoice
           search_label: Search
           search_button: Search
-          no_leads_to_display: 'No leads to display'
+          no_leads_to_display: "No leads to display"
           search:
             with_keyword: Keyword
             with_assigned_at_date_after_and_including: Assigned after
@@ -1564,45 +1560,45 @@ en:
       index:
         view:
           header: Leads assigned to me
-          view_lead: 'View details'
-          bulk_state_field: 'State'
-          bulk_update_button: 'Update all selected leads'
-          bulk_download_csv_link: 'Download CSV for selected leads'
-          bulk_download_csv_link_short: 'Download selected'
-          download_csv_link: 'CSV'
-          print_link: 'Print'
-          bulk_print_link: 'Print all selected leads'
-          bulk_print_link_short: 'Print selected'
+          view_lead: "View details"
+          bulk_state_field: "State"
+          bulk_update_button: "Update all selected leads"
+          bulk_download_csv_link: "Download CSV for selected leads"
+          bulk_download_csv_link_short: "Download selected"
+          download_csv_link: "CSV"
+          print_link: "Print"
+          bulk_print_link: "Print all selected leads"
+          bulk_print_link_short: "Print selected"
           email_lead: Contact lead
           search:
-            keyword_label: 'Keyword'
-            search_button: 'Search'
-            category_label: 'Category'
-            deal_value_from_label: 'From'
-            deal_value_to_label: 'To'
-            country_label: 'Country'
-            zip_code: 'Zip code'
+            keyword_label: "Keyword"
+            search_button: "Search"
+            category_label: "Category"
+            deal_value_from_label: "From"
+            deal_value_to_label: "To"
+            country_label: "Country"
+            zip_code: "Zip code"
       show:
         view:
-          header: 'Lead details'
+          header: "Lead details"
     lead_requests:
       index:
         view:
           header: Leads I have requested pending approval
           destroy_lead_request: Remove lead request
-          button_bulk_destroy_lead_request: 'Remove lead requests'
+          button_bulk_destroy_lead_request: "Remove lead requests"
           search:
-            keyword_label: 'Keyword'
-            category_label: 'Category'
-            deal_value_from_label: 'From'
-            deal_value_to_label: 'To'
-            country_label: 'Country'
-            search_button: 'Search'
-            zip_code: 'Zip code'
+            keyword_label: "Keyword"
+            category_label: "Category"
+            deal_value_from_label: "From"
+            deal_value_to_label: "To"
+            country_label: "Country"
+            search_button: "Search"
+            zip_code: "Zip code"
     bulk_lead_purchase_update:
       create:
         flash:
-          lead_purchases_updated_successfully: 'Leads has been updated successfully!'
+          lead_purchases_updated_successfully: "Leads has been updated successfully!"
     contact_lead_by_email:
       new:
         view:
@@ -1628,28 +1624,28 @@ en:
           bulk_state_field: State
           bulk_clear_response_dates: Clear response dates
           bulk_assigned_field: Assigned to
-          bulk_rating: 'Rating'
+          bulk_rating: "Rating"
           bulk_update_button: Update all selected leads
-          lead_response_date: 'Response date:'
-          rating_level: 'Rating:'
-          rating_reason: 'Reason:'
-          rating_reason_empty: 'You have to provide reson for your rating!'
-          update_rating_button: 'Save rating'
+          lead_response_date: "Response date:"
+          rating_level: "Rating:"
+          rating_reason: "Reason:"
+          rating_reason_empty: "You have to provide reson for your rating!"
+          update_rating_button: "Save rating"
           update_owner_note: Save note
           cancel_owner_note: Cancel
-          owner_note_blank: '(Click here to add note)'
+          owner_note_blank: "(Click here to add note)"
           view_lead: View Details
           email_lead: Contact lead
           search:
-            keyword_label: 'Keyword'
-            category_label: 'Category'
-            deal_value_from_label: 'From'
-            deal_value_to_label: 'To'
-            country_label: 'Country'
-            assignee_label: 'Assignee'
-            paid_label: 'Paid'
-            search_button: 'Search'
-            zip_code: 'Zip code'
+            keyword_label: "Keyword"
+            category_label: "Category"
+            deal_value_from_label: "From"
+            deal_value_to_label: "To"
+            country_label: "Country"
+            assignee_label: "Assignee"
+            paid_label: "Paid"
+            search_button: "Search"
+            zip_code: "Zip code"
     bulk_lead_share_by_email:
       new:
         view:
@@ -1670,25 +1666,25 @@ en:
   my_profile:
     edit:
       view:
-        change_password: 'Change password'
-        enable_team_buyers: 'Enable team buyers'
-        company_name: 'Company'
+        change_password: "Change password"
+        enable_team_buyers: "Enable team buyers"
+        company_name: "Company"
         interests_settings: Interests settings
     update:
       controller:
-        successful_update_notice: 'Your profile has been successfully updated!'
+        successful_update_notice: "Your profile has been successfully updated!"
 
   contact_us:
     new:
       view:
-        header: 'Contact us'
-        send_email_button: 'Send'
+        header: "Contact us"
+        send_email_button: "Send"
         email_subjects:
-          agent_inquiry: 'Agent inquiry'
-          buyer_inquiry: 'Sales manager inquiry'
+          agent_inquiry: "Agent inquiry"
+          buyer_inquiry: "Sales manager inquiry"
     create:
       flash:
-        email_sent_successfully: 'Your email was sent successfully to staff at NBS'
+        email_sent_successfully: "Your email was sent successfully to staff at NBS"
 
   shared:
     lead_templates:
@@ -1704,30 +1700,18 @@ en:
         country_local_label: Local
         country_international: International
         remove_template: Remove
-        company_name: 'Name'
-        company_information: 'Company information'
-        contact_information: 'Contact information'
-        company_ean_reg: 'Company EAN number'
-        company_vat_no: 'Company VAT number'
-        contact_direct_phone_number: 'Direct phone number'
-        contact_name: 'Name'
-        contact_mobile_number: 'Mobile number'
-        lead_information: 'Lead information'
-        is_international: 'Country'
-        header: 'Public header'
-        description: 'Public description'
-        hidden_description: 'Detailed description (hidden)'
-        additional_language: 'Additional language'
-        sales_information: 'Sales information'
+        company_information: "Company information"
+        contact_information: "Contact information"
+        lead_information: "Lead information"
+        additional_language: "Additional language"
+        sales_information: "Sales information"
         not_all_templates_filled: All mandatory templates must be filled!
         category_was_changed: Category has been changed
-        county: Region
-        creator: Creator
 
   models:
     user:
-      payout_validation_message: 'can only be between 0 and 100'
-      agreement_read_validation_message: 'You have to accept the agreement'
+      payout_validation_message: "can only be between 0 and 100"
+      agreement_read_validation_message: "You have to accept the agreement"
     lead:
       hotness:
         lvl0: Upcoming
@@ -1760,90 +1744,90 @@ en:
     models:
       article:
         news:
-          agent: 'Agent news'
-          sales_manager: 'Sales manager news'
-          purchase_manager: 'Purchase manager news'
-          category_home: 'Category home news'
+          agent: "Agent news"
+          sales_manager: "Sales manager news"
+          purchase_manager: "Purchase manager news"
+          category_home: "Category home news"
         cms:
-          help_popup: 'Help popup'
-          interface_content_text: 'Interface content text'
-          main_page_article: 'Main page article'
-          hint: 'Hint'
+          help_popup: "Help popup"
+          interface_content_text: "Interface content text"
+          main_page_article: "Main page article"
+          hint: "Hint"
 
     attributes:
       lead_purchase:
         rating_levels:
-          rating_level0: 'Excellent'
-          rating_level1: 'Very good'
-          rating_level2: 'Satisfactory'
-          rating_level12: 'Unsatisfactory: missing contact info'
-          rating_level13: 'Unsatisfactory: incorrect description'
-          rating_level14: 'Unsatisfactory: lead has chosen another supplier'
-          rating_level15: 'Unsatisfactory: other reason (fill in)'
+          rating_level0: "Excellent"
+          rating_level1: "Very good"
+          rating_level2: "Satisfactory"
+          rating_level12: "Unsatisfactory: missing contact info"
+          rating_level13: "Unsatisfactory: incorrect description"
+          rating_level14: "Unsatisfactory: lead has chosen another supplier"
+          rating_level15: "Unsatisfactory: other reason (fill in)"
       category:
-        name: 'Name'
-        description: 'Description'
+        name: "Name"
+        description: "Description"
       user:
-        first_name: 'First name'
-        last_name: 'Last name'
-        phone: 'Phone'
-        email: 'E-mail'
-        screen_name: 'Screen name'
-        password: 'Password'
-        password_confirmation: 'Password confirmation'
-        address_line_1: 'Address line 1'
-        address_line_1: 'Address line 2'
-        zip_code: 'Zip code'
-        address_line_1: 'Address line 3'
-        country: 'Country'
+        first_name: "First name"
+        last_name: "Last name"
+        phone: "Phone"
+        email: "E-mail"
+        screen_name: "Screen name"
+        password: "Password"
+        password_confirmation: "Password confirmation"
+        address_line_1: "Address line 1"
+        address_line_1: "Address line 2"
+        zip_code: "Zip code"
+        address_line_1: "Address line 3"
+        country: "Country"
         agreement_read: "I have read and agree to Associated Content's Terms of Use and Privacy Policy"
-        newsletter_on: 'I want to receive the newsletter'
+        newsletter_on: "I want to receive the newsletter"
       lead:
-        purchase_decision_date: 'Purchase decision date'
-        notify_buyers_after_update: 'Notify sales managers about changes'
+        purchase_decision_date: "Purchase decision date"
+        notify_buyers_after_update: "Notify sales managers about changes"
     errors:
       models:
         user:
           attributes:
             email:
-              not_found: 'not found'
+              not_found: "not found"
               already_confirmed: "was already confirmed"
             confirmation_token:
-              invalid: 'is invalid'
+              invalid: "is invalid"
               blank: "can't be blank"
         user/agent:
           attributes:
             email:
-              invalid: 'is invalid'
+              invalid: "is invalid"
             password:
-              blank: 'is blank'
+              blank: "is blank"
               confirmation: "doesn't match confirmation"
             current_password:
-              invalid: 'is invalid'
+              invalid: "is invalid"
             screen_name:
-              taken: 'has already been taken'
+              taken: "has already been taken"
         user/customer:
           attributes:
             email:
-              invalid: 'is invalid'
+              invalid: "is invalid"
             password:
-              blank: 'is blank'
+              blank: "is blank"
               confirmation: "doesn't match confirmation"
             screen_name:
-              taken: 'has already been taken'
+              taken: "has already been taken"
         user/purchase_manager:
           attributes:
             email:
-              invalid: 'is invalid'
+              invalid: "is invalid"
             password:
-              blank: 'is blank'
+              blank: "is blank"
               confirmation: "doesn't match confirmation"
             screen_name:
-              taken: 'has already been taken'
+              taken: "has already been taken"
         user/abstract:
           attributes:
             reset_password_token:
-              invalid: 'is invalid'
+              invalid: "is invalid"
         lead_translation:
           attributes:
             header:
@@ -1878,48 +1862,48 @@ en:
     agent_accounts:
       actions:
         create:
-          notice: 'Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account.'
+          notice: "Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account."
     buyer_accounts:
       actions:
         create:
-          notice: 'Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account.'
+          notice: "Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account."
     category_buyer_accounts:
       actions:
         create:
-          notice: 'Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account.'
+          notice: "Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account."
     purchase_manager_accounts:
       actions:
         create:
-          notice: 'Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account.'
+          notice: "Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account."
     categories:
       actions:
         create:
-          notice: 'Category was successfully created.'
+          notice: "Category was successfully created."
         update:
-          notice: 'Category was successfully updated.'
+          notice: "Category was successfully updated."
         destroy:
-          notice: 'Category was successfully removed.'
-          error: 'Category cannot be removed. Did You try to remove category that is not empty?'
+          notice: "Category was successfully removed."
+          error: "Category cannot be removed. Did You try to remove category that is not empty?"
     leads:
       actions:
         create:
-          notice: 'Lead was successfully created.'
+          notice: "Lead was successfully created."
         update:
-          notice: 'Lead was successfully updated.'
+          notice: "Lead was successfully updated."
     lead_users:
       actions:
         create:
-          notice: 'Lead request was successfully created.'
+          notice: "Lead request was successfully created."
         destroy:
-          notice: 'Lead request was successfully destroyed'
+          notice: "Lead request was successfully destroyed"
     bulk_lead_requests:
       actions:
         create:
-          notice: 'Lead requests were successfully created.'
+          notice: "Lead requests were successfully created."
         destroy:
-          notice: 'Lead requests were successfully removed.'
+          notice: "Lead requests were successfully removed."
         update:
-          notice: 'Lead requests were successfully updated.'
+          notice: "Lead requests were successfully updated."
     bulk_lead_share_by_email:
       actions:
         create:
@@ -1930,24 +1914,231 @@ en:
           notice: Email has been sent
     email_templates:
       update:
-        notice: 'Email template has been successfully updated'
+        notice: "Email template has been successfully updated"
     bulk_subaccounts_update:
       update:
-        notice: 'Selected subaccounts have been updated.'
+        notice: "Selected subaccounts have been updated."
     bulk_call_centre_agents_update:
       update:
-        notice: 'Selected call centre agents have been updated.'
+        notice: "Selected call centre agents have been updated."
     payment_transactions:
       create:
-        notice: 'Manual transaction has been successfully created.'
+        notice: "Manual transaction has been successfully created."
       update:
-        notice: 'Manual transaction has been successfully updated.'
+        notice: "Manual transaction has been successfully updated."
     bulk_invoice_update:
       update:
-        notice: 'Invoices have been successfully updated'
+        notice: "Invoices have been successfully updated"
     bulk_users_update:
       update:
-        notice: 'Users has been updated'
+        notice: "Users has been updated"
     credit_notes:
       create:
         notice: "Invoice has bee credited successfully"
+  formtastic:
+    labels:
+      address:
+        address_line_1: "Address line 1"
+        address_line_2: "Address line 2"
+        address_line_3: "Address line 3"
+        zip_code: "Zip code"
+        country: "Country"
+      bank_account:
+        bank_name: "Bank name"
+        iban_no: "Iban no"
+        local_bank_number: "Local bank number"
+        swift: "Swift"
+        payment_conditions: "Payment conditions"
+        country_default: "Country default"
+        global_default: "Global default"
+      lead:
+        company_name: "Name"
+        company_phone_number: "Company phone number"
+        company_website: "Company website"
+        address_line_1: "Address line 1"
+        address_line_2: "Address line 2"
+        address_line_3: "Address line 3"
+        zip_code: "Zip code"
+        city: "City"
+        country_id: "Country"
+        region_id: "Region"
+        company_vat_no: "Company VAT number"
+        company_ean_number: "Company EAN number"
+        tmp_creator_id: "Creator"
+        category_id: "Category"
+        is_international: "Country"
+        header: "Public header"
+        description: "Public description"
+        hidden_description: "Detailed description (hidden)"
+        purchase_value: "Purchase value"
+        price: "Price"
+        currency_id: "Currency"
+        published: "Published"
+        sale_limit: "Sale limit"
+        purchase_decision_date: "Purchase decision date"
+        contact_name: "Name"
+        contact_direct_phone_number: "Direct phone number"
+        contact_mobile_number: "Mobile number"
+        phone_numnber: "Phone number"
+        email_address: "Email address"
+        linkedin_url: "Linkedin url"
+        facebook_url: "Facebook url"
+      invoice:
+        number: "Number"
+        details: "Details"
+        seller_name: "Seller name"
+        seller_vat_no: "Seller vat no"
+        seller_first_name: "Seller first name"
+        seller_last_name: "Seller last name"
+        customer_name: "Customer name"
+        customer_vat_no: "Customer vat no"
+        ean_number: "Ean number"
+        bank_account_id: "Bank account"
+        creation_place: "Creation place"
+        creation_date: "Creation date"
+        sale_date: "Sale date"
+        payment_deadline_date: "Payment deadline date"
+        payment_method: "Payment method"
+        currency_id: "Currency"
+        vat_text_in_customer_country: "Vat text in customer country"
+        user_id: "User"
+        seller_id: "Seller"
+        cash_flow: "Amount paid"
+        paid_at: "Paid at"
+      seller:
+        company_name: "Company"
+        first_name: "First name"
+        last_name: "Last name"
+        bank_account_id: "Bank account1"
+        vat_no: "Vat no"
+        default: "Default"
+        note: "Invoice note"
+      user:
+        email: "E-mail"
+        password: "Password"
+        password_confirmation: "Password confirmation"
+        remember_me: "Remember me"
+        company_name: "Company"
+        team_buyers: "Enable team buyers"
+        not_charge_vat: "Do not charge VAT"
+        agreement_read: "Agreement read"
+      user/lead_user:
+        first_name: "First name"
+        last_name: "Last name"
+        screen_name: "Screen name"
+        phone: "Phone"
+        email: "E-mail"
+        password: "Password"
+        password_confirmation: "Password confirmation"
+        newsletter_on: "Newsletter on"
+        agreement_read: "Agreement read"
+      user/agent:
+        first_name: "First name"
+        last_name: "Last name"
+        can_edit_payout_information: "Can edit payout information"
+        paypal_email: "Paypal email"
+        bank_swift_number: "Bank swift number"
+        bank_iban_number: "Bank iban number"
+        screen_name: "Screen name"
+        phone: "Phone"
+        email: "E-mail"
+        password: "Password"
+        password_confirmation: "Password confirmation"
+        payout: "Payout"
+        newsletter_on: "Newsletter on"
+        agreement_read: "Agreement read"
+        certification_level: "Certification level"
+      user/administrator:
+        first_name: "First name"
+        last_name: "Last name"
+        screen_name: "Screen name"
+        phone: "Phone"
+        email: "E-mail"
+        password: "Password"
+        password_confirmation: "Password confirmation"
+        newsletter_on: "Newsletter on"
+        agreement_read: "Agreement read"
+      user/customer:
+        first_name: "First name"
+        last_name: "Last name"
+        vat_number: "Vat number"
+        screen_name: "Screen name"
+        phone: "Phone"
+        email: "E-mail"
+        password: "Password"
+        password_confirmation: "Password confirmation"
+        newsletter_on: "Newsletter on"
+        agreement_read: "Agreement read"
+        team_buyers: "Team buyers"
+      user/purchase_manager:
+        first_name: "First name"
+        last_name: "Last name"
+        screen_name: "Screen name"
+        phone: "Phone"
+        email: "E-mail"
+        password: "Password"
+        password_confirmation: "Password confirmation"
+        newsletter_on: "Newsletter on"
+        agreement_read: "Agreement read"
+      user/category_buyer:
+        first_name: "First name"
+        last_name: "Last name"
+        vat_number: "Vat number"
+        screen_name: "Screen name"
+        phone: "Phone"
+        email: "E-mail"
+        password: "Password"
+        password_confirmation: "Password confirmation"
+        newsletter_on: "Newsletter on"
+        agreement_read: "Agreement read"
+        big_buyer: "Big buyer"
+      country:
+        name: "Country name"
+      lead_template:
+        name: "Template name"
+      category:
+        name: "Name"
+        description: "Description"
+        is_locked: "Is locked"
+        buyout_enabled: "Buyout enabled"
+        is_customer_unique: "Is customer unique"
+        is_agent_unique: "Is agent unique"
+        countries: "Countries"
+      manual_transaction:
+        amount: "Amount"
+        paid_at: "Paid at"
+      article/cms/main_page_article:
+        title: "Title"
+        published: "Published"
+      article/cms/main_page_article:
+        title: "Title"
+        published: "Published"
+      article/news/agent:
+        title: "Title"
+        published: "Published"
+      article/news/sales_manager:
+        title: "Title"
+        published: "Published"
+      article/news/purchase_manager:
+        title: "Title"
+        published: "Published"
+      article/news/category_home:
+        title: "Title"
+        published: "Published"
+      vat_rate:
+        rate: "Rate"
+      email_template:
+        subject: "Subject"
+        from: "From"
+        bcc: "Bcc"
+        cc: "Cc"
+      currency:
+        name: "Name"
+        symbol: "Symbol"
+        format: "Format"
+        active: "Active"
+      country:
+        country_name: "Country name"
+        locale: "Locale"
+        detailed_locale: "Detailed locale"
+

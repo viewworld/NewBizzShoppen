@@ -2,7 +2,7 @@
   <div class="pdd_10 no_pdd_t">
     <fieldset class="inputs labels_ta_r labels_200">
       <ol>
-        <%= form.input :company_name, :label => t("my_profile.edit.view.company_name") %>
+        <%= form.input :company_name %>
         <%= form.input :first_name %>
         <%= form.input :last_name %>
         <%= form.input :phone %>
@@ -31,7 +31,7 @@
             <%= address_form.input :country, :as => :select, :collection => Country.all %>
         <% end %>
         <%= form.input :newsletter_on, :as => :boolean %>
-        <%= form.input :team_buyers, :as => :boolean, :label => t("my_profile.edit.view.enable_team_buyers") if current_user.has_role?(:customer) %>
+        <%= form.input :team_buyers, :as => :boolean if current_user.has_role?(:customer) %>
       </ol>
     </fieldset>
   </div>

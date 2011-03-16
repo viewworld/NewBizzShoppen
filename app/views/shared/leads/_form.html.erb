@@ -5,7 +5,7 @@
         <li class="header">
           <h3><%= t("shared.leads.form.company_information") %></h3>
         </li>
-        <%= form.input :company_name, :label => t("shared.leads.form.company_name"), :hint => hint_for(@lead, :company_name) %>
+        <%= form.input :company_name, :hint => hint_for(@lead, :company_name) %>
         <%= form.input :company_phone_number, :hint => hint_for(@lead, :company_phone_number) %>
         <%= form.input :company_website, :hint => hint_for(@lead, :company_website) %>
         <%= form.input :address_line_1, :hint => hint_for(@lead, :address_line_1) %>
@@ -15,10 +15,10 @@
         <%= form.input :city, :hint => hint_for(@lead, :city) %>
         <%= form.input :country_id, :as => :select, :collection => Country.all, :input_html => {:onchange => "refresh_phone_codes(); refresh_regions_list();"}, :hint => hint_for(@lead, :country_id) %>
         <%= form.input :region_id, :as => :select, :collection => @lead.country.present? ? @lead.country.regions : [], :hint => hint_for(@lead, :region_id) %>
-        <%= form.input :company_vat_no, :label => t("shared.leads.form.company_vat_no"), :hint => hint_for(@lead, :company_vat_no) %>
-        <%= form.input :company_ean_number, :label => t("shared.leads.form.company_ean_reg"), :hint => hint_for(@lead, :company_ean_number) %>
+        <%= form.input :company_vat_no, :hint => hint_for(@lead, :company_vat_no) %>
+        <%= form.input :company_ean_number, :hint => hint_for(@lead, :company_ean_number) %>
         <% if current_user.has_any_role?(:admin, :call_centre) %>
-            <%= form.input :tmp_creator_id, :as => :select, :collection => (current_user.has_role?(:call_centre) ? User.with_call_centre_agents(current_user) : User.with_agents_without_call_centres).map { |u| [u.email, u.id] }, :selected => @lead.creator_id, :label => t("shared.leads.form.creator") %>
+            <%= form.input :tmp_creator_id, :as => :select, :collection => (current_user.has_role?(:call_centre) ? User.with_call_centre_agents(current_user) : User.with_agents_without_call_centres).map { |u| [u.email, u.id] }, :selected => @lead.creator_id %>
         <% end %>
       </ol>
     </fieldset>
@@ -32,9 +32,9 @@
         <li class="header">
           <h3><%= t("shared.leads.form.contact_information") %></h3>
         </li>
-        <%= form.input :contact_name, :label => t("shared.leads.form.contact_name"), :hint => hint_for(@lead, :contact_name) %>
-        <%= form.input :direct_phone_number, :label => t("shared.leads.form.contact_direct_phone_number"), :hint => hint_for(@lead, :direct_phone_number) %>
-        <%= form.input :phone_number, :label => t("shared.leads.form.contact_mobile_number"), :hint => hint_for(@lead, :phone_number) %>
+        <%= form.input :contact_name, :hint => hint_for(@lead, :contact_name) %>
+        <%= form.input :direct_phone_number, :hint => hint_for(@lead, :direct_phone_number) %>
+        <%= form.input :phone_number, :hint => hint_for(@lead, :phone_number) %>
         <%= form.input :email_address, :hint => hint_for(@lead, :email_address) %>
         <%= form.input :linkedin_url, :hint => hint_for(@lead, :linkedin_url) %>
         <%= form.input :facebook_url, :hint => hint_for(@lead, :facebook_url) %>
@@ -55,11 +55,11 @@
       </li>
       <%= form.input :category_id, :collection => Category.without_locked.with_agent_unique(current_user).map { |c| [c.name, c.id] }, :include_blank => false, :input_html => {:disabled => (!@lead.new_record? and @lead.lead_template_values_present?), :onchange => "$('#lead_category_is_changed').val('1'); $('##{dom_id(@lead, @lead.new_record? ? :new : :edit)}').submit()"}, :hint => hint_for(@lead, :category_id) %>
       <%= form.input :category_is_changed, :as => :hidden, :value => "0" %>
-      <%= form.input :is_international, :as => :select, :collection => [[t("shared.leads.form.country_local_label"), 0], [t("shared.leads.form.country_international"), 1]], :include_blank => false, :label => t("shared.leads.form.is_international"), :hint => hint_for(@lead, :is_international) %>
-      <%= form.input :header, :label => t("shared.leads.form.header"), :hint => hint_for(@lead, :header) %>
-      <%= form.input :description, :input_html => {:style => "height: 140px; width: 600px"}, :label => t("shared.leads.form.description"), :hint => hint_for(@lead, :description) %>
+      <%= form.input :is_international, :as => :select, :collection => [[t("shared.leads.form.country_local_label"), 0], [t("shared.leads.form.country_international"), 1]], :include_blank => false, :hint => hint_for(@lead, :is_international) %>
+      <%= form.input :header, :hint => hint_for(@lead, :header) %>
+      <%= form.input :description, :input_html => {:style => "height: 140px; width: 600px"}, :hint => hint_for(@lead, :description) %>
       <% unless current_user.has_role?(:purchase_manager) %>
-          <%= form.input :hidden_description, :input_html => {:style => "height: 140px; width: 600px"}, :label => t("shared.leads.form.hidden_description"), :hint => hint_for(@lead, :hidden_description) %>
+          <%= form.input :hidden_description, :input_html => {:style => "height: 140px; width: 600px"}, :hint => hint_for(@lead, :hidden_description) %>
       <% end %>
       <%= form.input :purchase_value, :hint => hint_for(@lead, :purchase_value) %>
       <%= form.input :price, :hint => hint_for(@lead, :price) %>
