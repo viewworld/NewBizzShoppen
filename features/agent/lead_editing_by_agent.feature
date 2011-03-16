@@ -91,8 +91,10 @@ Scenario: I can select additional templates that are optional
   And I fill in "lead_lead_template_values_attributes_0_value" with "FaxFree v3"
   And I fill in "lead_lead_template_values_attributes_1_value" with "21-01-2010"
   And I select "United Kingdom" from "lead_country_id"
+  And I fill in "lead_phone_number" with "1234"
   And I select "2" from "lead_sale_limit"
   Then I press translated "agent.leads.edit.view.button_update"
+  And I open page in browser
   And I click hidden link by url regex "/agents\/leads\/\d+\/edit/"
   And the "lead_lead_template_values_attributes_0_value" field should contain "FaxFree v3"
   And the "lead_lead_template_values_attributes_1_value" field should contain "21-01-2010"
