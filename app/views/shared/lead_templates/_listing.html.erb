@@ -3,7 +3,9 @@
       <h3><%= lead_template.name.upcase %></h3>
       <p>
         <% values.each do |value| %>
-            <strong><%= value.lead_template_field.name %>: </strong><%= value.can_be_viewed_by?(current_user) ? value.value : t("shared.lead_templates.listing.hidden_value") %><br/>
+            <% if value.value.present? %>
+                <strong><%= value.lead_template_field.name %>: </strong><%= value.can_be_viewed_by?(current_user) ? value.value : t("shared.lead_templates.listing.hidden_value") %><br/>
+            <% end %>
         <% end %>
       </p>
     </div>

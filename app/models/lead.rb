@@ -268,10 +268,12 @@ class Lead < ActiveRecord::Base
   end
 
   def lead_templates_and_values
-    templates = lead_template_values.map { |ltv| ltv.lead_template_field.lead_template }.uniq
+    templates = LeadTemplate.select("DISTINCT(lead_templates.*)").
+        where("lead_template_values.lead_id = ? and lead_template_values.value IS NOT NULL", id).
+        joins("inner join lead_template_fields on lead_templates.id=lead_template_fields.lead_template_id inner join lead_template_values on lead_template_fields.id=lead_template_values.lead_template_field_id")
     templates.map do |template|
-      [template, lead_template_values.select { |ltv| ltv.lead_template_field.lead_template_id == template.id }]
-    end
+      [template, lead_template_values.select { |ltv| ltv.lead_template_field.lead_template_id == template.id and ltv.value.present? }]
+    end.select { |t| !t.last.empty? }
   end
 
   def facebook_url_present?
