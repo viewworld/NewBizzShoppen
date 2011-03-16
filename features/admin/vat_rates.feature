@@ -62,7 +62,7 @@ Feature: VAT rates
     And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role customer with attributes "vat_number:666"
     And I sign in as jon@lajoie.ca with password secret
     And I am on administration edit user kastomer@nbs.fake
-    Then I should see translated "administration.users.edit.view.not_charge_vat"
+    Then I should see translated "formtastic.labels.user.not_charge_vat"
 
   @_done
   Scenario: Administrator can't set the no charge vat flag when vat number is not specified
