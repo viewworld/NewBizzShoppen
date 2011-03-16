@@ -1,6 +1,8 @@
 class Customers::InterestsController <  Customers::CustomerController
   set_tab "interests_tab"
 
+  before_filter :authorize_for_interests
+
   def edit
     @categories = Category.with_customer_unique(current_user)
     @countries = Country.all(:order => "name")

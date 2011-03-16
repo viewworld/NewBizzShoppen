@@ -1682,6 +1682,7 @@ en:
         enable_team_buyers: "Enable team buyers"
         company_name: "Company"
         interests_settings: Interests settings
+        edit_account: "Edit account"
     update:
       controller:
         successful_update_notice: "Your profile has been successfully updated!"
