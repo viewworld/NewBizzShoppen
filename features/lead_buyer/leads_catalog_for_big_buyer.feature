@@ -21,6 +21,7 @@ Scenario: I can click add lead and I will see a notification “You added lead t
 
 @_tested @selenium
 Scenario: I can click bulk add leads and I will see a notification “You added leads to your list”
+  Given I follow translated "common.more"
   Given I follow "Another sample category"
   When I check "mark_all"
   And I press translated "leads.index.button_bulk_buy_leads"
