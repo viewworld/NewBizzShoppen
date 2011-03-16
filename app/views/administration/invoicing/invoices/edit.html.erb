@@ -108,7 +108,7 @@
             <table class="invoice_inline_inputs">
               <thead>
               <tr>
-                <% if @invoice.paid? %>
+                <% if @invoice.paid? and (@invoice.credit_note.nil? or @invoice.credit_note.class.to_s == "Refund") %>
                     <th><%= t("administration.invoices.edit.view.is_refunded") %></th>
                 <% end %>
                 <th><%= t("administration.invoices.edit.view.name") %></th>
