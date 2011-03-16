@@ -22,6 +22,10 @@ en:
       expand_prefix: "...  "
       collapse_prefix: " "
     no_categories_for_category_buyer: "Your Category Buyer account has no associated categories. You can't sign in."
+  ckeditor:
+    upload_new_files: "Upload new files"
+    file_manager: "File Manager"
+
   layout:
     main_menu:
       admin:
@@ -107,6 +111,9 @@ en:
       timeout: "Your session expired, please sign in again to continue."
       inactive: "Your account was not activated yet."
     sessions:
+      new:
+        view:
+          header: "Sign in"
       signed_in: "Signed in successfully."
       signed_out: "Signed out successfully."
     passwords:
@@ -129,6 +136,9 @@ en:
     unlocks:
       send_instructions: "You will receive an email with instructions about how to unlock your account in a few minutes."
       unlocked: "Your account was successfully unlocked. You are now signed in."
+      new:
+        view:
+          header: "Resend unlock instructions"
     mailer:
       confirmation_instructions:
         subject: "Confirmation instructions"
@@ -1665,6 +1675,7 @@ en:
   my_profile:
     edit:
       view:
+        header: "My profile"
         change_password: "Change password"
         enable_team_buyers: "Enable team buyers"
         company_name: "Company"
@@ -2147,3 +2158,8 @@ en:
         locale: "Locale"
         detailed_locale: "Detailed locale"
 
+  users:
+    passwords:
+      edit:
+        view:
+          header: "Change your password"
