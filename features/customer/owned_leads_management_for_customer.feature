@@ -235,5 +235,7 @@ Scenario: I can add note to owned lead
   When I go to buyer lead purchases
   And the "owner_note_1" field should contain "My custom note"
 
-@m6 @ao
+# https://redmine.selleo.com/issues/4021
+# I should see show page when I click a row!
+@m6 @ao @_deprecated @_done
 Scenario: I should not see show page for owned lead when accordion style listing is used
