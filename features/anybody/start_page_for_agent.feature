@@ -61,8 +61,12 @@ Scenario: I can go to details of latest leads
   And I follow "AwesomeLead" within "#latest_leads"
   Then I should be on the AwesomeLead lead page
 
-@m3 @ao @tested_elsewhere @_done
+@m3 @ao @_done @_tested
 Scenario: I can go to agent news listing
+  Given lead AwesomeLead exists within category Test
+  And I follow translated "home.show.view.agent"
+  And I follow translated "agent_home.show.view.complete_list_link" within "#latest_leads"
+  Then I should see "AwesomeLead" within ".leads_table"
 
 @ao @_tested
 Scenario: I can go to bestsellers listing

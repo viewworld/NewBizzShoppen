@@ -75,6 +75,17 @@ Feature: Category home pages
     And I follow "3" within ".pagination"
     Then I should see "1" rows in a table within ".leads_table tbody"
 
+  @m6 @added @_done @_tested
+  Scenario: I can see complete list of category leads as guest
+    When Category named "Best Leads" already exists
+    And there are "11" leads in category "Best Leads"
+    And I am on category home page for Best Leads
+    Then I should see "10" items on a list within "#latest_leads"
+    When I follow translated "category_home.show.view.complete_list_link" within "#latest_leads"
+    And I follow "3" within ".pagination"
+    Then I should see CSS path "table.leads_table tbody tr.odd"
+    And I should not see CSS path "table.leads_table tbody tr.even"
+
   @_done
   Scenario: I can buy selected leads from this category
     When Category named "Best Leads" already exists
