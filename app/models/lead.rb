@@ -305,7 +305,7 @@ class Lead < ActiveRecord::Base
   end
 
   def buyout_possible_for?(user)
-    category.buyout_enabled? and !bought_by_users_other_than(user) and buyable? and user.has_any_role?(:customer, :lead_buyer)
+    category.buyout_enabled? and !bought_by_users_other_than(user) and buyable? and (user.nil? or (user and user.has_any_role?(:customer, :lead_buyer)))
   end
 
   def buyout!(buyer)
