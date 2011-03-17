@@ -3,6 +3,7 @@ class Buyers::LeadPurchasesController < Buyers::BuyerController
   respond_to :html
   respond_to :csv, :only => :show
   set_tab "owned_leads"
+  before_filter :check_access_to_lead_purchase, :only => [:show]
 
   protected
 
@@ -23,10 +24,17 @@ class Buyers::LeadPurchasesController < Buyers::BuyerController
     @lead_purchases = @search.order("accessible_from DESC").paginate(:page => params[:page], :per_page => LeadPurchase.per_page)
   end
 
+  def check_access_to_lead_purchase
+    @lead_purchase = current_user.accessible_lead_purchases.find_by_id(params[:id])
+    if @lead_purchase.nil?
+      redirect_to buyers_lead_purchases_path
+    end
+  end
+
   public
 
   def show
-    @lead_purchase = current_user.accessible_lead_purchases.find(params[:id])
+    @lead_purchase = current_user.accessible_lead_purchases.find_by_id(params[:id])
     super do |format|
       format.csv { send_data @lead_purchase.to_csv, :filename => "lead-#{@lead_purchase.lead.header.parameterize}.csv" }
       format.print {
