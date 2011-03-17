@@ -26,10 +26,18 @@ module RoleChange
     def remove_role_category_buyer
       self.buying_categories = []
       self.roles.delete(:category_buyer)
+      User::LeadBuyer.find(subaccounts.map(&:id)).each do |sa|
+        sa.roles.delete(:category_buyer)
+        sa.save
+      end
     end
 
     def add_role_category_buyer
       self.roles << :category_buyer
+      subaccounts.map(&:with_role).each do |sa|
+        sa.roles << :category_buyer
+        sa.save
+      end
     end
   end
 

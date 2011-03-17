@@ -172,6 +172,23 @@ Scenario: User can login after changing his account to regular buyer
   Then I should see "AnotherCategory"
   And I should see "CategoryBuyerCategory"
 
+@m6 @added @_done @_tested
+Scenario: Subaccounts can login after changing parent to regular buyer
+  When I follow translated "layout.main_menu.admin.users"
+  And Category CategoryBuyerCategory is created
+  And Category AnotherCategory is created
+  And I am signed up and confirmed as user with email "kategory_bajer@nbs.com" and password "secret" and role "category_buyer" for category "CategoryBuyerCategory"
+  And an user with role lead_buyer and email sub@nbs.com exists as subaccount for customer kategory_bajer@nbs.com
+  And I fill in "search_with_keyword" with "kategory_bajer"
+  And I press translated "administration.users.index.view.search_button"
+  And I follow translated "administration.users.index.view.edit"
+  And I follow translated "administration.users.edit.view.change_to_regular_buyer"
+  And I sign out
+  And I sign in as sub@nbs.com with password secret
+  And I follow translated "layout.main_menu.shared.browse_leads"
+  Then I should see "AnotherCategory"
+  And I should see "CategoryBuyerCategory"
+
 @m6 @added @selenium @_done @_tested
 Scenario: User can login after changing his account to category buyer
   When I follow translated "layout.main_menu.admin.users"
@@ -187,6 +204,25 @@ Scenario: User can login after changing his account to category buyer
   Then I press translated "administration.categories.edit.view.button_update"
   And I sign out
   And I sign in as kastomer@nbs.com with password secret
+  And I follow translated "layout.main_menu.shared.browse_leads"
+  Then I should be on category leads page for CategoryBuyerCategory
+
+@m6 @added @selenium @_done @_tested
+Scenario: User can login after changing his account to category buyer
+  When I follow translated "layout.main_menu.admin.users"
+  And Category CategoryBuyerCategory is created
+  And Category AnotherCategory is created
+  And I am signed up and confirmed as user with email kastomer@nbs.com and password secret and role customer
+  And an user with role lead_buyer and email sub@nbs.com exists as subaccount for customer kastomer@nbs.com
+  And I fill in "search_with_keyword" with "kastomer"
+  And I press translated "administration.users.index.view.search_button"
+  And I click hidden link by url regex "/users\/\d+\/edit/"
+  And I follow translated "administration.users.edit.view.change_to_category_buyer"
+  And I select "CategoryBuyerCategory" from "all_categories"
+  And I follow "move_right" within "#category_buyer_categories"
+  Then I press translated "administration.categories.edit.view.button_update"
+  And I sign out
+  And I sign in as sub@nbs.com with password secret
   And I follow translated "layout.main_menu.shared.browse_leads"
   Then I should be on category leads page for CategoryBuyerCategory
 

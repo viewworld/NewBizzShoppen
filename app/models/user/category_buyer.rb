@@ -19,7 +19,7 @@ class ::User::CategoryBuyer < ::User
   has_many :bought_leads, :through => :lead_purchases, :class_name => "Lead", :source => :lead, :conditions => "accessible_from IS NOT NULL"
   has_and_belongs_to_many :buying_categories, :class_name => 'Category', :join_table => 'categories_users', :foreign_key => :user_id
 
-  validates_presence_of :company_name
+  validates_presence_of :company_name, :unless => Proc.new{|u| u.parent.present?}
 
   accepts_nested_attributes_for :lead_purchases
 
