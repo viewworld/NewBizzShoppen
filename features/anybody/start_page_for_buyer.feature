@@ -39,6 +39,16 @@ Scenario: I can see 10 latest leads
   Then I should see "10" items on a list within "#latest_leads"
   And I should see "AwesomeLead" first on a list within "#latest_leads"
 
+@added @m6 @ao @_tested @_done
+Scenario: I can't see inactive leads on latest leads
+  When there are no leads
+  And a lead InactiveLead exists within category Test and is bought by user kastomer@nbs.fake with role customer
+  And lead "InactiveLead" has attributes "sale_limit:1"
+  And I follow translated "home.show.view.buyer"
+  Then I should see "0" items on a list within "#latest_leads"
+  And I follow translated "buyer_home.show.view.complete_list_link" within "#latest_leads"
+  Then I should see translated "common.nothing_to_display"
+
 @m3 @ao @_done
 Scenario: I can go to details of buyer news
   Given published buyer news exists with attributes "title:FirstNews"
