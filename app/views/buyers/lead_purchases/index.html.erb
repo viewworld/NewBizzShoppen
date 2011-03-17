@@ -83,11 +83,11 @@
                   <%= label_tag :bulk_response_deadline, t("lead_buyer.lead_purchases.index.view.lead_response_date") %>
                   <%= text_field_tag :bulk_response_deadline, "", :id => "response_deadline_datepicker_bulk" %>
                 </li>
+                <li class="boolean">
+                  <%= check_box_tag :bulk_clear_response_dates, "1", false, :class => "non_selectable" %>
+                  <%= label_tag :bulk_clear_response_dates, t("lead_buyer.lead_purchases.index.view.bulk_clear_response_dates") %>
+                </li>
             <% end %>
-            <li class="boolean">
-              <%= check_box_tag :bulk_clear_response_dates, "1", false, :class => "non_selectable" %>
-              <%= label_tag :bulk_clear_response_dates, t("lead_buyer.lead_purchases.index.view.bulk_clear_response_dates") %>
-            </li>
             <li class="commit">
               <%= bt_link_to nil, t("lead_buyer.lead_purchases.index.view.bulk_update_button"), "javascript:void(0)", :onclick => "submitBulkForm('#{bulk_lead_purchase_update_path}');" %>
             </li>
