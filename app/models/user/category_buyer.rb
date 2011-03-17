@@ -7,6 +7,7 @@ class ::User::CategoryBuyer < ::User
   include Addresses
   include BankAccounts
   include User::CommonBuyer
+  include User::Subaccounts
 
   has_many :lead_purchases, :foreign_key => "owner_id"
   has_many :lead_requests, :foreign_key => "owner_id"
