@@ -138,6 +138,23 @@ Feature: Buy out
     And I follow translated "layout.main_menu.customer.not_invoiced"
     Then I should see "1,230.00" within "#invoices_list .ta_r"
 
+  @added @m6 @_done @tgn
+  Scenario: I can buyout lead when I'm category buyer
+    Given there are no leads
+    And Category named "Computers" already exists
+    And category "Computers" has attributes "buyout_enabled:1"
+    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Computers"
+    And User jon@lajoie.ca with role category_buyer is big buyer
+    And lead Printers exists within category Computers
+    And lead "Printers" has attributes "sale_limit:10,price:123"
+    And I am on the home page
+    And I sign in as jon@lajoie.ca with password secret
+    And I go to browse leads
+    And I follow translated "layout.main_menu.shared.browse_leads"
+    And I follow translated "leads.index.add_to_cart_buyout_link"
+    And I follow translated "layout.main_menu.customer.not_invoiced"
+    Then I should see "1,230.00" within "#invoices_list .ta_r"
+
   @added @m6 @_done @_tested
   Scenario: I can't buyout lead when it's in other users cart
     Given there are no leads
