@@ -172,7 +172,7 @@ Feature: Category buyer rules
     And I am on category home page for Worst Leads
     Then I should be on category home page for Basic Leads
 
-  @m6 @added @_done @_tested
+  @m6 @added @_done @_tested @wip
   Scenario: I can't login when I have no categories assigned
     When Category named "SampleCat" already exists
     When I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "SampleCat"
@@ -180,3 +180,37 @@ Feature: Category buyer rules
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
     Then I should see translated "common.no_categories_for_category_buyer"
+
+  @m6 @added @ao @_done @_tested
+  Scenario: I can edit lead buyer that belongs to my account
+    When Category named "Best Leads" already exists
+    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Best Leads"
+    And user "jon@lajoie.ca" with role "category_buyer" has attributes "team_buyers:1"
+    And an user with role lead_buyer and email lead_buyer@nbs.com exists as subaccount for customer jon@lajoie.ca
+    And I am on the home page
+    And I sign in as jon@lajoie.ca with password secret
+    And go to customers subaccounts
+    Then I follow translated "customer.subaccounts.index.view.edit"
+    And I fill in "user_category_buyer_first_name" with "Justin"
+    And I fill in "user_category_buyer_last_name" with "Bieber"
+    And I press translated "customer.subaccounts.edit.view.button_update"
+    Then I should see translated "customer.subaccounts.update.flash.subaccount_update_successful"
+    And I should see "Justin"
+    And I should see "Bieber"
+
+  @m6 @added @ao @_done @_tested
+  Scenario: I can edit lead user that belongs to my account
+    When Category named "Best Leads" already exists
+    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Best Leads"
+    And user "jon@lajoie.ca" with role "category_buyer" has attributes "team_buyers:1"
+    And an user with role lead_user and email lead_user@nbs.com exists as subaccount for customer jon@lajoie.ca
+    And I am on the home page
+    And I sign in as jon@lajoie.ca with password secret
+    And go to customers subaccounts
+    Then I follow translated "customer.subaccounts.index.view.edit"
+    And I fill in "user_category_buyer_first_name" with "Justin"
+    And I fill in "user_category_buyer_last_name" with "Bieber"
+    And I press translated "customer.subaccounts.edit.view.button_update"
+    Then I should see translated "customer.subaccounts.update.flash.subaccount_update_successful"
+    And I should see "Justin"
+    And I should see "Bieber"
