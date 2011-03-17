@@ -2026,7 +2026,7 @@ en:
         company_name: "Company"
         first_name: "First name"
         last_name: "Last name"
-        bank_account_id: "Bank account1"
+        bank_account_id: "Bank account"
         vat_no: "Vat no"
         default: "Default"
         note: "Invoice note"
