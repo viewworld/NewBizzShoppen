@@ -870,6 +870,10 @@ en:
             with_assigned_at_date_before_and_including: Assigned before
             payment_status: Payment status
     bank_accounts:
+      form:
+        view:
+          country_default: Country default
+          global_default: Global default
       index:
         view:
           header: "Bank accounts"
