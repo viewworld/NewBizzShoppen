@@ -1,4 +1,4 @@
-@m5 @ao @category_home_pages
+@m5 @ao @category_home_pages  @requested
 Feature: Category home pages
 
   @_done
