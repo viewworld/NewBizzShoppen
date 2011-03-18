@@ -1,5 +1,5 @@
 #This is almost the same as in Buyer scope
-@added @start_pages @ao
+@added @start_pages @ao  @requested
 Feature: Start page for purchase manager
 
 Background: I am a guest and I am on the home page
@@ -124,7 +124,7 @@ Scenario: In bestsellers and latest listings I should not see leads which I've a
   Then I should see "AwesomeLead"
   And I should not see "BoughtLead"
 
-@m5 @unique_categories @tgn @added @_tested
+@m5 @unique_categories @tgn @added @_tested  @requested
 Scenario: When I am not logged in I should not see any leads from unique categories on Latest & Bestsellers lists
   Given lead CommonLead1 exists within category Common Category1
   And CommonLead1 is a best seller
@@ -144,7 +144,7 @@ Scenario: When I am not logged in I should not see any leads from unique categor
   And I should not see "UniqueLead1" within "#latest_leads"
   And I should not see "UniqueLead2" within "#latest_leads"
 
-@m5 @unique_categories @tgn @added @_tested
+@m5 @unique_categories @tgn @added @_tested  @requested
 Scenario: I should not see leads from agent unique categories I'm not assigned to on Latest leads listing
   Given lead CommonLead1 exists within category Common Category1
   And lead CommonLead2 exists within category Common Category2
@@ -163,7 +163,7 @@ Scenario: I should not see leads from agent unique categories I'm not assigned t
   And I should not see "UniqueLead1" within "#latest_leads"
   And I should see "UniqueLead2" within "#latest_leads"
 
-@m5 @unique_categories @tgn @added @_tested
+@m5 @unique_categories @tgn @added @_tested  @requested
 Scenario: I should not see leads from agent unique categories I'm not assigned to on Bestsellers listing
   Given lead CommonLead1 exists within category Common Category1
   And CommonLead1 is a best seller
@@ -186,10 +186,10 @@ Scenario: I should not see leads from agent unique categories I'm not assigned t
   And I should not see "UniqueLead1" within "#best_sellers"
   And I should see "UniqueLead2" within "#best_sellers"
 
-@m5 @unique_categories @tgn @added @tested_elsewhere @_done
+@m5 @unique_categories @tgn @added @tested_elsewhere @_done  @requested
 Scenario: I should see leads from customer unique categories on Latest leads listing
 
-@m5 @unique_categories @tgn @added @_tested
+@m5 @unique_categories @tgn @added @_tested  @requested
 Scenario: I should see leads from agent unique categories I'm assigned to on Latest leads listing
   Given I am signed up and confirmed as user with email agent34234234@nbs.com and password secret and role purchase_manager
   Given lead CommonLead1 exists within category Common Category1
@@ -208,7 +208,7 @@ Scenario: I should see leads from agent unique categories I'm assigned to on Lat
   And I should not see "UniqueLead1" within "#latest_leads"
   And I should see "UniqueLead2" within "#latest_leads"
 
-@m5 @unique_categories @tgn @added @_tested
+@m5 @unique_categories @tgn @added @_tested  @requested
 Scenario: I should see leads from agent unique categories I'm assigned to on Bestsellers listing
   Given I am signed up and confirmed as user with email agent34234234@nbs.com and password secret and role purchase_manager
   Given lead CommonLead1 exists within category Common Category1
