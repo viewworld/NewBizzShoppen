@@ -1,4 +1,4 @@
-@settings @$_admin @m6 @tgn
+@settings @$_admin @m6 @tgn  @requested
 Feature: Dialling codes management
 
 @_done
