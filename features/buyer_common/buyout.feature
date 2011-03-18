@@ -1,4 +1,4 @@
-@customer @ao @buyouts
+@customer @ao @buyouts  @requested
 Feature: Buy out
 
   @m6 @_done @_tested
