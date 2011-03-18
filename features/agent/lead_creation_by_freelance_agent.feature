@@ -465,7 +465,7 @@ Scenario: I can publish leads only in unique categories if I'm assigned at least
   Then "category_id" dropdown should have values "Test category 1,Agent Unique Category"
   And "category_id" dropdown should not have values "Other Agent Unique Category"
 
-@m6 @tgn @_tested @added @lead_templates @selenium  @requested
+@m6 @tgn @_tested @added @lead_templates @selenium
 Scenario: When the template's field is of the note type then I should see textarea instead of textbox
   Given template named "Computers details" for category "Computers" is created by user "bob@person.com" with role "agent"
   And template named "Computers details" is mandatory
@@ -494,7 +494,7 @@ Scenario: I can choose region during creation of a lead
   And I select "Denmark" from "lead_country_id"
   And I select "Region #2" from "lead_region_id"
 
-@m6 @tgn @selenium @_tested
+@m6 @tgn @selenium @_tested  @requested
 Scenario: I have already filled in international dialling codes for telephone numbers (+xx) (xxxxxxxxxxxxxxxxxxxxxx)
   Given Category Test category 1 is created
   And I go to agents leads
