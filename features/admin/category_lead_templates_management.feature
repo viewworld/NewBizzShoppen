@@ -1,4 +1,4 @@
-@lead_templates @$_admin @m5 @tgn
+@lead_templates @$_admin @m5 @tgn  @requested
 Feature: Category lead templates management
 
 Background: Set English locale and login
