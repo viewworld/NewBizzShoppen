@@ -465,7 +465,7 @@ Scenario: I can publish leads only in unique categories if I'm assigned at least
   Then "category_id" dropdown should have values "Test category 1,Agent Unique Category"
   And "category_id" dropdown should not have values "Other Agent Unique Category"
 
-@m6 @tgn @_tested @added @lead_templates @selenium
+@m6 @tgn @_tested @added @lead_templates @selenium  @requested
 Scenario: When the template's field is of the note type then I should see textarea instead of textbox
   Given template named "Computers details" for category "Computers" is created by user "bob@person.com" with role "agent"
   And template named "Computers details" is mandatory
