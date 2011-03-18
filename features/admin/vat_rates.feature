@@ -8,7 +8,7 @@ Feature: VAT rates
   @_done
   Scenario: I can fill in VAT number when creating new buyer account
     When I follow translated "home.show.view.sign_up_here" within "#buyer_sign_up"
-    Then I should see "Vat number"
+    Then I should see translated "formtastic.labels.user/customer.vat_number"
 
   @_done
   Scenario: I can't fill in VAT number when creating new agent or purchase manager account
@@ -16,7 +16,7 @@ Feature: VAT rates
     Then I should not see "Vat number"
     When I am on the home page
     And I follow translated "home.show.view.sign_up_here" within "#purchase_manager_sign_up"
-    Then I should not see "Vat number"
+    Then I should not see translated "formtastic.labels.user.vat_number"
 
   @_done
   Scenario: Administrator can edit vat number for customer
@@ -24,7 +24,7 @@ Feature: VAT rates
     And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role customer
     And I sign in as jon@lajoie.ca with password secret
     And I am on administration edit user kastomer@nbs.fake
-    Then I should see "Vat number"
+    Then I should see translated "formtastic.labels.user/customer.vat_number"
 
   @_done
   Scenario: Administrator can't edit vat number for agents/pms
@@ -33,16 +33,16 @@ Feature: VAT rates
     And someone is signed up and confirmed as user with email piem@nbs.fake and password secret and role purchase_manager
     And I sign in as jon@lajoie.ca with password secret
     And I am on administration edit user ejdzent@nbs.fake
-    Then I should not see "Vat number"
+    Then I should not see translated "formtastic.labels.user.vat_number"
     When I am on administration edit user piem@nbs.fake
-    Then I should not see "Vat number"
+    Then I should not see translated "formtastic.labels.user.vat_number"
 
   @_done
   Scenario: Buyers can edit vat number in profile
     When I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
     And I sign in as jon@lajoie.ca with password secret
     And I follow translated "layout.my_profile_link"
-    Then I should see "Vat number"
+    Then I should see translated "formtastic.labels.user/customer.vat_number"
 
   @_done
   Scenario: Agents/PurchaseManagers can edit vat number in profile
@@ -50,11 +50,11 @@ Feature: VAT rates
     And I am signed up and confirmed as user with email piem@lajoie.ca and password secret and role purchase_manager
     And I sign in as ejdzent@lajoie.ca with password secret
     And I follow translated "layout.my_profile_link"
-    Then I should not see "Vat number"
+    Then I should not see translated "formtastic.labels.user.vat_number"
     When I sign out
     And I sign in as piem@lajoie.ca with password secret
     And I follow translated "layout.my_profile_link"
-    Then I should not see "Vat number"
+    Then I should not see translated "formtastic.labels.user.vat_number"
 
   @_done
   Scenario: Administrator can set the no charge vat flag when vat number is specified

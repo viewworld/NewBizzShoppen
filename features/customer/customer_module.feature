@@ -156,6 +156,7 @@ Scenario: I can use "Advanced search" in Browse leads with following fields: Dea
   And lead Super printers #1 exists with attributes "hotness_counter:0, sale_limit:9, purchase_value:5200"
 
   Given lead Super printers #2 is created by user agent02@nbs.com with role agent
+  And user "agent02@nbs.com" with role "agent" has attributes "screen_name:Xerox2 Agent02"
   And a lead Super printers #2 exists within category Computers and is bought by user ultimate.buyer@nbs.com with role customer
   And lead Super printers #2 exists with attributes "hotness_counter:1, sale_limit:2, purchase_value:5900"
 
@@ -165,7 +166,7 @@ Scenario: I can use "Advanced search" in Browse leads with following fields: Dea
 
   And I go to browse leads
   And I follow "Computers"
-  Then I select "Xerox2, agent02@nbs.com" from "search_with_created_by"
+  Then I select "Xerox2 Agent02, agent02@nbs.com" from "search_with_created_by"
   And I press translated "leads.index.search.search_button"
   Then I should see "Super printers #2"
   And I should not see "Super printers #1"
