@@ -369,7 +369,7 @@ Scenario: I can send invoice to given email address (as an attachment)
 @tgn @_done @non_testable
 Scenario: I can print out invoice (bypassing PDF)
 
-@tgn @m6 @added @_tested
+@tgn @m6 @added @_tested  @requested
 Scenario: I can credit an invoice ...
   Given I have user with email big_buyer.biz@nbs.com and role customer
   And User big_buyer.biz@nbs.com with role customer is big buyer
