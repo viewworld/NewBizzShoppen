@@ -54,7 +54,7 @@
   </li>
   <li class="select">
     <%= f.label :with_created_by, t("leads.index.search.created_by") %>
-    <%= f.select :with_created_by, @creators.map { |u| ["#{u.company_name}, #{u.email}", u.id] }, {:include_blank => true} %>
+    <%= f.select :with_created_by, @creators.map { |u| ["#{u.screen_name}, #{u.email}", u.id] }, {:include_blank => true} %>
   </li>
   <li class="select">
     <%= f.label :with_certification_level, t("leads.index.search.certification") %>
