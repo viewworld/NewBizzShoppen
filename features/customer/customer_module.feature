@@ -201,5 +201,9 @@ Scenario: I can use "Advanced search" in Browse leads with following fields: Dea
 
 # On the configure you interests page there should be a back button, when it is selected from my profile page
 # except for first login
-@m7 @requested
+@m7 @requested @tgn @_tested
 Scenario: I can see a back button when on configure interests page
+  Given I should not see "Back"
+  When I go to my profile
+  And I follow translated "my_profile.edit.view.interests_settings"
+  Then I should see "Back"
