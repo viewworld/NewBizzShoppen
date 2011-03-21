@@ -47,11 +47,7 @@
             <% if block_contact %>
                 <%= with_output_buffer { block_contact.call(lead_purchase) } if block_contact %>
             <% end %>
-            <% unless BigDecimal(lead_purchase.purchase_value.to_s).zero? %>
-                <p class="element"><%= t("lead_purchases.listing.purchase_value_label") %>
-                  <span class="green"> <%= as_currency(lead_purchase.purchase_value, lead_purchase.lead.currency) %></span>
-                </p>
-            <% end %>
+
             <p class="element_description i expandable"><%= lead_purchase.description %></p>
 
             <p class="element_description i expandable"><%= lead_purchase.hidden_description %></p>

@@ -18,17 +18,9 @@ Background:
   And I go to administration creditors
 
 @_tested
-Scenario: I can list all credits and refunds
+Scenario: I can list all credits
   Then I should see "Credit"
-  And I should see "Refund"
 
 @_tested
-Scenario: I can list separately credits and refunds
-  When I select "Credit" from "search_with_type"
-  And I press translated "administration.creditors.index.view.search_button"
+Scenario: I can list separately credits
   Then I should see "1/20"
-  And I should not see "2/20"
-  When I select "Refund" from "search_with_type"
-  And I press translated "administration.creditors.index.view.search_button"
-  And I should see "2/20"
-  Then I should not see "1/20"
