@@ -55,8 +55,8 @@ Scenario: I can select lead purchase value range that I am interested in
 
 @_tested @noguess
 Scenario: I can select multiple lead areas/countries that I am interested in
-  Given I select "Denmark" from "countries"
-  Given I select "United Kingdom" from "countries"
+  Given I check "country_1"
+  And I check "country_2"
   And I press translated "customer.interests.edit.view.button_update"
   Then I should see translated "customer.interests.update.flash.interests_update_successful"
 
@@ -135,11 +135,13 @@ Scenario: On the interests page the country should be selected based on current 
   When I follow translated "locales.en_locale"
   And I follow translated "layout.my_profile_link"
   And I follow translated "layout.main_menu.customer.interests"
-  Then "countries" should be selected for value "United Kingdom"
+  Then checkbox named "country_2" should be checked
+  And checkbox named "country_1" should not be checked
   When I follow translated "locales.dk_locale"
   And I follow translated "layout.my_profile_link"
   And I follow translated "layout.main_menu.customer.interests"
-  Then "countries" should be selected for value "Denmark"
+  Then checkbox named "country_1" should be checked
+  And checkbox named "country_2" should not be checked
 
 @m6 @tgn @_tested
 Scenario: I can use "Advanced search" in Browse leads with following fields: Deal value, Agent (creator), Agent’s (creator) rating (all,bronze, silver, gold), Uniqueness, Hotness

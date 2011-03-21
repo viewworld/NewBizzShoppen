@@ -45,7 +45,11 @@
                       </h3>
                     </li>
                     <li class="select multiple">
-                      <%= select_tag "countries", options_for_select(@countries.collect { |c| [c.name, c.id] }, current_user.countries.empty? ? Array(@countries.detect { |c| c.locale == I18n.locale.to_s }).compact.map(& :id) : current_user.countries.collect { |c| c.id.to_s }), :multiple => true %>
+                      <% @countries.each do |country| %>
+                          <%= check_box_tag "countries[]", country.id, (current_user.countries.empty? ? Array(@countries.detect { |c| c.locale == I18n.locale.to_s }).compact.map(& :id) : current_user.countries.map { |c| c.id }).include?(country.id), :id => "country_#{country.id}" %>
+                          <%= country.name %><br />
+                      <% end %>
+                      <%= hidden_field_tag "countries[]", "" %>
                     </li>
                   </ol>
                 </fieldset>

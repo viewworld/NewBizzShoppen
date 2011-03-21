@@ -50,9 +50,9 @@ Scenario: I can scope down leads listing with filter
   But I should see "Printers ultimate deal"
 
 @tgn @_tested
-Scenario: I can see lead header, purchase value, description, contact info
+Scenario: I can see lead header, description, contact info but not purchase value
   Given I should see "Printers ultimate deal"
-  And I should see "3,034.87"
+  And I should not see "3,034.87"
   And I should see "Public desc for printers deal"
   And I should see "John Printer"
   And I should see "john.printer@fghprintesrs.noserver.com"
