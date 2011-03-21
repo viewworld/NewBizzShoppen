@@ -507,6 +507,12 @@ Scenario: I have already filled in international dialling codes for telephone nu
   Then the "lead_direct_phone_number" field should contain "\+45"
   And the "lead_phone_number" field should contain "\+45"
 
-# Do not display raw locale name - display language or country name where appropriate (mosty applicable to interfaces dealing with translations, like “new lead”)
-@requested @m7
+# Do not display raw locale name - display language or country name where appropriate (mostly applicable to interfaces dealing with translations, like “new lead”)
+@requested @m7 @tgn @selenium @_tested
 Scenario: I can see language or country name when adding translation
+  Given Category Test category 1 is created
+  And I go to agents leads
+  And I select "Test category 1" from "category_id"
+  And I follow translated "agent.leads.index.view.new_lead"
+  And I select translated "models.locale.dk" from "locale_picker"
+  And I should see translated "models.locale.dk" within "#lead_translation_form_lead_lead_translations_attributes_0"

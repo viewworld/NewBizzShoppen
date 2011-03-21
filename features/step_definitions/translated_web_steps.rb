@@ -9,6 +9,16 @@ Then /^I should see translated "([^"]*)"(?: with options "([^"]*)")?$/ do |key, 
     end
 end
 
+Then /^I should see translated "([^"]*)" within "([^"]*)"$/ do |key, selector|
+
+  I18n.locale = :en
+  if selector.present?
+  Then %{I should see "#{I18n.t(key)}" within "#{selector}"}
+    else
+  Then %{I should see "#{I18n.t(key)}"}
+    end
+end
+
 Then /^I should not see translated "([^"]*)"(?: with options "([^"]*)")?$/ do |key, options|
   I18n.locale = :en
   if options.present?

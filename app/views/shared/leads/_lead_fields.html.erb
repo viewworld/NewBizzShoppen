@@ -5,7 +5,7 @@
       <ol class="align_inputs">
         <li class="header">
           <h3 class="locale_title">
-            <%= f.object.locale if f.object.respond_to?(:locale) %>
+            <%= t("models.locale.#{f.object.locale}") if f.object.respond_to?(:locale) %>
           </h3>
         </li>
         <li class="string">
