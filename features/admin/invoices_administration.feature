@@ -554,7 +554,7 @@ Scenario: I can see customer and seller addresses on invoice
 Scenario: I can select a seller on the edit inovice page
 
 # On the invoice, remove the text (labels) “address line 1, address line 2, address line 3”, leave zip code and country lables though
-@ao @requested @m7 @_done @_wip
+@ao @requested @m7 @_done @_tested
 Scenario: I can't see address line x labels
   Given I have user with email bigbuyer1@person.com and role customer
   And User bigbuyer1@person.com with role customer is big buyer
