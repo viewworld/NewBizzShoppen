@@ -401,7 +401,7 @@ en:
     lead_templates:
       new:
         view:
-          header: New lead template
+          header: "New lead template in category %{category}"
           button_create: Create
           button_cancel: Cancel
       edit:

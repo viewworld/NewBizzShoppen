@@ -146,3 +146,11 @@ Scenario: Make it possible to duplicate lead templates (from lead templates list
   And checkbox named "lead_template_lead_template_fields_attributes_1_is_mandatory" should not be checked
   And checkbox named "lead_template_lead_template_fields_attributes_2_is_mandatory" should not be checked
 
+# When creating new lead template - display in header for which category it is being created
+@ao @requested @m7 @_done @_tested
+Scenario: I can see a category name for which lead temlpate is being created
+  Given Category named "Vehicles" already exists
+  Then I go to administration categories
+  And I follow translated "administration.categories.index.view.edit_link"
+  And I follow translated "administration.categories.edit.view.new_template"
+  Then I should see "New lead template in category Vehicles"
