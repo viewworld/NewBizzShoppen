@@ -310,8 +310,16 @@ Scenario: I can see a list of subaccounts and edit them when editing parent acco
 @requested @m7
 Scenario: I can change buyer to category buyer only if he has interests categories
 
-@requested @m7
+@requested @m7 @_tested @tgn
 Scenario: I can filter users by Call center agents
+  Given I have user with email call_centre_agent01@nbs.com and role call_centre_agent
+  Given I have user with email call_centre_agent02@nbs.com and role call_centre_agent
+  And I go to administration users
+  And I select "Call centre agent" from "search_with_role"
+  And I press translated "administration.users.index.view.search_button"
+  Then I should see "call_centre_agent01@nbs.com"
+  And I should see "call_centre_agent02@nbs.com"
+  And I should not see "bob@person.com" within "#users_table"
 
 @requested @m7
 Scenario: When editing a call centre agent I can see it's name in format "fullname @ callcentername"
