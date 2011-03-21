@@ -94,6 +94,9 @@
                 <p><%= t("lead_purchases.listing.purchase_date") %>
                   <b><%= format_date lead_purchase.accessible_from %></b>
                 </p>
+                <p><%= t("lead_purchases.listing.creator_name") %>
+                  <b><%= lead_purchase.lead.creator_name %></b>
+                </p>
               </div>
             </div>
 
@@ -133,8 +136,6 @@
           <p><%= lead_purchase.lead.contact_name %></p>
 
           <p><%= lead_purchase.lead.address %></p>
-
-          <p><%= lead_purchase.lead.creator_name %></p>
 
           <% if block_card %>
               <%= with_output_buffer { block_card.call(lead_purchase) } %>
