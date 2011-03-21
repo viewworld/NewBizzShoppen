@@ -40,16 +40,16 @@
     </tr>
     <tr>
       <td>
-          <%= t("administration.invoices.show.view.bank_address_line_1") %>: <%= invoice.seller_address.address_line_1 %><br/>
-          <%= t("administration.invoices.show.view.bank_address_line_2") %>: <%= invoice.seller_address.address_line_2 %><br/>
-          <%= t("administration.invoices.show.view.bank_address_line_3") %>: <%= invoice.seller_address.address_line_3 %><br/>
+          <%= invoice.seller_address.address_line_1 %><br/>
+          <%= invoice.seller_address.address_line_2 %><br/>
+          <%= invoice.seller_address.address_line_3 %><br/>
           <%= t("administration.invoices.show.view.bank_zip_code") %>: <%= invoice.seller_address.zip_code %><br/>
           <%= t("administration.invoices.show.view.bank_country") %>: <%= invoice.seller_address.country.name %><br/>
       </td>
       <td>
-          <%= t("administration.invoices.show.view.bank_address_line_1") %>: <%= invoice.customer_address.address_line_1 %><br/>
-          <%= t("administration.invoices.show.view.bank_address_line_2") %>: <%= invoice.customer_address.address_line_2 %><br/>
-          <%= t("administration.invoices.show.view.bank_address_line_3") %>: <%= invoice.customer_address.address_line_3 %><br/>
+          <%= invoice.customer_address.address_line_1 %><br/>
+          <%= invoice.customer_address.address_line_2 %><br/>
+          <%= invoice.customer_address.address_line_3 %><br/>
           <%= t("administration.invoices.show.view.bank_zip_code") %>: <%= invoice.customer_address.zip_code %><br/>
           <%= t("administration.invoices.show.view.bank_country") %>: <%= invoice.customer_address.country.name %><br/>
       </td>
@@ -119,7 +119,7 @@
         <td colspan="7"></td>
       </tr>
 
-      <% unless invoice.vat_paid_in_customer_country? %>
+      <% if invoice.charge_vat? %>
           <% invoice.invoice_lines_grouped_by_vat_rate.each_with_index do |invoice_line, index| %>
               <tr class="totals">
                 <td class="empty" colspan="2"></td>
@@ -142,11 +142,6 @@
 
   <div class="additional_data">
     <p><strong><%= t("administration.invoices.show.view.total_in_words") %>:</strong> <%= invoice.total_in_words %></p>
-    <% if invoice.english_version %>
-        <p>
-          <strong><%= t("administration.invoices.show.view.vat_paid") %>:</strong> <%= invoice.vat_paid_in_customer_country == true ? t("administration.invoices.show.view.yes_label") : t("administration.invoices.show.view.no_label") %> <%= "- #{invoice.vat_text_in_customer_country}" if invoice.vat_text_in_customer_country.present? %>
-        </p>
-    <% end %>
     <p>
       <strong><%= t("administration.invoices.show.view.payment_method") %>:</strong> <%= invoice.payment_method == "cash" ? t("administration.invoices.common.view.cash") : t("administration.invoices.common.view.bank_transfer") %>
     </p>
@@ -155,9 +150,9 @@
         <% if invoice.bank_account %>
             <p>
               <%= t("administration.invoices.show.view.bank_name") %>: <%= invoice.bank_account.bank_name %><br/>
-              <%= t("administration.invoices.show.view.bank_address_line_1") %>: <%= invoice.bank_account.address.address_line_1 %><br/>
-              <%= t("administration.invoices.show.view.bank_address_line_2") %>: <%= invoice.bank_account.address.address_line_2 %><br/>
-              <%= t("administration.invoices.show.view.bank_address_line_3") %>: <%= invoice.bank_account.address.address_line_3 %><br/>
+              <%= invoice.bank_account.address.address_line_1 %><br/>
+              <%= invoice.bank_account.address.address_line_2 %><br/>
+              <%= invoice.bank_account.address.address_line_3 %><br/>
               <%= t("administration.invoices.show.view.bank_zip_code") %>: <%= invoice.bank_account.address.zip_code %><br/>
               <%= t("administration.invoices.show.view.bank_country") %>: <%= invoice.bank_account.address.country.name %><br/>
               <%= t("administration.invoices.show.view.iban_number") %>: <%= invoice.bank_account.iban_no %><br/>

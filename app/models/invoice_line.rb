@@ -41,7 +41,7 @@ class InvoiceLine < ActiveRecord::Base
   end
 
   def calculate_vat_rate
-    self.vat_rate = 0 if invoice.vat_paid_in_customer_country?
+    self.vat_rate = 0 unless invoice.charge_vat?
   end
 
   public
@@ -71,11 +71,11 @@ class InvoiceLine < ActiveRecord::Base
   end
 
   def calculate_vat_value
-    self.vat_value = (invoice.vat_paid_in_customer_country? ? 0 : netto_value * BigDecimal(vat_rate.to_s).div(100,2))
+    self.vat_value = (invoice.charge_vat? ? netto_value * BigDecimal(vat_rate.to_s).div(100,2) : 0)
   end
 
   def calculate_brutto_value
-    self.brutto_value = (invoice.vat_paid_in_customer_country? ? netto_value : netto_value + vat_value)
+    self.brutto_value = (invoice.charge_vat? ? netto_value + vat_value : netto_value)
   end
 
   def calculate_additional_values!
