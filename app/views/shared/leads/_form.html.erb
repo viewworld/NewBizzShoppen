@@ -133,7 +133,7 @@
             content = content.replace(/LOCALE_LANG/, $('#locale_picker').val());
             $('.nested_locale_container:last').append(content);
             $('.locale_hidden_field:last').val($('#locale_picker').val());
-            $('.locale_title:last').html($('#locale_picker').val());
+            $('.locale_title:last').html(language_names[$('#locale_picker').val()]);
             $('.lead_template_value_translations_container_' + $('#locale_picker').val()).show();
             $('.destroy_hidden_field_template_value_tr_' + $('#locale_picker').val()).val('');
             $("#locale_picker option[value=" + $('#locale_picker').val() + "]").remove();
