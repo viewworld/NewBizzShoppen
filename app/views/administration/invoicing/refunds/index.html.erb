@@ -1,18 +1,18 @@
 <search-box:>
   <div class="search_box">
-    <h2><%= t("administration.creditors.index.view.search_label") %></h2>
+    <h2><%= t("administration.refunds.index.view.search_label") %></h2>
 
     <div class="search_content">
-      <%= form_for @search, :url => administration_invoicing_creditors_path do |f| %>
+      <%= form_for @search, :url => administration_invoicing_refunds_path do |f| %>
           <fieldset class="inputs_vertical">
             <ol class="no_pdd">
               <li class="string">
-                <%= f.label :with_keyword, t("administration.creditors.index.view.search.with_keyword") %>
+                <%= f.label :with_keyword, t("administration.refunds.index.view.search.with_keyword") %>
                 <%= f.text_field :with_keyword %>
               </li>
               <li class="commit">
                 <ibt c="bt_green" icon="magnify">
-                  <%= submit_tag t("administration.creditors.index.view.search_button") %>
+                  <%= submit_tag t("administration.refunds.index.view.search_button") %>
                 </ibt>
                 <p>
                   <%= bt_clear_filter %>
@@ -30,7 +30,7 @@
 
   <header>
     <param:content>
-      <%= t("administration.creditors.index.view.header") %>
+      <%= t("administration.refunds.index.view.header") %>
     </param:content>
     <param:actions>
     </param:actions>
@@ -43,12 +43,12 @@
         <thead>
         <tr>
         <th class="hl"></th>
-        <th><%= t("administration.creditors.index.view.number") %></th>
-        <th><%= t("administration.creditors.index.view.customer_first_name") %></th>
-        <th><%= t("administration.creditors.index.view.customer_last_name") %></th>
-        <th><%= t("administration.creditors.index.view.customer_screen_name") %></th>
-        <th><%= t("administration.creditors.index.view.type") %></th>
-        <th><%= t("administration.creditors.index.view.total_value") %></th>
+        <th><%= t("administration.refunds.index.view.number") %></th>
+        <th><%= t("administration.refunds.index.view.customer_first_name") %></th>
+        <th><%= t("administration.refunds.index.view.customer_last_name") %></th>
+        <th><%= t("administration.refunds.index.view.customer_screen_name") %></th>
+        <th><%= t("administration.refunds.index.view.type") %></th>
+        <th><%= t("administration.refunds.index.view.total_value") %></th>
         <th class="hr"></th>
         </thead>
         <tfoot>
@@ -66,7 +66,7 @@
               <td><%= credit_note.customer.first_name %></td>
               <td><%= credit_note.customer.last_name %></td>
               <td><%= credit_note.customer.screen_name %></td>
-              <td><%= t("administration.creditors.index.view.type_#{credit_note.type_as_text}") %></td>
+              <td><%= t("administration.refunds.index.view.type_#{credit_note.type_as_text}") %></td>
               <td><%= as_currency(credit_note.total, credit_note.invoice.currency) %></td>
               <td class="cr"></td>
             </tr>

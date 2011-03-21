@@ -41,6 +41,7 @@ Nbs::Application.routes.draw do
       resources :payment_transactions
       resources :credit_notes
       resources :creditors
+      resources :refunds
     end
     resources :bank_accounts
     resources :vat_rates
