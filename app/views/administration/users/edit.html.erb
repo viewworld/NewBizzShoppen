@@ -24,4 +24,12 @@
         </param:actions>
       </frm>
   <% end %>
+
+  <% if @user.subaccounts.present? %>
+      <br />
+      <header><%= t("administration.users.edit.view.subaccounts_list") %></header>
+      <%= bulk_form do %>
+        <%= render :partial => "users_table", :locals => { :users => @user.subaccounts, :subaccounts_table => true } %>
+      <% end %>
+  <% end %>
 </column-mc:>

@@ -29,7 +29,8 @@ class User < ActiveRecord::Base
   # roles later, always append them at the end!
   roles :admin, :agent, :call_centre, :call_centre_agent, :customer, :lead_buyer, :lead_user, :purchase_manager, :category_buyer
 
-  validates_presence_of :email, :screen_name, :first_name, :last_name
+  validates_presence_of :email, :screen_name
+  validates_presence_of :first_name, :last_name, :if => :validate_first_and_last_name?
   validates_uniqueness_of :email, :screen_name
   validate :payout_information_is_complete
 
@@ -83,6 +84,10 @@ class User < ActiveRecord::Base
   liquid :email, :confirmation_instructions_url, :reset_password_instructions_url
 
   private
+
+  def validate_first_and_last_name?
+    true
+  end
 
   def mass_assignment_authorizer
     if self.can_edit_payout_information

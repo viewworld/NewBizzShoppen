@@ -389,6 +389,7 @@ en:
           available_unique_categories: "Available unique categories"
           selected_unique_categories: "Selected unique categories"
           selected_interests_categories: "Selected category interests"
+          subaccounts_list: "Subaccounts"
       create:
         flash:
           user_creation_successful: User has been created successfuly

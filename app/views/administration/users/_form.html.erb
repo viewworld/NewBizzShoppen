@@ -2,9 +2,11 @@
   <div class="pdd_10 no_pdd_t">
     <fieldset class="inputs labels_ta_r labels_200">
       <ol class="align_inputs">
-        <%= form.input :first_name %>
-        <%= form.input :last_name %>
-        <%= form.input :company_name if @user.has_any_role?(:customer, :category_buyer) or ["customer", "category_buyer"].include?((params[:role])) %>
+        <% unless @user.has_role?(:call_centre) or ["call_centre"].include?((params[:role])) %>
+            <%= form.input :first_name %>
+            <%= form.input :last_name %>
+        <% end %>
+        <%= form.input :company_name if @user.has_any_role?(:customer, :category_buyer, :call_centre) or ["customer", "category_buyer", "call_centre"].include?((params[:role])) %>
         <% if defined? form.object.address %>
             <%= form.fields_for :address do |address_form| %>
                 <%= address_form.input :address_line_1 %>

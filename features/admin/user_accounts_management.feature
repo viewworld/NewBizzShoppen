@@ -303,8 +303,20 @@ Scenario: I can manage user's access to unique categories as well
 # When editing a call centre as admin, display a list of agents that belong to that particular call centre below the form. Allow going to their edit screen.*
 # Same goes for buyer/big buyer - there should be a list of team-buyers displayed*
 # remove first name and last name fields in favour of company name*
-@requested @m7
+@requested @m7 @_tested @tgn
 Scenario: I can see a list of subaccounts and edit them when editing parent account
+  Given I have user with email buyer2932biz@nbs.com and role customer
+  And I have user with email lead_buyer29321biz@nbs.com and role lead_buyer
+  And an user with role lead_buyer and email lead_buyer29321biz@nbs.com exists as subaccount for customer buyer2932biz@nbs.com
+  And I have user with email lead_user29322biz@nbs.com and role lead_user
+  And an user with role lead_user and email lead_user29322biz@nbs.com exists as subaccount for customer buyer2932biz@nbs.com
+  And I go to administration users
+  And I fill in "search_with_keyword" with "buyer2932biz"
+  And I press translated "administration.users.index.view.search_button"
+  Then I follow translated "administration.users.index.view.edit"
+  And I should see translated "administration.users.edit.view.subaccounts_list"
+  And I should see "lead_buyer29321biz@nbs.com"
+  And I should see "lead_user29322biz@nbs.com"
 
 # When changing from regular buyer to category buyer, system should require that buyer to have category interests assigned (that will be migrated to category buyer’s assigned  categories)
 @requested @m7

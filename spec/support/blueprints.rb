@@ -185,10 +185,9 @@ end
   email { Faker::Internet.email }
   password { "secret" }
   password_confirmation { "secret" }
+  company_name { Faker::Internet.domain_word.capitalize }
   phone { Faker::PhoneNumber.phone_number }
   screen_name { Faker::Name.name + Time.now.to_f.to_s.sub('.','') }
-  first_name { Faker::Name.first_name + Time.now.to_f.to_s.sub('.','') }
-  last_name { Faker::Name.last_name }
   agreement_read { true }
   payout { rand(100) }
   roles_mask { 4 }
