@@ -1,5 +1,9 @@
 <column-mc:>
-  <header><%= t("customer.interests.edit.view.title") %></header>
+  <% if request.referer.to_s.include?("/my_profile") %>
+    <header back="true"><%= t("customer.interests.edit.view.title") %></header>
+  <% else %>
+    <header><%= t("customer.interests.edit.view.title") %></header>
+  <% end %>
   <%= form_tag customers_interests_path, :method => :put do %>
       <frm>
         <param:content>

@@ -250,7 +250,7 @@ Scenario: I can't see purchase value on my leads listing
   And I should not see "89.93"
 
 # Add creator name under purchase date (should display Agent’s screen name) in details in accordion
-@m7 @requested @selenium @tgn
+@m7 @requested @selenium @tgn @_tested
 Scenario: I can see creator name under purchase date
   When I go to buyer lead purchases
   And I open page in browser
