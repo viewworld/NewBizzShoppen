@@ -1,4 +1,4 @@
-@customer @ao
+@customer @ao  @requested
 Feature: Buyer common
 
   @m6 @_done @_tested @_done

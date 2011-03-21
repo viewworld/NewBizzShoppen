@@ -206,7 +206,7 @@ Scenario: I can bulk set status of leads
   And I follow translated "lead_buyer.lead_purchases.index.view.bulk_update_button"
   Then "state" should be selected for value translated "lead_purchases.statuses.contacted"
 
-@m5 @added @lead_templates @tgn @_tested
+@m5 @added @lead_templates @tgn @_tested  @requested
 Scenario: I can see lead template fields with public values for each lead
   Given template named "Printers details" for category "Computers" is created by user "ccagent@person.com" with role "call_centre_agent"
   And template named "Printers details" has following fields "printers protocol:true:false, vendor name:false:false, versions:false:false"
@@ -229,7 +229,7 @@ Scenario: Hidden description should be truncated and expandable by JS
   And I follow translated "common.js.read_more"
   Then I should see translated "common.js.collapse_expanded_text"
 
-@m6 @tgn @selenium @_tested
+@m6 @tgn @selenium @_tested  @requested
 Scenario: I can add note to owned lead
   When I go to buyer lead purchases
   And I move mouse over "#lead_purchase_1"
@@ -241,9 +241,9 @@ Scenario: I can add note to owned lead
 
 # https://redmine.selleo.com/issues/4021
 # I should see show page when I click a row!
-@m6 @ao @_deprecated @_done
+@m6 @ao @_deprecated @_done @requested
 Scenario: I should not see show page for owned lead when accordion style listing is used
-
+    
 @m7 @requested @_tested @tgn
 Scenario: I can't see purchase value on my leads listing
   When I go to buyer lead purchases

@@ -401,7 +401,7 @@ en:
     lead_templates:
       new:
         view:
-          header: New lead template
+          header: "New lead template in category %{category}"
           button_create: Create
           button_cancel: Cancel
       edit:
@@ -699,7 +699,7 @@ en:
           bank_name: "Bank name"
           bank_address_line_1: "Address line 1"
           bank_address_line_2: "Address line 2"
-          bank_address_line_3: "Address line 3"
+          bank_address_line_3: "City"
           bank_zip_code: "Zip code"
           bank_country: "Country"
           swift_code: "SWIFT"
@@ -810,7 +810,7 @@ en:
           last_name: "Last name"
           address_line_1: "Address line 1"
           address_line_2: "Address line 2"
-          address_line_3: "Address line 3"
+          address_line_3: "City"
           zip_code: "Zip code"
           vat_no: "Company REG/VAT"
           country: "Country"
@@ -909,7 +909,7 @@ en:
           bank_address: "Bank address"
           address_line_1: "Address line 1"
           address_line_2: "Address line 2"
-          address_line_3: "Address line 3"
+          address_line_3: "City"
           zip_code: "ZIP code"
           iban_no: "IBAN number"
           local_bank_number: "Local bank number"
@@ -1814,9 +1814,9 @@ en:
         password: "Password"
         password_confirmation: "Password confirmation"
         address_line_1: "Address line 1"
-        address_line_1: "Address line 2"
+        address_line_2: "Address line 2"
+        address_line_3: "City"
         zip_code: "Zip code"
-        address_line_1: "Address line 3"
         country: "Country"
         agreement_read: "I have read and agree to Associated Content's Terms of Use and Privacy Policy"
         newsletter_on: "I want to receive the newsletter"
@@ -1978,7 +1978,7 @@ en:
       address:
         address_line_1: "Address line 1"
         address_line_2: "Address line 2"
-        address_line_3: "Address line 3"
+        address_line_3: "City"
         zip_code: "Zip code"
         country: "Country"
       bank_account:
@@ -1995,7 +1995,7 @@ en:
         company_website: "Company website"
         address_line_1: "Address line 1"
         address_line_2: "Address line 2"
-        address_line_3: "Address line 3"
+        address_line_3: "City"
         zip_code: "Zip code"
         city: "City"
         country_id: "Country"

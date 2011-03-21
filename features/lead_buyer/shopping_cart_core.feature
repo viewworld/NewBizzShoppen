@@ -62,7 +62,7 @@ Scenario: I can access my basket after I logout and login again
   And I follow translated "layout.cart.show_cart"
   And I should see "Printers ultimate deal"
 
-@added @ao @m6 @_done @_tested
+@added @ao @m6 @_done @_tested  @requested
 Scenario: I can't buy (see) a lead when sale_limit is reached
   Given there are no leads
   And I have user with email agent01@nbs.com and role agent
