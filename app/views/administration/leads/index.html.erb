@@ -58,6 +58,7 @@
               </li>
               <li class="commit">
                 <ibt c="bt_green" icon="magnify">
+                  <%= f.hidden_field :with_created_by %>
                   <%= submit_tag t("administration.leads.index.view.search_button") %>
                 </ibt>
                 <p>
@@ -73,7 +74,7 @@
 
 
 <column-mc:>
-  <header><%= t("administration.leads.index.view.title") %></header>
+  <header back="#{'true' if @search.with_created_by}"><%= t("administration.leads.index.view.title") %></header>
 
   <% if @leads.blank? %>
     <%= blank_state_message %>
