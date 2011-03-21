@@ -383,8 +383,9 @@ en:
           reset_password_link: Reset password
           change_to_category_buyer: "Change to category buyer"
           change_to_regular_buyer: "Change to regular buyer"
+          view_created_leads: "View created leads"
           not_charge_vat: "Do not charge VAT"
-          available_categories: "Available categories"
+          available_categories: "Available public categories"
           selected_categories: "Selected categories"
           available_unique_categories: "Available unique categories"
           selected_unique_categories: "Selected unique categories"
