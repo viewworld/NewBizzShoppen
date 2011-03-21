@@ -9,7 +9,7 @@ Then /^I should see translated "([^"]*)"(?: with options "([^"]*)")?$/ do |key, 
     end
 end
 
-Then /^I should see translated "([^"]*)"(?: within "([^"]*)")?$/ do |key, selector|
+Then /^I should see translated "([^"]*)" within "([^"]*)"$/ do |key, selector|
 
   I18n.locale = :en
   if selector.present?
