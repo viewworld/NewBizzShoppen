@@ -554,8 +554,18 @@ Scenario: I can see customer and seller addresses on invoice
 Scenario: I can select a seller on the edit inovice page
 
 # On the invoice, remove the text (labels) “address line 1, address line 2, address line 3”, leave zip code and country lables though
-@requested @m7
+@ao @requested @m7 @_done @_wip
 Scenario: I can't see address line x labels
+  Given I have user with email bigbuyer1@person.com and role customer
+  And User bigbuyer1@person.com with role customer is big buyer
+  And a lead Monitors ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role customer
+  And lead Monitors ultimate deal exists with attributes "price:304.35,currency_id:1"
+  And user with email "bigbuyer1@person.com" and role "customer" has invoice generated for all unpaid leads
+  And I go to administration invoices
+  And I follow translated "administration.invoices.index.view.show_invoice"
+  Then I should not see translated "administration.invoices.show.view.bank_address_line_1"
+  And I should not see translated "administration.invoices.show.view.bank_address_line_1"
+  And I should not see translated "administration.invoices.show.view.bank_address_line_1"
 
 # The “VAT paid in customer country” label, should be renamed “Charge VAT”, the VAT paid field on the invoice should be removed (i.e. “VAT Paid: No” - both show view and pdf)
 @requested @m7

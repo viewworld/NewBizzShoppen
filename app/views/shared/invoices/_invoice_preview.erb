@@ -40,16 +40,16 @@
     </tr>
     <tr>
       <td>
-          <%= t("administration.invoices.show.view.bank_address_line_1") %>: <%= invoice.seller_address.address_line_1 %><br/>
-          <%= t("administration.invoices.show.view.bank_address_line_2") %>: <%= invoice.seller_address.address_line_2 %><br/>
-          <%= t("administration.invoices.show.view.bank_address_line_3") %>: <%= invoice.seller_address.address_line_3 %><br/>
+          <%= invoice.seller_address.address_line_1 %><br/>
+          <%= invoice.seller_address.address_line_2 %><br/>
+          <%= invoice.seller_address.address_line_3 %><br/>
           <%= t("administration.invoices.show.view.bank_zip_code") %>: <%= invoice.seller_address.zip_code %><br/>
           <%= t("administration.invoices.show.view.bank_country") %>: <%= invoice.seller_address.country.name %><br/>
       </td>
       <td>
-          <%= t("administration.invoices.show.view.bank_address_line_1") %>: <%= invoice.customer_address.address_line_1 %><br/>
-          <%= t("administration.invoices.show.view.bank_address_line_2") %>: <%= invoice.customer_address.address_line_2 %><br/>
-          <%= t("administration.invoices.show.view.bank_address_line_3") %>: <%= invoice.customer_address.address_line_3 %><br/>
+          <%= invoice.customer_address.address_line_1 %><br/>
+          <%= invoice.customer_address.address_line_2 %><br/>
+          <%= invoice.customer_address.address_line_3 %><br/>
           <%= t("administration.invoices.show.view.bank_zip_code") %>: <%= invoice.customer_address.zip_code %><br/>
           <%= t("administration.invoices.show.view.bank_country") %>: <%= invoice.customer_address.country.name %><br/>
       </td>
@@ -155,9 +155,9 @@
         <% if invoice.bank_account %>
             <p>
               <%= t("administration.invoices.show.view.bank_name") %>: <%= invoice.bank_account.bank_name %><br/>
-              <%= t("administration.invoices.show.view.bank_address_line_1") %>: <%= invoice.bank_account.address.address_line_1 %><br/>
-              <%= t("administration.invoices.show.view.bank_address_line_2") %>: <%= invoice.bank_account.address.address_line_2 %><br/>
-              <%= t("administration.invoices.show.view.bank_address_line_3") %>: <%= invoice.bank_account.address.address_line_3 %><br/>
+              <%= invoice.bank_account.address.address_line_1 %><br/>
+              <%= invoice.bank_account.address.address_line_2 %><br/>
+              <%= invoice.bank_account.address.address_line_3 %><br/>
               <%= t("administration.invoices.show.view.bank_zip_code") %>: <%= invoice.bank_account.address.zip_code %><br/>
               <%= t("administration.invoices.show.view.bank_country") %>: <%= invoice.bank_account.address.country.name %><br/>
               <%= t("administration.invoices.show.view.iban_number") %>: <%= invoice.bank_account.iban_no %><br/>
