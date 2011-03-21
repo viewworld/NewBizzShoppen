@@ -98,7 +98,7 @@
                                :include_blank => false %>
                 <%= form.input :currency_id,
                                :include_blank => false, :collection => Currency.all %>
-                <%= form.input :vat_paid_in_customer_country %>
+                <%= form.input :charge_vat %>
                 <%= form.input :vat_text_in_customer_country, :as => :string %>
               </ol>
             </fieldset>

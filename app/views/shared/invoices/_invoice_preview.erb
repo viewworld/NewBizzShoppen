@@ -119,7 +119,7 @@
         <td colspan="7"></td>
       </tr>
 
-      <% unless invoice.vat_paid_in_customer_country? %>
+      <% if invoice.charge_vat? %>
           <% invoice.invoice_lines_grouped_by_vat_rate.each_with_index do |invoice_line, index| %>
               <tr class="totals">
                 <td class="empty" colspan="2"></td>

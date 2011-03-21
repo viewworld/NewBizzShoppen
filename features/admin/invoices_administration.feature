@@ -129,7 +129,7 @@ Scenario: I should see on the upper right corner there should be a total of the 
 
 @m5 @added @tgn @sprint_5_corrections @_tested  @requested
 Scenario: I should be able to write a custom text on the invoice
-  Given invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "vat_paid_in_customer_country:1"
+  Given invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "charge_vat:0"
   And I go to administration invoices
   And I follow translated "administration.invoices.index.view.edit_invoice"
   And I fill in "invoice_details" with "Some details for invoice"
@@ -346,7 +346,7 @@ Scenario: I can filter invoices list by following parameters - creation range, p
 
 @ao @_done
 Scenario: I can download invoice as PDF file
-  When invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "vat_paid_in_customer_country:0"
+  When invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "charge_vat:1"
   And invoice line for first invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
   And I follow translated "layout.main_menu.admin.invoices"
   And I follow translated "administration.invoices.index.view.show_invoice"
@@ -445,7 +445,7 @@ Scenario: I should see amounts grouped by vat rate when vat is not paid in custo
 
 @added @m4b @_done
 Scenario: We do not need to generate a copy of the invoice, just the orininal
-  When invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "vat_paid_in_customer_country:0"
+  When invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "charge_vat:1"
   And invoice line for first invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
   And I follow translated "layout.main_menu.admin.invoices"
   And I follow translated "administration.invoices.index.view.show_invoice"
@@ -455,7 +455,7 @@ Scenario: We do not need to generate a copy of the invoice, just the orininal
 
 @added @m4b @selenium @_done
   Scenario: When you edit an invoice you should have the option to cancel the edit invoice
-  When invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "vat_paid_in_customer_country:0"
+  When invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "charge_vat:1"
   And invoice line for first invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
   And I click hidden link by url regex "/administration\/invoicing\/invoices/"
   And I click hidden link by url regex "/administration\/invoicing\/invoices\/(\d+)\/edit/"
@@ -582,5 +582,18 @@ Scenario: VAT paid in customer country should be renamed to 'Charge VAT' and I c
   Then I should see "Charge VAT"
 
 # If “Charge VAT” is set to false, do not display “VAT spec” section in show view and pdf
-@requested @m7
+@ao @requested @m7 @_done @_tested
 Scenario: I can't see VAT spec section when Carge VAT is set to false
+  Given invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "charge_vat:0"
+  And invoice line for first invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
+  And I go to administration invoices
+  And I follow translated "administration.invoices.index.view.show_invoice"
+  Then I should not see translated "administration.invoices.show.view.vat_spec"
+
+@ao @added @requested @m7 @_done @_tested
+Scenario: I can see VAT spec section when Carge VAT is set to false
+  Given invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "charge_vat:1"
+  And invoice line for first invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
+  And I go to administration invoices
+  And I follow translated "administration.invoices.index.view.show_invoice"
+  Then I should see translated "administration.invoices.show.view.vat_spec"

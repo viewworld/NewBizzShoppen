@@ -100,7 +100,7 @@ class Invoice < ActiveRecord::Base
             :seller_vat_no => seller.vat_no,
             :seller_first_name => seller.first_name,
             :seller_last_name => seller.last_name,
-            :vat_paid_in_customer_country => user.with_role.not_charge_vat?,
+            :charge_vat => !user.with_role.not_charge_vat?,
             :bank_account => payment_bank_account
     })
   end

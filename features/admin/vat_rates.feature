@@ -130,7 +130,7 @@ Feature: VAT rates
      And I press translated "administration.invoices.index.view.create_invoice"
      And I follow "add_fields_invoice_lines"
      Then the "1" field with id like "_vat_rate" should contain "27.0"
-     And the "invoice_vat_paid_in_customer_country" checkbox should not be checked
+     And the "invoice_charge_vat" checkbox should be checked
 
   @selenium @_done
   Scenario: When creating invoice manually by admin, VAT field should be zero and disabled if country has vat rate set but user pays vat in his country
@@ -143,7 +143,7 @@ Feature: VAT rates
     And I press translated "administration.invoices.index.view.create_invoice"
     And I follow "add_fields_invoice_lines"
     Then the "1" field with id like "_vat_rate" should contain "0"
-    And the "invoice_vat_paid_in_customer_country" checkbox should be checked
+    And the "invoice_charge_vat" checkbox should not be checked
 
   # Make country a textfield (we won’t create a new VAT for existing country, so it should be ok just to create both new country and VAT)
   @m5 @ao @_done
