@@ -88,14 +88,3 @@ Scenario: I can see clicks, exposure, hottness, novelty per lead
 Scenario: clicking on the lead should take to edit page
   Given I follow translated "agent.leads.index.view.edit"
   Then I should see translated "agent.leads.edit.view.title" with options "name:Lead 4"
-
-@m7 @requested
-Scenario: I can't see purchase value on my leads listing
-
-# Add creator name under purchase date (should display Agent’s screen name) in details in accordion
-@m7 @requested
-Scenario: I can see creator name under purchase date
-
-# My leads accordion - do not trigger accordion on mouse hover but on link-click instead (i.e. show more details)
-@m7 @requested
-Scenario: I can see details in accordion when clicking on header

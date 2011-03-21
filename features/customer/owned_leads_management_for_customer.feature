@@ -11,8 +11,10 @@ Background:
   And an user with role lead_user and email lead_user3@person.com exists as subaccount for customer customer@person.com
   And user lead_user2@person.com with role lead_user exists with attributes "screen_name:John McCoy,first_name:John,last_name:McCoy"
   And user lead_user3@person.com with role lead_user exists with attributes "screen_name:Martin Gleesse,first_name:Martin,last_name:Gleesse"
+  And someone is signed up and confirmed as user with email someagent@nbs.com and password secret and role agent with attributes "screen_name:SomeAgent Joe"
+  And lead Printers ultimate deal is created by user someagent@nbs.com with role agent
   And a lead Printers ultimate deal exists within category Computers and is bought by user customer@person.com with role customer
-  And lead "Printers ultimate deal" has attributes "hidden_description:Lorem ipsum dolor sit amet consectetur adipiscing elit Suspendisse posuere turpis eget lorem sollicitudin ac volutpat Suspendisse posuere turpis eget lorem sollicitudin ac volutpat desc_end"
+  And lead "Printers ultimate deal" has attributes "purchase_value:89.93,hidden_description:Lorem ipsum dolor sit amet consectetur adipiscing elit Suspendisse posuere turpis eget lorem sollicitudin ac volutpat Suspendisse posuere turpis eget lorem sollicitudin ac volutpat desc_end"
   And lead Keyboards deal exists within category Computers
   And lead Mouses ultimate deal exists within category Computers
   And lead Plotters ultimate deal exists within category Office
@@ -239,5 +241,22 @@ Scenario: I can add note to owned lead
 
 # https://redmine.selleo.com/issues/4021
 # I should see show page when I click a row!
-@m6 @ao @_deprecated @_done  @requested
+@m6 @ao @_deprecated @_done @requested
 Scenario: I should not see show page for owned lead when accordion style listing is used
+    
+@m7 @requested @_tested @tgn
+Scenario: I can't see purchase value on my leads listing
+  When I go to buyer lead purchases
+  And I should not see "89.93"
+
+# Add creator name under purchase date (should display Agent’s screen name) in details in accordion
+@m7 @requested @selenium @tgn
+Scenario: I can see creator name under purchase date
+  When I go to buyer lead purchases
+  And I open page in browser
+  Given I move mouse over "#lead_purchase_1"
+  And I should see "SomeAgent Joe"
+
+# My leads accordion - do not trigger accordion on mouse hover but on link-click instead (i.e. show more details)
+@m7 @requested
+Scenario: I can see details in accordion when clicking on header
