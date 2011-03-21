@@ -114,7 +114,7 @@ Scenario: I can perform a bulk invoice action
   And I go to administration upcoming invoices
   And I should not see "John von Buyer"
 
-@m4 @added @agent_certification @tgn @_tested
+@m4 @added @agent_certification @tgn @_tested  @requested
 Scenario: I can override the certification level of any agent or call centre
   Then I fill in "search_with_keyword" with "agent@nbs.com"
   And I press translated "administration.users.index.view.search_button"
@@ -140,7 +140,7 @@ Scenario: In users listing I can see unpaid leads count
   And I press translated "administration.users.index.view.search_button"
   Then I should have value "1" in the css path "tr:nth-child(1) td:nth-child(9)"
 
-@m6 @_done @_tested
+@m6 @_done @_tested  @requested
 Scenario: I can change category buyer to regular buyer
   When I follow translated "layout.main_menu.admin.users"
   And Category CategoryBuyerCategory is created
@@ -156,7 +156,7 @@ Scenario: I can change category buyer to regular buyer
   And I should see CSS path "#category_interests"
   And I should not see CSS path "#category_buyer_categories"
 
-@m6 @added @_done @_tested
+@m6 @added @_done @_tested  @requested
 Scenario: User can login after changing his account to regular buyer
   When I follow translated "layout.main_menu.admin.users"
   And Category CategoryBuyerCategory is created
@@ -172,7 +172,7 @@ Scenario: User can login after changing his account to regular buyer
   Then I should see "AnotherCategory"
   And I should see "CategoryBuyerCategory"
 
-@m6 @added @_done @_tested
+@m6 @added @_done @_tested  @requested
 Scenario: Subaccounts can login after changing parent to regular buyer
   When I follow translated "layout.main_menu.admin.users"
   And Category CategoryBuyerCategory is created
@@ -189,7 +189,7 @@ Scenario: Subaccounts can login after changing parent to regular buyer
   Then I should see "AnotherCategory"
   And I should see "CategoryBuyerCategory"
 
-@m6 @added @selenium @_done @_tested
+@m6 @added @selenium @_done @_tested  @requested
 Scenario: User can login after changing his account to category buyer
   When I follow translated "layout.main_menu.admin.users"
   And Category CategoryBuyerCategory is created
@@ -207,7 +207,7 @@ Scenario: User can login after changing his account to category buyer
   And I follow translated "layout.main_menu.shared.browse_leads"
   Then I should be on category leads page for CategoryBuyerCategory
 
-@m6 @added @selenium @_done @_tested
+@m6 @added @selenium @_done @_tested  @requested
 Scenario: User can login after changing his account to category buyer
   When I follow translated "layout.main_menu.admin.users"
   And Category CategoryBuyerCategory is created
@@ -226,7 +226,7 @@ Scenario: User can login after changing his account to category buyer
   And I follow translated "layout.main_menu.shared.browse_leads"
   Then I should be on category leads page for CategoryBuyerCategory
 
-@m6 @_done @_tested
+@m6 @_done @_tested  @requested
 Scenario: I can change regular buyer to category buyer
   When I follow translated "layout.main_menu.admin.users"
   And Category CategoryBuyerCategory is created
@@ -242,7 +242,7 @@ Scenario: I can change regular buyer to category buyer
   And I should not see CSS path "#category_interests"
   And I should see CSS path "#category_buyer_categories"
 
-@m6 @selenium @_done @_tested
+@m6 @selenium @_done @_tested  @requested
 Scenario: I can specify one or many categories for category buyer
   When Category named "Best Leads" already exists
   And Category named "Basic Leads" already exists
@@ -258,7 +258,7 @@ Scenario: I can specify one or many categories for category buyer
   And I am on administration edit user jon@lajoie.ca
   Then "user_category_buyer_buying_category_ids_" dropdown should have values "Basic Leads,Best Leads,Worst Leads"
 
-@m6 @added @selenium @_done @_tested
+@m6 @added @selenium @_done @_tested  @requested
 Scenario: I can't specify categories for category buyer's subaccounts
   When Category named "Basic Leads" already exists
   And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Basic Leads"
@@ -283,7 +283,7 @@ Scenario: I can configure buyer category interests when editing it
   And I click hidden link by url regex "/administration\/users\/\d+\/edit/"
   And "user_customer_category_ids_" dropdown should have values "Computers,Laptops"
 
-@m6 @tgn @selenium @_tested
+@m6 @tgn @selenium @_tested  @requested
 Scenario: I can manage user's access to unique categories as well
   Given I have user with email buyer2222@nbs.com and role customer
   And category "Computers" is unique for user with email "buyer29382.biz@nbs.com" role "customer"

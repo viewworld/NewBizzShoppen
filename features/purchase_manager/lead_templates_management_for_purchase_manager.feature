@@ -1,4 +1,4 @@
-@lead_templates @purchase_manager @m5 @tgn
+@lead_templates @purchase_manager @m5 @tgn  @requested
 Feature: Lead templates management for purchase manager
 
 Background:

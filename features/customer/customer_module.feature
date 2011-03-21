@@ -60,13 +60,13 @@ Scenario: I can select multiple lead areas/countries that I am interested in
   And I press translated "customer.interests.edit.view.button_update"
   Then I should see translated "customer.interests.update.flash.interests_update_successful"
 
-@m5 @tgn @_tested @deprecated
+@m5 @tgn @_tested @deprecated  @requested
 Scenario: I can select "all" as a Deal value
 #  And I check "user_all_deal_values_enabled"
 #  And I press translated "customer.interests.edit.view.button_update"
 #  Then I should see translated "customer.interests.update.flash.interests_update_successful"
 
-@m5 @unique_categories @added @_tested @tgn
+@m5 @unique_categories @added @_tested @tgn  @requested
 Scenario: I should not see unique categories I'm not assigned to on my interests page
   Given Category Computers is created
   And category "Computers" is unique for user with email "bob@person.com" role "customer"
@@ -76,7 +76,7 @@ Scenario: I should not see unique categories I'm not assigned to on my interests
   And I should see "Leisure"
   And I should see "Computers"
 
-@m5 @unique_categories @added @_tested @tgn
+@m5 @unique_categories @added @_tested @tgn  @requested
 Scenario: I should not see categories on my interests page when I'm assigned to unique category
   Given I have user with email other_buyer34525biz@nbs.com and role customer
   And Category OthersBuyerCategory is created
@@ -90,7 +90,7 @@ Scenario: I should not see categories on my interests page when I'm assigned to 
   And I should see "Computers"
   And I should not see "OthersBuyerCategory"
 
-@m5 @unique_categories @added @_tested @tgn
+@m5 @unique_categories @added @_tested @tgn  @requested
 Scenario: I should have my interests fixed to the unique category I'm assigned to
   Given there are no categories
   Given Category Computers is created
@@ -98,7 +98,7 @@ Scenario: I should have my interests fixed to the unique category I'm assigned t
   And I go to customer interests
   Then checkbox named "category_" should be checked
 
-@added @m6 @ao @_done @_tested
+@added @m6 @ao @_done @_tested  @requested
 Scenario: If customer is category buyer he/she can see also unique categories
   When I sign out
   And Category named "Best Leads" already exists
@@ -111,7 +111,7 @@ Scenario: If customer is category buyer he/she can see also unique categories
   Then I should see "Best Leads"
   And I should see "Unique Leads"
 
-@added @m6 @ao @_done @_tested
+@added @m6 @ao @_done @_tested  @requested
 Scenario: If customer is category buyer with assigned unique categories he can access them
   When I sign out
   And Category named "Best Leads" already exists
@@ -130,7 +130,7 @@ Scenario: If customer is category buyer with assigned unique categories he can a
   And I should see "Uniqlead"
   And I should see "1" rows in a table within ".leads_table tbody"
 
-@added @tgn @_tested
+@added @tgn @_tested  @requested
 Scenario: On the interests page the country should be selected based on current locale
   When I follow translated "locales.en_locale"
   And I follow translated "layout.my_profile_link"

@@ -35,7 +35,7 @@ Scenario: I can see list of invoices pending creation
   Then I should see "304.35"
   Then I should see "41.22"
 
-@m5 @ao @added @_done @_tested
+@m5 @ao @added @_done @_tested  @requested
 Scenario: I can see list of invoices pending creation grouped by currency
   Given I am not sign in
   Given I have user with email bigbuyer1@person.com and role customer
@@ -127,7 +127,7 @@ Scenario: I should see on the upper right corner there should be a total of the 
   And I should see translated "administration.upcoming_invoices.index.view.total"
   And I should see "2"
 
-@m5 @added @tgn @sprint_5_corrections @_tested
+@m5 @added @tgn @sprint_5_corrections @_tested  @requested
 Scenario: I should be able to write a custom text on the invoice
   Given invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "vat_paid_in_customer_country:1"
   And I go to administration invoices
@@ -369,7 +369,7 @@ Scenario: I can send invoice to given email address (as an attachment)
 @tgn @_done @non_testable
 Scenario: I can print out invoice (bypassing PDF)
 
-@tgn @m6 @added @_tested
+@tgn @m6 @added @_tested  @requested
 Scenario: I can credit an invoice ...
   Given I have user with email big_buyer.biz@nbs.com and role customer
   And User big_buyer.biz@nbs.com with role customer is big buyer
@@ -383,7 +383,7 @@ Scenario: I can credit an invoice ...
   And I should see "0.00"
   And I should see "Paid"
 
-@tgn @added @_tested @selenium
+@tgn @added @_tested @selenium  @requested
 Scenario: I can bulk set selected invoices as paid
   Given invoice exists for user "kastomer@nbs.fake" with role "customer"
   And invoice exists for user "kastomer@nbs.fake" with role "customer"
@@ -393,21 +393,21 @@ Scenario: I can bulk set selected invoices as paid
   Then I should see translated "flash.bulk_invoice_update.update.notice"
   Then I should see "Paid"
 
-@tgn @added @_tested
+@tgn @added @_tested  @requested
 Scenario: I can create invoice for any customer from users tab
   Given I go to administration users
   And I click hidden translated link "administration.users.index.view.create_invoice"
   Then I press translated "administration.invoices.new.view.button_create"
   And I should see translated "administration.invoices.edit.view.form.general_information"
 
-@tgn @added @_tested
+@tgn @added @_tested  @requested
 Scenario: I can create invoice for any customer from users tab
   Given I go to administration users
   And I click hidden translated link "administration.users.index.view.create_invoice"
   Then I press translated "administration.invoices.new.view.button_create"
   And I should see translated "administration.invoices.edit.view.form.general_information"
 
-@added @m4b @_done
+@added @m4b @_done  @requested
 Scenario: EAN should be visible if filled
   When invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "ean_number:123456"
   And invoice line for first invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
@@ -415,7 +415,7 @@ Scenario: EAN should be visible if filled
   And I follow translated "administration.invoices.index.view.show_invoice"
   Then I should see translated "administration.invoices.show.view.ean_number"
 
-@added @m4b @_done
+@added @m4b @_done  @requested
 Scenario: EAN should not be visible if not filled
   When invoice exists for user "kastomer@nbs.fake" with role "customer"
   And invoice line for first invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
@@ -423,7 +423,7 @@ Scenario: EAN should not be visible if not filled
   And I follow translated "administration.invoices.index.view.show_invoice"
   Then I should not see translated "administration.invoices.show.view.ean_number"
 
-@added @m4b @_done
+@added @m4b @_done  @requested
 Scenario: I should not see amounts grouped by vat rate when vat is paid in customer country
   When user "kastomer@nbs.fake" with role "customer" has attributes "not_charge_vat:1"
   And invoice exists for user "kastomer@nbs.fake" with role "customer"
@@ -433,7 +433,7 @@ Scenario: I should not see amounts grouped by vat rate when vat is paid in custo
   Then I should not see translated "administration.invoices.show.view.including"
   And I should not see "122" within ".totals"
 
-@added @m4b @_done
+@added @m4b @_done  @requested
 Scenario: I should see amounts grouped by vat rate when vat is not paid in customer country
   When user "kastomer@nbs.fake" with role "customer" has attributes "not_charge_vat:0"
   And invoice exists for user "kastomer@nbs.fake" with role "customer"
@@ -504,7 +504,7 @@ Scenario: Include users name, company and user email when filtering invoices
   Then I should see "88.32"
   And I should not see "77.99"
 
-@m5 @tgn @_tested
+@m5 @tgn @_tested  @requested
 Scenario: On Invoices listing there should be sums present in top right hand corner (total, total paid, total unpaid)
   Given I have user with email bigbuyer1@person.com and role customer
   And User bigbuyer1@person.com with role customer is big buyer

@@ -494,7 +494,7 @@ Scenario: I can choose region during creation of a lead
   And I select "Denmark" from "lead_country_id"
   And I select "Region #2" from "lead_region_id"
 
-@m6 @tgn @selenium @_tested
+@m6 @tgn @selenium @_tested  @requested
 Scenario: I have already filled in international dialling codes for telephone numbers (+xx) (xxxxxxxxxxxxxxxxxxxxxx)
   Given Category Test category 1 is created
   And I go to agents leads

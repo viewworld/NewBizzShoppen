@@ -102,7 +102,7 @@ Scenario: I can upload a category image
 Scenario: I can manage categories from Browse categories. Categories tab should be removed
   Then I should not see translated "layout.main_menu.admin.categories"
 
-@m6 @tgn @_tested
+@m6 @tgn @_tested  @requested
 Scenario: I can make any category country specific (Category can have one or more countries assigned to it)
   Given there are no categories
   And Category Computers is created
@@ -115,7 +115,7 @@ Scenario: I can make any category country specific (Category can have one or mor
   Then I follow translated "administration.categories.index.view.edit_link"
   And "category_country_ids" should be selected for value "Denmark"
 
-@m6 @ao @_done @_tested
+@m6 @ao @_done @_tested  @requested
 Scenario: I can mark category to allow buyouts
   Given Category named "Sample category" already exists
   And category "Sample category" has attributes "buyout_enabled:0"
@@ -126,7 +126,7 @@ Scenario: I can mark category to allow buyouts
   And I am on administration edit category Sample category
   Then checkbox named "category_buyout_enabled" should be checked
 
-@m6 @ao @_done @_tested
+@m6 @ao @_done @_tested  @requested
 Scenario: When creating new category it is marked with buyout flag by default
   When I go to administration categories
   And I follow translated "administration.categories.index.view.new_category"
