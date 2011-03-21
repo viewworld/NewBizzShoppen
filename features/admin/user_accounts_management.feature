@@ -299,3 +299,26 @@ Scenario: I can manage user's access to unique categories as well
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/administration\/users\/\d+\/edit/"
   And "user_customer_unique_category_ids_" dropdown should have values "Computers,Laptops"
+
+# When editing a call centre as admin, display a list of agents that belong to that particular call centre below the form. Allow going to their edit screen.*
+# Same goes for buyer/big buyer - there should be a list of team-buyers displayed*
+# remove first name and last name fields in favour of company name*
+@requested @m7
+Scenario: I can see a list of subaccounts and edit them when editing parent account
+
+# When changing from regular buyer to category buyer, system should require that buyer to have category interests assigned (that will be migrated to category buyer’s assigned  categories)
+@requested @m7
+Scenario: I can change buyer to category buyer only if he has interests categories
+
+@requested @m7
+Scenario: I can filter users by Call center agents
+
+@requested @m7
+Scenario: When editing a call centre agent I can see it's name in format "fullname @ callcentername"
+
+@requested @m7
+Scenario: When editing call center agent I can navigate to call center's edit page
+
+@requested @m7
+Scenario: When editing call center agent I can navigate to list of leads created by this agent
+
