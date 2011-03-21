@@ -20,3 +20,8 @@ Scenario: I can't resend activation email to my email address once the account w
   And I fill in "user_email" with "email@person.com"
   Then I press translated "devise.confirmations.resend_confirmation_link"
   And I should see translated "activerecord.errors.models.user.attributes.email.already_confirmed"
+
+@ao @m7 @requested @_done @_tested
+Scenario: I can see blurb text on resend confirmation page
+  When I go to resend confirmation instructions
+  Then I should see "Blurb resend confirmation"

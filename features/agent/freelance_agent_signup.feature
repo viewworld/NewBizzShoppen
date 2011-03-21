@@ -112,3 +112,7 @@ Scenario: Screen name has to be unique
   And I check "user_agent_agreement_read"
   And I press translated "agent_accounts.new.view.button_create_account"
   Then I should see translated "activerecord.errors.models.user/agent.attributes.screen_name.taken"
+
+# probably it should be renamed to “Agree to Terms and conditions”, where “Terms and conditions” should be link leadin to another page or popup with terms and conditions text displayed
+@requested @m7
+Scenario: I can see a link to agreement when signin up

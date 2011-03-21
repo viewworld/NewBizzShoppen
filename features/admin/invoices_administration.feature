@@ -548,3 +548,19 @@ Scenario: I can see customer and seller addresses on invoice
   And I follow translated "administration.invoices.index.view.show_invoice"
   Then I should see "Kaminskiego" within ".from_to_table tr:nth-child(2) td:nth-child(1)"
   And I should see "Michalowicza" within ".from_to_table tr:nth-child(2) td:nth-child(2)"
+
+# You should be able to select seller on the edit invoice note, which will fill out the details on the seller on the invoice (display dropdown over seller information fields)
+@requested @m7
+Scenario: I can select a seller on the edit inovice page
+
+# On the invoice, remove the text (labels) “address line 1, address line 2, address line 3”, leave zip code and country lables though
+@requested @m7
+Scenario: I can't see address line x labels
+
+# The “VAT paid in customer country” label, should be renamed “Charge VAT”, the VAT paid field on the invoice should be removed (i.e. “VAT Paid: No” - both show view and pdf)
+@requested @m7
+Scenario: VAT paid in customer country should be renamed to 'Carge VAT' and I can't see VAT paid field neither on page nor on pdf
+
+# If “Charge VAT” is set to false, do not display “VAT spec” section in show view and pdf
+@requested @m7
+Scenario: I can't see VAT spec section when Carge VAT is set to false

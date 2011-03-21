@@ -506,3 +506,11 @@ Scenario: I have already filled in international dialling codes for telephone nu
   And I press translated "agent.leads.new.view.button_create"
   Then the "lead_direct_phone_number" field should contain "\+45"
   And the "lead_phone_number" field should contain "\+45"
+
+# Do not display raw locale name - display language or country name where appropriate (mosty applicable to interfaces dealing with translations, like “new lead”)
+@requested @m7
+Scenario: I can see language or country name when adding translation
+
+# When creating new lead template - display in header for which category it is being created
+@requested @m7
+Scenario: I can see a category name for which lead is being created

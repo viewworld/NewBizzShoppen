@@ -196,3 +196,8 @@ Scenario: I can use "Advanced search" in Browse leads with following fields: Dea
   Then I should see "Super printers #1"
   And I should see "Super printers #2"
   And I should not see "Super printers #3"
+
+# On the configure you interests page there should be a back button, when it is selected from my profile page
+# except for first login
+@m7 @requested
+Scenario: I can see a back button when on configure interests page

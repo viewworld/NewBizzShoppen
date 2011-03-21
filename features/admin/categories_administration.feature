@@ -137,3 +137,7 @@ Scenario: When creating new category it is marked with buyout flag by default
   And I am on administration edit category New category
   Then checkbox named "category_buyout_enabled" should be checked
 
+# Allow admin to flag a category with option “Do not show prices to team members” - this will basically make team-buyers (subeaccounts) not see lead price when browsing leads within that particular category.
+@requested @m7
+Scenario: I can flag a category to not show prices to team members
+

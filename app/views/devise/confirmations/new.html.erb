@@ -1,5 +1,7 @@
 <column-mc:>
-  <header back="true">Resend confirmation instructions</header>
+  <header back="true"><%= t("devise.confirmations.resend_instructions") %></header>
+
+  <%= blurb("blurb_resend_confirmation") %>
 
   <%= form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => {:method => :post}) do |f| %>
       <%= devise_error_messages! %>
