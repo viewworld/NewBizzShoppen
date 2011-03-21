@@ -183,6 +183,7 @@ en:
       linkedin_profile: "LinkedIn profile"
       facebook_profile: "Facebook profile"
       purchase_date: "Purchase date:"
+      creator_name: "Creator:"
     statuses:
       not_contacted: Not contacted
       contacted: Contacted
@@ -1423,9 +1424,9 @@ en:
       edit:
         view:
           title: "Configure your interests"
-          categories: "Categories"
+          categories: "Lead categories"
           deal_values: "Deal value"
-          countries: "Countries"
+          countries: "Include leads to these countries"
           notify_about_new_leads: "Notify me about new leads via email"
           button_update: "Save"
           rss_feed_url: "RSS Feed"
