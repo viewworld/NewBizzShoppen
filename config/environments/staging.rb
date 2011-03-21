@@ -29,7 +29,7 @@ Nbs::Application.configure do
   config.action_mailer.delivery_method     = :smtp
   config.action_mailer.smtp_settings       = {:address              => "smtp.gmail.com",
                                               :port                 => 587,
-                                              :domain               => 'newbizzshoppen.com',
+                                              :domain               => 'beta.fairleads.com',
                                               :user_name            => 'selleo.test1@gmail.com',
                                               :password             => 'selleotest',
                                               :authentication       => 'plain',

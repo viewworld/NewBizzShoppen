@@ -46,7 +46,7 @@ Nbs::Application.configure do
   # the I18n.default_locale when a translation can not be found)
   #config.i18n.fallbacks                    = true
 
-  config.action_mailer.default_url_options = {:host => 'stable.nbs.selleo.com'}
+  config.action_mailer.default_url_options = {:host => 'fairleads.com'}
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation        = :notify
@@ -54,7 +54,7 @@ Nbs::Application.configure do
   config.action_mailer.delivery_method     = :smtp
   config.action_mailer.smtp_settings       = {:address              => "smtp.gmail.com",
                                               :port                 => 587,
-                                              :domain               => 'newbizzshoppen.com',
+                                              :domain               => 'fairleads.com',
                                               :user_name            => 'selleo.test1@gmail.com',
                                               :password             => 'selleotest',
                                               :authentication       => 'plain',

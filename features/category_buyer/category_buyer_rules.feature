@@ -172,7 +172,7 @@ Feature: Category buyer rules
     And I am on category home page for Worst Leads
     Then I should be on category home page for Basic Leads
 
-  @m6 @added @_done @_tested @wip
+  @m6 @added @_done @_tested
   Scenario: I can't login when I have no categories assigned
     When Category named "SampleCat" already exists
     When I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "SampleCat"
