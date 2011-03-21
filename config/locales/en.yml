@@ -294,7 +294,7 @@ en:
       view:
         agents_header: "Agents news"
         sales_managers_header: "Sales manager news"
-        purchase_managers_header: "Purchase manager news"
+        purchase_managers_header: "Procurement manager news"
         category_homes_header: "Category news"
         read_more_link: "read more"
         newer_link: "Newer"
@@ -309,13 +309,13 @@ en:
         header: "Home"
         buyer: "Sales manager"
         agent: "Agent"
-        purchase_manager: "Purchase manager"
+        purchase_manager: "Procurement manager"
         remember_me: "Remember me"
         sign_in: "Sign in"
         signup_message: "Don't have an account yet"
         agent_signup: "Freelance agent signup"
         buyer_signup: "Sales manager signup"
-        purchase_manager_signup: "Purchase Manager signup"
+        purchase_manager_signup: "Procurement manager signup"
         _signup: "Sales manager signup"
         forgotten_password_link: "Forgot password?"
         resend_confirmation_instructions: "Didn't receive confirmation instructions?"
@@ -542,7 +542,7 @@ en:
           header: "News"
           buyers: "sales managers"
           agents: "agents"
-          purchase_managers: "purchase managers"
+          purchase_managers: "procurement managers"
           category_homes: "category homes"
           new_news: "New news"
           search_button: "Search"
@@ -1279,7 +1279,7 @@ en:
   purchase_manager_accounts:
     new:
       view:
-        title: "Purchase Manager signup"
+        title: "Procurement Manager signup"
         header: "Create new account"
         button_create_account: "Create my account"
 
@@ -1347,7 +1347,7 @@ en:
       view:
         header: "Welcome sales manager"
         agent_link: "click here if you are an agent"
-        purchase_manager_link: "click here if you are a purchase manager"
+        purchase_manager_link: "click here if you are a procurement manager"
         header_best_sellers: "Best sellers"
         header_latest_leads: "Latest leads"
         header_latest_leads_in_my_categories: "Latest leads in my categories"
@@ -1368,7 +1368,7 @@ en:
       view:
         header: "Welcome agent"
         buyer_link: "click here if you are a sales manager"
-        purchase_manager_link: "click here if you are a purchase manager"
+        purchase_manager_link: "click here if you are a procurement manager"
         header_best_sellers: "Best sellers"
         header_latest_leads: "Latest leads"
         header_news: "News"
@@ -1383,7 +1383,7 @@ en:
   purchase_manager_home:
     show:
       view:
-        header: "Welcome purchase manager"
+        header: "Welcome procurement manager"
         agent_link: "click here if you are an agent"
         buyer_link: "click here if you are a sales manager"
         header_best_sellers: "Best sellers"
@@ -1394,7 +1394,7 @@ en:
         description_label: "Description:"
         read_more_link: "read more"
         complete_list_link: "complete list"
-        create_new_purchase_manager_account: "Create new purchase manager account"
+        create_new_purchase_manager_account: "Create new procurement manager account"
         i_have_an_account: "I have an account"
 
   category_home:
@@ -1782,7 +1782,7 @@ en:
         news:
           agent: "Agent news"
           sales_manager: "Sales manager news"
-          purchase_manager: "Purchase manager news"
+          purchase_manager: "Procurement manager news"
           category_home: "Category home news"
         cms:
           help_popup: "Help popup"
