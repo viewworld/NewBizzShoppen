@@ -627,7 +627,7 @@ en:
           no_currencies_defined: There are no countries defined
           table:
             id: ID
-            name: Name
+            name: Region name
             locale: Locale
             actions: Actions
       new:
@@ -2161,9 +2161,12 @@ en:
         format: "Format"
         active: "Active"
       country:
+        name: "Country name"
         country_name: "Country name"
-        locale: "Locale"
-        detailed_locale: "Detailed locale"
+        locale: "Language code"
+        detailed_locale: "Language format"
+      region:
+        name: "Region name"
 
   users:
     passwords:
