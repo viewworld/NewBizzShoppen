@@ -2043,6 +2043,7 @@ en:
         seller_id: "Seller"
         cash_flow: "Amount paid"
         paid_at: "Paid at"
+        vat_paid_in_customer_country: "Charge VAT"
       seller:
         company_name: "Company"
         first_name: "First name"

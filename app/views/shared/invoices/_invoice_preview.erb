@@ -142,11 +142,6 @@
 
   <div class="additional_data">
     <p><strong><%= t("administration.invoices.show.view.total_in_words") %>:</strong> <%= invoice.total_in_words %></p>
-    <% if invoice.english_version %>
-        <p>
-          <strong><%= t("administration.invoices.show.view.vat_paid") %>:</strong> <%= invoice.vat_paid_in_customer_country == true ? t("administration.invoices.show.view.yes_label") : t("administration.invoices.show.view.no_label") %> <%= "- #{invoice.vat_text_in_customer_country}" if invoice.vat_text_in_customer_country.present? %>
-        </p>
-    <% end %>
     <p>
       <strong><%= t("administration.invoices.show.view.payment_method") %>:</strong> <%= invoice.payment_method == "cash" ? t("administration.invoices.common.view.cash") : t("administration.invoices.common.view.bank_transfer") %>
     </p>

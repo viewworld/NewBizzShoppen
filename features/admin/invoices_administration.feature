@@ -568,8 +568,18 @@ Scenario: I can't see address line x labels
   And I should not see translated "administration.invoices.show.view.bank_address_line_1"
 
 # The “VAT paid in customer country” label, should be renamed “Charge VAT”, the VAT paid field on the invoice should be removed (i.e. “VAT Paid: No” - both show view and pdf)
-@requested @m7
-Scenario: VAT paid in customer country should be renamed to 'Carge VAT' and I can't see VAT paid field neither on page nor on pdf
+@ao @requested @m7 @_done @_tested
+Scenario: VAT paid in customer country should be renamed to 'Charge VAT' and I can't see VAT paid field neither on page nor on pdf
+  Given I have user with email bigbuyer1@person.com and role customer
+  And User bigbuyer1@person.com with role customer is big buyer
+  And a lead Monitors ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role customer
+  And lead Monitors ultimate deal exists with attributes "price:304.35,currency_id:1"
+  And user with email "bigbuyer1@person.com" and role "customer" has invoice generated for all unpaid leads
+  And I go to administration invoices
+  And I follow translated "administration.invoices.index.view.show_invoice"
+  Then I should not see translated "administration.invoices.show.view.vat_paid"
+  And I follow translated "administration.invoices.show.view.edit_invoice"
+  Then I should see "Charge VAT"
 
 # If “Charge VAT” is set to false, do not display “VAT spec” section in show view and pdf
 @requested @m7
