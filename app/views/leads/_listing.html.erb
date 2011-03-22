@@ -48,12 +48,14 @@
                 <span class="green"><%= as_currency(lead.purchase_value, lead.currency) %></span></p>
           <% end %>
 
-          <p class="element"><%= t("leads.listing.lead_price_label") %>
-            <span class="green"><%= as_currency(lead.price, lead.currency) %></span></p>
+          <% if lead.category.price_visible_for?(current_user) %>
+              <p class="element"><%= t("leads.listing.lead_price_label") %>
+                <span class="green"><%= as_currency(lead.price, lead.currency) %></span></p>
 
-          <% if lead.buyout_possible_for?(current_user) %>
-              <p class="element"><%= t("leads.listing.buyout_price_label") %>
-                <span class="green"><%= as_currency(lead.buyout_price, lead.currency) %></span></p>
+              <% if lead.buyout_possible_for?(current_user) %>
+                  <p class="element"><%= t("leads.listing.buyout_price_label") %>
+                    <span class="green"><%= as_currency(lead.buyout_price, lead.currency) %></span></p>
+              <% end %>
           <% end %>
 
           <p class="element_description i expandable"><%= lead.description %></p>

@@ -232,11 +232,11 @@ Scenario: Hidden description should be truncated and expandable by JS
 @m6 @tgn @selenium @_tested  @requested
 Scenario: I can add note to owned lead
   When I go to buyer lead purchases
-  And I move mouse over "#lead_purchase_1"
+  And I show accordion details for row "#lead_purchase_1"
   And I fill in "owner_note_1" with "My custom note"
   Then I follow translated "lead_buyer.lead_purchases.index.view.update_owner_note"
   When I go to buyer lead purchases
-  And I move mouse over "#lead_purchase_1"
+  And I show accordion details for row "#lead_purchase_1"
   And the "owner_note_1" field should contain "My custom note"
 
 # https://redmine.selleo.com/issues/4021
@@ -253,10 +253,13 @@ Scenario: I can't see purchase value on my leads listing
 @m7 @requested @selenium @tgn @_tested
 Scenario: I can see creator name under purchase date
   When I go to buyer lead purchases
-  And I open page in browser
-  Given I move mouse over "#lead_purchase_1"
+  Given I show accordion details for row "#lead_purchase_1"
   And I should see "SomeAgent Joe"
 
 # My leads accordion - do not trigger accordion on mouse hover but on link-click instead (i.e. show more details)
-@m7 @requested
+@m7 @requested @selenium @tgn @_tested
 Scenario: I can see details in accordion when clicking on header
+  When I go to buyer lead purchases
+  And I show accordion details for row "#lead_purchase_1"
+  And I should see "Uniqueness"
+  And I should see "Purchase date"

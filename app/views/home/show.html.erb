@@ -1,5 +1,11 @@
 <column-mc:>
-  <header><%= t("home.show.view.header") %></header>
+  <header>
+    <% if current_user and current_user.has_any_role?(:call_centre ,:call_centre_agent) %>
+        <%= t("home.show.view.call_centre_header", :name => "#{ current_user.screen_name + "@" if current_user.has_role?(:call_centre_agent)}#{current_user.has_role?(:call_centre_agent) ? current_user.parent.company_name : current_user.screen_name }") %>
+    <% else %>
+        <%= t("home.show.view.header") %>
+    <% end %>
+  </header>
 
   <div class="pdd_5 no_pdd_b">
     <p><%= blurb("blurb_start_page_role_selection") %></p>
