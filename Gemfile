@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 gem 'bundler'
 
-gem 'rails', '3.0.5'
+gem 'rails', '3.0.3'
 gem 'railties'
 
 gem 'mongrel'
