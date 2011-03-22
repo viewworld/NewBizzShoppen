@@ -32,6 +32,7 @@ class Administration::UsersController < Administration::AdministrationController
       flash[:notice] = t("administration.users.update.flash.user_update_successful")
       redirect_to administration_users_path
     else
+      flash[:alert] = @user.errors[:base]
       render :action => 'edit'
     end
   end

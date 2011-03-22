@@ -1823,6 +1823,9 @@ en:
         country: "Country"
         agreement_read: "I have read and agree to Associated Content's Terms of Use and Privacy Policy"
         newsletter_on: "I want to receive the newsletter"
+        customer:
+          base:
+            must_have_interests: "User must have at least one interests category"
       lead:
         purchase_decision_date: "Purchase decision date"
         notify_buyers_after_update: "Notify sales managers about changes"
