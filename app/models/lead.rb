@@ -285,7 +285,7 @@ class Lead < ActiveRecord::Base
   end
 
   def lead_template_values_present?
-    !LeadTemplateValue.where("lead_templates.id in (?)", lead_templates.map(&:id)).joins("inner join lead_template_fields on lead_template_values.lead_template_field_id=lead_template_fields.id inner join lead_templates on lead_template_fields.lead_template_id=lead_templates.id").limit(1).empty?
+    !LeadTemplateValue.where("value IS NOT NULL AND value NOT like '' AND lead_id = ? AND lead_templates.id in (?)", id, lead_templates.map(&:id)).joins("inner join lead_template_fields on lead_template_values.lead_template_field_id=lead_template_fields.id inner join lead_templates on lead_template_fields.lead_template_id=lead_templates.id").limit(1).empty?
   end
 
   def bought_by_anyone?
