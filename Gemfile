@@ -2,11 +2,11 @@ source 'http://rubygems.org'
 
 gem 'bundler'
 
-gem 'rails', '3.0.3'
+gem 'rails', '3.0.5'
 gem 'railties'
 
 gem 'mongrel'
-gem 'pg', '0.9.0'
+gem 'pg'
 gem 'inherited_resources', '1.1.2'
 gem 'will_paginate', '3.0.pre2', :branch => "rails3"
 gem 'formtastic', '1.1.0'

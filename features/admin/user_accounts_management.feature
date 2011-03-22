@@ -198,16 +198,19 @@ Scenario: User can login after changing his account to category buyer
   And I fill in "search_with_keyword" with "kastomer"
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/users\/\d+\/edit/"
-  And I follow translated "administration.users.edit.view.change_to_category_buyer"
-  And I select "CategoryBuyerCategory" from "all_categories"
-  And I follow "move_right" within "#category_buyer_categories"
+  And I select "CategoryBuyerCategory" from "all_categories_for_interests"
+  And I follow "move_right" within "#category_interests"
   Then I press translated "administration.categories.edit.view.button_update"
+  And I fill in "search_with_keyword" with "kastomer"
+  And I press translated "administration.users.index.view.search_button"
+  And I click hidden link by url regex "/users\/\d+\/edit/"
+  And I follow translated "administration.users.edit.view.change_to_category_buyer"
   And I sign out
   And I sign in as kastomer@nbs.com with password secret
   And I follow translated "layout.main_menu.shared.browse_leads"
   Then I should be on category leads page for CategoryBuyerCategory
 
-@m6 @added @selenium @_done @_tested  @requested
+@m6 @added @selenium @_done @_tested @requested
 Scenario: Subaccounts can login after changing his account to category buyer
   When I follow translated "layout.main_menu.admin.users"
   And Category CategoryBuyerCategory is created
@@ -217,10 +220,13 @@ Scenario: Subaccounts can login after changing his account to category buyer
   And I fill in "search_with_keyword" with "kastomer"
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/users\/\d+\/edit/"
-  And I follow translated "administration.users.edit.view.change_to_category_buyer"
-  And I select "CategoryBuyerCategory" from "all_categories"
-  And I follow "move_right" within "#category_buyer_categories"
+  And I select "CategoryBuyerCategory" from "all_categories_for_interests"
+  And I follow "move_right" within "#category_interests"
   Then I press translated "administration.categories.edit.view.button_update"
+  And I fill in "search_with_keyword" with "kastomer"
+  And I press translated "administration.users.index.view.search_button"
+  And I click hidden link by url regex "/users\/\d+\/edit/"
+  And I follow translated "administration.users.edit.view.change_to_category_buyer"
   And I sign out
   And I sign in as sub@nbs.com with password secret
   And I follow translated "layout.main_menu.shared.browse_leads"
@@ -353,12 +359,36 @@ Scenario: I can filter users by Call center agents
   And I should see "call_centre_agent02@nbs.com"
   And I should not see "bob@person.com" within "#users_table"
 
-@requested @m7
+@ao @requested @m7 @_done @_tested
 Scenario: When editing a call centre agent I can see it's name in format "fullname @ callcentername"
+  Given I am signed up and confirmed as user with email kol_senter@nbs.com and password secret and role call_centre with attributes "company_name:Selleo"
+  And an user with role call_centre_agent and email sab@nbs.com belongs to call centre kol_senter@nbs.com
+  And I go to administration users
+  And I select "Call centre agent" from "search_with_role"
+  And I press translated "administration.users.index.view.search_button"
+  And I click hidden link by url regex "/users\/\d+\/edit/"
+  Then I should see /[\w]+ @ \w+/ within ".header_ribbon"
 
-@requested @m7
+@ao @requested @m7 @_done @_tested
 Scenario: When editing call center agent I can navigate to call center's edit page
+  Given I am signed up and confirmed as user with email kol_senter@nbs.com and password secret and role call_centre with attributes "company_name:Selleo"
+  And an user with role call_centre_agent and email sab@nbs.com belongs to call centre kol_senter@nbs.com
+  And I go to administration users
+  And I select "Call centre agent" from "search_with_role"
+  And I press translated "administration.users.index.view.search_button"
+  And I click hidden link by url regex "/users\/\d+\/edit/"
+  And I follow "Selleo" within ".header_ribbon"
+  Then I should be on administration edit user for kol_senter@nbs.com
 
-@requested @m7
+@ao @requested @m7 @_done @_tested
 Scenario: When editing call center agent I can navigate to list of leads created by this agent
-
+  Given I am signed up and confirmed as user with email kol_senter@nbs.com and password secret and role call_centre with attributes "company_name:Selleo"
+  And an user with role call_centre_agent and email sab@nbs.com belongs to call centre kol_senter@nbs.com
+  And lead SabKolSenterLead is created by user sab@nbs.com with role call_centre_agent
+  And I go to administration users
+  And I select "Call centre agent" from "search_with_role"
+  And I press translated "administration.users.index.view.search_button"
+  And I click hidden link by url regex "/users\/\d+\/edit/"
+  And I follow translated "administration.users.edit.view.view_created_leads"
+  Then I should see "SabKolSenterLead" within "#leads"
+  And I should see "1" rows in a table within "#leads"

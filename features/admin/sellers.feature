@@ -14,7 +14,7 @@ Feature: Sellers
   # there is always one default seller from seed
   @selenium @_done
   Scenario: I can create a new seller
-    When I follow translated "layout.main_menu.admin.sellers"
+    When I click hidden link by url regex "/administration\/sellers/"
     And I follow translated "administration.sellers.index.view.add_seller"
     And I fill in "seller_company_name" with "SellerOne"
     And I fill in "seller_first_name" with "Danny"
@@ -61,7 +61,7 @@ Feature: Sellers
   Scenario: One seller can be selected as default
     When there is a seller with attributes "company_name:SellerOne"
     And there is a seller with attributes "company_name:SellerTwo"
-    And I follow translated "layout.main_menu.admin.sellers"
+    And I click hidden link by url regex "/administration\/sellers/"
     And I am on administration seller SellerOne edit page
     And I check "seller_default"
     And I press translated "administration.sellers.edit.view.button_update"
@@ -75,19 +75,19 @@ Feature: Sellers
 
   @added @selenium @_done @_tested
   Scenario: I can specify company name when creating new seller
-    When I follow translated "layout.main_menu.admin.sellers"
+    When I click hidden link by url regex "/administration\/sellers/"
     And I follow translated "administration.sellers.index.view.add_seller"
     Then I should see CSS path "#seller_company_name"
 
   @added @selenium @_done @_tested
   Scenario: Sellers should have invoice note information
-    When I follow translated "layout.main_menu.admin.sellers"
+    When I click hidden link by url regex "/administration\/sellers/"
     And I follow translated "administration.sellers.index.view.add_seller"
     Then I should see CSS path "#seller_note_input"
 
   @m6 @selenium @_done @_tested
   Scenario: I should be able to select bank account for each seller (by default the default bank account for new sellers)
-    When I follow translated "layout.main_menu.admin.sellers"
+    When I click hidden link by url regex "/administration\/sellers/"
     And I follow translated "administration.sellers.index.view.add_seller"
     Then I should see CSS path "#seller_bank_account_id"
 
@@ -95,10 +95,10 @@ Feature: Sellers
   Scenario: Global default bank should be selected for new seller
     When there is a bank account for country "United Kingdom"
     And bank account for country "Denmark" has attributes "global_default:1"
-    And I follow translated "layout.main_menu.admin.sellers"
+    And I click hidden link by url regex "/administration\/sellers/"
     And I follow translated "administration.sellers.index.view.add_seller"
     Then "seller_bank_account_id" should be selected for "1"
     When bank account for country "United Kingdom" has attributes "global_default:1"
-    And I follow translated "layout.main_menu.admin.sellers"
+    And I click hidden link by url regex "/administration\/sellers/"
     And I follow translated "administration.sellers.index.view.add_seller"
     Then "seller_bank_account_id" should be selected for "2"

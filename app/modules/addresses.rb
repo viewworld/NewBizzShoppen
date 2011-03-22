@@ -2,7 +2,7 @@ module Addresses
 
   def self.included(base)
     base.class_eval do
-      has_one :address, :as => :addressable
+      has_one :address, :as => :addressable, :autosave => true
 
       accepts_nested_attributes_for :address
 

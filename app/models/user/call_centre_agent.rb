@@ -7,7 +7,7 @@ class ::User::CallCentreAgent < ::User
 
   before_validation :skip_address_validation
 
-
+  # TODO wtf?
   def can_publish_leads?
     true
   end

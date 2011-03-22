@@ -5,6 +5,7 @@ module RoleChange
       attr_accessor :roles_to_remove, :roles_to_add
       before_save :check_changed_roles
       after_update :assign_buying_categories
+      before_update :keep_address
     end
     base.send(:include, InstanceMethods)
   end
@@ -49,6 +50,12 @@ module RoleChange
     def assign_buying_categories
       if roles_mask_changed? and has_role? :category_buyer and !parent
         self.with_role.buying_categories = categories
+      end
+    end
+
+    def keep_address
+      if roles_mask_changed? and !parent
+        self.address.addressable_type = "User::#{role.to_s.classify}"
       end
     end
   end
