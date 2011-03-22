@@ -4,7 +4,7 @@ module RoleChange
     base.class_eval do
       attr_accessor :roles_to_remove, :roles_to_add
       before_save :check_changed_roles
-      after_save :assign_buying_categories
+      after_update :assign_buying_categories
     end
     base.send(:include, InstanceMethods)
   end
