@@ -39,8 +39,8 @@ end
 group :test do
   gem 'database_cleaner'
   gem 'capybara'
-  gem 'cucumber', ">= 0.9.0"
-  gem 'cucumber-rails'
+  gem 'cucumber', "0.10.0"
+  gem 'cucumber-rails', '0.3.2'
   gem 'test-unit'
   gem 'pickle'
   gem 'spork'
