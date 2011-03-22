@@ -2051,6 +2051,25 @@ en:
         cash_flow: "Amount paid"
         paid_at: "Paid at"
         charge_vat: "Charge VAT"
+      address/invoice_seller:
+        address_line_1: "Address line 1"
+        address_line_2: "Address line 2"
+        address_line_3: "City"
+        zip_code: "Zip code"
+        country: "Country"
+      address/invoice_customer:
+        address_line_1: "Address line 1"
+        address_line_2: "Address line 2"
+        address_line_3: "City"
+        zip_code: "Zip code"
+        country: "Country"
+      address/bank:
+        address_line_1: "Address line 1"
+        address_line_2: "Address line 2"
+        address_line_3: "City"
+        zip_code: "Zip code"
+        country: "Country"
+
       seller:
         company_name: "Company"
         first_name: "First name"
