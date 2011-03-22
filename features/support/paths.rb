@@ -18,6 +18,8 @@ module NavigationHelpers
       '/agents'
     when /administration users/
         '/administration/users'
+    when /administration edit user for (.*)/
+        edit_administration_user_path(User.where(:email => $1).first)
     when /administration categories/
         '/administration/categories'
     when /administration edit category (.*)/
