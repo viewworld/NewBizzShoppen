@@ -140,7 +140,7 @@ Scenario: In users listing I can see unpaid leads count
   And I press translated "administration.users.index.view.search_button"
   Then I should have value "1" in the css path "tr:nth-child(1) td:nth-child(9)"
 
-@m6 @_done @_tested  @requested
+@m6 @_done @_tested @requested
 Scenario: I can change category buyer to regular buyer
   When I follow translated "layout.main_menu.admin.users"
   And Category CategoryBuyerCategory is created
@@ -244,9 +244,6 @@ Scenario: I can change regular buyer to category buyer
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/users\/\d+\/edit/"
   When I follow translated "administration.users.edit.view.change_to_category_buyer"
-  And I fill in "search_with_keyword" with "kastomer"
-  And I press translated "administration.users.index.view.search_button"
-  And I click hidden link by url regex "/users\/\d+\/edit/"
   Then I should not see CSS path "#unique_categories"
   And I should not see CSS path "#category_interests"
   And I should see CSS path "#category_buyer_categories"
@@ -292,7 +289,7 @@ Scenario: I can configure buyer category interests when editing it
   And I click hidden link by url regex "/administration\/users\/\d+\/edit/"
   And "user_customer_category_ids_" dropdown should have values "Computers,Laptops"
 
-@m6 @tgn @selenium @_tested  @requested
+@m6 @tgn @selenium @_tested @requested
 Scenario: I can manage user's access to unique categories as well
   Given I have user with email buyer2222@nbs.com and role customer
   And category "Computers" is unique for user with email "buyer29382.biz@nbs.com" role "customer"
