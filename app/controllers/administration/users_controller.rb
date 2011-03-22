@@ -25,13 +25,18 @@ class Administration::UsersController < Administration::AdministrationController
 
   def update
     @user = User.find(params[:id]).send(:casted_class).find(params[:id])
-
-    @user.send(:attributes=, params["user_#{@user.role.to_s}"], false)
+    user_params_key = "user_#{@user.role.to_s}"
+    @user.send(:attributes=, params[user_params_key], false)
 
     if @user.save
       flash[:notice] = t("administration.users.update.flash.user_update_successful")
-      redirect_to administration_users_path
+      if params[user_params_key]["roles_to_add"] or params[user_params_key]["roles_to_remove"]
+        redirect_to :back
+      else
+        redirect_to administration_users_path
+      end
     else
+      flash[:alert] = @user.errors[:base]
       render :action => 'edit'
     end
   end

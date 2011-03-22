@@ -1824,6 +1824,9 @@ en:
         country: "Country"
         agreement_read: "I have read and agree to Associated Content's Terms of Use and Privacy Policy"
         newsletter_on: "I want to receive the newsletter"
+        customer:
+          base:
+            must_have_interests: "User must have at least one interests category"
       lead:
         purchase_decision_date: "Purchase decision date"
         notify_buyers_after_update: "Notify sales managers about changes"
@@ -2048,6 +2051,25 @@ en:
         cash_flow: "Amount paid"
         paid_at: "Paid at"
         charge_vat: "Charge VAT"
+      address/invoice_seller:
+        address_line_1: "Address line 1"
+        address_line_2: "Address line 2"
+        address_line_3: "City"
+        zip_code: "Zip code"
+        country: "Country"
+      address/invoice_customer:
+        address_line_1: "Address line 1"
+        address_line_2: "Address line 2"
+        address_line_3: "City"
+        zip_code: "Zip code"
+        country: "Country"
+      address/bank:
+        address_line_1: "Address line 1"
+        address_line_2: "Address line 2"
+        address_line_3: "City"
+        zip_code: "Zip code"
+        country: "Country"
+
       seller:
         company_name: "Company"
         first_name: "First name"

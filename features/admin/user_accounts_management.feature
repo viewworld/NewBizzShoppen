@@ -140,7 +140,7 @@ Scenario: In users listing I can see unpaid leads count
   And I press translated "administration.users.index.view.search_button"
   Then I should have value "1" in the css path "tr:nth-child(1) td:nth-child(9)"
 
-@m6 @_done @_tested  @requested
+@m6 @_done @_tested @requested
 Scenario: I can change category buyer to regular buyer
   When I follow translated "layout.main_menu.admin.users"
   And Category CategoryBuyerCategory is created
@@ -208,7 +208,7 @@ Scenario: User can login after changing his account to category buyer
   Then I should be on category leads page for CategoryBuyerCategory
 
 @m6 @added @selenium @_done @_tested  @requested
-Scenario: User can login after changing his account to category buyer
+Scenario: Subaccounts can login after changing his account to category buyer
   When I follow translated "layout.main_menu.admin.users"
   And Category CategoryBuyerCategory is created
   And Category AnotherCategory is created
@@ -226,7 +226,7 @@ Scenario: User can login after changing his account to category buyer
   And I follow translated "layout.main_menu.shared.browse_leads"
   Then I should be on category leads page for CategoryBuyerCategory
 
-@m6 @_done @_tested  @requested
+@m6 @_done @_tested  @requested @selenium
 Scenario: I can change regular buyer to category buyer
   When I follow translated "layout.main_menu.admin.users"
   And Category CategoryBuyerCategory is created
@@ -234,9 +234,15 @@ Scenario: I can change regular buyer to category buyer
   And I am signed up and confirmed as user with email kastomer@nbs.com and password secret and role customer
   And I fill in "search_with_keyword" with "kastomer"
   And I press translated "administration.users.index.view.search_button"
-  And I follow translated "administration.users.index.view.edit"
+  And I click hidden link by url regex "/users\/\d+\/edit/"
   Then I should see CSS path "#unique_categories"
   And I should see CSS path "#category_interests"
+  And I select "CategoryBuyerCategory" from "all_categories_for_interests"
+  And I follow "move_right" within "#category_interests"
+  And I press translated "administration.users.edit.view.button_update_user"
+  And I fill in "search_with_keyword" with "kastomer"
+  And I press translated "administration.users.index.view.search_button"
+  And I click hidden link by url regex "/users\/\d+\/edit/"
   When I follow translated "administration.users.edit.view.change_to_category_buyer"
   Then I should not see CSS path "#unique_categories"
   And I should not see CSS path "#category_interests"
@@ -283,7 +289,7 @@ Scenario: I can configure buyer category interests when editing it
   And I click hidden link by url regex "/administration\/users\/\d+\/edit/"
   And "user_customer_category_ids_" dropdown should have values "Computers,Laptops"
 
-@m6 @tgn @selenium @_tested  @requested
+@m6 @tgn @selenium @_tested @requested
 Scenario: I can manage user's access to unique categories as well
   Given I have user with email buyer2222@nbs.com and role customer
   And category "Computers" is unique for user with email "buyer29382.biz@nbs.com" role "customer"
@@ -319,8 +325,22 @@ Scenario: I can see a list of subaccounts and edit them when editing parent acco
   And I should see "lead_user29322biz@nbs.com"
 
 # When changing from regular buyer to category buyer, system should require that buyer to have category interests assigned (that will be migrated to category buyer’s assigned  categories)
-@requested @m7
+@requested @m7 @selenium @_done @_tested
 Scenario: I can change buyer to category buyer only if he has interests categories
+  When I follow translated "layout.main_menu.admin.users"
+  And Category CategoryBuyerCategory is created
+  And Category AnotherCategory is created
+  And I am signed up and confirmed as user with email kastomer@nbs.com and password secret and role customer
+  And I fill in "search_with_keyword" with "kastomer"
+  And I press translated "administration.users.index.view.search_button"
+  And I click hidden link by url regex "/users\/\d+\/edit/"
+  And I follow translated "administration.users.edit.view.change_to_category_buyer"
+  Then I should see translated "activerecord.attributes.user.customer.base.must_have_interests"
+  And I select "CategoryBuyerCategory" from "all_categories_for_interests"
+  And I follow "move_right" within "#category_interests"
+  And I press translated "administration.users.edit.view.button_update_user"
+  Then I should be on administration users page
+  And I should not see translated "activerecord.attributes.user.customer.base.must_have_interests"
 
 @requested @m7 @_tested @tgn
 Scenario: I can filter users by Call center agents

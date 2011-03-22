@@ -9,9 +9,9 @@
             <%= bt_link_to nil, t("administration.users.edit.view.view_created_leads"), administration_leads_path(:search => {:with_created_by => @user}), :class => "fltr" %>
           <% end %>
           <% if @user.has_role?(:category_buyer) %>
-            <%= bt_link_to nil, t("administration.users.edit.view.change_to_regular_buyer"), administration_user_roles_path(@user, :roles => [:category_buyer]) , :method => :delete, :class => "fltr" %>
+            <%= bt_link_to nil, t("administration.users.edit.view.change_to_regular_buyer"), administration_user_path(@user, "user_#{@user.role}" => {:roles_to_remove => [:category_buyer]}) , :method => :put, :class => "fltr" %>
           <% elsif @user.has_role?(:customer) %>
-            <%= bt_link_to nil, t("administration.users.edit.view.change_to_category_buyer"), administration_user_roles_path(@user, :roles => [:category_buyer]) , :method => :post, :class => "fltr" %>
+            <%= bt_link_to nil, t("administration.users.edit.view.change_to_category_buyer"), administration_user_path(@user, "user_#{@user.role}" => {:roles_to_add => [:category_buyer]}) , :method => :put, :class => "fltr" %>
           <% end %>
         </param:header>
         <param:content>

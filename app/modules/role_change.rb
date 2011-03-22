@@ -4,6 +4,7 @@ module RoleChange
     base.class_eval do
       attr_accessor :roles_to_remove, :roles_to_add
       before_save :check_changed_roles
+      after_update :assign_buying_categories
     end
     base.send(:include, InstanceMethods)
   end
@@ -21,22 +22,33 @@ module RoleChange
           send("add_role_#{role_to_add}")
         end
       end
+      errors.empty?
     end
 
     def remove_role_category_buyer
       self.buying_categories = []
       self.roles.delete(:category_buyer)
-      User::LeadBuyer.find(subaccounts.map(&:id)).each do |sa|
+      User::LeadUser.find(subaccounts.map(&:id)).each do |sa|
         sa.roles.delete(:category_buyer)
         sa.save
       end
     end
 
     def add_role_category_buyer
-      self.roles << :category_buyer
-      subaccounts.map(&:with_role).each do |sa|
-        sa.roles << :category_buyer
-        sa.save
+      if categories.empty?
+        self.errors.add(:base, I18n.t("activerecord.attributes.user.customer.base.must_have_interests"))
+      else
+        self.roles << :category_buyer
+        subaccounts.map(&:with_role).each do |sa|
+          sa.roles << :category_buyer
+          sa.save
+        end
+      end
+    end
+
+    def assign_buying_categories
+      if roles_mask_changed? and has_role? :category_buyer and !parent
+        self.with_role.buying_categories = categories
       end
     end
   end
