@@ -128,3 +128,7 @@ end
 Given /^I move mouse over "([^"]*)"$/ do |selector|
   page.evaluate_script("move_mouse_over('#{selector}')")
 end
+
+Given /^I show accordion details for row "([^"]*)"$/ do |selector|
+  page.evaluate_script("show_hide_details('#{selector}')")
+end
