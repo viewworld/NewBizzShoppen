@@ -138,6 +138,30 @@ Scenario: When creating new category it is marked with buyout flag by default
   Then checkbox named "category_buyout_enabled" should be checked
 
 # Allow admin to flag a category with option “Do not show prices to team members” - this will basically make team-buyers (subeaccounts) not see lead price when browsing leads within that particular category.
-@requested @m7
+@requested @m7 @tgn @_tested
 Scenario: I can flag a category to not show prices to team members
-
+  Given there are no categories
+  And Category Computers is created
+  When I go to administration categories
+  Then I follow translated "administration.categories.index.view.edit_link"
+  And I check "category_no_prices_for_team_members"
+  And I press translated "administration.categories.edit.view.button_update"
+  Then I am not sign in
+  And lead Monitors deal #1 exists within category Computers
+  And lead "Monitors deal #1" has attributes "price:589.17"
+  And lead Monitors deal #2 exists within category Computers
+  And lead "Monitors deal #2" has attributes "price:439.58"
+  And someone is signed up and confirmed as user with email buyer888@nbs.com and password secret and role customer
+  And someone is signed up and confirmed as user with email lead_buyer888@nbs.com and password secret and role lead_buyer
+  And an user with role lead_buyer and email lead_buyer888@nbs.com exists as subaccount for customer buyer888@nbs.com
+  Then I sign in as lead_buyer888@nbs.com with password secret
+  And I go to browse leads
+  And I follow "Computers"
+  Then I should not see "589.17"
+  And I should not see "439.58"
+  Then I am not sign in
+  Then I sign in as buyer888@nbs.com with password secret
+  And I go to browse leads
+  And I follow "Computers"
+  Then I should see "589.17"
+  And I should see "439.58"

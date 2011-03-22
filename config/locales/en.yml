@@ -2152,6 +2152,7 @@ en:
         is_customer_unique: "Is customer unique"
         is_agent_unique: "Is agent unique"
         countries: "Countries"
+        no_prices_for_team_members: "Do not show prices for team members"
       manual_transaction:
         amount: "Amount"
         paid_at: "Paid at"

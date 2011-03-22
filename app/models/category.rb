@@ -123,4 +123,11 @@ class Category < ActiveRecord::Base
     name
   end
 
+  def price_visible_for?(user)
+    if user and user.has_any_role?(:lead_buyer, :lead_user) and user.parent.present?
+      return false
+    end
+    true
+  end
+
 end
