@@ -327,6 +327,7 @@ en:
         purchase_manager_sign_up_text: "If you want a quote on your business"
         agent_sign_up_text: "If you can create new leads"
 
+        call_centre_header: "Welcome %{name}"
   password:
     update:
       controller:
