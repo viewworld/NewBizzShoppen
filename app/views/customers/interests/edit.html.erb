@@ -20,12 +20,11 @@
                       <li>
                         <table class="categories_table">
                           <tbody>
-                          <% @categories.in_groups_of(3, false).each do |categories| %>
+                          <% @categories.select { |c| c.parent_id.blank? }.in_groups_of(3, false).each do |categories| %>
                               <tr>
                                 <% categories.each do |category| %>
                                     <td>
-                                      <%= check_box_tag("categories[]", category.id, current_user.categories.include?(category), :id => "category_#{category.id}") %>
-                                      <%= label_tag "category_#{category.id}", category.name %>
+                                      <%= categories_structure_root(category, @categories) %>
                                     </td>
                                 <% end %>
                               </tr>
@@ -89,4 +88,16 @@
         </param:actions>
       </frm>
   <% end %>
+
+
+        <script type="text/javascript">
+
+            $(document).ready(function() {
+                <% @categories.select { |c| c.parent_id.blank? }.each do |category| %>
+                $('#category_tree_<%= category.id %>').checkboxTree({
+                });
+                <% end %>
+            });
+
+        </script>
 </column-mc:>

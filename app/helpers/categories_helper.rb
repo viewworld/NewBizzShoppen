@@ -98,4 +98,30 @@ module CategoriesHelper
       end
   end
 
+  def categories_structure_root(root_category, all_categories=[])
+    result = [category_structure_tags(root_category)]
+    unless (children = all_categories.select { |c| c.parent_id == root_category.id }).empty?
+      result << categories_structure_children(children, all_categories)
+    end
+    content_tag("ul", result.flatten.compact.join.html_safe, :id => "category_tree_#{root_category.id}")
+  end
+
+  def categories_structure_children(children, all_categories, level=0)
+    result = []
+    children.each do |category|
+      result << category_structure_tags(category)
+      unless (category_children = all_categories.select { |c| c.parent_id == category.id }).empty?
+        result << categories_structure_children(category_children, all_categories, level + 1)
+      end
+    end
+    content_tag("ul", result.flatten.join.html_safe)
+  end
+
+  def category_structure_tags(category)
+    "<li>" +
+    check_box_tag("categories[]", category.id, current_user.categories.include?(category), :id => "category_#{category.id}") +
+    label_tag("category_#{category.id}", category.name)
+
+  end
+
 end
