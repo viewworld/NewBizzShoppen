@@ -550,8 +550,26 @@ Scenario: I can see customer and seller addresses on invoice
   And I should see "Michalowicza" within ".from_to_table tr:nth-child(2) td:nth-child(2)"
 
 # You should be able to select seller on the edit invoice note, which will fill out the details on the seller on the invoice (display dropdown over seller information fields)
-@requested @m7
+@ao @requested @m7 @selenium @_done @_tested
 Scenario: I can select a seller on the edit inovice page
+  Given there is a seller with attributes "company_name:SomeSeller,default:1" for country "Denmark"
+  And seller "SomeSeller" has address "address_line_1:Prosta"
+  And there is a seller with attributes "company_name:Selleo,default:0" for country "Denmark"
+  And seller "Selleo" has address "address_line_1:Kaminskiego"
+  And someone is signed up and confirmed as user with email bigbuyer666@nbs.com and password secret and role customer
+  And User bigbuyer666@nbs.com with role customer is big buyer
+  And user "bigbuyer666@nbs.com" with role "customer" has address "address_line_1:Michalowicza"
+  And a lead Klawiaturyyy exists within category Computers and is bought by user bigbuyer666@nbs.com with role customer
+  And user with email "bigbuyer666@nbs.com" and role "customer" has invoice generated for all unpaid leads
+  And I go to administration invoices
+  And I click hidden link by url regex "/administration\/invoicing\/invoices\/\d+/"
+  Then I should see "SomeSeller" within ".from_to_table tr:nth-child(1) td:nth-child(1)"
+  And I should see "Prosta" within ".from_to_table tr:nth-child(2) td:nth-child(1)"
+  When I follow translated "administration.invoices.show.view.edit_invoice"
+  And I select "Selleo" from "invoice_seller_id"
+  When I press translated "administration.invoices.edit.view.save_button"
+  Then I should see "Selleo" within ".from_to_table tr:nth-child(1) td:nth-child(1)"
+  And I should see "Kaminskiego" within ".from_to_table tr:nth-child(2) td:nth-child(1)"
 
 # On the invoice, remove the text (labels) “address line 1, address line 2, address line 3”, leave zip code and country lables though
 @ao @requested @m7 @_done @_tested
