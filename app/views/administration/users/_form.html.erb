@@ -53,7 +53,7 @@
         <%= form.input :phone %>
         <%= form.input :email %>
         <% if ['agent', 'call_centre'].include?(params[:role]) or @user.has_any_role?(:agent, :call_centre) %>
-            <%= form.input :payout, :hint => "%" %>
+            <%= form.input :payout, :required => true, :hint => "%" %>
         <% end %>
 
         <%= form.input :agreement_read, :as => :hidden %>
