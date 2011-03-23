@@ -18,7 +18,7 @@
         <%= form.input :company_vat_no, :hint => hint_for(@lead, :company_vat_no) %>
         <%= form.input :company_ean_number, :hint => hint_for(@lead, :company_ean_number) %>
         <% if current_user.has_any_role?(:admin, :call_centre) %>
-            <%= form.input :tmp_creator_id, :as => :select, :collection => (current_user.has_role?(:call_centre) ? User.with_call_centre_agents(current_user) : User.with_agents_without_call_centres).map { |u| [u.email, u.id] }, :selected => @lead.creator_id %>
+            <%= form.input :tmp_creator_id, :as => :select, :collection => (current_user.has_role?(:call_centre) ? User.with_call_centre_agents(current_user) : User.with_agents_without_call_centres).map { |u| [u.email, u.id] }, :selected => @lead.tmp_creator_id.blank? ? @lead.creator_id : @lead.tmp_creator_id %>
         <% end %>
       </ol>
     </fieldset>
