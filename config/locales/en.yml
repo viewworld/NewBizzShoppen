@@ -186,6 +186,8 @@ en:
       facebook_profile: "Facebook profile"
       purchase_date: "Purchase date:"
       creator_name: "Creator:"
+      show_row: "Show"
+      hide_row: "Hide"
     statuses:
       not_contacted: Not contacted
       contacted: Contacted
