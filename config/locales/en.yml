@@ -25,6 +25,7 @@ en:
       collapse_prefix: " "
     no_categories_for_category_buyer: "Your Category Buyer account has no associated categories. You can't sign in."
     edit_hint: "Edit hint"
+    agree_to: "Agree to"
   ckeditor:
     upload_new_files: "Upload new files"
     file_manager: "File Manager"

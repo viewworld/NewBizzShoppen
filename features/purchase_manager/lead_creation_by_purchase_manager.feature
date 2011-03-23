@@ -82,7 +82,7 @@ Scenario: Contact information should be prepopulated
   And the "lead_contact_name" field should contain any value
   And the "lead_phone_number" field should contain any value
   And the "lead_address_line_1" field should contain any value
-  And the "lead_city" field should contain any value
+  And the "lead_address_line_3" field should contain any value
   And the "lead_zip_code" field should contain any value
 
 @added @_done @selenium
@@ -139,7 +139,7 @@ Scenario: I have to fill out the templates which are mandatory
   And I fill in "lead_phone_number" with "123456789"
   And I fill in "lead_company_name" with "Printing company"
   And I fill in "lead_address_line_1" with "Kaminskiego 19"
-  And I fill in "lead_city" with "Bielsko-Biała"
+  And I fill in "lead_address_line_3" with "Bielsko-Biała"
   And I fill in "lead_zip_code" with "23-2911"
   And I fill in "datepicker" with date that is "5" days from now
   And I fill in "lead_lead_template_values_attributes_0_value" with "123"
@@ -171,7 +171,7 @@ Scenario: I can select additional templates that are optional
   And I fill in "lead_phone_number" with "123456789"
   And I fill in "lead_company_name" with "Printing company"
   And I fill in "lead_address_line_1" with "Kaminskiego 19"
-  And I fill in "lead_city" with "Bielsko-Biała"
+  And I fill in "lead_address_line_3" with "Bielsko-Biała"
   And I fill in "lead_zip_code" with "23-2911"
   And I fill in "datepicker" with date that is "5" days from now
   And I fill in "lead_lead_template_values_attributes_0_value" with "123"
@@ -241,7 +241,7 @@ Scenario: When new translation to lead is added I can also write translation for
   And I fill in "lead_phone_number" with "123456789"
   And I fill in "lead_company_name" with "Printing company"
   And I fill in "lead_address_line_1" with "Kaminskiego 19"
-  And I fill in "lead_city" with "Bielsko-Biała"
+  And I fill in "lead_address_line_3" with "Bielsko-Biała"
   And I fill in "lead_zip_code" with "23-2911"
   And I fill in "datepicker" with date that is "5" days from now
   And I fill in "lead_lead_template_values_attributes_0_value" with "123"
@@ -277,7 +277,7 @@ Scenario: I have to fill out the fields that are mandatory in mandatory or optio
   And I fill in "lead_phone_number" with "123456789"
   And I fill in "lead_company_name" with "Printing company"
   And I fill in "lead_address_line_1" with "Kaminskiego 19"
-  And I fill in "lead_city" with "Bielsko-Biała"
+  And I fill in "lead_address_line_3" with "Bielsko-Biała"
   And I fill in "lead_zip_code" with "23-2911"
   And I fill in "datepicker" with date that is "5" days from now
   And I fill in "lead_lead_template_values_attributes_0_value" with "123"
@@ -306,7 +306,7 @@ Scenario: When there is only one template present for a lead and it is optional 
   And I fill in "lead_phone_number" with "123456789"
   And I fill in "lead_company_name" with "Printing company"
   And I fill in "lead_address_line_1" with "Kaminskiego 19"
-  And I fill in "lead_city" with "Bielsko-Biała"
+  And I fill in "lead_address_line_3" with "Bielsko-Biała"
   And I fill in "lead_zip_code" with "23-2911"
   And I fill in "datepicker" with date that is "5" days from now
   And I fill in "lead_lead_template_values_attributes_0_value" with "123"

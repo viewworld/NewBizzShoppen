@@ -12,7 +12,6 @@
         <%= form.input :address_line_2, :hint => hint_for(@lead, :address_line_2) %>
         <%= form.input :address_line_3, :hint => hint_for(@lead, :address_line_3) %>
         <%= form.input :zip_code, :hint => hint_for(@lead, :zip_code) %>
-        <%= form.input :city, :hint => hint_for(@lead, :city) %>
         <%= form.input :country_id, :as => :select, :collection => Country.all, :required => true, :input_html => {:onchange => "refresh_phone_codes(); refresh_regions_list('lead');"}, :hint => hint_for(@lead, :country_id) %>
         <%= form.input :region_id, :as => :select, :collection => @lead.country.present? ? @lead.country.regions : [], :hint => hint_for(@lead, :region_id) %>
         <%= form.input :company_vat_no, :hint => hint_for(@lead, :company_vat_no) %>

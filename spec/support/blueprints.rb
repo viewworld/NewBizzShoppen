@@ -23,7 +23,7 @@ Lead.blueprint do
   phone_number { Faker::PhoneNumber.phone_number }
   email_address { Faker::Internet.email }
   address_line_1 { Faker::Address.street_address }
-  city { Faker::Address.city }
+  address_line_3 { Faker::Address.city }
   zip_code { Faker::Address.zip_code }
   creator_id { User::Agent.make!.id }
   creator_type { "User::Agent" }
@@ -46,7 +46,7 @@ Lead.blueprint(:featured) do
   phone_number { Faker::PhoneNumber.phone_number }
   email_address { Faker::Internet.email }
   address_line_1 { Faker::Address.street_address }
-  city { Faker::Address.city }
+  address_line_3 { Faker::Address.city }
   zip_code { Faker::Address.zip_code }
   creator_id { User::Agent.make!.id }
   creator_type { "User::Agent" }
