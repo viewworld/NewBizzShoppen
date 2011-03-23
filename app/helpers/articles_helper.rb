@@ -1,7 +1,7 @@
 module ArticlesHelper
-  def link_to_main_page_article(key)
+  def link_to_main_page_article(key, options = {}, html_options = {})
     if article = Article::Cms::MainPageArticle.where(:key => key).first
-      link_to article.title, article_path(article.id)
+      link_to article.title, article_path(article.id, options), html_options
     end
   end
 

@@ -114,5 +114,9 @@ Scenario: Screen name has to be unique
   Then I should see translated "activerecord.errors.models.user/agent.attributes.screen_name.taken"
 
 # probably it should be renamed to “Agree to Terms and conditions”, where “Terms and conditions” should be link leadin to another page or popup with terms and conditions text displayed
-@requested @m7
+@ao @requested @m7 @selenium @_done @_tested
 Scenario: I can see a link to agreement when signin up
+  When I go to agent sign up
+  And I follow "Terms & Conditions"
+  And I wait 1 second
+  Then I should see "Terms & Conditions" within "#container_popup"
