@@ -566,8 +566,11 @@ Scenario: I can select a seller on the edit inovice page
   Then I should see "SomeSeller" within ".from_to_table tr:nth-child(1) td:nth-child(1)"
   And I should see "Prosta" within ".from_to_table tr:nth-child(2) td:nth-child(1)"
   When I follow translated "administration.invoices.show.view.edit_invoice"
+  And I open page in browser
   And I select "Selleo" from "invoice_seller_id"
+  And I wait 1 second
   When I press translated "administration.invoices.edit.view.save_button"
+  And I open page in browser
   Then I should see "Selleo" within ".from_to_table tr:nth-child(1) td:nth-child(1)"
   And I should see "Kaminskiego" within ".from_to_table tr:nth-child(2) td:nth-child(1)"
 
