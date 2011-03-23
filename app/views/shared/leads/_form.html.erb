@@ -13,12 +13,12 @@
         <%= form.input :address_line_3, :hint => hint_for(@lead, :address_line_3) %>
         <%= form.input :zip_code, :hint => hint_for(@lead, :zip_code) %>
         <%= form.input :city, :hint => hint_for(@lead, :city) %>
-        <%= form.input :country_id, :as => :select, :collection => Country.all, :input_html => {:onchange => "refresh_phone_codes(); refresh_regions_list('lead');"}, :hint => hint_for(@lead, :country_id) %>
+        <%= form.input :country_id, :as => :select, :collection => Country.all, :required => true, :input_html => {:onchange => "refresh_phone_codes(); refresh_regions_list('lead');"}, :hint => hint_for(@lead, :country_id) %>
         <%= form.input :region_id, :as => :select, :collection => @lead.country.present? ? @lead.country.regions : [], :hint => hint_for(@lead, :region_id) %>
         <%= form.input :company_vat_no, :hint => hint_for(@lead, :company_vat_no) %>
         <%= form.input :company_ean_number, :hint => hint_for(@lead, :company_ean_number) %>
         <% if current_user.has_any_role?(:admin, :call_centre) %>
-            <%= form.input :tmp_creator_id, :as => :select, :collection => (current_user.has_role?(:call_centre) ? User.with_call_centre_agents(current_user) : User.with_agents_without_call_centres).map { |u| [u.email, u.id] }, :selected => @lead.creator_id %>
+            <%= form.input :tmp_creator_id, :as => :select, :collection => (current_user.has_role?(:call_centre) ? User.with_call_centre_agents(current_user) : User.with_agents_without_call_centres).map { |u| [u.email, u.id] }, :selected => @lead.tmp_creator_id.blank? ? @lead.creator_id : @lead.tmp_creator_id %>
         <% end %>
       </ol>
     </fieldset>
@@ -54,6 +54,9 @@
         <h3><%= t("shared.leads.form.lead_information") %></h3>
       </li>
       <%= form.input :category_id, :collection => Category.without_locked.with_agent_unique(current_user).map { |c| [c.name, c.id] }, :include_blank => false, :input_html => {:disabled => (!@lead.new_record? and @lead.lead_template_values_present?), :onchange => "$('#lead_category_is_changed').val('1'); $('##{dom_id(@lead, @lead.new_record? ? :new : :edit)}').submit()"}, :hint => hint_for(@lead, :category_id) %>
+      <% if !@lead.new_record? and @lead.lead_template_values_present? %>
+        <p><%= t("shared.leads.form.category_cannot_be_changed") %></p>
+      <% end %>
       <%= form.input :category_is_changed, :as => :hidden, :value => "0" %>
       <%= form.input :is_international, :as => :select, :collection => [[t("shared.leads.form.country_local_label"), 0], [t("shared.leads.form.country_international"), 1]], :include_blank => false, :hint => hint_for(@lead, :is_international) %>
       <%= form.input :header, :hint => hint_for(@lead, :header) %>

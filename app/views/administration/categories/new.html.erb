@@ -3,7 +3,6 @@
   <%= semantic_form_for [:administration, @category], :method => :put, :html => {:multipart => true} do |form| %>
       <frm>
         <param:header>
-          <%= bt_link_to nil, t("administration.categories.edit.view.new_template"), new_administration_lead_template_path(:category_id => @category.id), :class => "fltr" %>
         </param:header>
         <param:content>
           <%= render :partial => 'form', :locals => {:form => form} %>
