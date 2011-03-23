@@ -31,7 +31,7 @@ Scenario: I can create a new lead and close
   And I fill in "lead_phone_number" with "123456789"
   And I fill in "lead_email_address" with "my@email.com"
   And I fill in "lead_address_line_1" with "Kaminskiego 19"
-  And I fill in "lead_city" with "Bielsko-Biała"
+  And I fill in "lead_address_line_3" with "Bielsko-Biała"
   And I fill in "lead_zip_code" with "23-2911"
   And I fill in "datepicker" with date that is "5" days from now
   And I press translated "agent.leads.new.view.button_create"
@@ -57,7 +57,7 @@ Scenario: I can create a new lead and continue (create another one)
   And I fill in "lead_phone_number" with "123456789"
   And I fill in "lead_email_address" with "my@email.com"
   And I fill in "lead_address_line_1" with "Kaminskiego 19"
-  And I fill in "lead_city" with "Bielsko-Biała"
+  And I fill in "lead_address_line_3" with "Bielsko-Biała"
   And I fill in "lead_zip_code" with "23-2911"
   And I fill in "datepicker" with date that is "5" days from now
   And I press translated "agent.leads.new.view.button_create_and_continue"
@@ -84,7 +84,7 @@ Scenario: I can add an extra language while creating lead. This will include lea
   And I fill in "lead_phone_number" with "123456789"
   And I fill in "lead_email_address" with "my@email.com"
   And I fill in "lead_address_line_1" with "Kaminskiego 19"
-  And I fill in "lead_city" with "Bielsko-Biała"
+  And I fill in "lead_address_line_3" with "Bielsko-Biała"
   And I fill in "lead_zip_code" with "23-2911"
   And I fill in "datepicker" with date that is "5" days from now
   And I select translated "models.locale.dk" from "locale_picker"
@@ -128,7 +128,7 @@ Scenario: All fields for new lead have to be filled in beside email address
   And I fill in "lead_phone_number" with "123456789"
   And I fill in "lead_email_address" with ""
   And I fill in "lead_address_line_1" with "Kaminskiego 19"
-  And I fill in "lead_city" with "Bielsko-Biała"
+  And I fill in "lead_address_line_3" with "Bielsko-Biała"
   And I fill in "lead_zip_code" with "23-2911"
   And I fill in "datepicker" with date that is "5" days from now
   And I press translated "agent.leads.new.view.button_create"
@@ -164,7 +164,7 @@ Scenario: I can add linkedin and facebook links to lead's contact information
   And I fill in "lead_phone_number" with "123456789"
   And I fill in "lead_email_address" with "my@email.com"
   And I fill in "lead_address_line_1" with "Kaminskiego 19"
-  And I fill in "lead_city" with "Bielsko-Biała"
+  And I fill in "lead_address_line_3" with "Bielsko-Biała"
   And I fill in "lead_zip_code" with "23-2911"
   And I fill in "datepicker" with date that is "5" days from now
   And I fill in "lead_facebook_url" with "http://www.facebook.com/myfakefacebookprofile"
@@ -192,7 +192,7 @@ Scenario: I have to fill out the templates which are mandatory
   And I fill in "lead_phone_number" with "123456789"
   And I fill in "lead_company_name" with "Printing company"
   And I fill in "lead_address_line_1" with "Kaminskiego 19"
-  And I fill in "lead_city" with "Bielsko-Biała"
+  And I fill in "lead_address_line_3" with "Bielsko-Biała"
   And I fill in "lead_zip_code" with "23-2911"
   And I fill in "datepicker" with date that is "5" days from now
   And I fill in "lead_lead_template_values_attributes_0_value" with "123"
@@ -225,7 +225,7 @@ Scenario: I can select additional templates that are optional
   And I fill in "lead_phone_number" with "123456789"
   And I fill in "lead_company_name" with "Printing company"
   And I fill in "lead_address_line_1" with "Kaminskiego 19"
-  And I fill in "lead_city" with "Bielsko-Biała"
+  And I fill in "lead_address_line_3" with "Bielsko-Biała"
   And I fill in "lead_zip_code" with "23-2911"
   And I fill in "datepicker" with date that is "5" days from now
   And I fill in "lead_lead_template_values_attributes_0_value" with "123"
@@ -296,7 +296,7 @@ Scenario: When new translation to lead is added I can also write translation for
   And I fill in "lead_phone_number" with "123456789"
   And I fill in "lead_company_name" with "Printing company"
   And I fill in "lead_address_line_1" with "Kaminskiego 19"
-  And I fill in "lead_city" with "Bielsko-Biała"
+  And I fill in "lead_address_line_3" with "Bielsko-Biała"
   And I fill in "lead_zip_code" with "23-2911"
   And I fill in "datepicker" with date that is "5" days from now
   And I fill in "lead_lead_template_values_attributes_0_value" with "123"
@@ -334,7 +334,7 @@ Scenario: I have to fill out the fields that are mandatory in mandatory or optio
   And I fill in "lead_phone_number" with "123456789"
   And I fill in "lead_company_name" with "Printing company"
   And I fill in "lead_address_line_1" with "Kaminskiego 19"
-  And I fill in "lead_city" with "Bielsko-Biała"
+  And I fill in "lead_address_line_3" with "Bielsko-Biała"
   And I fill in "lead_zip_code" with "23-2911"
   And I fill in "datepicker" with date that is "5" days from now
   And I fill in "lead_lead_template_values_attributes_0_value" with "123"
@@ -364,7 +364,7 @@ Scenario: When there is only one template present for a lead and it is optional 
   And I fill in "lead_phone_number" with "123456789"
   And I fill in "lead_company_name" with "Printing company"
   And I fill in "lead_address_line_1" with "Kaminskiego 19"
-  And I fill in "lead_city" with "Bielsko-Biała"
+  And I fill in "lead_address_line_3" with "Bielsko-Biała"
   And I fill in "lead_zip_code" with "23-2911"
   And I fill in "datepicker" with date that is "5" days from now
   And I fill in "lead_lead_template_values_attributes_0_value" with "123"
@@ -416,7 +416,7 @@ Scenario: I can create a new lead and duplicate company\contact info to another 
   And I fill in "lead_direct_phone_number" with "2039282882"
   And I fill in "lead_email_address" with "my@email.com"
   And I fill in "lead_address_line_1" with "Kaminskiego 19"
-  And I fill in "lead_city" with "Bielsko-Biała"
+  And I fill in "lead_address_line_3" with "Bielsko-Biała"
   And I fill in "lead_zip_code" with "23-2911"
   And I fill in "datepicker" with date that is "5" days from now
   And I fill in "lead_company_phone_number" with "34234234234234"

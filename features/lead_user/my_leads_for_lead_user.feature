@@ -10,7 +10,7 @@ Background:
   And lead Printers ultimate deal exists within category Computers
   And someone is signed up and confirmed as user with email johnprinting@nbs.com and password secret and role agent with attributes "screen_name:Johan Printing"
   And lead Printers ultimate deal is created by user johnprinting@nbs.com with role agent
-  And lead Printers ultimate deal exists with attributes "creator_name:Johan Printing,email_address:john.printer@fghprintesrs.noserver.com,city:London,zip_code:847-387,address_line_1:Veilingstreet 46,clicks_count:17,exposures_count:887,company_name:FGH Printers,contact_name:John Printer,hidden_description:Hidden description for this lead,purchase_value:3034.87,description:Public desc for printers deal,published_at:01-01-2011"
+  And lead Printers ultimate deal exists with attributes "creator_name:Johan Printing,email_address:john.printer@fghprintesrs.noserver.com,address_line_3:London,zip_code:847-387,address_line_1:Veilingstreet 46,clicks_count:17,exposures_count:887,company_name:FGH Printers,contact_name:John Printer,hidden_description:Hidden description for this lead,purchase_value:3034.87,description:Public desc for printers deal,published_at:01-01-2011"
   And lead Monitors LCD deal exists within category Computers
   And lead Monitors LCD deal exists with attributes "hidden_description:Hidden description for this lead,purchase_value:2002.87"
   And lead Keyboards deal exists within category Office
