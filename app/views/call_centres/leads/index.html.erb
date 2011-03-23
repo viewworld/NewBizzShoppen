@@ -53,16 +53,16 @@
         <tr>
           <th class="hl"></th>
           <th><%= link_to t("leads.table.header"), order_for_scoped_search(:header) %></th>
-          <th class="ta_c"><%= link_to t("leads.table.purchase_value"), order_for_scoped_search(:purchase_value) %></th>
-          <th class="ta_c"><%= link_to t("leads.table.price"), order_for_scoped_search(:price) %></th>
-          <th class="ta_c"><%= t("leads.table.clicks") %></th>
-          <th class="ta_c"><%= t("leads.table.exposures") %></th>
-          <th class="ta_c"><%= t("leads.table.hottness") %></th>
-          <th class="ta_c"><%= t("leads.table.novelty") %></th>
+          <th class="ta_r"><%= link_to t("leads.table.purchase_value"), order_for_scoped_search(:purchase_value) %></th>
+          <th class="ta_r"><%= link_to t("leads.table.price"), order_for_scoped_search(:price) %></th>
+          <th class="ta_r"><%= t("leads.table.clicks") %></th>
+          <th class="ta_r"><%= t("leads.table.exposures") %></th>
+          <th class="ta_r"><%= t("leads.table.hottness") %></th>
+          <th class="ta_r"><%= t("leads.table.novelty") %></th>
           <th class="ta_c"><%= t("leads.table.created_by") %></th>
           <th class="ta_c"><%= t("leads.table.rating") %></th>
           <th class="ta_c"><%= t("leads.table.certification") %></th>
-          <th class="ta_c"><%= link_to t("leads.table.created_at"), order_for_scoped_search(:created_at) %></th>
+          <th class="ta_r"><%= link_to t("leads.table.created_at"), order_for_scoped_search(:created_at) %></th>
           <th class="ta_c"><%= t("leads.table.status") %></th>
           <th class="ta_r">
             <%= t("leads.table.actions") %>
@@ -83,16 +83,16 @@
             <tr id="lead_<%= lead.id %>" class="<%= cycle("odd", "even") %>">
               <td class="cl"></td>
               <td><%= lead.header %></td>
-              <td class="ta_c"><%= as_currency(lead.purchase_value, lead.currency) %></td>
-              <td class="ta_c"><%= as_currency(lead.price, lead.currency) %></td>
-              <td class="ta_c"><%= lead.clicks_count %></td>
-              <td class="ta_c"><%= lead.exposures_count %></td>
-              <td class="ta_c"><%= t("models.lead.hotness.lvl#{lead.hotness_level}") %></td>
+              <td class="ta_r"><%= as_currency(lead.purchase_value, lead.currency) %></td>
+              <td class="ta_r"><%= as_currency(lead.price, lead.currency) %></td>
+              <td class="ta_r"><%= lead.clicks_count %></td>
+              <td class="ta_r"><%= lead.exposures_count %></td>
+              <td class="ta_r"><%= t("models.lead.hotness.lvl#{lead.hotness_level}") %></td>
               <td class="ta_c"><%= lead.published ? t("models.lead.novelty.lvl#{lead.novelty_level}") : "-" %></td>
               <td class="ta_c"><%= lead.creator_name %></td>
               <td class="ta_c"><%= lead.average_rating == -1 ? t("leads.table.average_rating_none_label") : lead.average_rating_as_text %></td>
               <td class="ta_c"><%= t("models.lead.certification.lvl#{lead.certification_level}") %></td>
-              <td class="ta_c"><%= lead.created_at.strftime("%d-%m-%Y") %></td>
+              <td class="ta_r"><%= lead.created_at.strftime("%d-%m-%Y") %></td>
               <td class="ta_c">
                 <%= form_for [:call_centres, lead], :method => :put do |f| %>
                     <%= f.select :published, [[t("call_centre.leads.index.view.option_published"), 1], [t("call_centre.leads.index.view.option_not_published"), 0]], {:selected => lead.published ? 1 : 0}, {:onchange => "jQuery(this.form).callRemote()"} %>

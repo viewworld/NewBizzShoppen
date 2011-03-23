@@ -287,7 +287,7 @@ class User < ActiveRecord::Base
     elsif certification_level_ratio >= Settings.certification_level_1.to_i
       SILVER_CERTIFICATION
     else
-      NOT_CERTIFIED
+      BRONZE_CERTIFICATION
     end
   end
 

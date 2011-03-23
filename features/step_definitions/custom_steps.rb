@@ -130,5 +130,5 @@ Given /^I move mouse over "([^"]*)"$/ do |selector|
 end
 
 Given /^I show accordion details for row "([^"]*)"$/ do |selector|
-  page.evaluate_script("show_hide_details('#{selector}')")
+  And %{I follow translated "lead_purchases.listing.show_row" within "#{selector}"}
 end

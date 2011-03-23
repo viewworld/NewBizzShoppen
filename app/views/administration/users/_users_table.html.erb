@@ -32,18 +32,18 @@
                 <tr class="<%= cycle("odd", "even") %>">
                   <td class="cl"></td>
                   <td class="no_pdd_lr"><%= check_box_tag("user_ids[]", user.id) unless user.id == current_user.id %></td>
-                  <td><%= user.id %></td>
+                  <td class="ta_c"><%= user.id %></td>
                   <td><%= user.roles_as_text %></td>
                   <td><%= user.first_name %></td>
                   <td><%= user.last_name %></td>
                   <td><%= user.email %></td>
-                  <td><%= user.age %></td>
-                  <td><%= user.leads_purchased_counter %></td>
-                  <td><%= user.unpaid_leads_counter %></td>
-                  <td><%= user.leads_created_counter %></td>
-                  <td><%= user.leads_volume_sold_counter %></td>
-                  <td><%= user.leads_revenue_counter %></td>
-                  <td><%= user.payout %></td>
+                  <td class="ta_r"><%= user.age %></td>
+                  <td class="ta_r"><%= user.leads_purchased_counter %></td>
+                  <td class="ta_r"><%= user.unpaid_leads_counter %></td>
+                  <td class="ta_r"><%= user.leads_created_counter %></td>
+                  <td class="ta_r"><%= user.leads_volume_sold_counter %></td>
+                  <td class="ta_r"><%= user.leads_revenue_counter %></td>
+                  <td class="ta_r"><%= user.payout %></td>
                   <td class="ta_c">
                     <% unless user.id == current_user.id %>
                         <%= link_to user.locked_at.blank? ? t("administration.users.index.view.lock") : t("administration.users.index.view.unlock"), administration_user_path(user, {"user_#{user.role.to_s}".to_sym  => {:locked =>  user.locked_at.blank? ? "lock" : "unlock"}}), {:method => :put} %>

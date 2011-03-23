@@ -48,6 +48,6 @@ Scenario: When I change the certification levels in settings then agents' levels
   And I fill in "setting_3" with "40"
   And I press translated "administration.settings.edit.view.button_update_settings"
   And I should see translated "administration.settings.update.controller.successful_update_notice"
-  Then user "call_centre@person.com" with role "call_centre" has certification level 0
-  Then user "agent01@person.com" with role "agent" has certification level 0
+  Then user "call_centre@person.com" with role "call_centre" has certification level 1
+  Then user "agent01@person.com" with role "agent" has certification level 1
   And user "agent02@person.com" with role "agent" has certification level 11

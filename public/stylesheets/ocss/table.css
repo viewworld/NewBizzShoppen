@@ -138,6 +138,32 @@
 }
 
 
+.toggle_row_p
+{
+    font-size: 12px;
+    line-height: normal;
+    padding: 5px 0 0;
+    font-weight: bold;
+}
+
+.toggle_row_p a.toggle_row
+{
+    color: #0669b6;
+    padding-right: 13px;
+    background: url(/images/icons/toggle.png) no-repeat;
+}
+
+.toggle_row_p a.toggle_row.hide_row
+{
+    background-position: right 3px;
+}
+
+.toggle_row_p a.toggle_row.show_row
+{
+    background-position: right -39px;
+}
+
+
 
 .td_actions
 {
@@ -336,7 +362,7 @@ div.pagination .disabled
 .categories_table tbody td
 {
     padding: 4px 10px 4px 0;
-    vertical-align: middle;
+    vertical-align: top;
     width: 33%;
 }
 

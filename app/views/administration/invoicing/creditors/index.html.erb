@@ -67,7 +67,7 @@
               <td><%= credit_note.customer.last_name %></td>
               <td><%= credit_note.customer.screen_name %></td>
               <td><%= t("administration.creditors.index.view.type_#{credit_note.type_as_text}") %></td>
-              <td><%= as_currency(credit_note.total, credit_note.invoice.currency) %></td>
+              <td class="ta_r"><%= as_currency(credit_note.total, credit_note.invoice.currency) %></td>
               <td class="cr"></td>
             </tr>
         <% end %>

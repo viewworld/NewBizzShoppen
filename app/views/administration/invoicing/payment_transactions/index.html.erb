@@ -47,7 +47,7 @@
           <th><%= t("administration.payment_transactions.index.view.invoice_number") %>
           <th id="invoice_number_header"><%= t("administration.payment_transactions.index.view.customer_name") %></th>
           <th><%= t("administration.payment_transactions.index.view.customer_address") %></th>
-          <th><%= t("administration.payment_transactions.index.view.amount") %></th>
+          <th class="ta_r"><%= t("administration.payment_transactions.index.view.amount") %></th>
           <th class="ta_r"><%= t("administration.payment_transactions.index.view.actions") %></th>
           <th class="hr"></th>
         </tr>
@@ -67,7 +67,7 @@
               <td><%= payment_transaction.invoice.full_number %></td>
               <td><%= payment_transaction.invoice.customer_name %></td>
               <td><%= payment_transaction.invoice.customer_address %></td>
-              <td><%= as_currency(payment_transaction.amount, payment_transaction.invoice.currency)  %></td>
+              <td class="ta_r"><%= as_currency(payment_transaction.amount, payment_transaction.invoice.currency)  %></td>
               <td class="tda ta_r">
                 <% if payment_transaction.can_be_edited? %>
                     <%= bt_link_to nil, t("administration.payment_transactions.index.view.edit"), edit_administration_invoicing_payment_transaction_path(payment_transaction), :class => "default_action" %>

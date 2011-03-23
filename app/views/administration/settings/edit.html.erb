@@ -46,8 +46,8 @@
           <th><%= link_to t("administration.bank_accounts.index.view.id"), order_for_scoped_search(:id, :bank_accounts) %></th>
           <th><%= t("administration.bank_accounts.index.view.country") %></th>
           <th><%= t("administration.bank_accounts.index.view.bank_name") %></th>
-          <th><%= t("administration.bank_accounts.index.view.iban_no") %></th>
-          <th><%= t("administration.bank_accounts.index.view.local_bank_number") %></th>
+          <th class="ta_r"><%= t("administration.bank_accounts.index.view.iban_no") %></th>
+          <th class="ta_r"><%= t("administration.bank_accounts.index.view.local_bank_number") %></th>
           <th><%= t("administration.bank_accounts.index.view.swift") %></th>
           <th class="ta_c"><%= t("administration.bank_accounts.form.view.country_default") %></th>
           <th class="ta_c"><%= t("administration.bank_accounts.form.view.global_default") %></th>
@@ -62,8 +62,8 @@
               <td><%= ba.id %></td>
               <td><%= ba.address.country.name %></td>
               <td><%= ba.bank_name %></td>
-              <td><%= ba.iban_no %></td>
-              <td><%= ba.local_bank_number %></td>
+              <td class="ta_r"><%= ba.iban_no %></td>
+              <td class="ta_r"><%= ba.local_bank_number %></td>
               <td><%= ba.swift %></td>
               <td class="ta_c"><%= check_box_tag "country_default_#{ba.id}", 1, ba.country_default?, :disabled => true %></td>
               <td class="ta_c"><%= check_box_tag "global_default_#{ba.id}", 1, ba.global_default?, :disabled => true %></td>
@@ -106,7 +106,7 @@
         <tr>
           <th class="hl"></th>
           <th style="width: 200px"><%= t("administration.vat_rates.index.view.country") %></th>
-          <th><%= t("administration.vat_rates.index.view.rate") %></th>
+          <th style="width: 200px" class="ta_r"><%= t("administration.vat_rates.index.view.rate") %></th>
           <th class="ta_r"><%= t("administration.vat_rates.index.view.actions") %></th>
           <th class="hr"></th>
         </tr>
@@ -116,7 +116,7 @@
             <tr>
               <td class="cl"></td>
               <td><%= vr.country.name %></td>
-              <td><%= number_to_percentage(vr.rate, :precision => 2) %></td>
+              <td class="ta_r"><%= number_to_percentage(vr.rate, :precision => 2) %></td>
               <td class="tda ta_r">
                 <ul-actions>
                   <li><%= link_to t("administration.vat_rates.index.view.edit"), edit_administration_vat_rate_path(vr), :class => "default_action" %></li>
