@@ -94,6 +94,7 @@
                 <p><%= t("lead_purchases.listing.purchase_date") %>
                   <b><%= format_date lead_purchase.accessible_from %></b>
                 </p>
+
                 <p><%= t("lead_purchases.listing.creator_name") %>
                   <b><%= lead_purchase.lead.creator.screen_name %></b>
                 </p>
@@ -141,7 +142,10 @@
               <%= with_output_buffer { block_card.call(lead_purchase) } %>
           <% end %>
 
-          <%= link_to_function "Show/hide", "show_hide_details('##{dom_id(lead_purchase)}')" %>
+          <p class="toggle_row_p">
+            <%= link_to "Show", "javascript:void(0)", :class => "toggle_row show_row" %>
+            <%= link_to "Hide", "javascript:void(0)", :class => "toggle_row hide_row", :style => "display: none" %>
+          </p>
         </td>
 
         <% if block_assigned_to or block_other_actions %>
@@ -189,41 +193,39 @@
 </table>
 
 <script type=text/javascript>
-    var rowsDomList = [];
-    var rowsVisibility = [];
+    jQuery(document).ready(function() {
+        $(".toggle_row").bind("click", function() {
+            var t = $(this).parents("tr");
 
-    function show_hide_details(dom_id){
-        if(rowsVisibility[dom_id] == null){
-            rowsVisibility[dom_id] = false;
-            rowsDomList.push(dom_id);
-        }
+            if (t.find(".row_tooltip").is(":not(:visible)"))
+            {
+                // - show / hide label
+                $(".hide_row:visible").hide().prev().show();                
+                $(this).hide().next().show();
 
-        $.each(rowsDomList, function(index, value) {
-            if(rowsVisibility[value] && value != dom_id){
-                show_hide_row(value);
+
+                // - show / hide row
+                $(".row_tooltip:visible").slideUp("250");
+                $(".row_tooltip_helper").css({height: "1px"});
+
+                var eh = t.innerHeight() - t.find(".lead_details").height() - 18;
+
+                var rt = t.find("div.row_tooltip");
+                var rth = t.find("div.row_tooltip_helper");
+
+                rth.animate({height: (rt.height() + eh)}, 250);
+                rt.css({"left": t.position().left + "px", "margin-top": (eh + 7) + "px"}).slideDown(250);
             }
-        });
-        show_hide_row(dom_id);
+            else
+            {
+                // - show / hide label
+                $(this).hide().prev().show();
 
-    }
-
-    function show_hide_row(dom_id){
-        var rt = $(dom_id).find("div.row_tooltip");
-        var rth = $(dom_id).find("div.row_tooltip_helper");
-
-        if(rowsVisibility[dom_id]){
-            rowsVisibility[dom_id] = false;
-            rt.css({"left": $(dom_id).position().left}).slideUp(250);
-            rth.animate({height: 0}, 250);
-        }
-        else
-        {
-            rowsVisibility[dom_id] = true;
-            var eh = $(dom_id).innerHeight() - $(this).find(".lead_details").height() - 18;
-
-            rth.animate({height: (rt.height() + eh)}, 250);
-            rt.css({"left": $(dom_id).position().left + "px", "margin-top": (eh+7)+"px"}).slideDown(250);
-        }
-    }
+                // - hide row
+                $(".row_tooltip:visible").slideUp("250");
+                $(".row_tooltip_helper").animate({height: 1}, 350);                
+            }
+        })
+    })
 
 </script>

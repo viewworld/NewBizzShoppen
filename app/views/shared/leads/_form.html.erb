@@ -1,6 +1,6 @@
 <div class="column_left">
   <div class="pdd_10 no_pdd_t">
-    <fieldset class="inputs labels_ta_r labels_200">
+    <fieldset class="inputs labels_ta_r labels_180">
       <ol class="align_inputs">
         <li class="header">
           <h3><%= t("shared.leads.form.company_information") %></h3>
@@ -48,15 +48,18 @@
 <hl/>
 
 <div class="pdd_10 no_pdd_t">
-  <fieldset class="inputs labels_ta_r labels_200">
+  <fieldset class="inputs labels_ta_r labels_180">
     <ol class="align_inputs">
       <li class="header">
         <h3><%= t("shared.leads.form.lead_information") %></h3>
       </li>
-      <%= form.input :category_id, :collection => Category.without_locked.with_agent_unique(current_user).map { |c| [c.name, c.id] }, :include_blank => false, :input_html => {:disabled => (!@lead.new_record? and @lead.lead_template_values_present?), :onchange => "$('#lead_category_is_changed').val('1'); $('##{dom_id(@lead, @lead.new_record? ? :new : :edit)}').submit()"}, :hint => hint_for(@lead, :category_id) %>
       <% if !@lead.new_record? and @lead.lead_template_values_present? %>
-        <p><%= t("shared.leads.form.category_cannot_be_changed") %></p>
-      <% end %>
+      <li class="string error">
+        <label>&nbsp;</label>
+        <p class="inline-errors no_pdd"><%= t("shared.leads.form.category_cannot_be_changed") %></p>
+      </li>
+      <% end %>        
+      <%= form.input :category_id, :collection => Category.without_locked.with_agent_unique(current_user).map { |c| [c.name, c.id] }, :include_blank => false, :input_html => {:disabled => (!@lead.new_record? and @lead.lead_template_values_present?), :onchange => "$('#lead_category_is_changed').val('1'); $('##{dom_id(@lead, @lead.new_record? ? :new : :edit)}').submit()"}, :hint => hint_for(@lead, :category_id) %>
       <%= form.input :category_is_changed, :as => :hidden, :value => "0" %>
       <%= form.input :is_international, :as => :select, :collection => [[t("shared.leads.form.country_local_label"), 0], [t("shared.leads.form.country_international"), 1]], :include_blank => false, :hint => hint_for(@lead, :is_international) %>
       <%= form.input :header, :hint => hint_for(@lead, :header) %>
@@ -91,7 +94,7 @@
 <% end %>
 
 <div class="pdd_10 no_pdd_t" id="locale_picker_div">
-  <fieldset class="inputs labels_ta_r labels_200">
+  <fieldset class="inputs labels_ta_r labels_180">
     <ol class="align_inputs">
       <li class="header">
         <h3><%= t("shared.leads.form.additional_language") %></h3>
@@ -107,7 +110,7 @@
 <hl/>
 
 <div class="pdd_10 no_pdd_t">
-  <fieldset class="inputs labels_ta_r labels_200">
+  <fieldset class="inputs labels_ta_r labels_180">
     <ol class="align_inputs">
       <li class="header">
         <h3><%= t("shared.leads.form.sales_information") %></h3>

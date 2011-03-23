@@ -59,8 +59,8 @@
         <th><%= t("administration.upcoming_invoices.index.view.customer_first_name") %></th>
         <th><%= t("administration.upcoming_invoices.index.view.customer_last_name") %></th>
         <th><%= t("administration.upcoming_invoices.index.view.customer_screen_name") %></th>
-        <th><%= t("administration.upcoming_invoices.index.view.not_invoiced_count") %></th>
-        <th><%= t("administration.upcoming_invoices.index.view.not_invoiced_sum") %></th>
+        <th class="ta_r"><%= t("administration.upcoming_invoices.index.view.not_invoiced_count") %></th>
+        <th class="ta_r"><%= t("administration.upcoming_invoices.index.view.not_invoiced_sum") %></th>
         <th></th>
         <th class="hr"></th>
         </thead>
@@ -78,8 +78,8 @@
               <td><%= lead_purchase.owner.first_name %></td>
               <td><%= lead_purchase.owner.last_name %></td>
               <td><%= lead_purchase.owner.screen_name %></td>
-              <td><%= lead_purchase.not_invoiced_count %></td>
-              <td><%= as_currency(lead_purchase.not_invoiced_sum, Currency.where(:id => lead_purchase.currency_id).first) %></td>
+              <td class="ta_r"><%= lead_purchase.not_invoiced_count %></td>
+              <td class="ta_r"><%= as_currency(lead_purchase.not_invoiced_sum, Currency.where(:id => lead_purchase.currency_id).first) %></td>
               <td class="tda ta_r">
                 <%= bt_link_to nil, t("administration.upcoming_invoices.index.view.create_invoice"), new_administration_invoicing_invoice_path(:invoice => {:user_id => lead_purchase.owner_id, :currency_id => lead_purchase.currency_id}), :class => "default_action" %>
               </td>
