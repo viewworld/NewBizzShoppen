@@ -68,6 +68,8 @@
             <%= form.input :not_charge_vat, :as => :boolean %>
         <% end %>
 
+        <%= form.input :team_buyers, :as => :boolean if @user.has_role?(:customer) or params[:role] == "customer" %>
+
       </ol>
     </fieldset>
   </div>
