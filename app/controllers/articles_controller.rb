@@ -5,6 +5,11 @@ class ArticlesController < ApplicationController
     unless @article = Article.published.where(:id => params[:id]).first
       redirect_to root_path
     end
+    if params[:popup]
+      render :file => 'help_popups/show', :layout => 'help_popup'
+    else
+      render :action => :show
+    end
   end
 
 end

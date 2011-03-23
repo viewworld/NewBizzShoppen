@@ -135,6 +135,11 @@ jQuery(document).ready(function()
             initialHeight: 200
 
         });
+        $("a[id*='modal_box']").colorbox({
+            opacity: "0.5",
+            initialWidth: 200,
+            initialHeight: 200
+        })
     }
     catch(e)
     {

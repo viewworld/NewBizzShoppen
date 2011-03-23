@@ -148,6 +148,7 @@ Nbs::Application.routes.draw do
   match 'ckeditor/destroy/:id', :to => 'ckeditor#destroy'
 
   resource :contact_us, :controller => "contact_us", :as => "contact_us", :only => [:new, :create]
+  resource :terms_and_conditions, :controller => "terms_and_conditions", :as => "terms_and_conditions", :only => [:show]
   match 'contact_us' => 'contact_us#new', :as => 'contact_us'
 
   match ':slug' => 'category_home#show', :as => :category_home_page

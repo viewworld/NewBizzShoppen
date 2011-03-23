@@ -42,7 +42,7 @@
                 <%= form.input :password %>
                 <%= form.input :password_confirmation %>
                 <%= form.input :team_buyers, :as => :boolean %>
-                <%= form.input :agreement_read, :as => :boolean %>
+                <%= form.input :agreement_read, :as => :boolean, :label => "#{t("common.agree_to")} #{link_to_main_page_article('terms_conditions', {:popup => true}, {:id => 'agreement_modal_box'})}".html_safe %>
                 <%= form.input :newsletter_on, :as => :boolean %>
               </ol>
             </fieldset>
