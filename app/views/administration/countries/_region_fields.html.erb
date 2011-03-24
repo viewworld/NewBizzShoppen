@@ -4,7 +4,7 @@
     <fieldset class="inputs_vertical">
       <ol>
         <li class="string required <%= 'error' if f.object.errors[:name].present?%>">
-          <label><%= t("administration.countries.index.view.table.name") %><abbr title="required">*</abbr></label>
+          <label><%= t("administration.countries.form.region_name") %><abbr title="required">*</abbr></label>
           <%= f.text_field :name %>
           <%= custom_error_for_field(f, :name) %>
         </li>

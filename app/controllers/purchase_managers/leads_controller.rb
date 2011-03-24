@@ -18,16 +18,15 @@ class PurchaseManagers::LeadsController < PurchaseManagers::PurchaseManagerContr
   end
 
   def default_params_hash(params={})
+    [[:contact_name, current_user.full_name], [:phone_number, current_user.phone], [:email_address, current_user.email],
+     [:address_line_1, current_user.address.address_line_1], [:address_line_2, current_user.address.address_line_2],
+     [:zip_code, current_user.address.zip_code], [:address_line_3, current_user.address.address_line_3]].each do |field|
+        params[field.first] = field.last if params[field.first].blank?
+    end
+
     params.merge({
-        :contact_name   => current_user.full_name,
-        :phone_number   => current_user.phone,
-        :email_address  => current_user.email,
-        :address_line_1 => current_user.address.address_line_1,
-        :address_line_2 => current_user.address.address_line_2,
-        :zip_code       => current_user.address.zip_code,
-        :address_line_3 => current_user.address.address_line_3,
         :published      => false,
-        :current_user   => current_user    
+        :current_user   => current_user
     })
   end
 

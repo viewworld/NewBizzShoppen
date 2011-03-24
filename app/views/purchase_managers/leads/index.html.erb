@@ -64,7 +64,7 @@
           <% blocks.tools do |lead| %>
               <ul-actions>
                 <li>
-                  <%= link_to t("purchase_manager.leads.index.view.edit"), edit_purchase_managers_lead_path(lead) %>
+                  <%= link_to t("purchase_manager.leads.index.view.edit"), edit_purchase_managers_lead_path(lead), :class => "default_action" %>
                 </li>
                 <li>
                   <%= link_to t("purchase_manager.leads.index.view.destroy"), purchase_managers_lead_path(lead), :confirm => t("purchase_manager.leads.index.view.destroy_confirmation"), :method => :delete %>
