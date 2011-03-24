@@ -11,7 +11,7 @@ class BuyerHomeController < ApplicationController
   end
 
   def guest
-    @best_sellers = Lead.without_inactive.published_only.without_bought_and_requested_by(current_user).without_unique_categories.bestsellers.limit(10)
+    @best_sellers = Lead.includes(:creator).without_inactive.published_only.without_bought_and_requested_by(current_user).without_unique_categories.bestsellers.limit(10)
     @latest_leads = Lead.without_inactive.published_only.without_bought_and_requested_by(current_user).without_unique_categories.latest.limit(10)
     render :guest
   end

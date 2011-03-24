@@ -44,8 +44,8 @@ module CategoriesHelper
   public
 
   def all_categories_tree(options={})
-    if user_signed_in?
-      root_categories = if current_user.has_role?(:admin)
+    root_categories = if user_signed_in?
+      if current_user.has_role?(:admin)
         Category.roots
       elsif current_user.has_role?(:category_buyer)
         current_user.parent_accessible_categories
@@ -53,8 +53,8 @@ module CategoriesHelper
         current_user.has_accessible_categories? ? Category.roots.within_accessible(current_user) : current_user.has_role?(:customer) ? Category.roots.with_customer_unique(current_user) : Category.roots.with_agent_unique(current_user)
       end
     else
-      root_categories = Category.roots.without_unique
-    end
+      Category.roots.without_unique
+    end.includes(:parent)
 
     root_categories = root_categories.without_locked_and_not_published unless user_signed_in? and current_user.has_role?(:admin)
     content_tag(:ul, root_categories.map { |c| content_tag(:li, (options[:roots] ? category_label(c, options).html_safe : category_tree(c, options)), :class => "categories_node", :id => dom_id(c)) }.join.html_safe, :class => "categories_tree", :id => "categories_main_tree")
