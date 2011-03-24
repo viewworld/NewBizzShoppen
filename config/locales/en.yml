@@ -627,6 +627,7 @@ en:
       form:
         new_region: New region
         delete_region: Delete
+        region_name: "Region name"
       index:
         view:
           title: Countries
@@ -637,7 +638,7 @@ en:
           no_currencies_defined: There are no countries defined
           table:
             id: ID
-            name: Region name
+            name: Country name
             locale: Locale
             actions: Actions
       new:
