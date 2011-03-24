@@ -5,7 +5,7 @@ class CreditNote < ActiveRecord::Base
 
   include ScopedSearch::Model
 
-  scope :with_keyword, lambda { |keyword| where("first_name like :q or last_name like :q or number::TEXT like :q", { :q => "%#{keyword}%" }).joins(:user) }
+  scope :with_keyword, lambda { |keyword| where("users.first_name like :q or users.last_name like :q or credit_notes.number::TEXT like :q", { :q => "%#{keyword}%" }).joins(:invoice => [:user]) }
   scope :with_type, lambda { |type_name| where("lower(type) = ?", type_name) }
 
   after_create :set_number

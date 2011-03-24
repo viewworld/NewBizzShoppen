@@ -3,6 +3,10 @@
     <ol>
       <%= form.fields_for :country, form.object.country || Country.new do |country_form| %>
           <%= country_form.input :name, :input_html => {:disabled => !form.object.new_record?} %>
+          <% if form.object.new_record? %>
+            <%= country_form.input :locale %>
+            <%= country_form.input :detailed_locale %>
+          <% end %>
       <% end %>
       <%= form.input :rate %>
     </ol>
