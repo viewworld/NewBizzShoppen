@@ -25,6 +25,7 @@ Scenario: I can create a new lead and close
   And I fill in "lead_company_name" with "Llorem Inc"
   And I select "3" from "lead_sale_limit"
   And I select "Denmark" from "lead_country_id"
+  And I fill in "lead_phone_number" with "+45 48364068363"
   And I fill in "datepicker" with "2012-02-20"
   And I press translated "purchase_manager.leads.new.view.button_create"
   And I should be on purchase managers leads
@@ -43,6 +44,7 @@ Scenario: I can create a new lead and continue (create another one)
   And I fill in "lead_company_name" with "Llorem Inc"
   And I select "3" from "lead_sale_limit"
   And I select "Denmark" from "lead_country_id"
+  And I fill in "lead_phone_number" with "+45 48364068363"
   And I fill in "datepicker" with "2012-02-20"
   And I press translated "purchase_manager.leads.new.view.button_create_and_continue"
   And I should see translated "flash.leads.actions.create.notice"
@@ -62,6 +64,7 @@ Scenario: I can add an extra language while creating lead. This will include lea
   And I fill in "lead_company_name" with "Llorem Inc"
   And I select "3" from "lead_sale_limit"
   And I select "Denmark" from "lead_country_id"
+  And I fill in "lead_phone_number" with "+45 48364068363"
   And I fill in "datepicker" with date that is "5" days from now
   And I select translated "models.locale.dk" from "locale_picker"
   And I fill in "lead_lead_translations_attributes_0_header" with "DK header"
