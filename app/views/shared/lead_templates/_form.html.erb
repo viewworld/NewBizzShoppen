@@ -36,8 +36,8 @@
 
     function add_lead_template_field(link, content) {
         var new_id = new Date().getTime();
-        content = content.replace(/lead_template_lead_template_fields_attributes_0/g, "lead_template_lead_template_fields_attributes_" + nestedFormsCount.toString());
-        content = content.replace(/lead_template\[lead_template_fields_attributes\]\[0\]/g, "lead_template[lead_template_fields_attributes][" + new_id.toString() + "]");
+        content = content.replace(/lead_template_lead_template_fields_attributes_\d+/g, "lead_template_lead_template_fields_attributes_" + nestedFormsCount.toString());
+        content = content.replace(/lead_template\[lead_template_fields_attributes\]\[\d+\]/g, "lead_template[lead_template_fields_attributes][" + new_id.toString() + "]");
         $('.nested_template_fields_container:last').append(content);
         nestedFormsCount = nestedFormsCount + 1;
     }

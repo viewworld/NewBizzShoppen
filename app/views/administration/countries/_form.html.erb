@@ -24,8 +24,8 @@
 
     function add_region(link, content) {
         var new_id = new Date().getTime();
-        content = content.replace(/country_regions_attributes_0/g, "country_regions_attributes_" + nestedFormsCount.toString());
-        content = content.replace(/country\[regions_attributes\]\[0\]/g, "country[regions_attributes][" + new_id.toString() + "]");
+        content = content.replace(/country_regions_attributes_\d+/g, "country_regions_attributes_" + nestedFormsCount.toString());
+        content = content.replace(/country\[regions_attributes\]\[\d+\]/g, "country[regions_attributes][" + new_id.toString() + "]");
         $('.nested_region_fields_container:last').append(content);
         nestedFormsCount = nestedFormsCount + 1;
     }
