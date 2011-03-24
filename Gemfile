@@ -25,7 +25,7 @@ gem 'rails-settings', :require => "settings"
 gem 'nested_set', '1.5.4'
 gem 'fastercsv'
 gem 'thor'
-gem 'ckeditor', '3.5.0'
+gem 'ckeditor', '3.4.3.pre'
 gem 'aws-s3'
 gem 'i18n-js'
 
