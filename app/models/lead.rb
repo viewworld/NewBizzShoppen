@@ -58,7 +58,7 @@ class Lead < ActiveRecord::Base
   scope :owned_by, lambda { |user| where("lead_purchases.accessible_from IS NOT NULL and lead_purchases.owner_id = ?", user.id).joins(:lead_purchases) }
   scope :without_unique_categories, where("categories.is_agent_unique = ? and categories.is_customer_unique = ?", false, false).joins(:category)
   scope :with_customer_unique_categories, lambda { |customer_id| where("(is_customer_unique = ? and category_customers.user_id is NULL) or (is_customer_unique = ? and category_customers.user_id = ?)", false, true, customer_id).joins("INNER JOIN categories on categories.id=leads.category_id LEFT JOIN category_customers ON categories.id=category_customers.category_id") }
-  scope :with_agent_unique_categories, lambda { |agent_id| where("(is_agent_unique = ? and category_agents.user_id is NULL) or (is_agent_unique = ? and category_agents.user_id = ?)", false, true, agent_id).joins("INNER JOIN categories on categories.id=leads.category_id LEFT JOIN category_agents ON categories.id=category_agents.category_id") }
+  scope :with_agent_unique_categories, lambda { |agent_id| where("(is_agent_unique = ? and category_agents.user_id is NULL) or (is_agent_unique = ? and category_agents.user_id = ?)#{' or (is_agent_unique = \'t\' and category_agents.user_id = ' + User::CallCentreAgent.find_by_id(agent_id).parent_id.to_s + ')' if User::CallCentreAgent.find_by_id(agent_id)}", false, true, agent_id).joins("INNER JOIN categories on categories.id=leads.category_id LEFT JOIN category_agents ON categories.id=category_agents.category_id") }
 
   scope :with_deal_value_from, lambda { |from| where("purchase_value >= ?", from) }
   scope :with_deal_value_to, lambda { |to| where("purchase_value <= ?", to) }
@@ -190,7 +190,7 @@ class Lead < ActiveRecord::Base
 
   def check_category
     self.creator = current_user if creator.nil?
-    if category and category.is_agent_unique and creator.unique_categories.include?(category)
+    if category and category.is_agent_unique and !(creator.unique_categories.include?(category) or (creator.parent.present? and creator.parent.with_role.unique_categories.include?(category)))
       self.errors.add(:category_id, "Incorrect category!")
     end
   end
