@@ -1,12 +1,14 @@
 class Country < ActiveRecord::Base
   has_many :country_interest
   has_many :leads
-  has_many :bank_accounts
+  has_many :addresses
   has_many :regions
   has_one :vat_rate
 
   validates_presence_of :name
   validates_uniqueness_of :name
+
+  before_destroy :can_be_destroyed?
 
   accepts_nested_attributes_for :regions, :allow_destroy => true
 
@@ -31,7 +33,7 @@ class Country < ActiveRecord::Base
   end
 
   def can_be_destroyed?
-    country_interest.empty and leads.empty? and bank_accounts.empty? and !vat_rate.present?
+    country_interest.empty? and leads.empty? and addresses.empty? and !vat_rate.present?
   end
 
   PHONE_CODES = [

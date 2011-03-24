@@ -14,7 +14,7 @@
   </header>
 
   <div class="hidden">
-    <%= form_tag new_administration_country_path, :method => :get, :id => "form_new_country" do %>
+    <%= form_tag new_administration_vat_rate_path, :method => :get, :id => "form_new_country" do %>
         <%= submit_tag t("administration.countries.index.view.new_country") %>
     <% end %>
   </div>
@@ -52,9 +52,11 @@
                   <li>
                     <%= link_to t("administration.countries.index.view.edit"), edit_administration_country_path(country), :class => "default_action" %>
                   </li>
-                  <li>
-                    <%= link_to t("administration.countries.index.view.delete"), administration_country_path(country), {:method => :delete, :confirm => t("administration.countries.index.view.delete_confirmation_message")} %>
-                  </li>
+                  <% if country.can_be_destroyed? %>
+                    <li>
+                      <%= link_to t("administration.countries.index.view.delete"), administration_country_path(country), {:method => :delete, :confirm => t("administration.countries.index.view.delete_confirmation_message")} %>
+                    </li>
+                  <% end %>
                 </ul-actions>
               </td>
               <td class="cr"></td>
