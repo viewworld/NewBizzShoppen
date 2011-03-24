@@ -7,9 +7,9 @@
           <%= form.input :is_global %>
       <% else %>
           <% if current_user.has_role?(:call_centre) %>
-            <%= form.input :category_id, :collection => Category.without_locked.with_call_centre_unique(current_user).map { |c| [c.name, c.id] }, :include_blank => false %>
+            <%= form.input :category_id, :collection => nested_set_options(Category.without_locked.with_call_centre_unique(current_user)), :include_blank => false %>
           <% else %>
-            <%= form.input :category_id, :collection => Category.without_locked.with_agent_unique(current_user).map { |c| [c.name, c.id] }, :include_blank => false %>
+            <%= form.input :category_id, :collection => nested_set_options(Category.without_locked.with_agent_unique(current_user)), :include_blank => false %>
           <% end %>
       <% end %>
       <%= form.input :is_mandatory %>

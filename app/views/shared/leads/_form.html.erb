@@ -58,7 +58,7 @@
         <p class="inline-errors no_pdd"><%= t("shared.leads.form.category_cannot_be_changed") %></p>
       </li>
       <% end %>        
-      <%= form.input :category_id, :collection => Category.without_locked.with_agent_unique(current_user).map { |c| [c.name, c.id] }, :include_blank => false, :input_html => {:disabled => (!@lead.new_record? and @lead.lead_template_values_present?), :onchange => "$('#lead_category_is_changed').val('1'); $('##{dom_id(@lead, @lead.new_record? ? :new : :edit)}').submit()"}, :hint => hint_for(@lead, :category_id) %>
+      <%= form.input :category_id, :collection => nested_set_options(Category.without_locked.with_agent_unique(current_user).all), :include_blank => false, :input_html => {:disabled => (!@lead.new_record? and @lead.lead_template_values_present?), :onchange => "$('#lead_category_is_changed').val('1'); $('##{dom_id(@lead, @lead.new_record? ? :new : :edit)}').submit()"}, :hint => hint_for(@lead, :category_id) %>
       <%= form.input :category_is_changed, :as => :hidden, :value => "0" %>
       <%= form.input :is_international, :as => :select, :collection => [[t("shared.leads.form.country_local_label"), 0], [t("shared.leads.form.country_international"), 1]], :include_blank => false, :hint => hint_for(@lead, :is_international) %>
       <%= form.input :header, :hint => hint_for(@lead, :header) %>
