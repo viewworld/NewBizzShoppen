@@ -5,6 +5,7 @@ class InvoiceLine < ActiveRecord::Base
   validates_presence_of :name, :netto_price, :quantity
   belongs_to :payable, :polymorphic => true
   belongs_to :invoice
+  belongs_to :lead_purchase, :foreign_key => :payable_id
 
   after_save :update_frozen_revenue
   before_save :mark_as_paid
