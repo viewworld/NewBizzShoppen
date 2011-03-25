@@ -223,7 +223,7 @@ Given /^there are no leads$/ do
 end
 
 Given /^there are no countries$/ do
-  Country.delete_all
+  Country.destroy_all
 end
 
 When /^lead "([^"]*)" has attributes "([^"]*)"$/ do |lead_header, options|

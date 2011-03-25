@@ -82,6 +82,7 @@ Scenario: I can search for a transaction by a combination of keyword: contact na
   Given VAT ratio is set to 0.0
   Given I have user with email bigbuyer1@person.com and role customer
   And User bigbuyer1@person.com with role customer is big buyer
+  And user "bigbuyer1@person.com" with role "customer" has attributes "not_charge_vat:1"
   Given a lead TV ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role customer
   And lead TV ultimate deal exists with attributes "price:77.99,contact_name:Jill Johanssen,company_name:AIG Inc"
   And user with email "bigbuyer1@person.com" and role "customer" has invoice generated for all unpaid leads

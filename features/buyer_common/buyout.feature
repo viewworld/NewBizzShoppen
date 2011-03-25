@@ -232,7 +232,7 @@ Feature: Buy out
     Given there are no leads
     And Category named "Computers" already exists
     And category "Computers" has attributes "buyout_enabled:1"
-    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer with attributes "not_charge_vat:1"
     And User jon@lajoie.ca with role customer is big buyer
     And lead Printers exists within category Computers
     And lead "Printers" has attributes "sale_limit:10,price:123"

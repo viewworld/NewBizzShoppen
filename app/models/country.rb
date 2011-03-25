@@ -3,7 +3,7 @@ class Country < ActiveRecord::Base
   has_many :leads
   has_many :addresses
   has_many :regions
-  has_one :vat_rate
+  has_one :vat_rate, :dependent => :destroy
 
   validates_presence_of :name
   validates_uniqueness_of :name

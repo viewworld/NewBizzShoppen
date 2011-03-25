@@ -62,6 +62,7 @@ Scenario: I can search for invoices by a combination of keywords: contact name, 
   Given VAT ratio is set to 0.0
   Given I have user with email bigbuyer1@person.com and role customer
   And User bigbuyer1@person.com with role customer is big buyer
+  And user "bigbuyer1@person.com" with role "customer" has attributes "not_charge_vat:1"
   Given a lead Monitors ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role customer
   And lead Monitors ultimate deal exists with attributes "price:77.99,contact_name:Jill Johanssen,company_name:AIG Inc"
   And user with email "bigbuyer1@person.com" and role "customer" has invoice generated for all unpaid leads
@@ -478,13 +479,13 @@ Scenario: When creating new invoice a default seller should be selected
 @m5 @tgn @_tested
 Scenario: Include users name, company and user email when filtering invoices
   Given I have user with email bigbuyer1@person.com and role customer
-  And user bigbuyer1@person.com with role customer exists with attributes "first_name:John, last_name:Havranek"
+  And user bigbuyer1@person.com with role customer exists with attributes "first_name:John, last_name:Havranek,not_charge_vat:1"
   And User bigbuyer1@person.com with role customer is big buyer
   Given a lead Monitors ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role customer
   And lead Monitors ultimate deal exists with attributes "price:77.99,contact_name:Jill Johanssen,company_name:AIG Inc"
   And user with email "bigbuyer1@person.com" and role "customer" has invoice generated for all unpaid leads
   Given I have user with email bigbuyer2@person.com and role customer
-  And user bigbuyer2@person.com with role customer exists with attributes "first_name:Albert, last_name:Bohema"
+  And user bigbuyer2@person.com with role customer exists with attributes "first_name:Albert, last_name:Bohema,not_charge_vat:1"
   And User bigbuyer2@person.com with role customer is big buyer
   Given a lead Mouses 2 ultimate deal exists within category Computers and is bought by user bigbuyer2@person.com with role customer
   And lead Mouses 2 ultimate deal exists with attributes "price:88.32,contact_name:Tom Blanq,company_name:Xerox"
