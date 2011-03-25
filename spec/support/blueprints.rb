@@ -58,7 +58,7 @@ Lead.blueprint(:featured) do
 end
 
 Currency.blueprint do
-  name { Faker::Lorem.words(1) }
+  name { Faker::Lorem.words(1) + Time.now.to_f.to_s.sub('.','') }
   symbol { ['&euro;','&pound;','$'][rand(3)]}
   active { true }
 end

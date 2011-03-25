@@ -1,7 +1,7 @@
 <column-mc:>
   <header>
     <% if current_user and current_user.has_any_role?(:call_centre ,:call_centre_agent) %>
-        <%= t("home.show.view.call_centre_header", :name => "#{ current_user.screen_name + "@" if current_user.has_role?(:call_centre_agent)}#{current_user.has_role?(:call_centre_agent) ? current_user.parent.company_name : current_user.screen_name }") %>
+        <%= t("home.show.view.call_centre_header", :name => screen_name_with_company_name(current_user)) %>
     <% else %>
         <%= t("home.show.view.header") %>
     <% end %>
