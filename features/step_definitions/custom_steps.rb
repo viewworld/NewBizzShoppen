@@ -64,8 +64,10 @@ Given /^I click hidden link url "([^"]*)"$/ do |url|
   page.all(:css, 'a').detect { |l| l.text == caption }.click()
 end
 
-Given /^I click hidden link by url regex "([^"]*)"$/ do |regex|
-  visit page.all(:css, 'a').detect { |l| !(l[:href] =~ eval(regex)).nil? }[:href]
+Given /^I click hidden link by url regex "([^"]*)"(?: within "([^"]*)")?$/ do |regex,scope|
+  selector = "a"
+  selector = scope + " #{selector}" if scope
+  visit page.all(:css, selector).detect { |l| !(l[:href] =~ eval(regex)).nil? }[:href]
 end
 
 Given /^I (should not|should) see link with label "([^"]*)"$/ do |should_be_visible, label|
