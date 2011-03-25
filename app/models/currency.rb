@@ -3,6 +3,7 @@ class Currency < ActiveRecord::Base
   has_many :leads
 
   validates_presence_of :name, :symbol, :format
+  validates_uniqueness_of :name
 
   before_destroy :can_be_destroyed?
 

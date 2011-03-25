@@ -13,7 +13,7 @@
             <%= form.submit t("administration.currencies.new.view.button_create_currency") %>
           </ibt>
           <ibt c="bt_grey fltri">
-            <%= button_to_function t("administration.currencies.new.view.button_cancel"), "history.go(-1)" %>
+            <%= button_to_function t("administration.currencies.new.view.button_cancel"), href(administration_currencies_path) %>
           </ibt>          
         </param:actions>
       </frm>
