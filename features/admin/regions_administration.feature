@@ -50,7 +50,6 @@ Scenario: I can delete new region for given country
   And Country Poland is created
   And country "Poland" has regions "Region #1, Region #2, Region #3"
   And I go to administration countries
-  And I open page in browser
   When I click hidden link by url regex "/administration\/countries\/\d+\/edit/" within "table#countries_table tbody tr:nth-of-type(3)"
   And I follow translated "administration.countries.form.delete_region"
   And I press translated "administration.countries.edit.view.button_update_country"
