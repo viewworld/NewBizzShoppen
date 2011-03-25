@@ -11,7 +11,7 @@
             <%= form.submit t("administration.sellers.edit.view.button_update") %>
           </ibt>
           <ibt c="fltri bt_grey">
-            <%= button_to_function t("common.cancel_link"), "history.go(-1)" %>
+            <%= button_to_function t("common.cancel_link"), href(administration_sellers_path) %>
           </ibt>
         </param:actions>
       </frm>

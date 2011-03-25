@@ -14,6 +14,7 @@ class PaymentTransaction < ActiveRecord::Base
   scope :with_sale_date_before_and_including, lambda{ |date| where(["invoices.sale_date <= ?",date]) }
 
   validates_presence_of :invoice_id, :amount, :paid_at
+  validates_numericality_of :amount
 
   def paid_at_date
     paid_at ? paid_at.to_date : '-'
