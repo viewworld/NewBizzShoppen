@@ -9,7 +9,6 @@ end
 
 Country.blueprint do
   name { Faker::Address.uk_country + Time.now.to_f.to_s.sub('.','') }
-  vat_rate { VatRate.make! }
 end
 
 VatRate.blueprint do
