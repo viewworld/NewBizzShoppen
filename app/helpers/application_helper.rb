@@ -163,4 +163,8 @@ module ApplicationHelper
   def format_date(date, with_time=false)
     date.strftime("%d-%m-%Y#{' %H:%M' if with_time}")
   end
+
+  def href(url)
+    "window.location.href='#{url}'"
+  end
 end

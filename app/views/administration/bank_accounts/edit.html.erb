@@ -11,7 +11,7 @@
             <%= form.submit t("administration.bank_accounts.edit.view.button_save") %>
           </ibt>
             <ibt c="fltri bt_grey">
-              <%= button_to_function t("common.cancel_link"), "history.go(-1)" %>
+              <%= button_to_function t("common.cancel_link"), href(edit_administration_setting_path) %>
             </ibt>
         </param:actions>
       </frm>

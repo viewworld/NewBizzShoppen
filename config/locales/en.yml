@@ -942,7 +942,7 @@ en:
           button_create: "Create"
       edit:
         view:
-          header: "Editing VAR rate for:  %{name}"
+          header: "Editing VAT rate for:  %{name}"
           button_save: "Save"
       common:
         view:
