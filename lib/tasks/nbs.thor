@@ -181,7 +181,7 @@ class Nbs < Thor
         {:name => 'TWD', :symbol => 'TWD', :format => '%u %n', :active => false},
         {:name => 'THB', :symbol => 'THB', :format => '%u %n', :active => false}
     ].each do |params|
-      Currency.create!(params)
+      Currency.create(params)
     end
 
     unless Rails.env.production?
