@@ -61,7 +61,8 @@ module CategoriesHelper
   end
 
   def category_tree(category, options={})
-    [category_label(category, options), (category_children(category, options)), category_toggler(category)].compact.join.html_safe
+    all_children = category_children(category, options)
+    [category_label(category, options), (all_children), category_toggler(all_children.blank? ? false : true)].compact.join.html_safe
   end
 
 
@@ -89,8 +90,8 @@ module CategoriesHelper
     end
   end
 
-  def category_toggler(category)
-      unless category.children.empty?
+  def category_toggler(has_children)
+      if has_children
         content_tag(:p, :class => "subcategory_btn") do
           link_to(t("common.more"), "javascript:void(0)", :class => "show_subcategory")+
           link_to(t("common.fewer"), "javascript:void(0)", :class => "hide_subcategory", :style => "display: none")
