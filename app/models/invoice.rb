@@ -47,8 +47,8 @@ class Invoice < ActiveRecord::Base
   scope :descend_by_total, joins("LEFT JOIN invoice_lines ON invoice_lines.invoice_id = invoices.id").group(column_names.map{|c| 'invoices.'+c}.join(',')).order("SUM(invoice_lines.brutto_value) DESC")
   scope :with_paid, lambda{|paid| paid.to_i==1 ? where("invoices.paid_at IS NOT NULL") : where("invoices.paid_at IS NULL")}
   scope :for_user, lambda{|user| where(:user_id => user.to_i)}
-  scope :total_paid, where("paid_at IS NOT NULL")
-  scope :total_not_paid, where("paid_at IS NULL")
+  scope :total_paid, where("invoices.paid_at IS NOT NULL")
+  scope :total_not_paid, where("invoices.paid_at IS NULL")
 
   validates_presence_of :user, :seller
   validates_associated :invoice_lines, :seller
