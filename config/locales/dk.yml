@@ -1,4 +1,11 @@
 dk:
+  common:
+    js:
+      read_more: "read more"
+      collapse_expanded_text: "[collapse expanded text]"
+      expand_prefix: "...  "
+      collapse_prefix: " "
+
   home:
     show:
       view:
