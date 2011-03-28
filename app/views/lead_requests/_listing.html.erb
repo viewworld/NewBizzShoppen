@@ -32,7 +32,10 @@
           <% unless BigDecimal(lead_request.purchase_value.to_s).zero? %>
               <p class="element"><%= t("lead_requests.listing.purchase_value_label") %> <span class="green"><%= as_currency(lead_request.purchase_value, lead_request.lead.currency) %></span></p>
           <% end %>
-          <p class="element"><%= t("lead_requests.listing.lead_price_label") %> <span class="green"><%= as_currency(lead_request.price, lead_request.lead.currency) %></span></p>
+
+          <% if lead_request.lead.category.price_visible_for?(current_user) %>
+            <p class="element"><%= t("lead_requests.listing.lead_price_label") %> <span class="green"><%= as_currency(lead_request.price, lead_request.lead.currency) %></span></p>
+          <% end %>
           <p class="element_description i"><%= lead_request.description %></p>
 
           <% if block_general %>
