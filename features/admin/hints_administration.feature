@@ -33,3 +33,8 @@ Scenario: I can edit a hint directly from the place where it is displayed
   And I follow translated "administration.leads.index.view.edit"
   And I click hidden link by url regex "/administration\/hints\/\d+\/edit/"
   Then I should see "Edit hint Lead#region"
+
+# This will require some extension to admin - we think that when editing and admin account, we can set “Become a <<role>>” option -
+#it will allow an admin to become a user with a specific role (only one at a time) - therefore he will be able to access all interfaces within fairleads and perform article/blurb/hint editing.
+@requested @m8
+Scenario: Option for becoming a certain role and be able to edit blurb/articles/hints

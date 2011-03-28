@@ -80,3 +80,8 @@ Scenario: I can't buy (see) a lead when sale_limit is reached
   And I follow "Computers"
   Then I should see "Super printers #2"
   And I should not see "Super printers #1"
+
+#When adding a lead to cart for the first time, there should be a small popup displayed, pointing on “Cart” button with some customizable text
+#(i.e. Your lead has been added to cart. Click here to checkout.) If You close it, it should no more appear for that particular user
+@requested @m8
+Scenario: When adding a lead to cart for the first time, there should be a small popup displayed

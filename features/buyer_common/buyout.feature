@@ -250,3 +250,7 @@ Feature: Buy out
     And I follow translated "administration.invoices.edit.view.show_invoice"
     Then I should see "10" within ".invoice_data tr:nth-child(1) td:nth-child(3)"
     And I should see "1,230.00" within "td:nth-child(7)"
+
+  #Buyout from my leads page - i.e. you have bought lead once -> decided it is so good that it is worth buying out -> click buyout lead and buy remaining instances
+  @requested @m8
+  Scenario: I can buy out remaining leads if I previously bought only one
