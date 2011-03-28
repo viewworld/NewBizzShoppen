@@ -114,3 +114,6 @@ Scenario: I can search for a transaction by a combination of keyword: contact na
   And I press translated "administration.payment_transactions.index.view.search_button"
   Then I should see "77.99"
   Then I should not see "88.32"
+
+@requested @m8
+Scenario: Show company name in listing
