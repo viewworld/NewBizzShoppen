@@ -131,8 +131,12 @@ class Nbs < Thor
               notify_buyers_after_update sale_limit purchase_decision_date }
     }.each_pair do |klass, methods|
       methods.each do |method|
-        Article::Cms::Hint.create(:key => "#{klass}_#{method}", :published => false, :title => "#{klass.to_s.capitalize}##{method.gsub('_id', '')}",
-        :content => Rails.env.production? ? nil : "Hint for <b>lead's #{method.humanize.downcase.gsub('_id', '')}</b>")
+        article = Article::Cms::Hint.create(:key => "#{klass}_#{method}", :published => false)
+        [:en, :dk].each do |locale|
+          I18n.locale = locale
+          article.update_attributes({:content => Rails.env.production? ? nil : "Hint for <b>lead's #{method.humanize.downcase.gsub('_id', '')}</b>",
+                                     :title => "#{klass.to_s.capitalize}##{method.gsub('_id', '')}"})
+        end
       end
     end
 

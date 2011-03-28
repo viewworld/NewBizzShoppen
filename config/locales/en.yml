@@ -26,6 +26,8 @@ en:
     no_categories_for_category_buyer: "Your Category Buyer account has no associated categories. You can't sign in."
     edit_hint: "Edit hint"
     agree_to: "Agree to"
+    add_hint: "Add hint"
+    remove_hint: "Remove hint"
   ckeditor:
     upload_new_files: "Upload new files"
     file_manager: "File Manager"
