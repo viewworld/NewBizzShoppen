@@ -21,7 +21,7 @@ Scenario: I can edit hint
   And I wait 1 second
   And I fill in "article_content_editor" ckeditor with "Hint for region. Here you can select region specific to your country"
   And I press translated "administration.hints.edit.view.button_save"
-  Then I should see "Hint for region. Here you can select region specific to your country"
+  Then I should be on the homepage
 
 # Hints - allow admin to go to edit hint pages straight from interface (just as with blurbs etc.)
 @requested @m7 @tgn @_tested

@@ -1,6 +1,7 @@
 <column-mc:>
   <header back="true">
     <%= t('administration.hints.edit.view.header', :name => @article.title) %>
+    <%= image_tag("languages/flag_#{I18n.locale}.png") %>
   </header>
 
   <%= form_for @article, :as => :article, :url => administration_hint_path(@article), :html => {:method => :delete, :id => "delete_article_form"} do |form| %>

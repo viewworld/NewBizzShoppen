@@ -3,15 +3,24 @@ class Administration::HintsController < Administration::AdministrationController
   set_tab "content"
   set_subtab "hints"
 
+  before_filter :set_referer, :only => [:edit, :destroy]
+
   def edit
     @article = Article.find(params[:id])
+    if params[:add] == "1"
+      @article.published = true
+    end
   end
 
   def update
     @article = Article.find(params[:id])
     @article.attributes = params[:article]
     if @article.save
-      redirect_to administration_hint_path(@article)
+      if session[:hints_referer]
+        redirect_to session[:hints_referer]
+      else
+        redirect_to administration_hints_path
+      end
     else
       render :action => "edit"
     end
@@ -21,6 +30,16 @@ class Administration::HintsController < Administration::AdministrationController
     @article = Article::Cms::Hint.find(params[:id])
   end
 
+  def destroy
+    @article = Article.find(params[:id])
+    @article.update_attribute(:published, false)
+    if session[:hints_referer]
+      redirect_to session[:hints_referer]
+    else
+      redirect_to administration_hints_path
+    end
+  end
+
   protected
 
   def collection
@@ -28,5 +47,9 @@ class Administration::HintsController < Administration::AdministrationController
     params[:search][:with_subclass] = "Article::Cms::Hint" unless params[:search][:with_subclass].present?
     @search = Article.scoped_search(params[:search])
     @hints = @search.paginate(:page => params[:page])
+  end
+
+  def set_referer
+    session[:hints_referer] = request.referer
   end
 end
