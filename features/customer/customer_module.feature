@@ -199,6 +199,14 @@ Scenario: I can use "Advanced search" in Browse leads with following fields: Dea
   And I should see "Super printers #2"
   And I should not see "Super printers #3"
 
+@requested @m8 @tgn @selenium @_tested
+Scenario: Advanced search in browse leads should be hidden by default
+  Given Category Computers is created
+  And I go to browse leads
+  And I follow "Computers"
+  And I follow translated "common.advanced_search"
+  Then I should see translated "leads.index.search.deal_value_from_label"
+
 # On the configure you interests page there should be a back button, when it is selected from my profile page
 # except for first login
 @m7 @requested @tgn @_tested

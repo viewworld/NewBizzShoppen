@@ -16,3 +16,8 @@ Feature: Home page
 
   @m8 @requested @tgn
   Scenario: When a new user sigens in on fairleads, he should be redirected to his new role home page, not the site homepage
+
+  @m8 @requested @tgn @_tested
+  Scenario: Make year automatically change in footer
+    Given I go to the homepage
+    Then I should see "2011 Fairleads Ltd"
