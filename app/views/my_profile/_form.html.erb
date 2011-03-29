@@ -48,7 +48,7 @@
         <fieldset class="inputs labels_ta_r labels_200">
           <ol class="align_inputs">
             <% if current_user.has_role?(:call_centre) %>
-                <%= form.input :bank_name %>
+                <%= form.input :bank_name, :hint => hint_for("my_profile", :bank_name) %>
                 <%= form.fields_for :bank_address do |address_form| %>
                     <%= address_form.input :address_line_1, :hint => hint_for("my_profile", :bank_address_address_line_1) %>
                     <%= address_form.input :address_line_2, :hint => hint_for("my_profile", :bank_address_address_line_2) %>
