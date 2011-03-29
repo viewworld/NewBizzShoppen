@@ -360,3 +360,7 @@ end
 Then /^I should not see CSS path "([^"]*)"$/ do |selector|
   page.all(:css, selector).size.should eql(0)
 end
+
+Given /^browser accepts "([^"]*)" locale$/ do |locale|
+  page.driver.header "Accept-Language", locale
+end
