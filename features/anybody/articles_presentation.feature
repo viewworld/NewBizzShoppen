@@ -18,5 +18,11 @@ Scenario: I can see blurb text on the sign up page
   When I go to buyer sign up
   Then I should see "Blurb sign up"
 
-@m8 @ao
+@m8 @ao @selenium @_done @_tested
 Scenario: I can see help text by clicking on question mark icon (...)
+  Given I make sure current locale is "en"
+  And I am on the home page
+  And I follow translated "home.show.view.forgotten_password_link"
+  And I follow translated "common.help_link"
+  And I wait 1 second
+  Then I should see "Reset password" within "div#colorbox"
