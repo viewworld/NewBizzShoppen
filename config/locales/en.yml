@@ -1384,6 +1384,8 @@ en:
         header_best_sellers: "Best sellers"
         header_latest_leads: "Latest leads"
         header_news: "News"
+        header_my_new_leads: "My new leads"
+        header_my_sold_leads: "My sold leads"
         purchase_value_label: "Purchase value:"
         lead_price_label: "Lead price:"
         description_label: "Description:"

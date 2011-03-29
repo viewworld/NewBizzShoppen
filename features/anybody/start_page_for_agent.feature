@@ -228,5 +228,27 @@ Scenario: I should see leads from agent unique categories I'm assigned to on Bes
   And I should not see "UniqueLead1" within "#best_sellers"
   And I should see "UniqueLead2" within "#best_sellers"
 
-  @m8 @requested @ao
-  Scenario: When you are loged in as an agent and go to the role home pages. The three clumens should be “My new leads” And “My sold leads”
+@m8 @requested @ao @_done @_tested
+Scenario: When you are loged in as an agent and go to the role home pages, I should see column with “My sold leads”
+  Given there are no leads
+  And I am signed up and confirmed as user with email ejdzent@nbs.com and password secret and role agent
+  And lead Super ultra lead #1 is created by user ejdzent@nbs.com with role agent
+  And someone is signed up and confirmed as user with email bigbajer@nbs.com and password secret and role customer with attributes "big_buyer:1"
+  And an user with role lead_user and email lidjuzer@nbs.com exists as subaccount for customer bigbajer@nbs.com
+  And lead Super ultra lead #1 is bought by user bigbajer@nbs.com with role customer and is assigned to user lidjuzer@nbs.com with role lead_user
+  When I sign in as ejdzent@nbs.com with password secret
+  And I go to the home page
+  And I follow translated "home.show.view.agent"
+  Then I should see "Super ultra lead #1" within "#sold_leads"
+  And I should see "1" items on a list within "#sold_leads"
+
+  @m8 @requested @ao @_done @_tested
+  Scenario: When you are loged in as an agent and go to the role home pages, I should see column with “My new leads”
+  Given there are no leads
+  And I am signed up and confirmed as user with email ejdzent@nbs.com and password secret and role agent
+  And lead Super ultra lead #1 is created by user ejdzent@nbs.com with role agent
+  When I sign in as ejdzent@nbs.com with password secret
+  And I go to the home page
+  And I follow translated "home.show.view.agent"
+  Then I should see "Super ultra lead #1" within "#new_leads"
+  And I should see "1" items on a list within "#new_leads"

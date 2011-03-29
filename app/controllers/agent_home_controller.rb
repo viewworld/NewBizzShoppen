@@ -2,7 +2,13 @@ class AgentHomeController < ApplicationController
 
   set_tab "home"
 
-  def show
+  def agent
+    @new_leads = current_user.leads.without_outdated.without_inactive.order("created_at DESC").limit(10)
+    @sold_leads = current_user.leads.joins_on_lead_purchases.purchased.order("lead_purchases.created_at DESC").limit(10)
+    render :agent
+  end
+
+  def guest
     @best_sellers = Lead.scoped
     @best_sellers = @best_sellers.includes(:creator).without_inactive.published_only.without_bought_and_requested_by(current_user).bestsellers
     if user_signed_in?
@@ -20,7 +26,17 @@ class AgentHomeController < ApplicationController
       @latest_leads = @latest_leads.without_unique_categories
     end
     @latest_leads = @latest_leads.latest.limit(10)
-    @news         = Article::News::Agent.published.latest.limit(3)
+    render :guest
+  end
+
+  def show
+    @news = Article::News::Agent.published.latest.limit(3)
+
+    if user_signed_in? and current_user.has_role? :agent
+      agent
+    else
+      guest
+    end
   end
 
 end
