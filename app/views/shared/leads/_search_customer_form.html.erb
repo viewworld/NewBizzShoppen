@@ -24,6 +24,7 @@
     </ibt>
     <p>
       <%= bt_clear_filter_safe %>
+      <%= link_to_function t("common.advanced_search"), "$('#advanced_search_div').slideToggle();" %>
     </p>
   </li>
 </ol>
@@ -41,7 +42,7 @@
 <% end %>
 </fieldset>
 
-
+<div id="advanced_search_div" style="<%= 'display: none;' if [:with_deal_value_from, :with_deal_value_to, :with_created_by, :with_certification_level, :with_sale_limit, :with_hotness].detect { |k| !params[:search][k].blank?  }.nil? -%>;">
 <fieldset class="inputs_vertical">
 <ol class="no_pdd">
   <li class="select">
@@ -70,3 +71,4 @@
   </li>
 </ol>
 </fieldset>
+</div>

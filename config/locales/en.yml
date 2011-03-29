@@ -28,6 +28,7 @@ en:
     agree_to: "Agree to"
     add_hint: "Add hint"
     remove_hint: "Remove hint"
+    advanced_search: "Advanced search"
   ckeditor:
     upload_new_files: "Upload new files"
     file_manager: "File Manager"
