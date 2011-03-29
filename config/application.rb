@@ -43,10 +43,16 @@ module Nbs
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters                            += [:password]
 
+    require "locale_setter"
+    config.middleware.use "Rack::LocaleSetter"
+
     require "bulk_process"
     config.middleware.use "BulkProcess"
+
     require "#{config.root}/app/modules/custom_redirect.rb"
+
     config.autoload_paths += %W( #{config.root}/app/models/ckeditor )
+
     require "#{config.root}/lib/settings.rb"
 
     config.after_initialize do
