@@ -18,5 +18,5 @@ Scenario: I can see blurb text on the sign up page
   When I go to buyer sign up
   Then I should see "Blurb sign up"
 
-@m0
+@m8 @ao
 Scenario: I can see help text by clicking on question mark icon (...)

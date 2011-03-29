@@ -436,11 +436,11 @@ Scenario: I can create a new lead and duplicate company\contact info to another 
   And the "lead_facebook_url" field should contain "http://facebook.com/fkdjdjd-fjehjhd"
 
 # new feature introduced in M5
-@m0 @added
+@duplicated
 Scenario: I can pick region for a country from dropdown
 
 # new feature introduced in M5
-@m0 @added
+@duplicated
 Scenario: I can see international phone dialing prefix filled accordlingly to selected language/locale
 
 @m5 @unique_categories @added @_tested @tgn
