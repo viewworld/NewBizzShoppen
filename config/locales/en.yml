@@ -2235,3 +2235,7 @@ en:
       edit:
         view:
           header: "Change your password"
+  category_requests:
+    new:
+      view:
+        header: "Category requests"

@@ -135,6 +135,7 @@ Nbs::Application.routes.draw do
   resources :locales
   resources :phone_codes
   resources :regions
+  resources :category_requests, :only => [:new, :create]
 
   resources :news
   resources :articles
