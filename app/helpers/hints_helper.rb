@@ -1,6 +1,6 @@
 module HintsHelper
   def hint_for(object, method)
-    html_id = "#{object.class.to_s.tableize.singularize}_#{method}"
+    html_id = "#{object.class.to_s == "String" ? object : object.class.to_s.tableize.singularize}_#{method}"
     if current_user and current_user.has_role?(:admin)
       @hint = Article::Cms::Hint.find_by_key(html_id)
     else

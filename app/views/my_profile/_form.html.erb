@@ -2,14 +2,14 @@
   <div class="pdd_10 no_pdd_t">
     <fieldset class="inputs labels_ta_r labels_200">
       <ol>
-        <%= form.input :company_name %>
-        <%= form.input :first_name %>
-        <%= form.input :last_name %>
-        <%= form.input :phone %>
-        <%= form.input :email %>
-        <%= form.input :screen_name %>
-        <%= form.input :company_registration_number %>
-        <%= form.input :company_ean_number %>
+        <%= form.input :company_name, :hint => hint_for("my_profile", :company_name) %>
+        <%= form.input :first_name, :hint => hint_for("my_profile", :first_name) %>
+        <%= form.input :last_name, :hint => hint_for("my_profile", :last_name) %>
+        <%= form.input :phone, :hint => hint_for("my_profile", :phone) %>
+        <%= form.input :email, :hint => hint_for("my_profile", :email) %>
+        <%= form.input :screen_name, :hint => hint_for("my_profile", :screen_name) %>
+        <%= form.input :company_registration_number, :hint => hint_for("my_profile", :company_registration_number) %>
+        <%= form.input :company_ean_number, :hint => hint_for("my_profile", :company_ean_number) %>
       </ol>
     </fieldset>
   </div>
@@ -21,18 +21,18 @@
     <fieldset class="inputs labels_ta_r">
       <ol class="align_inputs">
         <%= form.fields_for :address do |address_form| %>
-            <%= address_form.input :address_line_1, :required => !current_user.has_role?(:call_centre_agent) %>
-            <%= address_form.input :address_line_2 %>
-            <%= address_form.input :address_line_3 %>
-            <%= address_form.input :zip_code, :required => !current_user.has_role?(:call_centre_agent) %>
+            <%= address_form.input :address_line_1, :hint => hint_for("my_profile", :address_address_line_1), :required => !current_user.has_role?(:call_centre_agent) %>
+            <%= address_form.input :address_line_2, :hint => hint_for("my_profile", :address_address_line_2) %>
+            <%= address_form.input :address_line_3, :hint => hint_for("my_profile", :address_address_line_3) %>
+            <%= address_form.input :zip_code, :hint => hint_for("my_profile", :address_zip_code), :required => !current_user.has_role?(:call_centre_agent) %>
         <% end %>
-        <%= form.input :vat_number if current_user.has_role?(:customer) %>
+        <%= form.input :vat_number, :hint => hint_for("my_profile", :vat_number) if current_user.has_role?(:customer) %>
         <%= form.fields_for :address do |address_form| %>
-            <%= address_form.input :country_id, :as => :select, :collection => Country.all, :input_html => { :onchange => "refresh_regions_list('user_#{@user.role.to_s}_address_attributes');" } %>
-            <%= address_form.input :region_id, :as => :select, :collection => regions_collection_for(@user.address.country) %>
+            <%= address_form.input :country_id, :hint => hint_for("my_profile", :address_country_id), :as => :select, :collection => Country.all, :input_html => { :onchange => "refresh_regions_list('user_#{@user.role.to_s}_address_attributes');" } %>
+            <%= address_form.input :region_id, :hint => hint_for("my_profile", :address_region_id), :as => :select, :collection => regions_collection_for(@user.address.country) %>
         <% end %>
-        <%= form.input :newsletter_on, :as => :boolean %>
-        <%= form.input :team_buyers, :as => :boolean if current_user.has_role?(:customer) %>
+        <%= form.input :newsletter_on, :hint => hint_for("my_profile", :newsletter_on), :as => :boolean %>
+        <%= form.input :team_buyers, :hint => hint_for("my_profile", :team_buyers), :as => :boolean if current_user.has_role?(:customer) %>
       </ol>
     </fieldset>
   </div>
@@ -50,12 +50,12 @@
             <% if current_user.has_role?(:call_centre) %>
                 <%= form.input :bank_name %>
                 <%= form.fields_for :bank_address do |address_form| %>
-                    <%= address_form.input :address_line_1 %>
-                    <%= address_form.input :address_line_2 %>
-                    <%= address_form.input :address_line_3 %>
-                    <%= address_form.input :zip_code %>
-                    <%= address_form.input :country_id, :as => :select, :collection => Country.all, :include_blank => false, :input_html => { :onchange => "refresh_regions_list('user_#{@user.role.to_s}_bank_address_attributes');" } %>
-                    <%= address_form.input :region_id, :as => :select, :collection => regions_collection_for(@user.bank_address.country) %>
+                    <%= address_form.input :address_line_1, :hint => hint_for("my_profile", :bank_address_address_line_1) %>
+                    <%= address_form.input :address_line_2, :hint => hint_for("my_profile", :bank_address_address_line_2) %>
+                    <%= address_form.input :address_line_3, :hint => hint_for("my_profile", :bank_address_address_line_3) %>
+                    <%= address_form.input :zip_code, :hint => hint_for("my_profile", :bank_address_zip_code) %>
+                    <%= address_form.input :country_id, :hint => hint_for("my_profile", :bank_address_country_id), :as => :select, :collection => Country.all, :include_blank => false, :input_html => { :onchange => "refresh_regions_list('user_#{@user.role.to_s}_bank_address_attributes');" } %>
+                    <%= address_form.input :region_id, :hint => hint_for("my_profile", :bank_address_region_id), :as => :select, :collection => regions_collection_for(@user.bank_address.country) %>
                 <% end %>
             <% end %>
           </ol>
@@ -67,10 +67,10 @@
       <div class="pdd_10 no_pdd_t">
         <fieldset class="inputs labels_ta_r">
           <ol class="align_inputs">
-            <%= form.input :paypal_email %>
-            <%= form.input :bank_swift_number %>
-            <%= form.input :bank_iban_number %>
-            <%= form.input :payout, :hint => "%" if current_user.has_role?(:call_centre) %>
+            <%= form.input :paypal_email, :hint => hint_for("my_profile", :paypal_email) %>
+            <%= form.input :bank_swift_number, :hint => hint_for("my_profile", :bank_swift_number) %>
+            <%= form.input :bank_iban_number, :hint => hint_for("my_profile", :bank_iban_number) %>
+            <%= form.input :payout, :hint => "% #{hint_for('my_profile', :payout)}".html_safe if current_user.has_role?(:call_centre) %>
           </ol>
         </fieldset>
       </div>

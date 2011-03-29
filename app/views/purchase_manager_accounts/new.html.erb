@@ -14,15 +14,15 @@
             <div class="pdd_10 no_pdd_t">
               <fieldset class="inputs labels_ta_r labels_200">
                 <ol>
-                  <%= form.input :first_name %>
-                  <%= form.input :last_name %>
+                  <%= form.input :first_name, :hint => hint_for(@user, :first_name) %>
+                  <%= form.input :last_name, :hint => hint_for(@user, :last_name) %>
                   <%= form.fields_for :address do |address_form| %>
-                      <%= address_form.input :address_line_1 %>
-                      <%= address_form.input :address_line_2 %>
-                      <%= address_form.input :address_line_3 %>
-                      <%= address_form.input :zip_code %>
-                      <%= address_form.input :country_id, :as => :select, :collection => Country.all, :input_html => { :onchange => "refresh_regions_list('user_purchase_manager_address_attributes');" } %>
-                      <%= address_form.input :region_id, :as => :select, :collection => regions_collection_for(@user.address.country) %>
+                      <%= address_form.input :address_line_1, :hint => hint_for(@user, :address_address_line_1) %>
+                      <%= address_form.input :address_line_2, :hint => hint_for(@user, :address_address_line_2) %>
+                      <%= address_form.input :address_line_3, :hint => hint_for(@user, :address_address_line_3) %>
+                      <%= address_form.input :zip_code, :hint => hint_for(@user, :address_zip_code) %>
+                      <%= address_form.input :country_id, :as => :select, :hint => hint_for(@user, :address_country_id), :collection => Country.all, :input_html => { :onchange => "refresh_regions_list('user_purchase_manager_address_attributes');" } %>
+                      <%= address_form.input :region_id, :as => :select, :hint => hint_for(@user, :address_region_id), :collection => regions_collection_for(@user.address.country) %>
                   <% end %>
                 </ol>
               </fieldset>
@@ -33,13 +33,13 @@
             <div class="pdd_10 no_pdd_t">
               <fieldset class="inputs labels_ta_r">
                 <ol class="align_inputs">
-                  <%= form.input :phone %>
-                  <%= form.input :email %>
-                  <%= form.input :screen_name %>
-                  <%= form.input :password %>
-                  <%= form.input :password_confirmation %>
-                  <%= form.input :agreement_read, :as => :boolean, :label => "#{t("common.agree_to")} #{link_to_main_page_article('terms_conditions', {:popup => true}, {:id => 'agreement_modal_box'})}".html_safe %>
-                  <%= form.input :newsletter_on, :as => :boolean %>
+                  <%= form.input :phone, :hint => hint_for(@user, :phone) %>
+                  <%= form.input :email, :hint => hint_for(@user, :email) %>
+                  <%= form.input :screen_name, :hint => hint_for(@user, :screen_name) %>
+                  <%= form.input :password, :hint => hint_for(@user, :password) %>
+                  <%= form.input :password_confirmation, :hint => hint_for(@user, :password_confirmation) %>
+                  <%= form.input :agreement_read, :as => :boolean, :hint => hint_for(@user, :agreement_read), :label => "#{t("common.agree_to")} #{link_to_main_page_article('terms_conditions', {:popup => true}, {:id => 'agreement_modal_box'})}".html_safe %>
+                  <%= form.input :newsletter_on, :as => :boolean, :hint => hint_for(@user, :newsletter_on) %>
                 </ol>
               </fieldset>
             </div>
