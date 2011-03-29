@@ -252,5 +252,5 @@ Feature: Buy out
     And I should see "1,230.00" within "td:nth-child(7)"
 
   #Buyout from my leads page - i.e. you have bought lead once -> decided it is so good that it is worth buying out -> click buyout lead and buy remaining instances
-  @requested @m8
+  @requested @m8 @ao
   Scenario: I can buy out remaining leads if I previously bought only one

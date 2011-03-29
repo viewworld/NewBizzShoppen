@@ -83,5 +83,5 @@ Scenario: I can't buy (see) a lead when sale_limit is reached
 
 #When adding a lead to cart for the first time, there should be a small popup displayed, pointing on “Cart” button with some customizable text
 #(i.e. Your lead has been added to cart. Click here to checkout.) If You close it, it should no more appear for that particular user
-@requested @m8
+@requested @m8 @tgn
 Scenario: When adding a lead to cart for the first time, there should be a small popup displayed

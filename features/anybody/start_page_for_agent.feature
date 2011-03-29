@@ -228,5 +228,5 @@ Scenario: I should see leads from agent unique categories I'm assigned to on Bes
   And I should not see "UniqueLead1" within "#best_sellers"
   And I should see "UniqueLead2" within "#best_sellers"
 
-  @m8 @requested
+  @m8 @requested @ao
   Scenario: When you are loged in as an agent and go to the role home pages. The three clumens should be “My new leads” And “My sold leads”
