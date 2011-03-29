@@ -8,7 +8,7 @@ Feature: User Account - Profile edit
     Then I sign in as bob@person.com with password supersecret
     And I go to my profile
 
- @_tested @wip
+ @_tested
   Scenario: I change my password
     Given I follow translated "password.edit.view.change_password"
     And I fill in "user_agent_current_password" with "supersecret"
