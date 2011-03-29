@@ -121,6 +121,7 @@ class ApplicationController < ActionController::Base
   Warden::Manager.before_logout do |user,auth,opts|
     session = auth.request.env['rack.session']
     session[:last_url_before_logout] = auth.request.headers["Referer"]
+    session[:show_cart_hint] = nil
   end
 end
 

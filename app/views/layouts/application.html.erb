@@ -40,6 +40,11 @@
     <%= link_to image_tag("logo_fairleads.png"), url_to_role_specific_home_page, :class => "logo" %>
   </div>
 
+  <% if session[:show_cart_hint] == "1" %>
+    <div id="cart_hint_div"><%= t("layout.cart.lead_added_to_cart_hint") %> <%= link_to_function t("layout.cart.close_hint"), "$.post('#{buyers_cart_path(:show_cart_hint => 0)}', {'_method':'put'})" %></div>
+  <% end %>
+
+
   <%= render('/layouts/cart') if current_user && current_user.has_role?(:lead_buyer) && !current_user.big_buyer %>
 
   <div id="user_menu">
@@ -85,6 +90,7 @@
 <script type="text/javascript">
     I18n.defaultLocale = "<%= I18n.default_locale %>";
     I18n.locale = "<%= I18n.locale %>";
+
 </script>
 
 <js:/>
