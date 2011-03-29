@@ -54,7 +54,7 @@ Nbs::Application.routes.draw do
   namespace :buyers do
     root :to => "lead_purchases#index"
     resources :cart_items
-    resource :cart, :only => [:show, :destroy], :controller => 'cart'
+    resource :cart, :only => [:show, :update, :destroy], :controller => 'cart'
     resources :lead_purchases do
       collection do
         put :bulk_update
