@@ -859,6 +859,7 @@ en:
             with_keyword: "Keyword:"
             with_sale_date_after_and_including: Sale after
             with_sale_date_before_and_including: Sale before
+          customer_company_name: "Company name"
       new:
         view:
           header: "New transaction"

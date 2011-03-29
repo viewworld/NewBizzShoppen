@@ -5,7 +5,7 @@ Background:
   Given I am on the homepage
   And I make sure current locale is "en"
   And I have user with email gerard.jones@paerson22.com and role customer
-  And user gerard.jones@paerson22.com with role customer exists with attributes "first_name:John,last_name:Kohen"
+  And user gerard.jones@paerson22.com with role customer exists with attributes "first_name:John,last_name:Kohen, company_name:Xanesra"
   And I have user with email lead_user.jones@paerson22.com and role lead_user
   And lead Monitors deal exists within category Computers
   And lead Printers deal exists within category Computers
@@ -115,5 +115,6 @@ Scenario: I can search for a transaction by a combination of keyword: contact na
   Then I should see "77.99"
   Then I should not see "88.32"
 
-@requested @m8 @tgn
+@requested @m8 @tgn @_tested
 Scenario: Show company name in listing
+  Then I should see "Xanesra"
