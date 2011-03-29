@@ -1,4 +1,4 @@
-@statistics @$_big_buyer @m0
+@statistics @$_big_buyer @m8
 Feature: Statistics for agent
 
 In order to make better decisions

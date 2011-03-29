@@ -1,4 +1,4 @@
-@statistics @$_lead_user @m0
+@statistics @$_lead_user @m8
 Feature: Statistics for lead user
 
 In order to make better decisions
