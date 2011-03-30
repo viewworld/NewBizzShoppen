@@ -87,3 +87,6 @@ Scenario: Add links present on sign in page to home login page as well (forgot p
 
 @requested @m8b
 Scenario: We need a forgot password function, where the user is e-maild his password, this should be available when you enter a wrong password
+
+@m8b @added
+Scenario: I can login to fairleads as any user without password by hash key that I can create in console (suggested by developers for future debuging of live fairleads.com)
