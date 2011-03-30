@@ -99,3 +99,6 @@ Scenario: I can filter the list of my leads by "paid" column
 @m5 @tgn @_tested
 Scenario: I should not see the cart when I'm a big buyer
   Then I should not see translated "layout.cart.cart_header" with options "count:0"
+
+@requested @m8
+Scenario: Admin should be able to define purchase limit for given big buyer (default in settings). All purchases should be recalculated to Euro and the limit should be set in Euro.

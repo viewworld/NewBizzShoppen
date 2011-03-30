@@ -1,4 +1,4 @@
-@statistics @$_admin @m8
+@statistics @$_admin @m9
 Feature: Statistics for admin
 
 In order to make better decisions
