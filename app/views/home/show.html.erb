@@ -7,8 +7,13 @@
     <% end %>
   </header>
 
+
   <div class="pdd_5 no_pdd_b">
+  <% if current_user and current_user.has_any_role?(:call_centre ,:call_centre_agent) %>
+    <p><%= blurb("blurb_call_centre_home") %></p>
+  <% else %>
     <p><%= blurb("blurb_start_page_role_selection") %></p>
+  <% end %>
   </div>
 
   <hl pdd="15"/>

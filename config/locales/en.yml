@@ -1418,7 +1418,7 @@ en:
   category_home:
     show:
       view:
-        header: "Welcome to category"
+        header: "Welcome to category:"
         sign_out: "Sign out"
         header_news: "News"
         complete_list_link: "complete list"
