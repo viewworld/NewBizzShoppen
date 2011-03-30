@@ -1,5 +1,5 @@
 class ::User::Admin < ::User
-  ROLES = [:admin]
+  ROLES = [:admin, :translator]
 
   include Addresses
   include BankAccounts

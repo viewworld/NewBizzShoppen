@@ -270,3 +270,10 @@ When /^user "([^"]*)" has no buying categories$/ do |email|
   u.buying_categories = []
   u.save!
 end
+
+Given /^I am a translator for role "([^"]*)" with email "([^"]*)" and password "([^"]*)"$/ do |role, email, password|
+  user = "User::#{role.camelize}".constantize.make!(:email => email, :password => password, :password_confirmation => password)
+  user.confirm!
+  user.roles << :translator
+  user.save
+end

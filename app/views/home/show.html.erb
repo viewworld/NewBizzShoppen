@@ -23,7 +23,7 @@
       </param:header>
     </frm-reverse>
 
-    <% unless user_signed_in? %>
+    <% if !user_signed_in? or (current_user and current_user.has_any_role?(:admin, :translator)) %>
         <div class="frm_tiny frm_tip">
           <span class="tip"></span>
 
@@ -42,7 +42,7 @@
       </param:header>
     </frm-reverse>
 
-    <% unless user_signed_in? %>
+    <% if !user_signed_in? or (current_user and current_user.has_any_role?(:admin, :translator)) %>
         <div class="frm_tiny frm_tip">
           <span class="tip"></span>
 
@@ -62,7 +62,7 @@
       </param:header>
     </frm-reverse>
 
-    <% unless user_signed_in? %>
+    <% if !user_signed_in? or (current_user and current_user.has_any_role?(:admin, :translator)) %>
         <div class="frm_tiny frm_tip">
           <span class="tip"></span>
 

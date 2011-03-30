@@ -52,4 +52,10 @@ class Administration::HintsController < Administration::AdministrationController
   def set_referer
     session[:hints_referer] = request.referer
   end
+
+  private
+
+  def authorize_user_for_namespace!
+    authorize_role(:translator)
+  end
 end

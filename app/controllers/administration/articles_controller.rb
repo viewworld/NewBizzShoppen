@@ -34,4 +34,10 @@ class Administration::ArticlesController < Administration::AdministrationControl
     @articles = @search.paginate(:page => params[:page])
   end
 
+  private
+
+  def authorize_user_for_namespace!
+    authorize_role(:translator)
+  end
+
 end
