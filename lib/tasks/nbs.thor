@@ -142,7 +142,7 @@ class Nbs < Thor
     "my_profile" => %w{company_name first_name last_name phone email screen_name company_registration_number company_ean_number address_address_line_1
               address_address_line_2 address_address_line_3 address_zip_code address_country_id address_region_id newsletter_on bank_address_address_line_1
               bank_address_address_line_2 bank_address_address_line_3 bank_address_zip_code bank_address_country_id bank_address_region_id paypal_email bank_swift_number
-              bank_iban_number payout bank_name}
+              bank_iban_number payout bank_name team_buyers}
     }.each_pair do |klass, methods|
       methods.each do |method|
         article = Article::Cms::Hint.find_by_key("#{klass}_#{method}")
