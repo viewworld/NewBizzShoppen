@@ -179,29 +179,6 @@ class Nbs < Thor
       u.save
     end
 
-    #Translators
-    [:agent, :call_centre, :customer, :purchase_manager, :category_buyer].each do |role|
-      klass = "User::#{role.to_s.camelize}".constantize
-      unless klass.find_by_email("translator_#{role}@nbs.com")
-        if role == :category_buyer
-          user = klass.make!(:email => "translator_#{role}@nbs.com", :password => "secret", :password_confirmation => "secret", :buying_categories => [Category.first])
-        else
-          user = klass.make!(:email => "translator_#{role}@nbs.com", :password => "secret", :password_confirmation => "secret")
-        end
-        user.confirm!
-        user.roles << :translator
-        user.save
-      end
-    end
-
-    unless User::CallCentreAgent.find_by_email("translator_call_centre_agent@nbs.com")
-      parent = User.find_by_email("translator_call_centre@nbs.com")
-      user = User::CallCentreAgent.make!(:email => "translator_call_centre_agent@nbs.com", :password => "secret", :password_confirmation => "secret", :parent_id => parent.id)
-      user.confirm!
-      user.roles << :translator
-      user.save
-    end
-
 
     puts "Creating default PayPal currencies..."
     [
@@ -289,6 +266,29 @@ class Nbs < Thor
         buyer.subaccounts << user
       end
 
+    end
+
+    #Translators
+    [:agent, :call_centre, :customer, :purchase_manager, :category_buyer].each do |role|
+      klass = "User::#{role.to_s.camelize}".constantize
+      unless klass.find_by_email("translator_#{role}@nbs.com")
+        if role == :category_buyer
+          user = klass.make!(:email => "translator_#{role}@nbs.com", :password => "secret", :password_confirmation => "secret", :buying_categories => [Category.first])
+        else
+          user = klass.make!(:email => "translator_#{role}@nbs.com", :password => "secret", :password_confirmation => "secret")
+        end
+        user.confirm!
+        user.roles << :translator
+        user.save
+      end
+    end
+
+    unless User::CallCentreAgent.find_by_email("translator_call_centre_agent@nbs.com")
+      parent = User.find_by_email("translator_call_centre@nbs.com")
+      user = User::CallCentreAgent.make!(:email => "translator_call_centre_agent@nbs.com", :password => "secret", :password_confirmation => "secret", :parent_id => parent.id)
+      user.confirm!
+      user.roles << :translator
+      user.save
     end
 
     puts "Creating default main page articles..."
