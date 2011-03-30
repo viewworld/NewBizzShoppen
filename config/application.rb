@@ -55,9 +55,9 @@ module Nbs
 
     require "#{config.root}/lib/settings.rb"
 
-#    config.after_initialize do
-#      SimplesIdeias::I18n.export!
-#    end
+    config.after_initialize do
+      I18nUtils.export_for_js!("common.js")
+    end
   end
 end
 

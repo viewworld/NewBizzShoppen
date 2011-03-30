@@ -6,7 +6,11 @@
   <td><%= invoice.seller_name %></td>
   <td><%= invoice.user %></td>
   <td class="ta_c"><%= payment_status(invoice.paid?, invoice.status.to_s.capitalize, invoice.status.to_s.capitalize) %></td>
-  <td class="ta_r"><%= number_to_currency(invoice.total(true), :unit => invoice.currency.symbol) %></td>
+  <td class="ta_r">
+    <%= number_to_currency(invoice.total(true),
+                           :precision => t("number.format.precision").to_i,
+                           :unit => invoice.currency.symbol) %>
+  </td>
   <td class="tda ta_r">
     <ul-actions>
       <li><%= link_to t("administration.invoices.index.view.show_invoice"), administration_invoicing_invoice_path(invoice) %></li>

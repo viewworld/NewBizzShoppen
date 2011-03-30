@@ -3,10 +3,12 @@
         <%= form.input :cash_flow,
                        :input_html => { :value => @invoice.cash_flow.zero? ? number_to_currency(@invoice.revenue_frozen,
                                                                                                 :unit => "",
-                                                                                                :delimiter => "") :
+                                                                                                :delimiter => "",
+                                                                                                :precision => t("number.format.precision").to_i) :
                                                                              number_to_currency(@invoice.cash_flow,
                                                                                                 :unit => "",
-                                                                                                :delimiter => "")} %>
+                                                                                                :delimiter => "",
+                                                                                                :precision => t("number.format.precision").to_i)} %>
         <%= form.input :paid_at,
                        :as => :string,
                        :required => false,

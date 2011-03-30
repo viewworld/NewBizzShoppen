@@ -15,16 +15,12 @@ dk:
     format:
       separator: '.'
       delimiter: ','
-      precision: 3
-      significant: false
-      strip_insignificant_zeros: false
+      precision: 2
     percentage:
       format:
         separator: '.'
         delimiter: ','
-        precision: 3
-        significant: false
-        strip_insignificant_zeros: false
+        precision: 2
   lead_user:
     lead_purchases:
       index:

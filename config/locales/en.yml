@@ -32,7 +32,16 @@ en:
   ckeditor:
     upload_new_files: "Upload new files"
     file_manager: "File Manager"
-
+  number:
+    format:
+      separator: '.'
+      delimiter: ','
+      precision: 2
+    percentage:
+      format:
+        separator: '.'
+        delimiter: ','
+        precision: 2
   layout:
     main_menu:
       admin:
