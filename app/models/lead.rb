@@ -12,6 +12,7 @@ class Lead < ActiveRecord::Base
   belongs_to :category
   belongs_to :country
   belongs_to :currency
+  belongs_to :region
   has_many :lead_translations, :dependent => :destroy
   has_many :lead_purchases
   has_many :lead_template_values
@@ -29,6 +30,7 @@ class Lead < ActiveRecord::Base
   scope :with_categories, lambda { |arr| where(:category_id => Category.where(:id => arr.map(&:self_and_descendants).flatten.map(&:id))) }
   scope :with_country, lambda { |country_id| where(:country_id => country_id) }
   scope :with_zip_code, lambda { |zip_code| where(:zip_code => zip_code)}
+  scope :with_region, lambda { |region_id| where(:region_id => region_id.to_i) }
   scope :with_ids_not_in, lambda { |q| where(["leads.id NOT IN (?)", q]) }
   scope :without_inactive, where("((select sum(quantity) from lead_purchases where lead_id = leads.id group by lead_id) is null or (select sum(quantity) from lead_purchases where lead_id = leads.id group by lead_id) < sale_limit)")
   scope :without_outdated, lambda { where("purchase_decision_date >= ?", Date.today.to_s ) }

@@ -207,8 +207,24 @@ Scenario: Advanced search in browse leads should be hidden by default
   And I follow translated "common.advanced_search"
   Then I should see translated "leads.index.search.deal_value_from_label"
 
-@requested @m8b
+@requested @m8b @tgn @_wip @selenium
 Scenario: Advanced search in browse leads should contain regions and all fields should be included in the hidden advanced search except keyword
+  Given country "Denmark" has regions "DK region #1, DK region #2"
+  And I have user with email agent01@nbs.com and role agent
+  And lead Super printers #1 is created by user agent01@nbs.com with role agent
+  And a lead Super printers #1 exists within category Computers and is bought by user ultimate.buyer@nbs.com with role customer
+  And lead "Super printers #1" is created for country "Denmark" with region "DK region #1"
+  And lead Super printers #2 is created by user agent01@nbs.com with role agent
+  And a lead Super printers #2 exists within category Computers and is bought by user ultimate.buyer@nbs.com with role customer
+  And lead "Super printers #2" is created for country "Denmark" with region "DK region #2"
+  And I go to browse leads
+  And I follow "Computers"
+  Then I select "Denmark" from "search_with_country"
+  #And I wait 5 second
+  And I select "DK region #2" from "search_with_region"
+  And I press translated "leads.index.search.search_button"
+  Then I should see "Super printers #2"
+  And I should not see "Super printers #1"
 
 # On the configure you interests page there should be a back button, when it is selected from my profile page
 # except for first login

@@ -72,16 +72,33 @@ function refresh_regions_list(field_prefix_id) {
     });
 }
 
-function move_mouse_over(selector){
-    $(selector).mouseenter();
+function add_region_custom(field_id, label, value) {
+    $('#' + field_id).
+            append($("<option></option>").
+            attr("value", value).
+            text(label));
 }
 
-function refresh_regions_list(field_prefix_id) {
+function refresh_regions_list_custom(country_html_id, region_html_id) {
     $.ajax({
         type: "GET",
         url: "/regions",
-        data: "country_id=" + $('#' + field_prefix_id + '_country_id').val() + "&field_prefix=" + field_prefix_id
+        data: "country_id=" + $('#' + country_html_id).val() + "&region_html_id=" + region_html_id
     });
+}
+
+function clear_regions_select_custom(field_id) {
+    $('#' + field_id + ' option').each(function()
+    {
+
+        if ($(this).text() != "") {
+            $(this).remove();
+        }
+    });
+}
+
+function move_mouse_over(selector){
+    $(selector).mouseenter();
 }
 
 function change_invoice_seller(invoice_id,new_seller_id) {

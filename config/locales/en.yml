@@ -275,6 +275,7 @@ en:
         certification: Certification
         sale_limit: Uniqueness
         hotness: Hotness
+        region_label: "Region"
       add_to_cart_link: Add to cart
       add_to_cart_buyout_link: "Buyout"
       buy_lead: Buy lead
