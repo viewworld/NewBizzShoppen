@@ -13,8 +13,8 @@ dk:
 
   number:
     format:
-      separator: '.'
-      delimiter: ','
+      separator: ','
+      delimiter: '.'
       significant: false
       strip_insignificant_zeros: false
     percentage:
