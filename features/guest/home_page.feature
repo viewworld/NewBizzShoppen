@@ -23,6 +23,9 @@ Feature: Home page
   @m8 @requested @tgn
   Scenario: When a new user sigens in on fairleads, he should be redirected to his new role home page, not the site homepage
 
+  @m8b @requested
+  Scenario: Call centre/call centre admin should share the homepage with agent -- correct the cc/cc agent welcome message (move it from the site home to agent home)
+
   @m8 @requested @tgn @_tested
   Scenario: Make year automatically change in footer
     Given I go to the homepage
