@@ -55,16 +55,31 @@ Scenario: I can login as any role and be able to edit content
   Then I click hidden link by url regex "/administration\/hints\/\d+\/edit\?add=1/"
   And I should see "Edit hint"
 
-@m8 @translations @selenium @added
+@m8 @translations @selenium @added @_tested
 Scenario: As translator I can edit blurb, change it, save it and then go back to previous page
   Given I am a translator for role "customer" with email "translator_1@nbs.com" and password "secret"
   And I am not sign in
   Then I sign in as translator_1@nbs.com with password secret
   And I go to the homepage
   And I follow "(edit)"
+  And I wait 1 second
   And I fill in "article_content_editor" ckeditor with "My test of article editing by translator"
   Then I press translated "administration.articles.edit.view.button_save"
   And I should be on the homepage
+  And I should see "My test of article editing by translator"
 
-@m8 @translations @added
+@m8 @translations @added @selenium @_tested
 Scenario: As translator I add/edit/remove edit hint, change it, save it and then go back to previous page
+  Given I am a translator for role "agent" with email "translator_1@nbs.com" and password "secret"
+  And Category Test category 1 is created
+  And there are no hints
+  And article hint for model "Lead" and method "company_name" has attributes "published:0"
+  And I am not sign in
+  Then I sign in as translator_1@nbs.com with password secret
+  And I go to agents leads
+  And I select "Test category 1" from "category_id"
+  And I follow translated "agent.leads.index.view.new_lead"
+  And I click hidden link by url regex "/administration\/hints\/\d+\/edit\?add=1/"
+  And I wait 1 second
+  And I fill in "article_content_editor" ckeditor with "My test of hits editing"
+  Then I press translated "administration.hints.edit.view.button_save"
