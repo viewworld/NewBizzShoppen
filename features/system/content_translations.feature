@@ -78,5 +78,5 @@ Scenario: Email translations
 @tgn @_done @_tested_elsewhere
 Scenario: Content language is displayed on the basis of choosen language
 
-@m8
+@m8 @requested
 Scenario: Put a flag of language next to each field not only to translations when editing translatable content (for user to know in which language he is entering primary data)
