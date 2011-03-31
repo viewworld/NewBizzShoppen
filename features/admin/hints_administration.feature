@@ -1,4 +1,4 @@
-@$_admin @m6 @tgn @added
+@$_admin @m6 @tgn @added @hints
 Feature: Hints administration
 
 Background:
