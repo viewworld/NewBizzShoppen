@@ -1,0 +1,6 @@
+@m8
+Feature: Background task processing
+
+Scenario: As admin I can by hand refresh counters and stats (delayed_job?)
+
+Scenario: Rake tasks for counters and stats are refreshed periodically (cron job)
