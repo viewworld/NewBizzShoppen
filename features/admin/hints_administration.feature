@@ -41,8 +41,8 @@ Scenario: I can edit a hint directly from the place where it is displayed
 
 # This will require some extension to admin - we think that when editing and admin account, we can set “Become a <<role>>” option -
 #it will allow an admin to become a user with a specific role (only one at a time) - therefore he will be able to access all interfaces within fairleads and perform article/blurb/hint editing.
-@requested @m8 @_tested
-Scenario: Option for becoming a certain role and be able to edit blurb/articles/hints
+@requested @m8 @_tested @translations
+Scenario: I can login as any role and be able to edit content
   Given I am a translator for role "customer" with email "translator_1@nbs.com" and password "secret"
   And I am not sign in
   Then I sign in as translator_1@nbs.com with password secret
@@ -54,3 +54,9 @@ Scenario: Option for becoming a certain role and be able to edit blurb/articles/
   And I follow translated "home.show.view.sign_up_here"
   Then I click hidden link by url regex "/administration\/hints\/\d+\/edit\?add=1/"
   And I should see "Edit hint"
+
+@m8 @translations
+Scenario: As translator I can edit blurb, change it, save it and then go back to previous page
+
+@m8 @translations
+Scenario: As translator I add/edit/remove edit hint, change it, save it and then go back to previous page
