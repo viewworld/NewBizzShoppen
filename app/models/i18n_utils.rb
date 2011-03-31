@@ -31,26 +31,29 @@ class I18nUtils
   def self.parse_yaml_files
     locales_path = File.join(Rails.root, "config/locales")
     Dir.open(locales_path).each do |name|
-      t0 = Time.now
       if File.file?(File.join(locales_path,name))
         puts "Processing file #{name} ..."
         I18nUtils.parse(YAML::load_file(File.join(locales_path,name)))
-        puts "Processed in #{Time.now-t0}s"
+        puts "Done #{name}"
       end
     end
   end
 
   def self.synchronize_locales(base_locale)
+    puts "Synchronizing #{base_locale} ..."
     locales = Translation.select("DISTINCT(locale)").where("locale <> :base_locale", {:base_locale => base_locale}).map(&:locale)
     locales.each do |locale|
-      Translation.joins("LEFT JOIN translations localized ON localized.key = translations.key").where("localized.locale = :locale", {:locale => locale}).count
+      puts "... with #{locale} ..."
+      Translation.where("translations.key NOT IN (select key from translations where locale = :locale)", {:locale => locale}).each do |missing_attribute|
+        Translation.create!(:locale => locale, :key => missing_attribute.key, :value => missing_attribute.value)
+      end
     end
   end
 
   def self.populate!(base_locale='en')
     t0 = Time.now
     I18nUtils.parse_yaml_files
-#    I18nUtils.synchronize_locales(base_locale)
+    I18nUtils.synchronize_locales(base_locale)
     puts "Done. Total time spent #{Time.now-t0}s"
   end
 

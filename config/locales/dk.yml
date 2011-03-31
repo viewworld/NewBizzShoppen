@@ -1,24 +1,6 @@
 dk:
-  common:
-    js:
-      read_more: "read more"
-      collapse_expanded_text: "[collapse expanded text]"
-      expand_prefix: "...  "
-      collapse_prefix: " "
-
   home:
     show:
       view:
-        header: 'Hjemmeside'
-
-  number:
-    format:
-      separator: '.'
-      delimiter: ','
-      precision: 2
-    percentage:
-      format:
-        separator: '.'
-        delimiter: ','
-        precision: 2
+        header: 'Hjem'
 

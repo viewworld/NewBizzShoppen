@@ -175,9 +175,10 @@ module ApplicationHelper
 
   def t(key, options = {})
     if current_user_has_any_role? [:admin, :translator]
-##      (super + link_to_function(" [edit]", "update_translation('#{I18n.locale}','#{key}')", :class => "update_translation_link")).html_safe
+#      (super + link_to_function(" [edit]", "update_translation('#{I18n.locale}','#{key}')", :class => "update_translation_link")).html_safe
 #      raw super + javascript_tag("attach_update_translation_link('#{I18n.locale}','#{key}')")
-      raw super + content_tag(:t, " [edit]", :id => "translate_#{locale}_#{key.gsub('.','_')}").html_safe
+#      raw super + content_tag(:t, " [edit]", :id => "translate_#{locale}_#{key.gsub('.','_')}").html_safe
+      super + "#{I18n.locale.to_s}::#{key}"
     else
       super
     end
