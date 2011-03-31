@@ -1,4 +1,4 @@
-@m5 @ao
+@m5 @ao @home_page
 Feature: Home page
 
   @_done @_tested
