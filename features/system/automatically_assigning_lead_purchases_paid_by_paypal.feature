@@ -20,7 +20,7 @@ Scenario: When I buy a lead it is automatically assigned to me
   And paypal payment for user with email "buyer.jim.jones@nbs.com" and role "customer"
   And lead named "Super printers" is owned by user "buyer.jim.jones@nbs.com" with role "customer"
 
-@_tested
+@_tested @deprecated
 Scenario: Lead purchases are assigned to topmost owner (to customer, if exists, otherwise to self)
   Given someone is signed up and confirmed as user with email buyer.jim.jones@nbs.com and password secret and role customer
   And I am signed up and confirmed as user with email leadbuyer.jon@nbs.com and password secret and role lead_buyer
@@ -33,3 +33,6 @@ Scenario: Lead purchases are assigned to topmost owner (to customer, if exists, 
   Then I press translated "buyer.cart.show.view.checkout_link"
   And paypal payment for user with email "leadbuyer.jon@nbs.com" and role "lead_buyer"
   And lead named "Super printers" is owned by user "buyer.jim.jones@nbs.com" with role "customer"
+
+@m8b @requested
+Scenario: When team buyer with buying permissions buys a leads, then it should be assigned to him/her, not the sales manager

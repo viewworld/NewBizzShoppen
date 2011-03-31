@@ -51,3 +51,6 @@ Scenario: The big buyer property of a customer should be inherited by all his su
 
 @requested @m8b
 Scenario: I should have option to hide the profile page for my team members
+
+@requested @m8b
+Scenario: Give at sales manager the option not to show lead price for team buyer
