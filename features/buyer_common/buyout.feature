@@ -254,3 +254,6 @@ Feature: Buy out
   #Buyout from my leads page - i.e. you have bought lead once -> decided it is so good that it is worth buying out -> click buyout lead and buy remaining instances
   @requested @m8 @ao
   Scenario: I can buy out remaining leads if I previously bought only one
+
+  @requested @m8 @ao
+  Scenario: I can see 2 transactions when I buyout after buying only one
