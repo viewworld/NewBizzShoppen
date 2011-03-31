@@ -7,7 +7,7 @@ class Nbs < Thor
     puts "running seed"
 
     require "spec/support/blueprints"
-#Default settings
+    #Default settings
     Settings.default_payout_delay   = 0
     Settings.default_leads_per_page = 5
     Settings.certification_level_1  = 10
@@ -348,5 +348,11 @@ class Nbs < Thor
     User::LeadBuyer.all.each do |user|
       user.refresh_buyer_counters!
     end
+  end
+
+  desc "copy yml to database", ""
+
+  def t
+    I18nUtils.populate!
   end
 end

@@ -21,8 +21,4 @@ dk:
         separator: '.'
         delimiter: ','
         precision: 2
-  lead_user:
-    lead_purchases:
-      index:
-        view:
-          state: "State"
+

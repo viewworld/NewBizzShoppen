@@ -2,6 +2,17 @@
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+  number:
+    format:
+      separator: '.'
+      delimiter: ','
+      precision: 2
+      dupa: '123'
+    percentage:
+      format:
+        separator: '.'
+        delimiter: ','
+        precision: 2
   common:
     back_link: Back
     edit_link: "Edit"
