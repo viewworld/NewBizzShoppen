@@ -125,17 +125,35 @@ class Nbs < Thor
     ]
 
     #Hints
-    {:lead => %w{ company_name company_phone_number company_website address_line_1 address_line_2 address_line_3 zip_code country_id
+    {"lead" => %w{ company_name company_phone_number company_website address_line_1 address_line_2 address_line_3 zip_code country_id
               region_id country_id company_vat_no company_ean_number contact_name direct_phone_number phone_number email_address linkedin_url
               facebook_url category_id is_international header description hidden_description purchase_value price currency_id published
-              notify_buyers_after_update sale_limit purchase_decision_date }
+              notify_buyers_after_update sale_limit purchase_decision_date},
+    "user/customer" => %w{first_name last_name company_name address_address_line_1 address_address_line_2 address_address_line_3 address_zip_code
+              address_country_id address_region_id vat_number screen_name phone email password password_confirmation team_buyers agreement_read newsletter_on },
+    "user/purchase_manager" => %w{first_name last_name address_address_line_1 address_address_line_2 address_address_line_3 address_zip_code address_country_id
+              address_region_id phone email screen_name password password_confirmation agreement_read newsletter_on },
+    "user/agent" => %w{first_name last_name address_address_line_1 address_address_line_2 address_address_line_3 address_zip_code address_country_id
+              address_region_id phone email screen_name password password_confirmation agreement_read newsletter_on },
+    "user/call_centre_agent" => %w{first_name last_name address_address_line_1 address_address_line_2 address_address_line_3 address_zip_code address_country_id
+              address_region_id phone mobile_phone email screen_name password password_confirmation agreement_read newsletter_on department},
+    "user/lead_buyer" => %w{first_name last_name mobile_phone screen_name phone email mobile_phone department lead_buyer_role_enabled password password_confirmation},
+    "user/lead_user" => %w{first_name last_name mobile_phone screen_name phone email mobile_phone department lead_buyer_role_enabled password password_confirmation},
+    "my_profile" => %w{company_name first_name last_name phone email screen_name company_registration_number company_ean_number address_address_line_1
+              address_address_line_2 address_address_line_3 address_zip_code address_country_id address_region_id newsletter_on bank_address_address_line_1
+              bank_address_address_line_2 bank_address_address_line_3 bank_address_zip_code bank_address_country_id bank_address_region_id paypal_email bank_swift_number
+              bank_iban_number payout bank_name team_buyers}
     }.each_pair do |klass, methods|
       methods.each do |method|
-        article = Article::Cms::Hint.create(:key => "#{klass}_#{method}", :published => false)
+        article = Article::Cms::Hint.find_by_key("#{klass}_#{method}")
+        article = Article::Cms::Hint.create(:key => "#{klass}_#{method}", :published => false) if article.nil?
         [:en, :dk].each do |locale|
           I18n.locale = locale
-          article.update_attributes({:content => Rails.env.production? ? nil : "Hint for <b>lead's #{method.humanize.downcase.gsub('_id', '')}</b>",
+          if article.content.blank?
+          article.update_attributes({:content => Rails.env.production? ? "(write text here)" : "Hint for <b>#{klass.to_s}: #{method.humanize.downcase.gsub('_id', '')}</b>",
                                      :title => "#{klass.to_s.capitalize}##{method.gsub('_id', '')}"})
+          article.update_attribute(:content, " ")
+          end
         end
       end
     end
@@ -160,6 +178,7 @@ class Nbs < Thor
       u.confirm!
       u.save
     end
+
 
     puts "Creating default PayPal currencies..."
     [
@@ -249,6 +268,29 @@ class Nbs < Thor
 
     end
 
+    #Translators
+    [:agent, :call_centre, :customer, :purchase_manager, :category_buyer].each do |role|
+      klass = "User::#{role.to_s.camelize}".constantize
+      unless klass.find_by_email("translator_#{role}@nbs.com")
+        if role == :category_buyer
+          user = klass.make!(:email => "translator_#{role}@nbs.com", :password => "secret", :password_confirmation => "secret", :buying_categories => [Category.first])
+        else
+          user = klass.make!(:email => "translator_#{role}@nbs.com", :password => "secret", :password_confirmation => "secret")
+        end
+        user.confirm!
+        user.roles << :translator
+        user.save
+      end
+    end
+
+    unless User::CallCentreAgent.find_by_email("translator_call_centre_agent@nbs.com")
+      parent = User.find_by_email("translator_call_centre@nbs.com")
+      user = User::CallCentreAgent.make!(:email => "translator_call_centre_agent@nbs.com", :password => "secret", :password_confirmation => "secret", :parent_id => parent.id)
+      user.confirm!
+      user.roles << :translator
+      user.save
+    end
+
     puts "Creating default main page articles..."
     [
         'About us',
@@ -272,6 +314,7 @@ class Nbs < Thor
         'blurb_sign_up',
         'blurb_buyer_home',
         'blurb_agent_home',
+        'blurb_call_centre_home',
         'blurb_purchase_manager_home',
         'blurb_start_page_role_selection',
         'blurb_currencies',
@@ -307,6 +350,12 @@ class Nbs < Thor
           article.publish!
         end
       end
+    end
+
+    #Add translator roles to existing users
+    User::Admin.all.each do |user|
+      user.roles << :translator unless user.has_role?(:translator)
+      user.save
     end
 
   end

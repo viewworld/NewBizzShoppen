@@ -8,8 +8,8 @@
           <div class="pdd_10 no_pdd_t">
             <fieldset class="inputs labels_ta_r labels_200">
               <ol>
-                <%= form.input :password %>
-                <%= form.input :password_confirmation %>
+                <%= form.input :password, :hint => hint_for(@call_centre_agent, :password) %>
+                <%= form.input :password_confirmation, :hint => hint_for(@call_centre_agent, :password_confirmation) %>
               </ol>
             </fieldset>
           </div>

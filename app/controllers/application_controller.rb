@@ -76,7 +76,7 @@ class ApplicationController < ActionController::Base
   end
 
   def redirect_to_root_path_if_signed_in
-    if user_signed_in?
+    if user_signed_in? and !current_user.has_any_role?(:admin, :translator)
       method_path = current_user.has_role?(:admin) ? "administration_root_path" : "#{current_user.role.to_s.pluralize}_root_path"
       redirect_to self.send(method_path)
     end
@@ -121,6 +121,7 @@ class ApplicationController < ActionController::Base
   Warden::Manager.before_logout do |user,auth,opts|
     session = auth.request.env['rack.session']
     session[:last_url_before_logout] = auth.request.headers["Referer"]
+    session[:show_cart_hint] = nil
   end
 end
 

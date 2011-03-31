@@ -392,3 +392,16 @@ Scenario: When editing call center agent I can navigate to list of leads created
   And I follow translated "administration.users.edit.view.view_created_leads"
   Then I should see "SabKolSenterLead" within "#leads"
   And I should see "1" rows in a table within "#leads"
+
+
+@requested @m8b
+Scenario: I should have 'Don't verify email address' for every user I create
+
+@requested @m8b
+Scenario: I should be able to set new password for any user not just reset it
+
+@requested @m8b
+Scenario: I can see company name on the users listing
+
+@requested @m8b
+Scenario: The header of users listing should include total number of users: 'Users: #total'

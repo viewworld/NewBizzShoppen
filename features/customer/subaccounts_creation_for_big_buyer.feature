@@ -46,4 +46,8 @@ Scenario: I should not have access to subaccounts without team buyers flag
   And I go to customers subaccounts
   Then I should see "You are not authorized"
 
+@requested @m8b
+Scenario: The big buyer property of a customer should be inherited by all his subaccounts
 
+@requested @m8b
+Scenario: I should have option to hide the profile page for my team members

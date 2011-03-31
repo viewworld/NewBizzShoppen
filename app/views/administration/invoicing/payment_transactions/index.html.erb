@@ -46,6 +46,7 @@
           <th><%= t("administration.payment_transactions.index.view.transaction_type") %></th>
           <th><%= t("administration.payment_transactions.index.view.invoice_number") %>
           <th id="invoice_number_header"><%= t("administration.payment_transactions.index.view.customer_name") %></th>
+          <th id="invoice_number_header"><%= t("administration.payment_transactions.index.view.customer_company_name") %></th>
           <th><%= t("administration.payment_transactions.index.view.customer_address") %></th>
           <th class="ta_r"><%= t("administration.payment_transactions.index.view.amount") %></th>
           <th class="ta_r"><%= t("administration.payment_transactions.index.view.actions") %></th>
@@ -55,7 +56,7 @@
         <tfoot>
         <tr>
           <td class="fl"></td>
-          <td colspan="6"></td>
+          <td colspan="7"></td>
           <td class="fr"></td>
         </tr>
         </tfoot>
@@ -66,6 +67,7 @@
               <td><%= payment_transaction.class.to_s == "PaypalTransaction" ? t("administration.payment_transactions.index.view.transaction_type_paypal") : t("administration.payment_transactions.index.view.transaction_type_manual") %></td>
               <td><%= payment_transaction.invoice.full_number %></td>
               <td><%= payment_transaction.invoice.customer_name %></td>
+              <td><%= payment_transaction.invoice.user.company_name %></td>
               <td><%= payment_transaction.invoice.customer_address %></td>
               <td class="ta_r"><%= as_currency(payment_transaction.amount, payment_transaction.invoice.currency)  %></td>
               <td class="tda ta_r">
@@ -78,7 +80,7 @@
         <% end %>
         <% if will_paginate %>
             <tr class="pagination">
-              <td colspan="8" class="ta_c">
+              <td colspan="9" class="ta_c">
                 <%= will_paginate @payment_transactions, :previous_label => '&laquo;', :next_label => '&raquo;' %>
               </td>
             </tr>

@@ -4,6 +4,10 @@ class Buyers::CartController < Buyers::BuyerController
   def show
   end
 
+  def update
+    session[:show_cart_hint] = "2" if params[:show_cart_hint] == "0"
+  end
+
   def destroy
     @cart.empty!
     redirect_to :back

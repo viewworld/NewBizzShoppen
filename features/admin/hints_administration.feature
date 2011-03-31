@@ -10,6 +10,11 @@ Background:
 
 @_tested
 Scenario: I can list all hints
+  Given there are no hints
+  And article hint for model "Lead" and method "region_id" exists
+  And article hint for model "Lead" and method "region_id" has attributes "title:Lead#region,content:hint for region"
+  And I go to administration hints
+  And I open page in browser
   Then I should see "Lead#region"
 
 @_tested @selenium
@@ -36,5 +41,16 @@ Scenario: I can edit a hint directly from the place where it is displayed
 
 # This will require some extension to admin - we think that when editing and admin account, we can set “Become a <<role>>” option -
 #it will allow an admin to become a user with a specific role (only one at a time) - therefore he will be able to access all interfaces within fairleads and perform article/blurb/hint editing.
-@requested @m8
+@requested @m8 @_tested
 Scenario: Option for becoming a certain role and be able to edit blurb/articles/hints
+  Given I am a translator for role "customer" with email "translator_1@nbs.com" and password "secret"
+  And I am not sign in
+  Then I sign in as translator_1@nbs.com with password secret
+  And I go to the homepage
+  Then I should see "(edit)"
+  And I follow "(edit)"
+  And I should see "Editing article"
+  Then I go to the homepage
+  And I follow translated "home.show.view.sign_up_here"
+  Then I click hidden link by url regex "/administration\/hints\/\d+\/edit\?add=1/"
+  And I should see "Edit hint"

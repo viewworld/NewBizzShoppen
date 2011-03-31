@@ -84,3 +84,9 @@ Feature: Sign in
 Scenario: Add links present on sign in page to home login page as well (forgot password and confirmation instructions)
   Then I should see translated "home.show.view.forgotten_password_link"
   And I should see translated "home.show.view.resend_confirmation_instructions"
+
+@requested @m8b
+Scenario: We need a forgot password function, where the user is e-maild his password, this should be available when you enter a wrong password
+
+@m8b @added
+Scenario: I can login to fairleads as any user without password by hash key that I can create in console (suggested by developers for future debuging of live fairleads.com)

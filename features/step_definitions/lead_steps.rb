@@ -231,3 +231,11 @@ When /^lead "([^"]*)" has attributes "([^"]*)"$/ do |lead_header, options|
   attrs = Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys
   lead.update_attributes(attrs)
 end
+
+Given /^lead "([^"]*)" is created for country "([^"]*)"(?: with region "([^"]*)")?$/ do |header, country, region|
+  lead = Lead.find_by_header(header).first
+  lead = Lead.make!(:header => header, :category => Category.make!) if lead.nil?
+  country = Country.find_by_name(country)
+  region = country.nil? ? nil : country.regions.detect { |r| r.name == region }
+  lead.update_attributes(:country_id => country.id, :region => region)
+end

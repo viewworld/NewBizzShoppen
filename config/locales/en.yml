@@ -115,6 +115,8 @@ en:
       empty_cart: Empty cart
       show_cart: Go to checkout
 
+      lead_added_to_cart_hint: "Your lead has been added to cart. Click here to checkout."
+      close_hint: "Close"
   errors:
     messages:
       not_found: "not found"
@@ -293,6 +295,7 @@ en:
         certification: Certification
         sale_limit: Uniqueness
         hotness: Hotness
+        region_label: "Region"
       add_to_cart_link: Add to cart
       add_to_cart_buyout_link: "Buyout"
       buy_lead: Buy lead
@@ -877,6 +880,7 @@ en:
             with_keyword: "Keyword:"
             with_sale_date_after_and_including: Sale after
             with_sale_date_before_and_including: Sale before
+          customer_company_name: "Company name"
       new:
         view:
           header: "New transaction"
@@ -1435,7 +1439,7 @@ en:
   category_home:
     show:
       view:
-        header: "Welcome to category"
+        header: "Welcome to category:"
         sign_out: "Sign out"
         header_news: "News"
         complete_list_link: "complete list"
@@ -2252,3 +2256,7 @@ en:
       edit:
         view:
           header: "Change your password"
+  category_requests:
+    new:
+      view:
+        header: "Category requests"

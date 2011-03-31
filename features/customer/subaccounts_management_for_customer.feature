@@ -248,3 +248,6 @@ Scenario: I should not have access to subaccounts without team buyers flag
   And I sign in as no_flag@nbs.com with password secret
   And I go to customers subaccounts
   Then I should see "You are not authorized"
+
+@m8b @requested
+Scenario: Team buyers should have "My assigned leads" tab reamed to "My leads"
