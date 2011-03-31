@@ -1,4 +1,4 @@
-@ao @m8
+@ao @m8 @translations
 Feature: Translations backend
 
   Scenario: Yaml file translations can be exported to database backend
