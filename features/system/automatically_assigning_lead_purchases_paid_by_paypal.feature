@@ -34,5 +34,5 @@ Scenario: Lead purchases are assigned to topmost owner (to customer, if exists, 
   And paypal payment for user with email "leadbuyer.jon@nbs.com" and role "lead_buyer"
   And lead named "Super printers" is owned by user "buyer.jim.jones@nbs.com" with role "customer"
 
-@m8b @request
+@m8b @requested
 Scenario: When team buyer with buying permissions buys a leads, then it should be assigned to him/her, not the sales manager
