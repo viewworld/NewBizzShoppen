@@ -463,9 +463,48 @@ Scenario: I can login without confirmation when 'Don't verify email address' is 
   And I sign in as alex.nova@person.com with password secret
   Then I should see translated "devise.failure.unconfirmed"
 
-@requested @m8b
+@requested @m8b @_done @_tested
 Scenario: I should be able to set new password for any user not just reset it
+  When I go to administration edit user for bob@person.com
+  And I follow translated "administration.users.edit.view.change_password_link"
+  And I fill in "user_password" with "newpass"
+  And I fill in "user_password_confirmation" with "newpass"
+  And I press translated "password.edit.view.button_update_user"
+  Then I should see translated "password.flashes.successfully_changed"
 
+@added @m8b @_done @_tested
+Scenario: It should be possible for me to login using new password
+  When I go to administration edit user for bob@person.com
+  And I follow translated "administration.users.edit.view.change_password_link"
+  And I fill in "user_password" with "newpass"
+  And I fill in "user_password_confirmation" with "newpass"
+  And I press translated "password.edit.view.button_update_user"
+  Then I should see translated "password.flashes.successfully_changed"
+  When I sign out
+  And I am on the home page
+  And I sign in as bob@person.com with password newpass
+  Then I should see translated "devise.sessions.signed_in"
+
+@added @m8b @_done @_tested
+Scenario: It should be possible for other users to login after password change
+  Given someone is signed up and confirmed as user with email ejdzent@nbs.com and password secret and role agent
+  And I sign out
+  And I am on the home page
+  And I sign in as ejdzent@nbs.com with password secret
+  Then I should see translated "devise.sessions.signed_in"
+  When I sign out
+  And I am on the home page
+  And I sign in as bob@person.com with password supersecret
+  And I am on administration edit user for ejdzent@nbs.com
+  And I follow translated "administration.users.edit.view.change_password_link"
+  And I fill in "user_password" with "newpass"
+  And I fill in "user_password_confirmation" with "newpass"
+  And I press translated "password.edit.view.button_update_user"
+  Then I should see translated "password.flashes.successfully_changed"
+  When I sign out
+  And I am on the home page
+  And I sign in as ejdzent@nbs.com with password newpass
+  Then I should see translated "devise.sessions.signed_in"
 
 @requested @m8b
 Scenario: I can see company name on the users listing

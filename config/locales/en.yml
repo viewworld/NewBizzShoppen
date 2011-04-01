@@ -338,6 +338,9 @@ en:
 
         call_centre_header: "Welcome %{name}"
   password:
+    flashes:
+      successfully_changed: 'Password has been successfully changed'
+      not_changed: "Password has not been changed"
     update:
       controller:
         successful_update_notice: "Password has been successfully changed!"
@@ -347,6 +350,9 @@ en:
         button_update_user: "Save"
         change_password: "Change password"
         password_label: "Password"
+        change_users_password: "Change user's password"
+        new_password_label: "New password"
+        new_password_confirmation_label: "New password confirmation"
 
   administration:
     password:
@@ -391,6 +397,7 @@ en:
           button_update_user: Save
           button_cancel: Cancel
           reset_password_link: Reset password
+          change_password_link: 'Change password'
           change_to_category_buyer: "Change to category buyer"
           change_to_regular_buyer: "Change to regular buyer"
           view_created_leads: "View created leads"
