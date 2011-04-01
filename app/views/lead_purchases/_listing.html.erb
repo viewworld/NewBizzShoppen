@@ -69,6 +69,8 @@
 
           <div class="row_tooltip">
 
+            <%= link_to t("lead_purchases.listing.hide_row"), "javascript:void(0)", :class => "toggle_row hide_row", :style => "display: none" %>            
+
             <% if lead_purchase.lead.lead_templates_and_values.any? %>
                 <div class="grid_270 fltl">
                   <div class="pdd_10">
@@ -115,7 +117,7 @@
               </div>
             </div>
 
-            <clb/>
+            <clb/>            
 
           </div>
           <div class="row_tooltip_helper"></div>
@@ -141,11 +143,6 @@
           <% if block_card %>
               <%= with_output_buffer { block_card.call(lead_purchase) } %>
           <% end %>
-
-          <p class="toggle_row_p">
-            <%= link_to t("lead_purchases.listing.show_row"), "javascript:void(0)", :class => "toggle_row show_row" %>
-            <%= link_to t("lead_purchases.listing.hide_row"), "javascript:void(0)", :class => "toggle_row hide_row", :style => "display: none" %>
-          </p>
         </td>
 
         <% if block_assigned_to or block_other_actions %>
@@ -165,7 +162,9 @@
             </td>
         <% end %>
 
-        <td class="cr"></td>
+        <td class="cr va_b">          
+            <%= link_to t("lead_purchases.listing.show_row"), "javascript:void(0)", :class => "toggle_row show_row" %>            
+        </td>
       </tr>
   <% end %>
 
@@ -200,8 +199,8 @@
             if (t.find(".row_tooltip").is(":not(:visible)"))
             {
                 // - show / hide label
-                $(".hide_row:visible").hide().prev().show();                
-                $(this).hide().next().show();
+                $(".hide_row:visible").hide().parents("tr").find(".show_row").fadeIn();                
+                $(this).fadeOut();
 
 
                 // - show / hide row
@@ -214,16 +213,20 @@
                 var rth = t.find("div.row_tooltip_helper");
 
                 rth.animate({height: (rt.height() + eh)}, 250);
-                rt.css({"left": t.position().left + "px", "margin-top": (eh + 7) + "px"}).slideDown(250);
+                rt.css({"left": t.position().left + "px", "margin-top": (eh + 7) + "px"}).slideDown(250, function() {
+                    $(this).find(".toggle_row.hide_row").fadeIn();
+                });
             }
             else
             {
                 // - show / hide label
-                $(this).hide().prev().show();
+                $(this).fadeOut();
 
                 // - hide row
-                $(".row_tooltip:visible").slideUp("250");
-                $(".row_tooltip_helper").animate({height: 1}, 350);                
+                $(".row_tooltip_helper").animate({height: 1}, 350);
+                $(".row_tooltip:visible").slideUp("250", function() {
+                    $(this).parents("tr").find(".toggle_row.show_row").fadeIn();
+                });                
             }
         })
     })
