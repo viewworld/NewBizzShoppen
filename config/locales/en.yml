@@ -364,9 +364,11 @@ en:
         view:
           title: "Users"
           id: "ID"
+          total: "Total"
           roles: "Roles"
           first_name: "First name"
           last_name: "Last name"
+          company_name: "Company name"
           email: "E-mail"
           age: "Age"
           leads_bought: "Leads bought"

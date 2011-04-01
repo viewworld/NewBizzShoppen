@@ -506,8 +506,40 @@ Scenario: It should be possible for other users to login after password change
   And I sign in as ejdzent@nbs.com with password newpass
   Then I should see translated "devise.sessions.signed_in"
 
-@requested @m8b
+@requested @m8b @_done @_tested
 Scenario: I can see company name on the users listing
+  Given I am on administration users page
+  Then I should see translated "administration.users.index.view.company_name" within "table#users_table thead"
 
-@requested @m8b
+@added @m8b @_done @_tested
+Scenario: I can sort users by company name
+  Given someone is signed up and confirmed as user with email ejdzent@nbs.com and password secret and role agent
+  And user "ejdzent@nbs.com" with role "agent" has attributes "company_name:Abc"
+  And someone is signed up and confirmed as user with email kastomer@nbs.com and password secret and role customer
+  And user "kastomer@nbs.com" with role "customer" has attributes "company_name:Xyz"
+  And I am on administration users page
+  And I follow translated "administration.users.index.view.company_name" within "table#users_table thead"
+  Then I should see "Abc" before "Xyz"
+  When I follow translated "administration.users.index.view.company_name" within "table#users_table thead"
+  Then I should see "Xyz" before "Abc"
+
+@added @m8b @_done @_tested
+Scenario: I can search users on company name
+  Given someone is signed up and confirmed as user with email ejdzent@nbs.com and password secret and role agent
+  And user "ejdzent@nbs.com" with role "agent" has attributes "company_name:Abc"
+  And someone is signed up and confirmed as user with email kastomer@nbs.com and password secret and role customer
+  And user "kastomer@nbs.com" with role "customer" has attributes "company_name:Xyz"
+  And I am on administration users page
+  And I fill in "search_with_keyword" with "Abc"
+  And I press translated "administration.users.index.view.search_button"
+  Then I should see "Abc"
+  And I should not see "Xyz"
+  When I fill in "search_with_keyword" with "Xyz"
+  And I press translated "administration.users.index.view.search_button"
+  Then I should see "Xyz"
+  And I should not see "Abc"
+
+@requested @m8b @_done @_tested
 Scenario: The header of users listing should include total number of users: 'Users: #total'
+  And I am on administration users page
+  Then I should see /Total:\s\d+/
