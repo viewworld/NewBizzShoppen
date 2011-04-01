@@ -393,12 +393,79 @@ Scenario: When editing call center agent I can navigate to list of leads created
   Then I should see "SabKolSenterLead" within "#leads"
   And I should see "1" rows in a table within "#leads"
 
-
-@requested @m8b
+@requested @m8b @_done @_tested
 Scenario: I should have 'Don't verify email address' for every user I create
+  When I go to administration users
+  Given I select "Buyer" from "role"
+  And I press translated "administration.users.index.view.new_user"
+  Then I fill in "user_customer_first_name" with "Alex"
+  And I fill in "user_customer_last_name" with "Nova"
+  And I fill in "user_customer_company_name" with "Selleo"
+  And I fill in "user_customer_phone" with "0297272341235"
+  And I fill in "user_customer_email" with "alex.nova@person.com"
+  And I fill in "user_customer_screen_name" with "Alex N"
+  And I fill in "user_customer_address_attributes_address_line_1" with "Typical 23"
+  And I fill in "user_customer_address_attributes_address_line_2" with "Paris"
+  And I fill in "user_customer_address_attributes_zip_code" with "22-232"
+  And I fill in "user_customer_address_attributes_address_line_3" with "Orange"
+  And I check "user_customer_skip_email_verification"
+  And I fill in "user_customer_password" with "secret"
+  And I fill in "user_customer_password_confirmation" with "secret"
+  Then I press translated "administration.users.edit.view.button_update_user"
+  And I should see translated "administration.users.create.flash.user_creation_successful"
+
+@added @m8b @_done @_tested
+Scenario: I can login without confirmation when 'Don't verify email address' is checked
+  When I go to administration users
+  Given I select "Buyer" from "role"
+  And I press translated "administration.users.index.view.new_user"
+  Then I fill in "user_customer_first_name" with "Alex"
+  And I fill in "user_customer_last_name" with "Nova"
+  And I fill in "user_customer_company_name" with "Selleo"
+  And I fill in "user_customer_phone" with "0297272341235"
+  And I fill in "user_customer_email" with "alex.nova@person.com"
+  And I fill in "user_customer_screen_name" with "Alex N"
+  And I fill in "user_customer_address_attributes_address_line_1" with "Typical 23"
+  And I fill in "user_customer_address_attributes_address_line_2" with "Paris"
+  And I fill in "user_customer_address_attributes_zip_code" with "22-232"
+  And I fill in "user_customer_address_attributes_address_line_3" with "Orange"
+  And I check "user_customer_skip_email_verification"
+  And I fill in "user_customer_password" with "secret"
+  And I fill in "user_customer_password_confirmation" with "secret"
+  Then I press translated "administration.users.edit.view.button_update_user"
+  And I should see translated "administration.users.create.flash.user_creation_successful"
+  When I sign out
+  And I am on the home page
+  And I sign in as alex.nova@person.com with password secret
+  Then I should see translated "devise.sessions.signed_in"
+
+@added @m8b @_done @_tested
+Scenario: I can login without confirmation when 'Don't verify email address' is checked
+  When I go to administration users
+  Given I select "Buyer" from "role"
+  And I press translated "administration.users.index.view.new_user"
+  Then I fill in "user_customer_first_name" with "Alex"
+  And I fill in "user_customer_last_name" with "Nova"
+  And I fill in "user_customer_company_name" with "Selleo"
+  And I fill in "user_customer_phone" with "0297272341235"
+  And I fill in "user_customer_email" with "alex.nova@person.com"
+  And I fill in "user_customer_screen_name" with "Alex N"
+  And I fill in "user_customer_address_attributes_address_line_1" with "Typical 23"
+  And I fill in "user_customer_address_attributes_address_line_2" with "Paris"
+  And I fill in "user_customer_address_attributes_zip_code" with "22-232"
+  And I fill in "user_customer_address_attributes_address_line_3" with "Orange"
+  And I fill in "user_customer_password" with "secret"
+  And I fill in "user_customer_password_confirmation" with "secret"
+  Then I press translated "administration.users.edit.view.button_update_user"
+  And I should see translated "administration.users.create.flash.user_creation_successful"
+  When I sign out
+  And I am on the home page
+  And I sign in as alex.nova@person.com with password secret
+  Then I should see translated "devise.failure.unconfirmed"
 
 @requested @m8b
 Scenario: I should be able to set new password for any user not just reset it
+
 
 @requested @m8b
 Scenario: I can see company name on the users listing
