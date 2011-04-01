@@ -73,17 +73,22 @@ class User < ActiveRecord::Base
                :leads_rated_good_counter, :leads_rated_bad_counter, :leads_not_rated_counter, :leads_rating_avg, :certification, :payout,
                :revenue_counter, :leads_purchased_counter, :leads_volume_sold_counter, :leads_revenue_counter, :unpaid_leads_counter
 
-  attr_protected :payout, :locked, :can_edit_payout_information, :paypal_email, :bank_swift_number, :bank_iban_number
+  attr_protected :payout, :locked, :can_edit_payout_information, :paypal_email, :bank_swift_number, :bank_iban_number, :skip_email_verification
 
-  attr_accessor :agreement_read, :locked
+  attr_accessor :agreement_read, :locked, :skip_email_verification
 
   before_save :handle_locking, :handle_team_buyers_flag
   before_create :set_rss_token, :set_role
   before_destroy :can_be_removed
+  after_create :auto_activate
 
   liquid :email, :confirmation_instructions_url, :reset_password_instructions_url
 
   private
+
+  def auto_activate
+    confirm! if skip_email_verification == "1"
+  end
 
   def validate_first_and_last_name?
     true
@@ -201,7 +206,7 @@ class User < ActiveRecord::Base
 
   def send_confirmation_instructions
     generate_confirmation_token if self.confirmation_token.nil?
-    deliver_email_template("confirmation_instructions")
+    deliver_email_template("confirmation_instructions") unless skip_email_verification
   end
 
   def send_reset_password_instructions
