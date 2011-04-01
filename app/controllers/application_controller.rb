@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   before_filter :authorize_with_http_basic_for_staging, :check_category_buyer
+  after_filter :do_something
 
   def authorize_with_http_basic_for_staging
     if Rails.env.staging?
@@ -122,6 +123,12 @@ class ApplicationController < ActionController::Base
     session = auth.request.env['rack.session']
     session[:last_url_before_logout] = auth.request.headers["Referer"]
     session[:show_cart_hint] = nil
+  end
+
+  def do_something
+#    require 'nokogiri'
+#    doc = Nokogiri::HTML(response_body)
+#    throw doc
   end
 end
 

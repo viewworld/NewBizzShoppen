@@ -180,7 +180,7 @@ module ApplicationHelper
 #      raw super + content_tag(:t, " [edit]", :id => "translate_#{locale}_#{key.gsub('.','_')}").html_safe
       super + "#{I18n.locale.to_s}::#{key}"
     else
-      super
+      super + "#{I18n.locale.to_s}::#{key}"
     end
   end
 end
