@@ -249,5 +249,5 @@ Scenario: I should not have access to subaccounts without team buyers flag
   And I go to customers subaccounts
   Then I should see "You are not authorized"
 
-@m8b @requested
+@m8b @requested @_done @non_testable
 Scenario: Team buyers should have "My assigned leads" tab reamed to "My leads"

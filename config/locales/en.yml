@@ -74,7 +74,7 @@ en:
       lead_buyer:
         lead_purchases: My leads
       lead_user:
-        lead_purchases: My assigned leads
+        lead_purchases: My leads
         lead_requests: My requested leads
       shared:
         browse_leads: Browse leads
