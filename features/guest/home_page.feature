@@ -23,8 +23,29 @@ Feature: Home page
   @m8 @requested @tgn @tested_elsewhere @_done
   Scenario: When a new user sigens in on fairleads, he should be redirected to his new role home page, not the site homepage
 
-  @m8b @requested
+  @m8b @requested @tgn @_tested
   Scenario: Call centre/call centre admin should share the homepage with agent -- correct the cc/cc agent welcome message (move it from the site home to agent home)
+    Given I am on the home page
+    Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role call_centre
+    And user "bob@person.com" with role "call_centre" has attributes "company_name: Xerox"
+    And I sign in as bob@person.com with password supersecret
+    Then I should see "Welcome Xerox"
+    And I should see "Blurb call centre home"
+    Given I am not sign in
+    Given I am signed up and confirmed as user with email bob2@person.com and password supersecret and role call_centre_agent
+    And user "bob2@person.com" with role "call_centre_agent" has attributes "screen_name: Yudkowsky"
+    And an user with role call_centre_agent and email bob2@person.com belongs to call centre bob@person.com
+    And I sign in as bob2@person.com with password supersecret
+    And I go to agent home
+    And I should see "Welcome Yudkowsky @ Xerox"
+    And I should see "Blurb call centre home"
+    Given I am not sign in
+    Given I am signed up and confirmed as user with email bob3@person.com and password supersecret and role agent
+    And I sign in as bob3@person.com with password supersecret
+    And I go to agent home
+    Then I should see "Welcome agent"
+    And I should see "Blurb agent home"
+    And I open page in browser
 
   @m8 @requested @tgn @_tested
   Scenario: Make year automatically change in footer
