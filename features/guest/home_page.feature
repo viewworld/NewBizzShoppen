@@ -20,7 +20,7 @@ Feature: Home page
   @m8 @requested @ao
   Scenario: If a user enters www.fairleads.dk he should be redirectoed to www.fairleads.com with danish selected as default.
 
-  @m8 @requested @tgn
+  @m8 @requested @tgn @tested_elsewhere @_done
   Scenario: When a new user sigens in on fairleads, he should be redirected to his new role home page, not the site homepage
 
   @m8b @requested
