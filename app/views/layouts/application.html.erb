@@ -27,7 +27,7 @@
 <div id="container" class="c">
   <div id="top">
 
-    <div id="user_panel">      
+    <div id="user_panel">
       <%= render '/layouts/locale_selection' %>
       <% if user_signed_in? %>
           <%= link_to t("layout.my_profile_link"), my_profile_path, :class => "sl" %>
@@ -40,15 +40,16 @@
     <%= link_to image_tag("logo_fairleads.png"), url_to_role_specific_home_page, :class => "logo" %>
   </div>
 
-  <% if session[:show_cart_hint] == "1" %>
-    <div id="cart_hint_div"><%= t("layout.cart.lead_added_to_cart_hint") %> <%= link_to_function t("layout.cart.close_hint"), "$.post('#{buyers_cart_path(:show_cart_hint => 0)}', {'_method':'put'})" %></div>
-  <% end %>
-
-
   <%= render('/layouts/cart') if current_user && current_user.has_role?(:lead_buyer) && !current_user.big_buyer %>
 
   <div id="user_menu">
     <%= render "layouts/main_menu" %>
+
+    <% if session[:show_cart_hint] == "1" %>
+        <div class="hidden">
+          <div id="cart_hint_div"><%= t("layout.cart.lead_added_to_cart_hint", :link => link_to(t("layout.cart.here_link"), buyers_cart_path) ).html_safe %> <%= link_to_function t("layout.cart.close_hint"), "$.post('#{buyers_cart_path(:show_cart_hint => 0)}', {'_method':'put'})" %></div>
+        </div>
+    <% end %>
 
     <% if current_user && current_user.has_role?(:lead_buyer) && !current_user.big_buyer %>
         <div id="cart">
@@ -91,6 +92,50 @@
     I18n.defaultLocale = "<%= I18n.default_locale %>";
     I18n.locale = "<%= I18n.locale %>";
 
+    <% if session[:show_cart_hint] == "1" %>
+    jQuery("#cart").qtip(
+    {
+        content: {
+            text: $("#cart_hint_div").html()
+        },
+        position: {
+            corner: {
+                target: 'leftMiddle',
+                tooltip: 'rightMiddle'
+            },
+            adjust: {
+                x: 5
+            }
+        },
+        hide: {
+            fixed: true,
+            when: {
+                event: "click"
+            }
+        },
+        show: {
+            ready: true
+        },
+        style: {
+            name: "cream",
+            border: {
+                radius: 3
+            },
+            tip: {
+                corner: 'rightMiddle',
+                size: {
+                    x: 8,
+                    y : 12
+                }
+            }
+        }
+    });
+
+    jQuery("#cart").qtip("show").bind("mouseover", function() {
+        $.post('<%= buyers_cart_path(:show_cart_hint => 0) %>', {'_method':'put'});
+        $(this).qtip("destroy");
+    });
+    <% end %>
 </script>
 
 <js:/>
