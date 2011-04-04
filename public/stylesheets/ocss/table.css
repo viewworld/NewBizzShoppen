@@ -25,14 +25,14 @@
 {
     background: url(/images/table/table.png) no-repeat 0 0;
     width: 10px;
-    padding: 0;
+    padding: 0 !important;
 }
 
 .generic thead th.hr
 {
     background: url(/images/table/table.png) no-repeat right 0;
     width: 10px;
-    padding: 0;
+    padding: 0 !important;
 }
 
 .generic thead th a
@@ -75,7 +75,7 @@
     background-repeat:  repeat-y;
     background-position: 0 0;
     width: 10px;
-    padding: 0;
+    padding: 0 !important;
 }
 
 .generic tbody tr td.cr
@@ -84,7 +84,7 @@
     background-repeat:  repeat-y;
     background-position: right 0;
     width: 10px;
-    padding: 0;
+    padding: 0 !important;
 }
 
 .generic tbody tr.even td
@@ -95,6 +95,23 @@
 .generic tbody tr:hover td
 {
     background-color: #fffee3;
+}
+
+
+.generic.small_padding tbody tr td
+{
+    padding: 10px 3px;
+}
+
+.generic.small_padding tbody tr td.cl,
+.generic.small_padding tbody tr td.cr
+{
+    padding: 0 !important;
+}
+
+.generic.small_padding thead th
+{
+    padding: 0 3px;
 }
 
 
@@ -163,6 +180,35 @@
     background-position: right -39px;
 }
 
+a.toggle_row
+{
+    position: absolute;
+    display: block;
+    margin-top: -23px;
+    right: 470px;
+    height: 22px;
+    line-height: 22px;
+    padding: 0 10px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-bottom: none;
+    border-top-color: #ccc;
+
+    -moz-border-radius: 4px 4px 0 0;
+    -webkit-border-radius: 4px 4px 0 0;
+    border-radius: 4px 4px 0 0;
+
+    -webkit-box-shadow: 0 -1px 3px #ddd;
+
+    text-decoration: none;
+
+    color: #666;    
+}
+
+.row_tooltip a.toggle_row
+{
+    right: 465px;
+}
 
 
 .td_actions
