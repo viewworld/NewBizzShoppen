@@ -80,6 +80,7 @@ en:
         browse_leads: Browse leads
         home: Home
         site_home: "Site home"
+        category_request: "Category request"
       purchase_manager:
         leads: My leads
         lead_templates: "Lead templates"
@@ -2239,4 +2240,10 @@ en:
   category_requests:
     new:
       view:
-        header: "Category requests"
+        header: "Category request"
+        email_from: "Email from"
+        category_name: "Category name"
+        leads_count_per_month: "How many leads would you need a month?"
+        lead_description: "Describe what would be a good lead"
+        can_be_contacted: "Can Fairleads contact you to discuss you suggestion?"
+        phone_number: "Phone number"

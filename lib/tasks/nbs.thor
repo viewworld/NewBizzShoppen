@@ -121,6 +121,15 @@ class Nbs < Thor
                   :body => "<p></p>"},
           :dk => {:subject => "[DK] Invoice",
                   :body => "<p></p>"}
+        },
+
+        {
+          :name => "Category request",
+            :uniq_id => "category_request",
+          :en => {:subject => "Category request",
+                  :body => "<p>{{request_type}} category request:</p><p>Category name: {{category_name}}</p><p>Lead description: {{lead_description}}</p><p>Leads count per month: {{leads_count_per_month}}</p><p>Can be contacted: {{can_be_contacted}}</p>"},
+          :dk => {:subject => "[DK] Category request",
+                  :body => "<p>{{request_type}} category request:</p><p>Category name: {{category_name}}</p><p>Lead description: {{lead_description}}</p><p>Leads count per month: {{leads_count_per_month}}</p><p>Can be contacted: {{can_be_contacted}}</p>"}
         }
     ]
 
@@ -142,7 +151,8 @@ class Nbs < Thor
     "my_profile" => %w{company_name first_name last_name phone email screen_name company_registration_number company_ean_number address_address_line_1
               address_address_line_2 address_address_line_3 address_zip_code address_country_id address_region_id newsletter_on bank_address_address_line_1
               bank_address_address_line_2 bank_address_address_line_3 bank_address_zip_code bank_address_country_id bank_address_region_id paypal_email bank_swift_number
-              bank_iban_number payout bank_name team_buyers}
+              bank_iban_number payout bank_name team_buyers},
+    "category_request" => %w{email_from phone_number category_name lead_description leads_count_per_month can_be_contacted}
     }.each_pair do |klass, methods|
       methods.each do |method|
         article = Article::Cms::Hint.find_by_key("#{klass}_#{method}")
