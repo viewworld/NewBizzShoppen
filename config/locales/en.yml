@@ -96,7 +96,8 @@ en:
       empty_cart: Empty cart
       show_cart: Go to checkout
 
-      lead_added_to_cart_hint: "Your lead has been added to cart. Click here to checkout."
+      lead_added_to_cart_hint: "Your lead has been added to cart. Click %{link} here to checkout."
+      here_link: here
       close_hint: "Close"
   errors:
     messages:
