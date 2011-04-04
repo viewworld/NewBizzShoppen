@@ -9,7 +9,6 @@
     <th><%= link_to t("administration.users.index.view.last_name"), order_for_scoped_search(:last_name) %></th>
     <th><%= link_to t("administration.users.index.view.company_name"), order_for_scoped_search(:company_name) %></th>
     <th><%= link_to t("administration.users.index.view.email"), order_for_scoped_search(:email) %></th>
-    <th class="ta_r"><%= link_to t("administration.users.index.view.age"), order_for_scoped_search(:age) %></th>
     <th class="ta_r"><%= link_to t("administration.users.index.view.leads_bought"), order_for_scoped_search(:leads_purchased_counter) %></th>
     <th class="ta_r"><%= link_to t("administration.users.index.view.unpaid_leads"), order_for_scoped_search(:unpaid_leads_counter) %></th>
     <th class="ta_r"><%= link_to t("administration.users.index.view.leads_created"), order_for_scoped_search(:leads_created_counter) %></th>
@@ -39,7 +38,6 @@
         <td><%= user.last_name %></td>
         <td><%= user.company_name %></td>
         <td><%= user.email %></td>
-        <td class="ta_r"><%= user.age %></td>
         <td class="ta_r"><%= user.leads_purchased_counter %></td>
         <td class="ta_r"><%= user.unpaid_leads_counter %></td>
         <td class="ta_r"><%= user.leads_created_counter %></td>
