@@ -44,7 +44,7 @@ class LeadPurchase < LeadPurchaseBase
   scope :with_not_invoiced_for_user, lambda { |user| joins("LEFT JOIN invoice_lines ON invoice_lines.payable_id = lead_purchases.id LEFT JOIN users ON users.id = lead_purchases.owner_id").where(["invoice_lines.payable_id IS NULL AND users.big_buyer IS TRUE AND users.id = ?", user.to_i]) }
 
   before_save :assign_to_proper_owner_if_accessible
-  before_save :assign_to_owner
+  before_save :assign_to_purchaser
   before_save :change_contacted_state
   before_save :handle_new_deadline
   before_save :set_assigned_at
@@ -63,8 +63,8 @@ class LeadPurchase < LeadPurchaseBase
     end
   end
 
-  def assign_to_owner
-    self.assignee_id = owner.id if !assignee and owner
+  def assign_to_purchaser
+    self.assignee_id = purchased_by if purchased_by
   end
 
   def change_contacted_state
