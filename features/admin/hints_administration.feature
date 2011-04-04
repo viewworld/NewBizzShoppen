@@ -14,7 +14,6 @@ Scenario: I can list all hints
   And article hint for model "Lead" and method "region_id" exists
   And article hint for model "Lead" and method "region_id" has attributes "title:Lead#region,content:hint for region"
   And I go to administration hints
-  And I open page in browser
   Then I should see "Lead#region"
 
 @_tested @selenium

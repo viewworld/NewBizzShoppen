@@ -393,15 +393,153 @@ Scenario: When editing call center agent I can navigate to list of leads created
   Then I should see "SabKolSenterLead" within "#leads"
   And I should see "1" rows in a table within "#leads"
 
-
-@requested @m8b
+@requested @m8b @_done @_tested
 Scenario: I should have 'Don't verify email address' for every user I create
+  When I go to administration users
+  Given I select "Buyer" from "role"
+  And I press translated "administration.users.index.view.new_user"
+  Then I fill in "user_customer_first_name" with "Alex"
+  And I fill in "user_customer_last_name" with "Nova"
+  And I fill in "user_customer_company_name" with "Selleo"
+  And I fill in "user_customer_phone" with "0297272341235"
+  And I fill in "user_customer_email" with "alex.nova@person.com"
+  And I fill in "user_customer_screen_name" with "Alex N"
+  And I fill in "user_customer_address_attributes_address_line_1" with "Typical 23"
+  And I fill in "user_customer_address_attributes_address_line_2" with "Paris"
+  And I fill in "user_customer_address_attributes_zip_code" with "22-232"
+  And I fill in "user_customer_address_attributes_address_line_3" with "Orange"
+  And I check "user_customer_skip_email_verification"
+  And I fill in "user_customer_password" with "secret"
+  And I fill in "user_customer_password_confirmation" with "secret"
+  Then I press translated "administration.users.edit.view.button_update_user"
+  And I should see translated "administration.users.create.flash.user_creation_successful"
 
-@requested @m8b
+@added @m8b @_done @_tested
+Scenario: I can login without confirmation when 'Don't verify email address' is checked
+  When I go to administration users
+  Given I select "Buyer" from "role"
+  And I press translated "administration.users.index.view.new_user"
+  Then I fill in "user_customer_first_name" with "Alex"
+  And I fill in "user_customer_last_name" with "Nova"
+  And I fill in "user_customer_company_name" with "Selleo"
+  And I fill in "user_customer_phone" with "0297272341235"
+  And I fill in "user_customer_email" with "alex.nova@person.com"
+  And I fill in "user_customer_screen_name" with "Alex N"
+  And I fill in "user_customer_address_attributes_address_line_1" with "Typical 23"
+  And I fill in "user_customer_address_attributes_address_line_2" with "Paris"
+  And I fill in "user_customer_address_attributes_zip_code" with "22-232"
+  And I fill in "user_customer_address_attributes_address_line_3" with "Orange"
+  And I check "user_customer_skip_email_verification"
+  And I fill in "user_customer_password" with "secret"
+  And I fill in "user_customer_password_confirmation" with "secret"
+  Then I press translated "administration.users.edit.view.button_update_user"
+  And I should see translated "administration.users.create.flash.user_creation_successful"
+  When I sign out
+  And I am on the home page
+  And I sign in as alex.nova@person.com with password secret
+  Then I should see translated "devise.sessions.signed_in"
+
+@added @m8b @_done @_tested
+Scenario: I can login without confirmation when 'Don't verify email address' is checked
+  When I go to administration users
+  Given I select "Buyer" from "role"
+  And I press translated "administration.users.index.view.new_user"
+  Then I fill in "user_customer_first_name" with "Alex"
+  And I fill in "user_customer_last_name" with "Nova"
+  And I fill in "user_customer_company_name" with "Selleo"
+  And I fill in "user_customer_phone" with "0297272341235"
+  And I fill in "user_customer_email" with "alex.nova@person.com"
+  And I fill in "user_customer_screen_name" with "Alex N"
+  And I fill in "user_customer_address_attributes_address_line_1" with "Typical 23"
+  And I fill in "user_customer_address_attributes_address_line_2" with "Paris"
+  And I fill in "user_customer_address_attributes_zip_code" with "22-232"
+  And I fill in "user_customer_address_attributes_address_line_3" with "Orange"
+  And I fill in "user_customer_password" with "secret"
+  And I fill in "user_customer_password_confirmation" with "secret"
+  Then I press translated "administration.users.edit.view.button_update_user"
+  And I should see translated "administration.users.create.flash.user_creation_successful"
+  When I sign out
+  And I am on the home page
+  And I sign in as alex.nova@person.com with password secret
+  Then I should see translated "devise.failure.unconfirmed"
+
+@requested @m8b @_done @_tested
 Scenario: I should be able to set new password for any user not just reset it
+  When I go to administration edit user for bob@person.com
+  And I follow translated "administration.users.edit.view.change_password_link"
+  And I fill in "user_password" with "newpass"
+  And I fill in "user_password_confirmation" with "newpass"
+  And I press translated "password.edit.view.button_update_user"
+  Then I should see translated "password.flashes.successfully_changed"
 
-@requested @m8b
+@added @m8b @_done @_tested
+Scenario: It should be possible for me to login using new password
+  When I go to administration edit user for bob@person.com
+  And I follow translated "administration.users.edit.view.change_password_link"
+  And I fill in "user_password" with "newpass"
+  And I fill in "user_password_confirmation" with "newpass"
+  And I press translated "password.edit.view.button_update_user"
+  Then I should see translated "password.flashes.successfully_changed"
+  When I sign out
+  And I am on the home page
+  And I sign in as bob@person.com with password newpass
+  Then I should see translated "devise.sessions.signed_in"
+
+@added @m8b @_done @_tested
+Scenario: It should be possible for other users to login after password change
+  Given someone is signed up and confirmed as user with email ejdzent@nbs.com and password secret and role agent
+  And I sign out
+  And I am on the home page
+  And I sign in as ejdzent@nbs.com with password secret
+  Then I should see translated "devise.sessions.signed_in"
+  When I sign out
+  And I am on the home page
+  And I sign in as bob@person.com with password supersecret
+  And I am on administration edit user for ejdzent@nbs.com
+  And I follow translated "administration.users.edit.view.change_password_link"
+  And I fill in "user_password" with "newpass"
+  And I fill in "user_password_confirmation" with "newpass"
+  And I press translated "password.edit.view.button_update_user"
+  Then I should see translated "password.flashes.successfully_changed"
+  When I sign out
+  And I am on the home page
+  And I sign in as ejdzent@nbs.com with password newpass
+  Then I should see translated "devise.sessions.signed_in"
+
+@requested @m8b @_done @_tested
 Scenario: I can see company name on the users listing
+  Given I am on administration users page
+  Then I should see translated "administration.users.index.view.company_name" within "table#users_table thead"
 
-@requested @m8b
+@added @m8b @_done @_tested
+Scenario: I can sort users by company name
+  Given someone is signed up and confirmed as user with email ejdzent@nbs.com and password secret and role agent
+  And user "ejdzent@nbs.com" with role "agent" has attributes "company_name:Abc"
+  And someone is signed up and confirmed as user with email kastomer@nbs.com and password secret and role customer
+  And user "kastomer@nbs.com" with role "customer" has attributes "company_name:Xyz"
+  And I am on administration users page
+  And I follow translated "administration.users.index.view.company_name" within "table#users_table thead"
+  Then I should see "Abc" before "Xyz"
+  When I follow translated "administration.users.index.view.company_name" within "table#users_table thead"
+  Then I should see "Xyz" before "Abc"
+
+@added @m8b @_done @_tested
+Scenario: I can search users on company name
+  Given someone is signed up and confirmed as user with email ejdzent@nbs.com and password secret and role agent
+  And user "ejdzent@nbs.com" with role "agent" has attributes "company_name:Abc"
+  And someone is signed up and confirmed as user with email kastomer@nbs.com and password secret and role customer
+  And user "kastomer@nbs.com" with role "customer" has attributes "company_name:Xyz"
+  And I am on administration users page
+  And I fill in "search_with_keyword" with "Abc"
+  And I press translated "administration.users.index.view.search_button"
+  Then I should see "Abc"
+  And I should not see "Xyz"
+  When I fill in "search_with_keyword" with "Xyz"
+  And I press translated "administration.users.index.view.search_button"
+  Then I should see "Xyz"
+  And I should not see "Abc"
+
+@requested @m8b @_done @_tested
 Scenario: The header of users listing should include total number of users: 'Users: #total'
+  And I am on administration users page
+  Then I should see /Total:\s\d+/

@@ -200,8 +200,8 @@ en:
       facebook_profile: "Facebook profile"
       purchase_date: "Purchase date:"
       creator_name: "Creator:"
-      show_row: "Show"
-      hide_row: "Hide"
+      show_row: "Show details"
+      hide_row: "Hide details"
     statuses:
       not_contacted: Not contacted
       contacted: Contacted
@@ -347,6 +347,9 @@ en:
 
         call_centre_header: "Welcome %{name}"
   password:
+    flashes:
+      successfully_changed: 'Password has been successfully changed'
+      not_changed: "Password has not been changed"
     update:
       controller:
         successful_update_notice: "Password has been successfully changed!"
@@ -356,6 +359,9 @@ en:
         button_update_user: "Save"
         change_password: "Change password"
         password_label: "Password"
+        change_users_password: "Change user's password"
+        new_password_label: "New password"
+        new_password_confirmation_label: "New password confirmation"
 
   administration:
     password:
@@ -367,9 +373,11 @@ en:
         view:
           title: "Users"
           id: "ID"
+          total: "Total"
           roles: "Roles"
           first_name: "First name"
           last_name: "Last name"
+          company_name: "Company name"
           email: "E-mail"
           age: "Age"
           leads_bought: "Leads bought"
@@ -400,6 +408,7 @@ en:
           button_update_user: Save
           button_cancel: Cancel
           reset_password_link: Reset password
+          change_password_link: 'Change password'
           change_to_category_buyer: "Change to category buyer"
           change_to_regular_buyer: "Change to regular buyer"
           view_created_leads: "View created leads"
@@ -1847,6 +1856,7 @@ en:
         country: "Country"
         agreement_read: "I have read and agree to Associated Content's Terms of Use and Privacy Policy"
         newsletter_on: "I want to receive the newsletter"
+        skip_email_verification: "Don't verify email address"
         customer:
           base:
             must_have_interests: "User must have at least one interests category"
@@ -2110,6 +2120,7 @@ en:
         team_buyers: "Enable team buyers"
         not_charge_vat: "Do not charge VAT"
         agreement_read: "Agreement read"
+        skip_email_verification: "Don't verify email address"
       user/lead_user:
         first_name: "First name"
         last_name: "Last name"
@@ -2121,6 +2132,7 @@ en:
         newsletter_on: "Newsletter on"
         not_charge_vat: "Do not charge VAT"
         agreement_read: "Agreement read"
+        skip_email_verification: "Don't verify email address"
       user/agent:
         first_name: "First name"
         last_name: "Last name"
@@ -2138,6 +2150,7 @@ en:
         not_charge_vat: "Do not charge VAT"
         agreement_read: "Agreement read"
         certification_level: "Certification level"
+        skip_email_verification: "Don't verify email address"
       user/administrator:
         first_name: "First name"
         last_name: "Last name"
@@ -2149,6 +2162,7 @@ en:
         newsletter_on: "Newsletter on"
         not_charge_vat: "Do not charge VAT"
         agreement_read: "Agreement read"
+        skip_email_verification: "Don't verify email address"
       user/customer:
         first_name: "First name"
         last_name: "Last name"
@@ -2162,6 +2176,7 @@ en:
         agreement_read: "Agreement read"
         not_charge_vat: "Do not charge VAT"
         team_buyers: "Team buyers"
+        skip_email_verification: "Don't verify email address"
       user/purchase_manager:
         first_name: "First name"
         last_name: "Last name"
@@ -2173,6 +2188,7 @@ en:
         newsletter_on: "Newsletter on"
         not_charge_vat: "Do not charge VAT"
         agreement_read: "Agreement read"
+        skip_email_verification: "Don't verify email address"
       user/category_buyer:
         first_name: "First name"
         last_name: "Last name"
@@ -2186,6 +2202,7 @@ en:
         not_charge_vat: "Do not charge VAT"
         agreement_read: "Agreement read"
         big_buyer: "Big buyer"
+        skip_email_verification: "Don't verify email address"
       country:
         name: "Country name"
       lead_template:

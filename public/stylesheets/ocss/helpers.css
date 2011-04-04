@@ -188,3 +188,8 @@
 {
     font-size: 11px;    
 }
+
+.va_b
+{
+    vertical-align: bottom !important;
+}

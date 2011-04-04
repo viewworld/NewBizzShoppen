@@ -1,3 +1,15 @@
+        <div class="fltr" id="total_users">
+          <div class="frm_tiny fltr" style="margin-top: 22px">
+            <div class="pdd_10">
+              <p>
+                <%= t("administration.users.index.view.total") %>: <strong><%= @total_users %></strong>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <clb/>
+
           <table id="users_table" class="generic">
             <thead>
             <tr>
@@ -7,6 +19,7 @@
               <th><%= link_to t("administration.users.index.view.roles"), order_for_scoped_search(:roles_mask) %></th>
               <th><%= link_to t("administration.users.index.view.first_name"), order_for_scoped_search(:first_name) %></th>
               <th><%= link_to t("administration.users.index.view.last_name"), order_for_scoped_search(:last_name) %></th>
+              <th><%= link_to t("administration.users.index.view.company_name"), order_for_scoped_search(:company_name) %></th>
               <th><%= link_to t("administration.users.index.view.email"), order_for_scoped_search(:email) %></th>
               <th><%= link_to t("administration.users.index.view.age"), order_for_scoped_search(:age) %></th>
               <th><%= link_to t("administration.users.index.view.leads_bought"), order_for_scoped_search(:leads_purchased_counter) %></th>
@@ -23,7 +36,7 @@
             <tfoot>
             <tr>
               <td class="fl"></td>
-              <td colspan="15"></td>
+              <td colspan="16"></td>
               <td class="fr"></td>
             </tr>
             </tfoot>
@@ -36,6 +49,7 @@
                   <td><%= user.roles_as_text %></td>
                   <td><%= user.first_name %></td>
                   <td><%= user.last_name %></td>
+                  <td><%= user.company_name %></td>
                   <td><%= user.email %></td>
                   <td class="ta_r"><%= user.age %></td>
                   <td class="ta_r"><%= user.leads_purchased_counter %></td>
@@ -71,7 +85,7 @@
                 </tr>
             <% end %>
             <tr class="pagination">
-              <td colspan="17" class="ta_c">
+              <td colspan="18" class="ta_c">
                 <div class="td_select_all">
                   <%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %>
                   <%= label_tag "mark_all", "select all" %>
@@ -81,7 +95,7 @@
             </tr>
             <tr class="main_actions">
               <td class="cl"></td>
-              <td colspan="15" class="no_pdd_lr ta_l">
+              <td colspan="16" class="no_pdd_lr ta_l">
                 <%= hidden_field_tag :route_to %>
                 <%= hidden_field_tag :bulk_action_type %>
                 <% if !subaccounts_table %>
