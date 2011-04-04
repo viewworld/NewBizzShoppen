@@ -14,7 +14,7 @@ Scenario: I can create new article
   And I fill in "article_title" with "MainPageArticle"
   And I fill in "article_content_editor" ckeditor with "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   And I press translated "administration.articles.edit.view.button_save"
-  And I should be on administration MainPageArticle article page
+  And I should be on administration articles page
 
 @selenium @_done
 Scenario: I can edit article
