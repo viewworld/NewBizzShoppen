@@ -1,0 +1,32 @@
+<column-mc:>
+  <header><%= t("administration.translations.index.view.header") %></header>
+  <table class="generic">
+    <thead>
+      <th>Key</th>
+      <% @locales.each do |locale| %>
+        <th><%= locale %></th>
+      <% end %>
+    </thead>
+    <tbody>
+      <% @keys.each do |key| %>
+        <tr>
+          <td><%= key[0..59] %></td>
+          <% @locales.each do |locale| %>
+            <td><%= text_field_tag "#{locale}_#{key}", @translations[locale][key].first.value, :locale => locale, :key => key, :onblur => "update_translation(this)" %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <script>
+    function update_translation(field) {
+        field = $(field);
+        $.ajax({
+          type: 'PUT',
+          url: '/administration/translation',
+          data: 'locale='+field.attr('locale')+'&key='+field.attr('key')+'&value='+field.attr('value')
+        });
+    }
+  </script>
+</column-mc:>

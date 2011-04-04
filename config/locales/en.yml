@@ -53,6 +53,7 @@ en:
         articles: "Articles"
         news: "News"
         hints: "Hints"
+        translations: "Translations"
         currencies: "Currencies"
         countries: Countries
         invoices: "Invoices"
@@ -1009,6 +1010,10 @@ en:
           type: "Type"
           type_credit: Credit
           type_refund: Refund
+    translations:
+      index:
+        view:
+          header: "Translations"
   agent:
     leads:
       index:
