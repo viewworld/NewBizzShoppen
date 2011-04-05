@@ -90,8 +90,17 @@ Scenario: Add links present on sign in page to home login page as well (forgot p
   Then I should see translated "home.show.view.forgotten_password_link"
   And I should see translated "home.show.view.resend_confirmation_instructions"
 
-@requested @m8b
+@requested @m8b @tgn @_tested
 Scenario: We need a forgot password function, where the user is e-maild his password, this should be available when you enter a wrong password
+  Given I am not sign in
+  And I go to the homepage
+  And I sign in as unknown_user@nohost.com with password none
+  Then I should see "forgot password?"
 
-@m8b @added
+@m8b @added @tgn @_tested
 Scenario: I can login to fairleads as any user without password by hash key that I can create in console (suggested by developers for future debuging of live fairleads.com)
+  Given I am not sign in
+  And I am signed up and confirmed as user with email bob7@person.com and password supersecret and role admin
+  And user with email "bob7@person.com" has login key generated
+  And I login as user with email "bob7@person.com" using login key
+  And I should see "Logout bob7@person.com"

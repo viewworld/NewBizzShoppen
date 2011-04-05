@@ -13,7 +13,7 @@
                   <%= f.text_field :email %>
                 </li>
                 <li class="password">
-                  <%= f.label :password %>
+                  <%= f.label raw(t("activerecord.attributes.user.password") + content_tag("br") + content_tag(:span, link_to(t("home.show.view.forgotten_password_link"), new_password_path(User)), :class => "label_link")) %>
                   <%= f.password_field :password %>
                 </li>
                 <% if devise_mapping.rememberable? -%>

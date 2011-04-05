@@ -83,6 +83,7 @@ class User < ActiveRecord::Base
   after_create :auto_activate
 
   liquid :email, :confirmation_instructions_url, :reset_password_instructions_url
+  require 'digest/sha1'
 
   private
 
@@ -357,5 +358,19 @@ class User < ActiveRecord::Base
     return false unless big_buyer?
     not_invoiced_cost = LeadPurchase.with_not_invoiced.where("owner_id = ?", id).map{ |lp| lp.not_invoiced_euro_sum.to_f}.sum
     (not_invoiced_cost + (buyout ? lead.buyout_quantity : 1) * lead.currency.to_euro(lead.price)) >= Settings.big_buyer_purchase_limit.to_f
+  end
+
+  def generate_login_key
+    self.login_key = Digest::SHA1.hexdigest("#{created_at} -- #{id} -- #{Time.now}")
+    login_key
+  end
+
+  def generate_login_key!
+    self.update_attribute(:login_key, generate_login_key)
+    login_key
+  end
+
+  def clear_login_key!
+    self.update_attribute(:login_key, nil)
   end
 end

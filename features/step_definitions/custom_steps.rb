@@ -134,3 +134,12 @@ end
 Given /^I show accordion details for row "([^"]*)"$/ do |selector|
   And %{I follow translated "lead_purchases.listing.show_row" within "#{selector}"}
 end
+Given /^user with email "([^"]*)" has login key generated$/ do |email|
+  user = User.find_by_email(email)
+  user.generate_login_key!
+end
+
+When /^I login as user with email "([^"]*)" using login key$/ do |email|
+  user = User.find_by_email(email)
+  visit "/login_keys/?key=#{user.login_key}"
+end
