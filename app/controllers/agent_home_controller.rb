@@ -32,7 +32,7 @@ class AgentHomeController < ApplicationController
   def show
     @news = Article::News::Agent.published.latest.limit(3)
 
-    if user_signed_in? and current_user.has_role? :agent
+    if user_signed_in? and current_user.has_any_role?(:agent, :call_centre_agent, :call_centre)
       agent
     else
       guest

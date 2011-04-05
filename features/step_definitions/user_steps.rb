@@ -277,3 +277,16 @@ Given /^I am a translator for role "([^"]*)" with email "([^"]*)" and password "
   user.roles << :translator
   user.save
 end
+
+When /^user with email "([^"]*)" is a subaccount of user with email "([^"]*)" and role "([^"]*)"$/ do |email, parent_email, parent_role|
+  if parent_email.present?
+    user = User.find_by_email(email).with_role
+    parent = "User::#{parent_role.camelize}".constantize.make!(:email => parent_email, :password => "secret", :password_confirmation => "secret")
+    user.update_attribute(:parent_id, parent.id)
+  end
+end
+
+Given /^user with email "([^"]*)" has logged before$/ do |email|
+  user = User.find_by_email(email)
+  user.update_attribute(:sign_in_count, 10)
+end

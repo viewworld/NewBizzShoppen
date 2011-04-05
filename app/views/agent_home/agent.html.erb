@@ -1,7 +1,11 @@
 <column-mc:>
   <header>
     <param:content>
-      <%= t("agent_home.show.view.header") %>
+      <% if current_user and current_user.has_any_role?(:call_centre ,:call_centre_agent) %>
+        <%= t("home.show.view.call_centre_header", :name => screen_name_with_company_name(current_user)) %>
+      <% else %>
+        <%= t("agent_home.show.view.header") %>
+      <% end %>
     </param:content>
 
     <param:actions>
@@ -20,7 +24,11 @@
   <div class="pdd_5 no_pdd_b">
 
     <div>
-      <p><%= blurb("blurb_agent_home") %></p>
+      <% if current_user and current_user.has_any_role?(:call_centre ,:call_centre_agent) %>
+        <p><%= blurb("blurb_call_centre_home") %></p>
+      <% else %>
+        <p><%= blurb("blurb_agent_home") %></p>
+      <% end %>
     </div>
 
     <clb/>

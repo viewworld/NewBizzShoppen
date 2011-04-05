@@ -239,3 +239,11 @@ Given /^lead "([^"]*)" is created for country "([^"]*)"(?: with region "([^"]*)"
   region = country.nil? ? nil : country.regions.detect { |r| r.name == region }
   lead.update_attributes(:country_id => country.id, :region => region)
 end
+
+Then /^last purchase for lead "([^"]*)" has attributes "([^"]*)"$/ do |header, options|
+  lead = Lead.find_by_header(header).first
+  purchase = lead.lead_purchases.last
+  Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys.each_pair do |method, value|
+    assert purchase.send(method).to_s == value.to_s
+  end
+end

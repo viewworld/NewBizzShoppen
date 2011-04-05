@@ -84,12 +84,13 @@ en:
       lead_buyer:
         lead_purchases: My leads
       lead_user:
-        lead_purchases: My assigned leads
+        lead_purchases: My leads
         lead_requests: My requested leads
       shared:
         browse_leads: Browse leads
         home: Home
         site_home: "Site home"
+        category_request: "Category request"
       purchase_manager:
         leads: My leads
         lead_templates: "Lead templates"
@@ -105,7 +106,8 @@ en:
       empty_cart: Empty cart
       show_cart: Go to checkout
 
-      lead_added_to_cart_hint: "Your lead has been added to cart. Click here to checkout."
+      lead_added_to_cart_hint: "Your lead has been added to cart. Click %{link} here to checkout."
+      here_link: here
       close_hint: "Close"
   errors:
     messages:
@@ -2273,4 +2275,10 @@ en:
   category_requests:
     new:
       view:
-        header: "Category requests"
+        header: "Category request"
+        email_from: "Email from"
+        category_name: "Category name"
+        leads_count_per_month: "How many leads would you need a month?"
+        lead_description: "Describe what would be a good lead"
+        can_be_contacted: "Can Fairleads contact you to discuss you suggestion?"
+        phone_number: "Phone number"

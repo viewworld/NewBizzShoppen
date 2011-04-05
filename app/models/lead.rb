@@ -50,7 +50,7 @@ class Lead < ActiveRecord::Base
 
   scope :joins_on_lead_purchases , joins("INNER JOIN lead_purchases ON lead_purchases.lead_id=leads.id")
   scope :with_created_by, lambda { |agent_id| where("creator_id = ?", agent_id) }
-  scope :with_revenue_by, lambda { |agent| select("sum(price) as id").where("creator_id = ? and requested_by IS NULL", agent.id).joins_on_lead_purchases }
+  scope :with_revenue_by, lambda { |agent| select("sum(lead_purchases.euro_price) as id").where("creator_id = ? and requested_by IS NULL", agent.id).joins_on_lead_purchases }
   scope :with_rated_good_by, lambda { |agent| where("creator_id = ? and lead_purchases.rating_level > -1 and lead_purchases.rating_level <= ? and requested_by IS NULL", agent.id, LeadPurchase::RATING_SATISFACTORY).joins_on_lead_purchases }
   scope :with_rated_bad_by, lambda { |agent| where("creator_id = ? and lead_purchases.rating_level > ? and requested_by IS NULL", agent.id, LeadPurchase::RATING_SATISFACTORY).joins_on_lead_purchases }
   scope :with_not_rated_by, lambda { |agent| where("creator_id = ? and (lead_purchases.rating_level = -1 or lead_purchases.rating_level is NULL) and requested_by IS NULL", agent.id).joins_on_lead_purchases }

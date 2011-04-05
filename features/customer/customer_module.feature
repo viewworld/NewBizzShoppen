@@ -207,7 +207,7 @@ Scenario: Advanced search in browse leads should be hidden by default
   And I follow translated "common.advanced_search"
   Then I should see translated "leads.index.search.deal_value_from_label"
 
-@requested @m8b @tgn @selenium
+@requested @m8b @tgn @selenium @_tested
 Scenario: Advanced search in browse leads should contain regions and all fields should be included in the hidden advanced search except keyword
   Given country "Denmark" has regions "DK region #1, DK region #2"
   And I have user with email agent01@nbs.com and role agent

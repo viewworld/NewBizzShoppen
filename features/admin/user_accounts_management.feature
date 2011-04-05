@@ -25,9 +25,9 @@ Feature: User accounts management
 @_tested
  Scenario: I can sort users
   Given I follow translated "administration.users.index.view.email"
-  Then I should have value "aaaaaaaagent.tom.blank@paerson22.com" in the css path "tr:nth-child(1) td:nth-child(7)"
+  Then I should have value "aaaaaaaagent.tom.blank@paerson22.com" in the css path "tr:nth-child(1) td:nth-child(8)"
   Given I follow translated "administration.users.index.view.email"
-  Then I should have value "zzzenon.tom.blank@paerson22.com" in the css path "tr:nth-child(1) td:nth-child(7)"
+  Then I should have value "zzzenon.tom.blank@paerson22.com" in the css path "tr:nth-child(1) td:nth-child(8)"
 
  @_tested
  Scenario: I can filter users [...]
@@ -138,7 +138,7 @@ Scenario: In users listing I can see unpaid leads count
   And all users have refreshed cache counters
   Then I fill in "search_with_keyword" with "big_buyer.biz@nbs.com"
   And I press translated "administration.users.index.view.search_button"
-  Then I should have value "1" in the css path "tr:nth-child(1) td:nth-child(9)"
+  Then I should have value "1" in the css path "tr:nth-child(1) td:nth-child(10)"
 
 @m6 @_done @_tested @requested
 Scenario: I can change category buyer to regular buyer

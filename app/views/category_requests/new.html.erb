@@ -7,16 +7,35 @@
 
         <fieldset class="inputs labels_ta_r">
           <ol class="align_inputs">
-            <%= f.hidden_field :subject, :value =>  t("contact_us.new.view.email_subjects.agent_inquiry") %>
-
             <li class="string">
-              <%= f.label :email_from %>
+              <%= f.label t("category_requests.new.view.email_from") %>
               <%= f.text_field :email_from %> <%= custom_error_for_object_and_field(@email_template_preview, :email_from) %>
+              <p class="inline-hints"><%= hint_for("category_request", :email_from) %></p>
             </li>
-
+            <li class="string">
+              <%= f.label t("category_requests.new.view.phone_number") %>
+              <%= f.text_field :phone_number %> <%= custom_error_for_object_and_field(@email_template_preview, :phone_number) %>
+              <p class="inline-hints"><%= hint_for("category_request", :phone_number) %></p>
+            </li>
+            <li class="string">
+              <%= f.label t("category_requests.new.view.category_name") %>
+              <%= f.text_field :category_name %> <%= custom_error_for_object_and_field(@email_template_preview, :category_name) %>
+              <p class="inline-hints"><%= hint_for("category_request", :category_name) %></p>
+            </li>
             <li class="text">
-              <%= f.label :body %>
-              <%= f.text_area :body, :size => "100x15" %><%= custom_error_for_object_and_field(@email_template_preview, :body) %>
+              <%= f.label t("category_requests.new.view.lead_description") %>
+              <%= f.text_area :lead_description, :size => "100x8" %><%= custom_error_for_object_and_field(@email_template_preview, :lead_description) %>
+              <p class="inline-hints"><%= hint_for("category_request", :lead_description) %></p>
+            </li>
+            <li class="string">
+              <%= f.label t("category_requests.new.view.leads_count_per_month") %>
+              <%= f.text_field :leads_count_per_month %> <%= custom_error_for_object_and_field(@email_template_preview, :leads_count_per_month) %>
+              <p class="inline-hints"><%= hint_for("category_request", :leads_count_per_month) %></p>
+            </li>
+            <li class="boolean">
+              <%= f.label t("category_requests.new.view.can_be_contacted") %>
+              <%= f.check_box :can_be_contacted %>
+              <p class="inline-hints"><%= hint_for("category_request", :can_be_contacted) %></p>
             </li>
           </ol>
         </fieldset>
@@ -29,6 +48,4 @@
       </param:actions>
     </frm>
   <% end %>
-
-
 </column-mc:>

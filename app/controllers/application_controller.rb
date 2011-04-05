@@ -56,8 +56,12 @@ class ApplicationController < ActionController::Base
         last_url
       elsif resource.has_role? :admin
         administration_root_path
-      elsif resource.role == :lead_buyer
-        buyers_root_path
+      elsif [:customer, :lead_buyer, :lead_user].include?(resource.role)
+        buyer_home_path
+      elsif [:agent, :call_centre, :call_centre_agent].include?(resource.role)
+        agent_home_path
+      elsif resource.has_role? :purchase_manager
+        purchase_manager_home_path
       else
         self.send "#{resource.role.to_s.pluralize}_root_path"
       end
