@@ -408,4 +408,11 @@ class Nbs < Thor
       user.refresh_buyer_counters!
     end
   end
+
+
+  desc "refresh_exchange_rates", ""
+  # updated daily between 2.15 p.m. and 3.00 p.m. CET
+  def refresh_exchange_rates
+    CurrencyConverter.cache_current_exchange_rates!
+  end
 end

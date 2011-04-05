@@ -14,4 +14,7 @@ When /^lead "([^"]*)" has currency "([^"]*)"$/ do |lead_header, currency_name|
   lead.save
 end
 
-
+Given /^currency "([^"]*)" exists with attributes "([^"]*)"$/ do |currency_name, options|
+  currency = Currency.where(:name => currency_name).first
+  currency.update_attributes(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys)
+end

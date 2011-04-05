@@ -48,6 +48,7 @@ class LeadPurchase < LeadPurchaseBase
   before_save :change_contacted_state
   before_save :handle_new_deadline
   before_save :set_assigned_at
+  before_save :set_euro_price
   after_save :deliver_lead_rated_as_unsatisfactory_email
   after_save :deliver_about_to_expire_email
 
@@ -109,6 +110,12 @@ class LeadPurchase < LeadPurchaseBase
     self.paid = true
     self.accessible_from = Time.now
     save
+  end
+
+  def set_euro_price
+    if lead.currency.exchange_rate.to_f > 0
+      self.euro_price = lead.currency.to_euro(lead.price)
+    end
   end
 
   public
