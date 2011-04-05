@@ -20,6 +20,9 @@ class Cart
     unless items.include?(lead)
       if currency_matches?(lead)
         if lead.buyable?
+          if @buyer.purchase_limit_reached?(lead)
+            return :big_buyer_purchase_limit_reached
+          end
           purchase = @buyer.lead_purchases.create(:lead_id => lead.id, :paid => false, :purchased_by => @buyer.id)
           if @buyer.big_buyer?
             purchase.update_attribute(:accessible_from, Time.now)
@@ -38,6 +41,9 @@ class Cart
 
   def buyout_lead(lead)
     if currency_matches?(lead)
+      if @buyer.purchase_limit_reached?(lead, true)
+        return :big_buyer_purchase_limit_reached
+      end
       if lead.buyout_possible_for?(@buyer)
         lead.buyout!(@buyer)
       else
@@ -49,7 +55,7 @@ class Cart
   end
 
   def add_leads(*ids)
-    Lead.where(:id => ids.flatten).map { |lead| add_lead(lead) }.select { |r| r != :already_in_cart and r != :currencies_mismatch }
+    Lead.where(:id => ids.flatten).map { |lead| add_lead(lead) }.select { |r| r != :already_in_cart and r != :currencies_mismatch and r != :big_buyer_purchase_limit_reached }
   end
 
   def remove_leads(*ids)

@@ -290,3 +290,7 @@ Given /^user with email "([^"]*)" has logged before$/ do |email|
   user = User.find_by_email(email)
   user.update_attribute(:sign_in_count, 10)
 end
+
+Given /^big buyer purchase limit is set to (\d+)$/ do |limit|
+  Settings.stubs(:big_buyer_purchase_limit).returns(limit.to_f)
+end

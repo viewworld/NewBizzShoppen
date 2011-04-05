@@ -8,6 +8,9 @@ Background:
   And user "customer@person.com" has team buyers enabled
   And User customer@person.com with role customer is big buyer
   And lead Printers ultimate deal exists within category Computers
+  And lead Printers ultimate deal has price 200
+  And currency "DKK" exists with attributes "exchange_rate: 2.5"
+  And lead "Printers ultimate deal" has currency "DKK"
   And I sign in as customer@person.com with password supersecret
 
 @_done
@@ -100,8 +103,24 @@ Scenario: I can filter the list of my leads by "paid" column
 Scenario: I should not see the cart when I'm a big buyer
   Then I should not see translated "layout.cart.cart_header" with options "count:0"
 
-@m8 @added
+@m8 @added @tgn @_tested
 Scenario: I can buy leads if my purchase limit is not yet reached
+  Given big buyer purchase limit is set to 1000
+  When I go to leads
+  And I follow "Computers"
+  And I follow translated "leads.index.buy_lead"
+  And I should see translated "buyer.cart_items.create.flash.cart_item_bought_successful"
+  Then I should not see "Printers ultimate deal"
 
-@m8 @added
+@m8 @added @tgn @_tested
 Scenario: I cannot buy leads if my purchase limit is reached
+  Given big buyer purchase limit is set to 160
+  And lead "Printers ultimate deal #2" has currency "DKK"
+  And lead Printers ultimate deal has price 200
+  And a lead Printers ultimate deal #2 exists within category Leisure and is bought by user customer@person.com with role customer
+  And all prices are converted to euro
+  When I go to leads
+  And I follow "Computers"
+  And I follow translated "leads.index.buy_lead"
+  And I should see translated "buyer.cart_items.create.flash.cart_item_big_buyer_purchase_limit_reached"
+  Then I should see "Printers ultimate deal"
