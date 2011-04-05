@@ -44,13 +44,13 @@ class LeadPurchase < LeadPurchaseBase
   scope :with_not_invoiced_for_user, lambda { |user| joins("LEFT JOIN invoice_lines ON invoice_lines.payable_id = lead_purchases.id LEFT JOIN users ON users.id = lead_purchases.owner_id").where(["invoice_lines.payable_id IS NULL AND users.big_buyer IS TRUE AND users.id = ?", user.to_i]) }
 
   before_save :assign_to_proper_owner_if_accessible
-  before_save :assign_to_purchaser
   before_save :change_contacted_state
   before_save :handle_new_deadline
   before_save :set_assigned_at
   before_save :set_euro_price
   after_save :deliver_lead_rated_as_unsatisfactory_email
   after_save :deliver_about_to_expire_email
+  before_create :assign_to_purchaser
 
   liquid :id, :header, :rating_level_as_text, :rating_reason
 

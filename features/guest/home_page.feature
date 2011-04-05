@@ -45,7 +45,6 @@ Feature: Home page
     And I go to agent home
     Then I should see "Welcome agent"
     And I should see "Blurb agent home"
-    And I open page in browser
 
   @m8 @requested @tgn @_tested
   Scenario: Make year automatically change in footer
