@@ -6,10 +6,11 @@ class Administration::TranslationsController < Administration::AdministrationCon
 
   def collection
     @locales = Locale.all.map(&:code)
-    @keys = Translation.select("DISTINCT(key)").order("key ASC").map(&:key)
-    @translations = Translation.select("locale,key,value").group_by(&:locale)
+    @search = Translation.scoped_search(params[:search])
+    @translations = @search.select("locale,key,value").order("key ASC").group_by(&:key)
+    @keys = @translations.keys
     @translations.each do |k,v|
-      @translations[k] = @translations[k].group_by(&:key)
+      @translations[k] = v.group_by(&:locale)
     end
   end
 
@@ -21,8 +22,11 @@ class Administration::TranslationsController < Administration::AdministrationCon
 
   def update
     @translation = Translation.find_or_create_by_locale_and_key(params[:locale],params[:key])
+    @translation.update_attribute(:value, params[:value])
     respond_to do |wants|
-      wants.js
+      wants.js {
+        render :nothing => true
+      }
     end
   end
 end

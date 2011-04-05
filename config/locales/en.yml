@@ -1011,9 +1011,12 @@ en:
           type_credit: Credit
           type_refund: Refund
     translations:
-      index:
+      show:
         view:
           header: "Translations"
+          search:
+            with_keyword: "Keyword"
+            search_button: "Search"
   agent:
     leads:
       index:

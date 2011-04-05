@@ -1,5 +1,0 @@
-if @translation.update_attribute(:value, params[:value])
-    page << "alert('ok')"
-else
-    page << "alert('nie ok')"
-end
