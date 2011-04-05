@@ -45,8 +45,7 @@ class I18nUtils
 
   def self.populate!(base_locale='en')
     puts "=> Updating locales..."
-    I18nUtils.parse_yaml_files
-#    I18nUtils.synchronize_locales(base_locale)
+    I18nUtils.parse_yaml_files if Translation.table_exists?
   end
 
   def self.store_in_hash(arr, hash, value)
@@ -61,13 +60,15 @@ class I18nUtils
   end
 
   def self.export_for_js!(selector)
-    h = {}
-    Translation.where("key LIKE :selector", {:selector => "%#{selector}%"}).each do |t|
-      self.store_in_hash(([t.locale] + t.key.split('.')), h, t.value)
+    if Translation.table_exists?
+      h = {}
+      Translation.where("key LIKE :selector", {:selector => "%#{selector}%"}).each do |t|
+        self.store_in_hash(([t.locale] + t.key.split('.')), h, t.value)
+      end
+      f = File.open('./public/javascripts/translations.js', 'w')
+      f << "var I18n = I18n || {};" << "I18n.translations = " << h.to_json << ";"
+      f.close
     end
-    f = File.open('./public/javascripts/translations.js', 'w')
-    f << "var I18n = I18n || {};" << "I18n.translations = " << h.to_json << ";"
-    f.close
   end
 
 end
