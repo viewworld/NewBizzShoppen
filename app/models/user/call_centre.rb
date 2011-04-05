@@ -26,6 +26,11 @@ class ::User::CallCentre < ::User
     true
   end
 
+  def leads
+    all_leads = Lead.scoped
+    all_leads.where("creator_id in (?)", self.subaccounts.map(&:id))
+  end
+
   private
 
   def validate_first_and_last_name?

@@ -86,13 +86,13 @@ Scenario: I can't buy (see) a lead when sale_limit is reached
 @requested @m8 @tgn @selenium @_tested
 Scenario: When adding a lead to cart for the first time, there should be a small popup displayed
   When I follow translated "leads.index.add_to_cart_link"
-  Then I should see translated "layout.cart.lead_added_to_cart_hint"
-  And I follow translated "layout.cart.close_hint"
+  Then I should see "Your lead has been added to cart."
+  And I click hidden translated link "layout.cart.close_hint"
   And I am not sign in
   Then I sign in as customer@person.com with password supersecret
   And I go to browse leads
   And I follow "Computers"
   Given I check "mark_all"
   And I press translated "leads.index.button_bulk_create_cart_item"
-  Then I should see translated "layout.cart.lead_added_to_cart_hint"
-  And I follow translated "layout.cart.close_hint"
+  Then I should see "Your lead has been added to cart."
+  And I click hidden translated link "layout.cart.close_hint"

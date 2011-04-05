@@ -68,9 +68,14 @@ Scenario: I can sort by bought, created, volume sold, revenue, payout %
   Given customer "customer@person.com" has no subaccounts
   And an user with role lead_buyer and email ann.lead_buyer@person.com exists as subaccount for customer customer@person.com
   And an user with role lead_buyer and email kirk.lead_buyer@person.com exists as subaccount for customer customer@person.com
+  And currency "DKK" exists with attributes "exchange_rate: 2.5"
   Given a lead Super printers #1 exists within category Computers and is bought by user ann.lead_buyer@person.com with role lead_buyer
+  And lead "Super printers #1" has currency "DKK"
   And a lead Super printers #2 exists within category Computers and is bought by user kirk.lead_buyer@person.com with role lead_buyer
+  And lead "Super printers #2" has currency "DKK"
   And a lead Super printers #3 exists within category Computers and is bought by user kirk.lead_buyer@person.com with role lead_buyer
+  And lead "Super printers #3" has currency "DKK"
+  And all prices are converted to euro
   And all users have refreshed cache counters
   Then I go to administration users
   Given I fill in "search_with_keyword" with "customer@person.com"
@@ -86,14 +91,18 @@ Scenario: I can sort by bought, created, volume sold, revenue, payout %
   And user ccagent01@nbs.com with role call_centre_agent exists with attributes "payout:20"
   And user ccagent02@nbs.com with role call_centre_agent exists with attributes "payout:10"
   And lead Super monitors #1 is created by user ccagent01@nbs.com with role call_centre_agent
+  And lead "Super monitors #1" has currency "DKK"
   And lead Super monitors #2 is created by user ccagent02@nbs.com with role call_centre_agent
+  And lead "Super monitors #2" has currency "DKK"
   And lead Super monitors #3 is created by user ccagent02@nbs.com with role call_centre_agent
+  And lead "Super monitors #3" has currency "DKK"
   And lead "Super monitors #1" has attributes "price:102"
   And lead "Super monitors #2" has attributes "price:100"
   And lead "Super monitors #3" has attributes "price:104.99"
   And a lead Super monitors #1 exists within category Computers and is bought by user customer@person.com with role customer
   And a lead Super monitors #2 exists within category Computers and is bought by user customer@person.com with role customer
   And a lead Super monitors #3 exists within category Computers and is bought by user customer@person.com with role customer
+  And all prices are converted to euro
   And all users have refreshed cache counters
   Then I go to administration users
   Given I fill in "search_with_keyword" with "call_centre028@nbs.com"

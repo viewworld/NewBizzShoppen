@@ -23,14 +23,22 @@ Scenario: I can sort by Name, Last Name, created, volume sold, revenue, mobile n
   Given an user with role call_centre_agent and email ccagent01@person.com belongs to call centre call_centre@person.com
   And an user with role call_centre_agent and email ccagent02@person.com belongs to call centre call_centre@person.com
   And I have user with email bob@person.com and role customer
+  And currency "DKK" exists with attributes "exchange_rate: 2.5"
 
   And lead Ultimate monitors 1 is created by user ccagent01@person.com with role call_centre_agent
+  And lead "Ultimate monitors 1" has currency "DKK"
   And lead Ultimate monitors 2 is created by user ccagent01@person.com with role call_centre_agent
+  And lead "Ultimate monitors 2" has currency "DKK"
   And lead Ultimate monitors 2a is created by user ccagent01@person.com with role call_centre_agent
+  And lead "Ultimate monitors 2a" has currency "DKK"
   And lead Ultimate monitors 3 is created by user ccagent02@person.com with role call_centre_agent
+  And lead "Ultimate monitors 3" has currency "DKK"
   And lead Ultimate monitors 4 is created by user ccagent02@person.com with role call_centre_agent
+  And lead "Ultimate monitors 4" has currency "DKK"
   And lead Ultimate monitors 5 is created by user ccagent02@person.com with role call_centre_agent
+  And lead "Ultimate monitors 5" has currency "DKK"
   And lead Ultimate monitors 5a is created by user ccagent02@person.com with role call_centre_agent
+  And lead "Ultimate monitors 5a" has currency "DKK"
 
   And lead Ultimate monitors 1 exists with attributes "price:5.0"
   And lead Ultimate monitors 2 exists with attributes "price:5.0"
@@ -58,7 +66,8 @@ Scenario: I can sort by Name, Last Name, created, volume sold, revenue, mobile n
   And a lead "Ultimate monitors 4" has bad rating
   And a lead "Ultimate monitors 5" has bad rating
 
-  Given all users have refreshed cache counters
+  Given all prices are converted to euro
+  And all users have refreshed cache counters
 
   And user ccagent01@person.com with role call_centre_agent exists with attributes "first_name:Zack,last_name:Florin,mobile_phone:20203041223"
   And user ccagent02@person.com with role call_centre_agent exists with attributes "first_name:Dorian,last_name:Grey,mobile_phone:10101010134"
@@ -76,7 +85,8 @@ Scenario: I can sort by Name, Last Name, created, volume sold, revenue, mobile n
   And I follow translated "call_centre.call_centre_agents.index.view.volume_sold_column"
   Then I should have value "3" in the css path "tr:nth-child(1) td:nth-child(6)"
   When I follow translated "call_centre.call_centre_agents.index.view.revenue_column"
-  Then I should have value "10.0" in the css path "tr:nth-child(1) td:nth-child(8)"
+  When I follow translated "call_centre.call_centre_agents.index.view.revenue_column"
+  Then I should have value "6.0" in the css path "tr:nth-child(1) td:nth-child(8)"
   When I follow translated "call_centre.call_centre_agents.index.view.purchased_month_ago_column"
   And I follow translated "call_centre.call_centre_agents.index.view.purchased_month_ago_column"
   Then I should have value "3" in the css path "tr:nth-child(1) td:nth-child(9)"

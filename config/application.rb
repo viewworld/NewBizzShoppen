@@ -55,6 +55,8 @@ module Nbs
 
     require "#{config.root}/lib/settings.rb"
 
+    require "#{config.root}/lib/currency_converter.rb"
+
     config.after_initialize do
       SimplesIdeias::I18n.export!
     end

@@ -371,10 +371,11 @@ Scenario: When editing a call centre agent I can see it's name in format "fullna
 
 @ao @requested @m7 @_done @_tested
 Scenario: When editing call center agent I can navigate to call center's edit page
-  Given I am signed up and confirmed as user with email kol_senter@nbs.com and password secret and role call_centre with attributes "company_name:Selleo"
+  Given I am signed up and confirmed as user with email kol_senter@nbs.com and password secret and role call_centre with attributes "company_name:Selleo,screen_name:Opeth"
   And an user with role call_centre_agent and email sab@nbs.com belongs to call centre kol_senter@nbs.com
   And I go to administration users
   And I select "Call centre agent" from "search_with_role"
+  And I fill in "search_with_keyword" with "sab@nbs.com"
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/users\/\d+\/edit/"
   And I follow "Selleo" within ".header_ribbon"
@@ -387,6 +388,7 @@ Scenario: When editing call center agent I can navigate to list of leads created
   And lead SabKolSenterLead is created by user sab@nbs.com with role call_centre_agent
   And I go to administration users
   And I select "Call centre agent" from "search_with_role"
+  And I fill in "search_with_keyword" with "sab@nbs.com"
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/users\/\d+\/edit/"
   And I follow translated "administration.users.edit.view.view_created_leads"

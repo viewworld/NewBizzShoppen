@@ -16,6 +16,7 @@ class Nbs < Thor
     # Invoicing
     Settings.invoicing_default_payment_deadline_date = 14
     Settings.invoicing_default_vat_rate              = 0.15
+    Settings.buyout_limit_purchase = 200
 
     Country.find_or_create_by_name("Denmark", :locale => "dk", :detailed_locale => "dk", :vat_rate => VatRate.new(:rate => 25))
     Country.find_or_create_by_name("United Kingdom", :locale => "en", :detailed_locale => "gb", :vat_rate => VatRate.new(:rate => 20))
@@ -407,5 +408,12 @@ class Nbs < Thor
     User::LeadBuyer.all.each do |user|
       user.refresh_buyer_counters!
     end
+  end
+
+
+  desc "refresh_exchange_rates", ""
+  # updated daily between 2.15 p.m. and 3.00 p.m. CET
+  def refresh_exchange_rates
+    CurrencyConverter.cache_current_exchange_rates!
   end
 end

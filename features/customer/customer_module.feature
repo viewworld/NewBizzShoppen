@@ -219,8 +219,8 @@ Scenario: Advanced search in browse leads should contain regions and all fields 
   And lead "Super printers #2" is created for country "Denmark" with region "DK region #2"
   And I go to browse leads
   And I follow "Computers"
+  And I follow translated "common.advanced_search"
   Then I select "Denmark" from "search_with_country"
-  #And I wait 5 second
   And I select "DK region #2" from "search_with_region"
   And I press translated "leads.index.search.search_button"
   Then I should see "Super printers #2"
