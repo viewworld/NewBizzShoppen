@@ -16,6 +16,7 @@ class Nbs < Thor
     # Invoicing
     Settings.invoicing_default_payment_deadline_date = 14
     Settings.invoicing_default_vat_rate              = 0.15
+    Settings.buyout_limit_purchase = 200
 
     Country.find_or_create_by_name("Denmark", :locale => "dk", :detailed_locale => "dk", :vat_rate => VatRate.new(:rate => 25))
     Country.find_or_create_by_name("United Kingdom", :locale => "en", :detailed_locale => "gb", :vat_rate => VatRate.new(:rate => 20))
