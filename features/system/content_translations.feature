@@ -61,7 +61,11 @@ Scenario: Article translations
   And I fill in "article_title" with "[DK]FirstArticle"
   And I fill in "article_content_editor" ckeditor with "[DK]Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   And I press translated "administration.articles.edit.view.button_save"
-  And I should be on administration [DK]FirstArticle article page
+  And I should be on the homepage
+  When I click hidden link by url regex "/administration\/articles/"
+  And I fill in "search_with_keyword" with "FirstArticle"
+  And I press translated "administration.articles.index.view.search_button"
+  And I click hidden link by url regex "/administration\/articles\/\d+$/"
   And I should see "[DK]FirstArticle"
   And I should see "[DK]Lorem"
   When I click hidden link by url regex "/locales\/en/"
