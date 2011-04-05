@@ -49,6 +49,7 @@ Nbs::Application.routes.draw do
     resources :sellers
     resources :category_users
     resources :countries
+    resource :translation
   end
 
   namespace :buyers do

@@ -1,0 +1,66 @@
+<search-box:>
+  <div class="search_box">
+    <h2><%= t("common.search") %></h2>
+
+    <div class="search_content">
+
+      <%= form_for @search, :url => administration_translation_path do |f| %>
+          <fieldset class="inputs_vertical">
+            <ol class="no_pdd">
+              <li class="string">
+                <%= f.label :with_keyword, t("administration.translations.show.view.search.with_keyword") %>
+                <%= f.text_field :with_keyword %>
+              </li>
+              <li class="commit">
+                <ibt c="bt_green" icon="magnify">
+                  <%= submit_tag t("administration.translations.show.view.search.search_button") %>
+                </ibt>
+                <p>
+                  <%= bt_clear_filter %>
+                </p>
+              </li>
+            </ol>
+          </fieldset>
+      <% end %>
+    </div>
+  </div>
+</search-box:>
+
+<column-mc:>
+  <header><%= t("administration.translations.show.view.header") %></header>
+  <table class="generic">
+    <thead>
+      <th>Key</th>
+      <% @locales.each do |locale| %>
+        <th><%= locale %></th>
+      <% end %>
+    </thead>
+    <tbody>
+      <% @keys.each do |key| %>
+        <tr>
+          <td id="<%= "td.#{locale}.#{key}" %>"><%= translation_key(key) %></td>
+          <% @locales.each do |locale| %>
+            <td><%= text_field_tag "#{locale}.#{key}", (@translations[key][locale] ? @translations[key][locale].first.value : ''), :locale => locale, :key => key, :onblur => "update_translation(this)" %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <script>
+    function update_translation(field) {
+        field = $(field);
+        $.ajax({
+          type: 'PUT',
+          url: '/administration/translation',
+          data: 'locale='+field.attr('locale')+'&key='+field.attr('key')+'&value='+field.attr('value'),
+          success: function(data, textStatus, jqXHR) {
+              field.parent().effect('highlight')
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+              alert(textStatus);
+          }
+        });
+    }
+  </script>
+</column-mc:>

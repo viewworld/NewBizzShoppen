@@ -32,7 +32,16 @@ en:
   ckeditor:
     upload_new_files: "Upload new files"
     file_manager: "File Manager"
-
+  number:
+    format:
+      separator: '.'
+      delimiter: ','
+      precision: 2
+    percentage:
+      format:
+        separator: '.'
+        delimiter: ','
+        precision: 2
   layout:
     main_menu:
       admin:
@@ -44,6 +53,7 @@ en:
         articles: "Articles"
         news: "News"
         hints: "Hints"
+        translations: "Translations"
         currencies: "Currencies"
         countries: Countries
         invoices: "Invoices"
@@ -1002,6 +1012,13 @@ en:
           type: "Type"
           type_credit: Credit
           type_refund: Refund
+    translations:
+      show:
+        view:
+          header: "Translations"
+          search:
+            with_keyword: "Keyword"
+            search_button: "Search"
   agent:
     leads:
       index:

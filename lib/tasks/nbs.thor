@@ -7,7 +7,7 @@ class Nbs < Thor
     puts "running seed"
 
     require "spec/support/blueprints"
-#Default settings
+    #Default settings
     Settings.default_payout_delay   = 0
     Settings.default_leads_per_page = 5
     Settings.certification_level_1  = 10
@@ -410,10 +410,14 @@ class Nbs < Thor
     end
   end
 
-
   desc "refresh_exchange_rates", ""
   # updated daily between 2.15 p.m. and 3.00 p.m. CET
   def refresh_exchange_rates
     CurrencyConverter.cache_current_exchange_rates!
   end
+  
+  desc "copy yml to database", ""
+  def t
+    I18nUtils.populate!
+  end  
 end

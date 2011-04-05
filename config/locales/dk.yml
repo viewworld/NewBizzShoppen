@@ -1,31 +1,6 @@
 dk:
-  common:
-    js:
-      read_more: "read more"
-      collapse_expanded_text: "[collapse expanded text]"
-      expand_prefix: "...  "
-      collapse_prefix: " "
-
   home:
     show:
       view:
-        header: 'Hjemmeside'
+        header: 'Hjem'
 
-  number:
-    format:
-      separator: ','
-      delimiter: '.'
-      significant: false
-      strip_insignificant_zeros: false
-    percentage:
-      format:
-        separator: '.'
-        delimiter: ','
-        precision: 3
-        significant: false
-        strip_insignificant_zeros: false
-  lead_user:
-    lead_purchases:
-      index:
-        view:
-          state: "State"

@@ -49,7 +49,12 @@
               <td class="ta_c"><%= currency.id %></td>
               <td><%= currency.name %></td>
               <td><%= currency.symbol %> (<%= raw currency.symbol %>)</td>
-              <td><%= currency.format %> (<%= raw number_to_currency(100, :format => currency.format, :unit => currency.symbol) %>)</td>
+              <td>
+                <%= currency.format %> (<%= raw number_to_currency(100,
+                                                                   :format => currency.format,
+                                                                   :unit => currency.symbol,
+                                                                   :precision => t("number.format.precision").to_i) %>)
+              </td>
               <td class="ta_c"><%= translate_boolean(currency.active) %></td>
               <td class="tda ta_r">
                 <ul-actions>

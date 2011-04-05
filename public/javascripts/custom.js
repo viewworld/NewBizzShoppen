@@ -108,3 +108,21 @@ function change_invoice_seller(invoice_id,new_seller_id) {
         data: "seller_id=" + new_seller_id
     });
 }
+
+function update_translation(locale, key) {
+    prompt("Enter translation for locale '"+locale+"'");
+}
+
+//function attach_update_translation_link(locale, key) {
+//    $('b#'+locale+'_'+key.replace('.','_')).bind('click', function() {
+//        alert('aaa');
+//    });
+////    prompt("Enter translation for locale '"+locale+"'");
+//}
+//arr = $(":contains('dk::')").clone().remove()
+//$.each(arr, function() { $(this).children().remove() } )
+
+$(document).ready(function() {
+   $("b[id*='translate_']").bind('click', function() {
+    });
+});
