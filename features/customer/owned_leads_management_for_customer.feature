@@ -26,7 +26,7 @@ Background:
   And lead Keyboards deal exists with attributes "creator_name:Philip Glass,price:9893.56,purchase_value:4002.21,description:Public description for keyboards"
   Then I sign in as customer@person.com with password supersecret
 
-@tgn @_tested @selenium
+@tgn @_tested @selenium  @_wip
 Scenario: I can assign any of my leads to any of lead users that belong to my account
   Then I go to buyer lead purchases
   Given I select "Martin Gleesse" from "assignee_id"

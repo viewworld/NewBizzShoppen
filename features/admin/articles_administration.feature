@@ -24,7 +24,7 @@ Scenario: I can edit article
   And I fill in "article_title" with "OtherTitle"
   And I fill in "article_content_editor" ckeditor with "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   And I press translated "administration.articles.edit.view.button_save"
-  Then I should see "OtherTitle"
+  Then I should be on the homepage
 
 @_done
 Scenario: I can browse articles with pagination

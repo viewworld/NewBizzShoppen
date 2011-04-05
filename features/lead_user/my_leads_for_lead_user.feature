@@ -20,6 +20,7 @@ Background:
   And lead Keyboards deal is bought by user customer@person.com with role customer and is assigned to user lead_user2@person.com with role lead_user
   And lead Mouses deal is bought by user customer@person.com with role customer and is assigned to user lead_user44@person.com with role lead_user
   Then I sign in as lead_user2@person.com with password supersecret
+  And I follow translated "layout.main_menu.lead_user.lead_purchases"
 
 @tgn @_done @_tested
 Scenario: I can see details of lead that is assigned to me
@@ -182,11 +183,11 @@ Scenario: I can print out multiple leads information
   Then I should see "Keyboards deal"
   Then I should see "Monitors LCD deal"
 
-@ao @_tested @_done  @noguess
+@ao @_tested @_done @noguess
 Scenario: I should see a yellow color for a lead with expiration date ending in 3 days
   Given lead Printers ultimate deal has deadline in 2 days from now
   And LeadPurchase statuses are updated
-  And I follow "My assigned leads"
+  And I follow translated "layout.main_menu.lead_user.lead_purchases"
   Then list item should be highlighted
 
 @m5 @added @lead_templates @tgn @_tested
