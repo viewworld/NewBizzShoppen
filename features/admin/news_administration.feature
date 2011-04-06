@@ -191,4 +191,5 @@ Scenario: When you look at the news tab, the list of news should contain the fol
   And I follow translated "agent_home.show.view.complete_list_link" within "#news"
   And I follow translated "news.index.view.read_more_link"
   And I follow translated "layout.main_menu.admin.news"
+  And I follow translated "administration.news.index.view.times_read"
   Then I should see "1" within ".even td:nth-child(6)"
