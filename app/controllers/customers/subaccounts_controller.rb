@@ -29,7 +29,6 @@ class Customers::SubaccountsController < Customers::CustomerController
       flash[:notice] = t("customer.subaccounts.create.flash.subaccount_creation_successful")
        redirect_to customers_subaccounts_path
     else
-      throw @user.errors.full_messages
       render :action => 'new'
     end
   end

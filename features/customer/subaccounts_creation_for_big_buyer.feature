@@ -46,8 +46,18 @@ Scenario: I should not have access to subaccounts without team buyers flag
   And I go to customers subaccounts
   Then I should see "You are not authorized"
 
-@requested @m8b
+@requested @m8b @tgn @_tested
 Scenario: The big buyer property of a customer should be inherited by all his subaccounts
+  Then I follow translated "customer.subaccounts.index.view.new_lead_buyer"
+  And I fill in "user_lead_buyer_first_name" with "Mark"
+  And I fill in "user_lead_buyer_last_name" with "Driscoll"
+  And I fill in "user_lead_buyer_email" with "driscoll@person.noserver.com"
+  And I fill in "user_lead_buyer_screen_name" with "ML Driscoll"
+  And I fill in "user_lead_buyer_password" with "secret"
+  And I fill in "user_lead_buyer_password_confirmation" with "secret"
+  And I press translated "customer.subaccounts.new.view.button_create"
+  Then I should see translated "customer.subaccounts.create.flash.subaccount_creation_successful"
+  And user "driscoll@person.noserver.com" should be big buyer
 
 @requested @m8b
 Scenario: I should have option to hide the profile page for my team members
