@@ -43,7 +43,7 @@
 
         <td>
           <div class="lead_details">
-            <h4><%= link_to lead_purchase.header, current_user.has_role?(:lead_buyer) ? buyers_lead_purchase_path(lead_purchase) : lead_users_lead_purchase_path(lead_purchase), :class => "default_action" %></h4>
+            <h4><%= link_to lead_purchase.header, current_user.has_role?(:customer) ? buyers_lead_purchase_path(lead_purchase) : lead_users_lead_purchase_path(lead_purchase), :class => "default_action" %></h4>
             <% if block_contact %>
                 <%= with_output_buffer { block_contact.call(lead_purchase) } if block_contact %>
             <% end %>
