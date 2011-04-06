@@ -16,4 +16,4 @@ Scenario: User can change the password only with a valid password
    Given I follow translated "password.edit.view.change_password"
    And I fill in "user_agent_current_password" with "newpassword"
    Then I press translated "password.edit.view.button_update_user"
-   And I should see translated "activerecord.errors.models.user/agent.attributes.current_password.invalid"
+   And I should see translated "activerecord.errors.models.user.agent.attributes.current_password.invalid"

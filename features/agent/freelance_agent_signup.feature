@@ -17,8 +17,8 @@ Feature: Freelance agent signup
       | user_agent_password              | secret       |
       | user_agent_password_confirmation |              |
     And I press translated "agent_accounts.new.view.button_create_account"
-    Then I should see translated "activerecord.errors.models.user/agent.attributes.email.invalid"
-    And I should see translated "activerecord.errors.models.user/agent.attributes.password.confirmation"
+    Then I should see translated "activerecord.errors.models.user.agent.attributes.email.invalid"
+    And I should see translated "activerecord.errors.models.user.agent.attributes.password.confirmation"
 
   @_tested
   Scenario: User signs up with valid data as a freelancer
@@ -111,7 +111,7 @@ Scenario: Screen name has to be unique
   And I select "Denmark" from "user_agent_address_attributes_country_id"
   And I check "user_agent_agreement_read"
   And I press translated "agent_accounts.new.view.button_create_account"
-  Then I should see translated "activerecord.errors.models.user/agent.attributes.screen_name.taken"
+  Then I should see translated "activerecord.errors.models.user.agent.attributes.screen_name.taken"
 
 # probably it should be renamed to “Agree to Terms and conditions”, where “Terms and conditions” should be link leadin to another page or popup with terms and conditions text displayed
 @ao @requested @m7 @selenium @_done @_tested

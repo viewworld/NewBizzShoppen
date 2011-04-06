@@ -16,8 +16,8 @@ Feature: Customer signup
       | user_customer_password              | secret       |
       | user_customer_password_confirmation |              |
     And I press translated "buyer_accounts.new.view.button_create_account"
-    Then I should see translated "activerecord.errors.models.user/customer.attributes.email.invalid"
-    And I should see translated "activerecord.errors.models.user/customer.attributes.password.confirmation"
+    Then I should see translated "activerecord.errors.models.user.customer.attributes.email.invalid"
+    And I should see translated "activerecord.errors.models.user.customer.attributes.password.confirmation"
 
 @_tested
   Scenario: User signs up with valid data as a buyer
@@ -90,4 +90,4 @@ Feature: Customer signup
     And I select "Denmark" from "user_customer_address_attributes_country_id"
     And I check "user_customer_agreement_read"
     And I press translated "buyer_accounts.new.view.button_create_account"
-    Then I should see translated "activerecord.errors.models.user/customer.attributes.screen_name.taken"
+    Then I should see translated "activerecord.errors.models.user.customer.attributes.screen_name.taken"
