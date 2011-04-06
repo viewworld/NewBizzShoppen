@@ -15,7 +15,6 @@ Scenario: I can create new invoice for user
   And I select "Cello Ltd, kastomer@nbs.fake" from "invoice_user_id"
   And I select "DannyTheSeller" from "invoice_seller_id"
   And I press translated "administration.invoices.index.view.create_invoice"
-  And I open page in browser
   Then I should see "was successfully created"
 
 @tgn @_tested
