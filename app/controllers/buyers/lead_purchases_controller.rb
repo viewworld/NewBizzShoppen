@@ -4,7 +4,7 @@ class Buyers::LeadPurchasesController < Buyers::BuyerController
   respond_to :csv, :only => :show
   set_tab "owned_leads"
   before_filter :check_access_to_lead_purchase, :only => [:show]
-
+  before_filter :check_customer_role
   protected
 
   def begin_of_association_chain
@@ -28,6 +28,12 @@ class Buyers::LeadPurchasesController < Buyers::BuyerController
     @lead_purchase = current_user.accessible_lead_purchases.find_by_id(params[:id])
     if @lead_purchase.nil?
       redirect_to buyers_lead_purchases_path
+    end
+  end
+
+  def check_customer_role
+    if !current_user.has_role?(:customer)
+      redirect_to buyer_home_path
     end
   end
 
