@@ -21,7 +21,7 @@ class ::User::LeadBuyer < ::User
   before_save :set_big_buyer
 
   def set_big_buyer
-    self.big_buyer = parent.big_buyer
+    self.big_buyer = parent.big_buyer if parent and self.big_buyer? != parent.big_buyer?
     true
   end
 end
