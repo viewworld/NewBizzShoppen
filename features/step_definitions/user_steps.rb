@@ -294,3 +294,7 @@ end
 Given /^big buyer purchase limit is set to (\d+)$/ do |limit|
   Settings.stubs(:big_buyer_purchase_limit).returns(limit.to_f)
 end
+
+Given /^user "([^"]*)" should (be|not be) big buyer$/ do |email, is_big_buyer|
+  assert User.find_by_email(email).big_buyer? == (is_big_buyer == "be")
+end

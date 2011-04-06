@@ -147,13 +147,14 @@ class Nbs < Thor
               address_region_id phone email screen_name password password_confirmation agreement_read newsletter_on },
     "user/call_centre_agent" => %w{first_name last_name address_address_line_1 address_address_line_2 address_address_line_3 address_zip_code address_country_id
               address_region_id phone mobile_phone email screen_name password password_confirmation agreement_read newsletter_on department},
-    "user/lead_buyer" => %w{first_name last_name mobile_phone screen_name phone email mobile_phone department lead_buyer_role_enabled password password_confirmation},
-    "user/lead_user" => %w{first_name last_name mobile_phone screen_name phone email mobile_phone department lead_buyer_role_enabled password password_confirmation},
+    "user/lead_buyer" => %w{first_name last_name mobile_phone screen_name phone email mobile_phone department lead_buyer_role_enabled password password_confirmation hide_profile_page hide_lead_prices},
+    "user/lead_user" => %w{first_name last_name mobile_phone screen_name phone email mobile_phone department lead_buyer_role_enabled password password_confirmation hide_profile_page hide_lead_prices},
     "my_profile" => %w{company_name first_name last_name phone email screen_name company_registration_number company_ean_number address_address_line_1
               address_address_line_2 address_address_line_3 address_zip_code address_country_id address_region_id newsletter_on bank_address_address_line_1
               bank_address_address_line_2 bank_address_address_line_3 bank_address_zip_code bank_address_country_id bank_address_region_id paypal_email bank_swift_number
               bank_iban_number payout bank_name team_buyers},
-    "category_request" => %w{email_from phone_number category_name lead_description leads_count_per_month can_be_contacted}
+    "category_request" => %w{email_from phone_number category_name lead_description leads_count_per_month can_be_contacted},
+    "share_leads_by_email" => %w{recipients subject body}
     }.each_pair do |klass, methods|
       methods.each do |method|
         article = Article::Cms::Hint.find_by_key("#{klass}_#{method}")

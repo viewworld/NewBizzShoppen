@@ -173,7 +173,7 @@ Scenario: I can send selected lead by email
   And I press translated "lead_buyer.bulk_lead_share_by_email.new.view.send_email_button"
   Then I should see translated "flash.bulk_lead_share_by_email.create.notice"
 
-@m8b @requested
+@m8b @requested @tgn @_done @non_testable
 Scenario: I can use ckeditor with limited toolbar for writting message in share by email function
 
 @tgn @_tested @selenium
