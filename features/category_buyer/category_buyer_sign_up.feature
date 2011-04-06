@@ -21,7 +21,7 @@ Feature: Category buyer sign up
     And I select "United Kingdom" from "user_category_buyer_address_attributes_country_id"
     And I check "user_category_buyer_agreement_read"
     And I press translated "category_buyer_accounts.new.view.button_create_account"
-    Then I should see translated "flash.category_buyer_accounts.actions.create.notice"
+    Then I should see translated "flash.category_buyer_accounts.create.notice"
 
   @_done
   Scenario: Account created from category home page has interests fixed to this category

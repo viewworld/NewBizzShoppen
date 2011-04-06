@@ -12,7 +12,7 @@ class Administration::CategoriesController < Administration::AdministrationContr
         @category.customer_ids = params[:category][:customer_ids]
         @category.agent_ids = params[:category][:agent_ids]
         @category.save
-        flash[:notice] = I18n.t("flash.categories.actions.create.notice")
+        flash[:notice] = I18n.t("flash.categories.create.notice")
         format.html { redirect_to categories_path }
       else
         format.html { render 'new' }
@@ -30,10 +30,10 @@ class Administration::CategoriesController < Administration::AdministrationContr
   def destroy
     destroy! do |success, failure|
       success.html {
-        flash[:notice] = I18n.t("flash.categories.actions.destroy.notice")
+        flash[:notice] = I18n.t("flash.categories.destroy.notice")
         redirect_to categories_path }
       failure.html {
-        flash[:notice] = I18n.t("flash.categories.actions.destroy.error")
+        flash[:notice] = I18n.t("flash.categories.destroy.error")
         redirect_to categories_path }
     end
   end

@@ -26,7 +26,7 @@ Scenario: I can add a given lead to my lead list
 Scenario: I can bulk add selected leads to my lead list
   Given I check "mark_all"
   Then I follow translated "customer.lead_requests.index.view.button_bulk_create_lead_request"
-  And I should see translated "flash.bulk_lead_requests.actions.update.notice"
+  And I should see translated "flash.bulk_lead_requests.update.notice"
 
 @added @_done
 Scenario: I should not have access to subaccounts without team buyers flag

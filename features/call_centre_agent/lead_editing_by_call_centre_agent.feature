@@ -23,7 +23,7 @@ Scenario: I can add a language - title, purchase, hidden, language
   And I fill in "lead_lead_translations_attributes_0_description" with "DK description"
   And I fill in "lead_lead_translations_attributes_0_hidden_description" with "DK hidden description"
   And I press translated "call_centre_agent.leads.edit.view.button_update"
-  Then I should see translated "flash.leads.actions.update.notice"
+  Then I should see translated "flash.leads.update.notice"
 
 @selenium @_tested
 Scenario: I can delete a language

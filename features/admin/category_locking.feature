@@ -15,7 +15,7 @@ Scenario: I should be able to lock category
   Then I check "category_is_locked"
   And attach the file "sample image" to "category_image_attributes_asset"
   And I press translated "administration.categories.edit.view.button_update"
-  Then I should see translated "flash.categories.actions.update.notice"
+  Then I should see translated "flash.categories.update.notice"
 
 @_tested
 Scenario: I should be able to unlock category
@@ -25,7 +25,7 @@ Scenario: I should be able to unlock category
   Then I uncheck "category_is_locked"
   And attach the file "sample image" to "category_image_attributes_asset"
   And I press translated "administration.categories.edit.view.button_update"
-  Then I should see translated "flash.categories.actions.update.notice"
+  Then I should see translated "flash.categories.update.notice"
 
 @_tested
 Scenario: When I lock a parent category then all its children are locked as well

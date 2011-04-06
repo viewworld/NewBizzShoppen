@@ -29,7 +29,7 @@ Scenario: I can create a category
   And attach the file "sample image" to "category_image_attributes_asset"
   Then I press translated "administration.categories.new.view.button_create"
   And I should be on browse leads
-  And I should see translated "flash.categories.actions.create.notice"
+  And I should see translated "flash.categories.create.notice"
 
 @_tested @added @tgn
 Scenario: I can create a category even when I am on DK locales (slug is not set then)
@@ -41,7 +41,7 @@ Scenario: I can create a category even when I am on DK locales (slug is not set 
   And attach the file "sample image" to "category_image_attributes_asset"
   Then I press translated "administration.categories.new.view.button_create"
   And I should be on browse leads
-  And I should see translated "flash.categories.actions.create.notice"
+  And I should see translated "flash.categories.create.notice"
 
 @_tested
 Scenario: I can edit category - name and description
@@ -53,7 +53,7 @@ Scenario: I can edit category - name and description
   And attach the file "sample image" to "category_image_attributes_asset"
   Then I press translated "administration.categories.edit.view.button_update"
   And I should be on browse leads
-  And I should see translated "flash.categories.actions.update.notice"
+  And I should see translated "flash.categories.update.notice"
 
 
 @_tested @bk
@@ -61,7 +61,7 @@ Scenario: I can delete a category if it is empty
   Given Category named "New test category" already exists
   And I go to browse leads
   And I follow translated "administration.categories.index.view.destroy_link" within "New test category" category
-  Then I should see translated "flash.categories.actions.destroy.notice"
+  Then I should see translated "flash.categories.destroy.notice"
 
 @_tested @bk
 Scenario: I cannot delete a category if it is not empty
@@ -69,7 +69,7 @@ Scenario: I cannot delete a category if it is not empty
   And I go to browse leads
   And Lead named "Super printers" exists within "New test category" category
   And I follow translated "administration.categories.index.view.destroy_link" within "New test category" category
-  Then I should see translated "flash.categories.actions.destroy.error"
+  Then I should see translated "flash.categories.destroy.error"
 
 @question
 Scenario: I can see statistics for a selected category
@@ -96,7 +96,7 @@ Scenario: I can upload a category image
   And attach the file "sample image" to "category_image_attributes_asset"
   Then I press translated "administration.categories.edit.view.button_update"
   And I should be on browse leads
-  And I should see translated "flash.categories.actions.update.notice"
+  And I should see translated "flash.categories.update.notice"
 
 @m6 @tgn @_tested
 Scenario: I can manage categories from Browse categories. Categories tab should be removed
@@ -111,7 +111,7 @@ Scenario: I can make any category country specific (Category can have one or mor
   And I select "Denmark" from "category_country_ids"
   And attach the file "sample image" to "category_image_attributes_asset"
   And I press translated "administration.categories.edit.view.button_update"
-  And I should see translated "flash.categories.actions.update.notice"
+  And I should see translated "flash.categories.update.notice"
   Then I follow translated "administration.categories.index.view.edit_link"
   And "category_country_ids" should be selected for value "Denmark"
 

@@ -36,7 +36,7 @@ Scenario: I can create a new lead and close
   And I fill in "datepicker" with date that is "5" days from now
   And I press translated "agent.leads.new.view.button_create"
   And I should be on agents leads
-  And I should see translated "flash.leads.actions.create.notice"
+  And I should see translated "flash.leads.create.notice"
 
 @_tested @noguess @selenium
 Scenario: I can create a new lead and continue (create another one)
@@ -61,7 +61,7 @@ Scenario: I can create a new lead and continue (create another one)
   And I fill in "lead_zip_code" with "23-2911"
   And I fill in "datepicker" with date that is "5" days from now
   And I press translated "agent.leads.new.view.button_create_and_continue"
-  And I should see translated "flash.leads.actions.create.notice"
+  And I should see translated "flash.leads.create.notice"
   And I should see translated "agent.leads.new.view.title"
 
 @_tested  @selenium @noguess
@@ -93,7 +93,7 @@ Scenario: I can add an extra language while creating lead. This will include lea
   And I fill in "lead_lead_translations_attributes_0_hidden_description" with "DK hidden description"
   And I press translated "agent.leads.new.view.button_create"
   And I should be on agents leads
-  And I should see translated "flash.leads.actions.create.notice"
+  And I should see translated "flash.leads.create.notice"
   Then I click hidden link by url regex "/agents\/leads\/\d+\/edit/"
   And I should see "DK description"
   And I should see "DK hidden description"
@@ -133,7 +133,7 @@ Scenario: All fields for new lead have to be filled in beside email address
   And I fill in "datepicker" with date that is "5" days from now
   And I press translated "agent.leads.new.view.button_create"
   And I should be on agents leads
-  And I should see translated "flash.leads.actions.create.notice"
+  And I should see translated "flash.leads.create.notice"
 
 @m3 @ao @_done @selenium
 Scenario: I should be able to specify currency in which Lead will be sold (from dropdown)
@@ -171,7 +171,7 @@ Scenario: I can add linkedin and facebook links to lead's contact information
   And I fill in "lead_linkedin_url" with "http://www.linkedin.com/myfakelinkedinprofile"
   And I press translated "agent.leads.new.view.button_create"
   And I should be on agents leads
-  And I should see translated "flash.leads.actions.create.notice"
+  And I should see translated "flash.leads.create.notice"
 
 @m5 @added @lead_templates @tgn @selenium @_tested
 Scenario: I have to fill out the templates which are mandatory
@@ -198,7 +198,7 @@ Scenario: I have to fill out the templates which are mandatory
   And I fill in "lead_lead_template_values_attributes_0_value" with "123"
   And I fill in "lead_lead_template_values_attributes_1_value" with "Ms Windows Vista"
   And I press translated "agent.leads.new.view.button_create"
-  And I should see translated "flash.leads.actions.create.notice"
+  And I should see translated "flash.leads.create.notice"
   Then I click hidden link by url regex "/agents\/leads\/\d+\/edit/"
   And the "lead_lead_template_values_attributes_0_value" field should contain "123"
   And the "lead_lead_template_values_attributes_1_value" field should contain "Ms Windows Vista"
@@ -234,7 +234,7 @@ Scenario: I can select additional templates that are optional
   And I fill in "lead_lead_template_values_attributes_2_value" with "FaxFree v3"
   And I fill in "lead_lead_template_values_attributes_3_value" with "21-01-2010"
   And I press translated "agent.leads.new.view.button_create"
-  And I should see translated "flash.leads.actions.create.notice"
+  And I should see translated "flash.leads.create.notice"
   Then I click hidden link by url regex "/agents\/leads\/\d+\/edit/"
   And the "lead_lead_template_values_attributes_0_value" field should contain "123"
   And the "lead_lead_template_values_attributes_1_value" field should contain "Ms Windows Vista"
@@ -308,7 +308,7 @@ Scenario: When new translation to lead is added I can also write translation for
   And I fill in "lead_lead_template_values_attributes_0_lead_template_value_translations_attributes_0_value" with "123 translated"
   And I fill in "lead_lead_template_values_attributes_1_lead_template_value_translations_attributes_0_value" with "Ms Windows Vista translated"
   And I press translated "agent.leads.new.view.button_create"
-  And I should see translated "flash.leads.actions.create.notice"
+  And I should see translated "flash.leads.create.notice"
   Then I click hidden link by url regex "/agents\/leads\/\d+\/edit/"
   And the "lead_lead_template_values_attributes_0_value" field should contain "123"
   And the "lead_lead_template_values_attributes_1_value" field should contain "Ms Windows Vista"
@@ -340,7 +340,7 @@ Scenario: I have to fill out the fields that are mandatory in mandatory or optio
   And I fill in "lead_lead_template_values_attributes_0_value" with "123"
   And I fill in "lead_lead_template_values_attributes_1_value" with "Ms Windows Vista"
   And I press translated "agent.leads.new.view.button_create"
-  And I should see translated "flash.leads.actions.create.notice"
+  And I should see translated "flash.leads.create.notice"
   Then I click hidden link by url regex "/agents\/leads\/\d+\/edit/"
   And the "lead_lead_template_values_attributes_0_value" field should contain "123"
   And the "lead_lead_template_values_attributes_1_value" field should contain "Ms Windows Vista"
@@ -370,7 +370,7 @@ Scenario: When there is only one template present for a lead and it is optional 
   And I fill in "lead_lead_template_values_attributes_0_value" with "123"
   And I fill in "lead_lead_template_values_attributes_1_value" with "Ms Windows Vista"
   And I press translated "agent.leads.new.view.button_create"
-  And I should see translated "flash.leads.actions.create.notice"
+  And I should see translated "flash.leads.create.notice"
 
 @m4 @added @tgn @agent_certification @_tested @selenium
 Scenario: I cannot publish leads if my certification level is Not Certified or Locked

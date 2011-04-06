@@ -16,7 +16,7 @@ Scenario: I can mark category as agent unique
   And I check "category_is_agent_unique"
   And attach the file "sample image" to "category_image_attributes_asset"
   Then I press translated "administration.categories.edit.view.button_update"
-  And I should see translated "flash.categories.actions.update.notice"
+  And I should see translated "flash.categories.update.notice"
 
 @_tested @selenium
 Scenario: I can assign one or more agents/call centers to category marked as agent unique
@@ -30,7 +30,7 @@ Scenario: I can assign one or more agents/call centers to category marked as age
   And I follow "move_right" within "#users_selection_agents_div"
   And attach the file "sample image" to "category_image_attributes_asset"
   Then I press translated "administration.categories.edit.view.button_update"
-  And I should see translated "flash.categories.actions.update.notice"
+  And I should see translated "flash.categories.update.notice"
   Then I follow translated "administration.categories.index.view.edit_link"
   And "selected_agents" should be selected for value "call_centre_agent3483434biz@nbs.com"
   And "selected_agents" should be selected for value "agent93928biz@nbs.com"
@@ -49,7 +49,7 @@ Scenario: I can search agents by first name, last name and email
   And I follow "move_right" within "#users_selection_agents_div"
   And attach the file "sample image" to "category_image_attributes_asset"
   Then I press translated "administration.categories.edit.view.button_update"
-  And I should see translated "flash.categories.actions.update.notice"
+  And I should see translated "flash.categories.update.notice"
   Then I follow translated "administration.categories.index.view.edit_link"
   And "selected_agents" should be selected for value "nbsagent3483434biz@nbs.com"
   
@@ -65,6 +65,6 @@ Scenario: I can assign a unique category to the whole call centre
   And I follow "move_right" within "#users_selection_agents_div"
   And attach the file "sample image" to "category_image_attributes_asset"
   Then I press translated "administration.categories.edit.view.button_update"
-  And I should see translated "flash.categories.actions.update.notice"
+  And I should see translated "flash.categories.update.notice"
   Then I follow translated "administration.categories.index.view.edit_link"
   And "selected_agents" should be selected for value "call_centre93928biz@nbs.com"

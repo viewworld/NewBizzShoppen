@@ -16,7 +16,7 @@ Scenario: I can mark category as customer unique
   And I check "category_is_customer_unique"
   And attach the file "sample image" to "category_image_attributes_asset"
   Then I press translated "administration.categories.edit.view.button_update"
-  And I should see translated "flash.categories.actions.update.notice"
+  And I should see translated "flash.categories.update.notice"
 
 @_tested @selenium
 Scenario: I can assign one or more sales managers to category marked as customer unique
@@ -30,7 +30,7 @@ Scenario: I can assign one or more sales managers to category marked as customer
   And I follow "move_right"
   And attach the file "sample image" to "category_image_attributes_asset"
   Then I press translated "administration.categories.edit.view.button_update"
-  And I should see translated "flash.categories.actions.update.notice"
+  And I should see translated "flash.categories.update.notice"
   Then I follow translated "administration.categories.index.view.edit_link"
   And "selected_customers" should be selected for value "lead_buyer3483434biz@nbs.com"
   And "selected_customers" should be selected for value "buyer93928biz@nbs.com"
@@ -49,7 +49,7 @@ Scenario: I can search customers by first name, last name and email
   And I follow "move_right" within "#users_selection_customers_div"
   And attach the file "sample image" to "category_image_attributes_asset"
   Then I press translated "administration.categories.edit.view.button_update"
-  And I should see translated "flash.categories.actions.update.notice"
+  And I should see translated "flash.categories.update.notice"
   Then I follow translated "administration.categories.index.view.edit_link"
   And "selected_customers" should be selected for value "nbsbuyer3483434biz@nbs.com"
 

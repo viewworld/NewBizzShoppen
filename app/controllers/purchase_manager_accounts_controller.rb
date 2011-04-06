@@ -9,7 +9,7 @@ class PurchaseManagerAccountsController < ApplicationController
     @user = User::PurchaseManager.new(params[:user_purchase_manager])
     respond_to do |format|
       if @user.save
-        flash[:notice] = I18n.t("flash.purchase_manager_accounts.actions.create.notice")
+        flash[:notice] = I18n.t("flash.purchase_manager_accounts.create.notice")
         format.html {  redirect_to(root_path) }
       else
         format.html {  render("new") }

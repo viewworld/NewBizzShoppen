@@ -15,7 +15,7 @@ Scenario: I can edit lead
   When I follow translated "agent.leads.index.view.edit"
   And I fill in "lead_header" with "New lead updated"
   And I press translated "agent.leads.edit.view.button_update"
-  Then I should see translated "flash.leads.actions.update.notice"
+  Then I should see translated "flash.leads.update.notice"
 
 @_tested  @selenium
 Scenario: I can add a language - title, purchase, hidden, language
@@ -26,7 +26,7 @@ Scenario: I can add a language - title, purchase, hidden, language
   And I fill in "lead_lead_translations_attributes_0_description" with "DK description"
   And I fill in "lead_lead_translations_attributes_0_hidden_description" with "DK hidden description"
   And I press translated "agent.leads.edit.view.button_update"
-  Then I should see translated "flash.leads.actions.update.notice"
+  Then I should see translated "flash.leads.update.notice"
 
 @_tested @selenium
 Scenario: I can delete a language

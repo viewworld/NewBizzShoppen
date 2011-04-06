@@ -126,7 +126,7 @@ Scenario: I can bulk delete leads requested by lead users that belong to my acco
   Then I go to customers lead requests
   And I check "mark_all"
   And I follow translated "customer.lead_requests.index.view.button_bulk_destroy_lead_request"
-  Then I should see translated "flash.bulk_lead_requests.actions.destroy.notice"
+  Then I should see translated "flash.bulk_lead_requests.destroy.notice"
 
 @tgn @_tested  @selenium  @noguess
 Scenario: I can set response deadline for lead
@@ -164,14 +164,14 @@ Scenario: I can email the lead if email information were provided
   And I follow translated "layout.main_menu.lead_buyer.lead_purchases"
   And I follow translated "lead_buyer.lead_purchases.index.view.email_lead" within ".lead"
   And I press translated "lead_buyer.contact_lead_by_email.new.view.send_email_button"
-  Then I should see translated "flash.contact_lead_by_email.actions.create.notice"
+  Then I should see translated "flash.contact_lead_by_email.create.notice"
 
 @tgn @_tested @selenium
 Scenario: I can send selected lead by email
   When I go to buyer lead purchases
   And I click hidden translated link "lead_buyer.lead_purchases.index.view.share_email_link"
   And I press translated "lead_buyer.bulk_lead_share_by_email.new.view.send_email_button"
-  Then I should see translated "flash.bulk_lead_share_by_email.actions.create.notice"
+  Then I should see translated "flash.bulk_lead_share_by_email.create.notice"
 
 @m8b @requested
 Scenario: I can use ckeditor with limited toolbar for writting message in share by email function
@@ -182,7 +182,7 @@ Scenario: I can bulk send selected leads by email
   And I check "mark_all"
   And I click hidden translated link "lead_buyer.lead_purchases.index.view.bulk_share_by_email_link"
   And I press translated "lead_buyer.bulk_lead_share_by_email.new.view.send_email_button"
-  Then I should see translated "flash.bulk_lead_share_by_email.actions.create.notice"
+  Then I should see translated "flash.bulk_lead_share_by_email.create.notice"
 
 #Adjust to current requirements first
 @m4 @tgn @_done @non_testable

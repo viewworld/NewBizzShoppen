@@ -132,7 +132,7 @@ Scenario: I can email the lead if email information were provided
   And I follow translated "layout.main_menu.lead_user.lead_purchases"
   And I follow translated "lead_user.lead_purchases.index.view.email_lead" within ".lead"
   And I press translated "lead_user.contact_lead_by_email.new.view.send_email_button"
-  Then I should see translated "flash.contact_lead_by_email.actions.create.notice"
+  Then I should see translated "flash.contact_lead_by_email.create.notice"
 
 @tgn @_done @_tested
 Scenario: I should see hottness, publish date, exposure, clicks

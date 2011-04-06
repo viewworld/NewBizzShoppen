@@ -86,7 +86,7 @@ class Category < ActiveRecord::Base
 
   def check_if_category_is_empty
     return true if is_empty?
-    errors[:base] << I18n.t("flash.categories.actions.destroy.error")
+    errors[:base] << I18n.t("flash.categories.destroy.error")
     false
   end
 

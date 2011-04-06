@@ -10,7 +10,7 @@ class BuyerAccountsController < ApplicationController
     @user = ::User::Customer.new(params[:user_customer])
     respond_to do  |format|
       if @user.save
-        flash[:notice] = I18n.t("flash.buyer_accounts.actions.create.notice")
+        flash[:notice] = I18n.t("flash.buyer_accounts.create.notice")
         format.html { redirect_to(root_path)}
       else
         format.html { render("new")}

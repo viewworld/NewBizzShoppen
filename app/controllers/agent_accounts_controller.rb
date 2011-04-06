@@ -9,7 +9,7 @@ class AgentAccountsController < ApplicationController
     @user = User::Agent.new(params[:user_agent])
     respond_to do |format|
       if @user.save
-        flash[:notice] = I18n.t("flash.agent_accounts.actions.create.notice")
+        flash[:notice] = I18n.t("flash.agent_accounts.create.notice")
         format.html {  redirect_to(root_path) }
       else
         format.html {  render("new") }

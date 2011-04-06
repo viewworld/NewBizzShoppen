@@ -1949,58 +1949,48 @@ en:
 
   flash:
     agent_accounts:
-      actions:
-        create:
-          notice: "Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account."
+      create:
+        notice: "Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account."
     buyer_accounts:
-      actions:
-        create:
-          notice: "Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account."
+      create:
+        notice: "Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account."
     category_buyer_accounts:
-      actions:
-        create:
-          notice: "Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account."
+      create:
+        notice: "Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account."
     purchase_manager_accounts:
-      actions:
-        create:
-          notice: "Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account."
+      create:
+        notice: "Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account."
     categories:
-      actions:
-        create:
-          notice: "Category was successfully created."
-        update:
-          notice: "Category was successfully updated."
-        destroy:
-          notice: "Category was successfully removed."
-          error: "Category cannot be removed. Did You try to remove category that is not empty?"
+      create:
+        notice: "Category was successfully created."
+      update:
+        notice: "Category was successfully updated."
+      destroy:
+        notice: "Category was successfully removed."
+        error: "Category cannot be removed. Did You try to remove category that is not empty?"
     leads:
-      actions:
-        create:
-          notice: "Lead was successfully created."
-        update:
-          notice: "Lead was successfully updated."
+      create:
+        notice: "Lead was successfully created."
+      update:
+        notice: "Lead was successfully updated."
     lead_users:
-      actions:
-        create:
-          notice: "Lead request was successfully created."
-        destroy:
-          notice: "Lead request was successfully destroyed"
+      create:
+        notice: "Lead request was successfully created."
+      destroy:
+        notice: "Lead request was successfully destroyed"
     bulk_lead_requests:
-      actions:
-        create:
-          notice: "Lead requests were successfully created."
-        destroy:
-          notice: "Lead requests were successfully removed."
-        update:
-          notice: "Lead requests were successfully updated."
+      create:
+        notice: "Lead requests were successfully created."
+      destroy:
+        notice: "Lead requests were successfully removed."
+      update:
+        notice: "Lead requests were successfully updated."
     bulk_lead_share_by_email:
-      actions:
-        create:
-          notice: Email has been sent
+      create:
+        notice: Email has been sent
     contact_lead_by_email:
-      actions:
-        create:
-          notice: Email has been sent
+      create:
+        notice: Email has been sent
     email_templates:
       update:
         notice: "Email template has been successfully updated"
@@ -2133,7 +2123,6 @@ en:
         not_charge_vat: "Do not charge VAT"
         agreement_read: "Agreement read"
         skip_email_verification: "Don't verify email address"
-      user:
         lead_user:
           first_name: "First name"
           last_name: "Last name"

@@ -10,7 +10,7 @@ class CategoryBuyerAccountsController < ApplicationController
     @user = ::User::CategoryBuyer.new(params[:user_category_buyer])
     respond_to do  |format|
       if @user.save
-        flash[:notice] = I18n.t("flash.category_buyer_accounts.actions.create.notice")
+        flash[:notice] = I18n.t("flash.category_buyer_accounts.create.notice")
         format.html { redirect_to category_home_page_path(@home_category.cached_slug) }
       else
         format.html { render("new")}

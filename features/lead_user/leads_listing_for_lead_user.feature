@@ -28,7 +28,7 @@ Scenario: I can click request lead and I will see a notification "You added lead
   Given I go to browse leads
   And I follow "Computers"
   And I follow translated "leads.index.request_lead"
-  Then I should see translated "flash.lead_users.actions.create.notice"
+  Then I should see translated "flash.lead_users.create.notice"
 
 @_tested @selenium @noguess 
 Scenario: I can click bulk request leads and I will see a notification “You added leads to your requested leads list”
@@ -37,7 +37,7 @@ Scenario: I can click bulk request leads and I will see a notification “You ad
   And I follow "Computers"
   Then I check "mark_all"
   Then I press translated "leads.index.button_bulk_create_lead_request"
-  And I should see translated "flash.bulk_lead_requests.actions.create.notice"
+  And I should see translated "flash.bulk_lead_requests.create.notice"
   Then I go to browse leads
   And I follow "Computers"
   Then I should not see "Printers ultimate deal"

@@ -57,14 +57,14 @@ Scenario: I can toggle select leads
 Scenario: I can bulk remove leads from my requested leads list
   And I check "mark_all"
   And I follow translated "lead_user.lead_requests.index.view.button_bulk_destroy_lead_request"
-  Then I should see translated "flash.bulk_lead_requests.actions.destroy.notice"
+  Then I should see translated "flash.bulk_lead_requests.destroy.notice"
   And I should not see "Printers ultimate deal"
   And I should not see "Monitors LCD deal"
 
 @tgn @_tested
 Scenario: I can remove a given leads from my requested leads list
   And I follow translated "lead_user.lead_requests.index.view.destroy_lead_request"
-  Then I should see translated "flash.lead_users.actions.destroy.notice"
+  Then I should see translated "flash.lead_users.destroy.notice"
 
 @tgn @_done @non_testable
 Scenario: My requested list should be without pagination

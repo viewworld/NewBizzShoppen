@@ -82,7 +82,7 @@ Scenario: I can bulk add to cart leads requested by lead user that belongs to my
   When I go to customers lead requests
   Then I check "mark_all"
   And I follow translated "customer.lead_requests.index.view.button_bulk_create_lead_request"
-  And I should see translated "flash.bulk_lead_requests.actions.update.notice"
+  And I should see translated "flash.bulk_lead_requests.update.notice"
 
 @tgn @m5 @added @_tested
 Scenario: Item cannot be added to the cart if its currency does not match items' currencies already added to the cart

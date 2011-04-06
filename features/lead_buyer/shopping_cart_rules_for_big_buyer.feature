@@ -86,7 +86,7 @@ Scenario: I can bulk instant-buy leads requested by lead user that belongs to my
   And I follow translated "layout.main_menu.customer.lead_requests"
   And I check "mark_all"
   And I follow translated "customer.lead_requests.index.view.button_bulk_create_lead_request"
-  Then I should see translated "flash.bulk_lead_requests.actions.update.notice"
+  Then I should see translated "flash.bulk_lead_requests.update.notice"
 
 @_done
 Scenario: I can filter the list of my leads by "paid" column

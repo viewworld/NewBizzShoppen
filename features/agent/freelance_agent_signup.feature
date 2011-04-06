@@ -38,7 +38,7 @@ Feature: Freelance agent signup
     And I select "Denmark" from "user_agent_address_attributes_country_id"
     And I check "user_agent_agreement_read"
     And I press translated "agent_accounts.new.view.button_create_account"
-    Then I should see translated "flash.agent_accounts.actions.create.notice"
+    Then I should see translated "flash.agent_accounts.create.notice"
     And a confirmation message should be sent to user@domain.dom
 
   @_tested
@@ -60,7 +60,7 @@ Feature: Freelance agent signup
     And I select "Denmark" from "user_customer_address_attributes_country_id"
     And I check "user_customer_agreement_read"
     And I press translated "buyer_accounts.new.view.button_create_account"
-    Then I should see translated "flash.buyer_accounts.actions.create.notice"
+    Then I should see translated "flash.buyer_accounts.create.notice"
     And a confirmation message should be sent to user@domain.dom
 
   @_tested

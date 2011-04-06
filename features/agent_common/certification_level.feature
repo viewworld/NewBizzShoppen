@@ -19,5 +19,5 @@ Feature: Certification levels
     And I select "Denmark" from "user_agent_address_attributes_country_id"
     And I check "user_agent_agreement_read"
     And I press translated "agent_accounts.new.view.button_create_account"
-    Then I should see translated "flash.agent_accounts.actions.create.notice"
+    Then I should see translated "flash.agent_accounts.create.notice"
     And user "user@domain.dom" with role "agent" has certification level 1

@@ -57,7 +57,7 @@ Scenario: I can toggle select leads
 Scenario: I can bulk remove leads from requested leads list
   Then I check "mark_all"
   And I follow translated "customer.lead_requests.index.view.button_bulk_destroy_lead_request"
-  Then I should see translated "flash.bulk_lead_requests.actions.destroy.notice"
+  Then I should see translated "flash.bulk_lead_requests.destroy.notice"
   And I should not see "Super printers"
   And I should not see "Ultra printers"
 
