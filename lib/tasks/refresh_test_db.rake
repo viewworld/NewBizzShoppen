@@ -1,9 +1,7 @@
 namespace :nbs do
   desc "Refresh db dump for tests"
   task :refresh_test_db => :environment do
-    ["db:drop",
-    "db:create",
-    "db:migrate"].each do |task|
+    ["db:reset"].each do |task|
       Rake::Task[task].invoke
     end
     `thor nbs:seed`
