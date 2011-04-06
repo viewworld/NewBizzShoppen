@@ -1,10 +1,10 @@
 namespace :nbs do
   desc "Refresh db dump for tests"
   task :refresh_test_db => :environment do
-    ["db:reset",
-     "db:migrate"].each do |task|
-      Rake::Task[task].invoke
-    end
+    ActiveRecord::Base.connection.disconnect!
+    `rake db:drop`
+    `rake db:create`
+    `rake db:migrate`
     `thor nbs:seed`
     `thor nbs:t`
     excluded_tables = ["schema_migrations"].collect { |t| "-T #{t}" }.join(" ")
