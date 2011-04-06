@@ -365,7 +365,7 @@ Scenario: I can send invoice to given email address (as an attachment)
   Then the "email_template_preview_recipients" field should contain "kastomer@nbs.fake"
   And I should see translated "administration.invoices.mailing.new.view.attachment"
   When I press translated "administration.invoices.mailing.new.view.send"
-  Then I should see translated "flash.bulk_lead_share_by_email.actions.create.notice"
+  Then I should see translated "flash.bulk_lead_share_by_email.create.notice"
 
 @tgn @_done @non_testable
 Scenario: I can print out invoice (bypassing PDF)
