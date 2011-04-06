@@ -2,7 +2,7 @@ class Country < ActiveRecord::Base
   has_many :country_interest
   has_many :leads
   has_many :addresses
-  has_many :regions
+  has_many :regions, :order => "name"
   has_one :vat_rate, :dependent => :destroy
 
   validates_presence_of :name
