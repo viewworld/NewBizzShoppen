@@ -12,4 +12,8 @@ hours = %w{1 1 2 2 3 3}
   end
 end
 
+every 1.day, :at => "4:00 am" do
+  command File.join(Dir.pwd, "RAILS_ENV=production thor nbs:refresh_exchange_rates")
+end
+
 

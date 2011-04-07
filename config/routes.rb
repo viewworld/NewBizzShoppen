@@ -50,6 +50,7 @@ Nbs::Application.routes.draw do
     resources :category_users
     resources :countries
     resource :translation
+    resource :stats_recalculation, :controller => "stats_recalculation", :only => [:update]
   end
 
   namespace :buyers do
