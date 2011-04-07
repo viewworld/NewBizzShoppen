@@ -1,5 +1,5 @@
 <column-mc:>
-  <header back="true"><%= t("purchase_manager.leads.new.view.title") %></header>
+  <header back="true"><%= t("purchase_manager.leads.new.view.title") %><%= image_tag_for_locale %></header>
 
   <%= semantic_form_for [:purchase_managers, @lead], :method => :post do |form| %>
       <frm title="Create new">

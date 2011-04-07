@@ -1,5 +1,5 @@
 <column-mc:>
-  <header back="true">Create new category</header>
+  <header back="true"><%= t("administration.categories.new.title") %><%= image_tag_for_locale %></header>
   <%= semantic_form_for [:administration, @category], :method => :put, :html => {:multipart => true} do |form| %>
       <frm>
         <param:header>

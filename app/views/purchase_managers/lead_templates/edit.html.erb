@@ -1,5 +1,5 @@
 <column-mc:>
-  <header back="true"><%= t("purchase_manager.lead_templates.edit.view.header", :name => @lead_template.name) %></header>
+  <header back="true"><%= t("purchase_manager.lead_templates.edit.view.header", :name => @lead_template.name) %><%= image_tag_for_locale %></header>
   <%= semantic_form_for [:purchase_managers, @lead_template], :method => :put do |form| %>
       <frm title="">
         <param:content>

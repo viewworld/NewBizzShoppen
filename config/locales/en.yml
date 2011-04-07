@@ -467,6 +467,7 @@ en:
       new:
         view:
           button_create: "Create"
+        title: "Create new category"
       edit:
         view:
           header: "Editing category: %{category_name}"

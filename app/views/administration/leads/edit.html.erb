@@ -1,6 +1,6 @@
 <column-mc:>
   <%= semantic_form_for [:administration, @lead], :method => :put do |form| %>
-      <header back="true"><%= t("administration.leads.edit.view.header", :lead_header => @lead.header) %></header>
+      <header back="true"><%= t("administration.leads.edit.view.header", :lead_header => @lead.header) %><%= image_tag_for_locale %></header>
       <frm title="#{t('administration.leads.edit.view.created_by')} #{@lead.creator.company_name} - #{@lead.creator.email}">
         <param:content>
           <%= render :partial => '/shared/leads/form', :locals => {:form => form} %>
