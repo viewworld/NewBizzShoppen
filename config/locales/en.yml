@@ -467,6 +467,7 @@ en:
       new:
         view:
           button_create: "Create"
+        title: "Create new category"
       edit:
         view:
           header: "Editing category: %{category_name}"
@@ -485,6 +486,8 @@ en:
           button_update_settings: "Save"
           button_cancel: "Cancel"
           confirmation_update_message: "Are you sure?"
+          title_stats: "Statistics recalculation"
+          button_update_stats: "Update stats"
       update:
         controller:
           successful_update_notice: "Settings were successfully updated."
@@ -2022,6 +2025,9 @@ en:
       destroy:
         notice: "%{resource_name} was successfully destroyed."
         alert: "%{resource_name} could not be destroyed."
+    stats_recalculation:
+      update:
+        notice: "Stats update has been queued. It may take few minutes to finish."
   formtastic:
     labels:
       address:

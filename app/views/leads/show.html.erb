@@ -8,6 +8,8 @@
       <h3><%= t("lead_purchases.listing.description_label") %></h3>
 
       <p><%= @lead.description %></p>
+      <br />
+      <p><%= render :partial => "purchase_buttons", :locals => { :lead => @lead } %></p>
     </div>
   </div>
 

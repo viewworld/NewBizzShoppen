@@ -1,5 +1,5 @@
 <column-mc:>
-  <header back="true"><%= t("administration.lead_templates.new.view.header", :category => @lead_template.category.name) %></header>
+  <header back="true"><%= t("administration.lead_templates.new.view.header", :category => @lead_template.category.name) %><%= image_tag_for_locale %></header>
   <%= semantic_form_for [:administration, @lead_template], :method => :put, :html => {:multipart => true} do |form| %>
       <frm title="">
         <param:content>

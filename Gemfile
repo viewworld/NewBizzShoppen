@@ -12,7 +12,7 @@ gem 'will_paginate', '3.0.pre2', :branch => "rails3"
 gem 'formtastic', '1.1.0'
 gem 'liquid'
 gem 'devise', '1.1.3'
-gem 'delayed_job', ' >= 2.1.0.pre2'
+gem 'delayed_job', '2.1.4', :git => "http://github.com/collectiveidea/delayed_job"
 gem 'hoptoad_notifier'
 gem "transitions", :require => ["transitions", "active_record/transitions"]
 gem 'paperclip', "2.3.6"
