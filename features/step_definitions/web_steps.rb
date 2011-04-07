@@ -364,3 +364,7 @@ end
 Given /^browser accepts "([^"]*)" locale$/ do |locale|
   page.driver.header "Accept-Language", locale
 end
+
+Given /^I clear cookies/ do
+  page.driver.clear_cookies
+end

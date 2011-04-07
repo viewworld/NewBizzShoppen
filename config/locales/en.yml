@@ -1879,6 +1879,10 @@ en:
         notify_buyers_after_update: "Notify sales managers about changes"
     errors:
       models:
+        country:
+          attributes:
+            name:
+              taken: "has already been taken"
         user:
           attributes:
             email:

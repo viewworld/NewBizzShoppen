@@ -14,6 +14,7 @@ Feature: Home page
     And I am on the home page
     Then I should see "Home"
     When browser accepts "da" locale
+    And I clear cookies
     And I am on the home page
     Then I should see "Hjem"
 
