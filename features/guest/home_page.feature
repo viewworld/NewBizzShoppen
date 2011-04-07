@@ -15,7 +15,7 @@ Feature: Home page
     Then I should see "Home"
     When browser accepts "da" locale
     And I am on the home page
-    Then I should see "Hjemmeside"
+    Then I should see "Hjem"
 
   @m8 @requested @ao
   Scenario: If a user enters www.fairleads.dk he should be redirectoed to www.fairleads.com with danish selected as default.
