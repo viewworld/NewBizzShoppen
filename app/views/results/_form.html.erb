@@ -1,0 +1,58 @@
+<div class="pdd_10 no_pdd_t">
+  <fieldset class="inputs labels_100 labels_ta_r">
+    <ol>
+      <%= form.input :name %>
+      <li class="string">
+        <label><%= t("results.new.type") %></label>
+
+        <div class="txt">
+          <strong>
+            <%= result.final? ? t("results.new.final_result") : t("results.new.call_log_result") %>
+          </strong>
+        </div>
+      </li>
+      <%= form.input :final, :as => :hidden %>
+    </ol>
+  </fieldset>
+</div>
+
+
+<%= form.fields_for :result_fields, @result.result_fields do |builder| %>
+    <%= render :partial => "/shared/results/result_field_fields", :locals => {:f => builder} %>
+<% end %>
+
+<div class="nested_result_fields_container"></div>
+
+<hl/>
+<div class="pdd_20" style="padding-top:10px">
+  <%= bt_link_to :plus, t("shared.lead_templates.form.new_lead_template_field"), "javascript:void(0)", :onclick => "#{fields_for_result_fields(form)}" %>
+</div>
+
+
+
+<script>
+    var nestedFormsCount = <%= result.result_fields.size %>;
+
+    function add_result_field(link, content) {
+        var new_id = new Date().getTime();
+        content = content.replace(/result_result_fields_attributes_0/g, "result_result_fields_attributes_" + nestedFormsCount.toString());
+        content = content.replace(/result\[result_fields_attributes\]\[0\]/g, "result[result_fields_attributes][" + new_id.toString() + "]");
+        $('.nested_result_fields_container:last').append(content);
+        nestedFormsCount = nestedFormsCount + 1;
+    }
+
+    function remove_result_field(id, record_id) {
+        nestedFormsCount = nestedFormsCount - 1;
+
+        if (record_id == null)
+        {
+            $('#result_field_form_' + id).remove();
+        }
+        else
+        {
+            $('#result_field_form_' + id).hide();
+            $('#destroy_hidden_field_' + record_id.toString()).val('true')
+        }
+
+    }
+</script>

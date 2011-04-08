@@ -1,0 +1,23 @@
+<header back="true" backurl="#{path_back}"><%= t("contacts.edit.title") %></header>
+
+<%= contact.lower_item_in_campaign_list ? link_to("<<", url_for(:controller => "#{namespace}/contacts", :action => :edit, :campaign_id => campaign, :id => contact.lower_item_in_campaign_list)) : "<<" %>
+<%= contact.higher_item_in_campaign_list ? link_to(">>", url_for(:controller => "#{namespace}/contacts", :action => :edit, :campaign_id => campaign, :id => contact.higher_item_in_campaign_list)) : ">>" %>
+
+<%= semantic_form_for [namespace, campaign, contact], :method => :put do |form| %>
+    <frm title="Edit">
+      <param:content>
+        <%= render :partial => '/shared/leads/form', :locals => {:form => form, :campaign => campaign, :contact => contact} %>
+      </param:content>
+      <param:actions>
+        <ibt c="fltri" icon="save">
+          <%= form.submit t("contacts.edit.save_button"), :name => "commit_create" %>
+        </ibt>
+        <%= bt_link_to nil, t("campaigns.new.button_cancel"), path_back, :method => :get, :class => "bt_grey fltr" %>
+      </param:actions>
+    </frm>
+<% end %>
+<br/>
+
+<h3><%= t("contacts.edit.current_agent_label") %> <%= @contact.agent ? @contact.agent.full_name : "-" %></h3>
+
+<header>Call log</header>

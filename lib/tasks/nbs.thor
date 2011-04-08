@@ -219,6 +219,23 @@ class Nbs < Thor
       Currency.create(params)
     end
 
+    [{:name => "Call back", :final => false, :generic => true},
+     {:name => "Not interested now", :final => false, :generic => true},
+     {:name => "Not interested", :final => true, :generic => true},
+     {:name => "Not in", :final => false, :generic => true},
+     {:name => "Upgraded to lead", :final => true, :generic => true, :upgrades_to_lead => true},
+     {:name => "Meeting booked", :final => true, :generic => true},
+     {:name => "Custom result", :final => true, :generic => true}].each do |result|
+      Result.create(result) unless Result.find_by_name(result[:name])
+     end
+
+    [{:name => "Call back date", :field_type => "2", :is_mandatory => true, :result => Result.find_by_name("Call back") },
+     {:name => "Call back date", :field_type => "2", :is_mandatory => true, :result => Result.find_by_name("Not interested now") },
+     {:name => "Meeting date", :field_type => "2", :is_mandatory => true, :result => Result.find_by_name("Meeting booked") },
+     {:name => "Result message", :field_type => "0", :is_mandatory => true, :result => Result.find_by_name("Custom result") }].each do |result_field|
+      ResultField.create(result_field) unless ResultField.find_by_name(result_field[:name])
+    end
+
     unless Rails.env.production?
 
       if Category.count.zero?

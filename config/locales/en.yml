@@ -72,9 +72,11 @@ en:
         call_centre_agents: "Team"
         leads: "My leads"
         lead_templates: "Lead templates"
+        campaigns: Campaigns
       call_centre_agent:
         leads: "My leads"
         lead_templates: "Lead templates"
+        campaigns: Campaigns
       customer:
         subaccounts: Team
         lead_requests: Requested leads
@@ -210,6 +212,167 @@ en:
       contacted: Contacted
       meeting: Meeting
       signed: Signed
+
+  campaigns:
+    filter:
+      keyword_label: Keyword
+      state_label: State
+      search_button: Search
+      state_select_all: all
+      state_select_active: active
+      state_select_inactive: inactive
+    header:
+      title: Campaigns
+      new_campaign_button: New Campaign
+    table:
+      actions: "Actions"
+      name: Name
+      category: Category
+      country: Country
+      start_date: Start date
+      end_date: End date
+      agents: Agents
+      contacts: Contacts
+      results: Results
+      completion: Completion
+      go_to_work_screen: go to work screen
+    new:
+      title: New campaign
+      button_create: Create
+      button_cancel: Cancel
+    show:
+      total_contacts: Total numbers of contacts
+      total_agents: Total number of agents
+      total_calls:  Total number of calls
+      search_label: Search
+      ranges_label: Predefined time ranges
+      ranges:
+        whole_campaign: whole campaign
+        this_month: this month
+        this_week: this week
+        today: today
+      search:
+        date_from: Date from
+        date_to: Date to
+        agents: Agents
+        final: only view completed contacts
+      search_button: Search
+      table:
+        results: Results
+        all_results: ALL RESULTS
+        sum: SUM
+    edit:
+      title: Edit campaign
+      button_update: Update
+      button_cancel: Back to campain listing
+      button_create_contact: Create contact
+      button_manage_result_types: Manage result types
+      button_import_contacts: Import contacts
+      button_assign_selected_contacts: Assign selected contacts
+      button_remove_assignment_for_selected: Remove assignments for selected
+      button_remove_selected: Remove selected
+      agent_assignment_button: Agent assignment
+      show_button: Show
+      edit_button: Edit
+      deassign_button:  Deassign
+      remove_button:  Remove
+      remove_confirm: Are you sure?
+      title_contacts: "Contacts"
+    index:
+      title: Campaigns
+      edit: Edit
+      destroy: Destroy
+      result: Result
+      destroy_confirmation: Are you sure?
+    call_result_details_table:
+      date: Date
+      agent: Agent
+      result: Result
+      call: Call
+
+  agent_work_screen:
+    index:
+      title: Agent work screen
+      select_campaign: Select campaign
+
+
+  contacts:
+    filter:
+      title: Search
+      keyword_label: Keyword
+      search_button: Search
+    new:
+      title_new_contact: New contact
+      title_import: Import contacts
+      create_button: Create
+      cancel_button: Back to campaign
+      button_show_import_contacts: import contacts
+      button_show_new_contact: create new contact
+    edit:
+      title: Edit contact
+      save_button: Update
+      cancel_button: Back to campaign
+      current_agent_label: "Current agent:"
+
+  call_results:
+    table:
+      date: Date
+      agent: Agent
+      result_type: Result type
+      actions: Actions
+      edit_link: Edit
+      remove_link: Remove
+      remove_confirm: "Are you sure?"
+    new:
+      title: New result
+      form_title: Create new
+      save_button: Create
+      cancel_button: Back to contact
+      result: Result
+    edit:
+      title: Edit result
+      form_title: Edit
+      save_button: Update
+      cancel_button: Cancel
+      result: Result
+      button_new_result: New result
+
+  campaigns_users:
+    index:
+      title: Assign users
+      button_cancel: Back to campaign
+      button_assign: Assign users to campaign
+      table:
+        agent: Agent
+        campaigns: Campaigns
+
+  results:
+    index:
+      title: Manage result types
+      button_cancel: Back to campaign
+      call_log_results: Call log results
+      final_results: Final results
+      button_add_result_type: Add result type
+      button_assign_result_types: Assign results types to campaign
+      table:
+        result_name: Result name
+        generic_types: Generic types
+        custom_types: Custom types
+        fields: Fields
+    new:
+      title: Add result type
+      type: Type
+      button_add_field: Add field
+      text: text
+      large_text: large text
+      date: date
+      number: number
+      field_label: Field label
+      field_type: Type
+      call_log_result: Call log result
+      final_result: Final result
+    edit:
+      title: Edit result type
 
   lead_requests:
     listing:
@@ -2079,7 +2242,7 @@ en:
         phone_numnber: "Phone number"
         email_address: "Email address"
         linkedin_url: "Linkedin url"
-        facebook_url: "Facebook url"
+        facebook_url: "Facebook url"       
       invoice:
         number: "Number"
         details: "Details"

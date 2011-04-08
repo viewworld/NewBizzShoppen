@@ -1,0 +1,7 @@
+<column-mc:>
+
+  <%= render :partial => "campaigns_users/index", :locals => {:path => call_centres_campaign_campaigns_user_path(@campaign, "bulk"),
+                                                              :campaign => @campaign, :call_centres => @call_centres,
+                                                              :path_back => edit_call_centres_campaign_path(@campaign)} %>
+
+</column-mc:>

@@ -1,0 +1,36 @@
+<% locals = { :campaign => campaign,
+              :agent => agent,
+              :contact => contact,
+              :contacts => contacts,  
+              :namespace => "call_centres" }  %>
+
+<column-mc:>
+  <header back="true" backurl="#{back_url}"><%= t("agent_work_screen.index.title") %></header>
+
+  <div id="switch_campaign_form">
+    <%= render :partial => "campaigns/agent_work_screen/switch_campaign_form", :locals => locals %>
+  </div>
+
+  <div id="contact_info">
+    <%= render :partial => "campaigns/agent_work_screen/contact_form", :locals => locals if contact %>
+  </div>
+
+  <div id="call_info">
+    <%= render :partial => "campaigns/agent_work_screen/call_interface", :locals => locals if contact %>
+  </div>
+
+  <div id="results_sheet">
+    <%= render :partial => "campaigns/agent_work_screen/results_sheet", :locals => locals if contact %>
+  </div>
+
+  <div id="call_sheet">
+    <%= render :partial => "campaigns/agent_work_screen/call_sheet", :locals => locals %>
+  </div>
+
+    <script type="text/javascript">
+        $("#change_campaign_id").live("change", function(){$(this).parents("form").submit()});
+        $("#call_sheet tbody tr").live("click", function(){$("#call_sheet tbody tr").removeClass("current");$(this).addClass("current")});
+    </script>
+
+</column-mc:>
+

@@ -1,0 +1,66 @@
+<%
+   cols = 9
+   cols += 1 if not block_tools.nil?
+-%>
+
+<table id="campaigns" class="generic">
+  <thead>
+  <tr>
+    <th class="hl"></th>
+    <th><%= link_to t("campaigns.table.name"), order_for_scoped_search(:name) %></th>
+    <th><%= link_to t("campaigns.table.category"), order_for_scoped_search(:category) %></th>
+    <th><%= link_to t("campaigns.table.country"), order_for_scoped_search(:country) %></th>
+    <th class="ta_r"><%= link_to t("campaigns.table.start_date"), order_for_scoped_search(:start_date) %></th>
+    <th class="ta_r"><%= link_to t("campaigns.table.end_date"), order_for_scoped_search(:end_date) %></th>
+    <th class="ta_r"><%= t("campaigns.table.agents") %></th>
+    <th class="ta_r"><%= t("campaigns.table.contacts") %></th>
+    <th class="ta_r"><%= t("campaigns.table.results") %></th>
+    <th class="ta_r"><%= t("campaigns.table.completion") %></th>
+    <% if block_tools %>
+        <th class="ta_r">
+          <%= t("campaigns.table.actions") %>
+        </th>
+    <% end %>
+    <th class="hr"></th>
+  </tr>
+  </thead>
+  <tfoot>
+  <tr>
+    <td class="fl"></td>
+    <td colspan="<%= cols %>"></td>
+    <td class="fr"></td>
+  </tr>
+  </tfoot>
+  <tbody>
+  <% collection.each do |campaign| %>
+      <tr id="campaign_<%= campaign.id %>" class="<%= cycle("odd", "even") %>">
+        <td class="cl"></td>
+        <td>
+          <%= campaign.name %>
+          <%= link_to t("campaigns.table.go_to_work_screen"), call_centres_campaign_agent_work_screen_index_path(campaign) %>
+        </td>
+        <td><%= campaign.category %></td>
+        <td><%= campaign.country %></td>
+        <td class="ta_r"><%= campaign.start_date %></td>
+        <td class="ta_r"><%= campaign.end_date %></td>
+        <td class="ta_r"><%= campaign.users.count %></td>
+        <td class="ta_r"><%= campaign.contacts.count %></td>
+        <td class="ta_r"><%= campaign.contacts.with_completed_status(true).count %></td>
+        <td class="ta_r"><%= campaign.completion %></td>
+        <% if block_tools %>
+            <td class="tda ta_r">
+              <%= with_output_buffer { block_tools.call(campaign) } %>
+            </td>
+        <% end %>
+        <td class="cr"></td>
+      </tr>
+  <% end %>
+  <% if will_paginate collection %>
+      <tr class="pagination">
+        <td colspan="<%= cols + 2 %>" class="ta_c">
+          <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

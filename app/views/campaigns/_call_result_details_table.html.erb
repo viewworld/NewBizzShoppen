@@ -1,0 +1,31 @@
+<table id="call_result_details" class="generic">
+  <thead>
+  <tr>
+    <th class="hl"></th>
+    <th><%= t("campaigns.call_result_details_table.date") %></th>
+    <th><%= t("campaigns.call_result_details_table.agent") %></th>
+    <th><%= t("campaigns.call_result_details_table.result") %></th>
+    <th><%= t("campaigns.call_result_details_table.call") %></th>
+    <th class="hr"></th>
+  </tr>
+  </thead>
+  <tfoot>
+  <tr>
+    <td class="fl"></td>
+    <td colspan="4"></td>
+    <td class="fr"></td>
+  </tr>
+  </tfoot>
+  <tbody>
+  <% call_results.each do |call_result| %>
+      <tr class="<%= cycle("odd", "even") %>">
+        <td class="cl"></td>
+        <td><%= call_result.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+        <td><%= call_result.agent %></td>
+        <td><%= call_result.result %></td>
+        <td></td>
+        <td class="cr"></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

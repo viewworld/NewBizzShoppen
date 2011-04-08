@@ -1,0 +1,25 @@
+<search-box:>
+  <%= render :partial => "campaigns/filter", :locals => {:search => @search, :path => call_centres_campaigns_path} %>
+</search-box:>
+
+<column-mc:>
+
+  <%= render :partial => "campaigns/header", :locals => {:path => new_call_centres_campaign_path} %>
+
+  <%= campaigns_table @campaigns do |blocks| %>
+      <% blocks.tools do |campaign| %>
+          <ul-actions>
+            <li>
+              <%= link_to t("campaigns.index.edit"), edit_call_centres_campaign_path(campaign), :class => "default_action" %>
+            </li>
+            <li>
+              <%= link_to t("campaigns.index.result"), call_centres_campaign_path(campaign) %>
+            </li>
+            <li>
+              <%= link_to t("campaigns.index.destroy"), call_centres_campaign_path(campaign), :confirm => t("campaigns.index.destroy_confirmation"), :method => :delete %>
+            </li>
+          </ul-actions>
+      <% end %>
+  <% end %>
+
+</column-mc:>

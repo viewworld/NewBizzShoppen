@@ -1,0 +1,25 @@
+<div class="pdd_10 no_pdd_t">
+  <fieldset class="inputs labels_ta_r labels_200">
+    <ol>
+      <li class="text">
+        <label><%= t("call_results.new.result") %></label>
+
+        <div class="txt">
+          <strong><%= call_result.result.name %></strong>
+        </div>
+      </li>
+      <%= form.input :result_id, :as => :hidden %>
+      <%= form.input :note, :as => :text, :input_html => {:style => "width: 400px;height:120px"} %>
+    </ol>
+  </fieldset>
+</div>
+
+<% if call_result.result.result_fields.present? %>
+    <hl/>
+    <%= render :partial => "/shared/results/result_fields", :locals => {:call_result => call_result, :form => form} %>
+<% end %>
+
+<% if call_result.result.upgrades_to_lead? %>
+    <hl/>
+    <%= render :partial => "/shared/results/add_result_lead_fields", :locals => {:call_result => call_result, :form => form} %>
+<% end %>

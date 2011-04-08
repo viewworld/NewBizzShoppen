@@ -1,0 +1,24 @@
+<column-mc:>
+  <%= render :partial => "contacts/edit", :locals => {:namespace => :call_centres, :campaign => @campaign, :contact => @contact,
+                                                      :path_back => edit_call_centres_campaign_path(@campaign)} %>
+
+  <% unless @contact.completed? %>
+      <% form_for CallResult.new, :url => new_call_centres_contact_call_result_path(@contact), :html => {:method => :get} do %>
+          <%= select_tag :result_id, options_for_select(@campaign.results_for_select) %>
+          <%= bt_link_to nil, t("call_results.edit.button_new_result"), "javascript:void(0)", :onclick => "$(this).parents('form').submit()" %>
+      <% end %>
+  <% end %>
+
+  <%= call_results_table @call_results do |blocks| %>
+      <% blocks.tools do |call_result| %>
+          <ul-actions>
+            <li>
+              <%= link_to t("call_results.table.edit_link"), edit_call_centres_contact_call_result_path(@contact, call_result), :class => "default_action" %>
+            </li>
+            <li>
+              <%= link_to t("call_results.table.remove_link"), call_centres_contact_call_result_path(@contact, call_result), :confirm => t("call_results.table.remove_confirm"), :method => :delete %>
+            </li>
+          </ul-actions>
+      <% end %>
+  <% end %>
+</column-mc:>

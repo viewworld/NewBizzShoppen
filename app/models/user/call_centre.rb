@@ -4,10 +4,13 @@ class ::User::CallCentre < ::User
   include Addresses
   include BankAccounts
 
+  has_and_belongs_to_many :campaigns, :join_table => "campaigns_users", :foreign_key => "user_id"
+  has_many :contacts, :foreign_key => :agent_id, :order => "leads.position ASC"
   has_one :bank_address, :class_name => '::Address::Bank', :as => :addressable
 
   has_many :category_agents, :foreign_key => "user_id"
   has_many :unique_categories, :through => :category_agents, :source => :category
+  has_many :campaigns_ownerships, :class_name => "Campaign", :foreign_key => :creator_id
 
   validates_inclusion_of :payout, :in => 0..100, :message =>   I18n.t("models.user.payout_validation_message")
   validates_presence_of :company_name
@@ -30,6 +33,10 @@ class ::User::CallCentre < ::User
     all_leads = Lead.scoped
     all_leads.where("creator_id in (?)", self.subaccounts.map(&:id))
   end
+
+  def has_max_contacts_in_campaign?(campaign)
+    (contacts.for_campaign(campaign).count >= campaign.max_contact_number)
+  end    
 
   private
 

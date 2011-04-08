@@ -27,6 +27,10 @@ class Country < ActiveRecord::Base
     id
   end
 
+  def to_s
+    name
+  end    
+
   def phone_dialling_code
     code = PHONE_CODES.detect { |pc| pc.first == detailed_locale.to_s.upcase }
     code.nil? ? "" : code.last

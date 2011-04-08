@@ -23,7 +23,11 @@ submitBulkForm = function(url, target) {
 
 
 jQuery(document).ready(function()
-{
+    {
+        loadScripts();
+    });
+
+function loadScripts() {
     /* --- subcategories > show/hide ---*/
 
     $(".categories_tree > li > ul.category_children_tree").hide();
@@ -177,7 +181,16 @@ jQuery(document).ready(function()
     });
 
 
-});
+}
+
+function set_contacts_id_hf(field_name) {
+    $('#' + field_name).val('');
+    $.each($('.cb_contact_id'), function() {
+        if ($('#' + this.id).attr('checked')) {
+            $('#' + field_name).val($('#' + field_name).val() + ',' + $('#' + this.id).val())
+        }
+    });
+}
 
 function clear_filter() {
     $.each($(".search_box form input"), function(idx, input) {

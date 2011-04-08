@@ -44,192 +44,191 @@
 
 <clb/>
 
-<hl/>
+<% unless @contact_managing %>
 
-<div class="pdd_10 no_pdd_t">
-  <fieldset class="inputs labels_ta_r labels_180">
-    <ol class="align_inputs">
-      <li class="header">
-        <h3><%= t("shared.leads.form.lead_information") %></h3>
-      </li>
-      <% if !@lead.new_record? and @lead.lead_template_values_present? %>
-      <li class="string error">
-        <label>&nbsp;</label>
-        <p class="inline-errors no_pdd"><%= t("shared.leads.form.category_cannot_be_changed") %></p>
-      </li>
-      <% end %>        
-      <%= form.input :category_id, :collection => nested_set_options(current_user.has_role?(:admin) ? Category.without_locked.all : current_user.has_role?(:call_centre) ? Category.without_locked.with_call_centre_unique(current_user).all : Category.without_locked.with_agent_unique(current_user).all), :include_blank => false, :input_html => {:disabled => (!@lead.new_record? and @lead.lead_template_values_present?), :onchange => "$('#lead_category_is_changed').val('1'); $('##{dom_id(@lead, @lead.new_record? ? :new : :edit)}').submit()"}, :hint => hint_for(@lead, :category_id) %>
-      <%= form.input :category_is_changed, :as => :hidden, :value => "0" %>
-      <%= form.input :is_international, :as => :select, :collection => [[t("shared.leads.form.country_local_label"), 0], [t("shared.leads.form.country_international"), 1]], :include_blank => false, :hint => hint_for(@lead, :is_international) %>
-      <%= form.input :header, :hint => hint_for(@lead, :header) %>
-      <%= form.input :description, :input_html => {:style => "height: 140px; width: 600px"}, :hint => hint_for(@lead, :description) %>
-      <% unless current_user.has_role?(:purchase_manager) %>
-          <%= form.input :hidden_description, :input_html => {:style => "height: 140px; width: 600px"}, :hint => hint_for(@lead, :hidden_description) %>
-      <% end %>
-      <%= form.input :purchase_value, :hint => hint_for(@lead, :purchase_value) %>
-      <%= form.input :price, :hint => hint_for(@lead, :price) %>
-      <%= form.input :currency_id, :collection => currencies_for_select, :include_blank => false, :hint => hint_for(@lead, :currency_id) %>
-      <% unless current_user.has_role?(:purchase_manager) %>
-          <% if current_user.can_publish_leads? %>
-              <%= form.input :published, :hint => hint_for(@lead, :published) %>
-          <% else %>
-              <%= form.input :published, :as => :hidden %>
-          <% end %>
-      <% end %>
-    </ol>
-  </fieldset>
-</div>
-<hl/>
-
-<% unless @lead.lead_templates.empty? %>
-    <%= render :partial => "/shared/leads/lead_template_fields", :locals => {:lead => @lead, :form => form} %>
     <hl/>
-<% end %>
 
-<div class="nested_locale_container"></div>
+    <div class="pdd_10 no_pdd_t">
+      <fieldset class="inputs labels_ta_r labels_180">
+        <ol class="align_inputs">
+          <li class="header">
+            <h3><%= t("shared.leads.form.lead_information") %></h3>
+          </li>
+          <% if !@lead.new_record? and @lead.lead_template_values_present? %>
+              <li class="string error">
+                <label>&nbsp;</label>
 
-<%= form.fields_for :lead_translations, @lead.lead_translations.select { |lt| lt.locale != I18n.locale.to_s } do |builder| %>
-    <%= render :partial => "/shared/leads/lead_fields", :locals => {:f => builder} %>
-<% end %>
+                <p class="inline-errors no_pdd"><%= t("shared.leads.form.category_cannot_be_changed") %></p>
+              </li>
+          <% end %>
+          <%= form.input :category_id, :collection => nested_set_options(current_user.has_role?(:admin) ? Category.without_locked.all : current_user.has_role?(:call_centre) ? Category.without_locked.with_call_centre_unique(current_user).all : Category.without_locked.with_agent_unique(current_user).all), :include_blank => false, :input_html => {:disabled => (!@lead.new_record? and @lead.lead_template_values_present?), :onchange => "$('#lead_category_is_changed').val('1'); $('##{dom_id(@lead, @lead.new_record? ? :new : :edit)}').submit()"}, :hint => hint_for(@lead, :category_id) %>
+          <%= form.input :category_is_changed, :as => :hidden, :value => "0" %>
+          <%= form.input :is_international, :as => :select, :collection => [[t("shared.leads.form.country_local_label"), 0], [t("shared.leads.form.country_international"), 1]], :include_blank => false, :hint => hint_for(@lead, :is_international) %>
+          <%= form.input :header, :hint => hint_for(@lead, :header) %>
+          <%= form.input :description, :input_html => {:style => "height: 140px; width: 600px"}, :hint => hint_for(@lead, :description) %>
+          <% unless current_user.has_role?(:purchase_manager) %>
+              <%= form.input :hidden_description, :input_html => {:style => "height: 140px; width: 600px"}, :hint => hint_for(@lead, :hidden_description) %>
+          <% end %>
+          <%= form.input :purchase_value, :hint => hint_for(@lead, :purchase_value) %>
+          <%= form.input :price, :hint => hint_for(@lead, :price) %>
+          <%= form.input :currency_id, :collection => currencies_for_select, :include_blank => false, :hint => hint_for(@lead, :currency_id) %>
+          <% unless current_user.has_role?(:purchase_manager) %>
+              <% if current_user.can_publish_leads? %>
+                  <%= form.input :published, :hint => hint_for(@lead, :published) %>
+              <% else %>
+                  <%= form.input :published, :as => :hidden %>
+              <% end %>
+          <% end %>
+        </ol>
+      </fieldset>
+    </div>
+    <hl/>
 
-<div class="pdd_10 no_pdd_t" id="locale_picker_div">
-  <fieldset class="inputs labels_ta_r labels_180">
-    <ol class="align_inputs">
-      <li class="header">
-        <h3><%= t("shared.leads.form.additional_language") %></h3>
-      </li>
-      <li class="select">
-        <%= form.label :locale, "New translation" %>
-        <%= select_tag :locale, options_for_select(available_locales_list(@lead.lead_translations)),
-                       {:id => "locale_picker", :include_blank => true, :onchange => fields_for_leads_translations(form)} %>
-      </li>
-    </ol>
-  </fieldset>
-</div>
-<hl/>
+    <% unless @lead.lead_templates.empty? %>
+        <%= render :partial => "/shared/leads/lead_template_fields", :locals => {:lead => @lead, :form => form} %>
+        <hl/>
+    <% end %>
 
-<div class="pdd_10 no_pdd_t">
-  <fieldset class="inputs labels_ta_r labels_180">
-    <ol class="align_inputs">
-      <li class="header">
-        <h3><%= t("shared.leads.form.sales_information") %></h3>
-      </li>
-      <%= form.input :notify_buyers_after_update, :as => :boolean, :hint => hint_for(@lead, :notify_buyers_after_update) unless @lead.lead_purchases.empty? %>
-      <%= form.input :sale_limit, :as => :select, :collection => (1..10), :include_blank => false, :hint => hint_for(@lead, :sale_limit) %>
-      <%= form.input :purchase_decision_date, :as => :string, :input_html => {:id => "datepicker"}, :wrapper_html => {:class => "date"}, :hint => hint_for(@lead, :purchase_decision_date) %>
-    </ol>
-  </fieldset>
-</div>
+    <div class="nested_locale_container"></div>
+
+    <%= form.fields_for :lead_translations, @lead.lead_translations.select { |lt| lt.locale != I18n.locale.to_s } do |builder| %>
+        <%= render :partial => "/shared/leads/lead_fields", :locals => {:f => builder} %>
+    <% end %>
+
+    <div class="pdd_10 no_pdd_t" id="locale_picker_div">
+      <fieldset class="inputs labels_ta_r labels_180">
+        <ol class="align_inputs">
+          <li class="header">
+            <h3><%= t("shared.leads.form.additional_language") %></h3>
+          </li>
+          <li class="select">
+            <%= form.label :locale, "New translation" %>
+            <%= select_tag :locale, options_for_select(available_locales_list(@lead.lead_translations)),
+                           {:id => "locale_picker", :include_blank => true, :onchange => fields_for_leads_translations(form)} %>
+          </li>
+        </ol>
+      </fieldset>
+    </div>
+    <hl/>
+
+    <div class="pdd_10 no_pdd_t">
+      <fieldset class="inputs labels_ta_r labels_180">
+        <ol class="align_inputs">
+          <li class="header">
+            <h3><%= t("shared.leads.form.sales_information") %></h3>
+          </li>
+          <%= form.input :notify_buyers_after_update, :as => :boolean, :hint => hint_for(@lead, :notify_buyers_after_update) unless @lead.lead_purchases.empty? %>
+          <%= form.input :sale_limit, :as => :select, :collection => (1..10), :include_blank => false, :hint => hint_for(@lead, :sale_limit) %>
+          <%= form.input :purchase_decision_date, :as => :string, :input_html => {:id => "datepicker"}, :wrapper_html => {:class => "date"}, :hint => hint_for(@lead, :purchase_decision_date) %>
+        </ol>
+      </fieldset>
+    </div>
 
 
 
-<script>
-    var nestedFormsCount = <%= @lead.lead_translations.reject{ |lt| lt.locale == I18n.locale.to_s }.size %>;
-    $(function() {
-        $("#datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
-    });
-    function add_fields(link, content) {
-        if ($('#locale_picker').text() != null)
-        {
-            var new_id = new Date().getTime();
-            var regexp = new RegExp("");
-            content = content.replace(/lead_lead_translations_attributes_\d+/g, "lead_lead_translations_attributes_" + nestedFormsCount.toString());
-            content = content.replace(/lead\[lead_translations_attributes\]\[\d+\]/g, "lead[lead_translations_attributes][" + new_id.toString() + "]");
-            content = content.replace(/LOCALE_LANG/, $('#locale_picker').val());
-            $('.nested_locale_container:last').append(content);
-            $('.locale_hidden_field:last').val($('#locale_picker').val());
-            $('.locale_title:last').html(language_names[$('#locale_picker').val()]);
-            $('.lead_template_value_translations_container_' + $('#locale_picker').val()).show();
-            $('.destroy_hidden_field_template_value_tr_' + $('#locale_picker').val()).val('');
-            $("#locale_picker option[value=" + $('#locale_picker').val() + "]").remove();
-            nestedFormsCount = nestedFormsCount + 1;
-            if ($("#locale_picker option[value!='']").size() == 0) {
-                $("#locale_picker_div").hide();
+    <script>
+        var nestedFormsCount = <%= @lead.lead_translations.reject{ |lt| lt.locale == I18n.locale.to_s }.size %>;
+        $(function() {
+            $("#datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+        });
+        function add_fields(link, content) {
+            if ($('#locale_picker').text() != null) {
+                var new_id = new Date().getTime();
+                var regexp = new RegExp("");
+                content = content.replace(/lead_lead_translations_attributes_\d+/g, "lead_lead_translations_attributes_" + nestedFormsCount.toString());
+                content = content.replace(/lead\[lead_translations_attributes\]\[\d+\]/g, "lead[lead_translations_attributes][" + new_id.toString() + "]");
+                content = content.replace(/LOCALE_LANG/, $('#locale_picker').val());
+                $('.nested_locale_container:last').append(content);
+                $('.locale_hidden_field:last').val($('#locale_picker').val());
+                $('.locale_title:last').html(language_names[$('#locale_picker').val()]);
+                $('.lead_template_value_translations_container_' + $('#locale_picker').val()).show();
+                $('.destroy_hidden_field_template_value_tr_' + $('#locale_picker').val()).val('');
+                $("#locale_picker option[value=" + $('#locale_picker').val() + "]").remove();
+                nestedFormsCount = nestedFormsCount + 1;
+                if ($("#locale_picker option[value!='']").size() == 0) {
+                    $("#locale_picker_div").hide();
+                }
             }
         }
-    }
 
-    function remove_language(id, locale, record_id) {
-        nestedFormsCount = nestedFormsCount - 1;
-        $('.lead_template_value_translations_container_' + locale).hide();
-        $('.destroy_hidden_field_template_value_tr_' + locale).val('true');
-        $('#locale_picker').append($("<option></option>").attr("value", locale).text(language_names[locale]));
-        if (record_id == null)
-        {
-            $('#lead_translation_form_' + id).remove();
-        }
-        else
-        {
-            $('#lead_translation_form_' + id).hide();
-            $('#destroy_hidden_field_' + record_id.toString()).val('true')
-        }
-        $("#locale_picker_div").show();
-    }
-
-    function set_beginnings_of_urls(fields_array) {
-        $.each(fields_array, function(index, value) {
-            if ($('#' + value).val() == "") {
-                $('#' + value).val("http://")
+        function remove_language(id, locale, record_id) {
+            nestedFormsCount = nestedFormsCount - 1;
+            $('.lead_template_value_translations_container_' + locale).hide();
+            $('.destroy_hidden_field_template_value_tr_' + locale).val('true');
+            $('#locale_picker').append($("<option></option>").attr("value", locale).text(language_names[locale]));
+            if (record_id == null) {
+                $('#lead_translation_form_' + id).remove();
             }
-        });
-
-    }
-
-    function add_template() {
-        $('#lead_template_container_' + $('#optional_templates_picker').val()).show();
-        $('.destroy_hidden_field_lead_template_fields_' + $('#optional_templates_picker').val()).val('');
-        $("#optional_templates_picker option[value=" + $('#optional_templates_picker').val() + "]").remove();
-        if ($('#optional_templates_picker option').length == 1)
-        {
-            $('#optional_templates_span').hide();
+            else {
+                $('#lead_translation_form_' + id).hide();
+                $('#destroy_hidden_field_' + record_id.toString()).val('true')
+            }
+            $("#locale_picker_div").show();
         }
-        else
-        {
-            $('#optional_templates_span').show();
+
+        function set_beginnings_of_urls(fields_array) {
+            $.each(fields_array, function(index, value) {
+                if ($('#' + value).val() == "") {
+                    $('#' + value).val("http://")
+                }
+            });
+
         }
-    }
 
-    function remove_template(template_id, template_name) {
-        $('#lead_template_container_' + template_id.toString()).hide();
-        $('.destroy_hidden_field_lead_template_fields_' + template_id.toString()).val('true');
-        $('#optional_templates_picker').append($("<option></option>").attr("value", template_id).text(template_name));
-        if ($('#optional_templates_picker option').length > 1)
-        {
-            $('#optional_templates_span').show();
+        function add_template() {
+            $('#lead_template_container_' + $('#optional_templates_picker').val()).show();
+            $('.destroy_hidden_field_lead_template_fields_' + $('#optional_templates_picker').val()).val('');
+            $("#optional_templates_picker option[value=" + $('#optional_templates_picker').val() + "]").remove();
+            if ($('#optional_templates_picker option').length == 1) {
+                $('#optional_templates_span').hide();
+            }
+            else {
+                $('#optional_templates_span').show();
+            }
         }
-    }
 
-    function refresh_phone_codes() {
-        $.ajax({
-            type: "GET",
-            url: "<%= phone_codes_path -%>",
-            data: "country_id=" + $('#lead_country_id').val()
-        });
-    }
+        function remove_template(template_id, template_name) {
+            $('#lead_template_container_' + template_id.toString()).hide();
+            $('.destroy_hidden_field_lead_template_fields_' + template_id.toString()).val('true');
+            $('#optional_templates_picker').append($("<option></option>").attr("value", template_id).text(template_name));
+            if ($('#optional_templates_picker option').length > 1) {
+                $('#optional_templates_span').show();
+            }
+        }
 
-    function set_phone_code(field, code) {
-        $('#' + field).val('+' + code)
-    }
+        function refresh_phone_codes() {
+            $.ajax({
+                type: "GET",
+                url: "<%= phone_codes_path -%>",
+                data: "country_id=" + $('#lead_country_id').val()
+            });
+        }
+
+        function set_phone_code(field, code) {
+            $('#' + field).val('+' + code)
+        }
 
 
-    <% if !@lead.new_record? or (@lead.new_record? and @lead.country.present?) %>
-    <%= "if($('#lead_direct_phone_number').val() == ''){set_phone_code('lead_direct_phone_number', #{@lead.country.phone_dialling_code})}" -%>
-    <%= "if($('#lead_phone_number').val() == ''){set_phone_code('lead_phone_number', #{@lead.country.phone_dialling_code})}" -%>
-    <%= "if($('#lead_company_phone_number').val() == ''){set_phone_code('lead_company_phone_number', #{@lead.country.phone_dialling_code})}" -%>
-    <% end %>
+        <% if !@lead.new_record? or (@lead.new_record? and @lead.country.present?) %>
+        <%= "if($('#lead_direct_phone_number').val() == ''){set_phone_code('lead_direct_phone_number', #{@lead.country.phone_dialling_code})}" -%>
+        <%= "if($('#lead_phone_number').val() == ''){set_phone_code('lead_phone_number', #{@lead.country.phone_dialling_code})}" -%>
+        <%= "if($('#lead_company_phone_number').val() == ''){set_phone_code('lead_company_phone_number', #{@lead.country.phone_dialling_code})}" -%>
+        <% end %>
 
-    <% if params[:action] == "new" or params[:action] == "create" %>
-    set_beginnings_of_urls(["lead_linkedin_url", "lead_facebook_url", "lead_company_website"]);
-    <% end %>
+        <% if params[:action] == "new" or params[:action] == "create" %>
+        set_beginnings_of_urls(["lead_linkedin_url", "lead_facebook_url", "lead_company_website"]);
+        <% end %>
 
-    <% lead_templates = @lead.lead_templates %>
-    <% if lead_templates.size == 1 and !lead_templates.first.is_mandatory %>
-    $('#optional_templates_picker').val('<%= lead_templates.first.id -%>');
-    add_template();
-    <% end %>
+        <% lead_templates = @lead.lead_templates %>
+        <% if lead_templates.size == 1 and !lead_templates.first.is_mandatory %>
+        $('#optional_templates_picker').val('<%= lead_templates.first.id -%>');
+        add_template();
+        <% end %>
 
-    var language_names = [];
-    <% Locale.all.each do |locale| %>
-    <%= "language_names['#{locale.code}'] = '#{t('models.locale.' + locale.code)}';" -%>
-    <% end %>
-</script>
+        var language_names = [];
+        <% Locale.all.each do |locale| %>
+        <%= "language_names['#{locale.code}'] = '#{t('models.locale.' + locale.code)}';" -%>
+        <% end %>
+    </script>
+
+<% end %>

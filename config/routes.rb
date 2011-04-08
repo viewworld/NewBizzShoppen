@@ -77,12 +77,64 @@ Nbs::Application.routes.draw do
     resource :bulk_call_centre_agents_update, :controller => "bulk_call_centre_agents_update", :only => [:update]
     resources :leads
     resources :lead_templates
+    resources :campaigns do
+      member do
+        get 'result_details'
+      end
+      resources :results, :except => :show do
+        collection do
+          post 'batch_assign'
+        end
+      end
+      resources :campaigns_users, :only => [:index, :update]
+      resources :contacts do
+        collection do
+          post 'batch_remove'
+          post 'batch_assign'
+        end
+      end
+      resources :agent_work_screen, :only => :index
+      namespace :agent_work_screen do
+        resources :contacts, :only => [:show, :destroy, :update] do
+          resources :call_results, :only => [:new, :create, :edit, :update, :destroy]
+        end
+      end
+    end
+    resources :contacts do
+      resources :call_results, :only => [:new, :create, :edit, :update, :destroy]
+    end
   end
 
   namespace :call_centre_agents do
     root :to => "leads#index"
     resources :leads
     resources :lead_templates
+    resources :campaigns do
+      member do
+        get 'result_details'
+      end
+      resources :results, :except => :show do
+        collection do
+          post 'batch_assign'
+        end
+      end
+      resources :campaigns_users, :only => [:index, :update]
+      resources :contacts do
+        collection do
+          post 'batch_remove'
+          post 'batch_assign'
+        end
+      end
+      resources :agent_work_screen, :only => :index
+      namespace :agent_work_screen do
+        resources :contacts, :only => [:show, :destroy, :update] do
+          resources :call_results, :only => [:new, :create, :edit, :update, :destroy]
+        end
+      end
+    end
+    resources :contacts do
+      resources :call_results, :only => [:new, :create, :edit, :update, :destroy]
+    end
   end
 
   namespace :lead_users do

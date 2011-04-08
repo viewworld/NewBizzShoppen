@@ -1,0 +1,27 @@
+<h2>Call log</h2>
+
+
+
+  <%= select_tag :result_id, options_for_select(campaign.results_for_select) %>
+  <%= submit_tag t("call_results.edit.button_new_result"), :id => "new_result" %>
+
+<%= call_results_table contact.call_results, :agent_work_screen => true do |blocks| %>
+    <% blocks.tools do |call_result| %>
+
+    <% end %>
+<% end %>
+
+
+<script type="text/javascript">
+  $('#new_result').click(function(){
+    var param = "?result_id="+$("#result_id").val();
+    $.colorbox({
+      iframe: true,
+      width: 900,
+      height: 700,
+      href: "<%= url_for( :controller => "#{namespace}/agent_work_screen/call_results", :action => :new, :campaign_id => campaign, :contact_id => contact) %>"+param,
+      onClosed: function(){location.reload();}
+    });
+  });
+
+</script>

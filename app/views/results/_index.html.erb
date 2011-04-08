@@ -1,0 +1,47 @@
+<% back_path = url_for(:controller => "#{namespace}/campaigns", :action => :edit, :id => campaign) %>
+
+<%= form_tag url_for(:controller => "#{namespace}/results", :action => :batch_assign, :campaign_id => campaign), :method => :post, :id => "result_types_form" do %>
+
+    <header back="true" backurl="#{back_path}">
+      <param:content>
+        <%= t("results.index.title") %>: <%= t("results.index.call_log_results") %>
+      </param:content>
+      <param:actions>
+        <ul class="header_actions">
+          <li class="last">
+            <%= bt_link_to :plus, t("results.index.button_add_result_type"), url_for(:controller => "#{namespace}/results", :action => :new, :campaign_id => campaign, :type => "call_log") %>
+          </li>
+        </ul>
+      </param:actions>
+    </header>
+
+
+    <%= render :partial => "results/table", :locals => {:results => results.call_log_results, :campaign => campaign, :namespace => namespace} %>
+    <br/>
+
+    <header>
+      <param:content>
+        <%= t("results.index.title") %>: <%= t("results.index.final_results") %>
+      </param:content>
+      <param:actions>
+        <ul class="header_actions">
+          <li class="last">
+            <%= bt_link_to :plus, t("results.index.button_add_result_type"), url_for(:controller => "#{namespace}/results", :action => :new, :campaign_id => campaign, :type => "final") %>
+          </li>
+        </ul>
+      </param:actions>
+    </header>
+
+    <%= render :partial => "results/table", :locals => {:results => results.final_results, :campaign => campaign, :namespace => namespace} %>
+    <br/>
+    
+<% end %>
+
+
+<div class="ibt_box">
+  <ibt c="fltri" icon="save">
+    <%= button_to_function t("results.index.button_assign_result_types"), "$('#result_types_form').submit();" %>
+  </ibt>
+  <%= bt_link_to nil, t("campaigns_users.index.button_cancel"), back_path, :class => "bt_grey fltr" %>
+  <clb/>
+</div>

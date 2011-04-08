@@ -1,0 +1,20 @@
+<div class="search_box">
+  <h2><%= t("contacts.filter.title") %></h2>
+
+  <div class="search_content">
+    <%= semantic_form_for search, :url => path do |f| %>
+        <fieldset class="inputs_vertical">
+          <ol class="no_pdd">
+            <li class="string">
+              <%= f.input :with_keyword, :label => t("contacts.filter.keyword_label") %>
+            </li>
+            <li class="commit">
+              <ibt c="bt_green" icon="magnify">
+                <%= submit_tag t("contacts.filter.search_button") %>
+              </ibt>
+            </li>
+          </ol>
+        </fieldset>
+    <% end %>
+  </div>
+</div>

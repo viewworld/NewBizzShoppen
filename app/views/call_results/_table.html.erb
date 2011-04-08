@@ -1,0 +1,45 @@
+<%
+   cols = 3
+   cols += 1 if not block_tools.nil?
+-%>
+
+<table id="call_results" class="generic">
+  <thead>
+  <tr>
+    <th class="hl"></th>
+    <th><%= t("call_results.table.date") %></th>
+    <th><%= t("call_results.table.agent") %></th>
+    <th><%= t("call_results.table.result_type") %></th>
+    <% if block_tools %>
+        <th class="ta_r">
+          <%= t("call_results.table.actions") %>
+        </th>
+    <% end %>
+
+    <th class="hr"></th>
+  </tr>
+  </thead>
+  <tfoot>
+  <tr>
+    <td class="fl"></td>
+    <td colspan="<%= cols %>"></td>
+    <td class="fr"></td>
+  </tr>
+  </tfoot>
+  <tbody>
+  <% collection.each do |call_result| %>
+      <tr class="<%= cycle("odd", "even") %>">
+        <td class="cl"></td>
+        <td><%= call_result.created_at %></td>
+        <td><%= call_result.agent.full_name %></td>
+        <td><%= call_result.result %></td>
+        <% if block_tools %>
+            <td class="tda ta_r">
+              <%= with_output_buffer { block_tools.call(call_result) } %>
+            </td>
+        <% end %>
+        <td class="cr"></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
