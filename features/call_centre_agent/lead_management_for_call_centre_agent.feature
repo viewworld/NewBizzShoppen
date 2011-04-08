@@ -36,10 +36,10 @@ Scenario: I can search leads with filtering by: show active (default), show all,
   And I press translated "call_centre.leads.index.view.search_button"
   Then I should see "Wires ultimate deal"
 
-
 @_tested @selenium
 Scenario: I can change lead status from lead list
-  Given I fill in "search_with_keyword" with "routers ultimate deal"
+  When I follow translated "layout.main_menu.call_centre_agent.leads"
+  And I fill in "search_with_keyword" with "routers ultimate deal"
   And I press translated "call_centre_agent.leads.index.view.search_button"
   Then I select translated "call_centre_agent.leads.index.view.option_not_published" from "lead_published"
   Given I fill in "search_with_keyword" with ""

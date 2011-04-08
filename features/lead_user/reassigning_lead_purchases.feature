@@ -19,7 +19,8 @@ Feature: Reassigning lead purchases
 
   @tgn @_done @_tested @selenium
   Scenario: I can transfer lead access to other lead handler that belong to the same customer (!!)
-    Given I fill in "search_with_keyword" with "Printers ultimate deal"
+    When I follow translated "layout.main_menu.lead_user.lead_purchases"
+    And I fill in "search_with_keyword" with "Printers ultimate deal"
     And I press translated "lead_user.lead_purchases.index.view.search.search_button"
     Then I select "Martin Gleesse" from "assignee_id"
     And I go to lead user lead purchases

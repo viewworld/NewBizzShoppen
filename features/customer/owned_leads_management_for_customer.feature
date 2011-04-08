@@ -50,7 +50,7 @@ Scenario: I can unassing any of my leads from lead user that belong to my accoun
   Then I go to buyer lead purchases
   Given I select "" from "assignee_id"
   And I go to buyer lead purchases
-  Then "assignee_id" should be selected for value ""
+  Then "assignee_id" should be selected for ""
 
 @tgn @_done @_tested
 Scenario: Assignment should not be possible/visible if I have not lead users associated with me

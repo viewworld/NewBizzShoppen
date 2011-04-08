@@ -1656,6 +1656,7 @@ en:
           bulk_print_link: "Print all selected leads"
           bulk_print_link_short: "Print selected"
           email_lead: Contact lead
+          state: "State"
           search:
             keyword_label: "Keyword"
             search_button: "Search"
@@ -1879,6 +1880,12 @@ en:
         notify_buyers_after_update: "Notify sales managers about changes"
     errors:
       models:
+        article:
+          news:
+            agent:
+              attributes:
+                content:
+                  blank: "can't be blank"
         country:
           attributes:
             name:
