@@ -143,3 +143,11 @@ When /^I login as user with email "([^"]*)" using login key$/ do |email|
   user = User.find_by_email(email)
   visit "/login_keys/?key=#{user.login_key}"
 end
+
+def options_hash_to_s(options)
+  options.to_a.map{|pair| pair.join(":")}.join(",")
+end
+
+def options_s_to_hash(options)
+  Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys  
+end

@@ -1,6 +1,13 @@
 @m5b @agent_campaign @$_administrator @$_call_centre @tbr
 Feature: Agent campaign - management
 
+   Background:
+    Given I am on the homepage
+    And I make sure current locale is "en"
+    And I sign in as translator_call_centre@nbs.com with password secret
+    And I follow translated "layout.main_menu.call_centre.campaigns"
+    Then I should see "Testing One"
+
 # As campaign administrator - admin or call centre
 
     #
@@ -99,21 +106,45 @@ Feature: Agent campaign - management
     Scenario: I can see template fields for current category
     #dynamically loaded via ajax
     
-    @3 @tbr @__campaign_manage_results @_done
-    Scenario: I can go to previous/next contact edit page through arrows    
-
+    @3 @tbr @__campaign_manage_results @_done @_tested
+    Scenario: I can go to previous/next contact edit page through arrows
+      When I click hidden link by url regex "/call_centres\/campaigns\/\d+\/edit/"
+      And I should see "Edit campaign"
+      And I should see "Bon Jovi inc."
+      And I click hidden link by url regex "/call_centres\/campaigns\/\d+\/contacts\/\d+\/edit/"
+      And I should see translated "contacts.edit.current_agent_label"
+      Then the "Company name" field should contain "Bon Jovi inc."
+      When I follow "next_contact"
+      Then the "Company name" field should contain "Mleko company"
+      When I follow "prev_contact"
+      Then the "Company name" field should contain "Bon Jovi inc."      
 
     #
     #
     #campaigns::agents::manage_results_types
-    @1 @tbr @__campaign_manage_result_types @_done
+    @1 @tbr @__campaign_manage_result_types @_done @_tested
     Scenario: I can see list of generic call log results
+      When I click hidden link by url regex "/call_centres\/campaigns\/\d+\/edit/"
+      And I should see "Edit campaign"
+      And I follow translated "campaigns.edit.button_manage_result_types"
+      Then I should see "Call back"
+      And I should see "Not interested now"
+      And I should see "Not in"
+      
+
 
     @2 @tbr @__campaign_manage_result_types @_done
     Scenario: I can see list of custom call log results
 
-    @1 @tbr @__campaign_manage_result_types @_done
+    @1 @tbr @__campaign_manage_result_types @_done @_tested
     Scenario: I can see list of generic final results
+      When I click hidden link by url regex "/call_centres\/campaigns\/\d+\/edit/"
+      And I should see "Edit campaign"
+      And I follow translated "campaigns.edit.button_manage_result_types"
+      Then I should see "Not interested"
+      And I should see "Upgraded to lead"
+      And I should see "Meeting booked"
+      And I should see "Custom result"
 
     @2 @tbr @__campaign_manage_result_types @_done
     Scenario: I can see list of custom final results
@@ -124,11 +155,35 @@ Feature: Agent campaign - management
     @2 @tbr @__campaign_manage_result_types @_done
     Scenario: I can assign generic results to campaign
 
-    @3 @tbr @__campaign_manage_result_types @_done
+    @3 @tbr @__campaign_manage_result_types @_done @selenium @_tested 
     Scenario: I can manage call log results
+      When I click hidden link by url regex "/call_centres\/campaigns\/\d+\/edit/"
+      And I should see "Edit campaign"
+      And I follow translated "campaigns.edit.button_manage_result_types"
+      When I click hidden link by url regex "/call_centres\/campaigns\/\d+\/results\/new\?type=call_log/"
+      And I should see translated "results.new.call_log_result"
+      And I fill in "Name" with "I am on fire"
+      And I follow translated "shared.lead_templates.form.new_lead_template_field"
+      And I fill in "result_result_fields_attributes_0_name" with "Some text"
+      And I check "result_result_fields_attributes_0_is_mandatory"
+      And I press translated "administration.lead_templates.new.view.button_create"
+      Then I should see "I am on fire"
+      And I should see "Some text"
 
-    @3 @tbr @__campaign_manage_result_types @_done
+    @3 @tbr @__campaign_manage_result_types @_done @selenium @_tested
     Scenario: I can manage final results
+      When I click hidden link by url regex "/call_centres\/campaigns\/\d+\/edit/"
+      And I should see "Edit campaign"
+      And I follow translated "campaigns.edit.button_manage_result_types"
+      When I click hidden link by url regex "/call_centres\/campaigns\/\d+\/results\/new\?type=final/"
+      And I should see translated "results.new.final_result"
+      And I fill in "Name" with "I am on fire"
+      And I follow translated "shared.lead_templates.form.new_lead_template_field"
+      And I fill in "result_result_fields_attributes_0_name" with "Some text"
+      And I check "result_result_fields_attributes_0_is_mandatory"
+      And I press translated "administration.lead_templates.new.view.button_create"
+      Then I should see "I am on fire"
+      And I should see "Some text"
 
     @3 @tbr @__campaign_manage_result_types @_done 
     Scenario: I can add custom fields to result type

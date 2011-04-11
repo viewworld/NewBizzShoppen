@@ -1,7 +1,7 @@
 <header back="true" backurl="#{path_back}"><%= t("contacts.edit.title") %></header>
 
-<%= contact.lower_item_in_campaign_list ? link_to("<<", url_for(:controller => "#{namespace}/contacts", :action => :edit, :campaign_id => campaign, :id => contact.lower_item_in_campaign_list)) : "<<" %>
-<%= contact.higher_item_in_campaign_list ? link_to(">>", url_for(:controller => "#{namespace}/contacts", :action => :edit, :campaign_id => campaign, :id => contact.higher_item_in_campaign_list)) : ">>" %>
+<%= contact.lower_item_in_campaign_list ? link_to("<<", url_for(:controller => "#{namespace}/contacts", :action => :edit, :campaign_id => campaign, :id => contact.lower_item_in_campaign_list), :id => "prev_contact") : "<<" %>
+<%= contact.higher_item_in_campaign_list ? link_to(">>", url_for(:controller => "#{namespace}/contacts", :action => :edit, :campaign_id => campaign, :id => contact.higher_item_in_campaign_list), :id => "next_contact") : ">>" %>
 
 <%= semantic_form_for [namespace, campaign, contact], :method => :put do |form| %>
     <frm title="Edit">

@@ -15,6 +15,8 @@ class Result < ActiveRecord::Base
   scope :generic_results, where(:generic => true)
   scope :custom_results, where(:generic => false)
 
+  validates :name, :presence => true
+
   def to_s
     name
   end

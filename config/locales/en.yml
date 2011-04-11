@@ -1945,6 +1945,12 @@ en:
         remove_lead_template_field: Remove
         template_name: Template name
         field_name: Field name
+    results:
+      form:
+        new_lead_template_field: New field
+        remove_lead_template_field: Remove
+        template_name: Template name
+        field_name: Field name
     leads:
       form:
         country_local_label: Local
@@ -1987,6 +1993,13 @@ en:
         type1: Number
         type2: Date
         type3: Note
+    result_field:
+      field_type:
+        type0: Text
+        type1: Number
+        type2: Date
+        type3: Note
+        type4: Time
     locale:
       en: English
       dk: Danish
@@ -2184,6 +2197,11 @@ en:
     credit_notes:
       create:
         notice: "Invoice has bee credited successfully"
+    results:
+      create:
+        notice: "Result type was successfully created."
+      update:
+        notice: "Result type was successfully updated."        
     actions:
       create:
         notice: "%{resource_name} was successfully created."
