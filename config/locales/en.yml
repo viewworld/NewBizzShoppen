@@ -1884,6 +1884,8 @@ en:
           news:
             agent:
               attributes:
+                title:
+                  blank: "can't be blank"
                 content:
                   blank: "can't be blank"
         country:
