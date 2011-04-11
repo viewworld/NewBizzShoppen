@@ -98,6 +98,9 @@ Feature: Agent campaign - management
     @3 @is @__campaign_manage_results @_done
     Scenario: I can see template fields for current category
     #dynamically loaded via ajax
+    
+    @3 @tbr @__campaign_manage_results @_done
+    Scenario: I can go to previous/next contact edit page through arrows    
 
 
     #
@@ -129,7 +132,12 @@ Feature: Agent campaign - management
 
     @3 @tbr @__campaign_manage_result_types @_done 
     Scenario: I can add custom fields to result type
-
+    
+    @1 @tbr @__campaign_manage_result_types @_done 
+    Scenario: I can see list of fields in result types list
+    
+    @3 @tbr @__campaign_manage_result_types @_todo
+    Scenario: I can select "time" type for custom field in result type
 
     #call results
     #
