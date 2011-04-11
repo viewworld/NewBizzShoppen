@@ -135,7 +135,8 @@ Feature: Buy out
     And I go to browse leads
     And I follow "Computers"
     And I follow translated "leads.index.add_to_cart_buyout_link"
-    And I follow translated "layout.main_menu.customer.not_invoiced"
+    And I follow translated "layout.main_menu.customer.invoices"
+    And I follow translated "customer.invoices.index.view.pending_leads"
     Then I should see "1,230.00" within "#invoices_list .ta_r"
 
   @added @m6 @_done @tgn
@@ -152,7 +153,8 @@ Feature: Buy out
     And I go to browse leads
     And I follow translated "layout.main_menu.shared.browse_leads"
     And I follow translated "leads.index.add_to_cart_buyout_link"
-    And I follow translated "layout.main_menu.customer.not_invoiced"
+    And I follow translated "layout.main_menu.customer.invoices"
+    And I follow translated "customer.invoices.index.view.pending_leads"
     Then I should see "1,230.00" within "#invoices_list .ta_r"
 
   @added @m6 @_done @_tested

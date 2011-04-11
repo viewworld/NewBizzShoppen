@@ -11,7 +11,8 @@ Feature: Ordered leads filter for big buyer
     And I go to leads
     And I follow "Computers"
     And I follow translated "leads.index.buy_lead"
-    And I follow translated "layout.main_menu.customer.not_invoiced"
+    And I follow translated "layout.main_menu.customer.invoices"
+    And I follow translated "customer.invoices.index.view.pending_leads"
     Then I should see "1" rows in a table within "#not_invoiced_leads"
 
   @m8b @requested @_done @_tested
