@@ -1,4 +1,4 @@
-<header><%= campaign.name %></header>
+<header back="true" backurl="#{path_back}"><%= campaign.name %></header>
 
 <%= t("campaigns.show.total_contacts") %>: <%= campaign.contacts.size %>
 <%= t("campaigns.show.total_agents") %>: <%= campaign.users.size %>

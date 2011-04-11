@@ -38,7 +38,7 @@ class CallResult < ActiveRecord::Base
     def for_table_row(date_from, date_to, result_ids, agent_ids, campaign_id)
       DateCalculator.days_or_ranges(date_from, date_to, 14).inject([]) do |result, output|
         date_start, date_stop = output.class == Range ? [output.first, output.last] : [output, output]
-        results = CallResult.joins(:contact).where("leads.campaign_id = #{campaign_id} and call_results.result_id IN (#{result_ids*','}) and call_results.agent_id IN (#{agent_ids*','}) and call_results.created_at < '#{date_stop.strftime("%Y-%m-%d")} 23:59:59' and call_results.created_at > '#{date_start.strftime("%Y-%m-%d")} 00:00:01'")
+        results = CallResult.joins(:contact).where(:leads => {:campaign_id => campaign_id }, :result_id => result_ids, :agent_id => agent_ids).where("call_results.created_at < '#{date_stop.strftime("%Y-%m-%d")} 23:59:59' and call_results.created_at > '#{date_start.strftime("%Y-%m-%d")} 00:00:01'")            
         result << {:number => results.size, :ids => results.map(&:id).blank? ? [0] : results.map(&:id) }
       end
     end
