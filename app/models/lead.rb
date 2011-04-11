@@ -256,7 +256,7 @@ class Lead < ActiveRecord::Base
                  true, creator.parent_id, creator.parent.nil? ? "" : creator.parent.send(:casted_class).to_s, creator.id, creator.class.to_s, "User::Admin",
                  (creator.has_role?(:call_centre_agent) and creator.parent.present?) ? creator.parent.send(:casted_class).find(creator.parent_id).subaccounts : [])
     templates = templates.where("is_mandatory = ?", with_mandatory_only) unless with_mandatory_only.nil?
-    templates
+    templates.order("lead_templates.name")
   end
 
   def all_lead_template_values(selected_template=nil)
