@@ -34,7 +34,7 @@ Scenario: I can create transaction (manual) for given invoice (need to supply am
   When I go to administration invoices
   Then I follow translated "administration.invoices.index.view.add_transaction"
   And I fill in "manual_transaction_amount" with "291.99"
-  And I fill in "manual_transaction_paid_at" with "12-12-2010 00:00:00"
+  And I fill in "datepicker" with "12-12-2010 00:00:00"
   And I press translated "administration.payment_transactions.new.view.button_create"
   Then I should see translated "flash.payment_transactions.create.notice"
 
@@ -42,7 +42,7 @@ Scenario: I can create transaction (manual) for given invoice (need to supply am
 Scenario: I can edit transaction (manual) for given invoice
   Then I follow translated "administration.payment_transactions.index.view.edit"
   And I fill in "payment_transaction_amount" with "121.99"
-  And I fill in "payment_transaction_paid_at" with "01-12-2010 00:00:00"
+  And I fill in "datepicker" with "01-12-2010 00:00:00"
   And I press translated "administration.payment_transactions.edit.view.button_update"
   Then I should see translated "flash.payment_transactions.update.notice"
   And I should see "121.99"
@@ -52,13 +52,13 @@ Scenario: I can create more than one transaction for given invoice
   When I go to administration invoices
   Then I follow translated "administration.invoices.index.view.add_transaction"
   And I fill in "manual_transaction_amount" with "291.99"
-  And I fill in "manual_transaction_paid_at" with "12-12-2010 00:00:00"
+  And I fill in "datepicker" with "12-12-2010 00:00:00"
   And I press translated "administration.payment_transactions.new.view.button_create"
   Then I should see translated "flash.payment_transactions.create.notice"
   When I go to administration invoices
   Then I follow translated "administration.invoices.index.view.add_transaction"
   And I fill in "manual_transaction_amount" with "10.99"
-  And I fill in "manual_transaction_paid_at" with "14-12-2010 00:00:00"
+  And I fill in "datepicker" with "14-12-2010 00:00:00"
   And I press translated "administration.payment_transactions.new.view.button_create"
   Then I should see translated "flash.payment_transactions.create.notice"
 
