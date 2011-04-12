@@ -116,7 +116,7 @@
       </li>
       <%= form.input :notify_buyers_after_update, :as => :boolean, :hint => hint_for(@lead, :notify_buyers_after_update) unless @lead.lead_purchases.empty? %>
       <%= form.input :sale_limit, :as => :select, :collection => (1..10), :include_blank => false, :hint => hint_for(@lead, :sale_limit) %>
-      <%= form.input :purchase_decision_date, :as => :string, :input_html => {:id => "datepicker"}, :wrapper_html => {:class => "date"}, :hint => hint_for(@lead, :purchase_decision_date) %>
+      <%= form.input :purchase_decision_date, :as => :datepicker, :wrapper_html => {:class => "date"}, :hint => hint_for(@lead, :purchase_decision_date) %>
     </ol>
   </fieldset>
 </div>
@@ -125,9 +125,7 @@
 
 <script>
     var nestedFormsCount = <%= @lead.lead_translations.reject{ |lt| lt.locale == I18n.locale.to_s }.size %>;
-    $(function() {
-        $("#datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
-    });
+
     function add_fields(link, content) {
         if ($('#locale_picker').text() != null)
         {

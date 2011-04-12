@@ -166,7 +166,7 @@ module ApplicationHelper
   end
   
   def format_date(date, with_time=false)
-    date.strftime("%d-%m-%Y#{' %H:%M' if with_time}")
+    date.strftime("#{I18n.t("date.formats.default")}#{' %H:%M' if with_time}")
   end
 
   def href(url)

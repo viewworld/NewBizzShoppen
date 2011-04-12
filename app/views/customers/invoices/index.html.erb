@@ -12,11 +12,11 @@
               </li>
               <li class="date">
                 <%= f.label :with_sale_date_after_and_including, t("customer.invoices.index.view.search.with_sale_date_after_and_including") %>
-                <%= f.text_field :with_sale_date_after_and_including, :class => "datepicker" %>
+                <%= f.text_field :with_sale_date_after_and_including, :class => "formtastic-ui-datepicker"  %>
               </li>
               <li class="date">
                 <%= f.label :with_sale_date_before_and_including, t("customer.invoices.index.view.search.with_sale_date_before_and_including") %>
-                <%= f.text_field :with_sale_date_before_and_including, :class => "datepicker" %>
+                <%= f.text_field :with_sale_date_before_and_including, :class => "formtastic-ui-datepicker" %>
               </li>
               <li class="select">
                 <%= f.label :with_paid, t("customer.invoices.index.view.search.payment_status") %>
@@ -76,11 +76,3 @@
       </table>
   <% end %>
 </column-mc:>
-
-<js:>
-  <script type="text/javascript">
-      $(function() {
-          $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
-      });
-  </script>
-</js:>

@@ -148,6 +148,10 @@
         $(this).qtip("destroy");
     });
     <% end %>
+
+    $(document).ready(function(){
+        $('input.formtastic-ui-datepicker').datepicker({ dateFormat: '<%= I18n.t("date.formats.datepicker") %>' });
+    });
 </script>
 
 <js:/>
