@@ -42,6 +42,10 @@ en:
         separator: '.'
         delimiter: ','
         precision: 2
+  date:
+    formats:
+      default: "%d-%m-%Y"
+      datepicker: "dd-mm-yy"
   layout:
     main_menu:
       admin:
@@ -1740,6 +1744,9 @@ en:
           total: "Total"
           actions: Actions
           no_invoices: "There are no invoices for your account"
+          pending_leads: "Pending leads"
+          due_invoices: "Due invoices"
+          paid_invoices: "Paid"
           search:
             with_keyword: "Keyword"
             with_sale_date_after_and_including: "Sale after"
@@ -1791,7 +1798,7 @@ en:
     not_invoiced:
       index:
         view:
-          header: Not Invoiced Leads
+          header: "Pending leads"
           lead_header: "Lead"
           lead_price: "Price"
           create_invoice: Create invoice
@@ -1819,6 +1826,7 @@ en:
           bulk_print_link: "Print all selected leads"
           bulk_print_link_short: "Print selected"
           email_lead: Contact lead
+          state: "State"
           search:
             keyword_label: "Keyword"
             search_button: "Search"
@@ -2055,6 +2063,14 @@ en:
         notify_buyers_after_update: "Notify sales managers about changes"
     errors:
       models:
+        article:
+          news:
+            agent:
+              attributes:
+                title:
+                  blank: "can't be blank"
+                content:
+                  blank: "can't be blank"
         country:
           attributes:
             name:
@@ -2220,6 +2236,9 @@ en:
       update:
         notice: "Stats update has been queued. It may take few minutes to finish."
   formtastic:
+    date:
+      formats:
+        default: "%d-%m-%Y"
     labels:
       address:
         address_line_1: "Address line 1"

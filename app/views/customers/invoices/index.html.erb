@@ -12,11 +12,11 @@
               </li>
               <li class="date">
                 <%= f.label :with_sale_date_after_and_including, t("customer.invoices.index.view.search.with_sale_date_after_and_including") %>
-                <%= f.text_field :with_sale_date_after_and_including, :class => "datepicker" %>
+                <%= f.text_field :with_sale_date_after_and_including, :class => "formtastic-ui-datepicker"  %>
               </li>
               <li class="date">
                 <%= f.label :with_sale_date_before_and_including, t("customer.invoices.index.view.search.with_sale_date_before_and_including") %>
-                <%= f.text_field :with_sale_date_before_and_including, :class => "datepicker" %>
+                <%= f.text_field :with_sale_date_before_and_including, :class => "formtastic-ui-datepicker" %>
               </li>
               <li class="select">
                 <%= f.label :with_paid, t("customer.invoices.index.view.search.payment_status") %>
@@ -39,7 +39,21 @@
 
 <column-mc:>
 
-  <header><%= t("customer.invoices.index.view.header") %></header>
+  <header>
+    <param:content>
+      <%= t("customer.invoices.index.view.header") %>
+    </param:content>
+
+    <param:actions>
+      <ul class="header_actions">
+        <% if current_user.big_buyer? %>
+            <li><%= bt_link_to nil, t("customer.invoices.index.view.pending_leads"), customers_not_invoiced_leads_path %></li>
+        <% end %>
+        <li><%= bt_link_to nil, t("customer.invoices.index.view.due_invoices"), customers_invoices_path(:search => {:with_paid => 0}) %></li>
+        <li class="last"><%= bt_link_to nil, t("customer.invoices.index.view.paid_invoices"), customers_invoices_path(:search => {:with_paid => 1}) %></li>
+      </ul>
+    </param:actions>
+  </header>
 
   <% unless @invoices.any? %>
       <%= blank_state_message(t("customer.invoices.index.view.no_invoices")) %>
@@ -76,11 +90,3 @@
       </table>
   <% end %>
 </column-mc:>
-
-<js:>
-  <script type="text/javascript">
-      $(function() {
-          $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
-      });
-  </script>
-</js:>
