@@ -194,6 +194,9 @@ Feature: Agent campaign - management
     @3 @tbr @__campaign_manage_result_types @_todo
     Scenario: I can select "time" type for custom field in result type
 
+    @3 @tbr @__campaign_manage_result_types @_todo
+    Scenario: I custom fields values should validate correct format
+
     #call results
     #
     # GENERIC RESULT TYPES

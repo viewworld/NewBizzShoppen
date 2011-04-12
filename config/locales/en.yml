@@ -2117,6 +2117,12 @@ en:
           attributes:
             default:
               cannot_be_disabled: "can't be disabled"
+        result_value:
+          attributes:
+            value:
+              incorrect_date_format: "incorrect date format"
+              incorrect_time_format: "incorrect time format"
+              incorrect_number_format: "incorrect number format"
 
   activemodel:
     errors:

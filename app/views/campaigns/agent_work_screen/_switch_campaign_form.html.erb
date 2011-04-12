@@ -2,7 +2,7 @@
     <ul>
       <li>
         <label><%= t("agent_work_screen.index.select_campaign") %></label>
-        <%= select_tag :change_campaign_id, options_for_select(agent.campaigns.map{|c| [c.name, c.id]}, campaign.id) %>
+        <%= select_tag :change_campaign_id, options_for_select(Campaign.available_for_user(agent).map{|c| [c.name, c.id]}, campaign.id) %>
       </li>
     </ul>
   <% end %>

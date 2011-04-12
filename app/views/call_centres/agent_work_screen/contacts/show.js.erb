@@ -1,2 +1,4 @@
+$("#call_sheet").html("<%= escape_javascript(render(:partial => "campaigns/agent_work_screen/call_sheet", :locals => @locals)) %>");
 $("#results_sheet").html("<%= escape_javascript(render(:partial => "campaigns/agent_work_screen/results_sheet", :locals => @locals)) %>");
-$("#contact_info").html("<%= escape_javascript(@locals[:contact] ? render(:partial => "campaigns/agent_work_screen/contact_form", :locals => @locals) : "") %>");       
+$("#contact_info").html("<%= escape_javascript(@locals[:contact] ? render(:partial => "campaigns/agent_work_screen/contact_form", :locals => @locals) : "") %>");
+loadScripts();
