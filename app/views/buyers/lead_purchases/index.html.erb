@@ -171,6 +171,10 @@
                       </li>
                   <% end %>
                 </ul-actions>
+                <% if lead_purchase.lead.buyout_possible_for?(current_user) %>
+                    <%= bt_link_to :cart, t("leads.index.add_to_cart_buyout_link"), buyers_cart_items_path(:id => lead_purchase.lead.id, :requested_url =>  request.fullpath, :buyout => true), :method => :post, :class => "default_action" %>
+                    <%= hidden_field_tag :confirmation_message, t("leads.index.add_to_cart_buyout_lead_confirm_msg"), :class => "default_action_confirmation_msg" %>
+                <% end %>
             <% end %>
 
 

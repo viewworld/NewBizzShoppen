@@ -312,7 +312,7 @@ class Lead < ActiveRecord::Base
   end
 
   def buyout!(buyer)
-    if buyer.lead_purchases.create(:lead_id => self.id,
+    if buyer.lead_buyouts.create(:lead_id => self.id,
                                    :paid => false,
                                    :accessible_from => (buyer.big_buyer ? Time.now : nil),
                                    :quantity => buyout_quantity)
