@@ -59,13 +59,13 @@ module Formtastic
 
     def datepicker_input(method, options = {})
       format = options[:format] || I18n.t("date.formats.default") || '%d-%m-%Y'
-      string_input(method, datepicker_options(format, method, object.send(method)).merge(options))
+      string_input(method, datepicker_options(format, method, object.send(method)).deep_merge(options))
     end
 
     # Generate html input options for the datepicker_input
     #
     def datepicker_options(format, method, value = nil)
-      datepicker_options = {:label_html =>  {:class => "date"}, :input_html => {:id => "datepicker_#{method}", :class => 'formtastic-ui-datepicker datepicker', :value => value.try(:strftime, format)}}
+      datepicker_options = {:label_html =>  {:class => "date"}, :input_html => {:id => "datepicker", :class => 'formtastic-ui-datepicker datepicker', :value => value.try(:strftime, format)}}
     end
   end
 end

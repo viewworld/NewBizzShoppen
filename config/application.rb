@@ -54,6 +54,7 @@ module Nbs
     config.autoload_paths += %W( #{config.root}/app/models/ckeditor )
 
     require "#{config.root}/lib/settings.rb"
+    require "#{config.root}/lib/column_path.rb"
 
     require "#{config.root}/lib/currency_converter.rb"
 
