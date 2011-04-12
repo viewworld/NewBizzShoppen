@@ -1,0 +1,9 @@
+<popup:>
+  <%= render :partial => "call_results/edit", :locals => {:namespace => :call_centres,
+                                                          :contact => @contact,
+                                                          :call_result => @call_result,
+                                                          :path => [:call_centres, @campaign, :agent_work_screen, @contact, @call_result],
+                                                          :back_path => nil} %>
+
+
+</popup:>

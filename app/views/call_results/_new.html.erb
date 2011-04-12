@@ -1,4 +1,4 @@
-<header back="true"><%= t("call_results.new.title") %></header>
+<header back="#{back_path}" backurl="#{back_path}"><%= t("call_results.new.title") %></header>
 
 <%= semantic_form_for path, :method => :post do |form| %>
     <frm title="Create new">
@@ -10,7 +10,7 @@
         <ibt c="fltri" icon="save">
           <%= form.submit t("call_results.new.save_button"), :name => "commit_create" %>
         </ibt>
-        <%= bt_link_to nil, t("call_results.new.cancel_button"), back_path, :class => "bt_grey fltr" %>
+        <%= bt_link_to(nil, t("call_results.new.cancel_button"), back_path, :class => "bt_grey fltr") if back_path %>
       </param:actions>
     </frm>
 <% end %>
