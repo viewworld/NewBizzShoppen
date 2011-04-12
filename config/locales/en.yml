@@ -1581,6 +1581,9 @@ en:
           total: "Total"
           actions: Actions
           no_invoices: "There are no invoices for your account"
+          pending_leads: "Pending leads"
+          due_invoices: "Due invoices"
+          paid_invoices: "Paid"
           search:
             with_keyword: "Keyword"
             with_sale_date_after_and_including: "Sale after"
@@ -1632,7 +1635,7 @@ en:
     not_invoiced:
       index:
         view:
-          header: Not Invoiced Leads
+          header: "Pending leads"
           lead_header: "Lead"
           lead_price: "Price"
           create_invoice: Create invoice

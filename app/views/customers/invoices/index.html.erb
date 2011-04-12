@@ -39,7 +39,21 @@
 
 <column-mc:>
 
-  <header><%= t("customer.invoices.index.view.header") %></header>
+  <header>
+    <param:content>
+      <%= t("customer.invoices.index.view.header") %>
+    </param:content>
+
+    <param:actions>
+      <ul class="header_actions">
+        <% if current_user.big_buyer? %>
+            <li><%= bt_link_to nil, t("customer.invoices.index.view.pending_leads"), customers_not_invoiced_leads_path %></li>
+        <% end %>
+        <li><%= bt_link_to nil, t("customer.invoices.index.view.due_invoices"), customers_invoices_path(:search => {:with_paid => 0}) %></li>
+        <li class="last"><%= bt_link_to nil, t("customer.invoices.index.view.paid_invoices"), customers_invoices_path(:search => {:with_paid => 1}) %></li>
+      </ul>
+    </param:actions>
+  </header>
 
   <% unless @invoices.any? %>
       <%= blank_state_message(t("customer.invoices.index.view.no_invoices")) %>
