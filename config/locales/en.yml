@@ -46,6 +46,8 @@ en:
     formats:
       default: "%d-%m-%Y"
       datepicker: "dd-mm-yy"
+    format:
+      standard: "%d-%m-%Y"
   layout:
     main_menu:
       admin:
