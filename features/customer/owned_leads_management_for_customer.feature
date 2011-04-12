@@ -135,7 +135,7 @@ Scenario: I can set response deadline for lead
   And I make ajax call to save lead purchase for lead Printers ultimate deal
   And I wait 3 second
   Given I go to buyer lead purchases
-  Then "response_deadline" should be selected for "2011-01-01"
+  Then "response_deadline" should be selected for "01-01-2011"
 
 @tgn @_tested @selenium  @noguess
 Scenario: I can bulk set response deadlines for lead

@@ -45,6 +45,12 @@ en:
         separator: '.'
         delimiter: ','
         precision: 2
+  date:
+    formats:
+      default: "%d-%m-%Y"
+      datepicker: "dd-mm-yy"
+    format:
+      standard: "%d-%m-%Y"
   layout:
     main_menu:
       admin:
@@ -2004,6 +2010,9 @@ en:
       update:
         notice: "Stats update has been queued. It may take few minutes to finish."
   formtastic:
+    date:
+      formats:
+        default: "%d-%m-%Y"
     labels:
       address:
         address_line_1: "Address line 1"

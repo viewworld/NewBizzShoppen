@@ -12,11 +12,11 @@
               </li>
               <li class="date">
                 <%= f.label :with_assigned_at_date_after_and_including, t("administration.upcoming_invoices.index.view.search.with_assigned_at_date_after_and_including") %>
-                <%= f.text_field :with_assigned_at_date_after_and_including, :class => "datepicker" %>
+                <%= f.text_field :with_assigned_at_date_after_and_including, :class => "formtastic-ui-datepicker" %>
               </li>
               <li class="date">
                 <%= f.label :with_assigned_at_date_before_and_including, t("administration.upcoming_invoices.index.view.search.with_assigned_at_date_before_and_including") %>
-                <%= f.text_field :with_assigned_at_date_before_and_including, :class => "datepicker" %>
+                <%= f.text_field :with_assigned_at_date_before_and_including, :class => "formtastic-ui-datepicker" %>
               </li>
               <li class="commit">
                 <ibt c="bt_green" icon="magnify">
@@ -100,11 +100,3 @@
   <% end %>
 
 </column-mc:>
-
-<js:>
-  <script type="text/javascript">
-      $(function() {
-          $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
-      });
-  </script>
-</js:>
