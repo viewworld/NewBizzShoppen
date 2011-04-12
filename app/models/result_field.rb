@@ -4,8 +4,8 @@ class ResultField < ActiveRecord::Base
   INTEGER = 1.freeze
   DATE = 2.freeze
   NOTE = 3.freeze
-  TIME = 4.freeze
-  FIELD_TYPES = [STRING, INTEGER, DATE, NOTE, TIME]
+  DATETIME = 4.freeze
+  FIELD_TYPES = [STRING, INTEGER, DATE, NOTE, DATETIME]
 
   belongs_to :result
   has_many :result_value

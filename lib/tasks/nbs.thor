@@ -229,8 +229,8 @@ class Nbs < Thor
       Result.create(result) unless Result.find_by_name(result[:name])
      end
 
-    [{:name => "Call back date", :field_type => "2", :is_mandatory => true, :result => Result.find_by_name("Call back") },
-     {:name => "Call back date", :field_type => "2", :is_mandatory => true, :result => Result.find_by_name("Not interested now") },
+    [{:name => "Call back date", :field_type => "4", :is_mandatory => true, :result => Result.find_by_name("Call back") },
+     {:name => "Call back date", :field_type => "4", :is_mandatory => true, :result => Result.find_by_name("Not interested now") },
      {:name => "Meeting date", :field_type => "2", :is_mandatory => true, :result => Result.find_by_name("Meeting booked") },
      {:name => "Result message", :field_type => "0", :is_mandatory => true, :result => Result.find_by_name("Custom result") }].each do |result_field|
       ResultField.create(result_field) unless ResultField.find_by_name(result_field[:name])

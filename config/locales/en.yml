@@ -2009,7 +2009,7 @@ en:
         type1: Number
         type2: Date
         type3: Note
-        type4: Time
+        type4: Date & Time
     locale:
       en: English
       dk: Danish
@@ -2139,7 +2139,7 @@ en:
           attributes:
             value:
               incorrect_date_format: "incorrect date format"
-              incorrect_time_format: "incorrect time format"
+              incorrect_datetime_format: "incorrect date & time format"
               incorrect_number_format: "incorrect number format"
 
   activemodel:
