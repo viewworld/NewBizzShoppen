@@ -19,11 +19,16 @@
     <%= render :partial => "campaigns/agent_work_screen/call_interface", :locals => locals if contact %>
   </div>
 
+  <div>
+    <%= link_to_function t("agent_work_screen.index.show_call_log_for_current_contact"), "$('#results_sheet').show();$('#call_sheet').hide();" %>
+    <%= link_to_function t("agent_work_screen.index.show_current_call_sheet"), "$('#results_sheet').hide();$('#call_sheet').show();" %>    
+  </div>
+
   <div id="results_sheet">
     <%= render :partial => "campaigns/agent_work_screen/results_sheet", :locals => locals if contact %>
   </div>
 
-  <div id="call_sheet">
+  <div id="call_sheet" style="display:none">
     <%= render :partial => "campaigns/agent_work_screen/call_sheet", :locals => locals %>
   </div>
 

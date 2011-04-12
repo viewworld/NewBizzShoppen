@@ -298,6 +298,8 @@ en:
     index:
       title: Agent work screen
       select_campaign: Select campaign
+      show_current_call_sheet: Show current call sheet
+      show_call_log_for_current_contact: Show call log for current contact
 
 
   contacts:

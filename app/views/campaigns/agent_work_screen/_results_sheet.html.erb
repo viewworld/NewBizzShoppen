@@ -21,7 +21,7 @@
       height: 700,
       href: "<%= url_for( :controller => "#{namespace}/agent_work_screen/call_results", :action => :new, :campaign_id => campaign, :contact_id => contact) %>"+param,
       onClosed: function(){
-          $.get("<%= url_for(:controller => "#{namespace}/agent_work_screen/contacts", :action => :show, :campaign_id => campaign, :id => contact) %>");
+          $.get("<%= url_for(:controller => "#{namespace}/agent_work_screen/contacts", :action => :show, :campaign_id => campaign, :id => 0) %>");
       }
     });
   });
