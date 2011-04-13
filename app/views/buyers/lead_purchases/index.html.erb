@@ -81,7 +81,7 @@
             <% if current_user.subaccounts.present? %>
                 <li class="date">
                   <%= label_tag :bulk_response_deadline, t("lead_buyer.lead_purchases.index.view.lead_response_date") %>
-                  <%= text_field_tag :bulk_response_deadline, "", :id => "response_deadline_datepicker_bulk" %>
+                  <%= text_field_tag :bulk_response_deadline, "", :id => "response_deadline_datepicker_bulk", :class => "formtastic-ui-datepicker" %>
                 </li>
                 <li class="boolean">
                   <%= check_box_tag :bulk_clear_response_dates, "1", false, :class => "non_selectable" %>
@@ -134,7 +134,7 @@
                     <p>
                       <%= label_tag :response_deadline, t("lead_buyer.lead_purchases.index.view.lead_response_date") %>
                       <br/>
-                      <%= text_field_tag :response_deadline, lead_purchase.response_deadline, :id => "response_deadline_datepicker_#{lead_purchase.id}", :class => "date" %>
+                      <%= text_field_tag :response_deadline, lead_purchase.response_deadline.blank? ? nil : lead_purchase.response_deadline.strftime(I18n.t("date.format.standard")), :id => "response_deadline_datepicker_#{lead_purchase.id}", :class => "date" %>
                     </p>
                 <% end %>
             <% end %>
@@ -191,15 +191,14 @@
 
 
 <script>
-    $(function() {
+    $(document).ready(function(){
     <% @lead_purchases.each do |lead_purchase| %>
-        $("#response_deadline_datepicker_<%= lead_purchase.id %>").datepicker({ dateFormat: 'yy-mm-dd',
+        $("#response_deadline_datepicker_<%= lead_purchase.id %>").datepicker({ dateFormat: '<%= I18n.t("date.formats.datepicker") %>',
             onSelect: function(dateText, inst) {
                 update_lead_response_deadline('<%= buyers_lead_purchase_path(lead_purchase) %>', this.value)
             }
         });
     <% end %>
-        $("#response_deadline_datepicker_bulk").datepicker({ dateFormat: 'yy-mm-dd' });
     });
 
     function update_lead_response_deadline(url, field_value)

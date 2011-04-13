@@ -13,14 +13,11 @@ class I18nUtils
   end
 
   def self.parse(hash)
-    processed, created = 0, 0
     raise InvalidLocaleFile if hash.keys.size != 1
     locale = hash.keys.first
     I18nUtils.extract_i18n_keys(hash[locale]).each do |key,value|
-      processed += 1
       unless Translation.where(:locale => locale, :key => key).first
         Translation.create!(:locale => locale, :key => key, :value => value)
-        created += 1
       end
     end
   end
