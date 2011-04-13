@@ -10,10 +10,12 @@ class Category < ActiveRecord::Base
           :conditions => "asset_type = 'Asset::CategoryImage'",
           :dependent  => :destroy
   has_many :category_interests
-  has_many :news, :as => :resource, :class_name => "Article::News::CategoryHome"
+  has_many :news, :as => :resource, :class_name => "Article::News::CategoryHome", :dependent => :destroy
+  has_one :blurb, :as => :resource, :class_name => "Article::Cms::InterfaceContentText", :dependent => :destroy
 
   after_save :set_cached_slug
   before_save :handle_locking_for_descendants
+  after_create :generate_blurb
 
   validates_presence_of :name
   validates_uniqueness_of :name, :scope => :parent_id
@@ -63,10 +65,16 @@ class Category < ActiveRecord::Base
   ").where("(categories.is_customer_unique = 't' and category_customers.user_id = :user_id) OR (categories_users.user_id = :user_id)", {:user_id => user.id})}
 
   before_destroy :check_if_category_is_empty
+  before_destroy :mark_articles_to_destroy
 
   accepts_nested_attributes_for :image
 
   private
+
+  def generate_blurb
+    create_blurb(:title => "blurb_category_home_page_#{seo_name.underscore}".humanize,
+                 :key => "blurb_category_home_page_#{id}").publish!
+  end
 
   def seo_name(add_id = false)
     name_en = CategoryTranslation.first(:conditions => ["category_id = ? and locale = ?", self.id, "en"])
@@ -88,6 +96,11 @@ class Category < ActiveRecord::Base
     return true if is_empty?
     errors[:base] << I18n.t("flash.categories.destroy.error")
     false
+  end
+
+  def mark_articles_to_destroy
+    blurb.force_destroy=true if blurb
+    news.each{|n| n.force_destroy=true}
   end
 
   def refresh_leads_count_cache!

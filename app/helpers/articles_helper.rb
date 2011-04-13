@@ -5,12 +5,15 @@ module ArticlesHelper
     end
   end
 
-  def blurb(key)
-    if blurb = Article::Cms::InterfaceContentText.where(:key => key).first
+  def blurb(object=nil)
+    raise "Specify object or key to display blurb" unless object
+    if blurb = (object.is_a?(String) ? Article::Cms::InterfaceContentText.where(:key => object).first : object.blurb)
       raw %{
-        #{(link_to "(#{t("common.edit_link").downcase})", edit_administration_article_path(blurb)) if current_user and current_user.has_any_role?(:admin, :translator)}
+        #{(link_to image_tag("icons/edit.png"), edit_administration_article_path(blurb)) if current_user and current_user.has_any_role?(:admin, :translator)}
         #{blurb.content}
-      }
+        }
+    else
+      "Blurb not found"
     end
   end
 
