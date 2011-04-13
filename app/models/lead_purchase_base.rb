@@ -7,6 +7,27 @@ class LeadPurchaseBase < ActiveRecord::Base
   belongs_to :owner, :class_name => "User::Customer", :foreign_key => "owner_id"
 
   include ScopedSearch::Model
+
+  CSV_ATTRS = %w(header description company_name contact_name phone_number email_address address)
+  ACTIVE               = 0
+  ABOUT_TO_EXPIRE      = 1
+  EXPIRED              = 2
+
+  NOT_CONTACTED        = 0
+  CONTACTED            = 1
+
+  RATING_EXCELLENT =              0
+  RATING_VERY_GOOD =              1
+  RATING_SATISFACTORY =           2
+  RATING_MISSING_CONTACT_INFO =   12
+  RATING_INCORRECT_DESCRIPTION =  13
+  RATING_ANOTHER_SUPPLIER =       14
+  RATING_OTHER_REASON =           15
+
+  UNSATISFACTORY_RATING_LEVELS = [RATING_MISSING_CONTACT_INFO, RATING_INCORRECT_DESCRIPTION,
+                          RATING_ANOTHER_SUPPLIER, RATING_OTHER_REASON]
+  RATING_LEVELS = [RATING_EXCELLENT, RATING_VERY_GOOD, RATING_SATISFACTORY] + UNSATISFACTORY_RATING_LEVELS
+
   scope :accessible, where("accessible_from IS NOT NULL")
   scope :with_owner, lambda { |owner_id| where("owner_id = ?", owner_id) }
   scope :with_assignee, lambda { |assignee_id| where("assignee_id = ?", assignee_id) }
