@@ -16,7 +16,7 @@ Feature: Customer signup
       | user_customer_password              | secret       |
       | user_customer_password_confirmation |              |
     And I press translated "buyer_accounts.new.view.button_create_account"
-    Then I should see translated "activerecord.errors.models.user.customer.attributes.email.invalid"
+    Then I should see translated "activerecord.errors.messages.invalid"
     And I should see translated "activerecord.errors.models.user.customer.attributes.password.confirmation"
 
 @_tested
@@ -55,14 +55,14 @@ Feature: Customer signup
     And I sign in as email@person.com with password secret
     And I should be signed in
     When I follow the confirmation link sent to email@person.com with role customer
-    Then I should see translated "activerecord.errors.models.user.attributes.confirmation_token.blank"
+    Then I should see translated "activerecord.errors.messages.blank"
 
   @_tested
   Scenario: Signed out user clicks confirmation link again
     Given I am signed up and confirmed as user with email email@person.com and password secret and role customer
     When I am not sign in
     And I follow the confirmation link sent to email@person.com with role customer
-    Then I should see translated "activerecord.errors.models.user.attributes.confirmation_token.blank"
+    Then I should see translated "activerecord.errors.messages.blank"
 
   @tgn @m1 @_tested @added
   Scenario: Newsletter checkbox should be selected by default
@@ -90,4 +90,4 @@ Feature: Customer signup
     And I select "Denmark" from "user_customer_address_attributes_country_id"
     And I check "user_customer_agreement_read"
     And I press translated "buyer_accounts.new.view.button_create_account"
-    Then I should see translated "activerecord.errors.models.user.customer.attributes.screen_name.taken"
+    Then I should see translated "activerecord.errors.messages.taken"

@@ -1,0 +1,3 @@
+class LeadSinglePurchase < LeadPrimaryPurchase
+
+end

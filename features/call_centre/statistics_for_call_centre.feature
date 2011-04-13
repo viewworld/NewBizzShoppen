@@ -1,4 +1,4 @@
-@statistics @$_call_centre @m9
+@statistics @$_call_centre
 Feature: Statistics for call centre
 
 In order to make better decisions
@@ -39,5 +39,3 @@ Scenario: I can see list of agents with following metrics displayed: leads creat
 Scenario: I can see list of agents with following metrics displayed: leads sold, total earnings
 
 Scenario: I can sort the list of agents metrices
-
-Scenario: Non traceable metrics are stored in separate statistics table and updated daily

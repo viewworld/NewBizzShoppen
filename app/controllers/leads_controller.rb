@@ -8,10 +8,10 @@ class LeadsController < ApplicationController
 
   def show
     show! do |format|
-      format.html { @lead.increment!(:clicks_count) }
+      @lead.update_stats!(:clicks_count)
+      format.html {  }
     end
   end
-
 
   def index
     index! do |format| 

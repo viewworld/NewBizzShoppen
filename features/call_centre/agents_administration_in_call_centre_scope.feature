@@ -164,3 +164,6 @@ Scenario: I can bulk unblock users
   Then I check "mark_all"
   And I follow "unlock_selected"
   Then I should see translated "flash.bulk_call_centre_agents_update.update.notice"
+
+@m9 @tgn
+Scenario: I can certify my own agents
