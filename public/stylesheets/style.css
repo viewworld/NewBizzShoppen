@@ -721,12 +721,14 @@ h4
     padding: 0 10px 0 5px;
 }
 
-.header_actions li a.bt:hover
+.header_actions li a.bt:hover,
+.header_actions li a.bt.bt_active    
 {
     background-position: 0 -620px;    
 }
 
-.header_actions li a.bt:hover span
+.header_actions li a.bt:hover span,
+.header_actions li a.bt.bt_active:hover span    
 {
     background-position: 0 -646px;    
 }
@@ -737,7 +739,8 @@ h4
     padding-left: 8px;
 }
 
-.header_actions li:first-child a.bt:hover
+.header_actions li:first-child a.bt:hover,
+.header_actions li:first-child a.bt.bt_active
 {
     background-position: 0 -594px;
 }
@@ -764,7 +767,8 @@ h4
     background-position: right -266px;
 }
 
-.header_actions li.last a.bt:hover span
+.header_actions li.last a.bt:hover span,
+.header_actions li.last a.bt.bt_active span    
 {
     background-position: right -318px;    
 }

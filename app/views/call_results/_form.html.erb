@@ -23,5 +23,7 @@
 
 <% if call_result.result.upgrades_to_lead? %>
     <hl/>
-    <%= render :partial => "/shared/results/add_result_lead_fields", :locals => {:call_result => call_result, :form => form} %>
+    <div class="pdd_10">
+      <%= render :partial => "/shared/results/add_result_lead_fields", :locals => {:call_result => call_result, :form => form} %>
+    </div>
 <% end %>

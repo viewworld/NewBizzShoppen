@@ -1,8 +1,6 @@
-<% back_path = url_for(:controller => "#{namespace}/contacts", :action => :edit, :campaign_id => contact.campaign, :id => contact) %>
+<header back="#{back_path}" backurl="#{back_path}"><%= t("call_results.edit.title") %></header>
 
-<header back="true" backurl="#{back_path}"><%= t("call_results.edit.title") %></header>
-
-<%= semantic_form_for [namespace, contact, call_result], :method => :put do |form| %>
+<%= semantic_form_for path, :method => :put do |form| %>
     <frm title="Create new">
       <param:content>
         <%= render :partial => '/call_results/form', :locals => {:form => form, :contact => contact, :call_result => call_result} %>
@@ -11,7 +9,7 @@
         <ibt c="fltri" icon="save">
           <%= form.submit t("call_results.edit.save_button"), :name => "commit_create" %>
         </ibt>
-        <%= bt_link_to nil, t("call_results.edit.cancel_button"), back_path, :class => "bt_grey fltr" %>
+        <%= bt_link_to(nil, t("call_results.edit.cancel_button"), back_path, :class => "bt_grey fltr") if back_path %>
       </param:actions>
     </frm>
 <% end %>

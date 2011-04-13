@@ -1,6 +1,5 @@
 <%= semantic_form_for contact, :url => url_for(:controller => "#{namespace}/agent_work_screen/contacts", :action => :update, :campaign_id => campaign, :id => contact), :html => { :method => :put }, :remote => true do |form| %>
-    <h2>Current contact: <%= contact.company_name %></h2>
-    <frm>
+    <frm title="#{'Current contact: '+contact.company_name}">
       <param:content>
         <%= render :partial => '/shared/leads/form', :locals => {:form => form, :campaign => campaign, :contact => contact} %>
       </param:content>

@@ -49,7 +49,7 @@ class CallCentres::AgentWorkScreen::CallResultsController < CallCentres::AgentWo
 
   def destroy
     destroy! do |success, failure|
-      success.html { redirect_to edit_call_centres_campaign_contact_path(@contact.campaign, @contact) }
+      success.js { set_locals }
       failure.html {}
     end    
   end

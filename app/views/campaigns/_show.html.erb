@@ -4,50 +4,53 @@
 
     <div class="search_content">
 
-      <p>
-        <%= t("campaigns.show.total_contacts") %>: <%= campaign.contacts.size %>
-        <%= t("campaigns.show.total_agents") %>: <%= campaign.users.size %>
-        <%= t("campaigns.show.total_calls") %>: ??
-      </p>
-
       <%= semantic_form_for search, :url => path do |f| %>
-
-          <br/>
-          <p>
-
-                <%= t("campaigns.show.ranges_label") %>:
-                <%= link_to_function t("campaigns.show.ranges.whole_campaign"), "$('#date_from').val('#{campaign.start_date}');$('#date_to').val('#{campaign.end_date}')" %>
-                <%= link_to_function t("campaigns.show.ranges.this_month"), "$('#date_from').val('#{Date.today.beginning_of_month}');$('#date_to').val('#{Date.today.end_of_month}')" %>
-                <%= link_to_function t("campaigns.show.ranges.this_week"), "$('#date_from').val('#{Date.today.beginning_of_week}');$('#date_to').val('#{Date.today.end_of_week}')" %>
-                <%= link_to_function t("campaigns.show.ranges.today"), "$('#date_from').val('#{Date.today}');$('#date_to').val('#{Date.today}')" %>
-
-          </p>
-
-          <fieldset class="inputs_vertical">
+          <fieldset class="inputs_vertical grid_150 fltl">
             <ol class="no_pdd">
-              <li class="boolean">
-                <%= check_box_tag :final, "yes", final %>
-                <%= t("campaigns.show.search.final") %>                
-              </li>
-              <li class="string">
-                <%= label_tag t("campaigns.show.search.date_from") %>
-                <%= text_field_tag :date_from, date_from %>
-              </li>
-              <li class="string">
-                <%= label_tag t("campaigns.show.search.date_to") %>
-                <%= text_field_tag :date_to, date_to %>
-              </li>
               <li class="select">
                 <%= label_tag t("campaigns.show.search.agents") %>
-                <%= select_tag :agent_ids, options_from_collection_for_select(campaign.users, "id", "full_name", agent_ids), :multiple => true, :style => "width:200px;height:60px;" %>
+                <%= select_tag :agent_ids, options_from_collection_for_select(campaign.users, "id", "full_name", agent_ids), :multiple => true, :style => "height:80px;width:140px;" %>
+              </li>
+            </ol>
+          </fieldset>
+
+          <div class="fltl">
+          
+          <fieldset class="inputs_vertical">
+            <ol class="no_pdd">
+              <li class="date">
+                <%= label_tag t("campaigns.show.search.date_from") %>
+                <%= text_field_tag :date_from, date_from, :class => "datepicker" %>
+              </li>
+              <li class="date">
+                <%= label_tag t("campaigns.show.search.date_to") %>
+                <%= text_field_tag :date_to, date_to, :class => "datepicker" %>
+              </li>
+              <li class="boolean">
+                <%= check_box_tag :final, "yes", final %>
+                <%= label_tag :final, t("campaigns.show.search.final") %>
               </li>
               <li class="commit">
                 <ibt c="bt_green" icon="magnify">
                   <%= submit_tag t("campaigns.show.search_button") %>
                 </ibt>
               </li>
-            </ol>
+            </ol>            
           </fieldset>
+
+            <br/>
+
+          <p class="pdd_10 no_pdd_tb" style="margin-top:-8px;">
+            <%= t("campaigns.show.ranges_label") %>:<br/>
+            <%= link_to_function t("campaigns.show.ranges.whole_campaign"), "$('#date_from').val('#{campaign.start_date}');$('#date_to').val('#{campaign.end_date}')" %>
+            <%= link_to_function t("campaigns.show.ranges.this_month"), "$('#date_from').val('#{Date.today.beginning_of_month}');$('#date_to').val('#{Date.today.end_of_month}')" %>
+            <%= link_to_function t("campaigns.show.ranges.this_week"), "$('#date_from').val('#{Date.today.beginning_of_week}');$('#date_to').val('#{Date.today.end_of_week}')" %>
+            <%= link_to_function t("campaigns.show.ranges.today"), "$('#date_from').val('#{Date.today}');$('#date_to').val('#{Date.today}')" %>
+          </p>
+
+            </div>
+
+          <clb/>
       <% end %>
     </div>
   </div>
@@ -55,15 +58,24 @@
 
 <header back="true" backurl="#{path_back}"><%= campaign.name %></header>
 
+<div class="frm_tiny pdd_10">
+
+  <p>
+    <%= t("campaigns.show.total_contacts") %>: <strong><%= campaign.contacts.size %></strong>&nbsp;
+    <%= t("campaigns.show.total_agents") %>: <strong><%= campaign.users.size %></strong>&nbsp;
+    <%= t("campaigns.show.total_calls") %>: <strong>??</strong>
+  </p>
+</div>
+
 <table id="call_results" class="generic">
   <thead>
   <tr>
     <th class="hl"></th>
     <th><%= t("campaigns.show.table.results") %></th>
     <% headers.each do |header| %>
-        <th><%= header %></th>
+        <th class="ta_r pointer"><%= header %></th>
     <% end %>
-    <th><%= t("campaigns.show.table.sum") %></th>
+    <th class="ta_r pointer"><%= t("campaigns.show.table.sum") %></th>
     <th class="hr"></th>
   </tr>
   </thead>
@@ -81,9 +93,9 @@
         <td class="cl"></td>
         <td><%= result.name %></td>
         <% rows.each do |col| %>
-            <td onclick="$('#call_result_ids').val('<%= col[:ids]*',' %>');$('#result_details_form').submit();"><%= col[:number] %></td>
+            <td class="ta_r pointer" onclick="$('#call_result_ids').val('<%= col[:ids]*',' %>');$('#result_details_form').submit();"><%= col[:number] %></td>
         <% end %>
-        <td onclick="$('#call_result_ids').val('<%= rows.inject([]){|acc, itm| acc += itm[:ids]}.uniq*',' %>');$('#result_details_form').submit();"><%= rows.map { |col| col[:number] }.sum %></td>
+        <td class="ta_r pointer" onclick="$('#call_result_ids').val('<%= rows.inject([]){|acc, itm| acc += itm[:ids]}.uniq*',' %>');$('#result_details_form').submit();"><%= rows.map { |col| col[:number] }.sum %></td>
         <td class="cr"></td>
       </tr>
   <% end %>
@@ -92,9 +104,9 @@
     <td class="cl"></td>
     <td><%= t("campaigns.show.table.all_results") %></td>
     <% result_row.each do |col| %>
-        <td onclick="$('#call_result_ids').val('<%= col[:ids]*',' %>');$('#result_details_form').submit();"><%= col[:number] %></td>
+        <td class="ta_r pointer" onclick="$('#call_result_ids').val('<%= col[:ids]*',' %>');$('#result_details_form').submit();"><%= col[:number] %></td>
     <% end %>
-    <td onclick="$('#call_result_ids').val('<%= result_row.inject([]){|acc, itm| acc += itm[:ids]}.uniq*',' %>');$('#result_details_form').submit();"><%= result_row.map { |col| col[:number] }.sum %></td>
+    <td class="ta_r pointer" onclick="$('#call_result_ids').val('<%= result_row.inject([]){|acc, itm| acc += itm[:ids]}.uniq*',' %>');$('#result_details_form').submit();"><%= result_row.map { |col| col[:number] }.sum %></td>
     <td class="cr"></td>
   </tr>
   </tbody>
@@ -105,3 +117,11 @@
 <% end %>
 
 <div id="container_for_result_details"></div>
+
+<js:>
+  <script type="text/javascript">
+      $(function() {
+          $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+      });
+  </script>
+</js:>
