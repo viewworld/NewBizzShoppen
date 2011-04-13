@@ -9,7 +9,7 @@ Feature: Freelance agent signup
     Given I am on the homepage
     And I make sure current locale is "en"
 
-  @_tested @wip
+  @_tested
   Scenario: User signs up with invalid data
     When I go to agent sign up
     And I fill in the following:
