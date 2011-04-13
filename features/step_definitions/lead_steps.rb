@@ -212,6 +212,11 @@ Given /^lead named "([^"]*)" is paid and accessible for user with email "([^"]*)
   assert !lead_purchase.accessible_from.nil?
 end
 
+Given /^cart for user "([^"]*)" is paid by paypal$/ do |email|
+  user = User.where(:email => email).first.with_role
+  user.cart.fake_paypal_payment
+end
+
 Given /^lead named "([^"]*)" (is published|is not published)$/ do |header, is_published|
   lead = Lead.find_by_header(header).first
   lead.published = (is_published == "is published")

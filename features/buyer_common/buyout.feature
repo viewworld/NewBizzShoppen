@@ -254,8 +254,63 @@ Feature: Buy out
     And I should see "1,230.00" within "td:nth-child(7)"
 
   #Buyout from my leads page - i.e. you have bought lead once -> decided it is so good that it is worth buying out -> click buyout lead and buy remaining instances
-  @requested @m8 @ao
+  @requested @m8 @ao @_done @_tested
   Scenario: I can buy out remaining leads if I previously bought only one
+    Given there are no leads
+    And Category named "Computers" already exists
+    And category "Computers" has attributes "buyout_enabled:1"
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer with attributes "not_charge_vat:1"
+    And User jon@lajoie.ca with role customer is big buyer
+    And lead Printers exists within category Computers
+    And lead "Printers" has attributes "sale_limit:10,price:123"
+    And I am on the home page
+    And I sign in as jon@lajoie.ca with password secret
+    And I go to browse leads
+    And I follow "Computers"
+    And I follow translated "leads.index.buy_lead"
+    And I go to browse leads
+    And I follow "Computers"
+    Then I should not see "Printers"
+    When I follow translated "layout.main_menu.customer.invoices"
+    And I follow translated "customer.invoices.index.view.pending_leads"
+    Then I should see "123.00" within "#invoices_list .ta_r"
+    When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+    Then I should see "Printers"
+    When I follow translated "leads.index.add_to_cart_buyout_link"
+    And I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+    Then I should see "1" rows in a table within ".leads_table tbody"
+    When I follow translated "layout.main_menu.customer.invoices"
+    And I follow translated "customer.invoices.index.view.pending_leads"
+    Then I should see "2" rows in a table within "#not_invoiced_leads"
+    And I should see "123.00"
+    And I should see "1,107.00"
 
-  @requested @m8 @ao
+  @requested @m8 @ao @_done @_tested
   Scenario: I can see 2 transactions when I buyout after buying only one
+    Given there are no leads
+    And Category named "Computers" already exists
+    And category "Computers" has attributes "buyout_enabled:1"
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer with attributes "not_charge_vat:1"
+    And lead Printers exists within category Computers
+    And lead "Printers" has attributes "sale_limit:10,price:123"
+    And I am on the home page
+    And I sign in as jon@lajoie.ca with password secret
+    And I go to browse leads
+    And I follow "Computers"
+    And I follow translated "leads.index.add_to_cart_link"
+    And cart for user "jon@lajoie.ca" is paid by paypal
+    And I am on the home page
+    When I follow translated "layout.main_menu.customer.invoices"
+    And I follow translated "customer.invoices.index.view.paid_invoices"
+    Then I should see "123.00"
+    When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+    Then I should see "Printers"
+    When I follow translated "leads.index.add_to_cart_buyout_link"
+    And cart for user "jon@lajoie.ca" is paid by paypal
+    And I am on the home page
+    When I follow translated "layout.main_menu.customer.invoices"
+    And I follow translated "customer.invoices.index.view.paid_invoices"
+    Then I should see "123.00"
+    And I should see "1,107.00"
+    When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+    Then I should see "1" rows in a table within ".leads_table tbody"
