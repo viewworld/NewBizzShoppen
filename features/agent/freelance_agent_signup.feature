@@ -9,7 +9,7 @@ Feature: Freelance agent signup
     Given I am on the homepage
     And I make sure current locale is "en"
 
-  @_tested
+  @_tested @wip
   Scenario: User signs up with invalid data
     When I go to agent sign up
     And I fill in the following:
@@ -17,7 +17,7 @@ Feature: Freelance agent signup
       | user_agent_password              | secret       |
       | user_agent_password_confirmation |              |
     And I press translated "agent_accounts.new.view.button_create_account"
-    Then I should see translated "activerecord.errors.models.user.agent.attributes.email.invalid"
+    Then I should see translated "activerecord.errors.messages.invalid"
     And I should see translated "activerecord.errors.models.user.agent.attributes.password.confirmation"
 
   @_tested
@@ -77,14 +77,14 @@ Feature: Freelance agent signup
     And I sign in as email@person.com with password secret
     And I should be signed in
     When I follow the confirmation link sent to email@person.com with role agent
-    Then I should see translated "activerecord.errors.models.user.attributes.confirmation_token.blank"
+    Then I should see translated "activerecord.errors.messages.blank"
 
 @_tested @m1
   Scenario: Signed out user clicks confirmation link again
     Given I am signed up and confirmed as user with email email@person.com and password secret and role agent
     When I am not sign in
     And I follow the confirmation link sent to email@person.com with role agent
-    Then I should see translated "activerecord.errors.models.user.attributes.confirmation_token.blank"
+    Then I should see translated "activerecord.errors.messages.blank"
 
 @tgn @m1 @_tested @added
 Scenario: Newsletter checkbox should be selected by default
@@ -111,7 +111,7 @@ Scenario: Screen name has to be unique
   And I select "Denmark" from "user_agent_address_attributes_country_id"
   And I check "user_agent_agreement_read"
   And I press translated "agent_accounts.new.view.button_create_account"
-  Then I should see translated "activerecord.errors.models.user.agent.attributes.screen_name.taken"
+  Then I should see translated "activerecord.errors.messages.taken"
 
 # probably it should be renamed to “Agree to Terms and conditions”, where “Terms and conditions” should be link leadin to another page or popup with terms and conditions text displayed
 @ao @requested @m7 @selenium @_done @_tested
