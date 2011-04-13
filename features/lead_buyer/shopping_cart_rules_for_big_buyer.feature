@@ -88,7 +88,7 @@ Scenario: I can bulk instant-buy leads requested by lead user that belongs to my
   And I follow translated "customer.lead_requests.index.view.button_bulk_create_lead_request"
   Then I should see translated "flash.bulk_lead_requests.update.notice"
 
-@_done
+@_done @wip
 Scenario: I can filter the list of my leads by "paid" column
   And I go to leads
   And I follow "Computers"
@@ -122,5 +122,6 @@ Scenario: I cannot buy leads if my purchase limit is reached
   When I go to leads
   And I follow "Computers"
   And I follow translated "leads.index.buy_lead"
+  And I open page in browser
   And I should see translated "buyer.cart_items.create.flash.cart_item_big_buyer_purchase_limit_reached"
   Then I should see "Printers ultimate deal"
