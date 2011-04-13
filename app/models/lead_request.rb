@@ -6,6 +6,7 @@ class LeadRequest < LeadPurchaseBase
     self.assignee_id = requested_by
     self.requested_by = nil
     self.accessible_from = Time.now if owner.big_buyer?
+    self.type = "LeadSinglePurchase"
     self.save
   end
 
