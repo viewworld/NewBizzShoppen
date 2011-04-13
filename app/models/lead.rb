@@ -320,4 +320,9 @@ class Lead < ActiveRecord::Base
         :buyout_successful
       end
   end
+
+  def update_stats!(field)
+    self.notify_buyers_after_update = false
+    self.increment!(field)
+  end
 end
