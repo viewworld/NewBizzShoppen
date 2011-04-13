@@ -1,42 +1,57 @@
-<h2>Call log</h2>
+<header>
+  <param:content>Call log</param:content>
 
-  <%= select_tag :result_id, options_for_select(campaign.results_for_select) %>
-  <%= submit_tag t("call_results.edit.button_new_result"), :id => "new_result" %>
+  <param:actions>
+    <ul class="header_actions">
+      <li>
+        <%= bt_link_to nil, t("agent_work_screen.index.show_call_log_for_current_contact"), "javascript:void(0)", :onclick => "$('#results_sheet').show();$('#call_sheet').hide();", :class => "bt_active" %>
+      </li>
+      <li class="last">
+        <%= bt_link_to nil, t("agent_work_screen.index.show_current_call_sheet"), "javascript:void(0)", :onclick => "$('#results_sheet').hide();$('#call_sheet').show();" %>
+      </li>
+    </ul>
+  </param:actions>
+</header>
+
+<%= select_tag :result_id, options_for_select(campaign.results_for_select) %>
+<%= bt_link_to nil, t("call_results.edit.button_new_result"), "javascript:void(0)", :id => "new_result" %>
 
 <%= call_results_table contact.call_results, :agent_work_screen => true do |blocks| %>
     <% blocks.tools do |call_result| %>
-          <ul-actions>
-            <li>
-              <%= link_to t("call_results.table.edit_link"), url_for( :controller => "#{namespace}/agent_work_screen/call_results", :action => :edit, :campaign_id => campaign, :contact_id => contact, :id => call_result), :class => "edit_call_result" %>
-            </li>
-            <li>
-              <%= link_to t("call_results.table.remove_link"), url_for( :controller => "#{namespace}/agent_work_screen/call_results", :action => :destroy, :campaign_id => campaign, :contact_id => contact, :id => call_result), :confirm => t("call_results.table.remove_confirm"), :method => :delete, :remote => true %>
-            </li>
-          </ul-actions>
+        <ul-actions>
+          <li>
+            <%= link_to t("call_results.table.edit_link"), url_for(:controller => "#{namespace}/agent_work_screen/call_results", :action => :edit, :campaign_id => campaign, :contact_id => contact, :id => call_result), :class => "edit_call_result" %>
+          </li>
+          <li>
+            <%= link_to t("call_results.table.remove_link"), url_for(:controller => "#{namespace}/agent_work_screen/call_results", :action => :destroy, :campaign_id => campaign, :contact_id => contact, :id => call_result), :confirm => t("call_results.table.remove_confirm"), :method => :delete, :remote => true %>
+          </li>
+        </ul-actions>
     <% end %>
 <% end %>
 
 
 <script type="text/javascript">
-  $('#new_result').click(function(){
-    var param = "?result_id="+$("#result_id").val();
-    $.colorbox({
-      iframe: true,
-      width: 900,
-      height: 700,
-      href: "<%= url_for( :controller => "#{namespace}/agent_work_screen/call_results", :action => :new, :campaign_id => campaign, :contact_id => contact) %>"+param,
-      onClosed: function(){
-          $.get("<%= url_for(:controller => "#{namespace}/agent_work_screen/contacts", :action => :show, :campaign_id => campaign, :id => 0) %>");
-      }
-    });
-  });
+    jQuery(document).ready(function() {
+        $('#new_result').click(function() {
+            var param = "?result_id=" + $("#result_id").val();
+            $.colorbox({
+                iframe: true,
+                width: 1100,
+                height: 520,
+                href: "<%= url_for( :controller => "#{namespace}/agent_work_screen/call_results", :action => :new, :campaign_id => campaign, :contact_id => contact) %>" + param,
+                onClosed: function() {
+                    $.get("<%= url_for(:controller => "#{namespace}/agent_work_screen/contacts", :action => :show, :campaign_id => campaign, :id => 0) %>");
+                }
+            });
+        });
 
-  $('a.edit_call_result').colorbox({
-      iframe: true,
-      width: 900,
-      height: 700,
-      onClosed: function(){
-          $.get("<%= url_for(:controller => "#{namespace}/agent_work_screen/contacts", :action => :show, :campaign_id => campaign, :id => contact) %>");
-      }
-  });
+        $('a.edit_call_result').colorbox({
+            iframe: true,
+            width: 900,
+            height: 700,
+            onClosed: function() {
+                $.get("<%= url_for(:controller => "#{namespace}/agent_work_screen/contacts", :action => :show, :campaign_id => campaign, :id => contact) %>");
+            }
+        });
+    });
 </script>

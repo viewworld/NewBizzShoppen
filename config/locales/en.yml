@@ -325,6 +325,8 @@ en:
       cancel_button: Back to campaign
       current_agent_label: "Current agent:"
 
+      prev: "<< Prev"
+      next: "Next >>"
   call_results:
     table:
       date: Date

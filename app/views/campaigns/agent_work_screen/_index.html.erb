@@ -1,8 +1,8 @@
-<% locals = { :campaign => campaign,
-              :agent => agent,
-              :contact => contact,
-              :contacts => contacts,  
-              :namespace => "call_centres" }  %>
+<% locals = {:campaign => campaign,
+             :agent => agent,
+             :contact => contact,
+             :contacts => contacts,
+             :namespace => "call_centres"} %>
 
 <column-mc:>
   <header back="true" backurl="#{back_url}"><%= t("agent_work_screen.index.title") %></header>
@@ -19,10 +19,7 @@
     <%= render :partial => "campaigns/agent_work_screen/call_interface", :locals => locals if contact %>
   </div>
 
-  <div>
-    <%= link_to_function t("agent_work_screen.index.show_call_log_for_current_contact"), "$('#results_sheet').show();$('#call_sheet').hide();" %>
-    <%= link_to_function t("agent_work_screen.index.show_current_call_sheet"), "$('#results_sheet').hide();$('#call_sheet').show();" %>    
-  </div>
+  <br/>
 
   <div id="results_sheet">
     <%= render :partial => "campaigns/agent_work_screen/results_sheet", :locals => locals if contact %>
@@ -31,11 +28,17 @@
   <div id="call_sheet" style="display:none">
     <%= render :partial => "campaigns/agent_work_screen/call_sheet", :locals => locals %>
   </div>
-
-    <script type="text/javascript">
-        $("#change_campaign_id").live("change", function(){$(this).parents("form").submit()});
-        $("#call_sheet tbody tr").live("click", function(){$("#call_sheet tbody tr").removeClass("current");$(this).addClass("current")});
-    </script>
-
 </column-mc:>
+
+<js:>
+  <script type="text/javascript">
+      $("#change_campaign_id").live("change", function() {
+          $(this).parents("form").submit()
+      });
+      $("#call_sheet tbody tr td").live("click", function() {
+          $("#call_sheet tbody tr").removeClass("highlight_row");
+          $(this).parent().addClass("highlight_row");
+      });
+  </script>
+</js:>
 

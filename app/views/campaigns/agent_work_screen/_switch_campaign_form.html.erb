@@ -1,8 +1,4 @@
-  <%= form_for url_for(:controller => "#{namespace}/agent_work_screen", :action => :index, :campaign_id => campaign), :html => { :method => :get } do  %>
-    <ul>
-      <li>
-        <label><%= t("agent_work_screen.index.select_campaign") %></label>
-        <%= select_tag :change_campaign_id, options_for_select(Campaign.available_for_user(agent).map{|c| [c.name, c.id]}, campaign.id) %>
-      </li>
-    </ul>
-  <% end %>
+<%= form_for url_for(:controller => "#{namespace}/agent_work_screen", :action => :index, :campaign_id => campaign), :html => {:method => :get} do %>
+    <label><%= t("agent_work_screen.index.select_campaign") %></label>
+    <%= select_tag :change_campaign_id, options_for_select(Campaign.available_for_user(agent).map { |c| [c.name, c.id] }, campaign.id) %>
+<% end %>

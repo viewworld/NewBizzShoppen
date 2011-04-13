@@ -1,10 +1,13 @@
 <header back="true" backurl="#{path_back}"><%= t("contacts.edit.title") %></header>
 
-<%= contact.lower_item_in_campaign_list ? link_to("<<", url_for(:controller => "#{namespace}/contacts", :action => :edit, :campaign_id => campaign, :id => contact.lower_item_in_campaign_list), :id => "prev_contact") : "<<" %>
-<%= contact.higher_item_in_campaign_list ? link_to(">>", url_for(:controller => "#{namespace}/contacts", :action => :edit, :campaign_id => campaign, :id => contact.higher_item_in_campaign_list), :id => "next_contact") : ">>" %>
-
 <%= semantic_form_for [namespace, campaign, contact], :method => :put do |form| %>
     <frm title="Edit">
+      <param:header>
+        <div class="fltr">
+          <%= contact.lower_item_in_campaign_list ? bt_link_to(nil, t("contacts.edit.prev"), url_for(:controller => "#{namespace}/contacts", :action => :edit, :campaign_id => campaign, :id => contact.lower_item_in_campaign_list), :id => "prev_contact") : "" %>
+          <%= contact.higher_item_in_campaign_list ? bt_link_to(nil, t("contacts.edit.next"), url_for(:controller => "#{namespace}/contacts", :action => :edit, :campaign_id => campaign, :id => contact.higher_item_in_campaign_list), :id => "next_contact") : "" %>
+        </div>
+      </param:header>
       <param:content>
         <%= render :partial => '/shared/leads/form', :locals => {:form => form, :campaign => campaign, :contact => contact} %>
       </param:content>

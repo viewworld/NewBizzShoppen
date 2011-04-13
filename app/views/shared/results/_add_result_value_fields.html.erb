@@ -1,4 +1,4 @@
-<li class="<%= f.object.result_field.field_type.to_i == ResultField::NOTE ? 'text' : 'string date' %>">
+<li class="<%= f.object.result_field.field_type.to_i == ResultField::NOTE ? 'text' : 'string date time' %>">
   <% abbr =  f.object.result_field.is_mandatory ? content_tag(:abbr, "*").html_safe : '' -%>
   <%= raw f.label :value, h(f.object.result_field.name)+(abbr) %>
   <% if f.object.result_field.field_type.to_i == ResultField::NOTE %>
@@ -15,7 +15,7 @@
 <js:>
   <script type="text/javascript">
       $(function() {
-          $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+          $(".datepicker").datetimepicker({ dateFormat: 'yy-mm-dd' });
       });
   </script>
 </js:>

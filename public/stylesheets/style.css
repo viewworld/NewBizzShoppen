@@ -691,7 +691,9 @@ h4
 
 .header_actions
 {
-    position: absolute;
+    float: right;
+    position: relative;
+    margin-left: 2px;
     top: 5px;
     right: 0;
 }
@@ -719,12 +721,14 @@ h4
     padding: 0 10px 0 5px;
 }
 
-.header_actions li a.bt:hover
+.header_actions li a.bt:hover,
+.header_actions li a.bt.bt_active    
 {
     background-position: 0 -620px;    
 }
 
-.header_actions li a.bt:hover span
+.header_actions li a.bt:hover span,
+.header_actions li a.bt.bt_active:hover span    
 {
     background-position: 0 -646px;    
 }
@@ -735,7 +739,8 @@ h4
     padding-left: 8px;
 }
 
-.header_actions li:first-child a.bt:hover
+.header_actions li:first-child a.bt:hover,
+.header_actions li:first-child a.bt.bt_active
 {
     background-position: 0 -594px;
 }
@@ -762,7 +767,8 @@ h4
     background-position: right -266px;
 }
 
-.header_actions li.last a.bt:hover span
+.header_actions li.last a.bt:hover span,
+.header_actions li.last a.bt.bt_active span    
 {
     background-position: right -318px;    
 }
@@ -1356,6 +1362,22 @@ a.bt_grey_small:hover span
 }
 
 
+a.bt_grey,
+a.bt_grey:hover
+{
+    background-position: 0 -120px;
+    color: #888888;
+    text-shadow: none;
+}
+
+a.bt_grey span,
+a.bt_grey:hover span
+{
+    height: 30px;
+    line-height: 30px;
+    background-position: right -150px;
+}
+
 
 
 a.bt_max
@@ -1514,6 +1536,18 @@ div.bt_green:hover span
 {
     background-position: right -486px;    
 }
+
+
+.ibt_box
+{
+    padding: 0;
+}
+
+.ibt_box .bt
+{
+    margin-left: 8px;
+}
+
 
 /* --- helpers ---
 --------------------------------------------------------------------------------- */

@@ -1,7 +1,3 @@
-<search-box:>
-  <%= render :partial => "contacts/filter", :locals => {:search => @search, :path => edit_call_centres_campaign_path(@campaign)} %>
-</search-box:>
-
 <column-mc:>
   <header back="true" backurl="#{call_centres_campaigns_path}"><%= t("campaigns.edit.title") %></header>
 
@@ -31,13 +27,16 @@
           </ul>
       <% end %>
     </param:actions>
-
   </header>
 
-  <% form_tag batch_assign_call_centres_campaign_contacts_path(@campaign), :method => :post, :id => "batch_assign_form" do %>
-      <%= select_tag "agent_id", options_for_select(@campaign.users.map { |u| [u.full_name, u.id] }) %>
-      <%= hidden_field_tag "contact_ids", nil, :id => "hf_batch_assign" %>
-      <%= bt_link_to nil, t("campaigns.edit.button_assign_selected_contacts"), "javascript:void(0)", :onclick => "set_contacts_id_hf('hf_batch_assign');$('#batch_assign_form').submit();" %>
+
+
+  <%= form_for @search, :url => edit_call_centres_campaign_path(@campaign) do |f| %>
+      <p>
+        <%= label_tag t("contacts.filter.keyword_label") %>
+        <%= text_field_tag :with_keyword %>
+        <%= bt_link_to nil, t("contacts.filter.search_button"), "javascript:void(0)", :onclick => "$(this).parents('form').submit()" %>
+      </p>
   <% end %>
 
   <%= contacts_table @contacts, :show_checkboxes => true do |blocks| %>
@@ -53,8 +52,15 @@
       <% end %>
 
       <% blocks.bottom do %>
-          <%= bt_link_to :remove, t("campaigns.edit.button_remove_selected"), "javascript:void(0)", :onclick => "set_contacts_id_hf('hf_batch_remove');$('#batch_remove_form').submit();" %>
-          <%= bt_link_to :remove, t("campaigns.edit.button_remove_assignment_for_selected"), "javascript:void(0)", :onclick => "set_contacts_id_hf('hf_batch_unassign');$('#batch_unassign_form').submit();" %>
+
+          <% form_tag batch_assign_call_centres_campaign_contacts_path(@campaign), :method => :post, :id => "batch_assign_form" do %>
+              <%= select_tag "agent_id", options_for_select(@campaign.users.map { |u| [u.full_name, u.id] }) %>
+              <%= hidden_field_tag "contact_ids", nil, :id => "hf_batch_assign" %>
+              <%= bt_link_to :users, t("campaigns.edit.button_assign_selected_contacts"), "javascript:void(0)", :onclick => "set_contacts_id_hf('hf_batch_assign');$('#batch_assign_form').submit();" %>
+              <%= bt_link_to :remove, t("campaigns.edit.button_remove_selected"), "javascript:void(0)", :onclick => "set_contacts_id_hf('hf_batch_remove');$('#batch_remove_form').submit();" %>
+              <%= bt_link_to :remove, t("campaigns.edit.button_remove_assignment_for_selected"), "javascript:void(0)", :onclick => "set_contacts_id_hf('hf_batch_unassign');$('#batch_unassign_form').submit();" %>
+          <% end %>
+
 
 
           <% form_tag batch_assign_call_centres_campaign_contacts_path(@campaign), :method => :post, :id => "batch_unassign_form" do %>
