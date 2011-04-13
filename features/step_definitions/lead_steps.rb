@@ -58,7 +58,7 @@ Given /^bought lead (.+) exists within category (.+)$/ do |header, category_name
   category = Category.make!(:name => category_name) if category.nil?
 
   lead = Lead.make!(:header => header, :category => category)
-  LeadPurchase.make!(:lead_id => lead.id, :owner => User::Customer.make!, :paid => true, :accessible_from => Time.now)
+  LeadSinglePurchase.make!(:lead_id => lead.id, :owner => User::Customer.make!, :paid => true, :accessible_from => Time.now)
 end
 
 Given /^a lead (.+) exists within category (.+) and is bought by user (.+) with role (.+)$/ do |header, category_name, email, role|
@@ -77,7 +77,7 @@ Given /^a lead (.+) exists within category (.+) and is bought by user (.+) with 
   else
     lead.update_attribute(:category, category)
   end
-  LeadPurchase.make!(:lead_id => lead.id, :owner => customer, :paid => true, :accessible_from => Time.now, :purchaser => purchaser)
+  LeadSinglePurchase.make!(:lead_id => lead.id, :owner => customer, :paid => true, :accessible_from => Time.now, :purchaser => purchaser)
 end
 
 Given /^lead (.+) is bought by user (.+) with role (.+) and is assigned to user (.+) with role (.+)$/ do |header, email, role, assignee_email, assignee_role|
@@ -91,7 +91,7 @@ Given /^lead (.+) is bought by user (.+) with role (.+) and is assigned to user 
   customer = "User::#{role.camelize}".constantize.find_by_email(email)
   assignee = "User::#{assignee_role.camelize}".constantize.find_by_email(assignee_email)
 
-  LeadPurchase.make!(:lead_id => lead.id, :owner => customer, :assignee => assignee, :paid => true, :accessible_from => Time.now)
+  LeadSinglePurchase.make!(:lead_id => lead.id, :owner => customer, :assignee => assignee, :paid => true, :accessible_from => Time.now)
 end
 
 Given /^lead (.+).is created by user (.+) with role (.+)$/ do |name, email, role|
@@ -127,7 +127,7 @@ Given /^there are "([^"]*)" existing leads$/ do |num|
 end
 
 Given /^there are "([^"]*)" sold leads$/ do |num|
-  num.to_i.times{LeadPurchase.make!(:lead => Lead.make!, :owner => User::Customer.make!, :paid => true, :accessible_from => Time.now)}
+  num.to_i.times{LeadSinglePurchase.make!(:lead => Lead.make!, :owner => User::Customer.make!, :paid => true, :accessible_from => Time.now)}
 end
 
 Given /^there are "([^"]*)" leads in category "([^"]*)"$/ do |num,category_name|
@@ -140,7 +140,7 @@ end
 Given /^(.+) is a best seller$/ do |header|
   lead = Lead.find_by_header(header).first
   (Lead.maximum(:lead_purchases_counter)+1).times do
-    LeadPurchase.make!(:lead_id => lead.id, :owner => User::Customer.make!, :paid => true, :accessible_from => Time.now)
+    LeadSinglePurchase.make!(:lead_id => lead.id, :owner => User::Customer.make!, :paid => true, :accessible_from => Time.now)
   end
 end
 
