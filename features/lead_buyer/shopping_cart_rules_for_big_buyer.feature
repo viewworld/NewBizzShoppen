@@ -122,6 +122,5 @@ Scenario: I cannot buy leads if my purchase limit is reached
   When I go to leads
   And I follow "Computers"
   And I follow translated "leads.index.buy_lead"
-  And I open page in browser
   And I should see translated "buyer.cart_items.create.flash.cart_item_big_buyer_purchase_limit_reached"
   Then I should see "Printers ultimate deal"
