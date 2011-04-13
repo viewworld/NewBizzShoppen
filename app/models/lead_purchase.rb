@@ -33,7 +33,6 @@ class LeadPurchase < LeadPurchaseBase
   has_one :invoice_line, :as => :payable
 
   scope :in_cart, where(:paid => false, :accessible_from => nil)
-  scope :accessible, where("accessible_from IS NOT NULL")
   scope :about_to_expire, lambda { where(["response_deadline = ? AND expiration_status = ? AND contacted = ?", Date.today+2.days, ACTIVE, NOT_CONTACTED]) }
   scope :expired, lambda { where(["response_deadline < ? AND expiration_status = ? AND contacted = ?", Date.today, ABOUT_TO_EXPIRE, NOT_CONTACTED]) }
   scope :with_paid, lambda {|paid| where(:paid => paid) }

@@ -7,6 +7,7 @@ class LeadPurchaseBase < ActiveRecord::Base
   belongs_to :owner, :class_name => "User::Customer", :foreign_key => "owner_id"
 
   include ScopedSearch::Model
+  scope :accessible, where("accessible_from IS NOT NULL")
   scope :with_owner, lambda { |owner_id| where("owner_id = ?", owner_id) }
   scope :with_assignee, lambda { |assignee_id| where("assignee_id = ?", assignee_id) }
   scope :with_leads, joins("INNER JOIN leads on leads.id=lead_purchases.lead_id")
