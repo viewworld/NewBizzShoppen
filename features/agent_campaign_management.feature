@@ -1,6 +1,17 @@
 @m5b @agent_campaign @$_administrator @$_call_centre @tbr
 Feature: Agent campaign - management
 
+#Places                Admin   Agent   Call Centre   Call Centre Agent
+#
+#Campaigns List        x       x*      x^            x*
+#Campaign Result       x       -       x^            -
+#Manage Result Types   x       -       x^            -
+#Edit Campaign         x       -       x^            x
+#Agent work screen     x       x       x             x
+
+#* - without actions
+#^ - only created by me
+
    Background:
     Given I am on the homepage
     And I make sure current locale is "en"
