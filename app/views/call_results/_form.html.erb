@@ -14,6 +14,8 @@
   </fieldset>
 </div>
 
+<clb/>
+
 <% if call_result.result.result_fields.present? %>
     <hl/>
     <%= render :partial => "/shared/results/result_fields", :locals => {:call_result => call_result, :form => form} %>

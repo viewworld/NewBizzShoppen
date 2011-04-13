@@ -691,7 +691,9 @@ h4
 
 .header_actions
 {
-    position: absolute;
+    float: right;
+    position: relative;
+    margin-left: 2px;
     top: 5px;
     right: 0;
 }
@@ -1356,6 +1358,22 @@ a.bt_grey_small:hover span
 }
 
 
+a.bt_grey,
+a.bt_grey:hover
+{
+    background-position: 0 -120px;
+    color: #888888;
+    text-shadow: none;
+}
+
+a.bt_grey span,
+a.bt_grey:hover span
+{
+    height: 30px;
+    line-height: 30px;
+    background-position: right -150px;
+}
+
 
 
 a.bt_max
@@ -1514,6 +1532,18 @@ div.bt_green:hover span
 {
     background-position: right -486px;    
 }
+
+
+.ibt_box
+{
+    padding: 0;
+}
+
+.ibt_box .bt
+{
+    margin-left: 8px;
+}
+
 
 /* --- helpers ---
 --------------------------------------------------------------------------------- */
