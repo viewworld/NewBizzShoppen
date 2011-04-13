@@ -94,8 +94,8 @@ class LeadPurchase < LeadPurchaseBase
         lead_purchases = find(ids)
         templates = lead_purchases.map { |lp| lp.lead.lead_templates }.flatten.uniq
         template_fields = templates.map { |t| t.lead_template_fields }.flatten
-        csv << CSV_ATTRS.map(&:humanize) + template_fields.map(&:name)
-        lead_purchases.each { |lp| csv << CSV_ATTRS.map { |attr| lp.lead[attr] } + template_fields.map { |tf| tf.value_for_lead(lp.lead) } }
+        csv << LeadPurchaseBase::CSV_ATTRS.map(&:humanize) + template_fields.map(&:name)
+        lead_purchases.each { |lp| csv << LeadPurchaseBase::CSV_ATTRS.map { |attr| lp.lead[attr] } + template_fields.map { |tf| tf.value_for_lead(lp.lead) } }
       end
     end
 
