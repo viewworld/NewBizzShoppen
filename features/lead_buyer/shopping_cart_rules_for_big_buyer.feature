@@ -88,7 +88,7 @@ Scenario: I can bulk instant-buy leads requested by lead user that belongs to my
   And I follow translated "customer.lead_requests.index.view.button_bulk_create_lead_request"
   Then I should see translated "flash.bulk_lead_requests.update.notice"
 
-@_done @wip
+@_done
 Scenario: I can filter the list of my leads by "paid" column
   And I go to leads
   And I follow "Computers"
