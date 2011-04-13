@@ -1,3 +1,3 @@
-class LeadSinglePurchase < LeadPurchase
+class LeadSinglePurchase < LeadPrimaryPurchase
 
 end

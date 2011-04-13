@@ -1,10 +1,10 @@
 class LeadPurchase < LeadPurchaseBase
-  unless Rails.env.production?
-    LeadSinglePurchase
-    LeadBuyout
+  unless ['production','test'].include?(Rails.env)
+    LeadPrimaryPurchase
+    LeadAdditionalBuyout
   else
-    require 'lead_single_purchase'
-    require 'lead_buyout'
+    require 'lead_primary_purchase'
+    require 'lead_additional_buyout'
   end
 
   CSV_ATTRS = %w(header description company_name contact_name phone_number email_address address)
@@ -48,6 +48,7 @@ class LeadPurchase < LeadPurchaseBase
   scope :with_assigned_at_date_before_and_including, lambda{ |date| where(["assigned_at::DATE <= ?",date.to_postgresql_date])}
   scope :with_purchased_by, lambda { |buyer| where("requested_by IS NULL and (owner_id = ? or purchased_by = ?)", buyer.id, buyer.id) }
   scope :with_not_invoiced_for_user, lambda { |user| joins("LEFT JOIN invoice_lines ON invoice_lines.payable_id = lead_purchases.id LEFT JOIN users ON users.id = lead_purchases.owner_id").where(["invoice_lines.payable_id IS NULL AND users.big_buyer IS TRUE AND users.id = ?", user.to_i]) }
+  scope :with_lead, lambda {|lead_id| where(:lead_id => lead_id)}
 
   before_save :assign_to_proper_owner_if_accessible
   before_save :change_contacted_state

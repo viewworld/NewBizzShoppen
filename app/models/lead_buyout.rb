@@ -1,3 +1,3 @@
-class LeadBuyout < LeadPurchase
+class LeadBuyout < LeadPrimaryPurchase
 
 end

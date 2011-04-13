@@ -5,7 +5,9 @@ class ::User::LeadBuyer < ::User
 
   has_many :lead_purchases, :foreign_key => :owner_id
   has_many :lead_buyouts, :foreign_key => :owner_id
+  has_many :lead_primary_purchases, :foreign_key => :owner_id
   has_many :lead_single_purchases, :foreign_key => :owner_id
+  has_many :lead_additional_buyouts, :foreign_key => :owner_id
   has_many :leads_in_cart,
            :class_name => "Lead",
            :through => :lead_purchases,
