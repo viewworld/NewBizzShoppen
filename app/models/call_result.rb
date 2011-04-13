@@ -14,6 +14,9 @@ class CallResult < ActiveRecord::Base
 
   PENDING_RESULT_TYPES = [:call_back, :not_interested_now]
 
+  scope :call_log_results, joins(:result).where(:results => { :final => false })
+  scope :final_results, joins(:result).where(:results => { :final => true })
+
   def called?
     call_log.present?
   end
