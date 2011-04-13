@@ -6,7 +6,7 @@ class BuyerHomeController < ApplicationController
 
   def sales_manager
     @latest_leads = Lead.without_inactive.interesting_for_user(current_user).published_only.without_bought_and_requested_by(current_user).with_customer_unique_categories(current_user.id).latest.limit(10)
-    @my_leads     = current_user.bought_leads.latest.limit(3)
+    @my_leads     = current_user.has_role?(:customer) ? current_user.bought_leads.latest.limit(3) : current_user.assigned_leads.latest.limit(3)
     render :sales_manager
   end
 
