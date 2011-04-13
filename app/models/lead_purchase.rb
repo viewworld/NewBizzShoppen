@@ -7,26 +7,6 @@ class LeadPurchase < LeadPurchaseBase
     require 'lead_additional_buyout'
   end
 
-  CSV_ATTRS = %w(header description company_name contact_name phone_number email_address address)
-  ACTIVE               = 0
-  ABOUT_TO_EXPIRE      = 1
-  EXPIRED              = 2
-
-  NOT_CONTACTED        = 0
-  CONTACTED            = 1
-
-  RATING_EXCELLENT =              0
-  RATING_VERY_GOOD =              1
-  RATING_SATISFACTORY =           2
-  RATING_MISSING_CONTACT_INFO =   12
-  RATING_INCORRECT_DESCRIPTION =  13
-  RATING_ANOTHER_SUPPLIER =       14
-  RATING_OTHER_REASON =           15
-
-  UNSATISFACTORY_RATING_LEVELS = [RATING_MISSING_CONTACT_INFO, RATING_INCORRECT_DESCRIPTION,
-                          RATING_ANOTHER_SUPPLIER, RATING_OTHER_REASON]
-  RATING_LEVELS = [RATING_EXCELLENT, RATING_VERY_GOOD, RATING_SATISFACTORY] + UNSATISFACTORY_RATING_LEVELS
-
   belongs_to :assignee, :class_name => "User::LeadUser", :foreign_key =>  "assignee_id"
   belongs_to :purchaser, :class_name => "User::LeadBuyer", :foreign_key =>  "purchased_by"
   belongs_to :lead, :counter_cache => :lead_purchases_counter
@@ -114,8 +94,8 @@ class LeadPurchase < LeadPurchaseBase
         lead_purchases = find(ids)
         templates = lead_purchases.map { |lp| lp.lead.lead_templates }.flatten.uniq
         template_fields = templates.map { |t| t.lead_template_fields }.flatten
-        csv << CSV_ATTRS.map(&:humanize) + template_fields.map(&:name)
-        lead_purchases.each { |lp| csv << CSV_ATTRS.map { |attr| lp.lead[attr] } + template_fields.map { |tf| tf.value_for_lead(lp.lead) } }
+        csv << LeadPurchaseBase::CSV_ATTRS.map(&:humanize) + template_fields.map(&:name)
+        lead_purchases.each { |lp| csv << LeadPurchaseBase::CSV_ATTRS.map { |attr| lp.lead[attr] } + template_fields.map { |tf| tf.value_for_lead(lp.lead) } }
       end
     end
 
