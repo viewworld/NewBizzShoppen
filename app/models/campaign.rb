@@ -16,7 +16,7 @@ class Campaign < ActiveRecord::Base
   scope :with_state, lambda { |q|
     case q
       when "active" then
-        where("start_date < '#{Date.today}' and end_date > '#{Date.today}'")
+        where("start_date <= '#{Date.today}' and end_date >= '#{Date.today}'")
       when "inactive" then
         where("start_date > '#{Date.today}' or end_date < '#{Date.today}'")
       else

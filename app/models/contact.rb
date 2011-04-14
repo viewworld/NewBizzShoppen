@@ -8,12 +8,12 @@ class Contact < AbstractLead
   belongs_to :agent, :class_name => "User"
   validates_presence_of :company_name, :company_phone_number, :creator_id, :category_id, :country_id
 
-  scope :with_keyword, lambda { |q| where("lower(contact_name) like :keyword", {:keyword => "%#{q.downcase}%"}) }
+  scope :with_keyword, lambda { |q| where("lower(company_name) like :keyword", {:keyword => "%#{q.downcase}%"}) }
   scope :only_completed, where(:completed => false)
   scope :for_campaign, lambda { |campaign| where(:campaign_id => campaign) }
   scope :with_completed_status, lambda { |completed| where(:completed => completed) }
   scope :available_to_assign, where(:agent_id => nil).with_completed_status(false)
-  scoped_order :contact_name
+  scoped_order :company_name
 
   acts_as_list :scope => [:campaign_id, :agent_id]
 

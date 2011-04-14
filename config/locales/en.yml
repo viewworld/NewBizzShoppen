@@ -219,6 +219,7 @@ en:
 
   campaigns:
     filter:
+      header: Search
       keyword_label: Keyword
       state_label: State
       search_button: Search
