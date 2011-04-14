@@ -130,21 +130,23 @@ Feature: Agent campaign - management
 
     # question: may agent have more assigned contacts then visible contacts number
     # - no but when the agent registre a result for a contact- the contact is removed from the agens active calling list and asign to the reslt list. Then the agent is dynamicly assign a new contact.
-    @3 @is @__campaign_manage @_done @selenium
+    @3 @is @__campaign_manage @_done @selenium @wip
     Scenario: I can assign selected contacts to selected agent
       When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
-      Then I should not see "John Smith" within "#contacts_table_body"
+      Then agent for "Bon Jovi inc." is blank
       Then I click xpath "(//table[@id='contacts']//input[@class='cb_contact_id'])[1]"
       Then I click xpath "(//form[@id='batch_assign_form']//a)[1]"
-      Then I should see "John Smith" within "#contacts_table_body"
-      Then I click xpath "(//table[@id='contacts']//input[@class='cb_contact_id'])[5]"
+      Then agent for "Bon Jovi inc." is "John Smith"
+      Then I follow "Company name"
+      Then I click xpath "(//table[@id='contacts']//input[@class='cb_contact_id'])[1]"
       Then I click xpath "(//form[@id='batch_assign_form']//a)[3]"
+      Then agent for "Bon Jovi inc." is blank
 
     @2 @is @__campaign_manage @_tested
     Scenario: I can remove contact from campaign
       Then I follow translated "campaigns.index.edit"
       Then I follow translated "campaigns.edit.remove_button"
-      Then I should see "Contact was successfully destroyed. "
+      Then I should see "Contact was successfully destroyed"
       Then I should not see "Bon Jovi"
 
     @1 @is @__campaign_manage @_done @tested_elsewhere
