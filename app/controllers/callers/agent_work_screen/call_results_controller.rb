@@ -5,8 +5,7 @@ class Callers::AgentWorkScreen::CallResultsController < Callers::AgentWorkScreen
 
   before_filter :set_result, :only => :new
   before_filter :set_call_result, :only => [:edit, :update, :destroy]
-
-  respond_to :js, :only => [:create, :update]
+  before_filter :set_category, :only => [:new, :edit]  
 
 
   def new
@@ -70,6 +69,11 @@ class Callers::AgentWorkScreen::CallResultsController < Callers::AgentWorkScreen
 
   def set_contact_managing
     @contact_managing = false
+  end
+  
+  def set_category
+    category = Category.find_by_id(params[:category_id])
+    @contact.update_attribute(:category, category) if category
   end
 
 end

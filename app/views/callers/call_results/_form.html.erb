@@ -27,3 +27,9 @@
       <%= render :partial => "/shared/results/add_result_lead_fields", :locals => {:call_result => call_result, :form => form} %>
     </div>
 <% end %>
+
+<script type="text/javascript">
+  $("#call_result_contact_attributes_category_id").change(function(){
+      window.location = '<%= reload_path %>'+'&category_id='+$(this).val();
+  });
+</script>

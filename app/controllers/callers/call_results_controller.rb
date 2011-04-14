@@ -5,6 +5,7 @@ class Callers::CallResultsController < Callers::CallerController
   before_filter :set_contact
   before_filter :set_result, :only => :new 
   before_filter :set_call_result, :only => [:edit, :update, :destroy]
+  before_filter :set_category, :only => [:new, :edit]
 
   def new
     @call_result = CallResult.new
@@ -63,6 +64,11 @@ class Callers::CallResultsController < Callers::CallerController
 
   def set_result
     @result = Result.find(params[:result_id])
+  end
+
+  def set_category
+    category = Category.find_by_id(params[:category_id])
+    @contact.update_attribute(:category, category) if category
   end
 
 end

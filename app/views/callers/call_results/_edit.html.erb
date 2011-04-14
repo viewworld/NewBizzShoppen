@@ -3,7 +3,7 @@
 <%= semantic_form_for path, :method => :put do |form| %>
     <frm title="Edit">
       <param:content>
-        <%= render :partial => '/callers/call_results/form', :locals => {:form => form, :contact => @contact, :call_result => @call_result} %>
+        <%= render :partial => '/callers/call_results/form', :locals => {:form => form, :contact => @contact, :call_result => @call_result, :reload_path => reload_path} %>
       </param:content>
       <param:actions>
         <ibt c="fltri" icon="save">

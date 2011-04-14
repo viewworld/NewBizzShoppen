@@ -128,6 +128,10 @@
 <script>
     var nestedFormsCount = <%= @lead.lead_translations.reject{ |lt| lt.locale == I18n.locale.to_s }.size %>;
 
+    $(function() {
+        $("#datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+    });
+
     function add_fields(link, content) {
         if ($('#locale_picker').text() != null)
         {
@@ -147,6 +151,7 @@
                 $("#locale_picker_div").hide();
             }
         }
+    }
 
         function remove_language(id, locale, record_id) {
             nestedFormsCount = nestedFormsCount - 1;
@@ -221,7 +226,7 @@
         $('#optional_templates_picker').val('<%= lead_templates.first.id -%>');
         add_template();
         <% end %>
-
+    
         var language_names = [];
         <% Locale.all.each do |locale| %>
         <%= "language_names['#{locale.code}'] = '#{t('models.locale.' + locale.code)}';" -%>
