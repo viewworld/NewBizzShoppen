@@ -298,6 +298,7 @@ en:
       destroy_confirmation: Are you sure?
     call_result_details_table:
       date: Date
+      contact: Contact
       agent: Agent
       result: Result
       call: Call

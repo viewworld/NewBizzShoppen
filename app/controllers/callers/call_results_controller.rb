@@ -19,7 +19,7 @@ class Callers::CallResultsController < Callers::CallerController
       @contact.update_attributes(params[:call_result].delete(:contact_attributes))
     end
     @call_result = CallResult.new(params[:call_result])    
-    @call_result.agent = current_user
+    @call_result.creator = current_user
     @call_result.contact = @contact
     create! do |success, failure|
       success.html { redirect_to edit_callers_campaign_contact_path(@contact.campaign, @contact) }

@@ -31,11 +31,11 @@
       <tr class="<%= cycle("odd", "even") %>">
         <td class="cl"></td>
         <td><%= call_result.created_at %></td>
-        <td><%= call_result.agent.full_name %></td>
+        <td><%= call_result.creator.full_name %></td>
         <td><%= call_result.result %></td>
         <% if block_tools %>
             <td class="tda ta_r">
-              <%= with_output_buffer { block_tools.call(call_result) } %>
+              <%= with_output_buffer { block_tools.call(call_result) } if call_result.can_be_managed_by?(current_user) %>
             </td>
         <% end %>
         <td class="cr"></td>

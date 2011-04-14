@@ -3,6 +3,7 @@
   <tr>
     <th class="hl"></th>
     <th><%= t("campaigns.call_result_details_table.date") %></th>
+    <th><%= t("campaigns.call_result_details_table.contact") %></th>
     <th><%= t("campaigns.call_result_details_table.agent") %></th>
     <th><%= t("campaigns.call_result_details_table.result") %></th>
     <th><%= t("campaigns.call_result_details_table.call") %></th>
@@ -12,7 +13,7 @@
   <tfoot>
   <tr>
     <td class="fl"></td>
-    <td colspan="4"></td>
+    <td colspan="5"></td>
     <td class="fr"></td>
   </tr>
   </tfoot>
@@ -21,7 +22,8 @@
       <tr class="<%= cycle("odd", "even") %>">
         <td class="cl"></td>
         <td><%= call_result.created_at.strftime("%Y-%m-%d %H:%M") %></td>
-        <td><%= call_result.agent %></td>
+        <td><%= call_result.contact.company_name %></td>
+        <td><%= call_result.creator.full_name %></td>
         <td><%= call_result.result %></td>
         <td></td>
         <td class="cr"></td>
