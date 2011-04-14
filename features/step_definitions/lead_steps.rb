@@ -36,7 +36,11 @@ Given /^lead (.+) exists with currency "([^"]*)"$/ do |header, currency_name|
     currency = Currency.make!(:name => currency_name)
   end
   lead = Lead.find_by_header(header).first
-  Lead.make!(:header => header, :currency => currency, :category => Category.make!) if lead.nil?
+  if lead.nil?
+    Lead.make!(:header => header, :currency => currency, :category => Category.make!)
+  else
+    lead.update_attribute(:currency, currency)
+  end
 end
 
 Given /^purchase for lead "([^"]*)" and user "([^"]*)" exists with attributes "([^"]*)"$/ do |header, email, options|

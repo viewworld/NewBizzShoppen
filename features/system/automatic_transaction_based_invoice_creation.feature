@@ -23,6 +23,8 @@ Scenario: Create an invoice if a new paypal transaction (payment for cart conten
 
 @_done
 Scenario: Invoice lines for manually created invoice should be automatically generated
+  Given lead Monitors deal exists with currency "DKK"
+  And lead Printers deal exists with currency "DKK"
   When I go to administration invoices
   And I select "Xerox, gerard.jones@paerson22.com" from "invoice_user_id"
   And I select "DannyTheSeller" from "invoice_seller_id"

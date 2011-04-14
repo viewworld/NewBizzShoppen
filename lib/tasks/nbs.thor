@@ -369,14 +369,6 @@ class Nbs < Thor
       user.roles << :translator unless user.has_role?(:translator)
       user.save
     end
-
-    #Recalculate existing lead purchases
-    CurrencyConverter.cache_current_exchange_rates!
-    LeadPurchase.where("euro_price = 0 or euro_price IS NULL").each do |lp|
-      lp.send(:set_euro_price)
-      lp.save
-    end
-
   end
 
   desc "recalculate_leads_average_ratings", ""
