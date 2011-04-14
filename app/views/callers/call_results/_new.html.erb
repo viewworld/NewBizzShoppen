@@ -1,17 +1,15 @@
-<h1><%= t("call_results.new.title") %></h1>
+<header back="#{back_path}" backurl="#{back_path}"><%= t("call_results.new.title") %></header>
 
 <%= semantic_form_for path, :method => :post do |form| %>
-    <%= render :partial => '/callers/call_results/form', :locals => {:form => form, :contact => @contact, :call_result => @call_result} %>
-    <div class="pdd_10 no_pdd_t">
-      <% form.inputs :class => "inputs labels_200" do %>
-          <li class="commit">
-            <ibt>
-              <%= form.submit t("call_results.new.save_button"), :name => "commit_create" %>
-            </ibt>
-            <p>
-              Or <%= link_to t("call_results.new.cancel_button"), "javascript:void(0)", :onclick => "window.parent.$.colorbox.close()" %>
-            </p>
-          </li>
-      <% end %>
-    </div>
+    <frm title="Create new">
+      <param:content>
+        <%= render :partial => '/callers/call_results/form', :locals => {:form => form, :contact => @contact, :call_result => @call_result} %>
+      </param:content>
+      <param:actions>
+        <ibt c="fltri" icon="save">
+          <%= form.submit t("call_results.new.save_button"), :name => "commit_create" %>
+        </ibt>
+        <%= bt_link_to(nil, t("call_results.edit.cancel_button"), back_path, :class => "bt_grey fltr") if back_path %>
+      </param:actions>
+    </frm>
 <% end %>

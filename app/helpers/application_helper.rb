@@ -56,13 +56,13 @@ module ApplicationHelper
 
   def custom_error_for_field(form, field)
     if form.object.errors[field].present?
-      content_tag(:p, form.object.errors[field], :class => "inline-errors") + tag("br")
+      content_tag(:p, form.object.errors[field].join(", "), :class => "inline-errors") + tag("br")
     end
   end
 
   def custom_error_for_object_and_field(object, field)
     if object.errors[field].present?
-      content_tag(:p, object.errors[field], :class => "inline-errors") + tag("br")
+      content_tag(:p, object.errors[field].join(", "), :class => "inline-errors") + tag("br")
     end
   end
 

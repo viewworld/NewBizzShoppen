@@ -1,7 +1,7 @@
 <header back="#{back_path}" backurl="#{back_path}"><%= t("call_results.edit.title") %></header>
 
 <%= semantic_form_for path, :method => :put do |form| %>
-    <frm title="Create new">
+    <frm title="Edit">
       <param:content>
         <%= render :partial => '/callers/call_results/form', :locals => {:form => form, :contact => @contact, :call_result => @call_result} %>
       </param:content>
