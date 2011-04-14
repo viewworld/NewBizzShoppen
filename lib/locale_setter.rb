@@ -10,14 +10,14 @@ module Rack
 
     def translate_locale(locale)
       dictionary = {'da' => 'dk'}
-      dictionary[locale.to_s] || locale.to_s
+      locale = dictionary[locale.to_s] || locale.to_s
+      locales.include?(locale) ? locale : 'en'
     end
 
     def find_locale(env)
-      locale = (env['SERVER_NAME'].to_s[/.*\.(\w{2,3})$/,1].to_a & locales).first ||
-                env['rack.session'][:locale_code] ||
-                env["HTTP_ACCEPT_LANGUAGE"].to_s[/^([a-z]{2})/]
-      locales.include?(locale) ? locale : 'en'
+      (env['SERVER_NAME'].to_s[/.*\.(\w{2,3})$/,1].to_a & locales).first ||
+       env['rack.session'][:locale_code] ||
+       env["HTTP_ACCEPT_LANGUAGE"].to_s[/^([a-z]{2})/]
     end
 
     def call(env)
