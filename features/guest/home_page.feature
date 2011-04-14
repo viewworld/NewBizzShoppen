@@ -18,13 +18,9 @@ Feature: Home page
     And I am on the home page
     Then I should see "Hjem"
 
-  @m8 @requested @ao @_done @_tested @wip
+  # set up on server side
+  @m8 @requested @ao @_done @non_testable
   Scenario: If a user enters www.fairleads.dk he should be redirectoed to www.fairleads.com with danish selected as default.
-    When I am on the home page
-    Then I should see "Home"
-    When I set referer to "fairleads.dk"
-    And I am on the home page
-    Then I should see "Hjem"
 
   @m8 @requested @tgn @tested_elsewhere @_done
   Scenario: When a new user sigens in on fairleads, he should be redirected to his new role home page, not the site homepage
