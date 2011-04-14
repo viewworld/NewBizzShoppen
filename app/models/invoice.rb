@@ -87,7 +87,7 @@ class Invoice < ActiveRecord::Base
 
   #TODO
   def set_default_currency
-    self.currency = Currency.where(:active => true).order("name").limit(1).first unless currency
+    self.currency = (!Currency.find_by_name("DKK").nil? ? Currency.find_by_name("DKK") : Currency.where(:active => true).order("name").limit(1).first) unless currency
   end
 
   def duplicate_company_and_customer_information
