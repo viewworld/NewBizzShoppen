@@ -33,7 +33,7 @@ class Callers::AgentWorkScreenController < Callers::CallerController
   end
 
   def set_contact
-    @lead = @contact = @agent.contacts.first
+    @lead = @contact = @contacts.first
   end
 
   def set_locals

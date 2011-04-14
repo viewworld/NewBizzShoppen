@@ -16,7 +16,7 @@ class Contact < AbstractLead
   scope :available_to_assign, where(:agent_id => nil).with_completed_status(false).with_pending_status(false)
   scoped_order :company_name
 
-  acts_as_list :scope => [:campaign_id, :agent_id]
+  acts_as_list :scope => [:campaign_id, :agent_id, :pending]
 
   class << self
 

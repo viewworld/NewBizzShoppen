@@ -20,7 +20,7 @@ class Callers::AgentWorkScreen::ContactsController < Callers::AgentWorkScreenCon
 
   private
   def set_contact
-    @lead = @contact = @agent.contacts.find_by_id(params[:id]) || @agent.contacts.first
+    @lead = @contact = @agent.contacts.find_by_id(params[:id]) || @contacts.first
   end  
 
 end
