@@ -22,6 +22,10 @@
   <div id="call_sheet" style="display:none">
     <%= render :partial => "callers/agent_work_screen/call_sheet", :locals => @locals %>
   </div>
+
+  <div id="pending_calls" style="display:none">
+    <%= render :partial => "callers/agent_work_screen/pending_calls", :locals => @locals %>
+  </div>
 </column-mc:>
 
 <js:>

@@ -12,7 +12,8 @@ class Contact < AbstractLead
   scope :only_completed, where(:completed => false)
   scope :for_campaign, lambda { |campaign| where(:campaign_id => campaign) }
   scope :with_completed_status, lambda { |completed| where(:completed => completed) }
-  scope :available_to_assign, where(:agent_id => nil).with_completed_status(false)
+  scope :with_pending_status, lambda { |pending| where(:pending => pending) }
+  scope :available_to_assign, where(:agent_id => nil).with_completed_status(false).with_pending_status(false)
   scoped_order :company_name
 
   acts_as_list :scope => [:campaign_id, :agent_id]
@@ -60,6 +61,18 @@ class Contact < AbstractLead
     self.update_attributes(:agent_id => agent_id)
     self.insert_at
     self.move_to_bottom
+  end
+
+  def change_pending_status(pending)
+    self.reload
+    self.remove_from_list
+    self.update_attributes(:pending => pending)
+    self.insert_at
+    self.move_to_bottom
+  end
+
+  def should_be_pending?
+    DateTime.parse("#{current_call_result.result_values.first.value} #{DateTime.now.formatted_offset}") > DateTime.now rescue false
   end
 
   def higher_item_in_campaign_list

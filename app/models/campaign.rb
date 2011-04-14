@@ -50,7 +50,15 @@ class Campaign < ActiveRecord::Base
 
   def assign_contacts_to_agent(agent)
     if agent.with_role.respond_to? :has_max_contacts_in_campaign?
-      contacts_list = contacts.available_to_assign
+      #restore contact to call sheet if it's not pending anymore
+      pending_contacts = agent.contacts.with_pending_status(true)
+      while (not agent.with_role.has_max_contacts_in_campaign? self) and pending_contacts.present?
+        contact = pending_contacts.shift
+        contact.change_pending_status(false) unless contact.should_be_pending?
+      end
+
+      #assign new contacts to agent
+      contacts_list = contacts.available_to_assign      
       while (not agent.with_role.has_max_contacts_in_campaign? self) and contacts_list.present?
         contacts_list.shift.assign_agent(agent.id)
       end

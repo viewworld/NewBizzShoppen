@@ -3,6 +3,7 @@ class Callers::AgentWorkScreenController < Callers::CallerController
   before_filter :set_campaign
   before_filter :set_agent
   before_filter :set_contacts
+  before_filter :set_pending_contacts
   before_filter :set_contact
   before_filter :set_contact_managing
 
@@ -24,11 +25,15 @@ class Callers::AgentWorkScreenController < Callers::CallerController
   end
 
   def set_contacts
-    @contacts = @agent.contacts.for_campaign(@campaign)
+    @contacts = @agent.contacts.for_campaign(@campaign).with_pending_status(false)
+  end
+
+  def set_pending_contacts
+    @pending_contacts = @agent.contacts.for_campaign(@campaign).with_pending_status(true)
   end
 
   def set_contact
-    @lead = @contact = @contacts.first
+    @lead = @contact = @agent.contacts.first
   end
 
   def set_locals
@@ -36,6 +41,7 @@ class Callers::AgentWorkScreenController < Callers::CallerController
               :agent => @agent,
               :contact => @contact,
               :contacts => @contacts,
+              :pending_contacts => @pending_contacts,
               :namespace => "callers" }
   end
 

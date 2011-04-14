@@ -56,7 +56,7 @@ class Callers::AgentWorkScreen::CallResultsController < Callers::AgentWorkScreen
 
   private
   def set_contact
-    @lead = @contact = @contacts.find(params[:contact_id])
+    @lead = @contact = @agent.contacts.find(params[:contact_id])
   end
 
   def set_call_result

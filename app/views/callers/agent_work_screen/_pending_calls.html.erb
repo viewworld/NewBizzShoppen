@@ -1,5 +1,5 @@
 <header>
-  <param:content>Call sheet</param:content>
+  <param:content>Pending calls</param:content>
 
   <param:actions>
     <ul class="header_actions">
@@ -16,7 +16,7 @@
   </param:actions>
 </header>
 
-<%= contacts_table contacts, :agent_work_screen => true do |blocks| %>
+<%= contacts_table pending_contacts, :agent_work_screen => true do |blocks| %>
     <% blocks.tools do |contact| %>
         <ul-actions>
           <li>

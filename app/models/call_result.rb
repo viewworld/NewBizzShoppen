@@ -60,7 +60,7 @@ class CallResult < ActiveRecord::Base
   end
 
   def update_pending_status
-    pending_status = contact.current_call_result.present? ? PENDING_RESULT_TYPES.include?(contact.current_call_result.result.label) : false
+    pending_status = contact.current_call_result.present? ? (PENDING_RESULT_TYPES.include?(contact.current_call_result.result.label) and contact.should_be_pending?) : false
     contact.update_attributes :pending => pending_status
   end
 
