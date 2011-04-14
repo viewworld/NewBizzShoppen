@@ -8,6 +8,8 @@ class ResultValue < ActiveRecord::Base
 
   before_create :duplicate_field_type
 
+  scope :for_result_field, lambda {|result_field| where(:result_field_id => result_field)}
+
   def duplicate_field_type
     self.field_type = result_field.field_type
   end
