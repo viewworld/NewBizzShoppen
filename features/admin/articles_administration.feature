@@ -153,5 +153,5 @@ Scenario: I can see type of article on the listing
 @m5 @tgn @_tested
 Scenario: As admin, it should be possible to edit all kind of articles by displaying Edit link in interface when articles is listed or displayed
   Given I go to the home page
-  Then I follow "(edit)"
+  Then I click hidden link by url regex "/administration\/articles\/\d+\/edit/"
   And I should see translated "administration.articles.edit.view.header" with options "name:Blurb start page role selection"

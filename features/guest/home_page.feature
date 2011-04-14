@@ -18,7 +18,8 @@ Feature: Home page
     And I am on the home page
     Then I should see "Hjem"
 
-  @m8 @requested @ao
+  # set up on server side
+  @m8 @requested @ao @_done @non_testable
   Scenario: If a user enters www.fairleads.dk he should be redirectoed to www.fairleads.com with danish selected as default.
 
   @m8 @requested @tgn @tested_elsewhere @_done

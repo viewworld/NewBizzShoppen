@@ -69,7 +69,9 @@
         <% end %>
 
         <%= form.input :team_buyers, :as => :boolean if @user.has_role?(:customer) or params[:role] == "customer" %>
-        <%= form.input :skip_email_verification, :as => :boolean %>
+        <% if @user.new_record? %>
+            <%= form.input :skip_email_verification, :as => :boolean %>
+        <% end %>
       </ol>
     </fieldset>
   </div>

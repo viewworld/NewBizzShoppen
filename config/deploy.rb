@@ -23,6 +23,7 @@ namespace :deploy do
   desc "Restarting god"
   task :restart, :roles => :app do
     sudo "/opt/ree/bin/god restart nbs_#{stage}"
+    sudo "/opt/ree/bin/god restart dj_#{stage}"
   end
 end
 
