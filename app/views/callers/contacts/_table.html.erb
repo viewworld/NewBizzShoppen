@@ -11,16 +11,16 @@
     <% if show_checkboxes %>
         <th class="no_pdd_lr" style="width: 10px;"><%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %></th>
     <% end %>
-    <th style="width:150px"><%= agent_work_screen ? "Company name" : link_to("Company name", order_for_scoped_search(:company_name)) %></th>
-    <th style="width:150px" class="ta_r">Company phone</th>
-    <th style="width:150px" class="ta_r">Contact phone</th>
+    <th style="width:150px"><%= agent_work_screen ? t("contacts.table.company_name") : link_to(t("contacts.table.company_name"), order_for_scoped_search(:company_name)) %></th>
+    <th style="width:150px" class="ta_r"><%= t("contacts.table.company_phone") %></th>
+    <th style="width:150px" class="ta_r"><%= t("contacts.table.contact_phone") %></th>
     <% unless agent_work_screen %>
-        <th>Agent</th>
+        <th><%= t("contacts.table.agent") %></th>
     <% end %>
     <th>Result</th>
     <% if block_tools %>
         <th class="ta_r">
-          Actions
+          <%= t("contacts.table.actions") %>
         </th>
     <% end %>
     <th class="hr"></th>

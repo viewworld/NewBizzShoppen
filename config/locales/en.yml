@@ -327,9 +327,15 @@ en:
       save_button: Update
       cancel_button: Back to campaign
       current_agent_label: "Current agent:"
-
       prev: "<< Prev"
       next: "Next >>"
+    table:
+      company_name: Company name
+      company_phone: Company phone
+      contact_phone: Contact phone
+      agent: Agent
+      result: Result
+      actions: Actions
   call_results:
     table:
       date: Date
