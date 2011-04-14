@@ -2,6 +2,17 @@
   <div class="pdd_10 no_pdd_t">
     <fieldset class="inputs labels_ta_r labels_200">
       <ol>
+        <% if current_user.has_role?(:admin) %>
+          <li class="string">
+            <label><%= t("campaigns.edit.owner") %></label>
+
+            <div class="txt">
+              <strong>
+                <%= campaign.creator.full_name %>
+              </strong>
+            </div>
+          </li>
+        <% end %>   
         <%= form.input :name %>
         <%= form.input :category_id, :as => :select, :collection => Category.all, :include_blank => false %>
         <%= form.input :country_id, :as => :select, :collection => Country.all, :include_blank => false %>

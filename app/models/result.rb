@@ -26,7 +26,7 @@ class Result < ActiveRecord::Base
   end
 
   def can_be_managed_by?(user)
-    !generic? and (creator == user or user.has_role?(:admin))
+    !generic? and (creator.id == user.id or user.has_role?(:admin))
   end
 
   def list_of_fields

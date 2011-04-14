@@ -312,6 +312,10 @@ class User < ActiveRecord::Base
     roles.include?(r)
   end
 
+  def has_one_of_roles?(*r)
+    r.map{|role| has_role?(role)}.include?(true)
+  end
+
   def to_s
     full_name
   end

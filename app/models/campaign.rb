@@ -30,7 +30,7 @@ class Campaign < ActiveRecord::Base
   scope :descend_by_category, order("categories.name DESC").joins_on_category
   scope :ascend_country, order("countries.name ASC").joins_on_country
   scope :descend_by_country, order("countries.name DESC").joins_on_country
-  scope :available_for_user, lambda {|user| includes(:users).where("users.id = :user_id OR campaigns.creator_id = :user_id", {:user_id => user.id})}
+  scope :available_for_user, lambda {|user| includes(:users).where("users.id = :user_id OR campaigns.creator_id = :user_id", {:user_id => user.id}) unless user.has_role? :admin}
 
   def assign(ids)
     self.users = ids.blank? ? [] : User.find(ids)
@@ -59,6 +59,10 @@ class Campaign < ActiveRecord::Base
 
   def has_user_as_member?(user)
     user.with_role.campaigns.include?(self)
+  end
+
+  def can_be_managed_by?(user)
+    creator.id == user.id or user.has_role?(:admin)
   end
 
 end

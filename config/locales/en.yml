@@ -274,6 +274,7 @@ en:
         sum: SUM
     edit:
       title: Edit campaign
+      owner: Owner
       button_update: Update
       button_cancel: Back to campain listing
       button_create_contact: Create contact
