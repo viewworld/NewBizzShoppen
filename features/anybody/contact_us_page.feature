@@ -22,7 +22,7 @@ Scenario: I have to fill in my email address
   And I fill in "email_template_preview_email_from" with ""
   And I fill in "email_template_preview_body" with "My question pertains to the manner in which orders are invoiced..."
   And I press translated "contact_us.new.view.send_email_button"
-  Then I should see translated "activemodel.errors.models.contact_us_template_preview.attributes.email_from.blank"
+  Then I should see translated "activerecord.errors.messages.blank"
 
 @_tested
 Scenario: If I am logged in, my email address is alredy filled in

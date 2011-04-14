@@ -23,7 +23,7 @@ class Cart
           if @buyer.purchase_limit_reached?(lead)
             return :big_buyer_purchase_limit_reached
           end
-          purchase = @buyer.lead_purchases.create(:lead_id => lead.id, :paid => false, :purchased_by => @buyer.id)
+          purchase = @buyer.lead_single_purchases.create(:lead_id => lead.id, :paid => false, :purchased_by => @buyer.id)
           if @buyer.big_buyer?
             purchase.update_attribute(:accessible_from, Time.now)
             return :bought_successful
@@ -99,6 +99,19 @@ class Cart
       return currency == lead.currency
     end
     true
+  end
+
+  def fake_paypal_payment
+    payment_notification = PaymentNotification.create!(
+        :params => {
+            :mc_gross => total,
+            :receiver_email => APP_CONFIG[:paypal_email],
+            :secret => APP_CONFIG[:paypal_secret]
+          },
+        :buyer_id => buyer.id,
+        :status => "Completed",
+        :transaction_id => rand(99999999).to_s)
+    payment_notification.buyer.cart.paid!
   end
 
 end

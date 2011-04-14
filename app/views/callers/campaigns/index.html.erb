@@ -1,0 +1,66 @@
+<search-box:>
+  <div class="search_box">
+    <h2><%= t("campaigns.filter.header") %></h2>
+
+    <div class="search_content">
+      <%= semantic_form_for @search, :url => callers_campaigns_path do |f| %>
+          <fieldset class="inputs_vertical">
+            <ol class="no_pdd">
+              <li class="string">
+                <%= f.input :with_keyword, :label => t("campaigns.filter.keyword_label") %>
+                <%= f.input :with_state, :as => :select, :collection => [[t("campaigns.filter.state_select_all"), "all"],
+                                                                         [t("campaigns.filter.state_select_active"), "active"],
+                                                                         [t("campaigns.filter.state_select_inactive"), "inactive"]],
+                            :label           => t("campaigns.filter.state_label"), :include_blank => false %>
+              </li>
+              <li class="commit">
+                <ibt c="bt_green" icon="magnify">
+                  <%= submit_tag t("campaigns.filter.search_button") %>
+                </ibt>
+              </li>
+            </ol>
+          </fieldset>
+      <% end %>
+    </div>
+  </div>
+</search-box:>
+
+<column-mc:>
+
+  <header>
+    <param:content>
+      <%= t("campaigns.header.title") %>
+    </param:content>
+
+    <param:actions>
+      <%= form_tag new_callers_campaign_path, :method => :get, :id => "form_new_campaign" do %>
+          <ul class="header_actions">
+            <li class="last">
+              <div class="hidden">
+                <%= submit_tag "New" %>
+              </div>
+              <%= bt_link_to :plus, t("campaigns.header.new_campaign_button"), "javascript:void", :onclick => "$('#form_new_campaign').submit()" %>
+            </li>
+          </ul>
+      <% end %>
+    </param:actions>
+  </header>
+
+
+  <%= campaigns_table @campaigns do |blocks| %>
+      <% blocks.tools do |campaign| %>
+          <ul-actions>
+            <li>
+              <%= link_to t("campaigns.index.edit"), edit_callers_campaign_path(campaign), :class => "default_action" %>
+            </li>
+            <li>
+              <%= link_to t("campaigns.index.result"), callers_campaign_path(campaign) %>
+            </li>
+            <li>
+              <%= link_to t("campaigns.index.destroy"), callers_campaign_path(campaign), :confirm => t("campaigns.index.destroy_confirmation"), :method => :delete %>
+            </li>
+          </ul-actions>
+      <% end %>
+  <% end %>
+
+</column-mc:>

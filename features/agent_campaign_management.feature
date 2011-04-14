@@ -1,6 +1,17 @@
 @m5b @agent_campaign @$_administrator @$_call_centre @tbr
 Feature: Agent campaign - management
 
+#Places                Admin   Agent   Call Centre   Call Centre Agent
+#
+#Campaigns List        x       x*      x^            x*
+#Campaign Result       x       -       x^            -
+#Manage Result Types   x       -       x^            -
+#Edit Campaign         x       -       x^            x
+#Agent work screen     x       x       x             x
+
+#* - without actions
+#^ - only created by me
+
    Background:
     Given I am on the homepage
     And I make sure current locale is "en"
@@ -35,7 +46,6 @@ Feature: Agent campaign - management
       Then I should see "Testing One" before "Testing Two"
       Then I follow translated "campaigns.table.name"
       Then I should see "Testing Two" before "Testing One"
-      Then show me the page
       Then I follow translated "campaigns.table.category"
       Then I should see "Business" before "Electronics"
       Then I follow translated "campaigns.table.category"
@@ -67,8 +77,22 @@ Feature: Agent campaign - management
       Then I should see "Campaign was successfully destroyed"
       Then I should see "Testing Two"
 
-    @2 @is @__campaigns_listing @_done
+    @2 @is @__campaigns_listing @_tested @_done @selenium
     Scenario: I can create new campaign
+      Then I click xpath "//ul[@class='header_actions']//a"
+      Then I fill in "campaign_name" with "Testing Creation"
+      Then I fill in "campaign_max_contact_number" with "188"
+      Then I fill in "campaign_start_date" with "2011-11-11"
+      Then I fill in "campaign_end_date" with "2011-12-12"
+      Then I select "Leisure" from "campaign_category_id"
+      Then I select "United Kingdom" from "campaign_country_id"
+      Then I press "campaign_submit"
+      Then I should see "Campaign was successfully created"
+      And I follow translated "layout.main_menu.call_centre.campaigns"
+      Then I should see "2011-11-11"
+      Then I should see "2011-12-12"
+      Then I should see "Testing Creation"
+      Then I should see "Leisure"
 
     #campaigns::edit
     # name, category, country, start_date, end_date, number_of_visible_contacts_per_agent
@@ -106,11 +130,13 @@ Feature: Agent campaign - management
 
     # question: may agent have more assigned contacts then visible contacts number
     # - no but when the agent registre a result for a contact- the contact is removed from the agens active calling list and asign to the reslt list. Then the agent is dynamicly assign a new contact.
-    @3 @is @__campaign_manage @_done
+    @3 @is @__campaign_manage @_done @selenium
     Scenario: I can assign selected contacts to selected agent
-      #Then I follow translated "campaigns.index.edit"
-      #Then I check "mark_all"
-      #Then I press translated ""
+      #When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
+      #Then I should not see "John Smith" within "#contacts_table_body"
+      #Then I click xpath "(//table[@id='contacts']//input[@class='cb_contact_id'])[1]"
+      #Then I click xpath "(//form[@id='batch_assign_form']//a)[1]"
+      #Then I should see "John Smith" within "#contacts_table_body"
 
     @2 @is @__campaign_manage @_tested
     Scenario: I can remove contact from campaign
@@ -131,24 +157,28 @@ Feature: Agent campaign - management
     #
     #
     #campaigns::agents::new (popup?)
-    @3 @is @__campaign_assign_agents @_done @wip
+    @3 @is @__campaign_assign_agents @_tested
     Scenario: I can browse available freelance agents and call centers
       Then I follow translated "campaigns.index.edit"
       Then I follow translated "campaigns.edit.agent_assignment_button"
-      Then I should see "1"
+      Then I should see "John Smith"
 
-      Then I click xpath "(//table[@id='campaigns']//input[@type='checkbox'])[1]"
-      Then I click xpath "//a[@class='bt bt_grey_small']"
-      Then I follow translated "campaigns.edit.agent_assignment_button"
-
-      Then show me the page
-
-
-    @2 @is @__campaign_assign_agents @_done
+    @2 @is @__campaign_assign_agents @tested_elsewhere
     Scenario: I can assign selected agents to campaign
 
-    @1 @is @__campaign_assign_agents @_done
+    @1 @is @__campaign_assign_agents @_tested @selenium
     Scenario: I can deassign not selected agents to campaign
+      When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
+      Then I follow translated "campaigns.edit.agent_assignment_button"
+      Then I should see "1" within "#campaigns"
+      Then I click xpath "(//table[@id='campaigns']//input[@type='checkbox'])[2]"
+      Then I click xpath "//tr[@class='main_actions']//a"
+      Then I click xpath "//div[@class='frm_head']//a"
+      Then I should not see "1" within "#campaigns"
+      Then I click xpath "(//table[@id='campaigns']//input[@type='checkbox'])[2]"
+      Then I click xpath "//tr[@class='main_actions']//a"
+      Then I click xpath "//div[@class='frm_head']//a"
+      Then I should see "1" within "#campaigns"
 
     #
     #

@@ -1,0 +1,75 @@
+<%
+   cols = 5
+   cols += 1 if show_checkboxes
+   cols += 1 if not block_tools.nil?
+-%>
+
+<table id="contacts" class="generic">
+  <thead>
+  <tr>
+    <th class="hl"></th>
+    <% if show_checkboxes %>
+        <th class="no_pdd_lr" style="width: 10px;"><%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %></th>
+    <% end %>
+    <th style="width:150px"><%= agent_work_screen ? "Company name" : link_to("Company name", order_for_scoped_search(:company_name)) %></th>
+    <th style="width:150px" class="ta_r">Company phone</th>
+    <th style="width:150px" class="ta_r">Contact phone</th>
+    <% unless agent_work_screen %>
+        <th>Agent</th>
+    <% end %>
+    <th>Result</th>
+    <% if block_tools %>
+        <th class="ta_r">
+          Actions
+        </th>
+    <% end %>
+    <th class="hr"></th>
+  </tr>
+  </thead>
+  <tfoot>
+  <tr>
+    <td class="fl"></td>
+    <td colspan="<%= agent_work_screen ? 5 : 7 %>"></td>
+    <td class="fr"></td>
+  </tr>
+  </tfoot>
+  <tbody>
+    <% collection.each do |contact| %>
+        <tr class="<%= cycle("odd", "even") %><%= contact.completed? ? " completed" : "" %><%= @contact == contact ? " highlight_row" : "" %>">
+          <td class="cl"></td>
+          <% if show_checkboxes %>
+              <td class="no_pdd_lr"><%= check_box_tag "cb_contact_#{contact.id}", contact.id, false, :class => "cb_contact_id" %></td>
+          <% end %>
+          <td><%= contact.company_name %></td>
+          <td class="ta_r"><%= contact.company_phone_number %></td>
+          <td class="ta_r"><%= contact.direct_phone_number %></td>
+          <% unless agent_work_screen %>
+              <td><%= contact.agent_name %></td>
+          <% end %>
+          <td><%= contact.current_call_result_name %> <%= "(#{contact.current_call_result.agent.full_name})" if contact.current_call_result %></td>
+          <% if block_tools %>
+              <td class="tda ta_r">
+                <%= with_output_buffer { block_tools.call(contact) } %>
+              </td>
+          <% end %>
+          <td class="cr"></td>
+        </tr>
+    <% end %>
+  <% if !agent_work_screen and will_paginate collection %>
+      <tr class="pagination">
+        <td colspan="<%= cols + 2 %>" class="ta_c">
+          <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+        </td>
+      </tr>
+  <% end %>
+  <% if block_bottom %>
+      <tr class="main_actions">
+        <td class="cl"></td>
+        <td colspan="<%= cols %>" class="no_pdd_lr">
+          <%= with_output_buffer { block_bottom.call } %>
+        </td>
+        <td class="cr"></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

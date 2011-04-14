@@ -2,6 +2,7 @@ class Administration::BankAccountsController < Administration::AdministrationCon
   inherit_resources
 
   set_tab "settings"
+  set_subtab "global"
 
   def update
     update! do |success,failure|

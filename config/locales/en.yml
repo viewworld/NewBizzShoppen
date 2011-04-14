@@ -2,6 +2,9 @@
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+  support:
+    array:
+      two_words_connector: " and "
   common:
     back_link: Back
     edit_link: "Edit"
@@ -46,6 +49,8 @@ en:
     formats:
       default: "%d-%m-%Y"
       datepicker: "dd-mm-yy"
+    format:
+      standard: "%d-%m-%Y"
   layout:
     main_menu:
       admin:
@@ -69,9 +74,11 @@ en:
         content: "Content"
         global: "Global"
         refunds: "Refunds"
+        campaigns: Campaigns
       agent:
         leads: My leads
         lead_templates: Lead templates
+        campaigns: Campaigns
       call_centre:
         call_centre_agents: "Team"
         leads: "My leads"
@@ -2016,7 +2023,6 @@ en:
     locale:
       en: English
       dk: Danish
-
   activerecord:
     models:
       article:
@@ -2067,68 +2073,32 @@ en:
         purchase_decision_date: "Purchase decision date"
         notify_buyers_after_update: "Notify sales managers about changes"
     errors:
+      messages:
+        blank: "can't be blank"
+        taken: "has already been taken"
+        invalid: "is invalid"
+        not_a_number: "is not a number"
       models:
-        article:
-          news:
-            agent:
-              attributes:
-                title:
-                  blank: "can't be blank"
-                content:
-                  blank: "can't be blank"
-        country:
-          attributes:
-            name:
-              taken: "has already been taken"
         user:
           attributes:
             email:
               not_found: "not found"
               already_confirmed: "was already confirmed"
-            confirmation_token:
-              invalid: "is invalid"
-              blank: "can't be blank"
           agent:
             attributes:
-              email:
-                invalid: "is invalid"
               password:
                 blank: "is blank"
                 confirmation: "doesn't match confirmation"
-              current_password:
-                invalid: "is invalid"
-              screen_name:
-                taken: "has already been taken"
           customer:
             attributes:
-              email:
-                invalid: "is invalid"
               password:
                 blank: "is blank"
                 confirmation: "doesn't match confirmation"
-              screen_name:
-                taken: "has already been taken"
           purchase_manager:
             attributes:
-              email:
-                invalid: "is invalid"
               password:
                 blank: "is blank"
                 confirmation: "doesn't match confirmation"
-              screen_name:
-                taken: "has already been taken"
-          abstract:
-            attributes:
-              reset_password_token:
-                invalid: "is invalid"
-        lead_translation:
-          attributes:
-            header:
-              blank: "can't be blank"
-            description:
-              blank: "can't be blank"
-            hidden_description:
-              blank: "can't be blank"
         bank_account:
           attributes:
             global_default:
@@ -2147,15 +2117,8 @@ en:
 
   activemodel:
     errors:
-      models:
-        contact_us_template_preview:
-          attributes:
-            email_from:
-              blank: "can't be blank"
-            subject:
-              blank: "can't be blank"
-            body:
-              blank: "can't be blank"
+      messages:
+        blank: "can't be blank"
 
   flash:
     agent_accounts:
