@@ -29,6 +29,7 @@
     <% end %>
 <% end %>
 
+<%= hidden_field_tag :reload, false %>
 
 <script type="text/javascript">
     jQuery(document).ready(function() {
@@ -40,17 +41,21 @@
                 height: 520,
                 href: "<%= url_for( :controller => "#{namespace}/agent_work_screen/call_results", :action => :new, :campaign_id => campaign, :contact_id => contact) %>" + param,
                 onClosed: function() {
-                    $.get("<%= url_for(:controller => "#{namespace}/agent_work_screen/contacts", :action => :show, :campaign_id => campaign, :id => 0) %>");
+                    if ($("#reload").val() == "true")
+                        $.get("<%= url_for(:controller => "#{namespace}/agent_work_screen/contacts", :action => :show, :campaign_id => campaign, :id => 0) %>");
+                    $("#reload").val(false);
                 }
             });
         });
 
         $('a.edit_call_result').colorbox({
             iframe: true,
-            width: 900,
-            height: 700,
+            width: 1100,
+            height: 520,
             onClosed: function() {
-                $.get("<%= url_for(:controller => "#{namespace}/agent_work_screen/contacts", :action => :show, :campaign_id => campaign, :id => contact) %>");
+                if ($("#reload").val() == "true")
+                    $.get("<%= url_for(:controller => "#{namespace}/agent_work_screen/contacts", :action => :show, :campaign_id => campaign, :id => contact) %>");
+                $("#reload").val(false);
             }
         });
     });
