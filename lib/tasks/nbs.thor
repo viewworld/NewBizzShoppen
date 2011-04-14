@@ -235,7 +235,7 @@ class Nbs < Thor
      {:name => "Result message", :field_type => "0", :is_mandatory => true, :result => Result.find_by_name("Custom result") }].each do |result_field|
       ResultField.create(result_field) unless ResultField.find_by_name(result_field[:name])
     end
-  
+
     unless Rails.env.production?
 
       if Category.count.zero?
@@ -314,7 +314,7 @@ class Nbs < Thor
 
     unless User::CallCentreAgent.find_by_email("translator_call_centre_agent@nbs.com")
       parent = User.find_by_email("translator_call_centre@nbs.com")
-      user = User::CallCentreAgent.make!(:email => "translator_call_centre_agent@nbs.com", :password => "secret", :password_confirmation => "secret", :parent_id => parent.id)
+      user = User::CallCentreAgent.make!(:email => "translator_call_centre_agent@nbs.com", :first_name => "John", :last_name => "Smith", :password => "secret", :password_confirmation => "secret", :parent_id => parent.id)
       user.confirm!
       user.roles << :translator
       user.save
@@ -399,9 +399,16 @@ class Nbs < Thor
                      :creator => call_centre,
                      :start_date => Date.today,
                      :end_date => Date.today + 14.days })
+    #inactive campaign
+    Campaign.create({:name => "Testing Two",
+                     :category => Category.where(:name => "Electronics").first,
+                     :country => Country.where(:name => "United Kingdom").first,
+                     :max_contact_number => 3,
+                     :creator => call_centre,
+                     :start_date => Date.today - 15.days,
+                     :end_date => Date.today - 1.days })
     campaign.results = Result.generic_results
     campaign.users = call_centre.subaccounts
-
 
     [{:company_name => "Bon Jovi inc.", :company_phone_number => "888 112 113" },
      {:company_name => "Mleko company", :company_phone_number => "510 333 333" },
@@ -441,9 +448,9 @@ class Nbs < Thor
   def refresh_exchange_rates
     CurrencyConverter.cache_current_exchange_rates!
   end
-  
+
   desc "copy yml to database", ""
   def t
     I18nUtils.populate!
-  end  
+  end
 end
