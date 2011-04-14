@@ -16,7 +16,7 @@ class LeadPurchase < LeadPurchaseBase
   before_save :change_contacted_state
   before_save :handle_new_deadline
   before_save :set_assigned_at
-  before_save :set_euro_price
+  before_create :set_euro_price
   after_save :deliver_lead_rated_as_unsatisfactory_email
   after_save :deliver_about_to_expire_email
   before_create :assign_to_purchaser
