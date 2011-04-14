@@ -318,7 +318,7 @@ class User < ActiveRecord::Base
   end
   
   def country_vat_rate
-    with_role.vat_rate ? with_role.vat_rate.rate : 0.0
+    (with_role.vat_rate and !not_charge_vat) ? with_role.vat_rate.rate : 0.0
   end
 
   def to_i

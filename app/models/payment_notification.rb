@@ -29,7 +29,7 @@ class PaymentNotification < ActiveRecord::Base
                            :payable => lead_purchase,
                            :name => lead_purchase.lead.header,
                            :netto_price => lead_purchase.lead.price,
-                           :vat_rate => Settings.invoicing_default_vat_rate.to_f,
+                           :vat_rate => buyer.country_vat_rate,
                            :quantity => lead_purchase.quantity)
       end
     end
