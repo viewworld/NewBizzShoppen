@@ -1,0 +1,4 @@
+<column-mc:>
+  <%= render :partial => "callers/call_results/new", :locals => {:path => [:callers, @contact, @call_result],
+                                                                 :back_path => url_for(:controller => "callers/contacts", :action => :edit, :campaign_id => @contact.campaign, :id => @contact) }%>
+</column-mc:>

@@ -1,0 +1,49 @@
+<column-mc:>
+
+  <header back="true" backurl="#{edit_callers_campaign_path(@campaign)}"><%= t("contacts.edit.title") %></header>
+
+  <%= semantic_form_for [:callers, @campaign, @contact], :method => :put do |form| %>
+      <frm title="Edit">
+        <param:header>
+          <div class="fltr">
+            <%= @contact.lower_item_in_campaign_list ? bt_link_to(nil, t("contacts.edit.prev"), url_for(:controller => "callers/contacts", :action => :edit, :campaign_id => @campaign, :id => @contact.lower_item_in_campaign_list), :id => "prev_contact") : "" %>
+            <%= @contact.higher_item_in_campaign_list ? bt_link_to(nil, t("contacts.edit.next"), url_for(:controller => "callers/contacts", :action => :edit, :campaign_id => @campaign, :id => @contact.higher_item_in_campaign_list), :id => "next_contact") : "" %>
+          </div>
+        </param:header>
+        <param:content>
+          <%= render :partial => '/shared/leads/form', :locals => {:form => form, :campaign => @campaign, :contact => @contact} %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("contacts.edit.save_button"), :name => "commit_create" %>
+          </ibt>
+          <%= bt_link_to nil, t("campaigns.new.button_cancel"), edit_callers_campaign_path(@campaign), :method => :get, :class => "bt_grey fltr" %>
+        </param:actions>
+      </frm>
+  <% end %>
+  <br/>
+
+  <h3><%= t("contacts.edit.current_agent_label") %> <%= @contact.agent ? @contact.agent.full_name : "-" %></h3>
+
+  <header>Call log</header>
+
+  <% unless @contact.completed? %>
+      <% form_for CallResult.new, :url => new_callers_contact_call_result_path(@contact), :html => {:method => :get} do %>
+          <%= select_tag :result_id, options_for_select(@campaign.results_for_select) %>
+          <%= bt_link_to nil, t("call_results.edit.button_new_result"), "javascript:void(0)", :onclick => "$(this).parents('form').submit()" %>
+      <% end %>
+  <% end %>
+
+  <%= call_results_table @call_results do |blocks| %>
+      <% blocks.tools do |call_result| %>
+          <ul-actions>
+            <li>
+              <%= link_to t("call_results.table.edit_link"), edit_callers_contact_call_result_path(@contact, call_result), :class => "default_action" %>
+            </li>
+            <li>
+              <%= link_to t("call_results.table.remove_link"), callers_contact_call_result_path(@contact, call_result), :confirm => t("call_results.table.remove_confirm"), :method => :delete %>
+            </li>
+          </ul-actions>
+      <% end %>
+  <% end %>
+</column-mc:>

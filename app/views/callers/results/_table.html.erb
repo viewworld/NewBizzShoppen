@@ -1,0 +1,37 @@
+<table class="generic">
+  <thead>
+  <tr>
+    <th class="hl"></th>
+    <th style="width:10px" class="no_pdd_lr">&nbsp;</th>
+    <th><%= t("results.index.table.result_name") %></th>
+    <th><%= t("results.index.table.fields") %></th>
+    <th style="width:80px"></th>
+    <th class="hr"></th>
+  </tr>
+  </thead>
+  <tfoot>
+  <tr>
+    <td class="fl"></td>
+    <td colspan="4"></td>
+    <td class="fr"></td>
+  </tr>
+  </tfoot>
+  <tbody>
+    <% if results.generic_results.present? %>
+        <tr class="header">
+          <td class="cl"></td>
+          <td colspan="4"><%= t("results.index.table.generic_types") %></td>
+          <td class="cr"></td>
+        </tr>
+        <%= render :partial => "callers/results/result", :collection => results.generic_results, :locals => {:campaign => campaign} %>
+    <% end %>
+    <% if results.custom_results.present? %>
+        <tr class="header">
+          <td class="cl"></td>
+          <td colspan="4"><%= t("results.index.table.custom_types") %></td>
+          <td class="cr"></td>
+        </tr>
+        <%= render :partial => "callers/results/result", :collection => results.custom_results, :locals => {:campaign => campaign} %>
+    <% end %>
+  </tbody>
+</table>

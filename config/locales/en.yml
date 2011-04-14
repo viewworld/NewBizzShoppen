@@ -74,9 +74,11 @@ en:
         content: "Content"
         global: "Global"
         refunds: "Refunds"
+        campaigns: Campaigns
       agent:
         leads: My leads
         lead_templates: Lead templates
+        campaigns: Campaigns
       call_centre:
         call_centre_agents: "Team"
         leads: "My leads"
