@@ -15,7 +15,7 @@ module Rack
     end
 
     def find_locale(env)
-      (env['SERVER_NAME'].to_s[/.*\.(\w{2,3})$/,1].to_a & locales).first ||
+      (env['HTTP_REFERER'].to_s[/fairleads\.(\w{2,3})/,1].to_a & locales).first ||
        env['rack.session'][:locale_code] ||
        env["HTTP_ACCEPT_LANGUAGE"].to_s[/^([a-z]{2})/]
     end
