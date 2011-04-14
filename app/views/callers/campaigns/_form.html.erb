@@ -27,10 +27,12 @@
       <ol class="align_inputs">
         <%= form.input :start_date, :as => :string,
                        :wrapper_html => {:class => "date"},
-                       :input_html => {:class => "datepicker", :value => campaign.start_date} %>
+                       :input_html => {:class => "datepicker", :value => campaign.start_date},
+                       :hint => t('models.result_field.date_format')%>
         <%= form.input :end_date, :as => :string,
                        :wrapper_html => {:class => "date"},
-                       :input_html => {:class => "datepicker", :value => campaign.end_date} %>
+                       :input_html => {:class => "datepicker", :value => campaign.end_date},
+                       :hint => t('models.result_field.date_format')%>
         <%= form.input :max_contact_number, :input_html => {:style => "width:95px"} %>
       </ol>
     </fieldset>

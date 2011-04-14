@@ -2021,6 +2021,8 @@ en:
         type2: Date
         type3: Note
         type4: Date & Time
+      date_format: "format: yyyy-mm-dd"
+      datetime_format: "format: yyyy-mm-dd hh:mm"  
     locale:
       en: English
       dk: Danish
