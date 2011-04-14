@@ -330,7 +330,7 @@ class User < ActiveRecord::Base
   end
 
   def vat_rate
-    address.country.vat_rate
+    parent.present? ? parent.with_role.address.country.vat_rate : address.country.vat_rate
   end
 
   def with_role
