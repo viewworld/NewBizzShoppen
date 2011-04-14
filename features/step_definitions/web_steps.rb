@@ -372,3 +372,7 @@ end
 When /^I visit domain "([^\"]*)"$/ do |domain_name|
   Capybara.default_host = domain_name
 end
+
+When /^I set referer to "([^\"]*)"$/ do |referer|
+  page.driver.header "HTTP_REFERER", referer
+end
