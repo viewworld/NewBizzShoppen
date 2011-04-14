@@ -115,6 +115,7 @@ Scenario: I can buy leads if my purchase limit is not yet reached
 @m8 @added @tgn @_tested
 Scenario: I cannot buy leads if my purchase limit is reached
   Given big buyer purchase limit is set to 160
+  And currency "DKK" exists with attributes "exchange_rate: 2.5"
   And lead "Printers ultimate deal #2" has currency "DKK"
   And lead Printers ultimate deal has price 200
   And a lead Printers ultimate deal #2 exists within category Leisure and is bought by user customer@person.com with role customer
