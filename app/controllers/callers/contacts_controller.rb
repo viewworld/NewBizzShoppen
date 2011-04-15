@@ -5,6 +5,8 @@ class Callers::ContactsController < Callers::CallerController
   before_filter :set_contact, :only => [:edit, :update, :destroy]
   before_filter :set_contact_managing
   before_filter :set_import_flag, :only => [:new, :create]
+  before_filter lambda {authorize_role(:call_centre, :admin)}
+  before_filter lambda {authorize_manage_rights(@contact)}, :only => [:edit,:update,:destroy]
 
   def new
     @lead = @contact = Contact.new
@@ -13,7 +15,7 @@ class Callers::ContactsController < Callers::CallerController
   def create
     attrs = {:creator => current_user, :creator_name => current_user.full_name, :campaign_id => @campaign.id, :category_id =>  @campaign.category_id}
     if @import
-      Contact.create_from_csv(params[:contact][:formatted_rows], attrs)
+      Contact.create_from_csv(params[:contact][:formatted_rows], attrs.merge(:contact_name => "", :phone_number => "", :email_address => ""))
       redirect_to edit_callers_campaign_path(@campaign)
     else
       @lead = @contact = Contact.new(params[:contact])

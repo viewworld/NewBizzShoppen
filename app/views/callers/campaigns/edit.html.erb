@@ -1,5 +1,5 @@
 <column-mc:>
-  <header back="true" backurl="#{callers_campaigns_path}"><%= t("campaigns.edit.title") %></header>
+  <header back="true" backurl="#{callers_campaigns_path}"><%= t("campaigns.edit.title") %>: <%= @campaign.name %></header>
 
   <%= semantic_form_for [:callers, @campaign], :method => :put do |form| %>
       <frm title="Edit">
@@ -32,11 +32,12 @@
               <%= bt_link_to :plus, t("campaigns.edit.button_create_contact"), new_callers_campaign_contact_path(@campaign) %>
             </li>
             <li>
-              <%= bt_link_to :pencil, t("campaigns.edit.button_manage_result_types"), callers_campaign_results_path(@campaign) %>
-            </li>
-            <li class="last">
               <%= bt_link_to :users, t("campaigns.edit.button_import_contacts"), new_callers_campaign_contact_path(@campaign, :type => "import") %>
             </li>
+            <li class="last">
+              <%= bt_link_to :pencil, t("campaigns.edit.button_manage_result_types"), callers_campaign_results_path(@campaign) %>
+            </li>
+
           </ul>
       <% end %>
     </param:actions>

@@ -4,6 +4,8 @@ class Callers::ResultsController < Callers::CallerController
   set_tab "campaigns"
   before_filter :set_campaign
   before_filter :set_result_type, :only => [:edit, :update, :destroy]
+  before_filter lambda {authorize_role(:call_centre, :admin)}
+  before_filter lambda {authorize_manage_rights(@result)}, :only => [:edit,:update,:destroy]
 
   def new
     @result = Result.new(:final => params[:type].eql?("final"))

@@ -1,6 +1,6 @@
 class Contact < AbstractLead
 
-  CSV_ATTRS = %w(company_name company_phone_number company_website address_line_1 address_line_2 address_line_3 zip_code country region company_vat_no company_ean_number contact_name direct_phone_number phone_number email_address linkedin_url facebook_url)
+  CSV_ATTRS = %w(company_name company_phone_number company_website address_line_1 address_line_2 address_line_3 zip_code country region company_vat_no company_ean_number contact_name direct_phone_number phone_number email_address linkedin_url facebook_url note)
 
   attr_accessor :strict_validate, :formatted_rows
 
@@ -39,24 +39,34 @@ class Contact < AbstractLead
       FasterCSV.generate(:force_quotes => true) do |csv|
         contacts = find(ids)
         csv << CSV_ATTRS.map(&:humanize)
-        contacts.each { |c| csv << CSV_ATTRS.map { |attr| c.send attr } }
+        contacts.each { |c| csv << CSV_ATTRS.map { |attr| c.send(attr).to_s.gsub(/[\n\r\t,]/, " ") } }
       end
     end
 
     def create_from_csv(formatted_rows, attrs)
       headers = []
+      created_contacts = []
       rows = formatted_rows.split("\r\n")
       rows.shift.split("\t").each do |h|
         headers << h.underscore.gsub(" ","_").delete('/"')
       end if rows.present?
       rows.each do |contact_row|
         contact = Contact.new(attrs)
-        contact_row.split("\n").each_with_index do |value, index|
+        contact_row.split("\t").each_with_index do |value, index|
           if CSV_ATTRS.include? headers[index]
-#            TODO
+            contact.send "#{headers[index]}=", case headers[index]
+              when "country" then
+                Country.find_by_name(value.delete('/"'))
+              when "region" then
+                Region.find_by_name(value.delete('/"'))
+              else
+                value.delete('/"')
+            end
           end
         end
+        created_contacts << contact if contact.save rescue nil
       end
+      created_contacts
     end
 
   end
@@ -102,15 +112,19 @@ class Contact < AbstractLead
   end
 
   def higher_item_in_campaign_list
-    ids = self.class.for_campaign(campaign).select(:id).map(&:id)
+    ids = self.class.for_campaign(campaign).select(:id).ascend_by_company_name.map(&:id)
     index = ids.index(id)+1
     (index >= ids.count or index < 0) ? nil : self.class.find(ids.at(index))
   end
 
   def lower_item_in_campaign_list
-    ids = self.class.for_campaign(campaign).select(:id).map(&:id)
+    ids = self.class.for_campaign(campaign).select(:id).ascend_by_company_name.map(&:id)
     index = ids.index(id)-1
     (index >= ids.count or index < 0) ? nil : self.class.find(ids.at(index))
+  end
+
+  def can_be_managed_by?(user)
+    (campaign.users.map(&:id) + [campaign.creator.id]).include?(user.id) or user.has_role?(:admin)
   end
 
 end

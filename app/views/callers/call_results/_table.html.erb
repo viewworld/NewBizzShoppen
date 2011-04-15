@@ -58,19 +58,21 @@
                     tooltip: 'bottomMiddle'
                 },
             },
+            hide: {
+                fixed: true
+            },
             content: $("#call_result_<%= call_result.id %>_tooltip").html(),
-            show: 'mouseover',
-            hide: 'mouseout',
             style: {
                 name: "cream",
                 border: {
                     radius: 3
                 },
+                width: 300,
                 tip: {
                     corner: 'bottomMiddle',
                     size: {
-                        x: 8,
-                        y : 12
+                        x: 12,
+                        y : 8
                     }
                 }
             }

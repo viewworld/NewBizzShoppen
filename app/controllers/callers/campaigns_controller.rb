@@ -3,6 +3,10 @@ class Callers::CampaignsController < Callers::CallerController
   set_tab "campaigns"
   helper :campaigns
 
+  before_filter :set_campaign, :except => [:index, :new, :create]
+  before_filter lambda {authorize_role(:call_centre, :admin)}, :except => :index
+  before_filter lambda {authorize_manage_rights(@campaign)}, :only => [:edit,:update,:destroy,:show]
+
   def new
     @campaign = Campaign.new(:start_date => Date.today, :end_date => Date.today+1.week, :max_contact_number => 0,
                              :category_id => Category.first.id, :country_id => Country.first.id)
@@ -19,13 +23,11 @@ class Callers::CampaignsController < Callers::CallerController
   end
 
   def edit
-    @campaign = Campaign.find(params[:id])
     set_contacts
   end
 
   def update
-    @campaign = Campaign.find(params[:id])
-    @campaign.attributes = params[:campaign]
+    @campaign.attributes = params[:campaign]    
     update! do |success, failure|
       success.html { redirect_to edit_callers_campaign_path(@campaign) }
       failure.html { set_contacts; render 'edit' }
@@ -33,7 +35,6 @@ class Callers::CampaignsController < Callers::CallerController
   end
 
   def show
-    @campaign = Campaign.find(params[:id])
     set_contacts
     @date_from = params[:date_from] ? params[:date_from].to_date : @campaign.start_date
     @date_to = params[:date_to] ? params[:date_to].to_date : @campaign.end_date
@@ -57,8 +58,13 @@ class Callers::CampaignsController < Callers::CallerController
 
   def set_contacts
     params[:search]||={}
+    params[:search][:ascend_by_company_name] = true unless params[:search][:descend_by_company_name] 
     @search = Contact.scoped_search(params[:search].merge(:for_campaign => @campaign))
     @contacts = @search.paginate(:page => params[:page], :per_page => 20)
+  end
+
+  def set_campaign
+    @campaign = Campaign.find(params[:id])
   end
 
 end
