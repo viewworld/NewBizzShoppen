@@ -303,6 +303,8 @@ class Nbs < Thor
       unless klass.find_by_email("translator_#{role}@nbs.com")
         if role == :category_buyer
           user = klass.make!(:email => "translator_#{role}@nbs.com", :password => "secret", :password_confirmation => "secret", :buying_categories => [Category.first])
+        elsif role == :call_centre
+          user = klass.make!(:email => "translator_#{role}@nbs.com", :password => "secret", :password_confirmation => "secret", :first_name => "Johnny", :last_name => "Mnemonic")
         else
           user = klass.make!(:email => "translator_#{role}@nbs.com", :password => "secret", :password_confirmation => "secret")
         end
