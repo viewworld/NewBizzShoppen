@@ -16,6 +16,28 @@
         <% end %>
       </param:actions>
     </header>
+
+    <%= semantic_form_for [:callers, @campaign, @contact], :method => :post do |form| %>
+        <frm title="Create new">
+          <param:content>
+            <div class="pdd_10 no_pdd_t">
+              <fieldset class="inputs labels_ta_r labels_180">
+                <ol class="align_inputs">
+                  <%= form.input :formatted_rows, :as => :text, :input_html => {:style => "width: 880px;"} %>
+                  <%= hidden_field_tag :type, "import" %>
+                </ol>
+              </fieldset>
+            </div>
+          </param:content>
+          <param:actions>
+            <ibt c="fltri" icon="save">
+              <%= form.submit t("contacts.new.create_button"), :name => "commit_create" %>
+            </ibt>
+            <%= bt_link_to nil, t("campaigns.new.button_cancel"), edit_callers_campaign_path(@campaign), :class => "bt_grey fltr" %>
+          </param:actions>
+        </frm>
+    <% end %>
+
   </div>
 
   <div <%= "style='display:none;'" if @import %> id="create_container">

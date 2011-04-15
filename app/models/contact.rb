@@ -2,7 +2,7 @@ class Contact < AbstractLead
 
   CSV_ATTRS = %w(company_name company_phone_number company_website address_line_1 address_line_2 address_line_3 zip_code country region company_vat_no company_ean_number contact_name direct_phone_number phone_number email_address linkedin_url facebook_url)
 
-  attr_accessor :strict_validate
+  attr_accessor :strict_validate, :formatted_rows
 
   belongs_to :campaign
   has_many :call_results, :dependent => :destroy
@@ -40,6 +40,22 @@ class Contact < AbstractLead
         contacts = find(ids)
         csv << CSV_ATTRS.map(&:humanize)
         contacts.each { |c| csv << CSV_ATTRS.map { |attr| c.send attr } }
+      end
+    end
+
+    def create_from_csv(formatted_rows, attrs)
+      headers = []
+      rows = formatted_rows.split("\r\n")
+      rows.shift.split("\t").each do |h|
+        headers << h.underscore.gsub(" ","_").delete('/"')
+      end if rows.present?
+      rows.each do |contact_row|
+        contact = Contact.new(attrs)
+        contact_row.split("\n").each_with_index do |value, index|
+          if CSV_ATTRS.include? headers[index]
+#            TODO
+          end
+        end
       end
     end
 
