@@ -45,18 +45,28 @@ class Contact < AbstractLead
 
     def create_from_csv(formatted_rows, attrs)
       headers = []
+      created_contacts = []
       rows = formatted_rows.split("\r\n")
       rows.shift.split("\t").each do |h|
         headers << h.underscore.gsub(" ","_").delete('/"')
       end if rows.present?
       rows.each do |contact_row|
         contact = Contact.new(attrs)
-        contact_row.split("\n").each_with_index do |value, index|
+        contact_row.split("\t").each_with_index do |value, index|
           if CSV_ATTRS.include? headers[index]
-#            TODO
+            contact.send "#{headers[index]}=", case headers[index]
+              when "country" then
+                Country.find_by_name(value.delete('/"')) || Country.first
+              when "region" then
+                Region.find_by_name(value.delete('/"'))
+              else
+                value.delete('/"')
+            end
           end
         end
+        created_contacts << contact if contact.save
       end
+      created_contacts
     end
 
   end
@@ -102,13 +112,13 @@ class Contact < AbstractLead
   end
 
   def higher_item_in_campaign_list
-    ids = self.class.for_campaign(campaign).select(:id).map(&:id)
+    ids = self.class.for_campaign(campaign).select(:id).ascend_by_company_name.map(&:id)
     index = ids.index(id)+1
     (index >= ids.count or index < 0) ? nil : self.class.find(ids.at(index))
   end
 
   def lower_item_in_campaign_list
-    ids = self.class.for_campaign(campaign).select(:id).map(&:id)
+    ids = self.class.for_campaign(campaign).select(:id).ascend_by_company_name.map(&:id)
     index = ids.index(id)-1
     (index >= ids.count or index < 0) ? nil : self.class.find(ids.at(index))
   end

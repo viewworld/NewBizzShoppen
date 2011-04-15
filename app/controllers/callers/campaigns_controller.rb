@@ -57,6 +57,7 @@ class Callers::CampaignsController < Callers::CallerController
 
   def set_contacts
     params[:search]||={}
+    params[:search][:ascend_by_company_name] = true unless params[:search][:descend_by_company_name] 
     @search = Contact.scoped_search(params[:search].merge(:for_campaign => @campaign))
     @contacts = @search.paginate(:page => params[:page], :per_page => 20)
   end
