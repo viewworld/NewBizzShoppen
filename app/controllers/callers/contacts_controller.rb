@@ -61,6 +61,12 @@ class Callers::ContactsController < Callers::CallerController
     redirect_to edit_callers_campaign_path(@campaign)
   end
 
+  def bulk_contacts_csv
+    respond_to  do |format|
+      format.html { send_data Contact.to_csv(*@campaign.contacts.map(&:id)), :filename => "contacts.csv" }
+    end
+  end
+
   protected
 
   private

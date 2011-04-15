@@ -135,6 +135,7 @@ Nbs::Application.routes.draw do
         collection do
           post 'batch_remove'
           post 'batch_assign'
+          post 'bulk_contacts_csv'
         end
       end
       resources :agent_work_screen, :only => :index

@@ -283,6 +283,7 @@ en:
       button_import_contacts: Import contacts
       button_assign_selected_contacts: Assign selected contacts
       button_remove_assignment_for_selected: Remove assignments for selected
+      button_bulk_download_csv_link: Download CSV for contacts
       button_remove_selected: Remove selected
       agent_assignment_button: Agent assignment
       show_button: Show
