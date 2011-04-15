@@ -46,8 +46,7 @@ Scenario: I can login as any role and be able to edit content
   And I am not sign in
   Then I sign in as translator_1@nbs.com with password secret
   And I go to the homepage
-  Then I should see "(edit)"
-  And I follow "(edit)"
+  And I click hidden link by url regex "/administration\/articles\/\d+\/edit/"
   And I should see "Editing article"
   Then I go to the homepage
   And I follow translated "home.show.view.sign_up_here"
@@ -60,7 +59,7 @@ Scenario: As translator I can edit blurb, change it, save it and then go back to
   And I am not sign in
   Then I sign in as translator_1@nbs.com with password secret
   And I go to the homepage
-  And I follow "(edit)"
+  And I click hidden link by url regex "/administration\/articles\/\d+\/edit/"
   And I wait 1 second
   And I fill in "article_content_editor" ckeditor with "My test of article editing by translator"
   Then I press translated "administration.articles.edit.view.button_save"

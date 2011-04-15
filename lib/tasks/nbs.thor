@@ -386,7 +386,6 @@ class Nbs < Thor
       user.roles << :translator unless user.has_role?(:translator)
       user.save
     end
-
   end
 
   desc "recalculate_leads_average_ratings", ""

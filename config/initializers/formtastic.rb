@@ -53,3 +53,20 @@ Formtastic::SemanticFormBuilder.i18n_lookups_by_default = true
 # You can add custom inputs or override parts of Formtastic by subclassing SemanticFormBuilder and
 # specifying that class here.  Defaults to SemanticFormBuilder.
 # Formtastic::SemanticFormHelper.builder = MyCustomBuilder
+module Formtastic
+  module DatePicker
+    protected
+
+    def datepicker_input(method, options = {})
+      format = options[:format] || I18n.t("date.formats.default") || '%d-%m-%Y'
+      string_input(method, datepicker_options(format, method, object.send(method)).deep_merge(options))
+    end
+
+    # Generate html input options for the datepicker_input
+    #
+    def datepicker_options(format, method, value = nil)
+      datepicker_options = {:label_html =>  {:class => "date"}, :input_html => {:id => "datepicker", :class => 'formtastic-ui-datepicker datepicker', :value => value.try(:strftime, format)}}
+    end
+  end
+end
+Formtastic::SemanticFormBuilder.send(:include, Formtastic::DatePicker)

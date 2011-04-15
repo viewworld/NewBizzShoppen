@@ -12,6 +12,9 @@ class ::User::LeadUser < ::User
            :conditions => "accessible_from IS NOT NULL",
            :include => :lead
 
+  has_many :assigned_lead_purchases, :foreign_key => :assignee_id, :class_name => "LeadPurchase", :conditions => "accessible_from IS NOT NULL"
+  has_many :assigned_leads, :class_name => "Lead", :through => :assigned_lead_purchases, :conditions => "accessible_from IS NOT NULL", :source => :lead
+
   alias_method :accessible_lead_purchases, :lead_purchases
 
   private

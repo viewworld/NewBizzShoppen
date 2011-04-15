@@ -1,14 +1,6 @@
-set :default_environment, {
-  'PATH' => "/home/rails/.rvm/gems/ree-1.8.7-2010.02@global/bin:/home/rails/.rvm/bin:/home/rails/.rvm/rubies/ree-1.8.7-2010.02/bin:$PATH",
-  'RUBY_VERSION' => '1.8.7',
-  'GEM_HOME'     => '/home/rails/.rvm/gems/ree-1.8.7-2010.02@nbs',
-  'GEM_PATH'     => '/home/rails/.rvm/gems/ree-1.8.7-2010.02@nbs:/home/rails/.rvm/gems/ree-1.8.7-2010.02@global',
-  'BUNDLE_PATH'  => '/home/rails/.rvm/gems/ree-1.8.7-2010.02@nbs'
-}
-
 default_run_options[:pty] = true
 
-set :stages, %w(staging production)
+set :stages, %w(staging production testing)
 set :default_stage, "staging"
 
 set :application, "nbs"
@@ -31,6 +23,7 @@ namespace :deploy do
   desc "Restarting god"
   task :restart, :roles => :app do
     sudo "/opt/ree/bin/god restart nbs_#{stage}"
+    sudo "/opt/ree/bin/god restart dj_#{stage}"
   end
 end
 

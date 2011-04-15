@@ -1,0 +1,3 @@
+class LeadAdditionalBuyout < LeadPurchase
+
+end

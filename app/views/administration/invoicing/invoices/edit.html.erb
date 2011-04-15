@@ -90,14 +90,18 @@
                 <%= form.input :bank_account_id, :as => :select, :collection => BankAccount.all %>
                 <%= form.input :creation_place %>
                 <%= form.input :creation_date,
-                               :as => :string,
-                               :input_html => {:class => "datepicker"}, :wrapper_html => {:class => "date"} %>
+                               :as => :datepicker,
+                               :input_html => { :id => "datepicker_creation_date"},
+                               :wrapper_html => {:class => "date"}
+                                %>
                 <%= form.input :sale_date,
-                               :as => :string,
-                               :input_html => {:class => "datepicker"}, :wrapper_html => {:class => "date"} %>
+                               :as => :datepicker,
+                               :input_html => {:id => "datepicker_sale_date"},
+                               :wrapper_html => {:class => "date"} %>
                 <%= form.input :payment_deadline_date,
-                               :as => :string,
-                               :input_html => {:class => "datepicker"}, :wrapper_html => {:class => "date"} %>
+                               :as => :datepicker,
+                               :input_html => {:id => "datepicker_payment_deadline_date"},
+                               :wrapper_html => {:class => "date"} %>
                 <%= form.input :payment_method,
                                :as => :select,
                                :collection => Invoice::PAYMENT_METHODS.map { |pm| [t("administration.invoices.common.view.#{pm}"), pm.to_s] },
@@ -157,11 +161,3 @@
   <% end %>
 
 </column-mc:>
-
-<js:>
-  <script type="text/javascript">
-      $(function() {
-          $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
-      });
-  </script>
-</js:>

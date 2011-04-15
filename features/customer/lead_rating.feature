@@ -13,10 +13,10 @@ Background:
 
 @_tested @selenium
 Scenario: I can rate a lead
-  Given I show accordion details for row "#lead_purchase_1"
+  Given I show accordion details for row "#lead_single_purchase_1"
   And I select translated "activerecord.attributes.lead_purchase.rating_levels.rating_level1" from "rating_level"
   And I go to buyer lead purchases
-  And I show accordion details for row "#lead_purchase_1"
+  And I show accordion details for row "#lead_single_purchase_1"
   Then "rating_level_1" should be selected for value translated "activerecord.attributes.lead_purchase.rating_levels.rating_level1"
 
 @_tested @selenium
@@ -30,10 +30,10 @@ Scenario: I can bulk rate a lead
 
 @_tested @selenium
 Scenario: I can select from 4 different rating levels: Very good, good, satisfactory, unsatisfactory
-  Given I show accordion details for row "#lead_purchase_1"
+  Given I show accordion details for row "#lead_single_purchase_1"
   And I select translated "activerecord.attributes.lead_purchase.rating_levels.rating_level2" from "rating_level"
   And I go to buyer lead purchases
-  And I show accordion details for row "#lead_purchase_1"
+  And I show accordion details for row "#lead_single_purchase_1"
   Then "rating_level_1" should be selected for value translated "activerecord.attributes.lead_purchase.rating_levels.rating_level2"
 
 # "Incorrect or missing contact information It has been impossible to get in contact with the lead ----- why?"
@@ -42,22 +42,22 @@ Scenario: I can select from 4 different rating levels: Very good, good, satisfac
 # "Other reason that the lead was unsatisfactory (enter text)"
 @_tested @selenium
 Scenario: I can select a reason when I rate lead as 'unsatisfactory'
-  Given I show accordion details for row "#lead_purchase_1"
+  Given I show accordion details for row "#lead_single_purchase_1"
   And I select translated "activerecord.attributes.lead_purchase.rating_levels.rating_level12" from "rating_level"
   Then I fill in "rating_reason" with "The reason for unsatisfactory rating"
   And I follow translated "lead_buyer.lead_purchases.index.view.update_rating_button"
   And I go to buyer lead purchases
-  And I show accordion details for row "#lead_purchase_1"
+  And I show accordion details for row "#lead_single_purchase_1"
   Then "rating_level_1" should be selected for value translated "activerecord.attributes.lead_purchase.rating_levels.rating_level12"
 
 @_tested @selenium
 Scenario: I must enter additional explaination for selected reason
-  Given I show accordion details for row "#lead_purchase_1"
+  Given I show accordion details for row "#lead_single_purchase_1"
   And I select translated "activerecord.attributes.lead_purchase.rating_levels.rating_level12" from "rating_level"
   Then I fill in "rating_reason" with "The reason for unsatisfactory rating"
   And I follow translated "lead_buyer.lead_purchases.index.view.update_rating_button"
   And I go to buyer lead purchases
-  And I show accordion details for row "#lead_purchase_1"
+  And I show accordion details for row "#lead_single_purchase_1"
   Then "rating_level_1" should be selected for value translated "activerecord.attributes.lead_purchase.rating_levels.rating_level12"
 
 # When a lead is rated as unsatisfactory, the agent should be alerted but he must not be able to reply.
@@ -113,3 +113,6 @@ Scenario: As admin I can view all 'unsatisfactory' ratings
 # by comments
 @m0 @comments
 Scenario: As admin I can reply to 'unsatisfactory' rating
+
+@m9 @statistics
+Scenario: Whenever a lead is rated the date is recorded

@@ -95,59 +95,56 @@
         <%= render :partial => "/shared/leads/lead_fields", :locals => {:f => builder} %>
     <% end %>
 
-    <div class="pdd_10 no_pdd_t" id="locale_picker_div">
-      <fieldset class="inputs labels_ta_r labels_180">
-        <ol class="align_inputs">
-          <li class="header">
-            <h3><%= t("shared.leads.form.additional_language") %></h3>
-          </li>
-          <li class="select">
-            <%= form.label :locale, "New translation" %>
-            <%= select_tag :locale, options_for_select(available_locales_list(@lead.lead_translations)),
-                           {:id => "locale_picker", :include_blank => true, :onchange => fields_for_leads_translations(form)} %>
-          </li>
-        </ol>
-      </fieldset>
-    </div>
-    <hl/>
+<div class="pdd_10 no_pdd_t" id="locale_picker_div">
+  <fieldset class="inputs labels_ta_r labels_180">
+    <ol class="align_inputs">
+      <li class="header">
+        <h3><%= t("shared.leads.form.additional_language") %></h3>
+      </li>
+      <li class="select">
+        <%= form.label :locale, "New translation" %>
+        <%= select_tag :locale, options_for_select(available_locales_list(@lead.lead_translations)),
+                       {:id => "locale_picker", :include_blank => true, :onchange => fields_for_leads_translations(form)} %>
+      </li>
+    </ol>
+  </fieldset>
+</div>
+<hl/>
 
-    <div class="pdd_10 no_pdd_t">
-      <fieldset class="inputs labels_ta_r labels_180">
-        <ol class="align_inputs">
-          <li class="header">
-            <h3><%= t("shared.leads.form.sales_information") %></h3>
-          </li>
-          <%= form.input :notify_buyers_after_update, :as => :boolean, :hint => hint_for(@lead, :notify_buyers_after_update) unless @lead.lead_purchases.empty? %>
-          <%= form.input :sale_limit, :as => :select, :collection => (1..10), :include_blank => false, :hint => hint_for(@lead, :sale_limit) %>
-          <%= form.input :purchase_decision_date, :as => :string, :input_html => {:id => "datepicker"}, :wrapper_html => {:class => "date"}, :hint => hint_for(@lead, :purchase_decision_date) %>
-        </ol>
-      </fieldset>
-    </div>
+<div class="pdd_10 no_pdd_t">
+  <fieldset class="inputs labels_ta_r labels_180">
+    <ol class="align_inputs">
+      <li class="header">
+        <h3><%= t("shared.leads.form.sales_information") %></h3>
+      </li>
+      <%= form.input :notify_buyers_after_update, :as => :boolean, :hint => hint_for(@lead, :notify_buyers_after_update) unless @lead.lead_purchases.empty? %>
+      <%= form.input :sale_limit, :as => :select, :collection => (1..10), :include_blank => false, :hint => hint_for(@lead, :sale_limit) %>
+      <%= form.input :purchase_decision_date, :as => :datepicker, :wrapper_html => {:class => "date"}, :hint => hint_for(@lead, :purchase_decision_date) %>
+    </ol>
+  </fieldset>
+</div>
 
 
+<script>
+    var nestedFormsCount = <%= @lead.lead_translations.reject{ |lt| lt.locale == I18n.locale.to_s }.size %>;
 
-    <script>
-        var nestedFormsCount = <%= @lead.lead_translations.reject{ |lt| lt.locale == I18n.locale.to_s }.size %>;
-        $(function() {
-            $("#datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
-        });
-        function add_fields(link, content) {
-            if ($('#locale_picker').text() != null) {
-                var new_id = new Date().getTime();
-                var regexp = new RegExp("");
-                content = content.replace(/lead_lead_translations_attributes_\d+/g, "lead_lead_translations_attributes_" + nestedFormsCount.toString());
-                content = content.replace(/lead\[lead_translations_attributes\]\[\d+\]/g, "lead[lead_translations_attributes][" + new_id.toString() + "]");
-                content = content.replace(/LOCALE_LANG/, $('#locale_picker').val());
-                $('.nested_locale_container:last').append(content);
-                $('.locale_hidden_field:last').val($('#locale_picker').val());
-                $('.locale_title:last').html(language_names[$('#locale_picker').val()]);
-                $('.lead_template_value_translations_container_' + $('#locale_picker').val()).show();
-                $('.destroy_hidden_field_template_value_tr_' + $('#locale_picker').val()).val('');
-                $("#locale_picker option[value=" + $('#locale_picker').val() + "]").remove();
-                nestedFormsCount = nestedFormsCount + 1;
-                if ($("#locale_picker option[value!='']").size() == 0) {
-                    $("#locale_picker_div").hide();
-                }
+    function add_fields(link, content) {
+        if ($('#locale_picker').text() != null)
+        {
+            var new_id = new Date().getTime();
+            var regexp = new RegExp("");
+            content = content.replace(/lead_lead_translations_attributes_\d+/g, "lead_lead_translations_attributes_" + nestedFormsCount.toString());
+            content = content.replace(/lead\[lead_translations_attributes\]\[\d+\]/g, "lead[lead_translations_attributes][" + new_id.toString() + "]");
+            content = content.replace(/LOCALE_LANG/, $('#locale_picker').val());
+            $('.nested_locale_container:last').append(content);
+            $('.locale_hidden_field:last').val($('#locale_picker').val());
+            $('.locale_title:last').html(language_names[$('#locale_picker').val()]);
+            $('.lead_template_value_translations_container_' + $('#locale_picker').val()).show();
+            $('.destroy_hidden_field_template_value_tr_' + $('#locale_picker').val()).val('');
+            $("#locale_picker option[value=" + $('#locale_picker').val() + "]").remove();
+            nestedFormsCount = nestedFormsCount + 1;
+            if ($("#locale_picker option[value!='']").size() == 0) {
+                $("#locale_picker_div").hide();
             }
         }
 

@@ -4,12 +4,23 @@ module Rack
       @app = app
     end
 
-    def call env
+    def locales
+      @locales ||= Locale.all.map(&:code)
+    end
+
+    def translate_locale(locale)
       dictionary = {'da' => 'dk'}
-      locale = env['rack.session'][:locale_code] || env["HTTP_ACCEPT_LANGUAGE"].to_s[/^([a-z]{2})/]
-      locale = (dictionary[locale.to_s] || locale.to_s)
-      env['rack.session'][:locale_code] = Locale.all.map(&:code).include?(locale) ? locale : 'en'
-      I18n.locale = env['rack.session'][:locale_code]
+      locale = dictionary[locale.to_s] || locale.to_s
+      locales.include?(locale) ? locale : 'en'
+    end
+
+    def find_locale(env)
+       env['rack.session'][:locale_code] ||
+       env["HTTP_ACCEPT_LANGUAGE"].to_s[/^([a-z]{2})/]
+    end
+
+    def call(env)
+      I18n.locale = env['rack.session'][:locale_code] = translate_locale(find_locale(env))
       @app.call env
     end
   end

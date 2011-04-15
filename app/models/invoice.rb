@@ -37,8 +37,8 @@ class Invoice < ActiveRecord::Base
   scope :ascend_by_invoice_number, order("YEAR(invoices.creation_date) ASC, invoices.number ASC, company_id ASC")
   scope :descend_by_invoice_number, order("YEAR(invoices.creation_date) DESC, invoices.number DESC, company_id ASC")
   scope :creation_date_in_year, lambda{ |date| where(["(date_part('year', created_at) = ?)", date.year]) }
-  scope :with_sale_date_after_and_including, lambda{ |date| where(["sale_date >= ?",date])}
-  scope :with_sale_date_before_and_including, lambda{ |date| where(["sale_date <= ?",date])}
+  scope :with_sale_date_after_and_including, lambda{ |date| where(["sale_date >= ?",date.to_postgresql_date])}
+  scope :with_sale_date_before_and_including, lambda{ |date| where(["sale_date <= ?",date.to_postgresql_date])}
   scope :not_paid, where(:paid_at => nil)
   scope :with_keyword, lambda{ |keyword| joins(:customer_address).where("users.email like :keyword OR users.first_name like :keyword OR users.last_name like :keyword OR invoices.seller_name like :keyword OR invoices.number::TEXT = :number_keyword OR lower(invoices.customer_name) LIKE :keyword OR lower(addresses.address_line_1) LIKE :keyword OR lower(addresses.address_line_2) LIKE :keyword OR lower(addresses.address_line_3) LIKE :keyword OR lower(addresses.zip_code) LIKE :keyword OR lower(leads.header) LIKE :keyword OR lower(leads.contact_name) LIKE :keyword OR lower(leads.company_name) LIKE :keyword OR lower(leads.email_address) LIKE :keyword", {:keyword => "%#{keyword.downcase}%", :number_keyword => "#{keyword.downcase}"}).joins("LEFT JOIN invoice_lines ON invoices.id=invoice_lines.invoice_id LEFT JOIN lead_purchases ON invoice_lines.payable_id=lead_purchases.id LEFT JOIN leads ON lead_purchases.lead_id=leads.id").joins(:user) }
   scope :ascend_by_customer, joins(:user).order("users.first_name||' '||users.last_name ASC")
@@ -87,7 +87,7 @@ class Invoice < ActiveRecord::Base
 
   #TODO
   def set_default_currency
-    self.currency = Currency.first unless currency
+    self.currency = (!Currency.find_by_name("DKK").nil? ? Currency.find_by_name("DKK") : Currency.where(:active => true).order("name").limit(1).first) unless currency
   end
 
   def duplicate_company_and_customer_information

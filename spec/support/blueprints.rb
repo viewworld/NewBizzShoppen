@@ -75,6 +75,13 @@ LeadPurchase.blueprint do
   owner_id { User::Customer.make!.id }
 end
 
+LeadSinglePurchase.blueprint do
+  paid { false }
+  accessible_from { nil }
+  lead_id { Lead.make! }
+  owner_id { User::Customer.make!.id }
+end
+
 LeadRequest.blueprint do
   paid { false }
   accessible_from { nil }

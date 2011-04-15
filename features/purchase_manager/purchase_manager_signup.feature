@@ -17,7 +17,7 @@ Feature: Purchase Manager signup
       | user_purchase_manager_password              | secret       |
       | user_purchase_manager_password_confirmation |              |
     And I press translated "purchase_manager_accounts.new.view.button_create_account"
-    Then I should see translated "activerecord.errors.models.user.purchase_manager.attributes.email.invalid"
+    Then I should see translated "activerecord.errors.messages.invalid"
     And I should see translated "activerecord.errors.models.user.purchase_manager.attributes.password.confirmation"
 
   @added @_done

@@ -13,14 +13,11 @@ class I18nUtils
   end
 
   def self.parse(hash)
-    processed, created = 0, 0
     raise InvalidLocaleFile if hash.keys.size != 1
     locale = hash.keys.first
     I18nUtils.extract_i18n_keys(hash[locale]).each do |key,value|
-      processed += 1
       unless Translation.where(:locale => locale, :key => key).first
         Translation.create!(:locale => locale, :key => key, :value => value)
-        created += 1
       end
     end
   end
@@ -65,7 +62,7 @@ class I18nUtils
       Translation.where("key LIKE :selector", {:selector => "%#{selector}%"}).each do |t|
         self.store_in_hash(([t.locale] + t.key.split('.')), h, t.value)
       end
-      f = File.open('./public/javascripts/translations.js', 'w')
+      f = File.open(File.join(Rails.root, "public/javascripts/translations.js"), 'w')
       f << "var I18n = I18n || {};" << "I18n.translations = " << h.to_json << ";"
       f.close
     end

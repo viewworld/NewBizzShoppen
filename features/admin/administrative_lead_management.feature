@@ -103,10 +103,10 @@ Scenario: I can edit leads from any page where they are presented
   Given lead New lead exists within category Computers
   When I go to browse leads
   And I follow "Computers"
-  Then I follow translated "leads.listing.edit_label"
+  Then I click hidden link by url regex "/administration\/leads\/\d+\/edit/"
   And I should see translated "agent.leads.edit.view.title" with options "name:New lead"
   When I go to agent home
-  Then I follow translated "leads.listing.edit_label"
+  Then I click hidden link by url regex "/administration\/leads\/\d+\/edit/"
   And I should see translated "agent.leads.edit.view.title" with options "name:Big deal on printers"
 
 @m5 @added @selenium @_done @_tested
