@@ -327,6 +327,7 @@ en:
       button_show_new_contact: create new contact
     edit:
       title: Edit contact
+      call_log_title: Call log
       save_button: Update
       cancel_button: Back to campaign
       current_agent_label: "Current agent:"

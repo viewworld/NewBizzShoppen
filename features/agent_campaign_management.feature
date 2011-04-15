@@ -123,14 +123,14 @@ Feature: Agent campaign - management
     @1 @is @__campaign_manage @_tested
     Scenario: I can sort contacts list
       Then I follow translated "campaigns.index.edit"
-      Then I follow "Company name"
+      Then I follow translated "contacts.table.company_name"
       Then I should see "Bon Jovi" before "Mleko company"
-      Then I follow "Company name"
+      Then I follow translated "contacts.table.company_name"
       Then I should see "Mleko company" before "Bon Jovi"
 
     # question: may agent have more assigned contacts then visible contacts number
     # - no but when the agent registre a result for a contact- the contact is removed from the agens active calling list and asign to the reslt list. Then the agent is dynamicly assign a new contact.
-    @3 @is @__campaign_manage @_done @selenium @wip
+    @3 @is @__campaign_manage @_done @selenium
     Scenario: I can assign selected contacts to selected agent
       When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
       Then agent for "Bon Jovi inc." is blank
@@ -152,8 +152,15 @@ Feature: Agent campaign - management
     @1 @is @__campaign_manage @_done @tested_elsewhere
     Scenario: I can deassign agents from selected contacts
 
-    @1 @is @__campaign_manage @_done
+    @1 @is @__campaign_manage @_tested @selenium
     Scenario: I can filter contacts by its fields
+      When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
+      Then I should see "Bon Jovi"
+      Then I should see "Mleko"
+      Then I fill in "search_with_keyword" with "bon"
+      Then I click xpath "//form[@id='search_new']//a"
+      Then I should see "Bon Jovi"
+      Then I should not see "Mleko"
 
     @3 @is @__campaign_manage @_todo
     Scenario: I can export selected contacts to CSV
@@ -192,15 +199,35 @@ Feature: Agent campaign - management
       # question: creating multiple contacts to single lead (on different campaigns)
       # - a lead only has one contact, but if the same contact information is importet twice- in two different campiangs, it the same contact information can be assigend to to different leads
 
-    @3 @is @__campaign_import_contacts @_done
+    @3 @is @__campaign_import_contacts @_tested
     Scenario: I can create single contact
+      Then I follow translated "campaigns.index.edit"
+      Then I follow translated "campaigns.edit.button_create_contact"
+      Then I should see translated "contacts.new.title_new_contact"
+      Then I press translated "contacts.new.create_button"
+      Then I should see "can't be blank"
+      Then I fill in "contact_company_name" with "Winter fresh"
+      Then I fill in "contact_company_phone_number" with "777777777"
+      Then I select "United Kingdom" from "contact_country_id"
+      Then I press translated "contacts.new.create_button"
+      Then I should see "Winter fresh"
+      Then I should see "777777777"
+      Then I should see "United Kingdom"
 
     #campaigns::contacts::edit
-    @3 @is @__campaign_import_contacts @_done
+    @3 @is @__campaign_import_contacts @_tested
     Scenario: I can see contact details
+      Then I follow translated "campaigns.index.edit"
+      Then I follow translated "campaigns.edit.edit_button"
+      Then I should see translated "contacts.edit.title"
+      Then I should see translated "contacts.edit.title"
 
-    @1 @is @__campaign_import_contacts @_done
+    @1 @is @__campaign_import_contacts @_done @selenium @wip
     Scenario: I can see contact results
+      When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
+      When I click hidden link by url regex "/callers\/campaigns\/\d+\/contacts\/\d+\/edit/"
+      Then I click xpath "//form[@id='new_call_result']//a"
+      Then I wait 5 second
 
     @1 @is @__campaign_import_contacts @_done
     Scenario: I can see current contact assignment
@@ -366,4 +393,5 @@ Feature: Agent campaign - management
     Scenario: I can see results list for given agent list
 
     @2 @is @__campaign_statistics @_todo
-    Scenario: I can see results list for completed contacts only
+  Scenario: I can see results list for completed contacts only
+
