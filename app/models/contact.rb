@@ -56,7 +56,7 @@ class Contact < AbstractLead
           if CSV_ATTRS.include? headers[index]
             contact.send "#{headers[index]}=", case headers[index]
               when "country" then
-                Country.find_by_name(value.delete('/"')) || Country.first
+                Country.find_by_name(value.delete('/"'))
               when "region" then
                 Region.find_by_name(value.delete('/"'))
               else
@@ -64,7 +64,7 @@ class Contact < AbstractLead
             end
           end
         end
-        created_contacts << contact if contact.save
+        created_contacts << contact if contact.save rescue nil
       end
       created_contacts
     end
