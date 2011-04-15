@@ -42,12 +42,10 @@
     </param:actions>
   </header>
 
-
-
   <%= form_for @search, :url => edit_callers_campaign_path(@campaign) do |f| %>
       <p>
         <%= label_tag t("contacts.filter.keyword_label") %>
-        <%= text_field_tag :with_keyword %>
+        <%= f.text_field :with_keyword %>
         <%= bt_link_to nil, t("contacts.filter.search_button"), "javascript:void(0)", :onclick => "$(this).parents('form').submit()" %>
       </p>
   <% end %>
@@ -74,8 +72,6 @@
               <%= bt_link_to :remove, t("campaigns.edit.button_remove_assignment_for_selected"), "javascript:void(0)", :onclick => "set_contacts_id_hf('hf_batch_unassign');$('#batch_unassign_form').submit();" %>
               <%= bt_link_to :download, t("campaigns.edit.button_bulk_download_csv_link"), bulk_contacts_export_csv_callers_campaign_contacts_path(@campaign), :method => :post, :class => "fltr" %>
           <% end %>
-
-
 
           <% form_tag batch_assign_callers_campaign_contacts_path(@campaign), :method => :post, :id => "batch_unassign_form" do %>
               <%= hidden_field_tag "contact_ids", nil, :id => "hf_batch_unassign" %>
