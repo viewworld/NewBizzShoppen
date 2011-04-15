@@ -67,7 +67,7 @@ class CallResult < ActiveRecord::Base
   end
 
   def update_contact_note
-    contact.update_attributes :note => "#{note}\n\n#{contact.note}"
+    contact.update_attributes :note => "#{note}\n#{contact.note}" if self.note.present? 
   end
 
 
