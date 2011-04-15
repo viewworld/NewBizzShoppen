@@ -130,17 +130,8 @@ Feature: Agent campaign - management
 
     # question: may agent have more assigned contacts then visible contacts number
     # - no but when the agent registre a result for a contact- the contact is removed from the agens active calling list and asign to the reslt list. Then the agent is dynamicly assign a new contact.
-    @3 @is @__campaign_manage @_done @selenium
+    @3 @is @__campaign_manage @_done @tested_elsewhere @selenium
     Scenario: I can assign selected contacts to selected agent
-      When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
-      Then agent for "Bon Jovi inc." is blank
-      Then I click xpath "(//table[@id='contacts']//input[@class='cb_contact_id'])[1]"
-      Then I click xpath "(//form[@id='batch_assign_form']//a)[1]"
-      Then agent for "Bon Jovi inc." is "John Smith"
-      Then I follow "Company name"
-      Then I click xpath "(//table[@id='contacts']//input[@class='cb_contact_id'])[1]"
-      Then I click xpath "(//form[@id='batch_assign_form']//a)[3]"
-      Then agent for "Bon Jovi inc." is blank
 
     @2 @is @__campaign_manage @_tested
     Scenario: I can remove contact from campaign
@@ -222,26 +213,55 @@ Feature: Agent campaign - management
       Then I should see translated "contacts.edit.title"
       Then I should see translated "contacts.edit.title"
 
-    @1 @is @__campaign_import_contacts @_done @selenium @wip
+    #create => edit => destroy is tested here as well
+    @1 @is @__campaign_import_contacts @_tested @selenium
     Scenario: I can see contact results
       When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
       When I click hidden link by url regex "/callers\/campaigns\/\d+\/contacts\/\d+\/edit/"
       Then I click xpath "//form[@id='new_call_result']//a"
-      Then I wait 5 second
+      Then I fill in "call_result_note" with "this is real deal!"
+      Then I fill in "call_result_result_values_attributes_0_value" with "2012-04-22 14:35"
+      Then I press translated "call_results.new.save_button"
+      Then I should see "Call back" within "#call_results"
+      Then I should see "Johnny Mnemonic" within "#call_results"
+      When I click hidden link by url regex "/callers\/contacts\/\d+\/call_results\/\d+\/edit/"
+      Then I fill in "call_result_note" with "this NOT COOL!!!!"
+      Then I press translated "call_results.edit.save_button"
+      Then I should see "Call result was successfully updated"
+      Then I execute js for display action block
+      Then I confirm a js popup on the next step
+      Then I follow translated "call_results.table.remove_link"
+      Then I should see "Call result was successfully destroyed"
+      Then I should not see "Call back" within "#call_results"
+      Then I should not see "Johnny Mnemonic" within "#call_results"
 
-    @1 @is @__campaign_import_contacts @_done
-    Scenario: I can see current contact assignment
-
-    @3 @is @__campaign_manage_results @_done
+    @3 @is @__campaign_manage_results @_done @tested_elsewhere
     Scenario: I can add new result
 
-    @2 @is @__campaign_manage_results @_done
+    @2 @is @__campaign_manage_results @_done @tested_elsewhere
     Scenario: I can edit result
 
-    @1 @is @__campaign_manage_results @_done
+    @1 @is @__campaign_manage_results @_done @tested_elsewhere
     Scenario: I can remove result
 
-    @3 @is @__campaign_manage_results @_done
+    @1 @is @__campaign_import_contacts @_tested @selenium
+    Scenario: I can see current contact assignment
+      When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
+      Then agent for "Bon Jovi inc." is blank
+      Then I click xpath "(//table[@id='contacts']//input[@class='cb_contact_id'])[1]"
+      Then I click xpath "(//form[@id='batch_assign_form']//a)[1]"
+      Then agent for "Bon Jovi inc." is "John Smith"
+      Then I follow translated "contacts.table.company_name"
+      When I click hidden link by url regex "/callers\/campaigns\/\d+\/contacts\/\d+\/edit/"
+      Then I should see "John Smith"
+      Then I click xpath "//ul[@class='header_actions']//a"
+      Then I follow translated "contacts.table.company_name"
+      Then I click xpath "(//table[@id='contacts']//input[@class='cb_contact_id'])[1]"
+      Then I click xpath "(//form[@id='batch_assign_form']//a)[3]"
+      Then agent for "Bon Jovi inc." is blank
+
+
+    @3 @tbr @__campaign_manage_results @_done
     Scenario: I can see template fields for current category
     #dynamically loaded via ajax
 
