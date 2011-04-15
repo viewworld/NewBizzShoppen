@@ -68,10 +68,6 @@ class Callers::ContactsController < Callers::CallerController
     send_data Contact.to_csv(*@campaign.contacts.map(&:id)), :filename => "contacts.csv"
   end
 
-  def bulk_contacts_export_csv
-    Contact.import_contacts(params[])
-  end
-
   protected
 
   private
