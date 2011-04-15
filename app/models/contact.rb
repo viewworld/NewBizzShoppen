@@ -123,4 +123,8 @@ class Contact < AbstractLead
     (index >= ids.count or index < 0) ? nil : self.class.find(ids.at(index))
   end
 
+  def can_be_managed_by?(user)
+    (campaign.users.map(&:id) + [campaign.creator.id]).include?(user.id) or user.has_role?(:admin)
+  end
+
 end

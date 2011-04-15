@@ -4,6 +4,7 @@ class Callers::CampaignsUsersController < Callers::CallerController
 
   def update
     @campaign = Campaign.find(params[:campaign_id])
+    authorize_manage_rights(@campaign)
     @campaign.assign(params[:campaign_user_ids])
     redirect_to edit_callers_campaign_path(@campaign)
   end

@@ -5,6 +5,8 @@ class Callers::ContactsController < Callers::CallerController
   before_filter :set_contact, :only => [:edit, :update, :destroy]
   before_filter :set_contact_managing
   before_filter :set_import_flag, :only => [:new, :create]
+  before_filter lambda {authorize_role(:call_centre, :admin)}
+  before_filter lambda {authorize_manage_rights(@contact)}, :only => [:edit,:update,:destroy]
 
   def new
     @lead = @contact = Contact.new

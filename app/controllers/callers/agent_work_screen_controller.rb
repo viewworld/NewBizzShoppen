@@ -8,6 +8,7 @@ class Callers::AgentWorkScreenController < Callers::CallerController
   before_filter :set_contact_managing
 
   def index
+    authorize_manage_rights(@campaign)
     set_locals
     redirect_to callers_campaign_agent_work_screen_index_path(Campaign.find(params[:change_campaign_id])) if params[:change_campaign_id]
   end
