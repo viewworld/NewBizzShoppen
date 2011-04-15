@@ -101,7 +101,7 @@
           <td class="cr"></td>
         </tr>
     <% end %>
-    <tr class="<%= cycle("odd", "even") %>">
+    <tr id="all_result_row" class="<%= cycle("odd", "even") %>">
       <% result_row = CallResult.for_table_row(@date_from, @date_to, @results.map(& :id), @agent_ids, @campaign.id) %>
       <td class="cl"></td>
       <td><%= t("campaigns.show.table.all_results") %></td>

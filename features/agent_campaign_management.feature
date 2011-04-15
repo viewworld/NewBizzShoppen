@@ -114,13 +114,13 @@ Feature: Agent campaign - management
       Then I should see "Leisure"
       Then I should not see "Denmark"
 
-    @3 @is @__campaign_manage @_tested
+    @3 @is @__campaign_manage @_tested @_done
     Scenario: I can see contacts list
       Then I follow translated "campaigns.index.edit"
       Then I should see translated "campaigns.edit.title_contacts"
       Then I should see translated "campaigns.edit.button_create_contact"
 
-    @1 @is @__campaign_manage @_tested
+    @1 @is @__campaign_manage @_tested @_done
     Scenario: I can sort contacts list
       Then I follow translated "campaigns.index.edit"
       Then I follow translated "contacts.table.company_name"
@@ -153,7 +153,7 @@ Feature: Agent campaign - management
       Then I should see "Bon Jovi"
       Then I should not see "Mleko"
 
-    @3 @is @__campaign_manage @_todo
+    @3 @tbr @__campaign_manage @_todo
     Scenario: I can export selected contacts to CSV
 
     #
@@ -185,7 +185,7 @@ Feature: Agent campaign - management
     #
     #
     #campaigns::contacts::new (popup?)
-    @3 @is @__campaign_import_contacts @_todo
+    @3 @tbr @__campaign_import_contacts @_todo
     Scenario: I can import contacts as excel formatted list
       # question: creating multiple contacts to single lead (on different campaigns)
       # - a lead only has one contact, but if the same contact information is importet twice- in two different campiangs, it the same contact information can be assigend to to different leads
@@ -228,7 +228,7 @@ Feature: Agent campaign - management
       Then I fill in "call_result_note" with "this NOT COOL!!!!"
       Then I press translated "call_results.edit.save_button"
       Then I should see "Call result was successfully updated"
-      Then I execute js for display action block
+      Then I execute js for display action block for "call_results"
       Then I confirm a js popup on the next step
       Then I follow translated "call_results.table.remove_link"
       Then I should see "Call result was successfully destroyed"
@@ -396,22 +396,79 @@ Feature: Agent campaign - management
     #
     #
     #campaigns::show (statistics)
-    @1 @is @__campaign_statistics @_todo
+    @1 @is @__campaign_statistics @_tested @selenium
     Scenario: I can see general statistics for campaign (all time)
       # number of agents, contacts, calls, results
+      Then I add user "translator_call_centre@nbs.com" to campaign "Testing One"
+      Then I create call result
+      Then I execute js for display action block for "campaigns"
+      Then I follow translated "campaigns.index.result"
+      Then I should see "Total numbers of contacts: 4"
+      Then I should see "Total number of agents: 2"
+      Then I should see "Total number of calls: ??"
+      #jak sie wysypie to bedzie wiadomo że trzeba dodać cyfre tam gdzie są teraz pytajniki :P
 
-    @3 @is @__campaign_statistics @_todo
+    @3 @is @__campaign_statistics @_tested @selenium
     Scenario: I can see results statistics for given time range
+      Then I execute js for display action block for "campaigns"
+      Then I follow translated "campaigns.index.result"
+      Then I fill in "date_from" with "2011-01-01"
+      Then I fill in "date_to" with "2011-01-03"
+      Then I press translated "campaigns.show.search_button"
+      Then I should see "01.01" within "#call_results"
+      Then I should see "02.01" within "#call_results"
+      Then I should see "03.01" within "#call_results"
 
-    @2 @is @__campaign_statistics @_todo
+    @2 @is @__campaign_statistics @_tested @selenium
     Scenario: I can select time range from predefined ones: whole campaign, today, this week, this month
+      Then I execute js for display action block for "campaigns"
+      Then I follow translated "campaigns.index.result"
+      Then I should see "Testing One"
+      Then I follow translated "campaigns.show.ranges.whole_campaign"
+      Then I press translated "campaigns.show.search_button"
+      Then I should see whole campaign dates in results table for campaign "Testing One"
+      Then I follow translated "campaigns.show.ranges.this_month"
+      Then I press translated "campaigns.show.search_button"
+      Then I should see start month date and and month date in results table
+      Then I follow translated "campaigns.show.ranges.this_week"
+      Then I press translated "campaigns.show.search_button"
+      Then I should see start week date and and week date in results table
+      Then I follow translated "campaigns.show.ranges.today"
+      Then I press translated "campaigns.show.search_button"
+      Then I should see today date in results table
 
-    @3 @is @__campaign_statistics @_todo
+    @3 @is @__campaign_statistics @_tested @selenium
     Scenario: I can see results list for given date and result type
+      Then I create call result
+      Then I execute js for display action block for "campaigns"
+      Then I follow translated "campaigns.index.result"
+      Then I click xpath "((//table[@id='call_results']//tr)[3]//td)[3]"
+      Then I wait 1 second
+      Then I should see "Bon Jovi inc." within "#call_result_details"
+      Then I should see "John Smith" within "#call_result_details"
+      Then I should see "Call back" within "#call_result_details"
 
-    @2 @is @__campaign_statistics @_todo
+    @2 @is @__campaign_statistics @_tested @selenium
     Scenario: I can see results list for given agent list
+      Then I create call result
+      Then I add user "translator_call_centre@nbs.com" to campaign "Testing One"
+      Then I execute js for display action block for "campaigns"
+      Then I follow translated "campaigns.index.result"
+      Then I select "John Smith" from "agent_ids"
+      Then I execute js for select agent_ids "1" to set selected as "false"
+      Then I press translated "campaigns.show.search_button"
+      Then I should see "1" within "#all_result_row"
+      Then I execute js for select agent_ids "0" to set selected as "false"
+      Then I execute js for select agent_ids "1" to set selected as "true"
+      Then I press translated "campaigns.show.search_button"
+      Then I should not see "1" within "#all_result_row"
+      Then I wait 4 second
 
-    @2 @is @__campaign_statistics @_todo
-  Scenario: I can see results list for completed contacts only
-
+    @2 @is @__campaign_statistics @_tested @selenium
+    Scenario: I can see results list for completed contacts only
+      Then I execute js for display action block for "campaigns"
+      Then I follow translated "campaigns.index.result"
+      Then I should see "Call back" within "#call_results"
+      Then I check "final"
+      Then I press translated "campaigns.show.search_button"
+      Then I should not see "Call back" within "#call_results"
