@@ -1612,3 +1612,28 @@ span.cke_skin_kama
     padding: 10px 4px;
     text-align: center;
 }
+
+
+/* ---- invoices ---
+--------------------------------------------------------------------------------- */
+
+.call_result_note
+{
+    padding: 5px;
+}
+
+.call_result_note h3
+{
+    font-size: 14px;
+    color: #6f5c36;
+    border-bottom: 1px dotted #cfb075;
+    padding: 0 0 4px;
+    margin-bottom: 11px;
+}
+
+.call_result_note table
+{
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 3px;
+}
