@@ -71,6 +71,20 @@ Scenario: I can instant-buy lead I will see a notification “You added lead to 
   When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
   Then I should see "Printers ultimate deal"
 
+@added @m8 @ao @_done @_tested
+Scenario: I can see latest bought leads at the top of the list
+  When there are no leads
+  And lead Number 1 ultimate deal exists within category Computers
+  And I go to leads
+  And I follow "Computers"
+  And I follow translated "leads.index.buy_lead"
+  And lead Number 2 ultimate deal exists within category Computers
+  And I go to leads
+  And I follow "Computers"
+  And I follow translated "leads.index.buy_lead"
+  When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  Then I should see "Number 2" before "Number 1"
+
 @selenium @_done  @noguess
 Scenario: I can bulk instant-buy leads requested by lead user that belongs to my account and I will see a notification “You added {n} leads to your list”
   When lead Monitors ultimate deal exists within category Computers
