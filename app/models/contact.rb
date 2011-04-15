@@ -1,6 +1,6 @@
 class Contact < AbstractLead
 
-  CSV_ATTRS = %w(company_name company_phone_number company_website address_line_1 address_line_2 address_line_3 zip_code country region company_vat_no company_ean_number contact_name direct_phone_number phone_number email_address linkedin_url facebook_url)
+  CSV_ATTRS = %w(company_name company_phone_number company_website address_line_1 address_line_2 address_line_3 zip_code country region company_vat_no company_ean_number contact_name direct_phone_number phone_number email_address linkedin_url facebook_url note)
 
   attr_accessor :strict_validate, :formatted_rows
 
@@ -39,7 +39,7 @@ class Contact < AbstractLead
       FasterCSV.generate(:force_quotes => true) do |csv|
         contacts = find(ids)
         csv << CSV_ATTRS.map(&:humanize)
-        contacts.each { |c| csv << CSV_ATTRS.map { |attr| c.send attr } }
+        contacts.each { |c| csv << CSV_ATTRS.map { |attr| c.send(attr).to_s.gsub(/[\n\r\t,]/, " ") } }
       end
     end
 
