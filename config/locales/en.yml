@@ -280,9 +280,10 @@ en:
       button_cancel: Back to campain listing
       button_create_contact: Create contact
       button_manage_result_types: Manage result types
-      button_import_contacts: Import contacts
+      button_import_contacts: Import CSV contacts
       button_assign_selected_contacts: Assign selected contacts
-      button_remove_assignment_for_selected: Remove assignments for selected
+      button_remove_assignment_for_selected: "Remove assignments for selected"
+      button_bulk_download_csv_link: "Export CSV contacts"
       button_remove_selected: Remove selected
       agent_assignment_button: Agent assignment
       show_button: Show

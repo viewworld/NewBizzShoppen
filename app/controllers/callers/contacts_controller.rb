@@ -4,21 +4,24 @@ class Callers::ContactsController < Callers::CallerController
   before_filter :set_campaign
   before_filter :set_contact, :only => [:edit, :update, :destroy]
   before_filter :set_contact_managing
+  before_filter :set_import_flag, :only => [:new, :create]
 
   def new
     @lead = @contact = Contact.new
-    @import = params[:type]
   end
 
   def create
-    @lead = @contact = Contact.new(params[:contact])
-    @contact.creator = current_user
-    @contact.creator_name = current_user.full_name
-    @contact.campaign_id = @campaign.id
-    @contact.category_id = @campaign.category_id
-    create! do |success, failure|
-      success.html { redirect_to edit_callers_campaign_path(@campaign) }
-      failure.html { render 'new' }
+    attrs = {:creator => current_user, :creator_name => current_user.full_name, :campaign_id => @campaign.id, :category_id =>  @campaign.category_id}
+    if @import
+      Contact.create_from_csv(params[:contact][:formatted_rows], attrs)
+      redirect_to edit_callers_campaign_path(@campaign)
+    else
+      @lead = @contact = Contact.new(params[:contact])
+      @contact.attributes = attrs
+      create! do |success, failure|
+        success.html { redirect_to edit_callers_campaign_path(@campaign) }
+        failure.html { render 'new' }
+      end
     end
   end
 
@@ -61,6 +64,10 @@ class Callers::ContactsController < Callers::CallerController
     redirect_to edit_callers_campaign_path(@campaign)
   end
 
+  def bulk_contacts_export_csv
+    send_data Contact.to_csv(*@campaign.contacts.map(&:id)), :filename => "contacts.csv"
+  end
+
   protected
 
   private
@@ -79,6 +86,10 @@ class Callers::ContactsController < Callers::CallerController
 
   def set_contact_managing
     @contact_managing = true
+  end
+
+  def set_import_flag
+    @import = params[:type]
   end
 
 end
