@@ -14,7 +14,7 @@
                 <%= f.label :with_category, t("customer.lead_requests.index.view.search.category_label") %>
                 <%= f.select :with_category, @categories, {:include_blank => true} %>
               </li>
-              <li class="select">
+              <li class="string">
                 <%= f.label :with_zip_code, t("customer.lead_requests.index.view.search.zip_code") %>
                 <%= f.text_field :with_zip_code %>
               </li>
