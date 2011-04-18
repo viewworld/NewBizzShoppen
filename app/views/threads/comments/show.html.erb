@@ -1,0 +1,27 @@
+<column-mc:>
+  <header></header>
+  <ul>
+    <li><%= @thread.title %> <%= link_to_function "reply", "reply_to(#{@thread.id},#{@thread.commentable_id})" %></li>
+  <% @thread.children.each do |child| %>
+    <li><%= child.title %> <%= link_to_function "reply", "reply_to(#{child.id},#{@thread.commentable_id})" %></li>
+  <% end %>
+  </ul>
+
+   <%= semantic_form_for :comment, Comment.new, :url => threads_comments_path, :html => {:id => "new_thread", :style => "display:none;"} do |f| %>
+      <%= f.input :parent_id, :as => :hidden, :value => "" %>
+      <%= f.input :commentable_id, :as => :hidden, :value => ""%>
+      <%= f.input :commentable_type, :as => :hidden, :value => "Lead" %>
+      <%= f.input :title %>
+      <%= f.input :body %>
+      <%= f.commit_button %>
+   <% end %>
+
+<script>
+  function reply_to(comment_id,commentable_id) {
+    $("input#comment_parent_id").attr("value",comment_id);
+    $("input#comment_commentable_id").attr("value",commentable_id);
+    $("#new_thread").show();
+  }
+</script>
+
+</column-mc:>

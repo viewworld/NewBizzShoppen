@@ -26,6 +26,10 @@ class ::User::Customer < ::User
 
   before_save :handle_interests
 
+  def comment_threads
+    Comment.roots.where(:user_id => (Array(self.id) + subaccounts.map(&:id)))
+  end
+
   private
   def handle_interests
     if (categories.select { |c| c.is_customer_unique } - unique_categories).size > 0

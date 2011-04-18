@@ -1,0 +1,18 @@
+<column-mc:>
+  <header></header>
+
+  <table class="generic">
+    <thead>
+        <th></th>
+    </thead>
+    <tbody>
+       <% @threads.each do |thread| %>
+       <tr>
+         <td>
+           <%= link_to thread.commentable.header, threads_comment_path(thread) %>
+         </td>
+       </tr>
+        <% end %>
+    </tbody>
+  </table>
+</column-mc:>

@@ -30,6 +30,7 @@ gem 'aws-s3'
 gem 'i18n-active_record'
 #gem 'i18n-js'
 gem 'whenever', :require => false
+gem 'acts_as_commentable_with_threading'
 
 
 group :development do

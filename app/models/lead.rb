@@ -5,6 +5,7 @@ class Lead < ActiveRecord::Base
   BLACK_LISTED_ATTRIBUTES = [:published]
 
   translates :header, :description, :hidden_description
+  acts_as_commentable
 
   include ScopedSearch::Model
 
