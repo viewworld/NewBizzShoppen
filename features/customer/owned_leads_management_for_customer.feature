@@ -148,9 +148,6 @@ Scenario: I can bulk set response deadlines for lead
 @ao @nontestable  @noguess
 Scenario: I am notified by email when dealine expires and status of lead has not changed
 
-@m0 @noguess @lead_manager @comments
-Scenario: I can create a comment for lead that I have access for
-
 #Accessible from owned leads listing
 #Just prepare interface for sending an email (based on email template as ususal) with recipient field read-only and prepopulated
 #Have a look at bulk_lead_share_by_email_controller.rb for sume hints regarding prerendering email template

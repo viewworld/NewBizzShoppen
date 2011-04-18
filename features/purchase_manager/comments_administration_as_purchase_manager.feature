@@ -1,7 +1,7 @@
-@comments @$_call_centre @noguess @ao @m9
-Feature: Comments administration as call centre agent
+@comments @purchase_manager @noguess @ao @m9
+Feature: Comments administration as purchase manager
 
-Scenario: I can see the amount of comments per lead on Lead created by my agents listing
+Scenario: I can see the amount of comments per lead on Lead created by me lisitng
 
 @m0
 Scenario: I can click on comment list and get a popup with comments from different ppl

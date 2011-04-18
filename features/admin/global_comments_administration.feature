@@ -1,4 +1,4 @@
-@comments @$_admin @m0 @noguess @ao
+@comments @$_admin @noguess @ao @m0
 Feature: Global comments administration
 
 Scenario: I can browse all comment conversations with pagination
@@ -16,3 +16,5 @@ Scenario: I can edit the comment
 Scenario: I can delete the comment
 
 Scenario: I can navigate to lead creator user page
+
+Scenario: I can start new comment thread
