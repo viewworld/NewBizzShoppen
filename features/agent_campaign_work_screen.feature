@@ -6,7 +6,7 @@ Feature: Agent campaign - calling session
     #
     #
     #dashboard
-    @1 @_todo
+    @1 @_done
     Scenario: I can see list of campaigns which I belong to
 
 
