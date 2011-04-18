@@ -26,7 +26,13 @@ Feature: Agent campaign - calling session
     Scenario: I can navigate through contacts details / results history / add result
 
     @1 @_done
+    Scenario: I can go to previous/next contact through arrows
+
+    @1 @_done
     Scenario: I can see current call sheet
+
+    @1 @_done @added
+    Scenario: I can see pending calls list
 
     @2 @_done
     Scenario: I can see contact form based on currently selected contact
@@ -37,8 +43,14 @@ Feature: Agent campaign - calling session
     @3 @_done
     Scenario: I can see new lead form for specifying information based on currently selected contact
 
+    @3 @_done @added
+    Scenario: I can change lead category and system reloads template fields
+
     @2 @_done
     Scenario: I can see information about previous results for selected contact
+
+    @3 @_done @added
+    Scenario: I can see detailed information about result in tooltip
 
     @3 @_todo
     Scenario: system can make a call automatically for next contact on the list if dynamic calling is enabled
