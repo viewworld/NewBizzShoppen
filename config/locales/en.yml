@@ -312,7 +312,10 @@ en:
       show_current_call_sheet: Show current call sheet
       show_pending_calls: Show pending calls
       show_call_log_for_current_contact: Show call log for current contact
-
+      call_log: Call log
+      call_sheet: Call sheet
+      current_contact: Current contact
+      pending_calls: Pending calls
 
   contacts:
     filter:
@@ -361,6 +364,7 @@ en:
       edit_link: Edit
       remove_link: Remove
       remove_confirm: "Are you sure?"
+      note: Note
     new:
       title: New result
       form_title: Create new
