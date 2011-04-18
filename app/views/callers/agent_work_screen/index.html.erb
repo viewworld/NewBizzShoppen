@@ -1,4 +1,5 @@
 <column-mc:>
+
   <header back="true" backurl="#{callers_campaigns_path}"><%= t("agent_work_screen.index.title") %></header>
 
   <div id="switch_campaign_form" class="fltr">
@@ -7,6 +8,14 @@
 
   <clb/>
 
+  <div id="flashes">
+      <div class="flash flash_notice" style="display:none">
+      </div>
+
+      <div class="flash flash_alert" style="display:none">
+      </div>
+  </div>
+  
   <div id="agent_work_screen_dashboard">
     <div id="contact_info">
       <%= render :partial => "callers/agent_work_screen/contact_form", :locals => @locals if @contact %>

@@ -207,13 +207,25 @@ function clear_filter() {
 }
 
 function show_agent_work_screen_dashboard() {
-    jQuery("#agent_work_screen_call_result").html("");
-    jQuery("#agent_work_screen_call_result").hide();
-    jQuery("#agent_work_screen_dashboard").show();
+    $("#agent_work_screen_call_result").html("");
+    $("#agent_work_screen_call_result").hide();
+    $("#agent_work_screen_dashboard").show();
 }
 
 function show_agent_work_screen_call_result(call_result_html) {
-    jQuery("#agent_work_screen_call_result").html(call_result_html);
-    jQuery("#agent_work_screen_dashboard").hide();
-    jQuery("#agent_work_screen_call_result").show();
+    $("#agent_work_screen_call_result").html(call_result_html);
+    $("#agent_work_screen_dashboard").hide();
+    $("#agent_work_screen_call_result").show();
+}
+
+function display_notice(message) {
+    $("#flashes .flash_notice").html(message);
+    $("#flashes .flash_notice").show();
+    setTimeout('$("#flashes .flash_notice").hide()', 5000)
+}
+
+function display_alert(message) {
+    $("#flashes .flash_alert").html(message);
+    $("#flashes .flash_alert").show();
+    setTimeout('$("#flashes .flash_alert").hide()', 5000)
 }

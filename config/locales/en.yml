@@ -341,6 +341,17 @@ en:
       agent: Agent
       result: Result
       actions: Actions
+    create:
+      flash:
+        successfully_imported: "%{count} contacts have been successfully imported."
+    update:
+      flash:
+        successfully_updated: Contact has been successfully updated.
+    destroy:
+      flash:
+        successfully_removed: Contact has been successfully removed.
+        successfully_deassigned: Contact has been successfully deassigned.
+
   call_results:
     table:
       date: Date
@@ -363,6 +374,16 @@ en:
       cancel_button: Cancel
       result: Result
       button_new_result: New result
+    create:
+      flash:
+        successfully_added: Call result has been successfully added. Next contact has been selected.
+    update:
+      flash:
+        successfully_updated: Call result has been successfully updated.
+    destroy:
+      flash:
+        successfully_removed: Call result has been successfully removed.         
+
 
   campaigns_users:
     index:

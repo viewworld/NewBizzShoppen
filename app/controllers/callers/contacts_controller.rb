@@ -15,8 +15,8 @@ class Callers::ContactsController < Callers::CallerController
   def create
     attrs = {:creator => current_user, :creator_name => current_user.full_name, :campaign_id => @campaign.id, :category_id =>  @campaign.category_id}
     if @import
-      Contact.create_from_csv(params[:contact][:formatted_rows], attrs.merge(:contact_name => "", :phone_number => "", :email_address => ""))
-      redirect_to edit_callers_campaign_path(@campaign)
+      contacts = Contact.create_from_csv(params[:contact][:formatted_rows], attrs.merge(:contact_name => "", :phone_number => "", :email_address => ""))
+      redirect_to edit_callers_campaign_path(@campaign), :notice => t('contacts.create.flash.successfully_imported', :count => contacts.count )
     else
       @lead = @contact = Contact.new(params[:contact])
       @contact.attributes = attrs

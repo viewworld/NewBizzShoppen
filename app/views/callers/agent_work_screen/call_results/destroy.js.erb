@@ -1,3 +1,4 @@
+display_notice("<%= escape_javascript(t("call_results.destroy.flash.successfully_removed")) %>");
 $("#results_sheet").html("<%= escape_javascript(render(:partial => "callers/agent_work_screen/results_sheet", :locals => @locals)) %>");
 $("#pending_calls").html("<%= escape_javascript(render(:partial => "callers/agent_work_screen/pending_calls", :locals => @locals)) %>");        
 $("#call_sheet").html("<%= escape_javascript(render(:partial => "callers/agent_work_screen/call_sheet", :locals => @locals)) %>");
