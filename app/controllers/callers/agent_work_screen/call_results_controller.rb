@@ -1,7 +1,6 @@
 class Callers::AgentWorkScreen::CallResultsController < Callers::AgentWorkScreenController
 
   inherit_resources
-  layout "help_popup"
 
   before_filter :set_result, :only => :new
   before_filter :set_call_result, :only => [:edit, :update, :destroy]
@@ -24,8 +23,8 @@ class Callers::AgentWorkScreen::CallResultsController < Callers::AgentWorkScreen
     @call_result.creator = current_user
     @call_result.contact = @contact
     create! do |success, failure|
-      success.html { }
-      failure.html { render 'new' }
+      success.js { }
+      failure.js { render 'new' }
     end
   end
 
@@ -41,15 +40,15 @@ class Callers::AgentWorkScreen::CallResultsController < Callers::AgentWorkScreen
     @call_result.contact = @contact
     @call_result.attributes = params[:call_result]
     update! do |success, failure|
-      success.html { }
-      failure.html { render 'edit' }
+      success.js { }
+      failure.js { render 'edit' }
     end
   end
 
   def destroy
     destroy! do |success, failure|
       success.js { set_locals }
-      failure.html {}
+      failure.js {}
     end    
   end
 

@@ -205,3 +205,15 @@ function clear_filter() {
     });
     $('.search_box #search_new').submit();
 }
+
+function show_agent_work_screen_dashboard() {
+    jQuery("#agent_work_screen_call_result").html("");
+    jQuery("#agent_work_screen_call_result").hide();
+    jQuery("#agent_work_screen_dashboard").show();
+}
+
+function show_agent_work_screen_call_result(call_result_html) {
+    jQuery("#agent_work_screen_call_result").html(call_result_html);
+    jQuery("#agent_work_screen_dashboard").hide();
+    jQuery("#agent_work_screen_call_result").show();
+}

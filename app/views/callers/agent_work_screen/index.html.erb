@@ -7,27 +7,35 @@
 
   <clb/>
 
-  <div id="contact_info">
-    <%= render :partial => "callers/agent_work_screen/contact_form", :locals => @locals if @contact %>
+  <div id="agent_work_screen_dashboard">
+    <div id="contact_info">
+      <%= render :partial => "callers/agent_work_screen/contact_form", :locals => @locals if @contact %>
+    </div>
+
+    <div id="call_info">
+      <%= render :partial => "callers/agent_work_screen/call_interface", :locals => @locals if @contact %>
+    </div>
+
+    <br/>
+
+    <div id="results_sheet">
+      <%= render :partial => "callers/agent_work_screen/results_sheet", :locals => @locals if @contact %>
+    </div>
+
+    <div id="call_sheet" style="display:none">
+      <%= render :partial => "callers/agent_work_screen/call_sheet", :locals => @locals %>
+    </div>
+
+    <div id="pending_calls" style="display:none">
+      <%= render :partial => "callers/agent_work_screen/pending_calls", :locals => @locals %>
+    </div>
   </div>
 
-  <div id="call_info">
-    <%= render :partial => "callers/agent_work_screen/call_interface", :locals => @locals if @contact %>
+  <div id="agent_work_screen_call_result" style="display:none">
+
   </div>
 
-  <br/>
 
-  <div id="results_sheet">
-    <%= render :partial => "callers/agent_work_screen/results_sheet", :locals => @locals if @contact %>
-  </div>
-
-  <div id="call_sheet" style="display:none">
-    <%= render :partial => "callers/agent_work_screen/call_sheet", :locals => @locals %>
-  </div>
-
-  <div id="pending_calls" style="display:none">
-    <%= render :partial => "callers/agent_work_screen/pending_calls", :locals => @locals %>
-  </div>
 </column-mc:>
 
 <js:>
