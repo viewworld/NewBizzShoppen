@@ -153,7 +153,7 @@ Feature: Agent campaign - management
       Then I should see "Bon Jovi"
       Then I should not see "Mleko"
 
-    @3 @tbr @__campaign_manage @_todo
+    @3 @tbr @__campaign_manage @_done
     Scenario: I can export selected contacts to CSV
 
     #
@@ -185,7 +185,7 @@ Feature: Agent campaign - management
     #
     #
     #campaigns::contacts::new (popup?)
-    @3 @tbr @__campaign_import_contacts @_todo
+    @3 @tbr @__campaign_import_contacts @_done
     Scenario: I can import contacts as excel formatted list
       # question: creating multiple contacts to single lead (on different campaigns)
       # - a lead only has one contact, but if the same contact information is importet twice- in two different campiangs, it the same contact information can be assigend to to different leads
@@ -348,10 +348,10 @@ Feature: Agent campaign - management
     @1 @tbr @__campaign_manage_result_types @_done @added
     Scenario: I can see list of fields in result types list
 
-    @3 @tbr @__campaign_manage_result_types @_todo @added
+    @3 @tbr @__campaign_manage_result_types @_done @added
     Scenario: I can select "time" type for custom field in result type
 
-    @3 @tbr @__campaign_manage_result_types @_todo @added
+    @3 @tbr @__campaign_manage_result_types @_done @added
     Scenario: I custom fields values should validate correct format
 
     #call results
