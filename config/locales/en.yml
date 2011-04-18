@@ -2177,6 +2177,7 @@ en:
         not_charge_vat: "Do not charge VAT"
         team_buyers: "Team buyers"
         skip_email_verification: "Don't verify email address"
+        big_buyer_purchase_limit: "Big buyer purchase limit (in Euro)"
       user/purchase_manager:
         first_name: "First name"
         last_name: "Last name"
@@ -2203,6 +2204,7 @@ en:
         agreement_read: "Agreement read"
         big_buyer: "Big buyer"
         skip_email_verification: "Don't verify email address"
+        big_buyer_purchase_limit: "Big buyer purchase limit (in Euro)"
       country:
         name: "Country name"
       lead_template:
