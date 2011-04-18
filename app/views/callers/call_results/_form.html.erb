@@ -30,6 +30,11 @@
 
 <script type="text/javascript">
   $("#call_result_contact_attributes_category_id").change(function(){
-      window.location = '<%= reload_path %>'+'&category_id='+$(this).val();
+      var path = '<%= reload_path %>'+'&category_id='+$(this).val();
+     <% if agent_work_screen %>
+        $.get(path);
+     <% else %>
+        window.location = path;
+     <% end %>
   });
 </script>
