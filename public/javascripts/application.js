@@ -94,7 +94,7 @@ function loadScripts() {
         {
             var link = $(this).parent().find('a.default_action');
             var link_confirm_msg = $(this).parent().find('input.default_action_confirmation_msg');
-            if (link.attr("data-method"))
+            if (link.attr("data-method") || link.attr("data-remote"))
             {
                 if (link_confirm_msg.val() == undefined)
                 {
