@@ -15,7 +15,7 @@ class LeadUsers::LeadPurchasesController < LeadUsers::LeadUserController
     @countries = Country.with_lead_purchase_assignee(current_user).map{|c| [c.name, c.id]}
     @categories = Category.with_lead_purchase_assignee(current_user).map{|c| [c.name, c.id]}
     @search = LeadPurchase.scoped_search(params[:search])
-    @lead_purchases = @search.paginate(:page => params[:page], :per_page => LeadPurchase.per_page)
+    @lead_purchases = @search.order("created_at DESC").paginate(:page => params[:page], :per_page => LeadPurchase.per_page)
   end
 
   public

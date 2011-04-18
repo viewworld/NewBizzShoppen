@@ -52,6 +52,9 @@
         <%= form.input :screen_name %>
         <%= form.input :phone %>
         <%= form.input :email %>
+        <% if @user.big_buyer? %>
+            <%= form.input :big_buyer_purchase_limit %>
+        <% end %>
         <% if ['agent', 'call_centre'].include?(params[:role]) or @user.has_any_role?(:agent, :call_centre) %>
             <%= form.input :payout, :required => true, :hint => "%" %>
         <% end %>
