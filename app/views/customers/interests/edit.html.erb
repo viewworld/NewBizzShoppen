@@ -17,22 +17,22 @@
                           <%= t("customer.interests.edit.view.categories") %>
                         </h3>
                       </li>
-                      <li>
-                        <table class="categories_table">
-                          <tbody>
-                          <% @categories.select { |c| c.parent_id.blank? }.in_groups_of(3, false).each do |categories| %>
-                              <tr>
-                                <% categories.each do |category| %>
-                                    <td>
-                                      <%= categories_structure_root(category, @categories) %>
-                                    </td>
-                                <% end %>
-                              </tr>
-                          <% end %>
-                          </tbody>
-                        </table>
-                      </li>
                     </ol>
+
+                    <table class="categories_table">
+                      <tbody>
+                      <% @categories.select { |c| c.parent_id.blank? }.in_groups_of(3, false).each do |categories| %>
+                          <tr>
+                            <% categories.each do |category| %>
+                                <td>
+                                  <%= categories_structure_root(category, @categories) %>
+                                </td>
+                            <% end %>
+                          </tr>
+                      <% end %>
+                      </tbody>
+                    </table>
+
                   </fieldset>
                 </div>
             <% end %>
