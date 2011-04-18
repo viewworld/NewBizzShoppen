@@ -265,7 +265,7 @@ Feature: Agent campaign - management
     Scenario: I can see template fields for current category
     #dynamically loaded via ajax
 
-    @3 @tbr @__campaign_manage_results @_done @_tested
+    @3 @tbr @__campaign_manage_results @_done @_tested @added
     Scenario: I can go to previous/next contact edit page through arrows
       When I click hidden link by url regex "/call_centres\/campaigns\/\d+\/edit/"
       And I should see "Edit campaign"
