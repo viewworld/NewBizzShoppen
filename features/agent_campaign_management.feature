@@ -281,7 +281,7 @@ Feature: Agent campaign - management
     #
     #
     #campaigns::agents::manage_results_types
-    @1 @tbr @__campaign_manage_result_types @_done @_tested
+    @1 @tbr @__campaign_manage_result_types @_done @_tested @added
     Scenario: I can see list of generic call log results
       When I click hidden link by url regex "/call_centres\/campaigns\/\d+\/edit/"
       And I should see "Edit campaign"
@@ -290,10 +290,10 @@ Feature: Agent campaign - management
       And I should see "Not interested now"
       And I should see "Not in"
 
-    @2 @tbr @__campaign_manage_result_types @_done
+    @2 @tbr @__campaign_manage_result_types @_done @added
     Scenario: I can see list of custom call log results
 
-    @1 @tbr @__campaign_manage_result_types @_done @_tested
+    @1 @tbr @__campaign_manage_result_types @_done @_tested @added
     Scenario: I can see list of generic final results
       When I click hidden link by url regex "/call_centres\/campaigns\/\d+\/edit/"
       And I should see "Edit campaign"
@@ -303,16 +303,16 @@ Feature: Agent campaign - management
       And I should see "Meeting booked"
       And I should see "Custom result"
 
-    @2 @tbr @__campaign_manage_result_types @_done
+    @2 @tbr @__campaign_manage_result_types @_done @added
     Scenario: I can see list of custom final results
 
-    @1 @tbr @__campaign_manage_result_types @_done
+    @1 @tbr @__campaign_manage_result_types @_done @added
     Scenario: I can assign custom results to campaign
 
-    @2 @tbr @__campaign_manage_result_types @_done
+    @2 @tbr @__campaign_manage_result_types @_done @added
     Scenario: I can assign generic results to campaign
 
-    @3 @tbr @__campaign_manage_result_types @_done @selenium @_tested
+    @3 @tbr @__campaign_manage_result_types @_done @selenium @_tested @added
     Scenario: I can manage call log results
       When I click hidden link by url regex "/call_centres\/campaigns\/\d+\/edit/"
       And I should see "Edit campaign"
@@ -327,7 +327,7 @@ Feature: Agent campaign - management
       Then I should see "I am on fire"
       And I should see "Some text"
 
-    @3 @tbr @__campaign_manage_result_types @_done @selenium @_tested
+    @3 @tbr @__campaign_manage_result_types @_done @selenium @_tested @added
     Scenario: I can manage final results
       When I click hidden link by url regex "/call_centres\/campaigns\/\d+\/edit/"
       And I should see "Edit campaign"
@@ -342,16 +342,16 @@ Feature: Agent campaign - management
       Then I should see "I am on fire"
       And I should see "Some text"
 
-    @3 @tbr @__campaign_manage_result_types @_done
+    @3 @tbr @__campaign_manage_result_types @_done @added
     Scenario: I can add custom fields to result type
 
-    @1 @tbr @__campaign_manage_result_types @_done
+    @1 @tbr @__campaign_manage_result_types @_done @added
     Scenario: I can see list of fields in result types list
 
-    @3 @tbr @__campaign_manage_result_types @_todo
+    @3 @tbr @__campaign_manage_result_types @_todo @added
     Scenario: I can select "time" type for custom field in result type
 
-    @3 @tbr @__campaign_manage_result_types @_todo
+    @3 @tbr @__campaign_manage_result_types @_todo @added
     Scenario: I custom fields values should validate correct format
 
     #call results
@@ -386,10 +386,10 @@ Feature: Agent campaign - management
     #
     # CUSTOM RESULT TYPES
     #
-    @3 @tbr @__campaign_manage_results @_done
+    @3 @tbr @__campaign_manage_results @_done @added
     Scenario: I can add custom call log result
 
-    @3 @tbr @__campaign_manage_results @_done
+    @3 @tbr @__campaign_manage_results @_done @added
     Scenario: I can add custom final result
 
 
