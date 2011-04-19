@@ -130,7 +130,7 @@ Feature: Agent campaign - management
 
     # question: may agent have more assigned contacts then visible contacts number
     # - no but when the agent registre a result for a contact- the contact is removed from the agens active calling list and asign to the reslt list. Then the agent is dynamicly assign a new contact.
-    @3 @is @__campaign_manage @_done @tested_elsewhere @selenium
+    @3 @is @__campaign_manage @_done @_tested_elsewhere @selenium
     Scenario: I can assign selected contacts to selected agent
 
     @2 @is @__campaign_manage @_tested
@@ -140,7 +140,7 @@ Feature: Agent campaign - management
       Then I should see "Contact was successfully destroyed"
       Then I should not see "Bon Jovi"
 
-    @1 @is @__campaign_manage @_done @tested_elsewhere
+    @1 @is @__campaign_manage @_done @_tested_elsewhere
     Scenario: I can deassign agents from selected contacts
 
     @1 @is @__campaign_manage @_tested @selenium
@@ -153,7 +153,7 @@ Feature: Agent campaign - management
       Then I should see "Bon Jovi"
       Then I should not see "Mleko"
 
-    @3 @tbr @__campaign_manage @_done
+    @3 @tbr @__campaign_manage @_done @nontestable
     Scenario: I can export selected contacts to CSV
 
     #
@@ -165,7 +165,7 @@ Feature: Agent campaign - management
       Then I follow translated "campaigns.edit.agent_assignment_button"
       Then I should see "John Smith"
 
-    @2 @is @__campaign_assign_agents @tested_elsewhere
+    @2 @is @__campaign_assign_agents @_tested_elsewhere
     Scenario: I can assign selected agents to campaign
 
     @1 @is @__campaign_assign_agents @_tested @selenium
@@ -185,10 +185,13 @@ Feature: Agent campaign - management
     #
     #
     #campaigns::contacts::new (popup?)
-    @3 @tbr @__campaign_import_contacts @_done
+    @3 @tbr @__campaign_import_contacts @_done @_tested
     Scenario: I can import contacts as excel formatted list
-      # question: creating multiple contacts to single lead (on different campaigns)
-      # - a lead only has one contact, but if the same contact information is importet twice- in two different campiangs, it the same contact information can be assigend to to different leads
+      When I edit campaign "Testing One"
+      And I follow translated "campaigns.edit.button_import_contacts"
+      And I fill in "Formatted rows" with import data for contacts
+      And I press translated "contacts.new.create_button"
+      Then imported contacts should be in campaign "Testing One"                
 
     @3 @is @__campaign_import_contacts @_tested
     Scenario: I can create single contact
@@ -235,13 +238,13 @@ Feature: Agent campaign - management
       Then I should not see "Call back" within "#call_results"
       Then I should not see "Johnny Mnemonic" within "#call_results"
 
-    @3 @is @__campaign_manage_results @_done @tested_elsewhere
+    @3 @is @__campaign_manage_results @_done @_tested_elsewhere
     Scenario: I can add new result
 
-    @2 @is @__campaign_manage_results @_done @tested_elsewhere
+    @2 @is @__campaign_manage_results @_done @_tested_elsewhere
     Scenario: I can edit result
 
-    @1 @is @__campaign_manage_results @_done @tested_elsewhere
+    @1 @is @__campaign_manage_results @_done @_tested_elsewhere
     Scenario: I can remove result
 
     @1 @is @__campaign_import_contacts @_tested @selenium
@@ -261,9 +264,18 @@ Feature: Agent campaign - management
       Then agent for "Bon Jovi inc." is blank
 
 
-    @3 @tbr @__campaign_manage_results @_done
+    @3 @tbr @__campaign_manage_results @selenium @_done @_tested
     Scenario: I can see template fields for current category
-    #dynamically loaded via ajax
+      Given template named "Leisure template" for category "Leisure" is created by user "translator_call_centre@nbs.com" with role "call_centre"
+      And template named "Leisure template" is global
+      When  I edit contact "Mleko company"
+      And I select "Upgraded to lead" from "result_id"
+      And I follow translated "call_results.edit.button_new_result"
+      And the "Category" field should contain "3"
+      Then I should not see "Leisure template"
+      When I select "Leisure" from "Category"
+      Then I should see "Leisure template"
+
 
     @3 @tbr @__campaign_manage_results @_done @_tested @added
     Scenario: I can go to previous/next contact edit page through arrows
@@ -290,8 +302,12 @@ Feature: Agent campaign - management
       And I should see "Not interested now"
       And I should see "Not in"
 
-    @2 @tbr @__campaign_manage_result_types @_done @added
+    @2 @tbr @__campaign_manage_result_types @_done @added @_tested
     Scenario: I can see list of custom call log results
+      Given the custom call_log result with name "Under shower" is created by "translator_call_centre@nbs.com"
+      When I edit campaign "Testing One"
+      And I follow translated "campaigns.edit.button_manage_result_types"
+      Then I should see "Under shower"  
 
     @1 @tbr @__campaign_manage_result_types @_done @_tested @added
     Scenario: I can see list of generic final results
@@ -303,13 +319,24 @@ Feature: Agent campaign - management
       And I should see "Meeting booked"
       And I should see "Custom result"
 
-    @2 @tbr @__campaign_manage_result_types @_done @added
+    @2 @tbr @__campaign_manage_result_types @_done @added @_tested
     Scenario: I can see list of custom final results
+      Given the custom final result with name "Don't give a damn" is created by "translator_call_centre@nbs.com"
+      When I edit campaign "Testing One"
+      And I follow translated "campaigns.edit.button_manage_result_types"
+      Then I should see "Don't give a damn"
 
-    @1 @tbr @__campaign_manage_result_types @_done @added
+    @1 @tbr @__campaign_manage_result_types @_done @added @_tested
     Scenario: I can assign custom results to campaign
+      Given the custom final result with name "Don't give a damn" is created by "translator_call_centre@nbs.com"
+      When I edit campaign "Testing One"
+      And I follow translated "campaigns.edit.button_manage_result_types"
+      And I should see "Don't give a damn"
+      And I check result "Don't give a damn"
+      And I press translated "results.index.button_assign_result_types"
+      Then result "Don't give a damn" should be assigned to campaign "Testing One"
 
-    @2 @tbr @__campaign_manage_result_types @_done @added
+    @2 @tbr @__campaign_manage_result_types @_done @added @_tested_elsewhere
     Scenario: I can assign generic results to campaign
 
     @3 @tbr @__campaign_manage_result_types @_done @selenium @_tested @added
@@ -342,56 +369,129 @@ Feature: Agent campaign - management
       Then I should see "I am on fire"
       And I should see "Some text"
 
-    @3 @tbr @__campaign_manage_result_types @_done @added
+    @3 @tbr @__campaign_manage_result_types @_done @added @_tested_elsewhere
     Scenario: I can add custom fields to result type
 
-    @1 @tbr @__campaign_manage_result_types @_done @added
+
+    @1 @tbr @__campaign_manage_result_types @_done @added @_tested_elsewhere
     Scenario: I can see list of fields in result types list
 
-    @3 @tbr @__campaign_manage_result_types @_done @added
+
+    @3 @tbr @__campaign_manage_result_types @_done @added @_tested_elsewhere
     Scenario: I can select "time" type for custom field in result type
 
-    @3 @tbr @__campaign_manage_result_types @_done @added
+    @3 @tbr @__campaign_manage_result_types @_done @added @_tested
     Scenario: I custom fields values should validate correct format
+      Given the custom call_log result with name "Multiple fields" is created by "translator_call_centre@nbs.com"
+      And result "Multiple fields" has mandatory "text field/STRING" field
+      And result "Multiple fields" has mandatory "number field/INTEGER" field
+      And result "Multiple fields" has mandatory "date field/DATE" field
+      And result "Multiple fields" has mandatory "note field/NOTE" field
+      And result "Multiple fields" has mandatory "datetime field/DATETIME" field
+      And result "Multiple fields" is assigned to campaign "Testing One"
+      When I am adding "Multiple fields" result for contact "Mleko company"
+      And I fill in the following:
+         | text field     | text       |
+         | number field   | two        |
+         | date field     | 02-02-2010 |
+         | note field     | large text |
+         | datetime field | 2011-02-02 |
+      And I press translated "call_results.new.save_button"
+      Then I should see translated "activerecord.errors.models.result_value.attributes.value.incorrect_number_format"
+      And I should see translated "activerecord.errors.models.result_value.attributes.value.incorrect_date_format"
+      And I should see translated "activerecord.errors.models.result_value.attributes.value.incorrect_datetime_format"
+      And I fill in the following:
+         | text field     | text             |
+         | number field   | 2                |
+         | date field     | 2011-02-02       |
+         | note field     | large text       |
+         | datetime field | 2011-02-02 21:00 |
+      And I press translated "call_results.new.save_button"
+      Then I should see translated "contacts.edit.current_agent_label"
+      And I should see "Multiple fields" within "#call_results"
+
 
     #call results
     #
     # GENERIC RESULT TYPES
     #
-    @2 @tbr @__campaign_manage_results @_done
+    @2 @tbr @__campaign_manage_results @_done @_tested
     Scenario: I can set call back datetime for contact when result is "call back"
-      #question: contact returns to pool and might be assigned to other agent at given date? - yes
+      When I am adding "Call back" result for contact "Mleko company"
+      And I fill in "Call back date" field with future datetime
+      And I press translated "call_results.new.save_button"
+      Then contact "Mleko company" should be pending
+      And I should see translated "contacts.edit.current_agent_label"
 
-    @2 @tbr @__campaign_manage_results @_done
+
+    @2 @tbr @__campaign_manage_results @_done @_tested
     Scenario: contact is moved to bottom of call list when result is "not in"
-      #question: deassign from agent and move to bottom or just to bottom of call sheet? - just to the bottom of call sheet
+      When I am adding "Not in" result for contact "Mleko company"
+      And I press translated "call_results.new.save_button"
+      Then contact "Mleko company" should be at bottom of the list
+      And I should see translated "contacts.edit.current_agent_label"
 
-    @2 @tbr @__campaign_manage_results @_done
+    @2 @tbr @__campaign_manage_results @_done @_tested
     Scenario: contact deassigned from agent when result is "Not interested"
-      #question: should not contact be assignable or other agents? - no they shuld be moved to the result list- with the result not interested
+      When I am adding "Not interested" result for contact "Mleko company"
+      And I press translated "call_results.new.save_button"
+      Then contact "Mleko company" should be completed
+      And I should see translated "contacts.edit.current_agent_label"
 
-    @2 @tbr @__campaign_manage_results @_done
-    Scenario: call back date is set automatically based on fixed number of days when result is "Not interested now"
-      #question: number of days needed. Should be assignable when call back date is out of campaign period?- The result not interested now should registere a call back date, and remove the contact from the campaign in the call back date is outside the campaing period
+    @2 @tbr @__campaign_manage_results @_done @_tested
+    Scenario: I can set call back datetime for contact when result is "Not interested now"
+      When I am adding "Not interested now" result for contact "Mleko company"
+      And I fill in "Call back date" field with future datetime
+      And I press translated "call_results.new.save_button"
+      Then contact "Mleko company" should be pending
+      And I should see translated "contacts.edit.current_agent_label"
 
-    @3 @tbr @__campaign_manage_results @_done
+    @3 @tbr @__campaign_manage_results @_done @_tested
     Scenario: new lead should be created based on contact when result is "Upgrade to lead"
-      #question: should form for editing new lead appear in popup? - no in same interface. - a smart - dynamic solution would be nice
+      When I am adding "Upgraded to lead" result for contact "Mleko company"
+      And I fill in the following:
+         | call_result_contact_attributes_contact_name | Mleko company  |
+         | Address line 1                 | Some Street 2               |
+         | City                           | London                      |
+         | Zip code                       | 34444                       |
+         | Phone number                   | 55555                       |
+         | Public header                  | A great deal                |
+         | Public description             | Some description            |
+         | Detailed description (hidden)  | Some hidden description     |
+         | Price                          | 2                           |
+         | Purchase decision date         | 2011-02-02                  |
+      And I press translated "call_results.new.save_button"
+      Then contact "Mleko company" should be upgraded to lead
+      And I should see translated "contacts.edit.current_agent_label"
 
-    @2 @tbr @__campaign_manage_results @_done
+    @2 @tbr @__campaign_manage_results @_done @_tested
     Scenario: I can set meeting datetime for contact when result is "Meeting booked"
+      When I am adding "Meeting booked" result for contact "Mleko company"
+      And I fill in "Meeting date" field with future date
+      And I press translated "call_results.new.save_button"
+      Then contact "Mleko company" should be completed
+      And I should see translated "contacts.edit.current_agent_label"
 
 
     #call results
     #
     # CUSTOM RESULT TYPES
     #
-    @3 @tbr @__campaign_manage_results @_done @added
+    @3 @tbr @__campaign_manage_results @_done @added @_tested
     Scenario: I can add custom call log result
+      Given the custom call_log result with name "Just a call log result" is created by "translator_call_centre@nbs.com"
+      When I am adding "Just a call log result" result for contact "Mleko company"
+      And I press translated "call_results.new.save_button"
+      Then contact "Mleko company" should be at bottom of the list
+      And I should see translated "contacts.edit.current_agent_label"
 
-    @3 @tbr @__campaign_manage_results @_done @added
+    @3 @tbr @__campaign_manage_results @_done @added @_tested
     Scenario: I can add custom final result
-
+      Given the custom final result with name "Just a final result" is created by "translator_call_centre@nbs.com"
+      When I am adding "Just a final result" result for contact "Mleko company"
+      And I press translated "call_results.new.save_button"
+      Then contact "Mleko company" should be completed
+      And I should see translated "contacts.edit.current_agent_label"
 
     #
     #

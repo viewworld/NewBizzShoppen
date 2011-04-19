@@ -5,10 +5,10 @@ Background:
   Given I am on the homepage
   And I make sure current locale is "en"
 
-@_done @tested_elsewhere
+@_done @_tested_elsewhere
 Scenario: Invoice should have invoice lines automatically generated for all non-paid leads for given user when created manually
 
-@_done @tested_elsewhere
+@_done @_tested_elsewhere
 Scenario: Automatically generated invoice lines are linked to leads bought
 
 @_done @deprecated

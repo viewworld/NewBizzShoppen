@@ -233,7 +233,7 @@ class Nbs < Thor
      {:name => "Call back date", :field_type => "4", :is_mandatory => true, :result => Result.find_by_name("Not interested now") },
      {:name => "Meeting date", :field_type => "2", :is_mandatory => true, :result => Result.find_by_name("Meeting booked") },
      {:name => "Result message", :field_type => "0", :is_mandatory => true, :result => Result.find_by_name("Custom result") }].each do |result_field|
-      ResultField.create(result_field) unless ResultField.find_by_name(result_field[:name])
+      ResultField.create(result_field) unless ResultField.find_by_name_and_result_id(result_field[:name], result_field[:result_id])
     end
 
     unless Rails.env.production?
