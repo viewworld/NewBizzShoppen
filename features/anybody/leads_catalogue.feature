@@ -92,5 +92,5 @@ Scenario: Add blurb or info text to leads listing "To view lead details click bu
   And I follow "Sample category"
   Then I should see "Blurb leads listing"
 
-@m9 @statistics
+@m0 @statistics
 Scenario: Statistics for exposures and clicks are stored per date
