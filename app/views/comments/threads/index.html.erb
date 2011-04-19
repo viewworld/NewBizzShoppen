@@ -29,13 +29,23 @@
 
   <table class="generic">
     <thead>
+        <th class="hl"></th>
         <th><%= link_to t("comments.threads.index.view.lead_header"), order_for_scoped_search(:header) %></th>
         <th><%= link_to t("comments.threads.index.view.started_by"), order_for_scoped_search(:user) %></th>
         <th><%= link_to t("comments.threads.index.view.date"), order_for_scoped_search(:created_at) %></th>
+        <th class="hr"></th>
     </thead>
+      <tfoot>
+      <tr>
+        <td class="fl"></td>
+        <td colspan="3"></td>
+        <td class="fr"></td>
+      </tr>
+      </tfoot>
     <tbody>
        <% @threads.each do |thread| %>
        <tr>
+         <td class="cl"></td>
          <td>
            <%= link_to thread.commentable.header, comments_thread_path(thread) %>
          </td>
@@ -45,8 +55,14 @@
          <td>
            <%= format_date(thread.created_at,true) %>
          </td>
+         <td class="cr"></td>
        </tr>
         <% end %>
+      <tr class="pagination">
+        <td colspan="<%= 6 %>" class="ta_c">
+            <%= will_paginate @threads, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+        </td>
+      </tr>
     </tbody>
   </table>
 </column-mc:>

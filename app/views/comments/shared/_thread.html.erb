@@ -26,7 +26,8 @@
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="plus">
-             <%= f.commit_button t("comments.threads.show.view.create_comment_button") %>
+            <%#= button_to_function t("comments.threads.show.view.create_comment_button"), "alert('dddd')"  %>
+             <%= f.commit_button t("comments.threads.show.view.create_comment_button"), :onclick => "alert('dd')" %>
           </ibt>
         </param:actions>
       </frm>
@@ -39,5 +40,9 @@
     $("#reply_"+thread_id+" input#comment_parent_id").attr("value",comment_id);
     $("#reply_"+thread_id+" input#comment_commentable_id").attr("value",commentable_id);
     $("#reply_"+thread_id).show();
+  }
+
+  function validate_form(){
+
   }
 </script>
