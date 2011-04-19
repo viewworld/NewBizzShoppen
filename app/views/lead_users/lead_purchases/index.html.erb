@@ -96,8 +96,8 @@
                         </li>
                     <% end %>
                   </ul-actions>
-                  <%= link_to "#{lead_purchase.lead.comment_threads.roots.count} comments", comments_lead_path(lead_purchase.lead) %>
-                  <%= link_to "post comment", new_comments_lead_thread_path(lead_purchase.lead) %>
+                  <%= link_to "#{lead_purchase.lead.comment_threads.roots.count} #{t("lead_user.lead_purchases.index.view.comments_count")}", comments_lead_path(lead_purchase.lead) %><br />
+                  <%= link_to t("lead_user.lead_purchases.index.view.post_comment"), new_comments_lead_thread_path(lead_purchase.lead) %>
               <% end %>
 
               <% blocks.bottom do |lead_purchase| %>

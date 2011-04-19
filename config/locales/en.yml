@@ -1679,6 +1679,8 @@ en:
             deal_value_to_label: "To"
             country_label: "Country"
             zip_code: "Zip code"
+          comments_count: "comments"
+          post_comment: "Post new comment"
       show:
         view:
           header: "Lead details"
@@ -2301,3 +2303,10 @@ en:
           reply: "reply"
           create_comment_button: "Create comment"
           header: "Thread %{title} for %{header}"
+      new:
+        view:
+          header: "Post new comment for %{header}"
+    leads:
+      show:
+        view:
+          header: "All threads for %{header}"
