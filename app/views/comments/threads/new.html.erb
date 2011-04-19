@@ -1,8 +1,26 @@
 <column-mc:>
-  <header></header>
-   <%= semantic_form_for :comment, Comment.new, :url => comments_lead_threads_path(@lead)  do |f| %>
-      <%= f.input :title %>
-      <%= f.input :body %>
-      <%= f.commit_button %>
+  <header><%= t("comments.threads.new.view.header", :header => @lead.header) %></header>
+
+     <%= semantic_form_for :comment, Comment.new, :url => comments_lead_threads_path(@lead) do |f| %>
+      <frm>
+        <param:header>
+        </param:header>
+        <param:content>
+            <div class="pdd_10 no_pdd_t">
+              <fieldset class="inputs labels_ta_r labels_240">
+                <ol class="align_inputs">
+                <%= f.input :title %>
+                <%= f.input :body %>
+                </ol>
+              </fieldset>
+            </div>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="plus">
+             <%= f.commit_button t("comments.threads.show.view.create_comment_button") %>
+          </ibt>
+        </param:actions>
+      </frm>
    <% end %>
 </column-mc:>
+

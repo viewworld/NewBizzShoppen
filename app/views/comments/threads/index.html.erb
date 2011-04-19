@@ -1,11 +1,37 @@
+<search-box:>
+  <div class="search_box">
+    <h2><%= t("comments.threads.index.view.search_label") %></h2>
+
+    <div class="search_content">
+      <%= form_for :search, :url => comments_threads_path, :html => { :method => :get } do |f| %>
+          <fieldset class="inputs_vertical">
+            <ol class="no_pdd">
+              <li class="string">
+                <%= f.label :with_keyword, t("comments.threads.index.view.search.with_keyword") %>
+                <%= f.text_field :with_keyword, :value => params[:search][:with_keyword] %>
+              </li>
+              <li class="commit">
+                <ibt c="bt_green" icon="magnify">
+                  <%= submit_tag t("comments.threads.index.view.search_button") %>
+                </ibt>
+                <p>
+                  <%= bt_clear_filter %>
+                </p>
+              </li>
+            </ol>
+          </fieldset>
+      <% end %>
+    </div>
+  </div>
+</search-box:>
 <column-mc:>
-  <header></header>
+  <header><%= t("comments.threads.index.view.header") %></header>
 
   <table class="generic">
     <thead>
-        <th><%= link_to "lead header", order_for_scoped_search(:header) %></th>
-        <th>started by</th>
-        <th><%= link_to "date", order_for_scoped_search(:created_at) %></th>
+        <th><%= link_to t("comments.threads.index.view.lead_header"), order_for_scoped_search(:header) %></th>
+        <th><%= link_to t("comments.threads.index.view.started_by"), order_for_scoped_search(:user) %></th>
+        <th><%= link_to t("comments.threads.index.view.date"), order_for_scoped_search(:created_at) %></th>
     </thead>
     <tbody>
        <% @threads.each do |thread| %>

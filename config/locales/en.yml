@@ -1679,6 +1679,8 @@ en:
             deal_value_to_label: "To"
             country_label: "Country"
             zip_code: "Zip code"
+          comments_count: "comments"
+          post_comment: "Post new comment"
       show:
         view:
           header: "Lead details"
@@ -2284,3 +2286,27 @@ en:
         lead_description: "Describe what would be a good lead"
         can_be_contacted: "Can Fairleads contact you to discuss your suggestion?"
         phone_number: "Phone number"
+  comments:
+    threads:
+      index:
+        view:
+          search_label: "Search"
+          search:
+            with_keyword: "Keyword"
+          search_button: "Search"
+          lead_header: "Lead header"
+          started_by: "Started by"
+          date: "Date"
+          header: "Comments"
+      show:
+        view:
+          reply: "reply"
+          create_comment_button: "Create comment"
+          header: "Thread %{title} for %{header}"
+      new:
+        view:
+          header: "Post new comment for %{header}"
+    leads:
+      show:
+        view:
+          header: "All threads for %{header}"

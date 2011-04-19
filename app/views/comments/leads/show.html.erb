@@ -1,5 +1,5 @@
 <column-mc:>
-  <header></header>
+  <header><%= t("comments.leads.show.view.header", :header => @lead.header) %></header>
   <% @threads.each do |thread| %>
     <%= render :partial => 'comments/shared/thread', :locals => {:thread => thread} %>
   <% end %>

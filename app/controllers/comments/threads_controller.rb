@@ -15,8 +15,8 @@ class Comments::ThreadsController < Comments::CommentsController
   def index
     params[:search] ||= {}
     @threads = current_user.comment_threads
-    params[:search].keys.each do |key|
-      @threads = @threads.send(key)
+    params[:search].each_pair do |key, value|
+      @threads = @threads.send(key, value)
     end
     @threads = @threads.paginate(:page => params[:page])
   end
