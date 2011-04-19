@@ -153,7 +153,7 @@ class Nbs < Thor
               address_address_line_2 address_address_line_3 address_zip_code address_country_id address_region_id newsletter_on bank_address_address_line_1
               bank_address_address_line_2 bank_address_address_line_3 bank_address_zip_code bank_address_country_id bank_address_region_id paypal_email bank_swift_number
               bank_iban_number payout bank_name team_buyers},
-    "category_request" => %w{email_from phone_number category_name lead_description leads_count_per_month can_be_contacted},
+    "category_request" => %w{email_from phone_number category_name lead_description leads_count_per_month_agent leads_count_per_month_buyer can_be_contacted},
     "share_leads_by_email" => %w{recipients subject body}
     }.each_pair do |klass, methods|
       methods.each do |method|
