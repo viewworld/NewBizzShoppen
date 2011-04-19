@@ -1,0 +1,6 @@
+<column-mc:>
+  <header></header>
+  <% @threads.each do |thread| %>
+    <%= render :partial => 'comments/shared/thread', :locals => {:thread => thread} %>
+  <% end %>
+</column-mc:>

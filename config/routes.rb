@@ -120,8 +120,11 @@ Nbs::Application.routes.draw do
     resources :lead_templates
   end
 
-  namespace :threads do
-    resources :comments
+  namespace :comments do
+    resources :threads
+    resources :leads do
+      resources :threads
+    end
   end
 
   match 'buyer_home' => 'buyer_home#show', :as => "buyer_home"

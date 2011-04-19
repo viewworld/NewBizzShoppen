@@ -1,0 +1,26 @@
+<column-mc:>
+  <header></header>
+
+  <table class="generic">
+    <thead>
+        <th><%= link_to "lead header", order_for_scoped_search(:header) %></th>
+        <th>started by</th>
+        <th><%= link_to "date", order_for_scoped_search(:created_at) %></th>
+    </thead>
+    <tbody>
+       <% @threads.each do |thread| %>
+       <tr>
+         <td>
+           <%= link_to thread.commentable.header, comments_thread_path(thread) %>
+         </td>
+         <td>
+           <%= thread.user.screen_name %>
+         </td>
+         <td>
+           <%= format_date(thread.created_at,true) %>
+         </td>
+       </tr>
+        <% end %>
+    </tbody>
+  </table>
+</column-mc:>

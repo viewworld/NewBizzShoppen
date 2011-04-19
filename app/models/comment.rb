@@ -1,6 +1,6 @@
 class Comment < ActiveRecord::Base
   acts_as_nested_set :scope => [:commentable_id, :commentable_type]
-  
+
   validates_presence_of :body
   validates_presence_of :user
   
@@ -11,7 +11,13 @@ class Comment < ActiveRecord::Base
   # NOTE: Comments belong to a user
   belongs_to :user
   belongs_to :commentable, :polymorphic => true
-  
+
+  scope :descend_by_created_at, order("created_at DESC")
+  scope :ascend_by_created_at, order("created_at ASC")
+  scope :descend_by_header, joins("INNER JOIN leads ON leads.id = comments.commentable_id").order("leads.header DESC")
+  scope :ascend_by_header, joins("INNER JOIN leads ON leads.id = comments.commentable_id").order("leads.header ASC")
+  scope :roots, where(:parent_id => nil)
+
   # Helper class method that allows you to build a comment
   # by passing a commentable object, a user_id, and comment text
   # example in readme
