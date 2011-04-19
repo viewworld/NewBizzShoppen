@@ -18,7 +18,7 @@ Background:
   Then I sign in as bob@person.com with password supersecret
   And there is a seller with attributes "company_name:DannyTheSeller,first_name:Danny,last_name:DeVito,address:USA,vat_no:123" for country "Denmark"
 
-@_done @tested_elsewhere
+@_done @_tested_elsewhere
 Scenario: Create an invoice if a new paypal transaction (payment for cart content has been confirmed) is created in the system
 
 @_done

@@ -37,6 +37,7 @@
         <%= form.input :email_address, :hint => hint_for(@lead, :email_address) %>
         <%= form.input :linkedin_url, :hint => hint_for(@lead, :linkedin_url) %>
         <%= form.input :facebook_url, :hint => hint_for(@lead, :facebook_url) %>
+        <%= form.input :note, :as => :text, :hint => hint_for(@lead, :note), :input_html => {:cols => 40, :rows => 10 } if @contact %>
       </ol>
     </fieldset>
   </div>
@@ -61,7 +62,7 @@
                 <p class="inline-errors no_pdd"><%= t("shared.leads.form.category_cannot_be_changed") %></p>
               </li>
           <% end %>
-          <%= form.input :category_id, :collection => nested_set_options(current_user.has_role?(:admin) ? Category.without_locked.all : current_user.has_role?(:call_centre) ? Category.without_locked.with_call_centre_unique(current_user).all : Category.without_locked.with_agent_unique(current_user).all), :include_blank => false, :input_html => {:disabled => (!@lead.new_record? and @lead.lead_template_values_present?), :onchange => "$('#lead_category_is_changed').val('1'); $('##{dom_id(@lead, @lead.new_record? ? :new : :edit)}').submit()"}, :hint => hint_for(@lead, :category_id) %>
+          <%= form.input :category_id, :collection => nested_set_options(current_user.has_role?(:admin) ? Category.without_locked.all : current_user.has_role?(:call_centre) ? Category.without_locked.with_call_centre_unique(current_user).all : Category.without_locked.with_agent_unique(current_user).all), :include_blank => false, :input_html => {:disabled => (!@lead.new_record? and @lead.lead_template_values_present?), :onchange => (@contact ? "" : "$('#lead_category_is_changed').val('1'); $('##{dom_id(@lead, @lead.new_record? ? :new : :edit)}').submit()")}, :hint => hint_for(@lead, :category_id) %>
           <%= form.input :category_is_changed, :as => :hidden, :value => "0" %>
           <%= form.input :is_international, :as => :select, :collection => [[t("shared.leads.form.country_local_label"), 0], [t("shared.leads.form.country_international"), 1]], :include_blank => false, :hint => hint_for(@lead, :is_international) %>
           <%= form.input :header, :hint => hint_for(@lead, :header) %>
@@ -128,6 +129,10 @@
 <script>
     var nestedFormsCount = <%= @lead.lead_translations.reject{ |lt| lt.locale == I18n.locale.to_s }.size %>;
 
+    $(function() {
+        $("#datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+    });
+
     function add_fields(link, content) {
         if ($('#locale_picker').text() != null)
         {
@@ -147,6 +152,7 @@
                 $("#locale_picker_div").hide();
             }
         }
+    }
 
         function remove_language(id, locale, record_id) {
             nestedFormsCount = nestedFormsCount - 1;
@@ -221,7 +227,7 @@
         $('#optional_templates_picker').val('<%= lead_templates.first.id -%>');
         add_template();
         <% end %>
-
+    
         var language_names = [];
         <% Locale.all.each do |locale| %>
         <%= "language_names['#{locale.code}'] = '#{t('models.locale.' + locale.code)}';" -%>

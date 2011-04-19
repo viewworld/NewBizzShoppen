@@ -91,10 +91,10 @@ Scenario: I can delete lead templates that were created by me and were not fille
   And I follow translated "administration.categories.edit.view.destroy_template"
   Then I should see translated "administration.lead_templates.destroy.flash.deletion_failure"
 
-@added @_done @tested_elsewhere
+@added @_done @_tested_elsewhere
 Scenario: During template creation/edition I can mark fields as hidden or public
 
-@added @_done @tested_elsewhere
+@added @_done @_tested_elsewhere
 Scenario: During template creation/editon I can mark fields as mandatory or optional
 
 @added @_tested

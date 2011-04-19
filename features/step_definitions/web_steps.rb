@@ -9,6 +9,8 @@ require 'uri'
 require 'cgi'
 require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "paths"))
 
+TIMEOUT = 10
+
 module WithinHelpers
   def with_scope(locator)
     locator ? within(locator) { yield } : yield
@@ -133,9 +135,9 @@ end
 Then /^(?:|I )should see "([^"]*)"(?: within "([^"]*)")?$/ do |text, selector|
   with_scope(selector) do
     if page.respond_to? :should
-      page.should have_content(text)
+      assert wait_until(TIMEOUT) { page.should have_content(text) }
     else
-      assert page.has_content?(text)
+      assert wait_until(TIMEOUT) { assert page.has_content?(text) }
     end
   end
 end
@@ -144,9 +146,9 @@ Then /^(?:|I )should see \/([^\/]*)\/(?: within "([^"]*)")?$/ do |regexp, select
   regexp = Regexp.new(regexp)
   with_scope(selector) do
     if page.respond_to? :should
-      page.should have_xpath('//*', :text => regexp)
+      assert wait_until(TIMEOUT) { page.should have_xpath('//*', :text => regexp) }
     else
-      assert page.has_xpath?('//*', :text => regexp)
+      assert wait_until(TIMEOUT) { assert page.has_xpath?('//*', :text => regexp) }
     end
   end
 end
@@ -154,9 +156,9 @@ end
 Then /^(?:|I )should not see "([^"]*)"(?: within "([^"]*)")?$/ do |text, selector|
   with_scope(selector) do
     if page.respond_to? :should
-      page.should have_no_content(text)
+      assert wait_until(TIMEOUT) { page.should have_no_content(text) }
     else
-      assert page.has_no_content?(text)
+      assert wait_until(TIMEOUT) { assert page.has_no_content?(text) }
     end
   end
 end
@@ -165,9 +167,9 @@ Then /^(?:|I )should not see \/([^\/]*)\/(?: within "([^"]*)")?$/ do |regexp, se
   regexp = Regexp.new(regexp)
   with_scope(selector) do
     if page.respond_to? :should
-      page.should have_no_xpath('//*', :text => regexp)
+      assert wait_until(TIMEOUT) { page.should have_no_xpath('//*', :text => regexp) }
     else
-      assert page.has_no_xpath?('//*', :text => regexp)
+      assert wait_until(TIMEOUT) { assert page.has_no_xpath?('//*', :text => regexp) }
     end
   end
 end
@@ -201,9 +203,9 @@ Then /^the "([^"]*)" field(?: within "([^"]*)")? should not contain "([^"]*)"$/ 
     field = find_field(field)
     field_value = (field.tag_name == 'textarea') ? field.text : field.value
     if field_value.respond_to? :should_not
-      field_value.should_not =~ /#{value}/
+      assert wait_until(TIMEOUT) { field_value.should_not =~ /#{value}/ }
     else
-      assert_no_match(/#{value}/, field_value)
+      assert wait_until(TIMEOUT) { assert_no_match(/#{value}/, field_value) }
     end
   end
 end
@@ -375,4 +377,20 @@ end
 
 When /^I set referer to "([^\"]*)"$/ do |referer|
   page.driver.header "HTTP_REFERER", referer
+end
+
+Then /^element is visible "([^\"]*)"(?: within "([^\"]*)")?$/ do |element, selector|
+  with_scope(selector) do
+    assert wait_until(TIMEOUT) { assert page.find(element).visible? }
+  end
+end
+
+Then /^element is not visible "([^\"]*)"(?: within "([^\"]*)")?$/ do |element, selector|
+  with_scope(selector) do
+    assert wait_until(TIMEOUT) { assert (not page.find(element).visible?) }
+  end
+end
+
+And /^I wait ([^\"]*)$/ do |seconds|
+  sleep seconds.to_i
 end

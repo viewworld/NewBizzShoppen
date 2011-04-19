@@ -57,5 +57,5 @@ Scenario: I can see lead template fields with public values for each lead
   And I should not see "xprinter3"
   And I should see translated "shared.lead_templates.listing.hidden_value"
 
-@m5 @added @lead_templates @tgn @_done @tested_elsewhere
+@m5 @added @lead_templates @tgn @_done @_tested_elsewhere
 Scenario: I can see only lead template fields' names (not values) for hidden fields

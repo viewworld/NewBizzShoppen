@@ -1,0 +1,81 @@
+<%
+   cols = 3
+   cols += 1 if not block_tools.nil?
+-%>
+
+<table id="call_results" class="generic">
+  <thead>
+  <tr>
+    <th class="hl"></th>
+    <th><%= t("call_results.table.date") %></th>
+    <th><%= t("call_results.table.agent") %></th>
+    <th><%= t("call_results.table.result_type") %></th>
+    <% if block_tools %>
+        <th class="ta_r">
+          <%= t("call_results.table.actions") %>
+        </th>
+    <% end %>
+
+    <th class="hr"></th>
+  </tr>
+  </thead>
+  <tfoot>
+  <tr>
+    <td class="fl"></td>
+    <td colspan="<%= cols %>"></td>
+    <td class="fr"></td>
+  </tr>
+  </tfoot>
+  <tbody>
+  <% collection.each do |call_result| %>
+      <tr class="<%= cycle("odd", "even") %>" id="call_result_<%= call_result.id %>">
+        <td class="cl"></td>
+        <td><%= call_result.created_at %></td>
+        <td><%= call_result.creator.full_name %></td>
+        <td><%= call_result.result %></td>
+        <% if block_tools %>
+            <td class="tda ta_r">
+              <%= with_output_buffer { block_tools.call(call_result) } if call_result.can_be_managed_by?(current_user) %>
+            </td>
+        <% end %>
+        <td class="cr"></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<% collection.each do |call_result| %>
+    <div id="call_result_<%= call_result.id %>_tooltip" style="display:none">
+      <%= render :partial => "callers/call_results/notes", :locals => {:call_result => call_result} %>
+    </div>
+
+    <script type="text/javascript">
+        jQuery("#call_result_<%= call_result.id %>").qtip(
+        {
+            position: {
+                corner: {
+                    target: 'topMiddle',
+                    tooltip: 'bottomMiddle'
+                },
+            },
+            hide: {
+                fixed: true
+            },
+            content: $("#call_result_<%= call_result.id %>_tooltip").html(),
+            style: {
+                name: "cream",
+                border: {
+                    radius: 3
+                },
+                width: 300,
+                tip: {
+                    corner: 'bottomMiddle',
+                    size: {
+                        x: 12,
+                        y : 8
+                    }
+                }
+            }
+        });
+    </script>
+<% end %>

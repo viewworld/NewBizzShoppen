@@ -149,7 +149,7 @@ Scenario: I should not see leads from agent unique categories I'm not assigned t
 @m5 @unique_categories @tgn @added @_tested @_deprecated
 Scenario: I should not see leads from agent unique categories I'm not assigned to on Bestsellers listing
 
-@m5 @unique_categories @tgn @added @tested_elsewhere @_done
+@m5 @unique_categories @tgn @added @_tested_elsewhere @_done
 Scenario: I should see leads from customer unique categories on Latest leads listing
 
 # deprecation reason: https://redmine.selleo.com/issues/4646

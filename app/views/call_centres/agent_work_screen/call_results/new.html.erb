@@ -1,8 +1,0 @@
-<popup:>
-  <%= render :partial => "call_results/new", :locals => {:namespace => :call_centres,
-                                                         :contact => @contact,
-                                                         :call_result => @call_result,
-                                                         :path => [:call_centres, @campaign, :agent_work_screen, @contact, @call_result],
-                                                         :back_path => call_centres_campaign_agent_work_screen_index_path(@campaign)
-                                                        }%>
-</popup:>

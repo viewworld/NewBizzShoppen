@@ -187,48 +187,6 @@ class Lead < AbstractLead
     end
   end
 
-  def lead_templates(with_mandatory_only=nil)
-    self.creator = current_user if creator.nil?
-    templates = LeadTemplate.with_category_and_its_ancestors(category).where("is_active = ?", true).
-        where("(is_global = ? or (creator_id = ? and creator_type = ?) or (creator_id = ? and creator_type = ?) or creator_type = ? or creator_id in (?))",
-                 true, creator.parent_id, creator.parent.nil? ? "" : creator.parent.send(:casted_class).to_s, creator.id, creator.class.to_s, "User::Admin",
-                 (creator.has_role?(:call_centre_agent) and creator.parent.present?) ? creator.parent.send(:casted_class).find(creator.parent_id).subaccounts : [])
-    templates = templates.where("is_mandatory = ?", with_mandatory_only) unless with_mandatory_only.nil?
-    templates.order("lead_templates.name")
-  end
-
-  def all_lead_template_values(selected_template=nil)
-    templates = selected_template.nil? ? lead_templates : [LeadTemplate.find(selected_template)]
-    templates.map do |template|
-      template.lead_template_fields.map do |field|
-        lead_template_value = lead_template_values.detect { |ltv| ltv.lead_template_field == field }
-        lead_template_value = LeadTemplateValue.new(:lead_template_field => field) if lead_template_value.nil?
-        lead_template_value
-      end
-    end.flatten.compact
-  end
-
-  def lead_templates_and_values
-    templates = LeadTemplate.select("DISTINCT(lead_templates.*)").
-        where("lead_template_values.lead_id = ? and lead_template_values.value IS NOT NULL", id).
-        joins("inner join lead_template_fields on lead_templates.id=lead_template_fields.lead_template_id inner join lead_template_values on lead_template_fields.id=lead_template_values.lead_template_field_id")
-    templates.map do |template|
-      [template, lead_template_values.select { |ltv| ltv.lead_template_field.lead_template_id == template.id and ltv.value.present? }]
-    end.select { |t| !t.last.empty? }
-  end
-
-  def facebook_url_present?
-    !facebook_url.blank? and facebook_url != "http://"
-  end
-
-  def linkedin_url_present?
-    !linkedin_url.blank? and linkedin_url != "http://"
-  end
-
-  def lead_template_values_present?
-    !LeadTemplateValue.where("value IS NOT NULL AND value NOT like '' AND lead_id = ? AND lead_templates.id in (?)", id, lead_templates.map(&:id)).joins("inner join lead_template_fields on lead_template_values.lead_template_field_id=lead_template_fields.id inner join lead_templates on lead_template_fields.lead_template_id=lead_templates.id").limit(1).empty?
-  end
-
   def bought_by_anyone?
     lead_purchases.any?
   end

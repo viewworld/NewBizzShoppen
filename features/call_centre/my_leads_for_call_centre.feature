@@ -64,7 +64,7 @@ Scenario: I can delete lead if the lead is not sold yet
   And I follow translated "call_centre.leads.index.view.destroy"
   Then I should see translated "call_centre.leads.destroy.flash.lead_deletion_failure"
 
-@_done @tested_elsewhere
+@_done @_tested_elsewhere
 Scenario: I can see clicks, exposure, hottness, novelty, unikness, price per lead
 
 @_done @non_testable

@@ -1,18 +1,23 @@
 class CallResult < ActiveRecord::Base
   belongs_to :contact
   belongs_to :result
-  belongs_to :agent, :class_name => "User"
+  belongs_to :creator, :polymorphic => true, :foreign_key => "creator_id"
   has_one :call_log
   has_many :result_values
   accepts_nested_attributes_for :result_values, :allow_destroy => true
   accepts_nested_attributes_for :contact
 
-  validates_presence_of :result_id, :agent_id, :contact_id
+  validates_presence_of :result_id, :creator_id, :contact_id
 
-  after_create :process_side_effects
+  after_create :process_side_effects, :update_contact_note
   after_destroy :update_completed_status, :update_pending_status
 
   PENDING_RESULT_TYPES = [:call_back, :not_interested_now]
+
+  scope :call_log_results, joins(:result).where(:results => { :final => false })
+  scope :final_results, joins(:result).where(:results => { :final => true })
+
+  default_scope :order => 'call_results.created_at ASC'  
 
   def called?
     call_log.present?
@@ -27,6 +32,10 @@ class CallResult < ActiveRecord::Base
     end
   end
 
+  def can_be_managed_by?(user)
+    creator.id == user.id or user.has_one_of_roles?(:admin, :call_centre)
+  end
+
   class << self
 
     def for_table_header(date_from, date_to)
@@ -38,7 +47,7 @@ class CallResult < ActiveRecord::Base
     def for_table_row(date_from, date_to, result_ids, agent_ids, campaign_id)
       DateCalculator.days_or_ranges(date_from, date_to, 14).inject([]) do |result, output|
         date_start, date_stop = output.class == Range ? [output.first, output.last] : [output, output]
-        results = CallResult.joins(:contact).where("leads.campaign_id = #{campaign_id} and call_results.result_id IN (#{result_ids*','}) and call_results.agent_id IN (#{agent_ids*','}) and call_results.created_at < '#{date_stop.strftime("%Y-%m-%d")} 23:59:59' and call_results.created_at > '#{date_start.strftime("%Y-%m-%d")} 00:00:01'")
+        results = CallResult.joins(:contact).where(:leads => {:campaign_id => campaign_id }, :result_id => result_ids, :creator_id => agent_ids).where("call_results.created_at < '#{date_stop.strftime("%Y-%m-%d")} 23:59:59' and call_results.created_at > '#{date_start.strftime("%Y-%m-%d")} 00:00:01'")            
         result << {:number => results.size, :ids => results.map(&:id).blank? ? [0] : results.map(&:id) }
       end
     end
@@ -53,8 +62,12 @@ class CallResult < ActiveRecord::Base
   end
 
   def update_pending_status
-    pending_status = contact.current_call_result.present? ? PENDING_RESULT_TYPES.include?(contact.current_call_result.result.label) : false
+    pending_status = contact.current_call_result.present? ? (PENDING_RESULT_TYPES.include?(contact.current_call_result.result.label) and contact.should_be_pending?) : false
     contact.update_attributes :pending => pending_status
+  end
+
+  def update_contact_note
+    contact.update_attributes :note => "#{note}\n#{contact.note}" if self.note.present? 
   end
 
 

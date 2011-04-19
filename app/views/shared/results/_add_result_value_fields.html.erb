@@ -1,21 +1,41 @@
-<li class="<%= f.object.result_field.field_type.to_i == ResultField::NOTE ? 'text' : 'string date' %>">
-  <% abbr =  f.object.result_field.is_mandatory ? content_tag(:abbr, "*").html_safe : '' -%>
+<% css_class = case f.object.result_field.field_type.to_i
+                   when ResultField::NOTE then
+                       'text'
+                   when ResultField::DATE then
+                       'date'
+                   when ResultField::DATETIME then
+                       'date time'
+                   else
+                       'string'
+               end
+%>
+
+
+<li class="<%= css_class %>">
+  <% abbr = f.object.result_field.is_mandatory ? content_tag(:abbr, "*").html_safe : '' -%>
   <%= raw f.label :value, h(f.object.result_field.name)+(abbr) %>
-  <% if f.object.result_field.field_type.to_i == ResultField::NOTE %>
-      <%= f.text_area :value, :style => "height: 100px; width: 230px" %>
-  <% else %>
-      <%= f.text_field :value, :class => "datepicker" %>
-  <% end %>
+  <%= case f.object.result_field.field_type.to_i
+          when ResultField::NOTE then
+              f.text_area :value, :style => "height: 100px; width: 230px"
+          when ResultField::DATE then
+              f.text_field :value, :class => "datepicker", :title => t('models.result_field.date_format')
+          when ResultField::DATETIME then
+              f.text_field :value, :class => "datetimepicker", :title => t('models.result_field.datetime_format')
+          else
+              f.text_field :value
+      end
+  %>
   <%= custom_error_for_field(f, :value) %>
 </li>
 <li class="hidden">
   <%= f.hidden_field :result_field_id, :value => f.object.result_field.id %>
 </li>
 
-<js:>
+
   <script type="text/javascript">
       $(function() {
+          $(".datetimepicker").datetimepicker({ dateFormat: 'yy-mm-dd' });
           $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
       });
   </script>
-</js:>
+

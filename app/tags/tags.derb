@@ -11,24 +11,30 @@
 </def>
 
 
-
-<def tag="header" attrs="title,back">
+<def tag="header" attrs="title,back,backurl">
   <div class="header_ribbon">
     <h1>
       <span>
-        <param:content/>      
+        <param:content/>
       </span>
     </h1>
-    <param:actions/>
     <% unless back.blank? %>
         <ul class="header_actions">
           <li class="bt_back">
-            <%= bt_link_to nil, "Back", "javascript:void(0)", :onclick => "history.go(-1)", :class => "bt_grey_small" %>
+            <% if backurl.blank? %>
+                <%= bt_link_to nil, "Back", "javascript:void(0)", :onclick => "history.go(-1)", :class => "bt_grey_small" %>
+            <% else %>
+                <%= bt_link_to nil, "Back", backurl, :class => "bt_grey_small" %>
+            <% end %>
           </li>
         </ul>
     <% end %>
+    <param:actions/>
   </div>
 </def>
+
+
+
 
 <def tag="bt_back" attrs="li">
   <% if li.nil? %>

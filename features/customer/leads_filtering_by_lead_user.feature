@@ -2,7 +2,7 @@
 Feature: Leads filtering by lead user
 
 #This is basically filtering by assignee_id - so do not create new view for that, just add dropdown with user selection to filter in Owned
-#Leads view. Probably all tests beside the first will be possible to be marked as @tested_elsewhere
+#Leads view. Probably all tests beside the first will be possible to be marked as @_tested_elsewhere
 
 Background:
   Given I am on the homepage
@@ -38,10 +38,10 @@ Scenario: I can browse leads assigned to one of my lead users with pagination
   Then I should not see "Monitors LCD deal"
   Then I should not see "Mouses deal"
 
-@tgn @tested_elsewhere
+@tgn @_tested_elsewhere
 Scenario: I can see lead header, purchase value, lead price, description, hottness, novelty, exposures, clicks
 
-@tgn @tested_elsewhere
+@tgn @_tested_elsewhere
 Scenario: I can see created by, rating, certification level
 
 @tgn @_tested
@@ -62,5 +62,5 @@ Scenario: I can filter leads
   Then I should see "Keyboards deal"
   And I should not see "Mouses deal"
 
-@m6 @tgn @_done @tested_elsewhere
+@m6 @tgn @_done @_tested_elsewhere
 Scenario: I should be able to click link in subaccounts listing and go straight to that users's leads listing

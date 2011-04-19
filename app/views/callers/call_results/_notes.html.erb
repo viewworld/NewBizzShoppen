@@ -1,0 +1,24 @@
+<div class="call_result_note">
+
+  <h3><%= t('call_results.table.note') %>:</h3>
+
+  <% if call_result.note.present? %>
+      <div class="note">
+        <%= call_result.note %>
+      </div>
+      <br/>
+  <% end %>
+
+  <div class="result_fields">
+    <table>
+      <tbody>
+      <% call_result.result.result_fields.each do |result_field| %>
+          <tr>
+            <td><strong><%= result_field.name %>:</strong></td>
+            <td><%= call_result.result_values.for_result_field(result_field).first.value %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

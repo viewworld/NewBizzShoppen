@@ -16,7 +16,7 @@ class Campaign < ActiveRecord::Base
   scope :with_state, lambda { |q|
     case q
       when "active" then
-        where("start_date < '#{Date.today}' and end_date > '#{Date.today}'")
+        where("start_date <= '#{Date.today}' and end_date >= '#{Date.today}'")
       when "inactive" then
         where("start_date > '#{Date.today}' or end_date < '#{Date.today}'")
       else
@@ -30,7 +30,7 @@ class Campaign < ActiveRecord::Base
   scope :descend_by_category, order("categories.name DESC").joins_on_category
   scope :ascend_country, order("countries.name ASC").joins_on_country
   scope :descend_by_country, order("countries.name DESC").joins_on_country
-  scope :available_for_user, lambda {|user| includes(:users).where("users.id = :user_id OR campaigns.creator_id = :user_id", {:user_id => user.id})}
+  scope :available_for_user, lambda {|user| includes(:users).where("users.id = :user_id OR campaigns.creator_id = :user_id", {:user_id => user.id}) unless user.has_role? :admin}
 
   def assign(ids)
     self.users = ids.blank? ? [] : User.find(ids)
@@ -50,7 +50,15 @@ class Campaign < ActiveRecord::Base
 
   def assign_contacts_to_agent(agent)
     if agent.with_role.respond_to? :has_max_contacts_in_campaign?
-      contacts_list = contacts.available_to_assign
+      #restore contact to call sheet if it's not pending anymore
+      pending_contacts = agent.contacts.with_pending_status(true)
+      while (not agent.with_role.has_max_contacts_in_campaign? self) and pending_contacts.present?
+        contact = pending_contacts.shift
+        contact.change_pending_status(false) unless contact.should_be_pending?
+      end
+
+      #assign new contacts to agent
+      contacts_list = contacts.available_to_assign      
       while (not agent.with_role.has_max_contacts_in_campaign? self) and contacts_list.present?
         contacts_list.shift.assign_agent(agent.id)
       end
@@ -59,6 +67,10 @@ class Campaign < ActiveRecord::Base
 
   def has_user_as_member?(user)
     user.with_role.campaigns.include?(self)
+  end
+
+  def can_be_managed_by?(user)
+    creator.id == user.id or user.has_role?(:admin)
   end
 
 end
