@@ -17,7 +17,7 @@ class CallResult < ActiveRecord::Base
   scope :call_log_results, joins(:result).where(:results => { :final => false })
   scope :final_results, joins(:result).where(:results => { :final => true })
 
-  default_scope :order => 'call_results.created_at ASC'  
+  default_scope :order => 'call_results.created_at DESC'  
 
   def called?
     call_log.present?
