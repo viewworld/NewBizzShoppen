@@ -1,4 +1,7 @@
 class Comments::ThreadsController < Comments::CommentsController
+  set_tab "comments"
+
+  before_filter :fetch_lead, :only => [:new, :create]
 
   set_tab "comments"
 
@@ -30,21 +33,28 @@ class Comments::ThreadsController < Comments::CommentsController
     if params[:lead_id]
       attributes.merge!({:commentable_type => 'Lead', :commentable_id => params[:lead_id]})
     end
-    @thread = current_user.comment_threads.new(attributes)
-    if @thread.save
-      flash[:notice] = "successfully created"
+    @threads = current_user.comment_threads.new(attributes)
+    if @threads.save
+      if params[:lead_id]
+        redirect_to comments_lead_thread_path(params[:lead_id], @threads)
+      else
+        redirect_to :back
+      end
+      flash[:notice] = I18n.t("comments.threads.create.flash.notice")
     else
-      flash[:alert] = "uuu  something went wrong my dear #{@thread.errors.full_messages}"
+      render 'new'
     end
-    if params[:lead_id]
-      redirect_to comments_lead_thread_path(params[:lead_id],@thread)
-    else
-      redirect_to :back
-    end
+
   end
 
   def new
-    @lead = current_user.leads.find(params[:lead_id])
+    @threads = Comment.new
+  end
+
+  protected
+
+  def fetch_lead
+    @lead = current_user.leads.find_by_id(params[:lead_id])
   end
 
 end

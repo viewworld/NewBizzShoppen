@@ -2298,6 +2298,9 @@ en:
           started_by: "Started by"
           date: "Date"
           header: "Comments"
+      create:
+        flash:
+          notice: "Comment has been successfully created!"
       show:
         view:
           reply: "reply"

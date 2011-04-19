@@ -26,7 +26,7 @@
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="plus">
-             <%= f.commit_button t("comments.threads.show.view.create_comment_button") %>
+             <%= button_to_function t("comments.threads.show.view.create_comment_button"), "validate_form('#reply_#{thread.id}')"  %>
           </ibt>
         </param:actions>
       </frm>
@@ -40,5 +40,36 @@
     $("#reply_"+thread_id+" input#comment_parent_id").attr("value",comment_id);
     $("#reply_"+thread_id+" input#comment_commentable_id").attr("value",commentable_id);
     $("#reply_"+thread_id).toggle();
+  }
+
+  function validate_form(form_id){
+      if( jQuery.trim($(form_id + " input[id='comment_title']").val()) == "" ||  jQuery.trim($(form_id + " textarea[id='comment_body']").val()) == "")
+      {
+          $(form_id + " li[id='comment_title_input'] p").remove();
+          if(jQuery.trim($(form_id + " input[id='comment_title']").val()) == "")
+          {
+              $(form_id + " li[id='comment_title_input']").addClass("error");
+              $(form_id + " li[id='comment_title_input']").append("<p class='inline-errors'>can't be blank</p>")
+          }
+          else
+          {
+              $(form_id + " li[id='comment_title_input']").removeClass("error");
+          }
+
+          $(form_id + " li[id='comment_body_input'] p").remove();
+          if(jQuery.trim($(form_id + " textarea[id='comment_body']").val()) == "")
+          {
+              $(form_id + " li[id='comment_body_input']").addClass("error");
+              $(form_id + " li[id='comment_body_input']").append("<p class='inline-errors'>can't be blank</p>")
+          }
+          else
+          {
+              $(form_id + " li[id='comment_body_input']").removeClass("error");
+          }
+      }
+      else
+      {
+          $(form_id).submit();
+      }
   }
 </script>
