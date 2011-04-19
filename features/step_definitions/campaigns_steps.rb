@@ -77,4 +77,13 @@ Given /^imported contacts should be in campaign "([^\"]*)"$/ do |campaign_name|
   end
 end
 
+Given /^user "([^\"]*)" (has|has not) contacts assigned in campaign "([^\"]*)"$/ do |email, status, campaign_name|
+  contacts = User.find_by_email(email).with_role.contacts
+  assert (status == "has not" ? contacts.blank? : (contacts.count == Campaign.find_by_name(campaign_name).max_contact_number))
+end
 
+Given /^user "([^\"]*)" should see his (available|pending) contacts$/ do |email, status|
+  User.find_by_email(email).with_role.contacts.with_pending_status(status == "pending").each do |c|
+    Then 'I should see "' + c.company_name + '"'
+  end
+end
