@@ -13,11 +13,11 @@ class ::User::CallCentreAgent < ::User
   end
 
   def leads
-    Lead.with_created_by(id)
+    Lead.with_created_by(self.id)
   end
 
   def comment_threads
-    Comment.roots.where(:commentable_id => leads.map(&:id))
+    Comment.roots.for_leads(leads)
   end
 
   private

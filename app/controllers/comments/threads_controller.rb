@@ -2,6 +2,16 @@ class Comments::ThreadsController < Comments::CommentsController
 
   set_tab "comments"
 
+  before_filter :can_start_conversation?, :only => [:new,:create]
+
+  private
+
+  def can_start_conversation?
+    raise CanCan::AccessDenied if current_user.agent?
+  end
+
+  public
+
   def index
     params[:search] ||= {}
     @threads = current_user.comment_threads

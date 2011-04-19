@@ -67,6 +67,7 @@
                 <%= link_to t("call_centre_agent.leads.index.view.destroy"), call_centre_agents_lead_path(lead), :confirm => t("call_centre_agent.leads.index.view.destroy_confirmation"), :method => :delete %>
               </li>
             </ul-actions>
+          <%= link_to "#{lead.comment_threads.roots.count} comments", comments_lead_path(lead) %>
       <% end %>
       <% blocks.status_column do |lead| %>
           <% if current_user.can_publish_leads? %>
