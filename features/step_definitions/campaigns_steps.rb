@@ -7,6 +7,14 @@ Given /^I edit contact "([^\"]*)"$/ do |company_name|
   visit "/callers/campaigns/#{contact.campaign_id}/contacts/#{contact.id}/edit"
 end
 
+Given /^I am adding "([^\"]*)" result for contact "([^\"]*)"$/ do |result_name, company_name|
+  visit "/callers/contacts/#{Contact.find_by_company_name(company_name).id}/call_results/new?result_id=#{Result.find_by_name(result_name).id}"
+end
+
+Given /^I am adding (call log|final) result in campaign "([^\"]*)"$/ do |result_type, campaign_name|
+  visit "/callers/campaigns/#{Campaign.find_by_name(campaign_name).id}/results/new?type=#{result_type}"
+end
+
 Given /^the custom ([^\"]*) result with name "([^\"]*)" is created by "([^\"]*)"$/ do |result_type, name, email|
   Result.create :name => name, :final => (result_type == "final"), :creator => User.find_by_email(email).with_role
 end
@@ -26,10 +34,6 @@ end
 Given /^result "([^\"]*)" has (mandatory|optional) "([^\"]*)" field$/ do |result_name, type, field|
   field_data = field.split("/")
   ResultField.create :name => field_data[0], :field_type => "ResultField::#{field_data[1]}".constantize, :result => Result.find_by_name(result_name), :is_mandatory => (type == "mandatory")
-end
-
-Given /^I am adding "([^\"]*)" result for contact "([^\"]*)"$/ do |result_name, company_name|
-  visit "/callers/contacts/#{Contact.find_by_company_name(company_name).id}/call_results/new?result_id=#{Result.find_by_name(result_name).id}"
 end
 
 Given /^I fill in "([^\"]*)" field with future datetime$/ do |field_name|
@@ -62,7 +66,7 @@ Given /^contact "([^\"]*)" should be upgraded to lead$/ do |company_name|
 end
 
 Given /^I fill in "([^\"]*)" with import data for contacts$/ do |field_name|
-  formatted_rows = "\"Company name\"\t\"Company phone number\"\t\"Company website\"\t\"Address line 1\"\t\"Address line 2\"\t\"Address line 3\"\t\"Zip code\"\t\"Country\"\t\"Region\"\t\"Company vat no\"\t\"Company ean number\"\t\"Contact name\"\t\"Direct phone number\"\t\"Phone number\"\t\"Email address\"\t\"Linkedin url\"\t\"Facebook url\"\t\"Note\"\r\n\"Greg and sons\"\t\"888 112 113\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"Denmark\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\r\n\"Little Franky\"\t\"510 333 333\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"Denmark\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\r\n\"Boiled fisher\"\t\"888 422 633\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"Denmark\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\r\n\"Novik company\"\t\"602 222 333\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"Denmark\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"" 
+  formatted_rows = "\"Company name\"\t\"Company phone number\"\t\"Company website\"\t\"Address line 1\"\t\"Address line 2\"\t\"Address line 3\"\t\"Zip code\"\t\"Country\"\t\"Region\"\t\"Company vat no\"\t\"Company ean number\"\t\"Contact name\"\t\"Direct phone number\"\t\"Phone number\"\t\"Email address\"\t\"Linkedin url\"\t\"Facebook url\"\t\"Note\"\r\n\"Greg and sons\"\t\"888 112 113\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"Denmark\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\r\n\"Little Franky\"\t\"510 333 333\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"Denmark\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\r\n\"Boiled fisher\"\t\"888 422 633\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"Denmark\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\r\n\"Novik company\"\t\"602 222 333\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"Denmark\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\""
   fill_in(field_name, :with => formatted_rows)
 end
 

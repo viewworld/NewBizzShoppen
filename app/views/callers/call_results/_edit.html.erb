@@ -5,7 +5,7 @@
 <%= semantic_form_for path, :method => :put, :remote => agent_work_screen do |form| %>
     <frm title="Edit">
       <param:content>
-        <%= render :partial => '/callers/call_results/form', :locals => {:form => form, :contact => @contact, :call_result => @call_result, :reload_path => reload_path} %>
+        <%= render :partial => '/callers/call_results/form', :locals => {:form => form, :contact => @contact, :call_result => @call_result, :reload_path => reload_path, :agent_work_screen => agent_work_screen} %>
       </param:content>
       <param:actions>
         <ibt c="fltri" icon="save">

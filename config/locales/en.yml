@@ -326,6 +326,7 @@ en:
       title_new_contact: New contact
       title_import: Import contacts
       create_button: Create
+      import_button: Import
       cancel_button: Back to campaign
       button_show_import_contacts: import contacts
       button_show_new_contact: create new contact

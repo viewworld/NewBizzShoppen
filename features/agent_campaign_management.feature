@@ -123,9 +123,8 @@ Feature: Agent campaign - management
     @1 @is @__campaign_manage @_tested @_done
     Scenario: I can sort contacts list
       Then I follow translated "campaigns.index.edit"
-      Then I follow translated "contacts.table.company_name"
       Then I should see "Bon Jovi" before "Mleko company"
-      Then I follow translated "contacts.table.company_name"
+      Then I follow translated "contacts.table.company_name"     
       Then I should see "Mleko company" before "Bon Jovi"
 
     # question: may agent have more assigned contacts then visible contacts number
@@ -190,7 +189,7 @@ Feature: Agent campaign - management
       When I edit campaign "Testing One"
       And I follow translated "campaigns.edit.button_import_contacts"
       And I fill in "Formatted rows" with import data for contacts
-      And I press translated "contacts.new.create_button"
+      And I press translated "contacts.new.import_button"
       Then imported contacts should be in campaign "Testing One"                
 
     @3 @is @__campaign_import_contacts @_tested
@@ -255,7 +254,7 @@ Feature: Agent campaign - management
       Then I click xpath "(//form[@id='batch_assign_form']//a)[1]"
       Then agent for "Bon Jovi inc." is "John Smith"
       Then I follow translated "contacts.table.company_name"
-      When I click hidden link by url regex "/callers\/campaigns\/\d+\/contacts\/\d+\/edit/"
+      When I edit contact "Bon Jovi inc."
       Then I should see "John Smith"
       Then I click xpath "//ul[@class='header_actions']//a"
       Then I follow translated "contacts.table.company_name"
@@ -279,23 +278,20 @@ Feature: Agent campaign - management
 
     @3 @tbr @__campaign_manage_results @_done @_tested @added
     Scenario: I can go to previous/next contact edit page through arrows
-      When I click hidden link by url regex "/call_centres\/campaigns\/\d+\/edit/"
-      And I should see "Edit campaign"
-      And I should see "Bon Jovi inc."
-      And I click hidden link by url regex "/call_centres\/campaigns\/\d+\/contacts\/\d+\/edit/"
+      When I edit contact "Bon Jovi inc." 
       And I should see translated "contacts.edit.current_agent_label"
-      Then the "Company name" field should contain "Bon Jovi inc."
+      Then the "contact_company_name" field should contain "Bon Jovi inc."
       When I follow "next_contact"
-      Then the "Company name" field should contain "Mleko company"
+      Then the "contact_company_name" field should contain "Mleko company"
       When I follow "prev_contact"
-      Then the "Company name" field should contain "Bon Jovi inc."
+      Then the "contact_company_name" field should contain "Bon Jovi inc."
 
     #
     #
     #campaigns::agents::manage_results_types
     @1 @tbr @__campaign_manage_result_types @_done @_tested @added
     Scenario: I can see list of generic call log results
-      When I click hidden link by url regex "/call_centres\/campaigns\/\d+\/edit/"
+      When I edit campaign "Testing One"
       And I should see "Edit campaign"
       And I follow translated "campaigns.edit.button_manage_result_types"
       Then I should see "Call back"
@@ -311,7 +307,7 @@ Feature: Agent campaign - management
 
     @1 @tbr @__campaign_manage_result_types @_done @_tested @added
     Scenario: I can see list of generic final results
-      When I click hidden link by url regex "/call_centres\/campaigns\/\d+\/edit/"
+      When I edit campaign "Testing One"
       And I should see "Edit campaign"
       And I follow translated "campaigns.edit.button_manage_result_types"
       Then I should see "Not interested"
@@ -341,10 +337,10 @@ Feature: Agent campaign - management
 
     @3 @tbr @__campaign_manage_result_types @_done @selenium @_tested @added
     Scenario: I can manage call log results
-      When I click hidden link by url regex "/call_centres\/campaigns\/\d+\/edit/"
+      When I edit campaign "Testing One"
       And I should see "Edit campaign"
       And I follow translated "campaigns.edit.button_manage_result_types"
-      When I click hidden link by url regex "/call_centres\/campaigns\/\d+\/results\/new\?type=call_log/"
+      When I am adding call log result in campaign "Testing One"     
       And I should see translated "results.new.call_log_result"
       And I fill in "Name" with "I am on fire"
       And I follow translated "shared.lead_templates.form.new_lead_template_field"
@@ -356,10 +352,10 @@ Feature: Agent campaign - management
 
     @3 @tbr @__campaign_manage_result_types @_done @selenium @_tested @added
     Scenario: I can manage final results
-      When I click hidden link by url regex "/call_centres\/campaigns\/\d+\/edit/"
+      When I edit campaign "Testing One"
       And I should see "Edit campaign"
       And I follow translated "campaigns.edit.button_manage_result_types"
-      When I click hidden link by url regex "/call_centres\/campaigns\/\d+\/results\/new\?type=final/"
+      When I am adding final result in campaign "Testing One"
       And I should see translated "results.new.final_result"
       And I fill in "Name" with "I am on fire"
       And I follow translated "shared.lead_templates.form.new_lead_template_field"
