@@ -1,20 +1,40 @@
   <ul>
   <% Comment.each_with_level(thread.self_and_descendants) do |o,level| %>
     <li style="margin-left:<%= 20*level %>px">
-      <%= o.title %> by <%= o.user.screen_name %> at <%= format_date(o.created_at, true) %> (<%= link_to_function "reply", "reply_to(#{thread.id},#{o.id},#{o.commentable_id})" %>)
+      <%= o.title %> by <%= o.user.screen_name %> at <%= format_date(o.created_at, true) %> (<%= link_to_function t("comments.threads.show.view.reply"), "reply_to(#{thread.id},#{o.id},#{o.commentable_id})" %>)
       <p><%= o.body %></p>
     </li>
   <% end %>
   </ul>
 
    <%= semantic_form_for :comment, Comment.new, :url => comments_threads_path, :html => {:id => "reply_#{thread.id}", :style => "display:none;"} do |f| %>
-      <%= f.input :parent_id, :as => :hidden, :value => "" %>
-      <%= f.input :commentable_id, :as => :hidden, :value => "" %>
-      <%= f.input :commentable_type, :as => :hidden, :value => "Lead" %>
-      <%= f.input :title %>
-      <%= f.input :body %>
-      <%= f.commit_button %>
+
+
+      <frm>
+        <param:header>
+        </param:header>
+        <param:content>
+            <div class="pdd_10 no_pdd_t">
+              <fieldset class="inputs labels_ta_r labels_240">
+                <ol class="align_inputs">
+                  <%= f.input :parent_id, :as => :hidden, :value => "" %>
+                  <%= f.input :commentable_id, :as => :hidden, :value => "" %>
+                  <%= f.input :commentable_type, :as => :hidden, :value => "Lead" %>
+                  <%= f.input :title %>
+                  <%= f.input :body %>
+                </ol>
+              </fieldset>
+            </div>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="plus">
+             <%= f.commit_button t("comments.threads.show.view.create_comment_button") %>
+          </ibt>
+        </param:actions>
+      </frm>
    <% end %>
+
+
 
 <script>
   function reply_to(thread_id,comment_id,commentable_id) {
