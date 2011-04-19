@@ -1,11 +1,11 @@
 @$_system @m9 @comments
 Feature: Comments
 
-Scenario: Create threaded structure for comments
+Scenario: Each comment object has to be processed in the background
 
-Scenario: Implement permissions for users with different roles
+Scenario: Each comment object has to have propper access permissions against different roles
 
-Scenario: Calculate number of comment threads visible for given user
+Scenario: Calculating number of comment threads visible for given user
 
 # commentable rating in future
-Scenario: Make comments attachable to different types of objects
+Scenario: Comment can be attached to different types of objects (not only lead)
