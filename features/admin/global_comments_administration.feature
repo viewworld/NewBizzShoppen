@@ -18,4 +18,5 @@ Scenario: I can delete the comment
 
 Scenario: I can navigate to lead creator user page
 
+@m0
 Scenario: I can start new comment thread
