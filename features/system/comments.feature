@@ -1,4 +1,4 @@
-@$_system  @m9
+@$_system  @m9 @comments
 Feature: Comments
 
 Scenario: Create threaded structure for comments
