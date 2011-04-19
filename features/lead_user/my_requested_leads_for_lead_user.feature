@@ -90,3 +90,13 @@ Scenario: I can narrow down the results by filters and search box
   And I press translated "lead_user.lead_requests.index.view.search.search_button"
   Then I should see "Copy machines ultimate deal"
   And I should not see "Faxes ultimate deal"
+
+@added @m8 @ao @_done @_tested
+Scenario: I can see latest requests leads at the top of the list
+  When there are no leads
+  And lead Number 1 ultimate deal exists within category Computers
+  And lead "Number 1 ultimate deal" was requested by user "lead_user2@person.com" with role "lead_user"
+  And lead Number 2 ultimate deal exists within category Computers
+  And lead "Number 2 ultimate deal" was requested by user "lead_user2@person.com" with role "lead_user"
+  When I go to lead user lead requests
+  Then I should see "Number 2" before "Number 1"

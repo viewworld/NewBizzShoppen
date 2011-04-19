@@ -71,6 +71,20 @@ Scenario: I can instant-buy lead I will see a notification “You added lead to 
   When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
   Then I should see "Printers ultimate deal"
 
+@added @m8 @ao @_done @_tested
+Scenario: I can see latest bought leads at the top of the list
+  When there are no leads
+  And lead Number 1 ultimate deal exists within category Computers
+  And I go to leads
+  And I follow "Computers"
+  And I follow translated "leads.index.buy_lead"
+  And lead Number 2 ultimate deal exists within category Computers
+  And I go to leads
+  And I follow "Computers"
+  And I follow translated "leads.index.buy_lead"
+  When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  Then I should see "Number 2" before "Number 1"
+
 @selenium @_done  @noguess
 Scenario: I can bulk instant-buy leads requested by lead user that belongs to my account and I will see a notification “You added {n} leads to your list”
   When lead Monitors ultimate deal exists within category Computers
@@ -104,7 +118,7 @@ Scenario: I should not see the cart when I'm a big buyer
   Then I should not see translated "layout.cart.cart_header" with options "count:0"
 
 @m8 @added @tgn @_tested
-Scenario: I can buy leads if my purchase limit is not yet reached
+Scenario: I can buy leads if total cost of my purchases don't exceed the global limit
   Given big buyer purchase limit is set to 1000
   When I go to leads
   And I follow "Computers"
@@ -113,8 +127,24 @@ Scenario: I can buy leads if my purchase limit is not yet reached
   Then I should not see "Printers ultimate deal"
 
 @m8 @added @tgn @_tested
-Scenario: I cannot buy leads if my purchase limit is reached
+Scenario: I cannot buy leads if total cost of my purchases exceeds the global limit
   Given big buyer purchase limit is set to 160
+  And currency "DKK" exists with attributes "exchange_rate: 2.5"
+  And lead "Printers ultimate deal #2" has currency "DKK"
+  And lead Printers ultimate deal #2 has price 200
+  And lead Printers ultimate deal has price 200
+  And a lead Printers ultimate deal #2 exists within category Leisure and is bought by user customer@person.com with role customer
+  And all prices are converted to euro
+  When I go to leads
+  And I follow "Computers"
+  And I follow translated "leads.index.buy_lead"
+  And I should see translated "buyer.cart_items.create.flash.cart_item_big_buyer_purchase_limit_reached"
+  Then I should see "Printers ultimate deal"
+
+@m8 @added @tgn @_tested
+Scenario: I cannot buy leads if total cost of my purchases exceeds my personal limit but not the global one
+  Given big buyer purchase limit is set to 260
+  And big buyer purchase limit for user "customer@person.com" is set to 160
   And currency "DKK" exists with attributes "exchange_rate: 2.5"
   And lead "Printers ultimate deal #2" has currency "DKK"
   And lead Printers ultimate deal #2 has price 200

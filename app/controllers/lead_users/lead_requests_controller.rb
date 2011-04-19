@@ -17,7 +17,7 @@ class LeadUsers::LeadRequestsController < LeadUsers::LeadUserController
     @countries = Country.with_lead_request_requested_by(current_user).map{|c| [c.name, c.id]}
     @categories = Category.with_lead_request_requested_by(current_user).map{|c| [c.name, c.id]}
     @search = LeadRequest.scoped_search(params[:search])
-    @lead_requests = @search.all
+    @lead_requests = @search.order("created_at DESC").all
   end
 
   def build_resource

@@ -61,14 +61,6 @@
     </param:actions>
   </header>
 
-  <div class="frm_tiny fltr" style="margin:-15px 0 7px">
-    <div class="pdd_10">
-      <p>
-        <%= t("administration.users.index.view.total") %>: <strong><%= @total_users %></strong>
-      </p>
-    </div>
-  </div>
-
   <% if @users.blank? %>
       <%= blank_state_message %>
   <% else %>

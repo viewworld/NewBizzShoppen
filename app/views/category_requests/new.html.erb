@@ -28,9 +28,9 @@
               <p class="inline-hints"><%= hint_for("category_request", :lead_description) %></p>
             </li>
             <li class="string">
-              <%= f.label t("category_requests.new.view.leads_count_per_month") %>
+              <%= f.label t("category_requests.new.view.leads_count_per_month_#{current_user.has_any_role?(:agent, :call_centre_agent) ? 'agent' : 'buyer'}") %>
               <%= f.text_field :leads_count_per_month %> <%= custom_error_for_object_and_field(@email_template_preview, :leads_count_per_month) %>
-              <p class="inline-hints"><%= hint_for("category_request", :leads_count_per_month) %></p>
+              <p class="inline-hints"><%= hint_for("category_request", "leads_count_per_month_#{current_user.has_any_role?(:agent, :call_centre_agent) ? 'agent' : 'buyer'}") %></p>
             </li>
             <li class="boolean">
               <%= f.label t("category_requests.new.view.can_be_contacted") %>
