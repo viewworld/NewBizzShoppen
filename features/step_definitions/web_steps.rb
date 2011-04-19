@@ -390,7 +390,3 @@ Then /^element is not visible "([^\"]*)"(?: within "([^\"]*)")?$/ do |element, s
     assert wait_until(TIMEOUT) { assert (not page.find(element).visible?) }
   end
 end
-
-And /^I wait ([^\"]*)$/ do |seconds|
-  sleep seconds.to_i
-end

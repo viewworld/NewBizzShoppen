@@ -445,6 +445,7 @@ Feature: Agent campaign - management
     @3 @tbr @__campaign_manage_results @_done @_tested
     Scenario: new lead should be created based on contact when result is "Upgrade to lead"
       When I am adding "Upgraded to lead" result for contact "Mleko company"
+      
       And I fill in the following:
          | call_result_contact_attributes_contact_name | Mleko company  |
          | Address line 1                 | Some Street 2               |
@@ -455,7 +456,7 @@ Feature: Agent campaign - management
          | Public description             | Some description            |
          | Detailed description (hidden)  | Some hidden description     |
          | Price                          | 2                           |
-         | Purchase decision date         | 2011-02-02                  |
+         | datepicker                     | 2011-02-02                  |
       And I press translated "call_results.new.save_button"
       Then contact "Mleko company" should be upgraded to lead
       And I should see translated "contacts.edit.current_agent_label"
@@ -463,7 +464,7 @@ Feature: Agent campaign - management
     @2 @tbr @__campaign_manage_results @_done @_tested
     Scenario: I can set meeting datetime for contact when result is "Meeting booked"
       When I am adding "Meeting booked" result for contact "Mleko company"
-      And I fill in "Meeting date" field with future date
+      And I fill in "Meeting date" field with future datetime
       And I press translated "call_results.new.save_button"
       Then contact "Mleko company" should be completed
       And I should see translated "contacts.edit.current_agent_label"
