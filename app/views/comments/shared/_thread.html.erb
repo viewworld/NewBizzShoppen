@@ -1,7 +1,7 @@
   <ul>
   <% Comment.each_with_level(thread.self_and_descendants) do |o,level| %>
     <li style="margin-left:<%= 20*level %>px">
-      <%= o.title %> by <%= o.user.screen_name %> at <%= format_date(o.created_at, true) %> (<%= link_to_function t("comments.threads.show.view.reply"), "reply_to(#{thread.id},#{o.id},#{o.commentable_id})" %>)
+      <%= o.title %> by <%= o.user.screen_name %> at <%= format_date(o.created_at, true) %> (<%= link_to_function t("comments.threads.show.view.reply"), "reply_to(#{thread.id},#{o.id},#{o.commentable_id},'#{o.title}')" %>)
       <p><%= o.body %></p>
     </li>
   <% end %>
@@ -35,9 +35,10 @@
 
 
 <script>
-  function reply_to(thread_id,comment_id,commentable_id) {
+  function reply_to(thread_id,comment_id,commentable_id,comment_title) {
+    $("#reply_"+thread_id+" input#comment_title").attr("value", 'Re: '+comment_title);
     $("#reply_"+thread_id+" input#comment_parent_id").attr("value",comment_id);
     $("#reply_"+thread_id+" input#comment_commentable_id").attr("value",commentable_id);
-    $("#reply_"+thread_id).show();
+    $("#reply_"+thread_id).toggle();
   }
 </script>

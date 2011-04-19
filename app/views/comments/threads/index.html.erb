@@ -37,7 +37,7 @@
        <% @threads.each do |thread| %>
        <tr>
          <td>
-           <%= link_to thread.commentable.header, comments_thread_path(thread) %>
+           <%= link_to thread.commentable.header, comments_lead_thread_path(thread.commentable_id,thread) %>
          </td>
          <td>
            <%= thread.user.screen_name %>

@@ -22,7 +22,7 @@ class ::User::LeadUser < ::User
   end
 
   def comment_threads
-    Comment.roots.where(:commentable_id => leads.map(&:id))
+    Comment.roots.for_users(self.self_and_descendants)
   end
 
   private

@@ -26,8 +26,12 @@ class ::User::Customer < ::User
 
   before_save :handle_interests
 
+  def leads
+    bought_leads
+  end
+
   def comment_threads
-    Comment.roots.where(:user_id => (Array(self.id) + subaccounts.map(&:id)))
+    Comment.roots.for_users(self.self_and_descendants)
   end
 
   private

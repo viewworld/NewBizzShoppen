@@ -2306,6 +2306,10 @@ en:
       new:
         view:
           header: "Post new comment for %{header}"
+    shared:
+      comment: "comment"
+      comments: "comments"
+
     leads:
       show:
         view:

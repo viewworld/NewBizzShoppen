@@ -2,7 +2,7 @@ class Comments::ThreadsController < Comments::CommentsController
 
   set_tab "comments"
 
-  before_filter :can_start_conversation?, :only => [:new,:create]
+  before_filter :can_start_conversation?, :only => [:new]
 
   private
 
