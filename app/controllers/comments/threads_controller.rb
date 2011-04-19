@@ -1,5 +1,7 @@
 class Comments::ThreadsController < Comments::CommentsController
 
+  set_tab "comments"
+
   def index
     params[:search] ||= {}
     @threads = current_user.comment_threads
