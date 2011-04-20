@@ -1,5 +1,5 @@
 <column-mc:>
-  <header><%= t("comments.threads.new.view.header", :header => @lead.header) %></header>
+  <header back="true"><%= t("comments.threads.new.view.header", :header => @lead.header) %></header>
 
      <%= semantic_form_for :comment, @thread, :url => comments_lead_threads_path(@lead) do |f| %>
       <frm>
