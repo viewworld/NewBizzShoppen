@@ -1992,7 +1992,12 @@ en:
           buyer_inquiry: "Sales manager inquiry"
     create:
       flash:
-        email_sent_successfully: "Your email was sent successfully to staff at NBS"
+        email_sent_successfully: "Your email has been sent"
+
+  category_requests:
+    create:
+      flash:
+        request_sent: "Your category request has been sent"
 
   shared:
     lead_templates:
