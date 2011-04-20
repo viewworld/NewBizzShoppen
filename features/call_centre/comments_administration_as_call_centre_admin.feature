@@ -1,7 +1,7 @@
 @comments @noguess @ao @m9
 Feature: Comments administration as call centre admin 
 
-Scenario: I can see the amount of comments per lead on Lead created by my agents listing
+Scenario: I can see the amount of comments per lead on the listing of Leads created by my agents
 
 @m0
 Scenario: I can click on comment list and get a popup with comments from different ppl

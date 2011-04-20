@@ -2,7 +2,7 @@
 Feature: Comments administration as customer
 
 @noguess
-Scenario: I can create a comment for lead that I have access for
+Scenario: I can create a comment for lead that I have access to
 
 Scenario: I can see all comments created by members of my ownership branch
 
