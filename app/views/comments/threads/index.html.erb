@@ -27,6 +27,9 @@
 <column-mc:>
   <header><%= t("comments.threads.index.view.header") %></header>
 
+<% if @threads.blank? %>
+    <%= blank_state_message %>
+<% else %>
   <table class="generic">
     <thead>
         <th class="hl"></th>
@@ -59,10 +62,11 @@
        </tr>
         <% end %>
       <tr class="pagination">
-        <td colspan="<%= 6 %>" class="ta_c">
+        <td colspan="6" class="ta_c">
             <%= will_paginate @threads, :previous_label => '&laquo;', :next_label => '&raquo;' %>
         </td>
       </tr>
     </tbody>
   </table>
+<% end %>
 </column-mc:>

@@ -8,6 +8,7 @@ class Comments::ThreadsController < Comments::CommentsController
   before_filter :can_start_conversation?, :only => [:new]
   before_filter :set_referer, :only => [:edit]
   before_filter :check_role_for_update, :only => [:edit, :update]
+  before_filter :check_role_for_destroy, :only => [:destroy]
 
   private
 
@@ -97,9 +98,15 @@ class Comments::ThreadsController < Comments::CommentsController
   end
 
   def check_role_for_update
-    unless current_user.has_any_role?(:admin, :call_centre)
-      flash[:alert] = I18n.t("comments.threads.update.flash.alert")
-      redirect_to :back
+    @thread = Comment.find_by_id(params[:id])
+    unless current_user.has_role?(:admin) or (current_user.has_role?(:call_centre) and @thread and @thread.user.parent.present? and @thread.user.parent.with_role == current_user)
+      raise CanCan::AccessDenied
+    end
+  end
+
+  def check_role_for_destroy
+    unless current_user.has_role?(:admin)
+      raise CanCan::AccessDenied
     end
   end
 
