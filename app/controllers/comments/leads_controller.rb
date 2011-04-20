@@ -11,6 +11,6 @@ class Comments::LeadsController < Comments::CommentsController
   public
 
   def show
-    @threads = @lead.comment_threads.for_users(current_user.self_and_descendants).roots
+    @threads = @lead.comment_threads.roots
   end
 end

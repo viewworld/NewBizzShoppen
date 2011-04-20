@@ -17,7 +17,7 @@ class Lead < AbstractLead
   has_many :lead_translations, :dependent => :destroy
   has_many :lead_purchases
   has_many :lead_template_values
-  has_many :comment_threads, :as => :commentable, :class_name => "Comment"
+  has_many :comment_threads, :class_name => "Comment", :foreign_key => :commentable_id, :conditions => {:commentable_type => 'AbstractLead'}
 
   scope :with_keyword, lambda { |q| where("lower(header) like :keyword OR lower(leads.description) like :keyword OR lower(creator_name) like :keyword", {:keyword => "%#{q.downcase}%"}) }
   scope :deal_value_from, lambda { |q| where(["purchase_value >= ?", q]) }
@@ -234,4 +234,5 @@ class Lead < AbstractLead
     self.notify_buyers_after_update = false
     self.increment!(field)
   end
+
 end
