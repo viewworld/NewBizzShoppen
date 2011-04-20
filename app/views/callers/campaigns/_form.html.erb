@@ -2,7 +2,7 @@
   <div class="pdd_10 no_pdd_t">
     <fieldset class="inputs labels_ta_r labels_200">
       <ol>
-        <% if current_user.has_role?(:admin) %>
+        <% if current_user.has_role?(:admin) and campaign.creator %>
           <li class="string">
             <label><%= t("campaigns.edit.owner") %></label>
 
