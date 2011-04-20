@@ -31,7 +31,7 @@ class ::User::Customer < ::User
   end
 
   def comment_threads
-    Comment.roots.for_users(self.self_and_descendants)
+    Comment.for_users(self.self_and_descendants)
   end
 
   private

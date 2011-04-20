@@ -13,6 +13,6 @@ class ::User::Admin < ::User
   end
 
   def comment_threads
-    Comment.roots
+    Comment.where("")
   end
 end
