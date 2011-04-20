@@ -1,0 +1,21 @@
+<tr>
+  <td class="cl"></td>
+  <td class="no_pdd_lr">
+    <%= check_box_tag "result_ids_#{result.id}", result.id, campaign.results.include?(result), :name => "campaign_result_ids[]", :class => "cb_cu_#{result.id}" %>
+  </td>
+  <td><%= result.name %></td>
+  <td><%= result.list_of_fields %></td>
+  <td class="tda ta_r">
+    <% if result.can_be_managed_by?(current_user) %>
+        <ul-actions>
+          <li>
+            <%= link_to t("campaigns.index.edit"), url_for(:controller => "callers/results", :action => "edit", :id => result, :campaign_id => campaign), :class => "default_action" %>
+          </li>
+          <li>
+            <%= link_to t("campaigns.index.destroy"), url_for(:controller => "callers/results", :action => "destroy", :id => result, :campaign_id => campaign), :confirm => t("campaigns.index.destroy_confirmation"), :method => :delete %>
+          </li>
+        </ul-actions>
+    <% end %>
+  </td>
+  <td class="cr"></td>
+</tr>

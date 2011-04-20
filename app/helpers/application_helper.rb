@@ -34,6 +34,14 @@ module ApplicationHelper
     "add_lead_template_field(this, \"#{escape_javascript(fields)}\")"
   end
 
+  def fields_for_result_fields(f)
+    result_field = ResultField.new
+    fields = f.fields_for :result_fields, result_field do |builder|
+       render("/shared/results/result_field_fields", :f => builder)
+    end
+    "add_result_field(this, \"#{escape_javascript(fields)}\")"
+  end  
+
   def fields_for_region_fields(f)
     region = Region.new
     fields = f.fields_for :regions, region do |builder|
@@ -48,13 +56,13 @@ module ApplicationHelper
 
   def custom_error_for_field(form, field)
     if form.object.errors[field].present?
-      content_tag(:p, form.object.errors[field], :class => "inline-errors") + tag("br")
+      content_tag(:p, form.object.errors[field].join(", "), :class => "inline-errors") + tag("br")
     end
   end
 
   def custom_error_for_object_and_field(object, field)
     if object.errors[field].present?
-      content_tag(:p, object.errors[field], :class => "inline-errors") + tag("br")
+      content_tag(:p, object.errors[field].join(", "), :class => "inline-errors") + tag("br")
     end
   end
 

@@ -157,5 +157,5 @@ Feature: Category home pages
     And I am on category home page for CategoryWithImage
     Then I should see CSS path "#category_image"
 
-  @_done @tested_elsewhere
+  @_done @_tested_elsewhere
   Scenario: When clicking on the row with lead (as customer in leads catalogue), prompt user if he wishes to add a lead to cart (and do so if he agrees)

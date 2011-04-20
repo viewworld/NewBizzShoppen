@@ -396,6 +396,12 @@ div.pagination .disabled
     background-color: #fffcc0;
 }
 
+.generic tbody tr.completed td
+{
+    color: #999;
+    background-color: #eee;
+}
+
 
 /* --- categories_table ---
 ------------------------------------------------------------------------------------------ */

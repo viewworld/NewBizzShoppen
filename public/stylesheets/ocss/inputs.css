@@ -254,6 +254,17 @@ input.date.hasDatepicker
     float: left;
 }
 
+.inputs ol li.date.time input
+{
+    width: 110px;
+    background: url(/images/forms/date.png) no-repeat left center #fff;
+    padding-left: 32px;
+}
+
+
+
+
+
 
 
 /* --- header---

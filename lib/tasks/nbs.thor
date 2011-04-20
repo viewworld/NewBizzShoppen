@@ -219,6 +219,23 @@ class Nbs < Thor
       Currency.create(params)
     end
 
+    [{:name => "Call back", :final => false, :generic => true},
+     {:name => "Not interested now", :final => false, :generic => true},
+     {:name => "Not interested", :final => true, :generic => true},
+     {:name => "Not in", :final => false, :generic => true},
+     {:name => "Upgraded to lead", :final => true, :generic => true, :upgrades_to_lead => true},
+     {:name => "Meeting booked", :final => true, :generic => true},
+     {:name => "Custom result", :final => true, :generic => true}].each do |result|
+      Result.create(result) unless Result.find_by_name(result[:name])
+     end
+
+    [{:name => "Call back date", :field_type => "4", :is_mandatory => true, :result => Result.find_by_name("Call back") },
+     {:name => "Call back date", :field_type => "4", :is_mandatory => true, :result => Result.find_by_name("Not interested now") },
+     {:name => "Meeting date", :field_type => "4", :is_mandatory => true, :result => Result.find_by_name("Meeting booked") },
+     {:name => "Result message", :field_type => "0", :is_mandatory => true, :result => Result.find_by_name("Custom result") }].each do |result_field|
+      ResultField.create(result_field) unless ResultField.find_by_name_and_result_id(result_field[:name], result_field[:result_id])
+    end
+
     unless Rails.env.production?
 
       if Category.count.zero?
@@ -286,6 +303,8 @@ class Nbs < Thor
       unless klass.find_by_email("translator_#{role}@nbs.com")
         if role == :category_buyer
           user = klass.make!(:email => "translator_#{role}@nbs.com", :password => "secret", :password_confirmation => "secret", :buying_categories => [Category.first])
+        elsif role == :call_centre
+          user = klass.make!(:email => "translator_#{role}@nbs.com", :password => "secret", :password_confirmation => "secret", :first_name => "Johnny", :last_name => "Mnemonic")
         else
           user = klass.make!(:email => "translator_#{role}@nbs.com", :password => "secret", :password_confirmation => "secret")
         end
@@ -297,7 +316,7 @@ class Nbs < Thor
 
     unless User::CallCentreAgent.find_by_email("translator_call_centre_agent@nbs.com")
       parent = User.find_by_email("translator_call_centre@nbs.com")
-      user = User::CallCentreAgent.make!(:email => "translator_call_centre_agent@nbs.com", :password => "secret", :password_confirmation => "secret", :parent_id => parent.id)
+      user = User::CallCentreAgent.make!(:email => "translator_call_centre_agent@nbs.com", :first_name => "John", :last_name => "Smith", :password => "secret", :password_confirmation => "secret", :parent_id => parent.id)
       user.confirm!
       user.roles << :translator
       user.save
@@ -369,6 +388,37 @@ class Nbs < Thor
       user.roles << :translator unless user.has_role?(:translator)
       user.save
     end
+
+    puts "Creating testing campaign & contacts..."
+
+    category = Category.where(:name => "Business").first
+    country = Country.where(:name => "Denmark").first
+    call_centre = User.where(:email => "translator_call_centre@nbs.com").first
+    campaign = Campaign.create({:name => "Testing One",
+                     :category => category,
+                     :country => country,
+                     :max_contact_number => 3,
+                     :creator => call_centre,
+                     :start_date => Date.today,
+                     :end_date => Date.today + 14.days })
+    #inactive campaign
+    Campaign.create({:name => "Testing Two",
+                     :category => Category.where(:name => "Electronics").first,
+                     :country => Country.where(:name => "United Kingdom").first,
+                     :max_contact_number => 3,
+                     :creator => call_centre,
+                     :start_date => Date.today - 15.days,
+                     :end_date => Date.today - 1.days })
+    campaign.results = Result.generic_results
+    campaign.users = call_centre.subaccounts
+
+    [{:company_name => "Bon Jovi inc.", :company_phone_number => "888 112 113" },
+     {:company_name => "Mleko company", :company_phone_number => "510 333 333" },
+     {:company_name => "Stefanek corp", :company_phone_number => "888 422 633" },
+     {:company_name => "PHU Sciemkata", :company_phone_number => "602 222 333" }].each do |attrs|
+      Contact.create attrs.merge(:country => country, :campaign => campaign, :creator => call_centre, :category => category, :contact_name => "", :phone_number => "", :email_address => "", :creator_name => call_centre.full_name)
+    end
+
   end
 
   desc "recalculate_leads_average_ratings", ""
@@ -400,9 +450,9 @@ class Nbs < Thor
   def refresh_exchange_rates
     CurrencyConverter.cache_current_exchange_rates!
   end
-  
+
   desc "copy yml to database", ""
   def t
     I18nUtils.populate!
-  end  
+  end
 end
