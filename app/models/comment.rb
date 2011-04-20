@@ -12,7 +12,7 @@ class Comment < ActiveRecord::Base
   belongs_to :user
   belongs_to :commentable, :polymorphic => true
 
-  before_destroy :move_children_to_higher_parent
+  #before_destroy :move_children_to_higher_parent
 
   scope :descend_by_created_at, order("created_at DESC")
   scope :ascend_by_created_at, order("created_at ASC")
@@ -60,12 +60,14 @@ class Comment < ActiveRecord::Base
     commentable_str.constantize.find(commentable_id)
   end
 
-  private
-
   def move_children_to_higher_parent
     if has_children?
       children.each do |child|
-        child.update_attribute(:parent_id, self.parent_id.present? ? self.parent_id : nil)
+        if self.parent_id.present?
+          child.move_to_child_of(parent_id)
+        else
+          child.move_to_root
+        end
       end
     end
   end

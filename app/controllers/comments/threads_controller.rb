@@ -50,7 +50,7 @@ class Comments::ThreadsController < Comments::CommentsController
   end
 
   def new
-    @threads = Comment.new
+    @thread = Comment.new
   end
 
   def edit
@@ -74,6 +74,8 @@ class Comments::ThreadsController < Comments::CommentsController
 
   def destroy
     @thread = current_user.comment_threads.find(params[:id])
+    @thread.move_children_to_higher_parent
+    @thread.reload
     @lead = @thread.commentable
     if @thread.destroy
       flash[:notice] = I18n.t("comments.threads.destroy.flash.notice")
