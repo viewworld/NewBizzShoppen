@@ -1,0 +1,33 @@
+<header>
+  <param:content><%= t('agent_work_screen.index.call_sheet') %></param:content>
+
+  <param:actions>
+    <ul class="header_actions">
+      <li>
+        <%= bt_link_to nil, t("agent_work_screen.index.show_call_log_for_current_contact"), "javascript:void(0)", :onclick => "$('#results_sheet').show();$('#call_sheet').hide();$('#pending_calls').hide();" %>
+      </li>
+      <li class="">
+        <%= bt_link_to nil, t("agent_work_screen.index.show_current_call_sheet"), "javascript:void(0)", :onclick => "$('#results_sheet').hide();$('#call_sheet').show();$('#pending_calls').hide();", :class => "bt_active" %>
+      </li>
+      <li class="last">
+        <%= bt_link_to nil, t("agent_work_screen.index.show_pending_calls"), "javascript:void(0)", :onclick => "$('#results_sheet').hide();$('#call_sheet').hide();$('#pending_calls').show();" %>
+      </li>
+    </ul>
+  </param:actions>
+</header>
+
+<%= contacts_table contacts, :agent_work_screen => true do |blocks| %>
+    <% blocks.tools do |contact| %>
+        <ul-actions>
+          <li>
+            <%= link_to t("campaigns.edit.show_button"), url_for(:controller => "#{namespace}/agent_work_screen/contacts", :action => :show, :campaign_id => campaign, :id => contact), :class => "default_action", :remote => true, :method => :get %>
+          </li>
+          <li>
+            <%= link_to t("campaigns.edit.deassign_button"), url_for(:controller => "#{namespace}/agent_work_screen/contacts", :action => :destroy, :campaign_id => campaign, :id => contact, :deassign => true), :remote => true, :method => :delete %>
+          </li>
+          <li>
+            <%= link_to t("campaigns.edit.remove_button"), url_for(:controller => "#{namespace}/agent_work_screen/contacts", :action => :destroy, :campaign_id => campaign, :id => contact), :confirm => t("campaigns.edit.remove_confirm"), :remote => true, :method => :delete %>
+          </li>
+        </ul-actions>
+    <% end %>
+<% end %>

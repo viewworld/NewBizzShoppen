@@ -111,7 +111,7 @@ Scenario: I should see certification level for each requested lead
   Then I go to customers lead requests
   And I should see translated "models.lead.certification.lvl1"
 
-@m6 @added @tgn @_done @tested_elsewhere
+@m6 @added @tgn @_done @_tested_elsewhere
 Scenario: I should see rating % for each requested lead
 
 @tgn @_done @_tested
@@ -219,7 +219,7 @@ Scenario: I can see lead template fields with public values for each lead
   And I should see "Havlett Packard"
   And I should see "3983c-39282f"
 
-@m5 @added @lead_templates @tgn @_done @tested_elsewhere
+@m5 @added @lead_templates @tgn @_done @_tested_elsewhere
 Scenario: I can see lead template fields with hidden values for each lead that I have bought
 
 @m6 @added @ao @selenium @_done @_tested

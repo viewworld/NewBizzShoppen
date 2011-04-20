@@ -120,6 +120,39 @@ Nbs::Application.routes.draw do
     resources :lead_templates
   end
 
+  namespace :callers do
+    resources :campaigns do
+      member do
+        get 'result_details'
+      end
+      resources :results, :except => :show do
+        collection do
+          post 'batch_assign'
+        end
+      end
+      resources :campaigns_users, :only => [:index, :update]
+      resources :contacts do
+        collection do
+          post 'batch_remove'
+          post 'batch_assign'
+          post 'bulk_contacts_export_csv'
+        end
+      end
+      resources :agent_work_screen, :only => :index
+      namespace :agent_work_screen do
+        resources :contacts, :only => [:show, :destroy, :update] do
+          resources :call_results, :only => [:new, :create, :edit, :update, :destroy]
+        end
+      end
+    end
+
+    resources :contacts do
+      resources :call_results, :only => [:new, :create, :edit, :update, :destroy]
+    end
+  end
+
+
+
   match 'buyer_home' => 'buyer_home#show', :as => "buyer_home"
   match 'agent_home' => 'agent_home#show', :as => "agent_home"
   match 'purchase_manager_home' => 'purchase_manager_home#show', :as => "purchase_manager_home"

@@ -134,6 +134,7 @@ end
 Given /^I show accordion details for row "([^"]*)"$/ do |selector|
   And %{I follow translated "lead_purchases.listing.show_row" within "#{selector}"}
 end
+
 Given /^user with email "([^"]*)" has login key generated$/ do |email|
   user = User.find_by_email(email)
   user.generate_login_key!
@@ -142,4 +143,20 @@ end
 When /^I login as user with email "([^"]*)" using login key$/ do |email|
   user = User.find_by_email(email)
   visit "/login_keys/?key=#{user.login_key}"
+end
+
+Given /^I follow(| translated) action "([^\"]*)" within row containing(| translated) "([^\"]*)"$/ do |is_action_translated, action, is_text_translated, text|
+  I18n.locale = :en
+  action = I18n.t(action) if is_action_translated == " translated"
+  text = I18n.t(text) if is_text_translated == " translated"
+  page.execute_script("$('div.td_actions ul').show()")
+  page.find(:xpath, "//td[contains(., '#{text}')]/..//a[contains(., '#{action}')]").click()
+end
+
+def options_hash_to_s(options)
+  options.to_a.map{|pair| pair.join(":")}.join(",")
+end
+
+def options_s_to_hash(options)
+  Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys  
 end

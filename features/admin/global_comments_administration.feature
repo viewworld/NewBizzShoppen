@@ -1,4 +1,4 @@
-@comments @$_admin @noguess @ao @m0
+@comments @$_admin @noguess @ao @m9
 Feature: Global comments administration
 
 Scenario: I can browse all comment conversations with pagination

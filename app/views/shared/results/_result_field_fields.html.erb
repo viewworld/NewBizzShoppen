@@ -1,0 +1,31 @@
+<div id="result_field_form_<%= f.object.new_record? ? 'result_result_fields_attributes_0' : f.object.id %>">
+  <hl/>
+  <div class="pdd_10 no_pdd_t">
+    <fieldset class="inputs_vertical">
+      <ol>
+        <li class="string required <%= 'error' if f.object.errors[:name].present?%>">
+          <label><%= t("shared.results.form.field_name") %><abbr title="required">*</abbr></label>
+          <%= f.text_field :name %>
+          <%= custom_error_for_field(f, :name) %>
+        </li>
+        <li class="select">
+          <%= f.label :field_type %>
+          <%= f.select :field_type, options_for_select(ResultField::FIELD_TYPES.map { |ft| [t("models.result_field.field_type.type#{ft}"), ft] }, f.object.field_type) %>
+          <%= custom_error_for_field(f, :field_type) %>
+        </li>
+        <li class="boolean">
+          <%= f.check_box :is_mandatory %>
+          <%= f.label :is_mandatory %>
+        </li>
+        <li class="hidden">
+          <% unless f.object.new_record? %>
+              <%= f.hidden_field :_destroy, :id => "destroy_hidden_field_#{f.object.id}" %>
+          <% end %>
+        </li>
+        <li class="commit">
+          <%= bt_link_to :remove, t("shared.lead_templates.form.remove_lead_template_field"), "javascript:void(0)", :onclick => "remove_result_field('#{f.object.new_record? ? 'result_result_fields_attributes_0' : f.object.id}', #{f.object.new_record? ? 'null' : f.object.id})" %>
+        </li>
+      </ol>
+    </fieldset>
+  </div>
+</div>

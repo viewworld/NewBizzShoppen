@@ -11,9 +11,9 @@ class AddAgentLeadStatsToUsers < ActiveRecord::Migration
     add_column :users, :leads_rating_avg, :integer, :default => 0
     add_column :users, :certification_level, :integer, :default => 0
 
-    (User::Agent.all + User::CallCentreAgent.all).each do |user|
-      user.refresh_agent_counters!
-    end
+#    (User::Agent.all + User::CallCentreAgent.all).each do |user|
+#      user.refresh_agent_counters!
+#    end
   end
 
   def self.down

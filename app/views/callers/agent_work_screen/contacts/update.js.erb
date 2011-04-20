@@ -1,0 +1,5 @@
+display_notice("<%= escape_javascript(t("contacts.update.flash.successfully_updated")) %>");
+$("#call_sheet").html("<%= escape_javascript(render(:partial => "callers/agent_work_screen/call_sheet", :locals => @locals)) %>");
+$("#pending_calls").html("<%= escape_javascript(render(:partial => "callers/agent_work_screen/pending_calls", :locals => @locals)) %>");        
+$("#contact_info").html("<%= escape_javascript(@locals[:contact] ? render(:partial => "callers/agent_work_screen/contact_form", :locals => @locals) : "") %>");
+loadScripts();

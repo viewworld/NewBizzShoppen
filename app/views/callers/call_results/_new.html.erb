@@ -1,0 +1,17 @@
+<% unless agent_work_screen %>
+    <header back="#{back_path}" backurl="#{back_path}"><%= t("call_results.new.title") %></header>
+<% end %>    
+
+<%= semantic_form_for path, :method => :post, :remote => agent_work_screen do |form| %>
+    <frm title="Create new">
+      <param:content>
+        <%= render :partial => '/callers/call_results/form', :locals => {:form => form, :contact => @contact, :call_result => @call_result, :reload_path => reload_path, :agent_work_screen => agent_work_screen } %>
+      </param:content>
+      <param:actions>
+        <ibt c="fltri" icon="save">
+          <%= form.submit t("call_results.new.save_button"), :name => "commit_create" %>
+        </ibt>
+        <%= bt_link_to(nil, t("call_results.edit.cancel_button"), back_path, :class => "bt_grey fltr") %>
+      </param:actions>
+    </frm>
+<% end %>

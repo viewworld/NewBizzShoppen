@@ -74,16 +74,20 @@ en:
         content: "Content"
         global: "Global"
         refunds: "Refunds"
+        campaigns: Campaigns
       agent:
         leads: My leads
         lead_templates: Lead templates
+        campaigns: Campaigns
       call_centre:
         call_centre_agents: "Team"
         leads: "My leads"
         lead_templates: "Lead templates"
+        campaigns: Campaigns
       call_centre_agent:
         leads: "My leads"
         lead_templates: "Lead templates"
+        campaigns: Campaigns
       customer:
         subaccounts: Team
         lead_requests: Requested leads
@@ -219,6 +223,209 @@ en:
       contacted: Contacted
       meeting: Meeting
       signed: Signed
+
+  campaigns:
+    filter:
+      header: Search
+      keyword_label: Keyword
+      state_label: State
+      search_button: Search
+      state_select_all: all
+      state_select_active: active
+      state_select_inactive: inactive
+    header:
+      title: Campaigns
+      new_campaign_button: New Campaign
+    table:
+      actions: "Actions"
+      name: Name
+      category: Category
+      country: Country
+      start_date: Start date
+      end_date: End date
+      agents: Agents
+      contacts: Contacts
+      results: Results
+      completion: Completion
+      go_to_work_screen: go to work screen
+    new:
+      title: New campaign
+      button_create: Create
+      button_cancel: Cancel
+    show:
+      total_contacts: Total numbers of contacts
+      total_agents: Total number of agents
+      total_calls:  Total number of calls
+      search_label: Search
+      ranges_label: Predefined time ranges
+      ranges:
+        whole_campaign: whole campaign
+        this_month: this month
+        this_week: this week
+        today: today
+      search:
+        date_from: Date from
+        date_to: Date to
+        agents: Agents
+        final: only view completed contacts
+      search_button: Search
+      table:
+        results: Results
+        all_results: ALL RESULTS
+        sum: SUM
+    edit:
+      title: Edit campaign
+      owner: Owner
+      button_update: Update
+      button_cancel: Back to campain listing
+      button_create_contact: Create contact
+      button_manage_result_types: Manage result types
+      button_import_contacts: Import CSV contacts
+      button_assign_selected_contacts: Assign selected contacts
+      button_remove_assignment_for_selected: "Remove assignments for selected"
+      button_bulk_download_csv_link: "Export CSV contacts"
+      button_remove_selected: Remove selected
+      agent_assignment_button: Agent assignment
+      show_button: Show
+      edit_button: Edit
+      deassign_button:  Deassign
+      remove_button:  Remove
+      remove_confirm: Are you sure?
+      title_contacts: "Contacts"
+    index:
+      title: Campaigns
+      edit: Edit
+      destroy: Destroy
+      result: Result
+      destroy_confirmation: Are you sure?
+    call_result_details_table:
+      date: Date
+      contact: Contact
+      agent: Agent
+      result: Result
+      call: Call
+
+  agent_work_screen:
+    index:
+      title: Agent work screen
+      select_campaign: Select campaign
+      show_current_call_sheet: Show current call sheet
+      show_pending_calls: Show pending calls
+      show_call_log_for_current_contact: Show call log for current contact
+      call_log: Call log
+      call_sheet: Call sheet
+      current_contact: Current contact
+      pending_calls: Pending calls
+
+  contacts:
+    filter:
+      title: Search
+      keyword_label: Keyword
+      search_button: Search
+    new:
+      title_new_contact: New contact
+      title_import: Import contacts
+      create_button: Create
+      import_button: Import
+      cancel_button: Back to campaign
+      button_show_import_contacts: import contacts
+      button_show_new_contact: create new contact
+    edit:
+      title: Edit contact
+      call_log_title: Call log
+      save_button: Update
+      cancel_button: Back to campaign
+      current_agent_label: "Current agent:"
+      prev: "<< Prev"
+      next: "Next >>"
+    table:
+      company_name: Company name
+      company_phone: Company phone
+      contact_phone: Contact phone
+      agent: Agent
+      result: Result
+      actions: Actions
+    create:
+      flash:
+        successfully_imported: "%{count} contacts have been successfully imported."
+    update:
+      flash:
+        successfully_updated: Contact has been successfully updated.
+    destroy:
+      flash:
+        successfully_removed: Contact has been successfully removed.
+        successfully_deassigned: Contact has been successfully deassigned.
+
+  call_results:
+    table:
+      date: Date
+      agent: Agent
+      result_type: Result type
+      actions: Actions
+      edit_link: Edit
+      remove_link: Remove
+      remove_confirm: "Are you sure?"
+      note: Note
+    new:
+      title: New result
+      form_title: Create new
+      save_button: Create
+      cancel_button: Back to contact
+      result: Result
+    edit:
+      title: Edit result
+      form_title: Edit
+      save_button: Update
+      cancel_button: Cancel
+      result: Result
+      button_new_result: New result
+    create:
+      flash:
+        successfully_added: Call result has been successfully added. Next contact has been selected.
+    update:
+      flash:
+        successfully_updated: Call result has been successfully updated.
+    destroy:
+      flash:
+        successfully_removed: Call result has been successfully removed.         
+
+
+  campaigns_users:
+    index:
+      title: Assign users
+      button_cancel: Back to campaign
+      button_assign: Assign users to campaign
+      table:
+        agent: Agent
+        campaigns: Campaigns
+
+  results:
+    index:
+      title: Manage result types
+      button_cancel: Back to campaign
+      call_log_results: Call log results
+      final_results: Final results
+      button_add_result_type: Add result type
+      button_assign_result_types: Assign results types to campaign
+      table:
+        result_name: Result name
+        generic_types: Generic types
+        custom_types: Custom types
+        fields: Fields
+    new:
+      title: Add result type
+      type: Type
+      button_add_field: Add field
+      text: text
+      large_text: large text
+      date: date
+      number: number
+      field_label: Field label
+      field_type: Type
+      call_log_result: Call log result
+      final_result: Final result
+    edit:
+      title: Edit result type
 
   lead_requests:
     listing:
@@ -1801,6 +2008,12 @@ en:
         remove_lead_template_field: Remove
         template_name: Template name
         field_name: Field name
+    results:
+      form:
+        new_lead_template_field: New field
+        remove_lead_template_field: Remove
+        template_name: Template name
+        field_name: Field name
     leads:
       form:
         country_local_label: Local
@@ -1843,6 +2056,15 @@ en:
         type1: Number
         type2: Date
         type3: Note
+    result_field:
+      field_type:
+        type0: Text
+        type1: Number
+        type2: Date
+        type3: Note
+        type4: Date & Time
+      date_format: "format: yyyy-mm-dd"
+      datetime_format: "format: yyyy-mm-dd hh:mm"  
     locale:
       en: English
       dk: Danish
@@ -1931,6 +2153,12 @@ en:
           attributes:
             default:
               cannot_be_disabled: "can't be disabled"
+        result_value:
+          attributes:
+            value:
+              incorrect_date_format: "incorrect date format"
+              incorrect_datetime_format: "incorrect date & time format"
+              incorrect_number_format: "incorrect number format"
 
   activemodel:
     errors:
@@ -2004,6 +2232,11 @@ en:
     credit_notes:
       create:
         notice: "Invoice has bee credited successfully"
+    results:
+      create:
+        notice: "Result type was successfully created."
+      update:
+        notice: "Result type was successfully updated."        
     actions:
       create:
         notice: "%{resource_name} was successfully created."
@@ -2066,6 +2299,39 @@ en:
         email_address: "Email address"
         linkedin_url: "Linkedin url"
         facebook_url: "Facebook url"
+      contact:
+        company_name: "Name"
+        company_phone_number: "Company phone number"
+        company_website: "Company website"
+        address_line_1: "Address line 1"
+        address_line_2: "Address line 2"
+        address_line_3: "City"
+        zip_code: "Zip code"
+        city: "City"
+        country_id: "Country"
+        region_id: "Region"
+        company_vat_no: "Company REG/VAT"
+        company_ean_number: "Company EAN number"
+        tmp_creator_id: "Creator"
+        category_id: "Category"
+        is_international: "Country"
+        header: "Public header"
+        description: "Public description"
+        hidden_description: "Detailed description (hidden)"
+        purchase_value: "Purchase value"
+        price: "Price"
+        currency_id: "Currency"
+        published: "Published"
+        sale_limit: "Sale limit"
+        purchase_decision_date: "Purchase decision date"
+        contact_name: "Name"
+        contact_direct_phone_number: "Direct phone number"
+        contact_mobile_number: "Mobile number"
+        phone_numnber: "Phone number"
+        email_address: "Email address"
+        linkedin_url: "Linkedin url"
+        facebook_url: "Facebook url"
+
       invoice:
         number: "Number"
         details: "Details"
