@@ -12,7 +12,9 @@ module User::Subaccounts
   end
 
   module InstanceMethods
+
     private
+
     def set_lead_buyer_role_enabled
       self.lead_buyer_role_enabled = has_role?(:lead_buyer) ? true : false
     end

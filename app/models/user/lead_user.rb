@@ -17,12 +17,12 @@ class ::User::LeadUser < ::User
 
   alias_method :accessible_lead_purchases, :lead_purchases
 
-  def comment_threads
-    Comment.roots.where(:commentable_id => lead_purchases.map(&:lead_id))
-  end
-
   def leads
     assigned_leads
+  end
+
+  def comment_threads
+    Comment.roots.for_users(self.self_and_descendants)
   end
 
   private

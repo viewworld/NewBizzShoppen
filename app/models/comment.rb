@@ -20,6 +20,8 @@ class Comment < ActiveRecord::Base
   scope :ascend_by_user, joins("INNER JOIN users ON users.id = comments.user_id").order("users.screen_name ASC")
   scope :with_keyword, lambda { |keyword| where("lower(leads.header) like :q", {:q => "%#{keyword.to_s.downcase}%"}).joins("INNER JOIN leads ON leads.id = comments.commentable_id") }
   scope :roots, where(:parent_id => nil)
+  scope :for_leads, lambda {|leads| where(:commentable_type => 'Lead', :commentable_id => leads.map(&:id))}
+  scope :for_users, lambda {|users| where(:user_id => users.map(&:id))}
 
   # Helper class method that allows you to build a comment
   # by passing a commentable object, a user_id, and comment text

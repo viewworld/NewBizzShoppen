@@ -31,4 +31,12 @@ class ::User::LeadBuyer < ::User
     self.big_buyer = parent.big_buyer if parent and self.big_buyer? != parent.big_buyer?
     true
   end
+
+  def leads
+    assigned_leads
+  end
+
+  def comment_threads
+    Comment.roots.for_users(self.self_and_descendants)
+  end
 end

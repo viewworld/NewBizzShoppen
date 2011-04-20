@@ -31,6 +31,10 @@ class ::User::CallCentre < ::User
     all_leads.where("creator_id in (?)", self.subaccounts.map(&:id))
   end
 
+  def comment_threads
+    Comment.roots.where(:commentable_id => leads.map(&:id))
+  end
+
   private
 
   def validate_first_and_last_name?

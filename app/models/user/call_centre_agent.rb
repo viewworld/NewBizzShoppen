@@ -12,6 +12,14 @@ class ::User::CallCentreAgent < ::User
     true
   end
 
+  def leads
+    Lead.with_created_by(self.id)
+  end
+
+  def comment_threads
+    Comment.roots.for_leads(leads)
+  end
+
   private
 
   def skip_address_validation

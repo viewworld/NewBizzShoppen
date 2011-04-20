@@ -3,6 +3,18 @@ class Comments::ThreadsController < Comments::CommentsController
 
   before_filter :fetch_lead, :only => [:new, :create]
 
+  set_tab "comments"
+
+  before_filter :can_start_conversation?, :only => [:new]
+
+  private
+
+  def can_start_conversation?
+    raise CanCan::AccessDenied if current_user.agent?
+  end
+
+  public
+
   def index
     params[:search] ||= {}
     @threads = current_user.comment_threads
@@ -37,6 +49,10 @@ class Comments::ThreadsController < Comments::CommentsController
 
   def new
     @threads = Comment.new
+  end
+
+  def edit
+    @thread = current_user.comment_threads.find(params[:id])
   end
 
   protected

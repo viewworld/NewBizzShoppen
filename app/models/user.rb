@@ -373,4 +373,12 @@ class User < ActiveRecord::Base
   def clear_login_key!
     self.update_attribute(:login_key, nil)
   end
+
+  def children
+    User.where(:parent_id => self.id)
+  end
+
+  def self_and_descendants
+    Array(self) + children
+  end
 end
