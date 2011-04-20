@@ -6,6 +6,8 @@ class Comments::ThreadsController < Comments::CommentsController
   set_tab "comments"
 
   before_filter :can_start_conversation?, :only => [:new]
+  before_filter :set_referer, :only => [:edit]
+  before_filter :check_role_for_update, :only => [:edit, :update]
 
   private
 
@@ -33,10 +35,10 @@ class Comments::ThreadsController < Comments::CommentsController
     if params[:lead_id]
       attributes.merge!({:commentable_type => 'Lead', :commentable_id => params[:lead_id]})
     end
-    @threads = current_user.comment_threads.new(attributes)
-    if @threads.save
+    @thread = current_user.comment_threads.new(attributes)
+    if @thread.save
       if params[:lead_id]
-        redirect_to comments_lead_thread_path(params[:lead_id], @threads)
+        redirect_to comments_lead_thread_path(params[:lead_id], @thread)
       else
         redirect_to :back
       end
@@ -55,10 +57,40 @@ class Comments::ThreadsController < Comments::CommentsController
     @thread = current_user.comment_threads.find(params[:id])
   end
 
+  def update
+    @thread = current_user.comment_threads.find(params[:id])
+    if @thread.update_attributes(params[:comment])
+      flash[:notice] = I18n.t("comments.threads.update.flash.notice")
+      if session[:comment_referer]
+        redirect_to session[:comment_referer]
+      else
+        redirect_to comments_lead_thread_path(@thread.commentable_id, @threads)
+      end
+      session[:comment_referer] = nil
+    else
+      render 'edit'
+    end
+  end
+
+  def destroy
+    @thread = current_user.comment_threads.find(params[:id])
+  end
+
   protected
 
   def fetch_lead
     @lead = current_user.leads.find_by_id(params[:lead_id])
+  end
+
+  def set_referer
+    session[:comment_referer] = request.referer
+  end
+
+  def check_role_for_update
+    unless current_user.has_any_role?(:admin, :call_centre)
+      flash[:alert] = I18n.t("comments.threads.update.flash.alert")
+      redirect_to :back
+    end
   end
 
 end
