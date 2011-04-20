@@ -2576,6 +2576,14 @@ en:
       new:
         view:
           header: "Post new comment for %{header}"
+      edit:
+        view:
+          header: "Edit comment for %{header}"
+          update_comment_button: "Save comment"
+      update:
+        flash:
+          notice: "Comment has been succesfully updated!"
+          alert: "You are not authorised to perform this operation!"
     shared:
       comment: "comment"
       comments: "comments"
