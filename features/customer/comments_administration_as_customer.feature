@@ -18,3 +18,5 @@ Scenario: I can sort all comments
 Scenario: I can filter all comments
 
 Scenario: I can see paginated list of comments
+
+Scenario: I can see tab with comments on my leads page besides show details
