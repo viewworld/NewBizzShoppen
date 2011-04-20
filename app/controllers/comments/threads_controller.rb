@@ -72,6 +72,16 @@ class Comments::ThreadsController < Comments::CommentsController
 
   def destroy
     @thread = current_user.comment_threads.find(params[:id])
+    @thread.move_children_to_higher_parent
+    @thread.reload
+    @lead = @thread.commentable
+    if @thread.destroy
+      flash[:notice] = I18n.t("comments.threads.destroy.flash.notice")
+      redirect_to comments_lead_path(@lead)
+    else
+      flash[:alert] = I18n.t("comments.threads.destroy.flash.alert")
+      redirect_to :back
+    end
   end
 
   protected

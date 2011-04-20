@@ -12,6 +12,8 @@ class Comment < ActiveRecord::Base
   belongs_to :user
   belongs_to :commentable, :polymorphic => true
 
+  #before_destroy :move_children_to_higher_parent
+
   scope :descend_by_created_at, order("created_at DESC")
   scope :ascend_by_created_at, order("created_at ASC")
   scope :descend_by_header, joins("INNER JOIN leads ON leads.id = comments.commentable_id").order("leads.header DESC")
@@ -20,8 +22,9 @@ class Comment < ActiveRecord::Base
   scope :ascend_by_user, joins("INNER JOIN users ON users.id = comments.user_id").order("users.screen_name ASC")
   scope :with_keyword, lambda { |keyword| where("lower(leads.header) like :q", {:q => "%#{keyword.to_s.downcase}%"}).joins("INNER JOIN leads ON leads.id = comments.commentable_id") }
   scope :roots, where(:parent_id => nil)
-  scope :for_leads, lambda {|leads| where(:commentable_type => 'Lead', :commentable_id => leads.map(&:id))}
+  scope :for_leads, lambda {|leads| where(:commentable_type => 'AbstractLead', :commentable_id => leads.map(&:id))}
   scope :for_users, lambda {|users| where(:user_id => users.map(&:id))}
+  scope :with_leads_created_by, lambda {|user| joins("INNER JOIN leads ON leads.id = comments.commentable_id").where(:leads => {:creator_id => user.id})}
 
   # Helper class method that allows you to build a comment
   # by passing a commentable object, a user_id, and comment text
@@ -56,5 +59,17 @@ class Comment < ActiveRecord::Base
   # given the commentable class name and id 
   def self.find_commentable(commentable_str, commentable_id)
     commentable_str.constantize.find(commentable_id)
+  end
+
+  def move_children_to_higher_parent
+    if has_children?
+      children.each do |child|
+        if self.parent_id.present?
+          child.move_to_child_of(parent_id)
+        else
+          child.move_to_root
+        end
+      end
+    end
   end
 end

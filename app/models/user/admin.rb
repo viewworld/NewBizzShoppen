@@ -15,4 +15,8 @@ class ::User::Admin < ::User
   def comment_threads
     Comment.where("")
   end
+
+  def leads
+    Lead.where("")
+  end
 end

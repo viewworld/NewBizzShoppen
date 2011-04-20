@@ -2573,6 +2573,8 @@ en:
           create_comment_button: "Create comment"
           header: "Thread %{title} for %{header}"
           edit: "Edit"
+          destroy: "Destroy"
+          destroy_message: "Are you sure to delete this comment?"
       new:
         view:
           header: "Post new comment for %{header}"
@@ -2584,6 +2586,10 @@ en:
         flash:
           notice: "Comment has been succesfully updated!"
           alert: "You are not authorised to perform this operation!"
+      destroy:
+        flash:
+          notice: "Comment has been successfully deleted!"
+          alert: "Comment could not be deleted!"
     shared:
       comment: "comment"
       comments: "comments"
