@@ -2575,6 +2575,7 @@ en:
           edit: "Edit"
           destroy: "Destroy"
           destroy_message: "Are you sure to delete this comment?"
+          start_new_thread: "Start new thread"
       new:
         view:
           header: "Post new comment for %{header}"

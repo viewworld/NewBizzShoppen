@@ -25,6 +25,10 @@ class ::User::LeadUser < ::User
     Comment.for_users(self.self_and_descendants)
   end
 
+  def can_start_new_lead_thread?
+    true
+  end
+
   private
 
   def set_owner(lead_request)

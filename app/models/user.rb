@@ -388,4 +388,8 @@ class User < ActiveRecord::Base
   def self_and_descendants
     Array(self) + children
   end
+
+  def can_start_new_lead_thread?
+    false
+  end
 end

@@ -5,5 +5,5 @@
       <hr/>
   <% end %>
 
-  <%= render :partial => "comments/threads/new" %>
+  <%= render :partial => "comments/threads/new" if current_user.can_start_new_lead_thread? %>
 </column-mc:>
