@@ -33,7 +33,7 @@ class Comments::ThreadsController < Comments::CommentsController
   def create
     attributes = params[:comment].merge(:user_id => current_user.id)
     if params[:lead_id]
-      attributes.merge!({:commentable_type => 'Lead', :commentable_id => params[:lead_id]})
+      attributes.merge!({:commentable_type => 'AbstractLead', :commentable_id => params[:lead_id]})
     end
     @thread = current_user.comment_threads.new(attributes)
     if @thread.save
