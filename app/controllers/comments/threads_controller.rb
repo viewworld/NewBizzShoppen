@@ -17,7 +17,7 @@ class Comments::ThreadsController < Comments::CommentsController
 
   def index
     params[:search] ||= {}
-    @threads = current_user.comment_threads
+    @threads = current_user.comment_threads.roots
     params[:search].each_pair do |key, value|
       @threads = @threads.send(key, value)
     end

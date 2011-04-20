@@ -20,7 +20,7 @@ class ::User::CallCentreAgent < ::User
   end
 
   def comment_threads
-    Comment.roots.for_leads(leads)
+    Comment.for_leads(leads)
   end
   
   def has_max_contacts_in_campaign?(campaign)

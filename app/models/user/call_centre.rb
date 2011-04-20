@@ -35,7 +35,7 @@ class ::User::CallCentre < ::User
   end
   
   def comment_threads
-    Comment.roots.where(:commentable_id => leads.map(&:id))
+    Comment.where(:commentable_id => leads.map(&:id))
   end  
 
   def has_max_contacts_in_campaign?(campaign)
