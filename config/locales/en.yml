@@ -2572,6 +2572,7 @@ en:
           reply: "reply"
           create_comment_button: "Create comment"
           header: "Thread %{title} for %{header}"
+          edit: "Edit"
       new:
         view:
           header: "Post new comment for %{header}"

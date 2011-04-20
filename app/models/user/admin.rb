@@ -11,4 +11,8 @@ class ::User::Admin < ::User
   def accessible_categories
     Category.all
   end
+
+  def comment_threads
+    Comment.roots
+  end
 end

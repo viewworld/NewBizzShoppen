@@ -51,6 +51,10 @@ class Comments::ThreadsController < Comments::CommentsController
     @threads = Comment.new
   end
 
+  def edit
+    @thread = current_user.comment_threads.find(params[:id])
+  end
+
   protected
 
   def fetch_lead

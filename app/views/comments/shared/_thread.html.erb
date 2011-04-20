@@ -1,7 +1,11 @@
   <ul>
   <% Comment.each_with_level(thread.self_and_descendants) do |o,level| %>
     <li style="margin-left:<%= 20*level %>px">
-      <%= o.title %> by <%= o.user.screen_name %> at <%= format_date(o.created_at, true) %> (<%= link_to_function t("comments.threads.show.view.reply"), "reply_to(#{thread.id},#{o.id},#{o.commentable_id},'#{o.title}')" %>)
+      <%= o.title %> by <%= o.user.screen_name %> at <%= format_date(o.created_at, true) %>
+      (<%= link_to_function t("comments.threads.show.view.reply"), "reply_to(#{thread.id},#{o.id},#{o.commentable_id},'#{o.title}')" %>)
+      <% if current_user.has_role?(:admin) %>
+          <%= link_to t("comments.threads.show.view.edit"), edit_comments_thread_path(o) %>
+      <% end %>
       <p><%= o.body %></p>
     </li>
   <% end %>
@@ -43,7 +47,7 @@
   }
 
   function validate_form(form_id){
-      if( jQuery.trim($(form_id + " input[id='comment_title']").val()) == "" ||  jQuery.trim($(form_id + " textarea[id='comment_body']").val()) == "")
+      if(jQuery.trim($(form_id + " input[id='comment_title']").val()) == "" || jQuery.trim($(form_id + " textarea[id='comment_body']").val()) == "")
       {
           $(form_id + " li[id='comment_title_input'] p").remove();
           if(jQuery.trim($(form_id + " input[id='comment_title']").val()) == "")
