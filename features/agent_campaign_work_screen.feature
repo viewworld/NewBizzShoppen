@@ -31,7 +31,7 @@ Feature: Agent campaign - calling session
     @1 @_done
     Scenario: I can see current call sheet
 
-    @1 @_done @added
+    @1 @_done @requested
     Scenario: I can see pending calls list
 
     @2 @_done
@@ -43,13 +43,13 @@ Feature: Agent campaign - calling session
     @3 @_done
     Scenario: I can see new lead form for specifying information based on currently selected contact
 
-    @3 @_done @added
+    @3 @_done @requested
     Scenario: I can change lead category and system reloads template fields
 
     @2 @_done
     Scenario: I can see information about previous results for selected contact
 
-    @3 @_done @added
+    @3 @_done @requested
     Scenario: I can see detailed information about result in tooltip
 
     @3 @_todo
