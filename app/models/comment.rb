@@ -12,6 +12,8 @@ class Comment < ActiveRecord::Base
   belongs_to :user
   belongs_to :commentable, :polymorphic => true
 
+  before_destroy :move_children_to_higher_parent
+
   scope :descend_by_created_at, order("created_at DESC")
   scope :ascend_by_created_at, order("created_at ASC")
   scope :descend_by_header, joins("INNER JOIN leads ON leads.id = comments.commentable_id").order("leads.header DESC")
@@ -56,5 +58,15 @@ class Comment < ActiveRecord::Base
   # given the commentable class name and id 
   def self.find_commentable(commentable_str, commentable_id)
     commentable_str.constantize.find(commentable_id)
+  end
+
+  private
+
+  def move_children_to_higher_parent
+    if has_children?
+      children.each do |child|
+        child.update_attribute(:parent_id, self.parent_id.present? ? self.parent_id : nil)
+      end
+    end
   end
 end
