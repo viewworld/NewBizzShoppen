@@ -59,13 +59,13 @@ Feature: Agent campaign - calling session
     @2 @_todo
     Scenario: I can see current call duration
 
-    @3 @_todo
+    @3 @_todo @snom
     Scenario: I can see snom phone connecting interface with current connect status
 
-    @3 @_todo
+    @3 @_todo @snom
     Scenario: I can connect my snom phone using its ip address
       # http://kb.snom.com/kb/index.php?View=entry&CategoryID=21&EntryID=40
 
-    @3 @_todo
+    @3 @_todo @snom
     Scenario: I can control my snom phone remotely through its http interface
       # http://kb.snom.com/kb/index.php?View=entry&CategoryID=21&EntryID=40    
