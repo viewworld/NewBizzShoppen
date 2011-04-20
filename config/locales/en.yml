@@ -218,9 +218,7 @@ en:
       purchase_date: "Purchase date:"
       creator_name: "Creator:"
       show_row: "Show details"
-      show_comments: "Show comments"
       hide_row: "Hide details"
-      hide_comments: "Hide comments"
     statuses:
       not_contacted: Not contacted
       contacted: Contacted
