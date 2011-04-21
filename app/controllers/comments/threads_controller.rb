@@ -91,6 +91,7 @@ class Comments::ThreadsController < Comments::CommentsController
 
   def fetch_lead
     @lead = current_user.leads.find_by_id(params[:lead_id])
+    raise CanCan::AccessDenied if @lead and !@lead.can_be_commented?
   end
 
   def set_referer

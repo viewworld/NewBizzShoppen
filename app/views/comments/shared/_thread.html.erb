@@ -1,7 +1,7 @@
   <ul>
   <% Comment.each_with_level(thread.self_and_descendants) do |o,level| %>
     <li style="margin-left:<%= 20*level %>px">
-      <%= o.title %> by <%= o.user.screen_name %> at <%= format_date(o.created_at, true) %>
+      <%= o.title %> by <%= current_user.has_role?(:admin) ?  link_to(o.user.screen_name, edit_administration_user_path(o.user)) : o.user.screen_name %> at <%= format_date(o.created_at, true) %>
       (<%= link_to_function t("comments.threads.show.view.reply"), "reply_to(#{thread.id},#{o.id},#{o.commentable_id},'#{o.title}')" %>)
       <% if current_user.has_role?(:admin) or (current_user.has_role?(:call_centre) and o.user.parent.present? and o.user.parent.with_role == current_user) %>
           <%= link_to t("comments.threads.show.view.edit"), edit_comments_thread_path(o) %>
