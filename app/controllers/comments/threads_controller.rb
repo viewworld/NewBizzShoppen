@@ -64,7 +64,7 @@ class Comments::ThreadsController < Comments::CommentsController
       flash[:notice] = I18n.t("comments.threads.update.flash.notice")
       if session[:comment_referer]
         redirect_to session[:comment_referer]
-      else      before_create :assign_last_thread_created_at_to_root
+      else
         redirect_to comments_lead_thread_path(@thread.commentable_id, @threads)
       end
       session[:comment_referer] = nil
