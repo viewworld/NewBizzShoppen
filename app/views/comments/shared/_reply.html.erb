@@ -1,6 +1,7 @@
    <%= semantic_remote_form_for :comment, Comment.new(:title => "Re: #{title}"), :url => comments_replies_path, :html => {:id => "reply_#{comment_id}", :style => "display:none"} do |f| %>
       <frm>
         <param:header>
+          <%= t("comments.threads.show.view.reply_to_comment", :title => comment.title) %>
         </param:header>
         <param:content>
             <div class="pdd_10 no_pdd_t">

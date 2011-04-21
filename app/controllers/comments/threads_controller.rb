@@ -54,17 +54,17 @@ class Comments::ThreadsController < Comments::CommentsController
   def new; end
 
   def edit
-    @thread = current_user.comment_threads.find(params[:id])
+    @comment = current_user.comment_threads.find(params[:id])
   end
 
   def update
-    @thread = current_user.comment_threads.find(params[:id])
-    if @thread.update_attributes(params[:comment])
+    @comment = current_user.comment_threads.find(params[:id])
+    if @comment.update_attributes(params[:comment])
       flash[:notice] = I18n.t("comments.threads.update.flash.notice")
       if session[:comment_referer]
         redirect_to session[:comment_referer]
       else
-        redirect_to comments_lead_thread_path(@thread.commentable_id, @threads)
+        redirect_to comments_lead_thread_path(@comment.commentable_id, @comment)
       end
       session[:comment_referer] = nil
     else
