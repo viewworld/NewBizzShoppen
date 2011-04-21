@@ -229,7 +229,7 @@ Feature: Agent campaign - management
     @3 @is @__campaign_manage_results @_done @_tested_elsewhere
     Scenario: I can add new result
 
-    @2 @is @__campaign_manage_results @_done @_tested_elsewhere
+    @2 @is @__campaign_manage_results @_done @_tested_elsewhere @requested
     Scenario: I can edit result
 
     @1 @is @__campaign_manage_results @_done @_tested_elsewhere
