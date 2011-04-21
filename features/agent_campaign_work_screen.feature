@@ -42,7 +42,7 @@ Feature: Agent campaign - calling session
     @3 @_done @_tested_elsewhere
     Scenario: I can navigate through contacts details / results history / add result
 
-    @1 @_done @_tested @added
+    @1 @_done @_tested
     Scenario: I can go to previous/next contact through arrows
       When I follow translated "campaigns.table.go_to_work_screen"
       And the "contact_company_name" field should contain "Bon Jovi inc."
