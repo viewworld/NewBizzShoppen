@@ -275,8 +275,7 @@ Feature: Agent campaign - management
       When I select "Leisure" from "Category"
       Then I should see "Leisure template"
 
-
-    @3 @tbr @__campaign_manage_results @_done @_tested @added
+    @3 @tbr @__campaign_manage_results @_done @_tested @requested
     Scenario: I can go to previous/next contact edit page through arrows
       When I edit contact "Bon Jovi inc." 
       And I should see translated "contacts.edit.current_agent_label"
@@ -289,7 +288,7 @@ Feature: Agent campaign - management
     #
     #
     #campaigns::agents::manage_results_types
-    @1 @tbr @__campaign_manage_result_types @_done @_tested @added
+    @1 @tbr @__campaign_manage_result_types @_done @_tested @requested
     Scenario: I can see list of generic call log results
       When I edit campaign "Testing One"
       And I should see "Edit campaign"
@@ -298,14 +297,14 @@ Feature: Agent campaign - management
       And I should see "Not interested now"
       And I should see "Not in"
 
-    @2 @tbr @__campaign_manage_result_types @_done @added @_tested
+    @2 @tbr @__campaign_manage_result_types @_done @requested
     Scenario: I can see list of custom call log results
       Given the custom call_log result with name "Under shower" is created by "translator_call_centre@nbs.com"
       When I edit campaign "Testing One"
       And I follow translated "campaigns.edit.button_manage_result_types"
       Then I should see "Under shower"  
 
-    @1 @tbr @__campaign_manage_result_types @_done @_tested @added
+    @1 @tbr @__campaign_manage_result_types @_done @_tested @requested
     Scenario: I can see list of generic final results
       When I edit campaign "Testing One"
       And I should see "Edit campaign"
@@ -315,14 +314,14 @@ Feature: Agent campaign - management
       And I should see "Meeting booked"
       And I should see "Custom result"
 
-    @2 @tbr @__campaign_manage_result_types @_done @added @_tested
+    @2 @tbr @__campaign_manage_result_types @_done @requested
     Scenario: I can see list of custom final results
       Given the custom final result with name "Don't give a damn" is created by "translator_call_centre@nbs.com"
       When I edit campaign "Testing One"
       And I follow translated "campaigns.edit.button_manage_result_types"
       Then I should see "Don't give a damn"
 
-    @1 @tbr @__campaign_manage_result_types @_done @added @_tested
+    @1 @tbr @__campaign_manage_result_types @_done @requested
     Scenario: I can assign custom results to campaign
       Given the custom final result with name "Don't give a damn" is created by "translator_call_centre@nbs.com"
       When I edit campaign "Testing One"
@@ -332,10 +331,10 @@ Feature: Agent campaign - management
       And I press translated "results.index.button_assign_result_types"
       Then result "Don't give a damn" should be assigned to campaign "Testing One"
 
-    @2 @tbr @__campaign_manage_result_types @_done @added @_tested_elsewhere
+    @2 @tbr @__campaign_manage_result_types @_done @requested
     Scenario: I can assign generic results to campaign
 
-    @3 @tbr @__campaign_manage_result_types @_done @selenium @_tested @added
+    @3 @tbr @__campaign_manage_result_types @_done @selenium @_tested @requested
     Scenario: I can manage call log results
       When I edit campaign "Testing One"
       And I should see "Edit campaign"
@@ -350,7 +349,7 @@ Feature: Agent campaign - management
       Then I should see "I am on fire"
       And I should see "Some text"
 
-    @3 @tbr @__campaign_manage_result_types @_done @selenium @_tested @added
+    @3 @tbr @__campaign_manage_result_types @_done @selenium @_tested @requested
     Scenario: I can manage final results
       When I edit campaign "Testing One"
       And I should see "Edit campaign"
@@ -365,18 +364,16 @@ Feature: Agent campaign - management
       Then I should see "I am on fire"
       And I should see "Some text"
 
-    @3 @tbr @__campaign_manage_result_types @_done @added @_tested_elsewhere
+    @3 @tbr @__campaign_manage_result_types @_done @requested
     Scenario: I can add custom fields to result type
 
-
-    @1 @tbr @__campaign_manage_result_types @_done @added @_tested_elsewhere
+    @1 @tbr @__campaign_manage_result_types @_done @requested
     Scenario: I can see list of fields in result types list
 
-
-    @3 @tbr @__campaign_manage_result_types @_done @added @_tested_elsewhere
+    @3 @tbr @__campaign_manage_result_types @_done @requested
     Scenario: I can select "time" type for custom field in result type
 
-    @3 @tbr @__campaign_manage_result_types @_done @added @_tested
+    @3 @tbr @__campaign_manage_result_types @_done @requested
     Scenario: I custom fields values should validate correct format
       Given the custom call_log result with name "Multiple fields" is created by "translator_call_centre@nbs.com"
       And result "Multiple fields" has mandatory "text field/STRING" field
@@ -474,7 +471,7 @@ Feature: Agent campaign - management
     #
     # CUSTOM RESULT TYPES
     #
-    @3 @tbr @__campaign_manage_results @_done @added @_tested
+    @3 @tbr @__campaign_manage_results @_done @requested
     Scenario: I can add custom call log result
       Given the custom call_log result with name "Just a call log result" is created by "translator_call_centre@nbs.com"
       When I am adding "Just a call log result" result for contact "Mleko company"
@@ -482,7 +479,7 @@ Feature: Agent campaign - management
       Then contact "Mleko company" should be at bottom of the list
       And I should see translated "contacts.edit.current_agent_label"
 
-    @3 @tbr @__campaign_manage_results @_done @added @_tested
+    @3 @tbr @__campaign_manage_results @_done @requested
     Scenario: I can add custom final result
       Given the custom final result with name "Just a final result" is created by "translator_call_centre@nbs.com"
       When I am adding "Just a final result" result for contact "Mleko company"

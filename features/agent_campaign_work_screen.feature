@@ -59,7 +59,7 @@ Feature: Agent campaign - calling session
       And I follow translated "agent_work_screen.index.show_current_call_sheet"
       Then user "translator_call_centre_agent@nbs.com" should see his available contacts
 
-    @1 @_done @added @_tested
+    @1 @_done @_tested @requested
     Scenario: I can see pending calls list
       When I follow translated "campaigns.table.go_to_work_screen"
       And I follow translated "agent_work_screen.index.show_pending_calls"
@@ -83,13 +83,13 @@ Feature: Agent campaign - calling session
     @3 @_done @_tested_elsewhere
     Scenario: I can see new lead form for specifying information based on currently selected contact
 
-    @3 @_done @_tested_elsewhere
+    @3 @_done @_tested_elsewhere @requested
     Scenario: I can change lead category and system reloads template fields
 
     @2 @_done @_tested_elsewhere
     Scenario: I can see information about previous results for selected contact
 
-    @3 @_done @nontestable
+    @3 @_done @nontestable @requested
     Scenario: I can see detailed information about result in tooltip
 
     @3 @_todo
@@ -99,13 +99,13 @@ Feature: Agent campaign - calling session
     @2 @_todo
     Scenario: I can see current call duration
 
-    @3 @_todo
+    @3 @_todo @snom
     Scenario: I can see snom phone connecting interface with current connect status
 
-    @3 @_todo
+    @3 @_todo @snom
     Scenario: I can connect my snom phone using its ip address
       # http://kb.snom.com/kb/index.php?View=entry&CategoryID=21&EntryID=40
 
-    @3 @_todo
+    @3 @_todo @snom
     Scenario: I can control my snom phone remotely through its http interface
       # http://kb.snom.com/kb/index.php?View=entry&CategoryID=21&EntryID=40    
