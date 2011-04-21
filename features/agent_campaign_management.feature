@@ -473,7 +473,7 @@ Feature: Agent campaign - management
     # CUSTOM RESULT TYPES
     #
     @3 @tbr @__campaign_manage_results @_done @requested
-    Scenario: I can add custom call log result
+    Scenario: I can add custom call result (call log)
       Given the custom call_log result with name "Just a call log result" is created by "translator_call_centre@nbs.com"
       When I am adding "Just a call log result" result for contact "Mleko company"
       And I press translated "call_results.new.save_button"
@@ -481,12 +481,18 @@ Feature: Agent campaign - management
       And I should see translated "contacts.edit.current_agent_label"
 
     @3 @tbr @__campaign_manage_results @_done @requested
-    Scenario: I can add custom final result
+    Scenario: I can add custom call result (final)
       Given the custom final result with name "Just a final result" is created by "translator_call_centre@nbs.com"
       When I am adding "Just a final result" result for contact "Mleko company"
       And I press translated "call_results.new.save_button"
       Then contact "Mleko company" should be completed
       And I should see translated "contacts.edit.current_agent_label"
+      
+    @tbr @__campaign_manage_results @_done @_tested_elsewhere @requested
+    Scenario: I can edit custom call result
+    
+    @tbr @__campaign_manage_results @_done @_tested_elsewhere @requested
+    Scenario: I can remove custom call result 
 
     #
     #
