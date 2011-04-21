@@ -13,12 +13,12 @@ Feature: Agent campaign - management
     #
     #
     #campaigns::index
-    @3 @is @__campaigns_listing @_tested @_done
+    @is @__campaigns_listing @_tested @_done
  	Scenario: I can see campaigns list
       Then I should see translated "campaigns.header.title"
       Then I should see translated "campaigns.header.new_campaign_button"
 
-    @1 @is @__campaigns_listing @_tested @_done
+    @is @__campaigns_listing @_tested @_done
     Scenario: I can filter campaigns by active/inactive status
       Then I select translated "campaigns.filter.state_select_active" from "search_with_state"
       Then I press translated "campaigns.filter.search_button"
@@ -29,7 +29,7 @@ Feature: Agent campaign - management
       Then I should see "Testing Two"
       Then I should not see "Testing One"
 
-    @1 @is @__campaigns_listing @_tested @_done
+    @is @__campaigns_listing @_tested @_done
     Scenario: I can sort campaigns
       Then I follow translated "campaigns.table.name"
       Then I should see "Testing One" before "Testing Two"
@@ -52,21 +52,21 @@ Feature: Agent campaign - management
       Then I follow translated "campaigns.table.end_date"
       Then I should see "Testing One" before "Testing Two"
 
-    @1 @is @__campaigns_listing @_tested @_done 
+    @is @__campaigns_listing @_tested @_done 
     Scenario: I can filter campaigns by name
       Then I fill in "search_with_keyword" with "two"
       Then I press translated "campaigns.filter.search_button"
       Then I should see "Testing Two"
       Then I should not see "Testing One"
 
-    @1 @is @__campaigns_listing @_done @_tested
+    @is @__campaigns_listing @_done @_tested
     Scenario: I can remove selected campaign
       Then I follow translated "campaigns.index.destroy"
       Then I should not see "Testing One"
       Then I should see "Campaign was successfully destroyed"
       Then I should see "Testing Two"
 
-    @2 @is @__campaigns_listing @_tested @_done @selenium
+    @is @__campaigns_listing @_tested @_done @selenium
     Scenario: I can create new campaign
       Then I click xpath "//ul[@class='header_actions']//a"
       Then I fill in "campaign_name" with "Testing Creation"
@@ -85,7 +85,7 @@ Feature: Agent campaign - management
 
     #campaigns::edit
     # name, category, country, start_date, end_date, number_of_visible_contacts_per_agent
-    @3 @is @__campaign_manage @_tested
+    @is @__campaign_manage @_tested
     Scenario: I can specify general campaign information
       Then I follow translated "campaigns.index.edit"
       Then I fill in "campaign_name" with "Testing Changed"
@@ -103,13 +103,13 @@ Feature: Agent campaign - management
       Then I should see "Leisure"
       Then I should not see "Denmark"
 
-    @3 @is @__campaign_manage @_tested @_done
+    @is @__campaign_manage @_tested @_done
     Scenario: I can see contacts list
       Then I follow translated "campaigns.index.edit"
       Then I should see translated "campaigns.edit.title_contacts"
       Then I should see translated "campaigns.edit.button_create_contact"
 
-    @1 @is @__campaign_manage @_tested @_done
+    @is @__campaign_manage @_tested @_done
     Scenario: I can sort contacts list
       Then I follow translated "campaigns.index.edit"
       Then I should see "Bon Jovi" before "Mleko company"
@@ -118,20 +118,20 @@ Feature: Agent campaign - management
 
     # question: may agent have more assigned contacts then visible contacts number
     # - no but when the agent registre a result for a contact- the contact is removed from the agens active calling list and asign to the reslt list. Then the agent is dynamicly assign a new contact.
-    @3 @is @__campaign_manage @_done @_tested_elsewhere @selenium
+    @is @__campaign_manage @_done @_tested_elsewhere @selenium
     Scenario: I can assign selected contacts to selected agent
 
-    @2 @is @__campaign_manage @_tested
+    @is @__campaign_manage @_tested
     Scenario: I can remove contact from campaign
       Then I follow translated "campaigns.index.edit"
       Then I follow translated "campaigns.edit.remove_button"
       Then I should see "Contact was successfully destroyed"
       Then I should not see "Bon Jovi"
 
-    @1 @is @__campaign_manage @_done @_tested_elsewhere
+    @is @__campaign_manage @_done @_tested_elsewhere
     Scenario: I can deassign agents from selected contacts
 
-    @1 @is @__campaign_manage @_tested @selenium
+    @is @__campaign_manage @_tested @selenium
     Scenario: I can filter contacts by its fields
       When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
       Then I should see "Bon Jovi"
@@ -141,22 +141,22 @@ Feature: Agent campaign - management
       Then I should see "Bon Jovi"
       Then I should not see "Mleko"
 
-    @3 @tbr @__campaign_manage @_done @nontestable @requested
+    @tbr @__campaign_manage @_done @nontestable @requested
     Scenario: I can export selected contacts to CSV
 
     #
     #
     #campaigns::agents::new (popup?)
-    @3 @is @__campaign_assign_agents @_tested
+    @is @__campaign_assign_agents @_tested
     Scenario: I can browse available freelance agents and call centers
       Then I follow translated "campaigns.index.edit"
       Then I follow translated "campaigns.edit.agent_assignment_button"
       Then I should see "John Smith"
 
-    @2 @is @__campaign_assign_agents @_tested_elsewhere
+    @is @__campaign_assign_agents @_tested_elsewhere
     Scenario: I can assign selected agents to campaign
 
-    @1 @is @__campaign_assign_agents @_tested @selenium @requested
+    @is @__campaign_assign_agents @_tested @selenium @requested
     Scenario: I can deassign not selected agents to campaign
       When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
       Then I follow translated "campaigns.edit.agent_assignment_button"
@@ -173,7 +173,7 @@ Feature: Agent campaign - management
     #
     #
     #campaigns::contacts::new (popup?)
-    @3 @tbr @__campaign_import_contacts @_done @_tested
+    @tbr @__campaign_import_contacts @_done @_tested
     Scenario: I can import contacts as excel formatted list
       When I edit campaign "Testing One"
       And I follow translated "campaigns.edit.button_import_contacts"
@@ -181,7 +181,7 @@ Feature: Agent campaign - management
       And I press translated "contacts.new.import_button"
       Then imported contacts should be in campaign "Testing One"                
 
-    @3 @is @__campaign_import_contacts @_tested
+   @is @__campaign_import_contacts @_tested
     Scenario: I can create single contact
       Then I follow translated "campaigns.index.edit"
       Then I follow translated "campaigns.edit.button_create_contact"
@@ -197,7 +197,7 @@ Feature: Agent campaign - management
       Then I should see "United Kingdom"
 
     #campaigns::contacts::edit
-    @3 @is @__campaign_import_contacts @_tested
+    @is @__campaign_import_contacts @_tested
     Scenario: I can see contact details
       Then I follow translated "campaigns.index.edit"
       Then I follow translated "campaigns.edit.edit_button"
@@ -205,7 +205,7 @@ Feature: Agent campaign - management
       Then I should see translated "contacts.edit.title"
 
     #create => edit => destroy is tested here as well
-    @1 @is @__campaign_import_contacts @_tested @selenium
+    @is @__campaign_import_contacts @_tested @selenium
     Scenario: I can see contact results
       When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
       When I click hidden link by url regex "/callers\/campaigns\/\d+\/contacts\/\d+\/edit/"
@@ -226,16 +226,16 @@ Feature: Agent campaign - management
       Then I should not see "Call back" within "#call_results"
       Then I should not see "Johnny Mnemonic" within "#call_results"
 
-    @3 @is @__campaign_manage_results @_done @_tested_elsewhere
+    @is @__campaign_manage_results @_done @_tested_elsewhere
     Scenario: I can add new result
 
-    @2 @is @__campaign_manage_results @_done @_tested_elsewhere @requested
+    @is @__campaign_manage_results @_done @_tested_elsewhere @requested
     Scenario: I can edit result
 
-    @1 @is @__campaign_manage_results @_done @_tested_elsewhere
+    @is @__campaign_manage_results @_done @_tested_elsewhere
     Scenario: I can remove result
 
-    @1 @is @__campaign_import_contacts @_tested @selenium
+    @is @__campaign_import_contacts @_tested @selenium
     Scenario: I can see current contact assignment
       When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
       Then agent for "Bon Jovi inc." is blank
@@ -252,7 +252,7 @@ Feature: Agent campaign - management
       Then agent for "Bon Jovi inc." is blank
 
 
-    @3 @tbr @__campaign_manage_results @selenium @_done @_tested @requested
+    @tbr @__campaign_manage_results @selenium @_done @_tested @requested
     Scenario: I can see template fields for current category
       Given template named "Leisure template" for category "Leisure" is created by user "translator_call_centre@nbs.com" with role "call_centre"
       And template named "Leisure template" is global
@@ -264,7 +264,7 @@ Feature: Agent campaign - management
       When I select "Leisure" from "Category"
       Then I should see "Leisure template"
 
-    @3 @tbr @__campaign_manage_results @_done @_tested @requested
+    @tbr @__campaign_manage_results @_done @_tested @requested
     Scenario: I can go to previous/next contact edit page through arrows
       When I edit contact "Bon Jovi inc." 
       And I should see translated "contacts.edit.current_agent_label"
@@ -277,7 +277,7 @@ Feature: Agent campaign - management
     #
     #
     #campaigns::agents::manage_results_types
-    @1 @tbr @__campaign_manage_result_types @_done @_tested @requested
+    @tbr @__campaign_manage_result_types @_done @_tested @requested
     Scenario: I can see list of generic call log results
       When I edit campaign "Testing One"
       And I should see "Edit campaign"
@@ -286,14 +286,14 @@ Feature: Agent campaign - management
       And I should see "Not interested now"
       And I should see "Not in"
 
-    @2 @tbr @__campaign_manage_result_types @_done @requested
+    @tbr @__campaign_manage_result_types @_done @requested
     Scenario: I can see list of custom call log results
       Given the custom call_log result with name "Under shower" is created by "translator_call_centre@nbs.com"
       When I edit campaign "Testing One"
       And I follow translated "campaigns.edit.button_manage_result_types"
       Then I should see "Under shower"  
 
-    @1 @tbr @__campaign_manage_result_types @_done @_tested @requested
+    @tbr @__campaign_manage_result_types @_done @_tested @requested
     Scenario: I can see list of generic final results
       When I edit campaign "Testing One"
       And I should see "Edit campaign"
@@ -303,14 +303,14 @@ Feature: Agent campaign - management
       And I should see "Meeting booked"
       And I should see "Custom result"
 
-    @2 @tbr @__campaign_manage_result_types @_done @requested
+    @tbr @__campaign_manage_result_types @_done @requested
     Scenario: I can see list of custom final results
       Given the custom final result with name "Don't give a damn" is created by "translator_call_centre@nbs.com"
       When I edit campaign "Testing One"
       And I follow translated "campaigns.edit.button_manage_result_types"
       Then I should see "Don't give a damn"
 
-    @1 @tbr @__campaign_manage_result_types @_done @requested
+    @tbr @__campaign_manage_result_types @_done @requested
     Scenario: I can assign custom results to campaign
       Given the custom final result with name "Don't give a damn" is created by "translator_call_centre@nbs.com"
       When I edit campaign "Testing One"
@@ -320,7 +320,7 @@ Feature: Agent campaign - management
       And I press translated "results.index.button_assign_result_types"
       Then result "Don't give a damn" should be assigned to campaign "Testing One"
 
-    @2 @tbr @__campaign_manage_result_types @_done @requested
+    @tbr @__campaign_manage_result_types @_done @requested
     Scenario: I can assign generic results to campaign
     
     @tbr @__campaign_manage_result_types @_done @_tested_elsewhere @requested
@@ -329,7 +329,7 @@ Feature: Agent campaign - management
     @tbr @__campaign_manage_result_types @_done @_tested_elsewhere @requested
     Scenario: I can remove call result
     
-    @3 @tbr @__campaign_manage_result_types @_done @selenium @_tested @requested
+    @tbr @__campaign_manage_result_types @_done @selenium @_tested @requested
     Scenario: I can edit call log results
       When I edit campaign "Testing One"
       And I should see "Edit campaign"
@@ -350,7 +350,7 @@ Feature: Agent campaign - management
     @tbr @__campaign_manage_result_types @_done @_tested_elsewhere @requested
     Scenario: I can remove final results
 
-    @3 @tbr @__campaign_manage_result_types @_done @selenium @_tested @requested
+    @tbr @__campaign_manage_result_types @_done @selenium @_tested @requested
     Scenario: I can edit final results
       When I edit campaign "Testing One"
       And I should see "Edit campaign"
@@ -365,16 +365,16 @@ Feature: Agent campaign - management
       Then I should see "I am on fire"
       And I should see "Some text"
 
-    @3 @tbr @__campaign_manage_result_types @_done @requested
+    @tbr @__campaign_manage_result_types @_done @requested
     Scenario: I can add custom fields to result type
 
-    @1 @tbr @__campaign_manage_result_types @_done @requested
+    @tbr @__campaign_manage_result_types @_done @requested
     Scenario: I can see list of fields in result types list
 
-    @3 @tbr @__campaign_manage_result_types @_done @requested
+    @tbr @__campaign_manage_result_types @_done @requested
     Scenario: I can select "datetime" type for custom field in result type
 
-    @3 @tbr @__campaign_manage_result_types @_done @requested
+    @tbr @__campaign_manage_result_types @_done @requested
     Scenario: I custom fields values should validate correct format
       Given the custom call_log result with name "Multiple fields" is created by "translator_call_centre@nbs.com"
       And result "Multiple fields" has mandatory "text field/STRING" field
@@ -409,7 +409,7 @@ Feature: Agent campaign - management
     #
     # GENERIC RESULT TYPES
     #
-    @2 @tbr @__campaign_manage_results @_done @_tested
+    @tbr @__campaign_manage_results @_done @_tested
     Scenario: I can set call back datetime for contact when result is "call back"
       When I am adding "Call back" result for contact "Mleko company"
       And I fill in "Call back date" field with future datetime
@@ -418,21 +418,21 @@ Feature: Agent campaign - management
       And I should see translated "contacts.edit.current_agent_label"
 
 
-    @2 @tbr @__campaign_manage_results @_done @_tested
+    @tbr @__campaign_manage_results @_done @_tested
     Scenario: contact is moved to bottom of call list when result is "not in"
       When I am adding "Not in" result for contact "Mleko company"
       And I press translated "call_results.new.save_button"
       Then contact "Mleko company" should be at bottom of the list
       And I should see translated "contacts.edit.current_agent_label"
 
-    @2 @tbr @__campaign_manage_results @_done @_tested
+    @tbr @__campaign_manage_results @_done @_tested
     Scenario: contact deassigned from agent when result is "Not interested"
       When I am adding "Not interested" result for contact "Mleko company"
       And I press translated "call_results.new.save_button"
       Then contact "Mleko company" should be completed
       And I should see translated "contacts.edit.current_agent_label"
 
-    @2 @tbr @__campaign_manage_results @_done @_tested
+    @tbr @__campaign_manage_results @_done @_tested
     Scenario: I can set call back datetime for contact when result is "Not interested now"
       When I am adding "Not interested now" result for contact "Mleko company"
       And I fill in "Call back date" field with future datetime
@@ -440,7 +440,7 @@ Feature: Agent campaign - management
       Then contact "Mleko company" should be pending
       And I should see translated "contacts.edit.current_agent_label"
 
-    @3 @tbr @__campaign_manage_results @_done @_tested
+    @tbr @__campaign_manage_results @_done @_tested
     Scenario: new lead should be created based on contact when result is "Upgrade to lead"
       When I am adding "Upgraded to lead" result for contact "Mleko company"
       
@@ -459,7 +459,7 @@ Feature: Agent campaign - management
       Then contact "Mleko company" should be upgraded to lead
       And I should see translated "contacts.edit.current_agent_label"
 
-    @2 @tbr @__campaign_manage_results @_done @_tested
+    @tbr @__campaign_manage_results @_done @_tested
     Scenario: I can set meeting datetime for contact when result is "Meeting booked"
       When I am adding "Meeting booked" result for contact "Mleko company"
       And I fill in "Meeting date" field with future datetime
@@ -472,7 +472,7 @@ Feature: Agent campaign - management
     #
     # CUSTOM RESULT TYPES
     #
-    @3 @tbr @__campaign_manage_results @_done @requested
+    @tbr @__campaign_manage_results @_done @requested
     Scenario: I can add custom call result (call log)
       Given the custom call_log result with name "Just a call log result" is created by "translator_call_centre@nbs.com"
       When I am adding "Just a call log result" result for contact "Mleko company"
@@ -480,7 +480,7 @@ Feature: Agent campaign - management
       Then contact "Mleko company" should be at bottom of the list
       And I should see translated "contacts.edit.current_agent_label"
 
-    @3 @tbr @__campaign_manage_results @_done @requested
+    @tbr @__campaign_manage_results @_done @requested
     Scenario: I can add custom call result (final)
       Given the custom final result with name "Just a final result" is created by "translator_call_centre@nbs.com"
       When I am adding "Just a final result" result for contact "Mleko company"
@@ -497,7 +497,7 @@ Feature: Agent campaign - management
     #
     #
     #campaigns::show (statistics)
-    @1 @is @__campaign_statistics @_tested @selenium
+    @is @__campaign_statistics @_tested @selenium
     Scenario: I can see general statistics for campaign (all time)
       # number of agents, contacts, calls, results
       Then I add user "translator_call_centre@nbs.com" to campaign "Testing One"
@@ -509,7 +509,7 @@ Feature: Agent campaign - management
       Then I should see "Total number of calls: ??"
       #jak sie wysypie to bedzie wiadomo że trzeba dodać cyfre tam gdzie są teraz pytajniki :P
 
-    @3 @is @__campaign_statistics @_tested @selenium
+    @is @__campaign_statistics @_tested @selenium
     Scenario: I can see results statistics for given time range
       Then I execute js for display action block for "campaigns"
       Then I follow translated "campaigns.index.result"
@@ -520,7 +520,7 @@ Feature: Agent campaign - management
       Then I should see "02.01" within "#call_results"
       Then I should see "03.01" within "#call_results"
 
-    @2 @is @__campaign_statistics @_tested @selenium
+    @is @__campaign_statistics @_tested @selenium
     Scenario: I can select time range from predefined ones: whole campaign, today, this week, this month
       Then I execute js for display action block for "campaigns"
       Then I follow translated "campaigns.index.result"
@@ -538,7 +538,7 @@ Feature: Agent campaign - management
       Then I press translated "campaigns.show.search_button"
       Then I should see today date in results table
 
-    @3 @is @__campaign_statistics @_tested @selenium
+    @is @__campaign_statistics @_tested @selenium
     Scenario: I can see results list for given date and result type
       Then I create call result
       Then I execute js for display action block for "campaigns"
@@ -549,7 +549,7 @@ Feature: Agent campaign - management
       Then I should see "John Smith" within "#call_result_details"
       Then I should see "Call back" within "#call_result_details"
 
-    @2 @is @__campaign_statistics @_tested @selenium @requested
+    @is @__campaign_statistics @_tested @selenium @requested
     Scenario: I can see results list for given agent list
       Then I create call result
       Then I add user "translator_call_centre@nbs.com" to campaign "Testing One"
@@ -565,7 +565,7 @@ Feature: Agent campaign - management
       Then I should not see "1" within "#all_result_row"
       Then I wait 4 second
 
-    @2 @is @__campaign_statistics @_tested @selenium @requested
+    @is @__campaign_statistics @_tested @selenium @requested
     Scenario: I can see results list for completed contacts only
       Then I execute js for display action block for "campaigns"
       Then I follow translated "campaigns.index.result"
