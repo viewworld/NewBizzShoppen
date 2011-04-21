@@ -36,7 +36,7 @@
         <th><%= link_to t("comments.threads.index.view.lead_header"), order_for_scoped_search(:header) %></th>
         <th><%= link_to t("comments.threads.index.view.started_by"), order_for_scoped_search(:user) %></th>
         <th><%= link_to t("comments.threads.index.view.date"), order_for_scoped_search(:created_at) %></th>
-        <th><%= link_to t("comments.threads.index.view.last_thread_date"), order_for_scoped_search(:created_at) %></th>
+        <th><%= link_to t("comments.threads.index.view.last_thread_date"), order_for_scoped_search(:last_thread_created_at) %></th>
         <th class="hr"></th>
     </thead>
       <tfoot>
@@ -51,7 +51,7 @@
        <tr>
          <td class="cl"></td>
          <td>
-           <%= link_to thread.commentable.header, comments_lead_thread_path(thread.commentable_id,thread) %>
+           <%= link_to thread.commentable.header, comments_lead_thread_path(thread.commentable_id,thread), :class => "default_action" %>
          </td>
          <td>
            <%= thread.user.screen_name %>
@@ -60,7 +60,7 @@
            <%= format_date(thread.created_at,true) %>
          </td>
          <td>
-           <%= format_date(thread.created_at,true) %>
+           <%= format_date(thread.last_thread_created_at, true) %>
          </td>
          <td class="cr"></td>
        </tr>

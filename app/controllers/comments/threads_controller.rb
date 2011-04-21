@@ -38,6 +38,8 @@ class Comments::ThreadsController < Comments::CommentsController
     end
     @thread = current_user.comment_threads.new(attributes)
     if @thread.save
+      @thread.reload
+      @thread.assign_last_thread_created_at_to_root
       if params[:lead_id]
         redirect_to comments_lead_thread_path(params[:lead_id], @thread)
       else
@@ -62,7 +64,7 @@ class Comments::ThreadsController < Comments::CommentsController
       flash[:notice] = I18n.t("comments.threads.update.flash.notice")
       if session[:comment_referer]
         redirect_to session[:comment_referer]
-      else
+      else      before_create :assign_last_thread_created_at_to_root
         redirect_to comments_lead_thread_path(@thread.commentable_id, @threads)
       end
       session[:comment_referer] = nil
