@@ -141,7 +141,7 @@ Feature: Agent campaign - management
       Then I should see "Bon Jovi"
       Then I should not see "Mleko"
 
-    @3 @tbr @__campaign_manage @_done @nontestable @added
+    @3 @tbr @__campaign_manage @_done @nontestable @requested
     Scenario: I can export selected contacts to CSV
 
     #
