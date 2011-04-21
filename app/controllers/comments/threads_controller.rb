@@ -24,7 +24,7 @@ class Comments::ThreadsController < Comments::CommentsController
     params[:search].each_pair do |key, value|
       @threads = @threads.send(key, value)
     end
-    @threads = @threads.paginate(:page => params[:page])
+    @threads = @threads.paginate(:page => params[:page], :per_page => Comment.per_page)
   end
 
   def show

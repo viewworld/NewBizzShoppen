@@ -74,6 +74,8 @@ Given /^a lead (.+) exists within category (.+) and is bought by user (.+) with 
   purchaser = customer.role == "customer" ? customer : User::LeadBuyer.find(customer.id)
   if role == "lead_buyer"
     customer = customer.parent.send(:casted_class).find(customer.parent_id)
+  elsif role == "category_buyer"
+    customer = User::Customer.find(customer.id)
   end
   lead = Lead.find_by_header(header).first
   if lead.nil?

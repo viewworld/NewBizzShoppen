@@ -304,3 +304,8 @@ Seller.blueprint do
   vat_no { Faker.numerify('#########') }
   bank_account { BankAccount.make! }
 end
+
+Comment.blueprint do
+  title { Faker::Lorem.words(5).to_s.capitalize }
+  body { Faker::Lorem.sentences(2).to_s }
+end
