@@ -33,6 +33,14 @@ class ::User::CategoryBuyer < ::User
 
   public
 
+  def leads
+    bought_leads
+  end
+
+  def comment_threads
+    Comment.for_users(self.self_and_descendants)
+  end
+
   def accessible_categories
     Category.category_buyer_accessible_categories(self)
   end

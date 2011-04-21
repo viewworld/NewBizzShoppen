@@ -1,4 +1,4 @@
-@$_system @m9 @comments
+@$_system @m9 @comments @_done @non_testable
 Feature: Comments
 
 Scenario: Each comment object has to be processed in the background
