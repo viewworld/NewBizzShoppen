@@ -322,9 +322,15 @@ Feature: Agent campaign - management
 
     @2 @tbr @__campaign_manage_result_types @_done @requested
     Scenario: I can assign generic results to campaign
-
+    
+    @tbr @__campaign_manage_result_types @_done @_tested_elsewhere @requested
+    Scenario: I can add new call result
+    
+    @tbr @__campaign_manage_result_types @_done @_tested_elsewhere @requested
+    Scenario: I can remove call result
+    
     @3 @tbr @__campaign_manage_result_types @_done @selenium @_tested @requested
-    Scenario: I can manage call log results
+    Scenario: I can edit call log results
       When I edit campaign "Testing One"
       And I should see "Edit campaign"
       And I follow translated "campaigns.edit.button_manage_result_types"
@@ -338,8 +344,14 @@ Feature: Agent campaign - management
       Then I should see "I am on fire"
       And I should see "Some text"
 
+    @tbr @__campaign_manage_result_types @_done @_tested_elsewhere @requested
+    Scenario: I can add final results
+    
+    @tbr @__campaign_manage_result_types @_done @_tested_elsewhere @requested
+    Scenario: I can remove final results
+
     @3 @tbr @__campaign_manage_result_types @_done @selenium @_tested @requested
-    Scenario: I can manage final results
+    Scenario: I can edit final results
       When I edit campaign "Testing One"
       And I should see "Edit campaign"
       And I follow translated "campaigns.edit.button_manage_result_types"
