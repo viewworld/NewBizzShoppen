@@ -1,4 +1,4 @@
-   <%= semantic_remote_form_for :comment, Comment.new(:title => "Re: #{title}"), :url => comments_replies_path, :html => {:id => "reply_#{comment_id}"} do |f| %>
+   <%= semantic_remote_form_for :comment, Comment.new(:title => "Re: #{title}"), :url => comments_replies_path, :html => {:id => "reply_#{comment_id}", :style => "display:none"} do |f| %>
       <frm>
         <param:header>
         </param:header>
