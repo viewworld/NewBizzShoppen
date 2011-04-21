@@ -1,0 +1,27 @@
+   <%= semantic_remote_form_for :comment, Comment.new(:title => "Re: #{title}"), :url => comments_replies_path, :html => {:id => "reply_#{comment_id}"} do |f| %>
+      <frm>
+        <param:header>
+        </param:header>
+        <param:content>
+            <div class="pdd_10 no_pdd_t">
+              <fieldset class="inputs labels_ta_r labels_240">
+                <ol class="align_inputs">
+                  <%= f.input :parent_id, :as => :hidden, :value => comment_id %>
+                  <%= f.input :commentable_id, :as => :hidden, :value => commentable_id %>
+                  <%= f.input :commentable_type, :as => :hidden, :value => "AbstractLead" %>
+                  <%= f.input :title %>
+                  <%= f.input :body %>
+                </ol>
+              </fieldset>
+            </div>
+        </param:content>
+        <param:actions>
+           <ibt c="fltri" icon="save">
+              <%= button_to_function t("comments.threads.show.view.create_comment_button"), "validate_form('#reply_#{comment_id}')"  %>
+           </ibt>
+           <ibt c="fltri bt_grey">
+              <%= button_to_function t("common.cancel_link"), "$('#reply_#{comment_id}').slideUp('slow');" %>
+           </ibt>
+        </param:actions>
+      </frm>
+   <% end %>

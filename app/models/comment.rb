@@ -76,4 +76,8 @@ class Comment < ActiveRecord::Base
   def assign_last_thread_created_at_to_root
     self.root.update_attribute(:last_thread_created_at, created_at)
   end
+  
+  def comment_to_insert_after
+    siblings.order("created_at").last || parent
+  end  
 end
