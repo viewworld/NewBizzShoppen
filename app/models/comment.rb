@@ -12,7 +12,7 @@ class Comment < ActiveRecord::Base
   belongs_to :user
   belongs_to :commentable, :polymorphic => true
 
-  #before_destroy :move_children_to_higher_parent
+  before_create :assign_last_thread_created_at_to_root
 
   scope :descend_by_created_at, order("created_at DESC")
   scope :ascend_by_created_at, order("created_at ASC")
@@ -71,5 +71,11 @@ class Comment < ActiveRecord::Base
         end
       end
     end
+  end
+
+  private
+
+  def assign_last_thread_created_at_to_root
+
   end
 end

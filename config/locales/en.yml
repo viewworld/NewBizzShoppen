@@ -2564,6 +2564,7 @@ en:
           started_by: "Started by"
           date: "Date"
           header: "Comments"
+          last_thread_date: "Last update"
       create:
         flash:
           notice: "Comment has been successfully created!"
