@@ -42,7 +42,7 @@ Feature: Agent campaign - calling session
     @3 @_done @_tested_elsewhere
     Scenario: I can navigate through contacts details / results history / add result
 
-    @1 @_done @_tested
+    @1 @_done @_tested @added
     Scenario: I can go to previous/next contact through arrows
       When I follow translated "campaigns.table.go_to_work_screen"
       And the "contact_company_name" field should contain "Bon Jovi inc."
@@ -92,11 +92,11 @@ Feature: Agent campaign - calling session
     @3 @_done @nontestable @requested
     Scenario: I can see detailed information about result in tooltip
 
-    @3 @_todo
+    @3 @_todo @snom
     Scenario: system can make a call automatically for next contact on the list if dynamic calling is enabled
       #when current call is over and result has been given
 
-    @2 @_todo
+    @2 @_todo @snom
     Scenario: I can see current call duration
 
     @3 @_todo @snom
