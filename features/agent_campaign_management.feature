@@ -547,7 +547,7 @@ Feature: Agent campaign - management
       Then I should not see "1" within "#all_result_row"
       Then I wait 4 second
 
-    @2 @is @__campaign_statistics @_tested @selenium
+    @2 @is @__campaign_statistics @_tested @selenium @requested
     Scenario: I can see results list for completed contacts only
       Then I execute js for display action block for "campaigns"
       Then I follow translated "campaigns.index.result"
