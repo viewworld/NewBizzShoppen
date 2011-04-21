@@ -1,0 +1,2 @@
+content = render(:text => 'asd')
+page << "$('#{content}').insertAfter('#comment_26');"

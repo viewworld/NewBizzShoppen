@@ -156,6 +156,7 @@ Nbs::Application.routes.draw do
     resources :leads do
       resources :threads
     end
+    resources :replies
   end  
 
   match 'buyer_home' => 'buyer_home#show', :as => "buyer_home"
