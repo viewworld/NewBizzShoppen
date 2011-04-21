@@ -252,7 +252,7 @@ Feature: Agent campaign - management
       Then agent for "Bon Jovi inc." is blank
 
 
-    @3 @tbr @__campaign_manage_results @selenium @_done @_tested @added
+    @3 @tbr @__campaign_manage_results @selenium @_done @_tested @requested
     Scenario: I can see template fields for current category
       Given template named "Leisure template" for category "Leisure" is created by user "translator_call_centre@nbs.com" with role "call_centre"
       And template named "Leisure template" is global
