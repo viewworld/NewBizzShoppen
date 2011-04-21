@@ -573,18 +573,18 @@ Feature: Agent campaign - management
 #* - without actions
 #^ - only created by me
 
-        @requested
+        @added
         Scenario: I should see and be able to use actions for managing campaign if I have privileges to it
         
-        @requested
+        @added
         Scenario: I should see and be able to use actions for managing contact if I have privileges to it        
         
-        @requested
+        @added
         Scenario: I should see and be able to use actions for managing call result if I have privileges to it        
       
-        @requested
+        @added
         Scenario: I should see and be able to use actions for managing result type if I have privileges to it        
         
-        @requested
+        @added
         Scenario: As call centre agent or agent I can't manage campaigns, result types, agent assignment
         
