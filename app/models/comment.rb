@@ -72,4 +72,8 @@ class Comment < ActiveRecord::Base
       end
     end
   end
+
+  def comment_to_insert_after
+    siblings.order("created_at").last || parent
+  end
 end

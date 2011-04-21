@@ -1,51 +1,16 @@
   <ul>
-  <% Comment.each_with_level(thread.self_and_descendants) do |o,level| %>
-    <li id="comment_<%= o.id %>" style="margin-left:<%= 20*level %>px">
-      <%= o.title %> by <%= o.user.screen_name %> at <%= format_date(o.created_at, true) %>
-      (<%= link_to_function t("comments.threads.show.view.reply"), "reply_to(#{thread.id},#{o.id},#{o.commentable_id},'#{o.title}')" %>)
-      <% if current_user.has_role?(:admin) %>
-          <%= link_to t("comments.threads.show.view.edit"), edit_comments_thread_path(o) %>
-          <%= link_to t("comments.threads.show.view.destroy"), comments_thread_path(o), :method => :delete, :confirm => t("comments.threads.show.view.destroy_message") %>
-      <% end %>
-      <p><%= o.body %></p>
-    </li>
+  <% Comment.each_with_level(thread.self_and_descendants) do |comment,level| %>
+    <%= render :partial => 'comments/shared/comment', :locals => {:comment => comment, :thread => thread, :level => level} %>
   <% end %>
   </ul>
 
-   <%= semantic_form_for :comment, Comment.new, :url => comments_threads_path, :html => {:id => "reply_#{thread.id}", :style => "display:none;"} do |f| %>
-      <frm>
-        <param:header>
-        </param:header>
-        <param:content>
-            <div class="pdd_10 no_pdd_t">
-              <fieldset class="inputs labels_ta_r labels_240">
-                <ol class="align_inputs">
-                  <%= f.input :parent_id, :as => :hidden, :value => "" %>
-                  <%= f.input :commentable_id, :as => :hidden, :value => "" %>
-                  <%= f.input :commentable_type, :as => :hidden, :value => "AbstractLead" %>
-                  <%= f.input :title %>
-                  <%= f.input :body %>
-                </ol>
-              </fieldset>
-            </div>
-        </param:content>
-        <param:actions>
-          <ibt c="fltri" icon="plus">
-             <%= button_to_function t("comments.threads.show.view.create_comment_button"), "validate_form('#reply_#{thread.id}')"  %>
-          </ibt>
-        </param:actions>
-      </frm>
-   <% end %>
-
-
-
 <script>
   function reply_to(thread_id,comment_id,commentable_id,comment_title) {
-    $.get('/comments/replies/new');
-//    $("#reply_"+thread_id+" input#comment_title").attr("value", 'Re: '+comment_title);
-//    $("#reply_"+thread_id+" input#comment_parent_id").attr("value",comment_id);
-//    $("#reply_"+thread_id+" input#comment_commentable_id").attr("value",commentable_id);
-//    $("#reply_"+thread_id).toggle();
+    if ($('#reply_'+comment_id).size() == 0) {
+        $.get('/comments/replies/new','thread_id='+thread_id+'&comment_id='+comment_id+'&title='+comment_title+'&commentable_id='+commentable_id);
+    } else {
+        $('#reply_'+comment_id).toggle();
+    }
   }
 
   function validate_form(form_id){

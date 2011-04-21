@@ -1,2 +1,2 @@
-content = render(:text => 'asd')
-page << "$('#{content}').insertAfter('#comment_26');"
+content = escape_javascript(render(:partial => 'comments/shared/reply', :locals => {:thread_id => params[:thread_id], :comment_id => params[:comment_id], :commentable_id => params[:commentable_id], :title => params[:title] }))
+page << "$('#{content}').insertAfter('#comment_#{params[:comment_id]}');"
