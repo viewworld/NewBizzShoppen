@@ -12,14 +12,14 @@ class Comment < ActiveRecord::Base
   belongs_to :user
   belongs_to :commentable, :polymorphic => true
 
-  #before_destroy :move_children_to_higher_parent
-
   scope :descend_by_created_at, order("created_at DESC")
   scope :ascend_by_created_at, order("created_at ASC")
   scope :descend_by_header, joins("INNER JOIN leads ON leads.id = comments.commentable_id").order("leads.header DESC")
   scope :ascend_by_header, joins("INNER JOIN leads ON leads.id = comments.commentable_id").order("leads.header ASC")
   scope :descend_by_user, joins("INNER JOIN users ON users.id = comments.user_id").order("users.screen_name DESC")
   scope :ascend_by_user, joins("INNER JOIN users ON users.id = comments.user_id").order("users.screen_name ASC")
+  scope :descend_by_last_thread_created_at, order("last_thread_created_at DESC")
+  scope :ascend_by_last_thread_created_at, order("last_thread_created_at ASC")
   scope :with_keyword, lambda { |keyword| where("lower(leads.header) like :q", {:q => "%#{keyword.to_s.downcase}%"}).joins("INNER JOIN leads ON leads.id = comments.commentable_id") }
   scope :roots, where(:parent_id => nil)
   scope :for_leads, lambda {|leads| where(:commentable_type => 'AbstractLead', :commentable_id => leads.map(&:id))}
@@ -73,7 +73,11 @@ class Comment < ActiveRecord::Base
     end
   end
 
+  def assign_last_thread_created_at_to_root
+    self.root.update_attribute(:last_thread_created_at, created_at)
+  end
+  
   def comment_to_insert_after
     siblings.order("created_at").last || parent
-  end
+  end  
 end

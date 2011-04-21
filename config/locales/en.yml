@@ -2562,8 +2562,9 @@ en:
           search_button: "Search"
           lead_header: "Lead header"
           started_by: "Started by"
-          date: "Date"
+          date: "Started at"
           header: "Comments"
+          last_thread_date: "Last update"
       create:
         flash:
           notice: "Comment has been successfully created!"

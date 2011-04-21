@@ -96,8 +96,10 @@
                         </li>
                     <% end %>
                   </ul-actions>
-                  <%= link_to number_of_comments(lead_purchase.lead.comment_threads.roots.count), comments_lead_path(lead_purchase.lead) %><br />
-                  <%= link_to t("lead_user.lead_purchases.index.view.post_comment"), new_comments_lead_thread_path(lead_purchase.lead) %>
+                  <% if lead_purchase.lead.can_be_commented? %>
+                    <%= link_to number_of_comments(lead_purchase.lead.comment_threads.roots.count), comments_lead_path(lead_purchase.lead) %><br />
+                    <%= link_to t("lead_user.lead_purchases.index.view.post_comment"), new_comments_lead_thread_path(lead_purchase.lead) %>
+                  <% end %>
               <% end %>
 
               <% blocks.bottom do |lead_purchase| %>

@@ -235,4 +235,8 @@ class Lead < AbstractLead
     self.increment!(field)
   end
 
+  def can_be_commented?
+    !creator.has_role?(:purchase_manager)
+  end
+
 end

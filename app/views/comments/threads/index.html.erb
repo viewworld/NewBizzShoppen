@@ -27,18 +27,22 @@
 <column-mc:>
   <header><%= t("comments.threads.index.view.header") %></header>
 
+<% if @threads.blank? %>
+    <%= blank_state_message %>
+<% else %>
   <table class="generic">
     <thead>
         <th class="hl"></th>
         <th><%= link_to t("comments.threads.index.view.lead_header"), order_for_scoped_search(:header) %></th>
         <th><%= link_to t("comments.threads.index.view.started_by"), order_for_scoped_search(:user) %></th>
         <th><%= link_to t("comments.threads.index.view.date"), order_for_scoped_search(:created_at) %></th>
+        <th><%= link_to t("comments.threads.index.view.last_thread_date"), order_for_scoped_search(:last_thread_created_at) %></th>
         <th class="hr"></th>
     </thead>
       <tfoot>
       <tr>
         <td class="fl"></td>
-        <td colspan="3"></td>
+        <td colspan="4"></td>
         <td class="fr"></td>
       </tr>
       </tfoot>
@@ -47,7 +51,7 @@
        <tr>
          <td class="cl"></td>
          <td>
-           <%= link_to thread.commentable.header, comments_lead_thread_path(thread.commentable_id,thread) %>
+           <%= link_to thread.commentable.header, comments_lead_thread_path(thread.commentable_id,thread), :class => "default_action" %>
          </td>
          <td>
            <%= thread.user.screen_name %>
@@ -55,14 +59,18 @@
          <td>
            <%= format_date(thread.created_at,true) %>
          </td>
+         <td>
+           <%= format_date(thread.last_thread_created_at, true) %>
+         </td>
          <td class="cr"></td>
        </tr>
         <% end %>
       <tr class="pagination">
-        <td colspan="<%= 6 %>" class="ta_c">
+        <td colspan="7" class="ta_c">
             <%= will_paginate @threads, :previous_label => '&laquo;', :next_label => '&raquo;' %>
         </td>
       </tr>
     </tbody>
   </table>
+<% end %>
 </column-mc:>
