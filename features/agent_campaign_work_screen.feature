@@ -27,7 +27,7 @@ Feature: Agent campaign - calling session
       And I should see "Mleko company"
 
 
-    @1 @_todo
+    @1 @_todo @snom
     Scenario: I can enable/disable dynamic calling
 
     @3 @_done @_tested
