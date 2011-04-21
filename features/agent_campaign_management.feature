@@ -531,7 +531,7 @@ Feature: Agent campaign - management
       Then I should see "John Smith" within "#call_result_details"
       Then I should see "Call back" within "#call_result_details"
 
-    @2 @is @__campaign_statistics @_tested @selenium
+    @2 @is @__campaign_statistics @_tested @selenium @requested
     Scenario: I can see results list for given agent list
       Then I create call result
       Then I add user "translator_call_centre@nbs.com" to campaign "Testing One"
