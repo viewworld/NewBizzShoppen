@@ -156,7 +156,7 @@ Feature: Agent campaign - management
     @2 @is @__campaign_assign_agents @_tested_elsewhere
     Scenario: I can assign selected agents to campaign
 
-    @1 @is @__campaign_assign_agents @_tested @selenium @added
+    @1 @is @__campaign_assign_agents @_tested @selenium @requested
     Scenario: I can deassign not selected agents to campaign
       When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
       Then I follow translated "campaigns.edit.agent_assignment_button"
