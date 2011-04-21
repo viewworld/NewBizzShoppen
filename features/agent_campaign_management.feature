@@ -52,7 +52,7 @@ Feature: Agent campaign - management
       Then I follow translated "campaigns.table.end_date"
       Then I should see "Testing One" before "Testing Two"
 
-    @1 @is @__campaigns_listing @_tested @_done
+    @1 @is @__campaigns_listing @_tested @_done @added
     Scenario: I can filter campaigns by name
       Then I fill in "search_with_keyword" with "two"
       Then I press translated "campaigns.filter.search_button"
@@ -109,7 +109,7 @@ Feature: Agent campaign - management
       Then I should see translated "campaigns.edit.title_contacts"
       Then I should see translated "campaigns.edit.button_create_contact"
 
-    @1 @is @__campaign_manage @_tested @_done
+    @1 @is @__campaign_manage @_tested @_done @added
     Scenario: I can sort contacts list
       Then I follow translated "campaigns.index.edit"
       Then I should see "Bon Jovi" before "Mleko company"
@@ -131,7 +131,7 @@ Feature: Agent campaign - management
     @1 @is @__campaign_manage @_done @_tested_elsewhere
     Scenario: I can deassign agents from selected contacts
 
-    @1 @is @__campaign_manage @_tested @selenium
+    @1 @is @__campaign_manage @_tested @selenium @added
     Scenario: I can filter contacts by its fields
       When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
       Then I should see "Bon Jovi"
@@ -141,7 +141,7 @@ Feature: Agent campaign - management
       Then I should see "Bon Jovi"
       Then I should not see "Mleko"
 
-    @3 @tbr @__campaign_manage @_done @nontestable
+    @3 @tbr @__campaign_manage @_done @nontestable @added
     Scenario: I can export selected contacts to CSV
 
     #
@@ -156,7 +156,7 @@ Feature: Agent campaign - management
     @2 @is @__campaign_assign_agents @_tested_elsewhere
     Scenario: I can assign selected agents to campaign
 
-    @1 @is @__campaign_assign_agents @_tested @selenium
+    @1 @is @__campaign_assign_agents @_tested @selenium @added
     Scenario: I can deassign not selected agents to campaign
       When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
       Then I follow translated "campaigns.edit.agent_assignment_button"
@@ -229,7 +229,7 @@ Feature: Agent campaign - management
     @3 @is @__campaign_manage_results @_done @_tested_elsewhere
     Scenario: I can add new result
 
-    @2 @is @__campaign_manage_results @_done @_tested_elsewhere
+    @2 @is @__campaign_manage_results @_done @_tested_elsewhere @added
     Scenario: I can edit result
 
     @1 @is @__campaign_manage_results @_done @_tested_elsewhere
@@ -252,7 +252,7 @@ Feature: Agent campaign - management
       Then agent for "Bon Jovi inc." is blank
 
 
-    @3 @tbr @__campaign_manage_results @selenium @_done @_tested
+    @3 @tbr @__campaign_manage_results @selenium @_done @_tested @added
     Scenario: I can see template fields for current category
       Given template named "Leisure template" for category "Leisure" is created by user "translator_call_centre@nbs.com" with role "call_centre"
       And template named "Leisure template" is global
@@ -531,7 +531,7 @@ Feature: Agent campaign - management
       Then I should see "John Smith" within "#call_result_details"
       Then I should see "Call back" within "#call_result_details"
 
-    @2 @is @__campaign_statistics @_tested @selenium
+    @2 @is @__campaign_statistics @_tested @selenium @added
     Scenario: I can see results list for given agent list
       Then I create call result
       Then I add user "translator_call_centre@nbs.com" to campaign "Testing One"
@@ -547,7 +547,7 @@ Feature: Agent campaign - management
       Then I should not see "1" within "#all_result_row"
       Then I wait 4 second
 
-    @2 @is @__campaign_statistics @_tested @selenium
+    @2 @is @__campaign_statistics @_tested @selenium @added
     Scenario: I can see results list for completed contacts only
       Then I execute js for display action block for "campaigns"
       Then I follow translated "campaigns.index.result"
