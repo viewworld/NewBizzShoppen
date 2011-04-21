@@ -24,6 +24,7 @@ class Comment < ActiveRecord::Base
   scope :roots, where(:parent_id => nil)
   scope :for_leads, lambda {|leads| where(:commentable_type => 'AbstractLead', :commentable_id => leads.map(&:id))}
   scope :for_users, lambda {|users| where(:user_id => users.map(&:id))}
+  scope :with_leads_created_by, lambda {|user| joins("INNER JOIN leads ON leads.id = comments.commentable_id").where(:leads => {:creator_id => user.id})}
 
   # Helper class method that allows you to build a comment
   # by passing a commentable object, a user_id, and comment text

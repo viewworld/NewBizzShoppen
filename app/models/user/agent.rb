@@ -12,7 +12,7 @@ class User::Agent < ::User
   before_create :set_default_certification_level
 
   def comment_threads
-    Comment.where(:commentable_id => leads.map(&:id))
+    Comment.with_leads_created_by(self)
   end
 
   private

@@ -34,6 +34,10 @@ class ::User::Customer < ::User
     Comment.for_users(self.self_and_descendants)
   end
 
+  def can_start_new_lead_thread?
+    true
+  end
+
   private
   def handle_interests
     if (categories.select { |c| c.is_customer_unique } - unique_categories).size > 0

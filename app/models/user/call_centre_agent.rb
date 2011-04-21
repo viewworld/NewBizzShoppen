@@ -15,12 +15,8 @@ class ::User::CallCentreAgent < ::User
     true
   end
 
-  def leads
-    Lead.with_created_by(self.id)
-  end
-
   def comment_threads
-    Comment.for_leads(leads)
+    Comment.with_leads_created_by(self)
   end
   
   def has_max_contacts_in_campaign?(campaign)

@@ -50,9 +50,7 @@ class Comments::ThreadsController < Comments::CommentsController
 
   end
 
-  def new
-    @thread = Comment.new
-  end
+  def new; end
 
   def edit
     @thread = current_user.comment_threads.find(params[:id])
