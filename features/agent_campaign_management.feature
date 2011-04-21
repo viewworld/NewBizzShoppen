@@ -1,17 +1,6 @@
 @m5b @agent_campaign @$_administrator @$_call_centre @tbr
 Feature: Agent campaign - management
 
-#Places                Admin   Agent   Call Centre   Call Centre Agent
-#
-#Campaigns List        x       x*      x^            x*
-#Campaign Result       x       -       x^            -
-#Manage Result Types   x       -       x^            -
-#Edit Campaign         x       -       x^            x
-#Agent work screen     x       x       x             x
-
-#* - without actions
-#^ - only created by me
-
    Background:
     Given I am on the homepage
     And I make sure current locale is "en"
@@ -371,7 +360,7 @@ Feature: Agent campaign - management
     Scenario: I can see list of fields in result types list
 
     @3 @tbr @__campaign_manage_result_types @_done @requested
-    Scenario: I can select "time" type for custom field in result type
+    Scenario: I can select "datetime" type for custom field in result type
 
     @3 @tbr @__campaign_manage_result_types @_done @requested
     Scenario: I custom fields values should validate correct format
@@ -401,7 +390,7 @@ Feature: Agent campaign - management
          | datetime field | 2011-02-02 21:00 |
       And I press translated "call_results.new.save_button"
       Then I should see translated "contacts.edit.current_agent_label"
-      And I should see "Multiple fields" within "#call_results"
+      And I should see "Multiple fields" within "#call_results"            
 
 
     #call results
@@ -566,3 +555,36 @@ Feature: Agent campaign - management
       Then I check "final"
       Then I press translated "campaigns.show.search_button"
       Then I should not see "Call back" within "#call_results"
+      
+      
+      
+    #access control
+    #
+    #
+    
+#Places                Admin   Agent   Call Centre   Call Centre Agent
+#
+#Campaigns List        x       x*      x^            x*
+#Campaign Result       x       -       x^            -
+#Manage Result Types   x       -       x^            -
+#Edit Campaign         x       -       x^            x
+#Agent work screen     x       x       x             x
+
+#* - without actions
+#^ - only created by me
+
+        @requested
+        Scenario: I should see and be able to use actions for managing campaign if I have privileges to it
+        
+        @requested
+        Scenario: I should see and be able to use actions for managing contact if I have privileges to it        
+        
+        @requested
+        Scenario: I should see and be able to use actions for managing call result if I have privileges to it        
+      
+        @requested
+        Scenario: I should see and be able to use actions for managing result type if I have privileges to it        
+        
+        @requested
+        Scenario: As call centre agent or agent I can't manage campaigns, result types, agent assignment
+        
