@@ -3,8 +3,6 @@ class Comments::ThreadsController < Comments::CommentsController
 
   before_filter :fetch_lead, :only => [:new, :create]
 
-  set_tab "comments"
-
   before_filter :can_start_conversation?, :only => [:new]
   before_filter :check_role_for_update, :only => [:edit, :update]
   before_filter :check_role_for_destroy, :only => [:destroy]

@@ -2,6 +2,8 @@ class Comments::LeadsController < Comments::CommentsController
 
   before_filter :fetch_lead
 
+  set_tab "comments"
+
   private
 
   def fetch_lead
@@ -11,6 +13,6 @@ class Comments::LeadsController < Comments::CommentsController
   public
 
   def show
-    @threads = @lead.comment_threads.roots
+    @threads = @lead.comment_threads.roots.order("created_at DESC")
   end
 end
