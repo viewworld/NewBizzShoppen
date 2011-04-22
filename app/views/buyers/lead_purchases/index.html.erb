@@ -145,6 +145,7 @@
                   <br/>
                   <%= select_tag :rating_level, options_for_select(LeadPurchase::RATING_LEVELS.map { |l| [t("activerecord.attributes.lead_purchase.rating_levels.rating_level#{l}"), l] }, lead_purchase.rating_level), :include_blank => true, :onchange => "set_rating_level(this.value, #{lead_purchase.id})", :id => "rating_level_#{lead_purchase.id}", :style => "width: 140px" %>
                 </p>
+
                 <div id="rating_reson_div_<%= lead_purchase.id %>" style="<%= 'display:none;' unless lead_purchase.is_rated_as_unsatisfactory? %>">
                   <%= t("lead_buyer.lead_purchases.index.view.rating_reason") %>
                   <br/>
@@ -155,6 +156,13 @@
             <% end %>
 
             <% blocks.tools do |lead_purchase| %>
+                <% if lead_purchase.lead.buyout_possible_for?(current_user) %>
+                    <div class="pdd_5 no_pdd_r">
+                      <%= bt_link_to :price, t("leads.index.add_to_cart_buyout_link"), buyers_cart_items_path(:id => lead_purchase.lead.id, :requested_url =>  request.fullpath, :buyout => true), :method => :post, :class => "default_action" %>
+                    </div>
+                    <%= hidden_field_tag :confirmation_message, t("leads.index.add_to_cart_buyout_lead_confirm_msg"), :class => "default_action_confirmation_msg" %>
+                <% end %>
+
                 <ul-actions>
                   <li>
                     <%= link_to t("lead_buyer.lead_purchases.index.view.download_csv_link"), buyers_lead_purchase_path(lead_purchase, :format => :csv) %>
@@ -195,7 +203,7 @@
 
 
 <script>
-    $(document).ready(function(){
+    $(document).ready(function() {
     <% @lead_purchases.each do |lead_purchase| %>
         $("#response_deadline_datepicker_<%= lead_purchase.id %>").datepicker({ dateFormat: '<%= I18n.t("date.formats.datepicker") %>',
             onSelect: function(dateText, inst) {
@@ -247,10 +255,10 @@
         }
     }
 
-      function save_owner_note(lead_purchase_id){
-          $.post('/buyers/lead_purchases/' + lead_purchase_id.toString(), {'_method':'put', 'lead_purchase[owner_note]':$('#owner_note_' + lead_purchase_id.toString()).val(), 'owner_note_changed':1, 'format':'js'});
-          $('#owner_note_form_' + lead_purchase_id.toString()).parents(".row_tooltip").effect("highlight", {color: "#d8ff9a"}, 500);
-      }
+    function save_owner_note(lead_purchase_id) {
+        $.post('/buyers/lead_purchases/' + lead_purchase_id.toString(), {'_method':'put', 'lead_purchase[owner_note]':$('#owner_note_' + lead_purchase_id.toString()).val(), 'owner_note_changed':1, 'format':'js'});
+        $('#owner_note_form_' + lead_purchase_id.toString()).parents(".row_tooltip").effect("highlight", {color: "#d8ff9a"}, 500);
+    }
 
-  </script>
+</script>
 </column-mc:>
