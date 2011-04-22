@@ -45,7 +45,7 @@ class LeadPurchaseBase < ActiveRecord::Base
   scope :about_to_expire, lambda { where(["response_deadline = ? AND expiration_status = ? AND contacted = ?", Date.today+2.days, ACTIVE, NOT_CONTACTED]) }
   scope :expired, lambda { where(["response_deadline < ? AND expiration_status = ? AND contacted = ?", Date.today, ABOUT_TO_EXPIRE, NOT_CONTACTED]) }
 
-  scope :with_volume_sold_by, lambda { |agent| where("leads.creator_id = ?", agent.id).joins("INNER JOIN leads ON lead_purchases.lead_id=leads.id") }
+  scope :with_volume_sold_by, lambda { |agent| where("leads.creator_id IN (?)", agent.has_role?(:call_centre) ? agent.subaccount_ids : agent.id).joins("INNER JOIN leads ON lead_purchases.lead_id=leads.id") }
   scope :with_rating_avg_by, lambda { |agent| select("avg(CASE WHEN rating_level in (#{Array(RATING_MISSING_CONTACT_INFO..RATING_OTHER_REASON).join(',')}) THEN 0 WHEN rating_level=2 THEN 0.25 WHEN rating_level=1 THEN 0.5 WHEN rating_level=0 THEN 1 END)*100 as id").where("creator_id = ? and (lead_purchases.rating_level != -1 and lead_purchases.rating_level is NOT NULL)", agent.id).joins("INNER JOIN leads ON lead_purchases.lead_id=leads.id") }
   scope :with_purchased_time_ago_by, lambda { |agent, time| where("creator_id = ? and accessible_from IS NOT NULL and accessible_from >= ?", agent.id, time).joins("INNER JOIN leads ON lead_purchases.lead_id=leads.id") }
 

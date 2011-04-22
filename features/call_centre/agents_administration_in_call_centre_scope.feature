@@ -165,5 +165,8 @@ Scenario: I can bulk unblock users
   And I follow "unlock_selected"
   Then I should see translated "flash.bulk_call_centre_agents_update.update.notice"
 
-@m9 @tgn
-Scenario: I can certify my own agents
+@m9 @tgn @_done @tested_elsewhere
+Scenario: Call centre agents should inherit the certification of a call centre
+
+@m9 @tgn @non_testable @_done
+Scenario: Call centre should have refreshed stats just like the agents

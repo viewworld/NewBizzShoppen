@@ -174,22 +174,9 @@ Then /^user "([^"]*)" with role "([^"]*)" should not have role "([^"]*)"$/ do |e
 end
 
 Given /^all users have refreshed cache counters$/ do
-    User::Abstract.where("parent_id is not null").each do |user|
-      user.refresh_subaccounts_counters!
-    end
-
-    User::CallCentre.all.each do |user|
-      user.refresh_certification_level
-      user.save
-    end
-
-    (User::Agent.all + User::CallCentreAgent.all).each do |user|
-      user.refresh_agent_counters!
-    end
-
-    User::LeadBuyer.all.each do |user|
-      user.refresh_buyer_counters!
-    end
+  [:refresh_subaccounts_counters, :refresh_agent_counters, :refresh_buyer_counters].each do |method|
+    CommonStats.send(method)
+  end
 end
 
 Given /^user "([^"]*)" with role "([^"]*)" has interest in following categories "([^"]*)"$/ do |email, role, category_names|

@@ -545,3 +545,13 @@ Scenario: I can search users on company name
 Scenario: The header of users listing should include total number of users: 'Users: #total'
   And I am on administration users page
   Then I should see /Total:\s\d+/
+
+@added @m9 @tgn @_tested
+Scenario: When I change the certification of call centre then its agents certification should be refreshed too
+  Given an user with role call_centre_agent and email ccagent01@person.com belongs to call centre call_centre1@person.com
+  Then I fill in "search_with_keyword" with "call_centre1@person.com"
+  And I press translated "administration.users.index.view.search_button"
+  And I click hidden link by url regex "/users\/\d+\/edit/"
+  And I select translated "models.lead.certification.lvl13" from "user_call_centre_certification_level"
+  And I press translated "password.edit.view.button_update_user"
+  And user "ccagent01@person.com" with role "call_centre_agent" has certification level 3

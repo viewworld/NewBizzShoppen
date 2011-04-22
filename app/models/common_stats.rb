@@ -17,8 +17,7 @@ class CommonStats
 
   def self.refresh_agent_counters
     User::CallCentre.all.each do |user|
-      user.refresh_certification_level
-      user.save
+      user.refresh_call_centre_counters!
     end
 
     (User::Agent.all + User::CallCentreAgent.all).each do |user|

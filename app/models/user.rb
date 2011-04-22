@@ -80,7 +80,7 @@ class User < ActiveRecord::Base
 
   attr_accessor :agreement_read, :locked, :skip_email_verification
 
-  before_save :handle_locking, :handle_team_buyers_flag
+  before_save :handle_locking, :handle_team_buyers_flag, :refresh_certification_of_call_centre_agents
   before_create :set_rss_token, :set_role
   before_destroy :can_be_removed
   after_create :auto_activate
@@ -253,6 +253,14 @@ class User < ActiveRecord::Base
     self.save
   end
 
+  def refresh_call_centre_counters!
+    self.leads_created_counter = Lead.with_created_by_call_centre(self).size
+    self.leads_volume_sold_counter = LeadPurchase.with_volume_sold_by(self).size
+    self.leads_revenue_counter = Lead.with_revenue_by(self).first.id || 0
+    self.refresh_certification_level
+    self.save
+  end
+
   def refresh_agent_counters!
     self.leads_created_counter = Lead.with_created_by(id).size
     self.leads_volume_sold_counter = LeadPurchase.with_volume_sold_by(self).size
@@ -263,9 +271,7 @@ class User < ActiveRecord::Base
     self.leads_rated_bad_counter = Lead.with_rated_bad_by(self).size
     self.leads_not_rated_counter = Lead.with_not_rated_by(self).size
     self.leads_rating_avg = LeadPurchase.with_rating_avg_by(self).first.id || 0
-    if has_role?(:call_centre_agent)
-      self.certification_level = parent.read_attribute(:certification_level)
-    else
+    unless has_role?(:call_centre_agent)
       self.refresh_certification_level
     end
     self.save
@@ -278,6 +284,15 @@ class User < ActiveRecord::Base
     end
   end
 
+  def refresh_certification_of_call_centre_agents
+    if has_role?(:call_centre) and certification_level_changed?
+      User::CallCentreAgent.where(:id => subaccount_ids).each do |cc_agent|
+        cc_agent.certification_level = read_attribute(:certification_level)
+        cc_agent.save
+      end
+    end
+  end
+
   def certification_level
     has_role?(:call_centre_agent) ? parent.certification_level : read_attribute(:certification_level) % 10
   end
@@ -287,7 +302,8 @@ class User < ActiveRecord::Base
   end
 
   def certification_level_ratio
-    Lead.joins(:lead_purchases).where(:creator_id => has_role?(:call_centre_agent) ? parent.subaccount_ids : id, :creator_type => has_role?(:call_centre_agent) ? "User::CallCentreAgent" : self.class.to_s).count
+    user_ids = has_any_role?(:call_centre, :call_centre_agent) ? (has_role?(:call_centre) ? subaccount_ids : parent.subaccount_ids) : id
+    Lead.joins(:lead_purchases).where(:creator_id => user_ids, :creator_type => has_any_role?(:call_centre, :call_centre_agent) ? "User::CallCentreAgent" : self.class.to_s).count
   end
 
   def calculate_certification_level
