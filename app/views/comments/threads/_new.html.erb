@@ -1,4 +1,5 @@
-<%= semantic_form_for :comment, Comment.new, :url => comments_lead_threads_path(@lead) do |f| %>
+<div id="new_comment_div"></div>
+<%= semantic_remote_form_for :comment, Comment.new, :url => comments_lead_threads_path(@lead), :html => {:method => :post, :id => "new_comment"} do |f| %>
     <frm title="#{t('comments.threads.show.view.start_new_thread')}">
       <param:content>
         <div class="pdd_10 no_pdd_t">
@@ -12,7 +13,7 @@
       </param:content>
       <param:actions>
         <ibt c="fltri" icon="plus">
-          <%= f.submit t("comments.threads.show.view.create_comment_button") %>
+          <%= button_to_function t("comments.threads.show.view.create_comment_button"), "validate_form('#new_comment')"  %>
         </ibt>
       </param:actions>
     </frm>

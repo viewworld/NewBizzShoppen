@@ -1,11 +1,13 @@
 <li id="comment_<%= comment.id %>" style="margin-left:<%= 20*level %>px">
-  <%= comment.title %> by <%= current_user.has_role?(:admin) ?  link_to(comment.user.screen_name, edit_administration_user_path(comment.user)) : comment.user.screen_name %> at <%= format_date(comment.created_at, true) %>
+  <p>
+  <span id="title"><%= comment.title %></span> by <%= current_user.has_role?(:admin) ?  link_to(comment.user.screen_name, edit_administration_user_path(comment.user)) : comment.user.screen_name %> at <%= format_date(comment.created_at, true) %>
   (<%= link_to_function t("comments.threads.show.view.reply"), "reply_to(#{thread.id},#{comment.id},#{comment.commentable_id},'#{comment.title}')" %>)
   <% if current_user.has_role?(:admin) or (current_user.has_role?(:call_centre) and comment.user.parent.present? and comment.user.parent.with_role == current_user) %>
       <%= link_to_function t("comments.threads.show.view.edit"), "edit_comment(#{comment.id})" %>
   <% end %>
   <% if current_user.has_role?(:admin) %>
-      <%= link_to t("comments.threads.show.view.destroy"), comments_thread_path(comment), :method => :delete, :confirm => t("comments.threads.show.view.destroy_message") %>
+      <%= link_to_function t("comments.threads.show.view.destroy"), "destroy_comment(#{comment.id})" %>
   <% end %>
-  <p><%= comment.body %></p>
+  </p>
+  <p><span id="body"><%= comment.body %></span></p>
 </li>

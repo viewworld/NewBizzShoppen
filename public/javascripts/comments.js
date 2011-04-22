@@ -11,11 +11,19 @@
   }
 
   function edit_comment(comment_id) {
+      $('#edit_comment_'+comment_id).slideUp('slow');
+      $('#edit_comment_'+comment_id).remove();
       $.get('/comments/threads/'+comment_id+'/edit.js',
             '',
              function(data){
                  $('#edit_comment_'+comment_id).slideDown('slow');
              });
+  }
+
+  function destroy_comment(comment_id){
+      if(confirm(I18n.t("common.js.confrimation_message"))){
+        $.post('/comments/threads/'+comment_id+'.js', '_method=DELETE');
+      }
   }
 
   function validate_form(form_id){
@@ -25,7 +33,7 @@
           if(jQuery.trim($(form_id + " input[id='comment_title']").val()) == "")
           {
               $(form_id + " li[id='comment_title_input']").addClass("error");
-              $(form_id + " li[id='comment_title_input']").append("<p class='inline-errors'>can't be blank</p>")
+              $(form_id + " li[id='comment_title_input']").append("<p class='inline-errors'>" + I18n.t("common.js.field_cant_be_blank") + "</p>")
           }
           else
           {
@@ -36,7 +44,7 @@
           if(jQuery.trim($(form_id + " textarea[id='comment_body']").val()) == "")
           {
               $(form_id + " li[id='comment_body_input']").addClass("error");
-              $(form_id + " li[id='comment_body_input']").append("<p class='inline-errors'>can't be blank</p>")
+              $(form_id + " li[id='comment_body_input']").append("<p class='inline-errors'>" + I18n.t("common.js.field_cant_be_blank") + "</p>")
           }
           else
           {
@@ -47,4 +55,11 @@
       {
           $(form_id).submit();
       }
+  }
+
+  function clear_form(form_id){
+      $(form_id + " input[type='text']").val("");
+      $(form_id + " textarea").val("");
+      $(form_id + " li[id*='comment_']").removeClass("error");
+      $(form_id + " li[id*='comment_'] p[class='inline-errors']").remove();
   }

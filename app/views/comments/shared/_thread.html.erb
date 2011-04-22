@@ -1,4 +1,4 @@
-  <ul>
+  <ul id="thread_<%= thread.id %>">
   <% Comment.each_with_level(thread.self_and_descendants) do |comment,level| %>
     <%= render :partial => 'comments/shared/comment', :locals => {:comment => comment, :thread => thread, :level => level} %>
   <% end %>
