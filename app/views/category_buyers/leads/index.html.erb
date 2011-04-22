@@ -4,7 +4,7 @@
 
     <div class="search_content">
       <%= form_for @search, :url => category_home_page_leads_path(@home_category.cached_slug) do |f| %>
-            <%= render :partial => "/shared/leads/search_customer_form", :locals => { :f => f } %>
+          <%= render :partial => "/shared/leads/search_customer_form", :locals => {:f => f} %>
       <% end %>
     </div>
   </div>
@@ -32,12 +32,16 @@
                           <%= bt_link_to nil, t("leads.index.request_lead"), lead_users_lead_requests_path(:lead_id => lead.id), :method => :post, :class => "default_action" %>
                       <% end %>
                   <% else %>
-                      <%= bt_link_to nil, t("leads.index.add_to_cart_link"), buyers_cart_items_path(:id => lead.id, :requested_url =>  request.fullpath), :method => :post, :class => "default_action" %>
-                      <%= hidden_field_tag :confirmation_message, t("leads.index.add_to_cart_lead_confirm_msg"), :class => "default_action_confirmation_msg" %>
+                      <div class="pdd_5 no_pdd_r">
+                        <%= bt_link_to nil, t("leads.index.add_to_cart_link"), buyers_cart_items_path(:id => lead.id, :requested_url =>  request.fullpath), :method => :post, :class => "default_action" %>
+                        <%= hidden_field_tag :confirmation_message, t("leads.index.add_to_cart_lead_confirm_msg"), :class => "default_action_confirmation_msg" %>
+                      </div>
                   <% end %>
                   <% if lead.buyout_possible_for?(current_user) %>
-                      <%= bt_link_to :cart, t("leads.index.add_to_cart_buyout_link"), buyers_cart_items_path(:id => lead.id, :requested_url =>  request.fullpath, :buyout => true), :method => :post %>
-                      <%= hidden_field_tag :confirmation_message, t("leads.index.add_to_cart_buyout_lead_confirm_msg"), :class => "default_action_confirmation_msg" %>
+                      <div class="pdd_5 no_pdd_r">
+                        <%= bt_link_to :price, t("leads.index.add_to_cart_buyout_link"), buyers_cart_items_path(:id => lead.id, :requested_url =>  request.fullpath, :buyout => true), :method => :post %>
+                        <%= hidden_field_tag :confirmation_message, t("leads.index.add_to_cart_buyout_lead_confirm_msg"), :class => "default_action_confirmation_msg" %>
+                      </div>
                   <% end %>
               <% end %>
 
