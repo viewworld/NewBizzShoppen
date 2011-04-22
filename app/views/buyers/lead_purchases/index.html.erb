@@ -179,10 +179,6 @@
                       </li>
                   <% end %>
                 </ul-actions>
-                <% if lead_purchase.lead.buyout_possible_for?(current_user) %>
-                    <%= bt_link_to :cart, t("leads.index.add_to_cart_buyout_link"), buyers_cart_items_path(:id => lead_purchase.lead.id, :requested_url =>  request.fullpath, :buyout => true), :method => :post, :class => "default_action" %>
-                    <%= hidden_field_tag :confirmation_message, t("leads.index.add_to_cart_buyout_lead_confirm_msg"), :class => "default_action_confirmation_msg" %>
-                <% end %><br />
                 <% if lead_purchase.lead.can_be_commented? %>
                     <%= link_to number_of_comments(lead_purchase.lead.comment_threads.for_users(current_user.self_and_descendants).roots.count), comments_lead_path(lead_purchase.lead) %><br />
                     <%= link_to t("lead_user.lead_purchases.index.view.post_comment"), new_comments_lead_thread_path(lead_purchase.lead) %>
