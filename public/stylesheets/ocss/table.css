@@ -305,6 +305,14 @@ td.tda a.bt
     text-shadow: 1px 1px 0 #d98025;
 }
 
+.generic tbody tr td.td_child_node
+{
+    padding-left: 40px;
+    background-image: url("/images/table/td_child.png");
+    background-repeat: no-repeat;
+    background-position: 12px 0;
+}
+
 /* --- pagination ---
 ---------------------------------------------------------------------------------------------------- */
 
