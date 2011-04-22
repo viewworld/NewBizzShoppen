@@ -186,7 +186,7 @@ Scenario: I should not see leads from agent unique categories I'm not assigned t
   And I should not see "UniqueLead1" within "#best_sellers"
   And I should see "UniqueLead2" within "#best_sellers"
 
-@m5 @unique_categories @tgn @added @tested_elsewhere @_done  @requested
+@m5 @unique_categories @tgn @added @_tested_elsewhere @_done  @requested
 Scenario: I should see leads from customer unique categories on Latest leads listing
 
 @m5 @unique_categories @tgn @added @_tested  @requested

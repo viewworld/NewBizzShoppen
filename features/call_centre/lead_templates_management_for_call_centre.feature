@@ -68,7 +68,7 @@ Scenario: I can delete lead template that was created by me and was not filled o
   And I follow translated "call_centre.lead_templates.index.view.destroy"
   Then I should see translated "call_centre.lead_templates.destroy.flash.deletion_failure"
 
-@added @_done @tested_elsewhere
+@added @_done @_tested_elsewhere
 Scenario: I can mark any of my lead templates as active/inactive
 
 @added @_tested @selenium

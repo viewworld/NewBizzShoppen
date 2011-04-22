@@ -114,5 +114,5 @@ Scenario: As admin I can view all 'unsatisfactory' ratings
 @m0 @comments
 Scenario: As admin I can reply to 'unsatisfactory' rating
 
-@m9 @statistics
+@m0 @statistics
 Scenario: Whenever a lead is rated the date is recorded

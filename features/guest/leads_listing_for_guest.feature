@@ -12,7 +12,7 @@ Background:
 Scenario: I should see an image and a description for each category
   Then I should see "Sample category"
 
-@tested_elsewhere
+@_tested_elsewhere
 Scenario: I can click on a category name and see a list of leads in that category
 
 @m2 @_tested @tgn
@@ -171,7 +171,7 @@ Scenario: I can see lead template fields with public values for each lead
   And I should not see "xprinter3"
   And I should see translated "shared.lead_templates.listing.hidden_value"
 
-@m5 @added @lead_templates @tgn @_done @tested_elsewhere
+@m5 @added @lead_templates @tgn @_done @_tested_elsewhere
 Scenario: I can see only lead template fields' names (not values) for hidden fields
 
 @m5 @unique_categories @added @_tested @tgn

@@ -1,0 +1,18 @@
+<%= semantic_form_for contact, :url => url_for(:controller => "#{namespace}/agent_work_screen/contacts", :action => :update, :campaign_id => campaign, :id => contact), :html => { :method => :put }, :remote => true do |form| %>
+    <frm title="#{t('agent_work_screen.index.current_contact')+': '+contact.company_name}">
+        <param:header>
+          <div class="fltr">
+            <%= contact.higher_item ? bt_link_to(nil, t("contacts.edit.prev"), url_for(:controller => "#{namespace}/agent_work_screen/contacts", :action => :show, :campaign_id => campaign, :id => contact.higher_item), :remote => true, :id => "prev_contact") : "" %>
+            <%= contact.lower_item ? bt_link_to(nil, t("contacts.edit.next"), url_for(:controller => "#{namespace}/agent_work_screen/contacts", :action => :show, :campaign_id => campaign, :id => contact.lower_item), :remote => true, :id => "next_contact") : "" %>
+          </div>
+        </param:header>
+      <param:content>
+        <%= render :partial => '/shared/leads/form', :locals => {:form => form, :campaign => campaign, :contact => contact} %>
+      </param:content>
+      <param:actions>
+        <ibt c="fltri" icon="save">
+          <%= form.submit t("contacts.edit.save_button"), :name => "commit_create" %>
+        </ibt>
+      </param:actions>
+    </frm>
+<% end %>

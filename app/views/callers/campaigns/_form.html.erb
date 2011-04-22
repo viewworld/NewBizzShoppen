@@ -1,0 +1,50 @@
+<div class="column_left">
+  <div class="pdd_10 no_pdd_t">
+    <fieldset class="inputs labels_ta_r labels_200">
+      <ol>
+        <% if current_user.has_role?(:admin) and campaign.creator %>
+          <li class="string">
+            <label><%= t("campaigns.edit.owner") %></label>
+
+            <div class="txt">
+              <strong>
+                <%= campaign.creator.full_name %>
+              </strong>
+            </div>
+          </li>
+        <% end %>   
+        <%= form.input :name %>
+        <%= form.input :category_id, :as => :select, :collection => Category.all, :include_blank => false %>
+        <%= form.input :country_id, :as => :select, :collection => Country.all, :include_blank => false %>
+      </ol>
+    </fieldset>
+  </div>
+</div>
+
+<div class="column_right">
+  <div class="pdd_10 no_pdd_t">
+    <fieldset class="inputs labels_ta_r">
+      <ol class="align_inputs">
+        <%= form.input :start_date, :as => :string,
+                       :wrapper_html => {:class => "date"},
+                       :input_html => {:class => "datepicker", :value => campaign.start_date},
+                       :hint => t('models.result_field.date_format')%>
+        <%= form.input :end_date, :as => :string,
+                       :wrapper_html => {:class => "date"},
+                       :input_html => {:class => "datepicker", :value => campaign.end_date},
+                       :hint => t('models.result_field.date_format')%>
+        <%= form.input :max_contact_number, :input_html => {:style => "width:95px"} %>
+      </ol>
+    </fieldset>
+  </div>
+</div>
+
+<clb/>
+
+<js:>
+  <script type="text/javascript">
+      $(function() {
+          $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+      });
+  </script>
+</js:>

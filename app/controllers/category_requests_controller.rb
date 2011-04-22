@@ -12,7 +12,7 @@ class CategoryRequestsController < ApplicationController
     end
 
       if @email_template_preview.valid?
-        flash[:notice] = I18n.t("contact_us.create.flash.email_sent_successfully")
+        flash[:notice] = I18n.t("category_requests.create.flash.request_sent")
         ApplicationMailer.generic_email(["admin@fairleads.com"], @email_template_preview.subject, @email_template_preview.body, @email_template_preview.email_from).deliver
 
         redirect_to root_path

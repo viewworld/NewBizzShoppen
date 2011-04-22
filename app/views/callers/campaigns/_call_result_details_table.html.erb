@@ -1,0 +1,67 @@
+<table id="call_result_details" class="generic">
+  <thead>
+  <tr>
+    <th class="hl"></th>
+    <th><%= t("campaigns.call_result_details_table.date") %></th>
+    <th><%= t("campaigns.call_result_details_table.contact") %></th>
+    <th><%= t("campaigns.call_result_details_table.agent") %></th>
+    <th><%= t("campaigns.call_result_details_table.result") %></th>
+    <th><%= t("campaigns.call_result_details_table.call") %></th>
+    <th class="hr"></th>
+  </tr>
+  </thead>
+  <tfoot>
+  <tr>
+    <td class="fl"></td>
+    <td colspan="5"></td>
+    <td class="fr"></td>
+  </tr>
+  </tfoot>
+  <tbody>
+  <% call_results.each do |call_result| %>
+      <tr class="<%= cycle("odd", "even") %>" id="call_result_<%= call_result.id %>">
+        <td class="cl"></td>
+        <td><%= call_result.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+        <td><%= call_result.contact.company_name %></td>
+        <td><%= call_result.creator.full_name %></td>
+        <td><%= call_result.result %></td>
+        <td></td>
+        <td class="cr"></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<% call_results.each do |call_result| %>
+    <div id="call_result_<%= call_result.id %>_tooltip" style="display:none">
+      <%= render :partial => "callers/call_results/notes", :locals => {:call_result => call_result} %>
+    </div>
+
+    <script type="text/javascript">
+        jQuery("#call_result_<%= call_result.id %>").qtip(
+        {
+            position: {
+                corner: {
+                    target: 'topMiddle',
+                    tooltip: 'bottomMiddle'
+                },
+            },
+            content: $("#call_result_<%= call_result.id %>_tooltip").html(),
+            show: 'mouseover',
+            hide: 'mouseout',
+            style: {
+                name: "cream",
+                border: {
+                    radius: 3
+                },
+                tip: {
+                    corner: 'bottomMiddle',
+                    size: {
+                        x: 8,
+                        y : 12
+                    }
+                }
+            }
+        });
+    </script>
+<% end %>

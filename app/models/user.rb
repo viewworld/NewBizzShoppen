@@ -43,6 +43,9 @@ class User < ActiveRecord::Base
   has_many :lead_templates,
            :as => :creator,
            :dependent => :destroy
+  has_many :results,
+           :as => :creator,
+           :dependent => :destroy
   alias_method :parent, :user
 
   scope :with_customers, where("roles_mask & #{2**User.valid_roles.index(:customer)} > 0 ")
@@ -307,6 +310,10 @@ class User < ActiveRecord::Base
   
   def has_role?(r)
     roles.include?(r)
+  end
+
+  def has_one_of_roles?(*r)
+    r.map{|role| has_role?(role)}.include?(true)
   end
 
   def to_s
