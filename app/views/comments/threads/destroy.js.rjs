@@ -1,0 +1,7 @@
+if @thread.nil?
+  page << "$('#thread_#{@thread_id}').remove();"
+else
+  content = escape_javascript(render(:partial => '/comments/shared/thread', :locals => {:thread => @thread}))
+  page << "$('#thread_#{@thread_id}').replaceWith('#{content}');"
+end
+

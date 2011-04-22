@@ -6,7 +6,6 @@ class Comments::ThreadsController < Comments::CommentsController
   set_tab "comments"
 
   before_filter :can_start_conversation?, :only => [:new]
-  before_filter :set_referer, :only => [:edit]
   before_filter :check_role_for_update, :only => [:edit, :update]
   before_filter :check_role_for_destroy, :only => [:destroy]
 
@@ -36,19 +35,12 @@ class Comments::ThreadsController < Comments::CommentsController
     if params[:lead_id]
       attributes.merge!({:commentable_type => 'AbstractLead', :commentable_id => params[:lead_id]})
     end
-    @thread = current_user.comment_threads.new(attributes)
-    if @thread.save
-      @thread.reload
-      @thread.assign_last_thread_created_at_to_root
-      if params[:lead_id]
-        redirect_to comments_lead_thread_path(params[:lead_id], @thread)
-      else
-        redirect_to :back
-      end
-      flash[:notice] = I18n.t("comments.threads.create.flash.notice")
-    else
-      render 'new'
+    @comment = current_user.comment_threads.new(attributes)
+    if @comment.save
+      @comment.reload
+      @comment.assign_last_thread_created_at_to_root
     end
+    #flash[:notice] = I18n.t("comments.threads.create.flash.notice")
   end
 
   def new; end
@@ -64,17 +56,10 @@ class Comments::ThreadsController < Comments::CommentsController
   end
 
   def destroy
-    @thread = current_user.comment_threads.find(params[:id])
-    @thread.move_children_to_higher_parent
-    @thread.reload
-    @lead = @thread.commentable
-    if @thread.destroy
-      flash[:notice] = I18n.t("comments.threads.destroy.flash.notice")
-      redirect_to comments_lead_path(@lead)
-    else
-      flash[:alert] = I18n.t("comments.threads.destroy.flash.alert")
-      redirect_to :back
-    end
+    @comment = current_user.comment_threads.find(params[:id])
+    @thread_id = @comment.root.id
+    @comment.destroy
+    @thread = Comment.find_by_id(@thread_id)
   end
 
   protected
@@ -82,10 +67,6 @@ class Comments::ThreadsController < Comments::CommentsController
   def fetch_lead
     @lead = current_user.leads.find_by_id(params[:lead_id])
     raise CanCan::AccessDenied if @lead and !@lead.can_be_commented?
-  end
-
-  def set_referer
-    session[:comment_referer] = request.referer
   end
 
   def check_role_for_update
