@@ -1,21 +1,19 @@
-     <%= semantic_form_for :comment, Comment.new, :url => comments_lead_threads_path(@lead) do |f| %>
-      <frm>
-        <param:header><%= t("comments.threads.show.view.start_new_thread") %>
-        </param:header>
-        <param:content>
-            <div class="pdd_10 no_pdd_t">
-              <fieldset class="inputs labels_ta_r labels_240">
-                <ol class="align_inputs">
-                <%= f.input :title %>
-                <%= f.input :body, :as => :text %>
-                </ol>
-              </fieldset>
-            </div>
-        </param:content>
-        <param:actions>
-          <ibt c="fltri" icon="plus">
-             <%= f.commit_button t("comments.threads.show.view.create_comment_button") %>
-          </ibt>
-        </param:actions>
-      </frm>
-   <% end %>
+<%= semantic_form_for :comment, Comment.new, :url => comments_lead_threads_path(@lead) do |f| %>
+    <frm title="#{t('comments.threads.show.view.start_new_thread')}">
+      <param:content>
+        <div class="pdd_10 no_pdd_t">
+          <fieldset class="inputs labels_ta_r">
+            <ol class="align_inputs">
+              <%= f.input :title %>
+              <%= f.input :body, :as => :text, :input_html => {:style => "width:450px;height: 200px;" }%>
+            </ol>
+          </fieldset>
+        </div>
+      </param:content>
+      <param:actions>
+        <ibt c="fltri" icon="plus">
+          <%= f.submit t("comments.threads.show.view.create_comment_button") %>
+        </ibt>
+      </param:actions>
+    </frm>
+<% end %>

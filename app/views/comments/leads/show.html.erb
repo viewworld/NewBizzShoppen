@@ -1,8 +1,8 @@
 <column-mc:>
   <header back="true"><%= t("comments.leads.show.view.header", :header => @lead.header) %></header>
   <% @threads.each do |thread| %>
-    <%= render :partial => 'comments/shared/thread', :locals => {:thread => thread} %>
-      <hr/>
+      <%= render :partial => 'comments/shared/thread', :locals => {:thread => thread} %>
+      <hl/>
   <% end %>
 
   <%= render :partial => "comments/threads/new" if current_user.can_start_new_lead_thread? %>
