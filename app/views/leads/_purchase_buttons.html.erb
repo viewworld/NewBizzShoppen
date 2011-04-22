@@ -1,18 +1,22 @@
-  <% if user_signed_in? %>
-      <% if current_user.has_role?(:lead_buyer) %>
-          <!-- TODO Should not be here - should be in buyer scope! ... Oh rly? -->
-          <!-- We should change it - ask RB! -->
-          <%= bt_link_to :cart, current_user.big_buyer? ? t("leads.index.buy_lead") : t("leads.index.add_to_cart_link"), buyers_cart_items_path(:id => lead.id), :method => :post, :class => "default_action" %>
-          <%= hidden_field_tag :confirmation_message, current_user.big_buyer? ? t("leads.index.buy_lead_confirm_msg") : t("leads.index.add_to_cart_lead_confirm_msg"), :class => "default_action_confirmation_msg" %>
-      <% elsif current_user.has_role?(:lead_user) %>
-          <%= hidden_field_tag :confirmation_message, t("leads.index.request_lead_confirm_msg"), :class => "default_action_confirmation_msg" %>
-          <%= bt_link_to nil, t("leads.index.request_lead"), lead_users_lead_requests_path(:lead_id => lead.id), :method => :post, :class => "default_action" %>
-      <% end %>
-  <% else %>
+<% if user_signed_in? %>
+    <% if current_user.has_role?(:lead_buyer) %>
+        <!-- TODO Should not be here - should be in buyer scope! ... Oh rly? -->
+        <!-- We should change it - ask RB! -->
+        <%= bt_link_to :cart, current_user.big_buyer? ? t("leads.index.buy_lead") : t("leads.index.add_to_cart_link"), buyers_cart_items_path(:id => lead.id), :method => :post, :class => "default_action" %>
+        <%= hidden_field_tag :confirmation_message, current_user.big_buyer? ? t("leads.index.buy_lead_confirm_msg") : t("leads.index.add_to_cart_lead_confirm_msg"), :class => "default_action_confirmation_msg" %>
+    <% elsif current_user.has_role?(:lead_user) %>
+        <%= hidden_field_tag :confirmation_message, t("leads.index.request_lead_confirm_msg"), :class => "default_action_confirmation_msg" %>
+        <%= bt_link_to nil, t("leads.index.request_lead"), lead_users_lead_requests_path(:lead_id => lead.id), :method => :post, :class => "default_action" %>
+    <% end %>
+<% else %>
+    <div class="pdd_5 no_pdd_r">
       <%= bt_link_to :cart, t("leads.index.add_to_cart_link"), buyers_cart_items_path(:id => lead.id, :requested_url =>  request.fullpath), :method => :post, :class => "default_action" %>
       <%= hidden_field_tag :confirmation_message, t("leads.index.add_to_cart_lead_confirm_msg"), :class => "default_action_confirmation_msg" %>
-  <% end %>
-  <% if lead.buyout_possible_for?(current_user) %>
-      <%= bt_link_to :cart, t("leads.index.add_to_cart_buyout_link"), buyers_cart_items_path(:id => lead.id, :requested_url =>  request.fullpath, :buyout => true), :method => :post, :class => "default_action" %>
+    </div>
+<% end %>
+<% if lead.buyout_possible_for?(current_user) %>
+    <div class="pdd_5 no_pdd_r">
+      <%= bt_link_to :price, t("leads.index.add_to_cart_buyout_link"), buyers_cart_items_path(:id => lead.id, :requested_url =>  request.fullpath, :buyout => true), :method => :post, :class => "default_action" %>
       <%= hidden_field_tag :confirmation_message, t("leads.index.add_to_cart_buyout_lead_confirm_msg"), :class => "default_action_confirmation_msg" %>
-  <% end %>
+    </div>
+<% end %>
