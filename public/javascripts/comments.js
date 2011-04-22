@@ -11,6 +11,8 @@
   }
 
   function edit_comment(comment_id) {
+      $('#edit_comment_'+comment_id).slideUp('slow');
+      $('#edit_comment_'+comment_id).remove();
       $.get('/comments/threads/'+comment_id+'/edit.js',
             '',
              function(data){
