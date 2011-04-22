@@ -43,6 +43,18 @@ class I18nUtils
   def self.populate!(base_locale='en')
     puts "=> Updating locales..."
     I18nUtils.parse_yaml_files if Translation.table_exists?
+    I18nUtils.populate_active_record_model_names(base_locale)
+  end
+
+  def self.populate_active_record_model_names(base_locale)
+    if Translation.table_exists?
+      locales = Translation.select("DISTINCT(locale)").where("locale <> :base_locale", {:base_locale => base_locale}).map(&:locale)
+      Translation.where("key LIKE '%activerecord.models%' and locale = :base_locale", {:base_locale => base_locale}).each do |t|
+        locales.each do |locale|
+          Translation.find_or_create_by_locale_and_key_and_value(locale,t.key,t.value)
+        end
+      end
+    end
   end
 
   def self.store_in_hash(arr, hash, value)
