@@ -88,7 +88,9 @@ class Contact < AbstractLead
   end
 
   def upgrade_to_lead
-    Lead.create!(self.attributes)
+    lead = self.deep_clone!({ :include => [:lead_purchases, :lead_translations, { :lead_template_values => :lead_template_value_translations} ],
+                              :with_callbacks => true })
+    lead.update_attribute :type, "Lead"
   end
 
   def assign_agent(agent_id)
