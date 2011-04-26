@@ -42,35 +42,85 @@
         <% end %>
 
         <td>
-          <div class="lead_details">
-            <h4><%= link_to lead_purchase.header, current_user.has_role?(:customer) ? buyers_lead_purchase_path(lead_purchase) : lead_users_lead_purchase_path(lead_purchase), :class => "default_action" %></h4>
-            <% if block_contact %>
-                <%= with_output_buffer { block_contact.call(lead_purchase) } if block_contact %>
-            <% end %>
+          <h4><%= link_to lead_purchase.header, current_user.has_role?(:customer) ? buyers_lead_purchase_path(lead_purchase) : lead_users_lead_purchase_path(lead_purchase), :class => "default_action" %></h4>
+          <% if block_contact %>
+              <%= with_output_buffer { block_contact.call(lead_purchase) } if block_contact %>
+          <% end %>
 
-            <p class="element_description i expandable"><%= lead_purchase.description %></p>
+          <p class="element_description i expandable"><%= lead_purchase.description %></p>
 
-            <p class="element_description i expandable"><%= lead_purchase.hidden_description %></p>
+          <p class="element_description i expandable"><%= lead_purchase.hidden_description %></p>
 
-            <% if lead_purchase.lead.linkedin_url_present? %>
-                <p><%= link_to t("lead_purchases.listing.linkedin_profile"), lead_purchase.lead.linkedin_url %>
-                  <%= link_to image_tag("icons/in_icon.png", :style => "vertical-align: top;"), lead_purchase.lead.linkedin_url %></p>
-            <% end %>
+          <% if lead_purchase.lead.linkedin_url_present? %>
+              <p><%= link_to t("lead_purchases.listing.linkedin_profile"), lead_purchase.lead.linkedin_url %>
+                <%= link_to image_tag("icons/in_icon.png", :style => "vertical-align: top;"), lead_purchase.lead.linkedin_url %></p>
+          <% end %>
 
-            <% if lead_purchase.lead.facebook_url_present? %>
-                <p><%= link_to t("lead_purchases.listing.facebook_profile"), lead_purchase.lead.facebook_url %>
-                  <%= link_to image_tag("icons/fb_icon.png", :style => "vertical-align: top;"), lead_purchase.lead.facebook_url %></p>
-            <% end %>
-          </div>
+          <% if lead_purchase.lead.facebook_url_present? %>
+              <p><%= link_to t("lead_purchases.listing.facebook_profile"), lead_purchase.lead.facebook_url %>
+                <%= link_to image_tag("icons/fb_icon.png", :style => "vertical-align: top;"), lead_purchase.lead.facebook_url %></p>
+          <% end %>
 
           <% if block_general %>
               <%= with_output_buffer { block_general.call(lead_purchase) } %>
           <% end %>
 
-          <div class="row_tooltip">
+        </td>
 
-            <%= link_to t("lead_purchases.listing.hide_row"), "javascript:void(0)", :class => "toggle_row hide_row", :style => "display: none" %>            
+        <td>
+          <h3><%= lead_purchase.lead.company_name %></h3>
 
+          <p><%= lead_purchase.lead.phone_number %></p>
+
+          <p><%= lead_purchase.lead.www_address %></p>
+
+          <p><%= lead_purchase.lead.www_address %></p>
+
+          <p><%= lead_purchase.lead.email_address %></p>
+
+          <p><%= lead_purchase.lead.contact_name %></p>
+
+          <p><%= lead_purchase.lead.address %></p>
+
+          <% if block_card %>
+              <%= with_output_buffer { block_card.call(lead_purchase) } %>
+          <% end %>
+        </td>
+
+        <% if block_assigned_to or block_other_actions %>
+            <td>
+              <% if block_assigned_to %>
+                  <%= with_output_buffer { block_assigned_to.call(lead_purchase) } %>
+              <% end %>
+
+              <% if block_other_actions %>
+                  <%= with_output_buffer { block_other_actions.call(lead_purchase) } %>
+              <% end %>
+            </td>
+        <% end %>
+        <% if block_tools %>
+            <td class="tda ta_r">
+              <%= with_output_buffer { block_tools.call(lead_purchase) } if block_tools %>
+            </td>
+        <% end %>
+
+        <td class="cr va_b">
+          <div class="row_tooltip_actions">
+            <%= link_to t("lead_purchases.listing.show_row"), "javascript:void(0)", :class => "toggle_row show_details" %>
+            <%= link_to t("lead_purchases.listing.hide_row"), "javascript:void(0)", :class => "toggle_row hide_details", :style => "display:none" %>
+
+            <%= link_to "Show comments", "javascript:void(0)", :class => "toggle_row show_comments" %>
+            <%= link_to "Hide comments", "javascript:void(0)", :class => "toggle_row hide_comments", :style => "display:none" %>
+          </div>
+        </td>
+      </tr>
+
+
+      <tr class="row_tooltip">
+        <td class="cl"></td>
+        <td colspan="<%= cols %>" class="no_pdd_tb">
+
+          <div class="row_tooltip_content lead_details">
             <% if lead_purchase.lead.lead_templates_and_values.any? %>
                 <div class="grid_270 fltl">
                   <div class="pdd_10">
@@ -117,56 +167,21 @@
               </div>
             </div>
 
-            <clb/>            
+            <clb/>
 
           </div>
-          <div class="row_tooltip_helper"></div>
 
+          <div class="row_tooltip_content comments_details">
+            Comments
+          </div>
 
         </td>
-
-        <td>
-          <h3><%= lead_purchase.lead.company_name %></h3>
-
-          <p><%= lead_purchase.lead.phone_number %></p>
-
-          <p><%= lead_purchase.lead.www_address %></p>
-
-          <p><%= lead_purchase.lead.www_address %></p>
-
-          <p><%= lead_purchase.lead.email_address %></p>
-
-          <p><%= lead_purchase.lead.contact_name %></p>
-
-          <p><%= lead_purchase.lead.address %></p>
-
-          <% if block_card %>
-              <%= with_output_buffer { block_card.call(lead_purchase) } %>
-          <% end %>
-        </td>
-
-        <% if block_assigned_to or block_other_actions %>
-            <td>
-              <% if block_assigned_to %>
-                  <%= with_output_buffer { block_assigned_to.call(lead_purchase) } %>
-              <% end %>
-
-              <% if block_other_actions %>
-                  <%= with_output_buffer { block_other_actions.call(lead_purchase) } %>
-              <% end %>
-            </td>
-        <% end %>
-        <% if block_tools %>
-            <td class="tda ta_r">
-              <%= with_output_buffer { block_tools.call(lead_purchase) } if block_tools %>
-            </td>
-        <% end %>
-
-        <td class="cr va_b">          
-            <%= link_to t("lead_purchases.listing.show_row"), "javascript:void(0)", :class => "toggle_row show_row" %>            
-        </td>
+        <td class="cr"></td>
       </tr>
+
   <% end %>
+
+
 
   <tr class="pagination">
     <td colspan="<%= cols + 2 %>" class="ta_c">
@@ -192,43 +207,68 @@
 </table>
 
 <script type=text/javascript>
+
+    function hideRowButtons()
+    {
+        $(".toggle_row.hide_details:visible, .toggle_row.hide_comments:visible").hide().prev().show();
+    }
+
     jQuery(document).ready(function() {
-        $(".toggle_row").bind("click", function() {
-            var t = $(this).parents("tr");
 
-            if (t.find(".row_tooltip").is(":not(:visible)"))
-            {
-                // - show / hide label
-                $(".hide_row:visible").hide().parents("tr").find(".show_row").fadeIn();                
-                $(this).fadeOut();
+        $(".toggle_row.show_details").bind("click", function() {
+
+            $(".row_tooltip").filter(":not(:eq(" + $(this).parents("tr:first").next().index(".row_tooltip") + "))")
+                    .filter(":visible").find(".row_tooltip_content:visible").slideUp("normal", function() {
+                $(this).parents("tr.row_tooltip").hide()
+            });
+
+            hideRowButtons();
+
+            $(this).hide().next().show().parents("tr:first")
+                    .next("tr.row_tooltip").show()
+                    .find(".comments_details:visible").slideUp().end()
+                    .find(".lead_details").slideDown();
+        });
+
+        $(".toggle_row.hide_details").bind("click", function() {
+
+            hideRowButtons();
+
+            $(this).hide().prev().show().parents("tr:first")
+                    .next("tr.row_tooltip")
+                    .find(".lead_details").slideUp('normal', function() {
+                $(this).parents("tr.row_tooltip").hide();
+            });
+        });
 
 
-                // - show / hide row
-                $(".row_tooltip:visible").slideUp("250");
-                $(".row_tooltip_helper").css({height: "1px"});
+        $(".toggle_row.show_comments").bind("click", function()
+        {
+            $(".row_tooltip").filter(":not(:eq(" + $(this).parents("tr:first").next().index(".row_tooltip") + "))")
+                    .filter(":visible").find(".row_tooltip_content:visible").slideUp("normal", function() {
+                $(this).parents("tr.row_tooltip").hide()
+            });
 
-                var eh = t.innerHeight() - t.find(".lead_details").height() - 18;
+            hideRowButtons();
 
-                var rt = t.find("div.row_tooltip");
-                var rth = t.find("div.row_tooltip_helper");
 
-                rth.animate({height: (rt.height() + eh)}, 250);
-                rt.css({"left": t.position().left + "px", "margin-top": (eh + 7) + "px"}).slideDown(250, function() {
-                    $(this).find(".toggle_row.hide_row").fadeIn();
-                });
-            }
-            else
-            {
-                // - show / hide label
-                $(this).fadeOut();
+            $(this).hide().next().show().parents("tr:first")
+                    .next("tr.row_tooltip").show()
+                    .find(".lead_details:visible").slideUp().end()
+                    .find(".comments_details").slideDown();
 
-                // - hide row
-                $(".row_tooltip_helper").animate({height: 1}, 350);
-                $(".row_tooltip:visible").slideUp("250", function() {
-                    $(this).parents("tr").find(".toggle_row.show_row").fadeIn();
-                });                
-            }
-        })
-    })
+        });
+
+        $(".toggle_row.hide_comments").bind("click", function()
+        {
+            hideRowButtons();
+
+            $(this).hide().prev().show().parents("tr:first")
+                    .next("tr.row_tooltip")
+                    .find(".comments_details").slideUp('normal', function() {
+                $(this).parents("tr.row_tooltip").hide();
+            });
+        });
+    });
 
 </script>

@@ -1,22 +1,20 @@
 <div id="new_comment_div"></div>
-   <%= semantic_remote_form_for :comment, Comment.new, :url => comments_lead_threads_path(@lead), :html => {:method => :post, :id => "new_comment"} do |f| %>
-      <frm>
-        <param:header><%= t("comments.threads.show.view.start_new_thread") %>
-        </param:header>
-        <param:content>
-            <div class="pdd_10 no_pdd_t">
-              <fieldset class="inputs labels_ta_r labels_240">
-                <ol class="align_inputs">
-                <%= f.input :title %>
-                <%= f.input :body, :as => :text %>
-                </ol>
-              </fieldset>
-            </div>
-        </param:content>
-        <param:actions>
-          <ibt c="fltri" icon="plus">
-             <%= button_to_function t("comments.threads.show.view.create_comment_button"), "validate_form('#new_comment')"  %>
-          </ibt>
-        </param:actions>
-      </frm>
-   <% end %>
+<%= semantic_remote_form_for :comment, Comment.new, :url => comments_lead_threads_path(@lead), :html => {:method => :post, :id => "new_comment"} do |f| %>
+    <frm title="#{t('comments.threads.show.view.start_new_thread')}">
+      <param:content>
+        <div class="pdd_10 no_pdd_t">
+          <fieldset class="inputs labels_ta_r">
+            <ol class="align_inputs">
+              <%= f.input :title %>
+              <%= f.input :body, :as => :text, :input_html => {:style => "width:450px;height: 200px;" }%>
+            </ol>
+          </fieldset>
+        </div>
+      </param:content>
+      <param:actions>
+        <ibt c="fltri" icon="plus">
+          <%= button_to_function t("comments.threads.show.view.create_comment_button"), "validate_form('#new_comment')"  %>
+        </ibt>
+      </param:actions>
+    </frm>
+<% end %>

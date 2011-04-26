@@ -221,6 +221,7 @@ en:
       creator_name: "Creator:"
       show_row: "Show details"
       hide_row: "Hide details"
+      comments: "Comments"
     statuses:
       not_contacted: Not contacted
       contacted: Contacted

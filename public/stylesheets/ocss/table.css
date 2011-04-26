@@ -115,80 +115,48 @@
 }
 
 
-/* --- extend ---
------------------------------------------------------------------------------------------- */
-
 .leads_table tbody tr td
 {
     padding: 8px;
-    vertical-align: top;    
+    vertical-align: top;
 }
+
+/* --- toggle_row ---
+------------------------------------------------------------------------------------------ */
+
 
 .leads_table tbody tr td div.row_tooltip
 {
-    position:absolute;
-    background:#fff;
-    width:1098px;
-    /*margin: 8px 0 0 -36px;*/
-    z-index: 9999;
-    border: 1px solid #e3e3e3;
-    margin-top:7px;
-    padding: 0 10px;
+}
 
-    /*-moz-box-shadow: 0 3px 5px #ddd;*/
-    /*-webkit-box-shadow: 0 3px 5px #ddd;*/
-    /*box-shadow: 0 3px 5px #ddd;*/
+.generic tbody tr.row_tooltip td
+{
+    background-color: #fff;
+}
 
-    /*-moz-border-radius: 0 0 10px 10px;*/
-    /*-webkit-border-radius: 0 0 10px 10px;*/
-    /*border-radius: 0 0 10px 10px;*/
-
+.generic tbody tr.row_tooltip,
+.generic tbody tr.row_tooltip td .row_tooltip_content    
+{
     display: none;
 }
 
-.row_tooltip_helper
-{
-    height: 1px;
-    overflow: hidden;
-    width: 10px;
-    visibility:hidden;
-}
-
-
-.toggle_row_p
-{
-    font-size: 12px;
-    line-height: normal;
-    padding: 5px 0 0;
-    font-weight: bold;
-}
-
-.toggle_row_p a.toggle_row
-{
-    color: #0669b6;
-    padding-right: 13px;
-    background: url(/images/icons/toggle.png) no-repeat;
-}
-
-.toggle_row_p a.toggle_row.hide_row
-{
-    background-position: right 3px;
-}
-
-.toggle_row_p a.toggle_row.show_row
-{
-    background-position: right -39px;
-}
-
-a.toggle_row
+.row_tooltip_actions
 {
     position: absolute;
     display: block;
     margin-top: -23px;
-    right: 470px;
+    left: 580px; 
+}
+
+
+.row_tooltip_actions a.toggle_row
+{
+    display: block;
+    float: left;
     height: 22px;
     line-height: 22px;
     padding: 0 10px;
+    margin-right: 5px;
     background: #fff;
     border: 1px solid #ddd;
     border-bottom: none;
@@ -201,14 +169,12 @@ a.toggle_row
     -webkit-box-shadow: 0 -1px 3px #ddd;
 
     text-decoration: none;
-
     color: #666;    
 }
 
-.row_tooltip a.toggle_row
-{
-    right: 465px;
-}
+
+/* --- actions ---
+------------------------------------------------------------------------------------------ */
 
 
 .td_actions
