@@ -172,7 +172,7 @@
           </div>
 
           <div class="row_tooltip_content comments_details">
-            Comments            
+            Comments
           </div>
 
         </td>
@@ -208,49 +208,54 @@
 
 <script type=text/javascript>
 
-  function hideRowButtons()
-  {
-      $(".toggle_row.hide_details:visible, .toggle_row.hide_comments:visible").hide().prev().show();     
-  }
+    function hideRowButtons()
+    {
+        $(".toggle_row.hide_details:visible, .toggle_row.hide_comments:visible").hide().prev().show();
+    }
 
     jQuery(document).ready(function() {
 
         $(".toggle_row.show_details").bind("click", function() {
 
-            $(".row_tooltip").filter(":not(:eq("+ $(this).parents("tr:first").next().index(".row_tooltip") +"))")
-                             .filter(":visible").find(".row_tooltip_content:visible").slideUp("normal", function() {$(this).parents("tr.row_tooltip").hide()});
+            $(".row_tooltip").filter(":not(:eq(" + $(this).parents("tr:first").next().index(".row_tooltip") + "))")
+                    .filter(":visible").find(".row_tooltip_content:visible").slideUp("normal", function() {
+                $(this).parents("tr.row_tooltip").hide()
+            });
 
             hideRowButtons();
 
             $(this).hide().next().show().parents("tr:first")
-                   .next("tr.row_tooltip").show()
-                   .find(".comments_details:visible").slideUp().end()
-                   .find(".lead_details").slideDown();
+                    .next("tr.row_tooltip").show()
+                    .find(".comments_details:visible").slideUp().end()
+                    .find(".lead_details").slideDown();
         });
-        
+
         $(".toggle_row.hide_details").bind("click", function() {
 
             hideRowButtons();
 
             $(this).hide().prev().show().parents("tr:first")
-                   .next("tr.row_tooltip")
-                   .find(".lead_details").slideUp('normal', function() { $(this).parents("tr.row_tooltip").hide(); });
+                    .next("tr.row_tooltip")
+                    .find(".lead_details").slideUp('normal', function() {
+                $(this).parents("tr.row_tooltip").hide();
+            });
         });
 
-        
 
         $(".toggle_row.show_comments").bind("click", function()
         {
-            $(".row_tooltip").filter(":not(:eq("+ $(this).parents("tr:first").next().index(".row_tooltip") +"))")
-                             .filter(":visible").find(".row_tooltip_content:visible").slideUp("normal", function() {$(this).parents("tr.row_tooltip").hide()});
+            $(".row_tooltip").filter(":not(:eq(" + $(this).parents("tr:first").next().index(".row_tooltip") + "))")
+                    .filter(":visible").find(".row_tooltip_content:visible").slideUp("normal", function() {
+                $(this).parents("tr.row_tooltip").hide()
+            });
 
             hideRowButtons();
 
 
             $(this).hide().next().show().parents("tr:first")
-                   .next("tr.row_tooltip").show()
-                   .find(".lead_details:visible").slideUp().end()
-                   .find(".comments_details").slideDown();
+                    .next("tr.row_tooltip").show()
+                    .find(".lead_details:visible").slideUp().end()
+                    .find(".comments_details").slideDown();
 
         });
 
@@ -259,8 +264,10 @@
             hideRowButtons();
 
             $(this).hide().prev().show().parents("tr:first")
-                   .next("tr.row_tooltip")
-                   .find(".comments_details").slideUp('normal', function() { $(this).parents("tr.row_tooltip").hide(); });
+                    .next("tr.row_tooltip")
+                    .find(".comments_details").slideUp('normal', function() {
+                $(this).parents("tr.row_tooltip").hide();
+            });
         });
     });
 

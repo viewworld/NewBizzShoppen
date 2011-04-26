@@ -7,32 +7,32 @@
 
 <table id="leads" class="generic">
   <thead>
-    <tr>
-      <th class="hl"></th>
-      <% if show_checkboxes %>
-          <th></th>
-      <% end %>
-      <th><%= link_to t("leads.table.id"), order_for_scoped_search(:id) %></th>
-      <th><%= link_to t("leads.table.header"), order_for_scoped_search(:header) %></th>
-      <th class="ta_r"><%= t("leads.table.clicks") %></th>
-      <th class="ta_r"><%= t("leads.table.exposures") %></th>
-      <th class="ta_c"><%= t("leads.table.hottness") %></th>
-      <th class="ta_c"><%= t("leads.table.novelty") %></th>
-      <th class="ta_r"><%= link_to t("leads.table.sale_limit"), order_for_scoped_search(:sale_limit) %></th>
-      <th class="ta_r"><%= link_to t("leads.table.price"), order_for_scoped_search(:price) %></th>
-      <th class="ta_r"><%= link_to t("leads.table.sold"), order_for_scoped_search(:lead_purchases_counter) %></th>
-      <th class="ta_r"><%= link_to t("leads.table.purchase_value"), order_for_scoped_search(:purchase_value) %></th>
-      <th class="ta_c"><%= t("leads.table.paid_out") %></th>
-      <th class="ta_c"><%= link_to t("leads.table.unsatisfactory_rating"), order_for_scoped_search(:has_unsatisfactory_rating) %></th>
-      <th><%= link_to t("leads.table.status"), order_for_scoped_search(:published) %></th>
+  <tr>
+    <th class="hl"></th>
+    <% if show_checkboxes %>
+        <th></th>
+    <% end %>
+    <th><%= link_to t("leads.table.id"), order_for_scoped_search(:id) %></th>
+    <th><%= link_to t("leads.table.header"), order_for_scoped_search(:header) %></th>
+    <th class="ta_r"><%= t("leads.table.clicks") %></th>
+    <th class="ta_r"><%= t("leads.table.exposures") %></th>
+    <th class="ta_c"><%= t("leads.table.hottness") %></th>
+    <th class="ta_c"><%= t("leads.table.novelty") %></th>
+    <th class="ta_r"><%= link_to t("leads.table.sale_limit"), order_for_scoped_search(:sale_limit) %></th>
+    <th class="ta_r"><%= link_to t("leads.table.price"), order_for_scoped_search(:price) %></th>
+    <th class="ta_r"><%= link_to t("leads.table.sold"), order_for_scoped_search(:lead_purchases_counter) %></th>
+    <th class="ta_r"><%= link_to t("leads.table.purchase_value"), order_for_scoped_search(:purchase_value) %></th>
+    <th class="ta_c"><%= t("leads.table.paid_out") %></th>
+    <th class="ta_c"><%= link_to t("leads.table.unsatisfactory_rating"), order_for_scoped_search(:has_unsatisfactory_rating) %></th>
+    <th><%= link_to t("leads.table.status"), order_for_scoped_search(:published) %></th>
 
-      <% if block_tools %>
+    <% if block_tools %>
         <th class="ta_r">
           <%= t("leads.table.actions") %>
         </th>
-      <% end %>
-      <th class="hr"></th>
-    </tr>
+    <% end %>
+    <th class="hr"></th>
+  </tr>
   </thead>
   <tfoot>
   <tr>
@@ -42,48 +42,101 @@
   </tr>
   </tfoot>
   <tbody>
-      <% collection.each do |lead| %>
-        <tr id="lead_<%= lead.id %>" class="<%= cycle("odd", "even") %>">
-          <td class="cl"></td>
-          <% if show_checkboxes %>
+  <% collection.each do |lead| %>
+      <tr id="lead_<%= lead.id %>" class="<%= cycle("odd", "even") %>">
+        <td class="cl"></td>
+        <% if show_checkboxes %>
             <td><%= check_box_tag("lead_ids[]", lead.id) %></td>
+        <% end %>
+        <td><%= lead.id %></td>
+        <td><%= lead.header %></td>
+        <td class="ta_r"><%= lead.clicks_count %></td>
+        <td class="ta_r"><%= lead.exposures_count %></td>
+        <td class="ta_c"><%= t("models.lead.hotness.lvl#{lead.hotness_level}") %></td>
+        <td class="ta_c"><%= lead.published ? t("models.lead.novelty.lvl#{lead.novelty_level}") : "-" %></td>
+        <td class="ta_r"><%= lead.sale_limit %></td>
+        <td class="ta_r"><%= as_currency(lead.price, lead.currency) %></td>
+        <td class="ta_r"><%= lead.lead_purchases_counter %></td>
+        <td class="ta_r"><%= as_currency(lead.purchase_value, lead.currency) %></td>
+        <td></td>
+        <td class="ta_c"><%= link_to lead.has_unsatisfactory_rating ? t("leads.listing.has_unsatisfactory_rating_yes") : t("leads.listing.has_unsatisfactory_rating_no"), current_user.has_any_role?(:agent, :call_centre_agent) ? send("edit_#{current_user.role.to_s.pluralize}_lead_path".to_sym, lead) : edit_administration_lead_path(lead, :anchor => "lead_rating") %></td>
+        <td>
+          <% if block_status_column %>
+              <%= with_output_buffer { block_status_column.call(lead) } %>
+          <% else %>
+              <%= lead.published %>
           <% end %>
-          <td><%= lead.id %></td>
-          <td><%= lead.header %></td>
-          <td class="ta_r"><%= lead.clicks_count %></td>
-          <td class="ta_r"><%= lead.exposures_count %></td>
-          <td class="ta_c"><%= t("models.lead.hotness.lvl#{lead.hotness_level}") %></td>
-          <td class="ta_c"><%= lead.published ? t("models.lead.novelty.lvl#{lead.novelty_level}") : "-" %></td>
-          <td class="ta_r"><%= lead.sale_limit %></td>
-          <td class="ta_r"><%= as_currency(lead.price,lead.currency) %></td>
-          <td class="ta_r"><%= lead.lead_purchases_counter %></td>
-          <td class="ta_r"><%= as_currency(lead.purchase_value,lead.currency) %></td>
-          <td></td>
-          <td class="ta_c"><%= link_to lead.has_unsatisfactory_rating ? t("leads.listing.has_unsatisfactory_rating_yes") : t("leads.listing.has_unsatisfactory_rating_no"), current_user.has_any_role?(:agent, :call_centre_agent) ? send("edit_#{current_user.role.to_s.pluralize}_lead_path".to_sym, lead) : edit_administration_lead_path(lead, :anchor => "lead_rating")%></td>
-          <td>
-            <% if block_status_column %>
-                <%= with_output_buffer { block_status_column.call(lead) } %>
-            <% else  %>
-                <%= lead.published %>
-            <% end %>
-          </td>
+        </td>
 
-          <% if block_tools %>
+        <% if block_tools %>
             <td class="tda ta_r">
               <%= with_output_buffer { block_tools.call(lead) } %>
             </td>
-          <% end %>
-          <td class="cr"></td>
-        </tr>
+        <% end %>
+        <td class="cr"></td>
+      </tr>
+
+      <% if block_rowtooltip %>
+
+      <tr class="row_tooltip">
+        <td class="cl no_pdd"></td>
+        <td colspan="<%= cols + 1 %>" class="no_pdd">
+          <div class="row_tooltip_content pdd_10">
+            <%= with_output_buffer { block_rowtooltip.call(lead) } %>
+          </div>
+        </td>
+        <td class="cr no_pdd"></td>
+      </tr>
+
       <% end %>
 
-      <% if will_paginate %>
-        <tr class="pagination">
-          <td colspan="<%= cols + 3 %>" class="ta_c">
-            <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
-          </td>
-        </tr>
-      <% end %>
-  
-      </tbody>
-  </table>
+  <% end %>
+
+  <% if will_paginate %>
+      <tr class="pagination">
+        <td colspan="<%= cols + 3 %>" class="ta_c">
+          <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+        </td>
+      </tr>
+  <% end %>
+
+  </tbody>
+</table>
+
+<script type=text/javascript>
+
+    function hideRowButtons()
+    {
+        $(".toggle_row.hide_comments:visible").hide().prev().show();
+    }
+
+    jQuery(document).ready(function()
+    {
+        $(".toggle_row.show_comments").bind("click", function()
+        {
+            $(".row_tooltip").filter(":not(:eq(" + $(this).parents("tr:first").next().index(".row_tooltip") + "))")
+                    .filter(":visible").find(".row_tooltip_content:visible").slideUp("normal", function() {
+                $(this).parents("tr.row_tooltip").hide()
+            });
+
+            hideRowButtons();
+
+
+            $(this).hide().next().show().parents("tr:first")
+                    .next("tr.row_tooltip").show()
+                    .find(".row_tooltip_content").slideDown();
+        });
+
+        $(".toggle_row.hide_comments").bind("click", function()
+        {
+            hideRowButtons();
+
+            $(this).hide().prev().show().parents("tr:first")
+                    .next("tr.row_tooltip")
+                    .find(".row_tooltip_content").slideUp('normal', function() {
+                $(this).parents("tr.row_tooltip").hide();
+            });
+        });
+    });
+
+</script>
