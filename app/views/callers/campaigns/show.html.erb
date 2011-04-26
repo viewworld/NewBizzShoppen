@@ -11,7 +11,7 @@
               <ol class="no_pdd">
                 <li class="select">
                   <%= label_tag t("campaigns.show.search.agents") %>
-                  <%= select_tag :agent_ids, options_from_collection_for_select(@campaign.users, "id", "full_name", @agent_ids), :multiple => true, :style => "height:80px;width:140px;" %>
+                  <%= select_tag :agent_ids, options_from_collection_for_select(@campaign.users, "id", "full_name", @agent_ids), :include_blank => true, :multiple => true, :style => "height:80px;width:140px;" %>
                 </li>
               </ol>
             </fieldset>
