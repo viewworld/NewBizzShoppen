@@ -109,8 +109,10 @@
             <%= link_to t("lead_purchases.listing.show_row"), "javascript:void(0)", :class => "toggle_row show_details" %>
             <%= link_to t("lead_purchases.listing.hide_row"), "javascript:void(0)", :class => "toggle_row hide_details", :style => "display:none" %>
 
-            <%= link_to "Show comments", "javascript:void(0)", :class => "toggle_row show_comments" %>
-            <%= link_to "Hide comments", "javascript:void(0)", :class => "toggle_row hide_comments", :style => "display:none" %>
+            <% if lead_purchase.lead.can_be_commented? %>
+                <%= link_to "Show comments", "javascript:void(0)", :class => "toggle_row show_comments" %>
+                <%= link_to "Hide comments", "javascript:void(0)", :class => "toggle_row hide_comments", :style => "display:none" %>
+            <% end %>
           </div>
         </td>
       </tr>
@@ -171,9 +173,11 @@
 
           </div>
 
+          <% if lead_purchase.lead.can_be_commented? %>
           <div class="row_tooltip_content comments_details">
-            Comments
+            <%= render :partial => "/shared/comments/lead_threads", :locals => { :lead => lead_purchase.lead, :threads => lead_purchase.lead.comment_threads.roots.order("created_at DESC") } %>
           </div>
+          <% end %>
 
         </td>
         <td class="cr"></td>

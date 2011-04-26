@@ -1,0 +1,6 @@
+  <% threads.each do |thread| %>
+      <%= render :partial => 'comments/shared/thread', :locals => {:thread => thread} %>
+      <hl/>
+  <% end %>
+
+  <%= render :partial => "comments/threads/new", :locals => { :lead => lead } if current_user.can_start_new_lead_thread? %>
