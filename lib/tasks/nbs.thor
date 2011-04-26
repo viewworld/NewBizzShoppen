@@ -394,7 +394,7 @@ class Nbs < Thor
     category = Category.where(:name => "Business").first
     country = Country.where(:name => "Denmark").first
     call_centre = User.where(:email => "translator_call_centre@nbs.com").first
-    campaign = Campaign.create({:name => "Testing One",
+    campaign = Campaign.find_or_create_by_name({:name => "Testing One",
                      :category => category,
                      :country => country,
                      :max_contact_number => 3,
@@ -402,7 +402,7 @@ class Nbs < Thor
                      :start_date => Date.today,
                      :end_date => Date.today + 14.days })
     #inactive campaign
-    Campaign.create({:name => "Testing Two",
+    Campaign.find_or_create_by_name({:name => "Testing Two",
                      :category => Category.where(:name => "Electronics").first,
                      :country => Country.where(:name => "United Kingdom").first,
                      :max_contact_number => 3,
@@ -416,7 +416,7 @@ class Nbs < Thor
      {:company_name => "Mleko company", :company_phone_number => "510 333 333" },
      {:company_name => "Stefanek corp", :company_phone_number => "888 422 633" },
      {:company_name => "PHU Sciemkata", :company_phone_number => "602 222 333" }].each do |attrs|
-      Contact.create attrs.merge(:country => country, :campaign => campaign, :creator => call_centre, :category => category, :contact_name => "", :phone_number => "", :email_address => "", :creator_name => call_centre.full_name)
+      Contact.find_or_create_by_company_name attrs.merge(:country => country, :campaign => campaign, :creator => call_centre, :category => category, :contact_name => "", :phone_number => "", :email_address => "", :creator_name => call_centre.full_name)
     end
 
   end
