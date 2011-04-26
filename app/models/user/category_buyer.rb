@@ -20,6 +20,9 @@ class ::User::CategoryBuyer < ::User
   has_many :bought_leads, :through => :lead_purchases, :class_name => "Lead", :source => :lead, :conditions => "accessible_from IS NOT NULL"
   has_and_belongs_to_many :buying_categories, :class_name => 'Category', :join_table => 'categories_users', :foreign_key => :user_id
 
+  has_many :assigned_lead_purchases, :foreign_key => :assignee_id, :class_name => "LeadPurchase", :conditions => "accessible_from IS NOT NULL"
+  has_many :assigned_leads, :class_name => "Lead", :through => :assigned_lead_purchases, :conditions => "accessible_from IS NOT NULL", :source => :lead
+
   validates_presence_of :company_name, :unless => Proc.new{|u| u.parent.present?}
 
   accepts_nested_attributes_for :lead_purchases
