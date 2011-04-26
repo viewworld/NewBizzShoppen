@@ -16,6 +16,7 @@ class Callers::CampaignsController < Callers::CallerController
     @campaign = Campaign.new(params[:campaign])
     @campaign.creator = current_user
     @campaign.results = Result.generic_results
+    @campaign.users << current_user
     create! do |success, failure|
       success.html { redirect_to callers_campaigns_path }
       failure.html { render 'new' }
