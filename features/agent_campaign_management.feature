@@ -562,7 +562,7 @@ Feature: Agent campaign - management
       Then I execute js for select agent_ids "0" to set selected as "false"
       Then I execute js for select agent_ids "1" to set selected as "true"
       Then I press translated "campaigns.show.search_button"
-      Then I should not see "1" within "#all_result_row"
+      Then I should see "1" within "#all_result_row"
       Then I wait 4 second
 
     @is @__campaign_statistics @_tested @selenium @requested
