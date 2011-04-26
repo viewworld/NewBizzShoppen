@@ -1,5 +1,6 @@
 class Callers::AgentWorkScreenController < Callers::CallerController
 
+  before_filter lambda {authorize_role(:call_centre, :call_centre_agent, :agent)}
   before_filter :set_campaign
   before_filter :set_agent
   before_filter :set_contacts

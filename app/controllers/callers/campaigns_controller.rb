@@ -16,6 +16,7 @@ class Callers::CampaignsController < Callers::CallerController
     @campaign = Campaign.new(params[:campaign])
     @campaign.creator = current_user
     @campaign.results = Result.generic_results
+    @campaign.users << current_user
     create! do |success, failure|
       success.html { redirect_to callers_campaigns_path }
       failure.html { render 'new' }
@@ -39,7 +40,8 @@ class Callers::CampaignsController < Callers::CallerController
     @date_from = params[:date_from] ? params[:date_from].to_date : @campaign.start_date
     @date_to = params[:date_to] ? params[:date_to].to_date : @campaign.end_date
     @final = (params[:final] and params[:final] == "yes") ? true : false
-    @agent_ids = params[:agent_ids] || @campaign.users.map(&:id)
+    @agent_ids = params[:agent_ids] || []
+    @agent_ids.delete("")
     @results = @final ? Result.where(:final => true) : Result.all
     @headers = CallResult.for_table_header(@date_from, @date_to)
   end
