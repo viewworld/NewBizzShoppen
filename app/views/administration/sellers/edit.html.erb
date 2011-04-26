@@ -1,4 +1,5 @@
 <column-mc:>
+  <%= javascript_include_tag :ckeditor %>
   <header><%= t('administration.sellers.edit.view.header', :name => @seller.company_name) %></header>
 
   <%= semantic_form_for @seller, :as => :seller, :url => administration_seller_path(@seller), :input_html => {:method => :post} do |form| %>
