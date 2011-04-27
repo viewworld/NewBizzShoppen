@@ -110,8 +110,8 @@
             <%= link_to t("lead_purchases.listing.hide_row"), "javascript:void(0)", :class => "toggle_row hide_details", :style => "display:none" %>
 
             <% if lead_purchase.lead.can_be_commented? %>
-                <%= link_to "Show comments", "javascript:void(0)", :class => "toggle_row show_comments" %>
-                <%= link_to "Hide comments", "javascript:void(0)", :class => "toggle_row hide_comments", :style => "display:none" %>
+                <%= link_to t("lead_purchases.listing.show_comments"), "javascript:void(0)", :class => "toggle_row show_comments" %>
+                <%= link_to t("lead_purchases.listing.hide_comments"), "javascript:void(0)", :class => "toggle_row hide_comments", :style => "display:none" %>
             <% end %>
           </div>
         </td>

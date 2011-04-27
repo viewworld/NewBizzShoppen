@@ -222,6 +222,8 @@ en:
       show_row: "Show details"
       hide_row: "Hide details"
       comments: "Comments"
+      show_comments: "Show comments"
+      hide_comments: "Hide comments"
     statuses:
       not_contacted: Not contacted
       contacted: Contacted

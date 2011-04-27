@@ -16,49 +16,69 @@ Background:  Sign in user and set locale
   And a lead Lead#4 exists within category Computers and is bought by user customer1@nbs.com with role customer
   And comment for lead "Lead#1" was posted by user "customer1@nbs.com" with attributes "created_at: 2011-01-01, last_thread_created_at:2011-01-01"
   And comment for lead "Lead#2" was posted by user "customer1@nbs.com" with attributes "last_thread_created_at:2011-01-02"
-  And comment for lead "Lead#3" was posted by user "lead_user.customer1@nbs.com" with attributes "created_at: 2010-01-01, last_thread_created_at:2011-01-30"
+  And comment for lead "Lead#3" was posted by user "lead_user.customer1@nbs.com" with attributes "title: Leadusers comment 1, created_at: 2010-01-01, last_thread_created_at:2011-01-30"
   And comment for lead "Lead#4" was posted by user "lead_buyer.customer1@nbs.com" with attributes "last_thread_created_at:2011-02-04"
   Then I sign in as customer1@nbs.com with password supersecret
 
-@noguess
+@noguess @_tested @selenium
 Scenario: I can create a comment for lead that I have access to
+  When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  And I fill in "search_with_keyword" with "Lead#4"
+  And I press translated "lead_buyer.lead_purchases.index.view.search.search_button"
+  And I follow translated "lead_purchases.listing.show_comments"
+  And I fill in "comment_title" with "New thread title" within ".lead_new_thread_container_div"
+  And I fill in "comment_body" with "New thread body" within ".lead_new_thread_container_div"
+  And I press translated "comments.threads.show.view.create_comment_button"
+  Then I should see "New thread title"
+  And I should see "New thread body"
 
+@_tested @selenium
+Scenario: I can reply to comment
+  When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  And I fill in "search_with_keyword" with "Lead#4"
+  And I press translated "lead_buyer.lead_purchases.index.view.search.search_button"
+  And I follow translated "lead_purchases.listing.show_comments"
+  And I follow translated "comments.threads.show.view.reply" within ".lead_threads_container_div"
+  And I fill in "comment_title" with "Reply to First Lead1 comment" within ".lead_threads_container_div"
+  And I fill in "comment_body" with "Body reply to First Lead1 comment" within ".lead_threads_container_div"
+  And I press translated "comments.threads.show.view.create_comment_button"
+  Then I should see "Reply to First Lead1 comment"
+  And I should see "Body reply to First Lead1 comment"
+
+@_tested @selenium
 Scenario: I can see all comments created by members of my ownership branch
+  When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  And I fill in "search_with_keyword" with "Lead#3"
+  And I press translated "lead_buyer.lead_purchases.index.view.search.search_button"
+  And I follow translated "lead_purchases.listing.show_comments"
+  Then I should see "Leadusers comment 1"
 
+#since all comments are visible to everybody involved with particular lead
+@deperecated @_done
 Scenario: I cannot see comments created by members of ownership branch that I do not belong to
 
 @m0
 Scenario: I can bulk create comments
 
-Scenario: I can reply to comment
 
-@_tested
+@_done @deprecated
 Scenario: I can sort all comments
-  Given I follow translated "layout.main_menu.shared.comments"
-  When I follow translated "comments.threads.index.view.lead_header"
-  And I follow translated "comments.threads.index.view.lead_header"
-  Then I should see "Lead#4" before "Lead#3"
-  When I follow translated "comments.threads.index.view.started_by"
-  Then I should see "Jane Doe" before "John Doe"
-  When I follow translated "comments.threads.index.view.date"
-  Then I should see "01-01-2010" before "01-01-2011"
-  When I follow translated "comments.threads.index.view.last_thread_date"
-  Then I should see "01-01-2011" before "02-01-2011"
 
-@_tested
+@_done @deprecated
 Scenario: I can filter all comments
-  Given I follow translated "layout.main_menu.shared.comments"
-  When I fill in "search_with_keyword" with "lead#1"
-  And I press translated "comments.threads.index.view.search_button"
-  Then I should see "Lead#1"
-  And I should not see "Lead#2"
 
-@_tested
+@_done @deprecated
 Scenario: I can see paginated list of comments
-  Given pagination per page size in model Comment is set to 2
-  And I follow translated "layout.main_menu.shared.comments"
-  Then I follow "2"
 
+@_done @tested_elsewhere
 Scenario: I can see tab with comments on my leads page besides show details
 
+@_tested
 Scenario: I can't comment leads created by purchase manager
+  Given I have user with email purchase_manager7@nbs.com and role purchase_manager
+  And lead Lead#7 is created by user purchase_manager7@nbs.com with role purchase_manager
+  And a lead Lead#7 exists within category Computers and is bought by user customer1@nbs.com with role customer
+  When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  And I fill in "search_with_keyword" with "Lead#7"
+  And I press translated "lead_buyer.lead_purchases.index.view.search.search_button"
+  Then I should not see translated "lead_purchases.listing.show_comments"
