@@ -63,3 +63,14 @@
       $(form_id + " li[id*='comment_']").removeClass("error");
       $(form_id + " li[id*='comment_'] p[class='inline-errors']").remove();
   }
+
+  function copy_checkboxes_to_bulk_form()
+  {
+      cb_ids = [];
+      jQuery.each($("input:checkbox:checked[id^=lead_purchase_checkbox_]"), function(){
+         cb_ids.push("<input type=\"hidden\" value=\""+this.value+"\" name=\"lead_purchase_ids[]\" id=\"duplicate_lead_purchase_checkbox_"+this.value+"\">");
+      });
+      $('#bulk_form_inputs').html("");
+      $('#bulk_form_inputs').html(cb_ids.join(" "))
+
+  }
