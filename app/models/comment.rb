@@ -82,6 +82,6 @@ class Comment < ActiveRecord::Base
   end
 
   def last_thread_created_at
-    created_at
+    read_attribute(:last_thread_created_at).blank? ? created_at : read_attribute(:last_thread_created_at)
   end
 end

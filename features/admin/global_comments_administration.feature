@@ -37,6 +37,7 @@ Scenario: I can sort comments
   When I follow translated "comments.threads.index.view.date"
   Then I should see "01-01-2010" before "01-01-2011"
   When I follow translated "comments.threads.index.view.last_thread_date"
+  And I open page in browser
   Then I should see "01-01-2011" before "02-01-2011"
 
 @_tested
@@ -71,6 +72,37 @@ Scenario: I can edit the comment
   And I should see "Corrected title"
   And I should see "Corrected body"
 
+@_tested @selenium
 Scenario: I can delete the comment
+  When I follow translated "layout.main_menu.admin.leads"
+  And I fill in "search_with_keyword" with "lead#1"
+  And I press translated "administration.leads.index.view.search_button"
+  And I follow translated "comments.shared.show_comment"
+  And I confirm a js popup on the next step
+  And I follow translated "comments.threads.show.view.destroy" within ".row_tooltip_content"
+  Then I should not see "First Lead1 comment"
 
+@_tested @selenium
 Scenario: I can start new comment thread
+  When I follow translated "layout.main_menu.admin.leads"
+  And I fill in "search_with_keyword" with "lead#1"
+  And I press translated "administration.leads.index.view.search_button"
+  And I follow translated "comments.shared.show_comment"
+  And I fill in "comment_title" with "New thread title" within ".lead_new_thread_container_div"
+  And I fill in "comment_body" with "New thread body" within ".lead_new_thread_container_div"
+  And I press translated "comments.threads.show.view.create_comment_button"
+  Then I should see "New thread title"
+  And I should see "New thread body"
+
+@_tested @selenium @added
+Scenario: I can reply to existing comment thread
+  When I follow translated "layout.main_menu.admin.leads"
+  And I fill in "search_with_keyword" with "lead#1"
+  And I press translated "administration.leads.index.view.search_button"
+  And I follow translated "comments.shared.show_comment"
+  And I follow translated "comments.threads.show.view.reply" within ".row_tooltip_content"
+  And I fill in "comment_title" with "Reply to First Lead1 comment" within ".lead_threads_container_div"
+  And I fill in "comment_body" with "Body reply to First Lead1 comment" within ".lead_threads_container_div"
+  And I press translated "comments.threads.show.view.create_comment_button"
+  Then I should see "Reply to First Lead1 comment"
+  And I should see "Body reply to First Lead1 comment"
