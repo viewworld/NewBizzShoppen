@@ -54,20 +54,20 @@ Scenario: I can see all comments created by members of my ownership branch
   Then I should see "Leadusers comment 1"
 
 #since all comments are visible to everybody involved with particular lead
-@deperecated @_done
+@_deprecated @_done
 Scenario: I cannot see comments created by members of ownership branch that I do not belong to
 
 @m0
 Scenario: I can bulk create comments
 
 
-@_done @deprecated
+@_done @_deprecated
 Scenario: I can sort all comments
 
-@_done @deprecated
+@_done @_deprecated
 Scenario: I can filter all comments
 
-@_done @deprecated
+@_done @_deprecated
 Scenario: I can see paginated list of comments
 
 @_done @tested_elsewhere

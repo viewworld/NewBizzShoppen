@@ -44,11 +44,11 @@ Scenario: I can reply to comment
   Then I should see "Reply to First Lead1 comment"
   And I should see "Body reply to First Lead1 comment"
 
-@_done @deprecated
+@_done @_deprecated
 Scenario: I can sort all comments
 
-@_done @deprecated
+@_done @_deprecated
 Scenario: I can filter all comments
 
-@_done @deprecated
+@_done @_deprecated
 Scenario: I can see paginated list of comments

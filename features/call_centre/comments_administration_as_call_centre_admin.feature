@@ -16,6 +16,7 @@ Background:
   And comment for lead "Lead#1" was posted by user "customer1@nbs.com" with attributes "created_at: 2011-01-01, last_thread_created_at:2011-01-01"
   And comment for lead "Lead#2" was posted by user "customer2@nbs.com" with attributes "last_thread_created_at:2011-01-02"
   And comment for lead "Lead#3" was posted by user "customer1@nbs.com" with attributes "created_at: 2010-01-01, last_thread_created_at:2011-01-30"
+  And comment thread for lead "Lead#3" was posted by users "customer1@nbs.com, call_centre1@nbs.com, customer1@nbs.com"
   And user "customer1@nbs.com" with role "customer" has attributes "screen_name: Mark Driscoll"
   And user "customer2@nbs.com" with role "customer" has attributes "screen_name: John Doe"
   And I sign in as call_centre1@nbs.com with password supersecret
@@ -33,8 +34,15 @@ Scenario: I can click on comment list and get a popup with comments from differe
 @m0
 Scenario: I can click on details of a specific comment
 
-
+@_tested @selenium
 Scenario: I can see the comment conversation details
+  When I follow translated "layout.main_menu.call_centre.leads"
+  And I fill in "search_with_keyword" with "lead#3"
+  And I press translated "call_centre.leads.index.view.search_button"
+  And I follow translated "comments.shared.show_comments"
+  Then I should see "Comment title #1"
+  Then I should see "Comment title #2"
+  Then I should see "Comment title #3"
 
 @_tested @selenium
 Scenario: I can respond to a comment and my comment is added to the conversation
@@ -75,3 +83,11 @@ Scenario: I can filter comments
   And I press translated "comments.threads.index.view.search_button"
   Then I should see "Lead#1"
   And I should not see "Lead#2"
+
+@added @_tested @selenium
+Scenario: I cannot start new thread
+  When I follow translated "layout.main_menu.call_centre.leads"
+  And I fill in "search_with_keyword" with "lead#3"
+  And I press translated "call_centre.leads.index.view.search_button"
+  And I follow translated "comments.shared.show_comments"
+  And I should not see translated "comments.threads.new.view.header" with options "header: Lead#3"
