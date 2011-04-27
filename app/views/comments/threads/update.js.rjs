@@ -1,5 +1,5 @@
 page << "$('#edit_comment_'+#{@comment.id}).slideUp('slow');"
 page << "$('#edit_comment_'+#{@comment.id}).remove();"
-page << "$('#comment_#{@comment.id} span[id=title]').html('#{@comment.title}')"
-page << "$('#comment_#{@comment.id} span[id=body]').html('#{@comment.body}')"
+page << "$('#comment_#{@comment.id} span[id=title]').html('#{escape_javascript(@comment.title)}')"
+page << "$('#comment_#{@comment.id} span[id=body]').html('#{escape_javascript(@comment.body)}')"
 page << "$('#comment_#{@comment.id} span[id=title]').effect('highlight', {}, 3000);"

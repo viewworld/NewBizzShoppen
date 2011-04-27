@@ -2601,6 +2601,8 @@ en:
       comment: "comment"
       comments: "comments"
 
+      show_comment: "show"
+      hide_comment: "hide"
     leads:
       show:
         view:

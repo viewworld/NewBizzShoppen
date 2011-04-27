@@ -108,9 +108,21 @@
                   </li>
                 </ul-actions>
                 <%= link_to number_of_comments(lead.comment_threads.roots.count), comments_lead_path(lead) %>
+                <br />
+                <%= link_to t("comments.shared.show_comment"), "#", :class => "toggle_row show_comments" %>
+                <%= link_to t("comments.shared.hide_comment"), "#", :class => "toggle_row hide_comments", :style => "display:none" %>
               </td>
               <td class="cr"></td>
             </tr>
+          <tr class="row_tooltip">
+            <td class="cl no_pdd"></td>
+            <td colspan="<%= 13 %>" class="no_pdd">
+              <div class="row_tooltip_content pdd_10">
+                <p><%= render :partial => "/shared/comments/lead_threads", :locals => { :lead => lead, :threads => lead.comment_threads.roots.order("created_at DESC") } %></p>
+              </div>
+            </td>
+            <td class="cr no_pdd"></td>
+          </tr>
         <% end %>
 
         <% if will_paginate %>
@@ -124,4 +136,42 @@
         </tbody>
       </table>
   <% end %>
+
+<script type=text/javascript>
+
+    function hideRowButtons()
+    {
+        $(".toggle_row.hide_comments:visible").hide().prev().show();
+    }
+
+    jQuery(document).ready(function()
+    {
+        $(".toggle_row.show_comments").bind("click", function()
+        {
+            $(".row_tooltip").filter(":not(:eq(" + $(this).parents("tr:first").next().index(".row_tooltip") + "))")
+                    .filter(":visible").find(".row_tooltip_content:visible").slideUp("normal", function() {
+                $(this).parents("tr.row_tooltip").hide()
+            });
+
+            hideRowButtons();
+
+
+            $(this).hide().next().show().parents("tr:first")
+                    .next("tr.row_tooltip").show()
+                    .find(".row_tooltip_content").slideDown();
+        });
+
+        $(".toggle_row.hide_comments").bind("click", function()
+        {
+            hideRowButtons();
+
+            $(this).hide().prev().show().parents("tr:first")
+                    .next("tr.row_tooltip")
+                    .find(".row_tooltip_content").slideUp('normal', function() {
+                $(this).parents("tr.row_tooltip").hide();
+            });
+        });
+    });
+
+</script>
 </column-mc:>

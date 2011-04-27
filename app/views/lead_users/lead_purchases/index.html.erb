@@ -52,12 +52,14 @@
                 <%= select_tag :bulk_state, options_for_select([[nil, nil]]+LeadPurchaseBase.statuses_for_select) %>
               </li>
               <li class="commit no_pdd_l">
-                <%= bt_link_to nil, t("lead_user.lead_purchases.index.view.bulk_update_button"), "javascript:void(0)", :onclick => "submitBulkForm('#{lead_users_bulk_lead_purchase_update_path}#POST');" %>
+                <%= bt_link_to nil, t("lead_user.lead_purchases.index.view.bulk_update_button"), "javascript:void(0)", :onclick => "copy_checkboxes_to_bulk_form();submitBulkForm('#{lead_users_bulk_lead_purchase_update_path}#POST');" %>
               </li>
             </ol>
           </fieldset>
 
           <%= hidden_field_tag :route_to %>
+          <span id="bulk_form_inputs"></span>
+      <% end %>
 
           <%= lead_purchases_listing @lead_purchases, :show_checkboxes => true do |blocks| %>
 
@@ -98,16 +100,15 @@
                   </ul-actions>
                   <% if lead_purchase.lead.can_be_commented? %>
                     <%= link_to number_of_comments(lead_purchase.lead.comment_threads.roots.count), comments_lead_path(lead_purchase.lead) %><br />
-                    <%= link_to t("lead_user.lead_purchases.index.view.post_comment"), new_comments_lead_thread_path(lead_purchase.lead) %>
                   <% end %>
               <% end %>
 
               <% blocks.bottom do |lead_purchase| %>
-                  <%= bt_link_to :download, t("lead_user.lead_purchases.index.view.bulk_download_csv_link_short"), "javascript:void(0)", :onclick => "submitBulkForm('#{lead_users_bulk_lead_purchase_csv_path}#POST');" %>
-                  <%= bt_link_to :printer, t("lead_user.lead_purchases.index.view.bulk_print_link_short"), "javascript:void(0)", :onclick => "submitBulkForm('#{lead_users_bulk_lead_purchase_print_path}#POST', '_blank');" %>
+                  <%= bt_link_to :download, t("lead_user.lead_purchases.index.view.bulk_download_csv_link_short"), "javascript:void(0)", :onclick => "copy_checkboxes_to_bulk_form();submitBulkForm('#{lead_users_bulk_lead_purchase_csv_path}#POST');" %>
+                  <%= bt_link_to :printer, t("lead_user.lead_purchases.index.view.bulk_print_link_short"), "javascript:void(0)", :onclick => "copy_checkboxes_to_bulk_form();submitBulkForm('#{lead_users_bulk_lead_purchase_print_path}#POST', '_blank');" %>
               <% end %>
           <% end %>
 
-      <% end %>
+
   <% end %>
 </column-mc:>

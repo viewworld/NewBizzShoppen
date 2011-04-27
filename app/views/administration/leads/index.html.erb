@@ -82,9 +82,20 @@
       <%= leads_table @leads, :show_checkboxes => false do |blocks| %>
           <% blocks.tools do |lead| %>
               <%= bt_link_to nil, t("administration.leads.index.view.edit"), edit_administration_lead_path(lead), :class => "default_action" %>
+              <% if lead.can_be_commented? %>
+                  <br/>
+                  <%= link_to number_of_comments(lead.comment_threads.roots.count), comments_lead_path(lead) %><br />
+                  <%= link_to t("comments.shared.show_comment"), "#", :class => "toggle_row show_comments" %>
+                  <%= link_to t("comments.shared.hide_comment"), "#", :class => "toggle_row hide_comments", :style => "display:none" %>
+              <% end %>
           <% end %>
           <% blocks.status_column do |lead| %>
               <%= status_or_status_change(lead) %>
+          <% end %>
+          <% blocks.rowtooltip do |lead| %>
+              <% if lead.can_be_commented? %>
+              <p><%= render :partial => "/shared/comments/lead_threads", :locals => { :lead => lead, :threads => lead.comment_threads.roots.order("created_at DESC") } %></p>
+              <% end %>
           <% end %>
       <% end %>
   <% end %>
