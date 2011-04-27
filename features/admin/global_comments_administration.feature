@@ -14,7 +14,7 @@ Background:
   And a lead Lead#2 exists within category Computers and is bought by user customer1@nbs.com with role customer
   And a lead Lead#3 exists within category Computers and is bought by user customer2@nbs.com with role customer
   And a lead Lead#4 exists within category Computers and is bought by user customer1@nbs.com with role customer
-  And comment for lead "Lead#1" was posted by user "customer2@nbs.com" with attributes "created_at: 2011-01-01, last_thread_created_at:2011-01-01"
+  And comment for lead "Lead#1" was posted by user "customer2@nbs.com" with attributes "title:First Lead1 comment, created_at: 2011-01-01, last_thread_created_at:2011-01-01"
   And comment for lead "Lead#2" was posted by user "customer1@nbs.com" with attributes "last_thread_created_at:2011-01-02"
   And comment for lead "Lead#3" was posted by user "customer2@nbs.com" with attributes "created_at: 2010-01-01, last_thread_created_at:2011-01-30"
   And comment for lead "Lead#4" was posted by user "customer1@nbs.com" with attributes "last_thread_created_at:2011-02-04"
@@ -58,10 +58,19 @@ Scenario: I can go to account edit page
   And I follow "Adam Savage"
   And I should see "Editing user: Adam Savage"
 
+@_tested @selenium
 Scenario: I can edit the comment
+  When I follow translated "layout.main_menu.admin.leads"
+  And I fill in "search_with_keyword" with "lead#1"
+  And I press translated "administration.leads.index.view.search_button"
+  And I follow translated "comments.shared.show_comment"
+  Then I follow translated "comments.threads.show.view.edit" within ".row_tooltip_content"
+  And I fill in "comment_title" with "Corrected title" within ".lead_threads_container_div"
+  And I fill in "comment_body" with "Corrected body" within ".lead_threads_container_div"
+  And I press translated "comments.threads.edit.view.update_comment_button"
+  And I should see "Corrected title"
+  And I should see "Corrected body"
 
 Scenario: I can delete the comment
-
-Scenario: I can navigate to lead creator user page
 
 Scenario: I can start new comment thread
