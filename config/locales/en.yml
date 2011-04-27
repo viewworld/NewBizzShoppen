@@ -2602,9 +2602,8 @@ en:
     shared:
       comment: "comment"
       comments: "comments"
-
-      show_comment: "show"
-      hide_comment: "hide"
+      show_comments: "show"
+      hide_comments: "hide"
     leads:
       show:
         view:

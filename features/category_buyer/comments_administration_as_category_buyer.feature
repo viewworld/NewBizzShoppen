@@ -16,37 +16,39 @@ Background:
   And I am on the home page
   And I sign in as catbuyer@nbs.com with password secret
 
-@noguess
+@noguess @_tested @selenium
 Scenario: I can create a comment for lead that I have access for
+  When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  And I fill in "search_with_keyword" with "Lead#4"
+  And I press translated "lead_buyer.lead_purchases.index.view.search.search_button"
+  And I follow translated "lead_purchases.listing.show_comments"
+  And I fill in "comment_title" with "New thread title" within ".lead_new_thread_container_div"
+  And I fill in "comment_body" with "New thread body" within ".lead_new_thread_container_div"
+  And I press translated "comments.threads.show.view.create_comment_button"
+  Then I should see "New thread title"
+  And I should see "New thread body"
 
 @m0
 Scenario: I can bulk create comments
 
+@_tested @selenium
 Scenario: I can reply to comment
+  When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  And I fill in "search_with_keyword" with "Lead#4"
+  And I press translated "lead_buyer.lead_purchases.index.view.search.search_button"
+  And I follow translated "lead_purchases.listing.show_comments"
+  And I follow translated "comments.threads.show.view.reply" within ".lead_threads_container_div"
+  And I fill in "comment_title" with "Reply to First Lead1 comment" within ".lead_threads_container_div"
+  And I fill in "comment_body" with "Body reply to First Lead1 comment" within ".lead_threads_container_div"
+  And I press translated "comments.threads.show.view.create_comment_button"
+  Then I should see "Reply to First Lead1 comment"
+  And I should see "Body reply to First Lead1 comment"
 
-@_tested
+@_done @deprecated
 Scenario: I can sort all comments
-  Given I follow translated "layout.main_menu.shared.comments"
-  When I follow translated "comments.threads.index.view.lead_header"
-  And I follow translated "comments.threads.index.view.lead_header"
-  Then I should see "Lead#4" before "Lead#3"
-  When I follow translated "comments.threads.index.view.started_by"
-  Then I should see "Mark Driscoll" before "Mark Driscoll"
-  When I follow translated "comments.threads.index.view.date"
-  Then I should see "01-01-2010" before "01-01-2011"
-  When I follow translated "comments.threads.index.view.last_thread_date"
-  Then I should see "01-01-2011" before "02-01-2011"
 
-@_tested
+@_done @deprecated
 Scenario: I can filter all comments
-  Given I follow translated "layout.main_menu.shared.comments"
-  When I fill in "search_with_keyword" with "lead#1"
-  And I press translated "comments.threads.index.view.search_button"
-  Then I should see "Lead#1"
-  And I should not see "Lead#2"
 
-@_tested
+@_done @deprecated
 Scenario: I can see paginated list of comments
-  Given pagination per page size in model Comment is set to 2
-  And I follow translated "layout.main_menu.shared.comments"
-  Then I follow "2"

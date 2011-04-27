@@ -19,7 +19,12 @@ Background:
   And user "customer2@nbs.com" with role "customer" has attributes "screen_name: John Doe"
   And I sign in as cca1.call_centre1@nbs.com with password supersecret
 
+@_tested
 Scenario: I can see the amount of comments per lead on listing of Leads created by me
+  When I follow translated "layout.main_menu.call_centre_agent.leads"
+  And I fill in "search_with_keyword" with "lead#1"
+  And I press translated "call_centre_agent.leads.index.view.search_button"
+  And I should see "1 comment"
 
 @m0
 Scenario: I can click on comment list and get a popup with comments from different ppl
@@ -29,7 +34,18 @@ Scenario: I can click on details of a specific comment
 
 Scenario: I can see the comment conversation details
 
+@_tested @selenium
 Scenario: I can respond to a comment and my comment is added to the conversation
+  When I follow translated "layout.main_menu.call_centre_agent.leads"
+  And I fill in "search_with_keyword" with "lead#1"
+  And I press translated "call_centre_agent.leads.index.view.search_button"
+  And I follow translated "comments.shared.show_comments"
+  And I follow translated "comments.threads.show.view.reply" within ".row_tooltip_content"
+  And I fill in "comment_title" with "Reply to First Lead1 comment" within ".lead_threads_container_div"
+  And I fill in "comment_body" with "Body reply to First Lead1 comment" within ".lead_threads_container_div"
+  And I press translated "comments.threads.show.view.create_comment_button"
+  Then I should see "Reply to First Lead1 comment"
+  And I should see "Body reply to First Lead1 comment"
 
 @_tested
 Scenario: I can browse all comments with pagination
