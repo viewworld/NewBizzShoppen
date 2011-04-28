@@ -82,7 +82,12 @@
         <% @leads.each do |lead| %>
             <tr id="lead_<%= lead.id %>" class="<%= cycle("odd", "even") %>">
               <td class="cl"></td>
-              <td><%= lead.header %></td>
+              <td>
+                <%= lead.header %>
+                <% if lead.can_be_commented? %>
+                    <br /><%= link_to "(#{number_of_comments(lead.comment_threads.roots.count)})", comments_lead_path(lead) %>
+                <% end %>
+              </td>
               <td class="ta_r"><%= as_currency(lead.purchase_value, lead.currency) %></td>
               <td class="ta_r"><%= as_currency(lead.price, lead.currency) %></td>
               <td class="ta_r"><%= lead.clicks_count %></td>
@@ -107,8 +112,6 @@
                     <%= link_to t("call_centre.leads.index.view.destroy"), call_centres_lead_path(lead), :confirm => t("call_centre.leads.index.view.destroy_confirmation"), :method => :delete %>
                   </li>
                 </ul-actions>
-                <%= link_to number_of_comments(lead.comment_threads.roots.count), comments_lead_path(lead) %>
-                <br />
                 <%= link_to t("comments.shared.show_comments"), "#", :class => "toggle_row show_comments" %>
                 <%= link_to t("comments.shared.hide_comments"), "#", :class => "toggle_row hide_comments", :style => "display:none" %>
               </td>

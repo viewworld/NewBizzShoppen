@@ -49,7 +49,12 @@
             <td><%= check_box_tag("lead_ids[]", lead.id) %></td>
         <% end %>
         <td><%= lead.id %></td>
-        <td><%= lead.header %></td>
+        <td>
+          <%= lead.header %>
+          <% if lead.can_be_commented? %>
+            <br /><%= link_to "(#{number_of_comments(lead.comment_threads.roots.count)})", comments_lead_path(lead) %>
+          <% end %>
+        </td>
         <td class="ta_r"><%= lead.clicks_count %></td>
         <td class="ta_r"><%= lead.exposures_count %></td>
         <td class="ta_c"><%= t("models.lead.hotness.lvl#{lead.hotness_level}") %></td>
