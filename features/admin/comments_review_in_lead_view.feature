@@ -20,7 +20,7 @@ Background:
   And comment for lead "Lead#1" was posted by user "customer1@nbs.com" with attributes "last_thread_created_at:2011-02-04"
   Then I sign in as admin1@nbs.com with password supersecret
 
-@_tested @tested
+@_tested
 Scenario: I can see amount of lead comments for each lead on leads listing
   When I follow translated "layout.main_menu.admin.leads"
   And I fill in "search_with_keyword" with "lead#1"

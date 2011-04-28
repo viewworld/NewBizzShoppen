@@ -1,6 +1,8 @@
 <div class="lead_threads_container_div">
   <% if threads.empty? %>
-      <p><%= t("comments.shared.no_comments") %></p>
+      <% unless current_user.can_start_new_lead_thread? %>
+        <p><%= t("comments.shared.no_comments") %></p>
+      <% end %>
   <% else %>
       <% threads.each do |thread| %>
           <%= render :partial => 'comments/shared/thread', :locals => {:thread => thread} %>
