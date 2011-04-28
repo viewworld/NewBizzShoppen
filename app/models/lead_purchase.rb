@@ -45,7 +45,7 @@ class LeadPurchase < LeadPurchaseBase
   end
 
   def handle_new_deadline
-    if response_deadline_changed? and contacted == NOT_CONTACTED
+    if response_deadline_changed? and !response_deadline.nil? and contacted == NOT_CONTACTED
       self.expiration_status = if (response_deadline-Date.today).to_i < 0
         EXPIRED
       elsif (0..2).include?((response_deadline-Date.today).to_i)
