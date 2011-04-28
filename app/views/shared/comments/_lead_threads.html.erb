@@ -1,7 +1,11 @@
 <div class="lead_threads_container_div">
-  <% threads.each do |thread| %>
-      <%= render :partial => 'comments/shared/thread', :locals => {:thread => thread} %>
-      <hl/>
+  <% if threads.empty? %>
+      <p><%= t("comments.shared.no_comments") %></p>
+  <% else %>
+      <% threads.each do |thread| %>
+          <%= render :partial => 'comments/shared/thread', :locals => {:thread => thread} %>
+          <hl/>
+      <% end %>
   <% end %>
 </div>
 

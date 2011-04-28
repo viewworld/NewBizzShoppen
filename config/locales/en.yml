@@ -2602,8 +2602,9 @@ en:
     shared:
       comment: "comment"
       comments: "comments"
-      show_comments: "show"
-      hide_comments: "hide"
+      show_comments: "show comments"
+      hide_comments: "hide comments"
+      no_comments: "No comments has been added."
     leads:
       show:
         view:
