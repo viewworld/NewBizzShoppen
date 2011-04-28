@@ -49,7 +49,6 @@ Scenario: I can see a comment (subject, date and comment author)
   And I should see "body for customers comment for lead3"
   And I should see "Customer1@Nbs"
   And I should see "at 01-01-2010 00:00"
-  And I open page in browser
 
 @m0
 Scenario: I can bulk create comments

@@ -37,7 +37,6 @@ Scenario: I can sort comments
   When I follow translated "comments.threads.index.view.date"
   Then I should see "01-01-2010" before "01-01-2011"
   When I follow translated "comments.threads.index.view.last_thread_date"
-  And I open page in browser
   Then I should see "01-01-2011" before "02-01-2011"
 
 @_tested
