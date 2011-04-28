@@ -82,3 +82,6 @@ Scenario: I can't comment leads created by purchase manager
   And I fill in "search_with_keyword" with "Lead#7"
   And I press translated "lead_buyer.lead_purchases.index.view.search.search_button"
   Then I should not see translated "lead_purchases.listing.show_comments"
+
+@added @m10
+Scenario: When there is new comment that I did not read then the tab with comments is red

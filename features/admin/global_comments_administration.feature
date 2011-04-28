@@ -105,3 +105,9 @@ Scenario: I can reply to existing comment thread
   And I press translated "comments.threads.show.view.create_comment_button"
   Then I should see "Reply to First Lead1 comment"
   And I should see "Body reply to First Lead1 comment"
+
+@added @m10
+Scenario: I can block comments
+
+@added @m10
+Scenario: I can block particular agent from further dialog with given buyer

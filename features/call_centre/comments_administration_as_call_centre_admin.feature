@@ -91,3 +91,12 @@ Scenario: I cannot start new thread
   And I press translated "call_centre.leads.index.view.search_button"
   And I follow translated "comments.shared.show_comments"
   And I should not see translated "comments.threads.new.view.header" with options "header: Lead#3"
+
+@added @m10
+Scenario: I can block comments from my agents
+
+@added @m10
+Scenario: I can block particular agent of mine from further dialog with given buyer
+
+@added @m10
+Scenario: When there is new comment that I did not read then the tab with comments is red
