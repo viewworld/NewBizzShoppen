@@ -1,10 +1,10 @@
-  <div class="lead_threads_container_div">
+<div class="lead_threads_container_div">
   <% threads.each do |thread| %>
       <%= render :partial => 'comments/shared/thread', :locals => {:thread => thread} %>
       <hl/>
   <% end %>
-  </div>
+</div>
 
-  <div class="lead_new_thread_container_div">
-  <%= render :partial => "comments/threads/new", :locals => { :lead => lead } if current_user.can_start_new_lead_thread? %>
-  </div>
+<div class="lead_new_thread_container_div">
+  <%= render :partial => "comments/threads/new", :locals => {:lead => lead} if current_user.can_start_new_lead_thread? %>
+</div>

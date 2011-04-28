@@ -1,28 +1,24 @@
-   <%= semantic_remote_form_for Comment.new(:title => "Re: #{title}"), :as => :comment, :url => comments_replies_path, :html => {:id => "reply_#{comment_id}", :style => "display:none"} do |f| %>
-      <frm>
-        <param:header>
-          <%= t("comments.threads.show.view.reply_to_comment", :title => title) %>
-        </param:header>
-        <param:content>
-            <div class="pdd_10 no_pdd_t">
-              <fieldset class="inputs labels_ta_r labels_240">
-                <ol class="align_inputs">
-                  <%= f.input :parent_id, :as => :hidden, :value => comment_id %>
-                  <%= f.input :commentable_id, :as => :hidden, :value => commentable_id %>
-                  <%= f.input :commentable_type, :as => :hidden, :value => "AbstractLead" %>
-                  <%= f.input :title %>
-                  <%= f.input :body %>
-                </ol>
-              </fieldset>
-            </div>
-        </param:content>
-        <param:actions>
-           <ibt c="fltri" icon="save">
-              <%= button_to_function t("comments.threads.show.view.create_comment_button"), "validate_form('#reply_#{comment_id}')"  %>
-           </ibt>
-           <ibt c="fltri bt_grey">
-              <%= button_to_function t("common.cancel_link"), "$('#reply_#{comment_id}').slideUp('slow');" %>
-           </ibt>
-        </param:actions>
-      </frm>
-   <% end %>
+<%= semantic_remote_form_for Comment.new(:title => "Re: #{title}"), :as => :comment, :url => comments_replies_path, :html => {:id => "reply_#{comment_id}", :style => "display:none"} do |f| %>
+
+    <fieldset class="inputs labels_ta_r labels_80">
+      <ol class="align_inputs">
+        <li class="header">
+          <h3><%= t("comments.threads.show.view.reply_to_comment", :title => title) %></h3>
+        </li>
+        <%= f.input :parent_id, :as => :hidden, :value => comment_id %>
+        <%= f.input :commentable_id, :as => :hidden, :value => commentable_id %>
+        <%= f.input :commentable_type, :as => :hidden, :value => "AbstractLead" %>
+        <%= f.input :title %>
+        <%= f.input :body, :input_html => {:style => "width:380px;height: 100px;"} %>
+        <li class="commit">
+          <ibt icon="plus">
+            <%= button_to_function t("comments.threads.show.view.create_comment_button"), "validate_form('#reply_#{comment_id}')" %>
+          </ibt>
+          <ibt c="bt_grey">
+            <%= button_to_function t("common.cancel_link"), "$('#reply_#{comment_id}').slideUp('slow');" %>
+          </ibt>
+        </li>
+      </ol>
+    </fieldset>
+    <br/>
+<% end %>

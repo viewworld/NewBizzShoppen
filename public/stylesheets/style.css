@@ -1637,3 +1637,29 @@ span.cke_skin_kama
     border-collapse: separate;
     border-spacing: 3px;
 }
+
+/* ---- comments ---
+--------------------------------------------------------------------------------- */
+
+.comment_container
+{
+    padding: 5px 0 5px 10px;
+    border-left: 2px solid #eee;
+    margin-top: 5px;
+    margin-bottom: 6px;
+}
+
+.comment_container .comment_title
+{
+    font-weight: bold;
+    line-height: 16px;
+    font-size: 13px;
+}
+
+.comment_container .comment_info
+{
+    font-size: 11px;
+    color: #7a7a7a;
+    line-height: 16px;
+    padding-bottom: 5px;
+}

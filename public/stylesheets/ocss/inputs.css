@@ -96,6 +96,11 @@
     padding-left: 3px;
 }
 
+.inputs li.commit div.bt
+{
+    margin-right: 5px;
+}
+
 .inputs ol li span.label_link
 {
     position: absolute;
@@ -773,25 +778,29 @@ input.date.hasDatepicker
 }
 
 .labels_80 ol li.commit,
-.labels_80 ol.align_inputs li.boolean
+.labels_80 ol.align_inputs li.boolean,
+.labels_80 ol.align_inputs li.header h3
 {
     margin-left: 80px;
 }
 
 .labels_100 ol li.commit,
-.labels_100 ol.align_inputs li.boolean
+.labels_100 ol.align_inputs li.boolean,
+.labels_100 ol.align_inputs li.header h3
 {
     margin-left: 100px;
 }
 
 .labels_120 ol li.commit,
-.labels_120 ol.align_inputs li.boolean
+.labels_120 ol.align_inputs li.boolean,
+.labels_120 ol.align_inputs li.header h3
 {
     margin-left: 120px;
 }
 
 .labels_140 ol li.commit,
-.labels_140 ol.align_inputs li.boolean
+.labels_140 ol.align_inputs li.boolean,
+.labels_140 ol.align_inputs li.header h3
 {
     margin-left: 140px;
 }
