@@ -26,7 +26,7 @@ en:
       collapse_expanded_text: "[collapse expanded text]"
       expand_prefix: "...  "
       collapse_prefix: " "
-      confrimation_message: "Are you sure?"
+      confrimation_message: "Are you sure? All subsequent replies will be deleted as well."
       field_cant_be_blank: "can't be blank"
     no_categories_for_category_buyer: "Your Category Buyer account has no associated categories. You can't sign in."
     edit_hint: "Edit hint"
