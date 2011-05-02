@@ -31,6 +31,7 @@ class AbstractLead < ActiveRecord::Base
 
   after_create :cache_creator_name
   before_save :change_creator
+  before_save :set_published_at
 
   accepts_nested_attributes_for :lead_translations, :allow_destroy => true
   accepts_nested_attributes_for :lead_template_values, :allow_destroy => true
@@ -114,5 +115,11 @@ class AbstractLead < ActiveRecord::Base
       self.creator_name = creator.name
     end
   end
+
+  def set_published_at
+    if published_changed?
+      self.published_at = published ? Time.now : nil
+    end
+  end  
 
 end

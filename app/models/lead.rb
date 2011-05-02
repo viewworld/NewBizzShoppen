@@ -78,7 +78,7 @@ class Lead < AbstractLead
   before_destroy :can_be_removed?
   after_find :set_buyers_notification
   before_update :notify_buyers_about_changes
-  before_save :set_published_at
+
   before_save :handle_category_change
   before_validation :handle_dialling_codes
 
@@ -125,12 +125,6 @@ class Lead < AbstractLead
       end
     else
       INFINITY
-    end
-  end
-
-  def set_published_at
-    if published_changed?
-      self.published_at = published ? Time.now : nil
     end
   end
 
