@@ -49,6 +49,10 @@
 
 <js:>
   <script type="text/javascript">
+      <% unless @contact %>
+        display_notice("<%= escape_javascript(t("contacts.show.flash.you_have_no_contacts_assigned")) %>", false);
+      <% end %>
+
       $("#change_campaign_id").live("change", function() {
           $(this).parents("form").submit()
       });

@@ -218,14 +218,16 @@ function show_agent_work_screen_call_result(call_result_html) {
     $("#agent_work_screen_call_result").show();
 }
 
-function display_notice(message) {
+function display_notice(message, withTimeout) {
     $("#flashes .flash_notice").html(message);
     $("#flashes .flash_notice").show();
-    setTimeout('$("#flashes .flash_notice").hide()', 5000)
+    if (withTimeout)
+        setTimeout('$("#flashes .flash_notice").hide()', 5000)
 }
 
-function display_alert(message) {
+function display_alert(message, withTimeout) {
     $("#flashes .flash_alert").html(message);
     $("#flashes .flash_alert").show();
-    setTimeout('$("#flashes .flash_alert").hide()', 5000)
+    if (withTimeout)
+        setTimeout('$("#flashes .flash_alert").hide()', 5000)
 }

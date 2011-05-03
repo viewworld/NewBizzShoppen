@@ -351,6 +351,9 @@ en:
       agent: Agent
       result: Result
       actions: Actions
+    show:
+      flash:
+        you_have_no_contacts_assigned: You have no contacts assigned
     create:
       flash:
         successfully_imported: "%{count} contacts have been successfully imported."
