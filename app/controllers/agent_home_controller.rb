@@ -16,7 +16,7 @@ class AgentHomeController < ApplicationController
     else
       @best_sellers = @best_sellers.without_unique_categories
     end
-    @best_sellers = @best_sellers.limit(10)
+    @best_sellers = @best_sellers.limit(3)
 
     @latest_leads = Lead.scoped
     @latest_leads = @latest_leads.without_inactive.published_only.without_bought_and_requested_by(current_user)
@@ -25,7 +25,7 @@ class AgentHomeController < ApplicationController
     else
       @latest_leads = @latest_leads.without_unique_categories
     end
-    @latest_leads = @latest_leads.latest.limit(10)
+    @latest_leads = @latest_leads.latest.limit(3)
     render :guest
   end
 
