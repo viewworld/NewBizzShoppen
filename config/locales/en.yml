@@ -318,11 +318,13 @@ en:
       select_campaign: Select campaign
       show_current_call_sheet: Show current call sheet
       show_pending_calls: Show pending calls
+      show_completed_contacts: Show completed contacts
       show_call_log_for_current_contact: Show call log for current contact
       call_log: Call log
       call_sheet: Call sheet
       current_contact: Current contact
       pending_calls: Pending calls
+      completed_contacts: Completed contacts
 
   contacts:
     filter:

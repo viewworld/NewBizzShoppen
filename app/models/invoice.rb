@@ -55,12 +55,13 @@ class Invoice < ActiveRecord::Base
 
   after_create :duplicate_company_and_customer_information, :set_year
   after_validation :set_default_currency, :if => Proc.new{ |i| i.new_record? }
-  after_update :cache_total_words, :update_revenue_frozen
+  after_update :update_revenue_frozen
   after_create :generate_invoice_lines_for_big_buyer
   before_update :generate_manual_transaction_for_big_buyer
   before_save :mark_all_invoice_lines_as_paid
   after_save :recalculate_invoice_items
   after_initialize :set_seller
+  after_save :cache_total_words
 
   #Uncomment reject_if, if not validating invoice lines
   accepts_nested_attributes_for :invoice_lines, :allow_destroy => true #,:reject_if => lambda { |a| a[:name].blank? }

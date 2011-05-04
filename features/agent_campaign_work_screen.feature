@@ -21,7 +21,7 @@ Feature: Agent campaign - calling session
     @_done @_tested
     Scenario: New contacts should be assigned to agent automatically
       Given user "translator_call_centre_agent@nbs.com" has not contacts assigned in campaign "Testing One"
-      When I follow translated "campaigns.table.go_to_work_screen"
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       Then user "translator_call_centre_agent@nbs.com" has contacts assigned in campaign "Testing One"
       And I follow translated "agent_work_screen.index.show_current_call_sheet"
       And I should see "Mleko company"
@@ -32,7 +32,7 @@ Feature: Agent campaign - calling session
 
     @_done @_tested
     Scenario: I can navigate through contacts on call sheet when call is over
-      When I follow translated "campaigns.table.go_to_work_screen"
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I follow translated "agent_work_screen.index.show_current_call_sheet"
       And the "contact_company_name" field should contain "Bon Jovi inc."
       And I follow translated action "campaigns.edit.show_button" within row containing "Stefanek corp"
@@ -44,7 +44,7 @@ Feature: Agent campaign - calling session
 
     @_done @_tested @requested
     Scenario: I can go to previous/next contact through arrows
-      When I follow translated "campaigns.table.go_to_work_screen"
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And the "contact_company_name" field should contain "Bon Jovi inc."
       And I follow translated "contacts.edit.next"
       Then I should see "Mleko company" within "#contact_info"
@@ -55,13 +55,13 @@ Feature: Agent campaign - calling session
 
     @_done @_tested
     Scenario: I can see current call sheet
-      When I follow translated "campaigns.table.go_to_work_screen"
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I follow translated "agent_work_screen.index.show_current_call_sheet"
       Then user "translator_call_centre_agent@nbs.com" should see his available contacts
 
     @_done @_tested @requested
     Scenario: I can see pending calls list
-      When I follow translated "campaigns.table.go_to_work_screen"
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I follow translated "agent_work_screen.index.show_pending_calls"
       Then user "translator_call_centre_agent@nbs.com" should see his pending contacts
 
@@ -70,7 +70,7 @@ Feature: Agent campaign - calling session
 
     @_done @_tested
     Scenario: I can see new result form for specifying notes and result
-      When I follow translated "campaigns.table.go_to_work_screen"
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Call back" from "result_id"
       And I follow translated "call_results.edit.button_new_result"
       And I should see translated "call_results.new.form_title"
