@@ -61,7 +61,6 @@ class Invoice < ActiveRecord::Base
   before_save :mark_all_invoice_lines_as_paid
   after_save :recalculate_invoice_items
   after_initialize :set_seller
-  after_save :cache_total_words
 
   #Uncomment reject_if, if not validating invoice lines
   accepts_nested_attributes_for :invoice_lines, :allow_destroy => true #,:reject_if => lambda { |a| a[:name].blank? }
@@ -78,10 +77,6 @@ class Invoice < ActiveRecord::Base
 
   def update_revenue_frozen
     Invoice.update_all ["revenue_frozen = (select sum(revenue_frozen) from invoice_lines where invoice_id = ?)",id], ["id = ?",id]
-  end
-
-  def cache_total_words
-    Invoice.update_all ["total_in_words = ?",EnglishNumerals.to_English(total)], ["id = ?",id]
   end
 
   private

@@ -1,4 +1,5 @@
-module EnglishNumerals
+module Numerals
+  module En
 
     Numbers = {
         1 => 'one',
@@ -110,7 +111,7 @@ module EnglishNumerals
         result
     end
 
-    def self.to_English(val, eu_names = true, include_and = true)
+    def self.to_English(val, eu_names = true, include_and = true, currency = nil)
         cents = (BigDecimal(val.to_s)-BigDecimal(val.to_i.to_s)).to_f
         val = val.to_i.abs
 
@@ -143,7 +144,11 @@ module EnglishNumerals
             exp -= 3
         end
 
-        (cents>0) ? "#{result.strip} #{(cents*100).to_i}/100" : result.strip
+        if currency
+          (cents>0) ? "#{result.strip} #{currency.unit_name} and #{(cents*100).to_i} #{currency.subunit_name}" : "#{result.strip} #{currency.unit_name}"
+        else
+          (cents>0) ? "#{result.strip} #{(cents*100).to_i}/100" : result.strip
+        end
     end
 
     def self.to_American(val, include_and = true)
@@ -228,4 +233,9 @@ module EnglishNumerals
 
         [ lowV, lowStr ]
     end
+
+    def self.in_words(num, currency = nil)
+      to_English(num, true, true, currency)
+    end
+  end
 end

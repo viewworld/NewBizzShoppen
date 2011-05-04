@@ -868,6 +868,10 @@ en:
             name: "Name"
             symbol: "Symbol"
             format: "Format"
+            separator: "Separator"
+            delimiter: "Delimiter"
+            unit_name: "Unit name"
+            subunit_name: "Subunit name"
             active: "Active"
       new:
         view:

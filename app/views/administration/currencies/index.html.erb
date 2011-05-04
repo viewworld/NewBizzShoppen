@@ -26,10 +26,13 @@
         <thead>
         <tr>
           <th class="hl"></th>
-          <th style="width:10px"><%= t("administration.currencies.index.view.table.id") %></th>
-          <th><%= t("administration.currencies.index.view.table.name") %></th>
+          <th style="width:10px"><%= t("administration.currencies.index.view.table.name") %></th>
           <th><%= t("administration.currencies.index.view.table.symbol") %></th>
           <th><%= t("administration.currencies.index.view.table.format") %></th>
+          <th><%= t("administration.currencies.index.view.table.separator") %></th>
+          <th><%= t("administration.currencies.index.view.table.delimiter") %></th>
+          <th><%= t("administration.currencies.index.view.table.unit_name") %></th>
+          <th><%= t("administration.currencies.index.view.table.subunit_name") %></th>
           <th class="ta_c"><%= t("administration.currencies.index.view.table.active") %></th>
           <th class="ta_r"><%= t("administration.currencies.index.view.actions") %></th>
           <th class="hr"></th>
@@ -38,7 +41,7 @@
         <tfoot>
         <tr>
           <td class="fl"></td>
-          <td colspan="6"></td>
+          <td colspan="7"></td>
           <td class="fr"></td>
         </tr>
         </tfoot>
@@ -46,12 +49,15 @@
         <% @currencies.each do |currency| %>
             <tr id="currency_<%= currency.id %>" class="<%= cycle("odd", "even") %>">
               <td class="cl"></td>
-              <td class="ta_c"><%= currency.id %></td>
-              <td><%= currency.name %></td>
+              <td class="ta_c"><%= currency.name %></td>
               <td><%= currency.symbol %> (<%= raw currency.symbol %>)</td>
               <td>
                 <%= currency.format %> (<%= raw as_currency(1000, currency) %>)
               </td>
+              <td><%= currency.separator %></td>
+              <td><%= currency.delimiter %></td>
+              <td><%= currency.unit_name %></td>
+              <td><%= currency.subunit_name %></td>
               <td class="ta_c"><%= translate_boolean(currency.active) %></td>
               <td class="tda ta_r">
                 <ul-actions>

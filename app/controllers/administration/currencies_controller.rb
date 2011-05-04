@@ -5,6 +5,14 @@ class Administration::CurrenciesController < Administration::AdministrationContr
   set_tab "settings"
   set_subtab "currencies"
 
+  private
+
+  def collection
+    @currencies = Currency.order("active DESC, symbol ASC")
+  end
+
+  public
+
   def create
     create! do |success,failure|
       success.html { redirect_to administration_currencies_path }
