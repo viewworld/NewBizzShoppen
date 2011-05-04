@@ -59,6 +59,7 @@ Scenario: I can go to details of purchase manager news
 @added @_done
 Scenario: I can go to details of bestsellers
   Given lead AwesomeLead exists within category Test
+  And AwesomeLead is a best seller
   And I follow translated "home.show.view.purchase_manager"
   And I follow "AwesomeLead" within "#best_sellers"
   Then I should be on the AwesomeLead lead page

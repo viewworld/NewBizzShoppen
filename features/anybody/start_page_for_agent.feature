@@ -52,7 +52,7 @@ Scenario: I can't see inactive leads on latest leads
 
 @m3 @ao @_done
 Scenario: I can go to details of agent news
-  Given published agent news exists with attributes "title:FirstNews"
+  Given published agent news exists with attributes "title:FirstNews"                                                                                                      i
   And I follow translated "home.show.view.agent"
   And I follow translated "agent_home.show.view.read_more_link" within "#news"
   Then I should be on FirstNews news page
@@ -60,8 +60,8 @@ Scenario: I can go to details of agent news
 @ao @_tested
 Scenario: I can go to details of bestsellers
   Given lead AwesomeLead exists within category Test
+  And AwesomeLead is a best seller
   And I follow translated "home.show.view.agent"
-  And I open page in browser
   And I follow "AwesomeLead" within "#best_sellers"
   Then I should be on the AwesomeLead lead page
 
