@@ -28,7 +28,7 @@
     <br/>
 
     <div id="results_sheet">
-      <%= render :partial => "callers/agent_work_screen/results_sheet", :locals => @locals if @contact %>
+      <%= render :partial => "callers/agent_work_screen/results_sheet", :locals => @locals %>
     </div>
 
     <div id="call_sheet" style="display:none">
@@ -60,10 +60,7 @@
       $("#change_campaign_id").live("change", function() {
           $(this).parents("form").submit()
       });
-      $("#call_sheet, #pending_calls, #completed_contacts").find("tbody tr td").live("click", function() {
-          $("#call_sheet, #pending_calls, #completed_contacts").find("tbody tr").removeClass("highlight_row");
-          $(this).parent().addClass("highlight_row");
-      });
+
   </script>
 </js:>
 

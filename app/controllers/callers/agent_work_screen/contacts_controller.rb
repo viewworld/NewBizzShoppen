@@ -4,6 +4,7 @@ class Callers::AgentWorkScreen::ContactsController < Callers::AgentWorkScreenCon
 
   def destroy
     params[:deassign] ? @contact.assign_agent(nil) : @contact.destroy
+    @contact_old = @contact
     set_contacts
     set_contact
     set_locals
