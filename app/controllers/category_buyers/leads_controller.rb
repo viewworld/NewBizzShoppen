@@ -27,7 +27,6 @@ class CategoryBuyers::LeadsController < ApplicationController
     end
 
     params[:search][:with_category] = @home_category.id
-    params[:search][:without_locked_users] = "1"
     params[:search][:published_only] = "1"
     params[:search][:ascend_by_header] = true
     params[:search][:without_inactive] = true

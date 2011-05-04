@@ -121,7 +121,7 @@ class Category < ActiveRecord::Base
 
   def refresh_published_leads_count_cache!
     Category.find(self_and_ancestors.map(&:id)).each do |c|
-      c.update_attribute(:published_leads_count, c.published_leads.including_subcategories.without_locked_users.count)
+      c.update_attribute(:published_leads_count, c.published_leads.including_subcategories.count)
     end
   end
 
