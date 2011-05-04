@@ -67,7 +67,7 @@ class Lead < AbstractLead
 
   scope :with_deal_value_from, lambda { |from| where("purchase_value >= ?", from) }
   scope :with_deal_value_to, lambda { |to| where("purchase_value <= ?", to) }
-  scope :with_certification_level, lambda { |cl| where("certification_level = ? or certification_level = ?", cl.to_i, cl.to_i + 10) }
+  scope :with_certification_level, lambda { |cl| joins("INNER JOIN users ON users.id=leads.creator_id").where("certification_level = ? or certification_level = ?", cl.to_i, cl.to_i + 10) }
   scope :with_sale_limit, lambda { |sale_limit| where("sale_limit = ?", sale_limit.to_i) }
   scope :with_hotness, lambda { |hotness| where("hotness_counter = ?", hotness) }
 

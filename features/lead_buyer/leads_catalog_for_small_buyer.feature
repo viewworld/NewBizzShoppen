@@ -29,10 +29,10 @@ Scenario: I can click on a category name and see a list of leads in that categor
   And I should see "Printers ultimate deal"
 
 @_tested
-Scenario: I should not see any leads that belong to a user which is blocked
+Scenario: I should see any leads that belong to a user which is blocked
   Then I follow "Computers"
   And I should see "Printers ultimate deal"
-  And I should not see "Cheap mouses ultimate deal"
+  And I should see "Cheap mouses ultimate deal"
 
 @_tested
 Scenario: I can browse leads in a given category with pagination

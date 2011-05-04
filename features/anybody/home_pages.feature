@@ -8,8 +8,8 @@ Feature: Home pages
     And I sign in as jon@lajoie.ca with password secret
     And I follow translated "layout.main_menu.shared.home"
     Then I should be on buyer home page
-    When I follow translated "layout.main_menu.shared.site_home"
-    Then I should be on the home page
+    When I follow translated "layout.main_menu.shared.home"
+    Then I should be on buyer home page
 
   @added @_done
   Scenario: On the category homepage we could change the name for the "Home" tab to front page and give the users a simpler way to get to the front page
@@ -18,8 +18,8 @@ Feature: Home pages
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
     Then I should be on category home page for Best Leads
-    When I follow translated "layout.main_menu.shared.site_home"
-    Then I should be on the home page
+    When I follow translated "layout.main_menu.shared.home"
+    Then I should be on category home page for Best Leads
 
   @_done
   Scenario: On category home page it should be possible to login

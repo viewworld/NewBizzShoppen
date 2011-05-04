@@ -125,7 +125,7 @@ module ApplicationHelper
   end
 
   def url_to_role_specific_home_page
-    if !user_signed_in? or (['buyer_home', 'agent_home', 'purchase_manager_home'].include?(params[:controller]) and params[:action] == "show")
+    if !user_signed_in?
       root_path
     else
       if @home_category and current_user.has_role?(:category_buyer)

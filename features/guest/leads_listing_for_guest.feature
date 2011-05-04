@@ -16,7 +16,7 @@ Scenario: I should see an image and a description for each category
 Scenario: I can click on a category name and see a list of leads in that category
 
 @m2 @_tested @tgn
-Scenario: I should not see any leads that belong to a user which is blocked
+Scenario: I should see leads that belong to a user which is blocked
   Given Lead named "Lead 1" exists within "Sample category" category
   And I have user with email agent@person.com and role agent
   And lead Lead 1 is created by user agent@person.com with role agent
@@ -25,7 +25,7 @@ Scenario: I should not see any leads that belong to a user which is blocked
   When User agent@person.com with role agent is blocked
   And I go to browse leads
   And I follow "Sample category"
-  Then I should not see "Lead 1"
+  Then I should see "Lead 1"
 
 @_tested @bk
 Scenario: I can browse leads in a given category with pagination
