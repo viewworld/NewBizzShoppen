@@ -34,6 +34,7 @@ en:
     add_hint: "Add hint"
     remove_hint: "Remove hint"
     advanced_search: "Advanced search"
+    cache_cleared: "Cache has been cleared"
   ckeditor:
     upload_new_files: "Upload new files"
     file_manager: "File Manager"
@@ -1252,6 +1253,7 @@ en:
       show:
         view:
           header: "Translations"
+          clear_cache: "Clear cache"
           search:
             with_keyword: "Keyword"
             search_button: "Search"
