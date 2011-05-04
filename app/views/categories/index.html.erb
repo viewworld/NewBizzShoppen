@@ -4,15 +4,18 @@
     <param:content>
       <%= t("categories.index.view.header") %>
     </param:content>
-    <% if user_signed_in? and current_user.has_role?(:admin) %>
+
     <param:actions>
       <ul class="header_actions">
-        <li class="last">
-          <%= bt_link_to :plus, t("administration.categories.index.view.new_category"), new_administration_category_path %>
-        </li>
+          <% if user_signed_in? and current_user.has_role?(:admin) %>
+            <li class="last"><%= bt_link_to :plus, t("administration.categories.index.view.new_category"), new_administration_category_path %></li>
+          <% end %>
+           <% if user_signed_in? and current_user.has_any_role?(:agent, :call_centre_agent, :purchase_manager, :customer, :lead_buyer) %>
+            <li class="last"><%= bt_link_to :plus, t("layout.main_menu.shared.category_request"), new_category_request_path %></li>
+          <% end %>
       </ul>
     </param:actions>
-    <% end %>
+
   </header>
 
   <%= all_categories_tree(:category_label => lambda { |c| link_to "#{c.name}", "/categories/#{c.cached_slug}?search[with_category]=#{c.id}" },

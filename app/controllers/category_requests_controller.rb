@@ -1,6 +1,6 @@
 class CategoryRequestsController < ApplicationController
   before_filter :check_user_role
-  set_tab "category_request"
+  set_tab "browse_leads"
 
   def new
     @email_template_preview = CategoryRequestTemplatePreview.new(:category_request, {:email_from => current_user.email, :phone_number => current_user.phone}, current_user)

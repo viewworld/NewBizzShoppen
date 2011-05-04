@@ -11,6 +11,7 @@ Feature: I can browse categories
   Scenario: When you are loged in as an agent, you should be able to request a category, this should be done via a form mail. to admin@fairleads.com the form should contain the following fields
     Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role agent
     Then I sign in as bob@person.com with password supersecret
+    And I go to browse leads
     And I follow translated "layout.main_menu.shared.category_request"
     And the "email_template_preview_email_from" field should contain "bob@person.com"
     Then I fill in "email_template_preview_email_from" with "agent@nbs.com"
@@ -27,6 +28,7 @@ Feature: I can browse categories
   Scenario: When you are loged in as a buyer, you should be able to request a category, this should be done via a form mail. to admin@fairleads.com the form should contain the following fields
     Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role customer
     Then I sign in as bob@person.com with password supersecret
+    And I go to browse leads
     And I follow translated "layout.main_menu.shared.category_request"
     And the "email_template_preview_email_from" field should contain "bob@person.com"
     Then I fill in "email_template_preview_email_from" with "agent@nbs.com"
