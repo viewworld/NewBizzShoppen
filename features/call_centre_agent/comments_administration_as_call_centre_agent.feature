@@ -25,7 +25,7 @@ Scenario: I can see the amount of comments per lead on listing of Leads created 
   When I follow translated "layout.main_menu.call_centre_agent.leads"
   And I fill in "search_with_keyword" with "lead#1"
   And I press translated "call_centre_agent.leads.index.view.search_button"
-  And I should see "1 comment"
+  And I should see "(1)"
 
 @m0
 Scenario: I can click on comment list and get a popup with comments from different ppl

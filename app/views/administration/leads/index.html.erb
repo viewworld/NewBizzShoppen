@@ -82,11 +82,6 @@
       <%= leads_table @leads, :show_checkboxes => false do |blocks| %>
           <% blocks.tools do |lead| %>
               <%= bt_link_to nil, t("administration.leads.index.view.edit"), edit_administration_lead_path(lead), :class => "default_action" %>
-              <% if lead.can_be_commented? %>
-                  <br/>
-                  <%= link_to t("comments.shared.show_comments"), "#", :class => "toggle_row show_comments" %>
-                  <%= link_to t("comments.shared.hide_comments"), "#", :class => "toggle_row hide_comments", :style => "display:none" %>
-              <% end %>
           <% end %>
           <% blocks.status_column do |lead| %>
               <%= status_or_status_change(lead) %>

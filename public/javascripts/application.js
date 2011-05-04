@@ -218,16 +218,28 @@ function show_agent_work_screen_call_result(call_result_html) {
     $("#agent_work_screen_call_result").show();
 }
 
+
 function display_notice(message, withTimeout) {
     $("#flashes .flash_notice").html(message);
     $("#flashes .flash_notice").show();
     if (withTimeout)
-        setTimeout('$("#flashes .flash_notice").hide()', 5000)
+        window.time_out_for_display_notice = setTimeout('$("#flashes .flash_notice").hide()', 5000);
+    else
+        clearTimeout(window.time_out_for_display_notice);
 }
 
 function display_alert(message, withTimeout) {
     $("#flashes .flash_alert").html(message);
     $("#flashes .flash_alert").show();
     if (withTimeout)
-        setTimeout('$("#flashes .flash_alert").hide()', 5000)
+        window.time_out_for_display_notice = setTimeout('$("#flashes .flash_notice").hide()', 5000);
+    else
+        clearTimeout(window.time_out_for_display_notice);
+}
+
+function displayWorkScreenTab(tab_id) {
+    var tab_ids = ["#results_sheet", "#call_sheet", "#pending_calls", "#completed_contacts"];
+    tab_ids.splice(tab_ids.indexOf(tab_id), 1);
+    $(tab_ids.join(",")).hide();
+    $(tab_id).show();
 }

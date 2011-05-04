@@ -10,9 +10,6 @@
           <%= render "/layouts/menu_sections/#{role.to_s}" %>
       <% end %>
   <% end %>
-  <% if current_user and current_user.has_any_role?(:agent, :call_centre_agent, :purchase_manager, :customer, :lead_buyer) %>
-      <%= main_menu_link_to t("layout.main_menu.shared.category_request"), new_category_request_path, :tab => "category_request" %>
-  <% end %>
   <% if current_user and (current_user.admin? or current_user.agent?) %>
     <%= main_menu_link_to t("layout.main_menu.shared.comments"), comments_threads_path, :tab => "comments" %>
   <% end %>
