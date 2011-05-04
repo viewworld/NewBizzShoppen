@@ -25,7 +25,7 @@ Scenario: I can see amount of lead comments for each lead on leads listing
   When I follow translated "layout.main_menu.admin.leads"
   And I fill in "search_with_keyword" with "lead#1"
   And I press translated "administration.leads.index.view.search_button"
-  And I should see "3 comments"
+  And I should see "(3)"
 
 @_done @tested_elsewhere
 Scenario: I can see lead comments in lead view
