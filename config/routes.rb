@@ -49,7 +49,9 @@ Nbs::Application.routes.draw do
     resources :sellers
     resources :category_users
     resources :countries
-    resource :translation
+    resource :translation do
+      resource :cache
+    end
     resource :stats_recalculation, :controller => "stats_recalculation", :only => [:update]
   end
 

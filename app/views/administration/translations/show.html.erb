@@ -27,7 +27,19 @@
 </search-box:>
 
 <column-mc:>
-  <header><%= t("administration.translations.show.view.header") %></header>
+  <header>
+    <param:content>
+        <%= t("administration.translations.show.view.header") %>
+    </param:content>
+    <param:actions>
+      <ul class="header_actions">
+        <li class="last">
+          <%= bt_link_to :remove, t("administration.translations.show.view.clear_cache"), administration_translation_cache_path, :method => :delete %>
+        </li>
+      </ul>
+    </param:actions>
+  </header>
+
   <table class="generic">
     <thead>
       <th>Key</th>
