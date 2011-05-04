@@ -63,7 +63,7 @@ class Category < ActiveRecord::Base
     LEFT JOIN users ON users.id = categories_users.user_id
     LEFT JOIN category_customers ON categories.id = category_customers.category_id
   ").where("(categories.is_customer_unique = 't' and category_customers.user_id = :user_id) OR (categories_users.user_id = :user_id)", {:user_id => user.id})}
-
+  scope :with_comment_threads, select("DISTINCT(categories.id), categories.*").joins("INNER JOIN leads ON leads.category_id=categories.id INNER JOIN comments ON comments.commentable_id=leads.id")
   before_destroy :check_if_category_is_empty
   before_destroy :mark_articles_to_destroy
 
