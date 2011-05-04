@@ -23,7 +23,7 @@ Scenario: I should be able to define new currency with following attributes name
   And I press translated "administration.currencies.new.view.button_create_currency"
   Then I should be on administration currencies
   And I should see "Złoty"
-  And I should see "100.00 PLN"
+  And I should see "1,000.00 PLN"
 
 @ao @_done
 Scenario: I should be able to edit currency
@@ -34,7 +34,7 @@ Scenario: I should be able to edit currency
   And I press translated "administration.currencies.edit.view.button_update_currency"
   Then I should be on administration currencies
   And I should see "US Dollar"
-  And I should see "$100.00"
+  And I should see "$1,000.00"
   
 @ao @_done
 Scenario: I should be able to destroy currency unless there are leads defined with that currency chosen
