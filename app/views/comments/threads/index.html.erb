@@ -10,6 +10,10 @@
                 <%= f.label :with_keyword, t("comments.threads.index.view.search.with_keyword") %>
                 <%= f.text_field :with_keyword, :value => params[:search][:with_keyword] %>
               </li>
+              <li class="select">
+                <%= f.label :with_category, t("comments.threads.index.view.search.category_label") %>
+                <%= f.select :with_category, nested_set_options(@categories.all), :include_blank => true, :selected => params[:search][:with_category].to_i %>
+              </li>
               <li class="commit">
                 <ibt c="bt_green" icon="magnify">
                   <%= submit_tag t("comments.threads.index.view.search_button") %>

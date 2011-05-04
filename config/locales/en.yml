@@ -2577,6 +2577,7 @@ en:
           search_label: "Search"
           search:
             with_keyword: "Keyword"
+            category_label: "Category"
           search_button: "Search"
           lead_header: "Lead header"
           started_by: "Started by"

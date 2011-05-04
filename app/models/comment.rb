@@ -20,11 +20,13 @@ class Comment < ActiveRecord::Base
   scope :ascend_by_user, joins("INNER JOIN users ON users.id = comments.user_id").order("users.screen_name ASC")
   scope :descend_by_last_thread_created_at, order("last_thread_created_at DESC")
   scope :ascend_by_last_thread_created_at, order("last_thread_created_at ASC")
-  scope :with_keyword, lambda { |keyword| where("lower(leads.header) like :q", {:q => "%#{keyword.to_s.downcase}%"}).joins("INNER JOIN leads ON leads.id = comments.commentable_id") }
+  scope :with_keyword, lambda { |keyword| where("lower(leads.header) like :q", {:q => "%#{keyword.to_s.downcase}%"}) }
   scope :roots, where(:parent_id => nil)
   scope :for_leads, lambda {|leads| where(:commentable_type => 'AbstractLead', :commentable_id => leads.map(&:id))}
   scope :for_users, lambda {|users| where(:user_id => users.map(&:id))}
-  scope :with_leads_created_by, lambda {|user| joins("INNER JOIN leads ON leads.id = comments.commentable_id").where(:leads => {:creator_id => user.id})}
+  scope :with_leads_created_by, lambda {|user| where(:leads => {:creator_id => user.id})}
+  scope :with_category, lambda { |category_id| category_id.blank? ? where("") : where(:leads => { :category_id => Category.find_by_id(category_id).self_and_descendants.map(&:id) }) }
+  scope :with_leads, joins("INNER JOIN leads ON leads.id = comments.commentable_id")
 
   # Helper class method that allows you to build a comment
   # by passing a commentable object, a user_id, and comment text

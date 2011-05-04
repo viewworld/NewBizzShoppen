@@ -41,7 +41,6 @@ class LeadsController < ApplicationController
       params[:search][:without_unique_categories] = "1"
     end
 
-    params[:search][:without_locked_users] = "1"
     params[:search][:published_only] = "1"
     params[:search][:without_inactive] = true
 

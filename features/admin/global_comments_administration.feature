@@ -14,10 +14,12 @@ Background:
   And a lead Lead#2 exists within category Computers and is bought by user customer1@nbs.com with role customer
   And a lead Lead#3 exists within category Computers and is bought by user customer2@nbs.com with role customer
   And a lead Lead#4 exists within category Computers and is bought by user customer1@nbs.com with role customer
+  And a lead Lead#5 exists within category Jobs and is bought by user customer1@nbs.com with role customer
   And comment for lead "Lead#1" was posted by user "customer2@nbs.com" with attributes "title:First Lead1 comment, created_at: 2011-01-01, last_thread_created_at:2011-01-01"
   And comment for lead "Lead#2" was posted by user "customer1@nbs.com" with attributes "last_thread_created_at:2011-01-02"
   And comment for lead "Lead#3" was posted by user "customer2@nbs.com" with attributes "created_at: 2010-01-01, last_thread_created_at:2011-01-30"
   And comment for lead "Lead#4" was posted by user "customer1@nbs.com" with attributes "last_thread_created_at:2011-02-04"
+  And comment for lead "Lead#5" was posted by user "customer1@nbs.com" with attributes "last_thread_created_at:2011-02-04"
   Then I sign in as admin1@nbs.com with password supersecret
 
 @_tested
@@ -46,7 +48,12 @@ Scenario: I can filter comments
   And I press translated "comments.threads.index.view.search_button"
   Then I should see "Lead#1"
   And I should not see "Lead#2"
-
+  Then I fill in "search_with_keyword" with ""
+  And I select "Job" from "search_with_category"
+  And I press translated "comments.threads.index.view.search_button"
+  And I should see "Lead#5"
+  And I should not see "Lead#1"
+  And I should not see "Lead#2"
 
 @m0
 Scenario: I can contact comment creator
