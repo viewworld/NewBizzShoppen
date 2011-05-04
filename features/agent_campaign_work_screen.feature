@@ -61,7 +61,7 @@ Feature: Agent campaign - calling session
 
     @_done @_tested @requested
     Scenario: I can see pending calls list
-      When I follow translated "campaigns.table.go_to_work_screen"
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I follow translated "agent_work_screen.index.show_pending_calls"
       Then user "translator_call_centre_agent@nbs.com" should see his pending contacts
 
