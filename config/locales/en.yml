@@ -224,6 +224,7 @@ en:
       comments: "Comments"
       show_comments: "Show comments"
       hide_comments: "Hide comments"
+      create_comment: "Create comments"
     statuses:
       not_contacted: Not contacted
       contacted: Contacted
