@@ -31,35 +31,43 @@
     <param:content>
       <%= t("campaigns.header.title") %>
     </param:content>
-    <% if current_user.has_one_of_roles?(:admin, :call_centre) %>
+    <% if current_user.has_one_of_roles?(:call_centre, :admin) %>
         <param:actions>
-          <%= form_tag new_callers_campaign_path, :method => :get, :id => "form_new_campaign" do %>
-              <ul class="header_actions">
-                <li class="last">
-                  <div class="hidden">
-                    <%= submit_tag "New" %>
-                  </div>
-                  <%= bt_link_to :plus, t("campaigns.header.new_campaign_button"), "javascript:void", :onclick => "$('#form_new_campaign').submit()" %>
-                </li>
-              </ul>
-          <% end %>
+              <%= form_tag new_callers_campaign_path, :method => :get, :id => "form_new_campaign" do %>
+                  <ul class="header_actions">
+                    <li class="last">
+                      <div class="hidden">
+                        <%= submit_tag "New" %>
+                      </div>
+                      <%= bt_link_to :plus, t("campaigns.header.new_campaign_button"), "javascript:void", :onclick => "$('#form_new_campaign').submit()" %>
+                    </li>
+                  </ul>
+              <% end %>
         </param:actions>
     <% end %>
+
   </header>
 
 
   <%= campaigns_table @campaigns do |blocks| %>
       <% blocks.tools do |campaign| %>
           <ul-actions>
-            <li>
-              <%= link_to t("campaigns.index.edit"), edit_callers_campaign_path(campaign), :class => "default_action" %>
-            </li>
-            <li>
-              <%= link_to t("campaigns.index.result"), callers_campaign_path(campaign) %>
-            </li>
-            <li>
-              <%= link_to t("campaigns.index.destroy"), callers_campaign_path(campaign), :confirm => t("campaigns.index.destroy_confirmation"), :method => :delete %>
-            </li>
+            <% if !current_user.has_role?(:admin) and (campaign.can_be_managed_by?(current_user) or campaign.has_user_as_member?(current_user))  %>
+                <li>
+                  <%= link_to t("campaigns.table.work_screen"), callers_campaign_agent_work_screen_index_path(campaign), :class => "default_action" %>
+                </li>
+            <% end %>
+            <% if current_user.has_one_of_roles?(:admin, :call_centre) and campaign.can_be_managed_by?(current_user) %>
+                <li>
+                  <%= link_to t("campaigns.index.edit"), edit_callers_campaign_path(campaign), :class => current_user.has_role?(:admin) ? "default_action" : "" %>
+                </li>
+                <li>
+                  <%= link_to t("campaigns.index.result"), callers_campaign_path(campaign) %>
+                </li>
+                <li>
+                  <%= link_to t("campaigns.index.destroy"), callers_campaign_path(campaign), :confirm => t("campaigns.index.destroy_confirmation"), :method => :delete %>
+                </li>
+            <% end %>
           </ul-actions>
       <% end %>
   <% end %>

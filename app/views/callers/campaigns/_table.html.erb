@@ -1,6 +1,6 @@
 <%
    cols = 9
-   cols += 1 if block_tools and current_user.has_one_of_roles?(:admin, :call_centre)
+   cols += 1 if block_tools
 -%>
 
 <table id="campaigns" class="generic">
@@ -16,7 +16,7 @@
     <th class="ta_r"><%= t("campaigns.table.contacts") %></th>
     <th class="ta_r"><%= t("campaigns.table.results") %></th>
     <th class="ta_r"><%= t("campaigns.table.completion") %></th>
-    <% if block_tools and current_user.has_one_of_roles?(:admin, :call_centre) %>
+    <% if block_tools %>
         <th class="ta_r">
           <%= t("campaigns.table.actions") %>
         </th>
@@ -37,7 +37,6 @@
         <td class="cl"></td>
         <td>
           <%= campaign.name %>
-          <%= link_to t("campaigns.table.go_to_work_screen"), callers_campaign_agent_work_screen_index_path(campaign) unless current_user.has_role?(:admin) %>
         </td>
         <td><%= campaign.category %></td>
         <td><%= campaign.country %></td>
@@ -47,9 +46,9 @@
         <td class="ta_r"><%= campaign.contacts.count %></td>
         <td class="ta_r"><%= campaign.contacts.with_completed_status(true).count %></td>
         <td class="ta_r"><%= campaign.completion %></td>
-        <% if block_tools and current_user.has_one_of_roles?(:admin, :call_centre) %>
+        <% if block_tools %>
             <td class="tda ta_r">
-              <%= with_output_buffer { block_tools.call(campaign) } if campaign.can_be_managed_by?(current_user) %>
+              <%= with_output_buffer { block_tools.call(campaign) } if campaign.can_be_managed_by?(current_user) or campaign.has_user_as_member?(current_user) %>
             </td>
         <% end %>
         <td class="cr"></td>

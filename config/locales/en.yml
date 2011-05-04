@@ -254,6 +254,7 @@ en:
       results: Results
       completion: Completion
       go_to_work_screen: go to work screen
+      work_screen: Work screen
     new:
       title: New campaign
       button_create: Create
