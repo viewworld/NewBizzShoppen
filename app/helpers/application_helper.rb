@@ -98,8 +98,8 @@ module ApplicationHelper
       number_to_currency(number,
                          :format => currency.format,
                          :unit => currency.symbol,
-                         :separator => t("number.format.separator"),
-                         :delimiter => t("number.format.delimiter"),
+                         :separator => currency.separator,
+                         :delimiter => currency.delimiter,
                          :precision => t("number.format.precision").to_i)
     else
       number_to_currency(number,

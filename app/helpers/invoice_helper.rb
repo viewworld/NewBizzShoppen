@@ -23,5 +23,12 @@ module InvoiceHelper
     "/html2pdf/invoice_cache/#{filename}"
   end
 
+  def total_in_words(invoice)
+    begin
+      "Numerals::#{I18n.locale.to_s.humanize}".constantize.in_words(invoice.total, invoice.currency)
+    rescue
+      Numerals::En.in_words(invoice.total, invoice.currency)
+    end
+  end
 
 end

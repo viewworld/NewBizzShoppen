@@ -159,7 +159,7 @@
   </div>
 
   <div class="additional_data">
-    <p><strong><%= t("administration.invoices.show.view.total_in_words") %>:</strong> <%= invoice.total_in_words %></p>
+    <p><strong><%= t("administration.invoices.show.view.total_in_words") %>:</strong> <%= total_in_words(invoice) %></p>
     <p>
       <strong><%= t("administration.invoices.show.view.payment_method") %>:</strong> <%= invoice.payment_method == "cash" ? t("administration.invoices.common.view.cash") : t("administration.invoices.common.view.bank_transfer") %>
     </p>
