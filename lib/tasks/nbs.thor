@@ -67,12 +67,16 @@ class Nbs < Thor
          :en      => {:subject => "Somebody shared leads with you",
                       :body    => "{% for lead in leads %}
 <p>{{lead.header}}<br />
-{{lead.description}}<br /></p>
+{{lead.description}}<br />
+{{lead.hidden_description}}<br />
+Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.phone_number}}, {{lead.direct_phone_number}}</p>
 {% endfor %}"},
          :dk      => {:subject => "[DK] Somebody shared leads with you",
                       :body    => "{% for lead in leads %}
 <p>{{lead.header}}<br />
-{{lead.description}}<br /></p>
+{{lead.description}}<br />
+{{lead.hidden_description}}<br />
+Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.phone_number}}, {{lead.direct_phone_number}}</p>
 {% endfor %}"}
         },
 
