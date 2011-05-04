@@ -4,13 +4,16 @@
   <param:actions>
     <ul class="header_actions">
       <li>
-        <%= bt_link_to nil, t("agent_work_screen.index.show_call_log_for_current_contact"), "javascript:void(0)", :onclick => "$('#results_sheet').show();$('#call_sheet').hide();$('#pending_calls').hide();" %>
+        <%= bt_link_to nil, t("agent_work_screen.index.show_call_log_for_current_contact"), "javascript:void(0)", :onclick => "displayWorkScreenTab('#results_sheet')" %>
       </li>
       <li class="">
-        <%= bt_link_to nil, t("agent_work_screen.index.show_current_call_sheet"), "javascript:void(0)", :onclick => "$('#results_sheet').hide();$('#call_sheet').show();$('#pending_calls').hide();", :class => "bt_active" %>
+        <%= bt_link_to nil, t("agent_work_screen.index.show_current_call_sheet"), "javascript:void(0)", :onclick => "displayWorkScreenTab('#call_sheet')", :class => "bt_active" %>
+      </li>
+      <li>
+        <%= bt_link_to nil, t("agent_work_screen.index.show_pending_calls"), "javascript:void(0)", :onclick => "displayWorkScreenTab('#pending_calls')" %>
       </li>
       <li class="last">
-        <%= bt_link_to nil, t("agent_work_screen.index.show_pending_calls"), "javascript:void(0)", :onclick => "$('#results_sheet').hide();$('#call_sheet').hide();$('#pending_calls').show();" %>
+        <%= bt_link_to nil, t("agent_work_screen.index.show_completed_contacts"), "javascript:void(0)", :onclick => "displayWorkScreenTab('#completed_contacts')" %>
       </li>
     </ul>
   </param:actions>

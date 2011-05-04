@@ -231,3 +231,10 @@ function display_alert(message, withTimeout) {
     if (withTimeout)
         setTimeout('$("#flashes .flash_alert").hide()', 5000)
 }
+
+function displayWorkScreenTab(tab_id) {
+    var tab_ids = ["#results_sheet", "#call_sheet", "#pending_calls", "#completed_contacts"];
+    tab_ids.splice(tab_ids.indexOf(tab_id), 1);
+    $(tab_ids.join(",")).hide();
+    $(tab_id).show();
+}

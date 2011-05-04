@@ -38,6 +38,10 @@
     <div id="pending_calls" style="display:none">
       <%= render :partial => "callers/agent_work_screen/pending_calls", :locals => @locals %>
     </div>
+
+    <div id="completed_contacts" style="display:none">
+      <%= render :partial => "callers/agent_work_screen/completed_contacts", :locals => @locals %>
+    </div>
   </div>
 
   <div id="agent_work_screen_call_result" style="display:none">
@@ -56,8 +60,8 @@
       $("#change_campaign_id").live("change", function() {
           $(this).parents("form").submit()
       });
-      $("#call_sheet tbody tr td").live("click", function() {
-          $("#call_sheet tbody tr").removeClass("highlight_row");
+      $("#call_sheet, #pending_calls, #completed_contacts").find("tbody tr td").live("click", function() {
+          $("#call_sheet, #pending_calls, #completed_contacts").find("tbody tr").removeClass("highlight_row");
           $(this).parent().addClass("highlight_row");
       });
   </script>

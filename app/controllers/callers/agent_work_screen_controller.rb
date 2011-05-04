@@ -5,6 +5,7 @@ class Callers::AgentWorkScreenController < Callers::CallerController
   before_filter :set_agent
   before_filter :set_contacts
   before_filter :set_pending_contacts
+  before_filter :set_completed_contacts
   before_filter :set_contact
   before_filter :set_contact_managing
 
@@ -34,6 +35,10 @@ class Callers::AgentWorkScreenController < Callers::CallerController
     @pending_contacts = @agent.contacts.for_campaign(@campaign).with_pending_status(true)
   end
 
+  def set_completed_contacts
+    @completed_contacts = @campaign.contacts.with_completed_status(true).select{ |contact| contact.current_call_result.creator == current_user.with_role }
+  end
+
   def set_contact
     @lead = @contact = @contacts.first
   end
@@ -44,6 +49,7 @@ class Callers::AgentWorkScreenController < Callers::CallerController
               :contact => @contact,
               :contacts => @contacts,
               :pending_contacts => @pending_contacts,
+              :completed_contacts => @completed_contacts,
               :namespace => "callers" }
   end
 
