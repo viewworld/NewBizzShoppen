@@ -33,11 +33,11 @@ Scenario: I can see 10 top bestsellers
   And I should see "AwesomeLead" first on a list within "#best_sellers"
 
 @ao @_tested
-Scenario: I can see 10 latest leads
-  Given there are "11" existing leads
+Scenario: I can see 3 latest leads
+  Given there are "4" existing leads
   And lead AwesomeLead exists within category Test
   And I follow translated "home.show.view.agent"
-  Then I should see "10" items on a list within "#latest_leads"
+  Then I should see "3" items on a list within "#latest_leads"
   And I should see "AwesomeLead" first on a list within "#latest_leads"
 
 @added @m6 @ao @_tested @_done

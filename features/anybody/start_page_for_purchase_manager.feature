@@ -33,10 +33,10 @@ Scenario: I can see 10 top bestsellers
 
 @added @_done
 Scenario: I can see 10 latest leads
-  Given there are "11" existing leads
+  Given there are "4" existing leads
   And lead AwesomeLead exists within category Test
   And I follow translated "home.show.view.purchase_manager"
-  Then I should see "10" items on a list within "#latest_leads"
+  Then I should see "3" items on a list within "#latest_leads"
   And I should see "AwesomeLead" first on a list within "#latest_leads"
 
 @added @m6 @ao @_tested @_done
