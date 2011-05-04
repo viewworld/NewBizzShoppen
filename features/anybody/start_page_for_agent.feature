@@ -29,7 +29,7 @@ Scenario: I can see 10 top bestsellers
   And AwesomeLead is a best seller
   And there are "11" existing leads
   And I follow translated "home.show.view.agent"
-  Then I should see "10" items on a list within "#best_sellers"
+  Then I should see "3" items on a list within "#best_sellers"
   And I should see "AwesomeLead" first on a list within "#best_sellers"
 
 @ao @_tested
@@ -61,6 +61,7 @@ Scenario: I can go to details of agent news
 Scenario: I can go to details of bestsellers
   Given lead AwesomeLead exists within category Test
   And I follow translated "home.show.view.agent"
+  And I open page in browser
   And I follow "AwesomeLead" within "#best_sellers"
   Then I should be on the AwesomeLead lead page
 

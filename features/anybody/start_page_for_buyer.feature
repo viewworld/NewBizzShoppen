@@ -28,7 +28,7 @@ Scenario: I can see 10 top bestsellers
   And AwesomeLead is a best seller
   And there are "11" existing leads
   And I follow translated "home.show.view.buyer"
-  Then I should see "10" items on a list within "#best_sellers"
+  Then I should see "3" items on a list within "#best_sellers"
   And I should see "AwesomeLead" first on a list within "#best_sellers"
 
 @ao @_done @_tested

@@ -80,7 +80,7 @@ Feature: Category home pages
     And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Best Leads"
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
-    Then I should see "10" items on a list within "#latest_leads"
+    Then I should see "3" items on a list within "#latest_leads"
     When I follow translated "category_home.show.view.complete_list_link" within "#latest_leads"
     And I follow "3" within ".pagination"
     Then I should see "1" rows in a table within ".leads_table tbody"
@@ -90,7 +90,7 @@ Feature: Category home pages
     When Category named "Best Leads" already exists
     And there are "11" leads in category "Best Leads"
     And I am on category home page for Best Leads
-    Then I should see "10" items on a list within "#latest_leads"
+    Then I should see "3" items on a list within "#latest_leads"
     When I follow translated "category_home.show.view.complete_list_link" within "#latest_leads"
     And I follow "3" within ".pagination"
     Then I should see CSS path "table.leads_table tbody tr.odd"
