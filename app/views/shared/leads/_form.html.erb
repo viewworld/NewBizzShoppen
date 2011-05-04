@@ -128,7 +128,9 @@
 
 <script>
     var nestedFormsCount = <%= @lead.lead_translations.reject{ |lt| lt.locale == I18n.locale.to_s }.size %>;
-
+    $(function() {
+        $("#datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+    });
     function add_fields(link, content) {
         if ($('#locale_picker').text() != null)
         {
