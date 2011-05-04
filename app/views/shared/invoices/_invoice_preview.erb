@@ -96,20 +96,14 @@
             <td class="ta_l"><%= invoice_line.name %></td>
             <td><%= invoice_line.quantity %></td>
             <td>
-              <%= number_to_currency(invoice_line.netto_price,
-                                     :precision => t("number.format.precision").to_i,
-                                     :unit => invoice.currency.symbol) %>
+              <%= as_currency(invoice_line.netto_price, invoice.currency) %>
             </td>
             <td><%= invoice_line.vat_rate.zero? ? (t :na, :scope => "administration.invoices.common.view") : number_to_percentage(invoice_line.vat_rate, :precision => 2) %></td>
             <td>
-              <%= number_to_currency(invoice_line.vat_value,
-                                     :precision => t("number.format.precision").to_i,
-                                     :unit => invoice.currency.symbol) %>
+              <%= as_currency(invoice_line.vat_value, invoice.currency) %>
             </td>
             <td>
-              <%= number_to_currency(invoice_line.brutto_value,
-                                     :precision => t("number.format.precision").to_i,
-                                     :unit=>invoice.currency.symbol) %>
+              <%= as_currency(invoice_line.brutto_value, invoice.currency) %>
             </td>
           </tr>
       <% end %>
@@ -122,20 +116,14 @@
         <td class="empty" colspan="2"></td>
         <td class="h_cell"><%= t("administration.invoices.show.view.total") %></td>
         <td><strong>
-          <%= number_to_currency(invoice.total_netto,
-                                 :precision => t("number.format.precision").to_i,
-                                 :unit => invoice.currency.symbol) %>
+          <%= as_currency(invoice.total_netto, invoice.currency) %>
         </strong></td>
         <td></td>
         <td><strong>
-          <%= number_to_currency(invoice.total_vat,
-                                 :precision => t("number.format.precision").to_i,
-                                 :unit => invoice.currency.symbol) %>
+          <%= as_currency(invoice.total_vat, invoice.currency) %>
         </strong></td>
         <td><strong>
-          <%= number_to_currency(invoice.total,
-                                 :precision => t("number.format.precision").to_i,
-                                 :unit => invoice.currency.symbol) %>
+          <%= as_currency(invoice.total, invoice.currency) %>
         </strong></td>
       </tr>
 
@@ -153,20 +141,14 @@
                     <td class="empty"></td>
                 <% end %>
                 <td class="ta_r">
-                  <%= number_to_currency(invoice_line.netto_value_sum,
-                                         :precision => t("number.format.precision").to_i,
-                                         :unit => invoice.currency.symbol) %>
+                  <%= as_currency(invoice_line.netto_value_sum, invoice.currency) %>
                 </td>
                 <td class="ta_r"><%= invoice_line.vat_rate.zero? ? (t :na, :scope => "administration.invoices.common.view") : number_to_percentage(invoice_line.vat_rate, :precision => 2) %></td>
                 <td class="ta_r">
-                  <%= number_to_currency(invoice_line.vat_value_sum,
-                                         :precision => t("number.format.precision").to_i,
-                                         :unit => invoice.currency.symbol) %>
+                  <%= as_currency(invoice_line.vat_value_sum, invoice.currency) %>
                 </td>
                 <td class="ta_r">
-                  <%= number_to_currency(invoice_line.brutto_value_sum,
-                                         :precision => t("number.format.precision").to_i,
-                                         :unit => invoice.currency.symbol) %>
+                  <%= as_currency(invoice_line.brutto_value_sum, invoice.currency) %>
                 </td>
               </tr>
           <% end %>
@@ -223,9 +205,7 @@
              <td><strong><%= t("administration.invoices.show.view.paid_at") %></strong> <%= invoice.paid_at or "-" %></td>
              <td><strong><%= t("administration.invoices.show.view.paid_at") %></strong> <%= invoice.paid_at or "-" %></td>
              <td><strong><%= t("administration.invoices.show.view.cashflow") %></strong>
-               <%= number_to_currency(invoice.cash_flow,
-                                      :precision => t("number.format.precision").to_i,
-                                      :unit => invoice.currency.symbol) %>
+               <%= as_currency(invoice.cash_flow, invoice.currency) %>
              </td>
            </tr>
           </tbody>
