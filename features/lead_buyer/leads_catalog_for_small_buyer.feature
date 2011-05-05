@@ -88,7 +88,7 @@ Scenario: I can bulk add leads to my basket and I will get a notification “Lea
   And I follow "Computers"
   Then I check "mark_all"
   And I press translated "leads.index.button_bulk_create_cart_item"
-  Then I should see translated "buyer.bulk_cart_items.create.flash.n_cart_items_added" with options "count:3"
+  Then I should see translated "buyer.bulk_cart_items.create.flash.n_cart_items_added" with options "count:4"
 
 @ao @m5 @added @_done @_tested
 Scenario: I should not see leads that I've added to cart
