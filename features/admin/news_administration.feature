@@ -179,7 +179,7 @@ Scenario: When you look at the news tab, the list of news should contain the fol
   And I check "news_published"
   And I press translated "administration.news.edit.view.button_save"
   And I should be on administration FirstNews news page
-  When I click hidden link by url regex "/administration\/news/"
+  When I click hidden link by url regex "/administration\/news$/"
   Then I should see /\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/
 
 @added @m5 @ao @_done

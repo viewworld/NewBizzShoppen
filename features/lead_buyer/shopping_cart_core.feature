@@ -44,7 +44,7 @@ Scenario: I can see basket summary before I go to checkout and I can see a total
   Given I check "mark_all"
   And I press translated "leads.index.button_bulk_create_cart_item"
   Then I should see translated "buyer.bulk_cart_items.create.flash.n_cart_items_added" with options "count:4"
-  And I click hidden link by url regex "/^\/buyers\/cart$/"
+  And I click hidden link by url regex "/buyers\/cart$/"
   Then I should see "Printers ultimate deal"
   And  I should see "Monitors LCD deal"
   And  I should see "Keyboards deal"
