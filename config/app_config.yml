@@ -11,9 +11,9 @@ test:
   paypal_url: "test/paypal/url"
 
 production:
-  paypal_email:
-  paypal_secret:
-  paypal_cert_id:
+  paypal_email: admin@fairleads.com
+  paypal_secret: i1knTfEsql5724S1MCX5QgV1Me0xXw
+  paypal_cert_id: JTL4K5CBZA9HA
   paypal_url: "https://www.paypal.com/cgi-bin/webscr"
 
 staging:
