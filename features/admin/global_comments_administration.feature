@@ -114,11 +114,15 @@ Scenario: I can reply to existing comment thread
   And I should see "Body reply to First Lead1 comment"
 
 @requested @m10
-Scenario: I can block comments
+Scenario: I can block a comment
+
+@requested @m10
+Scenario:  When comment is blocked I should not see it's children
 
 @requested @m10
 Scenario: I can block particular agent from further dialog with given buyer
 
+# filter on screen name, email address, company name
 @requested @m10
 Scenario: I can filter by users - any user involved in the conversation
 

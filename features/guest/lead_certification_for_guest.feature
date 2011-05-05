@@ -20,6 +20,14 @@ Scenario: When I decide to create new fairleads account I should be redirected t
 
 Scenario: After signup I can login instantly and do not have to confirm it by email (since it is the same email)
 
+Scenario: I can specify in settings how often send reminder emails to leads
+
+Scenario: I can edit contents of emails that will be sent to lead
+
+Scenario: When lead does not answer to any email then agent should see "Approval time out" information
+
+Scenario: Other users should not see that certification approval timed out
+
 #periodical rake task
 @non_testable
 Scenario: When certain period of time passes and the link with lead's confirmation is not visited then another email is sent to lead's contact

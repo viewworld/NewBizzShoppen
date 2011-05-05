@@ -96,4 +96,8 @@ Scenario: I cannot start new thread
 Scenario: I can block comments from my agents
 
 @requested @m10
-Scenario: I can block particular agent of mine from further dialog with given buyer
+Scenario: I can block particular agent of mine from further dialog with given buyer on given lead
+
+@requested @m10
+Scenario: When I block an agent from further dialog on a lead then communication should be possible on other leads
+
