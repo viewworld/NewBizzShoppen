@@ -555,3 +555,18 @@ Scenario: When I change the certification of call centre then its agents certifi
   And I select translated "models.lead.certification.lvl13" from "user_call_centre_certification_level"
   And I press translated "password.edit.view.button_update_user"
   And user "ccagent01@person.com" with role "call_centre_agent" has certification level 3
+
+@m10 @requested
+Scenario: I can see a role name of newly created user like "New buyer account”
+
+@m10 @requested
+Scenario: I can see password fields above unique categories
+
+@m10 @requested
+Scenario: I can see "Set interests" button next to "Change password"
+
+@m10 @requested
+Scenario: I can see "Refresh statistics" button on users listing instead of settings page
+
+@m10 @requested
+Scenario: I should be redirected to edit user page after saving interests

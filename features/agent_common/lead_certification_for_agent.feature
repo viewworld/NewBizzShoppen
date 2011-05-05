@@ -1,4 +1,4 @@
-@lead_certification @agent @added
+@lead_certification @agent @requested @m10
 Feature: Lead certification for agent
 
 Scenario: I can mark a lead as certified

@@ -155,8 +155,8 @@ Scenario: I can see a category name for which lead temlpate is being created
   And I follow translated "administration.categories.edit.view.new_template"
   Then I should see "New lead template in category Vehicles"
 
-@tgn @added @m10
+@tgn @requested @m10
 Scenario: I can edit any kind of template even created by other users
 
-@tgn @added @m10
+@tgn @requested @m10
 Scenario: I can change the lead's category even if the templates are filled out (templates should be preserved but hidden)

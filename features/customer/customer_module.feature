@@ -234,3 +234,9 @@ Scenario: I can see a back button when on configure interests page
   When I go to my profile
   And I follow translated "my_profile.edit.view.interests_settings"
   Then I should see "Back"
+
+@m10 @requested
+Scenario: After first login I should be redirected to my home page instead of interests config
+
+@m10 @requested
+Scenario: Interests are automatically configured after account is created - all countries and categories should be selected with disabled notifications

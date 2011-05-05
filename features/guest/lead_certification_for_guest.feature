@@ -1,4 +1,4 @@
-@lead_certification @added
+@lead_certification @requested @m10
 Feature: Lead certification for guest
 
 Scenario: I can get access to a lead by hashed link without logging in
@@ -23,5 +23,10 @@ Scenario: After signup I can login instantly and do not have to confirm it by em
 #periodical rake task
 @non_testable
 Scenario: When certain period of time passes and the link with lead's confirmation is not visited then another email is sent to lead's contact
+
+@non_testable
+Scenario: I check perdiodically for confirmations that have not been visited
+
+Scenario: Last visit date is recorded when link is accessed but lead is not confirmed
 
 Scenario: Once I have confirmed the lead then the link expires and I cannot get access to that lead again

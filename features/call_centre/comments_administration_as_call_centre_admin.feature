@@ -92,8 +92,8 @@ Scenario: I cannot start new thread
   And I follow translated "comments.shared.show_comments"
   And I should not see translated "comments.threads.new.view.header" with options "header: Lead#3"
 
-@added @m10
+@requested @m10
 Scenario: I can block comments from my agents
 
-@added @m10
+@requested @m10
 Scenario: I can block particular agent of mine from further dialog with given buyer

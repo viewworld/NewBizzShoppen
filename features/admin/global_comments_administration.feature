@@ -113,14 +113,14 @@ Scenario: I can reply to existing comment thread
   Then I should see "Reply to First Lead1 comment"
   And I should see "Body reply to First Lead1 comment"
 
-@added @m10
+@requested @m10
 Scenario: I can block comments
 
-@added @m10
+@requested @m10
 Scenario: I can block particular agent from further dialog with given buyer
 
-@added @m10
+@requested @m10
 Scenario: I can filter by users - any user involved in the conversation
 
-@added @m10
+@requested @m10
 Scenario: I can see Hide/Show links beside the destroy link to collapse/expand certain comments

@@ -39,3 +39,6 @@ Feature: I can browse categories
     And I check "email_template_preview_can_be_contacted"
     And I press translated "contact_us.new.view.send_email_button"
     And last email sent should have been sent to recipient "admin@fairleads.com"
+
+  @m10 @reqeusted
+  Scenario: I will return to agent/buyer home page after category request is sent
