@@ -9,6 +9,3 @@ Scenario: Calculating number of comment threads visible for given user
 
 # commentable rating in future
 Scenario: Comment can be attached to different types of objects (not only lead)
-
-@added @m10
-Scenario: I can see if a comment was read and by whom

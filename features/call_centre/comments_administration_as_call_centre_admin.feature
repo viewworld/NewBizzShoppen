@@ -97,6 +97,3 @@ Scenario: I can block comments from my agents
 
 @added @m10
 Scenario: I can block particular agent of mine from further dialog with given buyer
-
-@added @m10
-Scenario: When there is new comment that I did not read then the tab with comments is red

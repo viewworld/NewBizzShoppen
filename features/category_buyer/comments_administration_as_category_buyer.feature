@@ -52,6 +52,3 @@ Scenario: I can filter all comments
 
 @_done @_deprecated
 Scenario: I can see paginated list of comments
-
-@added @m10
-Scenario: When there is new comment that I did not read then the tab with comments is red

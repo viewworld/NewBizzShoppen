@@ -118,3 +118,9 @@ Scenario: I can block comments
 
 @added @m10
 Scenario: I can block particular agent from further dialog with given buyer
+
+@added @m10
+Scenario: I can filter by users - any user involved in the conversation
+
+@added @m10
+Scenario: I can see Hide/Show links beside the destroy link to collapse/expand certain comments

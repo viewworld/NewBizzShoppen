@@ -1,4 +1,4 @@
-@statistics @$_small_buyer @m10
+@statistics @$_small_buyer @m0
 Feature: Statistics for small buyer
 
 In order to make better decisions

@@ -154,3 +154,6 @@ Scenario: I can see a category name for which lead temlpate is being created
   And I follow translated "administration.categories.index.view.edit_link"
   And I follow translated "administration.categories.edit.view.new_template"
   Then I should see "New lead template in category Vehicles"
+
+@tgn @added @m10
+Scenario: I can edit any kind of template even created by other users
