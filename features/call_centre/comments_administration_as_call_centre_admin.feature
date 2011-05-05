@@ -63,7 +63,7 @@ Scenario: I can browse all comments from my agents with pagination
   And I follow translated "layout.main_menu.shared.comments"
   Then I follow "2"
 
-@_tested @wip
+@_tested
 Scenario: I can sort comments
   Given I follow translated "layout.main_menu.shared.comments"
   When I follow translated "comments.threads.index.view.lead_header"
