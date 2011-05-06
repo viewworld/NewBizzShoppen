@@ -46,3 +46,7 @@ Scenario: Data is transfererd to paypal in encrypted form
 
 @tgn @m5 @added @_non_testable @_done
 Scenario: Currency code from cart is passed to PayPal
+
+# https://redmine.selleo.com/issues/5436
+@m10 @requested
+Scenario: When paying by payal the price should include VAT where applicable
