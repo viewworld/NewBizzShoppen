@@ -123,7 +123,6 @@ Scenario: If customer is category buyer with assigned unique categories he can a
   And I sign in as jon@lajoie.ca with password secret
   And I am on category home page for Unique Leads
   Then I should be on category home page for Unique Leads
-  And I open page in browser
   And I should see "Uniqlead" within "#latest_leads"
   When I follow translated "category_home.show.view.complete_list_link" within "#latest_leads"
   Then I should be on category home leads page for Unique Leads
