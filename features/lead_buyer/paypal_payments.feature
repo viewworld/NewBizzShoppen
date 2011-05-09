@@ -50,3 +50,9 @@ Scenario: Currency code from cart is passed to PayPal
 # https://redmine.selleo.com/issues/5436
 @m10 @requested
 Scenario: When paying by payal the price should include VAT where applicable
+
+@m10 @requested
+Scenario: The vat amount should be visible as additional product line in paypal
+
+@m10 @requested
+Scenario: Total value of a cart should not include VAT rates
