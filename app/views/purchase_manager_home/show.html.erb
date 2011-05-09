@@ -78,7 +78,7 @@
         </param:header>
         <param:content>
           <ul class="solid_list">
-            <% if @news.any? %>
+            <% if @best_sellers.any? %>
                 <%= render :partial => 'lead', :collection => @best_sellers, :as => :lead %>
             <% else %>
                 <%= render :partial => 'shared/blank_data_li' %>
@@ -94,7 +94,7 @@
         </param:header>
         <param:content>
           <ul class="solid_list">
-            <% if @news.any? %>
+            <% if @latest_leads.any? %>
                 <%= render :partial => 'lead', :collection => @latest_leads, :as => :lead %>
             <% else %>
                 <%= render :partial => 'shared/blank_data_li' %>
