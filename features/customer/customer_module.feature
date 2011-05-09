@@ -234,8 +234,15 @@ Scenario: I can see a back button when on configure interests page
   And I follow translated "my_profile.edit.view.interests_settings"
   Then I should see "Back"
 
-@m10 @requested
+@m10 @requested @_done @_tested
 Scenario: After first login I should be redirected to my home page instead of interests config
+  Then I should be on buyer home
 
-@m10 @requested
+@m10 @requested @_done @_tested
 Scenario: Interests are automatically configured after account is created - all countries and categories should be selected with disabled notifications
+  When I am on customer interests page
+  Then checkbox named "country_1" should be checked
+  And checkbox named "country_2" should be checked
+  And checkbox named "category_1" should be checked
+  And checkbox named "category_2" should be checked
+  And checkbox named "category_3" should be checked
