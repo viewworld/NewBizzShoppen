@@ -278,10 +278,10 @@ Feature: Buy out
     Then I should see "Printers"
     When I follow translated "leads.index.add_to_cart_buyout_link"
     And I follow translated "layout.main_menu.lead_buyer.lead_purchases"
-    Then I should see "2" rows in a table within ".leads_table tbody"
+    Then I should see "2" rows in a table with headers within ".leads_table tbody"
     When I follow translated "layout.main_menu.customer.invoices"
     And I follow translated "customer.invoices.index.view.pending_leads"
-    Then I should see "2" rows in a table within "#not_invoiced_leads"
+    Then I should see "2" rows in a table with headers within "#not_invoiced_leads"
     And I should see "123.00"
     And I should see "1,107.00"
 
@@ -313,4 +313,4 @@ Feature: Buy out
     Then I should see "123.00"
     And I should see "1,107.00"
     When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
-    Then I should see "2" rows in a table within ".leads_table tbody"
+    Then I should see "2" rows in a table with headers within ".leads_table tbody"

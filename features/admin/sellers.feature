@@ -9,7 +9,7 @@ Feature: Sellers
   @_done
   Scenario: I can see Sellers list
     When I follow translated "layout.main_menu.admin.sellers"
-    Then I should see "1" rows in a table within "#sellers"
+    Then I should see "1" rows in a table with headers within "#sellers"
 
   # there is always one default seller from seed
   @selenium @_done
@@ -27,7 +27,7 @@ Feature: Sellers
     And I fill in "seller_vat_no" with "666-66-66-66"
     And I press translated "administration.sellers.new.view.button_create"
     And I am on administration sellers page
-    Then I should see "2" rows in a table within "#sellers"
+    Then I should see "2" rows in a table with headers within "#sellers"
 
   # Address, Name, Email, Bank account, Payment deadline, Default VAT rate (from created), Invoice information -> There should be a custom text in the bottom of invoice page.
   @_done

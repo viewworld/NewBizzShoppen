@@ -11,14 +11,14 @@ Feature: Bank Accounts
   @added @m4b @_done
   Scenario: I can see a list of bank accounts in settings tab
     Given I follow translated "layout.main_menu.admin.global"
-    Then I should see "2" rows in a table within "#bank_accounts"
+    Then I should see "2" rows in a table with headers within "#bank_accounts"
 
   @added @m4b @_done
   Scenario: I can add many bank accounts to one country
     Given there is a bank account for country "Denmark"
     And there is a bank account for country "Denmark"
     And I follow translated "layout.main_menu.admin.global"
-    Then I should see "4" rows in a table within "#bank_accounts"
+    Then I should see "4" rows in a table with headers within "#bank_accounts"
 
   @added @m4b @_done
   Scenario: Only one bank account for each country can be a default bank account

@@ -127,7 +127,7 @@ Scenario: If customer is category buyer with assigned unique categories he can a
   When I follow translated "category_home.show.view.complete_list_link" within "#latest_leads"
   Then I should be on category home leads page for Unique Leads
   And I should see "Uniqlead"
-  And I should see "1" rows in a table within ".leads_table tbody"
+  And I should see "1" rows in a table with headers within ".leads_table tbody"
 
 @added @tgn @_tested  @requested
 Scenario: On the interests page the country should be selected based on current locale

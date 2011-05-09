@@ -12,7 +12,7 @@ Feature: Invoices administration as customer
 
   @_done
   Scenario: I can see a list of my invoices
-    Then I should see "1" rows in a table within "#invoices"
+    Then I should see "1" rows in a table with headers within "#invoices"
 
   @_done
   Scenario: I can see number of my invoice

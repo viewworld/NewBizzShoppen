@@ -320,10 +320,16 @@ Then /^I should see "([^"]*)" before "([^"]*)"$/ do |first,second|
   page.body.should =~ /#{first}.*#{second}/m
 end
 
-Then /^I should see "([^"]*)" rows in a table(?: within "([^"]*)")?$/ do |number, selector|
+Then /^I should see "([^"]*)" rows in a table with headers(?: within "([^"]*)")?$/ do |number, selector|
   with_scope(selector) do
     # +2 for headers
     page.all(:css, 'tr').size.should eql(number.to_i+2)
+  end
+end
+
+Then /^I should see "([^"]*)" rows in a table(?: within "([^"]*)")?$/ do |number, selector|
+  with_scope(selector) do
+    page.all(:css, 'tr').size.should eql(number.to_i)
   end
 end
 

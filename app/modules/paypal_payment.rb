@@ -9,7 +9,7 @@ module PaypalPayment
     OpenSSL::PKCS7::encrypt([OpenSSL::X509::Certificate.new(PAYPAL_CERT_PEM)], signed.to_der, OpenSSL::Cipher::Cipher::new("DES3"), OpenSSL::PKCS7::BINARY).to_s.gsub("\n", "")
   end
 
-  def paypal_encrypted(return_url, notify_url)
+  def hash_for_paypal(return_url, notify_url)
     values = {
         :currency_code => currency_name,
         :business   => APP_CONFIG[:paypal_email],
@@ -20,15 +20,29 @@ module PaypalPayment
         :notify_url => notify_url,
         :cert_id    => APP_CONFIG[:paypal_cert_id]
     }
-    lead_purchases.each_with_index do |lp, index|
+    index = 0
+    lead_purchases.each do |lp|
+      index += 1
       values.merge!({
-                        "amount_#{index+1}"      => lp.lead.price,
-                        "item_name_#{index+1}"   => lp.header,
-                        "item_number_#{index+1}" => lp.id,
-                        "quantity_#{index+1}"    => lp.quantity
+                        "amount_#{index}"      => lp.lead.price,
+                        "item_name_#{index}"   => lp.header,
+                        "item_number_#{index}" => lp.id,
+                        "quantity_#{index}"    => lp.quantity
                     })
     end
-    encrypt_for_paypal(values)
+    unless @buyer.not_charge_vat?
+      values.merge!({
+                        "amount_#{index+1}"      => total_vat_value,
+                        "item_name_#{index+1}"   => I18n.t("cart.vat_line_title", :percentage => "#{@buyer.country_vat_rate}%"),
+                        "item_number_#{index+1}" => "",
+                        "quantity_#{index+1}"    => 1
+                    })
+    end
+    values
+  end
+
+  def paypal_encrypted(return_url, notify_url)
+    encrypt_for_paypal(hash_for_paypal(return_url, notify_url))
   end
 
 end

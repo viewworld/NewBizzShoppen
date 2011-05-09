@@ -15,3 +15,15 @@ end
 Then /^last payment notification is linked to invoice$/ do
   assert PaymentNotification.last.payment_transaction.invoice.present? == true
 end
+
+Then /^cart for user "([^"]*)" has VAT included in total value$/ do |email|
+  u = User.where(:email => email).first.with_role
+  u.cart.total.should == (u.cart.total_netto + u.cart.total_vat_value)
+end
+
+Then /^cart for user "([^"]*)" has additional line for VAT$/ do |email|
+  u = User.where(:email => email).first.with_role
+  u.cart.hash_for_paypal(nil,nil).values.should include I18n.t("cart.vat_line_title", :percentage => "#{u.country_vat_rate}%")
+  u.cart.hash_for_paypal(nil,nil).values.map(&:to_s).should include u.cart.total_vat_value.to_s
+end
+
