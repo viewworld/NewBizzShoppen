@@ -97,6 +97,6 @@ class Comment < ActiveRecord::Base
 
   def can_be_shown_for?(_user)
     (parent.nil? or (parent and !parent.is_blocked)) and
-    (_user.has_role?(:admin) or (_user.has_role?(:call_centre) and user.subaccounts.include?(user))) or !is_blocked?
+    (_user.has_role?(:admin) or (_user.has_role?(:call_centre) and _user.subaccounts.include?(user))) or !is_blocked?
   end
 end
