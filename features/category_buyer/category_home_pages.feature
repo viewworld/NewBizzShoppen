@@ -56,7 +56,7 @@ Feature: Category home pages
     And a lead InactiveLead exists within category Best Leads and is bought by user kastomer@nbs.fake with role customer
     And lead "InactiveLead" has attributes "sale_limit:1"
     And I am on category home page for Best Leads
-    Then I should see "0" items on a list within "#latest_leads"
+    Then I should see "1" items on a list within "#latest_leads"
     And I follow translated "agent_home.show.view.complete_list_link" within "#latest_leads"
     Then I should see translated "common.nothing_to_display"
 
