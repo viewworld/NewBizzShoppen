@@ -18,10 +18,11 @@
 
   <div class="pdd_5 no_pdd_b">
     <% unless @home_category.image.nil? %>
-      <br/>
-      <div class="grid_120 fltl">
-        <%= image_tag(@home_category.image.url, :id => 'category_image', :class => "thumb") %>
-      </div>
+        <br/>
+
+        <div class="grid_120 fltl">
+          <%= image_tag(@home_category.image.url, :id => 'category_image', :class => "thumb") %>
+        </div>
     <% end %>
 
     <div style="overflow:hidden">
@@ -41,7 +42,11 @@
         </param:header>
         <param:content>
           <ul class="solid_list">
-            <%= render :partial => 'news', :collection => @news, :as => :news %>
+            <% if @news.any? %>
+                <%= render :partial => 'news', :collection => @news, :as => :news %>
+            <% else %>
+                <%= render :partial => 'shared/blank_data_li' %>
+            <% end %>
           </ul>
         </param:content>
 
@@ -68,9 +73,9 @@
             </div>
             <hl/>
             <div style="padding:5px 10px">
-            <p>
-              <%= link_to t("home.show.view.resend_confirmation_instructions"), new_confirmation_path(User) %>
-            </p>
+              <p>
+                <%= link_to t("home.show.view.resend_confirmation_instructions"), new_confirmation_path(User) %>
+              </p>
             </div>
           </frm>
           <frm title="#{t('category_home.show.view.i_want_to_register')}" c="10">
@@ -87,7 +92,11 @@
             </param:header>
             <param:content>
               <ul class="solid_list">
-                <%= render :partial => 'my_lead', :collection => @my_leads, :as => :lead %>
+                <% if @my_leads.any? %>
+                    <%= render :partial => 'my_lead', :collection => @my_leads, :as => :lead %>
+                <% else %>
+                    <%= render :partial => 'shared/blank_data_li' %>
+                <% end %>
               </ul>
             </param:content>
           </frm>
@@ -100,7 +109,11 @@
         </param:header>
         <param:content>
           <ul class="solid_list">
-            <%= render :partial => 'lead', :collection => @latest_leads, :as => :lead %>
+            <% if @my_leads.any? %>
+                <%= render :partial => 'lead', :collection => @latest_leads, :as => :lead %>
+            <% else %>
+                <%= render :partial => 'shared/blank_data_li' %>
+            <% end %>
           </ul>
         </param:content>
       </frm>

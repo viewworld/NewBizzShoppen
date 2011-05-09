@@ -1,10 +1,10 @@
 <column-mc:>
   <header>
     <param:content>
-      <% if current_user and current_user.has_any_role?(:call_centre ,:call_centre_agent) %>
-        <%= t("home.show.view.call_centre_header", :name => screen_name_with_company_name(current_user)) %>
+      <% if current_user and current_user.has_any_role?(:call_centre, :call_centre_agent) %>
+          <%= t("home.show.view.call_centre_header", :name => screen_name_with_company_name(current_user)) %>
       <% else %>
-        <%= t("agent_home.show.view.header") %>
+          <%= t("agent_home.show.view.header") %>
       <% end %>
     </param:content>
 
@@ -24,10 +24,10 @@
   <div class="pdd_5 no_pdd_b">
 
     <div>
-      <% if current_user and current_user.has_any_role?(:call_centre ,:call_centre_agent) %>
-        <p><%= blurb("blurb_call_centre_home") %></p>
+      <% if current_user and current_user.has_any_role?(:call_centre, :call_centre_agent) %>
+          <p><%= blurb("blurb_call_centre_home") %></p>
       <% else %>
-        <p><%= blurb("blurb_agent_home") %></p>
+          <p><%= blurb("blurb_agent_home") %></p>
       <% end %>
     </div>
 
@@ -45,7 +45,11 @@
         </param:header>
         <param:content>
           <ul class="solid_list">
-            <%= render :partial => 'news', :collection => @news, :as => :news %>
+            <% if @news.any? %>
+                <%= render :partial => 'news', :collection => @news, :as => :news %>
+            <% else %>
+                <%= render :partial => 'shared/blank_data_li' %>
+            <% end %>
           </ul>
         </param:content>
       </frm>
@@ -57,7 +61,11 @@
         </param:header>
         <param:content>
           <ul class="solid_list">
-            <%= render :partial => 'lead', :collection => @new_leads, :as => :lead %>
+            <% if @new_leads.any? %>
+                <%= render :partial => 'lead', :collection => @new_leads, :as => :lead %>
+            <% else %>
+                <%= render :partial => 'shared/blank_data_li' %>
+            <% end %>         
           </ul>
         </param:content>
       </frm>
@@ -69,7 +77,11 @@
         </param:header>
         <param:content>
           <ul class="solid_list">
-            <%= render :partial => 'lead', :collection => @sold_leads, :as => :lead %>
+            <% if @sold_leads.any? %>
+                <%= render :partial => 'lead', :collection => @sold_leads, :as => :lead %>
+            <% else %>
+                <%= render :partial => 'shared/blank_data_li' %>
+            <% end %>
           </ul>
         </param:content>
       </frm>
@@ -83,7 +95,7 @@
   <script type="text/javascript">
 
       jQuery(document).ready(function() {
-          jQuery(".solid_list li").bind("click", function() {
+          jQuery(".solid_list li:not(.no_data)").bind("click", function() {
               window.location = $(this).find('a.read_more').attr("href");
           });
       });

@@ -57,7 +57,11 @@
         </param:header>
         <param:content>
           <ul class="solid_list">
-            <%= render :partial => 'news', :collection => @news, :as => :news %>
+            <% if @news.any? %>
+                <%= render :partial => 'news', :collection => @news, :as => :news %>
+            <% else %>
+                <%= render :partial => 'shared/blank_data_li' %>
+            <% end %>
           </ul>
         </param:content>
       </frm>
@@ -69,7 +73,11 @@
         </param:header>
         <param:content>
           <ul class="solid_list">
-            <%= render :partial => 'lead', :collection => @best_sellers, :as => :lead %>
+            <% if @best_sellers.any? %>
+                <%= render :partial => 'lead', :collection => @best_sellers, :as => :lead %>
+            <% else %>
+                <%= render :partial => 'shared/blank_data_li' %>
+            <% end %>
           </ul>
         </param:content>
       </frm>
@@ -81,7 +89,11 @@
         </param:header>
         <param:content>
           <ul class="solid_list">
-            <%= render :partial => 'lead', :collection => @latest_leads, :as => :lead %>
+            <% if @latest_leads.any? %>
+                <%= render :partial => 'lead', :collection => @latest_leads, :as => :lead %>
+            <% else %>
+                <%= render :partial => 'shared/blank_data_li' %>
+            <% end %>
           </ul>
         </param:content>
       </frm>
@@ -95,7 +107,7 @@
   <script type="text/javascript">
 
       jQuery(document).ready(function() {
-          jQuery(".solid_list li").bind("click", function() {
+          jQuery(".solid_list li:not(.no_data)").bind("click", function() {
               window.location = $(this).find('a.read_more').attr("href");
           });
       });

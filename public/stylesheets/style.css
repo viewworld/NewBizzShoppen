@@ -1049,6 +1049,11 @@ input:focus, textarea:focus, select:focus
 /* --- solid list ---
 --------------------------------------------------------------------------------- */
 
+.solid_list
+{
+    height: 402px;
+}
+
 .solid_list .lead_content,
 .solid_list .news_content
 {
@@ -1122,6 +1127,16 @@ input:focus, textarea:focus, select:focus
 .solid_list .news_content
 {
     padding-right: 20px;
+}
+
+.solid_list li.no_data
+{
+    background: none;
+    filter: none;
+    border: none;
+    text-align: center;
+    padding: 190px 0;
+    cursor: default;
 }
 
 

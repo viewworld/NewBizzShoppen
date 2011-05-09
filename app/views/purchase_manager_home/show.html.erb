@@ -61,7 +61,11 @@
         </param:header>
         <param:content>
           <ul class="solid_list">
-            <%= render :partial => 'news', :collection => @news, :as => :news %>
+            <% if @news.any? %>
+                <%= render :partial => 'news', :collection => @news, :as => :news %>
+            <% else %>
+                <%= render :partial => 'shared/blank_data_li' %>
+            <% end %>
           </ul>
         </param:content>
 
@@ -74,7 +78,11 @@
         </param:header>
         <param:content>
           <ul class="solid_list">
-            <%= render :partial => 'lead', :collection => @best_sellers, :as => :lead %>
+            <% if @news.any? %>
+                <%= render :partial => 'lead', :collection => @best_sellers, :as => :lead %>
+            <% else %>
+                <%= render :partial => 'shared/blank_data_li' %>
+            <% end %>
           </ul>
         </param:content>
       </frm>
@@ -86,7 +94,11 @@
         </param:header>
         <param:content>
           <ul class="solid_list">
-            <%= render :partial => 'lead', :collection => @latest_leads, :as => :lead %>
+            <% if @news.any? %>
+                <%= render :partial => 'lead', :collection => @latest_leads, :as => :lead %>
+            <% else %>
+                <%= render :partial => 'shared/blank_data_li' %>
+            <% end %>
           </ul>
         </param:content>
       </frm>
