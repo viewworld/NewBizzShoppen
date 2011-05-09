@@ -109,7 +109,7 @@
         </param:header>
         <param:content>
           <ul class="solid_list">
-            <% if @my_leads.any? %>
+            <% if @latest_leads.any? %>
                 <%= render :partial => 'lead', :collection => @latest_leads, :as => :lead %>
             <% else %>
                 <%= render :partial => 'shared/blank_data_li' %>

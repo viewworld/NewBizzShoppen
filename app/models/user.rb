@@ -412,4 +412,5 @@ class User < ActiveRecord::Base
   def can_start_new_lead_thread?
     !agent?
   end
+
 end
