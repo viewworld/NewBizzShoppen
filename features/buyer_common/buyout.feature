@@ -103,7 +103,7 @@ Feature: Buy out
     Given there are no leads
     And Category named "Computers" already exists
     And category "Computers" has attributes "buyout_enabled:1"
-    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer with attributes "vat_number:123,not_charge_vat:1"
     And lead Printers exists within category Computers
     And lead "Printers" has attributes "sale_limit:10,price:123"
     And I am on the home page
@@ -118,7 +118,7 @@ Feature: Buy out
     And I follow translated "layout.main_menu.customer.invoices"
     And I follow translated "customer.invoices.index.view.show_invoice"
     Then I should see "10" within ".invoice_data tr:nth-child(1) td:nth-child(3)"
-    And I should see "1,230.00" within ".ta_r:nth-child(3)"
+    And I should see "1,230.00" within "td:nth-child(6) strong"
     And I should see "1230.0" within "#invoices_table td:nth-child(4)"
 
   @added @m6 @_done
