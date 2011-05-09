@@ -1,7 +1,7 @@
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs_vertical">
     <ol>
-      <%= form.input :name, :input_html => {:disabled => (!@lead_template.new_record? and current_user != @lead_template.creator)} %>
+      <%= form.input :name, :input_html => {:disabled => (!@lead_template.new_record? and !current_user.has_role?(:admin) and current_user != @lead_template.creator)} %>
       <% if current_user.has_role?(:admin) %>
           <%= form.input :category_id, :as => :hidden %>
           <%= form.input :is_global %>
@@ -13,7 +13,7 @@
           <% end %>
       <% end %>
       <%= form.input :is_mandatory %>
-      <%= form.input :is_active if current_user.has_role?(:call_centre) %>
+      <%= form.input :is_active if current_user.has_any_role?(:call_centre, :admin) %>
     </ol>
   </fieldset>
 </div>
@@ -26,7 +26,7 @@
 
 <hl/>
 <div class="pdd_20" style="padding-top:10px">
-  <%= bt_link_to :plus, t("shared.lead_templates.form.new_lead_template_field"), "javascript:void(0)", :onclick => "#{fields_for_leads_template_fields(form)}" if @lead_template.new_record? or current_user == @lead_template.creator %>
+  <%= bt_link_to :plus, t("shared.lead_templates.form.new_lead_template_field"), "javascript:void(0)", :onclick => "#{fields_for_leads_template_fields(form)}" if @lead_template.new_record? or current_user.has_role?(:admin) or current_user == @lead_template.creator %>
 </div>
 
 

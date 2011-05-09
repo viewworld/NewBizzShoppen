@@ -34,8 +34,7 @@ class LeadTemplate < ActiveRecord::Base
 
   def mass_assignment_authorizer
     if self.current_user and (self.current_user.has_role?(:admin) or self.current_user == self.creator)
-      attr_array = self.current_user == self.creator ? BLACK_LISTED_ATTRIBUTES : [:is_mandatory]
-      self.class.protected_attributes.reject! { |a| attr_array.include?(a.to_sym)  }
+      self.class.protected_attributes.reject! { |a| BLACK_LISTED_ATTRIBUTES.include?(a.to_sym)  }
       self.class.protected_attributes
     else
       super

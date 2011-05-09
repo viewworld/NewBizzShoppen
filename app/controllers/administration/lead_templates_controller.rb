@@ -21,9 +21,6 @@ class Administration::LeadTemplatesController < Administration::AdministrationCo
   def update
     @lead_template = LeadTemplate.find(params[:id])
     @lead_template.current_user = current_user
-    if current_user != @lead_template.creator
-      params[:lead_template].delete(:lead_template_fields_attributes)
-    end
 
     update! do |success, failure|
       success.html { redirect_to edit_administration_category_path(@lead_template.category) }

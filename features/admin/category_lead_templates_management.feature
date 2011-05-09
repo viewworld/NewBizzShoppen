@@ -155,8 +155,23 @@ Scenario: I can see a category name for which lead temlpate is being created
   And I follow translated "administration.categories.edit.view.new_template"
   Then I should see "New lead template in category Vehicles"
 
-@tgn @requested @m10
+@tgn @requested @m10 @tgn @selenium @_tested
 Scenario: I can edit any kind of template even created by other users
+  Given template named "Computer details" for category "Computers" is created by user "call_centrebiz@person.com" with role "call_centre"
+  Then I go to administration categories
+  And I follow translated "administration.categories.index.view.edit_link"
+  And I click hidden link by url regex "/administration\/lead_templates\/\d+\/edit/"
+  And I should see translated "shared.lead_templates.form.new_lead_template_field"
+  And I follow translated "shared.lead_templates.form.new_lead_template_field"
+  And I fill in "lead_template_lead_template_fields_attributes_0_name" with "example attr 1"
+  And I follow translated "shared.lead_templates.form.new_lead_template_field"
+  And I fill in "lead_template_lead_template_fields_attributes_1_name" with "example attr 2"
+  And I check "lead_template_lead_template_fields_attributes_1_is_hidden"
+  And I uncheck "lead_template_is_active"
+  Then I press translated "administration.lead_templates.edit.view.button_update"
+  And I click hidden link by url regex "/administration\/lead_templates\/\d+\/edit/"
+  Then the "lead_template_lead_template_fields_attributes_0_name" field should contain "example attr 1"
+  Then the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 2"
 
 @tgn @requested @m10
 Scenario: I can change the lead's category even if the templates are filled out (templates should be preserved but hidden)
