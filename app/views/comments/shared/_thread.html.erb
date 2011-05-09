@@ -1,5 +1,7 @@
 <div id="thread_<%= thread.id %>">
   <% Comment.each_with_level(thread.self_and_descendants) do |comment, level| %>
+      <% if comment.can_be_shown_for?(current_user) %>
       <%= render :partial => 'comments/shared/comment', :locals => {:comment => comment, :thread => thread, :level => level} %>
+      <% end %>
   <% end %>
 </div>

@@ -2596,6 +2596,9 @@ en:
           destroy_message: "Are you sure to delete this comment?"
           start_new_thread: "Start new thread"
           reply_to_comment: "Reply to comment: %{title}"
+          comment_blocked: "Comment blocked"
+          block: "Block"
+          unblock: "Unblock"
       new:
         view:
           header: "Post new comment for %{header}"

@@ -113,11 +113,54 @@ Scenario: I can reply to existing comment thread
   Then I should see "Reply to First Lead1 comment"
   And I should see "Body reply to First Lead1 comment"
 
-@requested @m10
+@requested @m10 @tgn @selenium @m10 @tested
 Scenario: I can block a comment
+  Given a lead Lead#6 exists within category Computers and is bought by user customer2@nbs.com with role customer
+  And comment thread for lead "Lead#6" was posted by users "customer2@nbs.com, admin1@nbs.com, customer2@nbs.com"
+  Given I follow translated "layout.main_menu.admin.leads"
+  And I fill in "search_with_keyword" with "Lead#6"
+  And I press translated "administration.leads.index.view.search_button"
+  And I follow translated "comments.shared.show_comments"
+  When I follow translated "comments.threads.show.view.block"
+  Then I should see translated "comments.threads.show.view.comment_blocked"
+  And I should not see "Comment title #1"
+  And I should not see "Comment title #2"
+  And I should not see "Comment title #3"
+  When I follow translated "comments.threads.show.view.unblock"
+  Then I should see "Comment title #1"
+  And I should see "Comment title #2"
+  And I should see "Comment title #3"
 
-@requested @m10
+@requested @m10 @selenium @_tested
 Scenario:  When comment is blocked I should not see it's children
+  Given someone is signed up and confirmed as user with email customer99@nbs.com and password secret and role customer
+  And a lead Lead#6 exists within category Computers and is bought by user customer99@nbs.com with role customer
+  And comment thread for lead "Lead#6" was posted by users "customer99@nbs.com, admin1@nbs.com, customer99@nbs.com"
+  Given I am not sign in
+  Then I go to the homepage
+  And I sign in as customer99@nbs.com with password secret
+  And I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  And I follow translated "lead_purchases.listing.show_comments"
+  Then I should see "Comment title #1"
+  And I should see "Comment title #2"
+  And I should see "Comment title #3"
+  Given I am not sign in
+  Then I go to the homepage
+  And I sign in as admin1@nbs.com with password supersecret
+  Given I follow translated "layout.main_menu.admin.leads"
+  And I fill in "search_with_keyword" with "Lead#6"
+  And I press translated "administration.leads.index.view.search_button"
+  And I follow translated "comments.shared.show_comments"
+  When I follow translated "comments.threads.show.view.block"
+  Then I should see translated "comments.threads.show.view.comment_blocked"
+  Given I am not sign in
+  Then I go to the homepage
+  And I sign in as customer99@nbs.com with password secret
+  And I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  And I follow translated "lead_purchases.listing.show_comments"
+  And I should not see "Comment title #1"
+  And I should not see "Comment title #2"
+  And I should not see "Comment title #3"
 
 @requested @m10
 Scenario: I can block particular agent from further dialog with given buyer
@@ -127,4 +170,4 @@ Scenario: I can block particular agent from further dialog with given buyer
 Scenario: I can filter by users - any user involved in the conversation
 
 @requested @m10
-Scenario: I can see Hide/Show links beside the destroy link to collapse/expand certain comments
+Scenario: I can see Hide/Show links beside the destroy link to collapse/expand certain conversations (threads)

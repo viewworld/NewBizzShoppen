@@ -26,6 +26,10 @@
       }
   }
 
+  function block_comment(comment_id, is_blocked){
+      $.post('/comments/threads/'+comment_id+'.js', '_method=PUT&comment[is_blocked]=' + is_blocked);
+  }
+
   function validate_form(form_id){
       if(jQuery.trim($(form_id + " input[id='comment_title']").val()) == "" || jQuery.trim($(form_id + " textarea[id='comment_body']").val()) == "")
       {

@@ -12,6 +12,8 @@ class Comment < ActiveRecord::Base
   belongs_to :user
   belongs_to :commentable, :polymorphic => true
 
+  before_save :handle_blocking
+
   scope :descend_by_created_at, order("created_at DESC")
   scope :ascend_by_created_at, order("created_at ASC")
   scope :descend_by_header, joins("INNER JOIN leads ON leads.id = comments.commentable_id").order("leads.header DESC")
@@ -80,10 +82,21 @@ class Comment < ActiveRecord::Base
   end
   
   def comment_to_insert_after
-    siblings.order("created_at").last || parent
+    siblings.where("is_blocked = ?", false).order("created_at").last || parent
   end
 
   def last_thread_created_at
     read_attribute(:last_thread_created_at).blank? ? created_at : read_attribute(:last_thread_created_at)
+  end
+
+  def handle_blocking
+    if is_blocked_changed?
+      children.each{ |child| child.update_attribute(:is_blocked, is_blocked?) }
+    end
+  end
+
+  def can_be_shown_for?(_user)
+    (parent.nil? or (parent and !parent.is_blocked)) and
+    (_user.has_role?(:admin) or (_user.has_role?(:call_centre) and user.subaccounts.include?(user))) or !is_blocked?
   end
 end
