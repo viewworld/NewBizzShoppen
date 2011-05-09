@@ -172,6 +172,3 @@ Scenario: I can edit any kind of template even created by other users
   And I click hidden link by url regex "/administration\/lead_templates\/\d+\/edit/"
   Then the "lead_template_lead_template_fields_attributes_0_name" field should contain "example attr 1"
   Then the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 2"
-
-@tgn @requested @m10
-Scenario: I can change the lead's category even if the templates are filled out (templates should be preserved but hidden)
