@@ -635,6 +635,9 @@ en:
           delete_confirmation_message: "Are you sure?"
           leads_created: "Leads created"
           unpaid_leads: "Unpaid leads"
+      new:
+        view:
+          new_account: "New %{role} account"
       edit:
         view:
           title: "Editing user: %{name}"

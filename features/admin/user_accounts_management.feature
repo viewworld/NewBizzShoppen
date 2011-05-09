@@ -556,17 +556,25 @@ Scenario: When I change the certification of call centre then its agents certifi
   And I press translated "password.edit.view.button_update_user"
   And user "ccagent01@person.com" with role "call_centre_agent" has certification level 3
 
-@m10 @requested
+@m10 @requested @_done @_tested
 Scenario: I can see a role name of newly created user like "New buyer account”
+  When I go to administration users
+  Given I select "Buyer" from "role"
+  And I press translated "administration.users.index.view.new_user"
+  Then I should see "New Buyer account"
 
-@m10 @requested
+@m10 @requested @_done @_tested
 Scenario: I can see password fields above unique categories
+  When I go to administration users
+  Given I select "Agent" from "role"
+  And I press translated "administration.users.index.view.new_user"
+  Then I should see "Password" before "Available unique categories"
+
+@m10 @requested @tested_elsewhere @_done
+Scenario: I can see "Refresh statistics" button on users listing instead of settings page
 
 @m10 @requested
 Scenario: I can see "Set interests" button next to "Change password"
-
-@m10 @requested
-Scenario: I can see "Refresh statistics" button on users listing instead of settings page
 
 @m10 @requested
 Scenario: I should be redirected to edit user page after saving interests
