@@ -76,7 +76,7 @@ class Contact < AbstractLead
   end
 
   def current_call_result
-    call_results.order("created_at").last
+    call_results.reorder("call_results.created_at DESC").first
   end
 
   def current_call_result_name
