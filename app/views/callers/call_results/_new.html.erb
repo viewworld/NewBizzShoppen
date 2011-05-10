@@ -8,10 +8,16 @@
         <%= render :partial => '/callers/call_results/form', :locals => {:form => form, :contact => @contact, :call_result => @call_result, :reload_path => reload_path, :agent_work_screen => agent_work_screen } %>
       </param:content>
       <param:actions>
-        <ibt c="fltri" icon="save">
-          <%= form.submit t("call_results.new.save_button"), :name => "commit_create" %>
-        </ibt>
+        <%= bt_link_to :save, t("call_results.new.save_button"), "javascript:void(0)", :id => "commit_create_result", :class => "fltr" %>
         <%= bt_link_to(nil, t("call_results.edit.cancel_button"), back_path, :class => "bt_grey fltr") %>
       </param:actions>
     </frm>
 <% end %>
+
+<script type="text/javascript">
+ <% if agent_work_screen %>
+    $("#commit_create_result").click(function(){$(this).parents("form").callRemote();});
+ <% else %>
+    $("#commit_create_result").click(function(){$(this).parents("form").submit();});
+ <% end %>
+</script>
