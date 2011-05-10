@@ -99,4 +99,32 @@ class Comment < ActiveRecord::Base
     (parent.nil? or (parent and !parent.is_blocked)) and
     (_user.has_role?(:admin) or (_user.has_role?(:call_centre) and _user.subaccounts.include?(user))) or !is_blocked?
   end
+
+  def thread_started_by_buyer?
+    root.user.buyer?
+  end
+
+  def can_user_be_blocked?
+    user.agent? and !user.call_centre? and thread_started_by_buyer?
+  end
+
+  def blocked_conversation
+    user.with_role.blocked_conversations.where("lead_id = ? and buyer_id = ?", commentable_id, root.user_id).first
+  end
+
+  def user_blocked_from_conversation?
+    !blocked_conversation.nil?
+  end
+
+  def block_user_from_conversation!
+    if can_user_be_blocked? and !user_blocked_from_conversation?
+      user.with_role.blocked_conversations.create(:lead_id => commentable_id, :buyer_id => root.user_id)
+    end
+  end
+
+  def unblock_user_from_conversation!
+    if user_blocked_from_conversation?
+      blocked_conversation.destroy
+    end
+  end
 end

@@ -159,6 +159,7 @@ Nbs::Application.routes.draw do
       resources :threads
     end
     resources :replies
+    resources :blocked_conversations, :only => [:create, :destroy]
   end  
 
   match 'buyer_home' => 'buyer_home#show', :as => "buyer_home"

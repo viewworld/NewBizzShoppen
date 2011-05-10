@@ -26,6 +26,16 @@
       }
   }
 
+  function block_user(comment_id, is_blocked){
+      if(is_blocked == 0){
+          $.post('/comments/blocked_conversations.js', 'id='+comment_id);
+      }
+      else
+      {
+          $.post('/comments/blocked_conversations/'+comment_id+'.js', '_method=DELETE');
+      }
+  }
+
   function block_comment(comment_id, is_blocked){
       $.post('/comments/threads/'+comment_id+'.js', '_method=PUT&comment[is_blocked]=' + is_blocked);
   }

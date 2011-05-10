@@ -45,6 +45,10 @@ module User::CommonAgent
       ![User::NOT_CERTIFIED, User::NOT_CERTIFIED_LOCKED].include?(read_attribute(:certification_level))
     end
 
+    def can_reply_to_comment?(comment)
+      blocked_conversations.where("lead_id = ? and buyer_id = ?", comment.commentable_id, comment.root.user_id).first.nil?
+    end
+
     alias_method :to_s, :name
   end
 end

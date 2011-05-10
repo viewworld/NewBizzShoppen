@@ -3,7 +3,9 @@
   <p class="comment_info">
     <%= current_user.has_role?(:admin) ? link_to(comment.user.screen_name, edit_administration_user_path(comment.user)) : comment.user.screen_name %> at <%= format_date(comment.created_at, true) %>
     <% unless comment.is_blocked? %>
-    (<%= link_to_function t("comments.threads.show.view.reply"), "reply_to(#{thread.id},#{comment.id},#{comment.commentable_id},'#{comment.title}')" %>)
+    <% if current_user.can_reply_to_comment?(comment) %>
+        (<%= link_to_function t("comments.threads.show.view.reply"), "reply_to(#{thread.id},#{comment.id},#{comment.commentable_id},'#{comment.title}')" %>)
+    <% end %>
     <% if current_user.has_role?(:admin) or (current_user.has_role?(:call_centre) and comment.user.parent.present? and comment.user.parent.with_role == current_user) %>
         <%= link_to_function t("comments.threads.show.view.edit"), "edit_comment(#{comment.id})" %>
     <% end %>
@@ -12,6 +14,11 @@
         <%= link_to_function t("comments.threads.show.view.destroy"), "destroy_comment(#{comment.id})" %>
     <% end %>
     <% if current_user.has_role?(:admin) or (current_user.has_role?(:call_centre) and current_user.subaccounts.include?(comment.user)) %>
+        <% if comment.can_user_be_blocked? %>
+            <span id="block_user_link_<%= comment.id %>">
+              <%= link_to_function comment.user_blocked_from_conversation? ? t("comments.threads.show.view.unblock_user") : t("comments.threads.show.view.block_user"), "block_user(#{comment.id}, #{comment.user_blocked_from_conversation? ? 1 : 0})" %>
+            </span>
+        <% end %>
         <%= link_to_function comment.is_blocked? ? t("comments.threads.show.view.unblock") : t("comments.threads.show.view.block"), "block_comment(#{comment.id}, #{comment.is_blocked? ? 0 : 1})" %>
     <% end %>
   </p>

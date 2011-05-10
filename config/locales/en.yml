@@ -2597,8 +2597,10 @@ en:
           start_new_thread: "Start new thread"
           reply_to_comment: "Reply to comment: %{title}"
           comment_blocked: "Comment blocked"
-          block: "Block"
-          unblock: "Unblock"
+          block: "Block comment"
+          unblock: "Unblock comment"
+          block_user: "Block user"
+          unblock_user: "Unblock user"
       new:
         view:
           header: "Post new comment for %{header}"

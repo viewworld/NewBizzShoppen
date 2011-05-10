@@ -162,8 +162,22 @@ Scenario:  When comment is blocked I should not see it's children
   And I should not see "Comment title #2"
   And I should not see "Comment title #3"
 
-@requested @m10
+@requested @m10 @selenium @tgn @_tested
 Scenario: I can block particular agent from further dialog with given buyer
+  Given someone is signed up and confirmed as user with email agent99@nbs.com and password secret and role agent
+  And lead Lead#6 is created by user agent99@nbs.com with role agent
+  And a lead Lead#6 exists within category Computers and is bought by user customer2@nbs.com with role customer
+  And comment thread for lead "Lead#6" was posted by users "customer2@nbs.com, agent99@nbs.com"
+  Given I follow translated "layout.main_menu.admin.leads"
+  And I fill in "search_with_keyword" with "Lead#6"
+  And I press translated "administration.leads.index.view.search_button"
+  And I follow translated "comments.shared.show_comments"
+  When I follow translated "comments.threads.show.view.block_user"
+  Then I am not sign in
+  Given I sign in as agent99@nbs.com with password secret
+  Then I follow translated "layout.main_menu.agent.leads"
+  And I follow translated "comments.shared.show_comments"
+  Then I should not see translated "comments.threads.show.view.reply"
 
 # filter on screen name, email address, company name
 @requested @m10

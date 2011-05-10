@@ -46,6 +46,7 @@ class User < ActiveRecord::Base
   has_many :results,
            :as => :creator,
            :dependent => :destroy
+  has_many :blocked_conversations, :foreign_key => "agent_id"
   alias_method :parent, :user
 
   scope :with_customers, where("roles_mask & #{2**User.valid_roles.index(:customer)} > 0 ")
@@ -369,6 +370,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def call_centre?
+    has_role?(:call_centre)
+  end
+
   def agent?
     has_any_role?([:agent,:call_centre,:call_centre_agent])
   end
@@ -411,5 +416,9 @@ class User < ActiveRecord::Base
 
   def can_start_new_lead_thread?
     !agent?
+  end
+
+  def can_reply_to_comment?(comment)
+    true
   end
 end

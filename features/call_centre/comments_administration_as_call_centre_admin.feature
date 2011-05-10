@@ -111,8 +111,24 @@ Scenario: I can block comments from my agents
   And I should see "Comment title #2"
   And I should see "Comment title #3"
 
-@requested @m10
+@requested @m10 @selenium @tgn @_tested
 Scenario: I can block particular agent of mine from further dialog with given buyer on given lead
+  Given someone is signed up and confirmed as user with email cca3.call_centre1@nbs.com and password secret and role call_centre_agent
+  And an user with role call_centre_agent and email cca3.call_centre1@nbs.com belongs to call centre call_centre1@nbs.com
+  And lead Lead#6 is created by user cca3.call_centre1@nbs.com with role call_centre_agent
+  And a lead Lead#6 exists within category Computers and is bought by user customer2@nbs.com with role customer
+  And comment thread for lead "Lead#6" was posted by users "customer2@nbs.com, cca3.call_centre1@nbs.com"
+  Given I follow translated "layout.main_menu.call_centre.leads"
+  And I fill in "search_with_keyword" with "Lead#6"
+  And I press translated "call_centre.leads.index.view.search_button"
+  And I follow translated "comments.shared.show_comments"
+  When I follow translated "comments.threads.show.view.block_user"
+  Then I am not sign in
+  And I go to the homepage
+  Given I sign in as cca3.call_centre1@nbs.com with password secret
+  Then I follow translated "layout.main_menu.call_centre_agent.leads"
+  And I follow translated "comments.shared.show_comments"
+  Then I should not see translated "comments.threads.show.view.reply"
 
 @requested @m10
 Scenario: When I block an agent from further dialog on a lead then communication should be possible on other leads
