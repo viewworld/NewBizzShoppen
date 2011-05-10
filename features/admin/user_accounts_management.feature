@@ -189,7 +189,7 @@ Scenario: Subaccounts can login after changing parent to regular buyer
   Then I should see "AnotherCategory"
   And I should see "CategoryBuyerCategory"
 
-@m6 @added @selenium @_done @_tested  @requested
+@m6 @added @selenium @_done @_tested @requested
 Scenario: User can login after changing his account to category buyer
   When I follow translated "layout.main_menu.admin.users"
   And Category CategoryBuyerCategory is created
@@ -198,8 +198,14 @@ Scenario: User can login after changing his account to category buyer
   And I fill in "search_with_keyword" with "kastomer"
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/users\/\d+\/edit/"
-  And I select "CategoryBuyerCategory" from "all_categories_for_interests"
-  And I follow "move_right" within "#category_interests"
+  And I select "AnotherCategory" from "user_customer_category_ids_"
+  And I follow "move_left" within "#category_interests"
+  And I select "Electronics" from "user_customer_category_ids_"
+  And I follow "move_left" within "#category_interests"
+  And I select "Leisure" from "user_customer_category_ids_"
+  And I follow "move_left" within "#category_interests"
+  And I select "Business" from "user_customer_category_ids_"
+  And I follow "move_left" within "#category_interests"
   Then I press translated "administration.categories.edit.view.button_update"
   And I fill in "search_with_keyword" with "kastomer"
   And I press translated "administration.users.index.view.search_button"
@@ -220,8 +226,14 @@ Scenario: Subaccounts can login after changing his account to category buyer
   And I fill in "search_with_keyword" with "kastomer"
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/users\/\d+\/edit/"
-  And I select "CategoryBuyerCategory" from "all_categories_for_interests"
-  And I follow "move_right" within "#category_interests"
+  And I select "AnotherCategory" from "user_customer_category_ids_"
+  And I follow "move_left" within "#category_interests"
+  And I select "Electronics" from "user_customer_category_ids_"
+  And I follow "move_left" within "#category_interests"
+  And I select "Leisure" from "user_customer_category_ids_"
+  And I follow "move_left" within "#category_interests"
+  And I select "Business" from "user_customer_category_ids_"
+  And I follow "move_left" within "#category_interests"
   Then I press translated "administration.categories.edit.view.button_update"
   And I fill in "search_with_keyword" with "kastomer"
   And I press translated "administration.users.index.view.search_button"
@@ -337,6 +349,20 @@ Scenario: I can change buyer to category buyer only if he has interests categori
   And Category CategoryBuyerCategory is created
   And Category AnotherCategory is created
   And I am signed up and confirmed as user with email kastomer@nbs.com and password secret and role customer
+  And I fill in "search_with_keyword" with "kastomer"
+  And I press translated "administration.users.index.view.search_button"
+  And I click hidden link by url regex "/users\/\d+\/edit/"
+  And I select "CategoryBuyerCategory" from "user_customer_category_ids_"
+  And I follow "move_left" within "#category_interests"
+  And I select "AnotherCategory" from "user_customer_category_ids_"
+  And I follow "move_left" within "#category_interests"
+  And I select "Electronics" from "user_customer_category_ids_"
+  And I follow "move_left" within "#category_interests"
+  And I select "Leisure" from "user_customer_category_ids_"
+  And I follow "move_left" within "#category_interests"
+  And I select "Business" from "user_customer_category_ids_"
+  And I follow "move_left" within "#category_interests"
+  Then I press translated "administration.categories.edit.view.button_update"
   And I fill in "search_with_keyword" with "kastomer"
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/users\/\d+\/edit/"

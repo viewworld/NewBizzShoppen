@@ -2,14 +2,14 @@
 Feature: Lead details for lead user
 
 Background: Sign in user and set English locale
-  Given I am on the homepage
+  Given lead Printers ultimate deal exists within category Computers
+  And lead Printers ultimate deal exists with attributes "creator_name:Jacek Smietana,price:989.39,purchase_value:7843.99,description:Public desc about printers deal,exposures_count:887,clicks_count:17"
+  And I am on the homepage
   And I make sure current locale is "en"
-  Given I am signed up and confirmed as user with email lead_user2@person.com and password supersecret and role lead_user with attributes "first_name:Jacek,last_name:Smietana"
+  And I am signed up and confirmed as user with email lead_user2@person.com and password supersecret and role lead_user with attributes "first_name:Jacek,last_name:Smietana"
   And an user with role lead_user and email lead_user2@person.com exists as subaccount for customer customer@person.com
   Then I sign in as lead_user2@person.com with password supersecret
-  And lead Printers ultimate deal exists within category Computers
-  And lead Printers ultimate deal exists with attributes "creator_name:Jacek Smietana,price:989.39,purchase_value:7843.99,description:Public desc about printers deal,exposures_count:887,clicks_count:17"
-  Given I go to browse leads
+  When I go to browse leads
   And I follow "Computers"
 
 @deprecated
