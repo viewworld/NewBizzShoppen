@@ -2575,8 +2575,9 @@ en:
         view:
           search_label: "Search"
           search:
-            with_keyword: "Keyword"
+            with_keyword: "Lead keyword"
             category_label: "Category"
+            with_user_keyword: "User keyword"
           search_button: "Search"
           lead_header: "Lead header"
           started_by: "Started by"

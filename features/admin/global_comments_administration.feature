@@ -180,8 +180,28 @@ Scenario: I can block particular agent from further dialog with given buyer
   Then I should not see translated "comments.threads.show.view.reply"
 
 # filter on screen name, email address, company name
-@requested @m10
+@requested @m10 @tgn @_tested
 Scenario: I can filter by users - any user involved in the conversation
+  Given there are no leads
+  And I have user with email agent99@nbs.com and role agent
+  And I have user with email agent100@nbs.com and role agent
+  And a lead Lead#6 exists within category Computers and is bought by user customer11@nbs.com with role customer
+  And comment thread for lead "Lead#6" was posted by users "customer11@nbs.com, agent100@nbs.com"
+  And a lead Lead#7 exists within category Computers and is bought by user customer2@nbs.com with role customer
+  And comment thread for lead "Lead#7" was posted by users "customer2@nbs.com, agent99@nbs.com"
+  And a lead Lead#8 exists within category Computers and is bought by user customer3@nbs.com with role customer
+  And comment thread for lead "Lead#8" was posted by users "customer3@nbs.com, agent100@nbs.com"
+  Given I follow translated "layout.main_menu.shared.comments"
+  When I fill in "search_with_user" with "agent100@nbs.com"
+  And I press translated "comments.threads.index.view.search_button"
+  Then I should see "Lead#6"
+  And I should see "Lead#8"
+  And I should not see "Lead#7"
+  When I fill in "search_with_keyword" with "lead#8"
+  And I press translated "comments.threads.index.view.search_button"
+  Then I should see "Lead#8"
+  And I should not see "Lead#7"
+  And I should not see "Lead#6"
 
 @requested @m10
 Scenario: I can see Hide/Show links beside the destroy link to collapse/expand certain conversations (threads)
