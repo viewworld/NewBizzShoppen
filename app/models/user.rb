@@ -47,6 +47,8 @@ class User < ActiveRecord::Base
            :as => :creator,
            :dependent => :destroy
   has_many :blocked_conversations, :foreign_key => "agent_id"
+  has_many :comment_readers
+  has_many :read_comments, :through => :comment_readers, :source => :comment
   alias_method :parent, :user
 
   scope :with_customers, where("roles_mask & #{2**User.valid_roles.index(:customer)} > 0 ")
