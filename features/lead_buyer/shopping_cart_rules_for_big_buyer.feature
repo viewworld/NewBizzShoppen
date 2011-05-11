@@ -2,15 +2,15 @@
 Feature: Shopping cart rules for big buyer
 
 Background:
-  Given I am on the homepage
+  Given lead Printers ultimate deal exists within category Computers
+  And lead Printers ultimate deal has price 200
+  And currency "DKK" exists with attributes "exchange_rate: 2.5"
+  And lead "Printers ultimate deal" has currency "DKK"
+  And I am on the homepage
   And I make sure current locale is "en"
   And I am signed up and confirmed as user with email customer@person.com and password supersecret and role customer
   And user "customer@person.com" has team buyers enabled
   And User customer@person.com with role customer is big buyer
-  And lead Printers ultimate deal exists within category Computers
-  And lead Printers ultimate deal has price 200
-  And currency "DKK" exists with attributes "exchange_rate: 2.5"
-  And lead "Printers ultimate deal" has currency "DKK"
   And I sign in as customer@person.com with password supersecret
 
 @_done

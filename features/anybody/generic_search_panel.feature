@@ -41,7 +41,7 @@ Scenario: I can filter leads based on zip code
   And I press translated "leads.index.search.search_button"
   Then I should see "Printers ultimate deal"
   And I should not see "Monitors LCD deal"
-  And I should see "1" rows in a table within "table.leads_table"
+  And I should see "1" rows in a table with headers within "table.leads_table"
 
 @tgn @_tested
 Scenario: I can filter leads based on country

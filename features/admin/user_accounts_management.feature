@@ -189,7 +189,7 @@ Scenario: Subaccounts can login after changing parent to regular buyer
   Then I should see "AnotherCategory"
   And I should see "CategoryBuyerCategory"
 
-@m6 @added @selenium @_done @_tested  @requested
+@m6 @added @selenium @_done @_tested @requested
 Scenario: User can login after changing his account to category buyer
   When I follow translated "layout.main_menu.admin.users"
   And Category CategoryBuyerCategory is created
@@ -198,8 +198,14 @@ Scenario: User can login after changing his account to category buyer
   And I fill in "search_with_keyword" with "kastomer"
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/users\/\d+\/edit/"
-  And I select "CategoryBuyerCategory" from "all_categories_for_interests"
-  And I follow "move_right" within "#category_interests"
+  And I select "AnotherCategory" from "user_customer_category_ids_"
+  And I follow "move_left" within "#category_interests"
+  And I select "Electronics" from "user_customer_category_ids_"
+  And I follow "move_left" within "#category_interests"
+  And I select "Leisure" from "user_customer_category_ids_"
+  And I follow "move_left" within "#category_interests"
+  And I select "Business" from "user_customer_category_ids_"
+  And I follow "move_left" within "#category_interests"
   Then I press translated "administration.categories.edit.view.button_update"
   And I fill in "search_with_keyword" with "kastomer"
   And I press translated "administration.users.index.view.search_button"
@@ -220,8 +226,14 @@ Scenario: Subaccounts can login after changing his account to category buyer
   And I fill in "search_with_keyword" with "kastomer"
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/users\/\d+\/edit/"
-  And I select "CategoryBuyerCategory" from "all_categories_for_interests"
-  And I follow "move_right" within "#category_interests"
+  And I select "AnotherCategory" from "user_customer_category_ids_"
+  And I follow "move_left" within "#category_interests"
+  And I select "Electronics" from "user_customer_category_ids_"
+  And I follow "move_left" within "#category_interests"
+  And I select "Leisure" from "user_customer_category_ids_"
+  And I follow "move_left" within "#category_interests"
+  And I select "Business" from "user_customer_category_ids_"
+  And I follow "move_left" within "#category_interests"
   Then I press translated "administration.categories.edit.view.button_update"
   And I fill in "search_with_keyword" with "kastomer"
   And I press translated "administration.users.index.view.search_button"
@@ -340,6 +352,20 @@ Scenario: I can change buyer to category buyer only if he has interests categori
   And I fill in "search_with_keyword" with "kastomer"
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/users\/\d+\/edit/"
+  And I select "CategoryBuyerCategory" from "user_customer_category_ids_"
+  And I follow "move_left" within "#category_interests"
+  And I select "AnotherCategory" from "user_customer_category_ids_"
+  And I follow "move_left" within "#category_interests"
+  And I select "Electronics" from "user_customer_category_ids_"
+  And I follow "move_left" within "#category_interests"
+  And I select "Leisure" from "user_customer_category_ids_"
+  And I follow "move_left" within "#category_interests"
+  And I select "Business" from "user_customer_category_ids_"
+  And I follow "move_left" within "#category_interests"
+  Then I press translated "administration.categories.edit.view.button_update"
+  And I fill in "search_with_keyword" with "kastomer"
+  And I press translated "administration.users.index.view.search_button"
+  And I click hidden link by url regex "/users\/\d+\/edit/"
   And I follow translated "administration.users.edit.view.change_to_category_buyer"
   Then I should see translated "activerecord.attributes.user.customer.base.must_have_interests"
   And I select "CategoryBuyerCategory" from "all_categories_for_interests"
@@ -393,7 +419,7 @@ Scenario: When editing call center agent I can navigate to list of leads created
   And I click hidden link by url regex "/users\/\d+\/edit/"
   And I follow translated "administration.users.edit.view.view_created_leads"
   Then I should see "SabKolSenterLead" within "#leads"
-  And I should see "2" rows in a table within "#leads"
+  And I should see "2" rows in a table with headers within "#leads"
 
 @requested @m8b @_done @_tested
 Scenario: I should have 'Don't verify email address' for every user I create
@@ -556,17 +582,25 @@ Scenario: When I change the certification of call centre then its agents certifi
   And I press translated "password.edit.view.button_update_user"
   And user "ccagent01@person.com" with role "call_centre_agent" has certification level 3
 
-@m10 @requested
+@m10 @requested @_done @_tested
 Scenario: I can see a role name of newly created user like "New buyer account”
+  When I go to administration users
+  Given I select "Buyer" from "role"
+  And I press translated "administration.users.index.view.new_user"
+  Then I should see "New Buyer account"
 
-@m10 @requested
+@m10 @requested @_done @_tested
 Scenario: I can see password fields above unique categories
+  When I go to administration users
+  Given I select "Agent" from "role"
+  And I press translated "administration.users.index.view.new_user"
+  Then I should see "Password" before "Available unique categories"
+
+@m10 @requested @tested_elsewhere @_done
+Scenario: I can see "Refresh statistics" button on users listing instead of settings page
 
 @m10 @requested
 Scenario: I can see "Set interests" button next to "Change password"
-
-@m10 @requested
-Scenario: I can see "Refresh statistics" button on users listing instead of settings page
 
 @m10 @requested
 Scenario: I should be redirected to edit user page after saving interests

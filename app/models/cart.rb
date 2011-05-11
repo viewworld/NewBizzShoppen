@@ -67,6 +67,10 @@ class Cart
   end
 
   def total
+    BigDecimal.new(lead_purchases.sum('price * quantity')) + total_vat_value
+  end
+
+  def total_netto
     BigDecimal.new(lead_purchases.sum('price * quantity'))
   end
 
@@ -112,6 +116,17 @@ class Cart
         :status => "Completed",
         :transaction_id => rand(99999999).to_s)
     payment_notification.buyer.cart.paid!
+  end
+
+  def total_vat_value
+    vat_value = BigDecimal.new("0.0")
+    unless @buyer.not_charge_vat?
+      vat_rate = @buyer.country_vat_rate
+      items.each do |item|
+        vat_value += (item.price * BigDecimal(vat_rate.to_s).div(100,4)).round(2)
+      end
+    end
+    vat_value
   end
 
 end

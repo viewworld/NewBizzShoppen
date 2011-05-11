@@ -212,7 +212,7 @@ Feature: Agent campaign - management
       Then I click xpath "//form[@id='new_call_result']//a"
       Then I fill in "call_result_note" with "this is real deal!"
       Then I fill in "call_result_result_values_attributes_0_value" with "2012-04-22 14:35"
-      Then I press translated "call_results.new.save_button"
+      Then I follow translated "call_results.new.save_button"
       Then I should see "Call back" within "#call_results"
       Then I should see "Johnny Mnemonic" within "#call_results"
       When I click hidden link by url regex "/callers\/contacts\/\d+\/call_results\/\d+\/edit/"
@@ -374,7 +374,7 @@ Feature: Agent campaign - management
     @tbr @__campaign_manage_result_types @_done @requested
     Scenario: I can select "datetime" type for custom field in result type
 
-    @tbr @__campaign_manage_result_types @_done @requested
+    @tbr @__campaign_manage_result_types @_done @requested @selenium
     Scenario: I custom fields values should validate correct format
       Given the custom call_log result with name "Multiple fields" is created by "translator_call_centre@nbs.com"
       And result "Multiple fields" has mandatory "text field/STRING" field
@@ -390,7 +390,7 @@ Feature: Agent campaign - management
          | date field     | 02-02-2010 |
          | note field     | large text |
          | datetime field | 2011-02-02 |
-      And I press translated "call_results.new.save_button"
+      And I follow translated "call_results.new.save_button"
       Then I should see translated "activerecord.errors.models.result_value.attributes.value.incorrect_number_format"
       And I should see translated "activerecord.errors.models.result_value.attributes.value.incorrect_date_format"
       And I should see translated "activerecord.errors.models.result_value.attributes.value.incorrect_datetime_format"
@@ -400,7 +400,7 @@ Feature: Agent campaign - management
          | date field     | 2011-02-02       |
          | note field     | large text       |
          | datetime field | 2011-02-02 21:00 |
-      And I press translated "call_results.new.save_button"
+      And I follow translated "call_results.new.save_button"
       Then I should see translated "contacts.edit.current_agent_label"
       And I should see "Multiple fields" within "#call_results"            
 
@@ -409,38 +409,38 @@ Feature: Agent campaign - management
     #
     # GENERIC RESULT TYPES
     #
-    @tbr @__campaign_manage_results @_done @_tested
+    @tbr @__campaign_manage_results @_done @_tested @selenium
     Scenario: I can set call back datetime for contact when result is "call back"
       When I am adding "Call back" result for contact "Mleko company"
       And I fill in "Call back date" field with future datetime
-      And I press translated "call_results.new.save_button"
+      And I follow translated "call_results.new.save_button"
       Then contact "Mleko company" should be pending
       And I should see translated "contacts.edit.current_agent_label"
 
 
-    @tbr @__campaign_manage_results @_done @_tested
+    @tbr @__campaign_manage_results @_done @_tested @selenium
     Scenario: contact is moved to bottom of call list when result is "not in"
       When I am adding "Not in" result for contact "Mleko company"
-      And I press translated "call_results.new.save_button"
+      And I follow translated "call_results.new.save_button"
       Then contact "Mleko company" should be at bottom of the list
       And I should see translated "contacts.edit.current_agent_label"
 
-    @tbr @__campaign_manage_results @_done @_tested
+    @tbr @__campaign_manage_results @_done @_tested @selenium
     Scenario: contact deassigned from agent when result is "Not interested"
       When I am adding "Not interested" result for contact "Mleko company"
-      And I press translated "call_results.new.save_button"
+      And I follow translated "call_results.new.save_button"
       Then contact "Mleko company" should be completed
       And I should see translated "contacts.edit.current_agent_label"
 
-    @tbr @__campaign_manage_results @_done @_tested
+    @tbr @__campaign_manage_results @_done @_tested @selenium
     Scenario: I can set call back datetime for contact when result is "Not interested now"
       When I am adding "Not interested now" result for contact "Mleko company"
       And I fill in "Call back date" field with future datetime
-      And I press translated "call_results.new.save_button"
+      And I follow translated "call_results.new.save_button"
       Then contact "Mleko company" should be pending
       And I should see translated "contacts.edit.current_agent_label"
 
-    @tbr @__campaign_manage_results @_done @_tested
+    @tbr @__campaign_manage_results @_done @_tested @selenium
     Scenario: new lead should be created based on contact when result is "Upgrade to lead"
       When I am adding "Upgraded to lead" result for contact "Mleko company"
       
@@ -455,15 +455,15 @@ Feature: Agent campaign - management
          | Detailed description (hidden)  | Some hidden description     |
          | Price                          | 2                           |
          | datepicker                     | 2011-02-02                  |
-      And I press translated "call_results.new.save_button"
+      And I follow translated "call_results.new.save_button"
       Then contact "Mleko company" should be upgraded to lead
       And I should see translated "contacts.edit.current_agent_label"
 
-    @tbr @__campaign_manage_results @_done @_tested
+    @tbr @__campaign_manage_results @_done @_tested @selenium
     Scenario: I can set meeting datetime for contact when result is "Meeting booked"
       When I am adding "Meeting booked" result for contact "Mleko company"
       And I fill in "Meeting date" field with future datetime
-      And I press translated "call_results.new.save_button"
+      And I follow translated "call_results.new.save_button"
       Then contact "Mleko company" should be completed
       And I should see translated "contacts.edit.current_agent_label"
 
@@ -472,19 +472,19 @@ Feature: Agent campaign - management
     #
     # CUSTOM RESULT TYPES
     #
-    @tbr @__campaign_manage_results @_done @requested
+    @tbr @__campaign_manage_results @_done @requested @selenium
     Scenario: I can add custom call result (call log)
       Given the custom call_log result with name "Just a call log result" is created by "translator_call_centre@nbs.com"
       When I am adding "Just a call log result" result for contact "Mleko company"
-      And I press translated "call_results.new.save_button"
+      And I follow translated "call_results.new.save_button"
       Then contact "Mleko company" should be at bottom of the list
       And I should see translated "contacts.edit.current_agent_label"
 
-    @tbr @__campaign_manage_results @_done @requested
+    @tbr @__campaign_manage_results @_done @requested @selenium
     Scenario: I can add custom call result (final)
       Given the custom final result with name "Just a final result" is created by "translator_call_centre@nbs.com"
       When I am adding "Just a final result" result for contact "Mleko company"
-      And I press translated "call_results.new.save_button"
+      And I follow translated "call_results.new.save_button"
       Then contact "Mleko company" should be completed
       And I should see translated "contacts.edit.current_agent_label"
       

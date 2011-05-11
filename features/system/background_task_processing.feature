@@ -7,8 +7,7 @@ Scenario: As admin I can by hand refresh counters and stats (delayed_job?)
   And I make sure current locale is "en"
   And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
   Then I sign in as jon@lajoie.ca with password secret
-  And I go to administration settings
-  Then I should see translated "administration.settings.edit.view.title_stats"
+  And I go to administration users
   And I should see translated "administration.settings.edit.view.button_update_stats"
 
 @requested @m8b @tgn @_done @non_testable

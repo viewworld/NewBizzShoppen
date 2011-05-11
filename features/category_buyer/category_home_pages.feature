@@ -38,7 +38,7 @@ Feature: Category home pages
     And there are 1 purchase manager news
     And I am on category home page for Best Leads
     And I follow translated "category_home.show.view.complete_list_link" within "#news"
-    Then I should see "1" rows in a table within "table.generic"
+    Then I should see "1" rows in a table with headers within "table.generic"
 
   @_done
   Scenario: I can see a list of most recent category leads on category home page
@@ -83,7 +83,7 @@ Feature: Category home pages
     Then I should see "3" items on a list within "#latest_leads"
     When I follow translated "category_home.show.view.complete_list_link" within "#latest_leads"
     And I follow "3" within ".pagination"
-    Then I should see "1" rows in a table within ".leads_table tbody"
+    Then I should see "1" rows in a table with headers within ".leads_table tbody"
 
   @m6 @added @_done @_tested
   Scenario: I can see complete list of category leads as guest

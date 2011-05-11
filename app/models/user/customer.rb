@@ -25,6 +25,12 @@ class ::User::Customer < ::User
   has_many :unique_categories, :through => :category_customers, :source => :category
 
   before_save :handle_interests
+  after_create :set_interests
+
+  def set_interests
+    self.categories = Category.all
+    self.countries = Country.all
+  end
 
   def leads
     bought_leads

@@ -1,21 +1,10 @@
 <column-mc:>
-  <header back="true">New account</header>
+  <header back="true"><%= t("administration.users.new.view.new_account", :role => User.role_as_text(params[:role])) %></header>
 
   <%= semantic_form_for @user, :url => administration_users_path(:role => params[:role]) do |form| %>
-      <frm title="#{User.role_as_text(params[:role])}">
+      <frm>
         <param:content>
           <%= render :partial => 'form', :locals => {:form => form} %>
-
-          <hl/>
-
-          <div class="pdd_10 no_pdd_t">
-            <fieldset class="inputs labels_ta_r labels_200">
-              <ol class="align_inputs">
-                <%= form.inputs :password, :password_confirmation %>
-              </ol>
-            </fieldset>
-          </div>
-
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="save">

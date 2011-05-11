@@ -214,3 +214,9 @@ Feature: Category buyer rules
     Then I should see translated "customer.subaccounts.update.flash.subaccount_update_successful"
     And I should see "Justin"
     And I should see "Bieber"
+
+  @m10 @requested
+  Scenario: I have access to all sub categories of my buying categories
+
+  @m10 @requested
+  Scenario: I don't have access to subcategories of other root categories

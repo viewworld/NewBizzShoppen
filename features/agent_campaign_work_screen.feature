@@ -68,14 +68,14 @@ Feature: Agent campaign - calling session
     @_done @tested_elsewhere
     Scenario: I can see contact form based on currently selected contact
 
-    @_done @_tested
+    @_done @_tested @selenium
     Scenario: I can see new result form for specifying notes and result
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Call back" from "result_id"
       And I follow translated "call_results.edit.button_new_result"
       And I should see translated "call_results.new.form_title"
       And I fill in "Call back date" field with future datetime
-      And I press translated "call_results.new.save_button"
+      And I follow translated "call_results.new.save_button"
       Then I should see translated "call_results.create.flash.successfully_added"
       When I follow translated "agent_work_screen.index.show_pending_calls"
       Then I should see "Bon Jovi inc." within "#pending_calls"

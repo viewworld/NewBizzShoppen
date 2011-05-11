@@ -239,7 +239,9 @@ function display_alert(message, withTimeout) {
 
 function displayWorkScreenTab(tab_id) {
     var tab_ids = ["#results_sheet", "#call_sheet", "#pending_calls", "#completed_contacts"];
-    tab_ids.splice(tab_ids.indexOf(tab_id), 1);
+    tab_ids = $.grep(tab_ids, function(value) {
+      return value != tab_id;
+    });   
     $(tab_ids.join(",")).hide();
     $(tab_id).show();
 }

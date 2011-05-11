@@ -37,11 +37,15 @@ Scenario: I can see my unique RSS feed URL
 
 @_tested
 Scenario: I can select if I want to be notified about new leads matching my interests criteria
+  When I am on my profile
+  And I follow translated "my_profile.edit.view.interests_settings"
   Then I check "user_notify_about_new_leads"
 
 @_tested
 Scenario: I can select multiple lead categories that I am interested in
-  Given I check "category_1"
+  When I am on my profile
+  And I follow translated "my_profile.edit.view.interests_settings"
+  And I check "category_1"
   And I check "category_2"
   And I press translated "customer.interests.edit.view.button_update"
   Then I should see translated "customer.interests.update.flash.interests_update_successful"
@@ -55,7 +59,9 @@ Scenario: I can select lead purchase value range that I am interested in
 
 @_tested @noguess
 Scenario: I can select multiple lead areas/countries that I am interested in
-  Given I check "country_1"
+  When I am on my profile
+  And I follow translated "my_profile.edit.view.interests_settings"
+  And I check "country_1"
   And I check "country_2"
   And I press translated "customer.interests.edit.view.button_update"
   Then I should see translated "customer.interests.update.flash.interests_update_successful"
@@ -127,20 +133,12 @@ Scenario: If customer is category buyer with assigned unique categories he can a
   When I follow translated "category_home.show.view.complete_list_link" within "#latest_leads"
   Then I should be on category home leads page for Unique Leads
   And I should see "Uniqlead"
-  And I should see "1" rows in a table within ".leads_table tbody"
+  And I should see "1" rows in a table with headers within ".leads_table tbody"
 
-@added @tgn @_tested  @requested
+# all countries are selected after sign up
+# https://redmine.selleo.com/issues/5423
+@added @tgn @_tested @requested @deprecated
 Scenario: On the interests page the country should be selected based on current locale
-  When I follow translated "locales.en_locale"
-  And I follow translated "layout.my_profile_link"
-  And I follow translated "layout.main_menu.customer.interests"
-  Then checkbox named "country_2" should be checked
-  And checkbox named "country_1" should not be checked
-  When I follow translated "locales.dk_locale"
-  And I follow translated "layout.my_profile_link"
-  And I follow translated "layout.main_menu.customer.interests"
-  Then checkbox named "country_1" should be checked
-  And checkbox named "country_2" should not be checked
 
 @m6 @tgn @_tested
 Scenario: I can use "Advanced search" in Browse leads with following fields: Deal value, Agent (creator), Agent’s (creator) rating (all,bronze, silver, gold), Uniqueness, Hotness
@@ -234,8 +232,15 @@ Scenario: I can see a back button when on configure interests page
   And I follow translated "my_profile.edit.view.interests_settings"
   Then I should see "Back"
 
-@m10 @requested
+@m10 @requested @_done @_tested
 Scenario: After first login I should be redirected to my home page instead of interests config
+  Then I should be on buyer home
 
-@m10 @requested
+@m10 @requested @_done @_tested
 Scenario: Interests are automatically configured after account is created - all countries and categories should be selected with disabled notifications
+  When I am on customer interests page
+  Then checkbox named "country_1" should be checked
+  And checkbox named "country_2" should be checked
+  And checkbox named "category_1" should be checked
+  And checkbox named "category_2" should be checked
+  And checkbox named "category_3" should be checked

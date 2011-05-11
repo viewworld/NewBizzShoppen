@@ -13,7 +13,7 @@ Feature: Ordered leads filter for big buyer
     And I follow translated "leads.index.buy_lead"
     And I follow translated "layout.main_menu.customer.invoices"
     And I follow translated "customer.invoices.index.view.pending_leads"
-    Then I should see "1" rows in a table within "#not_invoiced_leads"
+    Then I should see "1" rows in a table with headers within "#not_invoiced_leads"
 
   @m8b @requested @_done @_tested
   Scenario: Big buyer should have Invoices tab with options: 'Pending leads' - current Not invoiced leads, 'Due invoices' - unpaid invoices, 'Paid' paid invoices

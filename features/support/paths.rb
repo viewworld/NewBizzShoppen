@@ -56,6 +56,8 @@ module NavigationHelpers
         '/agents/lead_templates'
     when /browse leads/
         '/categories'
+    when /buyer cart/
+        '/buyers/cart'
     when /buyer cart items/
         '/buyers/cart_items'
     when /call centre agents/

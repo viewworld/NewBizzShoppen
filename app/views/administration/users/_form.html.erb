@@ -80,6 +80,22 @@
   </div>
 </div>
 
+<hl/>
+
+<% if @user.new_record? %>
+    <clb/>
+
+    <div class="column_left">
+        <div class="pdd_10 no_pdd_t">
+          <fieldset class="inputs labels_ta_r labels_200">
+            <ol class="align_inputs">
+              <%= form.inputs :password, :password_confirmation %>
+            </ol>
+          </fieldset>
+        </div>
+    </div>
+<% end %>
+
 <clb/>
 
 <% if ['category_buyer'].include?(params[:role]) or @user.has_roles?(:category_buyer, :customer) %>

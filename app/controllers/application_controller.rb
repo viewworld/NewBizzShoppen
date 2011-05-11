@@ -40,8 +40,6 @@ class ApplicationController < ActionController::Base
         session[:lead_id] = nil
         session[:buyout] = nil
         requested_path
-      elsif resource.has_role? :customer and !resource.has_role? :category_buyer and resource.sign_in_count <= 1
-        edit_customers_interests_path
       elsif resource.has_role? :category_buyer
         if resource.with_role.parent_buying_categories.first
           category_home_page_path(resource.with_role.parent_buying_categories.first.cached_slug)

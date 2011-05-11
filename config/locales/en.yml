@@ -5,6 +5,8 @@ en:
   support:
     array:
       two_words_connector: " and "
+  cart:
+    vat_line_title: "VAT %{percentage}"
   common:
     back_link: Back
     edit_link: "Edit"
@@ -635,6 +637,9 @@ en:
           delete_confirmation_message: "Are you sure?"
           leads_created: "Leads created"
           unpaid_leads: "Unpaid leads"
+      new:
+        view:
+          new_account: "New %{role} account"
       edit:
         view:
           title: "Editing user: %{name}"

@@ -7,6 +7,7 @@ Background:
   And I make sure current locale is "en"
   Given Category named "Computers" already exists
   And Lead named "Super printers" exists within "Computers" category
+  And lead "Super printers" has attributes "price:100"
   Given I am signed up and confirmed as user with email buyer.jim.jones@nbs.com and password secret and role customer
   And an user with role lead_buyer and email leadbuyer.jon@nbs.com exists as subaccount for customer buyer.jim.jones@nbs.com
   Then I sign in as buyer.jim.jones@nbs.com with password secret
@@ -48,5 +49,16 @@ Scenario: Data is transfererd to paypal in encrypted form
 Scenario: Currency code from cart is passed to PayPal
 
 # https://redmine.selleo.com/issues/5436
-@m10 @requested
+@m10 @requested @_done @_tested
 Scenario: When paying by payal the price should include VAT where applicable
+  Then cart for user "buyer.jim.jones@nbs.com" has VAT included in total value
+
+@m10 @requested @_done @_tested
+Scenario: The vat amount should be visible as additional product line in paypal
+  Then cart for user "buyer.jim.jones@nbs.com" has additional line for VAT
+
+@m10 @requested @_done @_tested
+Scenario: Total value of a cart should not include VAT rates
+  When I am on buyer cart page
+  Then I should see "2" rows in a table within "table.cart_table tbody"
+  And I should see "100.00" within "table.cart_table tbody tr.total_row"
