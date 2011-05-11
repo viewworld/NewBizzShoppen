@@ -390,7 +390,7 @@ Feature: Agent campaign - management
          | date field     | 02-02-2010 |
          | note field     | large text |
          | datetime field | 2011-02-02 |
-      And I press translated "call_results.new.save_button"
+      And I follow translated "call_results.new.save_button"
       Then I should see translated "activerecord.errors.models.result_value.attributes.value.incorrect_number_format"
       And I should see translated "activerecord.errors.models.result_value.attributes.value.incorrect_date_format"
       And I should see translated "activerecord.errors.models.result_value.attributes.value.incorrect_datetime_format"
