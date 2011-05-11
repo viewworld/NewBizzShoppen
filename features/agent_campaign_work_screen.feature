@@ -68,7 +68,7 @@ Feature: Agent campaign - calling session
     @_done @tested_elsewhere
     Scenario: I can see contact form based on currently selected contact
 
-    @_done @_tested
+    @_done @_tested @selenium
     Scenario: I can see new result form for specifying notes and result
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Call back" from "result_id"
