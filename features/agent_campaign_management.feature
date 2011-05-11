@@ -205,7 +205,7 @@ Feature: Agent campaign - management
       Then I should see translated "contacts.edit.title"
 
     #create => edit => destroy is tested here as well
-    @is @__campaign_import_contacts @_tested @selenium @_wip
+    @is @__campaign_import_contacts @_tested @selenium
     Scenario: I can see contact results
       When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
       When I click hidden link by url regex "/callers\/campaigns\/\d+\/contacts\/\d+\/edit/"
