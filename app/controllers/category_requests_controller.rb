@@ -15,7 +15,7 @@ class CategoryRequestsController < ApplicationController
         flash[:notice] = I18n.t("category_requests.create.flash.request_sent")
         ApplicationMailer.generic_email(["admin@fairleads.com"], @email_template_preview.subject, @email_template_preview.body, @email_template_preview.email_from).deliver
 
-        redirect_to root_path
+        redirect_to current_user.has_any_role?(:agent, :call_centre_agent, :purchase_manager) ? agent_home_path : buyer_home_path
       else
         render :action => 'new'
       end

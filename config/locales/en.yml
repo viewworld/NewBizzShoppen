@@ -2020,11 +2020,6 @@ en:
       flash:
         email_sent_successfully: "Your email has been sent"
 
-  category_requests:
-    create:
-      flash:
-        request_sent: "Your category request has been sent"
-
   shared:
     lead_templates:
       listing:
@@ -2574,6 +2569,10 @@ en:
         lead_description: "Describe what would be a good lead"
         can_be_contacted: "Can Fairleads contact you to discuss your suggestion?"
         phone_number: "Phone number"
+    create:
+      flash:
+        request_sent: "Your category request has been sent"
+
   comments:
     threads:
       index:

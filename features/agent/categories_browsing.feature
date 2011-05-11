@@ -22,7 +22,7 @@ Feature: I can browse categories
     And I check "email_template_preview_can_be_contacted"
     And I press translated "contact_us.new.view.send_email_button"
     And last email sent should have been sent to recipient "admin@fairleads.com"
-
+    And I should be on agent home
 
   @m8b @requested @tgn @_tested
   Scenario: When you are loged in as a buyer, you should be able to request a category, this should be done via a form mail. to admin@fairleads.com the form should contain the following fields
@@ -39,6 +39,7 @@ Feature: I can browse categories
     And I check "email_template_preview_can_be_contacted"
     And I press translated "contact_us.new.view.send_email_button"
     And last email sent should have been sent to recipient "admin@fairleads.com"
+    And I should be on buyer home
 
-  @m10 @requested
+  @m10 @requested @_done @tested_elsewhere
   Scenario: I will return to agent/buyer home page after category request is sent
