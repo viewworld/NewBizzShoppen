@@ -1,5 +1,6 @@
 if params[:comment].keys.each(&:to_sym).include?("is_blocked")
     content = escape_javascript(render(:partial => '/comments/shared/thread', :locals => {:thread => @comment.root}))
+    page << "$('#truncated_thread_#{@comment.root.id}').remove();"
     page << "$('#thread_#{@comment.root.id}').replaceWith('#{content}');"
 else
     page << "$('#edit_comment_'+#{@comment.id}).slideUp('slow');"

@@ -55,7 +55,7 @@ Scenario: I can mark templates as mandatory or optional for given category even 
   Then I go to administration categories
   And I follow translated "administration.categories.index.view.edit_link"
   And I follow translated "administration.categories.edit.view.edit_template"
-  And I should not see translated "shared.lead_templates.form.new_lead_template_field"
+  And I should see translated "shared.lead_templates.form.new_lead_template_field"
   And I check "lead_template_is_mandatory"
   And I press translated "administration.lead_templates.edit.view.button_update"
   Then I follow translated "administration.categories.edit.view.edit_template"

@@ -1,7 +1,7 @@
-<% if current_user.has_role?(:admin) %>
+<% if current_user.has_role?(:admin) and !thread.is_blocked? %>
     <div id="truncated_thread_<%= thread.id %>" style="display: none;">
       <div class="comment_container">
-        <p class="comment_title"><%= thread.is_blocked? ? t("comments.threads.show.view.comment_blocked") : thread.title %></p>
+        <p class="comment_title"><%= thread.title %></p>
         <p class="comment_info">
           <%= link_to_function t("comments.threads.show.view.show_thread"), "show_hide_thread(#{thread.id})" %>
         </p>
