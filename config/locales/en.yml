@@ -2602,7 +2602,7 @@ en:
           unblock: "Unblock comment"
           block_user: "Block user"
           unblock_user: "Unblock user"
-          read_by: "Read by:"
+          read_by_number_of_users: "read by %{count} users"
       new:
         view:
           header: "Post new comment for %{header}"
