@@ -3,7 +3,8 @@
   <p class="comment_info">
     <%= current_user.has_role?(:admin) ? link_to(comment.user.screen_name, edit_administration_user_path(comment.user)) : comment.user.screen_name %> at <%= format_date(comment.created_at, true) %>
     <% if comment.read_by_anyone?(current_user) %>
-        <%= t("comments.threads.show.view.read_by_number_of_users", :count => comment.readers_count(current_user)) %>
+        <%= link_to_function(t("comments.threads.show.view.read_by_number_of_users", :count => comment.readers_count(current_user)), "javascript:void()", {:id => "lead_comment_readers_#{comment.commentable_id}", :class => "inputs_hint"}) %>
+
     <% end %>
     <% unless comment.is_blocked? %>
     <% if current_user.can_reply_to_comment?(comment) %>
@@ -24,9 +25,12 @@
         <% end %>
         <%= link_to_function comment.is_blocked? ? t("comments.threads.show.view.unblock") : t("comments.threads.show.view.block"), "block_comment(#{comment.id}, #{comment.is_blocked? ? 0 : 1})" %>
     <% end %>
+    <%= content_tag(:div, comment.all_readers(current_user).map(&:screen_name).join(', ').html_safe, :id => "lead_comment_readers_#{comment.commentable_id}", :class => "hidden") %>
   </p>
 
   <% unless comment.is_blocked? %>
     <p><span id="body"><%= comment.body %></span></p>
   <% end %>
+
+
 </div>

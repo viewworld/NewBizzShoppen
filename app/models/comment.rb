@@ -143,7 +143,11 @@ class Comment < ActiveRecord::Base
   end
 
   def readers_count(_user=nil)
-    comment_readers.where("comment_readers.user_id NOT IN (?)", [user_id, _user.nil? ? nil : _user.id].compact).count
+    all_readers(_user).count
+  end
+
+  def all_readers(_user=nil)
+    readers.where("comment_readers.user_id NOT IN (?)", [user_id, _user.nil? ? nil : _user.id].compact)
   end
 
   private

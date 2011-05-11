@@ -29,6 +29,7 @@ Scenario: I can see that a comment has been read
   And I follow translated "comments.shared.show_comments"
   Then I should see translated "comments.threads.show.view.read_by_number_of_users" with options "count:1"
 
+@_done @non_testable
 Scenario: I can see who read a comment (popup)
 
 @selenium @_tested
