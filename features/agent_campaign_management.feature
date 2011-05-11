@@ -205,14 +205,14 @@ Feature: Agent campaign - management
       Then I should see translated "contacts.edit.title"
 
     #create => edit => destroy is tested here as well
-    @is @__campaign_import_contacts @_tested @selenium
+    @is @__campaign_import_contacts @_tested @selenium @_wip
     Scenario: I can see contact results
       When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
       When I click hidden link by url regex "/callers\/campaigns\/\d+\/contacts\/\d+\/edit/"
       Then I click xpath "//form[@id='new_call_result']//a"
       Then I fill in "call_result_note" with "this is real deal!"
       Then I fill in "call_result_result_values_attributes_0_value" with "2012-04-22 14:35"
-      Then I press translated "call_results.new.save_button"
+      Then I follow translated "call_results.new.save_button"
       Then I should see "Call back" within "#call_results"
       Then I should see "Johnny Mnemonic" within "#call_results"
       When I click hidden link by url regex "/callers\/contacts\/\d+\/call_results\/\d+\/edit/"
