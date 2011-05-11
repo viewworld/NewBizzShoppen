@@ -23,3 +23,13 @@ When /^comments for lead "([^"]*)" are read by by users "([^"]*)"$/ do |lead_hea
     end
   end
 end
+When /^comments for lead "([^"]*)" (should not|should) be read by user "([^"]*)"$/ do |lead_header, should_be_read, user_email|
+  lead = Lead.find_by_header(lead_header).first
+  user = User.find_by_email(user_email).with_role
+
+  if should_be_read == "should"
+    assert lead.comment_threads.unread_by_user(user).count == 0
+  else
+    assert lead.comment_threads.unread_by_user(user).count == lead.comment_threads.count
+  end
+end

@@ -110,7 +110,7 @@
             <%= link_to t("lead_purchases.listing.hide_row"), "javascript:void(0)", :class => "toggle_row hide_details", :style => "display:none" %>
 
             <% if lead_purchase.lead.can_be_commented? %>
-                <%= link_to lead_purchase.lead.comment_threads.count == 0 ? t("lead_purchases.listing.create_comment") : t("lead_purchases.listing.show_comments"), "javascript:void(0)", :class => "toggle_row show_comments", :onclick => "mark_comments_as_read(#{lead_purchase.lead_id})" %>
+                <%= link_to lead_purchase.lead.comment_threads.count == 0 ? t("lead_purchases.listing.create_comment") : t("lead_purchases.listing.show_comments"), "javascript:void(0)", :class => "toggle_row show_comments#{' toggle_row_unread' if lead_purchase.lead.has_unread_comments_for_user?(current_user)}", :onclick => "mark_comments_as_read(#{lead_purchase.lead_id}); mark_row_as_read('#{dom_id(lead_purchase)}')" %>
                 <%= link_to t("lead_purchases.listing.hide_comments"), "javascript:void(0)", :class => "toggle_row hide_comments", :style => "display:none" %>
             <% end %>
           </div>

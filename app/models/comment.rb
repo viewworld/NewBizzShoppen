@@ -13,8 +13,10 @@ class Comment < ActiveRecord::Base
   belongs_to :commentable, :polymorphic => true
 
   before_save :handle_blocking
-  has_many :comment_readers
+  has_many :comment_readers, :dependent => :destroy
   has_many :readers, :through => :comment_readers, :source => :user
+
+  after_create :mark_as_read_by_creator
 
   scope :descend_by_created_at, order("created_at DESC")
   scope :ascend_by_created_at, order("created_at ASC")
@@ -136,7 +138,17 @@ class Comment < ActiveRecord::Base
     !comment_readers.where("user_id = ?", _user.id).first.nil?
   end
 
-  def read_by_anyone?
-    !comment_readers.empty?
+  def read_by_anyone?(_user=nil)
+    readers_count(_user) > 0
+  end
+
+  def readers_count(_user=nil)
+    comment_readers.where("comment_readers.user_id NOT IN (?)", [user_id, _user.nil? ? nil : _user.id].compact).count
+  end
+
+  private
+
+  def mark_as_read_by_creator
+    comment_readers.create(:user => user)
   end
 end

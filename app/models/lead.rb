@@ -234,4 +234,7 @@ class Lead < AbstractLead
     !creator.has_role?(:purchase_manager)
   end
 
+  def has_unread_comments_for_user?(user)
+    comment_threads.unread_by_user(user).count > 0
+  end
 end

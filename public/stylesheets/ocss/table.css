@@ -172,6 +172,11 @@
     color: #666;    
 }
 
+.row_tooltip_actions a.toggle_row_unread
+{
+    background: red;
+}
+
 .comments_details
 {
     padding: 15px 0;

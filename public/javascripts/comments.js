@@ -89,6 +89,8 @@
 
   }
 
+  var MarkAsReadCallbacks = [];
+
   function mark_comments_as_read(lead_id){
       if($.inArray(lead_id, MarkAsReadCallbacks) == -1){
           MarkAsReadCallbacks.push(lead_id);
@@ -96,4 +98,7 @@
       }
   }
 
-  var MarkAsReadCallbacks = [];
+  function mark_row_as_read(container_id){
+      $('#' + container_id + ' a').removeClass("toggle_row_unread");
+  }
+

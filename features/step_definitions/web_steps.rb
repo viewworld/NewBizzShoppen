@@ -390,3 +390,9 @@ Then /^element is not visible "([^\"]*)"(?: within "([^\"]*)")?$/ do |element, s
     assert wait_until(TIMEOUT) { assert (not page.find(element).visible?) }
   end
 end
+
+Then /^I should see "([^"]*)" occurrences of css class "([^"]*)" for tag "([^"]*)"(?: witihin "([^"]*)")?$/ do |number, css_class, tag_name, selector|
+  with_scope(selector) do
+    page.all(:css, "#{tag_name}[class*='#{css_class}']").size.should eql(number.to_i)
+  end
+end

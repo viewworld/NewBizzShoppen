@@ -2,8 +2,8 @@
   <p class="comment_title"><%= comment.is_blocked? ? t("comments.threads.show.view.comment_blocked") : comment.title %></p>
   <p class="comment_info">
     <%= current_user.has_role?(:admin) ? link_to(comment.user.screen_name, edit_administration_user_path(comment.user)) : comment.user.screen_name %> at <%= format_date(comment.created_at, true) %>
-    <% if comment.read_by_anyone? %>
-        <%= t("comments.threads.show.view.read_by_number_of_users", :count => comment.readers.size) %>
+    <% if comment.read_by_anyone?(current_user) %>
+        <%= t("comments.threads.show.view.read_by_number_of_users", :count => comment.readers_count(current_user)) %>
     <% end %>
     <% unless comment.is_blocked? %>
     <% if current_user.can_reply_to_comment?(comment) %>
