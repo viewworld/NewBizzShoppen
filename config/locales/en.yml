@@ -2608,6 +2608,8 @@ en:
           block_user: "Block user"
           unblock_user: "Unblock user"
           read_by_number_of_users: "read by %{count} users"
+          show_thread: "Show thread"
+          hide_thread: "Hide thread"
       new:
         view:
           header: "Post new comment for %{header}"

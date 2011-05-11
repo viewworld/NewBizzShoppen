@@ -15,6 +15,7 @@
     <% end %>
     <% end %>
     <% if current_user.has_role?(:admin) %>
+        <%= link_to_function t("comments.threads.show.view.hide_thread"), "show_hide_thread(#{comment.id})" if comment.root == comment and comment.has_children? %>
         <%= link_to_function t("comments.threads.show.view.destroy"), "destroy_comment(#{comment.id})" %>
     <% end %>
     <% if current_user.has_role?(:admin) or (current_user.has_role?(:call_centre) and current_user.subaccounts.include?(comment.user)) %>

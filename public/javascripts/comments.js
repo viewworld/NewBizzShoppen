@@ -102,3 +102,8 @@
       $('#' + container_id + ' a').removeClass("toggle_row_unread");
   }
 
+
+  function show_hide_thread(comment_id){
+      $('#thread_' + comment_id).slideToggle('slow');
+      $('#truncated_thread_' + comment_id).slideToggle('slow');
+  }
