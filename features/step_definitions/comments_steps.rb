@@ -13,3 +13,13 @@ When /^comment thread for lead "([^"]*)" was posted by users "([^"]*)"$/ do |lea
     parent_id = comment.id
   end
 end
+
+When /^comments for lead "([^"]*)" are read by by users "([^"]*)"$/ do |lead_header, user_emails|
+  lead = Lead.find_by_header(lead_header).first
+  users = user_emails.split(",").map{ |e| e.strip }.map { |email| User.find_by_email(email).with_role }
+  lead.comment_threads.each do |comment|
+    users.each do |user|
+      comment.comment_readers.create(:user => user)
+    end
+  end
+end

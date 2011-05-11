@@ -32,7 +32,7 @@ class Comment < ActiveRecord::Base
   scope :with_category, lambda { |category_id| category_id.blank? ? where("") : with_leads.where(:leads => { :category_id => Category.find_by_id(category_id).self_and_descendants.map(&:id) }) }
   scope :with_leads, joins("INNER JOIN leads ON leads.id = comments.commentable_id")
   scope :with_user, lambda { |q| select("distinct(roots.id), roots.*").where("roots.lft <= comments.lft and roots.rgt >= comments.rgt and roots.parent_id is null and (users.email like :q or users.screen_name like :q or users.company_name like :q)", {:q => "%#{q.to_s.downcase}%"}).joins("inner join users on comments.user_id=users.id inner join comments as roots on roots.commentable_id = comments.commentable_id ") }
-  scope :unread_by_user, lambda { |user| select("DISTINCT(comments.id), comments.*").where("comment_readers.user_id IS NULL or comment_readers.user_id != ?", user.id).joins("LEFT JOIN comment_readers ON comments.id=comment_readers.comment_id") }
+  scope :unread_by_user, lambda { |user| select("DISTINCT(comments.id), comments.*").where("comment_readers.user_id IS NULL", user.id).joins("LEFT JOIN comment_readers ON comments.id=comment_readers.comment_id AND comment_readers.user_id=#{user.id}") }
 
   # Helper class method that allows you to build a comment
   # by passing a commentable object, a user_id, and comment text

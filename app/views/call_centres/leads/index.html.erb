@@ -90,7 +90,7 @@
                 <%= lead.header %>
                 <% if lead.can_be_commented? %>
                     <br />
-                    <%= link_to t("comments.shared.show_comments"), "#", :class => "toggle_row show_comments" %>
+                    <%= link_to t("comments.shared.show_comments"), "#", :class => "toggle_row show_comments", :onclick => "mark_comments_as_read(#{lead.id})" %>
                     <%= link_to t("comments.shared.hide_comments"), "#", :class => "toggle_row hide_comments", :style => "display:none" %>
                     (<%= lead.comment_threads.roots.count %>)
                 <% end %>

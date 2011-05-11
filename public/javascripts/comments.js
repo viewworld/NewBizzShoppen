@@ -91,7 +91,7 @@
 
   function mark_comments_as_read(lead_id){
       if($.inArray(lead_id, MarkAsReadCallbacks) == -1){
-          MarkAsReadCallbacks.push(lead_id)
+          MarkAsReadCallbacks.push(lead_id);
           $.post('/comments/comment_readers.js', 'lead_id='+lead_id);
       }
   }
