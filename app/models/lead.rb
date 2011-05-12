@@ -14,6 +14,7 @@ class Lead < AbstractLead
   belongs_to :country
   belongs_to :currency
   belongs_to :region
+  has_one :lead_certification_request
   has_many :lead_translations, :dependent => :destroy
   has_many :lead_purchases
   has_many :lead_template_values

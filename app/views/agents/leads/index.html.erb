@@ -70,6 +70,11 @@
                 <li>
                   <%= link_to t("agent.leads.index.view.edit"), edit_agents_lead_path(lead), :class => "default_action" %>
                 </li>
+                <% if lead.lead_certification_request.blank? and lead.email_address and lead.contact_name %>
+                    <li>
+                      <%= link_to t("agent.leads.index.view.certificate"), agents_lead_certifications_path(lead), :method => :post %>
+                    </li>
+                <% end %>
                 <li>
                   <%= link_to t("agent.leads.index.view.destroy"), agents_lead_path(lead), :confirm => t("agent.leads.index.view.destroy_confirmation"), :method => :delete %>
                 </li>
@@ -86,7 +91,7 @@
           <% end %>
 
           <% blocks.rowtooltip do |lead| %>
-              <p><%= render :partial => "/shared/comments/lead_threads", :locals => { :lead => lead, :threads => lead.comment_threads.roots.order("created_at DESC") } %></p>
+              <p><%= render :partial => "/shared/comments/lead_threads", :locals => {:lead => lead, :threads => lead.comment_threads.roots.order("created_at DESC")} %></p>
           <% end %>
 
       <% end %>

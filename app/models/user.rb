@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
   include RoleChange
 
   devise :database_authenticatable, :registerable, :confirmable, :lockable,
-         :recoverable, :rememberable, :trackable, :validatable, :timeoutable
+         :recoverable, :rememberable, :trackable, :validatable, :timeoutable, :rpx_connectable
 
   # declare the valid roles -- do not change the order if you add more
   # roles later, always append them at the end!
@@ -147,7 +147,7 @@ class User < ActiveRecord::Base
 
   def generate_token(size=40)
     charset = (0..9).to_a + ("a".."z").to_a + ("A".."Z").to_a
-    (0...charset.size).map { charset[rand(charset.size)] }.join+id.to_s
+    (0...size).map { charset[rand(charset.size)] }.join+id.to_s
   end
 
   def set_role
@@ -411,5 +411,16 @@ class User < ActiveRecord::Base
 
   def can_start_new_lead_thread?
     !agent?
+  end
+
+  def set_fields_for_rpx(data)
+    self.email = data['verifiedEmail']
+      self.first_name = data['name']['givenName']
+      self.last_name = data['name']['familyName']
+      self.rpx_identifier = data['identifier']
+      self.newsletter_on = true
+      new_radnom_password = generate_token(12)
+      self.password = new_radnom_password
+      self.password_confirmation = new_radnom_password
   end
 end

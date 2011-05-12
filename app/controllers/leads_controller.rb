@@ -3,18 +3,40 @@ class LeadsController < ApplicationController
   actions :index, :show
   set_tab "browse_leads"
 
-  before_filter :check_category_buyer, :only => [:index]
+  before_filter :check_category_buyer, :only => :index
   before_filter :check_search, :only => :index
+  before_filter :check_token, :only => [:edit, :update]
 
   def show
     show! do |format|
       @lead.update_stats!(:clicks_count)
-      format.html {  }
+      format.html {}
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    if params[:confirmation] == "disagree"
+      @lsr.change_state("disagree")
+      flash[:notice] = "Thank you for your time"
+      redirect_to login_path
+    else
+      @lead.update_attributes(params[:lead])
+      if @lead.save
+        @lsr.change_state("agree")
+        flash[:notice] = "Lead successfully updated"
+        redirect_to new_certification_account_path(:lead_id => @lead.id)
+      else
+        redirect_to edit_lead_path(@lead, :token => @lsr.token)
+      end
+
     end
   end
 
   def index
-    index! do |format| 
+    index! do |format|
       format.html { Lead.update_all("exposures_count = exposures_count+1", {:id => @leads.map(&:id)}) }
     end
   end
@@ -66,6 +88,16 @@ class LeadsController < ApplicationController
   def check_category_buyer
     if current_user and current_user.has_role?(:category_buyer)
       redirect_to category_home_page_path(current_user.parent_buying_categories.first.cached_slug)
+    end
+  end
+
+  def check_token
+    @lsr = LeadCertificationRequest.find_by_token(params[:token])
+    if @lsr and @lsr.state == LeadCertificationRequest::STATE_SENT
+      @lead = Lead.find(@lsr.lead_id)
+    else
+      flash[:notice] = "Your token is invalid or state of your requested was changed and it is not available any more."
+      redirect_to login_path
     end
   end
 
