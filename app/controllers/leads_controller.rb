@@ -54,6 +54,9 @@ class LeadsController < ApplicationController
     @creators = (current_user and current_user.has_accessible_categories?) ? User.with_leads.within_accessible_categories(current_user) : User.with_leads
     @search = Lead.scoped_search(params[:search])
     @leads = @search.includes(:currency).paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)
+    if @search.with_category.present?
+      @search.with_selected_categories = Category.find_by_id(@search.with_category).self_and_descendants.map(&:id)
+    end
     @category = @search.with_category.present? ? Category.find(@search.with_category) : nil
   end
 
