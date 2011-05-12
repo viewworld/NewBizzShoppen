@@ -15,6 +15,7 @@ class LeadsController < ApplicationController
   end
 
   def edit
+    @lsr.update_attribute(:last_visit_date, Time.now)
   end
 
   def update
@@ -25,7 +26,7 @@ class LeadsController < ApplicationController
     else
       @lead.update_attributes(params[:lead])
       if @lead.save
-        @lsr.change_state("agree")
+        @lsr.change_state("agreed")
         flash[:notice] = "Lead successfully updated"
         redirect_to new_certification_account_path(:lead_id => @lead.id)
       else
