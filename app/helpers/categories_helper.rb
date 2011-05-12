@@ -99,30 +99,35 @@ module CategoriesHelper
       end
   end
 
-  def categories_structure_root(root_category, all_categories=[])
-    result = [category_structure_tags(root_category)]
+  def categories_structure_root(root_category, all_categories=[], tree_type=:interests)
+    result = [category_structure_tags(root_category, tree_type)]
     unless (children = all_categories.select { |c| c.parent_id == root_category.id }).empty?
-      result << categories_structure_children(children, all_categories)
+      result << categories_structure_children(children, all_categories, 0, tree_type)
     end
     content_tag("ul", result.flatten.compact.join.html_safe, :id => "category_tree_#{root_category.id}")
   end
 
-  def categories_structure_children(children, all_categories, level=0)
+  def categories_structure_children(children, all_categories, level=0, tree_type=:interests)
     result = []
     children.each do |category|
-      result << category_structure_tags(category)
+      result << category_structure_tags(category, tree_type)
       unless (category_children = all_categories.select { |c| c.parent_id == category.id }).empty?
-        result << categories_structure_children(category_children, all_categories, level + 1)
+        result << categories_structure_children(category_children, all_categories, level + 1, tree_type)
       end
     end
     content_tag("ul", result.flatten.join.html_safe)
   end
 
-  def category_structure_tags(category)
-    "<li>" +
-    check_box_tag("categories[]", category.id, current_user.categories.include?(category), :id => "category_#{category.id}") +
-    label_tag("category_#{category.id}", category.name)
-
+  def category_structure_tags(category, tree_type)
+    if tree_type == :interests
+      "<li>" +
+      check_box_tag("categories[]", category.id, current_user.categories.include?(category), :id => "category_#{category.id}") +
+      label_tag("category_#{category.id}", category.name)
+    elsif tree_type == :leads_catalog
+      "<li>" +
+      check_box_tag("search[with_selected_categories][]", category.id, false, :id => "category_#{category.id}") +
+      label_tag("category_#{category.id}", category.name)
+    end
   end
 
 end

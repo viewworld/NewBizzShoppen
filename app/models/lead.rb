@@ -29,6 +29,7 @@ class Lead < AbstractLead
   scope :purchase_value_from, lambda { |q| where(["purchase_value >= ?", q]) }
   scope :purchase_value_to, lambda { |q| where(["purchase_value <= ?", q]) }
   scope :with_category, lambda { |q| where(:category_id => Category.find_by_id(q).self_and_descendants.map(&:id)) }
+  scope :with_selected_categories, lambda { |q| where(:category_id => q) }
   scope :with_categories, lambda { |arr| where(:category_id => Category.where(:id => arr.map(&:self_and_descendants).flatten.map(&:id))) }
   scope :with_country, lambda { |country_id| where(:country_id => country_id) }
   scope :with_zip_code, lambda { |zip_code| where(:zip_code => zip_code)}
