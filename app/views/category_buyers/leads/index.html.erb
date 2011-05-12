@@ -12,7 +12,7 @@
 
 <column-mc:>
 
-  <header back="true"><%= leads_listing_header %><%= " #{t("leads.index.header_for")} #{@home_category.name}" %></header>
+  <header back="true"><%= leads_listing_header %><%= " #{t("leads.index.header_for")} #{@displayed_category.name}" if @displayed_category %></header>
 
   <% if @leads.empty? %>
       <%= blank_state_message %>

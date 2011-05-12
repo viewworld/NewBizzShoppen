@@ -56,4 +56,8 @@ class ::User::CategoryBuyer < ::User
     parent ? parent.with_role.buying_categories : buying_categories
   end
 
+  def buying_categories_with_descendants
+    Category.where(buying_categories.map { |bc| "lft between #{bc.lft} and #{bc.rgt}"  }.join(" or "))
+  end
+
 end

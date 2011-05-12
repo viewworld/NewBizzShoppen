@@ -245,3 +245,7 @@ function displayWorkScreenTab(tab_id) {
     $(tab_ids.join(",")).hide();
     $(tab_id).show();
 }
+
+function uncheck_category_checkboxes(){
+    $("input:checkbox:checked[id^=category_]").attr('checked', false);
+}

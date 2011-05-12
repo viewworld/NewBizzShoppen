@@ -39,9 +39,9 @@
   <ol class="no_pdd">
       <li class="select" style="float:right">
         <%= label "category", t("leads.index.search.category_label") %>
-        <%= select_tag "category", options_for_select(current_user.parent_accessible_categories.map { |c| [c.name, c.cached_slug] },@home_category.name.downcase),
+        <%= select_tag "category", options_for_select(current_user.parent_accessible_categories.map { |c| [c.name, c.cached_slug] },@home_category.cached_slug),
                        :include_blank => false,
-                       :onchange => "this.form.action='/'+this.value+'/leads';this.form.submit();"
+                       :onchange => "uncheck_category_checkboxes();this.form.action='/'+this.value+'/leads';this.form.submit();"
         %>
       </li>
     </ol>
@@ -81,7 +81,7 @@
 
 <table class="categories_table">
   <tbody>
-  <% @categories.select { |c| c.parent_id.blank? }.in_groups_of(3, false).each do |categories| %>
+  <% @categories.select { |c| c.parent_id.blank? }.in_groups_of(6, false).each do |categories| %>
       <tr>
         <% categories.each do |category| %>
             <td>
