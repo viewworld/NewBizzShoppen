@@ -32,6 +32,17 @@ class ::User::Customer < ::User
     self.countries = Country.all
   end
 
+  def check_and_correct_interests!
+    all_categories = categories.clone
+    categories.select { |c| c.parent_id.nil? }.each do |category|
+      all_categories = all_categories - category.self_and_descendants
+    end
+    all_categories.each do |category|
+      self.categories << category.ancestors
+    end
+    self.save
+  end
+
   def leads
     bought_leads
   end
