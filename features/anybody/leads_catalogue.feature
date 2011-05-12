@@ -94,3 +94,9 @@ Scenario: Add blurb or info text to leads listing "To view lead details click bu
 
 @m0 @statistics
 Scenario: Statistics for exposures and clicks are stored per date
+
+@m10 @requested
+Scenario: I should see tree with category checkboxes beneath the search filter instead of select with categories
+
+@m10 @requested
+Scenario: I should be able to select categories from different levels of the tree and see their leads
