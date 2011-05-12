@@ -53,6 +53,7 @@ Nbs::Application.routes.draw do
       resource :cache
     end
     resource :stats_recalculation, :controller => "stats_recalculation", :only => [:update]
+    resources :customer_interests, :only => [:edit, :update]
   end
 
   namespace :buyers do

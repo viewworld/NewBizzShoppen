@@ -657,6 +657,7 @@ en:
           selected_unique_categories: "Selected unique categories"
           selected_interests_categories: "Selected category interests"
           subaccounts_list: "Subaccounts"
+          change_customer_interests_link: "Set interests"
       create:
         flash:
           user_creation_successful: User has been created successfuly
@@ -1262,6 +1263,11 @@ en:
           search:
             with_keyword: "Keyword"
             search_button: "Search"
+    customer_interests:
+      edit:
+        view:
+          title: "Editing interests for user: %{name}"
+          countries: "Countries"
   agent:
     leads:
       index:
@@ -2269,6 +2275,9 @@ en:
     stats_recalculation:
       update:
         notice: "Stats update has been queued. It may take few minutes to finish."
+    customer_interests:
+      update:
+        notice: "Customer interest have been successfully saved!"
   formtastic:
     date:
       formats:

@@ -298,13 +298,12 @@ Scenario: I can configure buyer category interests when editing it
   Then I fill in "search_with_keyword" with "buyer2222@nbs.com"
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/administration\/users\/\d+\/edit/"
+  And I follow translated "administration.users.edit.view.change_customer_interests_link"
   And I select "Laptops" from "all_categories_for_interests"
   And I select "Computers" from "all_categories_for_interests"
   And I follow translated "administration.categories.form.move_users_right" within "#category_interests"
   And I press translated "administration.users.edit.view.button_update_user"
-  Then I fill in "search_with_keyword" with "buyer2222@nbs.com"
-  And I press translated "administration.users.index.view.search_button"
-  And I click hidden link by url regex "/administration\/users\/\d+\/edit/"
+  And I follow translated "administration.users.edit.view.change_customer_interests_link"
   And "user_customer_category_ids_" dropdown should have values "Computers,Laptops"
 
 @m6 @tgn @selenium @_tested @requested
@@ -599,8 +598,22 @@ Scenario: I can see password fields above unique categories
 @m10 @requested @tested_elsewhere @_done
 Scenario: I can see "Refresh statistics" button on users listing instead of settings page
 
-@m10 @requested
+@m10 @requested @selenium @tgn @_tested
 Scenario: I can see "Set interests" button next to "Change password"
+  Given I have user with email customer101@person.com and role customer
+  Then I fill in "search_with_keyword" with "customer101@person.com"
+  And I press translated "administration.users.index.view.search_button"
+  And I click hidden link by url regex "/users\/\d+\/edit/"
+  Then I should see translated "administration.users.edit.view.change_customer_interests_link"
+  And I follow translated "administration.users.edit.view.change_customer_interests_link"
 
-@m10 @requested
+@m10 @requested @tgn @_tested
 Scenario: I should be redirected to edit user page after saving interests
+  Given I have user with email customer101@person.com and role customer
+  Then I fill in "search_with_keyword" with "customer101@person.com"
+  And I press translated "administration.users.index.view.search_button"
+  And I click hidden link by url regex "/users\/\d+\/edit/"
+  Then I should see translated "administration.users.edit.view.change_customer_interests_link"
+  And I follow translated "administration.users.edit.view.change_customer_interests_link"
+  And I press translated "administration.users.edit.view.button_update_user"
+  And I should be on administration edit user for customer101@person.com
