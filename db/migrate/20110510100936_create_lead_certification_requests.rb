@@ -4,6 +4,7 @@ class CreateLeadCertificationRequests < ActiveRecord::Migration
       t.integer :lead_id
       t.integer :state
       t.string :token
+      t.datetime :last_visit_date
       t.timestamps
     end
 
