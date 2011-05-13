@@ -14,7 +14,7 @@ class Agents::CertificationsController < Agents::AgentController
   def create
     @lead = Lead.find(params[:lead_id])
     @lead.create_lead_certification_request
-    flash[:notice] = "Lead Certification Request has been successfully sent."
+    flash[:notice] = t("agent.lead_certifications.index.view.sent_successfully")
     redirect_to agents_leads_path
   end
 

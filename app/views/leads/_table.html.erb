@@ -57,6 +57,12 @@
            <%= link_to t("comments.shared.hide_comments"), "#", :class => "toggle_row hide_comments", :style => "display:none" %>
            (<%= lead.comment_threads.roots.count %>)
           <% end %>
+          <% if lead.creator == current_user or lead.creator.parent == current_user %>
+            <% if lead.lead_certification_request %>
+              <br/>
+              <%= t("leads.listing.certification_status") %>: <%= lead.lead_certification_request.current_status %>
+            <% end %>
+          <% end %>
         </td>
         <td class="ta_r"><%= lead.clicks_count %></td>
         <td class="ta_r"><%= lead.exposures_count %></td>

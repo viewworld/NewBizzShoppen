@@ -109,6 +109,14 @@ Given /^lead (.+).is created by user (.+) with role (.+)$/ do |name, email, role
   lead.lead_translations.each { |lt| lt.destroy if lt.locale != "en" }
 end
 
+Given /^lead "([^"]*)".is created in category "([^"]*)" by user "([^"]*)" with role "([^"]*)"$/ do |name, category_name, email, role|
+  u = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
+  category = Category.where(:name => category_name).first
+  published = (role != "purchase_manager")
+  lead = Lead.make!(:header => name, :creator_id => u.id, :creator_type => "User::#{role.camelize}", :published => published, :category => category)
+  lead.lead_translations.each { |lt| lt.destroy if lt.locale != "en" }
+end
+
 Given /^I can see following () f for lead Printers ultimate deal$/ do |fields, lead_header|
 
 end
@@ -258,3 +266,25 @@ Then /^last purchase for lead "([^"]*)" has attributes "([^"]*)"$/ do |header, o
     assert purchase.send(method).to_s == value.to_s
   end
 end
+
+When /^I visit certification url for lead "([^"]*)"$/ do |header|
+  lead = Lead.where(:header => header).first
+  visit "/leads/#{lead.id}/edit?token=#{lead.lead_certification_request.token}"
+end
+
+When /^lead "([^"]*)" is certified$/ do |header|
+  lead = Lead.where(:header => header).first
+  lead.create_lead_certification_request
+  lead.lead_certification_request.change_state("agreed")
+end
+
+When /^lead "([^"]*)" certification request is sent$/ do |header|
+  lead = Lead.where(:header => header).first
+  lead.create_lead_certification_request
+end
+
+Then /^lead "([^"]*)" certification status should be "([^"]*)"$/ do |header, expected_state|
+  lead = Lead.where(:header => header).first
+  lead.lead_certification_request.state.should == expected_state.to_i
+end
+

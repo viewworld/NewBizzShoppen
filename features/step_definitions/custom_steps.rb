@@ -70,6 +70,12 @@ Given /^I click hidden link by url regex "([^"]*)"(?: within "([^"]*)")?$/ do |r
   visit page.all(:css, selector).detect { |l| !(l[:href] =~ eval(regex)).nil? }[:href]
 end
 
+Given /^I really click hidden link by url regex "([^"]*)"(?: within "([^"]*)")?$/ do |regex,scope|
+  selector = "a"
+  selector = scope + " #{selector}" if scope
+  page.all(:css, selector).detect { |l| !(l[:href] =~ eval(regex)).nil? }.click()
+end
+
 Given /^I (should not|should) see link with label "([^"]*)"$/ do |should_be_visible, label|
   if should_be_visible == "should"
     assert !page.all(:css, 'a').detect { |l| l.text == label }.nil?

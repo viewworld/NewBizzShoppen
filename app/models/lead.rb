@@ -235,4 +235,8 @@ class Lead < AbstractLead
     !creator.has_role?(:purchase_manager)
   end
 
+  def certified?
+    lead_certification_request and lead_certification_request.approved?
+  end
+
 end

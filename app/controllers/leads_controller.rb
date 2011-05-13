@@ -97,7 +97,7 @@ class LeadsController < ApplicationController
     if @lsr and @lsr.state == LeadCertificationRequest::STATE_SENT
       @lead = Lead.find(@lsr.lead_id)
     else
-      flash[:notice] = "Your token is invalid or state of your requested was changed and it is not available any more."
+      flash[:notice] = t("leads.certification.invalid_token")
       redirect_to login_path
     end
   end

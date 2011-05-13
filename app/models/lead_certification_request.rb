@@ -2,8 +2,11 @@ class LeadCertificationRequest < ActiveRecord::Base
   belongs_to :lead
 
   STATE_SENT = 0
-  STATE_APPROVED = 1
-  STATE_REJECTED = 2
+  STATE_SENT_REMINDER = 1
+  STATE_SENT_SECOND_REMINDER = 2
+  STATE_APPROVED = 3
+  STATE_REJECTED = 4
+  STATE_TIMED_OUT = 5
 
   after_create :process
 
@@ -39,6 +42,14 @@ class LeadCertificationRequest < ActiveRecord::Base
 
   def change_state(message)
     self.update_attribute(:state, message == "agreed" ? STATE_APPROVED : STATE_REJECTED)
+  end
+
+  def current_status
+    I18n.t("leads.certification.status_#{state}")
+  end
+
+  def approved?
+    state == STATE_APPROVED
   end
 
 end

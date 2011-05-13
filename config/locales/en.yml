@@ -461,6 +461,15 @@ en:
       certification_label: "Certification:"
       rating_level: "Rating:"
   leads:
+    certification:
+      status_0: "sent"
+      status_1: "reminder sent"
+      status_2: "second reminder sent"
+      status_3: "approved"
+      status_4: "rejected"
+      confirm: "Confirm"
+      reject: "Do not confirm"
+      invalid_token: "Your token is invalid or state of your requested has changed and it is not available any more"
     listing:
       purchase_value_label: "Purchase value:"
       lead_price_label: "Lead price:"
@@ -484,6 +493,7 @@ en:
       has_unsatisfactory_rating_yes: "Yes"
       has_unsatisfactory_rating_no: "No"
       edit_label: Edit
+      certification_status: "Certification status"
     table:
       id: "ID"
       header: "Lead title"
@@ -1301,6 +1311,10 @@ en:
           rating_header: Ratings
           rating_level: Rating
           rating_reason: Reason
+    lead_certifications:
+      index:
+        view:
+          sent_successfully: "Lead Certification request has been sent"
     lead_templates:
       index:
         view:

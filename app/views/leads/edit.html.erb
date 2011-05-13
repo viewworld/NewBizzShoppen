@@ -9,7 +9,7 @@
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="save">
-            <%= form.submit "Confirm" %>
+            <%= form.submit t("leads.certification.confirm") %>
           </ibt>
         </param:actions>
       </frm>
@@ -19,7 +19,7 @@
       <%= hidden_field_tag "confirmation", "disagree" %>
       <param:actions>
         <ibt c="fltri" icon="save">
-          <%= submit_tag "Do not confirm" %>
+          <%= submit_tag t("leads.certification.reject") %>
         </ibt>
       </param:actions>
   <% end %>
