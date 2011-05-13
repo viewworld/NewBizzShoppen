@@ -595,7 +595,7 @@ Scenario: I can see password fields above unique categories
   And I press translated "administration.users.index.view.new_user"
   Then I should see "Password" before "Available unique categories"
 
-@m10 @requested @tested_elsewhere @_done
+@m10 @requested @tested_elsewhere @_done @_tested
 Scenario: I can see "Refresh statistics" button on users listing instead of settings page
 
 @m10 @requested @selenium @tgn @_tested
