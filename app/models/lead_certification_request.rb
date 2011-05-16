@@ -56,12 +56,12 @@ class LeadCertificationRequest < ActiveRecord::Base
   end
 
   def update_state!
-    if [STATE_SENT, STATE_SENT_REMINDER].include?(state) and last_email_sent_at.to_date+Settings.resend_certification_notification_after_days.to_i >= Date.today
+    if [STATE_SENT, STATE_SENT_REMINDER].include?(state) and last_email_sent_at.to_date+Settings.resend_certification_notification_after_days.to_i == Date.today
       self.state = state + 1
       self.last_email_sent_at = Time.now
       self.save
       ApplicationMailer.email_template(contact_email, EmailTemplate.find_by_uniq_id("certification_request_reminder"), {:lead_certification_request => self}).deliver
-    elsif state == STATE_SENT_SECOND_REMINDER  and last_email_sent_at.to_date+Settings.expire_certification_notification_after_days.to_i >= Date.today
+    elsif state == STATE_SENT_SECOND_REMINDER  and last_email_sent_at.to_date+Settings.expire_certification_notification_after_days.to_i == Date.today
       expire!
     end
   end

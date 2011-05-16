@@ -150,9 +150,9 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
         {
             :name => "Certification request reminder",
             :uniq_id => "certification_request_reminder",
-            :en => {:subject => "Certification request",
+            :en => {:subject => "Certification request reminder",
                     :body => "<p>Login url: {{lead_certification_request.login_url}}</p><p>Contact name: {{lead_certification_request.contact_name}}</p><p>Contact email: {{lead_certification_request.contact_email}}</p>"},
-            :dk => {:subject => "[DK] Certification request",
+            :dk => {:subject => "[DK] Certification request reminder",
                     :body => "[DK] <p>Login url: {{lead_certification_request.login_url}}</p><p>Contact name: {{lead_certification_request.contact_name}}</p><p>Contact email: {{lead_certification_request.contact_email}}</p>"}
         }
     ]

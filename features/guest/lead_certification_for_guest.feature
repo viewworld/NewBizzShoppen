@@ -104,8 +104,33 @@ Scenario: Other users should not see that certification approval timed out
 @non_testable @_done @tgn
 Scenario: When certain period of time passes and the link with lead's confirmation is not visited then another email is sent to lead's contact
 
-@non_testable @_done @tgn
+@_done @tgn @_tested
 Scenario: I check perdiodically for confirmations that have not been approved or rejected
+  Given date today is "2011-03-31"
+  And class "Settings" method "resend_certification_notification_after_days" returns "4"
+  And class "Settings" method "expire_certification_notification_after_days" returns "7"
+  When lead WorstLead1 is created by user agent007@nbs.com with role agent
+  And lead "WorstLead1" certification request has attributes "created_at:2011-03-27,last_email_sent_at:2011-03-27"
+  And lead "WorstLead1" certification status should be "0"
+  When lead WorstLead2 is created by user agent007@nbs.com with role agent
+  And lead "WorstLead2" certification request has attributes "created_at:2011-03-27,last_email_sent_at:2011-03-27,state:1"
+  And lead "WorstLead2" certification status should be "1"
+  When lead WorstLead3 is created by user agent007@nbs.com with role agent
+  And lead "WorstLead3" certification request has attributes "created_at:2011-03-24,last_email_sent_at:2011-03-24,state:2"
+  And lead "WorstLead3" certification status should be "2"
+  When lead WorstLead4 is created by user agent007@nbs.com with role agent
+  And lead "WorstLead4" certification request has attributes "created_at:2011-03-30,last_email_sent_at:2011-03-30,state:1"
+  And lead "WorstLead4" certification status should be "1"
+  And lead certification request for lead "WorstLead1" has its state updated
+  And last email sent should have subject "Certification request reminder"
+  And lead "WorstLead1" certification status should be "1"
+  And lead certification request for lead "WorstLead2" has its state updated
+  And last email sent should have subject "Certification request reminder"
+  And lead "WorstLead2" certification status should be "2"
+  And lead certification request for lead "WorstLead3" has its state updated
+  And lead "WorstLead3" certification status should be "5"
+  And lead certification request for lead "WorstLead4" has its state updated
+  And lead "WorstLead4" certification status should be "1"
 
 @_tested
 Scenario: Last visit date is recorded when link is accessed but lead is not confirmed

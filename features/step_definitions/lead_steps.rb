@@ -283,6 +283,13 @@ When /^lead "([^"]*)" certification request is sent$/ do |header|
   lead.create_lead_certification_request
 end
 
+When /^lead "([^"]*)" certification request has attributes "([^"]*)"$/ do |header, options|
+  lead = Lead.where(:header => header).first
+  lead.create_lead_certification_request if lead.lead_certification_request.nil?
+  attrs = Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys
+  lead.lead_certification_request.update_attributes(attrs)
+end
+
 Then /^lead "([^"]*)" certification status should be "([^"]*)"$/ do |header, expected_state|
   lead = Lead.where(:header => header).first
   lead.lead_certification_request.state.should == expected_state.to_i
@@ -291,4 +298,9 @@ end
 When /^lead certification request for lead "([^\"]*)" has expired$/ do |header|
   lead = Lead.where(:header => header).first
   lead.lead_certification_request.expire!
+end
+
+When /^lead certification request for lead "([^\"]*)" has its state updated$/ do |header|
+  lead = Lead.where(:header => header).first
+  lead.lead_certification_request.update_state!
 end
