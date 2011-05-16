@@ -10,12 +10,15 @@ class LeadCertificationRequest < ActiveRecord::Base
 
   after_create :process
 
+  scope :active, where("state <= ?", STATE_SENT_SECOND_REMINDER)
+
   liquid :login_url, :contact_name, :contact_email
 
   private
 
   def process
     self.token = generate_token
+    self.last_email_sent_at = Time.now
     self.state = STATE_SENT
     self.save!
     ApplicationMailer.email_template(contact_email, EmailTemplate.find_by_uniq_id("certification_request"), {:lead_certification_request => self}).deliver
@@ -50,6 +53,32 @@ class LeadCertificationRequest < ActiveRecord::Base
 
   def approved?
     state == STATE_APPROVED
+  end
+
+  def update_state!
+    if [STATE_SENT, STATE_SENT_REMINDER].include?(state) and last_email_sent_at.to_date+Settings.resend_certification_notification_after_days.to_i >= Date.today
+      self.state = state + 1
+      self.last_email_sent_at = Time.now
+      self.save
+      ApplicationMailer.email_template(contact_email, EmailTemplate.find_by_uniq_id("certification_request_reminder"), {:lead_certification_request => self}).deliver
+    elsif state == STATE_SENT_SECOND_REMINDER  and last_email_sent_at.to_date+Settings.expire_certification_notification_after_days.to_i >= Date.today
+      expire!
+    end
+  end
+
+  def expired?
+    state == STATE_TIMED_OUT
+  end
+
+  def expire!
+    unless expired?
+      self.state = STATE_TIMED_OUT
+      self.save
+    end
+  end
+
+  def visited?
+    !last_visit_date.blank?
   end
 
 end

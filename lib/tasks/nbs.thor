@@ -8,15 +8,18 @@ class Nbs < Thor
 
     require "spec/support/blueprints"
     #Default settings
-    Settings.default_payout_delay = 0
-    Settings.default_leads_per_page = 5
-    Settings.certification_level_1 = 10
-    Settings.certification_level_2 = 20
-    Settings.contact_us_email = "contact@nbs.fake.com"
+    Settings.default_payout_delay = 0 if Settings.default_payout_delay.nil?
+    Settings.default_leads_per_page = 5 if Settings.default_leads_per_page.nil?
+    Settings.certification_level_1 = 10 if Settings.certification_level_1.nil?
+    Settings.certification_level_2 = 20 if Settings.certification_level_2.nil?
+    Settings.contact_us_email = "contact@nbs.fake.com" if Settings.contact_us_email.nil?
     # Invoicing
-    Settings.invoicing_default_payment_deadline_date = 14
-    Settings.invoicing_default_vat_rate = 0.15
-    Settings.big_buyer_purchase_limit = 10000
+    Settings.invoicing_default_payment_deadline_date = 14 if Settings.invoicing_default_payment_deadline_date.nil?
+    Settings.invoicing_default_vat_rate = 0.15 if Settings.invoicing_default_vat_rate.nil?
+    Settings.big_buyer_purchase_limit = 10000 if Settings.big_buyer_purchase_limit.nil?
+    #Certification
+    Settings.resend_certification_notification_after_days = 15 if Settings.resend_certification_notification_after_days.nil?
+    Settings.expire_certification_notification_after_days = 15 if Settings.expire_certification_notification_after_days.nil?
 
     Country.find_or_create_by_name("Denmark", :locale => "dk", :detailed_locale => "dk", :vat_rate => VatRate.new(:rate => 25))
     Country.find_or_create_by_name("United Kingdom", :locale => "en", :detailed_locale => "gb", :vat_rate => VatRate.new(:rate => 20))
@@ -139,6 +142,14 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
         {
             :name => "Certification request",
             :uniq_id => "certification_request",
+            :en => {:subject => "Certification request",
+                    :body => "<p>Login url: {{lead_certification_request.login_url}}</p><p>Contact name: {{lead_certification_request.contact_name}}</p><p>Contact email: {{lead_certification_request.contact_email}}</p>"},
+            :dk => {:subject => "[DK] Certification request",
+                    :body => "[DK] <p>Login url: {{lead_certification_request.login_url}}</p><p>Contact name: {{lead_certification_request.contact_name}}</p><p>Contact email: {{lead_certification_request.contact_email}}</p>"}
+        },
+        {
+            :name => "Certification request reminder",
+            :uniq_id => "certification_request_reminder",
             :en => {:subject => "Certification request",
                     :body => "<p>Login url: {{lead_certification_request.login_url}}</p><p>Contact name: {{lead_certification_request.contact_name}}</p><p>Contact email: {{lead_certification_request.contact_email}}</p>"},
             :dk => {:subject => "[DK] Certification request",
@@ -466,5 +477,13 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
 
   def t
     I18nUtils.populate!
+  end
+
+  desc "check lead certification requests", ""
+
+  def check_lead_certification_requests
+    LeadCertificationRequest.active.each do |lead_certification_request|
+      lead_certification_request.update_state!
+    end
   end
 end

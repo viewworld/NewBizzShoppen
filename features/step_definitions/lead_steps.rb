@@ -288,3 +288,7 @@ Then /^lead "([^"]*)" certification status should be "([^"]*)"$/ do |header, exp
   lead.lead_certification_request.state.should == expected_state.to_i
 end
 
+When /^lead certification request for lead "([^\"]*)" has expired$/ do |header|
+  lead = Lead.where(:header => header).first
+  lead.lead_certification_request.expire!
+end

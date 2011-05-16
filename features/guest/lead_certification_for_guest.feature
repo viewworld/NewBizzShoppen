@@ -35,12 +35,20 @@ Scenario: I can confirm certification or cancel
   Then lead "WorstLead" certification status should be "4"
 
 #modal window with invitation
+@_tested @tgn
 Scenario: When lead is certified by me I am given a choice to create a fairleads account
+  When lead "BestLead" certification request is sent
+  And I visit certification url for lead "BestLead"
+  And I press translated "leads.certification.confirm"
+  Then I should see translated "certification_accounts.new.view.title"
 
+@_done @non_testable
 Scenario: When lead is certified by me I can login through google account and then confirm terms & conditions
 
+@_done @non_testable
 Scenario: When lead is certified by me I can login through linkedin account and then confirm terms & conditions
 
+@_done @non_testable
 Scenario: When lead is certified by me I can login through facebook account and then confirm terms & conditions
 
 @_done @_tested
@@ -66,22 +74,40 @@ Scenario: After signup I can login instantly and do not have to confirm it by em
   And I sign in as james@bond.co.uk with password secret
   Then I should be signed in
 
+@_tested @tgn
 Scenario: I can specify in settings how often send reminder emails to leads
+  Given I am not sign in
+  And I am signed up and confirmed as user with email admin888@nbs.com and password secret and role admin
+  And I sign in as admin888@nbs.com with password secret
+  And I follow translated "layout.main_menu.admin.global"
+  And I fill in "setting_6" with "15"
+  And I fill in "setting_9" with "15"
+  And I press translated "administration.settings.edit.view.button_update_settings"
 
+@_done @tested_elsewhere
 Scenario: I can edit contents of emails that will be sent to lead
 
+@_tested @tgn
 Scenario: When lead does not answer to any email then agent should see "Approval time out" information
+  When lead WorstLead is created by user agent007@nbs.com with role agent
+  And lead "WorstLead" certification request is sent
+  And lead certification request for lead "WorstLead" has expired
+  And I go to the homepage
+  And I sign in as agent007@nbs.com with password secret
+  And I follow translated "layout.main_menu.agent.leads"
+  Then I should see translated "leads.certification.status_5"
 
+@_done @non_testable
 Scenario: Other users should not see that certification approval timed out
 
 #periodical rake task
-@non_testable
+@non_testable @_done @tgn
 Scenario: When certain period of time passes and the link with lead's confirmation is not visited then another email is sent to lead's contact
 
-@non_testable
-Scenario: I check perdiodically for confirmations that have not been visited
+@non_testable @_done @tgn
+Scenario: I check perdiodically for confirmations that have not been approved or rejected
 
-@wip
+@_tested
 Scenario: Last visit date is recorded when link is accessed but lead is not confirmed
   When lead "BestLead" certification request is sent
   And I visit certification url for lead "BestLead" on "2000-01-01"

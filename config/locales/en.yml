@@ -467,6 +467,7 @@ en:
       status_2: "second reminder sent"
       status_3: "approved"
       status_4: "rejected"
+      status_5: "expired"
       confirm: "Confirm"
       reject: "Do not confirm"
       invalid_token: "Your token is invalid or state of your requested has changed and it is not available any more"
