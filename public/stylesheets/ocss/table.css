@@ -402,6 +402,24 @@ div.pagination .disabled
     width: 33%;
 }
 
+.categories_table tbody td ul li
+{
+    padding-left: 15px;
+    line-height: 20px;
+    font-size: 12px;
+}
+
+.categories_table tbody td > ul > li
+{
+    padding-left: 0;
+    font-size: 13px;
+}
+
+.categories_table tbody td > ul > li > label
+{
+    font-weight: bold;
+}
+
 
 
 
