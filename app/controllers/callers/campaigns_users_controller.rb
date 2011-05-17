@@ -13,7 +13,7 @@ class Callers::CampaignsUsersController < Callers::CallerController
 
   def collection
     @campaign = Campaign.find(params[:campaign_id])
-    @call_centres = current_user.has_role?(:admin) ? User::CallCentre.all : [current_user] 
+    @call_centres = current_user.has_role?(:admin) ? User::CallCentre.all + User::Agent.all : [current_user] 
   end
 
 end
