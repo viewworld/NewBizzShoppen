@@ -5,10 +5,11 @@
       <frm title="">
         <param:content>          
           <div class="pdd_10 no_pdd_t">
+            <% settings_left, settings_right = @settings.each_slice((@settings.size/2).to_i).to_a %>
             <div class="column_left">
             <fieldset class="inputs labels_260 labels_ta_r inputs_180">
               <ol>
-                <% @settings.each_with_index do |setting, i| %>
+                <% settings_left.each_with_index do |setting, i| %>
                     <li class="string">
                       <% if setting.var == "invoicing_default_payment_deadline_date" %>
                         <%= label_tag "Invoicing payment deadline date" %>
@@ -24,7 +25,7 @@
             <div class="column_right">
             <fieldset class="inputs labels_260 labels_ta_r inputs_180">
               <ol>
-                <% @settings.each_with_index do |setting, i| %>
+                <% settings_right.each_with_index do |setting, i| %>
                     <li class="string">
                       <% if setting.var == "invoicing_default_payment_deadline_date" %>
                         <%= label_tag "Invoicing payment deadline date" %>
