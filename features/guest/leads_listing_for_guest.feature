@@ -214,7 +214,7 @@ Scenario: I should not see agent unique categories in a search filter
   And I follow "Electronics"
   Then "search_with_category" dropdown should not have values "Other Agent Unique Category"
 
-@lead_certification @requested @m10 @_done @_tested @_wip
+@lead_certification @requested @m10 @_done @_tested
 Scenario: Every certified lead is marked by an icon in the lead listing
   When there are no leads
   And Category named "BestLeads" already exists
