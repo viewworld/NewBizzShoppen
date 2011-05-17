@@ -80,7 +80,8 @@ class LeadsController < ApplicationController
     if @search.with_category.present?
       @search.with_selected_categories = Category.find_by_id(@search.with_category).self_and_descendants.map(&:id)
     end
-    @category = @search.with_category.present? ? Category.find(@search.with_category) : nil
+    roots = @categories.select { |c| @search.with_selected_categories.to_a.map(&:to_i).include?(c.id) and c.parent_id.nil? }
+    @category = @search.with_category.present? ? Category.find(@search.with_category) : roots.size == 1 ? roots.first : nil
   end
 
   private
