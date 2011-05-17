@@ -83,7 +83,9 @@ Nbs::Application.routes.draw do
 
   namespace :call_centre_agents do
     root :to => "leads#index"
-    resources :leads
+    resources :leads do
+      resources :certifications, :only => :create
+    end
     resources :lead_templates
   end
 

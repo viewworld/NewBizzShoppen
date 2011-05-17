@@ -1464,6 +1464,7 @@ en:
             keyword_label: Keyword
             filter_with_inactive: Skip inactive
             filter_with_outdated: Skip outdated
+          certificate: "Certificate"
       new:
         view:
           title: New lead

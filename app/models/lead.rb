@@ -239,4 +239,8 @@ class Lead < AbstractLead
     lead_certification_request and lead_certification_request.approved?
   end
 
+  def can_be_certified?
+    lead_certification_request.blank? and !email_address.blank? and !contact_name.blank?
+  end
+
 end
