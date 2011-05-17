@@ -26,6 +26,7 @@ Scenario: I can see search panel on leads listing page
 @tgn @_done @_tested
 Scenario: I can filter leads based on category
   When I check "Office"
+  And I uncheck "Computers"
   And I press translated "leads.index.search.search_button"
   Then I should see "Faxes deal"
   Then I should see "Furniture for office deal"
