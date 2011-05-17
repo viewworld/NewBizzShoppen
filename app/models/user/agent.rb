@@ -15,13 +15,13 @@ class User::Agent < ::User
     Comment.with_leads_created_by(self)
   end
 
+  def has_max_contacts_in_campaign?(campaign)
+    contacts.for_campaign(campaign).with_pending_status(false).count >= campaign.max_contact_number rescue false
+  end
+
   private
 
   def set_default_certification_level
     self.certification_level = User::BRONZE_CERTIFICATION
-  end
-
-  def has_max_contacts_in_campaign?(campaign)
-    contacts.for_campaign(campaign).with_pending_status(false).count >= campaign.max_contact_number
   end
 end

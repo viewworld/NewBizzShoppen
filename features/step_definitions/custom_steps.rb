@@ -44,6 +44,10 @@ When /^confirmation email is sent for locale "([^"]*)"$/ do |locale_lang|
   User::Agent.make!
 end
 
+Then /^last email sent should have subject "([^"]*)"$/ do |content|
+  assert ActionMailer::Base.deliveries.last.subject.include?(content)
+end
+
 Then /^last email sent should have content "([^"]*)"$/ do |content|
   assert ActionMailer::Base.deliveries.last.body.raw_source.include?(content)
 end
@@ -68,6 +72,12 @@ Given /^I click hidden link by url regex "([^"]*)"(?: within "([^"]*)")?$/ do |r
   selector = "a"
   selector = scope + " #{selector}" if scope
   visit page.all(:css, selector).detect { |l| !(l[:href] =~ eval(regex)).nil? }[:href]
+end
+
+Given /^I really click hidden link by url regex "([^"]*)"(?: within "([^"]*)")?$/ do |regex,scope|
+  selector = "a"
+  selector = scope + " #{selector}" if scope
+  page.all(:css, selector).detect { |l| !(l[:href] =~ eval(regex)).nil? }.click()
 end
 
 Given /^I (should not|should) see link with label "([^"]*)"$/ do |should_be_visible, label|
@@ -155,6 +165,14 @@ Given /^I follow(| translated) action "([^\"]*)" within row containing(| transla
   text = I18n.t(text) if is_text_translated == " translated"
   page.execute_script("$('div.td_actions ul').show()")
   page.find(:xpath, "//td[contains(., '#{text}')]/..//a[contains(., '#{action}')]").click()
+end
+
+Given /^date today is "([^"]*)"$/ do |date|
+  Date.stubs(:today).returns(Date.parse(date))
+end
+
+Given /^class "([^"]*)" method "([^"]*)" returns "([^"]*)"$/ do |klass, method, arg|
+    klass.constantize.stubs(method.to_sym).returns(arg)
 end
 
 def options_hash_to_s(options)

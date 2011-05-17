@@ -59,6 +59,13 @@
               <%= t("models.lead.certification.lvl#{@lead.certification_level}") %>
             </div>
           </li>
+          <% if @lead.certified? %>
+            <li>
+              <div class="certificate">
+                <%= image_tag 'certificate' %>
+              </div>
+            </li>
+          <% end %>
         </ul>
       </div>
     </div>

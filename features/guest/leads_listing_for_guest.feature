@@ -214,5 +214,16 @@ Scenario: I should not see agent unique categories in a search filter
   And I follow "Electronics"
   Then "search_with_category" dropdown should not have values "Other Agent Unique Category"
 
-@lead_certification @requested @m10
+@lead_certification @requested @m10 @_done @_tested
 Scenario: Every certified lead is marked by an icon in the lead listing
+  When there are no leads
+  And Category named "BestLeads" already exists
+  And I am signed up and confirmed as user with email agent007@nbs.com and password secret and role agent
+  And lead "BestLead" is created in category "BestLeads" by user "agent007@nbs.com" with role "agent"
+  And lead "BestLead" has attributes "email_address:james@bond.co.uk"
+  And lead "BestLead" is certified
+  And I am on browse leads
+  And I follow "BestLeads"
+  Then I should see CSS path "p.certificate"
+  When I am on the BestLead lead page
+  Then I should see CSS path "div.certificate"

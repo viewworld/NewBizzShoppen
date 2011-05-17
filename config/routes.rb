@@ -84,7 +84,9 @@ Nbs::Application.routes.draw do
 
   namespace :call_centre_agents do
     root :to => "leads#index"
-    resources :leads
+    resources :leads do
+      resources :certifications, :only => :create
+    end
     resources :lead_templates
   end
 
@@ -113,7 +115,9 @@ Nbs::Application.routes.draw do
 
   namespace :agents do
     root :to => "leads#index"
-    resources :leads
+    resources :leads do
+      resources :certifications, :only => :create
+    end
     resources :lead_templates
   end
 
@@ -168,7 +172,7 @@ Nbs::Application.routes.draw do
   match 'agent_home' => 'agent_home#show', :as => "agent_home"
   match 'purchase_manager_home' => 'purchase_manager_home#show', :as => "purchase_manager_home"
 
-  resources :leads, :only => [:index, :show]
+  resources :leads, :except => [:new, :create, :destroy]
 
   resources :categories, :only => [:index]
   match 'categories/:slag' => "leads#index"
@@ -178,6 +182,7 @@ Nbs::Application.routes.draw do
   resources :buyer_accounts, :only => [:new, :create]
   resources :purchase_manager_accounts, :only => [:new, :create]
   resources :category_buyer_accounts, :only => [:new, :create]
+  resources :certification_accounts, :only => [:new, :create]
   resources :locales
   resources :phone_codes
   resources :regions

@@ -32,6 +32,7 @@ class Comments::ThreadsController < Comments::CommentsController
 
   def show
     @thread = current_user.comment_threads.find(params[:id])
+    @thread.self_and_descendants.unread_by_user(current_user).each { |c| c.comment_readers.create(:user => current_user) }
   end
 
   def create

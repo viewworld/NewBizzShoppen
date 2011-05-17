@@ -2,7 +2,9 @@
   <header back="true"><%= t("agent_accounts.new.view.title") %></header>
 
   <div class="pdd_5 no_pdd_b">
-    <%= blurb('blurb_sign_up') %>
+    <%= blurb('blurb_sign_up') %><br/>
+    <%= link_to_rpx t("agent_accounts.new.view.janrain_sign_up"), agent_accounts_url %>
+    <%= javascript_include_rpx agent_accounts_url %>
   </div>
 
   <hl pdd="15"/>
@@ -36,10 +38,11 @@
                   <%= form.input :screen_name, :hint => hint_for(@user, :screen_name) %>
                   <%= form.input :phone, :hint => hint_for(@user, :phone) %>
                   <%= form.input :email, :hint => hint_for(@user, :email) %>
-                  <%= form.input :password, :hint => hint_for(@user, :password) %>
-                  <%= form.input :password_confirmation, :hint => hint_for(@user, :password_confirmation) %>
+                  <%= form.input :password, :hint => hint_for(@user, :password), :as => @user.rpx_identifier.blank? ? :password : :hidden %>
+                  <%= form.input :password_confirmation, :hint => hint_for(@user, :password_confirmation), :as => @user.rpx_identifier.blank? ? :password : :hidden %>
                   <%= form.input :agreement_read, :hint => hint_for(@user, :agreement_read), :as => :boolean, :label => "#{t("common.agree_to")} #{link_to_main_page_article('terms_conditions', {:popup => true}, {:id => 'agreement_modal_box'})}".html_safe %>
                   <%= form.input :newsletter_on, :hint => hint_for(@user, :newsletter_on), :as => :boolean %>
+                  <%= form.input :rpx_identifier, :as => :hidden %>
                 </ol>
               </fieldset>
             </div>
