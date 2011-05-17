@@ -3,9 +3,10 @@
 
   <%= form_tag administration_setting_path, :method => :put do %>
       <frm title="">
-        <param:content>
+        <param:content>          
           <div class="pdd_10 no_pdd_t">
-            <fieldset class="inputs_vertical no_pdd_first inputs_190">
+            <div class="column_left">
+            <fieldset class="inputs labels_260 labels_ta_r inputs_180">
               <ol>
                 <% @settings.each_with_index do |setting, i| %>
                     <li class="string">
@@ -19,6 +20,24 @@
                 <% end %>
               </ol>
             </fieldset>
+            </div>
+            <div class="column_right">
+            <fieldset class="inputs labels_260 labels_ta_r inputs_180">
+              <ol>
+                <% @settings.each_with_index do |setting, i| %>
+                    <li class="string">
+                      <% if setting.var == "invoicing_default_payment_deadline_date" %>
+                        <%= label_tag "Invoicing payment deadline date" %>
+                      <% else %>
+                        <%= label_tag setting.var.humanize %>
+                      <% end %>
+                      <%= text_field "settings", setting.id, :value => setting.value, :id => "setting_#{i}" %>
+                    </li>
+                <% end %>
+              </ol>
+            </fieldset>             
+            </div>
+            <clb/>
           </div>
         </param:content>
         <param:actions>
