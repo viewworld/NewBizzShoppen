@@ -24,7 +24,8 @@
         <div class="frm_tiny frm_tip">
           <span class="tip"></span>
 
-          <p><%= t("home.show.view.buyer_sign_up_text") %>, <%= link_to t("home.show.view.sign_up_here"), new_buyer_account_path %>.</p>
+          <p><%= t("home.show.view.buyer_sign_up_text") %>
+            , <%= link_to t("home.show.view.sign_up_here"), new_buyer_account_path %>.</p>
         </div>
     <% end %>
   </div>
@@ -43,7 +44,8 @@
         <div class="frm_tiny frm_tip">
           <span class="tip"></span>
 
-          <p><%= t("home.show.view.purchase_manager_sign_up_text") %>,<br/><%= link_to t("home.show.view.sign_up_here"), new_purchase_manager_account_path %>.
+          <p><%= t("home.show.view.purchase_manager_sign_up_text") %>
+            ,<br/><%= link_to t("home.show.view.sign_up_here"), new_purchase_manager_account_path %>.
           </p>
         </div>
     <% end %>
@@ -63,7 +65,8 @@
         <div class="frm_tiny frm_tip">
           <span class="tip"></span>
 
-          <p><%= t("home.show.view.agent_sign_up_text") %>,<br/><%= link_to t("home.show.view.sign_up_here"), new_agent_account_path %>.</p>
+          <p><%= t("home.show.view.agent_sign_up_text") %>
+            ,<br/><%= link_to t("home.show.view.sign_up_here"), new_agent_account_path %>.</p>
         </div>
     <% end %>
 
@@ -76,6 +79,8 @@
             <%= semantic_form_for(:user, :url => session_path(:user)) do |f| %>
                 <fieldset class="inputs labels_100 inputs_180 no_pdd">
                   <ol class="align_inputs no_pdd">
+                    <%= link_to_rpx "Sign in using: <b>Google, Facebook or Linkin</b>", user_session_url %><br/><br/>
+                    <%= javascript_include_rpx user_session_url %>
                     <%= f.input :email, :input_html => {:tabindex => 1} %>
                     <%= f.input :password, :label => raw(I18n.t("activerecord.attributes.user.password") + content_tag(:span, link_to(t("home.show.view.forgotten_password_link"), new_password_path(User)), :class => "label_link")), :input_html => {:tabindex => 2}, :wrapper_html => {:class => "rltv"} %>
                     <%= f.input :remember_me, :as => :boolean, :required => false, :input_html => {:tabindex => 3} %>

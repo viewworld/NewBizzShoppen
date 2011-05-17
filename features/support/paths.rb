@@ -104,6 +104,9 @@ module NavigationHelpers
         purchase_managers_lead_templates_path
     when /leads/
         leads_path
+    when /lead edit page for (.*)/
+        lead = Lead.where(:header => $1).first
+        edit_lead_path(lead)
     when /agent home/
         agent_home_path
     when /buyer home/

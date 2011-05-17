@@ -1,0 +1,15 @@
+<column-mc:>
+  <header><%= t("certification_accounts.new.view.title") %></header>
+
+  <div class="pdd_5 no_pdd_b" style="width:800px">
+    <%= blurb('blurb_sign_up') %>
+    <br/>
+    <%= link_to_rpx t("certification_accounts.new.view.janrain_sign_up"), certification_accounts_url %>
+    <%= javascript_include_rpx certification_accounts_url %>
+    <fltr style="float:right;"><%= link_to t("certification_accounts.new.view.i_already_have_account"), root_path %></fltr>
+  </div>
+
+  <hl pdd="15"/>
+
+  <%= render :partial => "sign_in/purchase_manager_form", :locals => {:user => @user, :url => certification_accounts_path} %>
+</column-mc:>

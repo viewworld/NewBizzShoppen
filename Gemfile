@@ -32,6 +32,7 @@ gem 'i18n-active_record'
 gem 'whenever', :require => false
 gem 'acts_as_commentable_with_threading'
 gem 'memcache-client'
+gem "devise_rpx_connectable"
 
 
 group :development do

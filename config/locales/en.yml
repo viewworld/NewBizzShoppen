@@ -472,6 +472,16 @@ en:
       certification_label: "Certification:"
       rating_level: "Rating:"
   leads:
+    certification:
+      status_0: "sent"
+      status_1: "reminder sent"
+      status_2: "second reminder sent"
+      status_3: "approved"
+      status_4: "rejected"
+      status_5: "expired"
+      confirm: "Confirm"
+      reject: "Do not confirm"
+      invalid_token: "Your token is invalid or state of your requested has changed and it is not available any more"
     listing:
       purchase_value_label: "Purchase value:"
       lead_price_label: "Lead price:"
@@ -495,6 +505,7 @@ en:
       has_unsatisfactory_rating_yes: "Yes"
       has_unsatisfactory_rating_no: "No"
       edit_label: Edit
+      certification_status: "Certification status"
     table:
       id: "ID"
       header: "Lead title"
@@ -1285,6 +1296,7 @@ en:
         view:
           new_lead: "New lead"
           edit: "Edit"
+          certificate: "Certificate"
           destroy: "Destroy"
           destroy_confirmation: "Are you sure?"
           search_button: "Search"
@@ -1317,6 +1329,10 @@ en:
           rating_header: Ratings
           rating_level: Rating
           rating_reason: Reason
+    lead_certifications:
+      index:
+        view:
+          sent_successfully: "Lead Certification request has been sent"
     lead_templates:
       index:
         view:
@@ -1465,6 +1481,7 @@ en:
             keyword_label: Keyword
             filter_with_inactive: Skip inactive
             filter_with_outdated: Skip outdated
+          certificate: "Certificate"
       new:
         view:
           title: New lead
@@ -1580,12 +1597,21 @@ en:
       view:
         title: "Freelancer Agent signup"
         button_create_account: "Create my account"
+        janrain_sign_up: "Sign up using: <b>Google, Facebook or Linkin</b>"
+
+  certification_accounts:
+    new:
+      view:
+        title: "Procurement Manager signup"
+        janrain_sign_up: "Sign up using: <b>Google, Facebook or Linkin</b>"
+        i_already_have_account: "I already have an account!"
 
   purchase_manager_accounts:
     new:
       view:
         title: "Procurement Manager signup"
         header: "Create new account"
+        janrain_sign_up: "Sign up using: <b>Google, Facebook or Linkin</b>"
         button_create_account: "Create my account"
 
   buyer:
@@ -1640,6 +1666,7 @@ en:
         button_create_account: "Create"
         enable_team_buyers: "Enable team buyers"
         company_name: "Company"
+        janrain_sign_up: "Sign up using: <b>Google, Facebook or Linkin</b>"
 
   category_buyer_accounts:
     new:
@@ -1648,6 +1675,7 @@ en:
         button_create_account: "Create"
         enable_team_buyers: "Enable team buyers"
         company_name: "Company"
+        janrain_sign_up: "Sign up using: <b>Google, Facebook or Linkin</b>"
 
   buyer_home:
     show:

@@ -1,19 +1,11 @@
-class AgentAccountsController < ApplicationController
-  before_filter :redirect_to_root_path_if_signed_in
+class AgentAccountsController < SignInController
 
   def new
-    @user = User::Agent.new(:newsletter_on => true)
+    super(User::Agent)
   end
 
   def create
-    @user = User::Agent.new(params[:user_agent])
-    respond_to do |format|
-      if @user.save
-        flash[:notice] = I18n.t("flash.agent_accounts.create.notice")
-        format.html {  redirect_to(root_path) }
-      else
-        format.html {  render("new") }
-      end
-    end
+    super(User::Agent, :user_agent, I18n.t("flash.agent_accounts.create.notice"))
   end
+
 end
