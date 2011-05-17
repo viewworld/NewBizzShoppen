@@ -215,8 +215,39 @@ Feature: Category buyer rules
     And I should see "Justin"
     And I should see "Bieber"
 
-  @m10 @requested
+  @m10 @requested @_done @_tested
   Scenario: I have access to all sub categories of my buying categories
+    Given Category named "Computers" already exists within category named "Electronics"
+    And lead Hapeki exists within category Computers
+    And Category named "Consoles" already exists within category named "Electronics"
+    And lead Iksboksy exists within category Consoles
+    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Electronics"
+    And I am on the home page
+    And I sign in as jon@lajoie.ca with password secret
+    And I am on category home leads page for Electronics
+    Then I should see "Consoles" within "table.categories_table"
+    And I should see "Computers" within "table.categories_table"
+    And I should see "Hapeki"
+    And I should see "Iksboksy"
+    When I uncheck "Computers"
+    And I press translated "leads.index.search.search_button"
+    Then I should see "Iksboksy"
+    And I should not see "Hapeki"
 
-  @m10 @requested
+  @m10 @requested @_done @_tested
   Scenario: I don't have access to subcategories of other root categories
+    Given Category named "Computers" already exists within category named "Electronics"
+    And lead Hapeki exists within category Computers
+    And Category named "Consoles" already exists within category named "Electronics"
+    And lead Iksboksy exists within category Consoles
+    And Category named "Kradzieze" already exists within category named "Business"
+    And lead Kradziez exists within category Kradzieze
+    And Category named "Wymuszenia" already exists within category named "Business"
+    And lead WymuszeniePierwszenstwa exists within category Wymuszenia
+    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Electronics"
+    And I am on the home page
+    And I sign in as jon@lajoie.ca with password secret
+    And I am on category home leads page for Electronics
+    Then I should not see "Kradziez" within "table.categories_table"
+    And I should not see "WymuszeniePierwszenstwa" within "table.categories_table"
+
