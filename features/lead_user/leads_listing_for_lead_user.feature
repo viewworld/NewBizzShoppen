@@ -67,8 +67,10 @@ Scenario: I should not see categories that I have been restricted access to by c
   Then I sign in as lead_user2@person.com with password supersecret
   Given I go to browse leads
   And I follow "Office"
-  And "search_with_category" dropdown should have values "Office,Wireless Devices"
-  And "search_with_category" dropdown should not have values "Building,Computers"
+  And I should see "Office"
+  And I should see "Wireless Devices"
+  And I should not see "Building"
+  And I should not see "Computers"
 
 @_done @m3 @__category_restrictions @tgn @not_testable @noguess
 Scenario: I should not be able to request/buy leads from categories that I have been restricted access to by customer

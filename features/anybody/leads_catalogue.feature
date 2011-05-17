@@ -72,7 +72,7 @@ Scenario: I should see currency in which lead is being sold
   And I follow "Computers"
   And I fill in "search_with_keyword" with "Printers"
   And I press translated "leads.index.search.search_button"
-  And I should see "€989.39" within "table"
+  And I should see "€989.39" within ".leads_table"
 
 @m5 @tgn @_tested
 Scenario: When you click on a lead that you have not bought, and you are not signed up you should be given the opportunity to sign in or create a new account
