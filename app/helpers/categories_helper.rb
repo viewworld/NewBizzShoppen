@@ -125,7 +125,7 @@ module CategoriesHelper
       label_tag("category_#{category.id}", category.name)
     elsif tree_type == :leads_catalog
       "<li>" +
-      check_box_tag("search[with_selected_categories][]", category.id, @search.with_selected_categories.map(&:to_i).include?(category.id), :id => "category_#{category.id}") +
+      check_box_tag("search[with_selected_categories][]", category.id, @search.with_selected_categories.to_a.map(&:to_i).include?(category.id), :id => "category_#{category.id}") +
       label_tag("category_#{category.id}", category.name)
     end
   end
