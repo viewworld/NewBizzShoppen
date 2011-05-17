@@ -433,5 +433,6 @@ class User < ActiveRecord::Base
       new_radnom_password = generate_token(12)
       self.password = new_radnom_password
       self.password_confirmation = new_radnom_password
+      self.skip_email_verification = "1"
   end  
 end

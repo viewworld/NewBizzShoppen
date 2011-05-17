@@ -9,7 +9,6 @@ class SignInController < ApplicationController
     data = params[:token] ? RPXNow.user_data(params[:token], :raw_response => true)['profile'] : nil
     @user = user_class_name.new(params[param_key])
     @user.set_fields_for_rpx(data) unless data.blank?
-    @user.skip_email_verification = "1"
     respond_to do |format|
       if @user.save
         flash[:notice] = success_notice
