@@ -94,3 +94,33 @@ Scenario: Add blurb or info text to leads listing "To view lead details click bu
 
 @m0 @statistics
 Scenario: Statistics for exposures and clicks are stored per date
+
+@m10 @requested @_done @_tested
+Scenario: I should see tree with category checkboxes beneath the search filter instead of select with categories
+    When Category named "HP" already exists within category named "Computers"
+    And lead Hapeki exists within category HP
+    And I am on the browse leads page
+    And I follow "Computers"
+    And I should see "Computers" within "table.categories_table"
+    And I should see "HP" within "table.categories_table"
+    And I should see "Hapeki"
+
+@m10 @requested @_done @_tested
+Scenario: I should be able to select categories from different levels of the tree and see their leads
+  When there are no leads
+  And lead Hapeki exists within category Computers
+  And Category named "Japko" already exists within category named "Computers"
+  And lead Makbuki exists within category Japko
+  And I am on the browse leads page
+  And I follow "Computers"
+  And I should see "Hapeki"
+  And I should see "Makbuki"
+  When I uncheck "Japko"
+  And I press translated "leads.index.search.search_button"
+  Then I should see "Hapeki"
+  And I should not see "Makbuki"
+  When I check "Japko"
+  And I uncheck "Computers"
+  And I press translated "leads.index.search.search_button"
+  Then I should not see "Hapeki"
+  And I should see "Makbuki"

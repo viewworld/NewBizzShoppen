@@ -227,9 +227,3 @@ Scenario: Every certified lead is marked by an icon in the lead listing
   Then I should see CSS path "p.certificate"
   When I am on the BestLead lead page
   Then I should see CSS path "div.certificate"
-
-@m0
-Scenario: I can see a tree with subcategories and checkboxes to select where to look for leads
-
-@m0
-Scenario: I can see a tree when there are subcategories with leads

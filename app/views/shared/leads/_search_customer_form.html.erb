@@ -8,12 +8,6 @@
 
 <div id="advanced_search_1_div" style="<%= 'display: none;' unless advanced_search_active?(params[:search]) -%>;">
 <ol class="no_pdd">
-  <% if !@home_category and (!user_signed_in? or (current_user and !current_user.has_role?(:category_buyer))) %>
-  <li class="select">
-    <%= f.label t("leads.index.search.category_label") %>
-    <%= f.select :with_category, nested_set_options(@categories.all), :include_blank => true %>
-  </li>
-  <% end %>
   <li class="string">
     <%= f.label t("leads.index.search.zip_code") %>
     <%= f.text_field :with_zip_code, :style => "width: 90px" %>
@@ -45,9 +39,9 @@
   <ol class="no_pdd">
       <li class="select" style="float:right">
         <%= label "category", t("leads.index.search.category_label") %>
-        <%= select_tag "category", options_for_select(current_user.parent_accessible_categories.map { |c| [c.name, c.cached_slug] },@home_category.name.downcase),
+        <%= select_tag "category", options_for_select(current_user.parent_accessible_categories.map { |c| [c.name, c.cached_slug] },@home_category.cached_slug),
                        :include_blank => false,
-                       :onchange => "this.form.action='/'+this.value+'/leads';this.form.submit();"
+                       :onchange => "uncheck_category_checkboxes();this.form.action='/'+this.value+'/leads';this.form.submit();"
         %>
       </li>
     </ol>
@@ -84,3 +78,17 @@
 </ol>
 </fieldset>
 </div>
+
+<table class="categories_table">
+  <tbody>
+  <% @categories.select { |c| c.parent_id.blank? }.in_groups_of(6, false).each do |categories| %>
+      <tr>
+        <% categories.each do |category| %>
+            <td>
+              <%= categories_structure_root(category, @categories, :leads_catalog) %>
+            </td>
+        <% end %>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
