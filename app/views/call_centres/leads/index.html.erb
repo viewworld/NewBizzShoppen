@@ -91,9 +91,8 @@
                   <%= lead.header %>
                   <% if lead.can_be_commented? %>
                       <div class="row_tooltip_actions">
-                        <%= link_to t("comments.shared.show_comments"), "#", :class => "toggle_row show_comments#{' toggle_row_unread' if lead.has_unread_comments_for_user?(current_user)}", :onclick => "mark_comments_as_read(#{lead.id}); mark_row_as_read('lead_#{lead.id}')" %>
-                        <%= link_to t("comments.shared.hide_comments"), "#", :class => "toggle_row hide_comments", :style => "display:none" %>
-                        (<%= lead.comment_threads.roots.count %>)
+                        <%= link_to t("comments.shared.show_comments")+" (#{lead.comment_threads.roots.count})", "javascript:void(0)", :class => "toggle_row show_comments#{' toggle_row_unread' if lead.has_unread_comments_for_user?(current_user)}", :onclick => "mark_comments_as_read(#{lead.id}); mark_row_as_read('lead_#{lead.id}')" %>
+                        <%= link_to t("comments.shared.hide_comments"), "javascript:void(0)", :class => "toggle_row hide_comments", :style => "display:none" %>
                       </div>
                   <% end %>
                 </div>

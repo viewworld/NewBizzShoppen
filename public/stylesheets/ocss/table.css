@@ -172,7 +172,9 @@
     -webkit-box-shadow: 0 -1px 3px #ddd;
 
     text-decoration: none;
-    color: #666;    
+    color: #666;
+
+    white-space: nowrap;
 }
 
 .row_tooltip_actions a.toggle_row_unread
