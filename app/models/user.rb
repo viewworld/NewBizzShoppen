@@ -434,5 +434,9 @@ class User < ActiveRecord::Base
       self.password = new_radnom_password
       self.password_confirmation = new_radnom_password
       self.skip_email_verification = "1"
-  end  
+  end
+
+  def can_publish_leads?
+    true
+  end
 end
