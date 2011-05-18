@@ -248,4 +248,12 @@ class Lead < AbstractLead
     lead_certification_request.blank? and !email_address.blank? and !contact_name.blank?
   end
 
+  def comments_count_for(user)
+    if user.has_role?(:admin)
+      comment_threads.roots.count
+    else
+      comment_threads.roots.without_blocked.count
+    end
+  end
+
 end
