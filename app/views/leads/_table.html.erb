@@ -50,12 +50,13 @@
         <% end %>
         <td><%= lead.id %></td>
         <td>
+          <div class="rltv" style="padding-bottom: 20px;">
           <%= lead.header %>
           <% if lead.can_be_commented? %>
-           <br />
-           <%= link_to t("comments.shared.show_comments"), "#", :class => "toggle_row show_comments#{' toggle_row_unread' if lead.has_unread_comments_for_user?(current_user)}", :onclick => "mark_comments_as_read(#{lead.id}); mark_row_as_read('lead_#{lead.id}')" %>
+           <div class="row_tooltip_actions">
+           <%= link_to t("comments.shared.show_comments")+" (#{lead.comment_threads.roots.count})", "#", :class => "toggle_row show_comments#{' toggle_row_unread' if lead.has_unread_comments_for_user?(current_user)}", :onclick => "mark_comments_as_read(#{lead.id}); mark_row_as_read('lead_#{lead.id}')" %>
            <%= link_to t("comments.shared.hide_comments"), "#", :class => "toggle_row hide_comments", :style => "display:none" %>
-           (<%= lead.comment_threads.roots.count %>)
+           </div>
           <% end %>
           <% if lead.creator == current_user or lead.creator.parent == current_user %>
             <% if lead.lead_certification_request %>
@@ -63,6 +64,7 @@
               <%= t("leads.listing.certification_status") %>: <%= lead.lead_certification_request.current_status %>
             <% end %>
           <% end %>
+              </div>
         </td>
         <td class="ta_r"><%= lead.clicks_count %></td>
         <td class="ta_r"><%= lead.exposures_count %></td>
