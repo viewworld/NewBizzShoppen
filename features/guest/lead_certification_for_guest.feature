@@ -80,8 +80,8 @@ Scenario: I can specify in settings how often send reminder emails to leads
   And I am signed up and confirmed as user with email admin888@nbs.com and password secret and role admin
   And I sign in as admin888@nbs.com with password secret
   And I follow translated "layout.main_menu.admin.global"
-  And I fill in "setting_6" with "15"
-  And I fill in "setting_9" with "15"
+  And I fill in "setting_0" with "1500"
+  And I fill in "setting_1" with "15"
   And I press translated "administration.settings.edit.view.button_update_settings"
 
 @_done @tested_elsewhere
