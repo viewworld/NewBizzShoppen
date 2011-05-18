@@ -125,10 +125,6 @@
 ------------------------------------------------------------------------------------------ */
 
 
-.leads_table tbody tr td div.row_tooltip
-{
-}
-
 .generic tbody tr.row_tooltip td
 {
     background-color: #fff;
@@ -146,6 +142,13 @@
     display: block;
     margin-top: -23px;
     left: 580px; 
+}
+
+#leads .row_tooltip_actions
+{
+    left: 0;
+    bottom: -10px;
+    margin-top: 0;
 }
 
 
@@ -174,7 +177,9 @@
 
 .row_tooltip_actions a.toggle_row_unread
 {
-    background: red;
+    background-color: #f74444;
+    border-color: #c82121;
+    color: #fff;
 }
 
 .comments_details
