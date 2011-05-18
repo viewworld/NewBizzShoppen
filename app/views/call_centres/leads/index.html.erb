@@ -87,13 +87,16 @@
             <tr id="lead_<%= lead.id %>" class="<%= cycle("odd", "even") %>">
               <td class="cl"></td>
               <td>
-                <%= lead.header %>
-                <% if lead.can_be_commented? %>
-                    <br />
-                    <%= link_to t("comments.shared.show_comments"), "#", :class => "toggle_row show_comments#{' toggle_row_unread' if lead.has_unread_comments_for_user?(current_user)}", :onclick => "mark_comments_as_read(#{lead.id}); mark_row_as_read('lead_#{lead.id}')" %>
-                    <%= link_to t("comments.shared.hide_comments"), "#", :class => "toggle_row hide_comments", :style => "display:none" %>
-                    (<%= lead.comment_threads.roots.count %>)
-                <% end %>
+                <div class="rltv" style="padding-bottom: 20px;">
+                  <%= lead.header %>
+                  <% if lead.can_be_commented? %>
+                      <div class="row_tooltip_actions">
+                        <%= link_to t("comments.shared.show_comments"), "#", :class => "toggle_row show_comments#{' toggle_row_unread' if lead.has_unread_comments_for_user?(current_user)}", :onclick => "mark_comments_as_read(#{lead.id}); mark_row_as_read('lead_#{lead.id}')" %>
+                        <%= link_to t("comments.shared.hide_comments"), "#", :class => "toggle_row hide_comments", :style => "display:none" %>
+                        (<%= lead.comment_threads.roots.count %>)
+                      </div>
+                  <% end %>
+                </div>
               </td>
               <td class="ta_r"><%= as_currency(lead.purchase_value, lead.currency) %></td>
               <td class="ta_r"><%= as_currency(lead.price, lead.currency) %></td>
@@ -122,15 +125,15 @@
               </td>
               <td class="cr"></td>
             </tr>
-          <tr class="row_tooltip">
-            <td class="cl no_pdd"></td>
-            <td colspan="<%= 13 %>" class="no_pdd">
-              <div class="row_tooltip_content pdd_10">
-                <p><%= render :partial => "/shared/comments/lead_threads", :locals => { :lead => lead, :threads => lead.comment_threads.roots.order("created_at DESC") } %></p>
-              </div>
-            </td>
-            <td class="cr no_pdd"></td>
-          </tr>
+            <tr class="row_tooltip">
+              <td class="cl no_pdd"></td>
+              <td colspan="<%= 13 %>" class="no_pdd">
+                <div class="row_tooltip_content pdd_10">
+                  <p><%= render :partial => "/shared/comments/lead_threads", :locals => {:lead => lead, :threads => lead.comment_threads.roots.order("created_at DESC")} %></p>
+                </div>
+              </td>
+              <td class="cr no_pdd"></td>
+            </tr>
         <% end %>
 
         <% if will_paginate %>
@@ -145,41 +148,41 @@
       </table>
   <% end %>
 
-<script type=text/javascript>
+  <script type=text/javascript>
 
-    function hideRowButtons()
-    {
-        $(".toggle_row.hide_comments:visible").hide().prev().show();
-    }
+      function hideRowButtons()
+      {
+          $(".toggle_row.hide_comments:visible").hide().prev().show();
+      }
 
-    jQuery(document).ready(function()
-    {
-        $(".toggle_row.show_comments").bind("click", function()
-        {
-            $(".row_tooltip").filter(":not(:eq(" + $(this).parents("tr:first").next().index(".row_tooltip") + "))")
-                    .filter(":visible").find(".row_tooltip_content:visible").slideUp("normal", function() {
-                $(this).parents("tr.row_tooltip").hide()
-            });
+      jQuery(document).ready(function()
+      {
+          $(".toggle_row.show_comments").bind("click", function()
+          {
+              $(".row_tooltip").filter(":not(:eq(" + $(this).parents("tr:first").next().index(".row_tooltip") + "))")
+                      .filter(":visible").find(".row_tooltip_content:visible").slideUp("normal", function() {
+                  $(this).parents("tr.row_tooltip").hide()
+              });
 
-            hideRowButtons();
+              hideRowButtons();
 
 
-            $(this).hide().next().show().parents("tr:first")
-                    .next("tr.row_tooltip").show()
-                    .find(".row_tooltip_content").slideDown();
-        });
+              $(this).hide().next().show().parents("tr:first")
+                      .next("tr.row_tooltip").show()
+                      .find(".row_tooltip_content").slideDown();
+          });
 
-        $(".toggle_row.hide_comments").bind("click", function()
-        {
-            hideRowButtons();
+          $(".toggle_row.hide_comments").bind("click", function()
+          {
+              hideRowButtons();
 
-            $(this).hide().prev().show().parents("tr:first")
-                    .next("tr.row_tooltip")
-                    .find(".row_tooltip_content").slideUp('normal', function() {
-                $(this).parents("tr.row_tooltip").hide();
-            });
-        });
-    });
+              $(this).hide().prev().show().parents("tr:first")
+                      .next("tr.row_tooltip")
+                      .find(".row_tooltip_content").slideUp('normal', function() {
+                  $(this).parents("tr.row_tooltip").hide();
+              });
+          });
+      });
 
-</script>
+  </script>
 </column-mc:>
