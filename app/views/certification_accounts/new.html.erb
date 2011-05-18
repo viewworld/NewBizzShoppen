@@ -4,8 +4,10 @@
   <div class="pdd_5 no_pdd_b" style="width:800px">
     <%= blurb('blurb_sign_up') %>
     <br/>
-    <%= link_to_rpx t("certification_accounts.new.view.janrain_sign_up"), certification_accounts_url %>
-    <%= javascript_include_rpx certification_accounts_url %>
+    <% unless Rails.env.test? %>
+        <%= link_to_rpx t("certification_accounts.new.view.janrain_sign_up"), certification_accounts_url %>
+        <%= javascript_include_rpx certification_accounts_url %>
+    <% end %>
     <fltr style="float:right;"><%= link_to t("certification_accounts.new.view.i_already_have_account"), root_path %></fltr>
   </div>
 

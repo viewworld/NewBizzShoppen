@@ -603,6 +603,7 @@ en:
         agent_sign_up_text: "If you can create new leads"
 
         call_centre_header: "Welcome %{name}"
+        sign_in_with_external_account: "Sign in using: Google, Facebook or LinkedIn"
   password:
     flashes:
       successfully_changed: 'Password has been successfully changed'

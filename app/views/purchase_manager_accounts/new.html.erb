@@ -3,8 +3,10 @@
 
   <div class="pdd_5 no_pdd_b">
     <%= blurb('blurb_sign_up') %><br/>
-    <%= link_to_rpx t("purchase_manager_accounts.new.view.janrain_sign_up"), purchase_manager_accounts_url %>
-    <%= javascript_include_rpx purchase_manager_accounts_url %>
+    <% unless Rails.env.test? %>
+        <%= link_to_rpx t("purchase_manager_accounts.new.view.janrain_sign_up"), purchase_manager_accounts_url %>
+        <%= javascript_include_rpx purchase_manager_accounts_url %>
+    <% end %>
   </div>
 
   <hl pdd="15"/>
