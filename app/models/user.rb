@@ -437,6 +437,6 @@ class User < ActiveRecord::Base
   end
 
   def can_publish_leads?
-    true
+    false
   end
 end
