@@ -21,7 +21,7 @@ Scenario: I can edit lead information such as company information, contact infor
   And I should see CSS path "input#lead_contact_name"
   And I should see CSS path "textarea#lead_description"
 
-@_done @_tested
+@_done @_tested @selenium
 Scenario: I can confirm certification or cancel
   When lead WorstLead is created by user agent007@nbs.com with role agent
   And lead "WorstLead" has attributes "email_address:james@bond.co.uk"
