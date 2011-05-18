@@ -52,34 +52,31 @@
           <li class="header">
             <h3><%= t("shared.leads.form.lead_information") %></h3>
           </li>
-          <% if !@lead.new_record? and @lead.lead_template_values_present? %>
-              <li class="string error">
-                <label>&nbsp;</label>
-
-                <p class="inline-errors no_pdd"><%= t("shared.leads.form.category_cannot_be_changed") %></p>
-              </li>
-          <% end %>
           <li class="string optional">
-            <label>Category</label> <%= @lead.category %>
+            <label><%= t("formtastic.labels.lead.category_id") %></label> <%= @lead.category %>
           </li>
           <li class="string optional">
-            <label>Country</label> <%= @lead.is_international ? t("shared.leads.form.country_international") : t("shared.leads.form.country_local_label") %>
+            <label><%= t("formtastic.labels.lead.country_id") %></label> <%= @lead.is_international ? t("shared.leads.form.country_international") : t("shared.leads.form.country_local_label") %>
           </li>
           <li class="string optional">
-            <label>Public header</label> <%= @lead.header %>
+            <label><%= t("formtastic.labels.lead.header") %></label> <%= @lead.header %>
+            <%= form.input :header, :as => :hidden %>
           </li>
           <%= form.input :description, :input_html => {:style => "height: 140px; width: 600px"}, :hint => hint_for(@lead, :description) %>
           <li class="string optional">
-            <label>Detailed description (hidden)</label> <%= @lead.hidden_description %>
+            <label><%= t("formtastic.labels.lead.hidden_description") %></label> <%= @lead.hidden_description %>
+            <%= form.input :hidden_description, :as => :hidden %>
+          </li>
+          <% if @lead.purchase_value.present? %>
+           <li class="string optional">
+            <label><%= t("formtastic.labels.lead.purchase_value") %></label> <%= @lead.purchase_value %>
+          </li>
+          <% end %>
+           <li class="string optional">
+            <label><%= t("formtastic.labels.lead.price") %></label> <%= @lead.price %>
           </li>
            <li class="string optional">
-            <label>Purchase value</label> <%= @lead.purchase_value %>
-          </li>
-           <li class="string optional">
-            <label>Price</label> <%= @lead.price %>
-          </li>
-           <li class="string optional">
-            <label>Currency</label> <%= @lead.currency %>
+            <label><%= t("formtastic.labels.lead.currency_id") %></label> <%= @lead.currency %>
           </li>
         </ol>
       </fieldset>
@@ -89,7 +86,7 @@
     <div class="nested_locale_container"></div>
 
     <%= form.fields_for :lead_translations, @lead.lead_translations.select { |lt| lt.locale != I18n.locale.to_s } do |builder| %>
-        <%= render :partial => "/shared/leads/lead_fields", :locals => {:f => builder} %>
+        <%= render :partial => "lead_fields", :locals => {:f => builder, :lead => @lead} %>
     <% end %>
 
 <div class="pdd_10 no_pdd_t">
@@ -99,10 +96,10 @@
         <h3><%= t("shared.leads.form.sales_information") %></h3>
       </li>
       <li class="string optional">
-            <label>Sale limit</label> <%= @lead.sale_limit %>
+            <label><%= t("formtastic.labels.lead.sale_limit") %></label> <%= @lead.sale_limit %>
           </li>
       <li class="string optional">
-            <label>Purchase decision date</label> <%= @lead.purchase_decision_date %>
+            <label><%= t("formtastic.labels.lead.purchase_decision_date") %></label> <%= @lead.purchase_decision_date %>
           </li>
     </ol>
   </fieldset>
@@ -110,46 +107,6 @@
 
 
 <script>
-    var nestedFormsCount = <%= @lead.lead_translations.reject{ |lt| lt.locale == I18n.locale.to_s }.size %>;
-    $(function() {
-        $("#datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
-    });
-    function add_fields(link, content) {
-        if ($('#locale_picker').text() != null)
-        {
-            var new_id = new Date().getTime();
-            var regexp = new RegExp("");
-            content = content.replace(/lead_lead_translations_attributes_\d+/g, "lead_lead_translations_attributes_" + nestedFormsCount.toString());
-            content = content.replace(/lead\[lead_translations_attributes\]\[\d+\]/g, "lead[lead_translations_attributes][" + new_id.toString() + "]");
-            content = content.replace(/LOCALE_LANG/, $('#locale_picker').val());
-            $('.nested_locale_container:last').append(content);
-            $('.locale_hidden_field:last').val($('#locale_picker').val());
-            $('.locale_title:last').html(language_names[$('#locale_picker').val()]);
-            $('.lead_template_value_translations_container_' + $('#locale_picker').val()).show();
-            $('.destroy_hidden_field_template_value_tr_' + $('#locale_picker').val()).val('');
-            $("#locale_picker option[value=" + $('#locale_picker').val() + "]").remove();
-            nestedFormsCount = nestedFormsCount + 1;
-            if ($("#locale_picker option[value!='']").size() == 0) {
-                $("#locale_picker_div").hide();
-            }
-        }
-    }
-
-        function remove_language(id, locale, record_id) {
-            nestedFormsCount = nestedFormsCount - 1;
-            $('.lead_template_value_translations_container_' + locale).hide();
-            $('.destroy_hidden_field_template_value_tr_' + locale).val('true');
-            $('#locale_picker').append($("<option></option>").attr("value", locale).text(language_names[locale]));
-            if (record_id == null) {
-                $('#lead_translation_form_' + id).remove();
-            }
-            else {
-                $('#lead_translation_form_' + id).hide();
-                $('#destroy_hidden_field_' + record_id.toString()).val('true')
-            }
-            $("#locale_picker_div").show();
-        }
-
         function set_beginnings_of_urls(fields_array) {
             $.each(fields_array, function(index, value) {
                 if ($('#' + value).val() == "") {
@@ -157,27 +114,6 @@
                 }
             });
 
-        }
-
-        function add_template() {
-            $('#lead_template_container_' + $('#optional_templates_picker').val()).show();
-            $('.destroy_hidden_field_lead_template_fields_' + $('#optional_templates_picker').val()).val('');
-            $("#optional_templates_picker option[value=" + $('#optional_templates_picker').val() + "]").remove();
-            if ($('#optional_templates_picker option').length == 1) {
-                $('#optional_templates_span').hide();
-            }
-            else {
-                $('#optional_templates_span').show();
-            }
-        }
-
-        function remove_template(template_id, template_name) {
-            $('#lead_template_container_' + template_id.toString()).hide();
-            $('.destroy_hidden_field_lead_template_fields_' + template_id.toString()).val('true');
-            $('#optional_templates_picker').append($("<option></option>").attr("value", template_id).text(template_name));
-            if ($('#optional_templates_picker option').length > 1) {
-                $('#optional_templates_span').show();
-            }
         }
 
         function refresh_phone_codes() {
@@ -201,12 +137,6 @@
 
         <% if params[:action] == "new" or params[:action] == "create" %>
         set_beginnings_of_urls(["lead_linkedin_url", "lead_facebook_url", "lead_company_website"]);
-        <% end %>
-
-        <% lead_templates = @lead.lead_templates %>
-        <% if lead_templates.size == 1 and !lead_templates.first.is_mandatory %>
-        $('#optional_templates_picker').val('<%= lead_templates.first.id -%>');
-        add_template();
         <% end %>
     
         var language_names = [];

@@ -1,0 +1,45 @@
+<div id="lead_translation_form_<%=  f.object.id %>">
+  <div class="pdd_10 no_pdd_t rltv">
+    <fieldset class="inputs labels_ta_r labels_200">
+      <ol class="align_inputs">
+        <li class="header">
+          <h3 class="locale_title">
+            <%= t("models.locale.#{f.object.locale}") if f.object.respond_to?(:locale) %>
+          </h3>
+        </li>
+        <li class="string">
+          <label><%= t("formtastic.labels.lead.header") %></label>
+          <%= f.object.header %>
+          <%= f.hidden_field :header %>
+
+        </li>
+        <li class="text">
+          <%= f.label :description %>
+          <%= f.text_area :description, :style => "height: 140px; width: 600px" %>
+          <%= custom_error_for_field(f, :description) %>
+        </li>
+
+        <% unless lead.creator.has_role?(:purchase_manager) %>
+        <li class="text">
+          <label><%= t("formtastic.labels.lead.hidden_description") %></label>
+          <%= f.object.hidden_description %>
+          <%= f.hidden_field :hidden_description %>
+        </li>
+        <% end %>
+
+        <li class="hidden">
+          <%= f.hidden_field :locale, :class => "locale_hidden_field" %>
+          <% if lead.creator.has_role?(:purchase_manager) %>
+            <%= f.hidden_field :skip_hidden_field_validation, :value => true %>
+          <% end %>
+          <% unless f.object.new_record? %>
+              <%= f.hidden_field :_destroy, :id => "destroy_hidden_field_#{f.object.id}" %>
+          <% end %>
+        </li>
+      </ol>
+    </fieldset>
+
+    <span class="nested_locale_span"></span>
+  </div>
+  <hl/>
+</div>

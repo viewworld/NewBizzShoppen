@@ -98,8 +98,8 @@ class LeadsController < ApplicationController
 
   def check_token
     @lsr = LeadCertificationRequest.find_by_token(params[:token])
-    if @lsr and @lsr.state == LeadCertificationRequest::STATE_SENT
-      @lead = Lead.find(@lsr.lead_id)
+    if @lsr and @lsr.active?
+      @lead = @lsr.lead
     else
       flash[:notice] = t("leads.certification.invalid_token")
       redirect_to login_path

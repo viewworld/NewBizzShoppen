@@ -8,19 +8,14 @@
           <%= hidden_field_tag "confirmation", "agree" %>
         </param:content>
         <param:actions>
+          <ibt c="fltri" icon="remove">
+          <%= form.submit t("leads.certification.reject"), :onclick => "$('#confirmation').val('disagree');" %>
+          </ibt>
           <ibt c="fltri" icon="save">
             <%= form.submit t("leads.certification.confirm") %>
           </ibt>
+
         </param:actions>
       </frm>
-  <% end %>
-  <%= semantic_form_for @lead, :method => :put do %>
-      <%= hidden_field_tag "token", @lsr.token %>
-      <%= hidden_field_tag "confirmation", "disagree" %>
-      <param:actions>
-        <ibt c="fltri" icon="save">
-          <%= submit_tag t("leads.certification.reject") %>
-        </ibt>
-      </param:actions>
   <% end %>
 </column-mc:>

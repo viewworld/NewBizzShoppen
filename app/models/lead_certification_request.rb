@@ -81,4 +81,8 @@ class LeadCertificationRequest < ActiveRecord::Base
     !last_visit_date.blank?
   end
 
+  def active?
+    state <= STATE_SENT_SECOND_REMINDER
+  end
+
 end
