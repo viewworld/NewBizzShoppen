@@ -146,3 +146,7 @@ Scenario: I can change creator of lead to any other agent
   Then I should be on administration leads page
   And I follow translated "leads.listing.edit_label"
   And "lead_tmp_creator_id" should be selected for value "agent_777@nbs.com"
+
+##5606
+@requested @m11
+Scenario: I should be able to delete a lead
