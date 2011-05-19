@@ -171,6 +171,7 @@ Scenario: Call centre agents should inherit the certification of a call centre
 @m9 @tgn @non_testable @_done
 Scenario: Call centre should have refreshed stats just like the agents
 
+# 4871
 @m11 @requested
 Scenario: Call centers is able to reset and set password to all his agents
 

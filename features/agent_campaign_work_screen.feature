@@ -110,9 +110,11 @@ Feature: Agent campaign - calling session
     Scenario: I can control my snom phone remotely through its http interface
       # http://kb.snom.com/kb/index.php?View=entry&CategoryID=21&EntryID=40
 
+    # 5192
     @m11 @requested
     Scenario: I should be redirected to briefing area when I click campaign on my work screen
 
+    # 5192
     @m11 @requested
     Scenario: I can go back to my work screen when I click "Go to work screen"
         
