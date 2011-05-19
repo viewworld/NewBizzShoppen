@@ -172,4 +172,7 @@ Scenario: Call centre agents should inherit the certification of a call centre
 Scenario: Call centre should have refreshed stats just like the agents
 
 @m11 @requested
-Scenario: I can change password of my call center agents
+Scenario: Call centers is able to reset and set password to all his agents
+
+@m11 @requested
+Scenario: Call centers is able to skip email confirmation when creteing new agent

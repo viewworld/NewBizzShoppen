@@ -185,3 +185,6 @@ Scenario: When you are loged in as an agent and go to the role home pages, I sho
   And I follow translated "home.show.view.agent"
   Then I should see "Super ultra lead #1" within "#new_leads"
   And I should see "1" items on a list within "#new_leads"
+
+@requested @m11
+Scenario: Agent can see his latest comments on home page

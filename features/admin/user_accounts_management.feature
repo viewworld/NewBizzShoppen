@@ -614,3 +614,6 @@ Scenario: I should be redirected to edit user page after saving interests
 
 @requested @m11
 Scenario: When editing a user I should see the role of the user in header
+
+@requested @m11
+Scenario: As Admin I can see Name (default Company Name, if empty then First Name + Last Name) in user listing

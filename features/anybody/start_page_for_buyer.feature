@@ -178,3 +178,6 @@ Scenario: I should see leads from customer unique categories I'm assigned to on 
   And I should see "CommonLead2" within "#latest_leads"
   And I should not see "UniqueLead1" within "#latest_leads"
   And I should see "UniqueLead2" within "#latest_leads"
+
+@requested @m11
+Scenario: Buyer can see link to Interests on buyer home page if he don't have set any interests yet
