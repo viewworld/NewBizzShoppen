@@ -611,3 +611,6 @@ Scenario: I should be redirected to edit user page after saving interests
   And I follow translated "administration.users.edit.view.change_customer_interests_link"
   And I press translated "administration.users.edit.view.button_update_user"
   And I should be on administration edit user for customer101@person.com
+
+@requested @m11
+Scenario: When editing a user I should see the role of the user in header

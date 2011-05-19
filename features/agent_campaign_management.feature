@@ -605,4 +605,11 @@ Feature: Agent campaign - management
         
         @added
         Scenario: As call centre agent or agent I can't manage campaigns, result types, agent assignment
-        
+
+        ##5650
+        @requested @m11
+        Scenario: I should see a listbox with all the resuls types and be able to filter by them
+
+        ##5649
+        @requested @m11
+        Scenario: I should see "Go to results" button beside "Agent assignment" in edit campaign
