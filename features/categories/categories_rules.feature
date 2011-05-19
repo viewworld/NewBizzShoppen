@@ -1,4 +1,4 @@
-@requested @m11 @category_rules
+@requested @m11 @category_rules @tgn
 Feature: Categories rules
 
   Scenario: I can't publish leads in category that have subcategories

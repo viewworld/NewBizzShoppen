@@ -1,4 +1,4 @@
-@agent @requested @m11
+@agent @requested @m11 @is
 Feature: Agent time sheets
 
 Scenario: I am automatically log out after 5 minutes
