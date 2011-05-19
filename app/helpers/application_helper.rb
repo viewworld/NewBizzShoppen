@@ -117,7 +117,7 @@ module ApplicationHelper
   end
 
   def main_menu_link_to_role_specific_home_page
-    if @home_category
+    if user_signed_in? and current_user.has_role?(:category_buyer) and @home_category
       main_menu_link_to(t("layout.main_menu.shared.home"), category_home_page_path(@home_category.cached_slug), :tab => "home")
     else
       main_menu_link_to(t("layout.main_menu.shared.home"), url_to_role_specific_home_page, :tab => "home")
