@@ -606,24 +606,31 @@ Feature: Agent campaign - management
         @added
         Scenario: As call centre agent or agent I can't manage campaigns, result types, agent assignment
 
+        # 5048
         @m11 @requested
         Scenario: I can select which results to display
 
+        # 5168
         @m11 @requested
         Scenario: I can see a message when there are no more contacts in my campaign
 
+        # 5168
         @m11 @requested
         Scenario: I can see a message when there are only callback contacts in my campaign
 
+        # 5189
         @m11 @requested
         Scenario: I can see timestamps in my localization, not server time
 
+        # 5192
         @m11 @requested
         Scenario: I can specify description and briefing when creating new campaign
 
+        # 5192
         @m11 @requested
         Scenario: I can see a description in a popup
 
+        # 5192
         @m11 @requested
         Scenario: When editing a campaign I can click a link to edit description and briefing
         
