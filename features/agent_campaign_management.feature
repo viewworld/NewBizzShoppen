@@ -606,6 +606,27 @@ Feature: Agent campaign - management
         @added
         Scenario: As call centre agent or agent I can't manage campaigns, result types, agent assignment
 
+        @m11 @requested
+        Scenario: I can select which results to display
+
+        @m11 @requested
+        Scenario: I can see a message when there are no more contacts in my campaign
+
+        @m11 @requested
+        Scenario: I can see a message when there are only callback contacts in my campaign
+
+        @m11 @requested
+        Scenario: I can see timestamps in my localization, not server time
+
+        @m11 @requested
+        Scenario: I can specify description and briefing when creating new campaign
+
+        @m11 @requested
+        Scenario: I can see a description in a popup
+
+        @m11 @requested
+        Scenario: When editing a campaign I can click a link to edit description and briefing
+        
         ##5650
         @requested @m11
         Scenario: I should see a listbox with all the resuls types and be able to filter by them
