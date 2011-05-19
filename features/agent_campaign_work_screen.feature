@@ -108,4 +108,16 @@ Feature: Agent campaign - calling session
 
     @_todo @snom
     Scenario: I can control my snom phone remotely through its http interface
-      # http://kb.snom.com/kb/index.php?View=entry&CategoryID=21&EntryID=40    
+      # http://kb.snom.com/kb/index.php?View=entry&CategoryID=21&EntryID=40
+
+    #5460
+    @requested @m10
+    Scenario: I should be able to upload source materials to the repository of specific campaign
+
+    #5460
+    @requested @m10
+    Scenario: I should be able to browse the campaign repository and modify it (delete files unassigned to any results)
+
+    #5460
+    @requested @m10
+    Scenario: I should be able to add new result called 'Send material' and upload new material or choose one from campaign repository
