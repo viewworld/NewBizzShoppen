@@ -172,8 +172,20 @@ Scenario: Call centre agents should inherit the certification of a call centre
 Scenario: Call centre should have refreshed stats just like the agents
 
 # 4871
-@m11 @requested
+@m11 @requested @_done @_tested
 Scenario: Call centers is able to reset and set password to all his agents
+  Given an user with role call_centre_agent and email ccagent@person.com belongs to call centre call_centre@person.com
+  And I go to call centre agents
+  And I follow translated "call_centre.call_centre_agents.index.view.edit"
+  And I follow translated "call_centre.call_centre_agents.edit.view.change_password"
+  And I fill in "user_password" with "newpass"
+  And I fill in "user_password_confirmation" with "newpass"
+  And I press translated "password.edit.view.button_update_user"
+  Then I should see translated "password.flashes.successfully_changed"
+  When I sign out
+  And I am on the home page
+  And I sign in as ccagent@person.com with password newpass
+  Then I should be signed in
 
 @m11 @requested
 Scenario: Call centers is able to skip email confirmation when creteing new agent

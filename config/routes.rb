@@ -76,7 +76,9 @@ Nbs::Application.routes.draw do
 
   namespace :call_centres do
     root :to => "call_centre_agents#index"
-    resources :call_centre_agents
+    resources :call_centre_agents do
+      resource :password, :controller => 'password'
+    end
     resource :bulk_call_centre_agents_update, :controller => "bulk_call_centre_agents_update", :only => [:update]
     resources :leads
     resources :lead_templates

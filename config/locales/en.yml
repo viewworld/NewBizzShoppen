@@ -1432,6 +1432,7 @@ en:
           title: "Editing call centre agent: %{name}"
           button_update: "Save"
           button_cancel: "Cancel"
+          change_password: "Change password"
       create:
         flash:
           call_centre_agent_creation_successful: "Call centre agent has been created successfully!"
