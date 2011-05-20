@@ -635,12 +635,12 @@ Feature: Agent campaign - management
         Scenario: When editing a campaign I can click a link to edit description and briefing
         
         ##5650
-        @requested @m11 @ao
+        @requested @m11 @ao @non_testable @_done
         Scenario: I should see a listbox with all the resuls types and be able to filter by them
 
         ##5649
         @requested @m11 @_done @_tested @tgn
         Scenario: I should see "Go to results" button beside "Agent assignment" in edit campaign
-        When I follow translated "campaigns.index.edit"
-        Then I should see translated "campaigns.edit.results"
-        And I follow translated "campaigns.edit.results"
+          When I follow translated "campaigns.index.edit"
+          Then I should see translated "campaigns.edit.results"
+          And I follow translated "campaigns.edit.results"
