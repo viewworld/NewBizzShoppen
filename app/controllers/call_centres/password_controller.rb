@@ -12,8 +12,8 @@ class CallCentres::PasswordController < CallCentres::CallCentreController
 
   def destroy
     @user.send_reset_password_instructions
-    flash[:notice] = t("administration.password.destroy.flash.password_reset_successful")
-    redirect_to edit_administration_user_path(@user)
+    flash[:notice] = t("password.flashes.reset")
+    redirect_to edit_call_centres_call_centre_agent_path(@user)
   end
 
   def update

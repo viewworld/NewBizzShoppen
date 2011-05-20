@@ -186,6 +186,14 @@ Scenario: Call centers is able to reset and set password to all his agents
   And I am on the home page
   And I sign in as ccagent@person.com with password newpass
   Then I should be signed in
+  When I sign out
+  And I am on the home page
+  Then I sign in as call_centre@person.com with password supersecret
+  And I go to call centre agents
+  And I follow translated "call_centre.call_centre_agents.index.view.edit"
+  And I follow translated "call_centre.call_centre_agents.edit.view.reset_password"
+  Then I should see translated "administration.password.destroy.flash.password_reset_successful"
+  And a password reset message should be sent to ccagent@person.com
 
 @m11 @requested
 Scenario: Call centers is able to skip email confirmation when creteing new agent

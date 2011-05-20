@@ -610,6 +610,7 @@ en:
     flashes:
       successfully_changed: 'Password has been successfully changed'
       not_changed: "Password has not been changed"
+      reset: "Password has been reset"
     update:
       controller:
         successful_update_notice: "Password has been successfully changed!"
@@ -1433,6 +1434,7 @@ en:
           button_update: "Save"
           button_cancel: "Cancel"
           change_password: "Change password"
+          reset_password: "Reset password"
       create:
         flash:
           call_centre_agent_creation_successful: "Call centre agent has been created successfully!"
