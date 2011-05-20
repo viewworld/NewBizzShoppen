@@ -667,6 +667,7 @@ en:
       edit:
         view:
           title: "Editing user: %{name}"
+          title_with_role: "Editing %{role}: %{name}"
           button_update_user: Save
           button_cancel: Cancel
           reset_password_link: Reset password

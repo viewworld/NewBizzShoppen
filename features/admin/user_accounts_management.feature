@@ -612,8 +612,13 @@ Scenario: I should be redirected to edit user page after saving interests
   And I press translated "administration.users.edit.view.button_update_user"
   And I should be on administration edit user for customer101@person.com
 
-@requested @m11
+@requested @m11 @_done @_tested
 Scenario: When editing a user I should see the role of the user in header
+  Given I have user with email customer101@person.com and role customer
+  Then I fill in "search_with_keyword" with "customer101@person.com"
+  And I press translated "administration.users.index.view.search_button"
+  And I click hidden link by url regex "/users\/\d+\/edit/"
+  Then I should see "Editing Buyer:"
 
 @requested @m11
 Scenario: As Admin I can see Name (default Company Name, if empty then First Name + Last Name) in user listing
