@@ -16,6 +16,15 @@
               </ol>
             </fieldset>
 
+            <fieldset class="inputs_vertical grid_150 fltl">
+              <ol class="no_pdd">
+                <li class="select">
+                  <%= label_tag t("campaigns.show.search.results") %>
+                  <%= select_tag :result_ids, options_from_collection_for_select(@all_results, "id", "name", @result_ids), :include_blank => false, :multiple => true, :style => "height:80px;width:140px;" %>
+                </li>
+              </ol>
+            </fieldset>
+
             <div class="fltl">
 
               <fieldset class="inputs_vertical">

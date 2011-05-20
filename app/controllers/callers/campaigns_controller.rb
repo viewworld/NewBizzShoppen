@@ -37,12 +37,14 @@ class Callers::CampaignsController < Callers::CallerController
 
   def show
     set_contacts
+    @all_results = Result.scoped
+    @result_ids = params[:result_ids] || @all_results.map(&:id)
     @date_from = params[:date_from] ? params[:date_from].to_date : @campaign.start_date
     @date_to = params[:date_to] ? params[:date_to].to_date : @campaign.end_date
     @final = (params[:final] and params[:final] == "yes") ? true : false
     @agent_ids = params[:agent_ids] || []
     @agent_ids.delete("")
-    @results = @final ? Result.where(:final => true) : Result.all
+    @results = (@final ? @all_results.where(:final => true) : @all_results).where(:id => @result_ids)
     @headers = CallResult.for_table_header(@date_from, @date_to)
   end
 

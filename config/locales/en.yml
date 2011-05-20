@@ -289,6 +289,7 @@ en:
         date_from: Date from
         date_to: Date to
         agents: Agents
+        results: Results
         final: only view completed contacts
       search_button: Search
       table:
