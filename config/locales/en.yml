@@ -314,6 +314,7 @@ en:
       remove_button:  Remove
       remove_confirm: Are you sure?
       title_contacts: "Contacts"
+      results: "Results"
     index:
       title: Campaigns
       edit: Edit
