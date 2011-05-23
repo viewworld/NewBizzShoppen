@@ -1,5 +1,4 @@
-@call @m11 @requested @$_call_centre
-
+@call_center_news @m11 @requested @$_call_centre @is
 Feature: News management for call centre
 
 Scenario: A call centre manager should be abel to post call centre news to all his agents.

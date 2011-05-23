@@ -1,3 +1,4 @@
+@is @notifications
 Feature: Notifications
 
   @m11 @requested
