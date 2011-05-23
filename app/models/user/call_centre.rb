@@ -40,7 +40,11 @@ class ::User::CallCentre < ::User
 
   def has_max_contacts_in_campaign?(campaign)
     (contacts.for_campaign(campaign).with_pending_status(false).count >= campaign.max_contact_number)
-  end    
+  end
+
+  def subaccounts_without_locked
+    subaccounts.select { |u| u.locked_at.nil? }
+  end
 
   private
 

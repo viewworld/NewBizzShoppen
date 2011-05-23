@@ -32,7 +32,7 @@
               <td class="ta_c"><%= call_centre.campaigns.size %></td>
               <td class="cr"></td>
             </tr>
-            <% call_centre.subaccounts.each do |cc_agent| %>
+            <% call_centre.has_role?(:call_centre) && call_centre.subaccounts_without_locked.each do |cc_agent| %>
                 <% cc_agent = User::CallCentreAgent.find(cc_agent.id) %>
                 <tr>
                   <td class="cl"></td>
