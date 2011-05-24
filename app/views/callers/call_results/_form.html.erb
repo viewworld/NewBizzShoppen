@@ -18,7 +18,7 @@
 
 <% if call_result.result.result_fields.present? %>
     <hl/>
-    <%= render :partial => "/shared/results/result_fields", :locals => {:call_result => call_result, :form => form} %>
+    <%= render :partial => "/shared/results/result_fields", :locals => {:contact => contact, :call_result => call_result, :form => form} %>
 <% end %>
 
 <% if call_result.result.upgrades_to_lead? %>

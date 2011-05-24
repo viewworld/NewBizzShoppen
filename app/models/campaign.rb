@@ -7,6 +7,7 @@ class Campaign < ActiveRecord::Base
   has_and_belongs_to_many :users
   has_and_belongs_to_many :results
   has_many :contacts, :dependent => :destroy
+  has_many :materials, :as => :resource, :class_name => "Material", :dependent => :destroy
 
   validates_uniqueness_of :name
   validates_presence_of :name, :max_contact_number, :category_id, :country_id, :start_date, :end_date

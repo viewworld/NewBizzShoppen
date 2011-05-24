@@ -21,10 +21,15 @@
               f.text_field :value, :class => "datepicker", :title => t('models.result_field.date_format')
           when ResultField::DATETIME then
               f.text_field :value, :class => "datetimepicker", :title => t('models.result_field.datetime_format')
+          when ResultField::MATERIAL then
+              f.text_field :value, :class => ""
           else
               f.text_field :value
       end
   %>
+  <% if f.object.result_field.field_type.to_i == ResultField::MATERIAL %>
+    <%= link_to "Material repository", callers_campaign_materials_path(contact.campaign), :id => "materials_modal" %>
+  <% end %>
   <%= custom_error_for_field(f, :value) %>
 </li>
 <li class="hidden">
@@ -36,6 +41,11 @@
       $(function() {
           $(".datetimepicker").datetimepicker({ dateFormat: 'yy-mm-dd' });
           $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+          $("#materials_modal").colorbox({
+            opacity: "0.5",
+            initialWidth: 300,
+            initialHeight: 300
+            });
       });
   </script>
 

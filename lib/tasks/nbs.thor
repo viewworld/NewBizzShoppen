@@ -247,14 +247,17 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
      {:name => "Not in", :final => false, :generic => true},
      {:name => "Upgraded to lead", :final => true, :generic => true, :upgrades_to_lead => true},
      {:name => "Meeting booked", :final => true, :generic => true},
-     {:name => "Custom result", :final => true, :generic => true}].each do |result|
+     {:name => "Custom result", :final => true, :generic => true},
+     {:name => "Send material", :final => false, :generic => true}].each do |result|
       Result.create(result) unless Result.find_by_name(result[:name])
     end
 
     [{:name => "Call back date", :field_type => "4", :is_mandatory => true, :result => Result.find_by_name("Call back") },
      {:name => "Call back date", :field_type => "4", :is_mandatory => true, :result => Result.find_by_name("Not interested now") },
      {:name => "Meeting date", :field_type => "4", :is_mandatory => true, :result => Result.find_by_name("Meeting booked") },
-     {:name => "Result message", :field_type => "0", :is_mandatory => true, :result => Result.find_by_name("Custom result") }].each do |result_field|
+     {:name => "Result message", :field_type => "0", :is_mandatory => true, :result => Result.find_by_name("Custom result") },
+     {:name => "Call back date", :field_type => "4", :is_mandatory => true, :result => Result.find_by_name("Send material") },
+     {:name => "Material", :field_type => "5", :is_mandatory => true, :result => Result.find_by_name("Send material") }].each do |result_field|
       ResultField.create(result_field) unless ResultField.find_by_name_and_result_id(result_field[:name], result_field[:result].id)
     end
 

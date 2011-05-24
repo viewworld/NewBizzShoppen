@@ -1,0 +1,5 @@
+if @material.save
+  page << "alert('ok');"
+else
+  page << "alert('#{@material.errors.full_messages}');"
+end

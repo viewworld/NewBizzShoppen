@@ -1,0 +1,11 @@
+<p>Select exising material</p>
+
+<ul>
+  <% if @materials.any? %>
+    <% @materials.each do |material| %>
+      <li><%= link_to material.asset_file_name, material.url %></li>
+    <% end %>
+  <% else %>
+    no uploaded materials
+  <% end %>
+</ul>

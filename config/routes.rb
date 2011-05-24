@@ -131,6 +131,7 @@ Nbs::Application.routes.draw do
 
   namespace :callers do
     resources :campaigns do
+      resources :materials
       member do
         get 'result_details'
       end
