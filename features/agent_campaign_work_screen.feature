@@ -129,3 +129,6 @@ Feature: Agent campaign - calling session
     #5460
     @requested @m11 @ao
     Scenario: I should be able to add new result called 'Send material' and upload new material or choose one from campaign repository
+
+    @m11 @requested
+    Scenario: I can see new result form on the top of the page
