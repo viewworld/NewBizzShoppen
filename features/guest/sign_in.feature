@@ -105,5 +105,5 @@ Scenario: I can login to fairleads as any user without password by hash key that
   And I login as user with email "bob7@person.com" using login key
   And I should see "Logout bob7@person.com"
 
-@m11 @requested
+@m11 @requested @is
 Scenario: I can see Facebook/Linkedin/Google icons on bottom of signing in box

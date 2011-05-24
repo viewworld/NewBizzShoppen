@@ -59,5 +59,5 @@ Scenario: Admin should be able to define purchase limit for given big buyer (def
   Then I should see translated "administration.settings.update.controller.successful_update_notice"
 
 # 5722
-@m11 @requested @$_youtube
+@m11 @requested @youtube @ao
 Scenario: I can specify a youtube video url which is displayed on front page
