@@ -610,14 +610,6 @@ Feature: Agent campaign - management
         @m11 @requested @ao
         Scenario: I can select which results to display
 
-        # 5168
-        @m11 @requested @ao
-        Scenario: I can see a message when there are no more contacts in my campaign
-
-        # 5168
-        @m11 @requested @ao
-        Scenario: I can see a message when there are only callback contacts in my campaign
-
         # 5189
         @m11 @requested @ao
         Scenario: I can see timestamps in my localization, not server time

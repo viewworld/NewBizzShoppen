@@ -370,7 +370,7 @@ en:
       prev: "<< Prev"
       next: "Next >>"
     table:
-      company_name: Company name
+      company_nacame: Company name
       company_phone: Company phone
       contact_phone: Contact phone
       agent: Agent
@@ -378,7 +378,8 @@ en:
       actions: Actions
     show:
       flash:
-        you_have_no_contacts_assigned: You have no contacts assigned
+        you_have_no_contacts_assigned: "You have no contacts assigned"
+        you_have_only_callback_contacts: "You have only Callback contacts for further calling"
     create:
       flash:
         successfully_imported: "%{count} contacts have been successfully imported."

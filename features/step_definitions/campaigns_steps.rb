@@ -87,3 +87,9 @@ Given /^user "([^\"]*)" should see his (available|pending) contacts$/ do |email,
     Then 'I should see "' + c.company_name + '"'
   end
 end
+
+When /^there are no more active contacts for agent "([^"]*)"$/ do |email|
+  user = User.where(:email => email).first.with_role
+  user.contacts.with_pending_status(false)
+end
+
