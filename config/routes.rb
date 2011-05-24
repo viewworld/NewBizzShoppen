@@ -17,7 +17,7 @@ Nbs::Application.routes.draw do
   namespace :administration do
     root :to => redirect("/")
     resources :users do
-      resource :password, :controller => 'password'
+      resource :password, :controller => 'password', :only => [:new, :update, :destroy]
     end
     resource :bulk_users_update, :controller => "bulk_users_update", :only => [:update]
     resources :categories
@@ -77,11 +77,12 @@ Nbs::Application.routes.draw do
   namespace :call_centres do
     root :to => "call_centre_agents#index"
     resources :call_centre_agents do
-      resource :password, :controller => 'password'
+      resource :password, :controller => 'password', :only => [:new, :update, :destroy]
     end
     resource :bulk_call_centre_agents_update, :controller => "bulk_call_centre_agents_update", :only => [:update]
     resources :leads
     resources :lead_templates
+    resources :news
   end
 
   namespace :call_centre_agents do
@@ -206,6 +207,8 @@ Nbs::Application.routes.draw do
   resource :contact_us, :controller => "contact_us", :as => "contact_us", :only => [:new, :create]
   resource :terms_and_conditions, :controller => "terms_and_conditions", :as => "terms_and_conditions", :only => [:show]
   match 'contact_us' => 'contact_us#new', :as => 'contact_us'
+
+  resource :lead_templates
 
   match ':slug' => 'category_home#show', :as => :category_home_page
   match ':slug/account/new' => 'category_buyer_accounts#new', :as => :new_category_home_page_account

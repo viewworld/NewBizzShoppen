@@ -1,12 +1,38 @@
 @requested @m11 @category_rules @tgn
 Feature: Categories rules
 
+  Background:
+    And I am on the homepage
+    And I make sure current locale is "en"
+
+  @_done @_tested @tgn
   Scenario: I can't publish leads in category that have subcategories
+    Given Category Computers is created
+    And Category named "Laptops" already exists within category named "Computers"
+    Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role agent
+    Then I sign in as bob@person.com with password supersecret
+    And I go to agents leads
+    Then select "category_id" should have option "Computers" disabled
 
+  @_done @_tested @tgn
   Scenario: When first subcategory is created for root, all leads from root are moved to this new category
+    Given Category Computers is created
+    And lead Laptop Toshiba exists within category Computers
+    Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role admin
+    Then I sign in as bob@person.com with password supersecret
+    And I go to browse leads
+    And I follow translated "administration.categories.index.view.new_category"
+    And I fill in "category_name" with "Laptops"
+    And I select "Computers" from "category_parent_id"
+    And I fill in "category_description" with "Description"
+    And attach the file "sample image" to "category_image_attributes_asset"
+    And I press translated "administration.categories.new.view.button_create"
+    Then lead "Laptop Toshiba" should be in category "Laptops"
 
+  @_done @not_testable @tgn
   Scenario: I can move lead to other category and duplicate templates
 
+  @_done @not_testable @tgn
   Scenario: I can move lead to other category and delete template information
 
   Scenario: I can't edit interests from my profile page

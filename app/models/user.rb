@@ -37,6 +37,7 @@ class User < ActiveRecord::Base
   has_many :subaccounts, :class_name => "User", :foreign_key => "parent_id"
   has_many :owned_lead_requests, :class_name => 'LeadRequest', :foreign_key => :owner_id
   has_many :invoices
+  has_many :user_session_logs
   belongs_to :user, :class_name => "User", :foreign_key => "parent_id", :counter_cache => :subaccounts_counter
   belongs_to :bank_account, :foreign_key => :bank_account_id, :primary_key => :id, :class_name => 'BankAccount'
   belongs_to :vat_rate, :foreign_key => :country, :primary_key => :country_id
@@ -214,7 +215,7 @@ class User < ActiveRecord::Base
 
   def send_confirmation_instructions
     generate_confirmation_token if self.confirmation_token.nil?
-    deliver_email_template("confirmation_instructions") unless skip_email_verification
+    deliver_email_template("confirmation_instructions") unless ActiveRecord::ConnectionAdapters::Column.value_to_boolean(skip_email_verification)
   end
 
   def send_reset_password_instructions

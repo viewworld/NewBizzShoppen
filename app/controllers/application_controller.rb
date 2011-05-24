@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  before_filter :authorize_with_http_basic_for_staging, :check_category_buyer
+  before_filter :authorize_with_http_basic_for_staging, :check_category_buyer, :update_log_entries
   after_filter :do_something
 
   def authorize_with_http_basic_for_staging
@@ -12,9 +12,31 @@ class ApplicationController < ActionController::Base
       warden.custom_failure! if performed?
     end
   end
+
   before_filter :set_locale
 
   helper_method :locale
+
+
+  def update_log_entries
+    if user_signed_in?
+      UserSessionLog.update_end_time(session[:current_usl_global], Settings.logout_time.to_i) if !session[:current_usl_global].blank?
+      if self.class.name.match(/^Callers::/)
+        if session[:current_usl_campaigns].blank?
+          usl_campaign = UserSessionLog.create(:user_id => current_user.id, :start_time => Time.now, :end_time => (Time.now + Settings.logout_time.to_i.minutes), :log_type => UserSessionLog::TYPE_CAMPAIGN)
+          session[:current_usl_campaigns] = usl_campaign.id
+        else
+          UserSessionLog.update_end_time(session[:current_usl_campaigns], Settings.logout_time.to_i)
+        end
+      else
+        unless session[:current_usl_campaigns].blank?
+          UserSessionLog.update_end_time(session[:current_usl_campaigns])
+          session[:current_usl_campaigns] = nil
+        end
+      end
+    end
+
+  end
 
   #Always cast default role class if outside of any namespace
   def current_user
@@ -23,6 +45,8 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource)
     if resource.is_a?(User)
+      usl = UserSessionLog.create(:user_id => resource.id, :start_time => Time.now, :end_time => (Time.now + Settings.logout_time.to_i.minutes), :log_type => UserSessionLog::TYPE_REGULAR)
+      session[:current_usl_global] = usl.id
       if session[:user_requested_url].present?
         if session[:lead_id].to_i > 0 and resource.has_any_role?(:customer, :lead_buyer)
           lead = Lead.find_by_id(session[:lead_id])
@@ -96,16 +120,16 @@ class ApplicationController < ActionController::Base
   def check_category_buyer
     requested_category = category_from_slug
     @home_category = if user_signed_in? and current_user and current_user.has_role?(:category_buyer)
-      if requested_category and current_user.with_role.parent_accessible_categories.include?(requested_category)
-        requested_category
-      elsif requested_category
-        redirect_to category_home_page_path(current_user.with_role.parent_buying_categories.first.cached_slug)
-      elsif current_user.has_role?(:category_buyer)
-        current_user.with_role.parent_buying_categories.first
-      end
-    elsif requested_category
-      requested_category
-    end
+                       if requested_category and current_user.with_role.parent_accessible_categories.include?(requested_category)
+                         requested_category
+                       elsif requested_category
+                         redirect_to category_home_page_path(current_user.with_role.parent_buying_categories.first.cached_slug)
+                       elsif current_user.has_role?(:category_buyer)
+                         current_user.with_role.parent_buying_categories.first
+                       end
+                     elsif requested_category
+                       requested_category
+                     end
   end
 
   Warden::Manager.before_failure do |env, opts|
@@ -121,10 +145,16 @@ class ApplicationController < ActionController::Base
     params[:warden_failure] = opts
   end
 
-  Warden::Manager.before_logout do |user,auth,opts|
+  Warden::Manager.before_logout do |user, auth, opts|
     session = auth.request.env['rack.session']
     session[:last_url_before_logout] = auth.request.headers["Referer"]
     session[:show_cart_hint] = nil
+    [:current_usl_global, :current_usl_campaigns].each do |key|
+      unless session[key].blank?
+        UserSessionLog.update_end_time(session[key])
+        session[key] = nil
+      end
+    end
   end
 
   def do_something
@@ -132,5 +162,6 @@ class ApplicationController < ActionController::Base
 #    doc = Nokogiri::HTML(response_body)
 #    throw doc
   end
+
 end
 

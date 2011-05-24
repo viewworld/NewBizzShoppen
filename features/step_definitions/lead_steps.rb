@@ -304,3 +304,8 @@ When /^lead certification request for lead "([^\"]*)" has its state updated$/ do
   lead = Lead.where(:header => header).first
   lead.lead_certification_request.update_state!
 end
+
+When /^lead "([^"]*)" should be in category "([^"]*)"$/ do |header, name|
+  lead = Lead.where(:header => header).first
+  assert lead.category == Category.find_by_name(name).first
+end

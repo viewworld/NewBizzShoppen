@@ -128,6 +128,14 @@ class Category < ActiveRecord::Base
 
   public
 
+  def move_leads_to_subcategory
+    if parent and parent.descendants.size == 1 and parent.leads.present?
+      parent.leads.each do |lead|
+        lead.update_attributes(:notify_buyers_after_update => false, :category => self)
+      end
+    end
+  end
+
   def is_empty?
     total_leads_count.zero?
   end
@@ -141,6 +149,10 @@ class Category < ActiveRecord::Base
       return false
     end
     true
+  end
+
+  def can_publish_leads?
+    !root? or (root? and children.size == 0)
   end
 
 end

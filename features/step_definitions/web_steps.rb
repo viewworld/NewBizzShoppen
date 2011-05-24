@@ -402,3 +402,7 @@ Then /^I should see "([^"]*)" occurrences of css class "([^"]*)" for tag "([^"]*
     page.all(:css, "#{tag_name}[class*='#{css_class}']").size.should eql(number.to_i)
   end
 end
+
+Then /^select "([^"]*)" should have option "([^"]*)" disabled$/ do |id, name|
+  page.find("select[id='#{id}'] option[disabled]").text.should =~ /#{name}/
+end

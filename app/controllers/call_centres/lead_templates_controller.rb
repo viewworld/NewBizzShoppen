@@ -1,7 +1,7 @@
 class CallCentres::LeadTemplatesController < CallCentres::CallCentreController
   inherit_resources
 
-  set_tab "lead_templates"
+  set_tab "browse_leads"
 
   def new
     @lead_template = LeadTemplate.new(:current_user => current_user, :creator => current_user)

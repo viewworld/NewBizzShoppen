@@ -1,4 +1,4 @@
-@$_anybody @requested @m11 @tgn @lead_templates
+@$_anybody @requested @m11 @is @lead_templates
 Feature: Lead templates for agents
 
 Scenario: User can see created by in Lead Template edit view

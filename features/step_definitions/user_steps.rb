@@ -58,6 +58,21 @@ Then /^I have user with email (.+) and role (.+)$/ do |email, role|
   u.confirm!
 end
 
+Then /^I have user with email (.+) role (.+) first_name (.+) last_name (.+) and company_name (.+)$/ do |email, role, first_name, last_name, company_name|
+  u = "User::#{role.camelize}".constantize.make!(:email => email, :first_name => first_name, :last_name => last_name, :company_name => company_name)
+  u.confirm!
+end
+
+Then /User with email (.+) don't have interests/ do |email|
+  user = User::Customer.find_by_email(email)
+  user.categories = []
+  user.save
+end
+
+Then /^User with email (.+) has blank company name$/ do |email|
+  User.find_by_email(email).update_attribute(:company_name, nil)
+end
+
 Given /^I follow "([^"]*)" within table row with value "([^"]*)"$/ do |link_name, value|
  pending
 end
@@ -79,6 +94,11 @@ end
 
 Then /^a password reset message should be sent to (.+)$/ do |email|
   assert ActionMailer::Base.deliveries.size > 0
+end
+
+Then /^a call_center password reset message should be sent to (.+)$/ do |email|
+  assert ActionMailer::Base.deliveries.last.to.include?(email)
+  assert ActionMailer::Base.deliveries.last.body.include?(email)
 end
 
 When /^I follow the confirmation link sent to (.+) with role (.+)$/ do |email, role|
