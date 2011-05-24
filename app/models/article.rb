@@ -23,6 +23,8 @@ class Article < ActiveRecord::Base
   scope :ascend_by_title, only_translations(I18n.locale).order("article_translations.title ASC")
   scope :descend_by_title, only_translations(I18n.locale).order("article_translations.title DESC")
   scope :for_category, lambda { |category| where(:resource_type => 'Category', :resource_id => category.to_i) }
+  scope :for_call_centre, lambda {|user| where(:resource_type => 'User::CallCentre', :resource_id => user.id)}
+  scope :for_call_centre_agent, lambda {|user| where("type = 'Article::News::Agent' or (type = 'Article::News::CallCentre' and resource_type = 'User::CallCentre' and resource_id = :id)", {:id => user.parent_id})}
 
   private
 

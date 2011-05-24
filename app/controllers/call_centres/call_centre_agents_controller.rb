@@ -22,6 +22,7 @@ class CallCentres::CallCentreAgentsController < CallCentres::CallCentreControlle
   def create
     @call_centre_agent = User::CallCentreAgent.new(params[:user_call_centre_agent])
     @call_centre_agent.parent_id = current_user.id
+    @call_centre_agent.skip_email_verification = params[:user_call_centre_agent][:skip_email_verification]
     if @call_centre_agent.save
       flash[:notice] = t("call_centre.call_centre_agents.create.flash.call_centre_agent_creation_successful")
       redirect_to call_centres_call_centre_agents_path

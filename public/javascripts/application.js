@@ -121,7 +121,7 @@ function loadScripts() {
 
     $('.td_actions ul').hide(); // for ie7 - do not delete this line
 
-    $('.td_actions a').bind("mouseenter", function() {
+    $('.td_actions a').live("mouseenter", function() {
         $(this).next().show();
         $(this).parent().addClass("tda_hover");
     });

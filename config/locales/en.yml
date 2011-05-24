@@ -104,6 +104,7 @@ en:
         leads: "My leads"
         lead_templates: "Lead templates"
         campaigns: Campaigns
+        news: News
       customer:
         subaccounts: Team
         lead_requests: Requested leads
@@ -203,6 +204,7 @@ en:
     table:
       name: Name
       is_mandatory: Mandatory?
+      created_by: Created by
       is_active: Active?
       actions: Actions
       yes_label: "Yes"
@@ -545,6 +547,7 @@ en:
       bestsellers_header: Best sellers
       latest_header: Latest leads
       featured_header: Featured leads
+      subscribe_to_rss: Subscribe this category to RSS
     show:
       view:
         header: Lead details
@@ -624,6 +627,7 @@ en:
           first_name: "First name"
           last_name: "Last name"
           company_name: "Company name"
+          name: "Name"
           email: "E-mail"
           age: "Age"
           leads_bought: "Leads bought"
@@ -690,6 +694,7 @@ en:
           header: "Editing lead template: %{name}"
           button_update: Save
           button_cancel: Cancel
+          created_by: "Created by"
       destroy:
         flash:
           deletion_successful:  Lead template has been successfully deleted!
@@ -1340,6 +1345,7 @@ en:
           header: "Editing lead template: %{name}"
           button_update: Save
           button_cancel: Cancel
+          created_by: "Created by"
       destroy:
         flash:
           deletion_successful: "Lead template has been deleted successfully."
@@ -1369,6 +1375,7 @@ en:
           header: "Editing lead template: %{name}"
           button_update: Save
           button_cancel: Cancel
+          created_by: "Created by"
       destroy:
         flash:
           deletion_successful: Lead template has been deleted successfully!
@@ -1412,6 +1419,8 @@ en:
           title: "Editing call centre agent: %{name}"
           button_update: "Save"
           button_cancel: "Cancel"
+          change_password_link: "Change password"
+          reset_password_link: "Reset password"
       create:
         flash:
           call_centre_agent_creation_successful: "Call centre agent has been created successfully!"
@@ -1504,6 +1513,7 @@ en:
           header: "Editing lead template: %{name}"
           button_update: Save
           button_cancel: Cancel
+          created_by: "Created by"
       destroy:
         flash:
           deletion_successful: "Lead template has been deleted successfully."
@@ -1570,6 +1580,7 @@ en:
           header: "Editing lead template: %{name}"
           button_update: Save
           button_cancel: Cancel
+          created_by: "Created by"
       destroy:
         flash:
           deletion_successful: "Lead template has been deleted successfully."
@@ -1665,6 +1676,7 @@ en:
         description_label: "Description:"
         read_more_link: "read more"
         complete_list_link: "complete list"
+        configure_interests_link: "interests"
         create_new_buyer_account: "Create new sales manager account"
         sign_out: "Sign out"
         add_team_member: "Add team member"
@@ -1680,6 +1692,7 @@ en:
         header_latest_leads: "Latest leads"
         header_news: "News"
         header_my_new_leads: "My new leads"
+        header_my_new_comments: "My new comments"
         header_my_sold_leads: "My sold leads"
         purchase_value_label: "Purchase value:"
         lead_price_label: "Lead price:"
@@ -2114,6 +2127,7 @@ en:
           sales_manager: "Sales manager news"
           purchase_manager: "Procurement manager news"
           category_home: "Category home news"
+          call_centre: "Call centre news"
         cms:
           help_popup: "Help popup"
           interface_content_text: "Interface content text"

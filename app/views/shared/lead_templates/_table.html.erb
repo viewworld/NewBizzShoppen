@@ -1,5 +1,5 @@
 <%
-   cols = 3
+   cols = 4
    cols += 1 if show_checkboxes
    cols += 1 if not block_tools.nil?
    cols += 1 if show_active_column
@@ -16,7 +16,7 @@
       <th class="ta_l"><%= link_to t("lead_templates.table.name"), order_for_scoped_search(:name) %></th>
       <th class="ta_l"><%= t("lead_templates.table.category") %></th>
       <th class="ta_l"><%= t("lead_templates.table.is_mandatory") %></th>
-
+      <th class="ta_l"><%= t("lead_templates.table.created_by") %></th>
       <% if show_active_column %>
         <th class="ta_l"><%= t("lead_templates.table.is_active") %></th>
       <% end %>
@@ -46,6 +46,7 @@
           <td><%= lead_template.name %></td>
           <td><%= lead_template.category.name %></td>
           <td><%= translate_boolean(lead_template.is_mandatory?) %></td>
+          <td><%= lead_template.creator %></td>
           <% if show_active_column %>
             <td class="ta_l"><%= translate_boolean(lead_template.is_active?) %></td>
           <% end %>

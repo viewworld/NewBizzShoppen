@@ -4,7 +4,7 @@
 
     <div class="search_content">
       <%= form_for @search, :url => leads_path do |f| %>
-          <%= render :partial => "/shared/leads/search_customer_form", :locals => { :f => f } %>
+          <%= render :partial => "/shared/leads/search_customer_form", :locals => {:f => f} %>
       <% end %>
     </div>
   </div>
@@ -18,6 +18,10 @@
       <div class="pdd_10 no_pdd_lr"><%= blurb(:blurb_leads_listing) %></div>
   <% end %>
 
+  <% if @category %>
+      <%= link_to I18n.t("leads.index.subscribe_to_rss"), "/categories/#{@category.cached_slug}?search[with_category]=#{@category.id}&format=rss#{"&user_token=#{current_user.rss_token}" if current_user}" %>
+  <% end %>
+
   <% if @leads.empty? %>
       <%= blank_state_message %>
   <% else %>
@@ -25,7 +29,7 @@
           <%= leads_listing @leads, :show_checkboxes => (user_signed_in? and current_user.has_any_role?(:customer, :lead_buyer, :lead_user)) do |blocks| %>
 
               <% blocks.tools do |lead| %>
-                  <%= render :partial => "purchase_buttons", :locals => { :lead => lead } %>
+                  <%= render :partial => "purchase_buttons", :locals => {:lead => lead} %>
               <% end %>
 
 

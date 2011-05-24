@@ -11,8 +11,9 @@ class ::User::CallCentre < ::User
   has_many :category_agents, :foreign_key => "user_id"
   has_many :unique_categories, :through => :category_agents, :source => :category
   has_many :campaigns_ownerships, :class_name => "Campaign", :foreign_key => :creator_id
+  has_many :news, :as => :resource, :class_name => "User::CallCentre", :dependent => :destroy
 
-  validates_inclusion_of :payout, :in => 0..100, :message =>   I18n.t("models.user.payout_validation_message")
+  validates_inclusion_of :payout, :in => 0..100, :message => I18n.t("models.user.payout_validation_message")
   validates_presence_of :company_name
 
   before_create :allow_payout_information_editing
@@ -33,14 +34,14 @@ class ::User::CallCentre < ::User
     all_leads = Lead.scoped
     all_leads.where("creator_id in (?)", self.subaccounts.map(&:id))
   end
-  
+
   def comment_threads
     Comment.where(:commentable_id => leads.map(&:id))
-  end  
+  end
 
   def has_max_contacts_in_campaign?(campaign)
     (contacts.for_campaign(campaign).with_pending_status(false).count >= campaign.max_contact_number)
-  end    
+  end
 
   private
 

@@ -12,6 +12,7 @@ class Nbs < Thor
     Settings.default_leads_per_page = 5
     Settings.certification_level_1  = 10
     Settings.certification_level_2  = 20
+    Settings.logout_time = 5 #minutes
     Settings.contact_us_email = "contact@nbs.fake.com"
     # Invoicing
     Settings.invoicing_default_payment_deadline_date = 14
