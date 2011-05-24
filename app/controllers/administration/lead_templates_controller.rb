@@ -1,7 +1,7 @@
 class Administration::LeadTemplatesController < Administration::AdministrationController
   inherit_resources
   actions :all, :except => [:index, :show]
-  set_tab "categories"
+  set_tab "browse_leads"
 
   def new
     @lead_template = LeadTemplate.new(:category_id => params[:category_id].blank? ? params[:lead_template][:category_id] : params[:category_id])

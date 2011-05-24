@@ -55,14 +55,14 @@
       </frm>
     </div>
     <div class="column_1to3 fltl" style="padding: 0 15px" id="new_leads">
-      <frm title="#{t('agent_home.show.view.header_my_new_leads')}" c="no_marg">
+      <frm title="#{@new_comments.any? ? t('agent_home.show.view.header_my_new_comments') : t('agent_home.show.view.header_my_new_leads')}" c="no_marg">
         <param:header>
           <%= bt_link_to nil, t("agent_home.show.view.complete_list_link"), agents_leads_path, :class => "fltr" %>
         </param:header>
         <param:content>
           <ul class="solid_list">
-            <% if @new_leads.any? %>
-                <%= render :partial => 'lead', :collection => @new_leads, :as => :lead %>
+            <% if @new_comments.any? %>
+                <%= render :partial => 'comment', :collection => @new_comments, :as => :comment %>
             <% else %>
                 <%= render :partial => 'shared/blank_data_li' %>
             <% end %>         

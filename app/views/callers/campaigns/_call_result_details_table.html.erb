@@ -7,13 +7,14 @@
     <th><%= t("campaigns.call_result_details_table.agent") %></th>
     <th><%= t("campaigns.call_result_details_table.result") %></th>
     <th><%= t("campaigns.call_result_details_table.call") %></th>
+    <th>Actions</th>
     <th class="hr"></th>
   </tr>
   </thead>
   <tfoot>
   <tr>
     <td class="fl"></td>
-    <td colspan="5"></td>
+    <td colspan="6"></td>
     <td class="fr"></td>
   </tr>
   </tfoot>
@@ -26,6 +27,13 @@
         <td><%= call_result.creator.full_name %></td>
         <td><%= call_result.result %></td>
         <td></td>
+        <td class="tda ta_r">
+          <ul-actions>
+            <li>
+              <%= link_to t("call_results.table.edit_link"), edit_callers_contact_call_result_path(call_result.contact, call_result), :class => "default_action" %>
+            </li>
+          </ul-actions>
+        </td>
         <td class="cr"></td>
       </tr>
   <% end %>
@@ -63,5 +71,36 @@
                 }
             }
         });
+
+
+        if ($('table').has("a.default_action").length != 0)
+        {
+            $('tr:has(.default_action) td').filter(":not(:has(:checkbox, select, a))")
+                    .addClass("pointer")
+                    .click(function()
+            {
+                var link = $(this).parent().find('a.default_action');
+                var link_confirm_msg = $(this).parent().find('input.default_action_confirmation_msg');
+                if (link.attr("data-method") || link.attr("data-remote"))
+                {
+                    if (link_confirm_msg.val() == undefined)
+                    {
+                        link.trigger("click");
+                    }
+                    else
+                    {
+                        if (confirm(link_confirm_msg.val())) {
+                            link.trigger("click");
+                        }
+                    }
+                }
+                else
+                {
+                    window.location = link.attr("href");
+                }
+
+            });
+        }
+
     </script>
 <% end %>
