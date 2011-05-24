@@ -48,17 +48,43 @@ class LeadTemplate < ActiveRecord::Base
     !values.map(&:value).detect { |v| !v.blank? }.nil?
   end
 
-  def duplicate_fields(template)
+  def duplicate_fields(template, with_values=false, lead=nil)
     if template
       ["name", "is_mandatory"].each do |field|
          self.send("#{field}=".to_sym, template.send(field.to_sym))
       end
+
       template.lead_template_fields.each do |field|
-        lead_template_field = LeadTemplateField.new
+        if with_values
+          lead_template_field = field.deep_clone({:include => [:lead_template_field_translations] })
+          lead_template_field.lead_template_field_translations.each { |ltft| ltft.lead_template_field = lead_template_field }
+        else
+          lead_template_field = LeadTemplateField.new
+        end
         ["name", "field_type", "is_mandatory", "is_hidden"].each do |f_field|
           lead_template_field.send("#{f_field}=".to_sym, field.send(f_field.to_sym))
         end
         self.lead_template_fields << lead_template_field
+        if with_values
+          if lt_value = field.lead_template_values.detect { |ltv| ltv.lead_id == lead.id }
+            lt_value_new = lt_value.deep_clone({:include => [:lead_template_value_translations]})
+            lt_value_new.lead_template_value_translations.each { |ltvt| ltvt.lead_template_value = lt_value_new }
+            lt_value_new.attributes = {:lead_template_field => lead_template_field, :lead => lead, :value => lt_value.value}
+            lead_template_field.lead_template_values << lt_value_new
+          end
+        end
+      end
+
+      if with_values
+        self.save
+        self.lead_template_fields.each do |field|
+          field.lead_template_field_translations.each { |ltft| ltft.lead_template_field = field; ltft.save }
+          field.lead_template_values.each do |t_value|
+            t_value.lead_template_field_id = field.id
+            t_value.save
+            t_value.lead_template_value_translations.each { |ltvt| ltvt.lead_template_value_id = t_value.id; ltvt.save }
+          end
+        end
       end
     end
   end

@@ -206,6 +206,8 @@ Nbs::Application.routes.draw do
   resource :terms_and_conditions, :controller => "terms_and_conditions", :as => "terms_and_conditions", :only => [:show]
   match 'contact_us' => 'contact_us#new', :as => 'contact_us'
 
+  resource :lead_templates
+
   match ':slug' => 'category_home#show', :as => :category_home_page
   match ':slug/account/new' => 'category_buyer_accounts#new', :as => :new_category_home_page_account
   match ':slug/account' => 'category_buyer_accounts#create', :as => :category_home_page_account
