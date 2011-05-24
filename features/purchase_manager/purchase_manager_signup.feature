@@ -49,5 +49,6 @@ Feature: Purchase Manager signup
     And I should see translated "layout.my_profile_link"
     And I should be signed in
 
+  # 5778
   @m11 @requested
   Scenario: When I sign up as procurement manager the address fields are not required

@@ -57,3 +57,7 @@ Scenario: Admin should be able to define purchase limit for given big buyer (def
   Then I fill in "setting_0" with "123"
   And I press translated "administration.settings.edit.view.button_update_settings"
   Then I should see translated "administration.settings.update.controller.successful_update_notice"
+
+# 5722
+@m11 @requested @$_youtube
+Scenario: I can specify a youtube video url which is displayed on front page

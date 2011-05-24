@@ -124,3 +124,30 @@ Scenario: I should be able to select categories from different levels of the tre
   And I press translated "leads.index.search.search_button"
   Then I should not see "Hapeki"
   And I should see "Makbuki"
+
+# 5768
+@m11 @requested
+Scenario: I can see a certification icon next to lead header if lead is cerified
+
+# 5768
+@m11 @requested
+Scenario: If a linkedin/faceboook url is specified then I can see facebook/linkedin icon next to lead header
+
+# 5767
+# remove the icon from the right and put that text instead
+@m11 @requested
+Scenario: If a lead is certified then I see "Certified by procurement: (yes/no)"
+
+# 5766
+# the "certification" we have now is about agent's so it should be removed
+@m11 @requested
+Scenario: I should see "Agent's certification" instead of "Certification"
+
+# 5763
+@m11 @requested
+Scenario: I can see categories tree when I click advanced search
+
+# 5762
+# do not display other root categories. for examples when you select "Electronics" from browse lead then show categories tree only for Electronics and no other like Business, Leisure etc
+@m11 @requested
+Scenario: I should see only tree for selected root category
