@@ -45,3 +45,37 @@ Scenario: I can see that the lead I have marked as certified was confirmed by th
   And I follow translated "layout.main_menu.agent.leads"
   Then I should see translated "leads.listing.certification_status"
   And I should see translated "leads.certification.status_3"
+
+# 5770
+# put this button next to others on new lead form, when clicked a certification request should be sent
+@m11 @requested
+Scenario: When creating a new lead I can click "Create and certify"
+
+# 5769
+@m11 @requested
+Scenario: I should see "Recertify" button when Lead's contact email changes and certification request has benn already sent
+
+# 5765
+@m11 @requested
+Scenario: I can edit "Hidden description"
+
+# 5765
+@m11 @requested
+Scenario: I can't see "Sales information", "Price", "Currency", "Category", "Country" and "Public Header"
+
+# 5765
+@m11 @requested
+Scenario: I can edit Purchase decision date
+
+# 5765
+@m11 @requested
+Scenario: I can see a blurb text on top of the page
+
+# 5765
+@m11 @requested
+Scenario: I can see "Procurement information" instead of "Lead information" and Certify information" instead of "Editing lead"
+
+# 5764
+# rename "certification" link to "certify"
+@m11 @requested
+Scenario: I can certify lead by clicking on "Certify" link

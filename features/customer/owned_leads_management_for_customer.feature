@@ -262,3 +262,8 @@ Scenario: I can see details in accordion when clicking on header
   And I show accordion details for row "#lead_single_purchase_1"
   And I should see "Uniqueness"
   And I should see "Purchase date"
+
+# 5768
+# when facebook/linked URL is specified
+@requested @m11
+Scenario: Facebook and Linkedin icons should be displayed next to lead header and be clickable

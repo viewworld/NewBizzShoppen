@@ -9,3 +9,7 @@ Feature: Sign up feature
     When I make sure current locale is "dk"
     And I am on buyer sign up page
     Then "user_customer_address_attributes_country_id" should be selected for value "Denmark"
+
+  # 5779
+  @m0 @requested
+  Scenario: When I am on sign up page, the coutry should be selected to my browser locale/country

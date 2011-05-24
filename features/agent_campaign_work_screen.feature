@@ -137,3 +137,7 @@ Feature: Agent campaign - calling session
     # 5168
     @m11 @requested @ao @tested_elsewhere @_done
     Scenario: I can see a message when there are only callback contacts in my campaign
+
+    # 5777
+    @m11 @requested
+    Scenario: I can see new result form on the top of the page  
