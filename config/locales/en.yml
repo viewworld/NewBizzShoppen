@@ -2105,7 +2105,7 @@ en:
         sales_information: "Sales information"
         not_all_templates_filled: All mandatory templates must be filled!
         category_was_changed: Category has been changed
-
+        category_no_leads_can_be_published: "No leads can be published in that category"
         category_cannot_be_changed: "Category cannot be changed due to filled out templates!"
   models:
     user:

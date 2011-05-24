@@ -83,8 +83,15 @@ class Lead < AbstractLead
 
   before_save :handle_category_change
   before_validation :handle_dialling_codes
+  before_save :check_if_category_can_publish_leads
 
   private
+
+  def check_if_category_can_publish_leads
+    if category and !category.can_publish_leads?
+      self.errors.add(:category_id, I18n.t("shared.leads.form.category_no_leads_can_be_published"))
+    end
+  end
 
   def process_for_lead_information?
     true
