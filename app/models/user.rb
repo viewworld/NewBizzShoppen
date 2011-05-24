@@ -214,7 +214,7 @@ class User < ActiveRecord::Base
 
   def send_confirmation_instructions
     generate_confirmation_token if self.confirmation_token.nil?
-    deliver_email_template("confirmation_instructions") unless skip_email_verification
+    deliver_email_template("confirmation_instructions") unless ActiveRecord::ConnectionAdapters::Column.value_to_boolean(skip_email_verification)
   end
 
   def send_reset_password_instructions

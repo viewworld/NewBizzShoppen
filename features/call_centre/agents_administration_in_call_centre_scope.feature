@@ -177,7 +177,7 @@ Scenario: Call centers is able to reset and set password to all his agents
   Given an user with role call_centre_agent and email ccagent@person.com belongs to call centre call_centre@person.com
   And I go to call centre agents
   And I follow translated "call_centre.call_centre_agents.index.view.edit"
-  And I follow translated "call_centre.call_centre_agents.edit.view.change_password"
+  And I follow translated "call_centre.call_centre_agents.edit.view.change_password_link"
   And I fill in "user_password" with "newpass"
   And I fill in "user_password_confirmation" with "newpass"
   And I press translated "password.edit.view.button_update_user"
@@ -191,7 +191,7 @@ Scenario: Call centers is able to reset and set password to all his agents
   Then I sign in as call_centre@person.com with password supersecret
   And I go to call centre agents
   And I follow translated "call_centre.call_centre_agents.index.view.edit"
-  And I follow translated "call_centre.call_centre_agents.edit.view.reset_password"
+  And I follow translated "call_centre.call_centre_agents.edit.view.reset_password_link"
   Then I should see translated "administration.password.destroy.flash.password_reset_successful"
   And a password reset message should be sent to ccagent@person.com
 
