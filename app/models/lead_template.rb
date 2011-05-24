@@ -25,7 +25,7 @@ class LeadTemplate < ActiveRecord::Base
   private
 
   def is_filled_out?
-    !LeadTemplateValue.first(:conditions => ["lead_template_field_id in (?)", lead_template_fields.map(&:id)]).nil?
+    !lead_template_fields.detect { |ltf| !ltf.lead_template_values.empty? }.nil?
   end
 
   def can_be_removed
