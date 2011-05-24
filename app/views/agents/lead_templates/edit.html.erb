@@ -1,7 +1,7 @@
 <column-mc:>
   <header back="true"><%= t("agent.lead_templates.edit.view.header", :name => @lead_template.name) %><%= image_tag_for_locale %></header>
   <%= semantic_form_for [:agents, @lead_template], :method => :put do |form| %>
-      <frm title="">
+      <frm title="#{t('agent.lead_templates.edit.view.created_by')}: #{@lead_template.creator}">
         <param:content>
           <%= render :partial => '/shared/lead_templates/form', :locals => {:form => form} %>
         </param:content>

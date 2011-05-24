@@ -3,7 +3,8 @@ class AgentHomeController < ApplicationController
   set_tab "home"
 
   def agent
-    @new_leads = current_user.leads.without_outdated.without_inactive.order("created_at DESC").limit(3)
+    #@new_leads = current_user.leads.without_outdated.without_inactive.order("created_at DESC").limit(3)
+    @new_comments = current_user.comment_threads.order("last_thread_created_at DESC").limit(3)
     @sold_leads = current_user.leads.joins_on_lead_purchases.purchased.order("lead_purchases.created_at DESC").limit(3)
     render :agent
   end
@@ -30,7 +31,11 @@ class AgentHomeController < ApplicationController
   end
 
   def show
-    @news = Article::News::Agent.published.latest.limit(3)
+    if user_signed_in? and current_user.has_any_role?(:call_centre_agent)
+      @news = Article.for_call_centre_agent(current_user).published.latest.limit(3)
+    else
+      @news = Article::News::Agent.published.latest.limit(3)
+    end
 
     if user_signed_in? and current_user.has_any_role?(:agent, :call_centre_agent, :call_centre)
       agent
