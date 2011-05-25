@@ -510,7 +510,7 @@ en:
       sale_limit_label: "Uniqueness:"
       novelty_label: "Novelty:"
       hotness_label: "Hotness:"
-      certification_label: "Certification:"
+      agent_certification_label: "Agent's certification:"
       average_rating_label: "Lead rating:"
       average_rating_none_label: "None"
       has_unsatisfactory_rating_yes: "Yes"

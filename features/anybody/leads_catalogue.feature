@@ -140,8 +140,13 @@ Scenario: If a lead is certified then I see "Certified by procurement: (yes/no)"
 
 # 5766
 # the "certification" we have now is about agent's so it should be removed
-@m11 @requested @tgn
+@m11 @requested @tgn @_tested @_done
 Scenario: I should see "Agent's certification" instead of "Certification"
+  Given Category named "Sample category" already exists
+  And Lead named "Lead sample" exists within "Sample category" category
+  And I go to browse leads
+  And I follow "Sample category"
+  And I should see translated "leads.listing.agent_certification_label"
 
 # 5763
 @m11 @requested @tgn
