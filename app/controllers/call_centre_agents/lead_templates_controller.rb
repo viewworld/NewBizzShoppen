@@ -51,7 +51,7 @@ class CallCentreAgents::LeadTemplatesController < CallCentreAgents::CallCentreAg
 
     @search = LeadTemplate.scoped_search(params[:search])
     @lead_templates = @search.paginate(:page => params[:page], :per_page => LeadTemplate.per_page)
-    @categories = Category.with_lead_templates_created_by(current_user).map { |c| [c.name, c.id] }
+    @categories = Category.without_locked.with_agent_unique(current_user).map { |c| [c.name, c.id] }
   end
 
   end
