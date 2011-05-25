@@ -25,8 +25,7 @@ class LeadTemplate < ActiveRecord::Base
   private
 
   def is_filled_out?
-    #!lead_template_fields.detect { |ltf| !ltf.lead_template_values.empty? }.nil?
-    false
+    !lead_template_fields.detect { |ltf| !ltf.lead_template_values.empty? }.nil?
   end
 
   def can_be_removed
