@@ -67,4 +67,5 @@ end
 
 gem 'capistrano'
 gem 'capistrano-ext', '>= 1.2.1'
+gem 'rake', '~> 0.8.7'
 
