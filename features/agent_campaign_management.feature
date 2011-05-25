@@ -615,15 +615,15 @@ Feature: Agent campaign - management
         Scenario: I can see timestamps in my localization, not server time
 
         # 5192
-        @m11 @requested @ao
+        @m0 @requested @ao
         Scenario: I can specify description and briefing when creating new campaign
 
         # 5192
-        @m11 @requested @ao
+        @m0 @requested @ao
         Scenario: I can see a description in a popup
 
         # 5192
-        @m11 @requested @ao
+        @m0 @requested @ao
         Scenario: When editing a campaign I can click a link to edit description and briefing
         
         ##5650

@@ -111,11 +111,11 @@ Feature: Agent campaign - calling session
       # http://kb.snom.com/kb/index.php?View=entry&CategoryID=21&EntryID=40
 
     # 5192
-    @m11 @requested @ao
+    @m0 @requested @ao
     Scenario: I should be redirected to briefing area when I click campaign on my work screen
 
     # 5192
-    @m11 @requested @ao
+    @m0 @requested @ao
     Scenario: I can go back to my work screen when I click "Go to work screen"
         
     #5460
@@ -139,5 +139,5 @@ Feature: Agent campaign - calling session
     Scenario: I can see a message when there are only callback contacts in my campaign
 
     # 5777
-    @m11 @requested
-    Scenario: I can see new result form on the top of the page  
+    @m11 @requested @ao
+    Scenario: I can see new result form on the top of the page

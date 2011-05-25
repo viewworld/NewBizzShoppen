@@ -129,5 +129,5 @@ Feature: Home pages
      When I go to the home page
     Then I should not see "Other Agent Unique Category"
 
-  @m11 @requested @$_youtube
+  @m11 @requested @youtube
   Scenario: I can see a youtube video in the top right side of the page
