@@ -1,10 +1,10 @@
-@is @notifications @m11
+@is @notifications @m0
 Feature: Notifications
 
-  @m0 @requested
+  @requested
   Scenario: I will receive an email with new leads from my interests
 
-  @m0 @requested
+  @requested
   Scenario: I can subscribe by email to category
 
   @_done @_tested
