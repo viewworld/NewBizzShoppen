@@ -96,10 +96,6 @@ Then /^invoice lines for last invoice are paid for user with email "([^"]*)" and
   assert invoice.invoice_lines.detect { |il| il.paid_at.blank? }.nil?
 end
 
-Then /^VAT ratio is set to (.+)$/ do |vat_rate|
-  Settings.invoicing_default_vat_rate = vat_rate.to_f
-end
-
 Given /^there are no invoices$/ do
   Invoice.delete_all
 end

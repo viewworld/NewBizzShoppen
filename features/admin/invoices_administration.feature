@@ -59,7 +59,6 @@ Scenario: I can see list of invoices pending creation grouped by currency
 
 @m5 @added @tgn @sprint_5_corrections @_tested
 Scenario: I can search for invoices by a combination of keywords: contact name, company name, lead name, invoice number
-  Given VAT ratio is set to 0.0
   Given I have user with email bigbuyer1@person.com and role customer
   And User bigbuyer1@person.com with role customer is big buyer
   And user "bigbuyer1@person.com" with role "customer" has attributes "not_charge_vat:1"

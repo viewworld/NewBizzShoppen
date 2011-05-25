@@ -15,7 +15,6 @@ class Nbs < Thor
     Settings.contact_us_email = "contact@nbs.fake.com" if Settings.contact_us_email.nil?
     # Invoicing
     Settings.invoicing_default_payment_deadline_date = 14 if Settings.invoicing_default_payment_deadline_date.nil?
-    Settings.invoicing_default_vat_rate = 0.15 if Settings.invoicing_default_vat_rate.nil?
     Settings.big_buyer_purchase_limit = 10000 if Settings.big_buyer_purchase_limit.nil?
     #Certification
     Settings.resend_certification_notification_after_days = 15 if Settings.resend_certification_notification_after_days.nil?
