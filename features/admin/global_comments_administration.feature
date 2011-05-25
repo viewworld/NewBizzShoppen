@@ -63,7 +63,7 @@ Scenario: I can go to account edit page
   Given I follow translated "layout.main_menu.shared.comments"
   And I follow "Lead#1"
   And I follow "Adam Savage"
-  And I should see "Editing user: Adam Savage"
+  And I should see "Editing Buyer: Adam Savage"
 
 @_tested @selenium
 Scenario: I can edit the comment
