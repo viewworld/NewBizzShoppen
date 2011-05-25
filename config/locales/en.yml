@@ -726,6 +726,17 @@ en:
           destroy_template: Destroy
           destroy_template_confirmation_message: Are you sure?
     settings:
+      common:
+        view:
+          vars:
+            default_payout_delay: "Default payout delay"
+            invoicing_default_vat_rate: "Invoicing default vat rate"
+            default_leads_per_page: "Default leads per page"
+            certification_level_1: "Certification level 1"
+            contact_us_email: "Contact us email"
+            certification_level_2: "Certification level 2"
+            invoicing_default_payment_deadline_date: "Invoicing payment deadline date"
+            big_buyer_purchase_limit: "Big buyer purchase limit (EUR)"
       edit:
         view:
           title: "Settings"
