@@ -606,10 +606,6 @@ Feature: Agent campaign - management
         @added
         Scenario: As call centre agent or agent I can't manage campaigns, result types, agent assignment
 
-        # 5048
-        @m11 @requested @ao
-        Scenario: I can select which results to display
-
         # 5168
         @m11 @requested @ao
         Scenario: I can see a message when there are no more contacts in my campaign
