@@ -277,6 +277,7 @@ en:
       completion: Completion
       go_to_work_screen: go to work screen
       work_screen: Work screen
+      materials_repository: "Materials repository"
     new:
       title: New campaign
       button_create: Create
