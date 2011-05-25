@@ -373,7 +373,7 @@ en:
       prev: "<< Prev"
       next: "Next >>"
     table:
-      company_nacame: Company name
+      company_name: Company name
       company_phone: Company phone
       contact_phone: Contact phone
       agent: Agent

@@ -45,5 +45,6 @@ Scenario: After a lead that have been bought and I update it. When I click save 
 
 @_tested
 Scenario: Datepicker - after selecting form the select box it should automatically fill in the date
+  And I follow translated "layout.main_menu.call_centre_agent.leads"
   Then I follow translated "call_centre_agent.leads.index.view.edit"
   And  I fill in "datepicker" with "2010-01-01"

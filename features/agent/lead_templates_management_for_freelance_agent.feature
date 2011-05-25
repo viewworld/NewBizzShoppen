@@ -14,7 +14,10 @@ Scenario: I can list all lead templates that were created by me
   Given template named "Computer details" for category "Computers" is created by user "other_agent@nbs.com" with role "agent"
   Given template named "Printers details" for category "Computers" is created by user "agent@person.com" with role "agent"
   Given template named "Modems details" for category "Computers" is created by user "agent@person.com" with role "agent"
-  And I go to agents lead templates
+  And I go to browse leads
+  And I follow translated "categories.index.view.view_lead_templates"
+  And I select "" from "search_with_category"
+  And I press translated "agent.lead_templates.index.view.search_button"
   Then I should see "Printers details"
   Then I should see "Modems details"
   Then I should not see "Computer details"
