@@ -57,25 +57,15 @@ Scenario: I should see "Recertify" button when Lead's contact email changes and 
 
 # 5765
 @m11 @requested @is
-Scenario: I can edit "Hidden description"
+Scenario: I can edit "Hidden description" and "Purchase decision date"
 
 # 5765
 @m11 @requested @is
 Scenario: I can't see "Sales information", "Price", "Currency", "Category", "Country" and "Public Header"
 
 # 5765
+# rename "Lead information" to "Procurement information", "Editing lead" to  "Certify information"
+# and "Certification" link to "Certify"
+# and add blurb text to /leads/1/edit page
 @m11 @requested @is
-Scenario: I can edit Purchase decision date
-
-# 5765
-@m11 @requested @is
-Scenario: I can see a blurb text on top of the page
-
-# 5765
-@m11 @requested @is
-Scenario: I can see "Procurement information" instead of "Lead information" and Certify information" instead of "Editing lead"
-
-# 5764
-# rename "certification" link to "certify"
-@m11 @requested @is
-Scenario: I can certify lead by clicking on "Certify" link
+Scenario: I can see blurb, "Procurement information", "Certify information" and "Certify" link
