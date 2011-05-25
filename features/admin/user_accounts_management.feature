@@ -531,17 +531,17 @@ Scenario: It should be possible for other users to login after password change
 Scenario: I can see company name on the users listing (in favour of dynamically displayed full name/company name)
 
 
-@added @m8b @_done @_tested
+@added @m8b @_done @_tested @deprecated
 Scenario: I can sort users by company name
-  Given someone is signed up and confirmed as user with email ejdzent@nbs.com and password secret and role agent
-  And user "ejdzent@nbs.com" with role "agent" has attributes "company_name:Abc"
-  And someone is signed up and confirmed as user with email kastomer@nbs.com and password secret and role customer
-  And user "kastomer@nbs.com" with role "customer" has attributes "company_name:Xyz"
-  And I am on administration users page
-  And I follow translated "administration.users.index.view.company_name" within "table#users_table thead"
-  Then I should see "Abc" before "Xyz"
-  When I follow translated "administration.users.index.view.company_name" within "table#users_table thead"
-  Then I should see "Xyz" before "Abc"
+#  Given someone is signed up and confirmed as user with email ejdzent@nbs.com and password secret and role agent
+#  And user "ejdzent@nbs.com" with role "agent" has attributes "company_name:Abc"
+#  And someone is signed up and confirmed as user with email kastomer@nbs.com and password secret and role customer
+#  And user "kastomer@nbs.com" with role "customer" has attributes "company_name:Xyz"
+#  And I am on administration users page
+#  And I follow translated "administration.users.index.view.company_name" within "table#users_table thead"
+#  Then I should see "Abc" before "Xyz"
+#  When I follow translated "administration.users.index.view.company_name" within "table#users_table thead"
+#  Then I should see "Xyz" before "Abc"
 
 @added @m8b @_done @_tested
 Scenario: I can search users on company name
@@ -619,5 +619,17 @@ Scenario: When editing a user I should see the role of the user in header
   And I click hidden link by url regex "/users\/\d+\/edit/"
   Then I should see "Editing Buyer:"
 
-@requested @m11
+@_done @_tested @m11 @is
 Scenario: As Admin I can see Name (default Company Name, if empty then First Name + Last Name) in user listing
+  Given I am on the homepage
+  Then I sign in as blazejek@gmail.com with password secret
+  And I have user with email super@person.com role CategoryBuyer first_name Irek last_name Skrobis and company_name Selleo
+  And I go to administration users
+  Then I should see "Selleo"
+  Then I should not see "Irek"
+  Then I should not see "Skrobis"
+  Then User with email super@person.com has blank company name
+  And I go to administration users
+  Then I should not see "Selleo"
+  Then I should see "Irek"
+  Then I should see "Skrobis"

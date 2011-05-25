@@ -186,5 +186,15 @@ Scenario: When you are loged in as an agent and go to the role home pages, I sho
   Then I should see "Super ultra lead #1" within "#new_leads"
   And I should see "1" items on a list within "#new_leads"
 
-@requested @m11 @is @call_center_comments
+@requested @m11 @is @call_center_comments @_done @_tested
 Scenario: Agent can see his latest comments on home page
+  And I have user with email customer2@nbs.com and role customer
+  And user "customer2@nbs.com" with role "customer" has attributes "screen_name: Adam Savage"
+  And a lead Lead#1 exists within category Business and is bought by user customer2@nbs.com with role customer
+  And comment thread for lead "Lead#1" was posted by users "agent@nbs.com"
+  And comment for lead "Lead#1" was posted by user "customer2@nbs.com" with attributes "title:First Lead1 comment, created_at: 2011-01-01, last_thread_created_at:2011-01-01"
+  Given I am on the homepage
+  And comments for lead "Lead#1" are read by by users "agent@nbs.com"
+  Then I sign in as agent@nbs.com with password secret
+  Given I am on agent home
+  Then show me the page
