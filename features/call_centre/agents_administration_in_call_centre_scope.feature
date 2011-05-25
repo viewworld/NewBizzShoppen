@@ -203,7 +203,8 @@ Scenario: I can export all contacts with final results to a csv file
 
 @_done @_tested @is @m11 @requested
 Scenario: Call centers is able to reset password to all his agents
-  Given I am on the homepage
+  Given I go to the homepage
+  And I am not sign in
   Then I sign in as translator_call_centre@nbs.com with password secret
   Then I follow translated "layout.main_menu.call_centre.call_centre_agents"
   Then I follow translated "call_centre.call_centre_agents.index.view.edit"
@@ -214,6 +215,7 @@ Scenario: Call centers is able to reset password to all his agents
 @added @_done @_tested @is @m11 @requested
 Scenario: Call centers is able to set password to all his agents
   Given I am on the homepage
+  And I am not sign in
   Then I sign in as translator_call_centre@nbs.com with password secret
   Then I follow translated "layout.main_menu.call_centre.call_centre_agents"
   Then I follow translated "call_centre.call_centre_agents.index.view.edit"
@@ -230,6 +232,7 @@ Scenario: Call centers is able to set password to all his agents
 @_done @_tested @m11 @requested @is
 Scenario: Call centers is able to skip email confirmation when creating new agent
   Given I am on the homepage
+  And I am not sign in
   Then I sign in as translator_call_centre@nbs.com with password secret
   Then I follow translated "layout.main_menu.call_centre.call_centre_agents"
   Then I follow translated "call_centre.call_centre_agents.new.view.button_create"
