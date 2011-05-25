@@ -179,5 +179,13 @@ Scenario: I should see leads from customer unique categories I'm assigned to on 
   And I should not see "UniqueLead1" within "#latest_leads"
   And I should see "UniqueLead2" within "#latest_leads"
 
-@requested @m11 @is @interests
+@requested @m11 @is @interests @_done @_tested
 Scenario: Buyer can see link to Interests on buyer home page if he don't have set any interests yet
+  Given I am on the homepage
+  Then I sign in as buyer@nbs.com with password secret
+  Then I should not see translated "buyer_home.show.view.configure_interests_link"
+  Then User with email buyer@nbs.com don't have interests
+  Given I am on buyer home
+  Then I should see translated "buyer_home.show.view.configure_interests_link"
+  Then I follow translated "buyer_home.show.view.configure_interests_link"
+  Then I should see translated "customer.interests.edit.view.title"
