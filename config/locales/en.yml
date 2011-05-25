@@ -730,7 +730,6 @@ en:
         view:
           vars:
             default_payout_delay: "Default payout delay"
-            invoicing_default_vat_rate: "Invoicing default vat rate"
             default_leads_per_page: "Default leads per page"
             certification_level_1: "Certification level 1"
             contact_us_email: "Contact us email"

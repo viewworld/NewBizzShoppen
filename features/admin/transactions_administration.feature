@@ -79,7 +79,6 @@ Scenario: I can refund a transaction manually (what is the implication??)
 
 @m5 @added @tgn @sprint_5_corrections @_tested
 Scenario: I can search for a transaction by a combination of keyword: contact name, company name, lead name, invoice number and a specific time period (date from to date to)
-  Given VAT ratio is set to 0.0
   Given I have user with email bigbuyer1@person.com and role customer
   And User bigbuyer1@person.com with role customer is big buyer
   And user "bigbuyer1@person.com" with role "customer" has attributes "not_charge_vat:1"
