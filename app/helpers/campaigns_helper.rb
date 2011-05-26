@@ -23,4 +23,12 @@ module CampaignsHelper
     render(:partial => '/callers/call_results/table', :locals => options.merge({:collection => collection}.merge(@hb.results)))
   end
 
+  def display_result_value(result)
+    case result.field_type.to_i
+      when ResultField::MATERIAL then link_to result.material.asset_file_name, result.material.url
+      else result.value
+    end
+
+  end
+
 end

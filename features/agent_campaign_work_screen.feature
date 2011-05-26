@@ -119,16 +119,36 @@ Feature: Agent campaign - calling session
     Scenario: I can go back to my work screen when I click "Go to work screen"
         
     #5460
-    @requested @m11 @ao
+    @requested @m11 @ao @_done @_tested
     Scenario: I should be able to upload source materials to the repository of specific campaign
+      When I click hidden link by url regex "/callers\/campaigns\/\d+\/materials/"
+      And attach the file "sample image" to "material_asset"
+      And I press translated "materials.views.index.save_material"
+      Then I should see "sample.jpg"
 
     #5460
-    @requested @m11 @ao
+    @requested @m11 @ao @_done @_tested
     Scenario: I should be able to browse the campaign repository and modify it (delete files unassigned to any results)
+      When I click hidden link by url regex "/callers\/campaigns\/\d+\/materials/"
+      And attach the file "sample image" to "material_asset"
+      And I press translated "materials.views.index.save_material"
+      And I confirm a js popup on the next step
+      And I follow translated "materials.views.index.delete_material"
+      Then I should see translated "materials.views.index.successfully_deleted"
+      And I should not see "sample.jpg"
 
     #5460
-    @requested @m11 @ao
+    @requested @m11 @ao @_done @_tested
     Scenario: I should be able to add new result called 'Send material' and upload new material or choose one from campaign repository
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      And I select "Send material" from "result_id"
+      And I follow translated "call_results.edit.button_new_result"
+      And I follow translated "materials.views.index.material_repository"
+      And I wait 1 second
+      And attach the file "sample image" to "material_asset"
+      And I wait 1 second
+      Then I should see "sample.jpg"
+      And I follow "sample.jpg"
 
     # 5168
     @m11 @requested @ao @tested_elsewhere @_done

@@ -1,0 +1,34 @@
+<%= form_for material, :url => callers_campaign_materials_path(@campaign, :format => :js), :remote => true, :html => {:multipart => true} do |f| %>
+  <%= f.file_field :asset %>
+<% end %>
+
+<hr/>
+
+<ul style="display:inline;list-style:none">
+  <% if materials.any? %>
+    <% materials.each do |material| %>
+      <li style="display:inline;border: 1px solid #000;">
+        <%= link_to_function material.asset_file_name, "$('#material_#{params[:result_field_id]}').attr('value','#{material.id}');$('#material_#{params[:result_field_id]}_name').html('#{material.asset_file_name}');$('#materials_dialog').dialog('close')" %>
+      </li>
+    <% end %>
+  <% else %>
+    <%= t("materials.views.index.no_materials") %>
+  <% end %>
+</ul>
+
+<script>
+$('#new_material input').change(function(){
+ $(this).parent().ajaxSubmit({
+  beforeSubmit: function(a,f,o) {
+   o.dataType = 'script';
+  },
+  complete: function(XMLHttpRequest, textStatus) {
+   // XMLHttpRequest.responseText will contain the URL of the uploaded image.
+   // Put it in an image element you create, or do with it what you will.
+   // For example, if you have an image elemtn with id "my_image", then
+   //  $('#my_image').attr('src', XMLHttpRequest.responseText);
+   // Will set that image tag to display the uploaded image.
+  },
+ });
+});
+</script>

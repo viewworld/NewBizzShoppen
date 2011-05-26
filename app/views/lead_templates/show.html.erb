@@ -3,7 +3,7 @@
     <h1><%= t("lead_templates.show.view.question") %></h1>
     <%= radio_button_tag "lead_templates_action", "duplicate", true %> <%= t("lead_templates.show.view.duplicate_templates", :category_name => @category.name, :template_names => @templates.map(&:name).join(', ')) %><br />
     <%= radio_button_tag "lead_templates_action", "delete" %> <%= t("lead_templates.show.view.delete_templates") %><br />
-    <%= button_to_function "OK", "submit_question_form(#{@lead.id}, #{@category.id})", :id => "templates_question_submit_button" %>
+    <%= button_to_function t("lead_templates.show.view.ok_button"), "submit_question_form(#{@lead.id}, #{@category.id})", :id => "templates_question_submit_button" %>
   </div>
 
   <script type="text/javascript">

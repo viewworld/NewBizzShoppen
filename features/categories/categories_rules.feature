@@ -35,4 +35,9 @@ Feature: Categories rules
   @_done @not_testable @tgn
   Scenario: I can move lead to other category and delete template information
 
+  @_done @tgn @_tested @_done
   Scenario: I can't edit interests from my profile page
+    Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role customer
+    Then I sign in as bob@person.com with password supersecret
+    And I go to my profile
+    Then I should not see translated "my_profile.edit.view.interests_settings"
