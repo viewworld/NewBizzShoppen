@@ -494,6 +494,8 @@ en:
       confirm: "Confirm"
       reject: "Do not confirm"
       invalid_token: "Your token is invalid or state of your requested has changed and it is not available any more"
+      header: "Certify information"
+      procurement_information: "Procurement information"
     listing:
       purchase_value_label: "Purchase value:"
       lead_price_label: "Lead price:"
@@ -1642,7 +1644,6 @@ en:
         title: "Procurement Manager signup"
         janrain_sign_up: "Sign up using: <b>Google, Facebook or Linkin</b>"
         i_already_have_account: "I already have an account!"
-
   purchase_manager_accounts:
     new:
       view:

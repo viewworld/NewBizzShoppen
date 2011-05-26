@@ -140,3 +140,10 @@ Scenario: I can't see "Sales information", "Price", "Currency", "Category", "Cou
 # and add blurb text to /leads/1/edit page
 @m11 @requested @is
 Scenario: I can see blurb, "Procurement information", "Certify information" and "Certify" link
+  When there are no leads
+  And I am signed up and confirmed as user with email agent007@nbs.com and password secret and role agent
+  Given lead BestLead is created by user agent007@nbs.com with role agent
+  When lead "BestLead" certification request is sent
+  And I visit certification url for lead "BestLead"
+  Then I should see translated "leads.certification.header"
+  And I should see translated "leads.certification.procurement_information"
