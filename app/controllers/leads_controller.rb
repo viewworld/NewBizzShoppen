@@ -97,7 +97,7 @@ class LeadsController < ApplicationController
       category = @categories_scope.where("id in (?)", @search.with_selected_categories).first
       @category = category ? category.root : nil
     end
-    @categories = @category ? @categories_scope.with_leads.where("id in (?)", @category.self_and_descendants.map(&:id)) : []
+    @categories = @category ? @categories_scope.with_leads.where("categories.id in (?)", @category.self_and_descendants.map(&:id)) : []
   end
 
   private
