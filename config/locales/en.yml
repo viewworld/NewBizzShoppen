@@ -767,6 +767,9 @@ en:
             invoicing_default_payment_deadline_date: "Invoicing payment deadline date"
             big_buyer_purchase_limit: "Big buyer purchase limit (EUR)"
             expire_certification_notification_after_days: "Expire certification notification after days"
+            logout_time: "Logout after (min)"
+            resend_certification_notification_after_days: "Resend certification notification after days"
+            youtube_introduction: "YouTube introduction video URL"
       edit:
         view:
           title: "Settings"
