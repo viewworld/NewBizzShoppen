@@ -133,5 +133,4 @@ Feature: Home pages
   Scenario: I can see a youtube video in the top right side of the page
     When setting for "youtube_introduction" is set to "http://www.youtube.com/watch?v=-qMHNFOtjYk&feature=fvst"
     And I am on the home page
-    And I open page in browser
     Then I should see CSS path "div.fltr iframe"
