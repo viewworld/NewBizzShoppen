@@ -309,3 +309,13 @@ end
 When /^big buyer purchase limit for user "([^"]*)" is set to (\d+)$/ do |email, limit|
   User.find_by_email(email).update_attribute(:big_buyer_purchase_limit, limit)
 end
+
+Then /^user "([^"]*)" has profile copied from lead "([^"]*)"$/ do |email, lead_header|
+  u = User.find_by_email(email).with_role
+  lead = Lead.where(:header => lead_header).first
+  [:address_line_1, :address_line_2, :address_line_3, :zip_code, :country_id, :region_id].each do |field|
+    assert u.address.send(field) == lead.send(field)
+  end
+  assert u.full_name == lead.contact_name
+  assert u.screen_name == "#{lead.contact_name} (#{lead.email_address})"
+end
