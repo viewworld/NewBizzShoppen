@@ -149,6 +149,7 @@ Feature: Agent campaign - calling session
       And I wait 1 second
       Then I should see "sample.jpg"
       And I follow "sample.jpg"
+      Then I should see "sample.jpg" within "#agent_work_screen_call_result span"
 
     # 5168
     @m11 @requested @ao @tested_elsewhere @_done
