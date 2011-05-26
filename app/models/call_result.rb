@@ -124,4 +124,8 @@ class CallResult < ActiveRecord::Base
     contact.insert_at
   end
 
+  def process_for_send_material
+    process_for_call_log_result
+  end
+
 end

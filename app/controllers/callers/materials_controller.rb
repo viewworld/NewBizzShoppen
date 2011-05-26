@@ -20,7 +20,7 @@ class Callers::MaterialsController < Callers::CallerController
     respond_to do |wants|
       wants.html
       wants.js {
-        render :partial => 'materials', :locals => {:materials => @materials, :material => @material}
+        render :partial => 'materials', :locals => {:materials => @materials, :material => @material, :result_field_id => params[:result_field_id]}
       }
     end
   end
@@ -40,5 +40,12 @@ class Callers::MaterialsController < Callers::CallerController
   end
 
   def destroy
+    @material = @campaign.materials.find(params[:id])
+    unless @material.destroy
+      flash[:alert] = @material.errors.full_messages
+    else
+      flash[:notice] = I18n.t("materials.views.index.successfully_deleted")
+    end
+    redirect_to callers_campaign_materials_path(@campaign)
   end
 end

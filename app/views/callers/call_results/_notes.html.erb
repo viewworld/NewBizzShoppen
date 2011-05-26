@@ -15,7 +15,7 @@
       <% call_result.result.result_fields.each do |result_field| %>
           <tr>
             <td><strong><%= result_field.name %>:</strong></td>
-            <td><%= call_result.result_values.for_result_field(result_field).first.value %></td>
+            <td><%= display_result_value(call_result.result_values.for_result_field(result_field).first) %></td>
           </tr>
       <% end %>
       </tbody>

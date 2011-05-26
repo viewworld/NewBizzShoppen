@@ -22,14 +22,15 @@
           when ResultField::DATETIME then
               f.text_field :value, :class => "datetimepicker", :title => t('models.result_field.datetime_format')
           when ResultField::MATERIAL then
-              f.text_field :value, :class => ""
+              f.hidden_field :value, :id => "material_#{f.object.result_field.id}"
           else
               f.text_field :value
       end
   %>
   <% if f.object.result_field.field_type.to_i == ResultField::MATERIAL %>
-    <div id="dialog"></div>
-    <%= link_to_function "Material repository", "$('#dialog').load('#{callers_campaign_materials_path(contact.campaign, :format => :js)}').dialog()" %>
+    <div id="materials_dialog"></div>
+    <span id="material_<%= f.object.result_field.id %>_name"><%= t("materials.views.index.no_file_selected") if f.object.value.blank? %></span>
+    <%= link_to_function t("materials.views.index.material_repository"), "$('#materials_dialog').load('#{callers_campaign_materials_path(contact.campaign, :format => :js, :result_field_id => f.object.result_field.id )}').dialog({title:'#{t('materials.views.index.select_or_upload')}', width:500, height:400, beforeClose: function(event, ui) { $('#materials_dialog').html('');return true; }})" %>
   <% end %>
   <%= custom_error_for_field(f, :value) %>
 </li>

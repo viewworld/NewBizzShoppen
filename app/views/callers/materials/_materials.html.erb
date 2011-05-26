@@ -1,6 +1,5 @@
 <%= form_for material, :url => callers_campaign_materials_path(@campaign, :format => :js), :remote => true, :html => {:multipart => true} do |f| %>
   <%= f.file_field :asset %>
-  <%= f.submit t("materials.views.index.save_material") %>
 <% end %>
 
 <hr/>
@@ -8,7 +7,9 @@
 <ul style="display:inline;list-style:none">
   <% if materials.any? %>
     <% materials.each do |material| %>
-      <li style="display:inline;border: 1px solid #000;"><%= link_to_function material.asset_file_name, "$('#call_result_result_values_attributes_1_value').attr('value','666');" %></li>
+      <li style="display:inline;border: 1px solid #000;">
+        <%= link_to_function material.asset_file_name, "$('#material_#{params[:result_field_id]}').attr('value','#{material.id}');$('#material_#{params[:result_field_id]}_name').html('#{material.asset_file_name}');$('#materials_dialog').dialog('close')" %>
+      </li>
     <% end %>
   <% else %>
     <%= t("materials.views.index.no_materials") %>
@@ -19,7 +20,7 @@
 $('#new_material input').change(function(){
  $(this).parent().ajaxSubmit({
   beforeSubmit: function(a,f,o) {
-   o.dataType = 'json';
+   o.dataType = 'script';
   },
   complete: function(XMLHttpRequest, textStatus) {
    // XMLHttpRequest.responseText will contain the URL of the uploaded image.

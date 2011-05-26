@@ -2719,3 +2719,19 @@ en:
       show:
         view:
           header: "All threads for %{header}"
+  materials:
+    views:
+      index:
+        select_or_upload: "Select existing material or upload new"
+        no_materials: "There are no materials yet"
+        failed_to_upload: "File upload has failed"
+        no_file_selected: "No file selected"
+        delete_material: "Delete material"
+        assigned_to_results: "This material is assigned to results. It cannot be deleted."
+        successfully_deleted: "Material has been deleted"
+        header: "Material repository for %{campaign}"
+        upload_material: "Upload material"
+        file: "Select file to upload"
+        save_material: "Upload"
+        material_repository: "Material repository"
+
