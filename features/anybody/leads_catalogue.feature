@@ -155,7 +155,6 @@ Scenario: I can see categories tree when I click advanced search
   And Category named "Sample category#2" already exists within category named "Sample category"
   And Lead named "Lead sample" exists within "Sample category#2" category
   And I go to browse leads
-  And I open page in browser
   And I follow "Sample category"
   And I follow translated "common.advanced_search"
   And I should see "Sample category"
@@ -163,5 +162,18 @@ Scenario: I can see categories tree when I click advanced search
 
 # 5762
 # do not display other root categories. for examples when you select "Electronics" from browse lead then show categories tree only for Electronics and no other like Business, Leisure etc
-@m11 @requested @tgn
+@m11 @requested @tgn @selenium @_done @_tested
 Scenario: I should see only tree for selected root category
+  Given Category named "Sample category" already exists
+  And Category named "Sample category#2" already exists within category named "Sample category"
+  And Category named "Sample category#3" already exists within category named "Sample category#2"
+  And Lead named "Lead sample" exists within "Sample category#2" category
+  And Lead named "Lead sample" exists within "Sample category#3" category
+  And I go to browse leads
+  And I follow "Sample category"
+  And I follow translated "common.advanced_search"
+  And I should see "Sample category"
+  And I should see "Sample category#2"
+  And I should see "Sample category#3"
+  And I should not see "Computers"
+  And I should not see "Business"
