@@ -23,14 +23,14 @@ Background:
 Scenario: I can see search panel on leads listing page
   Then I should see CSS path ".search_content"
 
-@tgn @_done @_tested
+@tgn @_done @_tested @deprecated
 Scenario: I can filter leads based on category
-  When I check "Office"
-  And I uncheck "Computers"
-  And I press translated "leads.index.search.search_button"
-  Then I should see "Faxes deal"
-  Then I should see "Furniture for office deal"
-  Then I should not see "Mouses deal"
+#  When I check "Office"
+#  And I uncheck "Computers"
+#  And I press translated "leads.index.search.search_button"
+#  Then I should see "Faxes deal"
+#  Then I should see "Furniture for office deal"
+#  Then I should not see "Mouses deal"
 
 # see https://redmine.selleo.com/issues/3805
 @tgn @_done @_tested @_deprecated
