@@ -18,6 +18,9 @@ class CallCentreAgents::LeadsController < CallCentreAgents::CallCentreAgentContr
 
     create! do |success, failure|
       success.html {
+        if !params[:commit_certify].blank?
+          @lead.create_lead_certification_request
+        end
         if !params[:commit_duplicate].blank?
           redirect_to new_call_centre_agents_lead_path(:lead_id => @lead.id, :category_id => @lead.category_id)
         elsif !params[:commit_continue].blank?

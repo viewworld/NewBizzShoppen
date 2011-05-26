@@ -1350,6 +1350,7 @@ en:
           button_create_and_continue: "Create & continue"
           button_create_and_duplicate: "Create & duplicate"
           remove_language: "Remove"
+          button_create_and_certify: "Create & certify"
       edit:
         view:
           title: "Editing lead: %{name}"
@@ -1521,6 +1522,7 @@ en:
           button_create_and_duplicate: Create & duplicate
           button_create: Create
           button_cancel: Cancel
+          button_create_and_certify: "Create & certify"
       edit:
         view:
           title: "Editing lead: %{name}"

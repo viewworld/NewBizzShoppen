@@ -48,8 +48,61 @@ Scenario: I can see that the lead I have marked as certified was confirmed by th
 
 # 5770
 # put this button next to others on new lead form, when clicked a certification request should be sent
-@m11 @requested @tgn
+@m11 @requested @tgn @selenium @_tested @_done
 Scenario: When creating a new lead I can click "Create and certify"
+  Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role agent
+  And I am on the homepage
+  And I make sure current locale is "en"
+  Then I sign in as bob@person.com with password supersecret
+  And I go to agents leads
+  Given Category Test category 1 is created
+  And I go to agents leads
+  And I select "Test category 1" from "category_id"
+  And I follow translated "agent.leads.index.view.new_lead"
+  And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
+  And I fill in "lead_description" with "Lorem ipsum"
+  And I fill in "lead_hidden_description" with "Lorem ipsum hidden"
+  And I fill in "lead_purchase_value" with "10000"
+  And I fill in "lead_price" with "100"
+  And I select "3" from "lead_sale_limit"
+  And I select "Denmark" from "lead_country_id"
+  And I fill in "lead_company_name" with "Printing company"
+  And I fill in "lead_contact_name" with "Marek Kowalski"
+  And I fill in "lead_email_address" with "kowalski@person.com"
+  And I fill in "lead_phone_number" with "123456789"
+  And I fill in "lead_address_line_1" with "Kaminskiego 19"
+  And I fill in "lead_address_line_3" with "Bielsko-Biała"
+  And I fill in "lead_zip_code" with "23-2911"
+  And I fill in "datepicker" with date that is "5" days from now
+  And I press translated "agent.leads.new.view.button_create_and_certify"
+  And last email sent should have been sent to recipient "kowalski@person.com"
+  Then I am not sign in
+  Given I am signed up and confirmed as user with email bob_cca@person.com and password supersecret and role call_centre_agent
+  And I have user with email cc001@person.com and role call_centre
+  And an user with role call_centre_agent and email bob_cca@person.com belongs to call centre cc001@person.com
+  And I go to the homepage
+  And I make sure current locale is "en"
+  Then I sign in as bob_cca@person.com with password supersecret
+  And I follow translated "layout.main_menu.call_centre_agent.leads"
+  And I select "Test category 1" from "category_id"
+  And I follow translated "call_centre_agent.leads.index.view.new_lead"
+  And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
+  And I fill in "lead_description" with "Lorem ipsum"
+  And I fill in "lead_hidden_description" with "Lorem ipsum hidden"
+  And I fill in "lead_purchase_value" with "10000"
+  And I fill in "lead_price" with "100"
+  And I select "3" from "lead_sale_limit"
+  And I select "Denmark" from "lead_country_id"
+  And I fill in "lead_company_name" with "Printing company"
+  And I fill in "lead_contact_name" with "Marek Kowalski"
+  And I fill in "lead_email_address" with "kowalski1@person.com"
+  And I fill in "lead_phone_number" with "123456789"
+  And I fill in "lead_address_line_1" with "Kaminskiego 19"
+  And I fill in "lead_address_line_3" with "Bielsko-Biała"
+  And I fill in "lead_zip_code" with "23-2911"
+  And I fill in "datepicker" with date that is "5" days from now
+  And I press translated "call_centre_agent.leads.new.view.button_create_and_certify"
+  And last email sent should have been sent to recipient "kowalski1@person.com"
 
 # 5769
 @m11 @requested @is
