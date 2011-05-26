@@ -74,4 +74,8 @@ class Campaign < ActiveRecord::Base
     creator.id == user.id or user.has_role?(:admin)
   end
 
+  def can_be_accessed_by?(user)
+    has_user_as_member?(user) or creator.id == user.id or user.has_role?(:admin)
+  end
+
 end
