@@ -21,4 +21,8 @@ class SecuredController < ApplicationController
     raise CanCan::AccessDenied unless object.respond_to? :can_be_managed_by? and object.can_be_managed_by?(current_user) 
   end
 
+  def authorize_access_rights(object)
+    raise CanCan::AccessDenied unless object.respond_to? :can_be_accessed_by? and object.can_be_accessed_by?(current_user)
+  end
+
 end

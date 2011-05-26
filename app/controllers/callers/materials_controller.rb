@@ -4,7 +4,7 @@ class Callers::MaterialsController < Callers::CallerController
   layout 'campaign_materials'
 
   before_filter :fetch_campaign
-  before_filter lambda {authorize_manage_rights(@campaign)}
+  before_filter lambda {authorize_access_rights(@campaign)}
 
   private
 
