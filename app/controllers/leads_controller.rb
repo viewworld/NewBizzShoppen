@@ -94,7 +94,7 @@ class LeadsController < ApplicationController
     if @search.with_category.present?
       @category = @categories_scope.find(@search.with_category)
     elsif @search.with_selected_categories.present?
-      category = @categories_scope.where("id in (?)", @search.with_selected_categories).first
+      category = @categories_scope.where("categories.id in (?)", @search.with_selected_categories).first
       @category = category ? category.root : nil
     end
     @categories = @category ? @categories_scope.with_leads.where("categories.id in (?)", @category.self_and_descendants.map(&:id)) : []
