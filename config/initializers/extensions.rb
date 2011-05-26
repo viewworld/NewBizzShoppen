@@ -14,7 +14,7 @@ class String
   end
 
   def extract_youtube_video_id
-    self.scan(/v=(\w+)/).flatten.first
+    self.scan(/v=([a-zA-Z0-9-_]+)/).flatten.first
   end
 end
 
