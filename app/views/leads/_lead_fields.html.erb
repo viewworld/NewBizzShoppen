@@ -7,12 +7,6 @@
             <%= t("models.locale.#{f.object.locale}") if f.object.respond_to?(:locale) %>
           </h3>
         </li>
-        <li class="string">
-          <label><%= t("formtastic.labels.lead.header") %></label>
-          <%= f.object.header %>
-          <%= f.hidden_field :header %>
-
-        </li>
         <li class="text">
           <%= f.label :description %>
           <%= f.text_area :description, :style => "height: 140px; width: 600px" %>
@@ -22,8 +16,8 @@
         <% unless lead.creator.has_role?(:purchase_manager) %>
         <li class="text">
           <label><%= t("formtastic.labels.lead.hidden_description") %></label>
-          <%= f.object.hidden_description %>
-          <%= f.hidden_field :hidden_description %>
+           <%= f.text_area :hidden_description, :style => "height: 140px; width: 600px" %>
+          <%= custom_error_for_field(f, :hidden_description) %>
         </li>
         <% end %>
 

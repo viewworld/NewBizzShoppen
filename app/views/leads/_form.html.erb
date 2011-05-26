@@ -12,7 +12,6 @@
         <%= form.input :address_line_2, :hint => hint_for(@lead, :address_line_2) %>
         <%= form.input :address_line_3, :hint => hint_for(@lead, :address_line_3) %>
         <%= form.input :zip_code, :hint => hint_for(@lead, :zip_code) %>
-        <%= form.input :country_id, :as => :select, :collection => Country.all, :required => true, :input_html => {:onchange => "refresh_phone_codes(); refresh_regions_list('lead');"}, :hint => hint_for(@lead, :country_id) %>
         <%= form.input :region_id, :as => :select, :collection => @lead.country.present? ? @lead.country.regions : [], :hint => hint_for(@lead, :region_id) %>
         <%= form.input :company_vat_no, :hint => hint_for(@lead, :company_vat_no) %>
         <%= form.input :company_ean_number, :hint => hint_for(@lead, :company_ean_number) %>
@@ -52,32 +51,15 @@
           <li class="header">
             <h3><%= t("shared.leads.form.lead_information") %></h3>
           </li>
-          <li class="string optional">
-            <label><%= t("formtastic.labels.lead.category_id") %></label> <%= @lead.category %>
-          </li>
-          <li class="string optional">
-            <label><%= t("formtastic.labels.lead.country_id") %></label> <%= @lead.is_international ? t("shared.leads.form.country_international") : t("shared.leads.form.country_local_label") %>
-          </li>
-          <li class="string optional">
-            <label><%= t("formtastic.labels.lead.header") %></label> <%= @lead.header %>
-            <%= form.input :header, :as => :hidden %>
-          </li>
           <%= form.input :description, :input_html => {:style => "height: 140px; width: 600px"}, :hint => hint_for(@lead, :description) %>
           <li class="string optional">
-            <label><%= t("formtastic.labels.lead.hidden_description") %></label> <%= @lead.hidden_description %>
-            <%= form.input :hidden_description, :as => :hidden %>
+            <%= form.input :hidden_description, :input_html => {:style => "height: 140px; width: 600px"}, :hint => hint_for(@lead, :hidden_description) %>
           </li>
           <% if @lead.purchase_value.present? %>
            <li class="string optional">
             <label><%= t("formtastic.labels.lead.purchase_value") %></label> <%= @lead.purchase_value %>
           </li>
           <% end %>
-           <li class="string optional">
-            <label><%= t("formtastic.labels.lead.price") %></label> <%= @lead.price %>
-          </li>
-           <li class="string optional">
-            <label><%= t("formtastic.labels.lead.currency_id") %></label> <%= @lead.currency %>
-          </li>
         </ol>
       </fieldset>
     </div>
@@ -96,11 +78,8 @@
         <h3><%= t("shared.leads.form.sales_information") %></h3>
       </li>
       <li class="string optional">
-            <label><%= t("formtastic.labels.lead.sale_limit") %></label> <%= @lead.sale_limit %>
-          </li>
-      <li class="string optional">
-            <label><%= t("formtastic.labels.lead.purchase_decision_date") %></label> <%= @lead.purchase_decision_date %>
-          </li>
+        <%= form.input :purchase_decision_date, :as => :datepicker, :wrapper_html => {:class => "date"}, :hint => hint_for(@lead, :purchase_decision_date) %>
+      </li>
     </ol>
   </fieldset>
 </div>

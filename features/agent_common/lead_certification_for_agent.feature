@@ -109,12 +109,30 @@ Scenario: When creating a new lead I can click "Create and certify"
 Scenario: I should see "Recertify" button when Lead's contact email changes and certification request has benn already sent
 
 # 5765
-@m11 @requested @is
+@m11 @requested @tgn @_tested @_done
 Scenario: I can edit "Hidden description" and "Purchase decision date"
+  When there are no leads
+  And I am signed up and confirmed as user with email agent007@nbs.com and password secret and role agent
+  Given lead BestLead is created by user agent007@nbs.com with role agent
+  When lead "BestLead" certification request is sent
+  And I visit certification url for lead "BestLead"
+  Then I fill in "lead_hidden_description" with "sample description"
+  Then I fill in "datepicker" with "01-01-2011"
 
 # 5765
-@m11 @requested @is
+@m11 @requested @tgn @_tested @_done
 Scenario: I can't see "Sales information", "Price", "Currency", "Category", "Country" and "Public Header"
+  When there are no leads
+  And I am signed up and confirmed as user with email agent007@nbs.com and password secret and role agent
+  Given lead BestLead is created by user agent007@nbs.com with role agent
+  When lead "BestLead" certification request is sent
+  And I visit certification url for lead "BestLead"
+  Then I should not see translated "formtastic.labels.lead.sale_limit"
+  Then I should not see translated "formtastic.labels.lead.price"
+  Then I should not see translated "formtastic.labels.lead.currency_id"
+  Then I should not see translated "formtastic.labels.lead.category_id"
+  Then I should not see translated "formtastic.labels.lead.country_id"
+  Then I should not see translated "formtastic.labels.lead.header"
 
 # 5765
 # rename "Lead information" to "Procurement information", "Editing lead" to  "Certify information"
