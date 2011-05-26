@@ -28,7 +28,8 @@
       end
   %>
   <% if f.object.result_field.field_type.to_i == ResultField::MATERIAL %>
-    <%= link_to "Material repository", callers_campaign_materials_path(contact.campaign), :id => "materials_modal" %>
+    <div id="dialog"></div>
+    <%= link_to_function "Material repository", "$('#dialog').load('#{callers_campaign_materials_path(contact.campaign, :format => :js)}').dialog()" %>
   <% end %>
   <%= custom_error_for_field(f, :value) %>
 </li>
@@ -41,11 +42,6 @@
       $(function() {
           $(".datetimepicker").datetimepicker({ dateFormat: 'yy-mm-dd' });
           $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
-          $("#materials_modal").colorbox({
-            opacity: "0.5",
-            initialWidth: 300,
-            initialHeight: 300
-            });
       });
   </script>
 
