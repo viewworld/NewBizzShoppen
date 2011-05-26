@@ -145,6 +145,7 @@ Scenario: I can flag a category to not show prices to team members
   When I go to administration categories
   Then I follow translated "administration.categories.index.view.edit_link"
   And I check "category_no_prices_for_team_members"
+  And attach the file "sample image" to "category_image_attributes_asset"
   And I press translated "administration.categories.edit.view.button_update"
   Then I am not sign in
   And lead Monitors deal #1 exists within category Computers

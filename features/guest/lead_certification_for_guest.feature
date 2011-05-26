@@ -56,7 +56,7 @@ Scenario: When I decide to create new fairleads account I should be redirected t
   When lead "BestLead" certification request is sent
   And I visit certification url for lead "BestLead"
   And I press translated "leads.certification.confirm"
-  Then the "user_purchase_manager_email" field should contain "james@bond.co.uk"
+  And I should not see "E-mail"
 
 @_done @_tested
 Scenario: After signup I can login instantly and do not have to confirm it by email (since it is the same email)
