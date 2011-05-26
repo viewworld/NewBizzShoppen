@@ -52,6 +52,10 @@ class Callers::CampaignsController < Callers::CallerController
     @call_results = CallResult.find_all_by_id(params[:call_result_ids].split(","))
   end
 
+  def result_details_to_csv
+    send_data CallResult.to_csv(params[:call_result_ids].split(",")), :filename => "call_result.csv"
+  end
+
   protected
 
   def collection

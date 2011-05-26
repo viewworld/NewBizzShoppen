@@ -14,11 +14,11 @@ class CallResult < ActiveRecord::Base
 
   PENDING_RESULT_TYPES = [:call_back, :not_interested_now]
 
-  scope :call_log_results, joins(:result).where(:results => { :final => false })
-  scope :final_results, joins(:result).where(:results => { :final => true })
+  scope :call_log_results, joins(:result).where(:results => {:final => false})
+  scope :final_results, joins(:result).where(:results => {:final => true})
   scope :with_creator, lambda { |agent_id| where(:creator_id => agent_id) if agent_id.present? }
 
-  default_scope :order => 'call_results.created_at DESC'  
+  default_scope :order => 'call_results.created_at DESC'
 
   def called?
     call_log.present?
@@ -37,6 +37,13 @@ class CallResult < ActiveRecord::Base
     creator.id == user.id or user.has_one_of_roles?(:admin, :call_centre)
   end
 
+  def custom_fields_for_csv(size)
+    result = []
+    size.times { result << "" }
+    result_values.each_with_index { |result_value, index| result[index] = "#{result_value.result_field.name}: #{result_value.value}" }
+    result
+  end
+
   class << self
 
     def for_table_header(date_from, date_to)
@@ -48,8 +55,23 @@ class CallResult < ActiveRecord::Base
     def for_table_row(date_from, date_to, result_ids, agent_ids, campaign_id)
       DateCalculator.days_or_ranges(date_from, date_to, 14).inject([]) do |result, output|
         date_start, date_stop = output.class == Range ? [output.first, output.last] : [output, output]
-        results = CallResult.joins(:contact).where(:leads => {:campaign_id => campaign_id }, :result_id => result_ids).with_creator(agent_ids).where("call_results.created_at < '#{date_stop.strftime("%Y-%m-%d")} 23:59:59' and call_results.created_at > '#{date_start.strftime("%Y-%m-%d")} 00:00:01'")            
-        result << {:number => results.size, :ids => results.map(&:id).blank? ? [0] : results.map(&:id) }
+        results = CallResult.joins(:contact).where(:leads => {:campaign_id => campaign_id}, :result_id => result_ids).with_creator(agent_ids).where("call_results.created_at < '#{date_stop.strftime("%Y-%m-%d")} 23:59:59' and call_results.created_at > '#{date_start.strftime("%Y-%m-%d")} 00:00:01'")
+        result << {:number => results.size, :ids => results.map(&:id).blank? ? [0] : results.map(&:id)}
+      end
+    end
+
+    def to_csv(call_result_ids)
+      contact_company_information_fields = %w(company_name company_phone_number company_website address_line_1 address_line_2 address_line_3 zip_code country region company_vat_no company_ean_number creator_name)
+      contact_contact_information_fields = %w(contact_name direct_phone_number phone_number email_address  linkedin_url facebook_url note)
+      contact_information = contact_company_information_fields + contact_contact_information_fields
+      result_fields = %w(result note)
+      result_custom_fields = %w(custom_field_1 custom_field_2 custom_field_3 custom_field_4)
+
+      FasterCSV.generate(:force_quotes => true) do |csv|
+        csv << (contact_information + result_fields + result_custom_fields).map(&:humanize)
+        CallResult.find_all_by_id(call_result_ids).each do |c|
+          csv << (lead_company_information_fields + lead_contact_information_fields).map { |attr| c.contact.send(attr).to_s.gsub(/[\n\r\t,]/, " ") } + result_fields.map { |attr| c.send(attr).to_s.gsub(/[\n\r\t,]/, " ") } + c.custom_fields_for_csv(result_custom_fields.size)
+        end
       end
     end
 
@@ -68,7 +90,7 @@ class CallResult < ActiveRecord::Base
   end
 
   def update_contact_note
-    contact.update_attributes :note => "#{note}\n#{contact.note}" if self.note.present? 
+    contact.update_attributes :note => "#{note}\n#{contact.note}" if self.note.present?
   end
 
 

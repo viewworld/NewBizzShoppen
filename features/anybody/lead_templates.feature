@@ -49,5 +49,6 @@ Scenario: There should not be Lead Templates tab for any user
   Then I should not see "Lead templates"
   
 # 5776
+@_done @_tested_elsewhere
 Scenario: When I access templates listing from browse leads page then I should see template creator
   

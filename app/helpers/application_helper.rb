@@ -93,6 +93,16 @@ module ApplicationHelper
     link_to(content_tag(:span, icon_tag), _url, opts)
   end
 
+  def bt_link_to_function(icon_name, text, script, opts = {})
+    icon_alt   = text || icon_name.to_s.capitalize
+    link_class = text.nil? ? "bt bt_icon" : "bt"
+    opts[:class].nil? ? opts[:class] = link_class : opts[:class] = "#{link_class} #{opts[:class]}"
+    icon_tag   = ""
+    icon_tag = icon(icon_name, icon_alt) unless icon_name.nil?
+    icon_tag << "#{text}" unless text.nil?
+    link_to_function(content_tag(:span, icon_tag), script, opts)
+  end
+
   def as_currency(number,currency=nil)
      if currency
       number_to_currency(number,

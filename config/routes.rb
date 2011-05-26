@@ -135,6 +135,7 @@ Nbs::Application.routes.draw do
       resources :materials
       member do
         get 'result_details'
+        get 'result_details_to_csv'
       end
       resources :results, :except => :show do
         collection do
