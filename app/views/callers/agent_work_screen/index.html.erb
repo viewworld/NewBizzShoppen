@@ -1,7 +1,7 @@
 <column-mc:>
   <header back="true" backurl="#{callers_campaigns_path}"><%= t("agent_work_screen.index.title") %> - <%= @campaign.name %></header>
 
-  <div id="switch_campaign_form" class="fltr">
+  <div id="switch_campaign_form">
     <%= render :partial => "callers/agent_work_screen/switch_campaign_form", :locals => @locals %>
   </div>
 
