@@ -165,7 +165,7 @@ Scenario: Screen name should be automatically generated
 Scenario: I should not see fields for address, names etc
 
 #5771
-@m11 @requested @tgn
+@m11 @requested @is
 Scenario: I should see icons for Facebook/Linkedin/Google sign in
 
 #5771
