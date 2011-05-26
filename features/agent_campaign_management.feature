@@ -164,10 +164,16 @@ Feature: Agent campaign - management
       Then I click xpath "(//table[@id='campaigns']//input[@type='checkbox'])[2]"
       Then I click xpath "//tr[@class='main_actions']//a"
       Then I click xpath "//div[@class='frm_head']//a"
+      And I follow translated "layout.main_menu.call_centre.campaigns"
+      When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
+      Then I follow translated "campaigns.edit.agent_assignment_button"
       Then I should not see "1" within "#campaigns"
       Then I click xpath "(//table[@id='campaigns']//input[@type='checkbox'])[2]"
       Then I click xpath "//tr[@class='main_actions']//a"
       Then I click xpath "//div[@class='frm_head']//a"
+      And I follow translated "layout.main_menu.call_centre.campaigns"
+      When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
+      Then I follow translated "campaigns.edit.agent_assignment_button"
       Then I should see "1" within "#campaigns"
 
     #

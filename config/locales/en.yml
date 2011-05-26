@@ -215,6 +215,7 @@ en:
         question: "You are trying to move a lead, with template information into a category with no template to hold the information. Do you want to:"
         duplicate_templates: "Add templates %{template_names} to category %{category_name} and copy the information"
         delete_templates: "Delete the template information from the lead"
+        ok_button: "OK"
   lead_purchases:
     listing:
       purchase_value_label: "Purchase value:"
@@ -373,7 +374,7 @@ en:
       prev: "<< Prev"
       next: "Next >>"
     table:
-      company_nacame: Company name
+      company_name: Company name
       company_phone: Company phone
       contact_phone: Contact phone
       agent: Agent
@@ -510,7 +511,7 @@ en:
       sale_limit_label: "Uniqueness:"
       novelty_label: "Novelty:"
       hotness_label: "Hotness:"
-      certification_label: "Certification:"
+      agent_certification_label: "Agent's certification:"
       average_rating_label: "Lead rating:"
       average_rating_none_label: "None"
       has_unsatisfactory_rating_yes: "Yes"
@@ -765,6 +766,7 @@ en:
             certification_level_2: "Certification level 2"
             invoicing_default_payment_deadline_date: "Invoicing payment deadline date"
             big_buyer_purchase_limit: "Big buyer purchase limit (EUR)"
+            expire_certification_notification_after_days: "Expire certification notification after days"
       edit:
         view:
           title: "Settings"
@@ -1349,6 +1351,7 @@ en:
           button_create_and_continue: "Create & continue"
           button_create_and_duplicate: "Create & duplicate"
           remove_language: "Remove"
+          button_create_and_certify: "Create & certify"
       edit:
         view:
           title: "Editing lead: %{name}"
@@ -1520,6 +1523,7 @@ en:
           button_create_and_duplicate: Create & duplicate
           button_create: Create
           button_cancel: Cancel
+          button_create_and_certify: "Create & certify"
       edit:
         view:
           title: "Editing lead: %{name}"

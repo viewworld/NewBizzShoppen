@@ -622,6 +622,7 @@ Scenario: When editing a user I should see the role of the user in header
 @_done @_tested @m11 @is
 Scenario: As Admin I can see Name (default Company Name, if empty then First Name + Last Name) in user listing
   Given I am on the homepage
+  And I am not sign in
   Then I sign in as blazejek@gmail.com with password secret
   And I have user with email super@person.com role CategoryBuyer first_name Irek last_name Skrobis and company_name Selleo
   And I go to administration users
