@@ -158,17 +158,23 @@ Feature: Agent campaign - management
 
     @is @__campaign_assign_agents @_tested @selenium @requested
     Scenario: I can deassign not selected agents to campaign
-#      When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
-#      Then I follow translated "campaigns.edit.agent_assignment_button"
-#      Then I should see "1" within "#campaigns"
-#      Then I click xpath "(//table[@id='campaigns']//input[@type='checkbox'])[2]"
-#      Then I click xpath "//tr[@class='main_actions']//a"
-#      Then I click xpath "//div[@class='frm_head']//a"
-#      Then I should not see "1" within "#campaigns"
-#      Then I click xpath "(//table[@id='campaigns']//input[@type='checkbox'])[2]"
-#      Then I click xpath "//tr[@class='main_actions']//a"
-#      Then I click xpath "//div[@class='frm_head']//a"
-#      Then I should see "1" within "#campaigns"
+      When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
+      Then I follow translated "campaigns.edit.agent_assignment_button"
+      Then I should see "1" within "#campaigns"
+      Then I click xpath "(//table[@id='campaigns']//input[@type='checkbox'])[2]"
+      Then I click xpath "//tr[@class='main_actions']//a"
+      Then I click xpath "//div[@class='frm_head']//a"
+      And I follow translated "layout.main_menu.call_centre.campaigns"
+      When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
+      Then I follow translated "campaigns.edit.agent_assignment_button"
+      Then I should not see "1" within "#campaigns"
+      Then I click xpath "(//table[@id='campaigns']//input[@type='checkbox'])[2]"
+      Then I click xpath "//tr[@class='main_actions']//a"
+      Then I click xpath "//div[@class='frm_head']//a"
+      And I follow translated "layout.main_menu.call_centre.campaigns"
+      When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
+      Then I follow translated "campaigns.edit.agent_assignment_button"
+      Then I should see "1" within "#campaigns"
 
     #
     #
@@ -254,15 +260,15 @@ Feature: Agent campaign - management
 
     @tbr @__campaign_manage_results @selenium @_done @_tested @requested
     Scenario: I can see template fields for current category
-#      Given template named "Leisure template" for category "Leisure" is created by user "translator_call_centre@nbs.com" with role "call_centre"
-#      And template named "Leisure template" is global
-#      When  I edit contact "Mleko company"
-#      And I select "Upgraded to lead" from "result_id"
-#      And I follow translated "call_results.edit.button_new_result"
-#      And the "Category" field should contain "3"
-#      Then I should not see "Leisure template"
-#      When I select "Leisure" from "Category"
-#      Then I should see "Leisure template"
+      Given template named "Leisure template" for category "Leisure" is created by user "translator_call_centre@nbs.com" with role "call_centre"
+      And template named "Leisure template" is global
+      When  I edit contact "Mleko company"
+      And I select "Upgraded to lead" from "result_id"
+      And I follow translated "call_results.edit.button_new_result"
+      And the "Category" field should contain "3"
+      Then I should not see "Leisure template"
+      When I select "Leisure" from "Category"
+      Then I should see "Leisure template"
 
     @tbr @__campaign_manage_results @_done @_tested @requested
     Scenario: I can go to previous/next contact edit page through arrows
