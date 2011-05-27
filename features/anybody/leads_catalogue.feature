@@ -126,17 +126,22 @@ Scenario: I should be able to select categories from different levels of the tre
   And I should see "Makbuki"
 
 # 5768
-@m11 @requested @is
+@m11 @requested @is @_done @_not_testable
 Scenario: I can see a certification icon next to lead header if lead is cerified
 
 # 5768
-@m11 @requested @is
+@m11 @requested @is @_done @_not_testable
 Scenario: If a linkedin/faceboook url is specified then I can see facebook/linkedin icon next to lead header
 
 # 5767
 # remove the icon from the right and put that text instead
-@m11 @requested @is
+@m11 @requested @is @_tested @_done
 Scenario: If a lead is certified then I see "Certified by procurement: (yes/no)"
+  Given Category named "Sample category" already exists
+  And Lead named "Lead sample" exists within "Sample category" category
+  And I go to browse leads
+  And I follow "Sample category"
+  Then I should see translated "leads.listing.certified_by_procurement_label"
 
 # 5766
 # the "certification" we have now is about agent's so it should be removed

@@ -544,7 +544,7 @@ Feature: Agent campaign - management
       Then I press translated "campaigns.show.search_button"
       Then I should see today date in results table
 
-    @is @__campaign_statistics @_tested @selenium
+    @is @__campaign_statistics @_tested @selenium @wip
     Scenario: I can see results list for given date and result type
       Then I create call result
       Then I execute js for display action block for "campaigns"
@@ -554,6 +554,10 @@ Feature: Agent campaign - management
       Then I should see "Bon Jovi inc." within "#call_result_details"
       Then I should see "John Smith" within "#call_result_details"
       Then I should see "Call back" within "#call_result_details"
+      Then I should see translated "call_results.table.export_to_csv"
+      Then I execute js for display action block for "call_result_details"
+      Then I follow translated "call_results.table.edit_link"
+      Then I should see "Edit result"
 
     @is @__campaign_statistics @_tested @selenium @requested
     Scenario: I can see results list for given agent list

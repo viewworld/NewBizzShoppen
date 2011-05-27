@@ -5,7 +5,7 @@
     <%= blurb('blurb_sign_up') %><br/>
     <% unless Rails.env.test? %>
         <%= link_to_rpx t("agent_accounts.new.view.janrain_sign_up"), agent_accounts_url %>
-        <%= javascript_include_rpx agent_accounts_url %>
+        <%= embed_rpx agent_accounts_url %>
     <% end %>
   </div>
 

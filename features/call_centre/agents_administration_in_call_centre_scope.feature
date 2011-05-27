@@ -195,10 +195,12 @@ Scenario: Call centers is able to reset and set password to all his agents
   Then I should see translated "administration.password.destroy.flash.password_reset_successful"
   And a password reset message should be sent to ccagent@person.com
 
-@m11 @requested @is
+# look for call_results.table.export_to_csv
+@m11 @requested @is @_done @_tested_elsewhere
 Scenario: I can view the contact on agent work screen when I click it on results listing
 
-@m11 @requested @is
+# look for call_results.table.export_to_csv
+@m11 @requested @is @_done @_tested_elsewhere
 Scenario: I can export all contacts with final results to a csv file
 
 @_done @_tested @is @m11 @requested

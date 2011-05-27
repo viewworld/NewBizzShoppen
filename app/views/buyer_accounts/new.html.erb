@@ -5,7 +5,7 @@
     <%= blurb('blurb_sign_up') %><br/>
     <% unless Rails.env.test? %>
         <%= link_to_rpx t("buyer_accounts.new.view.janrain_sign_up"), buyer_accounts_url %>
-        <%= javascript_include_rpx buyer_accounts_url %>
+        <%= embed_rpx buyer_accounts_url %>
     <% end %>
   </div>
 

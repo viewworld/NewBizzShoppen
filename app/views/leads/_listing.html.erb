@@ -41,7 +41,17 @@
         <% end %>
 
         <td>
-          <h4><%= lead.header %> <%= link_to_edit_lead(lead) %></h4>
+          <h4><%= lead.header %>
+          <% if lead.certified? %>
+            <%= image_tag 'icons/certificate.png', {:class => "certificate_icon"} %>
+          <% end %>
+            <% if lead.linkedin_url_present? %>
+                <%= link_to image_tag("icons/in_icon.png"), lead.linkedin_url %>
+          <% end %>
+          <% if lead.facebook_url_present? %>
+                <%= link_to image_tag("icons/fb_icon.png"), lead.facebook_url %>
+          <% end %>
+            <%= link_to_edit_lead(lead) %></h4>
 
           <% unless BigDecimal(lead.purchase_value.to_s).zero? %>
               <p class="element"><%= t("leads.listing.purchase_value_label") %>
@@ -82,10 +92,9 @@
 
           <p class="element"><%= t("leads.listing.agent_certification_label") %>
             <b> <%= t("models.lead.certification.lvl#{lead.certification_level}") %></b></p>
-
-          <% if lead.certified? %>
-            <p class="element"><%= image_tag 'icons/certificate.png', {:class => "certificate_icon"} %></p>
-          <% end %>
+            <p class="element">
+              <%= t("leads.listing.certified_by_procurement_label") %> <b><%= lead.certified? ? t('common.yes_label') : t('common.no_label') %></b>
+            </p>
         </td>
 
         <% if block_tools %>
