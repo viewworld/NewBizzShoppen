@@ -82,7 +82,7 @@ class LeadsController < ApplicationController
     params[:search][:without_inactive] = true
 
     if cu_or_user_from_rss_token
-      @categories_scope = cu_or_user_from_rss_token.has_accessible_categories? ? Category..within_accessible(cu_or_user_from_rss_token).without_locked_and_not_published : cu_or_user_from_rss_token.has_role?(:customer) ? Category.without_locked_and_not_published.with_customer_unique(cu_or_user_from_rss_token).scoped : Category.without_locked_and_not_published.with_agent_unique(cu_or_user_from_rss_token).scoped
+      @categories_scope = cu_or_user_from_rss_token.has_accessible_categories? ? Category.within_accessible(cu_or_user_from_rss_token).without_locked_and_not_published : cu_or_user_from_rss_token.has_role?(:customer) ? Category.without_locked_and_not_published.with_customer_unique(cu_or_user_from_rss_token).scoped : Category.without_locked_and_not_published.with_agent_unique(cu_or_user_from_rss_token).scoped
     else
       @categories_scope = Category.without_locked_and_not_published.without_unique.scoped
     end

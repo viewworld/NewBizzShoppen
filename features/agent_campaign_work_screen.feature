@@ -149,6 +149,7 @@ Feature: Agent campaign - calling session
       And I wait 1 second
       Then I should see "sample.jpg"
       And I follow "sample.jpg"
+      Then I should see "sample.jpg" within "#agent_work_screen_call_result span"
 
     # 5168
     @m11 @requested @ao @tested_elsewhere @_done
@@ -159,5 +160,7 @@ Feature: Agent campaign - calling session
     Scenario: I can see a message when there are only callback contacts in my campaign
 
     # 5777
-    @m11 @requested @ao
+    @m11 @requested @ao @_done @_tested
     Scenario: I can see new result form on the top of the page
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      Then I should see CSS path "#switch_campaign_form #result_id"

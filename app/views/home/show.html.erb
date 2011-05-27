@@ -5,8 +5,17 @@
 
 
   <div class="pdd_5 no_pdd_b">
-    <p><%= blurb("blurb_start_page_role_selection") %></p>
+    <div class="fltl" style="<%= "width:530px" if Settings.youtube_introduction.to_s.extract_youtube_video_id %>">
+      <p><%= blurb("blurb_start_page_role_selection") %></p>
+    </div>
+    <% if Settings.youtube_introduction.to_s.extract_youtube_video_id %>
+      <div class="fltr">
+        <iframe width="560" height="349" src="http://www.youtube.com/embed/<%= Settings.youtube_introduction.to_s.extract_youtube_video_id %>" frameborder="0" allowfullscreen></iframe>
+      </div>
+    <% end %>
   </div>
+
+  <div class="clb"></div>
 
   <hl pdd="15"/>
 

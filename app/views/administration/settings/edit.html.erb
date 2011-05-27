@@ -5,7 +5,7 @@
       <frm title="">
         <param:content>          
           <div class="pdd_10 no_pdd_t">
-            <% settings_left, settings_right = @settings.each_slice((@settings.size/2).to_i).to_a %>
+            <% settings_left, settings_right = @settings.chunk(2) %>
             <div class="column_left">
             <fieldset class="inputs labels_260 labels_ta_r inputs_180">
               <ol>

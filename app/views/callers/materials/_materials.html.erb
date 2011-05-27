@@ -1,4 +1,4 @@
-<%= form_for material, :url => callers_campaign_materials_path(@campaign, :format => :js), :remote => true, :html => {:multipart => true} do |f| %>
+<%= form_for material, :url => callers_campaign_materials_path(@campaign, :format => :js, :result_field_id => params[:result_field_id]), :remote => true, :html => {:multipart => true} do |f| %>
   <%= f.file_field :asset %>
 <% end %>
 
