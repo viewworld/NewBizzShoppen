@@ -1,21 +1,34 @@
 <popup:>
-  <div class="c_help">
-    <h1><%= t("lead_templates.show.view.question") %></h1>
-    <%= radio_button_tag "lead_templates_action", "duplicate", true %> <%= t("lead_templates.show.view.duplicate_templates", :category_name => @category.name, :template_names => @templates.map(&:name).join(', ')) %><br />
-    <%= radio_button_tag "lead_templates_action", "delete" %> <%= t("lead_templates.show.view.delete_templates") %><br />
-    <%= button_to_function t("lead_templates.show.view.ok_button"), "submit_question_form(#{@lead.id}, #{@category.id})", :id => "templates_question_submit_button" %>
-  </div>
+  <h1><%= t("lead_templates.show.view.question") %></h1>
+  <fieldset class="inputs">
+    <ol>
+      <li class="radio">
+        <%= radio_button_tag "lead_templates_action", "duplicate", true %>
+        <label for="lead_templates_action"><%= t("lead_templates.show.view.duplicate_templates", :category_name => @category.name, :template_names => @templates.map(& :name).join(', ')) %></label>
+      </li>
+      <li class="radio">
+        <%= radio_button_tag "lead_templates_action", "delete" %>
+        <label for="lead_templates_action"><%= t("lead_templates.show.view.delete_templates") %></label>
+      </li>
+    </ol>
+  </fieldset>
+
+  <p class="ta_r">
+    <%= bt_link_to nil, t("lead_templates.show.view.ok_button"), "javascript:void(0)", :onclick => "submit_question_form(#{@lead.id}, #{@category.id})", :id => "templates_question_submit_button" %>
+  </p>
 
   <script type="text/javascript">
-    function submit_question_form(lead_id, category_id){
-        if($('#lead_templates_action_duplicate').is(':checked')){
-            $('#templates_question_submit_button').attr('disabled', 'disabled');
-            $.post('/lead_templates.js', 'lead_id='+lead_id+'&category_id='+category_id, function(data){ parent.$.fn.colorbox.close(); });
-        }
-        else
-        {
-            parent.$.fn.colorbox.close();
-        }
-    }
+      function submit_question_form(lead_id, category_id) {
+          if ($('#lead_templates_action_duplicate').is(':checked')) {
+              $('#templates_question_submit_button').attr('disabled', 'disabled');
+              $.post('/lead_templates.js', 'lead_id=' + lead_id + '&category_id=' + category_id, function(data) {
+                  parent.$.fn.colorbox.close();
+              });
+          }
+          else
+          {
+              parent.$.fn.colorbox.close();
+          }
+      }
   </script>
 </popup:>
