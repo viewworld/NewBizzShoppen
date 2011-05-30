@@ -269,7 +269,7 @@ end
 
 When /^I visit certification url for lead "([^"]*)"$/ do |header|
   lead = Lead.where(:header => header).first
-  visit "/leads/#{lead.id}/edit?token=#{lead.lead_certification_request.token}"
+  visit "/leads/#{lead.id}/edit?token=#{lead.current_lcr.token}"
 end
 
 When /^lead "([^"]*)" is certified$/ do |header|
@@ -280,7 +280,7 @@ end
 
 When /^lead "([^"]*)" certification request is sent$/ do |header|
   lead = Lead.where(:header => header).first
-  lead.create_lead_certification_request
+  lead.lead_certification_requests.create
 end
 
 When /^lead "([^"]*)" certification request has attributes "([^"]*)"$/ do |header, options|
@@ -292,7 +292,7 @@ end
 
 Then /^lead "([^"]*)" certification status should be "([^"]*)"$/ do |header, expected_state|
   lead = Lead.where(:header => header).first
-  lead.lead_certification_request.state.should == expected_state.to_i
+  lead.current_lcr.state.should == expected_state.to_i
 end
 
 When /^lead certification request for lead "([^\"]*)" has expired$/ do |header|

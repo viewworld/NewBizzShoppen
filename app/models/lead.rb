@@ -260,7 +260,7 @@ class Lead < AbstractLead
   end
 
   def can_be_recertified?
-    current_lcr.email != email_address and LeadCertificationRequest::STATES_THAT_COULD_BE_RECERTIFICATED.include?(current_lcr.state)
+    current_lcr.present? and current_lcr.email != email_address and LeadCertificationRequest::STATES_THAT_COULD_BE_RECERTIFICATED.include?(current_lcr.state)
   end
 
   def comments_count_for(user)
