@@ -147,6 +147,7 @@ Scenario: I can see blurb, "Procurement information", "Certify information" and 
   And I visit certification url for lead "BestLead"
   Then I should see translated "leads.certification.header"
   And I should see translated "leads.certification.procurement_information"
+  And I should see "Blurb certify information"
   Given I am not sign in
   When there are no leads
   Given lead BestLead is created by user agent007@nbs.com with role agent
