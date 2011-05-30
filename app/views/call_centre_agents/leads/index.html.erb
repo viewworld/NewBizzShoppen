@@ -70,7 +70,7 @@
               </li>
               <% if lead.can_be_certified? %>
                 <li>
-                    <%= link_to t("call_centre_agent.leads.index.view.certificate"), call_centre_agents_lead_certifications_path(lead), :method => :post %>
+                    <%= link_to t("call_centre_agent.leads.index.view.certify"), call_centre_agents_lead_certifications_path(lead), :method => :post %>
                 </li>
               <% end %>
               <li>

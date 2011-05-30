@@ -1340,6 +1340,7 @@ en:
           option_not_published: "not published"
           filter_with_inactive: "Skip inactive"
           filter_with_outdated: "Skip outdated"
+          certify: "Certify"
       show:
         view:
           header: "Ratings for lead: %{lead_header}"
@@ -1522,7 +1523,7 @@ en:
             keyword_label: Keyword
             filter_with_inactive: Skip inactive
             filter_with_outdated: Skip outdated
-          certificate: "Certificate"
+          certify: "Certify"
       new:
         view:
           title: New lead
