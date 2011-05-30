@@ -215,7 +215,7 @@ en:
         question: "You are trying to move a lead, with template information into a category with no template to hold the information. Do you want to:"
         duplicate_templates: "Add templates %{template_names} to category %{category_name} and copy the information"
         delete_templates: "Delete the template information from the lead"
-        ok_button: "OK"
+        ok_button: "Continue"
   lead_purchases:
     listing:
       purchase_value_label: "Purchase value:"
