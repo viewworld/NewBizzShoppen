@@ -3,6 +3,10 @@
 
   <div class="pdd_5 no_pdd_b">
     <%= blurb('blurb_sign_up') %>
+    <% unless Rails.env.test? %>
+        <%= link_to_rpx t("buyer_accounts.new.view.janrain_sign_up"), "https://#{Nbs::Application.config.action_mailer.default_url_options[:host]}/#{params[:slug]}/account" %>
+        <%= embed_rpx buyer_accounts_url %>
+    <% end %>
   </div>
   
   <hl pdd="15"/>

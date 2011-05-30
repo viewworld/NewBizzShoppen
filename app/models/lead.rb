@@ -14,7 +14,7 @@ class Lead < AbstractLead
   belongs_to :country
   belongs_to :currency
   belongs_to :region
-  has_one :lead_certification_request
+  has_many :lead_certification_requests
   has_many :lead_translations, :dependent => :destroy
   has_many :lead_purchases
   has_many :lead_template_values
@@ -247,20 +247,24 @@ class Lead < AbstractLead
     comment_threads.unread_by_user(user).count > 0
   end
 
+  def current_lcr
+    lead_certification_requests.last
+  end
+
   def certified?
-    lead_certification_request and lead_certification_request.approved?
+    !lead_certification_requests.blank? and current_lcr.approved?
   end
 
   def can_be_certified?
-    lead_certification_request.blank? and !email_address.blank? and !contact_name.blank?
+    lead_certification_requests.blank? and !email_address.blank? and !contact_name.blank?
+  end
+
+  def can_be_recertified?
+    current_lcr.email != email_address and LeadCertificationRequest::STATES_THAT_COULD_BE_RECERTIFICATED.include?(current_lcr.state)
   end
 
   def comments_count_for(user)
-    if user.has_role?(:admin)
-      comment_threads.roots.count
-    else
-      comment_threads.roots.without_blocked.count
-    end
+    user.has_role?(:admin) ? comment_threads.roots.count : comment_threads.roots.without_blocked.count
   end
 
 end
