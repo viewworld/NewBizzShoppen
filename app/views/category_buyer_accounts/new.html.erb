@@ -7,6 +7,15 @@
   
   <hl pdd="15"/>
 
+  <label style="padding-top: 8px;margin-right:20px;float:left"><%= t("buyer_accounts.new.view.janrain_sign_up_label") %></label>
+
+  <div class="txt">
+    <% unless Rails.env.test? %>
+        <%= link_to_rpx image_tag("icons/social_login.png"), "https://#{Nbs::Application.config.action_mailer.default_url_options[:host]}/#{params[:slug]}/account" %>
+        <%= javascript_include_rpx "https://#{Nbs::Application.config.action_mailer.default_url_options[:host]}/#{params[:slug]}/account" %>
+    <% end %>
+  </div>
+
   <%= semantic_form_for @user, :url => "/#{params[:slug]}/account" do |form| %>
       <frm title="Create new account" c="no_marg">
         <param:content>

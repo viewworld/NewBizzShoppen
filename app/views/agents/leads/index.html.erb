@@ -75,6 +75,10 @@
                     <li>
                       <%= link_to t("agent.leads.index.view.certify"), agents_lead_certifications_path(lead), :method => :post %>
                     </li>
+                <% elsif lead.can_be_recertified? %>
+                    <li>
+                      <%= link_to t("agent.leads.index.view.recertificate"), agents_lead_certifications_path(lead), :method => :post %>
+                    </li>
                 <% end %>
                 <li>
                   <%= link_to t("agent.leads.index.view.destroy"), agents_lead_path(lead), :confirm => t("agent.leads.index.view.destroy_confirmation"), :method => :delete %>
