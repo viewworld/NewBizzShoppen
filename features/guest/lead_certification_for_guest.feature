@@ -178,7 +178,7 @@ Scenario: I should not see fields for address, names etc
   And I should not see "Last name"
 
 #5771
-@m11 @requested @is
+@m11 @requested @is @_done @_non_testable
 Scenario: I should see icons for Facebook/Linkedin/Google sign in
 
 #5771

@@ -544,7 +544,7 @@ Feature: Agent campaign - management
       Then I press translated "campaigns.show.search_button"
       Then I should see today date in results table
 
-    @is @__campaign_statistics @_tested @selenium @wip
+    @is @__campaign_statistics @_tested @selenium
     Scenario: I can see results list for given date and result type
       Then I create call result
       Then I execute js for display action block for "campaigns"

@@ -105,8 +105,21 @@ Scenario: When creating a new lead I can click "Create and certify"
   And last email sent should have been sent to recipient "kowalski1@person.com"
 
 # 5769
-@m11 @requested @is
+@m11 @requested @is @_done @_tested
 Scenario: I should see "Recertify" button when Lead's contact email changes and certification request has benn already sent
+  When there are no leads
+  And I am signed up and confirmed as user with email agent007@nbs.com and password secret and role agent
+  And lead BestLead is created by user agent007@nbs.com with role agent
+  And I am on the home page
+  And I sign in as agent007@nbs.com with password secret
+  And I follow translated "layout.main_menu.agent.leads"
+  When lead "BestLead" certification request is sent
+  When lead "BestLead" has attributes "email_address:error"
+  And I follow translated "layout.main_menu.agent.leads"
+  Then I should not see translated "agent.leads.index.view.certificate"
+  Then I should see translated "agent.leads.index.view.recertificate"
+  Then I follow translated "agent.leads.index.view.recertificate"
+  Then I should see translated "agent.lead_certifications.index.view.sent_successfully"
 
 # 5765
 @m11 @requested @tgn @_tested @_done
