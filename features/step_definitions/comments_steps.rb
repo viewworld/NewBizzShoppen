@@ -1,12 +1,12 @@
 When /^comment for lead "([^"]*)" was posted by user "([^"]*)" with attributes "([^"]*)"$/ do |lead_header, email, options|
-  lead = Lead.find_by_header(lead_header)
+  lead = Lead.where(:header => lead_header).first
   user = User.find_by_email(email).with_role
   options_hash = Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys
   Comment.make!({:commentable_id => lead.id, :commentable_type => "AbstractLead", :user => user}.merge(options_hash))
 end
 
 When /^comment thread for lead "([^"]*)" was posted by users "([^"]*)"$/ do |lead_header, user_emails|
-  lead = Lead.find_by_header(lead_header)
+  lead = Lead.where(:header => lead_header).first
   users = user_emails.split(",").map{ |e| e.strip }.map { |email| User.find_by_email(email).with_role }
   parent_id = nil
   users.each_with_index do |user, i|
@@ -16,7 +16,7 @@ When /^comment thread for lead "([^"]*)" was posted by users "([^"]*)"$/ do |lea
 end
 
 When /^comments for lead "([^"]*)" are read by by users "([^"]*)"$/ do |lead_header, user_emails|
-  lead = Lead.find_by_header(lead_header)
+  lead = Lead.where(:header => lead_header).first
   users = user_emails.split(",").map{ |e| e.strip }.map { |email| User.find_by_email(email).with_role }
   lead.comment_threads.each do |comment|
     users.each do |user|
@@ -25,7 +25,7 @@ When /^comments for lead "([^"]*)" are read by by users "([^"]*)"$/ do |lead_hea
   end
 end
 When /^comments for lead "([^"]*)" (should not|should) be read by user "([^"]*)"$/ do |lead_header, should_be_read, user_email|
-  lead = Lead.find_by_header(lead_header)
+  lead = Lead.where(:header => lead_header).first
   user = User.find_by_email(user_email).with_role
 
   if should_be_read == "should"

@@ -201,7 +201,7 @@ end
 
 Given /^user "([^"]*)" with role "([^"]*)" has interest in following categories "([^"]*)"$/ do |email, role, category_names|
   user = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
-  user.categories = category_names.split(",").map { |name| Category.find_by_name(name).last }
+  user.categories = category_names.split(",").map { |name| Category.where(:name => name).last }
   user.save
 end
 

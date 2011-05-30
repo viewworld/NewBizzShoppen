@@ -11,7 +11,7 @@ end
 
 Given /^Lead named "([^"]*)" exists within "([^"]*)" category$/ do |name, category_name|
   category_id =  if category_name
-                   Category.find_by_name(category_name).id
+                   Category.where(:name => category_name).first.id
                  else
                    Category.make!(:name => category_name).id
                  end
