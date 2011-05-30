@@ -7,15 +7,23 @@
 
   <hl pdd="15"/>
 
-  <label style="padding-top: 8px;margin-right:20px;float:left"><%= t("certification_accounts.new.view.janrain_sign_up_label") %></label>
+  <fieldset class="inputs labels_100 no_pdd" style="margin-top:-5px;">
+    <ol class="no_pdd">
+      <li class="string social_login">
+        <label><%= t("certification_accounts.new.view.janrain_sign_up_label") %></label>
 
-  <div class="txt">
-    <% unless Rails.env.test? %>
-        <%= link_to_rpx image_tag("icons/social_login.png"), certification_accounts_url %>
-        <%= javascript_include_rpx certification_accounts_url %>
-    <% end %>
-    <fltr style="float:right;"><%= link_to t("certification_accounts.new.view.i_already_have_account"), root_path %></fltr>
-  </div>
+        <div class="txt">
+          <% unless Rails.env.test? %>
+              <%= link_to_rpx image_tag("icons/social_login.png"), certification_accounts_url %>
+              <%= javascript_include_rpx certification_accounts_url %>
+          <% end %>
+          <br/>
+          <%= link_to t("certification_accounts.new.view.i_already_have_account"), root_path %>
+        </div>
+      </li>
+    </ol>
+  </fieldset>
+
 
 
   <%= semantic_form_for @user, :url => certification_accounts_path do |form| %>

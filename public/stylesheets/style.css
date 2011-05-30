@@ -1690,3 +1690,23 @@ span.cke_skin_kama
     line-height: 16px;
     padding-bottom: 5px;
 }
+
+
+
+/* ---- materials -----
+--------------------------------------------------------------------------------- */
+
+.materials_list
+{
+    padding-left: 15px;
+}
+
+.materials_list li
+{
+    line-height: 24px;
+}
+
+.materials_list li strong
+{
+    font-size: 13px;
+}

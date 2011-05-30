@@ -7,14 +7,20 @@
 
   <hl pdd="15"/>
 
-  <label style="padding-top: 8px;margin-right:20px;float:left"><%= t("buyer_accounts.new.view.janrain_sign_up_label") %></label>
+  <fieldset class="inputs labels_100 no_pdd" style="margin-top:-5px;">
+    <ol class="no_pdd">
+      <li class="string social_login">
+        <label><%= t("buyer_accounts.new.view.janrain_sign_up_label") %></label>
 
-  <div class="txt">
-    <% unless Rails.env.test? %>
-        <%= link_to_rpx image_tag("icons/social_login.png"), buyer_accounts_url %>
-        <%= javascript_include_rpx buyer_accounts_url %>
-    <% end %>
-  </div>
+        <div class="txt">
+          <% unless Rails.env.test? %>
+              <%= link_to_rpx image_tag("icons/social_login.png"), buyer_accounts_url %>
+              <%= javascript_include_rpx buyer_accounts_url %>
+          <% end %>
+        </div>
+      </li>
+    </ol>
+  </fieldset>
 
   <%= semantic_form_for @user, :url => buyer_accounts_path do |form| %>
       <frm title="Create new account" c="no_marg">

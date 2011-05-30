@@ -211,14 +211,24 @@
 
 .inputs ol li.string.social_login
 {
-    border-bottom: 1px dotted #ccc;
-    margin-bottom: 12px;
     padding-bottom: 6px;
 }
 
+.frm .inputs ol li.string.social_login
+{
+    border-bottom: 1px dotted #ccc;
+    margin-bottom: 12px;    
+}
+
+
 .inputs ol li.string.social_login label
 {
-    padding-top: 15px;
+    padding-top: 7px;
+}
+
+.inputs ol li.string.social_login div.txt
+{
+    margin-top: 0;
 }
 
 

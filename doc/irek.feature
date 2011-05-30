@@ -29,7 +29,6 @@ Feature: Irek
 #  @_done @_tested_elsewhere
 #  Scenario: Before I execute any controller action then end time of current Regular Log is set to Time now plus 5 min
 #
-#  @wip
 #  Scenario: If I execute any campaign controller first time then new Campaign Log is created with start time and end time set to Time now and Time now plus 5 min
 #    Given I am on the homepage
 #    Then Count for model UserSessionLog is equal 0
