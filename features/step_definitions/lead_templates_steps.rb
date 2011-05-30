@@ -25,7 +25,7 @@ end
 
 #fields are entered as four values: name:is_hidden:is_mandatory :field_type -- example -- computer count:false:true:1, conditions:true:false:3
 Given /^template named "([^"]*)" has following fields "([^"]*)"$/ do |name, fields|
-  template = LeadTemplate.find_by_name(name)
+  template = LeadTemplate.where(:name => name).first
   fields.split(",").map { |f| f.to_s.strip.split(':') }.each do |f_name, f_is_hidden, f_is_mandatory, f_field_type|
     template.lead_template_fields.create(:name => f_name, :is_hidden => f_is_hidden == "true" ? true : false,
                                          :field_type => f_field_type.to_i,
