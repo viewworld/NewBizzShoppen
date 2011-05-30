@@ -145,7 +145,7 @@ function loadScripts() {
             opacity: "0.5",
             initialWidth: 200,
             initialHeight: 200
-        })        
+        })
     }
     catch(e)
     {
