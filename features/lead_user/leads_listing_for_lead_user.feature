@@ -66,7 +66,6 @@ Scenario: I should not see categories that I have been restricted access to by c
   When I am not sign in
   Then I sign in as lead_user2@person.com with password supersecret
   Given I go to browse leads
-  And I follow "Office"
   And I should see "Office"
   And I should see "Wireless Devices"
   And I should not see "Building"

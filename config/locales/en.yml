@@ -618,9 +618,8 @@ en:
         buyer_sign_up_text: "If you want to buy hot leads for your business"
         purchase_manager_sign_up_text: "If you want a quote on your business"
         agent_sign_up_text: "If you can create new leads"
-
         call_centre_header: "Welcome %{name}"
-        sign_in_with_external_account: "Sign in using: Google, Facebook or LinkedIn"
+        sign_in_with_external_accounts: "Sign in using:"
   password:
     flashes:
       successfully_changed: 'Password has been successfully changed'
@@ -1332,8 +1331,8 @@ en:
         view:
           new_lead: "New lead"
           edit: "Edit"
-          certificate: "Certificate"
-          recertificate: "Recertificate"
+          certificate: "Certify"
+          recertificate: "Recertify"
           destroy: "Destroy"
           destroy_confirmation: "Are you sure?"
           search_button: "Search"
@@ -1642,20 +1641,20 @@ en:
       view:
         title: "Freelancer Agent signup"
         button_create_account: "Create my account"
-        janrain_sign_up: "Sign up using: <b>Google, Facebook or Linkin</b>"
+        janrain_sign_up_label: "Sign up using:"
 
   certification_accounts:
     new:
       view:
         title: "Procurement Manager signup"
-        janrain_sign_up: "Sign up using: <b>Google, Facebook or Linkin</b>"
+        janrain_sign_up_label: "Sign up using:"
         i_already_have_account: "I already have an account!"
   purchase_manager_accounts:
     new:
       view:
         title: "Procurement Manager signup"
         header: "Create new account"
-        janrain_sign_up: "Sign up using: <b>Google, Facebook or Linkin</b>"
+        janrain_sign_up_label: "Sign up using:"
         button_create_account: "Create my account"
 
   buyer:
@@ -1710,7 +1709,7 @@ en:
         button_create_account: "Create"
         enable_team_buyers: "Enable team buyers"
         company_name: "Company"
-        janrain_sign_up: "Sign up using: <b>Google, Facebook or Linkin</b>"
+        janrain_sign_up_label: "Sign up using:"
 
   category_buyer_accounts:
     new:
@@ -1719,7 +1718,7 @@ en:
         button_create_account: "Create"
         enable_team_buyers: "Enable team buyers"
         company_name: "Company"
-        janrain_sign_up: "Sign up using: <b>Google, Facebook or Linkin</b>"
+        janrain_sign_up_label: "Sign up using:"
 
   buyer_home:
     show:

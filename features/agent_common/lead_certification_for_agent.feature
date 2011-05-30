@@ -138,7 +138,7 @@ Scenario: I can't see "Sales information", "Price", "Currency", "Category", "Cou
 # rename "Lead information" to "Procurement information", "Editing lead" to  "Certify information"
 # and "Certification" link to "Certify"
 # and add blurb text to /leads/1/edit page
-@m11 @requested @is
+@m11 @requested @tgn @_done @_tested
 Scenario: I can see blurb, "Procurement information", "Certify information" and "Certify" link
   When there are no leads
   And I am signed up and confirmed as user with email agent007@nbs.com and password secret and role agent
@@ -147,3 +147,10 @@ Scenario: I can see blurb, "Procurement information", "Certify information" and 
   And I visit certification url for lead "BestLead"
   Then I should see translated "leads.certification.header"
   And I should see translated "leads.certification.procurement_information"
+  And I should see "Blurb certify information"
+  Given I am not sign in
+  When there are no leads
+  Given lead BestLead is created by user agent007@nbs.com with role agent
+  And I sign in as agent007@nbs.com with password secret
+  And I go to agents leads
+  And I follow translated "agent.leads.index.view.certify"

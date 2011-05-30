@@ -38,7 +38,7 @@
     <div class="column_1to3 fltl" id="news" style="padding-right: 15px">
       <frm title="#{t('category_home.show.view.header_news')}" c="no_marg">
         <param:header>
-          <%= bt_link_to nil, t("category_home.show.view.complete_list_link"), news_index_path(:search => {:with_subclass =>  'CategoryHome', :for_category => @home_category.id}), :class => "fltr" %>
+          <%= bt_link_to nil, t("category_home.show.view.complete_list_link"), news_index_path(:search => {:with_subclass => 'CategoryHome', :for_category => @home_category.id}), :class => "fltr" %>
         </param:header>
         <param:content>
           <ul class="solid_list">
@@ -59,10 +59,16 @@
               <%= semantic_form_for(:user, :url => session_path(:user)) do |f| %>
                   <fieldset class="inputs labels_100 inputs_200 no_pdd">
                     <ol class="align_inputs no_pdd">
-                      <% unless Rails.env.test? %>
-                        <%= link_to_rpx t("home.show.view.sign_in_with_external_account"), user_session_url %><br/><br/>
-                        <%= embed_rpx user_session_url %>
-                      <% end %>
+                      <li class="string social_login">
+                        <label style="padding-top: 14px;"><%= t("home.show.view.sign_in_with_external_accounts") %></label>
+
+                        <div class="txt">
+                          <% unless Rails.env.test? %>
+                              <%= link_to_rpx image_tag("icons/social_login.png"), user_session_url %>
+                              <%= javascript_include_rpx user_session_url %>
+                          <% end %>
+                        </div>
+                      </li>
                       <%= f.input :email, :input_html => {:tabindex => 1} %>
                       <%= f.input :password, :label => raw(I18n.t("activerecord.attributes.user.password") + content_tag(:span, link_to(t("category_home.show.view.forgotten_password_link"), new_password_path(User)), :class => "label_link")), :input_html => {:tabindex => 2}, :wrapper_html => {:class => "rltv"} %>
                       <%= f.input :remember_me, :as => :boolean, :required => false, :input_html => {:tabindex => 3} %>
@@ -71,6 +77,7 @@
                           <%= f.submit t("category_home.show.view.sign_in"), :tabindex => 4 %>
                         </ibt>
                       </li>
+
                     </ol>
                   </fieldset>
               <% end %>

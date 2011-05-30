@@ -2,14 +2,20 @@
   <header back="true"><%= t("buyer_accounts.new.view.title") %></header>
 
   <div class="pdd_5 no_pdd_b">
-    <%= blurb('blurb_sign_up') %><br/>
-    <% unless Rails.env.test? %>
-        <%= link_to_rpx t("buyer_accounts.new.view.janrain_sign_up"), buyer_accounts_url %>
-        <%= embed_rpx buyer_accounts_url %>
-    <% end %>
+    <%= blurb('blurb_sign_up') %>
   </div>
 
   <hl pdd="15"/>
+
+  <label style="padding-top: 8px;margin-right:20px;float:left"><%= t("buyer_accounts.new.view.janrain_sign_up_label") %></label>
+
+  <div class="txt">
+    <% unless Rails.env.test? %>
+        <%= link_to_rpx image_tag("icons/social_login.png"), buyer_accounts_url %>
+        <%= javascript_include_rpx buyer_accounts_url %>
+    <% end %>
+  </div>
+
   <%= semantic_form_for @user, :url => buyer_accounts_path do |form| %>
       <frm title="Create new account" c="no_marg">
         <param:content>
@@ -25,7 +31,7 @@
                       <%= address_form.input :address_line_2, :hint => hint_for(@user, :address_address_line_2) %>
                       <%= address_form.input :address_line_3, :hint => hint_for(@user, :address_address_line_3) %>
                       <%= address_form.input :zip_code, :hint => hint_for(@user, :address_zip_code) %>
-                      <%= address_form.input :country_id, :as => :select, :hint => hint_for(@user, :address_country_id), :collection => Country.all, :input_html => { :onchange => "refresh_regions_list('user_customer_address_attributes');" } %>
+                      <%= address_form.input :country_id, :as => :select, :hint => hint_for(@user, :address_country_id), :collection => Country.all, :input_html => {:onchange => "refresh_regions_list('user_customer_address_attributes');"} %>
                       <%= address_form.input :region_id, :as => :select, :hint => hint_for(@user, :address_region_id), :collection => regions_collection_for(@user.address.country) %>
                   <% end %>
                   <%= form.input :vat_number, :hint => hint_for(@user, :vat_number) %>

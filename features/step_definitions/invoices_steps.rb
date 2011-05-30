@@ -46,7 +46,7 @@ end
 
 Then /^invoice line is created for lead "([^"]*)" and user with email "([^"]*)" and role "([^"]*)"$/ do |header, email, role|
   customer = "User::#{role.camelize}".constantize.find_by_email(email)
-  lead = Lead.find_by_header(header).first
+  lead = Lead.where(:header => header).first
   assert !customer.invoices.last.invoice_lines.detect { |il| il.payable.lead == lead }.nil?
 end
 
@@ -73,7 +73,7 @@ end
 
 Then /^user with email "([^"]*)" and role "([^"]*)" has invoice for lead "([^"]*)" and transaction created (by paypal|manually)$/ do |email, role, header, transaction_type|
   customer = "User::#{role.camelize}".constantize.find_by_email(email)
-  lead = Lead.find_by_header(header).first
+  lead = Lead.where(:header => header).first
   lead_purchase = lead.lead_purchases.first
   if transaction_type == "by paypal"
     payment_notification = PaymentNotification.create(:status => "Completed", :buyer_id => customer.id, :transaction_id => "428282", :params => {})
@@ -109,7 +109,7 @@ end
 When /^last invoice for user "([^"]*)" with role "([^"]*)" is refunded for lines "([^"]*)"$/ do |email, role, lead_names|
   customer = "User::#{role.camelize}".constantize.find_by_email(email)
   invoice = customer.invoices.last
-  leads = lead_names.split(",").map { |header| Lead.find_by_header(header).first }.map(&:id)
+  leads = lead_names.split(",").map { |header| Lead.where(:header => header).first }.map(&:id)
   invoice.invoice_lines.select { |il| leads.include?(il.payable.lead_id) }.each do |invoice_line|
     invoice_line.update_attribute(:is_credited, true)
   end

@@ -9,9 +9,9 @@
       <p><%= blurb("blurb_start_page_role_selection") %></p>
     </div>
     <% if Settings.youtube_introduction.to_s.extract_youtube_video_id %>
-      <div class="fltr">
-        <iframe width="560" height="349" src="http://www.youtube.com/embed/<%= Settings.youtube_introduction.to_s.extract_youtube_video_id %>" frameborder="0" allowfullscreen></iframe>
-      </div>
+        <div class="fltr">
+          <iframe width="560" height="349" src="http://www.youtube.com/embed/<%= Settings.youtube_introduction.to_s.extract_youtube_video_id %>" frameborder="0" allowfullscreen></iframe>
+        </div>
     <% end %>
   </div>
 
@@ -86,12 +86,26 @@
         <frm title="I have an account" c="no_marg">
           <div class="pdd_10">
             <%= semantic_form_for(:user, :url => session_path(:user)) do |f| %>
+
                 <fieldset class="inputs labels_100 inputs_180 no_pdd">
                   <ol class="align_inputs no_pdd">
-                    <% unless Rails.env.test? %>
-                        <%= link_to_rpx t("home.show.view.sign_in_with_external_account"), user_session_url %><br/><br/>
-                        <%= embed_rpx user_session_url %>
-                    <% end %>
+                    <li class="string social_login">
+                      <label style="padding-top: 14px;"><%= t("home.show.view.sign_in_with_external_accounts") %></label>
+
+                      <div class="txt">
+                        <% unless Rails.env.test? %>
+                            <%= link_to_rpx image_tag("icons/social_login.png"), user_session_url %>
+                            <%= javascript_include_rpx user_session_url %>
+                        <% end %>
+                      </div>
+                    </li>
+                  </ol>
+                </fieldset>
+
+
+                <fieldset class="inputs labels_100 inputs_180 no_pdd">
+                  <ol class="align_inputs no_pdd">
+
                     <%= f.input :email, :input_html => {:tabindex => 1} %>
                     <%= f.input :password, :label => raw(I18n.t("activerecord.attributes.user.password") + content_tag(:span, link_to(t("home.show.view.forgotten_password_link"), new_password_path(User)), :class => "label_link")), :input_html => {:tabindex => 2}, :wrapper_html => {:class => "rltv"} %>
                     <%= f.input :remember_me, :as => :boolean, :required => false, :input_html => {:tabindex => 3} %>
