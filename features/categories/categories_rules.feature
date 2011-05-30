@@ -29,10 +29,10 @@ Feature: Categories rules
     And I press translated "administration.categories.new.view.button_create"
     Then lead "Laptop Toshiba" should be in category "Laptops"
 
-  @_done @not_testable @tgn
+  @_done @non_testable @tgn
   Scenario: I can move lead to other category and duplicate templates
 
-  @_done @not_testable @tgn
+  @_done @non_testable @tgn
   Scenario: I can move lead to other category and delete template information
 
   @_done @tgn @_tested @_done
