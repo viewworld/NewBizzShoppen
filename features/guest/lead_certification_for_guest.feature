@@ -101,7 +101,7 @@ Scenario: Other users should not see that certification approval timed out
 @non_testable @_done @tgn
 Scenario: When certain period of time passes and the link with lead's confirmation is not visited then another email is sent to lead's contact
 
-@_done @tgn @_tested
+@_done @tgn @_tested @_wip
 Scenario: I check perdiodically for confirmations that have not been approved or rejected
   Given date today is "2011-03-31"
   And class "Settings" method "resend_certification_notification_after_days" returns "4"
