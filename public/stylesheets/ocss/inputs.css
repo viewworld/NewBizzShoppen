@@ -206,6 +206,23 @@
 }
 
 
+/* --- social login ---
+--------------------------------------------------------------------------------- */
+
+.inputs ol li.string.social_login
+{
+    border-bottom: 1px dotted #ccc;
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+}
+
+.inputs ol li.string.social_login label
+{
+    padding-top: 15px;
+}
+
+
+
 /* --- boolean + radio ---
 --------------------------------------------------------------------------------- */
 
