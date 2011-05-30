@@ -73,7 +73,7 @@
                 </li>
                 <% if lead.can_be_certified? %>
                     <li>
-                      <%= link_to t("agent.leads.index.view.certificate"), agents_lead_certifications_path(lead), :method => :post %>
+                      <%= link_to t("agent.leads.index.view.certify"), agents_lead_certifications_path(lead), :method => :post %>
                     </li>
                 <% end %>
                 <li>
