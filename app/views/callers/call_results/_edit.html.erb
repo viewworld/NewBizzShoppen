@@ -1,5 +1,5 @@
 <% unless agent_work_screen %>
-    <header back="#{back_path}" backurl="#{back_path}"><%= t("call_results.edit.title") %></header>
+    <header back="true"><%= t("call_results.edit.title") %></header>
 <% end %>
 
 <%= semantic_form_for path, :method => :put, :remote => agent_work_screen do |form| %>
