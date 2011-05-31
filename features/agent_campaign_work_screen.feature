@@ -151,6 +151,14 @@ Feature: Agent campaign - calling session
       And I follow "sample.jpg"
       Then I should see "sample.jpg" within "#agent_work_screen_call_result span"
 
+    #5931
+    @post_m11
+    Scenario: I can edit contact email when adding result type "send material"
+
+    #5931
+    @post_m11
+    Scenario: When I add result "send material" then an email should be sent to contact email
+
     # 5168
     @m11 @requested @ao @tested_elsewhere @_done
     Scenario: I can see a message when there are no more contacts in my campaign

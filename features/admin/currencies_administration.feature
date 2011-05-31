@@ -49,3 +49,7 @@ Scenario: I should be able to destroy currency unless there are leads defined wi
 
 @tgn @m5 @added @non_testable @_done
 Scenario: There are currencies already defined in the system that are accepted by PayPal
+
+#5936
+@post_m11
+Scenario: I shoudl be able to specify a default currency

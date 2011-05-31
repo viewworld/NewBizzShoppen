@@ -642,3 +642,14 @@ Feature: Agent campaign - management
           When I follow translated "campaigns.index.edit"
           Then I should see translated "campaigns.edit.results"
           And I follow translated "campaigns.edit.results"
+
+        #5931
+        # when editing campaign add “email template” nex to “result” button
+        @post_m11
+        Scenario: When I create a new campaign the default admin template should be populated and it should be editable by campaign owner
+
+        #5935
+        @post_m11
+        Scenario: When I am on campaign results page and I change date then the page should reload with filter applied
+
+

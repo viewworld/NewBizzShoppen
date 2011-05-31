@@ -64,3 +64,11 @@ Scenario: I can specify a youtube video url which is displayed on front page
   Then I fill in "setting_4" with "123"
   And I press translated "administration.settings.edit.view.button_update_settings"
   Then I should see translated "administration.settings.update.controller.successful_update_notice"
+
+#youtube url put thumbnail and onclick play in modal window
+#http://img.youtube.com/vi/<insert-youtube-video-id-here>/0.jpg
+@m0 @post_m11
+Scenario: I can play youtube video in a modal box
+
+@m0 @post_m11
+Scenario: I can specify youtube url for each locale
