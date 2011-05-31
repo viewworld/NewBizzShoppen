@@ -4,10 +4,10 @@
 
 <hr/>
 
-<ul style="display:inline;list-style:none">
+<ul style="list-style:square url('/images/icons/file.png');margin-left:35px;">
   <% if materials.any? %>
     <% materials.each do |material| %>
-      <li style="display:inline;border: 1px solid #000;">
+      <li>
         <%= link_to_function material.asset_file_name, "$('#material_#{params[:result_field_id]}').attr('value','#{material.id}');$('#material_#{params[:result_field_id]}_name').html('#{material.asset_file_name}');$('#materials_dialog').dialog('close')" %>
       </li>
     <% end %>
