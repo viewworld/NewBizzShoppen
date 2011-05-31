@@ -70,7 +70,7 @@ class CallResult < ActiveRecord::Base
       FasterCSV.generate(:force_quotes => true) do |csv|
         csv << (contact_information + result_fields + result_custom_fields).map(&:humanize)
         CallResult.find_all_by_id(call_result_ids).each do |c|
-          csv << (lead_company_information_fields + lead_contact_information_fields).map { |attr| c.contact.send(attr).to_s.gsub(/[\n\r\t,]/, " ") } + result_fields.map { |attr| c.send(attr).to_s.gsub(/[\n\r\t,]/, " ") } + c.custom_fields_for_csv(result_custom_fields.size)
+          csv << (contact_company_information_fields + contact_contact_information_fields).map { |attr| c.contact.send(attr).to_s.gsub(/[\n\r\t,]/, " ") } + result_fields.map { |attr| c.send(attr).to_s.gsub(/[\n\r\t,]/, " ") } + c.custom_fields_for_csv(result_custom_fields.size)
         end
       end
     end
