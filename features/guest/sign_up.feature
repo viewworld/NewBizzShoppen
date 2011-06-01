@@ -11,5 +11,5 @@ Feature: Sign up feature
     Then "user_customer_address_attributes_country_id" should be selected for value "Denmark"
 
   # 5779
-  @m0 @requested
+  @m12 @requested
   Scenario: When I am on sign up page, the coutry should be selected to my browser locale/country

@@ -1,13 +1,22 @@
-@is @notifications @m0
+@is @notifications
 Feature: Notifications
 
-  @requested
+  #5941
+  #instantly by default
+  @requested @12
   Scenario: I will receive an email with new leads from my interests
 
-  @requested
+  #5941
+  # The text schould be "Notify me on new leads.
+  @requested @m12
   Scenario: I can subscribe by email to category
 
-  @_done @_tested
+  #5941
+  #in user profile
+  @requested @m12
+  Scenario: I can select to be notified once a day or once a week on new leads
+
+  @_done @_tested @m11
   Scenario: I can subscribe by rss to category
     Given I am on the homepage
     Then I sign in as agent@nbs.com with password secret

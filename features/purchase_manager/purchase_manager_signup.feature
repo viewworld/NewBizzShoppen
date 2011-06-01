@@ -50,5 +50,5 @@ Feature: Purchase Manager signup
     And I should be signed in
 
   # 5778
-  @m0 @requested
+  @m12 @requested
   Scenario: When I sign up as procurement manager the address fields are not required
