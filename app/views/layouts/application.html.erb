@@ -158,7 +158,7 @@
         $('input.formtastic-ui-datepicker').datepicker({ dateFormat: '<%= I18n.t("date.formats.datepicker") %>' });
     });
 
-    <% if !current_user.blank? and !Rails.env.development? %>
+    <% if !current_user.blank? and !Rails.env.development? and current_user.call_centre_agent? %>
     TIME_OUT = <%= Settings.logout_time.to_i %> * 60;
 
     function set_logout_time() {
