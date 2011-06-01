@@ -620,6 +620,7 @@ en:
         agent_sign_up_text: "If you can create new leads"
         call_centre_header: "Welcome %{name}"
         sign_in_with_external_accounts: "Sign in using:"
+        introduction_video: "Introduction video"
   password:
     flashes:
       successfully_changed: 'Password has been successfully changed'
@@ -1325,6 +1326,24 @@ en:
         view:
           title: "Editing interests for user: %{name}"
           countries: "Countries"
+    introduction_video:
+      view:
+        header: "YouTube introduction videos"
+        no_videos: "There are no introduction videos specified"
+        add_video: "Add video"
+        locale: "Locale"
+        url: "URL address"
+        actions: "Actions"
+        edit: "Edit"
+        delete: "Delete"
+      new:
+        view:
+          header: "New video"
+          button_create: "Create"
+      edit:
+        view:
+          header: "Editing introduction video"
+          button_save: "Save"
   agent:
     leads:
       index:
@@ -2746,4 +2765,5 @@ en:
         file: "Select file to upload"
         save_material: "Upload"
         material_repository: "Material repository"
+
 
