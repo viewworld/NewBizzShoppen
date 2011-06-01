@@ -1215,6 +1215,11 @@ div.element_templates .lead_template p
     color: #555;
 }
 
+.lead_purchase_contact
+{
+    padding-bottom: 22px;
+}
+
 
 /* --- elements_list ---
 --------------------------------------------------------------------------------- */
