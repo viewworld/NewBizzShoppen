@@ -18,7 +18,7 @@ gem "transitions", :require => ["transitions", "active_record/transitions"]
 gem 'paperclip', "2.3.6"
 gem 'scoped-search', '0.7.1', :require => "scoped_search"
 gem 'json_pure', '>= 1.4.6'
-gem 'globalize3', '0.1.0'
+gem 'globalize3', '0.0.10'
 gem 'role_model', :require => "role_model"
 gem 'cancan'
 gem 'rails-settings', :require => "settings"
