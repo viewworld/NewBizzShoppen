@@ -12,6 +12,15 @@
           <ibt c="bt_grey fltri">
             <%= button_to_function t("administration.settings.edit.view.button_cancel"), "history.go(-1)" %>
           </ibt>
+        <% if @lead.can_be_certified? %>
+              <ibt c="fltri">
+              <%= bt_link_to nil, t("agent.leads.index.view.certify"), agents_lead_certifications_path(@lead), :method => :post %>
+              </ibt>
+        <% elsif @lead.can_be_recertified? %>
+              <ibt c="fltri">
+              <%= bt_link_to  t("agent.leads.index.view.recertify"), agents_lead_certifications_path(@lead), :method => :post %>
+              </ibt>
+        <% end %>
         </param:actions>
       </frm>
   <% end %>

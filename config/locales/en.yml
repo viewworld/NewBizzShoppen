@@ -1332,7 +1332,7 @@ en:
           new_lead: "New lead"
           edit: "Edit"
           certificate: "Certify"
-          recertificate: "Recertify"
+          recertify: "Recertify"
           destroy: "Destroy"
           destroy_confirmation: "Are you sure?"
           search_button: "Search"
@@ -1524,6 +1524,7 @@ en:
             filter_with_inactive: Skip inactive
             filter_with_outdated: Skip outdated
           certify: "Certify"
+          recertify: "Recertify"
       new:
         view:
           title: New lead
