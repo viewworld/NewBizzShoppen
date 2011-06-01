@@ -75,6 +75,7 @@
         </td>
 
         <td>
+          <div class="lead_purchase_contact">
           <h3><%= lead_purchase.lead.company_name %></h3>
 
           <p><%= lead_purchase.lead.phone_number %></p>
@@ -88,6 +89,7 @@
           <p><%= lead_purchase.lead.contact_name %></p>
 
           <p><%= lead_purchase.lead.address %></p>
+          </div>  
 
           <% if block_card %>
               <%= with_output_buffer { block_card.call(lead_purchase) } %>

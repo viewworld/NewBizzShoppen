@@ -2,17 +2,19 @@
   <header back="true"><%= t("call_centre_agent.leads.edit.view.title", :name => @lead.header) %><%= image_tag_for_locale %></header>
     <%= semantic_form_for [:call_centre_agents, @lead], :method => :put do |form| %>
       <frm title="Edit">
-        <param:header>
-        <% if @lead.can_be_certified? %>
-              <%= bt_link_to nil, t("call_centre_agent.leads.index.view.certify"), call_centre_agents_lead_certifications_path(@lead), :method => :post, :class => "fltr" %>
-        <% elsif @lead.can_be_recertified? %>
-              <%= bt_link_to nil, t("call_centre_agent.leads.index.view.recertify"), call_centre_agents_lead_certifications_path(@lead), :method => :post, :class => "fltr" %>
-        <% end %>
-        </param:header>
         <param:content>
           <%= render :partial => '/shared/leads/form', :locals => { :form => form }  %>
         </param:content>
         <param:actions>
+          <% if @lead.can_be_certified? %>
+              <ibt c="fltri">
+                <%= link_to t("agent.leads.index.view.certify"), call_centre_agents_lead_certifications_path(@lead), :method => :post %>
+              </ibt>
+          <% elsif @lead.can_be_recertified? %>
+              <ibt c="fltri">
+                <%= link_to t("agent.leads.index.view.recertify"), call_centre_agents_lead_certifications_path(@lead), :method => :post %>
+              </ibt>
+          <% end %>
           <ibt c="fltri" icon="save">
             <%= form.submit t("call_centre_agent.leads.edit.view.button_update") %>
           </ibt>

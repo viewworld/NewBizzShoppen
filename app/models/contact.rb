@@ -129,4 +129,15 @@ class Contact < AbstractLead
     (campaign.users.map(&:id) + [campaign.creator.id]).include?(user.id) or user.has_role?(:admin)
   end
 
+  def contacts_list_conditions_for(direction)
+    Contact.where("pending = ? and campaign_id = ? and agent_id = ? and position #{direction == :higher ? '<' : '>'} ?", pending, campaign_id, agent_id, position).order("position #{direction == :higher ? 'DESC' : 'ASC'}").limit(1).first
+  end
+
+  def higher_contact
+    contacts_list_conditions_for(:higher)
+  end
+
+  def lower_contact
+    contacts_list_conditions_for(:lower)
+  end
 end
