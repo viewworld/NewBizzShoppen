@@ -2,13 +2,6 @@
   <header back="true"><%= t("agent.leads.edit.view.title", :name => @lead.header) %><%= image_tag_for_locale %></header>
   <%= semantic_form_for [:agents, @lead], :method => :put do |form| %>
       <frm title="Edit">
-        <param:header>
-        <% if @lead.can_be_certified? %>
-              <%= bt_link_to nil, t("agent.leads.index.view.certify"), agents_lead_certifications_path(@lead), :method => :post, :class => "fltr" %>
-        <% elsif @lead.can_be_recertified? %>
-              <%= bt_link_to nil, t("agent.leads.index.view.recertify"), agents_lead_certifications_path(@lead), :method => :post, :class => "fltr" %>
-        <% end %>
-        </param:header>
         <param:content>
           <%= render :partial => '/shared/leads/form', :locals => {:form => form} %>
         </param:content>
@@ -19,6 +12,15 @@
           <ibt c="bt_grey fltri">
             <%= button_to_function t("administration.settings.edit.view.button_cancel"), "history.go(-1)" %>
           </ibt>
+        <% if @lead.can_be_certified? %>
+              <ibt c="fltri">
+              <%= bt_link_to nil, t("agent.leads.index.view.certify"), agents_lead_certifications_path(@lead), :method => :post %>
+              </ibt>
+        <% elsif @lead.can_be_recertified? %>
+              <ibt c="fltri">
+              <%= bt_link_to  t("agent.leads.index.view.recertify"), agents_lead_certifications_path(@lead), :method => :post %>
+              </ibt>
+        <% end %>
         </param:actions>
       </frm>
   <% end %>
