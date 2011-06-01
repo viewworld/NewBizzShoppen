@@ -2,6 +2,13 @@
   <header back="true"><%= t("agent.leads.edit.view.title", :name => @lead.header) %><%= image_tag_for_locale %></header>
   <%= semantic_form_for [:agents, @lead], :method => :put do |form| %>
       <frm title="Edit">
+        <param:header>
+        <% if @lead.can_be_certified? %>
+              <%= bt_link_to nil, t("agent.leads.index.view.certify"), agents_lead_certifications_path(@lead), :method => :post, :class => "fltr" %>
+        <% elsif @lead.can_be_recertified? %>
+              <%= bt_link_to nil, t("agent.leads.index.view.recertify"), agents_lead_certifications_path(@lead), :method => :post, :class => "fltr" %>
+        <% end %>
+        </param:header>
         <param:content>
           <%= render :partial => '/shared/leads/form', :locals => {:form => form} %>
         </param:content>
