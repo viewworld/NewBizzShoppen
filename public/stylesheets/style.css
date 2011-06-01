@@ -1489,6 +1489,25 @@ div.bt span input, x:-moz-any-link, x:default
     padding: 0 10px 3px !important;
 }
 
+div.bt span a
+{
+    cursor: pointer;
+    display: block;
+    float: left;
+    height: 30px;
+    line-height: 30px;
+
+    padding: 0 10px 0;    
+    font-weight: bold;
+    font-size: 11px;
+    color: #fff;
+    outline: 0;
+
+    text-shadow: 1px 1px 0 #995c1b;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
 
 div.bt:hover
 {
@@ -1501,7 +1520,8 @@ div.bt:hover span
 }
 
 
-div.bt_icon span input
+div.bt_icon span input,
+div.bt_icon span a    
 {
     padding: 0 10px 0 28px !important;
     position: relative;
