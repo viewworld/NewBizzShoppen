@@ -1711,3 +1711,21 @@ span.cke_skin_kama
 {
     font-size: 13px;
 }
+
+.materials_list.with_icon li
+{
+    background: url(/images/icons/file.png) no-repeat left center;
+    padding-left: 20px;
+}
+
+.ui-dialog-content .materials_list.with_icon
+{
+    border-top: 1px solid #bbb;        
+    margin-top: 5px;
+    padding: 5px 0 0;
+}
+
+.ui-dialog-content .materials_list.with_icon a
+{
+    color: #008fff;
+}
