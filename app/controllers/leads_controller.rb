@@ -93,6 +93,7 @@ class LeadsController < ApplicationController
     @leads = @search.includes(:currency).paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)
     if @search.with_category.present?
       @category = @categories_scope.find(@search.with_category)
+      @category = @category.root unless @category.root?
     elsif @search.with_selected_categories.present?
       category = @categories_scope.where("categories.id in (?)", @search.with_selected_categories).first
       @category = category ? category.root : nil
