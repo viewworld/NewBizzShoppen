@@ -2566,6 +2566,7 @@ en:
         team_buyers: "Team buyers"
         skip_email_verification: "Don't verify email address"
         big_buyer_purchase_limit: "Big buyer purchase limit (in Euro)"
+        lead_notification_type: "Lead notifications"
       user/purchase_manager:
         first_name: "First name"
         last_name: "Last name"
@@ -2655,6 +2656,10 @@ en:
       edit:
         view:
           header: "Change your password"
+    lead_notification_types:
+      notification_type0: "Instant"
+      notification_type1: "Once per dey"
+      notification_type2: "Once per week"
   category_requests:
     new:
       view:
