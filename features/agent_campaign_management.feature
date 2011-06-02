@@ -645,11 +645,16 @@ Feature: Agent campaign - management
 
         #5931
         # when editing campaign add “email template” nex to “result” button
-        @post_m11
-        Scenario: When I create a new campaign the default admin template should be populated and it should be editable by campaign owner
+        @m12 @requested
+        Scenario: When I create a new campaign the default admin template should be populated and it should be editable by campaign creator
 
         #5935
-        @m12
+        @m12 @requested
         Scenario: When I am on campaign results page and I change date then the page should reload with filter applied
+
+        @m12 @requested
+        Scenario: Call centre can edit campaign when assigned to it by admin
+
+
 
 

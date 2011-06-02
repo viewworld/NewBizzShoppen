@@ -112,7 +112,7 @@ Feature: Agent campaign - calling session
 
     # 5192
     @m12 @requested @ao
-    Scenario: I should be redirected to briefing area when I click campaign on my work screen
+    Scenario: I should see briefing area when I click "Briefing" on agent work screen
 
     # 5192
     @m12 @requested @ao
