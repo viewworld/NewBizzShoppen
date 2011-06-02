@@ -192,6 +192,7 @@ Nbs::Application.routes.draw do
   resources :phone_codes
   resources :regions
   resources :category_requests, :only => [:new, :create]
+  resources :category_interests, :only => [:create]
 
   resources :news
   resources :articles
@@ -210,6 +211,8 @@ Nbs::Application.routes.draw do
   match 'contact_us' => 'contact_us#new', :as => 'contact_us'
 
   resource :lead_templates
+
+  resource :user_session_log, :controller => "user_session_log", :only => [:create]
 
   match ':slug' => 'category_home#show', :as => :category_home_page
   match ':slug/account/new' => 'category_buyer_accounts#new', :as => :new_category_home_page_account

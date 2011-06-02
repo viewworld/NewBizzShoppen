@@ -71,3 +71,6 @@ Feature: User Account - Profile edit
   #The user login and their facebook account is linked to the apporpiate sevice.
   @requested @m12 @janrain @is
   Scenario: I can link my account with Facebook/Google/Linkedin
+    
+  @m12 @is
+  Scenario: I can see time zone for user    

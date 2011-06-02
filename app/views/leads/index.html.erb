@@ -20,6 +20,9 @@
 
   <% if @category %>
       <%= link_to I18n.t("leads.index.subscribe_to_rss"), "/categories/#{@category.cached_slug}?search[with_category]=#{@category.id}&format=rss#{"&user_token=#{current_user.rss_token}" if current_user}" %>
+      <% if current_user and current_user.can_save_category_interests? %>
+          <%#= check_box_tag "subscribe_to_category", "subscribe", current_user.categories.include?(@category), :onclick => "$.ajax({type: 'POST',url: '#{category_interests_url(:category_id=>@category.id)}',data: '',success: function(data){eval(data);}});" %> <%#= I18n.t("leads.index.subscribe_to_category_cb") %>
+      <% end %>
   <% end %>
 
   <% if @leads.empty? %>
@@ -31,7 +34,6 @@
               <% blocks.tools do |lead| %>
                   <%= render :partial => "purchase_buttons", :locals => {:lead => lead} %>
               <% end %>
-
 
               <% if user_signed_in? && (current_user.has_role?(:customer) || current_user.has_role?(:lead_user)) %>
                   <% blocks.bottom do %>
