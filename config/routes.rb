@@ -211,6 +211,8 @@ Nbs::Application.routes.draw do
 
   resource :lead_templates
 
+  resource :user_session_log, :controller => "user_session_log", :only => [:create]
+
   match ':slug' => 'category_home#show', :as => :category_home_page
   match ':slug/account/new' => 'category_buyer_accounts#new', :as => :new_category_home_page_account
   match ':slug/account' => 'category_buyer_accounts#create', :as => :category_home_page_account

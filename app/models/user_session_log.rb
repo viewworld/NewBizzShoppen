@@ -12,4 +12,8 @@ class UserSessionLog < ActiveRecord::Base
     UserSessionLog.find(id).update_attribute(:end_time, time ? (Time.now + time.minutes) : Time.now) if UserSessionLog.find(id)
   end
 
+  def expired?
+    end_time <= Time.now
+  end
+
 end
