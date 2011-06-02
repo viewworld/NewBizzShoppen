@@ -19,7 +19,7 @@ Given /^the custom ([^\"]*) result with name "([^\"]*)" is created by "([^\"]*)"
   Result.create :name => name, :final => (result_type == "final"), :creator => User.find_by_email(email).with_role
 end
 
-Given /^I check result "([^\"]*)"$/ do |result_name|  
+Given /^I check result "([^\"]*)"$/ do |result_name|
   check("result_ids_#{Result.find_by_name(result_name).id}")
 end
 
@@ -28,7 +28,7 @@ Given /^result "([^\"]*)" is assigned to campaign "([^\"]*)"$/ do |result_name, 
 end
 
 Given /^result "([^\"]*)" should be assigned to campaign "([^\"]*)"$/ do |result_name, campaign_name|
-  Campaign.find_by_name(campaign_name).results.include? Result.find_by_name(result_name)  
+  Campaign.find_by_name(campaign_name).results.include? Result.find_by_name(result_name)
 end
 
 Given /^result "([^\"]*)" has (mandatory|optional) "([^\"]*)" field$/ do |result_name, type, field|
@@ -52,7 +52,7 @@ end
 
 Given /^contact "([^\"]*)" should be at bottom of the list$/ do |company_name|
   contact = Contact.find_by_company_name(company_name)
-  assert contact.last? 
+  assert contact.last?
 end
 
 Given /^contact "([^\"]*)" should be completed$/ do |company_name|
@@ -73,7 +73,7 @@ end
 Given /^imported contacts should be in campaign "([^\"]*)"$/ do |campaign_name|
   campaign = Campaign.find_by_name(campaign_name)
   ["Greg and sons", "Little Franky", "Boiled fisher", "Novik company"].each do |company_name|
-    assert Contact.find_by_company_name(company_name).campaign_id == campaign.id 
+    assert Contact.find_by_company_name(company_name).campaign_id == campaign.id
   end
 end
 
@@ -93,3 +93,14 @@ When /^there are no more active contacts for agent "([^"]*)"$/ do |email|
   user.contacts.with_pending_status(false)
 end
 
+Then /^current call back result for contact "([^"]*)" has date set to time now "([^"]*)" 15 minutes$/ do |name, sign|
+  ccr = Contact.find_by_company_name(name).current_call_result
+  rv = ccr.result_values.first
+  if sign == "-"
+    rv.value = (Time.now-15.minutes).strftime("%Y-%m-%d %H:%M")
+  else
+    rv.value = (Time.now+15.minutes).strftime("%Y-%m-%d %H:%M")
+  end
+  rv.save!
+  ccr.save!
+end
