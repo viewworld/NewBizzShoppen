@@ -2,7 +2,7 @@ class SignInController < ApplicationController
   before_filter :redirect_to_root_path_if_signed_in
 
   def new(user_class_name)
-    @user = user_class_name.new(:newsletter_on => true)
+    @user = user_class_name.new(:newsletter_on => true, :time_zone => "UTC")
   end
 
   def create(user_class_name, param_key, success_notice)

@@ -573,6 +573,7 @@ en:
       latest_header: Latest leads
       featured_header: Featured leads
       subscribe_to_rss: Subscribe this category to RSS
+      subscribe_to_category_cb: Subscribe to category
     show:
       view:
         header: Lead details
@@ -1524,6 +1525,7 @@ en:
             filter_with_inactive: Skip inactive
             filter_with_outdated: Skip outdated
           certify: "Certify"
+          recertify: "Recertify"
       new:
         view:
           title: New lead

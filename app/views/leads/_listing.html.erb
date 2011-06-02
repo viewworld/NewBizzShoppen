@@ -46,10 +46,10 @@
             <%= image_tag 'icons/certificate.png', {:class => "certificate_icon"} %>
           <% end %>
             <% if lead.linkedin_url_present? %>
-                <%= link_to image_tag("icons/in_icon.png"), lead.linkedin_url %>
+                <%= image_tag("icons/in_icon.png") %>
           <% end %>
           <% if lead.facebook_url_present? %>
-                <%= link_to image_tag("icons/fb_icon.png"), lead.facebook_url %>
+                <%= image_tag("icons/fb_icon.png") %>
           <% end %>
             <%= link_to_edit_lead(lead) %></h4>
 

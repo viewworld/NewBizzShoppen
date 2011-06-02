@@ -109,8 +109,8 @@ class Contact < AbstractLead
     self.move_to_bottom
   end
 
-  def should_be_pending?
-    DateTime.parse("#{current_call_result.result_values.first.value} #{DateTime.now.formatted_offset}") > DateTime.now rescue false
+  def should_be_pending?(agent_)
+    ActiveSupport::TimeZone[agent_.time_zone].parse("#{current_call_result.result_values.first.value}") > DateTime.now rescue false
   end
 
   def higher_item_in_campaign_list

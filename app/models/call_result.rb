@@ -10,6 +10,7 @@ class CallResult < ActiveRecord::Base
   validates_presence_of :result_id, :creator_id, :contact_id
 
   after_create :process_side_effects, :update_contact_note
+  after_update :process_side_effects
   after_destroy :update_completed_status, :update_pending_status
 
   PENDING_RESULT_TYPES = [:call_back, :not_interested_now]
@@ -85,7 +86,7 @@ class CallResult < ActiveRecord::Base
   end
 
   def update_pending_status
-    pending_status = contact.current_call_result.present? ? (PENDING_RESULT_TYPES.include?(contact.current_call_result.result.label) and contact.should_be_pending?) : false
+    pending_status = contact.current_call_result.present? ? (PENDING_RESULT_TYPES.include?(contact.current_call_result.result.label) and contact.should_be_pending?(contact.agent)) : false
     contact.update_attributes :pending => pending_status
   end
 

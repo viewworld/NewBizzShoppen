@@ -48,3 +48,7 @@ Given /^category "([^"]*)" has attributes "([^"]*)"$/ do |category_name, options
   attrs = Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys
   category.update_attributes(attrs)
 end
+
+Then /^category "([^"]*)" is in interests of user "([^"]*)" "([^"]*)"$/ do |category, email, is_true|
+  ::User::Customer.find_by_email(email).categories.include?(Category.find_by_name(category)).should == (is_true == true)
+end
