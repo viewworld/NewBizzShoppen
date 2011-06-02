@@ -35,6 +35,10 @@ Feature: Categories rules
   @_done @non_testable @tgn
   Scenario: I can move lead to other category and delete template information
 
+  #5928
+  @requested @m12
+  Scenario: When I move lead to other category then duplicated templates should always be optional
+
   @_done @tgn @_tested @_done
   Scenario: I can't edit interests from my profile page
     Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role customer

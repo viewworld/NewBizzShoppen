@@ -6,6 +6,15 @@
           <%= render :partial => '/shared/leads/form', :locals => {:form => form} %>
         </param:content>
         <param:actions>
+          <% if @lead.can_be_certified? %>
+              <ibt c="fltri">
+                <%= link_to t("agent.leads.index.view.certify"), agents_lead_certifications_path(@lead), :method => :post %>
+              </ibt>
+          <% elsif @lead.can_be_recertified? %>
+              <ibt c="fltri">
+                <%= link_to t("agent.leads.index.view.recertify"), agents_lead_certifications_path(@lead), :method => :post %>
+              </ibt>
+          <% end %>
           <ibt c="fltri" icon="save">
             <%= form.submit t("agent.leads.edit.view.button_update") %>
           </ibt>
@@ -26,7 +35,7 @@
 
                   <p><%#= t("agent.leads.edit.view.rating_reason") %><%= lead_purchase.rating_reason %></p>
                 </div>
-                <hl/>                
+                <hl/>
             <% end %>
         <% end %>
       </frm>

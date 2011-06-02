@@ -382,6 +382,10 @@ class User < ActiveRecord::Base
     has_role?(:call_centre)
   end
 
+  def call_centre_agent?
+    has_role?(:call_centre_agent)
+  end
+
   def agent?
     has_any_role?([:agent, :call_centre, :call_centre_agent])
   end

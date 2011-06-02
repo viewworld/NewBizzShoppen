@@ -116,6 +116,7 @@
 .inputs ol li div.txt
 {
     margin-top: 7px;
+    overflow: hidden;
 }
 
 

@@ -2,9 +2,7 @@
   <%= f.file_field :asset %>
 <% end %>
 
-<hr/>
-
-<ul style="list-style:square url('/images/icons/file.png');margin-left:35px;">
+<ul class="materials_list with_icon">
   <% if materials.any? %>
     <% materials.each do |material| %>
       <li>
@@ -28,7 +26,7 @@ $('#new_material input').change(function(){
    // For example, if you have an image elemtn with id "my_image", then
    //  $('#my_image').attr('src', XMLHttpRequest.responseText);
    // Will set that image tag to display the uploaded image.
-  },
+  }
  });
 });
 </script>

@@ -158,7 +158,7 @@
         $('input.formtastic-ui-datepicker').datepicker({ dateFormat: '<%= I18n.t("date.formats.datepicker") %>' });
     });
 
-    <% if !current_user.blank? and !Rails.env.development? %>
+    <% if !current_user.blank? and !Rails.env.development? and current_user.agent? %>
     TIME_OUT = <%= Settings.logout_time.to_i %> * 60;
 
     function set_logout_time() {
@@ -166,7 +166,17 @@
     }
 
     function set_logout_dialog_time() {
-        return setTimeout("$('#modal_for_longer_session').dialog('open')", TIME_OUT * 1000);
+        return setTimeout("check_session()", TIME_OUT * 1000);
+    }
+
+    function check_session(){
+        $.post("/user_session_log.js")
+    }
+
+    function extend_session(){
+        clearTimeout(window.t);
+        window.t = set_logout_time();
+        window.t2 = set_logout_dialog_time();
     }
 
     var t = set_logout_time();
@@ -175,9 +185,7 @@
     $('#modal_for_longer_session').dialog({
         autoOpen: false,
         buttons: { "Cancel": function() {
-            clearTimeout(window.t);
-            window.t = set_logout_time();
-            window.t2 = set_logout_dialog_time();
+            extend_session();
             $(this).dialog("close");
         }}
     });
