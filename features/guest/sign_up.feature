@@ -23,6 +23,9 @@ Feature: Sign up feature
   @m12 @janrain @requested @is
   Scenario: When I decide to sign up from home page then I should select a desired role in modal box
 
+  @m12 @janrain @requested @is
+  Scenario: When I choose role from modal box I should be redirected to proper user create form, with filled first name, last name and email
+
   #The user is automatically created in the applicable role for the category or role home page.
   @m12 @janrain @requested @is
   Scenario: When I decide to sign up from role home page or category home page account should be automatically assigned a applicable role
