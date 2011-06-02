@@ -3,12 +3,16 @@ Feature: Notifications
 
   #5941
   #instantly by default
-  @requested @m12
-  Scenario: I will receive an email with new leads from categories I am subscribed to instantly when they appear
+  @requested @m12 @tgn
+  Scenario: I will receive an email with new lead from categories I am subscribed to instantly when it appears
+
+  #5941
+  @requested @m12 @tgn
+  Scenario: I will receive an email with all new leads from categories I am subscribed to once a days or once a week
 
   #5941
   # The text schould be "Notify me on new leads"
-  @requested @m12
+  @requested @m12 @tgn
   Scenario: I can subscribe by email to category
 
   @_done @_tested @m11
