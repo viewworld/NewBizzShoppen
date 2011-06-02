@@ -16,6 +16,7 @@
                 <%= address_form.input :country_id, :as => :select, :collection => Country.all, :input_html => { :onchange => "refresh_regions_list('user_#{params[:role].present? ? params[:role] : form.object.role}_address_attributes');" } %>
                 <%= address_form.input :region_id, :as => :select, :collection => regions_collection_for(form.object.address.country) %>
             <% end %>
+            <%= form.input :time_zone, :wrapper_html => { :class => "select"}, :input_html => {:style => "width: 240px"} %>
         <% end %>
         <% if ['lead_buyer', 'customer'].include?(params[:role]) or @user.has_any_role?(:lead_buyer, :customer) %>
             <%= form.input :vat_number %>

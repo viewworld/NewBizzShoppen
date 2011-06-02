@@ -55,7 +55,7 @@ class Campaign < ActiveRecord::Base
       pending_contacts = agent.contacts.with_pending_status(true)
       while (not agent.with_role.has_max_contacts_in_campaign? self) and pending_contacts.present?
         contact = pending_contacts.shift
-        contact.change_pending_status(false) unless contact.should_be_pending?
+        contact.change_pending_status(false) unless contact.should_be_pending?(agent)
       end
 
       #assign new contacts to agent

@@ -59,3 +59,6 @@ Feature: User Account - Profile edit
     And I fill in "user_agent_company_ean_number" with "Y7894D"
     When I press translated "password.edit.view.button_update_user"
     Then I should see translated "my_profile.update.controller.successful_update_notice"
+
+  @m12 @is
+  Scenario: I can see time zone for user
