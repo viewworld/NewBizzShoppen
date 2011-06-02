@@ -112,11 +112,11 @@ Feature: Agent campaign - calling session
       # http://kb.snom.com/kb/index.php?View=entry&CategoryID=21&EntryID=40
 
     # 5192
-    @m12 @requested @ao
-    Scenario: I should be redirected to briefing area when I click campaign on my work screen
+    @m12 @requested @is @briefing
+    Scenario: I should see briefing area when I click "Briefing" on agent work screen
 
     # 5192
-    @m12 @requested @ao
+    @m12 @requested @is @briefing
     Scenario: I can go back to my work screen when I click "Go to work screen"
         
     #5460
@@ -153,11 +153,11 @@ Feature: Agent campaign - calling session
       Then I should see "sample.jpg"
 
     #5931
-    @requested @m12
+    @requested @m12 @ao
     Scenario: I can edit contact email when adding result type "send material"
 
     #5931
-    @requested @m12
+    @requested @m12 @ao
     Scenario: When I add result "send material" then an email should be sent to contact email
 
     # 5168

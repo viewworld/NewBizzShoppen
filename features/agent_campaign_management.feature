@@ -621,15 +621,15 @@ Feature: Agent campaign - management
         Scenario: I can see timestamps in my localization, not server time
 
         # 5192
-        @m12 @requested @ao
+        @m12 @requested @is @briefing
         Scenario: I can specify description and briefing when creating new campaign
 
         # 5192
-        @m12 @requested @ao
+        @m12 @requested @is @briefing
         Scenario: I can see a description in a popup
 
         # 5192
-        @m12 @requested @ao
+        @m12 @requested @is @briefing
         Scenario: When editing a campaign I can click a link to edit description and briefing
         
         ##5650
@@ -645,11 +645,16 @@ Feature: Agent campaign - management
 
         #5931
         # when editing campaign add “email template” nex to “result” button
-        @post_m11
-        Scenario: When I create a new campaign the default admin template should be populated and it should be editable by campaign owner
+        @m12 @requested @is
+        Scenario: When I create a new campaign the default admin template should be populated and it should be editable by campaign creator
 
         #5935
-        @m12
+        @m12 @requested @is
         Scenario: When I am on campaign results page and I change date then the page should reload with filter applied
+
+        @m12 @requested @tgn
+        Scenario: Call centre can edit campaign when assigned to it by admin
+
+
 
 

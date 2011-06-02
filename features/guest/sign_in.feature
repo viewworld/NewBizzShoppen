@@ -107,3 +107,11 @@ Scenario: I can login to fairleads as any user without password by hash key that
 
 @m11 @requested @is @_done @_non_testable
 Scenario: I can see Facebook/Linkedin/Google icons on bottom of signing in box
+
+#Since the user has not been loged in before he is given the following prompt:
+#Hi xxx we have no fairleads account assosiated to your facebook profile, do you
+#want to create a new fairleds account and link it to this facebook account
+#(Facebook account namen) (Link Button)(Cancel) Or do you want to login using
+#another account (Icons of facebook, linkin and googel)
+@m12 @janrain @requested @is
+Scenario: When I try to login with Facebook/Linkedin/Google and I have no Fairleads account associated, I should be given chance to register new or login using different FB/Google/Linkedin account

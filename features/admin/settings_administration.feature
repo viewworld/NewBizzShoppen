@@ -68,9 +68,9 @@ Scenario: I can specify a youtube video url which is displayed on front page
 #5919
 #youtube url put thumbnail and onclick play in modal window
 #http://img.youtube.com/vi/<insert-youtube-video-id-here>/0.jpg
-@requested @m12
+@requested @m12 @tgn
 Scenario: I can play youtube video in a modal box
 
 #5919
-@requested @m12
+@requested @m12 @tgn
 Scenario: I can specify youtube url for each locale
