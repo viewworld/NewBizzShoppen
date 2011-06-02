@@ -7,6 +7,7 @@
 
   <hl pdd="15"/>
 
+  <% if false %>
   <fieldset class="inputs labels_100 no_pdd" style="margin-top:-5px;">
     <ol class="no_pdd">
       <li class="string social_login">
@@ -21,6 +22,7 @@
       </li>
     </ol>
   </fieldset>
+  <% end %>
 
   <%= semantic_form_for @user, :url => "/#{params[:slug]}/account" do |form| %>
       <frm title="Create new account" c="no_marg">
