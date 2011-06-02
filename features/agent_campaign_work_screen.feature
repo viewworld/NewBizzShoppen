@@ -111,11 +111,11 @@ Feature: Agent campaign - calling session
       # http://kb.snom.com/kb/index.php?View=entry&CategoryID=21&EntryID=40
 
     # 5192
-    @m12 @requested @ao
-    Scenario: I should be redirected to briefing area when I click campaign on my work screen
+    @m12 @requested @is @briefing
+    Scenario: I should see briefing area when I click "Briefing" on agent work screen
 
     # 5192
-    @m12 @requested @ao
+    @m12 @requested @is @briefing
     Scenario: I can go back to my work screen when I click "Go to work screen"
         
     #5460
@@ -152,11 +152,11 @@ Feature: Agent campaign - calling session
       Then I should see "sample.jpg"
 
     #5931
-    @requested @m12
+    @requested @m12 @ao
     Scenario: I can edit contact email when adding result type "send material"
 
     #5931
-    @requested @m12
+    @requested @m12 @ao
     Scenario: When I add result "send material" then an email should be sent to contact email
 
     # 5168
@@ -172,3 +172,24 @@ Feature: Agent campaign - calling session
     Scenario: I can see new result form on the top of the page
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       Then I should see CSS path "#switch_campaign_form #result_id"
+
+    # as call centre agent
+    @m12 @requested @my_results @ao
+    Scenario: I can access "My results" from agent work screen
+
+    # A list of contacts which have results (including final results) assigend to them
+    @m12 @requested @my_results @ao
+    Scenario: I should see a list of contacts that have results assigned to them
+
+    @m12 @requested @my_results @ao
+    Scenario: I should see latest results on top of My results list
+
+    @m12 @requested @my_results @ao
+    Scenario: I can search contacts on My results list
+
+    @m12 @requested @my_results @ao
+    Scenario: I can edit contact when I click it on My results list
+
+    @m12 @requested @my_results @ao
+    Scenario: I can edit results when I click contact on My results list
+

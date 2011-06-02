@@ -48,6 +48,6 @@ Scenario: I should be able to edit email templates using WYSIWYG editor and appl
 
 #5931
 #new template in seed as default send material email template should be created
-@post_m11
+@m12
 Scenario: I can edit email template for send material result type
 

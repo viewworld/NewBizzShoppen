@@ -3,8 +3,8 @@ Feature: Notifications
 
   #5941
   #instantly by default
-  @requested @12
-  Scenario: I will receive an email with new leads from my interests
+  @requested @m12 @tgn
+  Scenario: I will receive an email with new lead from categories I am subscribed to instantly when it appears
 
   #5941
   # The text schould be "Notify me on new leads.
@@ -24,9 +24,9 @@ Feature: Notifications
 #    Then category "Business" is in interests of user "buyer@nbs.com" "true"
 
   #5941
-  #in user profile
-  @requested @m12
-  Scenario: I can select to be notified once a day or once a week on new leads
+  # The text schould be "Notify me on new leads"
+  @requested @m12 @tgn
+  Scenario: I can subscribe by email to category
 
   @_done @_tested @m11
   Scenario: I can subscribe by rss to category

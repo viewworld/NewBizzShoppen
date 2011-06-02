@@ -60,5 +60,17 @@ Feature: User Account - Profile edit
     When I press translated "password.edit.view.button_update_user"
     Then I should see translated "my_profile.update.controller.successful_update_notice"
 
+  #5941
+  #in user profile
+  @requested @m12 @notifications @tgn
+  Scenario: I can select to be notified instantly, once a day or once a week on new leads
+
+  #Log in using their fairleds account.
+  #Go to their profile page
+  #Clik on link to thid party login (Display facbokk, linkeid and google icons)
+  #The user login and their facebook account is linked to the apporpiate sevice.
+  @requested @m12 @janrain @is
+  Scenario: I can link my account with Facebook/Google/Linkedin
+    
   @m12 @is
-  Scenario: I can see time zone for user
+  Scenario: I can see time zone for user    
