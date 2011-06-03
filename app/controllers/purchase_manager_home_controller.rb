@@ -13,7 +13,7 @@ class PurchaseManagerHomeController < ApplicationController
     @best_sellers = @best_sellers.limit(3)
 
     if user_signed_in? and current_user.has_role?(:purchase_manager)
-      @my_contact_requests = Lead.without_inactive.with_agent_unique_categories(current_user.id).contact_requests_for(current_user).limit(3)
+      @my_contact_requests = Lead.without_inactive.published_only.with_agent_unique_categories(current_user.id).contact_requests_for(current_user.id).limit(3)
     else
       @latest_leads = Lead.without_inactive.published_only.without_unique_categories.latest.limit(3)
     end

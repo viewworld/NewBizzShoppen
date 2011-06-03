@@ -572,6 +572,7 @@ en:
       bestsellers_header: Best sellers
       latest_header: Latest leads
       featured_header: Featured leads
+      contact_requests_for_header: "My contact requests"
       subscribe_to_rss: Subscribe this category to RSS
       subscribe_to_category_cb: Subscribe to category
     show:
@@ -987,6 +988,7 @@ en:
           cash: "Cash"
           bank_transfer: "Bank transfer"
           na: N/A
+          paypal_transfer: "Paypal"
       new:
         view:
           header: "New invoice"

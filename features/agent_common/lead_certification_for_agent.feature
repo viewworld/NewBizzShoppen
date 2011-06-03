@@ -104,6 +104,37 @@ Scenario: When creating a new lead I can click "Create and certify"
   And I press translated "call_centre_agent.leads.new.view.button_create_and_certify"
   And last email sent should have been sent to recipient "kowalski1@person.com"
 
+ @m11 @added @ao @_done @_tested @selenium
+ Scenario: Contact email should be obligatory when I click "Create & certify"
+  Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role agent
+  And I am on the homepage
+  And I make sure current locale is "en"
+  Then I sign in as bob@person.com with password supersecret
+  And I go to agents leads
+  Given Category Test category 1 is created
+  And I go to agents leads
+  And I select "Test category 1" from "category_id"
+  And I follow translated "agent.leads.index.view.new_lead"
+  And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
+  And I fill in "lead_description" with "Lorem ipsum"
+  And I fill in "lead_hidden_description" with "Lorem ipsum hidden"
+  And I fill in "lead_purchase_value" with "10000"
+  And I fill in "lead_price" with "100"
+  And I select "3" from "lead_sale_limit"
+  And I select "Denmark" from "lead_country_id"
+  And I fill in "lead_company_name" with "Printing company"
+  And I fill in "lead_contact_name" with "Marek Kowalski"
+  And I fill in "lead_phone_number" with "123456789"
+  And I fill in "lead_address_line_1" with "Kaminskiego 19"
+  And I fill in "lead_address_line_3" with "Bielsko-Biała"
+  And I fill in "lead_zip_code" with "23-2911"
+  And I fill in "datepicker" with date that is "5" days from now
+  And I press translated "agent.leads.new.view.button_create_and_certify"
+  Then I should see translated "activerecord.errors.messages.blank"
+  When I fill in "lead_email_address" with "kowalski@person.com"
+  And I press translated "agent.leads.new.view.button_create_and_certify"
+  And last email sent should have been sent to recipient "kowalski@person.com"
+
 # 5769
 @m11 @requested @is @_done @_tested
 Scenario: I should see "Recertify" button when Lead's contact email changes and certification request has benn already sent

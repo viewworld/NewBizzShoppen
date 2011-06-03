@@ -1,7 +1,7 @@
 class AbstractLead < ActiveRecord::Base
   set_table_name "leads"
 
-  translates :header, :description, :hidden_description  
+  translates :header, :description, :hidden_description
 
   include ScopedSearch::Model
 
@@ -23,10 +23,13 @@ class AbstractLead < ActiveRecord::Base
   attr_accessor :tmp_creator_id
   attr_accessor :current_user
   attr_accessor :notify_buyers_after_update
+  attr_accessor :validate_contact_email
 
   validates_presence_of :header, :description, :price, :company_name, :contact_name, :phone_number, :sale_limit, :category_id, :purchase_decision_date, :country_id, :currency, :address_line_1, :address_line_3, :zip_code, :if => :process_for_lead_information?
   validates_presence_of :hidden_description, :unless => Proc.new{|l| l.created_by?('PurchaseManager')}, :if => :process_for_lead_information?
+  validates_presence_of :email_address, :if => Proc.new{|l| l.validate_contact_email }
   validates_inclusion_of :sale_limit, :in => 0..10, :if => :process_for_lead_information?
+  validates_format_of :email_address, :allow_blank => true, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
   validate :check_category, :check_lead_templates, :if => :process_for_lead_information?
 
   after_create :cache_creator_name
@@ -120,6 +123,6 @@ class AbstractLead < ActiveRecord::Base
     if published_changed?
       self.published_at = published ? Time.now : nil
     end
-  end  
+  end
 
 end

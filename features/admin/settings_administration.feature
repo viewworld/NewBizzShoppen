@@ -66,8 +66,11 @@ Scenario: I can specify a youtube video url which is displayed on front page
   Then I should see translated "administration.settings.update.controller.successful_update_notice"
 
 #5919
-#youtube url put thumbnail and onclick play in modal window
 #http://img.youtube.com/vi/<insert-youtube-video-id-here>/0.jpg
+@requested @m12 @ao
+Scenario: I can see a jpg thumbnail of a introduction video on home page
+  
+#5919
 @requested @m12 @ao @_done @_tested
 Scenario: I can play youtube video in a modal box
   When I follow translated "administration.introduction_video.view.add_video"
