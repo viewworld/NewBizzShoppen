@@ -77,6 +77,7 @@ Feature: Agent campaign - calling session
       And I fill in "Call back date" field with future datetime
       And I follow translated "call_results.new.save_button"
       Then I should see translated "call_results.create.flash.successfully_added"
+      Then I wait 4 second
       When I follow translated "agent_work_screen.index.show_pending_calls"
       Then I should see "Bon Jovi inc." within "#pending_calls"
 
@@ -192,4 +193,3 @@ Feature: Agent campaign - calling session
 
     @m12 @requested @my_results @ao
     Scenario: I can edit results when I click contact on My results list
-
