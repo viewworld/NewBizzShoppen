@@ -84,6 +84,7 @@ class Lead < AbstractLead
   before_save :handle_category_change
   before_validation :handle_dialling_codes
   before_save :check_if_category_can_publish_leads
+  after_create :send_instant_notification_to_subscribers
 
   private
 
@@ -267,4 +268,17 @@ class Lead < AbstractLead
     user.has_role?(:admin) ? comment_threads.roots.count : comment_threads.roots.without_blocked.count
   end
 
+  def send_instant_notification_to_subscribers
+    self.delay.deliver_instant_notification_to_subscribers
+  end
+
+  def deliver_instant_notification_to_subscribers
+    category.customer_subscribers.each do |user|
+      deliver_email_template(user.email, "lead_notification_instant")
+    end
+  end
+
+  def show_lead_details_url
+    "https://#{mailer_host}/leads/#{lead.id}"
+  end
 end

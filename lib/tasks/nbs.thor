@@ -156,6 +156,13 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
                     :body => "<p>Login url: {{lead_certification_request.login_url}}</p><p>Contact name: {{lead_certification_request.contact_name}}</p><p>Contact email: {{lead_certification_request.contact_email}}</p>"},
             :dk => {:subject => "[DK] Certification request reminder",
                     :body => "[DK] <p>Login url: {{lead_certification_request.login_url}}</p><p>Contact name: {{lead_certification_request.contact_name}}</p><p>Contact email: {{lead_certification_request.contact_email}}</p>"}
+        },
+        {:name => "Lead notification instant",
+         :uniq_id => "lead_notification_instant",
+         :en => {:subject => "New lead has been added to the subscribed category",
+                 :body => "<p>New lead&nbsp;<a href=\"{{lead.show_lead_details_url}}\">{{lead.header}}</a>&nbsp;has been created in category {{lead.category.name}}</p>"},
+         :dk => {:subject => "[DK] New lead has been added to the subscribed category",
+                 :body => "<p>New lead&nbsp;<a href=\"{{lead.show_lead_details_url}}\">{{lead.header}}</a>&nbsp;has been created in category {{lead.category}}</p>"}
         }
     ]
 

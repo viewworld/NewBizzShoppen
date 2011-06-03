@@ -14,7 +14,7 @@ class AbstractLead < ActiveRecord::Base
   has_many :lead_purchases, :foreign_key => :lead_id
   has_many :lead_template_values, :foreign_key => :lead_id
   
-  liquid_methods :header, :description, :hidden_description, :company_name, :contact_name, :phone_number, :email_address, :address, :www_address, :direct_phone_number
+  liquid_methods :show_lead_details_url, :category, :header, :description, :hidden_description, :company_name, :contact_name, :phone_number, :email_address, :address, :www_address, :direct_phone_number
   #TODO ???
   liquid :header
 
