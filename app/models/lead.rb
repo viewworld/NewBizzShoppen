@@ -126,7 +126,7 @@ class Lead < AbstractLead
   end
 
   def novelty_ratio
-    (Date.today - published_at.to_date).to_i
+    !published_at.nil? ? (Date.today - published_at.to_date).to_i : 2
   end
 
   def hotness_ratio

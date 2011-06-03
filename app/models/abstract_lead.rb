@@ -29,6 +29,7 @@ class AbstractLead < ActiveRecord::Base
   validates_presence_of :hidden_description, :unless => Proc.new{|l| l.created_by?('PurchaseManager')}, :if => :process_for_lead_information?
   validates_presence_of :email_address, :if => Proc.new{|l| l.validate_contact_email }
   validates_inclusion_of :sale_limit, :in => 0..10, :if => :process_for_lead_information?
+  validates_format_of :email_address, :allow_blank => true, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
   validate :check_category, :check_lead_templates, :if => :process_for_lead_information?
 
   after_create :cache_creator_name
