@@ -15,6 +15,7 @@ class CallCentreAgents::LeadsController < CallCentreAgents::CallCentreAgentContr
     @lead.published = params[:lead][:published] if current_user.can_publish_leads?
     @lead.current_user = current_user
     session[:selected_category] = @lead.category_id
+    @lead.validate_contact_email = true if params[:commit_certify] and @lead.email_address.blank?
 
     create! do |success, failure|
       success.html {
