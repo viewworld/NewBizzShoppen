@@ -1792,6 +1792,7 @@ en:
         buyer_link: "click here if you are a sales manager"
         header_best_sellers: "Best sellers"
         header_latest_leads: "Latest leads"
+        header_my_contact_requests: "My contact requests"
         header_news: "News"
         purchase_value_label: "Purchase value:"
         lead_price_label: "Lead price:"
