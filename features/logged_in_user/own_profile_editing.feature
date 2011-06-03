@@ -70,7 +70,13 @@ Feature: User Account - Profile edit
   #Clik on link to thid party login (Display facbokk, linkeid and google icons)
   #The user login and their facebook account is linked to the apporpiate sevice.
   @requested @m12 @janrain @is
-  Scenario: I can link my account with Facebook/Google/Linkedin
+  Scenario: I can link my fairleads account with Facebook/Google/Linkedin account
+
+  @requested @m12 @janrain @is
+  Scenario: I can unlink Facebook/Google/Linkedin account from my fairleads account
+
+  @requested @m12 @janrain @is
+  Scenario: Only one Facebook/Google/Linkedin account can be connected to fairleads account
     
   @m12 @is
   Scenario: I can see time zone for user    
