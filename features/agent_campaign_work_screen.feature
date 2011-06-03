@@ -173,3 +173,23 @@ Feature: Agent campaign - calling session
     Scenario: I can see new result form on the top of the page
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       Then I should see CSS path "#switch_campaign_form #result_id"
+
+    # as call centre agent
+    @m12 @requested @my_results @ao
+    Scenario: I can access "My results" from agent work screen
+
+    # A list of contacts which have results (including final results) assigend to them
+    @m12 @requested @my_results @ao
+    Scenario: I should see a list of contacts that have results assigned to them
+
+    @m12 @requested @my_results @ao
+    Scenario: I should see latest results on top of My results list
+
+    @m12 @requested @my_results @ao
+    Scenario: I can search contacts on My results list
+
+    @m12 @requested @my_results @ao
+    Scenario: I can edit contact when I click it on My results list
+
+    @m12 @requested @my_results @ao
+    Scenario: I can edit results when I click contact on My results list
