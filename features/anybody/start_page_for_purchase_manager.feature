@@ -31,7 +31,7 @@ Scenario: I can see 10 top bestsellers
   Then I should see "3" items on a list within "#best_sellers"
   And I should see "AwesomeLead" first on a list within "#best_sellers"
 
-@added @_done
+@added @_done @_deprecated
 Scenario: I can see 10 latest leads
   Given there are "4" existing leads
   And lead AwesomeLead exists within category Test
@@ -231,3 +231,11 @@ Scenario: I should see leads from agent unique categories I'm assigned to on Bes
   And I should see "CommonLead2" within "#best_sellers"
   And I should not see "UniqueLead1" within "#best_sellers"
   And I should see "UniqueLead2" within "#best_sellers"
+
+@m12 @requested
+Scenario: I should see "My contact requests" instead of "Latest leads"
+
+#1/ Lead created by given Procurement manager, and
+#2/ Lead created by other agents where given Procurement manager is specified as Contact
+@m12 @requested
+Scenario: In "My contact requests" I should see leads created by me and leads created by other agents where I am specified as a contact

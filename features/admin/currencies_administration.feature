@@ -51,5 +51,5 @@ Scenario: I should be able to destroy currency unless there are leads defined wi
 Scenario: There are currencies already defined in the system that are accepted by PayPal
 
 #5936
-@requested @m12
+@requested @m12 @tgn
 Scenario: I should be able to specify a default currency

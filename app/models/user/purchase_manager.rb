@@ -12,7 +12,7 @@ class User::PurchaseManager < ::User
 
   def populate_fields_from_lead(lead)
     contact_name_arr = lead.contact_name.strip.split(" ")
-    contact_name_arr = contact_name_arr.size == 1 ? contact_name_arr : [contact_name_arr.first, contact_name_arr[1..-1]]
+    contact_name_arr = contact_name_arr.size == 1 ? contact_name_arr : [contact_name_arr.first, contact_name_arr[1..-1].join(' ')]
     lead_attrs = {:newsletter_on => true, :email => lead.email_address,
                   :phone => lead.direct_phone_number.blank? ? lead.phone_number : lead.direct_phone_number,
                   :first_name => contact_name_arr.first,

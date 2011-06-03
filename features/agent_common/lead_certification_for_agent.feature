@@ -116,9 +116,9 @@ Scenario: I should see "Recertify" button when Lead's contact email changes and 
   When lead "BestLead" certification request is sent
   When lead "BestLead" has attributes "email_address:error"
   And I follow translated "layout.main_menu.agent.leads"
-  Then I should not see translated "agent.leads.index.view.certificate"
-  Then I should see translated "agent.leads.index.view.recertificate"
-  Then I follow translated "agent.leads.index.view.recertificate"
+  Then I should not see translated "agent.leads.index.view.certify"
+  Then I should see translated "agent.leads.index.view.recertify"
+  Then I follow translated "agent.leads.index.view.recertify"
   Then I should see translated "agent.lead_certifications.index.view.sent_successfully"
 
 # 5765

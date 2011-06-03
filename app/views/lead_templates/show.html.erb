@@ -2,11 +2,11 @@
   <h1><%= t("lead_templates.show.view.question") %></h1>
   <fieldset class="inputs">
     <ol>
-      <li class="radio">
+      <li class="radio" style="height:auto">
         <%= radio_button_tag "lead_templates_action", "duplicate", true %>
         <label for="lead_templates_action"><%= t("lead_templates.show.view.duplicate_templates", :category_name => @category.name, :template_names => @templates.map(& :name).join(', ')) %></label>
       </li>
-      <li class="radio">
+      <li class="radio" style="height:auto">
         <%= radio_button_tag "lead_templates_action", "delete" %>
         <label for="lead_templates_action"><%= t("lead_templates.show.view.delete_templates") %></label>
       </li>

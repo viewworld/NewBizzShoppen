@@ -1,4 +1,3 @@
-@m0
 Feature: Minors
 
 @tgn @m1 @nontestable @_done
@@ -8,5 +7,5 @@ Scenario: Change "lead name" translation to "Contact name" - everywhere in the s
 Scenario: Change "Create buyer" translation to "Create lead user with buying permission" in customer's subaccounts management
 
 #5956
-@m12 @requested @tested_elsewhere
+@m12 @requested @minor_changes @tgn
 Scenario: After M11 presentation minor corrections

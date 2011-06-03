@@ -4,7 +4,7 @@ class CallCentreAgents::LeadTemplatesController < CallCentreAgents::CallCentreAg
   set_tab "browse_leads"
 
   def new
-    @lead_template = LeadTemplate.new(:current_user => current_user, :creator => current_user)
+    @lead_template = LeadTemplate.new(:current_user => current_user, :creator => current_user, :category_id => params[:lead_template].blank? ? nil : params[:lead_template][:category_id])
     @lead_template.duplicate_fields(LeadTemplate.with_creator(current_user.id).find_by_id(params[:template_id]))
   end
 

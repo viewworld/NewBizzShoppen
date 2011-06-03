@@ -77,6 +77,7 @@ Feature: Agent campaign - calling session
       And I fill in "Call back date" field with future datetime
       And I follow translated "call_results.new.save_button"
       Then I should see translated "call_results.create.flash.successfully_added"
+      Then I wait 4 second
       When I follow translated "agent_work_screen.index.show_pending_calls"
       Then I should see "Bon Jovi inc." within "#pending_calls"
 
@@ -111,11 +112,11 @@ Feature: Agent campaign - calling session
       # http://kb.snom.com/kb/index.php?View=entry&CategoryID=21&EntryID=40
 
     # 5192
-    @m12 @requested @ao
-    Scenario: I should be redirected to briefing area when I click campaign on my work screen
+    @m12 @requested @is @briefing
+    Scenario: I should see briefing area when I click "Briefing" on agent work screen
 
     # 5192
-    @m12 @requested @ao
+    @m12 @requested @is @briefing
     Scenario: I can go back to my work screen when I click "Go to work screen"
         
     #5460
@@ -149,14 +150,14 @@ Feature: Agent campaign - calling session
       And I wait 1 second
       Then I should see "sample.jpg"
       And I follow "sample.jpg"
-      Then I should see "sample.jpg" within "#agent_work_screen_call_result span"
+      Then I should see "sample.jpg"
 
     #5931
-    @requested @m12
+    @requested @m12 @ao
     Scenario: I can edit contact email when adding result type "send material"
 
     #5931
-    @requested @m12
+    @requested @m12 @ao
     Scenario: When I add result "send material" then an email should be sent to contact email
 
     # 5168
