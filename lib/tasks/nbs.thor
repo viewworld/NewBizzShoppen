@@ -160,9 +160,9 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
         {:name => "Lead notification instant",
          :uniq_id => "lead_notification_instant",
          :en => {:subject => "New lead has been added to the subscribed category",
-                 :body => "<p>New lead&nbsp;<a href=\"{{lead.show_lead_details_url}}\">{{lead.header}}</a>&nbsp;has been created in category {{lead.category.name}}</p>"},
+                 :body => "<p>New lead&nbsp;<a href=\"{{lead.show_lead_details_url}}\">{{lead.header}}</a>&nbsp;has been created in category {{lead.category_name}}</p>"},
          :dk => {:subject => "[DK] New lead has been added to the subscribed category",
-                 :body => "<p>New lead&nbsp;<a href=\"{{lead.show_lead_details_url}}\">{{lead.header}}</a>&nbsp;has been created in category {{lead.category}}</p>"}
+                 :body => "<p>New lead&nbsp;<a href=\"{{lead.show_lead_details_url}}\">{{lead.header}}</a>&nbsp;has been created in category {{lead.category_name}}</p>"}
         }
     ]
 

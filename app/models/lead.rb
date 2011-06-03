@@ -278,7 +278,15 @@ class Lead < AbstractLead
     end
   end
 
+  def mailer_host
+    Nbs::Application.config.action_mailer.default_url_options[:host]
+  end
+
   def show_lead_details_url
-    "https://#{mailer_host}/leads/#{lead.id}"
+    "https://#{mailer_host}/leads/#{self.id}"
+  end
+
+  def category_name
+    category.name
   end
 end
