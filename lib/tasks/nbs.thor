@@ -163,6 +163,20 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
                  :body => "<p>New lead&nbsp;<a href=\"{{lead.show_lead_details_url}}\">{{lead.header}}</a>&nbsp;has been created in category {{lead.category_name}}</p>"},
          :dk => {:subject => "[DK] New lead has been added to the subscribed category",
                  :body => "<p>New lead&nbsp;<a href=\"{{lead.show_lead_details_url}}\">{{lead.header}}</a>&nbsp;has been created in category {{lead.category_name}}</p>"}
+        },
+        {:name => "Lead notification daily",
+         :uniq_id => "lead_notification_daily",
+         :en => {:subject => "New leads added to your subscribed categories today",
+                 :body => "<p>{% for lead in leads %}<p><a href=\"{{lead.show_lead_details_url}}\">{{lead.header}}</a><br />{{lead.description}}</p>{% endfor %}</p>"},
+         :dk => {:subject => "[DK] New leads added to your subscribed categories today",
+                 :body => "<p>{% for lead in leads %}<p><a href=\"{{lead.show_lead_details_url}}\">{{lead.header}}</a><br />{{lead.description}}</p>{% endfor %}</p>"}
+        },
+        {:name => "Lead notification weekly",
+         :uniq_id => "lead_notification_weekly",
+         :en => {:subject => "New leads added to your subscribed categories this week",
+                 :body => "<p>{% for lead in leads %}<p><a href=\"{{lead.show_lead_details_url}}\">{{lead.header}}</a><br />{{lead.description}}</p>{% endfor %}</p>"},
+         :dk => {:subject => "[DK] New leads added to your subscribed categories this week",
+                 :body => "<p>{% for lead in leads %}<p><a href=\"{{lead.show_lead_details_url}}\">{{lead.header}}</a><br />{{lead.description}}</p>{% endfor %}</p>"}
         }
     ]
 
@@ -499,5 +513,17 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
     LeadCertificationRequest.active.each do |lead_certification_request|
       lead_certification_request.update_state!
     end
+  end
+
+  desc "send_daily_lead_notifications", ""
+
+  def send_daily_lead_notifications
+    CommonNotifications.send_daily_lead_notifications!
+  end
+
+  desc "send_weekly_lead_notifications", ""
+
+  def send_weekly_lead_notifications
+    CommonNotifications.send_weekly_lead_notifications!
   end
 end

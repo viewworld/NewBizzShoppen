@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
 
   LEAD_NOTIFICATION_INSTANT       = 0
   LEAD_NOTIFICATION_ONCE_PER_DAY  = 1
-  LEAD_NOTIFICATION_ONCE_PER_WEEK =2
+  LEAD_NOTIFICATION_ONCE_PER_WEEK = 2
   LEAD_NOTIFICATION_TYPES = [LEAD_NOTIFICATION_INSTANT, LEAD_NOTIFICATION_ONCE_PER_DAY, LEAD_NOTIFICATION_ONCE_PER_WEEK]
 
   BLACK_LISTED_ATTRIBUTES = [:paypal_email, :bank_swift_number, :bank_iban_number]
@@ -455,4 +455,14 @@ class User < ActiveRecord::Base
     false
   end
 
+  def deliver_lead_notification
+    unless lead_notification_type == LEAD_NOTIFICATION_INSTANT
+      subscribed_categories = has_role?(:customer) ? with_role.categories : has_any_role?(:lead_buyer, :lead_user) and parent.present? ? parent.with_role.categories : []
+      unless subscribed_categories.empty?
+        uniq_id = "lead_notification_#{lead_notification_type == LEAD_NOTIFICATION_ONCE_PER_DAY ? 'daily' : 'weekly'}"
+        leads = Lead.for_notification(subscribed_categories, lead_notification_type)
+        ApplicationMailer.email_template(email, EmailTemplate.find_by_uniq_id(uniq_id), {:user => self, :leads => leads}).deliver
+      end
+    end
+  end
 end

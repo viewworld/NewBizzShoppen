@@ -159,7 +159,7 @@ class Category < ActiveRecord::Base
   def leads_count_for_user(user)
     leads_scope = leads.including_subcategories.published_only.without_inactive.scoped
     if user
-      if user.buyer?
+      if user.buyer? and (user.all_requested_lead_ids.any? or user.all_purchased_lead_ids.any?)
         leads_scope = leads_scope.with_ids_not_in(user.all_requested_lead_ids + user.all_purchased_lead_ids)
       end
       if user.has_accessible_categories?

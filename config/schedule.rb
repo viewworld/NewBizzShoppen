@@ -16,4 +16,10 @@ every 1.day, :at => "4:00 am" do
   command File.join(Dir.pwd, "RAILS_ENV=production thor nbs:refresh_exchange_rates")
 end
 
+every 1.day, :at => "8:00 pm" do
+  command File.join(Dir.pwd, "RAILS_ENV=production thor nbs:send_daily_lead_notifications")
+end
 
+every :sunday, :at => "8:00 pm" do
+  command File.join(Dir.pwd, "RAILS_ENV=production thor nbs:send_daily_lead_notifications")
+end

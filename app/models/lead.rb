@@ -72,6 +72,7 @@ class Lead < AbstractLead
   scope :with_certification_level, lambda { |cl| joins("INNER JOIN users ON users.id=leads.creator_id").where("certification_level = ? or certification_level = ?", cl.to_i, cl.to_i + 10) }
   scope :with_sale_limit, lambda { |sale_limit| where("sale_limit = ?", sale_limit.to_i) }
   scope :with_hotness, lambda { |hotness| where("hotness_counter = ?", hotness) }
+  scope :for_notification, lambda { |categories, notification_type| where("category_id in (?) and DATE(created_at) between ? and ?", categories.map(&:id), notification_type == User::LEAD_NOTIFICATION_ONCE_PER_DAY ? Date.today : Date.today-7, Date.today).published_only.without_inactive.without_outdated.order("category_id") }
 
   delegate :certification_level, :to => :creator
 
