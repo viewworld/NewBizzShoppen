@@ -66,8 +66,8 @@ Scenario: I can specify a youtube video url which is displayed on front page
   Then I should see translated "administration.settings.update.controller.successful_update_notice"
 
 #5919
-@requested @m12 @ao
 #http://img.youtube.com/vi/<insert-youtube-video-id-here>/0.jpg
+@requested @m12 @ao
 Scenario: I can see a jpg thumbnail of a introduction video on home page
 
 #5919
