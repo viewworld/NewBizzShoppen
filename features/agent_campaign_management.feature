@@ -617,7 +617,7 @@ Feature: Agent campaign - management
         Scenario: As call centre agent or agent I can't manage campaigns, result types, agent assignment
 
         # 5189
-        @m11 @requested @ao
+        @m11 @requested @is @non_testable @_done
         Scenario: I can see timestamps in my localization, not server time
 
         # 5192
