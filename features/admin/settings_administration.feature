@@ -59,17 +59,17 @@ Scenario: Admin should be able to define purchase limit for given big buyer (def
   Then I should see translated "administration.settings.update.controller.successful_update_notice"
 
 # 5722
-@m11 @requested @youtube @ao @_done @_tested
+@m11 @requested @youtube @ao @_deprecated
 Scenario: I can specify a youtube video url which is displayed on front page
-  Then I fill in "setting_4" with "123"
-  And I press translated "administration.settings.edit.view.button_update_settings"
-  Then I should see translated "administration.settings.update.controller.successful_update_notice"
 
 #5919
-#youtube url put thumbnail and onclick play in modal window
-#http://img.youtube.com/vi/<insert-youtube-video-id-here>/0.jpg
 @requested @m12 @ao
-Scenario: I can play youtube video in a modal box
+#http://img.youtube.com/vi/<insert-youtube-video-id-here>/0.jpg
+Scenario: I can see a jpg thumbnail of a introduction video on home page
+
+#5919
+@requested @m12 @ao
+Scenario: I can play youtube video in a modal box when I click a thumbnail
 
 #5919
 @requested @m12 @ao
