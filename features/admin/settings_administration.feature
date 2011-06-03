@@ -68,7 +68,7 @@ Scenario: I can specify a youtube video url which is displayed on front page
 #5919
 #youtube url put thumbnail and onclick play in modal window
 #http://img.youtube.com/vi/<insert-youtube-video-id-here>/0.jpg
-@requested @m12 @selenium @ao
+@requested @m12 @ao
 Scenario: I can play youtube video in a modal box
   When I follow translated "administration.introduction_video.view.add_video"
   And I fill in "youtube_introduction_url" with "http://www.youtube.com/watch?v=SBjQ9tuuTJQ"
