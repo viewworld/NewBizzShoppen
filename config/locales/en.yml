@@ -961,6 +961,7 @@ en:
           cash: "Cash"
           bank_transfer: "Bank transfer"
           na: N/A
+          paypal_transfer: "Paypal"
       new:
         view:
           header: "New invoice"

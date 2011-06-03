@@ -161,7 +161,7 @@
   <div class="additional_data">
     <p><strong><%= t("administration.invoices.show.view.total_in_words") %>:</strong> <%= total_in_words(invoice) %></p>
     <p>
-      <strong><%= t("administration.invoices.show.view.payment_method") %>:</strong> <%= invoice.payment_method == "cash" ? t("administration.invoices.common.view.cash") : t("administration.invoices.common.view.bank_transfer") %>
+      <strong><%= t("administration.invoices.show.view.payment_method") %>:</strong> <%= invoice.payment_method == "cash" ? t("administration.invoices.common.view.cash") : invoice.payment_transactions.detect { |t| t.class.to_s == "PaypalTransaction" }.nil? ? t("administration.invoices.common.view.bank_transfer") : t("administration.invoices.common.view.paypal_transfer") %>
     </p>
     <% if not invoice.payment_method == "cash" %>
         <p style="padding-top:5px"><strong><%= t("administration.invoices.show.view.payment_account") %>:</strong></p>
