@@ -2,15 +2,28 @@
   <header back="true"><%= t("purchase_manager_accounts.new.view.title") %></header>
 
   <div class="pdd_5 no_pdd_b">
-    <%= blurb('blurb_sign_up') %><br/>
-    <% unless Rails.env.test? %>
-        <%= link_to_rpx t("purchase_manager_accounts.new.view.janrain_sign_up"), purchase_manager_accounts_url %>
-        <%= javascript_include_rpx purchase_manager_accounts_url %>
-    <% end %>
+    <%= blurb('blurb_sign_up') %>
+    <br/>
   </div>
 
   <hl pdd="15"/>
 
-  <%= render :partial => "sign_in/purchase_manager_form", :locals => {:user => @user, :url => purchase_manager_accounts_path} %>
+  <% if false %>
+  <fieldset class="inputs labels_100 no_pdd" style="margin-top:-5px;">
+    <ol class="no_pdd">
+      <li class="string social_login">
+        <label><%= t("purchase_manager_accounts.new.view.janrain_sign_up_label") %></label>
 
+        <div class="txt">
+          <% unless Rails.env.test? %>
+              <%= link_to_rpx image_tag("icons/social_login.png"), purchase_manager_accounts_url %>
+              <%= javascript_include_rpx purchase_manager_accounts_url %>
+          <% end %>
+        </div>
+      </li>
+    </ol>
+  </fieldset>
+  <% end %>
+
+  <%= render :partial => "sign_in/purchase_manager_form", :locals => {:user => @user, :url => purchase_manager_accounts_path} %>
 </column-mc:>

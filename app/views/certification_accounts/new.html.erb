@@ -2,16 +2,66 @@
   <header><%= t("certification_accounts.new.view.title") %></header>
 
   <div class="pdd_5 no_pdd_b" style="width:800px">
-    <%= blurb('blurb_sign_up') %>
-    <br/>
-    <% unless Rails.env.test? %>
-        <%= link_to_rpx t("certification_accounts.new.view.janrain_sign_up"), certification_accounts_url %>
-        <%= javascript_include_rpx certification_accounts_url %>
-    <% end %>
-    <fltr style="float:right;"><%= link_to t("certification_accounts.new.view.i_already_have_account"), root_path %></fltr>
+    <p><%= blurb("blurb_certification_purchase_manager_signup") %></p>
   </div>
 
   <hl pdd="15"/>
 
-  <%= render :partial => "sign_in/purchase_manager_form", :locals => {:user => @user, :url => certification_accounts_path} %>
+  <fieldset class="inputs labels_100 no_pdd" style="margin-top:-5px;">
+    <ol class="no_pdd">
+      <li class="string social_login">
+        <label><%= t("certification_accounts.new.view.janrain_sign_up_label") %></label>
+
+        <div class="txt">
+          <% unless Rails.env.test? %>
+              <%= link_to_rpx image_tag("icons/social_login.png"), certification_accounts_url %>
+              <%= javascript_include_rpx certification_accounts_url %>
+          <% end %>
+          <br/>
+          <%= link_to t("certification_accounts.new.view.i_already_have_account"), root_path %>
+        </div>
+      </li>
+    </ol>
+  </fieldset>
+
+
+
+  <%= semantic_form_for @user, :url => certification_accounts_path do |form| %>
+      <frm title="#{t('purchase_manager_accounts.new.view.header')}" c="no_marg">
+        <param:content>
+          <div class="column_left">
+            <div class="pdd_10 no_pdd_t">
+              <fieldset class="inputs labels_ta_r labels_200">
+                <ol>
+                  <%= form.input :first_name, :as => :hidden %>
+                  <%= form.input :last_name, :as => :hidden %>
+                  <%= form.input :screen_name, :as => :hidden %>
+                  <%= form.input :email, :as => :hidden %>
+                  <%= form.input :phone, :as => :hidden %>
+                  <%= form.input :password, :hint => hint_for(@user, :password), :as => @user.rpx_identifier.blank? ? :password : :hidden %>
+                  <%= form.input :password_confirmation, :hint => hint_for(@user, :password_confirmation), :as => @user.rpx_identifier.blank? ? :password : :hidden %>
+                  <%= form.input :time_zone, :wrapper_html => { :class => "select"}, :input_html => {:style => "width: 240px"} %>
+                  <%= form.input :agreement_read, :as => :boolean, :hint => hint_for(@user, :agreement_read), :label => "#{t("common.agree_to")} #{link_to_main_page_article('terms_conditions', {:popup => true}, {:id => 'agreement_modal_box'})}".html_safe %>
+                  <%= form.fields_for :address do |address_form| %>
+                      <%= address_form.input :address_line_1, :as => :hidden %>
+                      <%= address_form.input :address_line_2, :as => :hidden %>
+                      <%= address_form.input :address_line_3, :as => :hidden %>
+                      <%= address_form.input :zip_code, :as => :hidden %>
+                      <%= address_form.input :country_id, :as => :hidden %>
+                      <%= address_form.input :region_id, :as => :hidden %>
+                  <% end %>
+                  <%= form.input :rpx_identifier, :as => :hidden %>
+                </ol>
+              </fieldset>
+            </div>
+          </div>
+          <clb/>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="plus">
+            <%= form.submit t("purchase_manager_accounts.new.view.button_create_account") %>
+          </ibt>
+        </param:actions>
+      </frm>
+  <% end %>
 </column-mc:>

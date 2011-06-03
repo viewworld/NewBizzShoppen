@@ -1,0 +1,45 @@
+<column-mc:>
+
+  <header back="true">
+    <param:content>
+      <%= t("materials.views.index.header", :campaign => @campaign.name) %>
+    </param:content>
+  </header>
+
+  <div class="frm_tiny">
+    <div class="pdd_10">
+    <h2><%= t("materials.views.index.upload_material") %></h2>
+
+    <%= semantic_form_for @material, :url => callers_campaign_materials_path(@campaign), :html => {:multipart => true} do |f| %>
+        <% f.inputs do %>
+            <%= f.input :asset,
+                        :as => :file,
+                        :label => t("materials.views.index.file"),
+                        :required => true %>
+            <li class="commit">
+              <ibt icon="save">
+                <%= f.submit t("materials.views.index.save_material") %>
+              </ibt>
+            </li>
+
+        <% end %>
+    <% end %>
+  </div>
+  </div>
+
+  <hl pdd="10"/>
+
+  <ul class="materials_list">
+    <% if @materials.any? %>
+        <% @materials.each do |material| %>
+            <li>
+              - <strong><%= link_to material.asset_file_name, material.url %> - </strong>
+              <%= link_to t("materials.views.index.delete_material"), callers_campaign_material_path(@campaign, material), :method => :delete, :confirm => t("common.confirmation") %>
+            </li>
+        <% end %>
+    <% else %>
+        <%= t("materials.views.index.no_materials") %>
+    <% end %>
+  </ul>
+
+</column-mc:>

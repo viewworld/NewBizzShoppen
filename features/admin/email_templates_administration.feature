@@ -45,3 +45,9 @@ Scenario: I can edit and update email template fields for different language whe
   
 @m4 @tgn @_done @non_testable
 Scenario: I should be able to edit email templates using WYSIWYG editor and applying basic styling
+
+#5931
+#new template in seed as default send material email template should be created
+@m12
+Scenario: I can edit email template for send material result type
+

@@ -1,6 +1,6 @@
 When /^I follow translated "([^"]*)" for lead "([^"]*)"$/ do |link_name, lead_name|
   I18n.locale = :en
-  dom_id      = ActionController::RecordIdentifier.dom_id(Lead.find_by_header(lead_name).last)
+  dom_id      = ActionController::RecordIdentifier.dom_id(Lead.where(:header => lead_name).last)
   Then %{I follow "#{I18n.t(link_name)}" within "tr##{dom_id}"}
 end
 
@@ -14,7 +14,7 @@ end
 #end
 
 Given /^a lead purchase for lead "([^"]*)" by user "([^"]*)" with role "([^"]*)" exists with attributes "([^"]*)"$/ do |header, email, role, options|
-  lead = Lead.find_by_header(header).first
+  lead = Lead.where(:header => header).first
   customer = "User::#{role.camelize}".constantize.find_by_email(email)
   options_hash = Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys
   options_hash.each_pair do |k, v|
@@ -26,7 +26,7 @@ Given /^a lead purchase for lead "([^"]*)" by user "([^"]*)" with role "([^"]*)"
 end
 
 Given /^lead (.+) exists with attributes "([^"]*)"$/ do |header, options|
-  lead = Lead.find_by_header(header).first
+  lead = Lead.where(:header => header).first
   lead = Lead.make!(:header => header, :category => Category.make!) if lead.nil?
   lead.update_attributes(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys)
 end
@@ -35,7 +35,7 @@ Given /^lead (.+) exists with currency "([^"]*)"$/ do |header, currency_name|
   unless currency = Currency.where(:name => currency_name).first
     currency = Currency.make!(:name => currency_name)
   end
-  lead = Lead.find_by_header(header).first
+  lead = Lead.where(:header => header).first
   if lead.nil?
     Lead.make!(:header => header, :currency => currency, :category => Category.make!)
   else
@@ -45,20 +45,20 @@ end
 
 Given /^purchase for lead "([^"]*)" and user "([^"]*)" exists with attributes "([^"]*)"$/ do |header, email, options|
   user = User::Customer.find_by_email(email)
-  lead = Lead.find_by_header(header).first
+  lead = Lead.where(:header => header).first
   lead_purchase = lead.lead_purchases.detect { |lp| lp.owner == user }
   lead_purchase.update_attributes(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys)
 end
 
 Given /^lead (.+) exists within category (.+)$/ do |header, category_name|
-  category = Category.find_by_name(category_name).last
+  category = Category.where(:name => category_name).first
   category = Category.make!(:name => category_name) if category.nil?
 
   lead = Lead.make!(:header => header, :category => category)
 end
 
 Given /^bought lead (.+) exists within category (.+)$/ do |header, category_name|
-  category = Category.find_by_name(category_name).last
+  category = Category.where(:name => category_name).first
   category = Category.make!(:name => category_name) if category.nil?
 
   lead = Lead.make!(:header => header, :category => category)
@@ -66,7 +66,7 @@ Given /^bought lead (.+) exists within category (.+)$/ do |header, category_name
 end
 
 Given /^a lead (.+) exists within category (.+) and is bought by user (.+) with role (.+)$/ do |header, category_name, email, role|
-  category = Category.find_by_name(category_name).last
+  category = Category.where(:name => category_name).first
   category = Category.make!(:name => category_name) if category.nil?
 
   customer = "User::#{role.camelize}".constantize.find_by_email(email)
@@ -77,7 +77,7 @@ Given /^a lead (.+) exists within category (.+) and is bought by user (.+) with 
   elsif role == "category_buyer"
     customer = User::Customer.find(customer.id)
   end
-  lead = Lead.find_by_header(header).first
+  lead = Lead.where(:header => header).first
   if lead.nil?
     lead = Lead.make!(:header => header, :category => category)
   else
@@ -87,7 +87,7 @@ Given /^a lead (.+) exists within category (.+) and is bought by user (.+) with 
 end
 
 Given /^lead (.+) is bought by user (.+) with role (.+) and is assigned to user (.+) with role (.+)$/ do |header, email, role, assignee_email, assignee_role|
-  lead = Lead.find_by_header(header).first
+  lead = Lead.where(:header => header).first
   lead = Lead.make!(:header => header) if lead.nil?
 
   if assignee_role == "lead_buyer"
@@ -102,7 +102,7 @@ end
 
 Given /^lead (.+).is created by user (.+) with role (.+)$/ do |name, email, role|
   u = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
-  lead = Lead.find_by_header(name).last
+  lead = Lead.where(:header => name).first
   lead.update_attributes({ :creator_id => u.id, :published => true}) unless lead.nil?
   published = (role != "purchase_manager")
   lead = Lead.make!(:header => name, :creator_id => u.id, :creator_type => "User::#{role.camelize}", :published => published) if lead.nil?
@@ -126,13 +126,13 @@ Given /^lead "([^"]*)" was requested by user "([^"]*)" with role "([^"]*)"(?: an
     role = "lead_user"
   end
   u = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
-  lead = Lead.find_by_header(header).last
+  lead = Lead.where(:header => header).first
   owner = User::Customer.first(:conditions => { :email => owner_email })
   LeadRequest.make!(:requestee => u, :lead => lead, :owner => owner)
 end
 
 Given /^I make ajax call to save lead purchase for lead (.+)$/ do |header|
-  lead = Lead.find_by_header(header).last
+  lead = Lead.where(:header => header).first
   Then %{I run javascript update_lead_response_deadline('/buyers/lead_purchases/#{lead.lead_purchases.last.id}', $('#response_deadline_datepicker_#{lead.lead_purchases.last.id}').val())}
 end
 
@@ -152,31 +152,31 @@ Given /^there are "([^"]*)" leads in category "([^"]*)"$/ do |num,category_name|
 end
 
 Given /^(.+) is a best seller$/ do |header|
-  lead = Lead.find_by_header(header).first
+  lead = Lead.where(:header => header).first
   (Lead.maximum(:lead_purchases_counter)+1).times do
     LeadSinglePurchase.make!(:lead_id => lead.id, :owner => User::Customer.make!, :paid => true, :accessible_from => Time.now)
   end
 end
 
 Given /^lead (.+) has price (.+)$/ do |header,price|
-  lead = Lead.find_by_header(header).first
+  lead = Lead.where(:header => header).first
   lead.update_attribute(:price, price)
 end
 
 Given /^lead (.+) has purchase value (.+)$/ do |header,pv|
-  lead = Lead.find_by_header(header).first
+  lead = Lead.where(:header => header).first
   lead.update_attribute(:purchase_value, pv)
 end
 
 
 Given /^lead "([^"]*)" has translation for lang "([^"]*)" with attributes "([^"]*)"$/ do |header, locale_lang, options|
-  lead = Lead.find_by_header(header).first
+  lead = Lead.where(:header => header).first
   lead_translation = LeadTranslation.create(:lead_id => lead.id, :locale => locale_lang)
   lead_translation.update_attributes(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys)
 end
 
 Given /^lead (.+) has deadline in (\d+) days from now$/ do |header,days|
-  lead = Lead.find_by_header(header).first
+  lead = Lead.where(:header => header).first
   lead.lead_purchases.first.update_attribute(:response_deadline, Date.today+days.to_i.days)
 end
 
@@ -195,7 +195,7 @@ Then /^list item should be highlighted$/ do
 end
 
 Given /^a lead "([^"]*)" has (good|bad) rating$/ do |header, rating_type|
-  lead = Lead.find_by_header(header).first
+  lead = Lead.where(:header => header).first
   lead.lead_purchases.first.update_attributes(:rating_level => rating_type == "good" ? 0 : 12, :rating_reason => rating_type == "bad" ? "Lorem ipsum dolor sit amet" : nil)
 end
 
@@ -207,19 +207,19 @@ Given /^All leads have refreshed average ratings$/ do
 end
 
 Given /^lead named "([^"]*)" is owned by user "([^"]*)" with role "([^"]*)"$/ do |header, email, role|
-  lead = Lead.find_by_header(header).first
+  lead = Lead.where(:header => header).first
   customer = "User::#{role.camelize}".constantize.find_by_email(email)
   assert !lead.lead_purchases.detect { |lp| lp.owner_id == customer.id  }.nil?
 end
 
 Given /^lead named "([^"]*)" is assigned to user "([^"]*)" with role "([^"]*)"$/ do |header, email, role|
-  lead = Lead.find_by_header(header).first
+  lead = Lead.where(:header => header).first
   customer = "User::#{role.camelize}".constantize.find_by_email(email)
   assert !lead.lead_purchases.detect { |lp| lp.assignee_id == customer.id  }.nil?
 end
 
 Given /^lead named "([^"]*)" is paid and accessible for user with email "([^"]*)" and role "([^"]*)"$/ do |header, email, role|
-  lead = Lead.find_by_header(header).first
+  lead = Lead.where(:header => header).first
   customer = "User::#{role.camelize}".constantize.find_by_email(email)
   lead_purchase = lead.lead_purchases.detect { |lp| lp.owner_id == customer.id  }
   assert lead_purchase.paid == true
@@ -232,7 +232,7 @@ Given /^cart for user "([^"]*)" is paid by paypal$/ do |email|
 end
 
 Given /^lead named "([^"]*)" (is published|is not published)$/ do |header, is_published|
-  lead = Lead.find_by_header(header).first
+  lead = Lead.where(:header => header).first
   lead.published = (is_published == "is published")
   lead.save
 end
@@ -252,7 +252,7 @@ When /^lead "([^"]*)" has attributes "([^"]*)"$/ do |lead_header, options|
 end
 
 Given /^lead "([^"]*)" is created for country "([^"]*)"(?: with region "([^"]*)")?$/ do |header, country, region|
-  lead = Lead.find_by_header(header).first
+  lead = Lead.where(:header => header).first
   lead = Lead.make!(:header => header, :category => Category.make!) if lead.nil?
   country = Country.find_by_name(country)
   region = country.nil? ? nil : country.regions.detect { |r| r.name == region }
@@ -260,7 +260,7 @@ Given /^lead "([^"]*)" is created for country "([^"]*)"(?: with region "([^"]*)"
 end
 
 Then /^last purchase for lead "([^"]*)" has attributes "([^"]*)"$/ do |header, options|
-  lead = Lead.find_by_header(header).first
+  lead = Lead.where(:header => header).first
   purchase = lead.lead_purchases.last
   Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys.each_pair do |method, value|
     assert purchase.send(method).to_s == value.to_s
@@ -269,38 +269,43 @@ end
 
 When /^I visit certification url for lead "([^"]*)"$/ do |header|
   lead = Lead.where(:header => header).first
-  visit "/leads/#{lead.id}/edit?token=#{lead.lead_certification_request.token}"
+  visit "/leads/#{lead.id}/edit?token=#{lead.current_lcr.token}"
 end
 
 When /^lead "([^"]*)" is certified$/ do |header|
   lead = Lead.where(:header => header).first
-  lead.create_lead_certification_request
-  lead.lead_certification_request.change_state("agreed")
+  lead.lead_certification_requests.create
+  lead.current_lcr.change_state("agreed")
 end
 
 When /^lead "([^"]*)" certification request is sent$/ do |header|
   lead = Lead.where(:header => header).first
-  lead.create_lead_certification_request
+  lead.lead_certification_requests.create
 end
 
 When /^lead "([^"]*)" certification request has attributes "([^"]*)"$/ do |header, options|
   lead = Lead.where(:header => header).first
-  lead.create_lead_certification_request if lead.lead_certification_request.nil?
+  lead.lead_certification_requests.create if lead.current_lcr.nil?
   attrs = Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys
-  lead.lead_certification_request.update_attributes(attrs)
+  lead.current_lcr.update_attributes(attrs)
 end
 
 Then /^lead "([^"]*)" certification status should be "([^"]*)"$/ do |header, expected_state|
   lead = Lead.where(:header => header).first
-  lead.lead_certification_request.state.should == expected_state.to_i
+  lead.current_lcr.state.should == expected_state.to_i
 end
 
 When /^lead certification request for lead "([^\"]*)" has expired$/ do |header|
   lead = Lead.where(:header => header).first
-  lead.lead_certification_request.expire!
+  lead.current_lcr.expire!
 end
 
 When /^lead certification request for lead "([^\"]*)" has its state updated$/ do |header|
   lead = Lead.where(:header => header).first
-  lead.lead_certification_request.update_state!
+  lead.current_lcr.update_state!
+end
+
+When /^lead "([^"]*)" should be in category "([^"]*)"$/ do |header, name|
+  lead = Lead.where(:header => header).first
+  assert lead.category == Category.where(:name => name).first
 end

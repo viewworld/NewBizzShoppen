@@ -898,6 +898,7 @@ h4
     margin-top: -15px;
     padding: 12px 10px;
     border-bottom: 1px solid #cfcfcf;
+    -webkit-box-shadow: 0 0 2px rgba(0,0,0,0.3);
 }
 
 .search_box h2
@@ -1214,6 +1215,11 @@ div.element_templates .lead_template p
     color: #555;
 }
 
+.lead_purchase_contact
+{
+    padding-bottom: 22px;
+}
+
 
 /* --- elements_list ---
 --------------------------------------------------------------------------------- */
@@ -1488,6 +1494,25 @@ div.bt span input, x:-moz-any-link, x:default
     padding: 0 10px 3px !important;
 }
 
+div.bt span a
+{
+    cursor: pointer;
+    display: block;
+    float: left;
+    height: 30px;
+    line-height: 30px;
+
+    padding: 0 10px 0;    
+    font-weight: bold;
+    font-size: 11px;
+    color: #fff;
+    outline: 0;
+
+    text-shadow: 1px 1px 0 #995c1b;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
 
 div.bt:hover
 {
@@ -1500,7 +1525,8 @@ div.bt:hover span
 }
 
 
-div.bt_icon span input
+div.bt_icon span input,
+div.bt_icon span a    
 {
     padding: 0 10px 0 28px !important;
     position: relative;
@@ -1689,4 +1715,42 @@ span.cke_skin_kama
     color: #7a7a7a;
     line-height: 16px;
     padding-bottom: 5px;
+}
+
+
+
+/* ---- materials -----
+--------------------------------------------------------------------------------- */
+
+.materials_list
+{
+    padding-left: 15px;
+}
+
+.materials_list li
+{
+    line-height: 24px;
+}
+
+.materials_list li strong
+{
+    font-size: 13px;
+}
+
+.materials_list.with_icon li
+{
+    background: url(/images/icons/file.png) no-repeat left center;
+    padding-left: 20px;
+}
+
+.ui-dialog-content .materials_list.with_icon
+{
+    border-top: 1px solid #bbb;        
+    margin-top: 5px;
+    padding: 5px 0 0;
+}
+
+.ui-dialog-content .materials_list.with_icon a
+{
+    color: #008fff;
 }

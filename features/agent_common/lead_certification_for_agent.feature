@@ -48,34 +48,122 @@ Scenario: I can see that the lead I have marked as certified was confirmed by th
 
 # 5770
 # put this button next to others on new lead form, when clicked a certification request should be sent
-@m11 @requested @tgn
+@m11 @requested @tgn @selenium @_tested @_done
 Scenario: When creating a new lead I can click "Create and certify"
+  Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role agent
+  And I am on the homepage
+  And I make sure current locale is "en"
+  Then I sign in as bob@person.com with password supersecret
+  And I go to agents leads
+  Given Category Test category 1 is created
+  And I go to agents leads
+  And I select "Test category 1" from "category_id"
+  And I follow translated "agent.leads.index.view.new_lead"
+  And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
+  And I fill in "lead_description" with "Lorem ipsum"
+  And I fill in "lead_hidden_description" with "Lorem ipsum hidden"
+  And I fill in "lead_purchase_value" with "10000"
+  And I fill in "lead_price" with "100"
+  And I select "3" from "lead_sale_limit"
+  And I select "Denmark" from "lead_country_id"
+  And I fill in "lead_company_name" with "Printing company"
+  And I fill in "lead_contact_name" with "Marek Kowalski"
+  And I fill in "lead_email_address" with "kowalski@person.com"
+  And I fill in "lead_phone_number" with "123456789"
+  And I fill in "lead_address_line_1" with "Kaminskiego 19"
+  And I fill in "lead_address_line_3" with "Bielsko-Biała"
+  And I fill in "lead_zip_code" with "23-2911"
+  And I fill in "datepicker" with date that is "5" days from now
+  And I press translated "agent.leads.new.view.button_create_and_certify"
+  And last email sent should have been sent to recipient "kowalski@person.com"
+  Then I am not sign in
+  Given I am signed up and confirmed as user with email bob_cca@person.com and password supersecret and role call_centre_agent
+  And I have user with email cc001@person.com and role call_centre
+  And an user with role call_centre_agent and email bob_cca@person.com belongs to call centre cc001@person.com
+  And I go to the homepage
+  And I make sure current locale is "en"
+  Then I sign in as bob_cca@person.com with password supersecret
+  And I follow translated "layout.main_menu.call_centre_agent.leads"
+  And I select "Test category 1" from "category_id"
+  And I follow translated "call_centre_agent.leads.index.view.new_lead"
+  And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
+  And I fill in "lead_description" with "Lorem ipsum"
+  And I fill in "lead_hidden_description" with "Lorem ipsum hidden"
+  And I fill in "lead_purchase_value" with "10000"
+  And I fill in "lead_price" with "100"
+  And I select "3" from "lead_sale_limit"
+  And I select "Denmark" from "lead_country_id"
+  And I fill in "lead_company_name" with "Printing company"
+  And I fill in "lead_contact_name" with "Marek Kowalski"
+  And I fill in "lead_email_address" with "kowalski1@person.com"
+  And I fill in "lead_phone_number" with "123456789"
+  And I fill in "lead_address_line_1" with "Kaminskiego 19"
+  And I fill in "lead_address_line_3" with "Bielsko-Biała"
+  And I fill in "lead_zip_code" with "23-2911"
+  And I fill in "datepicker" with date that is "5" days from now
+  And I press translated "call_centre_agent.leads.new.view.button_create_and_certify"
+  And last email sent should have been sent to recipient "kowalski1@person.com"
 
 # 5769
-@m11 @requested @is
+@m11 @requested @is @_done @_tested
 Scenario: I should see "Recertify" button when Lead's contact email changes and certification request has benn already sent
+  When there are no leads
+  And I am signed up and confirmed as user with email agent007@nbs.com and password secret and role agent
+  And lead BestLead is created by user agent007@nbs.com with role agent
+  And I am on the home page
+  And I sign in as agent007@nbs.com with password secret
+  And I follow translated "layout.main_menu.agent.leads"
+  When lead "BestLead" certification request is sent
+  When lead "BestLead" has attributes "email_address:error"
+  And I follow translated "layout.main_menu.agent.leads"
+  Then I should not see translated "agent.leads.index.view.certify"
+  Then I should see translated "agent.leads.index.view.recertify"
+  Then I follow translated "agent.leads.index.view.recertify"
+  Then I should see translated "agent.lead_certifications.index.view.sent_successfully"
 
 # 5765
-@m11 @requested @is
-Scenario: I can edit "Hidden description"
+@m11 @requested @tgn @_tested @_done
+Scenario: I can edit "Hidden description" and "Purchase decision date"
+  When there are no leads
+  And I am signed up and confirmed as user with email agent007@nbs.com and password secret and role agent
+  Given lead BestLead is created by user agent007@nbs.com with role agent
+  When lead "BestLead" certification request is sent
+  And I visit certification url for lead "BestLead"
+  Then I fill in "lead_hidden_description" with "sample description"
+  Then I fill in "datepicker" with "01-01-2011"
 
 # 5765
-@m11 @requested @is
+@m11 @requested @tgn @_tested @_done
 Scenario: I can't see "Sales information", "Price", "Currency", "Category", "Country" and "Public Header"
+  When there are no leads
+  And I am signed up and confirmed as user with email agent007@nbs.com and password secret and role agent
+  Given lead BestLead is created by user agent007@nbs.com with role agent
+  When lead "BestLead" certification request is sent
+  And I visit certification url for lead "BestLead"
+  Then I should not see translated "formtastic.labels.lead.sale_limit"
+  Then I should not see translated "formtastic.labels.lead.price"
+  Then I should not see translated "formtastic.labels.lead.currency_id"
+  Then I should not see translated "formtastic.labels.lead.category_id"
+  Then I should not see translated "formtastic.labels.lead.country_id"
+  Then I should not see translated "formtastic.labels.lead.header"
 
 # 5765
-@m11 @requested @is
-Scenario: I can edit Purchase decision date
-
-# 5765
-@m11 @requested @is
-Scenario: I can see a blurb text on top of the page
-
-# 5765
-@m11 @requested @is
-Scenario: I can see "Procurement information" instead of "Lead information" and Certify information" instead of "Editing lead"
-
-# 5764
-# rename "certification" link to "certify"
-@m11 @requested @is
-Scenario: I can certify lead by clicking on "Certify" link
+# rename "Lead information" to "Procurement information", "Editing lead" to  "Certify information"
+# and "Certification" link to "Certify"
+# and add blurb text to /leads/1/edit page
+@m11 @requested @tgn @_done @_tested
+Scenario: I can see blurb, "Procurement information", "Certify information" and "Certify" link
+  When there are no leads
+  And I am signed up and confirmed as user with email agent007@nbs.com and password secret and role agent
+  Given lead BestLead is created by user agent007@nbs.com with role agent
+  When lead "BestLead" certification request is sent
+  And I visit certification url for lead "BestLead"
+  Then I should see translated "leads.certification.header"
+  And I should see translated "leads.certification.procurement_information"
+  And I should see "Blurb certify information"
+  Given I am not sign in
+  When there are no leads
+  Given lead BestLead is created by user agent007@nbs.com with role agent
+  And I sign in as agent007@nbs.com with password secret
+  And I go to agents leads
+  And I follow translated "agent.leads.index.view.certify"

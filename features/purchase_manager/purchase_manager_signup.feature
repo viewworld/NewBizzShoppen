@@ -48,7 +48,3 @@ Feature: Purchase Manager signup
     Then I should see translated "devise.confirmations.confirmed"
     And I should see translated "layout.my_profile_link"
     And I should be signed in
-
-  # 5778
-  @m0 @requested
-  Scenario: When I sign up as procurement manager the address fields are not required

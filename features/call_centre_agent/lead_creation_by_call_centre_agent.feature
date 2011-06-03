@@ -375,7 +375,8 @@ Scenario: I can choose region during creation of a lead
 @tgn @requested @m10 @tgn @lead_templates @selenium @_tested
 Scenario: I can change the lead's category even if the templates are filled out (templates should be preserved but hidden)
   Given Category named "Cat template#1" already exists
-  And Category named "Cat template#2" already exists within category named "Cat template#1"
+  And Category named "Cat template#1.1" already exists within category named "Cat template#1"
+  And Category named "Cat template#2" already exists within category named "Cat template#1.1"
   And Category named "Cat template#3" already exists within category named "Cat template#2"
   Given template named "Cat template#1 details" for category "Cat template#1" is created by user "call_centre@person.com" with role "call_centre"
   And template named "Cat template#2 details" for category "Cat template#2" is created by user "call_centre@person.com" with role "call_centre"
@@ -387,7 +388,7 @@ Scenario: I can change the lead's category even if the templates are filled out 
   And template named "Cat template#3 details" is mandatory
   And template named "Cat template#3 details" has following fields "f5:true:true, f6:true:true"
   When I follow translated "layout.main_menu.call_centre_agent.leads"
-  And I select "Cat template#1" from "category_id"
+  And I select "Cat template#1.1" from "category_id"
   And I follow translated "agent.leads.index.view.new_lead"
   And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
   And I fill in "lead_description" with "Lorem ipsum"
@@ -408,6 +409,7 @@ Scenario: I can change the lead's category even if the templates are filled out 
   And I press translated "call_centre_agent.leads.new.view.button_create"
   Then I click hidden link by url regex "/call_centre_agents\/leads\/\d+\/edit/"
   And I select "Cat template#3" from "lead_category_id"
+  And I wait 2 second
   And the "lead_lead_template_values_attributes_0_value" field should contain "111"
   And the "lead_lead_template_values_attributes_1_value" field should contain "222"
   And I fill in "lead_lead_template_values_attributes_2_value" with "333"
@@ -423,6 +425,8 @@ Scenario: I can change the lead's category even if the templates are filled out 
   And the "lead_lead_template_values_attributes_4_value" field should contain "555"
   And the "lead_lead_template_values_attributes_5_value" field should contain "666"
   And I select "Cat template#2" from "lead_category_id"
+  And I press translated "call_centre_agent.leads.edit.view.button_update"
+  Then I click hidden link by url regex "/call_centre_agents\/leads\/\d+\/edit/"
   And the "lead_lead_template_values_attributes_0_value" field should contain "111"
   And the "lead_lead_template_values_attributes_1_value" field should contain "222"
   And the "lead_lead_template_values_attributes_2_value" field should contain "333"

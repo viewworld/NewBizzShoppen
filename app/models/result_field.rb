@@ -5,7 +5,8 @@ class ResultField < ActiveRecord::Base
   DATE = 2.freeze
   NOTE = 3.freeze
   DATETIME = 4.freeze
-  FIELD_TYPES = [STRING, INTEGER, DATE, NOTE, DATETIME]
+  MATERIAL = 5.freeze
+  FIELD_TYPES = [STRING, INTEGER, DATE, NOTE, DATETIME, MATERIAL]
 
   belongs_to :result
   has_many :result_value

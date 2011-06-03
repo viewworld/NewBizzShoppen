@@ -56,16 +56,13 @@ Scenario: When I decide to create new fairleads account I should be redirected t
   When lead "BestLead" certification request is sent
   And I visit certification url for lead "BestLead"
   And I press translated "leads.certification.confirm"
-  Then the "user_purchase_manager_email" field should contain "james@bond.co.uk"
+  And I should not see "E-mail"
 
 @_done @_tested
 Scenario: After signup I can login instantly and do not have to confirm it by email (since it is the same email)
   When lead "BestLead" certification request is sent
   And I visit certification url for lead "BestLead"
   And I press translated "leads.certification.confirm"
-  And I fill in "user_purchase_manager_address_attributes_address_line_1" with "Downing St"
-  And I fill in "user_purchase_manager_address_attributes_zip_code" with "12345"
-  And I fill in "user_purchase_manager_screen_name" with "Bond, James Bond"
   And I fill in "user_purchase_manager_password" with "secret"
   And I fill in "user_purchase_manager_password_confirmation" with "secret"
   And I check "user_purchase_manager_agreement_read"
@@ -151,24 +148,44 @@ Scenario: Once I have confirmed the lead then the link expires and I cannot get 
 
 #5771
 # address, first name, last name
-@m11 @requested @tgn
+@m11 @requested @tgn @_done @_tested
 Scenario: All my account information should be populated from lead
+  When lead "BestLead" certification request is sent
+  And I visit certification url for lead "BestLead"
+  And I press translated "leads.certification.confirm"
+  And I fill in "user_purchase_manager_password" with "secret"
+  And I fill in "user_purchase_manager_password_confirmation" with "secret"
+  And I check "user_purchase_manager_agreement_read"
+  And I press translated "purchase_manager_accounts.new.view.button_create_account"
+  Then user "james@bond.co.uk" has profile copied from lead "BestLead"
 
 #5771
 # to make it unique for example "first_name last_name (email_address)"
-@m11 @requested @tgn
+@m11 @requested @tgn @tested_elsewhere @_done
 Scenario: Screen name should be automatically generated
 
 #5771
 # they should be populated from lead
-@m11 @requested @tgn
+@m11 @requested @tgn @_tested @_done
 Scenario: I should not see fields for address, names etc
+  When lead "BestLead" certification request is sent
+  And I visit certification url for lead "BestLead"
+  And I press translated "leads.certification.confirm"
+  And I should not see "Address line 1"
+  #And I should not see "City"
+  And I should not see "Screen name"
+  And I should not see "First name"
+  And I should not see "Last name"
 
 #5771
-@m11 @requested @tgn
+@m11 @requested @is @_done @_non_testable
 Scenario: I should see icons for Facebook/Linkedin/Google sign in
 
 #5771
 # blurb saying "use google/linkedin/facebook to sign in or specify an unique password to create fairleads account"
-@m11 @requested @tgn
+@m11 @requested @tgn @_tested @_done
 Scenario: I can see a blurb on the top of the page
+  When lead "BestLead" certification request is sent
+  And I visit certification url for lead "BestLead"
+  And I press translated "leads.certification.confirm"
+  Then I should see "Blurb certification purchase manager signup"

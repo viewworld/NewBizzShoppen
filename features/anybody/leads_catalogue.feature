@@ -126,28 +126,59 @@ Scenario: I should be able to select categories from different levels of the tre
   And I should see "Makbuki"
 
 # 5768
-@m11 @requested @is
+@m11 @requested @is @_done @_not_testable
 Scenario: I can see a certification icon next to lead header if lead is cerified
 
 # 5768
-@m11 @requested @is
+@m11 @requested @is @_done @_not_testable
 Scenario: If a linkedin/faceboook url is specified then I can see facebook/linkedin icon next to lead header
 
 # 5767
 # remove the icon from the right and put that text instead
-@m11 @requested @is
+@m11 @requested @is @_tested @_done
 Scenario: If a lead is certified then I see "Certified by procurement: (yes/no)"
+  Given Category named "Sample category" already exists
+  And Lead named "Lead sample" exists within "Sample category" category
+  And I go to browse leads
+  And I follow "Sample category"
+  Then I should see translated "leads.listing.certified_by_procurement_label"
 
 # 5766
 # the "certification" we have now is about agent's so it should be removed
-@m11 @requested @tgn
+@m11 @requested @tgn @_tested @_done
 Scenario: I should see "Agent's certification" instead of "Certification"
+  Given Category named "Sample category" already exists
+  And Lead named "Lead sample" exists within "Sample category" category
+  And I go to browse leads
+  And I follow "Sample category"
+  And I should see translated "leads.listing.agent_certification_label"
 
 # 5763
-@m11 @requested @tgn
+@m11 @requested @tgn @selenium @_tested @_done
 Scenario: I can see categories tree when I click advanced search
+  Given Category named "Sample category" already exists
+  And Category named "Sample category#2" already exists within category named "Sample category"
+  And Lead named "Lead sample" exists within "Sample category#2" category
+  And I go to browse leads
+  And I follow "Sample category"
+  And I follow translated "common.advanced_search"
+  And I should see "Sample category"
+  And I should see "Sample category#2"
 
 # 5762
 # do not display other root categories. for examples when you select "Electronics" from browse lead then show categories tree only for Electronics and no other like Business, Leisure etc
-@m11 @requested @tgn
+@m11 @requested @tgn @selenium @_done @_tested
 Scenario: I should see only tree for selected root category
+  Given Category named "Sample category" already exists
+  And Category named "Sample category#2" already exists within category named "Sample category"
+  And Category named "Sample category#3" already exists within category named "Sample category#2"
+  And Lead named "Lead sample" exists within "Sample category#2" category
+  And Lead named "Lead sample" exists within "Sample category#3" category
+  And I go to browse leads
+  And I follow "Sample category"
+  And I follow translated "common.advanced_search"
+  And I should see "Sample category"
+  And I should see "Sample category#2"
+  And I should see "Sample category#3"
+  And I should not see "Computers"
+  And I should not see "Business"

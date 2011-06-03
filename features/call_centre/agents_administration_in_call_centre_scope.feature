@@ -172,8 +172,82 @@ Scenario: Call centre agents should inherit the certification of a call centre
 Scenario: Call centre should have refreshed stats just like the agents
 
 # 4871
-@m11 @requested
+@m11 @requested @_done @_tested
 Scenario: Call centers is able to reset and set password to all his agents
+  Given an user with role call_centre_agent and email ccagent@person.com belongs to call centre call_centre@person.com
+  And I go to call centre agents
+  And I follow translated "call_centre.call_centre_agents.index.view.edit"
+  And I follow translated "call_centre.call_centre_agents.edit.view.change_password_link"
+  And I fill in "user_password" with "newpass"
+  And I fill in "user_password_confirmation" with "newpass"
+  And I press translated "password.edit.view.button_update_user"
+  Then I should see translated "password.flashes.successfully_changed"
+  When I sign out
+  And I am on the home page
+  And I sign in as ccagent@person.com with password newpass
+  Then I should be signed in
+  When I sign out
+  And I am on the home page
+  Then I sign in as call_centre@person.com with password supersecret
+  And I go to call centre agents
+  And I follow translated "call_centre.call_centre_agents.index.view.edit"
+  And I follow translated "call_centre.call_centre_agents.edit.view.reset_password_link"
+  Then I should see translated "administration.password.destroy.flash.password_reset_successful"
+  And a password reset message should be sent to ccagent@person.com
 
-@m11 @requested
-Scenario: Call centers is able to skip email confirmation when creteing new agent
+# look for call_results.table.export_to_csv
+@m11 @requested @is @_done @_tested_elsewhere
+Scenario: I can view the contact on agent work screen when I click it on results listing
+
+# look for call_results.table.export_to_csv
+@m11 @requested @is @_done @_tested_elsewhere
+Scenario: I can export all contacts with final results to a csv file
+
+@_done @_tested @is @m11 @requested
+Scenario: Call centers is able to reset password to all his agents
+  Given I go to the homepage
+  And I am not sign in
+  Then I sign in as translator_call_centre@nbs.com with password secret
+  Then I follow translated "layout.main_menu.call_centre.call_centre_agents"
+  Then I follow translated "call_centre.call_centre_agents.index.view.edit"
+  Then I follow translated "call_centre.call_centre_agents.edit.view.reset_password_link"
+  Then I should see translated "administration.password.destroy.flash.password_reset_successful"
+  Then a call_center password reset message should be sent to translator_call_centre_agent@nbs.com
+
+@added @_done @_tested @is @m11 @requested
+Scenario: Call centers is able to set password to all his agents
+  Given I am on the homepage
+  And I am not sign in
+  Then I sign in as translator_call_centre@nbs.com with password secret
+  Then I follow translated "layout.main_menu.call_centre.call_centre_agents"
+  Then I follow translated "call_centre.call_centre_agents.index.view.edit"
+  Then I follow translated "call_centre.call_centre_agents.edit.view.change_password_link"
+  Then I fill in "password" with "3343secret33234"
+  Then I fill in "user_password_confirmation" with "3343secret33234"
+  Then I press translated "password.edit.view.button_update_user"
+  Then I should see translated "password.flashes.successfully_changed"
+  Then I go to the logout page
+  Given I am on the homepage
+  Then I sign in as translator_call_centre_agent@nbs.com with password 3343secret33234
+  Then I should see translated "devise.sessions.signed_in"
+
+@_done @_tested @m11 @requested @is
+Scenario: Call centers is able to skip email confirmation when creating new agent
+  Given I am on the homepage
+  And I am not sign in
+  Then I sign in as translator_call_centre@nbs.com with password secret
+  Then I follow translated "layout.main_menu.call_centre.call_centre_agents"
+  Then I follow translated "call_centre.call_centre_agents.new.view.button_create"
+  Then I should see "Skip email verification"
+  Then I fill in "user_call_centre_agent_first_name" with "Johnny"
+  Then I fill in "user_call_centre_agent_last_name" with "Cage"
+  Then I fill in "user_call_centre_agent_screen_name" with "Movie Star"
+  Then I fill in "user_call_centre_agent_password" with "secret"
+  Then I fill in "user_call_centre_agent_password_confirmation" with "secret"
+  Then I fill in "user_call_centre_agent_email" with "johnny_cage@mk.com"
+  Then I check "user_call_centre_agent_skip_email_verification"
+  Then I press "Create"
+  Then I go to the logout page
+  Given I am on the homepage
+  Then I sign in as johnny_cage@mk.com with password secret
+  Then I should see translated "devise.sessions.signed_in"

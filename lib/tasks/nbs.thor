@@ -8,10 +8,11 @@ class Nbs < Thor
 
     require "spec/support/blueprints"
     #Default settings
-    Settings.default_payout_delay = 0 if Settings.default_payout_delay.nil?
+Settings.default_payout_delay = 0 if Settings.default_payout_delay.nil?
     Settings.default_leads_per_page = 5 if Settings.default_leads_per_page.nil?
     Settings.certification_level_1 = 10 if Settings.certification_level_1.nil?
     Settings.certification_level_2 = 20 if Settings.certification_level_2.nil?
+    Settings.logout_time = 5 if Settings.logout_time.nil? #minutes 
     Settings.contact_us_email = "contact@nbs.fake.com" if Settings.contact_us_email.nil?
     # Invoicing
     Settings.invoicing_default_payment_deadline_date = 14 if Settings.invoicing_default_payment_deadline_date.nil?
@@ -19,6 +20,8 @@ class Nbs < Thor
     #Certification
     Settings.resend_certification_notification_after_days = 15 if Settings.resend_certification_notification_after_days.nil?
     Settings.expire_certification_notification_after_days = 15 if Settings.expire_certification_notification_after_days.nil?
+    #Youtube introduction
+    Settings.youtube_introduction = "" if Settings.youtube_introduction.nil?
 
     Country.find_or_create_by_name("Denmark", :locale => "dk", :detailed_locale => "dk", :vat_rate => VatRate.new(:rate => 25))
     Country.find_or_create_by_name("United Kingdom", :locale => "en", :detailed_locale => "gb", :vat_rate => VatRate.new(:rate => 20))
@@ -246,14 +249,17 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
      {:name => "Not in", :final => false, :generic => true},
      {:name => "Upgraded to lead", :final => true, :generic => true, :upgrades_to_lead => true},
      {:name => "Meeting booked", :final => true, :generic => true},
-     {:name => "Custom result", :final => true, :generic => true}].each do |result|
+     {:name => "Custom result", :final => true, :generic => true},
+     {:name => "Send material", :final => false, :generic => true}].each do |result|
       Result.create(result) unless Result.find_by_name(result[:name])
     end
 
     [{:name => "Call back date", :field_type => "4", :is_mandatory => true, :result => Result.find_by_name("Call back") },
      {:name => "Call back date", :field_type => "4", :is_mandatory => true, :result => Result.find_by_name("Not interested now") },
      {:name => "Meeting date", :field_type => "4", :is_mandatory => true, :result => Result.find_by_name("Meeting booked") },
-     {:name => "Result message", :field_type => "0", :is_mandatory => true, :result => Result.find_by_name("Custom result") }].each do |result_field|
+     {:name => "Result message", :field_type => "0", :is_mandatory => true, :result => Result.find_by_name("Custom result") },
+     {:name => "Call back date", :field_type => "4", :is_mandatory => true, :result => Result.find_by_name("Send material") },
+     {:name => "Material", :field_type => "5", :is_mandatory => true, :result => Result.find_by_name("Send material") }].each do |result_field|
       ResultField.create(result_field) unless ResultField.find_by_name_and_result_id(result_field[:name], result_field[:result].id)
     end
 
@@ -374,7 +380,9 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
         'blurb_leads_listing',
         'blurb_agent_contact_us',
         'blurb_buyer_contact_us',
-        'blurb_resend_confirmation'
+        'blurb_resend_confirmation',
+        'blurb_certification_purchase_manager_signup',
+        'blurb_certify_information'
     ].each do |key|
       unless Article::Cms::InterfaceContentText.where(:key => key).first
         article = Article::Cms::InterfaceContentText.make!(:title => key.humanize, :content => key.humanize, :key => key)

@@ -410,15 +410,17 @@ div.pagination .disabled
 
 .categories_table tbody td ul li
 {
-    padding-left: 15px;
-    line-height: 20px;
+    padding-left: 18px;
+    line-height: 22px;
     font-size: 12px;
+    background: url(/images/tree_child_line.png) no-repeat 8px -8px;
 }
 
 .categories_table tbody td > ul > li
 {
     padding-left: 0;
     font-size: 13px;
+    background: none;
 }
 
 .categories_table tbody td > ul > li > label

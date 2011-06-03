@@ -1,0 +1,15 @@
+<column-mc:>
+  <header back="true"><%= t('administration.news.show.view.header') %></header>
+
+  <frm title="#{@news.title}">
+    <param:header>
+      <%= bt_link_to nil, t("common.edit_link"), call_centres_news_path, :class => "fltr" %>
+    </param:header>
+    <param:content>
+      <div class="pdd_10">
+        <%= raw @news.content %>
+      </div>
+    </param:content>
+  </frm>
+
+</column-mc:>

@@ -128,6 +128,14 @@ class Category < ActiveRecord::Base
 
   public
 
+  def move_leads_to_subcategory
+    if parent and parent.descendants.size == 1 and parent.leads.present?
+      parent.leads.each do |lead|
+        lead.update_attributes(:notify_buyers_after_update => false, :category => self)
+      end
+    end
+  end
+
   def is_empty?
     total_leads_count.zero?
   end
@@ -143,4 +151,26 @@ class Category < ActiveRecord::Base
     true
   end
 
+  def can_publish_leads?
+    !root? or (root? and children.size == 0)
+  end
+
+  def leads_count_for_user(user)
+    leads_scope = leads.including_subcategories.published_only.without_inactive.scoped
+    if user
+      if user.buyer?
+        leads_scope = leads_scope.with_ids_not_in(user.all_requested_lead_ids + user.all_purchased_lead_ids)
+      end
+      if user.has_accessible_categories?
+        leads_scope = leads_scope.within_accessible_categories(user.accessible_categories_ids)
+      elsif user.has_role?(:customer)
+        leads_scope = leads_scope.with_customer_unique_categories(user.id)
+      elsif user.agent?
+        leads_scope = leads_scope.with_agent_unique_categories(user.id)
+      end
+    else
+     leads_scope = leads_scope.without_unique_categories
+    end
+    leads_scope.count
+  end
 end

@@ -9,14 +9,16 @@ Background:
   And I am signed up and confirmed as user with email call_centre_agent@person.com and password supersecret and role call_centre_agent
   And an user with role call_centre_agent and email call_centre_agent@person.com belongs to call centre call_centre91@nbs.com
   Then I sign in as call_centre_agent@person.com with password supersecret
-  And I follow translated "layout.main_menu.call_centre_agent.lead_templates"
 
-@added @_tested @_tested
+@added @_tested @_done
 Scenario: I can list all lead templates that were created by me
   Given template named "Computer details" for category "Computers" is created by user "other_agent@nbs.com" with role "call_centre_agent"
   Given template named "Printers details" for category "Computers" is created by user "call_centre_agent@person.com" with role "call_centre_agent"
   Given template named "Modems details" for category "Computers" is created by user "call_centre_agent@person.com" with role "call_centre_agent"
-  And I follow translated "layout.main_menu.call_centre_agent.lead_templates"
+  And I go to browse leads
+  And I follow translated "categories.index.view.view_lead_templates"
+  And I select "" from "search_with_category"
+  And I press translated "call_centre_agent.lead_templates.index.view.search_button"
   Then I should see "Printers details"
   Then I should see "Modems details"
   Then I should not see "Computer details"
@@ -48,7 +50,10 @@ Scenario: During template creation/editon I can mark fields as mandatory or opti
 @added @selenium @_tested
 Scenario: I can edit lead template that was created by me
   Given template named "Printers details" for category "Computers" is created by user "call_centre_agent@person.com" with role "call_centre_agent"
-  Then I follow translated "layout.main_menu.call_centre_agent.lead_templates"
+  And I go to browse leads
+  And I follow translated "categories.index.view.view_lead_templates"
+  And I select "Computers" from "search_with_category"
+  And I press translated "call_centre_agent.lead_templates.index.view.search_button"
   And I click hidden link by url regex "/call_centre_agents\/lead_templates\/\d+\/edit/"
   And I should see translated "shared.lead_templates.form.new_lead_template_field"
   And I follow translated "shared.lead_templates.form.new_lead_template_field"
@@ -65,12 +70,18 @@ Scenario: I can edit lead template that was created by me
 @added @_tested
 Scenario: I can delete lead template that was created by me and was not filled out by anyone
   Given template named "Printers details" for category "Computers" is created by user "call_centre_agent@person.com" with role "call_centre_agent"
-  Then I follow translated "layout.main_menu.call_centre_agent.lead_templates"
+  And I go to browse leads
+  And I follow translated "categories.index.view.view_lead_templates"
+  And I select "Computers" from "search_with_category"
+  And I press translated "call_centre_agent.lead_templates.index.view.search_button"
   And I follow translated "call_centre_agent.lead_templates.index.view.destroy"
   Then I should see translated "call_centre_agent.lead_templates.destroy.flash.deletion_successful"
   Given template named "Computers details" for category "Computers" is created by user "call_centre_agent@person.com" with role "call_centre_agent"
   And template named "Computers details" is filled out by someone
-  Then I follow translated "layout.main_menu.call_centre_agent.lead_templates"
+  And I go to browse leads
+  And I follow translated "categories.index.view.view_lead_templates"
+  And I select "Computers" from "search_with_category"
+  And I press translated "call_centre_agent.lead_templates.index.view.search_button"
   And I follow translated "call_centre_agent.lead_templates.index.view.destroy"
   Then I should see translated "call_centre_agent.lead_templates.destroy.flash.deletion_failure"
 
@@ -96,7 +107,10 @@ Scenario: Make it possible to duplicate lead templates (from lead templates list
   Given template named "Computer details" for category "Computers" is created by user "call_centre_agent@person.com" with role "call_centre_agent"
   And template named "Computer details" is mandatory
   And template named "Computer details" has following fields "field #1:true:true,field #2:true:false,field #3:false:false"
-  Then I follow translated "layout.main_menu.call_centre_agent.lead_templates"
+  And I go to browse leads
+  And I follow translated "categories.index.view.view_lead_templates"
+  And I select "Computers" from "search_with_category"
+  And I press translated "call_centre_agent.lead_templates.index.view.search_button"
   And I follow translated "call_centre_agent.lead_templates.index.view.duplicate"
   Then the "lead_template_name" field should contain "Computer details"
   And checkbox named "lead_template_is_mandatory" should be checked

@@ -58,7 +58,11 @@
     <div class="column_1to3 fltl" id="latest_leads">
       <frm title="#{t('buyer_home.show.view.header_latest_leads_in_my_categories')}">
         <param:header>
-          <%= bt_link_to nil, t("buyer_home.show.view.complete_list_link"), leads_path(:search => {:latest => true}), :class => "fltr" %>
+          <% if current_user and current_user.has_role?(:customer) and current_user.categories.blank? %>
+              <%= bt_link_to nil, t("buyer_home.show.view.configure_interests_link"), edit_customers_interests_path, :class => "fltr" %>
+          <% else %>
+              <%= bt_link_to nil, t("buyer_home.show.view.complete_list_link"), leads_path(:search => {:latest => true}), :class => "fltr" %>
+          <% end %>
         </param:header>
         <param:content>
           <ul class="solid_list">

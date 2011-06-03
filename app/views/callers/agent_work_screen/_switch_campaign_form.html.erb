@@ -1,4 +1,15 @@
+<div class="fltl">
 <%= form_for url_for(:controller => "#{namespace}/agent_work_screen", :action => :index, :campaign_id => campaign), :html => {:method => :get} do %>
     <label><%= t("agent_work_screen.index.select_campaign") %></label>
     <%= select_tag :change_campaign_id, options_for_select(Campaign.available_for_user(agent).map { |c| [c.name, c.id] }, campaign.id) %>
 <% end %>
+</div>
+
+<div class="fltr">
+<% if @contact %>
+  <% form_for CallResult.new, :url => new_callers_campaign_agent_work_screen_contact_call_result_path(@campaign, @contact), :html => {:method => :get, :remote => true}  do %>
+    <%= select_tag :result_id, options_for_select(@campaign.results_for_select) %>
+    <%= bt_link_to nil, t("call_results.edit.button_new_result"), "javascript:void(0)", :onclick => "$(this).parents('form').submit()" %>
+  <% end %>
+<% end %>
+</div>

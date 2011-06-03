@@ -104,6 +104,7 @@ en:
         leads: "My leads"
         lead_templates: "Lead templates"
         campaigns: Campaigns
+        news: News
       customer:
         subaccounts: Team
         lead_requests: Requested leads
@@ -203,11 +204,18 @@ en:
     table:
       name: Name
       is_mandatory: Mandatory?
+      created_by: Created by
       is_active: Active?
       actions: Actions
       yes_label: "Yes"
       no_label: "No"
       category: Category
+    show:
+      view:
+        question: "You are trying to move a lead, with template information into a category with no template to hold the information. Do you want to:"
+        duplicate_templates: "Add templates %{template_names} to category %{category_name} and copy the information"
+        delete_templates: "Delete the template information from the lead"
+        ok_button: "Continue"
   lead_purchases:
     listing:
       purchase_value_label: "Purchase value:"
@@ -270,6 +278,7 @@ en:
       completion: Completion
       go_to_work_screen: go to work screen
       work_screen: Work screen
+      materials_repository: "Materials repository"
     new:
       title: New campaign
       button_create: Create
@@ -289,6 +298,7 @@ en:
         date_from: Date from
         date_to: Date to
         agents: Agents
+        results: Results
         final: only view completed contacts
       search_button: Search
       table:
@@ -314,6 +324,7 @@ en:
       remove_button:  Remove
       remove_confirm: Are you sure?
       title_contacts: "Contacts"
+      results: "Results"
     index:
       title: Campaigns
       edit: Edit
@@ -371,7 +382,8 @@ en:
       actions: Actions
     show:
       flash:
-        you_have_no_contacts_assigned: You have no contacts assigned
+        you_have_no_contacts_assigned: "You have no contacts assigned"
+        you_have_only_callback_contacts: "You have only Callback contacts for further calling"
     create:
       flash:
         successfully_imported: "%{count} contacts have been successfully imported."
@@ -393,6 +405,7 @@ en:
       remove_link: Remove
       remove_confirm: "Are you sure?"
       note: Note
+      export_to_csv: Export to csv
     new:
       title: New result
       form_title: Create new
@@ -482,6 +495,8 @@ en:
       confirm: "Confirm"
       reject: "Do not confirm"
       invalid_token: "Your token is invalid or state of your requested has changed and it is not available any more"
+      header: "Certify information"
+      procurement_information: "Procurement information"
     listing:
       purchase_value_label: "Purchase value:"
       lead_price_label: "Lead price:"
@@ -499,7 +514,8 @@ en:
       sale_limit_label: "Uniqueness:"
       novelty_label: "Novelty:"
       hotness_label: "Hotness:"
-      certification_label: "Certification:"
+      certified_by_procurement_label: "Certified by procurement:"
+      agent_certification_label: "Agent's certification:"
       average_rating_label: "Lead rating:"
       average_rating_none_label: "None"
       has_unsatisfactory_rating_yes: "Yes"
@@ -556,6 +572,8 @@ en:
       bestsellers_header: Best sellers
       latest_header: Latest leads
       featured_header: Featured leads
+      subscribe_to_rss: Subscribe this category to RSS
+      subscribe_to_category_cb: Subscribe to category
     show:
       view:
         header: Lead details
@@ -601,13 +619,13 @@ en:
         buyer_sign_up_text: "If you want to buy hot leads for your business"
         purchase_manager_sign_up_text: "If you want a quote on your business"
         agent_sign_up_text: "If you can create new leads"
-
         call_centre_header: "Welcome %{name}"
-        sign_in_with_external_account: "Sign in using: Google, Facebook or LinkedIn"
+        sign_in_with_external_accounts: "Sign in using:"
   password:
     flashes:
       successfully_changed: 'Password has been successfully changed'
       not_changed: "Password has not been changed"
+      reset: "Password has been reset"
     update:
       controller:
         successful_update_notice: "Password has been successfully changed!"
@@ -636,6 +654,7 @@ en:
           first_name: "First name"
           last_name: "Last name"
           company_name: "Company name"
+          name: "Name"
           email: "E-mail"
           age: "Age"
           leads_bought: "Leads bought"
@@ -666,6 +685,7 @@ en:
       edit:
         view:
           title: "Editing user: %{name}"
+          title_with_role: "Editing %{role}: %{name}"
           button_update_user: Save
           button_cancel: Cancel
           reset_password_link: Reset password
@@ -702,6 +722,7 @@ en:
           header: "Editing lead template: %{name}"
           button_update: Save
           button_cancel: Cancel
+          created_by: "Created by"
       destroy:
         flash:
           deletion_successful:  Lead template has been successfully deleted!
@@ -749,6 +770,10 @@ en:
             certification_level_2: "Certification level 2"
             invoicing_default_payment_deadline_date: "Invoicing payment deadline date"
             big_buyer_purchase_limit: "Big buyer purchase limit (EUR)"
+            expire_certification_notification_after_days: "Expire certification notification after days"
+            logout_time: "Logout after (min)"
+            resend_certification_notification_after_days: "Resend certification notification after days"
+            youtube_introduction: "YouTube introduction video URL"
       edit:
         view:
           title: "Settings"
@@ -849,7 +874,7 @@ en:
         view:
           header: "News"
           buyers: "sales managers"
-          agents: "agents"
+          agents: "call centres and agents"
           purchase_managers: "procurement managers"
           category_homes: "category homes"
           new_news: "New news"
@@ -1308,7 +1333,8 @@ en:
         view:
           new_lead: "New lead"
           edit: "Edit"
-          certificate: "Certificate"
+          certificate: "Certify"
+          recertify: "Recertify"
           destroy: "Destroy"
           destroy_confirmation: "Are you sure?"
           search_button: "Search"
@@ -1316,6 +1342,7 @@ en:
           option_not_published: "not published"
           filter_with_inactive: "Skip inactive"
           filter_with_outdated: "Skip outdated"
+          certify: "Certify"
       show:
         view:
           header: "Ratings for lead: %{lead_header}"
@@ -1334,6 +1361,7 @@ en:
           button_create_and_continue: "Create & continue"
           button_create_and_duplicate: "Create & duplicate"
           remove_language: "Remove"
+          button_create_and_certify: "Create & certify"
       edit:
         view:
           title: "Editing lead: %{name}"
@@ -1368,6 +1396,7 @@ en:
           header: "Editing lead template: %{name}"
           button_update: Save
           button_cancel: Cancel
+          created_by: "Created by"
       destroy:
         flash:
           deletion_successful: "Lead template has been deleted successfully."
@@ -1397,6 +1426,7 @@ en:
           header: "Editing lead template: %{name}"
           button_update: Save
           button_cancel: Cancel
+          created_by: "Created by"
       destroy:
         flash:
           deletion_successful: Lead template has been deleted successfully!
@@ -1440,6 +1470,8 @@ en:
           title: "Editing call centre agent: %{name}"
           button_update: "Save"
           button_cancel: "Cancel"
+          change_password_link: "Change password"
+          reset_password_link: "Reset password"
       create:
         flash:
           call_centre_agent_creation_successful: "Call centre agent has been created successfully!"
@@ -1493,7 +1525,8 @@ en:
             keyword_label: Keyword
             filter_with_inactive: Skip inactive
             filter_with_outdated: Skip outdated
-          certificate: "Certificate"
+          certify: "Certify"
+          recertify: "Recertify"
       new:
         view:
           title: New lead
@@ -1501,6 +1534,7 @@ en:
           button_create_and_duplicate: Create & duplicate
           button_create: Create
           button_cancel: Cancel
+          button_create_and_certify: "Create & certify"
       edit:
         view:
           title: "Editing lead: %{name}"
@@ -1533,6 +1567,7 @@ en:
           header: "Editing lead template: %{name}"
           button_update: Save
           button_cancel: Cancel
+          created_by: "Created by"
       destroy:
         flash:
           deletion_successful: "Lead template has been deleted successfully."
@@ -1599,6 +1634,7 @@ en:
           header: "Editing lead template: %{name}"
           button_update: Save
           button_cancel: Cancel
+          created_by: "Created by"
       destroy:
         flash:
           deletion_successful: "Lead template has been deleted successfully."
@@ -1609,21 +1645,20 @@ en:
       view:
         title: "Freelancer Agent signup"
         button_create_account: "Create my account"
-        janrain_sign_up: "Sign up using: <b>Google, Facebook or Linkin</b>"
+        janrain_sign_up_label: "Sign up using:"
 
   certification_accounts:
     new:
       view:
         title: "Procurement Manager signup"
-        janrain_sign_up: "Sign up using: <b>Google, Facebook or Linkin</b>"
+        janrain_sign_up_label: "Sign up using:"
         i_already_have_account: "I already have an account!"
-
   purchase_manager_accounts:
     new:
       view:
         title: "Procurement Manager signup"
         header: "Create new account"
-        janrain_sign_up: "Sign up using: <b>Google, Facebook or Linkin</b>"
+        janrain_sign_up_label: "Sign up using:"
         button_create_account: "Create my account"
 
   buyer:
@@ -1678,7 +1713,7 @@ en:
         button_create_account: "Create"
         enable_team_buyers: "Enable team buyers"
         company_name: "Company"
-        janrain_sign_up: "Sign up using: <b>Google, Facebook or Linkin</b>"
+        janrain_sign_up_label: "Sign up using:"
 
   category_buyer_accounts:
     new:
@@ -1687,7 +1722,7 @@ en:
         button_create_account: "Create"
         enable_team_buyers: "Enable team buyers"
         company_name: "Company"
-        janrain_sign_up: "Sign up using: <b>Google, Facebook or Linkin</b>"
+        janrain_sign_up_label: "Sign up using:"
 
   buyer_home:
     show:
@@ -1705,6 +1740,7 @@ en:
         description_label: "Description:"
         read_more_link: "read more"
         complete_list_link: "complete list"
+        configure_interests_link: "interests"
         create_new_buyer_account: "Create new sales manager account"
         sign_out: "Sign out"
         add_team_member: "Add team member"
@@ -1720,6 +1756,7 @@ en:
         header_latest_leads: "Latest leads"
         header_news: "News"
         header_my_new_leads: "My new leads"
+        header_my_new_comments: "My new comments"
         header_my_sold_leads: "My sold leads"
         purchase_value_label: "Purchase value:"
         lead_price_label: "Lead price:"
@@ -2104,7 +2141,7 @@ en:
         sales_information: "Sales information"
         not_all_templates_filled: All mandatory templates must be filled!
         category_was_changed: Category has been changed
-
+        category_no_leads_can_be_published: "No leads can be published in that category"
         category_cannot_be_changed: "Category cannot be changed due to filled out templates!"
   models:
     user:
@@ -2154,6 +2191,7 @@ en:
           sales_manager: "Sales manager news"
           purchase_manager: "Procurement manager news"
           category_home: "Category home news"
+          call_centre: "Call centre news"
         cms:
           help_popup: "Help popup"
           interface_content_text: "Interface content text"
@@ -2695,3 +2733,19 @@ en:
       show:
         view:
           header: "All threads for %{header}"
+  materials:
+    views:
+      index:
+        select_or_upload: "Select existing material or upload new"
+        no_materials: "There are no materials yet"
+        failed_to_upload: "File upload has failed"
+        no_file_selected: "No file selected"
+        delete_material: "Delete material"
+        assigned_to_results: "This material is assigned to results. It cannot be deleted."
+        successfully_deleted: "Material has been deleted"
+        header: "Material repository for %{campaign}"
+        upload_material: "Upload material"
+        file: "Select file to upload"
+        save_material: "Upload"
+        material_repository: "Material repository"
+

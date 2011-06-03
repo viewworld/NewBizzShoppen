@@ -1,7 +1,7 @@
 <column-mc:>
   <header back="true" backurl="#{callers_campaigns_path}"><%= t("agent_work_screen.index.title") %> - <%= @campaign.name %></header>
 
-  <div id="switch_campaign_form" class="fltr">
+  <div id="switch_campaign_form">
     <%= render :partial => "callers/agent_work_screen/switch_campaign_form", :locals => @locals %>
   </div>
 
@@ -52,7 +52,9 @@
 
 <js:>
   <script type="text/javascript">
-      <% unless @contact %>
+      <% if !@contact and @pending_contacts.any? %>
+        display_notice("<%= escape_javascript(t("contacts.show.flash.you_have_only_callback_contacts")) %>", false);
+      <% elsif !@contact%>
         display_notice("<%= escape_javascript(t("contacts.show.flash.you_have_no_contacts_assigned")) %>", false);
       <% end %>
 

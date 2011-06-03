@@ -52,6 +52,9 @@
   <%= campaigns_table @campaigns do |blocks| %>
       <% blocks.tools do |campaign| %>
           <ul-actions>
+            <li>
+              <%= link_to t("campaigns.table.materials_repository"), callers_campaign_materials_path(campaign) %>
+            </li>
             <% if !current_user.has_role?(:admin) and (campaign.can_be_managed_by?(current_user) or campaign.has_user_as_member?(current_user))  %>
                 <li>
                   <%= link_to t("campaigns.table.work_screen"), callers_campaign_agent_work_screen_index_path(campaign), :class => "default_action" %>

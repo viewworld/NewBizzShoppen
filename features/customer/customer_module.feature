@@ -35,20 +35,20 @@ Scenario: After signup I am assigned roles of Customer, Lead Buyer and Lead user
 Scenario: I can see my unique RSS feed URL
   Then I should see translated "customer.interests.edit.view.rss_feed_url"
 
-@_tested
+@_tested @deprecated
 Scenario: I can select if I want to be notified about new leads matching my interests criteria
-  When I am on my profile
-  And I follow translated "my_profile.edit.view.interests_settings"
-  Then I check "user_notify_about_new_leads"
+#  When I am on my profile
+#  And I follow translated "my_profile.edit.view.interests_settings"
+#  Then I check "user_notify_about_new_leads"
 
-@_tested
+@_tested @deprecated
 Scenario: I can select multiple lead categories that I am interested in
-  When I am on my profile
-  And I follow translated "my_profile.edit.view.interests_settings"
-  And I check "category_1"
-  And I check "category_2"
-  And I press translated "customer.interests.edit.view.button_update"
-  Then I should see translated "customer.interests.update.flash.interests_update_successful"
+#  When I am on my profile
+#  And I follow translated "my_profile.edit.view.interests_settings"
+#  And I check "category_1"
+#  And I check "category_2"
+#  And I press translated "customer.interests.edit.view.button_update"
+#  Then I should see translated "customer.interests.update.flash.interests_update_successful"
 
 @_tested @deprecated
 Scenario: I can select lead purchase value range that I am interested in
@@ -57,14 +57,14 @@ Scenario: I can select lead purchase value range that I am interested in
 #  And I press translated "customer.interests.edit.view.button_update"
 #  Then I should see translated "customer.interests.update.flash.interests_update_successful"
 
-@_tested @noguess
+@_tested @noguess @deprecated
 Scenario: I can select multiple lead areas/countries that I am interested in
-  When I am on my profile
-  And I follow translated "my_profile.edit.view.interests_settings"
-  And I check "country_1"
-  And I check "country_2"
-  And I press translated "customer.interests.edit.view.button_update"
-  Then I should see translated "customer.interests.update.flash.interests_update_successful"
+#  When I am on my profile
+#  And I follow translated "my_profile.edit.view.interests_settings"
+#  And I check "country_1"
+#  And I check "country_2"
+#  And I press translated "customer.interests.edit.view.button_update"
+#  Then I should see translated "customer.interests.update.flash.interests_update_successful"
 
 @m5 @tgn @_tested @deprecated  @requested
 Scenario: I can select "all" as a Deal value
@@ -225,12 +225,12 @@ Scenario: Advanced search in browse leads should contain regions and all fields 
 
 # On the configure you interests page there should be a back button, when it is selected from my profile page
 # except for first login
-@m7 @requested @tgn @_tested
+@m7 @requested @tgn @_tested @deprecated
 Scenario: I can see a back button when on configure interests page
-  Given I should not see "Back"
-  When I go to my profile
-  And I follow translated "my_profile.edit.view.interests_settings"
-  Then I should see "Back"
+#  Given I should not see "Back"
+#  When I go to my profile
+#  And I follow translated "my_profile.edit.view.interests_settings"
+#  Then I should see "Back"
 
 @m10 @requested @_done @_tested
 Scenario: After first login I should be redirected to my home page instead of interests config

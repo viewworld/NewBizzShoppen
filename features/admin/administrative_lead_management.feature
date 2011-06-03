@@ -126,12 +126,12 @@ Scenario: I can clear the filter when browsing leads
 
 @m6 @selenium @_tested @tgn
 Scenario: When I change the category then I am not redirected back to the listing view
-  Given there are no leads
-  And a lead Super ultra lead #1 exists within category Computers and is bought by user tim@nbs.com with role customer
-  When I follow translated "layout.main_menu.admin.leads"
-  And I follow translated "leads.listing.edit_label"
-  Then I select "Electronics" from "lead_category_id"
-  And I should see "Editing lead: Super ultra lead #1"
+#  Given there are no leads
+#  And a lead Super ultra lead #1 exists within category Computers and is bought by user tim@nbs.com with role customer
+#  When I follow translated "layout.main_menu.admin.leads"
+#  And I follow translated "leads.listing.edit_label"
+#  Then I select "Electronics" from "lead_category_id"
+#  And I should see "Editing lead: Super ultra lead #1"
 
 @m6 @_tested @tgn
 Scenario: I can change creator of lead to any other agent
@@ -146,7 +146,3 @@ Scenario: I can change creator of lead to any other agent
   Then I should be on administration leads page
   And I follow translated "leads.listing.edit_label"
   And "lead_tmp_creator_id" should be selected for value "agent_777@nbs.com"
-
-##5606
-@requested @m11
-Scenario: I should be able to delete a lead

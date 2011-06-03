@@ -25,9 +25,9 @@ Feature: User accounts management
 @_tested
  Scenario: I can sort users
   Given I follow translated "administration.users.index.view.email"
-  Then I should have value "aaaaaaaagent.tom.blank@paerson22.com" in the css path "tr:nth-child(1) td:nth-child(8)"
+  Then I should have value "aaaaaaaagent.tom.blank@paerson22.com" in the css path "tr:nth-child(1) td:nth-child(6)"
   Given I follow translated "administration.users.index.view.email"
-  Then I should have value "zzzenon.tom.blank@paerson22.com" in the css path "tr:nth-child(1) td:nth-child(8)"
+  Then I should have value "zzzenon.tom.blank@paerson22.com" in the css path "tr:nth-child(1) td:nth-child(6)"
 
  @_tested
  Scenario: I can filter users [...]
@@ -138,7 +138,7 @@ Scenario: In users listing I can see unpaid leads count
   And all users have refreshed cache counters
   Then I fill in "search_with_keyword" with "big_buyer.biz@nbs.com"
   And I press translated "administration.users.index.view.search_button"
-  Then I should have value "1" in the css path "tr:nth-child(1) td:nth-child(10)"
+  Then I should have value "1" in the css path "tr:nth-child(1) td:nth-child(8)"
 
 @m6 @_done @_tested @requested
 Scenario: I can change category buyer to regular buyer
@@ -527,22 +527,21 @@ Scenario: It should be possible for other users to login after password change
   And I sign in as ejdzent@nbs.com with password newpass
   Then I should see translated "devise.sessions.signed_in"
 
-@requested @m8b @_done @_tested
-Scenario: I can see company name on the users listing
-  Given I am on administration users page
-  Then I should see translated "administration.users.index.view.company_name" within "table#users_table thead"
+@requested @m8b @_done @_tested @deprecated
+Scenario: I can see company name on the users listing (in favour of dynamically displayed full name/company name)
 
-@added @m8b @_done @_tested
+
+@added @m8b @_done @_tested @deprecated
 Scenario: I can sort users by company name
-  Given someone is signed up and confirmed as user with email ejdzent@nbs.com and password secret and role agent
-  And user "ejdzent@nbs.com" with role "agent" has attributes "company_name:Abc"
-  And someone is signed up and confirmed as user with email kastomer@nbs.com and password secret and role customer
-  And user "kastomer@nbs.com" with role "customer" has attributes "company_name:Xyz"
-  And I am on administration users page
-  And I follow translated "administration.users.index.view.company_name" within "table#users_table thead"
-  Then I should see "Abc" before "Xyz"
-  When I follow translated "administration.users.index.view.company_name" within "table#users_table thead"
-  Then I should see "Xyz" before "Abc"
+#  Given someone is signed up and confirmed as user with email ejdzent@nbs.com and password secret and role agent
+#  And user "ejdzent@nbs.com" with role "agent" has attributes "company_name:Abc"
+#  And someone is signed up and confirmed as user with email kastomer@nbs.com and password secret and role customer
+#  And user "kastomer@nbs.com" with role "customer" has attributes "company_name:Xyz"
+#  And I am on administration users page
+#  And I follow translated "administration.users.index.view.company_name" within "table#users_table thead"
+#  Then I should see "Abc" before "Xyz"
+#  When I follow translated "administration.users.index.view.company_name" within "table#users_table thead"
+#  Then I should see "Xyz" before "Abc"
 
 @added @m8b @_done @_tested
 Scenario: I can search users on company name
@@ -612,8 +611,26 @@ Scenario: I should be redirected to edit user page after saving interests
   And I press translated "administration.users.edit.view.button_update_user"
   And I should be on administration edit user for customer101@person.com
 
-@requested @m11
+@requested @m11 @_done @_tested
 Scenario: When editing a user I should see the role of the user in header
+  Given I have user with email customer101@person.com and role customer
+  Then I fill in "search_with_keyword" with "customer101@person.com"
+  And I press translated "administration.users.index.view.search_button"
+  And I click hidden link by url regex "/users\/\d+\/edit/"
+  Then I should see "Editing Buyer:"
 
-@requested @m11
+@_done @_tested @m11 @is
 Scenario: As Admin I can see Name (default Company Name, if empty then First Name + Last Name) in user listing
+  Given I am on the homepage
+  And I am not sign in
+  Then I sign in as blazejek@gmail.com with password secret
+  And I have user with email super@person.com role CategoryBuyer first_name Irek last_name Skrobis and company_name Selleo
+  And I go to administration users
+  Then I should see "Selleo"
+  Then I should not see "Irek"
+  Then I should not see "Skrobis"
+  Then User with email super@person.com has blank company name
+  And I go to administration users
+  Then I should not see "Selleo"
+  Then I should see "Irek"
+  Then I should see "Skrobis"

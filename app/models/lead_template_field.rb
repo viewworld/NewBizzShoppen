@@ -7,9 +7,12 @@ class LeadTemplateField < ActiveRecord::Base
   FIELD_TYPES = [STRING, INTEGER, DATE, NOTE]
 
   belongs_to :lead_template
-  has_many :lead_template_value
+  has_many :lead_template_values, :dependent => :destroy
+  has_many :lead_template_field_translations
 
   validates_presence_of :name, :field_type
+
+  accepts_nested_attributes_for :lead_template_field_translations
 
   translates :name
 

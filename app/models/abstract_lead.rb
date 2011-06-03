@@ -91,7 +91,7 @@ class AbstractLead < ActiveRecord::Base
   private
   def check_category
     self.creator = current_user if creator.nil?
-    if category and category.is_agent_unique and !(creator.unique_categories.include?(category) or (creator.parent.present? and creator.parent.with_role.unique_categories.include?(category)))
+    if category and category.is_agent_unique and !creator.has_role?(:admin) and !(creator.unique_categories.include?(category) or (creator.parent.present? and creator.parent.with_role.unique_categories.include?(category)))
       self.errors.add(:category_id, "Incorrect category!")
     end
   end

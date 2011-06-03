@@ -10,6 +10,8 @@ class LeadTemplateValue < ActiveRecord::Base
   validates_presence_of :value, :if => Proc.new { |ltv| ltv.lead_template_field.is_mandatory }
   translates :value
 
+  accepts_nested_attributes_for :lead_template_value_translations
+
   before_create :duplicate_field_type
 
   def duplicate_field_type

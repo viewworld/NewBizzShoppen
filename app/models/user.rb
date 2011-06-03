@@ -6,14 +6,14 @@ class User < ActiveRecord::Base
   BASIC_USER_ROLES_WITH_LABELS = [['Administrator', 'admin'], ['Agent', 'agent'], ['Buyer', 'customer'], ['Call centre', 'call_centre'], ['Purchase Manager', 'purchase_manager'], ['Category Buyer', 'category_buyer']]
   ADDITIONAL_USER_ROLES_WITH_LABELS = [['Lead user', "lead_user"], ['Lead buyer', "lead_buyer"], ["Call centre agent", "call_centre_agent"]]
 
-  NOT_CERTIFIED               = 0
-  BRONZE_CERTIFICATION        = 1
-  SILVER_CERTIFICATION        = 2
-  GOLD_CERTIFICATION          = 3
-  NOT_CERTIFIED_LOCKED        = 10
+  NOT_CERTIFIED = 0
+  BRONZE_CERTIFICATION = 1
+  SILVER_CERTIFICATION = 2
+  GOLD_CERTIFICATION = 3
+  NOT_CERTIFIED_LOCKED = 10
   BRONZE_CERTIFICATION_LOCKED = 11
   SILVER_CERTIFICATION_LOCKED = 12
-  GOLD_CERTIFICATION_LOCKED   = 13
+  GOLD_CERTIFICATION_LOCKED = 13
   CERTIFICATION_LEVELS = [NOT_CERTIFIED, BRONZE_CERTIFICATION, SILVER_CERTIFICATION, GOLD_CERTIFICATION, NOT_CERTIFIED_LOCKED, BRONZE_CERTIFICATION_LOCKED, SILVER_CERTIFICATION_LOCKED, GOLD_CERTIFICATION_LOCKED]
 
   BLACK_LISTED_ATTRIBUTES = [:paypal_email, :bank_swift_number, :bank_iban_number]
@@ -37,6 +37,7 @@ class User < ActiveRecord::Base
   has_many :subaccounts, :class_name => "User", :foreign_key => "parent_id"
   has_many :owned_lead_requests, :class_name => 'LeadRequest', :foreign_key => :owner_id
   has_many :invoices
+  has_many :user_session_logs
   belongs_to :user, :class_name => "User", :foreign_key => "parent_id", :counter_cache => :subaccounts_counter
   belongs_to :bank_account, :foreign_key => :bank_account_id, :primary_key => :id, :class_name => 'BankAccount'
   belongs_to :vat_rate, :foreign_key => :country, :primary_key => :country_id
@@ -104,7 +105,7 @@ class User < ActiveRecord::Base
 
   def mass_assignment_authorizer
     if self.can_edit_payout_information
-      self.class.protected_attributes.reject! { |a| BLACK_LISTED_ATTRIBUTES.include?(a.to_sym)  }
+      self.class.protected_attributes.reject! { |a| BLACK_LISTED_ATTRIBUTES.include?(a.to_sym) }
       self.class.protected_attributes
     else
       super
@@ -201,7 +202,7 @@ class User < ActiveRecord::Base
 
   # TODO find out which roles are invoiceable
   def self.invoiceable
-    all.reject{|u| !defined? u.with_role.address}
+    all.reject { |u| !defined? u.with_role.address }
   end
 
   def role
@@ -214,7 +215,7 @@ class User < ActiveRecord::Base
 
   def send_confirmation_instructions
     generate_confirmation_token if self.confirmation_token.nil?
-    deliver_email_template("confirmation_instructions") unless skip_email_verification
+    deliver_email_template("confirmation_instructions") unless ActiveRecord::ConnectionAdapters::Column.value_to_boolean(skip_email_verification)
   end
 
   def send_reset_password_instructions
@@ -231,8 +232,8 @@ class User < ActiveRecord::Base
   end
 
   def roles_as_text
-   selected_role = (BASIC_USER_ROLES_WITH_LABELS + ADDITIONAL_USER_ROLES_WITH_LABELS).detect { |r| r.last == role.to_s }
-   selected_role.blank? ? "" : selected_role.first
+    selected_role = (BASIC_USER_ROLES_WITH_LABELS + ADDITIONAL_USER_ROLES_WITH_LABELS).detect { |r| r.last == role.to_s }
+    selected_role.blank? ? "" : selected_role.first
   end
 
   def self.role_as_text(_role)
@@ -253,7 +254,7 @@ class User < ActiveRecord::Base
     self.leads_requested_counter = User.with_requested_leads(self).size
     self.leads_assigned_month_ago_counter = User.with_assigned_leads_time_ago(self, 30.days.ago).size
     self.leads_assigned_year_ago_counter = User.with_assigned_leads_time_ago(self, 12.months.ago).size
-    self.total_leads_assigned_counter  = User.with_assigned_leads_total(self).size
+    self.total_leads_assigned_counter = User.with_assigned_leads_total(self).size
     self.save
   end
 
@@ -324,26 +325,30 @@ class User < ActiveRecord::Base
     parent.present? and has_any_role?(:lead_buyer, :lead_user) and User::Customer.find(parent_id).category_interests.present?
   end
 
+  def can_save_category_interests?
+    has_any_role?(:customer)
+  end
+
   def accessible_categories_ids
     User::Customer.find(parent_id.blank? ? id : parent_id).category_interests.map(&:category_id)
   end
-  
+
   def has_role?(r)
     roles.include?(r)
   end
 
   def has_one_of_roles?(*r)
-    r.map{|role| has_role?(role)}.include?(true)
+    r.map { |role| has_role?(role) }.include?(true)
   end
 
   def to_s
     full_name
   end
-  
+
   def can_create_lead_templates?
     has_any_role?(:admin, :call_centre, :agent, :call_centre_agent, :purchase_manager)
   end
-  
+
   def country_vat_rate
     (with_role.vat_rate and !not_charge_vat) ? with_role.vat_rate.rate : 0.0
   end
@@ -377,12 +382,16 @@ class User < ActiveRecord::Base
     has_role?(:call_centre)
   end
 
+  def call_centre_agent?
+    has_role?(:call_centre_agent)
+  end
+
   def agent?
-    has_any_role?([:agent,:call_centre,:call_centre_agent])
+    has_any_role?([:agent, :call_centre, :call_centre_agent])
   end
 
   def buyer?
-    has_any_role?([:customer,:purchase_manager,:category_buyer,:lead_buyer])
+    has_any_role?([:customer, :purchase_manager, :category_buyer, :lead_buyer])
   end
 
   def admin?
@@ -391,7 +400,7 @@ class User < ActiveRecord::Base
 
   def purchase_limit_reached?(lead, buyout=false)
     return false unless big_buyer?
-    not_invoiced_cost = LeadPurchase.with_not_invoiced.where("owner_id = ?", id).map{ |lp| lp.not_invoiced_euro_sum.to_f}.sum
+    not_invoiced_cost = LeadPurchase.with_not_invoiced.where("owner_id = ?", id).map { |lp| lp.not_invoiced_euro_sum.to_f }.sum
     (not_invoiced_cost + (buyout ? lead.buyout_quantity : 1) * lead.currency.to_euro(lead.price)) >= (big_buyer_purchase_limit.to_f > 0 ? big_buyer_purchase_limit.to_f : Settings.big_buyer_purchase_limit.to_f)
   end
 
@@ -424,20 +433,21 @@ class User < ActiveRecord::Base
   def can_reply_to_comment?(comment)
     true
   end
-  
+
   def set_fields_for_rpx(data)
     self.email = data['verifiedEmail']
-      self.first_name = data['name']['givenName']
-      self.last_name = data['name']['familyName']
-      self.rpx_identifier = data['identifier']
-      self.newsletter_on = true
-      new_radnom_password = generate_token(12)
-      self.password = new_radnom_password
-      self.password_confirmation = new_radnom_password
-      self.skip_email_verification = "1"
+    self.first_name = data['name']['givenName']
+    self.last_name = data['name']['familyName']
+    self.rpx_identifier = data['identifier']
+    self.newsletter_on = true
+    new_radnom_password = generate_token(12)
+    self.password = new_radnom_password
+    self.password_confirmation = new_radnom_password
+    self.skip_email_verification = "1"
   end
 
   def can_publish_leads?
     false
   end
+
 end

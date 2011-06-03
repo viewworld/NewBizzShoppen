@@ -42,7 +42,14 @@
         <% end %>
 
         <td>
-          <h4><%= link_to lead_purchase.header, current_user.has_role?(:customer) ? buyers_lead_purchase_path(lead_purchase) : lead_users_lead_purchase_path(lead_purchase), :class => "default_action" %></h4>
+          <h4><%= link_to lead_purchase.header, current_user.has_role?(:customer) ? buyers_lead_purchase_path(lead_purchase) : lead_users_lead_purchase_path(lead_purchase), :class => "default_action" %>
+          <% if lead_purchase.lead.linkedin_url_present? %>
+                <%= link_to image_tag("icons/in_icon.png"), lead_purchase.lead.linkedin_url %>
+          <% end %>
+          <% if lead_purchase.lead.facebook_url_present? %>
+                <%= link_to image_tag("icons/fb_icon.png"), lead_purchase.lead.facebook_url %>
+          <% end %>
+          </h4>
           <% if block_contact %>
               <%= with_output_buffer { block_contact.call(lead_purchase) } if block_contact %>
           <% end %>
@@ -51,15 +58,15 @@
 
           <p class="element_description i expandable"><%= lead_purchase.hidden_description %></p>
 
-          <% if lead_purchase.lead.linkedin_url_present? %>
-              <p><%= link_to t("lead_purchases.listing.linkedin_profile"), lead_purchase.lead.linkedin_url %>
-                <%= link_to image_tag("icons/in_icon.png", :style => "vertical-align: top;"), lead_purchase.lead.linkedin_url %></p>
-          <% end %>
+          <% #if lead_purchase.lead.linkedin_url_present? %>
+              <p><%#= link_to t("lead_purchases.listing.linkedin_profile"), lead_purchase.lead.linkedin_url %>
+                <%#= link_to image_tag("icons/in_icon.png", :style => "vertical-align: top;"), lead_purchase.lead.linkedin_url %></p>
+          <% #end %>
 
-          <% if lead_purchase.lead.facebook_url_present? %>
-              <p><%= link_to t("lead_purchases.listing.facebook_profile"), lead_purchase.lead.facebook_url %>
-                <%= link_to image_tag("icons/fb_icon.png", :style => "vertical-align: top;"), lead_purchase.lead.facebook_url %></p>
-          <% end %>
+          <% #if lead_purchase.lead.facebook_url_present? %>
+              <p><%#= link_to t("lead_purchases.listing.facebook_profile"), lead_purchase.lead.facebook_url %>
+                <%#= link_to image_tag("icons/fb_icon.png", :style => "vertical-align: top;"), lead_purchase.lead.facebook_url %></p>
+          <% #end %>
 
           <% if block_general %>
               <%= with_output_buffer { block_general.call(lead_purchase) } %>
@@ -68,6 +75,7 @@
         </td>
 
         <td>
+          <div class="lead_purchase_contact">
           <h3><%= lead_purchase.lead.company_name %></h3>
 
           <p><%= lead_purchase.lead.phone_number %></p>
@@ -81,6 +89,7 @@
           <p><%= lead_purchase.lead.contact_name %></p>
 
           <p><%= lead_purchase.lead.address %></p>
+          </div>  
 
           <% if block_card %>
               <%= with_output_buffer { block_card.call(lead_purchase) } %>

@@ -164,10 +164,16 @@ Feature: Agent campaign - management
       Then I click xpath "(//table[@id='campaigns']//input[@type='checkbox'])[2]"
       Then I click xpath "//tr[@class='main_actions']//a"
       Then I click xpath "//div[@class='frm_head']//a"
+      And I follow translated "layout.main_menu.call_centre.campaigns"
+      When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
+      Then I follow translated "campaigns.edit.agent_assignment_button"
       Then I should not see "1" within "#campaigns"
       Then I click xpath "(//table[@id='campaigns']//input[@type='checkbox'])[2]"
       Then I click xpath "//tr[@class='main_actions']//a"
       Then I click xpath "//div[@class='frm_head']//a"
+      And I follow translated "layout.main_menu.call_centre.campaigns"
+      When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
+      Then I follow translated "campaigns.edit.agent_assignment_button"
       Then I should see "1" within "#campaigns"
 
     #
@@ -548,6 +554,10 @@ Feature: Agent campaign - management
       Then I should see "Bon Jovi inc." within "#call_result_details"
       Then I should see "John Smith" within "#call_result_details"
       Then I should see "Call back" within "#call_result_details"
+      Then I should see translated "call_results.table.export_to_csv"
+      Then I execute js for display action block for "call_result_details"
+      Then I follow translated "call_results.table.edit_link"
+      Then I should see "Edit result"
 
     @is @__campaign_statistics @_tested @selenium @requested
     Scenario: I can see results list for given agent list
@@ -606,38 +616,45 @@ Feature: Agent campaign - management
         @added
         Scenario: As call centre agent or agent I can't manage campaigns, result types, agent assignment
 
-        # 5048
-        @m11 @requested @ao
-        Scenario: I can select which results to display
-
-        # 5168
-        @m11 @requested @ao
-        Scenario: I can see a message when there are no more contacts in my campaign
-
-        # 5168
-        @m11 @requested @ao
-        Scenario: I can see a message when there are only callback contacts in my campaign
-
         # 5189
         @m11 @requested @ao
         Scenario: I can see timestamps in my localization, not server time
 
         # 5192
-        @m0 @requested @ao
+        @m12 @requested @is @briefing
         Scenario: I can specify description and briefing when creating new campaign
 
         # 5192
-        @m0 @requested @ao
+        @m12 @requested @is @briefing
         Scenario: I can see a description in a popup
 
         # 5192
-        @m0 @requested @ao
+        @m12 @requested @is @briefing
         Scenario: When editing a campaign I can click a link to edit description and briefing
         
         ##5650
-        @requested @m11 @ao
+        @requested @m11 @ao @non_testable @_done
         Scenario: I should see a listbox with all the resuls types and be able to filter by them
 
         ##5649
-        @requested @m11 @tgn
+        @requested @m11 @_done @_tested @tgn
         Scenario: I should see "Go to results" button beside "Agent assignment" in edit campaign
+          When I follow translated "campaigns.index.edit"
+          Then I should see translated "campaigns.edit.results"
+          And I follow translated "campaigns.edit.results"
+
+        #5931
+        # when editing campaign add “email template” nex to “result” button
+        @m12 @requested @is
+        Scenario: When I create a new campaign the default admin template should be populated and it should be editable by campaign creator
+
+        #5935
+        @m12 @requested @is
+        Scenario: When I am on campaign results page and I change date then the page should reload with filter applied
+
+        @m12 @requested @tgn
+        Scenario: Call centre can edit campaign when assigned to it by admin
+
+
+
+

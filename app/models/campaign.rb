@@ -7,6 +7,7 @@ class Campaign < ActiveRecord::Base
   has_and_belongs_to_many :users
   has_and_belongs_to_many :results
   has_many :contacts, :dependent => :destroy
+  has_many :materials, :as => :resource, :class_name => "Material", :dependent => :destroy
 
   validates_uniqueness_of :name
   validates_presence_of :name, :max_contact_number, :category_id, :country_id, :start_date, :end_date
@@ -54,7 +55,7 @@ class Campaign < ActiveRecord::Base
       pending_contacts = agent.contacts.with_pending_status(true)
       while (not agent.with_role.has_max_contacts_in_campaign? self) and pending_contacts.present?
         contact = pending_contacts.shift
-        contact.change_pending_status(false) unless contact.should_be_pending?
+        contact.change_pending_status(false) unless contact.should_be_pending?(agent)
       end
 
       #assign new contacts to agent
@@ -71,6 +72,10 @@ class Campaign < ActiveRecord::Base
 
   def can_be_managed_by?(user)
     creator.id == user.id or user.has_role?(:admin)
+  end
+
+  def can_be_accessed_by?(user)
+    user.has_role?(:admin) or creator.id == user.id or has_user_as_member?(user)
   end
 
 end

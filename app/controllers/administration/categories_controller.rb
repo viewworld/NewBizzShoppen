@@ -12,6 +12,7 @@ class Administration::CategoriesController < Administration::AdministrationContr
         @category.customer_ids = params[:category][:customer_ids]
         @category.agent_ids = params[:category][:agent_ids]
         @category.save
+        @category.move_leads_to_subcategory
         flash[:notice] = I18n.t("flash.categories.create.notice")
         format.html { redirect_to categories_path }
       else

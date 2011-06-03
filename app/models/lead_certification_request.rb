@@ -7,6 +7,9 @@ class LeadCertificationRequest < ActiveRecord::Base
   STATE_APPROVED = 3
   STATE_REJECTED = 4
   STATE_TIMED_OUT = 5
+  STATE_RECERTIFICATED = 6
+
+  STATES_THAT_COULD_BE_RECERTIFICATED = [STATE_SENT, STATE_SENT_REMINDER, STATE_SENT_SECOND_REMINDER, STATE_TIMED_OUT]
 
   after_create :process
 
@@ -20,6 +23,7 @@ class LeadCertificationRequest < ActiveRecord::Base
     self.token = generate_token
     self.last_email_sent_at = Time.now
     self.state = STATE_SENT
+    self.email = contact_email
     self.save!
     ApplicationMailer.email_template(contact_email, EmailTemplate.find_by_uniq_id("certification_request"), {:lead_certification_request => self}).deliver
   end
@@ -61,7 +65,7 @@ class LeadCertificationRequest < ActiveRecord::Base
       self.last_email_sent_at = Time.now
       self.save
       ApplicationMailer.email_template(contact_email, EmailTemplate.find_by_uniq_id("certification_request_reminder"), {:lead_certification_request => self}).deliver
-    elsif state == STATE_SENT_SECOND_REMINDER  and last_email_sent_at.to_date+Settings.expire_certification_notification_after_days.to_i == Date.today
+    elsif state == STATE_SENT_SECOND_REMINDER and last_email_sent_at.to_date+Settings.expire_certification_notification_after_days.to_i == Date.today
       expire!
     end
   end

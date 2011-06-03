@@ -12,6 +12,10 @@ class String
       self
     end
   end
+
+  def extract_youtube_video_id
+    self.scan(/v=([a-zA-Z0-9-_]+)/).flatten.first
+  end
 end
 
 class NilClass

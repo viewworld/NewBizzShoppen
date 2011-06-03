@@ -116,6 +116,7 @@
 .inputs ol li div.txt
 {
     margin-top: 7px;
+    overflow: hidden;
 }
 
 
@@ -204,6 +205,33 @@
 {
     vertical-align:top !ie7;
 }
+
+
+/* --- social login ---
+--------------------------------------------------------------------------------- */
+
+.inputs ol li.string.social_login
+{
+    padding-bottom: 6px;
+}
+
+.frm .inputs ol li.string.social_login
+{
+    border-bottom: 1px dotted #ccc;
+    margin-bottom: 12px;    
+}
+
+
+.inputs ol li.string.social_login label
+{
+    padding-top: 7px;
+}
+
+.inputs ol li.string.social_login div.txt
+{
+    margin-top: 0;
+}
+
 
 
 /* --- boolean + radio ---

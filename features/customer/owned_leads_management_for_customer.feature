@@ -265,5 +265,5 @@ Scenario: I can see details in accordion when clicking on header
 
 # 5768
 # when facebook/linked URL is specified
-@requested @m11 @is
+@requested @m11 @is @_done @_not_testable
 Scenario: Facebook and Linkedin icons should be displayed next to lead header and be clickable
