@@ -62,6 +62,7 @@
                   <li class="header">
                     <h3><%= t("administration.invoices.edit.view.form.customer_information") %></h3>
                   </li>
+                  <%= form.input :customer_company_name %>
                   <%= form.input :customer_name %>
                   <%= form.input :customer_vat_no %>
                   <%= form.fields_for :customer_address do |address_form| %>
