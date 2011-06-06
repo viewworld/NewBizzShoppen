@@ -8,7 +8,7 @@ Feature: Notifications
 
   #5941
   # The text schould be "Notify me on new leads.
-#  @requested @m12 @_done @_tested @wip @selenium
+#  @requested @m12 @_done @_tested @selenium
 #  Scenario: I can subscribe by email to category
 #    Given I am on the homepage
 #    Then I sign in as buyer@nbs.com with password secret

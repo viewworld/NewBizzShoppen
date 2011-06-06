@@ -314,7 +314,7 @@ Scenario: I can sort invoices listing by following columns -  number, customer, 
   When I follow translated "administration.invoices.index.view.customer"
   Then I should see "Janko Muzykant" before "Ferdek Kiepski"
 
-@ao @_done
+@ao @_done @_tested
 Scenario: I can filter invoices list by following parameters - creation range, payment status, customer
   When invoice exists for user "kastomer@nbs.fake" with role "customer"
   And invoice line for first invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
@@ -344,14 +344,14 @@ Scenario: I can filter invoices list by following parameters - creation range, p
   Then I should see "Ferdek Kiepski" within "#invoices"
   And I should not see "Janko Muzykant" within "#invoices"
 
-@ao @_done
+@ao @_done @_tested
 Scenario: I can download invoice as PDF file
   When invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "charge_vat:1"
   And invoice line for first invoice exists for user "kastomer@nbs.fake" with role "customer" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
   And I follow translated "layout.main_menu.admin.invoices"
   And I follow translated "administration.invoices.index.view.show_invoice"
   And I follow translated PDF link "administration.invoices.show.view.download_pdf"
-  Then I should see "Janko Muzykant"
+  Then I should see "Cello Ltd"
   And I should see "122"
 
 @_done @ao @_tested
@@ -475,7 +475,7 @@ Scenario: When creating new invoice a default seller should be selected
   And I press translated "administration.invoices.new.view.button_create"
   Then the "invoice_seller_name" field should contain "DefaultSeller"
 
-@m5 @tgn @_tested
+@m5 @tgn @_tested @_done
 Scenario: Include users name, company and user email when filtering invoices
   Given I have user with email bigbuyer1@person.com and role customer
   And user bigbuyer1@person.com with role customer exists with attributes "first_name:John, last_name:Havranek,not_charge_vat:1"
