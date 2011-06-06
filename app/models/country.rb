@@ -40,6 +40,10 @@ class Country < ActiveRecord::Base
     country_interest.empty? and leads.empty? and addresses.empty? and !vat_rate.present?
   end
 
+  def self.get_country_from_locale
+    all.detect { |c| c.locale == I18n.locale.to_s }
+  end
+
   PHONE_CODES = [
     ["AF", "93"], ["AL", "355"], ["DZ", "213"], ["AS", "1 684"], ["AD", "376"], ["AO", "244"], ["AI", "1 264"], ["AQ", "672"], ["AG", "1 268"],
     ["AR", "54"], ["AM", "374"], ["AW", "297"], ["AU", "61"], ["AT", "43"], ["AZ", "994"], ["BS", "1 242"], ["BH", "973"], ["BD", "880"],
