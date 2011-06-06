@@ -141,11 +141,12 @@ Scenario: I should see "Recertify" button when Lead's contact email changes and 
   When there are no leads
   And I am signed up and confirmed as user with email agent007@nbs.com and password secret and role agent
   And lead BestLead is created by user agent007@nbs.com with role agent
+  And lead "BestLead" has attributes "email_address:john@rambo.fake"
   And I am on the home page
   And I sign in as agent007@nbs.com with password secret
   And I follow translated "layout.main_menu.agent.leads"
   When lead "BestLead" certification request is sent
-  When lead "BestLead" has attributes "email_address:error"
+  When lead "BestLead" has attributes "email_address:bad@guy.fake"
   And I follow translated "layout.main_menu.agent.leads"
   Then I should not see translated "agent.leads.index.view.certify"
   Then I should see translated "agent.leads.index.view.recertify"
