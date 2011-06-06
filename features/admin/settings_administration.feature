@@ -67,9 +67,16 @@ Scenario: I can specify a youtube video url which is displayed on front page
 
 #5919
 #http://img.youtube.com/vi/<insert-youtube-video-id-here>/0.jpg
-@requested @m12 @ao
+@requested @m12 @ao @_done @_tested
 Scenario: I can see a jpg thumbnail of a introduction video on home page
-  
+  When I follow translated "administration.introduction_video.view.add_video"
+  And I fill in "youtube_introduction_url" with "http://www.youtube.com/watch?v=SBjQ9tuuTJQ"
+  And I select "en" from "youtube_introduction_locale_code"
+  And I press translated "administration.introduction_video.new.view.button_create"
+  And I make sure current locale is "en"
+  And I am on the home page
+  Then I should see CSS path "#introduction_video"
+
 #5919
 @requested @m12 @ao @_done @_tested
 Scenario: I can play youtube video in a modal box
