@@ -32,7 +32,8 @@ class PurchaseManagers::LeadsController < PurchaseManagers::PurchaseManagerContr
 
     params.merge({
         :published      => false,
-        :current_user   => current_user
+        :current_user   => current_user,
+        :currency       => Currency.default_currency
     })
   end
 

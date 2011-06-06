@@ -9,7 +9,6 @@ class Currency < ActiveRecord::Base
   after_save :change_default_currency
 
   scope :active, where(:active => true)
-  scope :default_currency, where(:global_default => true)
 
 #  private
 
@@ -44,4 +43,7 @@ class Currency < ActiveRecord::Base
     name
   end
 
+  def self.default_currency
+    Currency.where(:global_default => true).first
+  end
 end

@@ -26,7 +26,7 @@ class Agents::LeadsController < Agents::AgentController
   public
 
   def new
-    @lead = Lead.new(:current_user => current_user)
+    @lead = Lead.new(:current_user => current_user, :currency => Currency.default_currency)
     @lead.category_id = params[:category_id]
     @lead.duplicate_fields(current_user.leads.find_by_id(params[:lead_id]))
     @lead.published = current_user.can_publish_leads?
