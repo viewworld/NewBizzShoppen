@@ -652,9 +652,29 @@ Feature: Agent campaign - management
         @m12 @requested @is
         Scenario: When I am on campaign results page and I change date then the page should reload with filter applied
 
-        @m12 @requested @tgn
+        #5970
+        @m12 @requested @tgn @selenium @_tested @_done
         Scenario: Call centre can edit campaign when assigned to it by admin
-
-
+          Given I am not sign in
+          And I am on the homepage
+          And I sign in as blazejek@gmail.com with password secret
+          And I follow translated "layout.main_menu.admin.campaigns"
+          Then I follow translated "campaigns.header.new_campaign_button"
+          Then I fill in "campaign_name" with "Campaign for call centre"
+          Then I fill in "campaign_max_contact_number" with "188"
+          And I press translated "campaigns.new.button_create"
+          And I fill in "search_with_keyword" with "Campaign for call centre"
+          And I press translated "campaigns.filter.search_button"
+          When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
+          And I follow translated "campaigns.edit.agent_assignment_button"
+          And I check "campaign_user_id_7"
+          And I follow translated "campaigns_users.index.button_assign"
+          And I am not sign in
+          And I sign in as translator_call_centre@nbs.com with password secret
+          And I follow translated "layout.main_menu.call_centre_agent.campaigns"
+          And I fill in "search_with_keyword" with "Campaign for call centre"
+          And I press translated "campaigns.filter.search_button"
+          When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
+          And I should see "Edit campaign: Campaign for call centre"
 
 
