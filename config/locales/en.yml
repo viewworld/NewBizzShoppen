@@ -938,6 +938,7 @@ en:
             unit_name: "Unit name"
             subunit_name: "Subunit name"
             active: "Active"
+            global_default: "Default"
       new:
         view:
           header: "New currency"
