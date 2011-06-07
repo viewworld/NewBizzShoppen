@@ -153,12 +153,33 @@ Feature: Agent campaign - calling session
       Then I should see "sample.jpg"
 
     #5931
-    @requested @m12 @ao
+    @requested @m12 @ao @_done @non_testable
     Scenario: I can edit contact email when adding result type "send material"
+#      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+#      And I select "Send material" from "result_id"
+#      And I follow translated "call_results.edit.button_new_result"
+#      And I fill in "call_result_contact_attributes_email_address" with "new@contact.com"
+#      And I fill in "call_result_note" with "test"
+#      And I fill in "Call back date" field with future datetime
+#      And I follow translated "materials.views.index.material_repository"
+#      And attach the file "sample image" to "material_asset"
+#      And I follow "sample.jpg"
+#      And I follow translated "call_results.new.save_button"
 
     #5931
-    @requested @m12 @ao
+    @requested @m12 @ao @_done @non_testable
     Scenario: When I add result "send material" then an email should be sent to contact email
+#      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+#      And I select "Send material" from "result_id"
+#      And I follow translated "call_results.edit.button_new_result"
+#      And I fill in "call_result_contact_attributes_email_address" with "new@contact.com"
+#      And I fill in "call_result_note" with "test"
+#      And I fill in "Call back date" field with future datetime
+#      And I follow translated "materials.views.index.material_repository"
+#      And attach the file "sample image" to "material_asset"
+#      And I follow "sample.jpg"
+#      And I follow translated "call_results.new.save_button"
+#      And last email sent should have been sent to recipient "new@contact.com"
 
     # 5168
     @m11 @requested @ao @tested_elsewhere @_done

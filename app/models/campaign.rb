@@ -8,6 +8,7 @@ class Campaign < ActiveRecord::Base
   has_and_belongs_to_many :results
   has_many :contacts, :dependent => :destroy
   has_many :materials, :as => :resource, :class_name => "Material", :dependent => :destroy
+  has_one :send_material_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'result_send_material'", :dependent => :destroy
 
   validates_uniqueness_of :name
   validates_presence_of :name, :max_contact_number, :category_id, :country_id, :start_date, :end_date
@@ -32,6 +33,22 @@ class Campaign < ActiveRecord::Base
   scope :ascend_country, order("countries.name ASC").joins_on_country
   scope :descend_by_country, order("countries.name DESC").joins_on_country
   scope :available_for_user, lambda {|user| includes(:users).where("users.id = :user_id OR campaigns.creator_id = :user_id", {:user_id => user.id}) unless user.has_role? :admin}
+
+  after_save :check_send_material_email_template
+
+  private
+
+  def check_send_material_email_template
+    unless send_material_email_template
+      global_template = EmailTemplate.global.where(:uniq_id => 'result_send_material').first
+      self.send_material_email_template = global_template.dup
+      self.send_material_email_template.translations = global_template.translations.dup
+      self.save
+      self.send_material_email_template.save
+    end
+  end
+
+  public
 
   def assign(ids)
     self.users = ids.blank? ? [] : User.find(ids)

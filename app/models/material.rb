@@ -25,7 +25,7 @@ class Material < Asset
   public
 
   # TODO there must be a better way..
-  def url(style=nil)
+  def url(style=nil, use_timestamp = false)
     if self.class.s3_storage?
       super.gsub('//s3','//fairleads.s3').gsub('/fairleads/','/')
     else

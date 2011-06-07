@@ -157,6 +157,7 @@ Nbs::Application.routes.draw do
           resources :call_results, :only => [:new, :create, :edit, :update, :destroy]
         end
       end
+      resources :email_templates, :only => [:edit,:update]
     end
 
     resources :contacts do

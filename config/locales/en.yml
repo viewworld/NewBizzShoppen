@@ -325,6 +325,7 @@ en:
       remove_confirm: Are you sure?
       title_contacts: "Contacts"
       results: "Results"
+      send_material_email_template: "Edit 'Send material' email template"
     index:
       title: Campaigns
       edit: Edit
@@ -337,6 +338,11 @@ en:
       agent: Agent
       result: Result
       call: Call
+    email_templates:
+      edit:
+        view:
+          title: "Editing template: %{name}"
+          button_update: "Save"
 
   agent_work_screen:
     index:
@@ -2769,5 +2775,6 @@ en:
         file: "Select file to upload"
         save_material: "Upload"
         material_repository: "Material repository"
+        contact_email_address: "Contact email address"
 
 
