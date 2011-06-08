@@ -8,20 +8,20 @@ Background: Sign in user and set English locale
   Then I sign in as bob@person.com with password supersecret
   And I go to administration email templates
 
-@_tested
+@_done @_tested
 Scenario: I can list all available email templates and see following columns -  name, subject, actions
   Then I should see "confirmation_instructions"
   And I should see "Confirmation instructions"
   And I should see translated "administration.email_templates.index.view.edit"
 
-@_tested
+@_done @_tested
 Scenario: I can paginate email templates list
   Then pagination per page size in model EmailTemplate is set to 2
   And I go to administration email templates
   And I follow "2"
   And I follow "1"
 
-@_tested @selenium
+@_done @_tested @selenium
 Scenario: I can edit and update following email template fields: name, subject, body
   Then I click hidden link by url regex "/administration\/email_templates\/(\d+)\/edit/"
   And I fill in "email_template_subject" with "Confirmation message corrected"
@@ -29,7 +29,7 @@ Scenario: I can edit and update following email template fields: name, subject, 
   Then I press translated "administration.email_templates.edit.view.button_update"
   And I should see translated "flash.email_templates.update.notice"
 
-@_tested @selenium
+@_done @_tested @selenium
 Scenario: I can edit and update email template fields for different language when I switch interface language
   Given email "confirmation_instructions" has translation for lang "dk" with attributes "subject:Bekraeftelse instruktioner"
   Then I click hidden link by url regex "/administration\/email_templates\/(\d+)\/edit/"
@@ -48,6 +48,7 @@ Scenario: I should be able to edit email templates using WYSIWYG editor and appl
 
 #5931
 #new template in seed as default send material email template should be created
-@m12
+@m12 @ao @_done @_tested
 Scenario: I can edit email template for send material result type
-
+  Then I should see "Additional materials"
+  And I should see "result_send_material"
