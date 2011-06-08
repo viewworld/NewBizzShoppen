@@ -5,12 +5,14 @@
 
 
   <div class="pdd_5 no_pdd_b">
-    <div class="fltl" style="<%= "width:530px" if Settings.youtube_introduction.to_s.extract_youtube_video_id %>">
+    <div class="fltl" style="<%= "width:970px" if youtube_introduction_id %>">
       <p><%= blurb("blurb_start_page_role_selection") %></p>
     </div>
-    <% if Settings.youtube_introduction.to_s.extract_youtube_video_id %>
+    <% if youtube_introduction_id %>
         <div class="fltr">
-          <iframe width="560" height="349" src="http://www.youtube.com/embed/<%= Settings.youtube_introduction.to_s.extract_youtube_video_id %>" frameborder="0" allowfullscreen></iframe>
+          <%= link_to image_tag("http://img.youtube.com/vi/#{youtube_introduction_id}/default.jpg")+"<br/>".html_safe+t("home.show.view.introduction_video"),
+                "http://www.youtube.com/embed/#{youtube_introduction_id}?autoplay=1&rel=0&border=0",
+                :id => "introduction_video" %>
         </div>
     <% end %>
   </div>
@@ -135,5 +137,11 @@
   <div class="home_categories_tree">
     <%= all_categories_tree(:roots => true, :category_label => lambda { |c| link_to "#{c.name}", c.cached_slug }) %>
   </div>
+
+  <script>
+    $(document).ready(function() {
+      $('#introduction_video').colorbox({iframe:true, innerWidth:560, innerHeight:349});
+    });
+  </script>
 
 </column-mc:>

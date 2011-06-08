@@ -18,14 +18,18 @@ class Callers::CallResultsController < Callers::CallerController
   end
 
   def create
-    if params[:call_result][:contact_attributes].present?
+    if params[:call_result][:contact_attributes].present? and params[:call_result][:contact_attributes].keys.size == 1 and params[:call_result][:contact_attributes][:email_address]
+      @contact.strict_validate = false
+      @contact.email_address = params[:call_result][:contact_attributes][:email_address]
+      @contact.save
+    elsif params[:call_result][:contact_attributes].present?
       @contact.strict_validate = true
       attributes = params[:call_result].delete(:contact_attributes)
       @contact.attributes = attributes
       @contact.published = true unless attributes[:published].to_i.zero?
       @contact.save
     end
-    @call_result = CallResult.new(params[:call_result])    
+    @call_result = CallResult.new(params[:call_result])
     @call_result.creator = current_user
     @call_result.contact = @contact
     create! do |success, failure|

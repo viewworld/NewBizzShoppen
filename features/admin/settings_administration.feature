@@ -67,13 +67,45 @@ Scenario: I can specify a youtube video url which is displayed on front page
 
 #5919
 #http://img.youtube.com/vi/<insert-youtube-video-id-here>/0.jpg
-@requested @m12 @ao
+@requested @m12 @ao @_done @_tested
 Scenario: I can see a jpg thumbnail of a introduction video on home page
+  When I follow translated "administration.introduction_video.view.add_video"
+  And I fill in "youtube_introduction_url" with "http://www.youtube.com/watch?v=SBjQ9tuuTJQ"
+  And I select "en" from "youtube_introduction_locale_code"
+  And I press translated "administration.introduction_video.new.view.button_create"
+  And I make sure current locale is "en"
+  And I am on the home page
+  Then I should see CSS path "#introduction_video"
 
 #5919
-@requested @m12 @ao
-Scenario: I can play youtube video in a modal box when I click a thumbnail
+@requested @m12 @ao @_done @_tested
+Scenario: I can play youtube video in a modal box
+  When I follow translated "administration.introduction_video.view.add_video"
+  And I fill in "youtube_introduction_url" with "http://www.youtube.com/watch?v=SBjQ9tuuTJQ"
+  And I select "en" from "youtube_introduction_locale_code"
+  And I press translated "administration.introduction_video.new.view.button_create"
+  And I make sure current locale is "en"
+  And I am on the home page
+  And I follow "introduction_video"
+  And I wait 1 second
+  Then I should see CSS path "#cboxLoadedContent"
 
 #5919
-@requested @m12 @ao
+@requested @m12 @ao @_done @_tested
 Scenario: I can specify youtube url for each locale
+  When I follow translated "administration.introduction_video.view.add_video"
+  And I fill in "youtube_introduction_url" with "http://www.youtube.com/watch?v=SBjQ9tuuTJQ"
+  And I select "en" from "youtube_introduction_locale_code"
+  And I press translated "administration.introduction_video.new.view.button_create"
+  And I make sure current locale is "en"
+  And I am on the home page
+  Then I should see CSS path "#introduction_video"
+  When I make sure current locale is "dk"
+  Then I should not see CSS path "#introduction_video"
+  When I go to administration settings
+  When I follow translated "administration.introduction_video.view.add_video"
+  And I fill in "youtube_introduction_url" with "http://www.youtube.com/watch?v=SBjQ9tuuTJQ"
+  And I select "dk" from "youtube_introduction_locale_code"
+  And I press translated "administration.introduction_video.new.view.button_create"
+  And I am on the home page
+  Then I should see CSS path "#introduction_video"

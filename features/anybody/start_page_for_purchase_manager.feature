@@ -232,10 +232,34 @@ Scenario: I should see leads from agent unique categories I'm assigned to on Bes
   And I should not see "UniqueLead1" within "#best_sellers"
   And I should see "UniqueLead2" within "#best_sellers"
 
-@m12 @requested
+@m12 @requested @_done @_tested
 Scenario: I should see "My contact requests" instead of "Latest leads"
+  When I am signed up and confirmed as user with email pm@nbs.com and password secret and role purchase_manager
+  And I am on the home page
+  And I sign in as pm@nbs.com with password secret
+  And I follow translated "purchase_manager_home.show.view.complete_list_link" within "#my_contact_requests"
+  Then I should be on the leads page
+  And I should see translated "leads.index.contact_requests_for_header"
+
+@m12 @added @_done @_tested
+Scenario: I should see "Latest leads" when I'm not a procurement manager
+  When I am on the home page
+  And I follow translated "home.show.view.purchase_manager"
+  And I follow translated "purchase_manager_home.show.view.complete_list_link" within "#latest_leads"
+  Then I should be on the leads page
+  And I should see translated "leads.index.latest_header"
 
 #1/ Lead created by given Procurement manager, and
 #2/ Lead created by other agents where given Procurement manager is specified as Contact
-@m12 @requested
+@m12 @requested @_done @_tested
 Scenario: In "My contact requests" I should see leads created by me and leads created by other agents where I am specified as a contact
+  When there are no leads
+  And I am signed up and confirmed as user with email pm@nbs.com and password secret and role purchase_manager
+  And lead Lead#1 is created by user pm@nbs.com with role purchase_manager
+  And lead "Lead#1" is published
+  And lead Lead#2 is created by user agent@nbs.com with role agent
+  And lead "Lead#2" has attributes "email_address:pm@nbs.com"
+  And I am on the home page
+  And I sign in as pm@nbs.com with password secret
+  Then I should see "Lead#1" within "#my_contact_requests"
+  And I should see "Lead#2" within "#my_contact_requests"

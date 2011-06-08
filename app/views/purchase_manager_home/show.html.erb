@@ -87,22 +87,41 @@
         </param:content>
       </frm>
     </div>
-    <div class="column_1to3 fltl" id="latest_leads">
-      <frm title="#{t('purchase_manager_home.show.view.header_latest_leads')}" c="no_marg">
-        <param:header>
-          <%= bt_link_to nil, t("purchase_manager_home.show.view.complete_list_link"), leads_path(:search => {:latest => true}), :class => "fltr" %>
-        </param:header>
-        <param:content>
-          <ul class="solid_list">
-            <% if @latest_leads.any? %>
-                <%= render :partial => 'lead', :collection => @latest_leads, :as => :lead %>
-            <% else %>
-                <%= render :partial => 'shared/blank_data_li' %>
-            <% end %>
-          </ul>
-        </param:content>
-      </frm>
-    </div>
+    <% if user_signed_in? and current_user.has_role?(:purchase_manager) %>
+        <div class="column_1to3 fltl" id="my_contact_requests">
+          <frm title="#{t('purchase_manager_home.show.view.header_my_contact_requests')}" c="no_marg">
+            <param:header>
+              <%= bt_link_to nil, t("purchase_manager_home.show.view.complete_list_link"), leads_path(:search => {:contact_requests_for => current_user.id}), :class => "fltr" %>
+            </param:header>
+            <param:content>
+              <ul class="solid_list">
+                <% if @my_contact_requests.any? %>
+                    <%= render :partial => 'lead', :collection => @my_contact_requests, :as => :lead %>
+                <% else %>
+                    <%= render :partial => 'shared/blank_data_li' %>
+                <% end %>
+              </ul>
+            </param:content>
+          </frm>
+        </div>
+    <% else %>
+        <div class="column_1to3 fltl" id="latest_leads">
+          <frm title="#{t('purchase_manager_home.show.view.header_latest_leads')}" c="no_marg">
+            <param:header>
+              <%= bt_link_to nil, t("purchase_manager_home.show.view.complete_list_link"), leads_path(:search => {:latest => true}), :class => "fltr" %>
+            </param:header>
+            <param:content>
+              <ul class="solid_list">
+                <% if @latest_leads.any? %>
+                    <%= render :partial => 'lead', :collection => @latest_leads, :as => :lead %>
+                <% else %>
+                    <%= render :partial => 'shared/blank_data_li' %>
+                <% end %>
+              </ul>
+            </param:content>
+          </frm>
+        </div>
+    <% end %>
     <clb/>
   </div>
 
