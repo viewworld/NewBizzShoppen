@@ -279,6 +279,7 @@ en:
       go_to_work_screen: go to work screen
       work_screen: Work screen
       materials_repository: "Materials repository"
+      description_tooltip_blank: "(no description)"
     new:
       title: New campaign
       button_create: Create
@@ -325,6 +326,7 @@ en:
       remove_confirm: Are you sure?
       title_contacts: "Contacts"
       results: "Results"
+      description_and_briefing: "Description & briefing"
     index:
       title: Campaigns
       edit: Edit
@@ -338,6 +340,9 @@ en:
       result: Result
       call: Call
 
+    form:
+      description: "Description"
+      briefing: "Briefing"
   agent_work_screen:
     index:
       title: Agent work screen
@@ -351,7 +356,9 @@ en:
       current_contact: Current contact
       pending_calls: Pending calls
       completed_contacts: Completed contacts
-
+      briefing_area: "Briefing"
+      hide_briefing_area: "Go to agent"
+      show_briefing_area: "Show/Hide briefing"
   contacts:
     filter:
       title: Search
@@ -2755,3 +2762,10 @@ en:
         save_material: "Upload"
         material_repository: "Material repository"
 
+  campaigns_description:
+    edit:
+      title: "Edit description & briefing"
+      button_update: "Save"
+      button_cancel: "Cancel"
+    show:
+      header: "Briefing area"

@@ -112,13 +112,23 @@ Feature: Agent campaign - calling session
       # http://kb.snom.com/kb/index.php?View=entry&CategoryID=21&EntryID=40
 
     # 5192
-    @m12 @requested @is @briefing
+    @m12 @requested @tgn @briefing @_tested @_done
     Scenario: I should see briefing area when I click "Briefing" on agent work screen
+      Given campaign named "Testing One" exists with attributes "briefing:Briefing content here"
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      And I press translated "agent_work_screen.index.show_briefing_area"
+      Then I should see "Briefing content here"
 
     # 5192
-    @m12 @requested @is @briefing
+    @m12 @requested @tgn @briefing @_tested @_done
     Scenario: I can go back to my work screen when I click "Go to work screen"
-        
+      Given campaign named "Testing One" exists with attributes "briefing:Briefing content here"
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      And I press translated "agent_work_screen.index.show_briefing_area"
+      Then I should see "Briefing content here"
+      And I press translated "agent_work_screen.index.show_briefing_area"
+      Then I should see translated "agent_work_screen.index.call_log"
+
     #5460
     @requested @m11 @ao @_done @_tested
     Scenario: I should be able to upload source materials to the repository of specific campaign

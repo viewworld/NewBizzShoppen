@@ -4,6 +4,7 @@
   <%= semantic_form_for [:callers, @campaign], :method => :put do |form| %>
       <frm title="Edit">
         <param:header>
+          <%= bt_link_to nil, t("campaigns.edit.description_and_briefing"), edit_callers_campaign_campaigns_description_path(@campaign), :class => "fltr" %>
           <%= bt_link_to nil, t("campaigns.edit.results"), callers_campaign_path(@campaign), :class => "fltr" %>
           <%= bt_link_to nil, t("campaigns.edit.agent_assignment_button"), callers_campaign_campaigns_users_path(@campaign), :class => "fltr" %>
         </param:header>

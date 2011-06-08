@@ -1,0 +1,33 @@
+<div class="pdd_10 no_pdd_t">
+  <fieldset class="inputs labels_100 labels_ta_r">
+    <ol>
+<%= t("campaigns.form.description") %>
+<%= form.input :description,
+                :as => :ckeditor,
+                :label => false,
+                :input_html => {
+                    :width => '1085px',
+                    :height => '300px',
+                    :swf_params => {
+                        :resource_type => @campaign.class.name,
+                        :resource_id => @campaign.id
+                        }
+                    } %>
+    </ol>
+
+    <ol>
+    <%= t("campaigns.form.briefing") %>
+    <%= form.input :briefing,
+                :as => :ckeditor,
+                :label => false,
+                :input_html => {
+                    :width => '1085px',
+                    :height => '300px',
+                    :swf_params => {
+                        :resource_type => @campaign.class.name,
+                        :resource_id => @campaign.id
+                        }
+                    } %>
+    </ol>
+  </fieldset>
+</div>

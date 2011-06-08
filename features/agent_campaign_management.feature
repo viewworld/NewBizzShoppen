@@ -621,16 +621,30 @@ Feature: Agent campaign - management
         Scenario: I can see timestamps in my localization, not server time
 
         # 5192
-        @m12 @requested @is @briefing
+        @m12 @requested @tgn @briefing @selenium @_done @_tested
         Scenario: I can specify description and briefing when creating new campaign
+          When I follow translated "campaigns.header.new_campaign_button"
+          Then I fill in "campaign_name" with "BriefingCampaingTest"
+          And I fill in "campaign_max_contact_number" with "20"
+          And I press translated "campaigns.new.button_create"
+          Then I should see translated "campaigns_description.edit.title"
+          And I fill in "campaign_description_editor" ckeditor with "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+          And I fill in "campaign_briefing_editor" ckeditor with "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+          And I press translated "campaigns_description.edit.button_update"
 
         # 5192
-        @m12 @requested @is @briefing
+        @m12 @requested @tgn @briefing @non_testable @_done
         Scenario: I can see a description in a popup
 
         # 5192
-        @m12 @requested @is @briefing
+        @m12 @requested @tgn @briefing @selenium @_done @_tested
         Scenario: When editing a campaign I can click a link to edit description and briefing
+          When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
+          And I follow translated "campaigns.edit.description_and_briefing"
+          And I should see translated "campaigns_description.edit.title"
+          And I fill in "campaign_description_editor" ckeditor with "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+          And I fill in "campaign_briefing_editor" ckeditor with "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+          And I press translated "campaigns_description.edit.button_update"
         
         ##5650
         @requested @m11 @ao @non_testable @_done

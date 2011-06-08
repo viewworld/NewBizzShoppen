@@ -1,3 +1,8 @@
+Given /^campaign named "([^"]*)" exists with attributes "([^"]*)"$/ do |campaign_name, options|
+  campaign = Campaign.where(:name => campaign_name).first
+  campaign.update_attributes(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys)
+end
+
 Given /^I edit campaign "([^\"]*)"$/ do |campaign_name|
   visit "/callers/campaigns/#{Campaign.find_by_name(campaign_name).id}/edit"
 end

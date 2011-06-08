@@ -143,6 +143,7 @@ Nbs::Application.routes.draw do
         end
       end
       resources :campaigns_users, :only => [:index, :update]
+      resource :campaigns_description, :controller => "campaigns_description", :only => [:show, :edit, :update]
       resources :contacts do
         collection do
           post 'batch_remove'
