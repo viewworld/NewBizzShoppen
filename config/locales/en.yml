@@ -359,6 +359,13 @@ en:
       briefing_area: "Briefing"
       hide_briefing_area: "Go to agent"
       show_briefing_area: "Show/Hide briefing"
+    my_results:
+      index:
+        filter:
+          header: "Search"
+          keyword_label: "Keyword"
+          search_button: "Search"
+        header: "My results"
   contacts:
     filter:
       title: Search
@@ -387,6 +394,7 @@ en:
       agent: Agent
       result: Result
       actions: Actions
+      last_result: "Result"
     show:
       flash:
         you_have_no_contacts_assigned: "You have no contacts assigned"

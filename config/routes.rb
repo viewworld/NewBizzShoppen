@@ -156,6 +156,7 @@ Nbs::Application.routes.draw do
         resources :contacts, :only => [:show, :destroy, :update] do
           resources :call_results, :only => [:new, :create, :edit, :update, :destroy]
         end
+        resources :my_results
       end
     end
 
