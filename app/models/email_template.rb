@@ -4,6 +4,8 @@ class EmailTemplate < ActiveRecord::Base
   has_many :email_template_translations
   belongs_to :resource, :polymorphic => true
 
+  validates_uniqueness_of :uniq_id, :scope => [:resource_type,:resource_id]
+
   scope :global, where("resource_type IS NULL and resource_id IS NULL")
 
   def can_be_managed_by?(user)
