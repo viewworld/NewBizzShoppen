@@ -663,7 +663,7 @@ Feature: Agent campaign - management
           And the "Subject" field should contain "Additional materials"
 
         #5935
-        @m12 @requested @is
+        @m12 @requested @ao @_done @non_testable
         Scenario: When I am on campaign results page and I change date then the page should reload with filter applied
 
         @m12 @requested @tgn
