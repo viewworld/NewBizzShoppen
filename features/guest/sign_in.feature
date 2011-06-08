@@ -113,8 +113,8 @@ Scenario: I can see Facebook/Linkedin/Google icons on bottom of signing in box
 #want to create a new fairleds account and link it to this facebook account
 #(Facebook account namen) (Link Button)(Cancel) Or do you want to login using
 #another account (Icons of facebook, linkin and googel)
-  @m12 @janrain @requested @is
+  @m12 @$_guest @janrain @requested @is
   Scenario: When I try to login with Facebook/Linkedin/Google and I have no Fairleads account associated, I should be given chance to register new or login using different FB/Google/Linkedin account
 
-  @m12 @janrain @requested @is
+  @m12 @$_guest @janrain @requested @is
   Scenario: When I try to login with Facebook/Linkedin/Google and I have Fairleads account for this email, I should be given chance to link this accounts

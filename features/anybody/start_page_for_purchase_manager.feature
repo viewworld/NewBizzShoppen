@@ -234,7 +234,7 @@ Scenario: I should see leads from agent unique categories I'm assigned to on Bes
   And I should not see "UniqueLead1" within "#best_sellers"
   And I should see "UniqueLead2" within "#best_sellers"
 
-@m12 @requested @_done @_tested
+@m12 @$_purchase_manager @requested @_done @_tested
 Scenario: I should see "My contact requests" instead of "Latest leads"
   When I am signed up and confirmed as user with email pm@nbs.com and password secret and role purchase_manager
   And I am on the home page
@@ -243,7 +243,7 @@ Scenario: I should see "My contact requests" instead of "Latest leads"
   Then I should be on the leads page
   And I should see translated "leads.index.contact_requests_for_header"
 
-@m12 @added @_done @_tested
+@m12 @$_guest @added @_done @_tested
 Scenario: I should see "Latest leads" when I'm not a procurement manager
   When I am on the home page
   And I follow translated "home.show.view.purchase_manager"
@@ -253,7 +253,7 @@ Scenario: I should see "Latest leads" when I'm not a procurement manager
 
 #1/ Lead created by given Procurement manager, and
 #2/ Lead created by other agents where given Procurement manager is specified as Contact
-@m12 @requested @_done @_tested
+@m12 @$_purchase_manager @requested @_done @_tested
 Scenario: In "My contact requests" I should see leads created by me and leads created by other agents where I am specified as a contact
   When there are no leads
   And I am signed up and confirmed as user with email pm@nbs.com and password secret and role purchase_manager

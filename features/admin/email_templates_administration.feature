@@ -48,7 +48,7 @@ Scenario: I should be able to edit email templates using WYSIWYG editor and appl
 
 #5931
 #new template in seed as default send material email template should be created
-@m12 @ao @_done @_tested
+@m12 @$_admin @ao @_done @_tested
 Scenario: I can edit email template for send material result type
   Then I should see "Additional materials"
   And I should see "result_send_material"
