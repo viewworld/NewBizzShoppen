@@ -645,7 +645,7 @@ Feature: Agent campaign - management
 
         #5931
         # when editing campaign add “email template” nex to “result” button
-        @m12 @requested @ao @selenium @wip
+        @m12 @requested @ao @selenium @_done @_tested
         Scenario: When I create a new campaign the default admin template should be populated and it should be editable by campaign creator
           When there are no campaigns
           And I follow translated "layout.main_menu.call_centre.campaigns"
@@ -658,10 +658,9 @@ Feature: Agent campaign - management
           And I select "United Kingdom" from "campaign_country_id"
           And I press "campaign_submit"
           And I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
-  And I run ruby "throw EmailTemplate.last"
-  And I open page in browser
           And I follow translated "campaigns.edit.send_material_email_template"
-  And I open page in browser
+          Then I should see CSS path "#email_template_body_input"
+          And the "Subject" field should contain "Additional materials"
 
         #5935
         @m12 @requested @is

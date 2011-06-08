@@ -69,7 +69,7 @@
 
       <% blocks.bottom do %>
 
-          <% form_tag batch_assign_callers_campaign_contacts_path(@campaign), :method => :post, :id => "batch_assign_form" do %>
+          <%= form_tag batch_assign_callers_campaign_contacts_path(@campaign), :method => :post, :id => "batch_assign_form" do %>
               <%= select_tag "agent_id", options_for_select(@campaign.users.map { |u| [u.full_name, u.id] }) %>
               <%= hidden_field_tag "contact_ids", nil, :id => "hf_batch_assign" %>
               <%= bt_link_to :users, t("campaigns.edit.button_assign_selected_contacts"), "javascript:void(0)", :onclick => "set_contacts_id_hf('hf_batch_assign');$('#batch_assign_form').submit();" %>
@@ -78,11 +78,11 @@
               <%= bt_link_to :download, t("campaigns.edit.button_bulk_download_csv_link"), bulk_contacts_export_csv_callers_campaign_contacts_path(@campaign), :method => :post, :class => "fltr" %>
           <% end %>
 
-          <% form_tag batch_assign_callers_campaign_contacts_path(@campaign), :method => :post, :id => "batch_unassign_form" do %>
+          <%= form_tag batch_assign_callers_campaign_contacts_path(@campaign), :method => :post, :id => "batch_unassign_form" do %>
               <%= hidden_field_tag "contact_ids", nil, :id => "hf_batch_unassign" %>
           <% end %>
 
-          <% form_tag batch_remove_callers_campaign_contacts_path(@campaign), :method => :post, :id => "batch_remove_form" do %>
+          <%= form_tag batch_remove_callers_campaign_contacts_path(@campaign), :method => :post, :id => "batch_remove_form" do %>
               <%= hidden_field_tag "contact_ids", nil, :id => "hf_batch_remove" %>
           <% end %>
       <% end %>

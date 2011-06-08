@@ -41,10 +41,11 @@ class Campaign < ActiveRecord::Base
   def check_send_material_email_template
     unless send_material_email_template
       global_template = EmailTemplate.global.where(:uniq_id => 'result_send_material').first
-      self.send_material_email_template = global_template.dup
-      self.send_material_email_template.translations = global_template.translations.dup
+      self.send_material_email_template = global_template.clone
+      global_template.translations.each do |translation|
+        self.send_material_email_template.translations << translation.clone
+      end
       self.save
-      self.send_material_email_template.save
     end
   end
 
