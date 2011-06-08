@@ -35,13 +35,13 @@ Scenario: After signup I am assigned roles of Customer, Lead Buyer and Lead user
 Scenario: I can see my unique RSS feed URL
   Then I should see translated "customer.interests.edit.view.rss_feed_url"
 
-@_tested @deprecated
+@_tested @_deprecated
 Scenario: I can select if I want to be notified about new leads matching my interests criteria
 #  When I am on my profile
 #  And I follow translated "my_profile.edit.view.interests_settings"
 #  Then I check "user_notify_about_new_leads"
 
-@_tested @deprecated
+@_tested @_deprecated
 Scenario: I can select multiple lead categories that I am interested in
 #  When I am on my profile
 #  And I follow translated "my_profile.edit.view.interests_settings"
@@ -50,14 +50,14 @@ Scenario: I can select multiple lead categories that I am interested in
 #  And I press translated "customer.interests.edit.view.button_update"
 #  Then I should see translated "customer.interests.update.flash.interests_update_successful"
 
-@_tested @deprecated
+@_tested @_deprecated
 Scenario: I can select lead purchase value range that I am interested in
 #  Given I select "3000" from "user_deal_value_range_start"
 #  And I select "6000" from "user_deal_value_range_end"
 #  And I press translated "customer.interests.edit.view.button_update"
 #  Then I should see translated "customer.interests.update.flash.interests_update_successful"
 
-@_tested @noguess @deprecated
+@_tested @noguess @_deprecated
 Scenario: I can select multiple lead areas/countries that I am interested in
 #  When I am on my profile
 #  And I follow translated "my_profile.edit.view.interests_settings"
@@ -66,7 +66,7 @@ Scenario: I can select multiple lead areas/countries that I am interested in
 #  And I press translated "customer.interests.edit.view.button_update"
 #  Then I should see translated "customer.interests.update.flash.interests_update_successful"
 
-@m5 @tgn @_tested @deprecated  @requested
+@m5 @tgn @_tested @_deprecated  @requested
 Scenario: I can select "all" as a Deal value
 #  And I check "user_all_deal_values_enabled"
 #  And I press translated "customer.interests.edit.view.button_update"
@@ -137,7 +137,7 @@ Scenario: If customer is category buyer with assigned unique categories he can a
 
 # all countries are selected after sign up
 # https://redmine.selleo.com/issues/5423
-@added @tgn @_tested @requested @deprecated
+@added @tgn @_tested @requested @_deprecated
 Scenario: On the interests page the country should be selected based on current locale
 
 @m6 @tgn @_tested
@@ -225,7 +225,7 @@ Scenario: Advanced search in browse leads should contain regions and all fields 
 
 # On the configure you interests page there should be a back button, when it is selected from my profile page
 # except for first login
-@m7 @requested @tgn @_tested @deprecated
+@m7 @requested @tgn @_tested @_deprecated
 Scenario: I can see a back button when on configure interests page
 #  Given I should not see "Back"
 #  When I go to my profile

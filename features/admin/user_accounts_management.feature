@@ -527,11 +527,11 @@ Scenario: It should be possible for other users to login after password change
   And I sign in as ejdzent@nbs.com with password newpass
   Then I should see translated "devise.sessions.signed_in"
 
-@requested @m8b @_done @_tested @deprecated
+@requested @m8b @_done @_tested @_deprecated
 Scenario: I can see company name on the users listing (in favour of dynamically displayed full name/company name)
 
 
-@added @m8b @_done @_tested @deprecated
+@added @m8b @_done @_tested @_deprecated
 Scenario: I can sort users by company name
 #  Given someone is signed up and confirmed as user with email ejdzent@nbs.com and password secret and role agent
 #  And user "ejdzent@nbs.com" with role "agent" has attributes "company_name:Abc"

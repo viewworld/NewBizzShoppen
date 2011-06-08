@@ -92,7 +92,7 @@ Scenario: I can go to latest leads listing
   Then I should be on the leads page
   And I should see translated "leads.index.latest_header"
 
-@ao @_done @_tested @deprecated
+@ao @_done @_tested @_deprecated
 Scenario: I can go to agent page by clicking “CLICK HERE IF YOU ARE AN AGENT”
 #  When I follow translated "home.show.view.buyer"
 #  And I follow translated "buyer_home.show.view.agent_link"

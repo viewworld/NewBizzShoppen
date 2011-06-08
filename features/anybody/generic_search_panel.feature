@@ -23,7 +23,7 @@ Background:
 Scenario: I can see search panel on leads listing page
   Then I should see CSS path ".search_content"
 
-@tgn @_done @_tested @deprecated
+@tgn @_done @_tested @_deprecated
 Scenario: I can filter leads based on category
 #  When I check "Office"
 #  And I uncheck "Computers"
