@@ -78,7 +78,7 @@ Scenario: I can see a jpg thumbnail of a introduction video on home page
   Then I should see CSS path "#introduction_video"
 
 #5919
-@requested @m12 @ao @_done @_tested
+@requested @m12 @ao @_done @_tested @selenium
 Scenario: I can play youtube video in a modal box
   When I follow translated "administration.introduction_video.view.add_video"
   And I fill in "youtube_introduction_url" with "http://www.youtube.com/watch?v=SBjQ9tuuTJQ"
