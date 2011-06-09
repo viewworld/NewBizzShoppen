@@ -36,7 +36,7 @@ Scenario: I can browse leads in a given category with pagination
   Then I follow "Computers"
   And I follow "2"
 
-@deprecated
+@_deprecated
 Scenario: I should see created by
 
 @m4 @tgn @_tested  @added

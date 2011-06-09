@@ -25,7 +25,7 @@ Scenario: I can see a listing of all transactions registered in system
 
 @_tested @_done
 Scenario: I can filter listing of transactions by invoice number
-  When I fill in "search_with_keyword" with "Xanesra"
+  When I fill in "search_with_keyword" with "John Kohen"
   And I press translated "administration.payment_transactions.index.view.search_button"
   Then I should see "Manual"
 

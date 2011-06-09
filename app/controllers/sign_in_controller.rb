@@ -3,10 +3,19 @@ class SignInController < ApplicationController
 
   def new(user_class_name)
     @user = user_class_name.new(:newsletter_on => true, :time_zone => "UTC")
+    data = session[:rpx_data]
+    @user.set_fields_for_rpx(data) unless data.blank?
   end
 
-  def create(user_class_name, param_key, success_notice)
+  def create(user_class_name, param_key, success_notice, path = root_path)
     data = params[:token] ? RPXNow.user_data(params[:token], :raw_response => true)['profile'] : nil
+    data = session[:rpx_data] if data.blank?
+    user = User.find_by_email(data['verifiedEmail']) unless data.blank?
+    if user
+      user.update_attribute(:rpx_identifier, data['identifier'])
+      flash[:notice] = "Hello #{user.first_name}! Your #{User.social_provider(user.rpx_identifier)} account had been connected to your fairleads account with email #{user.email}. Now you can use any of them to log in."
+      return redirect_to login_path
+    end
     @user = user_class_name.new(params[param_key])
     @user.set_fields_for_rpx(data) unless data.blank?
     if request.referer.to_s.include?("certification_accounts")
@@ -15,7 +24,7 @@ class SignInController < ApplicationController
     respond_to do |format|
       if @user.save
         flash[:notice] = success_notice
-        format.html { redirect_to(root_path) }
+        format.html { redirect_to(path) }
       else
         format.html { render("new") }
       end

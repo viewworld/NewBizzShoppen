@@ -28,7 +28,7 @@ Scenario: I should see rating % and certification level for each lead
   Then I should see "100%"
   And I should see translated "models.lead.certification.lvl1"
 
-@deprecated @_done
+@_deprecated @_done
 Scenario: I should see created by
 
 @_tested

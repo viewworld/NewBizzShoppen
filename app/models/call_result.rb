@@ -4,11 +4,13 @@ class CallResult < ActiveRecord::Base
   belongs_to :creator, :polymorphic => true, :foreign_key => "creator_id"
   has_one :call_log
   has_many :result_values
+  has_one :send_material_result_value, :class_name => "ResultValue", :conditions => "result_values.field_type = '#{ResultField::MATERIAL}'"
   accepts_nested_attributes_for :result_values, :allow_destroy => true
   accepts_nested_attributes_for :contact
 
   validates_presence_of :result_id, :creator_id, :contact_id
 
+  validate :contact_email_address
   after_create :process_side_effects, :update_contact_note, :set_last_call_result_in_contact
   after_update :process_side_effects
   after_destroy :update_completed_status, :update_pending_status
@@ -80,6 +82,12 @@ class CallResult < ActiveRecord::Base
 
   private
 
+  def contact_email_address
+    if result.result_field_ids.include?(ResultField::MATERIAL) and contact.email_address.blank?
+      self.errors.add(:base, "contact email cant be blank")
+    end
+  end
+
   def update_completed_status
     completed_status = contact.current_call_result.present? ? contact.current_call_result.result.final? : false
     contact.update_attributes :completed => completed_status
@@ -148,11 +156,16 @@ class CallResult < ActiveRecord::Base
   end
 
   def process_for_send_material
+    deliver_material
     process_for_call_log_result
   end
-
+  
+  def deliver_material
+    template = contact.campaign.send_material_email_template || EmailTemplate.global.where(:uniq_id => 'result_send_material').first
+    ApplicationMailer.generic_email([contact.email_address], template.subject, template.body, template.from, [Pathname.new(File.join([::Rails.root, 'public', send_material_result_value.material.url]))]).deliver
+  end
+  
   def set_last_call_result_in_contact
     self.contact.update_attribute(:last_call_result_at, created_at)
   end
-
 end

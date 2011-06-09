@@ -2,7 +2,7 @@ class CertificationAccountsController < SignInController
 
   def new
     lead = Lead.find(params[:lead_id])
-    @user = User::PurchaseManager.new
+    @user = User::PurchaseManager.new(:time_zone => "UTC")
     @user.populate_fields_from_lead(lead)
   end
 

@@ -1,11 +1,35 @@
 <column-mc:>
-  <header><%= t("devise.sessions.new.view.header")%></header>
+  <header><%= t("devise.sessions.new.view.header") %></header>
 
+  <% if @failed_rpx %>
+      Hi <%= @first_name %>! We have no fairleads account assosiated to
+      your <%= User.social_provider(@rpx_identifier) %> profile, do you want to create a new
+      fairleds account and link it to this <%= User.social_provider(@rpx_identifier) %> account?<br/><br/>
+
+      <%= link_to_function "link this account", "$('#modal_for_new_account').dialog({autoOpen: false,minWidth: 400,buttons: { 'Cancel': function() {$(this).dialog('close');}}});$('#modal_for_new_account').dialog('open')" %>
+
+      <div id="modal_for_new_account" style="display:none">
+        Thank you for linking, now lets set up your account.<br/>Please chose account type:<br/><br/>
+
+        <%= link_to "Sales manager", new_buyer_account_path %> (If you want to buy new leads to your business)<br/>
+        <%= link_to " Procurement manager", new_purchase_manager_account_path %> (If you want to a bid on you
+        business)<br/>
+        <%= link_to "Agent", new_agent_account_path %> (If you are really good at creating new leads)
+      </div>
+
+      <br/><br/>or do you want to log in using another account?
+      <%= render(:partial => "shared/accounts/rpx_linked_in_note") if User.social_provider(@rpx_identifier) == "Linked In" %>
+  <% end %>
 
   <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
       <div class="grid_440 grid_c">
         <frm title="Type your email">
           <div class="pdd_10">
+            <fieldset class="inputs labels_100 inputs_180 no_pdd">
+              <ol class="align_inputs no_pdd">
+                <%= render :partial => "shared/accounts/social_login_for_sign_in" %>
+              </ol>
+            </fieldset>
             <fieldset class="inputs labels_100 inputs_280">
               <ol class="align_inputs">
                 <li class="string">

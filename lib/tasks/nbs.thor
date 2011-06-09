@@ -177,6 +177,14 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
                  :body => "<p>{% for lead in leads %}<p><a href=\"{{lead.show_lead_details_url}}\">{{lead.header}}</a><br />{{lead.description}}</p>{% endfor %}</p>"},
          :dk => {:subject => "[DK] New leads added to your subscribed categories this week",
                  :body => "<p>{% for lead in leads %}<p><a href=\"{{lead.show_lead_details_url}}\">{{lead.header}}</a><br />{{lead.description}}</p>{% endfor %}</p>"}
+        },
+        {
+            :name => "Additional materials",
+            :uniq_id => "result_send_material",
+            :en => {:subject => "Additional materials",
+                    :body => "<p></p>"},
+            :dk => {:subject => "[DK] Additional materials",
+                    :body => "<p></p>"}
         }
     ]
 
@@ -217,7 +225,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
     end
 
     email_templates_array.each do |email_template|
-      unless EmailTemplate.find_by_uniq_id(email_template[:uniq_id])
+      unless EmailTemplate.global.find_by_uniq_id(email_template[:uniq_id])
         [:en, :dk].each do |locale|
           I18n.locale = locale
           et = EmailTemplate.find_or_initialize_by_uniq_id({:name => email_template[:name], :persist => true,

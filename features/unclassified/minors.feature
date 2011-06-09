@@ -7,5 +7,10 @@ Scenario: Change "lead name" translation to "Contact name" - everywhere in the s
 Scenario: Change "Create buyer" translation to "Create lead user with buying permission" in customer's subaccounts management
 
 #5956
+# do not display emails to public (guest)
+# rename “agents” news to “call center and agent news”
+# remove “current contact”
+# materials repo - add back button
+# “back” button on camapign results
 @m12 @requested @minor_changes @tgn @_done @non_testable
 Scenario: After M11 presentation minor corrections

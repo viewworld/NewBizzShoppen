@@ -94,7 +94,7 @@ Scenario: I can go to latest leads listing
   And I should see translated "leads.index.latest_header"
 
 
-@ao  @_tested  @deprecated
+@ao  @_tested  @_deprecated
 Scenario: I can go to buyer page by clicking “CLICK HERE IF YOU ARE A BUYER”
 #  When I follow translated "home.show.view.agent"
 #  And I follow translated "agent_home.show.view.buyer_link"
@@ -175,7 +175,7 @@ Scenario: When you are loged in as an agent and go to the role home pages, I sho
   Then I should see "Super ultra lead #1" within "#sold_leads"
   And I should see "1" items on a list within "#sold_leads"
 
-  @m8 @requested @ao @_done @_tested @deprecated
+  @m8 @requested @ao @_done @_tested @_deprecated
   Scenario: When you are loged in as an agent and go to the role home pages, I should see column with “My new leads” (deprecated in favour of "My new comments")
 
 @requested @m11 @is @call_center_comments @_done @_tested

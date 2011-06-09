@@ -1,0 +1,6 @@
+Hi <%= user.first_name %>! We have no fairleads account associated to
+your <%= User.social_provider(user.rpx_identifier) %> profile, do you want to create a new
+fairleds account and link it to this <%= User.social_provider(user.rpx_identifier) %> account?<br/>
+<br/>If yes then just fill up the form below.
+
+<%= render(:partial => "shared/accounts/rpx_linked_in_note") if User.social_provider(user.rpx_identifier) == "Linked In" %>

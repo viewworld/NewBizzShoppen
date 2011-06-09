@@ -8,7 +8,6 @@
 
   <hl pdd="15"/>
 
-  <% if false %>
   <fieldset class="inputs labels_100 no_pdd" style="margin-top:-5px;">
     <ol class="no_pdd">
       <li class="string social_login">
@@ -20,10 +19,10 @@
               <%= javascript_include_rpx purchase_manager_accounts_url %>
           <% end %>
         </div>
+        <%= render(:partial => "shared/accounts/rpx_message", :locals => {:user => @user}) unless @user.rpx_identifier.blank? %>
       </li>
     </ol>
   </fieldset>
-  <% end %>
 
   <%= render :partial => "sign_in/purchase_manager_form", :locals => {:user => @user, :url => purchase_manager_accounts_path} %>
 </column-mc:>

@@ -1,0 +1,10 @@
+@m13 @reports
+Feature: Reports
+
+  Scenario: I can generate campaign results report for given day
+
+  Scenario: I can generate campaign results report for a given week
+
+  Scenario: I can generate campaign results report for given month
+
+  Scenario: I can generate campaign results report for custom period of time

@@ -1,5 +1,5 @@
 <div class="fltl">
-<%= form_for url_for(:controller => "#{namespace}/agent_work_screen", :action => :index, :campaign_id => campaign), :html => {:method => :get} do %>
+<%= form_for callers_campaign_agent_work_screen_index_path(campaign), :html => {:method => :get} do %>
     <label><%= t("agent_work_screen.index.select_campaign") %></label>
     <%= select_tag :change_campaign_id, options_for_select(Campaign.available_for_user(agent).map { |c| [c.name, c.id] }, campaign.id) %>
 <% end %>

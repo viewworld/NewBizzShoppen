@@ -17,6 +17,21 @@ class MyProfileController < SecuredController
     end
   end
 
+  def social_link
+    data = params[:token] ? RPXNow.user_data(params[:token], :raw_response => true)['profile'] : nil
+    unless data[:identifier].blank?
+      current_user.update_attribute(:rpx_identifier, data[:identifier])
+      flash[:notice] = "Your account is now connected to #{User.social_provider(current_user.rpx_identifier)}"
+    end
+    redirect_to my_profile_path
+  end
+
+  def social_unlink
+    current_user.update_attribute(:rpx_identifier, nil)
+    flash[:notice] = "Your account is no longer connected to any of social media services."
+    redirect_to my_profile_path
+  end
+
   protected
 
   def redirect_if_my_profile_hidden

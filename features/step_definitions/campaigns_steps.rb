@@ -123,3 +123,6 @@ Given /^contact for company "([^"]*)" has assigned result "([^"]*)" created by "
   call_result.save
 end
 
+Given /^there are no campaigns/ do
+  Campaign.destroy_all
+end

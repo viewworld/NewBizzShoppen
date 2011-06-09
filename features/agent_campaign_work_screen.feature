@@ -112,7 +112,7 @@ Feature: Agent campaign - calling session
       # http://kb.snom.com/kb/index.php?View=entry&CategoryID=21&EntryID=40
 
     # 5192
-    @m12 @requested @tgn @briefing @_tested @_done
+    @m12 @$_call_centre_agent @requested @tgn @briefing @_tested @_done
     Scenario: I should see briefing area when I click "Briefing" on agent work screen
       Given campaign named "Testing One" exists with attributes "briefing:Briefing content here"
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
@@ -120,7 +120,7 @@ Feature: Agent campaign - calling session
       Then I should see "Briefing content here"
 
     # 5192
-    @m12 @requested @tgn @briefing @_tested @_done
+    @m12 @$_call_centre_agent @requested @tgn @briefing @_tested @_done
     Scenario: I can go back to my work screen when I click "Go to work screen"
       Given campaign named "Testing One" exists with attributes "briefing:Briefing content here"
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
@@ -163,12 +163,33 @@ Feature: Agent campaign - calling session
       Then I should see "sample.jpg"
 
     #5931
-    @requested @m12 @ao
+    @requested @$_call_centre_agent @m12 @ao @_done @non_testable
     Scenario: I can edit contact email when adding result type "send material"
+#      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+#      And I select "Send material" from "result_id"
+#      And I follow translated "call_results.edit.button_new_result"
+#      And I fill in "call_result_contact_attributes_email_address" with "new@contact.com"
+#      And I fill in "call_result_note" with "test"
+#      And I fill in "Call back date" field with future datetime
+#      And I follow translated "materials.views.index.material_repository"
+#      And attach the file "sample image" to "material_asset"
+#      And I follow "sample.jpg"
+#      And I follow translated "call_results.new.save_button"
 
     #5931
-    @requested @m12 @ao
+    @requested @$_call_centre_agent @m12 @ao @_done @non_testable
     Scenario: When I add result "send material" then an email should be sent to contact email
+#      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+#      And I select "Send material" from "result_id"
+#      And I follow translated "call_results.edit.button_new_result"
+#      And I fill in "call_result_contact_attributes_email_address" with "new@contact.com"
+#      And I fill in "call_result_note" with "test"
+#      And I fill in "Call back date" field with future datetime
+#      And I follow translated "materials.views.index.material_repository"
+#      And attach the file "sample image" to "material_asset"
+#      And I follow "sample.jpg"
+#      And I follow translated "call_results.new.save_button"
+#      And last email sent should have been sent to recipient "new@contact.com"
 
     # 5168
     @m11 @requested @ao @tested_elsewhere @_done
@@ -185,14 +206,14 @@ Feature: Agent campaign - calling session
       Then I should see CSS path "#switch_campaign_form #result_id"
 
     # as call centre agent
-    @m12 @requested @my_results @tgn @_done @_tested
+    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested
     Scenario: I can access "My results" from agent work screen
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       Then I follow translated "call_results.edit.my_results"
       And I should see translated "agent_work_screen.my_results.index.view.header"
 
     # A list of contacts which have results (including final results) assigend to them
-    @m12 @requested @my_results @tgn @_done @_tested
+    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested
     Scenario: I should see a list of contacts that have results assigned to them
       Given contact for company "Mleko company" has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
@@ -202,7 +223,7 @@ Feature: Agent campaign - calling session
       And I should not see "Stefanek corp"
 
 
-    @m12 @requested @my_results @tgn @_done @_tested
+    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested
     Scenario: I should see latest results on top of My results list
       Given contact for company "Mleko company" has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
       And contact for company "Bon Jovi inc." has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
@@ -210,7 +231,7 @@ Feature: Agent campaign - calling session
       Then I follow translated "call_results.edit.my_results"
       And I should see "Bon Jovi inc." before "Mleko company"
 
-    @m12 @requested @my_results @tgn @_done @_tested
+    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested
     Scenario: I can search contacts on My results list
       Given contact for company "Mleko company" has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
       And contact for company "Bon Jovi inc." has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
@@ -221,7 +242,7 @@ Feature: Agent campaign - calling session
       Then I should see "Mleko company"
       And I should not see "Bon Jovi inc."
 
-    @m12 @requested @my_results @tgn @_done @_tested
+    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested
     Scenario: I can edit contact when I click it on My results list
       Given contact for company "Mleko company" has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
@@ -234,7 +255,7 @@ Feature: Agent campaign - calling session
       And the "contact_company_website" field should contain "http://mleko.pl"
       And the "contact_contact_name" field should contain "Bertrand Russell"
 
-    @m12 @requested @my_results @tgn @_done @_tested
+    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested
     Scenario: I can edit results when I click contact on My results list
       Given contact for company "Mleko company" has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"

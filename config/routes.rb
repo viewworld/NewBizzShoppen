@@ -54,6 +54,7 @@ Nbs::Application.routes.draw do
     end
     resource :stats_recalculation, :controller => "stats_recalculation", :only => [:update]
     resources :customer_interests, :only => [:edit, :update]
+    resources :youtube_introductions
   end
 
   namespace :buyers do
@@ -64,7 +65,7 @@ Nbs::Application.routes.draw do
       collection do
         put :bulk_update
       end
-      resource :lead_email, :only => [:new,:create]
+      resource :lead_email, :only => [:new, :create]
     end
     resource :bulk_cart_items, :controller => "bulk_cart_items", :only => [:create]
   end
@@ -96,7 +97,7 @@ Nbs::Application.routes.draw do
   namespace :lead_users do
     root :to => "lead_purchases#index"
     resources :lead_purchases do
-      resource :lead_email, :only => [:new,:create]
+      resource :lead_email, :only => [:new, :create]
     end
     resources :lead_requests
     resource :bulk_lead_requests, :controller => "bulk_lead_requests", :only => [:create, :destroy]
@@ -110,10 +111,10 @@ Nbs::Application.routes.draw do
     resource :interests, :only => [:edit, :update]
     resources :subaccounts
     resources :lead_requests, :only => [:index, :update, :destroy]
-    resource :bulk_lead_requests, :controller => "bulk_lead_requests", :only => [:destroy,:update]
+    resource :bulk_lead_requests, :controller => "bulk_lead_requests", :only => [:destroy, :update]
     resource :bulk_subaccounts_update, :controller => "bulk_subaccounts_update", :only => [:update]
     resources :not_invoiced_leads, :only => [:index]
-    resources :invoices, :only => [:show,:index]
+    resources :invoices, :only => [:show, :index]
   end
 
   namespace :agents do
@@ -158,13 +159,14 @@ Nbs::Application.routes.draw do
         end
         resources :my_results
       end
+      resources :email_templates, :only => [:edit,:update]
     end
 
     resources :contacts do
       resources :call_results, :only => [:new, :create, :edit, :update, :destroy]
     end
   end
-  
+
   namespace :comments do
     resources :threads
     resources :leads do
@@ -173,7 +175,7 @@ Nbs::Application.routes.draw do
     resources :replies
     resources :blocked_conversations, :only => [:create, :destroy]
     resources :comment_readers, :only => [:create]
-  end  
+  end
 
   match 'buyer_home' => 'buyer_home#show', :as => "buyer_home"
   match 'agent_home' => 'agent_home#show', :as => "agent_home"
@@ -199,9 +201,15 @@ Nbs::Application.routes.draw do
   resources :news
   resources :articles
   resources :help_popups
-  resources  :login_keys
+  resources :login_keys
 
-  resource :my_profile, :controller => "my_profile", :only => [:update]
+  resource :my_profile, :controller => "my_profile", :only => [:update] do
+    member do
+      post 'social_link'
+      put 'social_unlink'
+    end
+  end
+
   match 'my_profile' => 'my_profile#edit', :as => "my_profile"
 
   resource :password, :controller => 'password', :only => [:update]

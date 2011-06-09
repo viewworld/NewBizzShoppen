@@ -327,6 +327,7 @@ en:
       title_contacts: "Contacts"
       results: "Results"
       description_and_briefing: "Description & briefing"
+      send_material_email_template: "Edit 'Send material' email template"
     index:
       title: Campaigns
       edit: Edit
@@ -339,6 +340,11 @@ en:
       agent: Agent
       result: Result
       call: Call
+    email_templates:
+      edit:
+        view:
+          title: "Editing template: %{name}"
+          button_update: "Save"
 
     form:
       description: "Description"
@@ -594,6 +600,7 @@ en:
       bestsellers_header: Best sellers
       latest_header: Latest leads
       featured_header: Featured leads
+      contact_requests_for_header: "My contact requests"
       subscribe_to_rss: Subscribe this category to RSS
       subscribe_to_category_cb: Subscribe to category
     show:
@@ -643,6 +650,7 @@ en:
         agent_sign_up_text: "If you can create new leads"
         call_centre_header: "Welcome %{name}"
         sign_in_with_external_accounts: "Sign in using:"
+        introduction_video: "Introduction video"
   password:
     flashes:
       successfully_changed: 'Password has been successfully changed'
@@ -1350,6 +1358,24 @@ en:
         view:
           title: "Editing interests for user: %{name}"
           countries: "Countries"
+    introduction_video:
+      view:
+        header: "YouTube introduction videos"
+        no_videos: "There are no introduction videos specified"
+        add_video: "Add video"
+        locale: "Locale"
+        url: "URL address"
+        actions: "Actions"
+        edit: "Edit"
+        delete: "Delete"
+      new:
+        view:
+          header: "New video"
+          button_create: "Create"
+      edit:
+        view:
+          header: "Editing introduction video"
+          button_save: "Save"
   agent:
     leads:
       index:
@@ -1797,6 +1823,7 @@ en:
         buyer_link: "click here if you are a sales manager"
         header_best_sellers: "Best sellers"
         header_latest_leads: "Latest leads"
+        header_my_contact_requests: "My contact requests"
         header_news: "News"
         purchase_value_label: "Purchase value:"
         lead_price_label: "Lead price:"
@@ -2776,6 +2803,7 @@ en:
         file: "Select file to upload"
         save_material: "Upload"
         material_repository: "Material repository"
+        contact_email_address: "Contact email address"
 
   campaigns_description:
     edit:
