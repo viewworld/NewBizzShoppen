@@ -6,6 +6,7 @@ class Contact < AbstractLead
 
   belongs_to :campaign
   has_many :call_results, :dependent => :destroy
+  has_many :result_values, :through => :call_results
 
   belongs_to :agent, :class_name => "User"
   validates_presence_of :company_name, :company_phone_number, :creator_id, :category_id, :country_id, :campaign_id
@@ -21,6 +22,8 @@ class Contact < AbstractLead
   scoped_order :company_name
 
   acts_as_list :scope => [:campaign_id, :agent_id, :pending]
+
+  accepts_nested_attributes_for :call_results, :result_values
 
   class << self
 

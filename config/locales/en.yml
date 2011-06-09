@@ -361,11 +361,16 @@ en:
       show_briefing_area: "Show/Hide briefing"
     my_results:
       index:
-        filter:
-          header: "Search"
-          keyword_label: "Keyword"
-          search_button: "Search"
-        header: "My results"
+        view:
+          filter:
+            header: "Search"
+            keyword_label: "Keyword"
+            search_button: "Search"
+          header: "My results"
+      edit:
+        view:
+          header: "Edit contact"
+          button_update: "Save"
   contacts:
     filter:
       title: Search
@@ -395,6 +400,7 @@ en:
       result: Result
       actions: Actions
       last_result: "Result"
+      edit: "Edit"
     show:
       flash:
         you_have_no_contacts_assigned: "You have no contacts assigned"

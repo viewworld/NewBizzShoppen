@@ -1,17 +1,17 @@
 <search-box:>
   <div class="search_box">
-    <h2><%= t("agent_work_screen.my_results.index.filter.header") %></h2>
+    <h2><%= t("agent_work_screen.my_results.index.view.filter.header") %></h2>
 
     <div class="search_content">
       <%= semantic_form_for @search, :url => callers_campaign_agent_work_screen_my_results_path do |f| %>
           <fieldset class="inputs_vertical">
             <ol class="no_pdd">
               <li class="string">
-                <%= f.input :with_keyword, :label => t("agent_work_screen.my_results.index.filter.keyword_label"), :required => false %>
+                <%= f.input :with_keyword, :label => t("agent_work_screen.my_results.index.view.filter.keyword_label"), :required => false %>
               </li>
               <li class="commit">
                 <ibt c="bt_green" icon="magnify">
-                  <%= submit_tag t("agent_work_screen.my_results.index.filter.search_button") %>
+                  <%= submit_tag t("agent_work_screen.my_results.index.view.filter.search_button") %>
                 </ibt>
               </li>
             </ol>
@@ -25,7 +25,7 @@
 
   <header>
     <param:content>
-      <%= t("agent_work_screen.my_results.index.header") %>
+      <%= t("agent_work_screen.my_results.index.view.header") %>
     </param:content>
   </header>
 
@@ -63,7 +63,7 @@
             <td class="tda ta_r">
            <ul-actions>
                 <li>
-                  <%= link_to t("campaigns.table.work_screen"), "/no-url", :class => "default_action" %>
+                  <%= link_to t("contacts.table.edit"), edit_callers_campaign_agent_work_screen_my_result_path(contact.campaign, contact), :class => "default_action" %>
                 </li>
           </ul-actions>
             </td>
