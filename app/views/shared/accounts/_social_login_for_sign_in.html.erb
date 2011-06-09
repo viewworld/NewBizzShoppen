@@ -1,0 +1,10 @@
+<li class="string social_login">
+  <label><%= t("home.show.view.sign_in_with_external_accounts") %></label>
+
+  <div class="txt">
+    <% unless Rails.env.test? %>
+        <%= link_to_rpx image_tag("icons/social_login.png"), user_session_url %>
+        <%= javascript_include_rpx user_session_url %>
+    <% end %>
+  </div>
+</li>

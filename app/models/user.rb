@@ -450,4 +450,11 @@ class User < ActiveRecord::Base
     false
   end
 
+  def self.social_provider(rpx_identifier)
+    return nil if rpx_identifier.blank?
+    return "Google" if rpx_identifier.include?("www.google.com")
+    return "Facebook" if rpx_identifier.include?("www.facebook.com")
+    "Linked In" if rpx_identifier.include?("www.linkedin.com")
+  end
+
 end
