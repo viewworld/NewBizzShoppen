@@ -469,6 +469,11 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
       Contact.find_or_create_by_company_name attrs.merge(:country => country, :campaign => campaign, :creator => call_centre, :category => category, :contact_name => "", :phone_number => "", :email_address => "", :creator_name => call_centre.full_name)
     end
 
+    Contact.where("last_call_result_at IS NULL").each do |contact|
+      last_call_result = contact.call_results.order("created_at DESC").first
+      contact.update_attribute(:last_call_result_at, last_call_result.nil? ? nil : last_call_result.created_at)
+    end
+
   end
 
   desc "recalculate_leads_average_ratings", ""

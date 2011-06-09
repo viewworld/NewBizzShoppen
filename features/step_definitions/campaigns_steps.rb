@@ -109,3 +109,17 @@ Then /^current call back result for contact "([^"]*)" has date set to time now "
   rv.save!
   ccr.save!
 end
+
+Given /^contact for company "([^"]*)" has assigned result "([^"]*)" created by "([^"]*)"$/ do |company_name, result_name, email|
+  user = User.where(:email => email).first.with_role
+
+  contact = Contact.find_by_company_name(company_name)
+  result = Result.find_by_name(result_name)
+  params = {"note"=>"note text here", "result_id"=>result, "result_values_attributes"=>{"0"=>{"result_field_id"=>result.result_fields.first.id,
+            "value"=>"2011-06-22 00:00"}}}
+  call_result = CallResult.new(params)
+  call_result.creator = user
+  call_result.contact = contact
+  call_result.save
+end
+

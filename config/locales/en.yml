@@ -440,6 +440,7 @@ en:
       cancel_button: Cancel
       result: Result
       button_new_result: New result
+      my_results: "My results"
     create:
       flash:
         successfully_added: Call result has been successfully added. Next contact has been selected.

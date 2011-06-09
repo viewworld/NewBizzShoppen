@@ -17,3 +17,9 @@
 <div class="fltr">
     <%= button_to_function t("agent_work_screen.index.show_briefing_area"), "$.get('/callers/campaigns/#{campaign.id}/campaigns_description.js')" %>
 </div>
+
+<% if current_user.has_any_role?(:agent, :call_centre_agent, :purchase_manager) %>
+<div class="fltr">
+  <%= bt_link_to nil, t("call_results.edit.my_results"), callers_campaign_agent_work_screen_my_results_path(@campaign) %>
+</div>
+<% end %>

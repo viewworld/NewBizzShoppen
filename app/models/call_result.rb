@@ -9,7 +9,7 @@ class CallResult < ActiveRecord::Base
 
   validates_presence_of :result_id, :creator_id, :contact_id
 
-  after_create :process_side_effects, :update_contact_note
+  after_create :process_side_effects, :update_contact_note, :set_last_call_result_in_contact
   after_update :process_side_effects
   after_destroy :update_completed_status, :update_pending_status
 
@@ -149,6 +149,10 @@ class CallResult < ActiveRecord::Base
 
   def process_for_send_material
     process_for_call_log_result
+  end
+
+  def set_last_call_result_in_contact
+    self.contact.update_attribute(:last_call_result_at, created_at)
   end
 
 end

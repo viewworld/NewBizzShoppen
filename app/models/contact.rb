@@ -18,7 +18,7 @@ class Contact < AbstractLead
   scope :with_pending_status, lambda { |pending| where(:pending => pending) }
   scope :available_to_assign, where(:agent_id => nil).with_completed_status(false).with_pending_status(false)
   scope :with_results, joins(:call_results)
-  scope :with_agent, lambda { |agent_id| where(:agent_id => agent_id) }
+  scope :with_agent, lambda { |agent_id| where("agent_id = ? or call_results.creator_id = ?", agent_id, agent_id) }
   scoped_order :company_name
 
   acts_as_list :scope => [:campaign_id, :agent_id, :pending]

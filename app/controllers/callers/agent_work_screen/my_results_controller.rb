@@ -2,7 +2,8 @@ class Callers::AgentWorkScreen::MyResultsController < Callers::AgentWorkScreenCo
   inherit_resources
 
   def update
-    @contact = current_user.contacts.find(params[:id])
+    @contact = current_user.all_contacts_with_results.find(params[:id], :readonly => false)
+
     respond_to do |format|
       if @contact.update_attributes(params[:contact])
         format.html { redirect_to callers_campaign_agent_work_screen_my_results_path(@contact.campaign) }
@@ -19,10 +20,10 @@ class Callers::AgentWorkScreen::MyResultsController < Callers::AgentWorkScreenCo
     @search.with_results = true
     @search.with_agent = current_user.id
     @search.for_campaign = Campaign.find_by_id(params[:campaign_id])
-    @contacts = @search.order("call_results.updated_at DESC").paginate(:page => params[:page], :per_page => 20)
+    @contacts = @search.select("DISTINCT(leads.id), leads.*").order("leads.last_call_result_at DESC").paginate(:page => params[:page], :per_page => 20)
   end
 
   def resource
-    @contact = current_user.contacts.find(params[:id])
+    @contact = current_user.all_contacts_with_results.find(params[:id])
   end
 end
