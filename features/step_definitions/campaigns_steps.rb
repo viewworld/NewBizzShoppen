@@ -104,3 +104,7 @@ Then /^current call back result for contact "([^"]*)" has date set to time now "
   rv.save!
   ccr.save!
 end
+
+Given /^there are no campaigns/ do
+  Campaign.destroy_all
+end

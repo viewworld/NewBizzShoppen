@@ -36,7 +36,7 @@ Feature: Categories rules
   Scenario: I can move lead to other category and delete template information
 
   #5928
-  @requested @m12
+  @requested @$_agent @m12
   Scenario: When I move lead to other category then duplicated templates should always be optional
 
   @_done @tgn @_tested @_done

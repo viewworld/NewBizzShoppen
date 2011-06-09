@@ -617,19 +617,19 @@ Feature: Agent campaign - management
         Scenario: As call centre agent or agent I can't manage campaigns, result types, agent assignment
 
         # 5189
-        @m11 @requested @ao
+        @m11 @requested @is @non_testable @_done
         Scenario: I can see timestamps in my localization, not server time
 
         # 5192
-        @m12 @requested @is @briefing
+        @m12 @$_call_centre @requested @is @briefing
         Scenario: I can specify description and briefing when creating new campaign
 
         # 5192
-        @m12 @requested @is @briefing
+        @m12 @$_call_centre @requested @is @briefing
         Scenario: I can see a description in a popup
 
         # 5192
-        @m12 @requested @is @briefing
+        @m12 @$_call_centre @requested @is @briefing
         Scenario: When editing a campaign I can click a link to edit description and briefing
         
         ##5650
@@ -645,14 +645,28 @@ Feature: Agent campaign - management
 
         #5931
         # when editing campaign add “email template” nex to “result” button
-        @m12 @requested @is
+        @m12 @$_call_centre @requested @ao @selenium @_done @_tested
         Scenario: When I create a new campaign the default admin template should be populated and it should be editable by campaign creator
+          When there are no campaigns
+          And I follow translated "layout.main_menu.call_centre.campaigns"
+          And I click xpath "//ul[@class='header_actions']//a"
+          And I fill in "campaign_name" with "Testing Template"
+          And I fill in "campaign_max_contact_number" with "18"
+          And I fill in "campaign_start_date" with "2011-11-11"
+          And I fill in "campaign_end_date" with "2011-12-12"
+          And I select "Leisure" from "campaign_category_id"
+          And I select "United Kingdom" from "campaign_country_id"
+          And I press "campaign_submit"
+          And I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
+          And I follow translated "campaigns.edit.send_material_email_template"
+          Then I should see CSS path "#email_template_body_input"
+          And the "Subject" field should contain "Additional materials"
 
         #5935
-        @m12 @requested @is
+        @m12 @$_call_centre @requested @ao @_done @non_testable
         Scenario: When I am on campaign results page and I change date then the page should reload with filter applied
 
-        @m12 @requested @tgn
+        @m12 @$_call_centre @requested @tgn
         Scenario: Call centre can edit campaign when assigned to it by admin
 
 

@@ -62,21 +62,21 @@ Feature: User Account - Profile edit
 
   #5941
   #in user profile
-  @requested @m12 @notifications @tgn
+  @requested @$_customer @m12 @notifications @tgn
   Scenario: I can select to be notified instantly, once a day or once a week on new leads
 
   #Log in using their fairleds account.
   #Go to their profile page
   #Clik on link to thid party login (Display facbokk, linkeid and google icons)
   #The user login and their facebook account is linked to the apporpiate sevice.
-  @requested @m12 @janrain @is
+  @requested @$_all @m12 @janrain @is
   Scenario: I can link my fairleads account with Facebook/Google/Linkedin account
 
-  @requested @m12 @janrain @is
+  @requested @$_all @m12 @janrain @is
   Scenario: I can unlink Facebook/Google/Linkedin account from my fairleads account
 
-  @requested @m12 @janrain @is
+  @requested @$_all @m12 @janrain @is
   Scenario: Only one Facebook/Google/Linkedin account can be connected to fairleads account
     
-  @m12 @is
+  @m12 @$_all @is
   Scenario: I can see time zone for user    

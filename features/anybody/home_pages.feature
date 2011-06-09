@@ -129,8 +129,9 @@ Feature: Home pages
      When I go to the home page
     Then I should not see "Other Agent Unique Category"
 
-  @m11 @requested @youtube @_done @_tested
+  # deprecated in favour to jpeg image
+  @m11 @requested @youtube @_done @_tested @_deprecated
   Scenario: I can see a youtube video in the top right side of the page
-    When setting for "youtube_introduction" is set to "http://www.youtube.com/watch?v=-qMHNFOtjYk&feature=fvst"
-    And I am on the home page
-    Then I should see CSS path "div.fltr iframe"
+#    When setting for "youtube_introduction" is set to "http://www.youtube.com/watch?v=-qMHNFOtjYk&feature=fvst"
+#    And I am on the home page
+#    Then I should see CSS path "div.fltr iframe"

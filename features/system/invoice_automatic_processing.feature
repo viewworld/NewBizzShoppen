@@ -11,10 +11,10 @@ Scenario: Invoice should have invoice lines automatically generated for all non-
 @_done @_tested_elsewhere
 Scenario: Automatically generated invoice lines are linked to leads bought
 
-@_done @deprecated
+@_done @_deprecated
 Scenario: Invoice is automatically generated after user goes to checkout
 
-@_done @deprecated
+@_done @_deprecated
 Scenario: Invoice is not automatically generated for big buyers (do big buyers use paypal to pay??)
 
 @_tested

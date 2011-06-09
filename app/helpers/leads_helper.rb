@@ -15,7 +15,7 @@ module LeadsHelper
 
   def leads_listing_header
     header = if params[:search].is_a?(Hash)
-      (['bestsellers','latest','featured'] & params[:search].keys).first
+      (['bestsellers','latest','featured','contact_requests_for'] & params[:search].keys).first
     else
       nil
     end

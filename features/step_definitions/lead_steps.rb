@@ -251,6 +251,12 @@ When /^lead "([^"]*)" has attributes "([^"]*)"$/ do |lead_header, options|
   lead.update_attributes(attrs)
 end
 
+When /^lead "([^"]*)" is published$/ do |lead_header|
+  lead = Lead.where(:header => lead_header).first
+  lead.published = true
+  lead.save!
+end
+
 Given /^lead "([^"]*)" is created for country "([^"]*)"(?: with region "([^"]*)")?$/ do |header, country, region|
   lead = Lead.where(:header => header).first
   lead = Lead.make!(:header => header, :category => Category.make!) if lead.nil?

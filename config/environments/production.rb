@@ -55,8 +55,8 @@ Nbs::Application.configure do
   config.action_mailer.smtp_settings       = {:address              => "smtp.gmail.com",
                                               :port                 => 587,
                                               :domain               => 'fairleads.com',
-                                              :user_name            => 'selleo.test1@gmail.com',
-                                              :password             => 'selleotest',
+                                              :user_name            => 'noreply@fairleads.com',
+                                              :password             => 'myfairleads',
                                               :authentication       => 'plain',
                                               :enable_starttls_auto => true}
 end

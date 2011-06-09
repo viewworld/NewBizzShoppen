@@ -1,4 +1,5 @@
 display_notice("<%= escape_javascript(@contact_old.destroyed? ? t("contacts.destroy.flash.successfully_removed") : t("contacts.destroy.flash.successfully_deassigned"))  %>", true);
+$("#switch_campaign_form").html("<%= escape_javascript(render(:partial => "callers/agent_work_screen/switch_campaign_form", :locals => @locals)) %>");
 $("#call_sheet").html("<%= escape_javascript(render(:partial => "callers/agent_work_screen/call_sheet", :locals => @locals)) %>");
 $("#pending_calls").html("<%= escape_javascript(render(:partial => "callers/agent_work_screen/pending_calls", :locals => @locals)) %>");
 $("#completed_contacts").html("<%= escape_javascript(render(:partial => "callers/agent_work_screen/completed_contacts", :locals => @locals)) %>");        

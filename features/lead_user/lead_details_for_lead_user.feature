@@ -12,7 +12,7 @@ Background: Sign in user and set English locale
   When I go to browse leads
   And I follow "Computers"
 
-@deprecated
+@_deprecated
 Scenario: I should see created by
 
 @m4 @tgn @_tested @added

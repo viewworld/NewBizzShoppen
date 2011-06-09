@@ -9,6 +9,7 @@ class Administration::SettingsController < Administration::AdministrationControl
     @bank_accounts_search.ascend_by_id = true unless params[:bank_accounts]
     @bank_accounts = @bank_accounts_search.all.paginate :page => params[:page], :per_page => 20
     @vat_rates = VatRate.all
+    @youtube_introductions = YoutubeIntroduction.all
   end
 
   def update
