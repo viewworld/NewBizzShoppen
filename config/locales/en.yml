@@ -2125,9 +2125,18 @@ en:
         company_name: "Company"
         interests_settings: Interests settings
         edit_account: "Edit account"
+        social_unlink_label: "Your account is currently connected to %{account_type}. If you want, you can unlink it here:"
+        social_link_label: "You can link your profile with one of this social network service account"
+        social_unlink_link: "unlink from my profile"
     update:
       controller:
         successful_update_notice: "Your profile has been successfully updated!"
+    social_link:
+      controller:
+        successful_link_notice: "Your account is now connected to %{account_type}"
+    social_unlink:
+      controller:
+        successful_unlink_notice: "Your account is no longer connected to %{account_type}"
 
   contact_us:
     new:

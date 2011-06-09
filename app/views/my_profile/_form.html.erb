@@ -83,8 +83,7 @@
     <fieldset class="inputs no_pdd" style="margin-top:5px;">
       <ol class="no_pdd">
         <li class="string social_login" style="border-bottom:none;margin-bottom:0px">
-          <label style="width:400px;margin-left:60px">You can link your profile with one of this social network service
-            account</label>
+          <label style="width:400px;margin-left:60px"><%= t('my_profile.edit.view.social_link_label') %></label>
 
           <div class="txt">
             <% unless Rails.env.test? %>
@@ -96,6 +95,6 @@
       </ol>
     </fieldset>
 <% else %>
-   <p style="padding: 5px 0 10px 60px">Your account is currently connected to <%= User.social_provider(current_user.rpx_identifier) %>. If you want, you can unlink it <%= link_to "here", social_unlink_my_profile_path, :method => :put %></p>
+   <p style="padding: 5px 0 10px 60px"><%= t("my_profile.edit.view.social_unlink_label", :account_type =>  User.social_provider(current_user.rpx_identifier)) %> <%= link_to t("my_profile.edit.view.social_unlink_link"), social_unlink_my_profile_path, :method => :put %></p>
 <% end %>
 
