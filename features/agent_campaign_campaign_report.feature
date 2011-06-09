@@ -31,6 +31,7 @@ Feature: Campaign report
   @m0
   Scenario: I can see number of calls made
 
+  # a sum of all the minutes spend on that contact not only on the final result
   Scenario: I can see average number of minutes spent per final result
 
   @m0
