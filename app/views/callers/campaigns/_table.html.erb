@@ -63,3 +63,40 @@
   <% end %>
   </tbody>
 </table>
+
+<% collection.each do |campaign| %>
+    <div id="campaign_<%= campaign.id %>_tooltip" style="display:none">
+      <div class="call_result_note">
+      <%= campaign.description.blank? ? t("campaigns.table.description_tooltip_blank") : campaign.description.to_s.html_safe %>
+      </div>
+    </div>
+
+
+    <script type="text/javascript">
+        jQuery("#campaign_<%= campaign.id %>").qtip(
+        {
+            position: {
+                corner: {
+                    target: 'topMiddle',
+                    tooltip: 'bottomMiddle'
+                },
+            },
+            content: $("#campaign_<%= campaign.id %>_tooltip").html(),
+            show: 'mouseover',
+            hide: 'mouseout',
+            style: {
+                name: "cream",
+                border: {
+                    radius: 3
+                },
+                tip: {
+                    corner: 'bottomMiddle',
+                    size: {
+                        x: 8,
+                        y : 12
+                    }
+                }
+            }
+        });
+    </script>
+<% end %>

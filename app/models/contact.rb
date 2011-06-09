@@ -6,6 +6,7 @@ class Contact < AbstractLead
 
   belongs_to :campaign
   has_many :call_results, :dependent => :destroy
+  has_many :result_values, :through => :call_results
 
   belongs_to :agent, :class_name => "User"
   validates_presence_of :company_name, :company_phone_number, :creator_id, :category_id, :country_id, :campaign_id
@@ -16,9 +17,13 @@ class Contact < AbstractLead
   scope :with_completed_status, lambda { |completed| where(:completed => completed) }
   scope :with_pending_status, lambda { |pending| where(:pending => pending) }
   scope :available_to_assign, where(:agent_id => nil).with_completed_status(false).with_pending_status(false)
+  scope :with_results, joins(:call_results)
+  scope :with_agent, lambda { |agent_id| where("agent_id = ? or call_results.creator_id = ?", agent_id, agent_id) }
   scoped_order :company_name
 
   acts_as_list :scope => [:campaign_id, :agent_id, :pending]
+
+  accepts_nested_attributes_for :call_results, :result_values
 
   class << self
 

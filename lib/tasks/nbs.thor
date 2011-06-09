@@ -157,6 +157,27 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
             :dk => {:subject => "[DK] Certification request reminder",
                     :body => "[DK] <p>Login url: {{lead_certification_request.login_url}}</p><p>Contact name: {{lead_certification_request.contact_name}}</p><p>Contact email: {{lead_certification_request.contact_email}}</p>"}
         },
+        {:name => "Lead notification instant",
+         :uniq_id => "lead_notification_instant",
+         :en => {:subject => "New lead has been added to the subscribed category",
+                 :body => "<p>New lead&nbsp;<a href=\"{{lead.show_lead_details_url}}\">{{lead.header}}</a>&nbsp;has been created in category {{lead.category_name}}</p>"},
+         :dk => {:subject => "[DK] New lead has been added to the subscribed category",
+                 :body => "<p>New lead&nbsp;<a href=\"{{lead.show_lead_details_url}}\">{{lead.header}}</a>&nbsp;has been created in category {{lead.category_name}}</p>"}
+        },
+        {:name => "Lead notification daily",
+         :uniq_id => "lead_notification_daily",
+         :en => {:subject => "New leads added to your subscribed categories today",
+                 :body => "<p>{% for lead in leads %}<p><a href=\"{{lead.show_lead_details_url}}\">{{lead.header}}</a><br />{{lead.description}}</p>{% endfor %}</p>"},
+         :dk => {:subject => "[DK] New leads added to your subscribed categories today",
+                 :body => "<p>{% for lead in leads %}<p><a href=\"{{lead.show_lead_details_url}}\">{{lead.header}}</a><br />{{lead.description}}</p>{% endfor %}</p>"}
+        },
+        {:name => "Lead notification weekly",
+         :uniq_id => "lead_notification_weekly",
+         :en => {:subject => "New leads added to your subscribed categories this week",
+                 :body => "<p>{% for lead in leads %}<p><a href=\"{{lead.show_lead_details_url}}\">{{lead.header}}</a><br />{{lead.description}}</p>{% endfor %}</p>"},
+         :dk => {:subject => "[DK] New leads added to your subscribed categories this week",
+                 :body => "<p>{% for lead in leads %}<p><a href=\"{{lead.show_lead_details_url}}\">{{lead.header}}</a><br />{{lead.description}}</p>{% endfor %}</p>"}
+        },
         {
             :name => "Additional materials",
             :uniq_id => "result_send_material",
@@ -456,6 +477,11 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
       Contact.find_or_create_by_company_name attrs.merge(:country => country, :campaign => campaign, :creator => call_centre, :category => category, :contact_name => "", :phone_number => "", :email_address => "", :creator_name => call_centre.full_name)
     end
 
+    Contact.where("last_call_result_at IS NULL").each do |contact|
+      last_call_result = contact.call_results.order("created_at DESC").first
+      contact.update_attribute(:last_call_result_at, last_call_result.nil? ? nil : last_call_result.created_at)
+    end
+
   end
 
   desc "recalculate_leads_average_ratings", ""
@@ -500,5 +526,17 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
     LeadCertificationRequest.active.each do |lead_certification_request|
       lead_certification_request.update_state!
     end
+  end
+
+  desc "send_daily_lead_notifications", ""
+
+  def send_daily_lead_notifications
+    CommonNotifications.send_daily_lead_notifications!
+  end
+
+  desc "send_weekly_lead_notifications", ""
+
+  def send_weekly_lead_notifications
+    CommonNotifications.send_weekly_lead_notifications!
   end
 end

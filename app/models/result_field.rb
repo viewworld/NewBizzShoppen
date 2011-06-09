@@ -14,8 +14,11 @@ class ResultField < ActiveRecord::Base
   validates_presence_of :name, :field_type
 
   def value_for_call_result(call_result)
-    rv = ResultValue.first(:conditions => ["call_result_id = ? and result_field_id = ?", call_result.id, id])
+    rv = result_value_for_call_result(call_result)
     rv.nil? ? "" : rv.value
   end
 
+  def result_value_for_call_result(call_result)
+    ResultValue.first(:conditions => ["call_result_id = ? and result_field_id = ?", call_result.id, id])
+  end
 end

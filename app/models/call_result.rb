@@ -11,7 +11,7 @@ class CallResult < ActiveRecord::Base
   validates_presence_of :result_id, :creator_id, :contact_id
 
   validate :contact_email_address
-  after_create :process_side_effects, :update_contact_note
+  after_create :process_side_effects, :update_contact_note, :set_last_call_result_in_contact
   after_update :process_side_effects
   after_destroy :update_completed_status, :update_pending_status
 
@@ -159,10 +159,13 @@ class CallResult < ActiveRecord::Base
     deliver_material
     process_for_call_log_result
   end
-
+  
   def deliver_material
     template = contact.campaign.send_material_email_template || EmailTemplate.global.where(:uniq_id => 'result_send_material').first
     ApplicationMailer.generic_email([contact.email_address], template.subject, template.body, template.from, [Pathname.new(File.join([::Rails.root, 'public', send_material_result_value.material.url]))]).deliver
   end
-
+  
+  def set_last_call_result_in_contact
+    self.contact.update_attribute(:last_call_result_at, created_at)
+  end
 end

@@ -144,6 +144,7 @@ Nbs::Application.routes.draw do
         end
       end
       resources :campaigns_users, :only => [:index, :update]
+      resource :campaigns_description, :controller => "campaigns_description", :only => [:show, :edit, :update]
       resources :contacts do
         collection do
           post 'batch_remove'
@@ -156,6 +157,7 @@ Nbs::Application.routes.draw do
         resources :contacts, :only => [:show, :destroy, :update] do
           resources :call_results, :only => [:new, :create, :edit, :update, :destroy]
         end
+        resources :my_results
       end
       resources :email_templates, :only => [:edit,:update]
     end

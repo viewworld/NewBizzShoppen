@@ -16,6 +16,11 @@ class User < ActiveRecord::Base
   GOLD_CERTIFICATION_LOCKED = 13
   CERTIFICATION_LEVELS = [NOT_CERTIFIED, BRONZE_CERTIFICATION, SILVER_CERTIFICATION, GOLD_CERTIFICATION, NOT_CERTIFIED_LOCKED, BRONZE_CERTIFICATION_LOCKED, SILVER_CERTIFICATION_LOCKED, GOLD_CERTIFICATION_LOCKED]
 
+  LEAD_NOTIFICATION_INSTANT       = 0
+  LEAD_NOTIFICATION_ONCE_PER_DAY  = 1
+  LEAD_NOTIFICATION_ONCE_PER_WEEK = 2
+  LEAD_NOTIFICATION_TYPES = [LEAD_NOTIFICATION_INSTANT, LEAD_NOTIFICATION_ONCE_PER_DAY, LEAD_NOTIFICATION_ONCE_PER_WEEK]
+
   BLACK_LISTED_ATTRIBUTES = [:paypal_email, :bank_swift_number, :bank_iban_number]
 
   include RoleModel
@@ -449,12 +454,22 @@ class User < ActiveRecord::Base
   def can_publish_leads?
     false
   end
-
+  
   def self.social_provider(rpx_identifier)
     return nil if rpx_identifier.blank?
     return "Google" if rpx_identifier.include?("www.google.com")
     return "Facebook" if rpx_identifier.include?("www.facebook.com")
     "Linked In" if rpx_identifier.include?("www.linkedin.com")
   end
-
+  
+  def deliver_lead_notification
+    unless lead_notification_type == LEAD_NOTIFICATION_INSTANT
+      subscribed_categories = has_role?(:customer) ? with_role.categories : has_any_role?(:lead_buyer, :lead_user) and parent.present? ? parent.with_role.categories : []
+      unless subscribed_categories.empty?
+        uniq_id = "lead_notification_#{lead_notification_type == LEAD_NOTIFICATION_ONCE_PER_DAY ? 'daily' : 'weekly'}"
+        leads = Lead.for_notification(subscribed_categories, lead_notification_type)
+        ApplicationMailer.email_template(email, EmailTemplate.find_by_uniq_id(uniq_id), {:user => self, :leads => leads}).deliver
+      end
+    end
+  end
 end

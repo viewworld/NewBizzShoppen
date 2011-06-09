@@ -1,0 +1,60 @@
+<column-mc:>
+
+  <header back="true">
+    <param:content>
+      <%= t("agent_work_screen.my_results.edit.view.header") %>
+    </param:content>
+  </header>
+
+  <%= semantic_form_for @contact, :url => callers_campaign_agent_work_screen_my_result_path(@contact.campaign, @contact), :method => :put do |form| %>
+  <frm title="#{@contact.company_name}">
+    <param:content>
+      <% @lead = @contact %>
+        <%= render :partial => '/shared/leads/form', :locals => {:form => form, :campaign => @contact.campaign, :contact => @contact} %>
+
+      <% @contact.call_results.each do |call_result| %>
+      <b><%= call_result.result.name %></b>
+      <%= form.fields_for :call_results, call_result do |call_result_form| %>
+          <%= call_result_form.input :note, :input_html => {:style => "width: 400px;height:120px"} %>
+      <% end %>
+                <% call_result.result.result_fields.each do |result_field| %>
+                  <%= form.fields_for :result_values, result_field.result_value_for_call_result(call_result) do |result_field_form| %>
+                      <%= result_field.name %>:
+
+                      <%= case result_field.field_type.to_i
+                          when ResultField::NOTE then
+                              result_field_form.input :value, :as => :textarea, :input_html => {:style => "height: 100px; width: 230px"}
+                          when ResultField::DATE then
+                              result_field_form.input :value, :input_html => {:class => "datepicker"}, :title => t('models.result_field.date_format')
+                          when ResultField::DATETIME then
+                              result_field_form.input :value,  :input_html => {:class => "datetimepicker"}, :title => t('models.result_field.datetime_format')
+                          when ResultField::MATERIAL then
+                              result_field_form.input :value, :as => :hidden
+                          else
+                              result_field_form.input :value
+                      end
+                      %>
+
+                    <% end %>
+                <% end %>
+      <% end %>
+
+    </param:content>
+    <param:actions>
+        <ibt c="fltri" icon="save">
+            <%= form.submit t("agent_work_screen.my_results.edit.view.button_update") %>
+        </ibt>
+    </param:actions>
+  </frm>
+  <% end %>
+
+</column-mc:>
+
+<js:>
+  <script type="text/javascript">
+    $(function() {
+        $(".datetimepicker").datetimepicker({ dateFormat: 'yy-mm-dd' });
+        $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+    });
+  </script>
+</js:>

@@ -112,13 +112,23 @@ Feature: Agent campaign - calling session
       # http://kb.snom.com/kb/index.php?View=entry&CategoryID=21&EntryID=40
 
     # 5192
-    @m12 @$_call_centre_agent @requested @is @briefing
+    @m12 @$_call_centre_agent @requested @tgn @briefing @_tested @_done
     Scenario: I should see briefing area when I click "Briefing" on agent work screen
+      Given campaign named "Testing One" exists with attributes "briefing:Briefing content here"
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      And I press translated "agent_work_screen.index.show_briefing_area"
+      Then I should see "Briefing content here"
 
     # 5192
-    @m12 @$_call_centre_agent @requested @is @briefing
+    @m12 @$_call_centre_agent @requested @tgn @briefing @_tested @_done
     Scenario: I can go back to my work screen when I click "Go to work screen"
-        
+      Given campaign named "Testing One" exists with attributes "briefing:Briefing content here"
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      And I press translated "agent_work_screen.index.show_briefing_area"
+      Then I should see "Briefing content here"
+      And I press translated "agent_work_screen.index.show_briefing_area"
+      Then I should see translated "agent_work_screen.index.call_log"
+
     #5460
     @requested @m11 @ao @_done @_tested
     Scenario: I should be able to upload source materials to the repository of specific campaign
@@ -196,21 +206,64 @@ Feature: Agent campaign - calling session
       Then I should see CSS path "#switch_campaign_form #result_id"
 
     # as call centre agent
-    @m12 @$_call_centre_agent @requested @my_results @ao
+    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested
     Scenario: I can access "My results" from agent work screen
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      Then I follow translated "call_results.edit.my_results"
+      And I should see translated "agent_work_screen.my_results.index.view.header"
 
     # A list of contacts which have results (including final results) assigend to them
-    @m12 @$_call_centre_agent @requested @my_results @ao
+    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested
     Scenario: I should see a list of contacts that have results assigned to them
+      Given contact for company "Mleko company" has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      Then I follow translated "call_results.edit.my_results"
+      And I should see "Mleko company"
+      And I should not see "Bon Jovi inc."
+      And I should not see "Stefanek corp"
 
-    @m12 @$_call_centre_agent @requested @my_results @ao
+
+    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested
     Scenario: I should see latest results on top of My results list
+      Given contact for company "Mleko company" has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
+      And contact for company "Bon Jovi inc." has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      Then I follow translated "call_results.edit.my_results"
+      And I should see "Bon Jovi inc." before "Mleko company"
 
-    @m12 @$_call_centre_agent @requested @my_results @ao
+    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested
     Scenario: I can search contacts on My results list
+      Given contact for company "Mleko company" has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
+      And contact for company "Bon Jovi inc." has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      Then I follow translated "call_results.edit.my_results"
+      And I fill in "search_with_keyword" with "mleko"
+      And I press translated "agent_work_screen.my_results.index.view.filter.search_button"
+      Then I should see "Mleko company"
+      And I should not see "Bon Jovi inc."
 
-    @m12 @$_call_centre_agent @requested @my_results @ao
+    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested
     Scenario: I can edit contact when I click it on My results list
+      Given contact for company "Mleko company" has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      Then I follow translated "call_results.edit.my_results"
+      And I click hidden link by url regex "/callers\/campaigns\/\d+\/agent_work_screen\/my_results\/\d+\/edit/"
+      And I fill in "contact_company_website" with "http://mleko.pl"
+      And I fill in "contact_contact_name" with "Bertrand Russell"
+      And I press translated "agent_work_screen.my_results.edit.view.button_update"
+      And I click hidden link by url regex "/callers\/campaigns\/\d+\/agent_work_screen\/my_results\/\d+\/edit/"
+      And the "contact_company_website" field should contain "http://mleko.pl"
+      And the "contact_contact_name" field should contain "Bertrand Russell"
 
-    @m12 @$_call_centre_agent @requested @my_results @ao
+    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested
     Scenario: I can edit results when I click contact on My results list
+      Given contact for company "Mleko company" has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      Then I follow translated "call_results.edit.my_results"
+      And I click hidden link by url regex "/callers\/campaigns\/\d+\/agent_work_screen\/my_results\/\d+\/edit/"
+      Then I fill in "contact_call_results_attributes_0_note" with "new note for call result #1"
+      And I fill in "contact_result_values_attributes_0_value" with "2011-09-22 12:00"
+      And I press translated "agent_work_screen.my_results.edit.view.button_update"
+      And I click hidden link by url regex "/callers\/campaigns\/\d+\/agent_work_screen\/my_results\/\d+\/edit/"
+      And the "contact_call_results_attributes_0_note" field should contain "new note for call result #1"
+      And the "contact_result_values_attributes_0_value" field should contain "2011-09-22 12:00"

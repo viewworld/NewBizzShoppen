@@ -165,7 +165,7 @@ Scenario: I can use "Advanced search" in Browse leads with following fields: Dea
 
   And I go to browse leads
   And I follow "Computers"
-  Then I select "Xerox2 Agent02, agent02@nbs.com" from "search_with_created_by"
+  Then I select "Xerox2 Agent02" from "search_with_created_by"
   And I press translated "leads.index.search.search_button"
   Then I should see "Super printers #2"
   And I should not see "Super printers #1"

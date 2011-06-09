@@ -12,5 +12,5 @@ Scenario: Change "Create buyer" translation to "Create lead user with buying per
 # remove “current contact”
 # materials repo - add back button
 # “back” button on camapign results
-@m12 @requested @minor_changes @tgn
+@m12 @requested @minor_changes @tgn @_done @non_testable
 Scenario: After M11 presentation minor corrections

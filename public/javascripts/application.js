@@ -218,6 +218,13 @@ function show_agent_work_screen_call_result(call_result_html) {
     $("#agent_work_screen_call_result").show();
 }
 
+function show_briefing(briefing_html){
+  $("#agent_work_screen_call_result").html(briefing_html);
+  $("#agent_work_screen_dashboard").toggle();
+  $("#agent_work_screen_call_result").toggle();
+  $('#new_result_form').toggle();
+}
+
 
 function display_notice(message, withTimeout) {
     $("#flashes .flash_notice").html(message);

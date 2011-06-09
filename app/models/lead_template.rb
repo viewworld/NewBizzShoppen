@@ -76,6 +76,7 @@ class LeadTemplate < ActiveRecord::Base
       end
 
       if with_values
+        self.is_mandatory = false
         self.save
         self.lead_template_fields.each do |field|
           field.lead_template_field_translations.each { |ltft| ltft.lead_template_field = field; ltft.save }

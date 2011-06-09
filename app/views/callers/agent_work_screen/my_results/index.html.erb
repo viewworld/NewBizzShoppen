@@ -1,0 +1,85 @@
+<search-box:>
+  <div class="search_box">
+    <h2><%= t("agent_work_screen.my_results.index.view.filter.header") %></h2>
+
+    <div class="search_content">
+      <%= semantic_form_for @search, :url => callers_campaign_agent_work_screen_my_results_path do |f| %>
+          <fieldset class="inputs_vertical">
+            <ol class="no_pdd">
+              <li class="string">
+                <%= f.input :with_keyword, :label => t("agent_work_screen.my_results.index.view.filter.keyword_label"), :required => false %>
+              </li>
+              <li class="commit">
+                <ibt c="bt_green" icon="magnify">
+                  <%= submit_tag t("agent_work_screen.my_results.index.view.filter.search_button") %>
+                </ibt>
+              </li>
+            </ol>
+          </fieldset>
+      <% end %>
+    </div>
+  </div>
+</search-box:>
+
+<column-mc:>
+
+  <header>
+    <param:content>
+      <%= t("agent_work_screen.my_results.index.view.header") %>
+    </param:content>
+  </header>
+
+<% if collection.empty? %>
+  <%= blank_state_message %>
+<% else %>
+      <table id="contacts" class="generic">
+      <thead>
+      <tr>
+        <th class="hl"></th>
+        <th style="width:150px"><%= t("contacts.table.company_name") %></th>
+        <th style="width:150px" class="ta_r"><%= t("contacts.table.company_phone") %></th>
+        <th style="width:150px" class="ta_r"><%= t("contacts.table.contact_phone") %></th>
+        <th><%= t("contacts.table.last_result") %></th>
+        <th class="ta_r">
+          <%= t("contacts.table.actions") %>
+        </th>
+
+        <th class="hr"></th>
+      </tr>
+      </thead>
+      <tfoot>
+      <tr>
+        <td class="fl"></td>
+        <td colspan="5"></td>
+        <td class="fr"></td>
+      </tr>
+      </tfoot>
+      <tbody>
+        <% collection.each do |contact| %>
+            <tr class="<%= cycle("odd", "even") %>">
+            <td class="cl"></td>
+            <td><%= contact.company_name %></td>
+            <td class="ta_r"><%= contact.company_phone_number %></td>
+            <td class="ta_r"><%= contact.direct_phone_number %></td>
+
+            <td><%= contact.current_call_result_name %> <%= "(#{contact.current_call_result.creator.full_name})" if contact.current_call_result %></td>
+                <td class="tda ta_r">
+               <ul-actions>
+                    <li>
+                      <%= link_to t("contacts.table.edit"), edit_callers_campaign_agent_work_screen_my_result_path(contact.campaign, contact), :class => "default_action" %>
+                    </li>
+              </ul-actions>
+                </td>
+            <td class="cr"></td>
+          </tr>
+      <% end %>
+
+          <tr class="pagination">
+            <td colspan="7" class="ta_c">
+              <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+<% end %>
+</column-mc:>

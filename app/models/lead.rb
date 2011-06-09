@@ -73,6 +73,7 @@ class Lead < AbstractLead
   scope :with_certification_level, lambda { |cl| joins("INNER JOIN users ON users.id=leads.creator_id").where("certification_level = ? or certification_level = ?", cl.to_i, cl.to_i + 10) }
   scope :with_sale_limit, lambda { |sale_limit| where("sale_limit = ?", sale_limit.to_i) }
   scope :with_hotness, lambda { |hotness| where("hotness_counter = ?", hotness) }
+  scope :for_notification, lambda { |categories, notification_type| where("category_id in (?) and DATE(created_at) between ? and ?", categories.map(&:id), notification_type == User::LEAD_NOTIFICATION_ONCE_PER_DAY ? Date.today : Date.today-7, Date.today).published_only.without_inactive.without_outdated.order("category_id") }
 
   delegate :certification_level, :to => :creator
 
@@ -85,6 +86,7 @@ class Lead < AbstractLead
   before_save :handle_category_change
   before_validation :handle_dialling_codes
   before_save :check_if_category_can_publish_leads
+  after_create :send_instant_notification_to_subscribers
 
   private
 
@@ -268,4 +270,25 @@ class Lead < AbstractLead
     user.has_role?(:admin) ? comment_threads.roots.count : comment_threads.roots.without_blocked.count
   end
 
+  def send_instant_notification_to_subscribers
+    self.delay.deliver_instant_notification_to_subscribers
+  end
+
+  def deliver_instant_notification_to_subscribers
+    category.customer_subscribers.where("lead_notification_type = ?", User::LEAD_NOTIFICATION_INSTANT).each do |user|
+      deliver_email_template(user.email, "lead_notification_instant")
+    end
+  end
+
+  def mailer_host
+    Nbs::Application.config.action_mailer.default_url_options[:host]
+  end
+
+  def show_lead_details_url
+    "https://#{mailer_host}/leads/#{self.id}"
+  end
+
+  def category_name
+    category.name
+  end
 end

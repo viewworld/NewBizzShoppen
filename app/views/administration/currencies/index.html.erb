@@ -34,6 +34,7 @@
           <th><%= t("administration.currencies.index.view.table.unit_name") %></th>
           <th><%= t("administration.currencies.index.view.table.subunit_name") %></th>
           <th class="ta_c"><%= t("administration.currencies.index.view.table.active") %></th>
+          <th class="ta_c"><%= t("administration.currencies.index.view.table.global_default") %></th>
           <th class="ta_r"><%= t("administration.currencies.index.view.actions") %></th>
           <th class="hr"></th>
         </tr>
@@ -41,7 +42,7 @@
         <tfoot>
         <tr>
           <td class="fl"></td>
-          <td colspan="7"></td>
+          <td colspan="10"></td>
           <td class="fr"></td>
         </tr>
         </tfoot>
@@ -59,6 +60,7 @@
               <td><%= currency.unit_name %></td>
               <td><%= currency.subunit_name %></td>
               <td class="ta_c"><%= translate_boolean(currency.active) %></td>
+              <td><%= translate_boolean(currency.global_default) %></td>
               <td class="tda ta_r">
                 <ul-actions>
                   <li>

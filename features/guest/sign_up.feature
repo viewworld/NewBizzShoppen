@@ -11,8 +11,18 @@ Feature: Sign up feature
     Then "user_customer_address_attributes_country_id" should be selected for value "Denmark"
 
   # 5779
-  @m12 @$_guest @requested @tgn
+  @m12 @$_guest @requested @tgn @_done @_tested @selenium
   Scenario: When I am on sign up page, the coutry should be selected to my browser locale/country
+    Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role agent
+    And I am on the homepage
+    And I make sure current locale is "dk"
+    Then I sign in as bob@person.com with password supersecret
+    And I go to agents leads
+    Given Category Test category 1 is created
+    And I go to agents leads
+    And I select "Test category 1" from "category_id"
+    And I follow translated "agent.leads.index.view.new_lead"
+  Then "lead_country_id" should be selected for value "Denmark"
 
   #If the user chooses link he is prompted with a modal window with the text:
   #Thank you for linking, now lets set up your account. Please chose account type:

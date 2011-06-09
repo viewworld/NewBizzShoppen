@@ -6,6 +6,7 @@ class Currency < ActiveRecord::Base
   validates_uniqueness_of :name
 
   before_destroy :can_be_destroyed?
+  after_save :change_default_currency
 
   scope :active, where(:active => true)
 
@@ -17,6 +18,14 @@ class Currency < ActiveRecord::Base
       false
     else
       true
+    end
+  end
+
+  def change_default_currency
+    if global_default? and global_default_changed?
+      Currency.where(:global_default => true).select { |c| c.id != id }.each do |currency|
+        currency.update_attribute(:global_default, false)
+      end
     end
   end
 
@@ -34,4 +43,7 @@ class Currency < ActiveRecord::Base
     name
   end
 
+  def self.default_currency
+    Currency.where(:global_default => true).first
+  end
 end

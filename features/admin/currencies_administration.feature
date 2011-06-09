@@ -51,5 +51,9 @@ Scenario: I should be able to destroy currency unless there are leads defined wi
 Scenario: There are currencies already defined in the system that are accepted by PayPal
 
 #5936
-@requested @$_admin @m12 @tgn
+@requested @$_admin @m12 @tgn @_done @_tested
 Scenario: I should be able to specify a default currency
+  When I follow translated "layout.main_menu.admin.currencies"
+  And I click hidden translated link "administration.currencies.index.view.edit"
+  And I check "currency_global_default"
+  And I press translated "administration.currencies.edit.view.button_update_currency"

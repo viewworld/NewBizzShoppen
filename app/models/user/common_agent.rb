@@ -49,6 +49,10 @@ module User::CommonAgent
       blocked_conversations.where("lead_id = ? and buyer_id = ?", comment.commentable_id, comment.root.user_id).first.nil?
     end
 
+    def all_contacts_with_results
+      Contact.with_agent(id).with_results
+    end
+
     alias_method :to_s, :name
   end
 end
