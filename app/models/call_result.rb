@@ -1,4 +1,6 @@
 class CallResult < ActiveRecord::Base
+  attr_accessor :contact_email_address
+
   belongs_to :contact
   belongs_to :result
   belongs_to :creator, :polymorphic => true, :foreign_key => "creator_id"
@@ -9,9 +11,10 @@ class CallResult < ActiveRecord::Base
   accepts_nested_attributes_for :contact
 
   validates_presence_of :result_id, :creator_id, :contact_id
+  validates_presence_of :contact_email_address, :if => Proc.new{|cr| cr.result.send_material?}
+  validates_format_of :contact_email_address, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :if => Proc.new{|cr| cr.result.send_material?}
 
-  validate :contact_email_address
-  after_create :process_side_effects, :update_contact_note, :set_last_call_result_in_contact
+  after_create :process_side_effects, :update_contact_note, :set_last_call_result_in_contact, :update_contact_email
   after_update :process_side_effects
   after_destroy :update_completed_status, :update_pending_status
 
@@ -82,12 +85,6 @@ class CallResult < ActiveRecord::Base
 
   private
 
-  def contact_email_address
-    if result.result_field_ids.include?(ResultField::MATERIAL) and contact.email_address.blank?
-      self.errors.add(:base, "contact email cant be blank")
-    end
-  end
-
   def update_completed_status
     completed_status = contact.current_call_result.present? ? contact.current_call_result.result.final? : false
     contact.update_attributes :completed => completed_status
@@ -100,6 +97,10 @@ class CallResult < ActiveRecord::Base
 
   def update_contact_note
     contact.update_attributes :note => "#{note}\n#{contact.note}" if self.note.present?
+  end
+
+  def update_contact_email
+    contact.update_attribute(:email_address, contact_email_address) if result.send_material? and contact_email_address.present?
   end
 
 
@@ -162,7 +163,7 @@ class CallResult < ActiveRecord::Base
   
   def deliver_material
     template = contact.campaign.send_material_email_template || EmailTemplate.global.where(:uniq_id => 'result_send_material').first
-    ApplicationMailer.generic_email([contact.email_address], template.subject, template.body, template.from, [Pathname.new(File.join([::Rails.root, 'public', send_material_result_value.material.url]))]).deliver
+    ApplicationMailer.generic_email([contact_email_address], template.subject, template.body, template.from, [Pathname.new(File.join([::Rails.root, 'public', send_material_result_value.material.url]))]).deliver
   end
   
   def set_last_call_result_in_contact
