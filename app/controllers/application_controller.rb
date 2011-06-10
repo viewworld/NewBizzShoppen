@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
 
 
   def update_log_entries
-    if current_user and self.class.to_s != "UserSessionLogController"
+    if user_signed_in? and self.class.to_s != "UserSessionLogController"
       UserSessionLog.update_end_time(session[:current_usl_global], Settings.logout_time.to_i) if !session[:current_usl_global].blank?
       if self.class.name.match(/^Callers::/)
         if session[:current_usl_campaigns].blank?
