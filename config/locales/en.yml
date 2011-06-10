@@ -1715,7 +1715,7 @@ en:
     new:
       view:
         title: "Procurement Manager signup"
-        janrain_sign_up_label: "OR use Facebook, LinedIn or Google to sing in in the future:"
+        janrain_sign_up_label: "Or use Facebook, LinedIn or Google to sing in in the future:"
         i_already_have_account: "I already have an account!"
   purchase_manager_accounts:
     new:
