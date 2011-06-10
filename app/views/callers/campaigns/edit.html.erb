@@ -51,7 +51,7 @@
   <div class="frm_tiny fltr pdd_5">
   <% form_tag import_xls_callers_campaign_contacts_path(@campaign), :method => :post, :multipart => true do %>
       <%= file_field_tag 'attachment', :accept => 'spreadsheet/ods,spreadsheet/doc,spreadsheet/xdoc', :class => "fltl" %>
-      <%= bt_link_to nil, "import spreadsheet", "javascript:void(0)", :onclick => "$(this).parents('form').submit()", :class => "bt_grey" %>
+      <%= bt_link_to nil, "import spreadsheet", "javascript:void(0)", :onclick => "$(this).parents('form').submit()", :class => "bt_grey", :style => "margin-left: 5px" %>
   <% end %>
   </div>        
 
