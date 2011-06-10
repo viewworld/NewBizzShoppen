@@ -29,7 +29,6 @@ end
   %>
   <%= custom_error_for_field(f, :value) %>
   <% if f.object.result_field.field_type.to_i == ResultField::MATERIAL %>
-      <div id="materials_dialog"></div>
       <div class="txt">
         <p id="material_<%= f.object.result_field.id %>_name">
           <% if f.object.value.blank? %>
@@ -54,6 +53,12 @@ end
 
 
 <script type="text/javascript">
+    jQuery(document).ready(function() {
+        if ($('#materials_dialog').length == 0) {
+            $('body').append('<div id="materials_dialog"></div>');
+        }
+    });
+
     $(function() {
         $(".datetimepicker").datetimepicker({ dateFormat: 'yy-mm-dd' });
         $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
