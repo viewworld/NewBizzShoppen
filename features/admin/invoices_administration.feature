@@ -569,8 +569,8 @@ Scenario: I can select a seller on the edit inovice page
   And I select "Selleo" from "invoice_seller_id"
   And I wait 1 second
   When I press translated "administration.invoices.edit.view.save_button"
-  Then I should see "Selleo" within ".from_to_table tr:nth-child(1) td:nth-child(1)"
-  And I should see "Kaminskiego" within ".from_to_table tr:nth-child(2) td:nth-child(1)"
+  Then I should see "Selleo" within ".from_to_table"
+  And I should see "Kaminskiego" within ".from_to_table"
 
 # On the invoice, remove the text (labels) “address line 1, address line 2, address line 3”, leave zip code and country lables though
 @ao @requested @m7 @_done @_tested
