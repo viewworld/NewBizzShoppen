@@ -29,18 +29,21 @@ end
   %>
   <%= custom_error_for_field(f, :value) %>
   <% if f.object.result_field.field_type.to_i == ResultField::MATERIAL %>
-      <div id="materials_dialog"></div>
       <div class="txt">
         <p id="material_<%= f.object.result_field.id %>_name">
-          <%= t("materials.views.index.no_file_selected") if f.object.value.blank? %>
+          <% if f.object.value.blank? %>
+            <%= t("materials.views.index.no_file_selected")  %>
+          <% else %>
+            <%= Material.find(f.object.value).filename %>
+          <% end %>
         </p>
         <p style="padding-top:5px;">
           <%= bt_link_to_function :cog, t("materials.views.index.material_repository"), "$('#materials_dialog').load('#{callers_campaign_materials_path(contact.campaign, :format => :js, :result_field_id => f.object.result_field.id)}').dialog({title:'#{t('materials.views.index.select_or_upload')}', width:400, height:350, beforeClose: function(event, ui) { $('#materials_dialog').html('');return true; }})" %>
         </p>
       </div>
       <div class="txt">
-          <p><%= label_tag "call_result[contact_attributes][email_address]", "#{t("materials.views.index.contact_email_address")}<abbr>*</abbr>".html_safe %><%= text_field_tag "call_result[contact_attributes][email_address]", contact.email_address  %></p>
-          <%= custom_error_for_object_and_field(contact, :email_address) %>
+          <p><%= label_tag "call_result[contact_email_address]", "#{t("materials.views.index.contact_email_address")}<abbr>*</abbr>".html_safe %><%= text_field_tag "call_result[contact_email_address]", call_result.contact_email_address || contact.email_address  %></p>
+          <%= custom_error_for_object_and_field(call_result, :contact_email_address) %>
       </div>
   <% end %>
 </li>
@@ -50,6 +53,12 @@ end
 
 
 <script type="text/javascript">
+    jQuery(document).ready(function() {
+        if ($('#materials_dialog').length == 0) {
+            $('body').append('<div id="materials_dialog"></div>');
+        }
+    });
+
     $(function() {
         $(".datetimepicker").datetimepicker({ dateFormat: 'yy-mm-dd' });
         $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });

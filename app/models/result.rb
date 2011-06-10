@@ -33,5 +33,9 @@ class Result < ActiveRecord::Base
     result_fields.map(&:name).join(", ")
   end
 
+  def send_material?
+    result_fields.map(&:field_type).include?(ResultField::MATERIAL.to_s)
+  end
+
 
 end
