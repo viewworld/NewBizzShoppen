@@ -32,7 +32,7 @@ class Campaign < ActiveRecord::Base
   scope :descend_by_category, order("categories.name DESC").joins_on_category
   scope :ascend_country, order("countries.name ASC").joins_on_country
   scope :descend_by_country, order("countries.name DESC").joins_on_country
-  scope :available_for_user, lambda {|user| includes(:users).where("users.id = :user_id OR campaigns.creator_id = :user_id", {:user_id => user.id}) unless user.has_role? :admin}
+  scope :available_for_user, lambda { |user| includes(:users).where("users.id = :user_id OR campaigns.creator_id = :user_id", {:user_id => user.id}) unless user.has_role? :admin }
 
   after_save :check_send_material_email_template
 
@@ -60,7 +60,7 @@ class Campaign < ActiveRecord::Base
   end
 
   def results_for_select
-    results.map{|result| [result.name, result.id]}
+    results.map { |result| [result.name, result.id] }
   end
 
   def completion
@@ -77,7 +77,7 @@ class Campaign < ActiveRecord::Base
       end
 
       #assign new contacts to agent
-      contacts_list = contacts.available_to_assign      
+      contacts_list = contacts.available_to_assign
       while (not agent.with_role.has_max_contacts_in_campaign? self) and contacts_list.present?
         contacts_list.shift.assign_agent(agent.id)
       end
@@ -94,6 +94,27 @@ class Campaign < ActiveRecord::Base
 
   def can_be_accessed_by?(user)
     user.has_role?(:admin) or creator.id == user.id or has_user_as_member?(user)
+  end
+
+  def create_contacts_from_xls(spreadsheet, current_user)
+    spreadsheet.default_sheet = spreadsheet.sheets.first
+    2.upto(spreadsheet.last_row) do |line|
+      contact = contacts.build
+      Contact::CSV_ATTRS.each_with_index do |field, index|
+        if field == "region"
+          contact.region = Region.find_by_name(spreadsheet.cell(line, index+1))
+        elsif field == "country"
+          contact.country = Country.find_by_name(spreadsheet.cell(line, index+1))
+        else
+          contact.send("#{field}=".to_sym, spreadsheet.cell(line, index+1) ? spreadsheet.cell(line, index+1) : "")
+        end
+      end
+      contact.creator_id = current_user.id
+      contact.creator_type = "User"
+      contact.category_id = category_id
+      contact.creator_name = current_user
+      contact.save
+    end
   end
 
 end

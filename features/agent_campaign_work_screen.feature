@@ -214,7 +214,7 @@ Feature: Agent campaign - calling session
       And I should see translated "agent_work_screen.my_results.index.view.header"
 
     # A list of contacts which have results (including final results) assigend to them
-    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested
+    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested @wip
     Scenario: I should see a list of contacts that have results assigned to them
       Given contact for company "Mleko company" has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
@@ -264,7 +264,9 @@ Feature: Agent campaign - calling session
       And I click hidden link by url regex "/callers\/campaigns\/\d+\/agent_work_screen\/my_results\/\d+\/edit/"
       Then I fill in "contact_call_results_attributes_0_note" with "new note for call result #1"
       And I fill in "contact_result_values_attributes_0_value" with "2011-09-22 12:00"
+      And I open page in browser
       And I press translated "agent_work_screen.my_results.edit.view.button_update"
+      And I open page in browser
       And I click hidden link by url regex "/callers\/campaigns\/\d+\/agent_work_screen\/my_results\/\d+\/edit/"
       And I open page in browser
       And the "contact_call_results_attributes_0_note" field should contain "new note for call result #1"
