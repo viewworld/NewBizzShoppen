@@ -214,7 +214,7 @@ Feature: Agent campaign - calling session
       And I should see translated "agent_work_screen.my_results.index.view.header"
 
     # A list of contacts which have results (including final results) assigend to them
-    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested
+    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested @wip
     Scenario: I should see a list of contacts that have results assigned to them
       Given contact for company "Mleko company" has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"

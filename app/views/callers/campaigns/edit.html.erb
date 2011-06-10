@@ -90,5 +90,9 @@
 
   <% end %>
 
+  <% form_tag import_xls_callers_campaign_contacts_path(@campaign), :method => :post, :multipart => true do %>
+      <%= file_field_tag 'attachment', :accept => 'spreadsheet/ods,spreadsheet/doc,spreadsheet/xdoc' %>
+      <%= submit_tag "import spreadsheet" %>
+  <% end %>
 
 </column-mc:>

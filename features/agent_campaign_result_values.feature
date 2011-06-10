@@ -16,3 +16,6 @@ Feature: Result values
 
   # like  "0,4" for result pr. hour means that 10 hours of work creates 4 result of the given type.
   Scenario: I can specify the expected completed results per hour rate when assigning results to project
+
+  # no matter what currency is selected
+  Scenario: All result values should be stored additionally in Euro

@@ -166,6 +166,7 @@ Scenario: I can email the lead if email information were provided
 @tgn @_tested @selenium
 Scenario: I can send selected lead by email
   When I go to buyer lead purchases
+  Then I execute js for display action block for "lead_purchases_table"
   And I click hidden translated link "lead_buyer.lead_purchases.index.view.share_email_link"
   And I press translated "lead_buyer.bulk_lead_share_by_email.new.view.send_email_button"
   Then I should see translated "flash.bulk_lead_share_by_email.create.notice"
@@ -177,7 +178,7 @@ Scenario: I can use ckeditor with limited toolbar for writting message in share 
 Scenario: I can bulk send selected leads by email
   When I go to buyer lead purchases
   And I check "mark_all"
-  And I click hidden translated link "lead_buyer.lead_purchases.index.view.bulk_share_by_email_link"
+  And I follow translated "lead_buyer.lead_purchases.index.view.bulk_share_by_email_link" within ".bulk_links"
   And I press translated "lead_buyer.bulk_lead_share_by_email.new.view.send_email_button"
   Then I should see translated "flash.bulk_lead_share_by_email.create.notice"
 
