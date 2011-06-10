@@ -167,8 +167,23 @@ en:
       new:
         view:
           header: "Sign in"
+          failed_rpx_label: "Hi %{first_name}! We have no fairleads account associated to your %{account_type} profile, do you want to create a new fairleds account and link it to this %{account_type} account?"
+          failed_rpx_label_2: "or do you want to log in using another account?"
+          link_this_account_link: "link this account"
+          modal_intro_label: "Thank you for linking, now lets set up your account"
+          modal_intro_label_2: "Please chose account type:"
+          modal_sales_manager_link: "Sales manager"
+          modal_sales_manager_label: "(If you want to buy new leads to your business)"
+          modal_procurement_manager_link: "Procurement manager"
+          modal_procurement_manager_label: "(If you want to a bid on you business)"
+          modal_agent_link: "Agent"
+          modal_agent_label: "(If you are really good at creating new leads)"
+
+        controller:
+          successfully_connect_to_social: "Hello %{first_name}! Your %{account_type} account had been connected to your fairleads account with email %{email}. Now you can use any of them to log in."
       signed_in: "Signed in successfully."
       signed_out: "Signed out successfully."
+
     passwords:
       button_update: "Change my password"
       button_create: "Reset password"
@@ -1677,7 +1692,7 @@ en:
     new:
       view:
         title: "Procurement Manager signup"
-        janrain_sign_up_label: "Sign up using:"
+        janrain_sign_up_label: "OR use Facebook, LinedIn or Google to sing in in the future:"
         i_already_have_account: "I already have an account!"
   purchase_manager_accounts:
     new:
@@ -2151,6 +2166,13 @@ en:
         email_sent_successfully: "Your email has been sent"
 
   shared:
+    accounts:
+      rpx_linked_in_note:
+        note: "Note: If you already have an fairleads account and you want to link it with this LinkedIn account, then you should log in and use social link function from My Profile Page."
+        link: "Go to log in page"
+      rpx_message:
+        failed_rpx_label: "Hi %{first_name}! We have no fairleads account associated to your %{account_type} profile, do you want to create a new fairleds account and link it to this %{account_type} account?"
+        failed_rpx_label_2: "If yes, then just fill up the form below."
     lead_templates:
       listing:
         hidden_value: (hidden)
