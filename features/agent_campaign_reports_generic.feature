@@ -1,6 +1,8 @@
 @m13 @reports
 Feature: Reports
 
+  Scenario: I can select which campaign to include in report (active, finished)
+
   Scenario: I can generate campaign results report for given day
 
   Scenario: I can generate campaign results report for a given week
