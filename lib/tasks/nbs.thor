@@ -272,6 +272,10 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
       Currency.create(params)
     end
 
+    if Currency.default_currency.blank?
+      Currency.where(:name => "DKK").first.update_attribute(:global_default, true)
+    end
+
     [{:name => "Call back", :final => false, :generic => true},
      {:name => "Not interested now", :final => false, :generic => true},
      {:name => "Not interested", :final => true, :generic => true},
