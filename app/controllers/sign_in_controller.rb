@@ -13,7 +13,7 @@ class SignInController < ApplicationController
     user = User.find_by_email(data['verifiedEmail']) unless data.blank?
     if user
       user.update_attribute(:rpx_identifier, data['identifier'])
-      flash[:notice] = "Hello #{user.first_name}! Your #{User.social_provider(user.rpx_identifier)} account had been connected to your fairleads account with email #{user.email}. Now you can use any of them to log in."
+      flash[:notice] = t("devise.sessions.new.controller.successfully_connect_to_social", :first_name => user.first_name, :account_type => User.social_provider(user.rpx_identifier), :email => user.email)
       return redirect_to login_path
     end
     @user = user_class_name.new(params[param_key])
