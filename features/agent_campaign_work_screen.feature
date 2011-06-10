@@ -264,7 +264,9 @@ Feature: Agent campaign - calling session
       And I click hidden link by url regex "/callers\/campaigns\/\d+\/agent_work_screen\/my_results\/\d+\/edit/"
       Then I fill in "contact_call_results_attributes_0_note" with "new note for call result #1"
       And I fill in "contact_result_values_attributes_0_value" with "2011-09-22 12:00"
+      And I open page in browser
       And I press translated "agent_work_screen.my_results.edit.view.button_update"
+      And I open page in browser
       And I click hidden link by url regex "/callers\/campaigns\/\d+\/agent_work_screen\/my_results\/\d+\/edit/"
       And I open page in browser
       And the "contact_call_results_attributes_0_note" field should contain "new note for call result #1"
