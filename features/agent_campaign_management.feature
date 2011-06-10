@@ -520,6 +520,7 @@ Feature: Agent campaign - management
       Then I execute js for display action block for "campaigns"
       Then I follow translated "campaigns.index.result"
       Then I fill in "date_from" with "2011-01-01"
+      Then I press translated "campaigns.show.search_button"
       Then I fill in "date_to" with "2011-01-03"
       Then I press translated "campaigns.show.search_button"
       Then I should see "01.01" within "#call_results"
