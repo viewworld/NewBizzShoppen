@@ -31,11 +31,11 @@
                 <ol class="no_pdd">
                   <li class="date">
                     <%= label_tag t("campaigns.show.search.date_from") %>
-                    <%= text_field_tag :date_from, @date_from, :class => "datepicker", :onchange => "this.form.submit()" %>
+                    <%= text_field_tag :date_from, @date_from, :class => "datepicker", :onchange => "if($('#date_from').val() != '') {this.form.submit();}" %>
                   </li>
                   <li class="date">
                     <%= label_tag t("campaigns.show.search.date_to") %>
-                    <%= text_field_tag :date_to, @date_to, :class => "datepicker", :onchange => "this.form.submit()" %>
+                    <%= text_field_tag :date_to, @date_to, :class => "datepicker", :onchange => "if($('#date_to').val() != '') {this.form.submit();}" %>
                   </li>
                   <li class="boolean">
                     <%= check_box_tag :final, "yes", @final %>

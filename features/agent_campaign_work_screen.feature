@@ -22,6 +22,7 @@ Feature: Agent campaign - calling session
     Scenario: New contacts should be assigned to agent automatically
       Given user "translator_call_centre_agent@nbs.com" has not contacts assigned in campaign "Testing One"
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      And I wait 1 second
       Then user "translator_call_centre_agent@nbs.com" has contacts assigned in campaign "Testing One"
       And I follow translated "agent_work_screen.index.show_current_call_sheet"
       And I should see "Mleko company"

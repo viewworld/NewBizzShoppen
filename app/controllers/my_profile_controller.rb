@@ -21,14 +21,15 @@ class MyProfileController < SecuredController
     data = params[:token] ? RPXNow.user_data(params[:token], :raw_response => true)['profile'] : nil
     unless data[:identifier].blank?
       current_user.update_attribute(:rpx_identifier, data[:identifier])
-      flash[:notice] = "Your account is now connected to #{User.social_provider(current_user.rpx_identifier)}"
+      flash[:notice] = I18n.t("my_profile.social_link.controller.successful_link_notice", :account_type => User.social_provider(current_user.rpx_identifier))
     end
     redirect_to my_profile_path
   end
 
   def social_unlink
+    temp_rpx_identifier = current_user.rpx_identifier
     current_user.update_attribute(:rpx_identifier, nil)
-    flash[:notice] = "Your account is no longer connected to any of social media services."
+    flash[:notice] = I18n.t("my_profile.social_unlink.controller.successful_unlink_notice", :account_type => User.social_provider(temp_rpx_identifier))
     redirect_to my_profile_path
   end
 
