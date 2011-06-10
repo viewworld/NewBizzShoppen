@@ -35,7 +35,7 @@
         <%= form.input :team_buyers, :hint => hint_for("my_profile", :team_buyers), :as => :boolean if current_user.has_role?(:customer) %>
         <%= form.input :time_zone, :wrapper_html => { :class => "select"}, :input_html => {:style => "width: 240px"} %>
 
-        <%= form.input :lead_notification_type, :as => :radio, :collection => User::LEAD_NOTIFICATION_TYPES.map { |lnt| [t("users.lead_notification_types.notification_type#{lnt}"), lnt] } %>
+        <%= form.input :lead_notification_type, :as => :radio, :collection => User::LEAD_NOTIFICATION_TYPES.map { |lnt| [t("users.lead_notification_types.notification_type#{lnt}"), lnt] }, :wrapper_html => {:class => "collection"} %>
       </ol>
     </fieldset>
   </div>
