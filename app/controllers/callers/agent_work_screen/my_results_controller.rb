@@ -5,7 +5,7 @@ class Callers::AgentWorkScreen::MyResultsController < Callers::AgentWorkScreenCo
     @contact = current_user.all_contacts_with_results.find(params[:id], :readonly => false)
 
     respond_to do |format|
-      if @contact.update_attributes!(params[:contact])
+      if @contact.update_attributes(params[:contact])
         format.html { redirect_to callers_campaign_agent_work_screen_my_results_path(@contact.campaign) }
       else
         format.html { render("new") }
