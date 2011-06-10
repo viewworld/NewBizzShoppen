@@ -1,23 +1,7 @@
-<div class="fltl">
+<div class="fltr pdd_5">
   <%= form_for callers_campaign_agent_work_screen_index_path(campaign), :html => {:method => :get} do %>
       <label><%= t("agent_work_screen.index.select_campaign") %></label>
       <%= select_tag :change_campaign_id, options_for_select(Campaign.available_for_user(agent).map { |c| [c.name, c.id] }, campaign.id) %>
-  <% end %>
-</div>
-
-<div class="fltr">
-
-    <% if @contact %>
-        <% form_for CallResult.new, :url => new_callers_campaign_agent_work_screen_contact_call_result_path(@campaign, @contact), :html => {:method => :get, :remote => true, :id => "new_result_form"} do %>
-            <%= select_tag :result_id, options_for_select(@campaign.results_for_select) %>
-            <%= bt_link_to nil, t("call_results.edit.button_new_result"), "javascript:void(0)", :onclick => "$(this).parents('form').submit()" %>
-        <% end %>
-    <% end %>
-
-  <%= bt_link_to nil, t("agent_work_screen.index.show_briefing_area"), "javascript:void(0)", :onclick => "$.get('/callers/campaigns/#{campaign.id}/campaigns_description.js')" %>
-
-  <% if current_user.has_any_role?(:agent, :call_centre_agent, :purchase_manager) %>
-      <%= bt_link_to nil, t("call_results.edit.my_results"), callers_campaign_agent_work_screen_my_results_path(@campaign) %>
   <% end %>
 </div>
 

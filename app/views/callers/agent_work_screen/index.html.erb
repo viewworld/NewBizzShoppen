@@ -1,20 +1,23 @@
 <column-mc:>
-  <header back="true" backurl="#{callers_campaigns_path}"><%= t("agent_work_screen.index.title") %> - <%= @campaign.name %></header>
-
-  <div id="switch_campaign_form">
-    <%= render :partial => "callers/agent_work_screen/switch_campaign_form", :locals => @locals %>
-  </div>
-
-  <clb/>
+  <header back="true" backurl="#{callers_campaigns_path}">
+    <param:content>
+      <%= t("agent_work_screen.index.title") %> - <%= @campaign.name %>
+    </param:content>
+    <param:actions>
+      <div id="switch_campaign_form">
+        <%= render :partial => "callers/agent_work_screen/switch_campaign_form", :locals => @locals %>
+      </div>
+    </param:actions>
+  </header>
 
   <div id="flashes">
-      <div class="flash flash_notice" style="display:none">
-      </div>
+    <div class="flash flash_notice" style="display:none">
+    </div>
 
-      <div class="flash flash_alert" style="display:none">
-      </div>
+    <div class="flash flash_alert" style="display:none">
+    </div>
   </div>
-  
+
   <div id="agent_work_screen_dashboard">
     <div id="contact_info">
       <%= render :partial => "callers/agent_work_screen/contact_form", :locals => @locals if @contact %>
@@ -53,9 +56,9 @@
 <js:>
   <script type="text/javascript">
       <% if !@contact and @pending_contacts.any? %>
-        display_notice("<%= escape_javascript(t("contacts.show.flash.you_have_only_callback_contacts")) %>", false);
+      display_notice("<%= escape_javascript(t("contacts.show.flash.you_have_only_callback_contacts")) %>", false);
       <% elsif !@contact%>
-        display_notice("<%= escape_javascript(t("contacts.show.flash.you_have_no_contacts_assigned")) %>", false);
+      display_notice("<%= escape_javascript(t("contacts.show.flash.you_have_no_contacts_assigned")) %>", false);
       <% end %>
 
       $("#change_campaign_id").live("change", function() {

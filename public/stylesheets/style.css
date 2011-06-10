@@ -1435,6 +1435,12 @@ a.bt_max
     margin-left: 8px;
 }
 
+.frm .frm_head .frm_hc select
+{
+    position: relative;
+    top: 3px;
+}
+
 
 /* --- div.bt - submit ---
 --------------------------------------------------------------------------------- */
