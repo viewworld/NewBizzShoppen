@@ -16,3 +16,9 @@ Feature: Cost calculation
 
   @$_administrator @$_call_centre
   Scenario: I can specify agent's billing rate
+
+  @$_administrator @$_call_centre
+  Scenario: All rates should be stored additionally in Euro for reporting
+
+  @$_call_centre_agent
+  Scenario: Agent timesheets should include current agent's billing rate
