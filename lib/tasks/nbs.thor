@@ -20,8 +20,6 @@ Settings.default_payout_delay = 0 if Settings.default_payout_delay.nil?
     #Certification
     Settings.resend_certification_notification_after_days = 15 if Settings.resend_certification_notification_after_days.nil?
     Settings.expire_certification_notification_after_days = 15 if Settings.expire_certification_notification_after_days.nil?
-    #Youtube introduction
-    Settings.youtube_introduction = "" if Settings.youtube_introduction.nil?
 
     Country.find_or_create_by_name("Denmark", :locale => "dk", :detailed_locale => "dk", :vat_rate => VatRate.new(:rate => 25))
     Country.find_or_create_by_name("United Kingdom", :locale => "en", :detailed_locale => "gb", :vat_rate => VatRate.new(:rate => 20))
