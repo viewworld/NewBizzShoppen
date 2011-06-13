@@ -72,7 +72,7 @@ Feature: Agent campaign - calling session
     @_done @_tested @selenium
     Scenario: I can see new result form for specifying notes and result
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
-      And I select "Call back" from "result_id"
+      And I select "Call back" from "selected_result_id"
       And I follow translated "call_results.edit.button_new_result"
       And I should see translated "call_results.new.form_title"
       And I fill in "Call back date" field with future datetime
@@ -127,7 +127,7 @@ Feature: Agent campaign - calling session
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I follow translated "agent_work_screen.index.show_briefing_area"
       Then I should see "Briefing content here"
-      And I follow translated "agent_work_screen.index.show_briefing_area"
+      And I follow translated "agent_work_screen.index.show_briefing_area" within "#briefing_area_content"
       Then I should see translated "agent_work_screen.index.call_log"
 
     #5460
@@ -153,7 +153,7 @@ Feature: Agent campaign - calling session
     @requested @m11 @ao @_done @_tested
     Scenario: I should be able to add new result called 'Send material' and upload new material or choose one from campaign repository
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
-      And I select "Send material" from "result_id"
+      And I select "Send material" from "selected_result_id"
       And I follow translated "call_results.edit.button_new_result"
       And I follow translated "materials.views.index.material_repository"
       And I wait 1 second
@@ -214,7 +214,7 @@ Feature: Agent campaign - calling session
       And I should see translated "agent_work_screen.my_results.index.view.header"
 
     # A list of contacts which have results (including final results) assigend to them
-    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested @wip
+    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested
     Scenario: I should see a list of contacts that have results assigned to them
       Given contact for company "Mleko company" has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
