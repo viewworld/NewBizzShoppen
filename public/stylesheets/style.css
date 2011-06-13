@@ -1761,3 +1761,21 @@ span.cke_skin_kama
 {
     color: #008fff;
 }
+
+/* --- rpxnow ---
+-------------------------------------------------------------------------------- */
+
+.profile_social
+{
+    padding: 5px 0 10px 50px;
+}
+
+.profile_social .ico
+{
+    vertical-align: top;
+}
+
+.rpxnow img
+{
+    vertical-align: middle;
+}
