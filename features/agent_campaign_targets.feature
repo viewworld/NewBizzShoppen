@@ -1,4 +1,4 @@
-@m13 @campaign_targets @$_administrator
+@m13 @campaign_targets @$_administrator @requested
 Feature: Agent campaign targets
 
   Scenario: When creating new campaign I can select a currency
