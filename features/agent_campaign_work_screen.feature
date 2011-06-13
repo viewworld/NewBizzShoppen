@@ -192,16 +192,16 @@ Feature: Agent campaign - calling session
 #      And I follow translated "call_results.new.save_button"
 #      And last email sent should have been sent to recipient "new@contact.com"
 
-    @requested @m13
+    @requested @m13 @after_m12_presentation
     Scenario: I can see files from "Materials Set" prepared by call centre
 
-    @requested @m13
+    @requested @m13 @after_m12_presentation
     Scenario: I can select by checkboxes which files from "Materials Set" will be included in email
 
-    @requested @m13
+    @requested @m13 @after_m12_presentation
     Scenario: I can upload and add new files to the set for the result being created
 
-    @requested @m13
+    @requested @m13 @after_m12_presentation
     Scenario: I can click "Customize email" button and edit all email fields in modal box
 
     # 5168

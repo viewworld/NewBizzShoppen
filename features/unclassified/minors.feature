@@ -20,5 +20,5 @@ Scenario: After M11 presentation minor corrections
 # "Subscribe to category", rename to "Update by email"
 # I can access materials repository from cmapaign edit screen
 # Import contact, put file browser for excel below text area
-@m13 @requested @minor_changes
+@m13 @requested @minor_changes @after_m12_presentation
 Scenario: After M12 presentation minor corrections
