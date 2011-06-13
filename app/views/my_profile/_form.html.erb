@@ -33,9 +33,11 @@
         <% end %>
         <%= form.input :newsletter_on, :hint => hint_for("my_profile", :newsletter_on), :as => :boolean %>
         <%= form.input :team_buyers, :hint => hint_for("my_profile", :team_buyers), :as => :boolean if current_user.has_role?(:customer) %>
-        <%= form.input :time_zone, :wrapper_html => { :class => "select"}, :input_html => {:style => "width: 240px"} %>
+        <%= form.input :time_zone, :wrapper_html => {:class => "select"}, :input_html => {:style => "width: 240px"} %>
 
-        <%= form.input :lead_notification_type, :as => :radio, :collection => User::LEAD_NOTIFICATION_TYPES.map { |lnt| [t("users.lead_notification_types.notification_type#{lnt}"), lnt] }, :wrapper_html => {:class => "collection"} %>
+        <% if current_user.buyer? %>
+            <%= form.input :lead_notification_type, :as => :radio, :collection => User::LEAD_NOTIFICATION_TYPES.map { |lnt| [t("users.lead_notification_types.notification_type#{lnt}"), lnt] }, :wrapper_html => {:class => "collection"} %>
+        <% end %>
       </ol>
     </fieldset>
   </div>
@@ -81,22 +83,20 @@
     <clb/>
 <% end %>
 
-<% if current_user.rpx_identifier.blank?  %>
-    <fieldset class="inputs no_pdd" style="margin-top:5px;">
-      <ol class="no_pdd">
-        <li class="string social_login" style="border-bottom:none;margin-bottom:0px">
-          <label style="width:400px;margin-left:60px"><%= t('my_profile.edit.view.social_link_label') %></label>
-
-          <div class="txt">
-            <% unless Rails.env.test? %>
-                <%= link_to_rpx image_tag("icons/social_login.png"), social_link_my_profile_url %>
-                <%= javascript_include_rpx social_link_my_profile_url %>
-            <% end %>
-          </div>
-        </li>
-      </ol>
-    </fieldset>
+<% if current_user.rpx_identifier.blank? %>
+    <div class="profile_social">
+      <%= t('my_profile.edit.view.social_link_label') %>
+      <% unless Rails.env.test? %>
+          <%= link_to_rpx image_tag("icons/social_login.png"), social_link_my_profile_url %>
+          <%= javascript_include_rpx social_link_my_profile_url %>
+      <% end %>
+    </div>
 <% else %>
-   <p style="padding: 5px 0 10px 60px"><%= t("my_profile.edit.view.social_unlink_label", :account_type =>  User.social_provider(current_user.rpx_identifier)) %> <%= link_to t("my_profile.edit.view.social_unlink_link"), social_unlink_my_profile_path, :method => :put %></p>
+    <div class="profile_social">
+      <%= image_tag("icons/fb_icon.png", :class => "ico") %>
+      <%#= image_tag("icons/in_icon.png", :class => "ico") %>
+      <%#= image_tag("icons/google_icon.png", :class => "ico") %>
+      <%= t("my_profile.edit.view.social_unlink_label", :account_type =>  User.social_provider(current_user.rpx_identifier)) %> <%= link_to t("my_profile.edit.view.social_unlink_link"), social_unlink_my_profile_path, :method => :put %>
+    </div>
 <% end %>
 
