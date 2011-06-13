@@ -704,4 +704,7 @@ Feature: Agent campaign - management
           When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
           And I should see "Edit campaign: Campaign for call centre"
 
+        @m13 @requested
+        Scenario: I can define a default set of materials to be included in emails
+
 
