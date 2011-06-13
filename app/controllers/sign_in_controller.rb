@@ -18,9 +18,12 @@ class SignInController < ApplicationController
     end
     @user = user_class_name.new(params[param_key])
     @user.set_fields_for_rpx(data) unless data.blank?
+    if request.referer.to_s.include?("certification_accounts")
+      @user.skip_email_verification = "1"
+    end
     respond_to do |format|
       if @user.save
-        flash[:notice] = @user.rpx_identifier ? "Your account has been successfully created! Now you can log in." : success_notice
+        flash[:notice] = @user.rpx_identifier.blank? ? success_notice : "Your account has been successfully created! Now you can log in."
         format.html { redirect_to(path) }
       else
         format.html { render("new") }

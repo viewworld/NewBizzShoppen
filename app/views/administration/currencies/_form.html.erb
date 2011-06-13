@@ -9,7 +9,7 @@
       <%= form.input :unit_name %>
       <%= form.input :subunit_name %>
       <%= form.input :active %>
-      <%= form.input :global_default %>
+      <%= form.input :global_default, :disabled => !@currency.active %>
     </ol>
   </fieldset>
 </div>
