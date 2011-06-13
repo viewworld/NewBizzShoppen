@@ -50,8 +50,10 @@
 
   </div>
 
-  <% form_for CallResult.new, :url => new_callers_campaign_agent_work_screen_contact_call_result_path(@campaign, @contact), :html => {:method => :get, :remote => true, :id => "new_result_form"} do %>
-      <%= hidden_field_tag :result_id %>
+  <% if @contact %>
+      <% form_for CallResult.new, :url => new_callers_campaign_agent_work_screen_contact_call_result_path(@campaign, @contact), :html => {:method => :get, :remote => true, :id => "new_result_form"} do %>
+          <%= hidden_field_tag :result_id %>
+      <% end %>
   <% end %>
 
 </column-mc:>
