@@ -204,7 +204,6 @@ Feature: Agent campaign - calling session
     @m11 @requested @ao @_done @_tested
     Scenario: I can see new result form on the top of the page
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
-      And I open page in browser
       Then I should see CSS path ".frm_head #selected_result_id"
 
     # as call centre agent
