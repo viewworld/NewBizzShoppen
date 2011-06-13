@@ -93,9 +93,9 @@
     </div>
 <% else %>
     <div class="profile_social">
-      <%= image_tag("/images/icons/fb_icon.png", :class => "ico") %>
-      <%#= image_tag("/images/icons/in_icon.png", :class => "ico") %>
-      <%#= image_tag("/images/icons/google_icon.png", :class => "ico") %>
+      <%= image_tag("icons/fb_icon.png", :class => "ico") %>
+      <%#= image_tag("icons/in_icon.png", :class => "ico") %>
+      <%#= image_tag("icons/google_icon.png", :class => "ico") %>
       <%= t("my_profile.edit.view.social_unlink_label", :account_type =>  User.social_provider(current_user.rpx_identifier)) %> <%= link_to t("my_profile.edit.view.social_unlink_link"), social_unlink_my_profile_path, :method => :put %>
     </div>
 <% end %>
