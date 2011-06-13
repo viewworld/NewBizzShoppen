@@ -86,7 +86,7 @@ Scenario: I can play youtube video in a modal box
   And I press translated "administration.introduction_video.new.view.button_create"
   And I make sure current locale is "en"
   And I am on the home page
-  And I follow "introduction_video"
+  And I follow "Introduction video"
   And I wait 1 second
   Then I should see CSS path "#cboxLoadedContent"
 
