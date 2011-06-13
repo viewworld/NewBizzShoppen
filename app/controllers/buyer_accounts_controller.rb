@@ -1,7 +1,7 @@
 class BuyerAccountsController < SignInController
 
   def new
-    @user = User::Customer.new(:newsletter_on => true)
+    super(User::Customer)
   end
 
   def create
