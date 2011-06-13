@@ -440,9 +440,9 @@ class User < ActiveRecord::Base
   end
 
   def set_fields_for_rpx(data)
-    self.email = data['verifiedEmail']
-    self.first_name = data['name']['givenName']
-    self.last_name = data['name']['familyName']
+    self.email = data['verifiedEmail'] if self.email.blank?
+    self.first_name = data['name']['givenName'] if self.first_name.blank?
+    self.last_name = data['name']['familyName'] if self.last_name.blank?
     self.rpx_identifier = data['identifier']
     self.newsletter_on = true
     new_radnom_password = generate_token(12)
