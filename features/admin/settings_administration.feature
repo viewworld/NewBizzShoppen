@@ -77,6 +77,9 @@ Scenario: I can see a jpg thumbnail of a introduction video on home page
   And I am on the home page
   Then I should see "2" elements within CSS path ".introduction_video"
 
+@requested @m13
+Scenario: I can upload custom jpeg image to be displayed on home page for video introduction
+
 #5919
 @requested @$_all @m12 @ao @_done @_tested @selenium
 Scenario: I can play youtube video in a modal box
