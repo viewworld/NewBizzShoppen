@@ -77,13 +77,13 @@ Feature: User Account - Profile edit
   #Go to their profile page
   #Clik on link to thid party login (Display facbokk, linkeid and google icons)
   #The user login and their facebook account is linked to the apporpiate sevice.
-  @requested @$_all @m12 @janrain @is
+  @requested @$_all @m12 @janrain @is @_done @not_testable
   Scenario: I can link my fairleads account with Facebook/Google/Linkedin account
 
-  @requested @$_all @m12 @janrain @is
+  @requested @$_all @m12 @janrain @is @_done @not_testable
   Scenario: I can unlink Facebook/Google/Linkedin account from my fairleads account
 
-  @requested @$_all @m12 @janrain @is
+  @requested @$_all @m12 @janrain @is @_done @not_testable
   Scenario: Only one Facebook/Google/Linkedin account can be connected to fairleads account
     
   @m12 @$_all @is
