@@ -1,4 +1,4 @@
-@m13 @agent_report
+@m13 @agent_report @requested
 Feature: Agent report
 
   Scenario: I can see all values per agent per campaign
