@@ -20,6 +20,5 @@ Scenario: After M11 presentation minor corrections
 # "Subscribe to category", rename to "Update by email"
 # I can access materials repository from cmapaign edit screen
 # Import contact, put file browser for excel below text area
-# Settings remove youtube video from top settings on beta/www
 @m13 @requested @minor_changes
 Scenario: After M12 presentation minor corrections

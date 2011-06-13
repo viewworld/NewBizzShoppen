@@ -707,4 +707,13 @@ Feature: Agent campaign - management
         @m13 @requested
         Scenario: I can define a default set of materials to be included in emails
 
+        @m13 @requested @$_call_centre
+        Scenario: Call centre can see results from his agents
+
+        @m13 @requested @$_admin
+        Scenario: Admin call see results from all agents
+
+        @m13 @requested @$_call_centre @$_admin
+        Scenario: I can select for which agents display the results
+
 
