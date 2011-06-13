@@ -12,8 +12,11 @@
       <li>
         <%= bt_link_to nil, t("agent_work_screen.index.show_pending_calls"), "javascript:void(0)", :onclick => "displayWorkScreenTab('#pending_calls')" %>
       </li>
-      <li class="last">
+      <li>
         <%= bt_link_to nil, t("agent_work_screen.index.show_completed_contacts"), "javascript:void(0)", :onclick => "displayWorkScreenTab('#completed_contacts')" %>
+      </li>
+      <li class="last">
+        <%= bt_link_to nil, t("agent_work_screen.index.show_my_results"), callers_campaign_agent_work_screen_my_results_path(campaign) %>
       </li>
     </ul>
   </param:actions>

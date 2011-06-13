@@ -7,8 +7,4 @@
     <% end %>
 
   <%= bt_link_to nil, t("agent_work_screen.index.show_briefing_area"), "javascript:void(0)", :onclick => "$.get('/callers/campaigns/#{campaign.id}/campaigns_description.js')", :class => "fltr" %>
-
-  <% if current_user.has_any_role?(:agent, :call_centre_agent, :purchase_manager) %>
-      <%= bt_link_to nil, t("call_results.edit.my_results"), callers_campaign_agent_work_screen_my_results_path(@campaign), :class => "fltr" %>
-  <% end %>
 </div>

@@ -21,5 +21,5 @@ Scenario: After M11 presentation minor corrections
 # I can access materials repository from cmapaign edit screen
 # Import contact, put file browser for excel below text area
 # Settings remove youtube video from top settings on beta/www
-@m13 @requested @minor_changes
+@m13 @requested @minor_changes @tgn
 Scenario: After M12 presentation minor corrections

@@ -343,6 +343,7 @@ en:
       results: "Results"
       description_and_briefing: "Description & briefing"
       send_material_email_template: "Edit 'Send material' email template"
+      materials_repository: "Materials repository"
     index:
       title: Campaigns
       edit: Edit
@@ -380,6 +381,7 @@ en:
       briefing_area: "Briefing"
       hide_briefing_area: "Go to agent"
       show_briefing_area: "Show/Hide briefing"
+      show_my_results: "My results"
     my_results:
       index:
         view:
@@ -402,6 +404,7 @@ en:
       title_import: Import contacts
       create_button: Create
       import_button: Import
+      import_from_excel_button: Import from spreadsheet
       cancel_button: Back to campaign
       button_show_import_contacts: import contacts
       button_show_new_contact: create new contact
@@ -617,7 +620,7 @@ en:
       featured_header: Featured leads
       contact_requests_for_header: "My contact requests"
       subscribe_to_rss: Subscribe this category to RSS
-      subscribe_to_category_cb: Subscribe to category
+      subscribe_to_category_cb: Update by email
     show:
       view:
         header: Lead details
