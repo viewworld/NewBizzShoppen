@@ -1,5 +1,5 @@
 <column-mc:>
-  <header back="true"><%= t("purchase_manager_accounts.new.view.title") %></header>
+  <%= render :partial => "shared/accounts/new_account_title", :locals => {:accounts_type => "purchase_manager_accounts", :user => @user } %>
 
   <div class="pdd_5 no_pdd_b">
     <%= blurb('blurb_sign_up') %>
