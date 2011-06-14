@@ -2,11 +2,11 @@
     <%= semantic_form_for contact, :url => url_for(:controller => "#{namespace}/agent_work_screen/contacts", :action => :update, :campaign_id => campaign, :id => contact), :html => { :method => :put }, :remote => true do |form| %>
         <frm title="#{contact.company_name}">
             <param:header>
-              <%= render :partial => "callers/agent_work_screen/results_actions", :locals => @locals %>              
-              <div class="fltr">
+              <div class="fltr ta_r">
+                <%= render :partial => "callers/agent_work_screen/results_actions", :locals => @locals %>
                 <%= contact.higher_contact ? bt_link_to(nil, t("contacts.edit.prev"), url_for(:controller => "#{namespace}/agent_work_screen/contacts", :action => :show, :campaign_id => campaign, :id => contact.higher_contact), :remote => true, :id => "prev_contact") : "" %>
                 <%= contact.lower_contact ? bt_link_to(nil, t("contacts.edit.next"), url_for(:controller => "#{namespace}/agent_work_screen/contacts", :action => :show, :campaign_id => campaign, :id => contact.lower_contact), :remote => true, :id => "next_contact") : "" %>
-              </div>                            
+              </div>
             </param:header>
           <param:content>
             <%= render :partial => '/shared/leads/form', :locals => {:form => form, :campaign => campaign, :contact => contact} %>
