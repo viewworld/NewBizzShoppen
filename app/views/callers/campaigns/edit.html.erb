@@ -4,6 +4,7 @@
   <%= semantic_form_for [:callers, @campaign], :method => :put do |form| %>
       <frm title="Edit">
         <param:header>
+          <%= bt_link_to nil, t("campaigns.edit.materials_repository"), callers_campaign_materials_path(@campaign), :class => "fltr" %>
           <%= bt_link_to nil, t("campaigns.edit.description_and_briefing"), edit_callers_campaign_campaigns_description_path(@campaign), :class => "fltr" %>
           <% if @campaign.send_material_email_template %>
               <%= bt_link_to nil, t("campaigns.edit.send_material_email_template"), edit_callers_campaign_email_template_path(@campaign, @campaign.send_material_email_template), :class => "fltr" %>
@@ -47,13 +48,6 @@
       <% end %>
     </param:actions>
   </header>
-
-  <div class="frm_tiny fltr pdd_5">
-  <% form_tag import_xls_callers_campaign_contacts_path(@campaign), :method => :post, :multipart => true do %>
-      <%= file_field_tag 'attachment', :accept => 'spreadsheet/ods,spreadsheet/doc,spreadsheet/xdoc', :class => "fltl" %>
-      <%= bt_link_to nil, "import spreadsheet", "javascript:void(0)", :onclick => "$(this).parents('form').submit()", :class => "bt_grey", :style => "margin-left: 5px" %>
-  <% end %>
-  </div>        
 
   <%= form_for @search, :url => edit_callers_campaign_path(@campaign) do |f| %>
       <p>

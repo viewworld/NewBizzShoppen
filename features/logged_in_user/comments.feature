@@ -59,5 +59,6 @@ Scenario: When I open the tab with comments then the comments listed there are m
   And I fill in "search_with_keyword" with "lead#1"
   And I press translated "agent.leads.index.view.search_button"
   And I follow translated "comments.shared.show_comments"
+  And I wait 2 second
   And comments for lead "Lead#1" should be read by user "agent1@nbs.com"
 

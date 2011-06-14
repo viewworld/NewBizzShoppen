@@ -38,6 +38,26 @@
         </frm>
     <% end %>
 
+
+      <% form_tag import_xls_callers_campaign_contacts_path(@campaign), :method => :post, :multipart => true do %>
+        <frm title="Create new from spreadsheet">
+          <param:content>
+            <div class="pdd_10 no_pdd_t">
+              <fieldset class="inputs labels_ta_r labels_180">
+                <ol class="align_inputs">
+                  <%= file_field_tag 'attachment', :accept => 'spreadsheet/ods,spreadsheet/doc,spreadsheet/xdoc', :class => "fltl" %>
+                </ol>
+              </fieldset>
+            </div>
+          </param:content>
+          <param:actions>
+            <ibt c="fltri" icon="save">
+              <%= submit_tag t("contacts.new.import_from_excel_button"), :name => "commit_create" %>
+            </ibt>
+            <%= bt_link_to nil, t("campaigns.new.button_cancel"), edit_callers_campaign_path(@campaign), :class => "bt_grey fltr" %>
+          </param:actions>
+        </frm>
+      <% end %>
   </div>
 
   <div <%= "style='display:none;'" if @import %> id="create_container">

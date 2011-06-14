@@ -704,4 +704,16 @@ Feature: Agent campaign - management
           When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
           And I should see "Edit campaign: Campaign for call centre"
 
+        @m13 @requested @after_m12_presentation
+        Scenario: I can define a default set of materials to be included in emails
+
+        @m13 @requested @$_call_centre @after_m12_presentation
+        Scenario: Call centre can see results from his agents
+
+        @m13 @requested @$_admin @after_m12_presentation
+        Scenario: Admin call see results from all agents
+
+        @m13 @requested @$_call_centre @$_admin @after_m12_presentation
+        Scenario: I can select for which agents display the results
+
 

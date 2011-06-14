@@ -130,4 +130,13 @@ module CategoriesHelper
     end
   end
 
+  def default_category_for_select(categories)
+    selected_category = Category.find_by_id(session[:selected_category].to_i)
+    if selected_category and categories.include?(selected_category) and selected_category.can_publish_leads?
+      selected_category.id
+    else
+      categories.detect { |c| c.can_publish_leads? }.id
+    end
+  end
+
 end

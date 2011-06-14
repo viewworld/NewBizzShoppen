@@ -208,6 +208,7 @@ Nbs::Application.routes.draw do
     member do
       post 'social_link'
       put 'social_unlink'
+      get 'unlink'
     end
   end
 

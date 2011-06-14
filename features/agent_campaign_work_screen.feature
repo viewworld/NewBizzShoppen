@@ -72,7 +72,7 @@ Feature: Agent campaign - calling session
     @_done @_tested @selenium
     Scenario: I can see new result form for specifying notes and result
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
-      And I select "Call back" from "result_id"
+      And I select "Call back" from "selected_result_id"
       And I follow translated "call_results.edit.button_new_result"
       And I should see translated "call_results.new.form_title"
       And I fill in "Call back date" field with future datetime
@@ -127,7 +127,7 @@ Feature: Agent campaign - calling session
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I follow translated "agent_work_screen.index.show_briefing_area"
       Then I should see "Briefing content here"
-      And I follow translated "agent_work_screen.index.show_briefing_area"
+      And I follow translated "agent_work_screen.index.show_briefing_area" within "#briefing_area_content"
       Then I should see translated "agent_work_screen.index.call_log"
 
     #5460
@@ -153,7 +153,7 @@ Feature: Agent campaign - calling session
     @requested @m11 @ao @_done @_tested
     Scenario: I should be able to add new result called 'Send material' and upload new material or choose one from campaign repository
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
-      And I select "Send material" from "result_id"
+      And I select "Send material" from "selected_result_id"
       And I follow translated "call_results.edit.button_new_result"
       And I follow translated "materials.views.index.material_repository"
       And I wait 1 second
@@ -192,6 +192,18 @@ Feature: Agent campaign - calling session
 #      And I follow translated "call_results.new.save_button"
 #      And last email sent should have been sent to recipient "new@contact.com"
 
+    @requested @m13 @after_m12_presentation
+    Scenario: I can see files from "Materials Set" prepared by call centre
+
+    @requested @m13 @after_m12_presentation
+    Scenario: I can select by checkboxes which files from "Materials Set" will be included in email
+
+    @requested @m13 @after_m12_presentation
+    Scenario: I can upload and add new files to the set for the result being created
+
+    @requested @m13 @after_m12_presentation
+    Scenario: I can click "Customize email" button and edit all email fields in modal box
+
     # 5168
     @m11 @requested @ao @tested_elsewhere @_done
     Scenario: I can see a message when there are no more contacts in my campaign
@@ -204,7 +216,7 @@ Feature: Agent campaign - calling session
     @m11 @requested @ao @_done @_tested
     Scenario: I can see new result form on the top of the page
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
-      Then I should see CSS path "#switch_campaign_form #result_id"
+      Then I should see CSS path ".frm_head #selected_result_id"
 
     # as call centre agent
     @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested
@@ -214,7 +226,7 @@ Feature: Agent campaign - calling session
       And I should see translated "agent_work_screen.my_results.index.view.header"
 
     # A list of contacts which have results (including final results) assigend to them
-    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested @wip
+    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested
     Scenario: I should see a list of contacts that have results assigned to them
       Given contact for company "Mleko company" has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"

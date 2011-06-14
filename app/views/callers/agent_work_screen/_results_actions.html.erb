@@ -1,14 +1,10 @@
 <div class="fltr">
     <% if @contact %>
-        <% form_for CallResult.new, :url => new_callers_campaign_agent_work_screen_contact_call_result_path(@campaign, @contact), :html => {:method => :get, :remote => true, :id => "new_result_form"} do %>
-            <%= select_tag :result_id, options_for_select(@campaign.results_for_select) %>
-            <%= bt_link_to nil, t("call_results.edit.button_new_result"), "javascript:void(0)", :onclick => "$(this).parents('form').submit()" %>
-        <% end %>
+
+            <%= select_tag :selected_result_id, options_for_select(@campaign.results_for_select) %>
+            <%= bt_link_to nil, t("call_results.edit.button_new_result"), "javascript:void(0)", :onclick => "$('#result_id').val($('#selected_result_id').val());$('#new_result_form').submit()" %>
+
     <% end %>
 
   <%= bt_link_to nil, t("agent_work_screen.index.show_briefing_area"), "javascript:void(0)", :onclick => "$.get('/callers/campaigns/#{campaign.id}/campaigns_description.js')", :class => "fltr" %>
-
-  <% if current_user.has_any_role?(:agent, :call_centre_agent, :purchase_manager) %>
-      <%= bt_link_to nil, t("call_results.edit.my_results"), callers_campaign_agent_work_screen_my_results_path(@campaign), :class => "fltr" %>
-  <% end %>
 </div>
