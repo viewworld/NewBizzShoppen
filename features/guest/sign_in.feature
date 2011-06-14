@@ -122,14 +122,14 @@ Scenario: I can see Facebook/Linkedin/Google icons on bottom of signing in box
   @m12 @$_guest @janrain @requested @is @added @_done @_not_testable
   Scenario: When I try to login with LinkedIn and I have no Fairleads account associated then the note about linking account should be displayed
 
-  @m13 @$_guest @janrain @requested @is
+  @m13 @$_guest @janrain @requested @is @$_signed_in_user
   Scenario: After I connect the social account with an existing account I should be logged in and redirect to role home page
 
-  @m13 @$_guest @janrain @requested @is
+  @m13 @$_guest @janrain @requested @is @$_signed_in_user
   Scenario: Agree to terms & conditions should be marked as required field
 
-  @m13 @$_guest @janrain @requested @is
+  @m13 @$_guest @janrain @requested @is @$_signed_in_user
   Scenario: I can click cancel button when I creating new account and it redirect me to home page
 
-  @m13 @$_guest @janrain @requested @is
+  @m13 @$_guest @janrain @requested @is @$_signed_in_user
   Scenario: In header of the creation of new account page I can see who am I and what social account am I using right now

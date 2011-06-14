@@ -192,16 +192,16 @@ Feature: Agent campaign - calling session
 #      And I follow translated "call_results.new.save_button"
 #      And last email sent should have been sent to recipient "new@contact.com"
 
-    @requested @m13 @after_m12_presentation
+    @requested @m13 @after_m12_presentation @ao @$_call_centre_agent
     Scenario: I can see files from "Materials Set" prepared by call centre
 
-    @requested @m13 @after_m12_presentation
+    @requested @m13 @after_m12_presentation @ao @$_call_centre_agent
     Scenario: I can select by checkboxes which files from "Materials Set" will be included in email
 
-    @requested @m13 @after_m12_presentation
+    @requested @m13 @after_m12_presentation @ao @$_call_centre_agent
     Scenario: I can upload and add new files to the set for the result being created
 
-    @requested @m13 @after_m12_presentation
+    @requested @m13 @after_m12_presentation @ao @$_call_centre_agent
     Scenario: I can click "Customize email" button and edit all email fields in modal box
 
     # 5168
@@ -283,3 +283,46 @@ Feature: Agent campaign - calling session
       And I open page in browser
       And the "contact_call_results_attributes_0_note" field should contain "new note for call result #1"
       And the "contact_result_values_attributes_0_value" field should contain "2011-09-22 12:00"
+
+    @m13 @$_call_centre_agent @_done @_not_testable @is
+    Scenario: I can find contact with auto complete search text field
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      Then I fill in "autocompleter" with "bon"
+
+    @m13 @$_call_centre_agent @_done @_not_testable @is
+    Scenario: I can see results from contact search as a clickable list
+
+    @m13 @$_call_centre_agent @_done @_not_testable @is
+    Scenario: I can open contact when I click on result from contact search
+
+    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent
+    Scenario: I can upgrade contact to category buyer
+
+    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent
+    Scenario: Category buyer upgraded from lead should be subscribed to campaign's category by default
+
+    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent
+    Scenario: When upgrading contact to category buyer, agent can select more subscription categories for created category buyer
+
+    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent
+    Scenario: Contact should receive customized emails with material and signup link
+
+    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent
+    Scenario: Agent can assign materials when upgrading contact to category buyer
+
+    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent
+    Scenario: Agent can customize email when upgrading contact to category buyer
+
+    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent
+    Scenario: Contact can sign up by clicking on link in email and entering password or using Facebook/Google/Linkedin
+
+    # his name account will already be set up by the contact information allready in the system.
+    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent
+    Scenario: After sign up contact can confirm his account information
+
+    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent
+    Scenario: After confirming his account information, contact should be redirected to his account home page
+
+    # After he has confirmed his details he will receive a default (buyer welcome mail) with a link to the the category homepage, how he sign up (Facebook, Google of LinkedIn) just so he can remember to log on to fairleads again.
+    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent
+    Scenario: After confirming his account information, contact should receive welcome mail link link to his home page and login information

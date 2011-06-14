@@ -87,3 +87,12 @@ Scenario: I cannot see unique categories not assigned to me in Browse leads
   And category "This Customer Unique Category" is unique for user with email "other_john@doe.com" role "customer"
   When I go to browse leads
   Then I should not see "This Customer Unique Category"
+
+# The form should include.
+# Company name
+# Contact name
+# contact e-mail
+# Contact phone
+# How many leads do you need a month:
+@m13 @requested @request_leads @ao @$_guest
+Scenario: I can request more leads for category

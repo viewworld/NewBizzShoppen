@@ -1,5 +1,5 @@
 # only final results
-@m13 @result_values @requested
+@m14 @result_values @requested
 Feature: Result values
 
   Scenario: It should be possible to assign a value to a result

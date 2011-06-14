@@ -77,7 +77,7 @@ Scenario: I can see a jpg thumbnail of a introduction video on home page
   And I am on the home page
   Then I should see "2" elements within CSS path ".introduction_video"
 
-@requested @m13 @after_m12_presentation
+@requested @m13 @after_m12_presentation @ao @$_administrator
 Scenario: I can upload custom jpeg image to be displayed on home page for video introduction
 
 #5919
