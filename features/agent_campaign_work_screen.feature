@@ -283,3 +283,14 @@ Feature: Agent campaign - calling session
       And I open page in browser
       And the "contact_call_results_attributes_0_note" field should contain "new note for call result #1"
       And the "contact_result_values_attributes_0_value" field should contain "2011-09-22 12:00"
+
+    @m0 @$_call_centre_agent @wip @_done @_not_testable
+    Scenario: I can find contact with auto complete search text field
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      Then I fill in "autocompleter" with "bon"
+
+    @m0 @$_call_centre_agent @_done @_not_testable
+    Scenario: I can see results from contact search as a clickable list
+
+    @m0 @$_call_centre_agent @_done @_not_testable
+    Scenario: I can open contact when I click on result from contact search

@@ -117,4 +117,8 @@ class Campaign < ActiveRecord::Base
     end
   end
 
+  def contacts_for_auto_completer
+    contacts.map{|c| "{text:'#{c.company_name}', url:'/callers/campaigns/#{id}/agent_work_screen/contacts/#{c.id}'}"}
+  end
+
 end

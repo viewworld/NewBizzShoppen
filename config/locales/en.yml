@@ -382,6 +382,7 @@ en:
       hide_briefing_area: "Go to agent"
       show_briefing_area: "Show/Hide briefing"
       show_my_results: "My results"
+      contact_search_label: "Search contact:"
     my_results:
       index:
         view:

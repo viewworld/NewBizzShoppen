@@ -18,6 +18,24 @@
     </div>
   </div>
 
+  <%= t("agent_work_screen.index.contact_search_label") %> <%= text_field_tag "autocompleter", nil %>
+
+  <a data-remote="true" data-method="get" id="autocomplter_result_form" href="" class="display:none"></a>
+
+  <script language="javascript">
+      var data = [
+          <%= @campaign.contacts_for_auto_completer*"," %>
+      ];
+      $("#autocompleter").autocomplete(data, {
+          formatItem: function(item) {
+              return item.text;
+          }
+      }).result(function(event, item) {
+          $("#autocomplter_result_form").attr("href", item.url).click();
+      });
+
+  </script>
+
   <div id="agent_work_screen_dashboard">
     <div id="contact_info">
       <%= render :partial => "callers/agent_work_screen/contact_form", :locals => @locals if @contact %>
