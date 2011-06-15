@@ -2168,6 +2168,7 @@ en:
       view:
         header: "My profile"
         change_password: "Change password"
+        remove_category_buyer: "Change account to normal buyer"
         enable_team_buyers: "Enable team buyers"
         company_name: "Company"
         interests_settings: Interests settings
@@ -2184,6 +2185,10 @@ en:
     social_unlink:
       controller:
         successful_unlink_notice: "Your account is no longer connected to %{account_type}"
+    change_to_buyer:
+      controller:
+        success: "You are not category buyer any more"
+        failure: "You are not authorized to perform this action"
 
   contact_us:
     new:

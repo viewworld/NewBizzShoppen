@@ -43,6 +43,11 @@ class MyProfileController < SecuredController
     end
   end
 
+  def remove_category_buyer
+    flash[:notice] = current_user.remove_category_buyer ? t("my_profile.change_to_buyer.controller.success") : t("my_profile.change_to_buyer.controller.failure")
+    redirect_to my_profile_path
+  end
+
   protected
 
   def redirect_if_my_profile_hidden

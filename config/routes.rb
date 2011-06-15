@@ -209,6 +209,7 @@ Nbs::Application.routes.draw do
       post 'social_link'
       put 'social_unlink'
       get 'unlink'
+      put 'remove_category_buyer'
     end
   end
 

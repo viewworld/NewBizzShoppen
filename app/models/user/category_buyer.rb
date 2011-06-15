@@ -23,7 +23,7 @@ class ::User::CategoryBuyer < ::User
   has_many :assigned_lead_purchases, :foreign_key => :assignee_id, :class_name => "LeadPurchase", :conditions => "accessible_from IS NOT NULL"
   has_many :assigned_leads, :class_name => "Lead", :through => :assigned_lead_purchases, :conditions => "accessible_from IS NOT NULL", :source => :lead
 
-  validates_presence_of :company_name, :unless => Proc.new{|u| u.parent.present?}
+  validates_presence_of :company_name, :unless => Proc.new { |u| u.parent.present? }
 
   accepts_nested_attributes_for :lead_purchases
 
@@ -57,7 +57,15 @@ class ::User::CategoryBuyer < ::User
   end
 
   def buying_categories_with_descendants
-    Category.where(buying_categories.map { |bc| "lft between #{bc.lft} and #{bc.rgt}"  }.join(" or "))
+    Category.where(buying_categories.map { |bc| "lft between #{bc.lft} and #{bc.rgt}" }.join(" or "))
+  end
+
+  def remove_category_buyer
+    return false unless (has_role?(:category_buyer) and has_role?(:customer))
+    subaccounts.each { |user| u = ::User::CategoryBuyer.find(user.id); u.send(:remove_role_category_buyer); u.save }
+    send(:remove_role_category_buyer)
+    save
+    true
   end
 
 end

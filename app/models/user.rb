@@ -1,4 +1,7 @@
+require 'app/modules/role_change'
+
 class User < ActiveRecord::Base
+
   self.abstract_class = true
 
   ROLES_PRIORITY = [:admin, :call_centre, :agent, :call_centre_agent, :purchase_manager, :category_buyer, :customer, :lead_buyer, :lead_user, :translator]
