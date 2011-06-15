@@ -170,6 +170,7 @@ en:
           failed_rpx_label: "Hi %{first_name}! We have no fairleads account associated to your %{account_type} profile, do you want to create a new fairleds account and link it to this %{account_type} account?"
           failed_rpx_label_2: "or do you want to log in using another account?"
           link_this_account_link: "link this account"
+          create_new_account: "Create new account"
           modal_intro_label: "Thank you for linking, now lets set up your account"
           modal_intro_label_2: "Please chose account type:"
           modal_sales_manager_link: "Sales manager"
@@ -382,6 +383,7 @@ en:
       hide_briefing_area: "Go to agent"
       show_briefing_area: "Show/Hide briefing"
       show_my_results: "My results"
+      contact_search_label: "Search contact:"
     my_results:
       index:
         view:
@@ -1711,6 +1713,7 @@ en:
     new:
       view:
         title: "Freelancer Agent signup"
+        rpx_title: "You are creating Freelancer Agent account as %{full_name} using %{account_type} account"
         button_create_account: "Create my account"
         janrain_sign_up_label: "Sign up using:"
 
@@ -1718,12 +1721,14 @@ en:
     new:
       view:
         title: "Procurement Manager signup"
+        rpx_title: "You are creating Procurement Manager account as %{full_name} using %{account_type} account"
         janrain_sign_up_label: "Or use Facebook, LinedIn or Google to sing in in the future:"
         i_already_have_account: "I already have an account!"
   purchase_manager_accounts:
     new:
       view:
         title: "Procurement Manager signup"
+        rpx_title: "You are creating Procurement Manager account as %{full_name} using %{account_type} account"
         header: "Create new account"
         janrain_sign_up_label: "Sign up using:"
         button_create_account: "Create my account"
@@ -1777,6 +1782,7 @@ en:
     new:
       view:
         title: "Sales manager signup"
+        rpx_title: "You are creating Sales Manager account as %{full_name} using %{account_type} account"
         button_create_account: "Create"
         enable_team_buyers: "Enable team buyers"
         company_name: "Company"
@@ -1786,6 +1792,7 @@ en:
     new:
       view:
         title: "Category buyer signup"
+        rpx_title: "You are creating Category Buyer account as %{full_name} using %{account_type} account"
         button_create_account: "Create"
         enable_team_buyers: "Enable team buyers"
         company_name: "Company"
@@ -2199,6 +2206,8 @@ en:
       rpx_message:
         failed_rpx_label: "Hi %{first_name}! We have no fairleads account associated to your %{account_type} profile, do you want to create a new fairleds account and link it to this %{account_type} account?"
         failed_rpx_label_2: "If yes, then just fill up the form below."
+      new_account_form:
+        button_cancel: Cancel
     lead_templates:
       listing:
         hidden_value: (hidden)
