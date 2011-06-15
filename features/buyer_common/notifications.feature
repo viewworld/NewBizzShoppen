@@ -33,3 +33,6 @@ Feature: Notifications
     Then I follow translated "layout.main_menu.shared.browse_leads"
     Then I follow "Business"
     Then I should see translated "leads.index.subscribe_to_rss"
+
+  @m13 @requested @auto_buy
+  Scenario: I should receive email with direct link when I buy a lead
