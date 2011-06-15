@@ -156,3 +156,6 @@ Scenario: I cannot buy leads if total cost of my purchases exceeds my personal l
   And I follow translated "leads.index.buy_lead"
   And I should see translated "buyer.cart_items.create.flash.cart_item_big_buyer_purchase_limit_reached"
   Then I should see "Printers ultimate deal"
+
+@m13 @requested @auto_buy
+Scenario: New leads from my unique categories are automatically bought when I enable auto-buy option
