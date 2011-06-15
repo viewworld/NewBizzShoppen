@@ -182,3 +182,11 @@ Scenario: I should see only tree for selected root category
   And I should see "Sample category#3"
   And I should not see "Computers"
   And I should not see "Business"
+
+@m13 @requested @request_leads @ao @$_guest
+Scenario: I can request a category and more leads for category as a guest
+
+#6054
+# If a category has "0" leads it should display "Sold out" instead.
+@m13 @requested @ao @$_guest
+Scenario: I can see "Sold out" message when there are no leads in category
