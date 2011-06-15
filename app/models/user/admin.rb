@@ -19,4 +19,8 @@ class ::User::Admin < ::User
   def leads
     Lead.where("")
   end
+
+  def all_contacts_with_results
+    Contact.with_results
+  end
 end

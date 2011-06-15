@@ -50,7 +50,7 @@ module User::CommonAgent
     end
 
     def all_contacts_with_results
-      Contact.with_agent(id).with_results
+      Contact.with_agents(id).with_results
     end
 
     alias_method :to_s, :name

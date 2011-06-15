@@ -280,6 +280,7 @@ en:
     header:
       title: Campaigns
       new_campaign_button: New Campaign
+      my_results_global_button: "My results"
     table:
       actions: "Actions"
       name: Name
@@ -350,6 +351,7 @@ en:
       destroy: Destroy
       result: Result
       destroy_confirmation: Are you sure?
+      my_results: "My results"
     call_result_details_table:
       date: Date
       contact: Contact
@@ -365,6 +367,19 @@ en:
     form:
       description: "Description"
       briefing: "Briefing"
+  my_results:
+    index:
+      view:
+        filter:
+          header: "Search"
+          keyword_label: "Keyword"
+          search_button: "Search"
+          agents_label: "Agents"
+        header: "My results"
+    edit:
+      view:
+        header: "Edit contact"
+        button_update: "Save"
   agent_work_screen:
     index:
       title: Agent work screen
@@ -382,18 +397,6 @@ en:
       hide_briefing_area: "Go to agent"
       show_briefing_area: "Show/Hide briefing"
       show_my_results: "My results"
-    my_results:
-      index:
-        view:
-          filter:
-            header: "Search"
-            keyword_label: "Keyword"
-            search_button: "Search"
-          header: "My results"
-      edit:
-        view:
-          header: "Edit contact"
-          button_update: "Save"
   contacts:
     filter:
       title: Search
