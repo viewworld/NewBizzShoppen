@@ -7,21 +7,25 @@
 
   <hl pdd="15"/>
 
-  <fieldset class="inputs labels_100 no_pdd" style="margin-top:-5px;">
-    <ol class="no_pdd">
-      <li class="string social_login">
-        <label><%= t("buyer_accounts.new.view.janrain_sign_up_label") %></label>
+  <div class="frm_tiny" style="margin-bottom:10px;">
+    <div class="pdd_10">
+      <fieldset class="inputs labels_100 no_pdd" style="margin-top:-5px;">
+        <ol class="no_pdd">
+          <li class="string social_login">
+            <label><%= t("purchase_manager_accounts.new.view.janrain_sign_up_label") %></label>
 
-        <div class="txt">
-          <% unless Rails.env.test? %>
-              <%= link_to_rpx image_tag("icons/social_login.png"), buyer_accounts_url %>
-              <%= javascript_include_rpx buyer_accounts_url %>
-          <% end %>
-        </div>
-        <%= render(:partial => "shared/accounts/rpx_message", :locals => {:user => @user}) unless @user.rpx_identifier.blank? %>
-      </li>
-    </ol>
-  </fieldset>
+            <div class="txt">
+              <% unless Rails.env.test? %>
+                  <%= link_to_rpx image_tag("icons/social_login.png"), buyer_accounts_url %>
+                  <%= javascript_include_rpx buyer_accounts_url %>
+              <% end %>
+            </div>
+          </li>
+        </ol>
+      </fieldset>
+      <%= render(:partial => "shared/accounts/rpx_message", :locals => {:user => @user}) unless @user.rpx_identifier.blank? %>      
+    </div>
+  </div>
 
   <%= semantic_form_for @user, :url => buyer_accounts_path do |form| %>
       <frm title="Create new account" c="no_marg">
@@ -57,7 +61,7 @@
                   <%= form.input :email, :hint => hint_for(@user, :email) %>
                   <%= form.input :password, :hint => hint_for(@user, :password), :as => @user.rpx_identifier.blank? ? :password : :hidden %>
                   <%= form.input :password_confirmation, :hint => hint_for(@user, :password_confirmation), :as => @user.rpx_identifier.blank? ? :password : :hidden %>
-                  <%= form.input :time_zone, :wrapper_html => { :class => "select"}, :input_html => {:style => "width: 240px"} %>
+                  <%= form.input :time_zone, :wrapper_html => {:class => "select"}, :input_html => {:style => "width: 240px"} %>
                   <%= form.input :team_buyers, :as => :boolean, :hint => hint_for(@user, :team_buyers) %>
                   <%= form.input :agreement_read, :as => :boolean, :hint => hint_for(@user, :agreement_read), :label => "#{t("common.agree_to")} #{link_to_main_page_article('terms_conditions', {:popup => true}, {:id => 'agreement_modal_box'})}".html_safe %>
                   <%= form.input :newsletter_on, :as => :boolean, :hint => hint_for(@user, :newsletter_on) %>
