@@ -53,9 +53,9 @@ Scenario: I can edit email template for send material result type
   Then I should see "Additional materials"
   And I should see "result_send_material"
 
-@m13 @requested @auto_buy
+@m13 @requested @auto_buy @is
 Scenario: I can edit global email template to be sent when lead is bought
 
-@m13 @requested @auto_buy
+@m13 @requested @auto_buy @is
 Scenario: I can edit category specific email temaplate to be sent when lead is bought
 

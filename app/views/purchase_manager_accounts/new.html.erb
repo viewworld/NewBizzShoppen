@@ -8,21 +8,26 @@
 
   <hl pdd="15"/>
 
-  <fieldset class="inputs labels_100 no_pdd" style="margin-top:-5px;">
-    <ol class="no_pdd">
-      <li class="string social_login">
-        <label><%= t("purchase_manager_accounts.new.view.janrain_sign_up_label") %></label>
+  <div class="frm_tiny" style="margin-bottom:10px;">
+    <div class="pdd_10">
+      <fieldset class="inputs labels_100 no_pdd" style="margin-top:-5px;">
+        <ol class="no_pdd">
+          <li class="string social_login">
+            <label><%= t("purchase_manager_accounts.new.view.janrain_sign_up_label") %></label>
 
-        <div class="txt">
-          <% unless Rails.env.test? %>
-              <%= link_to_rpx image_tag("icons/social_login.png"), purchase_manager_accounts_url %>
-              <%= javascript_include_rpx purchase_manager_accounts_url %>
-          <% end %>
-        </div>
-        <%= render(:partial => "shared/accounts/rpx_message", :locals => {:user => @user}) unless @user.rpx_identifier.blank? %>
-      </li>
-    </ol>
-  </fieldset>
+            <div class="txt">
+              <% unless Rails.env.test? %>
+                  <%= link_to_rpx image_tag("icons/social_login.png"), purchase_manager_accounts_url %>
+                  <%= javascript_include_rpx purchase_manager_accounts_url %>
+              <% end %>
+            </div>
+          </li>
+        </ol>
+      </fieldset>
+      <%= render(:partial => "shared/accounts/rpx_message", :locals => {:user => @user}) unless @user.rpx_identifier.blank? %>
+    </div>
+  </div>
+
 
   <%= render :partial => "sign_in/purchase_manager_form", :locals => {:user => @user, :url => purchase_manager_accounts_path} %>
 </column-mc:>

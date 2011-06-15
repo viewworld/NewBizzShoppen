@@ -215,7 +215,8 @@
     padding-bottom: 6px;
 }
 
-.frm .inputs ol li.string.social_login
+.frm .inputs ol li.string.social_login,
+.frm_tiny .inputs ol li.string.social_login
 {
     border-bottom: 1px dotted #ccc;
     margin-bottom: 12px;    

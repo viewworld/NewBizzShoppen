@@ -170,6 +170,7 @@ en:
           failed_rpx_label: "Hi %{first_name}! We have no fairleads account associated to your %{account_type} profile, do you want to create a new fairleds account and link it to this %{account_type} account?"
           failed_rpx_label_2: "or do you want to log in using another account?"
           link_this_account_link: "link this account"
+          create_new_account: "Create new account"
           modal_intro_label: "Thank you for linking, now lets set up your account"
           modal_intro_label_2: "Please chose account type:"
           modal_sales_manager_link: "Sales manager"
