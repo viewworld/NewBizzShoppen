@@ -75,7 +75,7 @@ Scenario: I can see a jpg thumbnail of a introduction video on home page
   And I press translated "administration.introduction_video.new.view.button_create"
   And I make sure current locale is "en"
   And I am on the home page
-  Then I should see "2" elements within CSS path ".introduction_video"
+  Then I should see "1" elements within CSS path ".introduction_video"
 
 @requested @m13 @after_m12_presentation @ao @$_administrator
 Scenario: I can upload custom jpeg image to be displayed on home page for video introduction
@@ -89,7 +89,7 @@ Scenario: I can play youtube video in a modal box
   And I press translated "administration.introduction_video.new.view.button_create"
   And I make sure current locale is "en"
   And I am on the home page
-  And I follow "Introduction video"
+  And I follow "introduction_video_link"
   And I wait 1 second
   Then I should see CSS path "#cboxLoadedContent"
 
@@ -102,7 +102,7 @@ Scenario: I can specify youtube url for each locale
   And I press translated "administration.introduction_video.new.view.button_create"
   And I make sure current locale is "en"
   And I am on the home page
-  Then I should see "2" elements within CSS path ".introduction_video"
+  Then I should see "1" elements within CSS path ".introduction_video"
   When I make sure current locale is "dk"
   Then I should not see CSS path ".introduction_video"
   When I go to administration settings
@@ -111,4 +111,4 @@ Scenario: I can specify youtube url for each locale
   And I select "dk" from "youtube_introduction_locale_code"
   And I press translated "administration.introduction_video.new.view.button_create"
   And I am on the home page
-  Then I should see "2" elements within CSS path ".introduction_video"
+  Then I should see "1" elements within CSS path ".introduction_video"
