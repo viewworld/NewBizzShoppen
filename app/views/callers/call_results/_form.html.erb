@@ -10,11 +10,47 @@
       </li>
       <%= form.input :result_id, :as => :hidden %>
       <%= form.input :note, :as => :text, :input_html => {:style => "width: 400px;height:120px"} %>
+
+      <% if call_result.result.upgrades_to_category_buyer? %>
+          <% [:first_name, :last_name, :address_line_1, :zip_code].each do |field| %>
+          <li>
+            <p><%= label_tag "call_result[contact_email_address]", "#{t("call_results.new.contact_#{field}")}<abbr>*</abbr>".html_safe %><%= text_field_tag "call_result[contact_#{field}]", call_result.send("contact_#{field}".to_sym) || (contact.send(field) if contact.respond_to?(field))  %></p>
+            <%= custom_error_for_object_and_field(call_result, "contact_#{field}".to_sym) %>
+          </li>
+          <% end %>
+            <div id="category_buyer_categories">
+              <div class="pdd_10">
+                <div class="grid_210 fltl">&nbsp;</div>
+                <div class="grid_240 fltl">
+                  <h3><%= t("administration.users.edit.view.available_categories") %></h3>
+                  <%= select_tag "all_categories", options_for_select((Category.roots.without_unique-call_result.buying_categories).map { |c| [c.name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+                </div>
+
+                <div class="grid_160 fltl" style="margin-right: 10px;margin-top:10px;">
+                  <p class="ta_c pdd_5 no_pdd_lr"><%= bt_link_to nil, t("administration.categories.form.move_users_right"), "javascript:move_selected('all_categories','call_result_buying_category_ids_')", :id => "move_right" %></p>
+
+                  <p class="ta_c"><%= bt_link_to nil, t("administration.categories.form.move_users_left"), "javascript:move_selected('call_result_buying_category_ids_','all_categories')", :id => "move_left" %></p>
+                </div>
+
+                <div class="grid_240 fltl">
+                  <h3><%= t("administration.users.edit.view.selected_categories") %></h3>
+                  <%= select_tag "call_result[buying_category_ids][]", options_for_select(call_result.buying_categories.map { |c| [c.name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+                </div>
+                <clb/>
+              </div>
+            </div>
+          <% [:subject, :from, :bcc, :cc, :body].each do |field| %>
+              <%= form.input "email_template_#{field}", :as => :hidden %>
+          <% end %>
+          <%= bt_link_to_function nil, t("call_results.new.edit_email_template"), "javascript:$('#modal_for_email_template_edit').dialog('open')" %>
+      <% end %>
     </ol>
   </fieldset>
 </div>
 
 <clb/>
+
+
 
 <% if call_result.result.result_fields.present? %>
     <hl/>
@@ -37,4 +73,13 @@
         window.location = path;
      <% end %>
   });
+    $('#modal_for_email_template_edit').dialog({
+        autoOpen: false,
+        width: 1150,
+        height: 720,
+        title: 'Edit email template',
+        buttons: { "Save": function() {
+            $(this).dialog("close");
+        }}
+    });
 </script>

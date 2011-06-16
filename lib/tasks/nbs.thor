@@ -183,6 +183,14 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
                     :body => "<p></p>"},
             :dk => {:subject => "[DK] Additional materials",
                     :body => "<p></p>"}
+        },
+        {
+            :name => "Upgrade to category buyer",
+            :uniq_id => "upgrade_to_category_buyer",
+            :en => {:subject => "You have been upgraded to category buyer",
+                    :body => "<p></p>"},
+            :dk => {:subject => "[DK] You have been upgraded to category buyer",
+                    :body => "<p></p>"}
         }
     ]
 
@@ -281,7 +289,8 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
      {:name => "Upgraded to lead", :final => true, :generic => true, :upgrades_to_lead => true},
      {:name => "Meeting booked", :final => true, :generic => true},
      {:name => "Custom result", :final => true, :generic => true},
-     {:name => "Send material", :final => false, :generic => true}].each do |result|
+     {:name => "Send material", :final => false, :generic => true},
+     {:name => "Upgrade to category buyer", :final => true, :generic => true}].each do |result|
       Result.create(result) unless Result.find_by_name(result[:name])
     end
 
@@ -290,7 +299,9 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
      {:name => "Meeting date", :field_type => "4", :is_mandatory => true, :result => Result.find_by_name("Meeting booked") },
      {:name => "Result message", :field_type => "0", :is_mandatory => true, :result => Result.find_by_name("Custom result") },
      {:name => "Call back date", :field_type => "4", :is_mandatory => true, :result => Result.find_by_name("Send material") },
-     {:name => "Material", :field_type => "5", :is_mandatory => true, :result => Result.find_by_name("Send material") }].each do |result_field|
+     {:name => "Material", :field_type => "5", :is_mandatory => true, :result => Result.find_by_name("Send material") },
+     {:name => "Material", :field_type => "5", :is_mandatory => false, :result => Result.find_by_name("Upgrade to category buyer") }
+    ].each do |result_field|
       ResultField.create(result_field) unless ResultField.find_by_name_and_result_id(result_field[:name], result_field[:result].id)
     end
 

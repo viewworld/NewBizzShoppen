@@ -460,6 +460,11 @@ en:
       save_button: Create
       cancel_button: Back to contact
       result: Result
+      contact_first_name: "First name"
+      contact_last_name: "Last name"
+      contact_address_line_1: "Address line 1"
+      contact_zip_code: "Zip code"
+      edit_email_template: "Edit email template"
     edit:
       title: Edit result
       form_title: Edit
@@ -2231,6 +2236,8 @@ en:
         category_no_leads_can_be_published: "No leads can be published in that category"
         category_cannot_be_changed: "Category cannot be changed due to filled out templates!"
   models:
+    call_result:
+      not_unique_email_address: "User with this e-mail already exists!"
     user:
       payout_validation_message: "can only be between 0 and 100"
       agreement_read_validation_message: "You have to accept the agreement"

@@ -1,4 +1,5 @@
 <column-mc:>
+  <%= javascript_include_tag :ckeditor %>
   <header back="true" backurl="#{callers_campaigns_path}">
     <param:content>
       <%= t("agent_work_screen.index.title") %> - <%= @campaign.name %>
@@ -56,6 +57,20 @@
       <% end %>
   <% end %>
 
+  <div id="modal_for_email_template_edit" style="display:none;">
+    <div class="pdd_10 no_pdd_t">
+      <fieldset class="inputs labels_ta_r labels_100">
+        <ol>
+          <li><%= text_field_tag :subject %></li>
+          <li><%= text_field_tag :from %></li>
+          <li><%= text_field_tag :bcc %></li>
+          <li><%= text_field_tag :cc %></li>
+          <li><%= text_area_tag :body %></li>
+        </ol>
+      </fieldset>
+    </div>
+  </div>
+
 </column-mc:>
 
 <js:>
@@ -69,7 +84,6 @@
       $("#change_campaign_id").live("change", function() {
           $(this).parents("form").submit()
       });
-
   </script>
 </js:>
 

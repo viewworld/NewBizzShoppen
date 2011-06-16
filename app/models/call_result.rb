@@ -1,5 +1,6 @@
 class CallResult < ActiveRecord::Base
-  attr_accessor :contact_email_address
+  attr_accessor :contact_email_address, :contact_first_name, :contact_last_name, :contact_address_line_1, :contact_zip_code,
+                :buying_category_ids, :email_template_subject, :email_template_from, :email_template_bcc, :email_template_cc, :email_template_body
 
   belongs_to :contact
   belongs_to :result
@@ -13,8 +14,10 @@ class CallResult < ActiveRecord::Base
   validates_presence_of :result_id, :creator_id, :contact_id
   validates_presence_of :contact_email_address, :if => Proc.new{|cr| cr.result.send_material?}
   validates_format_of :contact_email_address, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :if => Proc.new{|cr| cr.result.send_material?}
+  validates_presence_of :contact_first_name, :contact_last_name, :contact_address_line_1, :contact_zip_code
+  validate :validate_uniqueness_of_contact_email_address, :if => Proc.new { |cr| cr.result.upgrades_to_category_buyer? }
 
-  after_create :process_side_effects, :update_contact_note, :set_last_call_result_in_contact, :update_contact_email
+  after_create :process_side_effects, :update_contact_note, :set_last_call_result_in_contact, :update_contact_email, :update_contact_address
   after_update :process_side_effects
   after_destroy :update_completed_status, :update_pending_status
 
@@ -48,6 +51,10 @@ class CallResult < ActiveRecord::Base
     size.times { result << "" }
     result_values.each_with_index { |result_value, index| result[index] = "#{result_value.result_field.name}: #{result_value.value}" }
     result
+  end
+
+  def buying_categories
+    Category.where("id in (?)", self.buying_category_ids || contact.category.root.id)
   end
 
   class << self
@@ -85,6 +92,12 @@ class CallResult < ActiveRecord::Base
 
   private
 
+  def validate_uniqueness_of_contact_email_address
+    unless User.where("email = ?", contact_email_address).empty?
+      self.errors.add(:contact_email_address, I18n.t("models.call_result.not_unique_email_address"))
+    end
+  end
+
   def update_completed_status
     completed_status = contact.current_call_result.present? ? contact.current_call_result.result.final? : false
     contact.update_attributes :completed => completed_status
@@ -103,6 +116,12 @@ class CallResult < ActiveRecord::Base
     contact.update_attribute(:email_address, contact_email_address) if result.send_material? and contact_email_address.present?
   end
 
+  def update_contact_address
+    if result.upgrades_to_category_buyer?
+      contact.update_attributes({:contact_name => "#{contact_first_name} #{contact_last_name}", :address_line_1 => contact_address_line_1,
+                                 :zip_code => contact_zip_code, :email_address => contact_email_address})
+    end
+  end
 
   def process_side_effects
     if result.generic?
@@ -160,10 +179,41 @@ class CallResult < ActiveRecord::Base
     deliver_material
     process_for_call_log_result
   end
+
+  def process_for_upgrade_to_category_buyer
+    deliver_email_for_category_buyer
+    upgrade_to_category_buyer
+    process_for_final_result
+  end
+
+  def upgrade_to_category_buyer
+    user = User::CategoryBuyer.new(:email => contact_email_address, :first_name => contact_first_name,
+                            :last_name => contact_last_name, :screen_name => "#{contact_first_name} #{contact_last_name} (#{contact_email_address})",
+                            :address_attributes => { :address_line_1 => contact_address_line_1, :zip_code => contact_zip_code,
+                                                     :country_id => contact.country_id }, :agreement_read => true, :company_name => contact.company_name,
+                            :buying_category_ids => buying_category_ids)
+
+    new_random_password = user.send(:generate_token, 12)
+    user.password = new_random_password
+    user.password_confirmation = new_random_password
+    user.skip_email_verification = "1"
+    user.save
+  end
   
   def deliver_material
     template = contact.campaign.send_material_email_template || EmailTemplate.global.where(:uniq_id => 'result_send_material').first
     ApplicationMailer.generic_email([contact_email_address], template.subject, template.body, template.from, [Pathname.new(File.join([::Rails.root, 'public', send_material_result_value.material.url]))]).deliver
+  end
+
+  def deliver_email_for_category_buyer
+    template = EmailTemplate.global.where(:uniq_id => 'upgrade_to_category_buyer').first
+    [:subject, :from, :bcc, :cc, :body].each do |field|
+      template.send("#{field}=".to_sym, self.send("email_template_#{field}"))
+    end
+    throw template.inspect
+    attachments_arr = send_material_result_value.material.blank? ? [] : [Pathname.new(File.join([::Rails.root, 'public', send_material_result_value.material.url]))]
+
+    ApplicationMailer.generic_email([contact_email_address], template.subject, template.body, template.from, attachments_arr).deliver
   end
   
   def set_last_call_result_in_contact
