@@ -4,4 +4,5 @@ $("#call_sheet").html("<%= escape_javascript(render(:partial => "callers/agent_w
 $("#pending_calls").html("<%= escape_javascript(render(:partial => "callers/agent_work_screen/pending_calls", :locals => @locals)) %>");
 $("#completed_contacts").html("<%= escape_javascript(render(:partial => "callers/agent_work_screen/completed_contacts", :locals => @locals)) %>");        
 $("#contact_info").html("<%= escape_javascript(@locals[:contact] ? render(:partial => "callers/agent_work_screen/contact_form", :locals => @locals) : "") %>");
+$("#call_result_form").html("<%= escape_javascript(@locals[:contact] ? render(:partial => "callers/agent_work_screen/call_result_form", :locals => @locals) : "") %>");
 loadScripts();
