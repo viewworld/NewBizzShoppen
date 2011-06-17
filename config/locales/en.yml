@@ -122,6 +122,7 @@ en:
         site_home: "Site home"
         category_request: "Category request"
         comments: "Comments"
+        sold_out: "Sold out"
       purchase_manager:
         leads: My leads
         lead_templates: "Lead templates"
