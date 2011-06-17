@@ -1779,3 +1779,14 @@ span.cke_skin_kama
 {
     vertical-align: middle;
 }
+
+.rpx_note
+{
+    font-size: 11px;
+    color: #777;
+    padding-top: 7px;
+    margin-top: 6px;
+    line-height: 14px;
+    border-top: 1px dotted #CCC;
+
+}

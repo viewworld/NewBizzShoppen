@@ -20,6 +20,24 @@
     </div>
   </div>
 
+  <%= t("agent_work_screen.index.contact_search_label") %> <%= text_field_tag "autocompleter", nil %>
+
+  <a data-remote="true" data-method="get" id="autocomplter_result_form" href="" class="display:none"></a>
+
+  <script language="javascript">
+      var data = [
+          <%= @campaign.contacts_for_auto_completer*"," %>
+      ];
+      $("#autocompleter").autocomplete(data, {
+          formatItem: function(item) {
+              return item.text;
+          }
+      }).result(function(event, item) {
+          $("#autocomplter_result_form").attr("href", item.url).click();
+      });
+
+  </script>
+
   <div id="agent_work_screen_dashboard">
     <div id="contact_info">
       <%= render :partial => "callers/agent_work_screen/contact_form", :locals => @locals if @contact %>
@@ -52,11 +70,9 @@
 
   </div>
 
-  <% if @contact %>
-      <% form_for CallResult.new, :url => new_callers_campaign_agent_work_screen_contact_call_result_path(@campaign, @contact), :html => {:method => :get, :remote => true, :id => "new_result_form"} do %>
-          <%= hidden_field_tag :result_id %>
-      <% end %>
-  <% end %>
+  <div id="call_result_form">
+    <%= render :partial => "callers/agent_work_screen/call_result_form", :locals => @locals %>
+  </div>
 
   <div id="modal_for_email_template_edit" style="display:none;">
     <div class="pdd_10 no_pdd_t">

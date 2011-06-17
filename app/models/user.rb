@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
   include ScopedSearch::Model
   include RoleChange
 
-  devise :database_authenticatable, :registerable, :confirmable, :lockable,
+  devise :database_authenticatable, :registerable, :confirmable, :lockable, :token_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable, :timeoutable, :rpx_connectable
 
   # declare the valid roles -- do not change the order if you add more

@@ -35,3 +35,6 @@ Scenario: I should not see leads that I've bought
   And I should see "Ultra printers" within ".leads_table"
   When I follow translated "leads.index.buy_lead" for lead "Super printers"
   Then I should not see "Printers ultimate deal" within ".leads_table"
+
+@m13 @requested @$_customer @auto_buy @is
+Scenario: I can enable auto-buy option for categories which are unique to me

@@ -622,16 +622,16 @@ Feature: Agent campaign - management
         Scenario: I can see timestamps in my localization, not server time
 
         # 5192
-        @m12 @$_call_centre @requested @tgn @briefing @selenium @_done @_tested
+        @m12 @$_call_centre @requested @tgn @briefing @selenium @_done @_tested @_deprecated
         Scenario: I can specify description and briefing when creating new campaign
-          When I follow translated "campaigns.header.new_campaign_button"
-          Then I fill in "campaign_name" with "BriefingCampaingTest"
-          And I fill in "campaign_max_contact_number" with "20"
-          And I press translated "campaigns.new.button_create"
-          Then I should see translated "campaigns_description.edit.title"
-          And I fill in "campaign_description_editor" ckeditor with "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-          And I fill in "campaign_briefing_editor" ckeditor with "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-          And I press translated "campaigns_description.edit.button_update"
+#          When I follow translated "campaigns.header.new_campaign_button"
+#          Then I fill in "campaign_name" with "BriefingCampaingTest"
+#          And I fill in "campaign_max_contact_number" with "20"
+#          And I press translated "campaigns.new.button_create"
+#          Then I should see translated "campaigns_description.edit.title"
+#          And I fill in "campaign_description_editor" ckeditor with "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+#          And I fill in "campaign_briefing_editor" ckeditor with "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+#          And I press translated "campaigns_description.edit.button_update"
 
         # 5192
         @m12 @$_call_centre @requested @tgn @briefing @non_testable @_done
@@ -692,7 +692,6 @@ Feature: Agent campaign - management
           Then I fill in "campaign_name" with "Campaign for call centre"
           Then I fill in "campaign_max_contact_number" with "188"
           And I press translated "campaigns.new.button_create"
-          And I press translated "campaigns_description.edit.button_update"
           And I follow translated "campaigns.edit.agent_assignment_button"
           And I check "campaign_user_id_7"
           And I follow translated "campaigns_users.index.button_assign"

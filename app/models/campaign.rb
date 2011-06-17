@@ -63,8 +63,13 @@ class Campaign < ActiveRecord::Base
 
   public
 
+  def return_contact_to_the_pool
+    contacts.where("agent_id NOT IN (?)", user_ids).each { |c| c.update_attribute(:agent_id, nil) }
+  end
+
   def assign(ids)
     self.users = ids.blank? ? [] : User.find(ids)
+    return_contact_to_the_pool
   end
 
   def assign_results(ids)
@@ -127,6 +132,10 @@ class Campaign < ActiveRecord::Base
       contact.creator_name = current_user
       contact.save
     end
+  end
+
+  def contacts_for_auto_completer
+    contacts.map{|c| "{text:'#{c.company_name}', url:'/callers/campaigns/#{id}/agent_work_screen/contacts/#{c.id}'}"}
   end
 
 end

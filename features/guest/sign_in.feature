@@ -90,12 +90,12 @@ Scenario: Add links present on sign in page to home login page as well (forgot p
   Then I should see translated "home.show.view.forgotten_password_link"
   And I should see translated "home.show.view.resend_confirmation_instructions"
 
-@requested @m8b @tgn @_tested
+@requested @m8b @tgn @_tested @_done
 Scenario: We need a forgot password function, where the user is e-maild his password, this should be available when you enter a wrong password
   Given I am not sign in
   And I go to the homepage
   And I sign in as unknown_user@nohost.com with password none
-  Then I should see "forgot password?"
+  Then I should see "Forgot password?"
 
 @m8b @added @tgn @_tested
 Scenario: I can login to fairleads as any user without password by hash key that I can create in console (suggested by developers for future debuging of live fairleads.com)
@@ -122,14 +122,28 @@ Scenario: I can see Facebook/Linkedin/Google icons on bottom of signing in box
   @m12 @$_guest @janrain @requested @is @added @_done @_not_testable
   Scenario: When I try to login with LinkedIn and I have no Fairleads account associated then the note about linking account should be displayed
 
-  @m13 @$_guest @janrain @requested @is @$_signed_in_user
+  @m13 @$_guest @janrain @requested @is @$_signed_in_user @_done @_not_testable
   Scenario: After I connect the social account with an existing account I should be logged in and redirect to role home page
 
-  @m13 @$_guest @janrain @requested @is @$_signed_in_user
+  @m13 @$_guest @janrain @requested @is @$_signed_in_user @_done @_tested
   Scenario: Agree to terms & conditions should be marked as required field
+    Given I am not sign in
+    Then I go to agent sign up
+    Then I should see "Agree to Terms & Conditions*"
+    Then I go to buyer sign up
+    Then I should see "Agree to Terms & Conditions*"
+    Then I go to purchase manager sign up
+    Then I should see "Agree to Terms & Conditions*"
 
-  @m13 @$_guest @janrain @requested @is @$_signed_in_user
+  @m13 @$_guest @janrain @requested @is @$_signed_in_user @_done @_tested
   Scenario: I can click cancel button when I creating new account and it redirect me to home page
+    Given I am not sign in
+    Then I go to agent sign up
+    Then I should see translated "shared.accounts.new_account_form.button_cancel"
+    Then I go to buyer sign up
+    Then I should see translated "shared.accounts.new_account_form.button_cancel"
+    Then I go to purchase manager sign up
+    Then I should see translated "shared.accounts.new_account_form.button_cancel"
 
-  @m13 @$_guest @janrain @requested @is @$_signed_in_user
+  @m13 @$_guest @janrain @requested @is @$_signed_in_user @_done @_not_testable
   Scenario: In header of the creation of new account page I can see who am I and what social account am I using right now
