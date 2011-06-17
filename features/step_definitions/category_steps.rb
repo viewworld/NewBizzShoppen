@@ -52,3 +52,12 @@ end
 Then /^category "([^"]*)" is in interests of user "([^"]*)" "([^"]*)"$/ do |category, email, is_true|
   ::User::Customer.find_by_email(email).categories.include?(Category.find_by_name(category)).should == (is_true == true)
 end
+
+Then /^category "([^"]*)" has email template - "([^"]*)"$/ do |name, yes_or_no|
+  assert Category.find_by_name(name).first.email_template.blank? == ((yes_or_no == "Yes") ? false : true)
+end
+
+Then /^category "([^"]*)" has email template with subject "([^"]*)"$/ do |name, subject|
+  global_et = EmailTemplate.find_by_uniq_id('bought_lead_notification')
+   Category.find_by_name(name).first.create_email_template(:subject => subject, :body => global_et.body, :from => global_et.from)
+end

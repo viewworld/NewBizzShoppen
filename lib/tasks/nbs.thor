@@ -147,6 +147,14 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
             :dk => {:subject => "[DK] Certification request",
                     :body => "[DK] <p>Login url: {{lead_certification_request.login_url}}</p><p>Contact name: {{lead_certification_request.contact_name}}</p><p>Contact email: {{lead_certification_request.contact_email}}</p>"}
         },
+            {
+            :name => "bought lead notification",
+            :uniq_id => "bought_lead_notification",
+            :en => {:subject => "Bought lead notification",
+                    :body => "<p>Link to lead: {{lead_purchase.url}}</p>"},
+            :dk => {:subject => "[DK] Bought lead notification",
+                    :body => "[DK] <p>Link to lead: {{lead_purchase.url}}</p>"}
+        },
         {
             :name => "Certification request reminder",
             :uniq_id => "certification_request_reminder",

@@ -53,9 +53,16 @@ Scenario: I can edit email template for send material result type
   Then I should see "Additional materials"
   And I should see "result_send_material"
 
-@m13 @requested @auto_buy @is
+@m13 @requested @auto_buy @is @_done @_tested
 Scenario: I can edit global email template to be sent when lead is bought
+  Then I should see "Bought lead notification"
 
-@m13 @requested @auto_buy @is
-Scenario: I can edit category specific email temaplate to be sent when lead is bought
-
+@m13 @requested @auto_buy @is @_done @_tested
+Scenario: I can edit category specific email template to be sent when lead is bought
+  Then I follow translated "layout.main_menu.shared.browse_leads"
+  Then category "Electronics" has email template - "No"
+  Then I follow "Edit ET"
+  Then I should see "Electronics"
+  Then I press translated "administration.email_templates.edit.view.button_update"
+  Then I should see translated "administration.category_email_templates.update.controller.successful_update_notice"
+  Then category "Electronics" has email template - "Yes"

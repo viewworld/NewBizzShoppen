@@ -1,5 +1,5 @@
 class LeadPurchase < LeadPurchaseBase
-  unless ['production','test'].include?(Rails.env)
+  unless ['production', 'test'].include?(Rails.env)
     LeadPrimaryPurchase
     LeadAdditionalBuyout
   else
@@ -7,8 +7,8 @@ class LeadPurchase < LeadPurchaseBase
     require 'lead_additional_buyout'
   end
 
-  belongs_to :assignee, :class_name => "User::LeadUser", :foreign_key =>  "assignee_id"
-  belongs_to :purchaser, :class_name => "User::LeadBuyer", :foreign_key =>  "purchased_by"
+  belongs_to :assignee, :class_name => "User::LeadUser", :foreign_key => "assignee_id"
+  belongs_to :purchaser, :class_name => "User::LeadBuyer", :foreign_key => "purchased_by"
   belongs_to :lead, :counter_cache => :lead_purchases_counter
   has_one :invoice_line, :as => :payable
 
@@ -20,8 +20,9 @@ class LeadPurchase < LeadPurchaseBase
   after_save :deliver_lead_rated_as_unsatisfactory_email
   after_save :deliver_about_to_expire_email
   before_create :assign_to_purchaser
+  after_save :deliver_bought_notification
 
-  liquid :id, :header, :rating_level_as_text, :rating_reason
+  liquid :id, :header, :rating_level_as_text, :rating_reason, :url
 
   private
 
@@ -47,12 +48,12 @@ class LeadPurchase < LeadPurchaseBase
   def handle_new_deadline
     if response_deadline_changed? and !response_deadline.nil? and contacted == NOT_CONTACTED
       self.expiration_status = if (response_deadline-Date.today).to_i < 0
-        EXPIRED
-      elsif (0..2).include?((response_deadline-Date.today).to_i)
-        ABOUT_TO_EXPIRE
-      else
-        ACTIVE
-      end
+                                 EXPIRED
+                               elsif (0..2).include?((response_deadline-Date.today).to_i)
+                                 ABOUT_TO_EXPIRE
+                               else
+                                 ACTIVE
+                               end
     end
   end
 
@@ -66,6 +67,16 @@ class LeadPurchase < LeadPurchaseBase
     if rating_level_changed? and !rating_level.nil? and rating_level >= RATING_MISSING_CONTACT_INFO
       self.lead.update_attributes(:notify_buyers_after_update => false, :has_unsatisfactory_rating => true)
       deliver_email_template("lead_rated_as_unsatisfactory", lead.creator.email)
+    end
+  end
+
+  def deliver_bought_notification
+    if accessible_from_changed? and !accessible_from.nil? and !owner.disable_bought_notification
+      if lead.category.email_template.blank?
+        deliver_email_template("bought_lead_notification", owner.email)
+      else
+        ApplicationMailer.email_template(owner.email, lead.category.email_template, {:lead_purchase => self}).deliver
+      end
     end
   end
 
@@ -149,6 +160,10 @@ class LeadPurchase < LeadPurchaseBase
 
   def total
     quantity * lead.price
+  end
+
+  def url
+    "https://#{Nbs::Application.config.action_mailer.default_url_options[:host]}/buyers/lead_purchases/#{id}"
   end
 
 end

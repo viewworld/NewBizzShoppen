@@ -634,3 +634,6 @@ Scenario: As Admin I can see Name (default Company Name, if empty then First Nam
   Then I should not see "Selleo"
   Then I should see "Irek"
   Then I should see "Skrobis"
+
+@m13 @added @auto_buy @is
+Scenario: I can enable auto-buy option for big buyer for categories which are unique to him

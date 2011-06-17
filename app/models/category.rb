@@ -13,6 +13,7 @@ class Category < ActiveRecord::Base
   has_many :customer_subscribers, :through => :category_interests, :source => :user
   has_many :news, :as => :resource, :class_name => "Article::News::CategoryHome", :dependent => :destroy
   has_one :blurb, :as => :resource, :class_name => "Article::Cms::InterfaceContentText", :dependent => :destroy
+  has_one :email_template, :as => :resource
 
   after_save :set_cached_slug
   before_save :handle_locking_for_descendants

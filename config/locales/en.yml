@@ -849,6 +849,11 @@ en:
           title: "Editing template: %{name}"
           button_update: "Save"
 
+    category_email_templates:
+      update:
+        controller:
+          successful_update_notice: "Email template has been successfully updated."
+
     leads:
       index:
         view:
@@ -2177,6 +2182,7 @@ en:
         social_unlink_label: "Your account is currently connected to %{account_type}. If you want, you can unlink it here:"
         social_link_label: "You can link your profile with one of this social network service account"
         social_unlink_link: "unlink from my profile"
+        disable_bought_notification_label: "Don't send me e-mails when I buy a lead"
     update:
       controller:
         successful_update_notice: "Your profile has been successfully updated!"
