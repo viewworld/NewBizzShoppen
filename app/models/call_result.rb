@@ -181,7 +181,6 @@ class CallResult < ActiveRecord::Base
   end
 
   def process_for_upgrade_to_category_buyer
-    deliver_email_for_category_buyer
     upgrade_to_category_buyer
     process_for_final_result
   end
@@ -191,13 +190,17 @@ class CallResult < ActiveRecord::Base
                             :last_name => contact_last_name, :screen_name => "#{contact_first_name} #{contact_last_name} (#{contact_email_address})",
                             :address_attributes => { :address_line_1 => contact_address_line_1, :zip_code => contact_zip_code,
                                                      :country_id => contact.country_id }, :agreement_read => true, :company_name => contact.company_name,
-                            :buying_category_ids => buying_category_ids)
+                            :contact => contact)
 
     new_random_password = user.send(:generate_token, 12)
     user.password = new_random_password
     user.password_confirmation = new_random_password
     user.skip_email_verification = "1"
     user.save
+    user.buying_category_ids = buying_category_ids
+    user.save
+    user.send(:generate_reset_password_token!)
+    deliver_email_for_category_buyer(user)
   end
   
   def deliver_material
@@ -205,15 +208,14 @@ class CallResult < ActiveRecord::Base
     ApplicationMailer.generic_email([contact_email_address], template.subject, template.body, template.from, [Pathname.new(File.join([::Rails.root, 'public', send_material_result_value.material.url]))]).deliver
   end
 
-  def deliver_email_for_category_buyer
-    template = EmailTemplate.global.where(:uniq_id => 'upgrade_to_category_buyer').first
+  def deliver_email_for_category_buyer(user)
+    template = contact.campaign.upgrade_contact_to_category_buyer_email_template || EmailTemplate.global.where(:uniq_id => 'upgrade_contact_to_category_buyer').first
     [:subject, :from, :bcc, :cc, :body].each do |field|
-      template.send("#{field}=".to_sym, self.send("email_template_#{field}"))
+      template.send("#{field}=".to_sym, self.send("email_template_#{field}")) unless self.send("email_template_#{field}").blank?
     end
-    throw template.inspect
     attachments_arr = send_material_result_value.material.blank? ? [] : [Pathname.new(File.join([::Rails.root, 'public', send_material_result_value.material.url]))]
 
-    ApplicationMailer.generic_email([contact_email_address], template.subject, template.body, template.from, attachments_arr).deliver
+    ApplicationMailer.generic_email([contact_email_address], template.subject, template.render({:user => user}), template.from, attachments_arr).deliver
   end
   
   def set_last_call_result_in_contact

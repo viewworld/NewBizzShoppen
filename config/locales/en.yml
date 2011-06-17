@@ -30,6 +30,7 @@ en:
       collapse_prefix: " "
       confrimation_message: "Are you sure? All subsequent replies will be deleted as well."
       field_cant_be_blank: "can't be blank"
+      field_incorrect_format: "incorrect value"
     no_categories_for_category_buyer: "Your Category Buyer account has no associated categories. You can't sign in."
     edit_hint: "Edit hint"
     agree_to: "Agree to"
@@ -397,6 +398,11 @@ en:
       hide_briefing_area: "Go to agent"
       show_briefing_area: "Show/Hide briefing"
       show_my_results: "My results"
+      email_templates_editor:
+        subject: "Subject"
+        from: "From"
+        bcc: "Bcc"
+        cc: "Cc"
   contacts:
     filter:
       title: Search
@@ -2751,6 +2757,7 @@ en:
       edit:
         view:
           header: "Change your password"
+          contact_upgraded_to_category_buyer_info: "In order to start using Fairleads please set your new password below"
     lead_notification_types:
       notification_type0: "Instant"
       notification_type1: "Once per dey"

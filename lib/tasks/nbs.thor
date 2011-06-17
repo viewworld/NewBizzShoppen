@@ -186,11 +186,11 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
         },
         {
             :name => "Upgrade to category buyer",
-            :uniq_id => "upgrade_to_category_buyer",
+            :uniq_id => "upgrade_contact_to_category_buyer",
             :en => {:subject => "You have been upgraded to category buyer",
-                    :body => "<p></p>"},
+                    :body => "<p><a href=\"{{ user.reset_password_instructions_url }}\">Start using your account</a></p>"},
             :dk => {:subject => "[DK] You have been upgraded to category buyer",
-                    :body => "<p></p>"}
+                    :body => "<p><a href=\"{{ user.reset_password_instructions_url }}\">Start using your account</a></p>"}
         }
     ]
 

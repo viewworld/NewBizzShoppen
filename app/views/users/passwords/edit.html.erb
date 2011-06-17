@@ -1,6 +1,11 @@
 <column-mc:>
   <header><%= t("users.passwords.edit.view.header") %></header>
 
+  <% if user = User.find_by_reset_password_token(params[:reset_password_token]) and user.contact.present? and user.sign_in_count == 0 %>
+  <p><%= t("users.passwords.edit.view.contact_upgraded_to_category_buyer_info") %></p>
+  <% end %>
+
+
   <%= form_for(resource, :as => resource_name, :url => user_password_path(resource_name), :html => {:method => :put}) do |f| %>
       <%= devise_error_messages! %>
       <%= f.hidden_field :reset_password_token %>

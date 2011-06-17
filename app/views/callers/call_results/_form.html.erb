@@ -42,7 +42,12 @@
           <% [:subject, :from, :bcc, :cc, :body].each do |field| %>
               <%= form.input "email_template_#{field}", :as => :hidden %>
           <% end %>
-          <%= bt_link_to_function nil, t("call_results.new.edit_email_template"), "javascript:$('#modal_for_email_template_edit').dialog('open')" %>
+          <% if call_result.errors.empty? %>
+          <script type="text/javascript">
+            window.template_initialised = 0;
+          </script>
+          <% end %>
+          <%= bt_link_to_function nil, t("call_results.new.edit_email_template"), "javascript:set_email_template_editor_init_values_function_name('fill_editor_with_upgrade_to_cat_buyer_template_values()');$('#modal_for_email_template_edit').dialog('open');" %>
       <% end %>
     </ol>
   </fieldset>
@@ -73,13 +78,12 @@
         window.location = path;
      <% end %>
   });
-    $('#modal_for_email_template_edit').dialog({
-        autoOpen: false,
-        width: 1150,
-        height: 720,
-        title: 'Edit email template',
-        buttons: { "Save": function() {
-            $(this).dialog("close");
-        }}
-    });
+
+function fill_editor_with_upgrade_to_cat_buyer_template_values(){
+    <%=
+     template = @campaign.upgrade_contact_to_category_buyer_email_template
+     "fill_email_template_editor_with_values('#{template.subject}', '#{template.from}', '#{template.bcc}', '#{template.cc}', '#{template.body_sanitized}')".html_safe
+     -%>
+}
+
 </script>

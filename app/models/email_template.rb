@@ -12,6 +12,10 @@ class EmailTemplate < ActiveRecord::Base
     user.admin? or (user.call_centre? and (resource.creator == user or resource.users.include?(user)))
   end
 
+  def body_sanitized
+    body.gsub(/\n/,"").gsub(/\r/,"").gsub(/[']/, '\\\\\'')
+  end
+
   private
 
   #Template cannot be cached due to dynamic translations
