@@ -168,6 +168,11 @@ Given /^lead (.+) has purchase value (.+)$/ do |header,pv|
   lead.update_attribute(:purchase_value, pv)
 end
 
+Given /^lead (.+) has (.+) lead purchases$/ do |header,number|
+  lead = Lead.where(:header => header).first
+  lead.lead_purchases.size.should == number.to_i
+end
+
 
 Given /^lead "([^"]*)" has translation for lang "([^"]*)" with attributes "([^"]*)"$/ do |header, locale_lang, options|
   lead = Lead.where(:header => header).first

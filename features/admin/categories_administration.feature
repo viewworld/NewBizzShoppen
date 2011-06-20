@@ -166,3 +166,23 @@ Scenario: I can flag a category to not show prices to team members
   And I follow "Computers"
   Then I should see "589.17"
   And I should see "439.58"
+
+@m13 @added @auto_buy @is @_done @_tested @selenium
+Scenario: I can enable auto-buy option for big buyer for categories which are unique to him
+  Given there are no categories
+  Then I have user with email nbsbuyer3483434biz@nbs.com and role customer
+  Then User nbsbuyer3483434biz@nbs.com with role customer is big buyer
+  Then Category Computers is created
+  When I go to administration categories
+  Then I follow translated "administration.categories.index.view.edit_link"
+  Then I check "category_is_customer_unique"
+  Then I select "nbsbuyer3483434biz@nbs.com" from "all_customers"
+  Then I follow "move_right" within "#users_selection_customers_div"
+  Then I check "category_auto_buy"
+  Then I press "Save"
+  Then category named "Computers" is auto buy enabled
+  Then Lead named "sub zero" exists within "Computers" category
+  Then lead sub zero has 1 lead purchases
+  Then last email sent should have been sent to recipient "nbsbuyer3483434biz@nbs.com"
+
+

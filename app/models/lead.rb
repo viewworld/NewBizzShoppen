@@ -1,12 +1,12 @@
 class Lead < AbstractLead
-  INFINITY             = 1.0/0
+  INFINITY = 1.0/0
   NOVELTY_LEVEL_RANGES = [(0..8), (9..30), (31..INFINITY)]
   HOTNESS_LEVEL_RANGES = [(29..INFINITY), (7..28), (-INFINITY..6)]
   BLACK_LISTED_ATTRIBUTES = [:published]
 
   translates :header, :description, :hidden_description
   acts_as_commentable
-  
+
   include ScopedSearch::Model
 
   belongs_to :creator, :polymorphic => true, :foreign_key => "creator_id"
@@ -33,30 +33,30 @@ class Lead < AbstractLead
   scope :with_selected_categories, lambda { |q| where(:category_id => q) }
   scope :with_categories, lambda { |arr| where(:category_id => Category.where(:id => arr.map(&:self_and_descendants).flatten.map(&:id))) }
   scope :with_country, lambda { |country_id| where(:country_id => country_id) }
-  scope :with_zip_code, lambda { |zip_code| where(:zip_code => zip_code)}
+  scope :with_zip_code, lambda { |zip_code| where(:zip_code => zip_code) }
   scope :with_region, lambda { |region_id| where(:region_id => region_id.to_i) }
   scope :with_ids_not_in, lambda { |q| where(["leads.id NOT IN (?)", q]) }
   scope :without_inactive, where("((select sum(quantity) from lead_purchases where lead_id = leads.id group by lead_id) is null or (select sum(quantity) from lead_purchases where lead_id = leads.id group by lead_id) < sale_limit)")
-  scope :without_outdated, lambda { where("purchase_decision_date >= ?", Date.today.to_s ) }
+  scope :without_outdated, lambda { where("purchase_decision_date >= ?", Date.today.to_s) }
   scope :without_locked_users, joins("INNER JOIN users ON users.id=leads.creator_id").where("users.locked_at is NULL")
   scope :with_status, lambda { |q| where(["leads.published = ?", q]) }
   scope :published_only, where(:published => true)
-  scope :with_creator_type, lambda {|creator_type| where(["leads.creator_type = ?", "User::#{creator_type}"]) }
+  scope :with_creator_type, lambda { |creator_type| where(["leads.creator_type = ?", "User::#{creator_type}"]) }
   scope :within_accessible_categories, lambda { |accessible_categories_ids| where("leads.category_id IN (?)", accessible_categories_ids) }
   scope :with_call_centre, lambda { |call_centre_id| where(["users.parent_id = ?", call_centre_id]).joins("INNER JOIN users ON leads.creator_id=users.id") }
   #====================
   scope :featured, where(:featured => true)
   scope :purchased, where("lead_purchases_counter > 0")
-  scope :without_bought_and_requested_by, lambda {|u| select("DISTINCT leads.*").joins("LEFT JOIN lead_purchases lp ON lp.lead_id = leads.id").where(["(lp.owner_id <> ? OR lp.owner_id IS NULL) AND (lp.assignee_id <> ? OR lp.assignee_id IS NULL) AND (lp.requested_by <> ? OR lp.requested_by IS NULL)", u.id, u.id, u.id]) if u}
+  scope :without_bought_and_requested_by, lambda { |u| select("DISTINCT leads.*").joins("LEFT JOIN lead_purchases lp ON lp.lead_id = leads.id").where(["(lp.owner_id <> ? OR lp.owner_id IS NULL) AND (lp.assignee_id <> ? OR lp.assignee_id IS NULL) AND (lp.requested_by <> ? OR lp.requested_by IS NULL)", u.id, u.id, u.id]) if u }
   scope :bestsellers, order("lead_purchases_counter DESC")
   scope :latest, order("created_at DESC")
-  scope :contact_requests_for, lambda { |user_id| where("leads.creator_id = :id or leads.email_address = :email", {:id => user_id, :email => User.find(user_id).email})}
+  scope :contact_requests_for, lambda { |user_id| where("leads.creator_id = :id or leads.email_address = :email", {:id => user_id, :email => User.find(user_id).email}) }
   scope :interesting_for_user, lambda { |user| where("leads.category_id IN (?)", user.accessible_categories_ids) }
 
-  scope :joins_on_lead_purchases , joins("INNER JOIN lead_purchases ON lead_purchases.lead_id=leads.id")
+  scope :joins_on_lead_purchases, joins("INNER JOIN lead_purchases ON lead_purchases.lead_id=leads.id")
   scope :with_created_by, lambda { |agent_id| where("creator_id = ?", agent_id) }
   scope :with_created_by_call_centre, lambda { |call_centre| where("creator_id IN (?)", call_centre.subaccount_ids) }
-  scope :with_revenue_by, lambda { |agent| select("sum(lead_purchases.euro_price) as id").where("creator_id IN (?) and requested_by IS NULL",  agent.has_role?(:call_centre) ? agent.subaccount_ids : agent.id).joins_on_lead_purchases }
+  scope :with_revenue_by, lambda { |agent| select("sum(lead_purchases.euro_price) as id").where("creator_id IN (?) and requested_by IS NULL", agent.has_role?(:call_centre) ? agent.subaccount_ids : agent.id).joins_on_lead_purchases }
   scope :with_rated_good_by, lambda { |agent| where("creator_id = ? and lead_purchases.rating_level > -1 and lead_purchases.rating_level <= ? and requested_by IS NULL", agent.id, LeadPurchase::RATING_SATISFACTORY).joins_on_lead_purchases }
   scope :with_rated_bad_by, lambda { |agent| where("creator_id = ? and lead_purchases.rating_level > ? and requested_by IS NULL", agent.id, LeadPurchase::RATING_SATISFACTORY).joins_on_lead_purchases }
   scope :with_not_rated_by, lambda { |agent| where("creator_id = ? and (lead_purchases.rating_level = -1 or lead_purchases.rating_level is NULL) and requested_by IS NULL", agent.id).joins_on_lead_purchases }
@@ -87,6 +87,7 @@ class Lead < AbstractLead
   before_validation :handle_dialling_codes
   before_save :check_if_category_can_publish_leads
   after_create :send_instant_notification_to_subscribers
+  after_save :auto_buy
 
   private
 
@@ -98,7 +99,7 @@ class Lead < AbstractLead
 
   def process_for_lead_information?
     true
-  end  
+  end
 
   #prevent dialling codes from saving when no proper phone number follows them
   def handle_dialling_codes
@@ -119,7 +120,7 @@ class Lead < AbstractLead
 
   def mass_assignment_authorizer
     if self.current_user and current_user.can_publish_leads?
-      self.class.protected_attributes.reject! { |a| BLACK_LISTED_ATTRIBUTES.include?(a.to_sym)  }
+      self.class.protected_attributes.reject! { |a| BLACK_LISTED_ATTRIBUTES.include?(a.to_sym) }
       self.class.protected_attributes
     else
       super
@@ -140,9 +141,9 @@ class Lead < AbstractLead
     end
   end
 
-    def can_be_removed?
+  def can_be_removed?
     lead_purchases.empty?
-    end
+  end
 
   def set_buyers_notification
     self.notify_buyers_after_update = true
@@ -162,6 +163,12 @@ class Lead < AbstractLead
     ApplicationMailer.email_template(email, EmailTemplate.find_by_uniq_id(uniq_id), {:lead => self}).deliver
   end
 
+  def auto_buy
+    if published_changed? and published and category.auto_buy
+      user = category.category_customers.first.user
+      user.cart.add_lead(self) if user.big_buyer? and !bought_by_user?(user)
+    end
+  end
 
   public
 
@@ -197,11 +204,11 @@ class Lead < AbstractLead
   def sold?
     lead_purchases_counter > 0
   end
-  
+
   def duplicate_fields(lead)
     if lead
       ["company_name", "company_phone_number", "company_website", "address_line_1", "address_line_2", "address_line_3", "zip_code",
-      "country_id", "company_ean_number", "contact_name", "direct_phone_number", "phone_number", "email_address", "linkedin_url", "facebook_url"].each do |field|
+       "country_id", "company_ean_number", "contact_name", "direct_phone_number", "phone_number", "email_address", "linkedin_url", "facebook_url"].each do |field|
         self.send("#{field}=".to_sym, lead.send(field.to_sym))
       end
     end
@@ -220,7 +227,7 @@ class Lead < AbstractLead
   end
 
   def buyout_price
-     buyout_quantity * price
+    buyout_quantity * price
   end
 
   def buyout_possible_for?(user)
@@ -228,13 +235,13 @@ class Lead < AbstractLead
   end
 
   def buyout!(buyer)
-      if (buyer.lead_single_purchases.with_lead(id).any? ? buyer.lead_additional_buyouts : buyer.lead_buyouts).create(
-                                     :lead_id => self.id,
-                                     :paid => false,
-                                     :accessible_from => (buyer.big_buyer ? Time.now : nil),
-                                     :quantity => buyout_quantity)
-        :buyout_successful
-      end
+    if (buyer.lead_single_purchases.with_lead(id).any? ? buyer.lead_additional_buyouts : buyer.lead_buyouts).create(
+        :lead_id => self.id,
+        :paid => false,
+        :accessible_from => (buyer.big_buyer ? Time.now : nil),
+        :quantity => buyout_quantity)
+      :buyout_successful
+    end
   end
 
   def update_stats!(field)
@@ -245,7 +252,7 @@ class Lead < AbstractLead
   def can_be_commented?
     !creator.has_role?(:purchase_manager)
   end
-  
+
   def has_unread_comments_for_user?(user)
     comment_threads.unread_by_user(user).count > 0
   end
@@ -291,4 +298,9 @@ class Lead < AbstractLead
   def category_name
     category.name
   end
+
+  def bought_by_user?(user)
+     !lead_purchases.where("purchased_by = #{user.id} and accessible_from IS NOT NULL").blank?
+  end
+
 end

@@ -19,6 +19,8 @@
 
         <%= render :partial => "users_selection", :locals => {:users_type => "agents", :form => form} %>
 
+        <%= form.input :auto_buy %>
+
       </ol>
     </fieldset>
   </div>
@@ -51,8 +53,7 @@
 
 <script type="text/javascript">
     function move_users_to_all(users_type) {
-        $("#all_" + users_type + " option:selected").each(function()
-        {
+        $("#all_" + users_type + " option:selected").each(function() {
             $("#selected_" + users_type).
                     append($("<option></option>").
                     attr("value", $(this).val()).
@@ -62,8 +63,7 @@
     }
 
     function move_users_to_selected(users_type) {
-        $("#selected_" + users_type + " option:selected").each(function()
-        {
+        $("#selected_" + users_type + " option:selected").each(function() {
             $("#all_" + users_type).
                     append($("<option></option>").
                     attr("value", $(this).val()).
@@ -73,13 +73,11 @@
     }
 
     function select_all_options(users_type) {
-        if ($("#selected_" + users_type + " option").length == 0)
-        {
+        if ($("#selected_" + users_type + " option").length == 0) {
             $("#selected_" + users_type).append($("<option></option>"));
         }
 
-        $("#selected_" + users_type + " option").each(function()
-        {
+        $("#selected_" + users_type + " option").each(function() {
             $(this).attr("selected", "selected");
         });
     }
@@ -88,8 +86,7 @@
         if ($('#category_is_customer_unique:checked').val() == "1") {
             select_all_options("customers")
         }
-        else
-        {
+        else {
             clear_select("customers", "selected");
             select_all_options("customers")
         }
@@ -97,34 +94,29 @@
         if ($('#category_is_agent_unique:checked').val() == "1") {
             select_all_options("agents")
         }
-        else
-        {
+        else {
             clear_select("agents", "selected");
             select_all_options("agents")
         }
     }
 
     function show_hide_users_selection(users_type) {
-        if ($('#category_is_' + users_type + '_unique:checked').val() == "1")
-        {
+        if ($('#category_is_' + users_type + '_unique:checked').val() == "1") {
             $('#users_selection_' + users_type + 's_div').show();
         }
-        else
-        {
+        else {
             $('#users_selection_' + users_type + 's_div').hide();
         }
     }
 
     function clear_select(users_type, select_type) {
-        $("#" + select_type + "_" + users_type + " option").each(function()
-        {
+        $("#" + select_type + "_" + users_type + " option").each(function() {
             $(this).remove();
         });
     }
 
     function add_option_to_select(users_type, select_type, name, value) {
-        if ($("#selected_" + users_type + " option[value=" + value + "]").length == 0)
-        {
+        if ($("#selected_" + users_type + " option[value=" + value + "]").length == 0) {
             $("#" + select_type + "_" + users_type).
                     append($("<option></option>").
                     attr("value", value).
@@ -139,7 +131,6 @@
             url: "<%= administration_category_users_path -%>",
             data: "query=" + query + "&users_type=" + users_type
         });
-
     }
 </script>
 

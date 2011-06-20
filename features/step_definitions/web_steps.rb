@@ -300,6 +300,10 @@ Then /^I run javascript (.+)$/ do |js_code|
   page.evaluate_script(js_code)
 end
 
+Then /^I evaluate javascript "([^"]*)"$/ do |js_code|
+  page.evaluate_script(js_code)
+end
+
 Then /^I fill in hidden field "([^"]*)" with "([^"]*)"$/ do |field, value|
   page.evaluate_script("document.getElementById('#{field}').value = '#{value}'")
 end

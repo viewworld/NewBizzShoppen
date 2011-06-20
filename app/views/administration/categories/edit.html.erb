@@ -37,4 +37,16 @@
           <% end %>
       <% end %>
   <% end %>
+
+  <script type="text/javascript">
+    function auto_buy() {
+        if ($('#selected_customers option').size() == 1) {
+            $('#category_auto_buy').attr("disabled", false);
+        } else {
+            $('#category_auto_buy').attr("disabled", true);
+            $('#category_auto_buy').attr("checked", false);
+        }
+    }
+    auto_buy();
+  </script>
 </column-mc:>
