@@ -4,7 +4,7 @@ class Callers::CampaignsController < Callers::CallerController
   helper :campaigns
 
   before_filter :set_campaign, :except => [:index, :new, :create]
-  before_filter lambda {authorize_role(:call_centre, :admin)}, :except => :index
+  before_filter lambda {authorize_role(:call_centre, :admin)}, :except => [:index, :contacts_for_search]
   before_filter lambda {authorize_manage_rights(@campaign)}, :only => [:edit,:update,:destroy,:show]
 
   def new
@@ -54,6 +54,13 @@ class Callers::CampaignsController < Callers::CallerController
 
   def result_details_to_csv
     send_data CallResult.to_csv(params[:call_result_ids].split(",")), :filename => "call_result.csv"
+  end
+
+  def contacts_for_search
+    @contacts = @campaign.contacts.where("lower(company_name) LIKE '%#{params[:q].downcase}%'").limit(10).order(:company_name)
+    respond_to do |format|
+      format.js
+    end
   end
 
   protected

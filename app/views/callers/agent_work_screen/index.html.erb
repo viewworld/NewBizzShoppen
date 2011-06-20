@@ -23,15 +23,22 @@
   <a data-remote="true" data-method="get" id="autocomplter_result_form" href="" class="display:none"></a>
 
   <script language="javascript">
-      var data = [
-          <%= @campaign.contacts_for_auto_completer*"," %>
-      ];
-      $("#autocompleter").autocomplete(data, {
-          formatItem: function(item) {
-              return item.text;
+      $(document).ready(function() {
+          jQuery.ajaxSetup({
+              'beforeSend': function(xhr) {
+                  xhr.setRequestHeader("Accept", "text/javascript")
+              }
+          });
+          $("#autocompleter").autocomplete({
+              url : 'callers/campaigns/<%= @campaign.id %>/contacts_for_search.js',
+              mustMatch : false
           }
-      }).result(function(event, item) {
-          $("#autocomplter_result_form").attr("href", item.url).click();
+                  ).result(function(event, item) {
+              $("#autocomplter_result_form").attr("href", "/callers/campaigns/<%= @campaign.id %>/agent_work_screen/contacts/"+item[1]).click();
+          });
+
+          $("#autocompleter").autocomplete('contacts_for_search', function(event, data, formatted) {
+          });
       });
 
   </script>
