@@ -50,5 +50,5 @@ Given /^category "([^"]*)" has attributes "([^"]*)"$/ do |category_name, options
 end
 
 Then /^category "([^"]*)" is in interests of user "([^"]*)" "([^"]*)"$/ do |category, email, is_true|
-  ::User::Customer.find_by_email(email).categories.include?(Category.find_by_name(category)).should == (is_true == true)
+  ::User::Customer.find_by_email(email).categories.include?(Category.where(:name => category).first).should == (eval(is_true) == true)
 end
