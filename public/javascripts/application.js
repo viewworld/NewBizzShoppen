@@ -223,6 +223,13 @@ function show_briefing(briefing_html){
   $("#agent_work_screen_dashboard").toggle();
   $("#agent_work_screen_call_result").toggle();
   $('#new_result_form').toggle();
+  if($("a:.bt_grey_small").attr('href') == "/callers/campaigns"){
+      $("a:.bt_grey_small").attr('href', "javascript:show_briefing('');")
+  }
+    else
+  {
+      $("a:.bt_grey_small").attr('href', "/callers/campaigns")
+  }
 }
 
 
