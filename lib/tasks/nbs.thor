@@ -185,7 +185,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
                     :body => "<p></p>"}
         },
         {
-            :name => "Upgrade to category buyer",
+            :name => "Upgrade contact to category buyer",
             :uniq_id => "upgrade_contact_to_category_buyer",
             :en => {:subject => "You have been upgraded to category buyer",
                     :body => "<p><a href=\"{{ user.reset_password_instructions_url }}\">Start using your account</a></p>"},

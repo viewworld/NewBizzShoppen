@@ -86,14 +86,14 @@
 
 function fill_editor_with_upgrade_to_cat_buyer_template_values(){
     <%=
-     template = @campaign.upgrade_contact_to_category_buyer_email_template || EmailTemplate.first
+     template = @campaign.upgrade_contact_to_category_buyer_email_template
      "fill_email_template_editor_with_values('#{template.subject}', '#{template.from}', '#{template.bcc}', '#{template.cc}', '#{template.body_sanitized}')".html_safe
      -%>
 }
 
 function fill_editor_with_send_result_material_template_values(){
     <%=
-     template = @campaign.send_material_email_template  || EmailTemplate.first
+     template = @campaign.send_material_email_template
      "fill_email_template_editor_with_values('#{template.subject}', '#{template.from}', '#{template.bcc}', '#{template.cc}', '#{template.body_sanitized}')".html_safe
      -%>
 }

@@ -201,11 +201,12 @@ Feature: Agent campaign - calling session
     @requested @m13 @after_m12_presentation @ao @$_call_centre_agent
     Scenario: I can upload and add new files to the set for the result being created
 
-    @requested @m13 @after_m12_presentation @tgn @$_call_centre_agent @_wip
+    @requested @m13 @after_m12_presentation @tgn @$_call_centre_agent @_done @_tested
     Scenario: I can click "Customize email" button and edit all email fields in modal box
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Send material" from "selected_result_id"
       And I follow translated "call_results.edit.button_new_result"
+      And I should see translated "call_results.new.customize_email_template"
 
     # 5168
     @m11 @requested @ao @tested_elsewhere @_done
