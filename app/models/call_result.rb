@@ -202,17 +202,23 @@ class CallResult < ActiveRecord::Base
     user.send(:generate_reset_password_token!)
     deliver_email_for_category_buyer(user)
   end
+
+  def customize_email_template(template)
+    [:subject, :from, :bcc, :cc, :body].each do |field|
+      template.send("#{field}=".to_sym, self.send("email_template_#{field}")) unless self.send("email_template_#{field}").blank?
+    end
+    template
+  end
   
   def deliver_material
     template = contact.campaign.send_material_email_template || EmailTemplate.global.where(:uniq_id => 'result_send_material').first
+    template = customize_email_template(template)
     ApplicationMailer.generic_email([contact_email_address], template.subject, template.body, template.from, [Pathname.new(File.join([::Rails.root, 'public', send_material_result_value.material.url]))]).deliver
   end
 
   def deliver_email_for_category_buyer(user)
     template = contact.campaign.upgrade_contact_to_category_buyer_email_template || EmailTemplate.global.where(:uniq_id => 'upgrade_contact_to_category_buyer').first
-    [:subject, :from, :bcc, :cc, :body].each do |field|
-      template.send("#{field}=".to_sym, self.send("email_template_#{field}")) unless self.send("email_template_#{field}").blank?
-    end
+    template = customize_email_template(template)
     attachments_arr = send_material_result_value.material.blank? ? [] : [Pathname.new(File.join([::Rails.root, 'public', send_material_result_value.material.url]))]
 
     ApplicationMailer.generic_email([contact_email_address], template.subject, template.render({:user => user}), template.from, attachments_arr).deliver

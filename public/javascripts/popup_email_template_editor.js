@@ -1,5 +1,14 @@
   var ckeditor_initialised = 0;
 
+  function reload_ck_editor(){
+      if(true){
+      CKEDITOR.instances.body_editor.destroy();
+      window.ckeditor_initialised = 0;
+      init_ck_editor();
+      setTimeout("CKEDITOR.instances.body_editor.setData( $('#call_result_email_template_body').val())",200)
+      }
+  }
+
   function init_ck_editor(){
       if(window.ckeditor_initialised == 0){
       if (CKEDITOR.instances['body_editor']) {

@@ -484,7 +484,7 @@ en:
       contact_last_name: "Last name"
       contact_address_line_1: "Address line 1"
       contact_zip_code: "Zip code"
-      edit_email_template: "Edit email template"
+      customize_email_template: "Customize email"
     edit:
       title: Edit result
       form_title: Edit

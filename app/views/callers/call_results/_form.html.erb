@@ -39,6 +39,8 @@
                 <clb/>
               </div>
             </div>
+      <% end %>
+      <% if call_result.result.upgrades_to_category_buyer? or call_result.result.send_material? %>
           <% [:subject, :from, :bcc, :cc, :body].each do |field| %>
               <%= form.input "email_template_#{field}", :as => :hidden %>
           <% end %>
@@ -47,7 +49,10 @@
             window.template_initialised = 0;
           </script>
           <% end %>
-          <%= bt_link_to_function nil, t("call_results.new.edit_email_template"), "javascript:set_email_template_editor_init_values_function_name('fill_editor_with_upgrade_to_cat_buyer_template_values()');$('#modal_for_email_template_edit').dialog('open');" %>
+
+          <li>
+            <%= bt_link_to_function nil, t("call_results.new.customize_email_template"), "javascript:set_email_template_editor_init_values_function_name('#{call_result.result.upgrades_to_category_buyer? ? 'fill_editor_with_upgrade_to_cat_buyer_template_values()' : 'fill_editor_with_send_result_material_template_values()'}');$('#modal_for_email_template_edit').dialog('open');#{'reload_ck_editor();' if call_result.result.send_material?}" %>
+          </li>
       <% end %>
     </ol>
   </fieldset>
@@ -81,7 +86,14 @@
 
 function fill_editor_with_upgrade_to_cat_buyer_template_values(){
     <%=
-     template = @campaign.upgrade_contact_to_category_buyer_email_template
+     template = @campaign.upgrade_contact_to_category_buyer_email_template || EmailTemplate.first
+     "fill_email_template_editor_with_values('#{template.subject}', '#{template.from}', '#{template.bcc}', '#{template.cc}', '#{template.body_sanitized}')".html_safe
+     -%>
+}
+
+function fill_editor_with_send_result_material_template_values(){
+    <%=
+     template = @campaign.send_material_email_template  || EmailTemplate.first
      "fill_email_template_editor_with_values('#{template.subject}', '#{template.from}', '#{template.bcc}', '#{template.cc}', '#{template.body_sanitized}')".html_safe
      -%>
 }

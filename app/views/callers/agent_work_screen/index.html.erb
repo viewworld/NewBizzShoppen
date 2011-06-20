@@ -107,7 +107,7 @@
         width: 1150,
         height: 720,
         title: 'Edit email template',
-        open: function(event, ui){ init_ck_editor(); setTimeout("init_email_template_editor_with_values();",500);  },
+        open: function(event, ui){ init_ck_editor(); setTimeout("init_email_template_editor_with_values();",300);  },
         beforeClose: function(event, ui){ if(validate_template_editor_fields() == 0){ return true } else {return false}},
         buttons: { "Save": function() {
             if(validate_template_editor_fields() == 0){ $(this).dialog("close");  }
