@@ -188,9 +188,17 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
             :name => "Upgrade contact to category buyer",
             :uniq_id => "upgrade_contact_to_category_buyer",
             :en => {:subject => "You have been upgraded to category buyer",
-                    :body => "<p><a href=\"{{ user.reset_password_instructions_url }}\">Start using your account</a></p>"},
+                    :body => "<p>Fairleads username: {{user.email}}</p><p>Fairleads password: {{password}}</p><p>Screen name: {{user.screen_name}}</p><p><a href=\"{{user.category_buyer_category_home_url}}\">{{user.category_buyer_category_home_url}}</a></p>"},
             :dk => {:subject => "[DK] You have been upgraded to category buyer",
-                    :body => "<p><a href=\"{{ user.reset_password_instructions_url }}\">Start using your account</a></p>"}
+                    :body => "<p>Fairleads username: {{user.email}}</p><p>Fairleads password: {{password}}</p><p>Screen name: {{user.screen_name}}</p><p><a href=\"{{user.category_buyer_category_home_url}}\">{{user.category_buyer_category_home_url}}</a></p>"}
+        },
+        {
+            :name => "Upgraded category buyer welcome",
+            :uniq_id => "upgraded_contact_to_category_buyer_welcome",
+            :en => {:subject => "Welcome to Fairleads.com!",
+                    :body => "<p>Login: {{user.email}}</p><p>Linked with account: {{user.social_provider_name}}</p><p><a href=\"{{user.category_buyer_category_home_url}}\">{{user.category_buyer_category_home_url}}</a></p>"},
+            :dk => {:subject => "[DK] Welcome to Fairleads.com!",
+                    :body => "<p>Login: {{user.email}}</p><p>Linked with account: {{user.social_provider_name}}</p><p><a href=\"{{user.category_buyer_category_home_url}}\">{{user.category_buyer_category_home_url}}</a></p>"}
         }
     ]
 

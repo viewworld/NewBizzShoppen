@@ -15,7 +15,11 @@ class SignInController < ApplicationController
       user.update_attribute(:rpx_identifier, data['identifier'])
       flash[:notice] = t("devise.sessions.new.controller.successfully_connect_to_social", :first_name => user.first_name, :account_type => User.social_provider(user.rpx_identifier), :email => user.email)
       sign_in(user)
-      return redirect_to root_path
+      if user.has_role? :category_buyer and user.sign_in_count == 1
+        return redirect_to my_profile_path
+      else
+        return redirect_to root_path
+      end
     end
     @user = user_class_name.new(params[param_key])
     @user.set_fields_for_rpx(data) unless data.blank?

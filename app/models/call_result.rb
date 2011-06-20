@@ -187,20 +187,21 @@ class CallResult < ActiveRecord::Base
 
   def upgrade_to_category_buyer
     user = User::CategoryBuyer.new(:email => contact_email_address, :first_name => contact_first_name,
-                            :last_name => contact_last_name, :screen_name => "#{contact_first_name} #{contact_last_name} (#{contact_email_address})",
+                            :last_name => contact_last_name,
                             :address_attributes => { :address_line_1 => contact_address_line_1, :zip_code => contact_zip_code,
                                                      :country_id => contact.country_id }, :agreement_read => true, :company_name => contact.company_name,
                             :contact => contact)
 
-    new_random_password = user.send(:generate_token, 12)
-    user.password = new_random_password
-    user.password_confirmation = new_random_password
+    users_count = User.where("last_name = ?", contact_last_name).count
+    user.screen_name = "#{contact_last_name}#{' ' + users_count.to_s if users_count > 0}"
+    new_password = contact.campaign.name.downcase.first(6)
+    user.password = new_password
+    user.password_confirmation = new_password
     user.skip_email_verification = "1"
     user.save
     user.buying_category_ids = buying_category_ids
     user.save
-    user.send(:generate_reset_password_token!)
-    deliver_email_for_category_buyer(user)
+    deliver_email_for_category_buyer(user, new_password)
   end
 
   def customize_email_template(template)
@@ -216,12 +217,12 @@ class CallResult < ActiveRecord::Base
     ApplicationMailer.generic_email([contact_email_address], template.subject, template.body, template.from, [Pathname.new(File.join([::Rails.root, 'public', send_material_result_value.material.url]))]).deliver
   end
 
-  def deliver_email_for_category_buyer(user)
+  def deliver_email_for_category_buyer(user, password)
     template = contact.campaign.upgrade_contact_to_category_buyer_email_template || EmailTemplate.global.where(:uniq_id => 'upgrade_contact_to_category_buyer').first
     template = customize_email_template(template)
     attachments_arr = send_material_result_value.material.blank? ? [] : [Pathname.new(File.join([::Rails.root, 'public', send_material_result_value.material.url]))]
 
-    ApplicationMailer.generic_email([contact_email_address], template.subject, template.render({:user => user}), template.from, attachments_arr).deliver
+    ApplicationMailer.generic_email([contact_email_address], template.subject, template.render({:user => user, :password => password}), template.from, attachments_arr).deliver
   end
   
   def set_last_call_result_in_contact

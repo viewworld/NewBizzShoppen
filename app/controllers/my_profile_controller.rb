@@ -11,7 +11,15 @@ class MyProfileController < SecuredController
     @user = current_user
     if @user.update_attributes(params["user_#{@user.role.to_s}".to_sym])
       flash[:notice] = I18n.t("my_profile.update.controller.successful_update_notice")
-      redirect_to my_profile_path
+      if @user.has_role?(:category_buyer) and @user.contact.present? and @user.sign_in_count == 1
+        unless session[:category_buyer_confirmed_account_info] == "1"
+          @user.deliver_welcome_email_for_upgraded_contact
+          session[:category_buyer_confirmed_account_info] = "1"
+        end
+        redirect_to category_home_page_path(:slug => @user.buying_categories.first.cached_slug)
+      else
+        redirect_to my_profile_path
+      end
     else
       render :action => 'edit'
     end

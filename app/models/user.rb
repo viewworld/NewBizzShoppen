@@ -100,7 +100,7 @@ class User < ActiveRecord::Base
   before_destroy :can_be_removed
   after_create :auto_activate
 
-  liquid :email, :confirmation_instructions_url, :reset_password_instructions_url
+  liquid :email, :confirmation_instructions_url, :reset_password_instructions_url, :social_provider_name, :category_buyer_category_home_url, :screen_name
   require 'digest/sha1'
 
   private
@@ -467,6 +467,14 @@ class User < ActiveRecord::Base
     "Linked In" if rpx_identifier.include?("www.linkedin.com")
   end
 
+  def social_provider_name
+    if rpx_identifier
+      User.social_provider(rpx_identifier)
+    else
+      "not linked"
+    end
+  end
+
   def social_provider_ico
     case User.social_provider(rpx_identifier)
       when "Google"
@@ -488,6 +496,12 @@ class User < ActiveRecord::Base
         leads = Lead.for_notification(subscribed_categories, lead_notification_type)
         ApplicationMailer.email_template(email, EmailTemplate.find_by_uniq_id(uniq_id), {:user => self, :leads => leads}).deliver
       end
+    end
+  end
+
+  def category_buyer_category_home_url
+    if has_role?(:category_buyer)
+      "https://#{mailer_host}/#{buying_categories.first.cached_slug}"
     end
   end
 end
