@@ -4,7 +4,7 @@
   <%= semantic_form_for @user, :url => administration_user_path, :method => :put do |form| %>
       <frm title="">
         <param:header>
-          <% if @user.has_role?(:customer) %>
+          <% if @user.has_role?(:customer) and !@user.has_role?(:category_buyer) %>
             <%= bt_link_to nil, t("administration.users.edit.view.change_customer_interests_link"), edit_administration_customer_interest_path(@user), :class => "fltr" %>
           <% end %>
           <%= bt_link_to nil, t("administration.users.edit.view.change_password_link"), new_administration_user_password_path(@user), :class => "fltr" %>

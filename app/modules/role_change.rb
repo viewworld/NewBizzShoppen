@@ -48,7 +48,7 @@ module RoleChange
     end
 
     def assign_buying_categories
-      if roles_mask_changed? and has_role? :category_buyer and !parent
+      if roles_mask_changed? and has_role? :category_buyer and !parent and !roles_mask_was.nil?
         self.with_role.buying_categories = categories
       end
     end
