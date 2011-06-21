@@ -44,6 +44,8 @@ module NavigationHelpers
         administration_sellers_path
     when /administration hints/
         administration_hints_path
+    when /administration new category buyer/
+        new_administration_user_path(:role => :category_buyer)
     when /category home leads page for (.*)/
         "/#{$1.to_url}/leads"
     when /category home page for (.*)/

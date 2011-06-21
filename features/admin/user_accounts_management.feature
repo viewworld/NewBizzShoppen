@@ -634,3 +634,29 @@ Scenario: As Admin I can see Name (default Company Name, if empty then First Nam
   Then I should not see "Selleo"
   Then I should see "Irek"
   Then I should see "Skrobis"
+
+@_bug @added @m13 @selenium @_done @_tested
+Scenario: Category buyer created by admin should have buying categories assigned
+  When Category named "TestingCategoryBuyer" already exists
+  And I am on administration new category buyer page
+  Then I fill in "user_category_buyer_first_name" with "Category"
+  And I fill in "user_category_buyer_last_name" with "Buyer"
+  And I fill in "user_category_buyer_company_name" with "Selleo"
+  And I fill in "user_category_buyer_phone" with "0297272341235"
+  And I fill in "user_category_buyer_email" with "category@buyer.fake"
+  And I fill in "user_category_buyer_screen_name" with "Category Buyer"
+  And I fill in "user_category_buyer_address_attributes_address_line_1" with "Typical 23"
+  And I fill in "user_category_buyer_address_attributes_address_line_2" with "Paris"
+  And I fill in "user_category_buyer_address_attributes_zip_code" with "22-232"
+  And I fill in "user_category_buyer_address_attributes_address_line_3" with "Orange"
+  And I fill in "user_category_buyer_password" with "secret"
+  And I fill in "user_category_buyer_password_confirmation" with "secret"
+  And I check "user_category_buyer_skip_email_verification"
+  And I select "TestingCategoryBuyer" from "all_categories"
+  And I follow "move_right"
+  Then I press translated "administration.users.edit.view.button_update_user"
+  And I should see translated "administration.users.create.flash.user_creation_successful"
+  When I sign out
+  And I sign in as category@buyer.fake with password secret
+  Then I should see "TestingCategoryBuyer"
+  And I should see translated "category_home.show.view.header"
