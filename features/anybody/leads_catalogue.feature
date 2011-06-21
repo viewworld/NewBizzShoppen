@@ -183,8 +183,15 @@ Scenario: I should see only tree for selected root category
   And I should not see "Computers"
   And I should not see "Business"
 
-@m13 @requested @request_leads @ao @$_guest
+@m13 @requested @request_leads @ao @$_guest @_done @_tested
 Scenario: I can request a category and more leads for category as a guest
+  When there are no leads
+  And I follow translated "layout.main_menu.shared.category_request"
+  Then I should see translated "category_requests.new.view.header"
+  When I go to browse leads
+  And I follow "Electronics"
+  And I follow translated "leads.index.request_more_leads"
+  Then I should see translated "more_leads_requests.new.view.header" with options "category:Electronics"
 
 #6054
 # If a category has "0" leads it should display "Sold out" instead.

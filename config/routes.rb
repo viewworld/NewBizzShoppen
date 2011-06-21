@@ -184,7 +184,9 @@ Nbs::Application.routes.draw do
 
   resources :leads, :except => [:new, :create, :destroy]
 
-  resources :categories, :only => [:index]
+  resources :categories, :only => [:index] do
+    resources :more_leads_requests, :only => [:new, :create]
+  end
   match 'categories/:slag' => "leads#index"
 
 

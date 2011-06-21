@@ -21,7 +21,21 @@
 
 <column-mc:>
 
-  <header back="true"><%= leads_listing_header %><%= " #{t("leads.index.header_for")} #{@category.name}" if @category %></header>
+  <header back="true">
+
+    <param:content>
+      <%= leads_listing_header %><%= " #{t("leads.index.header_for")} #{@category.name}" if @category %>
+    </param:content>
+
+    <param:actions>
+      <ul class="header_actions">
+        <% if @leads.empty? and (!user_signed_in? or (user_signed_in? and current_user.has_any_role?(:customer, :lead_buyer))) %>
+          <li class="last"><%= bt_link_to :plus, t("leads.index.request_more_leads"), new_category_more_leads_request_path(@category) %></li>
+        <% end %>
+      </ul>
+    </param:actions>
+
+  </header>
 
   <% unless blurb(:blurb_leads_listing).blank? %>
       <div class="pdd_10 no_pdd_lr"><%= blurb(:blurb_leads_listing) %></div>

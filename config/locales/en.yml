@@ -594,6 +594,7 @@ en:
     index:
       header: Leads
       header_for: "for"
+      request_more_leads: "Request more leads"
       search:
         search_button: Search
         keyword_label: Keyword
@@ -2374,6 +2375,7 @@ en:
     errors:
       messages:
         blank: "can't be blank"
+        invalid: "is invalid"
 
   flash:
     agent_accounts:
@@ -2770,6 +2772,18 @@ en:
     create:
       flash:
         request_sent: "Your category request has been sent"
+
+  more_leads_requests:
+    new:
+      view:
+        header: "Request more leads for category %{category}"
+        company_name: "Company name"
+        contact_name: "Contact name"
+        contact_email: "Contact email"
+        contact_phone: "Contact phone"
+    create:
+      flash:
+        request_sent: "Your request has been sent"
 
   comments:
     threads:

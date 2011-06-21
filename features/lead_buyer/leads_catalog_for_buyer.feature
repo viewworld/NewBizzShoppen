@@ -94,5 +94,21 @@ Scenario: I cannot see unique categories not assigned to me in Browse leads
 # contact e-mail
 # Contact phone
 # How many leads do you need a month:
-@m13 @requested @request_leads @ao @$_guest
+@m13 @requested @request_leads @ao @$_guest @_done @_tested
 Scenario: I can request more leads for category
+  Given there are no leads
+  And Category TestingMoreLeadsRequest is created
+  And I go to browse leads
+  And I follow "TestingMoreLeadsRequest"
+  And I follow translated "leads.index.request_more_leads"
+  And I fill in "email_template_preview_company_name" with "Selleo"
+  And I fill in "email_template_preview_contact_name" with "Boss"
+  And I fill in "email_template_preview_contact_email" with "boss@selleo.fake"
+  And I fill in "email_template_preview_contact_phone" with "+483344556666"
+  And I press translated "contact_us.new.view.send_email_button"
+  Then last email sent should have been sent to recipient "admin@fairleads.com"
+  And last email sent should have content "TestingMoreLeadsRequest"
+  And last email sent should have content "Selleo"
+  And last email sent should have content "Boss"
+  And last email sent should have content "boss@selleo.fake"
+  And last email sent should have content "+483344556666"
