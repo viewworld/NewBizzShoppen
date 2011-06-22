@@ -1,7 +1,7 @@
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs labels_ta_r labels_200">
     <ol>
-      <li class="text">
+      <li class="string">
         <label><%= t("call_results.new.result") %></label>
 
         <div class="txt">
@@ -13,13 +13,14 @@
 
       <% if call_result.result.upgrades_to_category_buyer? %>
           <% [:first_name, :last_name, :address_line_1, :zip_code].each do |field| %>
-          <li>
-            <p><%= label_tag "call_result[contact_email_address]", "#{t("call_results.new.contact_#{field}")}<abbr>*</abbr>".html_safe %><%= text_field_tag "call_result[contact_#{field}]", call_result.send("contact_#{field}".to_sym) || (contact.send(field) if contact.respond_to?(field))  %></p>
+          <li class="string">
+            <%= label_tag "call_result[contact_email_address]", "#{t("call_results.new.contact_#{field}")}<abbr>*</abbr>".html_safe %>
+            <%= text_field_tag "call_result[contact_#{field}]", call_result.send("contact_#{field}".to_sym) || (contact.send(field) if contact.respond_to?(field)) %>
             <%= custom_error_for_object_and_field(call_result, "contact_#{field}".to_sym) %>
           </li>
           <% end %>
+          <li>
             <div id="category_buyer_categories">
-              <div class="pdd_10">
                 <div class="grid_210 fltl">&nbsp;</div>
                 <div class="grid_240 fltl">
                   <h3><%= t("administration.users.edit.view.available_categories") %></h3>
@@ -38,7 +39,7 @@
                 </div>
                 <clb/>
               </div>
-            </div>
+          </li>
       <% end %>
       <% if call_result.result.upgrades_to_category_buyer? or call_result.result.send_material? %>
           <% [:subject, :from, :bcc, :cc, :body].each do |field| %>
@@ -50,7 +51,7 @@
           </script>
           <% end %>
 
-          <li>
+          <li class="commit" style="padding-top:10px">
             <%= bt_link_to_function nil, t("call_results.new.customize_email_template"), "javascript:set_email_template_editor_init_values_function_name('#{call_result.result.upgrades_to_category_buyer? ? 'fill_editor_with_upgrade_to_cat_buyer_template_values()' : 'fill_editor_with_send_result_material_template_values()'}');$('#modal_for_email_template_edit').dialog('open');#{'reload_ck_editor();' if call_result.result.send_material?}" %>
           </li>
       <% end %>
