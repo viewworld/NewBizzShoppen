@@ -1790,3 +1790,23 @@ span.cke_skin_kama
     border-top: 1px dotted #CCC;
 
 }
+
+
+/* --- intro - homepage ---
+-------------------------------------------------------------------------------- */
+
+.introduction
+{
+    padding-top: 5px;
+}
+
+.introduction .youtube_thumb
+{
+    float: right;
+    padding: 0 0 10px 10px;
+}
+
+.introduction .intro_content
+{
+    overflow: hidden;
+}
