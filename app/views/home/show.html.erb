@@ -4,21 +4,17 @@
   </header>
 
 
-  <div class="pdd_5 no_pdd_b">
-    <div class="fltl" style="<%= "width:970px" if youtube_introduction %>">
-      <p><%= blurb("blurb_start_page_role_selection") %></p>
-    </div>
+  <div class="introduction">
     <% if youtube_introduction %>
-        <div class="fltr grid_140">
-          <p class="ta_c">
-            <%= link_to image_tag(youtube_introduction.image ? youtube_introduction.image.url : "http://img.youtube.com/vi/#{youtube_introduction.url.extract_youtube_video_id}/default.jpg", :class => "thumb"),
-                "http://www.youtube.com/embed/#{youtube_introduction.url.extract_youtube_video_id}?autoplay=1&rel=0&border=0", :class => "introduction_video", :id => "introduction_video_link" %>
-          </p>
+        <div class="youtube_thumb">
+          <%= link_to image_tag(youtube_introduction.image ? youtube_introduction.image.url : "http://img.youtube.com/vi/#{youtube_introduction.url.extract_youtube_video_id}/default.jpg", :class => "thumb"), "http://www.youtube.com/embed/#{youtube_introduction.url.extract_youtube_video_id}?autoplay=1&rel=0&border=0", :class => "introduction_video", :id => "introduction_video_link" %>
         </div>
-        <clb/>
     <% end %>
+    <div class="intro_content">
+      <%= blurb("blurb_start_page_role_selection") %>
+    </div>
+    <clb/>
   </div>
-
 
 
   <hl pdd="15"/>
@@ -132,9 +128,9 @@
   </div>
 
   <script>
-    $(document).ready(function() {
-      $('.introduction_video').colorbox({iframe:true, innerWidth:560, innerHeight:349});
-    });
+      $(document).ready(function() {
+          $('.introduction_video').colorbox({iframe:true, innerWidth:560, innerHeight:349});
+      });
   </script>
 
 </column-mc:>
