@@ -91,6 +91,11 @@ class LeadsController < ApplicationController
 
     @countries = (cu_or_user_from_rss_token and cu_or_user_from_rss_token.has_accessible_categories?) ? Country.with_leads.within_accessible_categories(cu_or_user_from_rss_token) : Country.with_leads
     @creators = (cu_or_user_from_rss_token and cu_or_user_from_rss_token.has_accessible_categories?) ? User.with_leads.within_accessible_categories(cu_or_user_from_rss_token) : User.with_leads
+
+    unless params[:search].keys.any? { |k| k =~ /scend_by/}
+      params[:search][:descend_by_id] = true
+    end
+
     @search = Lead.scoped_search(params[:search])
     @leads = @search.includes(:currency).paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)
     if @search.with_category.present?
