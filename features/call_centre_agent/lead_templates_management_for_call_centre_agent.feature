@@ -23,7 +23,7 @@ Scenario: I can list all lead templates that were created by me
   Then I should see "Modems details"
   Then I should not see "Computer details"
 
-@added @selenium @_tested
+@added @selenium @_tested @_wip
 Scenario: I can create new lead template for given category
   Given I go to browse leads
   Then I follow translated "categories.index.view.view_lead_templates"
