@@ -6,6 +6,7 @@
         <div class="frm_tiny">
           <div class="pdd_10">
             <p><%= t('devise.sessions.new.view.failed_rpx_label', :first_name => @first_name, :account_type => User.social_provider(@rpx_identifier)) %></p>
+
             <p class="pdd_10 no_pdd_lr"><%= bt_link_to :user, t("devise.sessions.new.view.create_new_account"), "javascript:void(0)", :onclick => "$('#modal_for_new_account').dialog({autoOpen: false,minWidth: 450,buttons: { 'Cancel': function() {$(this).dialog('close');}}});$('#modal_for_new_account').dialog('open')" %></p>
 
             <div id="modal_for_new_account" style="display:none">
@@ -34,7 +35,7 @@
           <div class="pdd_10">
             <fieldset class="inputs labels_100 inputs_180 no_pdd">
               <ol class="align_inputs no_pdd">
-                <%= render :partial => "shared/accounts/social_login_for_sign_in" %>
+                <%= render(:partial => "shared/accounts/social_login_for_sign_in") unless @failed_rpx %>
               </ol>
             </fieldset>
             <fieldset class="inputs labels_100 inputs_280">
@@ -46,8 +47,8 @@
                 <li class="password rltv">
                   <label>
                     <%= t("activerecord.attributes.user.password") %>
-                    <%= content_tag(:span, link_to(t("home.show.view.forgotten_password_link"), new_password_path(User)), :class => "label_link") %>                    
-                  </label>                  
+                    <%= content_tag(:span, link_to(t("home.show.view.forgotten_password_link"), new_password_path(User)), :class => "label_link") %>
+                  </label>
                   <%= f.password_field :password %>
                 </li>
                 <% if devise_mapping.rememberable? -%>
@@ -60,7 +61,9 @@
                   <ibt>
                     <%= f.submit "Sign in" %>
                   </ibt>
-                  <p>or <%= link_to t("buyer_home.show.view.create_new_buyer_account"), new_buyer_account_path %></p>
+                  <% unless @failed_rpx %>
+                      <p>or <%= link_to t("buyer_home.show.view.create_new_buyer_account"), new_buyer_account_path %></p>
+                  <% end %>
                 </li>
               </ol>
             </fieldset>
