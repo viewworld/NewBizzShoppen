@@ -39,6 +39,14 @@ class Callers::MaterialsController < Callers::CallerController
     end
   end
 
+  def update
+    @material = @campaign.materials.find(params[:id])
+    @material.update_attributes(params[:material])
+    respond_to do |wants|
+      wants.js { render :nothing => true }
+    end
+  end
+
   def destroy
     @material = @campaign.materials.find(params[:id])
     unless @material.destroy

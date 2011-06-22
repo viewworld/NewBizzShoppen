@@ -9,7 +9,7 @@
       </param:content>
       <param:actions>
         <ibt icon="save" c="fltri">
-        <%= link_to t("call_results.new.save_button"), "javascript:void(0)", :id => "commit_create_result", :class => "fltr" %>
+        <%= link_to t("call_results.new.save_button"), "javascript:void(0)", :id => "commit_create_result", :class => "fltr", :onclick => "select_options_to_submit('call_result_buying_category_ids_')" %>
         </ibt>
         <%= bt_link_to(nil, t("call_results.edit.cancel_button"), back_path, :class => "bt_grey fltr") %>
       </param:actions>

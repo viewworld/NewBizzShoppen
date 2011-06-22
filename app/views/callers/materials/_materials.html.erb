@@ -6,7 +6,7 @@
   <% if materials.any? %>
     <% materials.each do |material| %>
       <li>
-        <%= link_to_function material.asset_file_name, "$('#material_#{params[:result_field_id]}').attr('value','#{material.id}');$('#material_#{params[:result_field_id]}_name').html('#{material.asset_file_name}');$('#materials_dialog').dialog('close')" %>
+        <%= link_to_function material.asset_file_name, "select_file_from_repository_dialog('#{params[:result_field_id]}', #{material.id}, '#{material.asset_file_name}')" %>
       </li>
     <% end %>
   <% else %>

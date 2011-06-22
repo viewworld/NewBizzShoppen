@@ -9,6 +9,9 @@
           <% if @campaign.send_material_email_template %>
               <%= bt_link_to nil, t("campaigns.edit.send_material_email_template"), edit_callers_campaign_email_template_path(@campaign, @campaign.send_material_email_template), :class => "fltr" %>
           <% end %>
+          <% if @campaign.upgrade_contact_to_category_buyer_email_template %>
+              <%= bt_link_to nil, t("campaigns.edit.upgrade_to_category_buyer_email_template"), edit_callers_campaign_email_template_path(@campaign, @campaign.upgrade_contact_to_category_buyer_email_template), :class => "fltr" %>
+          <% end %>
           <%= bt_link_to nil, t("campaigns.edit.results"), callers_campaign_path(@campaign), :class => "fltr" %>
           <%= bt_link_to nil, t("campaigns.edit.agent_assignment_button"), callers_campaign_campaigns_users_path(@campaign), :class => "fltr" %>
         </param:header>

@@ -9,7 +9,7 @@ class UserSessionLog < ActiveRecord::Base
   scope :campaign, where(:log_type => TYPE_CAMPAIGN).order("id ASC")
 
   def self.update_end_time(id, time = nil)
-    UserSessionLog.find(id).update_attribute(:end_time, time ? (Time.now + time.minutes) : Time.now) if UserSessionLog.find(id)
+    UserSessionLog.find(id).update_attribute(:end_time, time ? (Time.now + time.minutes) : Time.now) if UserSessionLog.find_by_id(id)
   end
 
   def expired?

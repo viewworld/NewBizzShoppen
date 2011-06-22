@@ -263,3 +263,38 @@ function displayWorkScreenTab(tab_id) {
 function uncheck_category_checkboxes(){
     $("input:checkbox:checked[id^=category_]").attr('checked', false);
 }
+
+var materials_repository_files = [];
+
+function select_checkbox_for_file_from_repository(field_id, material_id){
+    selected_index = -1;
+    $.each(window.materials_repository_files, function(index, value) {
+        if(value[0] ==  material_id){
+            selected_index = index;
+        }
+    });
+    value = 0;
+    if(window.materials_repository_files[selected_index][2] == 1){ value = 0; } else { value = 1; }
+    window.materials_repository_files[selected_index][2] = value;
+    insert_material_ids_to_value(field_id);
+}
+
+function select_file_from_repository(field_id, material_id, material_file_name){
+    if(jQuery.inArray(material_id, $.map(window.materials_repository_files, function (e) { return e[0] })) == -1){
+    window.materials_repository_files.push([material_id, material_file_name, 1]);
+    }
+
+    $('#material_'  + field_id + '_name').html($.map(window.materials_repository_files,
+                      function (e) { return "<input type=\"checkbox\"" + [' ' ,' checked=checked '][e[2]] + "value=\"1\" name=\"material_selected_12\" id=\"material_selected_" + material_id.toString() + "\" onclick=\"select_checkbox_for_file_from_repository(\'" + field_id + "\'," + e[0] + ")\">" + e[1] }).join('<br />'));
+    insert_material_ids_to_value(field_id);
+}
+
+function insert_material_ids_to_value(field_id){
+    active_materials = $.grep(window.materials_repository_files, function(n, i){ return (n[2] == 1); });
+    $('#material_' + field_id).attr('value', $.map(active_materials, function (e) { return e[0] }).join(','));
+}
+
+function select_file_from_repository_dialog(field_id, material_id, material_file_name){
+    select_file_from_repository(field_id, material_id, material_file_name);
+    $('#materials_dialog').dialog('close');
+}

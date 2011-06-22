@@ -123,6 +123,23 @@ Given /^contact for company "([^"]*)" has assigned result "([^"]*)" created by "
   call_result.save
 end
 
+Given /^contact for company "([^"]*)" and campaign "([^"]*)" is assigned to user "([^"]*)"$/ do |company_name, campaign_name, email|
+  user = User.where(:email => email).first.with_role
+  campaign = Campaign.where(:name => campaign_name).first
+  contact = Contact.find_by_company_name(company_name)
+  if contact.nil?
+    Contact.make!(:campaign => campaign, :company_name => company_name, :agent_id => user.id, :creator => campaign.creator,
+                       :country_id => campaign.country_id, :category_id => campaign.category_id, :company_phone_number => "+48 493756349734")
+  else
+    contact.update_attribute(:agent_id, user.id)
+  end
+  unless campaign.users.include?(user)
+    campaign.users << user
+    campaign.save
+  end
+
+end
+
 Given /^there are no campaigns/ do
   Campaign.destroy_all
 end

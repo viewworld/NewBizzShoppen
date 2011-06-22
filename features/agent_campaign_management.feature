@@ -703,17 +703,55 @@ Feature: Agent campaign - management
           When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
           And I should see "Edit campaign: Campaign for call centre"
 
-        @m13 @requested @after_m12_presentation @ao @$_call_centre
+        @m13 @requested @after_m12_presentation @tgn @$_call_centre @selenium @_tested @_done
         Scenario: I can define a default set of materials to be included in emails
+          When I click hidden link by url regex "/callers\/campaigns\/\d+\/materials/"
+          And attach the file "sample image" to "material_asset"
+          And I press translated "materials.views.index.save_material"
+          And I check "is_default"
 
         # "My results" for call centre / TGN
-        @m13 @requested @$_call_centre @after_m12_presentation @tgn
+        @m13 @requested @$_call_centre @after_m12_presentation @tgn @_done @_tested
         Scenario: Call centre can see results from his agents
+          Given I have user with email ccagent01@nbs.com and role call_centre_agent
+          And user ccagent01@nbs.com with role call_centre_agent exists with attributes "first_name:Greg,last_name:Foam"
+          And an user with role call_centre_agent and email ccagent01@nbs.com belongs to call centre translator_call_centre@nbs.com
+          And contact for company "ContactTest1" and campaign "Testing One" is assigned to user "ccagent01@nbs.com"
+          And contact for company "ContactTest1" has assigned result "Call back" created by "ccagent01@nbs.com"
+          And contact for company "ContactTest2" and campaign "Testing One" is assigned to user "translator_call_centre_agent@nbs.com"
+          And contact for company "ContactTest2" has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
+          And I click hidden link by url regex "/\/campaigns\/\d+\/my_results/"
+          Then I should see "ContactTest1"
+          Then I should see "ContactTest2"
 
-        @m13 @requested @$_admin @after_m12_presentation @tgn
+        @m13 @requested @$_admin @after_m12_presentation @tgn @_tested @_done
         Scenario: Admin call see results from all agents
+          Given I am not sign in
+          Given I have user with email ccagent01@nbs.com and role call_centre_agent
+          And user ccagent01@nbs.com with role call_centre_agent exists with attributes "first_name:Greg,last_name:Foam"
+          And an user with role call_centre_agent and email ccagent01@nbs.com belongs to call centre translator_call_centre@nbs.com
+          And contact for company "ContactTest1" and campaign "Testing One" is assigned to user "ccagent01@nbs.com"
+          And contact for company "ContactTest1" has assigned result "Call back" created by "ccagent01@nbs.com"
+          And contact for company "ContactTest2" and campaign "Testing One" is assigned to user "translator_call_centre_agent@nbs.com"
+          And contact for company "ContactTest2" has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
+          And I sign in as blazejek@gmail.com with password secret
+          And I follow translated "layout.main_menu.call_centre.campaigns"
+          And I click hidden link by url regex "/\/campaigns\/\d+\/my_results/"
+          Then I should see "ContactTest1"
+          Then I should see "ContactTest2"
 
-        @m13 @requested @$_call_centre @$_admin @after_m12_presentation @tgn
+        @m13 @requested @$_call_centre @$_admin @after_m12_presentation @tgn @_tested @_done
         Scenario: I can select for which agents display the results
+          Given I have user with email ccagent01@nbs.com and role call_centre_agent
+          And user ccagent01@nbs.com with role call_centre_agent exists with attributes "first_name:Greg,last_name:Foam"
+          And an user with role call_centre_agent and email ccagent01@nbs.com belongs to call centre translator_call_centre@nbs.com
+          And contact for company "ContactTest1" and campaign "Testing One" is assigned to user "ccagent01@nbs.com"
+          And contact for company "ContactTest1" has assigned result "Call back" created by "ccagent01@nbs.com"
+          And contact for company "ContactTest2" and campaign "Testing One" is assigned to user "translator_call_centre_agent@nbs.com"
+          And contact for company "ContactTest2" has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
+          And I click hidden link by url regex "/\/campaigns\/\d+\/my_results/"
+          And I select "Greg Foam" from "search_with_agents"
+          And I press translated "my_results.index.view.filter.search_button"
+          Then I should see "ContactTest1"
 
 

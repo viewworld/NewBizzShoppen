@@ -47,6 +47,10 @@ class ::User::CallCentre < ::User
     subaccounts.select { |u| u.locked_at.nil? }
   end
 
+  def all_contacts_with_results
+    Contact.with_agents(subaccounts.map(&:id)).with_results
+  end
+
   private
 
   def validate_first_and_last_name?

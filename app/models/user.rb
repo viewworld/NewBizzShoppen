@@ -58,6 +58,7 @@ class User < ActiveRecord::Base
   has_many :blocked_conversations, :foreign_key => "agent_id"
   has_many :comment_readers
   has_many :read_comments, :through => :comment_readers, :source => :comment
+  belongs_to :contact
   alias_method :parent, :user
 
   scope :with_customers, where("roles_mask & #{2**User.valid_roles.index(:customer)} > 0 ")
@@ -83,6 +84,10 @@ class User < ActiveRecord::Base
   scope :with_leads, select("DISTINCT(email), users.*").joins("RIGHT JOIN leads on users.id=leads.creator_id")
   scope :within_accessible_categories, lambda { |customer| where("leads.category_id NOT IN (?)", customer.accessible_categories_ids) }
 
+  scope :assigned_to_campaigns, select("DISTINCT(users.id), users.*").joins("inner join campaigns_users on users.id=campaigns_users.user_id")
+  scope :with_results, joins("inner join call_results on users.id=call_results.creator_id")
+  scope :for_campaigns, lambda { |campaign_ids| where("campaigns_users.campaign_id in (?)", campaign_ids) unless campaign_ids.empty? }
+
   scoped_order :id, :roles_mask, :first_name, :last_name, :email, :age, :department, :mobile_phone, :completed_leads_counter, :leads_requested_counter,
                :leads_assigned_month_ago_counter, :leads_assigned_year_ago_counter, :total_leads_assigned_counter, :leads_created_counter,
                :leads_volume_sold_counter, :leads_revenue_counter, :leads_purchased_month_ago_counter, :leads_purchased_year_ago_counter,
@@ -98,7 +103,7 @@ class User < ActiveRecord::Base
   before_destroy :can_be_removed
   after_create :auto_activate
 
-  liquid :email, :confirmation_instructions_url, :reset_password_instructions_url
+  liquid :email, :confirmation_instructions_url, :reset_password_instructions_url, :social_provider_name, :category_buyer_category_home_url, :screen_name
   require 'digest/sha1'
 
   private
@@ -465,6 +470,14 @@ class User < ActiveRecord::Base
     "Linked In" if rpx_identifier.include?("www.linkedin.com")
   end
 
+  def social_provider_name
+    if rpx_identifier
+      User.social_provider(rpx_identifier)
+    else
+      "not linked"
+    end
+  end
+
   def social_provider_ico
     case User.social_provider(rpx_identifier)
       when "Google"
@@ -486,6 +499,12 @@ class User < ActiveRecord::Base
         leads = Lead.for_notification(subscribed_categories, lead_notification_type)
         ApplicationMailer.email_template(email, EmailTemplate.find_by_uniq_id(uniq_id), {:user => self, :leads => leads}).deliver
       end
+    end
+  end
+
+  def category_buyer_category_home_url
+    if has_role?(:category_buyer)
+      "https://#{mailer_host}/#{buying_categories.first.cached_slug}"
     end
   end
 end

@@ -192,17 +192,84 @@ Feature: Agent campaign - calling session
 #      And I follow translated "call_results.new.save_button"
 #      And last email sent should have been sent to recipient "new@contact.com"
 
-    @requested @m13 @after_m12_presentation @ao @$_call_centre_agent
+    @requested @m13 @after_m12_presentation @tgn @$_call_centre_agent @_done @_tested
     Scenario: I can see files from "Materials Set" prepared by call centre
+      Given I am not sign in
+      Given I am on the homepage
+      And I make sure current locale is "en"
+      And I sign in as translator_call_centre@nbs.com with password secret
+      And I follow translated "layout.main_menu.call_centre.campaigns"
+      When I click hidden link by url regex "/callers\/campaigns\/\d+\/materials/"
+      And attach the file "sample image" to "material_asset"
+      And I press translated "materials.views.index.save_material"
+      And I check "is_default"
+      Given I am not sign in
+      Given I am on the homepage
+      And I make sure current locale is "en"
+      And I sign in as translator_call_centre_agent@nbs.com with password secret
+      And I follow translated "layout.main_menu.call_centre.campaigns"
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      And I select "Send material" from "selected_result_id"
+      And I follow translated "call_results.edit.button_new_result"
+      And I should see "sample.jpg"
 
-    @requested @m13 @after_m12_presentation @ao @$_call_centre_agent
+
+    @requested @m13 @after_m12_presentation @tgn @$_call_centre_agent @_done @_tested
     Scenario: I can select by checkboxes which files from "Materials Set" will be included in email
+      Given I am not sign in
+      Given I am on the homepage
+      And I make sure current locale is "en"
+      And I sign in as translator_call_centre@nbs.com with password secret
+      And I follow translated "layout.main_menu.call_centre.campaigns"
+      When I click hidden link by url regex "/callers\/campaigns\/\d+\/materials/"
+      And attach the file "sample image" to "material_asset"
+      And I press translated "materials.views.index.save_material"
+      And I check "is_default"
+      Given I am not sign in
+      Given I am on the homepage
+      And I make sure current locale is "en"
+      And I sign in as translator_call_centre_agent@nbs.com with password secret
+      And I follow translated "layout.main_menu.call_centre.campaigns"
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      And I select "Send material" from "selected_result_id"
+      And I follow translated "call_results.edit.button_new_result"
+      And I should see "sample.jpg"
+      And I uncheck "material_selected_12"
 
-    @requested @m13 @after_m12_presentation @ao @$_call_centre_agent
+    @requested @m13 @after_m12_presentation @tgn @$_call_centre_agent @_done @_tested
     Scenario: I can upload and add new files to the set for the result being created
+      Given I am not sign in
+      Given I am on the homepage
+      And I make sure current locale is "en"
+      And I sign in as translator_call_centre@nbs.com with password secret
+      And I follow translated "layout.main_menu.call_centre.campaigns"
+      When I click hidden link by url regex "/callers\/campaigns\/\d+\/materials/"
+      And attach the file "sample image" to "material_asset"
+      And I press translated "materials.views.index.save_material"
+      And I check "is_default"
+      Given I am not sign in
+      Given I am on the homepage
+      And I make sure current locale is "en"
+      And I sign in as translator_call_centre_agent@nbs.com with password secret
+      And I follow translated "layout.main_menu.call_centre.campaigns"
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      And I select "Send material" from "selected_result_id"
+      And I follow translated "call_results.edit.button_new_result"
+      And I should see "sample.jpg"
+      And I follow translated "materials.views.index.material_repository"
+      And I wait 1 second
+      And attach the file "sample image" to "material_asset"
+      And I wait 1 second
+      Then I should see "sample.jpg"
+      And I follow "sample.jpg"
+      And I should see "2" elements within CSS path "input[type=checkbox][id^=material_selected_]"
 
-    @requested @m13 @after_m12_presentation @ao @$_call_centre_agent
+    @requested @m13 @after_m12_presentation @tgn @$_call_centre_agent @_done @_tested
     Scenario: I can click "Customize email" button and edit all email fields in modal box
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      And I select "Send material" from "selected_result_id"
+      And I follow translated "call_results.edit.button_new_result"
+      And I should see translated "call_results.new.customize_email_template"
 
     # 5168
     @m11 @requested @ao @tested_elsewhere @_done
@@ -292,34 +359,170 @@ Feature: Agent campaign - calling session
     @m13 @$_call_centre_agent @_done @_not_testable @is
     Scenario: I can open contact when I click on result from contact search
 
-    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent
+    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done
     Scenario: I can upgrade contact to category buyer
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      And I select "Upgrade to category buyer" from "selected_result_id"
+      And I follow translated "call_results.edit.button_new_result"
+      And I fill in "call_result_contact_first_name" with "John"
+      And I fill in "call_result_contact_last_name" with "Dohn"
+      And I fill in "call_result_contact_address_line_1" with "LongRoad 2"
+      And I fill in "call_result_contact_zip_code" with "21-221"
+      And I fill in "call_result_contact_email_address" with "newcategory_buyer888@nbs.com"
+      And I follow translated "call_results.new.save_button"
+      Then I should see translated "call_results.create.flash.successfully_added"
 
-    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent
+    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done
     Scenario: Category buyer upgraded from lead should be subscribed to campaign's category by default
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      And I select "Upgrade to category buyer" from "selected_result_id"
+      And I follow translated "call_results.edit.button_new_result"
+      And I fill in "call_result_contact_first_name" with "John"
+      And I fill in "call_result_contact_last_name" with "Dohn"
+      And I fill in "call_result_contact_address_line_1" with "LongRoad 2"
+      And I fill in "call_result_contact_zip_code" with "21-221"
+      And I fill in "call_result_contact_email_address" with "newcategory_buyer888@nbs.com"
+      And I follow translated "call_results.new.save_button"
+      Then I should see translated "call_results.create.flash.successfully_added"
+      And category "Business" is in interests of user "newcategory_buyer888@nbs.com" "true"
 
-    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent
+    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done
     Scenario: When upgrading contact to category buyer, agent can select more subscription categories for created category buyer
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      And I select "Upgrade to category buyer" from "selected_result_id"
+      And I follow translated "call_results.edit.button_new_result"
+      And I fill in "call_result_contact_first_name" with "John"
+      And I fill in "call_result_contact_last_name" with "Dohn"
+      And I fill in "call_result_contact_address_line_1" with "LongRoad 2"
+      And I fill in "call_result_contact_zip_code" with "21-221"
+      And I fill in "call_result_contact_email_address" with "newcategory_buyer888@nbs.com"
+      And I select "Leisure" from "all_categories"
+      And I follow translated "administration.categories.form.move_users_right"
+      And I follow translated "call_results.new.save_button"
+      Then I should see translated "call_results.create.flash.successfully_added"
+      And category "Business" is in interests of user "newcategory_buyer888@nbs.com" "true"
+      And category "Leisure" is in interests of user "newcategory_buyer888@nbs.com" "true"
 
-    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent
+    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done
     Scenario: Contact should receive customized emails with material and signup link
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      And I select "Upgrade to category buyer" from "selected_result_id"
+      And I follow translated "call_results.edit.button_new_result"
+      And I fill in "call_result_contact_first_name" with "John"
+      And I fill in "call_result_contact_last_name" with "Dohn"
+      And I fill in "call_result_contact_address_line_1" with "LongRoad 2"
+      And I fill in "call_result_contact_zip_code" with "21-221"
+      And I fill in "call_result_contact_email_address" with "newcategory_buyer888@nbs.com"
+      And I select "Leisure" from "all_categories"
+      And I follow translated "administration.categories.form.move_users_right"
+      And I follow translated "call_results.new.save_button"
+      Then I should see translated "call_results.create.flash.successfully_added"
+      And last email sent should have been sent to recipient "newcategory_buyer888@nbs.com"
+      And last email sent should have content "/business"
+      And last email sent should have content "Fairleads password: testin"
+      And last email sent should have content "Screen name: Dohn"
+      And last email sent should have content "Fairleads username: newcategory_buyer888@nbs.com"
 
-    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent
+    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done
     Scenario: Agent can assign materials when upgrading contact to category buyer
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      And I select "Upgrade to category buyer" from "selected_result_id"
+      And I follow translated "call_results.edit.button_new_result"
+      And I fill in "call_result_contact_first_name" with "John"
+      And I fill in "call_result_contact_last_name" with "Dohn"
+      And I fill in "call_result_contact_address_line_1" with "LongRoad 2"
+      And I fill in "call_result_contact_zip_code" with "21-221"
+      And I fill in "call_result_contact_email_address" with "newcategory_buyer888@nbs.com"
+      And I follow translated "materials.views.index.material_repository"
+      And I wait 1 second
+      And attach the file "sample image" to "material_asset"
+      And I wait 1 second
+      And I follow "sample.jpg"
+      And I follow translated "call_results.new.save_button"
+      Then I should see translated "call_results.create.flash.successfully_added"
 
-    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent
+    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_done @not_testable
     Scenario: Agent can customize email when upgrading contact to category buyer
 
-    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent
+    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done
     Scenario: Contact can sign up by clicking on link in email and entering password or using Facebook/Google/Linkedin
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      And I select "Upgrade to category buyer" from "selected_result_id"
+      And I follow translated "call_results.edit.button_new_result"
+      And I fill in "call_result_contact_first_name" with "John"
+      And I fill in "call_result_contact_last_name" with "Dohn"
+      And I fill in "call_result_contact_address_line_1" with "LongRoad 2"
+      And I fill in "call_result_contact_zip_code" with "21-221"
+      And I fill in "call_result_contact_email_address" with "newcategory_buyer888@nbs.com"
+      And I follow translated "call_results.new.save_button"
+      Then I should see translated "call_results.create.flash.successfully_added"
+      Given I am not sign in
+      And I am on the homepage
+      And I sign in as newcategory_buyer888@nbs.com with password testin
+      Then I should see translated "my_profile.edit.view.header"
 
     # his name account will already be set up by the contact information allready in the system.
-    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent
+    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done
     Scenario: After sign up contact can confirm his account information
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      And I select "Upgrade to category buyer" from "selected_result_id"
+      And I follow translated "call_results.edit.button_new_result"
+      And I fill in "call_result_contact_first_name" with "John"
+      And I fill in "call_result_contact_last_name" with "Dohn"
+      And I fill in "call_result_contact_address_line_1" with "LongRoad 2"
+      And I fill in "call_result_contact_zip_code" with "21-221"
+      And I fill in "call_result_contact_email_address" with "newcategory_buyer888@nbs.com"
+      And I follow translated "call_results.new.save_button"
+      Then I should see translated "call_results.create.flash.successfully_added"
+      Given I am not sign in
+      And I am on the homepage
+      And I sign in as newcategory_buyer888@nbs.com with password testin
+      Then I should see translated "my_profile.edit.view.header"
+      And the "user_category_buyer_company_name" field should contain "Bon Jovi inc."
+      And the "user_category_buyer_first_name" field should contain "John"
+      And the "user_category_buyer_last_name" field should contain "Dohn"
+      And the "user_category_buyer_email" field should contain "newcategory_buyer888@nbs.com"
+      And the "user_category_buyer_address_attributes_address_line_1" field should contain "LongRoad 2"
+      And the "user_category_buyer_address_attributes_zip_code" field should contain "21-221"
 
-    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent
+    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent  @_tested @_done
     Scenario: After confirming his account information, contact should be redirected to his account home page
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      And I select "Upgrade to category buyer" from "selected_result_id"
+      And I follow translated "call_results.edit.button_new_result"
+      And I fill in "call_result_contact_first_name" with "John"
+      And I fill in "call_result_contact_last_name" with "Dohn"
+      And I fill in "call_result_contact_address_line_1" with "LongRoad 2"
+      And I fill in "call_result_contact_zip_code" with "21-221"
+      And I fill in "call_result_contact_email_address" with "newcategory_buyer888@nbs.com"
+      And I follow translated "call_results.new.save_button"
+      Then I should see translated "call_results.create.flash.successfully_added"
+      Given I am not sign in
+      And I am on the homepage
+      And I sign in as newcategory_buyer888@nbs.com with password testin
+      Then I should see translated "my_profile.edit.view.header"
+      And I press translated "password.edit.view.button_update_user"
+      Then I should see "Welcome to category: Business"
 
     # After he has confirmed his details he will receive a default (buyer welcome mail) with a link to the the category homepage, how he sign up (Facebook, Google of LinkedIn) just so he can remember to log on to fairleads again.
-    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent
+    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done
     Scenario: After confirming his account information, contact should receive welcome mail link link to his home page and login information
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      And I select "Upgrade to category buyer" from "selected_result_id"
+      And I follow translated "call_results.edit.button_new_result"
+      And I fill in "call_result_contact_first_name" with "John"
+      And I fill in "call_result_contact_last_name" with "Dohn"
+      And I fill in "call_result_contact_address_line_1" with "LongRoad 2"
+      And I fill in "call_result_contact_zip_code" with "21-221"
+      And I fill in "call_result_contact_email_address" with "newcategory_buyer888@nbs.com"
+      And I follow translated "call_results.new.save_button"
+      Then I should see translated "call_results.create.flash.successfully_added"
+      Given I am not sign in
+      And I am on the homepage
+      And I sign in as newcategory_buyer888@nbs.com with password testin
+      Then I should see translated "my_profile.edit.view.header"
+      And I press translated "password.edit.view.button_update_user"
+      And last email sent should have been sent to recipient "newcategory_buyer888@nbs.com"
+      And last email sent should have content "/business"
+      And last email sent should have content "Login: newcategory_buyer888@nbs.com"
+      And last email sent should have content "Linked with account: not linked"

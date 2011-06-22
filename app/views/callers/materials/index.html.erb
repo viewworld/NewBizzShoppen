@@ -33,6 +33,7 @@
     <% if @materials.any? %>
         <% @materials.each do |material| %>
             <li>
+              <%= check_box_tag :is_default, "1", material.is_default?, {:onclick => "$.post('/callers/campaigns/#{@campaign.id}/materials/#{material.id}.js', '_method=PUT&material[is_default]='+this.checked);"} %>
               - <strong><%= link_to material.asset_file_name, material.url %> - </strong>
               <%= link_to t("materials.views.index.delete_material"), callers_campaign_material_path(@campaign, material), :method => :delete, :confirm => t("common.confirmation") %>
             </li>

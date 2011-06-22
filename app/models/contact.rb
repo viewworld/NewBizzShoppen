@@ -14,11 +14,12 @@ class Contact < AbstractLead
   scope :with_keyword, lambda { |q| where("lower(company_name) like :keyword", {:keyword => "%#{q.downcase}%"}) }
   scope :only_completed, where(:completed => false)
   scope :for_campaign, lambda { |campaign| where(:campaign_id => campaign) }
+  scope :for_campaigns, lambda { |campaign_ids| where("campaign_id in (?)", campaign_ids) unless campaign_ids.to_a.empty? }
   scope :with_completed_status, lambda { |completed| where(:completed => completed) }
   scope :with_pending_status, lambda { |pending| where(:pending => pending) }
   scope :available_to_assign, where(:agent_id => nil).with_completed_status(false).with_pending_status(false)
   scope :with_results, joins(:call_results)
-  scope :with_agent, lambda { |agent_id| where("agent_id = ? or call_results.creator_id = ?", agent_id, agent_id) }
+  scope :with_agents, lambda { |agent_ids| where("agent_id IN (:agent_ids) or call_results.creator_id IN (:agent_ids)", {:agent_ids => agent_ids }) unless agent_ids.to_a.select{ |id| !id.blank? }.empty? }
   scoped_order :company_name
 
   acts_as_list :scope => [:campaign_id, :agent_id, :pending]

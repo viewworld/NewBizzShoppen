@@ -30,6 +30,7 @@ en:
       collapse_prefix: " "
       confrimation_message: "Are you sure? All subsequent replies will be deleted as well."
       field_cant_be_blank: "can't be blank"
+      field_incorrect_format: "incorrect value"
     no_categories_for_category_buyer: "Your Category Buyer account has no associated categories. You can't sign in."
     edit_hint: "Edit hint"
     agree_to: "Agree to"
@@ -282,6 +283,7 @@ en:
     header:
       title: Campaigns
       new_campaign_button: New Campaign
+      my_results_global_button: "My results"
     table:
       actions: "Actions"
       name: Name
@@ -345,6 +347,7 @@ en:
       results: "Results"
       description_and_briefing: "Description & briefing"
       send_material_email_template: "Edit 'Send material' email template"
+      upgrade_to_category_buyer_email_template: "Edit 'Upgrade to category buyer' email"
       materials_repository: "Materials repository"
     index:
       title: Campaigns
@@ -352,6 +355,7 @@ en:
       destroy: Destroy
       result: Result
       destroy_confirmation: Are you sure?
+      my_results: "My results"
     call_result_details_table:
       date: Date
       contact: Contact
@@ -367,6 +371,19 @@ en:
     form:
       description: "Description"
       briefing: "Briefing"
+  my_results:
+    index:
+      view:
+        filter:
+          header: "Search"
+          keyword_label: "Keyword"
+          search_button: "Search"
+          agents_label: "Agents"
+        header: "My results"
+    edit:
+      view:
+        header: "Edit contact"
+        button_update: "Save"
   agent_work_screen:
     index:
       title: Agent work screen
@@ -385,6 +402,11 @@ en:
       show_briefing_area: "Show/Hide briefing"
       show_my_results: "My results"
       contact_search_label: "Search contact:"
+      email_templates_editor:
+        subject: "Subject"
+        from: "From"
+        bcc: "Bcc"
+        cc: "Cc"      
     my_results:
       index:
         view:
@@ -460,6 +482,11 @@ en:
       save_button: Create
       cancel_button: Back to contact
       result: Result
+      contact_first_name: "First name"
+      contact_last_name: "Last name"
+      contact_address_line_1: "Address line 1"
+      contact_zip_code: "Zip code"
+      customize_email_template: "Customize email"
     edit:
       title: Edit result
       form_title: Edit
@@ -2250,6 +2277,8 @@ en:
         category_no_leads_can_be_published: "No leads can be published in that category"
         category_cannot_be_changed: "Category cannot be changed due to filled out templates!"
   models:
+    call_result:
+      not_unique_email_address: "User with this e-mail already exists!"
     user:
       payout_validation_message: "can only be between 0 and 100"
       agreement_read_validation_message: "You have to accept the agreement"
@@ -2764,6 +2793,7 @@ en:
       edit:
         view:
           header: "Change your password"
+          contact_upgraded_to_category_buyer_info: "In order to start using Fairleads please set your new password below"
     lead_notification_types:
       notification_type0: "Instant"
       notification_type1: "Once per dey"

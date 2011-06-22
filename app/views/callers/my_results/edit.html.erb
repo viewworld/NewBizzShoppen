@@ -2,14 +2,14 @@
 
   <header back="true">
     <param:content>
-      <%= t("agent_work_screen.my_results.edit.view.header") %>
+      <%= t("my_results.edit.view.header") %>
     </param:content>
   </header>
 
-  <%= semantic_form_for @contact, :url => callers_campaign_agent_work_screen_my_result_path(@contact.campaign, @contact), :method => :put do |form| %>
+  <%= semantic_form_for @contact, :url => callers_campaign_my_result_path(@contact.campaign, @contact), :method => :put do |form| %>
       <frm title="#{@contact.company_name}">
         <param:content>
-          <% @lead = @contact %>
+          <% @lead = @contact; @contact_managing = true %>
           <%= render :partial => '/shared/leads/form', :locals => {:form => form, :campaign => @contact.campaign, :contact => @contact} %>
 
           <hl/>
@@ -56,7 +56,7 @@
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="save">
-            <%= form.submit t("agent_work_screen.my_results.edit.view.button_update") %>
+            <%= form.submit t("my_results.edit.view.button_update") %>
           </ibt>
           <ibt c="bt_grey fltri">
             <%= button_to_function t("administration.settings.edit.view.button_cancel"), "history.go(-1)" %>

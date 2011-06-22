@@ -1,17 +1,22 @@
 <search-box:>
   <div class="search_box">
-    <h2><%= t("agent_work_screen.my_results.index.view.filter.header") %></h2>
+    <h2><%= t("my_results.index.view.filter.header") %></h2>
 
     <div class="search_content">
-      <%= semantic_form_for @search, :url => callers_campaign_agent_work_screen_my_results_path do |f| %>
+      <%= semantic_form_for @search, :url => @campaign ? callers_campaign_my_results_path : callers_my_results_path do |f| %>
           <fieldset class="inputs_vertical">
             <ol class="no_pdd">
               <li class="string">
-                <%= f.input :with_keyword, :label => t("agent_work_screen.my_results.index.view.filter.keyword_label"), :required => false %>
+                <%= f.input :with_keyword, :label => t("my_results.index.view.filter.keyword_label"), :required => false %>
               </li>
+              <% if current_user.has_any_role?(:call_centre, :admin) %>
+              <li class="select">
+                  <%= f.input :with_agents, :label => t("my_results.index.view.filter.agents_label"), :collection => @agents, :required => false, :input_html => {:include_blank => true, :multiple => true, :style => "height:80px;width:140px;"} %>
+              </li>
+              <% end %>
               <li class="commit">
                 <ibt c="bt_green" icon="magnify">
-                  <%= submit_tag t("agent_work_screen.my_results.index.view.filter.search_button") %>
+                  <%= submit_tag t("my_results.index.view.filter.search_button") %>
                 </ibt>
               </li>
             </ol>
@@ -25,7 +30,7 @@
 
   <header back="true">
     <param:content>
-      <%= t("agent_work_screen.my_results.index.view.header") %>
+      <%= t("my_results.index.view.header") %> <%= ": #{@campaign.name}" if @campaign %>
     </param:content>
   </header>
 
@@ -66,7 +71,7 @@
                 <td class="tda ta_r">
                <ul-actions>
                     <li>
-                      <%= link_to t("contacts.table.edit"), edit_callers_campaign_agent_work_screen_my_result_path(contact.campaign, contact), :class => "default_action" %>
+                      <%= link_to t("contacts.table.edit"), edit_callers_campaign_my_result_path(contact.campaign, contact), :class => "default_action" %>
                     </li>
               </ul-actions>
                 </td>

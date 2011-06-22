@@ -2,7 +2,6 @@ class ResultValue < ActiveRecord::Base
 
   belongs_to :result_field
   belongs_to :call_result
-  belongs_to :material, :class_name => 'Material', :primary_key => :id, :foreign_key => :value
 
   validates_presence_of :value, :if => Proc.new { |rv| rv.result_field.is_mandatory }
   validate :value_format
@@ -13,6 +12,10 @@ class ResultValue < ActiveRecord::Base
 
   def duplicate_field_type
     self.field_type = result_field.field_type
+  end
+
+  def materials
+    Material.where(:id => value.to_s.split(","))
   end
 
   private
