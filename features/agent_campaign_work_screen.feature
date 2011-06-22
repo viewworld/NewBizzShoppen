@@ -192,14 +192,77 @@ Feature: Agent campaign - calling session
 #      And I follow translated "call_results.new.save_button"
 #      And last email sent should have been sent to recipient "new@contact.com"
 
-    @requested @m13 @after_m12_presentation @ao @$_call_centre_agent
+    @requested @m13 @after_m12_presentation @tgn @$_call_centre_agent @_done @_tested
     Scenario: I can see files from "Materials Set" prepared by call centre
+      Given I am not sign in
+      Given I am on the homepage
+      And I make sure current locale is "en"
+      And I sign in as translator_call_centre@nbs.com with password secret
+      And I follow translated "layout.main_menu.call_centre.campaigns"
+      When I click hidden link by url regex "/callers\/campaigns\/\d+\/materials/"
+      And attach the file "sample image" to "material_asset"
+      And I press translated "materials.views.index.save_material"
+      And I check "is_default"
+      Given I am not sign in
+      Given I am on the homepage
+      And I make sure current locale is "en"
+      And I sign in as translator_call_centre_agent@nbs.com with password secret
+      And I follow translated "layout.main_menu.call_centre.campaigns"
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      And I select "Send material" from "selected_result_id"
+      And I follow translated "call_results.edit.button_new_result"
+      And I should see "sample.jpg"
 
-    @requested @m13 @after_m12_presentation @ao @$_call_centre_agent
+
+    @requested @m13 @after_m12_presentation @tgn @$_call_centre_agent @_done @_tested
     Scenario: I can select by checkboxes which files from "Materials Set" will be included in email
+      Given I am not sign in
+      Given I am on the homepage
+      And I make sure current locale is "en"
+      And I sign in as translator_call_centre@nbs.com with password secret
+      And I follow translated "layout.main_menu.call_centre.campaigns"
+      When I click hidden link by url regex "/callers\/campaigns\/\d+\/materials/"
+      And attach the file "sample image" to "material_asset"
+      And I press translated "materials.views.index.save_material"
+      And I check "is_default"
+      Given I am not sign in
+      Given I am on the homepage
+      And I make sure current locale is "en"
+      And I sign in as translator_call_centre_agent@nbs.com with password secret
+      And I follow translated "layout.main_menu.call_centre.campaigns"
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      And I select "Send material" from "selected_result_id"
+      And I follow translated "call_results.edit.button_new_result"
+      And I should see "sample.jpg"
+      And I uncheck "material_selected_12"
 
-    @requested @m13 @after_m12_presentation @ao @$_call_centre_agent
+    @requested @m13 @after_m12_presentation @tgn @$_call_centre_agent @_done @_tested
     Scenario: I can upload and add new files to the set for the result being created
+      Given I am not sign in
+      Given I am on the homepage
+      And I make sure current locale is "en"
+      And I sign in as translator_call_centre@nbs.com with password secret
+      And I follow translated "layout.main_menu.call_centre.campaigns"
+      When I click hidden link by url regex "/callers\/campaigns\/\d+\/materials/"
+      And attach the file "sample image" to "material_asset"
+      And I press translated "materials.views.index.save_material"
+      And I check "is_default"
+      Given I am not sign in
+      Given I am on the homepage
+      And I make sure current locale is "en"
+      And I sign in as translator_call_centre_agent@nbs.com with password secret
+      And I follow translated "layout.main_menu.call_centre.campaigns"
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      And I select "Send material" from "selected_result_id"
+      And I follow translated "call_results.edit.button_new_result"
+      And I should see "sample.jpg"
+      And I follow translated "materials.views.index.material_repository"
+      And I wait 1 second
+      And attach the file "sample image" to "material_asset"
+      And I wait 1 second
+      Then I should see "sample.jpg"
+      And I follow "sample.jpg"
+      And I should see "2" elements within CSS path "input[type=checkbox][id^=material_selected_]"
 
     @requested @m13 @after_m12_presentation @tgn @$_call_centre_agent @_done @_tested
     Scenario: I can click "Customize email" button and edit all email fields in modal box

@@ -34,7 +34,10 @@ end
           <% if f.object.value.blank? %>
             <%= t("materials.views.index.no_file_selected")  %>
           <% else %>
-            <%= Material.find(f.object.value).filename %>
+            <% (contact.campaign.default_materials_set + f.object.materials).uniq.each do |material| %>
+                  <%= check_box_tag "material_selected_#{material.id}", "1", params["material_selected_#{material.id}".to_sym].to_i == 1 %>
+                  <%= material.filename %><br/>
+            <% end %>
           <% end %>
         </p>
         <p style="padding-top:5px;">
@@ -45,12 +48,17 @@ end
           <p><%= label_tag "call_result[contact_email_address]", "#{t("materials.views.index.contact_email_address")}<abbr>*</abbr>".html_safe %><%= text_field_tag "call_result[contact_email_address]", call_result.contact_email_address || contact.email_address  %></p>
           <%= custom_error_for_object_and_field(call_result, :contact_email_address) %>
       </div>
+
+      <script type="text/javascript">
+        <% (contact.campaign.default_materials_set + f.object.materials).uniq.each do |material| %>
+            <%= "select_file_from_repository('#{f.object.result_field.id}', #{material.id}, '#{material.asset_file_name}');" %>
+        <% end %>
+      </script>
   <% end %>
 </li>
 <li class="hidden">
   <%= f.hidden_field :result_field_id, :value => f.object.result_field.id %>
 </li>
-
 
 <script type="text/javascript">
     jQuery(document).ready(function() {

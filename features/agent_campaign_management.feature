@@ -703,8 +703,12 @@ Feature: Agent campaign - management
           When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
           And I should see "Edit campaign: Campaign for call centre"
 
-        @m13 @requested @after_m12_presentation @ao @$_call_centre
+        @m13 @requested @after_m12_presentation @tgn @$_call_centre @selenium @_tested @_done
         Scenario: I can define a default set of materials to be included in emails
+          When I click hidden link by url regex "/callers\/campaigns\/\d+\/materials/"
+          And attach the file "sample image" to "material_asset"
+          And I press translated "materials.views.index.save_material"
+          And I check "is_default"
 
         # "My results" for call centre / TGN
         @m13 @requested @$_call_centre @after_m12_presentation @tgn @_done @_tested

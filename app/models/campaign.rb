@@ -138,4 +138,8 @@ class Campaign < ActiveRecord::Base
     contacts.map{|c| "{text:'#{c.company_name}', url:'/callers/campaigns/#{id}/agent_work_screen/contacts/#{c.id}'}"}
   end
 
+  def default_materials_set
+    materials.where(:is_default => true)
+  end
+
 end

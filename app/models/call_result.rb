@@ -214,13 +214,16 @@ class CallResult < ActiveRecord::Base
   def deliver_material
     template = contact.campaign.send_material_email_template || EmailTemplate.global.where(:uniq_id => 'result_send_material').first
     template = customize_email_template(template)
-    ApplicationMailer.generic_email([contact_email_address], template.subject, template.body, template.from, [Pathname.new(File.join([::Rails.root, 'public', send_material_result_value.material.url]))]).deliver
+    ApplicationMailer.generic_email([contact_email_address],
+                                    template.subject, template.body,
+                                    template.from,
+                                    send_material_result_value.materials.map{ |material| Pathname.new(File.join([::Rails.root, 'public', material.url]))}).deliver
   end
 
   def deliver_email_for_category_buyer(user, password)
     template = contact.campaign.upgrade_contact_to_category_buyer_email_template || EmailTemplate.global.where(:uniq_id => 'upgrade_contact_to_category_buyer').first
     template = customize_email_template(template)
-    attachments_arr = send_material_result_value.material.blank? ? [] : [Pathname.new(File.join([::Rails.root, 'public', send_material_result_value.material.url]))]
+    attachments_arr = send_material_result_value.materials.empty? ? [] : send_material_result_value.materials.map{ |material| Pathname.new(File.join([::Rails.root, 'public', material.url])) }
 
     ApplicationMailer.generic_email([contact_email_address], template.subject, template.render({:user => user, :password => password}), template.from, attachments_arr).deliver
   end
