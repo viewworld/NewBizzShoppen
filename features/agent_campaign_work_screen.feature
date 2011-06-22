@@ -121,13 +121,13 @@ Feature: Agent campaign - calling session
       Then I should see "Briefing content here"
 
     # 5192
-    @m12 @$_call_centre_agent @requested @tgn @briefing @_tested @_done
+    @m12 @$_call_centre_agent @requested @tgn @briefing @_tested @_done @_wip
     Scenario: I can go back to my work screen when I click "Go to work screen"
       Given campaign named "Testing One" exists with attributes "briefing:Briefing content here"
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I follow translated "agent_work_screen.index.show_briefing_area"
       Then I should see "Briefing content here"
-      And I follow translated "agent_work_screen.index.show_briefing_area" within "#briefing_area_content"
+      And I follow "Back"
       Then I should see translated "agent_work_screen.index.call_log"
 
     #5460
