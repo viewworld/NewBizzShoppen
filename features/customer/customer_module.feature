@@ -241,6 +241,6 @@ Scenario: Interests are automatically configured after account is created - all 
   When I am on customer interests page
   Then checkbox named "country_1" should be checked
   And checkbox named "country_2" should be checked
-  And checkbox named "category_1" should be checked
-  And checkbox named "category_2" should be checked
-  And checkbox named "category_3" should be checked
+  And checkbox named "category_1" should not be checked
+  And checkbox named "category_2" should not be checked
+  And checkbox named "category_3" should not be checked
