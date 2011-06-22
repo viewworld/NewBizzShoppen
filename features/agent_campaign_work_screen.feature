@@ -340,11 +340,11 @@ Feature: Agent campaign - calling session
       Given contact for company "Mleko company" has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       Then I follow translated "call_results.edit.my_results"
-      And I click hidden link by url regex "/callers\/campaigns\/\d+\/agent_work_screen\/my_results\/\d+\/edit/"
+      And I click hidden link by url regex "/callers\/campaigns\/\d+\/my_results\/\d+\/edit/"
       Then I fill in "contact_call_results_attributes_0_note" with "new note for call result #1"
       And I fill in "contact_result_values_attributes_0_value" with "2011-09-22 12:00"
       And I press translated "agent_work_screen.my_results.edit.view.button_update"
-      And I click hidden link by url regex "/callers\/campaigns\/\d+\/agent_work_screen\/my_results\/\d+\/edit/"
+      And I click hidden link by url regex "/callers\/campaigns\/\d+\/my_results\/\d+\/edit/"
       And the "contact_call_results_attributes_0_note" field should contain "new note for call result #1"
       And the "contact_result_values_attributes_0_value" field should contain "2011-09-22 12:00"
 
