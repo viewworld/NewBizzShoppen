@@ -643,6 +643,7 @@ Feature: Agent campaign - management
           When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
           And I follow translated "campaigns.edit.description_and_briefing"
           And I should see translated "campaigns_description.edit.title"
+          And I wait 1 second
           And I fill in "campaign_description_editor" ckeditor with "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
           And I fill in "campaign_briefing_editor" ckeditor with "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
           And I press translated "campaigns_description.edit.button_update"
