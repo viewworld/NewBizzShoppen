@@ -28,7 +28,6 @@ class ::User::Customer < ::User
   after_create :set_interests
 
   def set_interests
-    self.categories = Category.all
     self.countries = Country.all
   end
 
