@@ -59,11 +59,8 @@ Scenario: Admin should be able to define purchase limit for given big buyer (def
   Then I should see translated "administration.settings.update.controller.successful_update_notice"
 
 # 5722
-@m11 @requested @youtube @ao @_done @_tested
+@m11 @requested @youtube @ao @_done @_tested @_deprecated
 Scenario: I can specify a youtube video url which is displayed on front page
-  Then I fill in "setting_4" with "123"
-  And I press translated "administration.settings.edit.view.button_update_settings"
-  Then I should see translated "administration.settings.update.controller.successful_update_notice"
 
 #5919
 #http://img.youtube.com/vi/<insert-youtube-video-id-here>/0.jpg
@@ -75,10 +72,18 @@ Scenario: I can see a jpg thumbnail of a introduction video on home page
   And I press translated "administration.introduction_video.new.view.button_create"
   And I make sure current locale is "en"
   And I am on the home page
-  Then I should see "2" elements within CSS path ".introduction_video"
+  Then I should see "1" elements within CSS path ".introduction_video"
 
-@requested @m13 @after_m12_presentation @ao @$_administrator
+@requested @m13 @after_m12_presentation @ao @$_administrator @_done @_tested
 Scenario: I can upload custom jpeg image to be displayed on home page for video introduction
+  When I follow translated "administration.introduction_video.view.add_video"
+  And I fill in "youtube_introduction_url" with "http://www.youtube.com/watch?v=SBjQ9tuuTJQ"
+  And I select "en" from "youtube_introduction_locale_code"
+  And attach the file "sample image" to "youtube_introduction_image_attributes_asset"
+  And I press translated "administration.introduction_video.new.view.button_create"
+  And I make sure current locale is "en"
+  And I am on the home page
+  Then I should see CSS path "img[src*='_original']"
 
 #5919
 @requested @$_all @m12 @ao @_done @_tested @selenium
@@ -89,7 +94,7 @@ Scenario: I can play youtube video in a modal box
   And I press translated "administration.introduction_video.new.view.button_create"
   And I make sure current locale is "en"
   And I am on the home page
-  And I follow "Introduction video"
+  And I follow "introduction_video_link"
   And I wait 1 second
   Then I should see CSS path "#cboxLoadedContent"
 
@@ -102,7 +107,7 @@ Scenario: I can specify youtube url for each locale
   And I press translated "administration.introduction_video.new.view.button_create"
   And I make sure current locale is "en"
   And I am on the home page
-  Then I should see "2" elements within CSS path ".introduction_video"
+  Then I should see "1" elements within CSS path ".introduction_video"
   When I make sure current locale is "dk"
   Then I should not see CSS path ".introduction_video"
   When I go to administration settings
@@ -111,4 +116,4 @@ Scenario: I can specify youtube url for each locale
   And I select "dk" from "youtube_introduction_locale_code"
   And I press translated "administration.introduction_video.new.view.button_create"
   And I am on the home page
-  Then I should see "2" elements within CSS path ".introduction_video"
+  Then I should see "1" elements within CSS path ".introduction_video"

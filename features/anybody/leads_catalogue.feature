@@ -183,10 +183,24 @@ Scenario: I should see only tree for selected root category
   And I should not see "Computers"
   And I should not see "Business"
 
-@m13 @requested @request_leads @ao @$_guest
+@m13 @requested @request_leads @ao @$_guest @_done @_tested
 Scenario: I can request a category and more leads for category as a guest
+  When there are no leads
+  And I follow translated "layout.main_menu.shared.category_request"
+  Then I should see translated "category_requests.new.view.header"
+  When I go to browse leads
+  And I follow "Electronics"
+  And I follow translated "leads.index.request_more_leads"
+  Then I should see translated "more_leads_requests.new.view.header" with options "category:Electronics"
 
 #6054
 # If a category has "0" leads it should display "Sold out" instead.
-@m13 @requested @ao @$_guest
+@m13 @requested @ao @$_guest @_done @_tested
 Scenario: I can see "Sold out" message when there are no leads in category
+  Given there are no categories
+  And Category named "Sample category" already exists
+  And Category named "Sample category#2" already exists
+  And Lead named "Lead sample" exists within "Sample category#2" category
+  And I go to browse leads
+  Then I should see translated "layout.main_menu.shared.sold_out" within ".categories_node:nth-of-type(1)"
+  And I should not see translated "layout.main_menu.shared.sold_out" within ".categories_node:nth-of-type(2)"

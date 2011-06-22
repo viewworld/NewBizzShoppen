@@ -122,6 +122,7 @@ en:
         site_home: "Site home"
         category_request: "Category request"
         comments: "Comments"
+        sold_out: "Sold out"
       purchase_manager:
         leads: My leads
         lead_templates: "Lead templates"
@@ -593,6 +594,7 @@ en:
     index:
       header: Leads
       header_for: "for"
+      request_more_leads: "Request more leads"
       search:
         search_button: Search
         keyword_label: Keyword
@@ -2384,6 +2386,7 @@ en:
     errors:
       messages:
         blank: "can't be blank"
+        invalid: "is invalid"
 
   flash:
     agent_accounts:
@@ -2773,12 +2776,25 @@ en:
         category_name: "Category name"
         leads_count_per_month_buyer: "How many leads approximately would you need a month?"
         leads_count_per_month_agent: "How many leads approximately would you produce a month?"
+        leads_count_per_month_guest: "How many leads approximately would you need or produce a month?"
         lead_description: "Describe what would be a good lead"
         can_be_contacted: "Can Fairleads contact you to discuss your suggestion?"
         phone_number: "Phone number"
     create:
       flash:
         request_sent: "Your category request has been sent"
+
+  more_leads_requests:
+    new:
+      view:
+        header: "Request more leads for category %{category}"
+        company_name: "Company name"
+        contact_name: "Contact name"
+        contact_email: "Contact email"
+        contact_phone: "Contact phone"
+    create:
+      flash:
+        request_sent: "Your request has been sent"
 
   comments:
     threads:

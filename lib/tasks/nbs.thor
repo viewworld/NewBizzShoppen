@@ -140,6 +140,14 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
                     :body => "<p>{{request_type}} category request:</p><p>Category name: {{category_name}}</p><p>Lead description: {{lead_description}}</p><p>Leads count per month: {{leads_count_per_month}}</p><p>Can be contacted: {{can_be_contacted}}</p>"}
         },
         {
+            :name => "More leads request",
+            :uniq_id => "more_leads_request",
+            :en => {:subject => "More leads request",
+                    :body => "<p>More leads request:</p><p>Category name: {{category_name}}</p><p>Company name: {{company_name}}</p><p>Contact name: {{contact_name}}</p><p>Contact email: {{contact_email}}</p><p>Contact phone: {{contact_phone}}</p>"},
+            :dk => {:subject => "[DK] More leads  request",
+                    :body => "<p>More leads request:</p><p>Category name: {{category_name}}</p><p>Company name: {{company_name}}</p><p>Contact name: {{contact_name}}</p><p>Contact email: {{contact_email}}</p><p>Contact phone: {{contact_phone}}</p>"}
+        },
+        {
             :name => "Certification request",
             :uniq_id => "certification_request",
             :en => {:subject => "Certification request",

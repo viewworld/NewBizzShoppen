@@ -1,0 +1,41 @@
+<column-mc:>
+  <header><%= t("more_leads_requests.new.view.header", :category => @category.name) %></header>
+  <%= form_for :email_template_preview, :url => category_more_leads_requests_path(@category) do |f| %>
+    <frm title="Contact Form">
+      <param:content>
+      <div class="pdd_10 no_pdd_t">
+
+        <fieldset class="inputs labels_ta_r">
+          <ol class="align_inputs">
+            <li class="string">
+              <%= f.label "#{t("more_leads_requests.new.view.company_name")}<abbr title=\"required\">*</abbr>".html_safe %>
+              <%= f.text_field :company_name %> <%= custom_error_for_object_and_field(@email_template_preview, :company_name) %>
+              <p class="inline-hints"><%= hint_for("more_leads_requests", :company_name) %></p>
+            </li>
+            <li class="string">
+              <%= f.label "#{t("more_leads_requests.new.view.contact_name")}<abbr title=\"required\">*</abbr>".html_safe %>
+              <%= f.text_field :contact_name %> <%= custom_error_for_object_and_field(@email_template_preview, :contact_name) %>
+              <p class="inline-hints"><%= hint_for("more_leads_requests", :contact_name) %></p>
+            </li>
+            <li class="string">
+              <%= f.label "#{t("more_leads_requests.new.view.contact_email")}<abbr title=\"required\">*</abbr>".html_safe %>
+              <%= f.text_field :contact_email %> <%= custom_error_for_object_and_field(@email_template_preview, :contact_email) %>
+              <p class="inline-hints"><%= hint_for("more_leads_requests", :contact_email) %></p>
+            </li>
+            <li class="string">
+              <%= f.label "#{t("more_leads_requests.new.view.contact_phone")}<abbr title=\"required\">*</abbr>".html_safe %>
+              <%= f.text_field :contact_phone %><%= custom_error_for_object_and_field(@email_template_preview, :contact_phone) %>
+              <p class="inline-hints"><%= hint_for("more_leads_requests", :contact_phone) %></p>
+            </li>
+          </ol>
+        </fieldset>
+      </div>
+      </param:content>
+      <param:actions>
+        <ibt c="fltri">
+          <%= submit_tag t("contact_us.new.view.send_email_button") %>
+        </ibt>
+      </param:actions>
+    </frm>
+  <% end %>
+</column-mc:>

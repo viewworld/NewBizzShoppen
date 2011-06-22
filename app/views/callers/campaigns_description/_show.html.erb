@@ -1,5 +1,4 @@
 <span id="briefing_area_content">
-<%= bt_link_to nil, t("agent_work_screen.index.show_briefing_area"), "javascript:void(0)", :onclick => "$.get('/callers/campaigns/#{campaign.id}/campaigns_description.js')", :class => "fltr" %>
 <h2><%= t("campaigns_description.show.header") %></h2>
 <br />
 <%= campaign.briefing.to_s.html_safe %>

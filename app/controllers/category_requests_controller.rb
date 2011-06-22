@@ -3,7 +3,9 @@ class CategoryRequestsController < ApplicationController
   set_tab "browse_leads"
 
   def new
-    @email_template_preview = CategoryRequestTemplatePreview.new(:category_request, {:email_from => current_user.email, :phone_number => current_user.phone}, current_user)
+    @email_template_preview = CategoryRequestTemplatePreview.new(:category_request,
+                                                                 {:email_from => (current_user ? current_user.email : ''), :phone_number => (current_user ? current_user.phone : '')},
+                                                                 current_user)
   end
 
   def create
@@ -24,7 +26,7 @@ class CategoryRequestsController < ApplicationController
   protected
 
   def check_user_role
-    if current_user.nil? or !current_user.has_any_role?(:agent, :call_centre_agent, :purchase_manager, :customer, :lead_buyer)
+    if (current_user and !current_user.has_any_role?(:agent, :call_centre_agent, :purchase_manager, :customer, :lead_buyer))
       redirect_to root_path
     end
   end

@@ -1,7 +1,7 @@
 <column-mc:>
   <header back="true"><%= t('administration.introduction_video.edit.view.header') %></header>
 
-  <%= semantic_form_for @youtube_introduction, :as => :youtube_introduction, :url => administration_youtube_introduction_path(@youtube_introduction), :input_html => {:method => :put} do |form| %>
+  <%= semantic_form_for @youtube_introduction, :as => :youtube_introduction, :url => administration_youtube_introduction_path(@youtube_introduction), :html => {:method => :put, :multipart => true} do |form| %>
       <frm>
         <param:content>
           <%= render :partial => 'form', :locals => {:form => form} %>

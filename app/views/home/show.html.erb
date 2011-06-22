@@ -5,15 +5,14 @@
 
 
   <div class="pdd_5 no_pdd_b">
-    <div class="fltl" style="<%= "width:970px" if youtube_introduction_id %>">
+    <div class="fltl" style="<%= "width:970px" if youtube_introduction %>">
       <p><%= blurb("blurb_start_page_role_selection") %></p>
     </div>
-    <% if youtube_introduction_id %>
+    <% if youtube_introduction %>
         <div class="fltr grid_140">
           <p class="ta_c">
-            <%= link_to image_tag("http://img.youtube.com/vi/#{youtube_introduction_id}/default.jpg", :class => "thumb"),
-                "http://www.youtube.com/embed/#{youtube_introduction_id}?autoplay=1&rel=0&border=0", :class => "introduction_video" %>
-            <%= link_to t("home.show.view.introduction_video"), "http://www.youtube.com/embed/#{youtube_introduction_id}?autoplay=1&rel=0&border=0", :class => "introduction_video" %>
+            <%= link_to image_tag(youtube_introduction.image ? youtube_introduction.image.url : "http://img.youtube.com/vi/#{youtube_introduction.url.extract_youtube_video_id}/default.jpg", :class => "thumb"),
+                "http://www.youtube.com/embed/#{youtube_introduction.url.extract_youtube_video_id}?autoplay=1&rel=0&border=0", :class => "introduction_video", :id => "introduction_video_link" %>
           </p>
         </div>
         <clb/>

@@ -75,3 +75,21 @@ class Asset::CategoryImage < Asset
   end
 
 end
+
+class Asset::YoutubeImage < Asset
+  belongs_to :youtube_introduction, :foreign_key => "resource_id"
+  has_attached_file :asset, attachment_options
+  validates_attachment_presence :asset
+  validates_attachment_size :asset, :less_than => 1.megabyte
+  validates_attachment_content_type :asset, :content_type => Asset::IMAGE_FILE_TYPES, :message => " - #{I18n.t(:validation_asset_images_type)}"
+
+  # TODO there must be a better way..
+  def url(style=nil)
+    if self.class.s3_storage?
+      super.gsub('//s3','//fairleads.s3').gsub('/fairleads/','/')
+    else
+      super
+    end
+  end
+
+end

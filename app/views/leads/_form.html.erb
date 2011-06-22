@@ -33,7 +33,7 @@
         <%= form.input :email_address, :hint => hint_for(@lead, :email_address) %>
         <%= form.input :linkedin_url, :hint => hint_for(@lead, :linkedin_url) %>
         <%= form.input :facebook_url, :hint => hint_for(@lead, :facebook_url) %>
-        <%= form.input :note, :as => :text, :hint => hint_for(@lead, :note), :input_html => {:cols => 40, :rows => 10 } if @contact %>
+        <%= form.input :note, :as => :text, :hint => hint_for(@lead, :note), :input_html => {:cols => 40, :rows => 10} if @contact %>
       </ol>
     </fieldset>
   </div>
@@ -56,9 +56,10 @@
             <%= form.input :hidden_description, :input_html => {:style => "height: 140px; width: 600px"}, :hint => hint_for(@lead, :hidden_description) %>
           </li>
           <% if @lead.purchase_value.present? %>
-           <li class="string optional">
-            <label><%= t("formtastic.labels.lead.purchase_value") %></label> <%= @lead.purchase_value %>
-          </li>
+              <li class="string optional">
+                <label><%= t("formtastic.labels.lead.purchase_value") %></label>
+                <div class="txt"><strong><%= @lead.purchase_value %></strong></div>
+              </li>
           <% end %>
         </ol>
       </fieldset>
@@ -71,21 +72,21 @@
         <%= render :partial => "lead_fields", :locals => {:f => builder, :lead => @lead} %>
     <% end %>
 
-<div class="pdd_10 no_pdd_t">
-  <fieldset class="inputs labels_ta_r labels_180">
-    <ol class="align_inputs">
-      <li class="header">
-        <h3><%= t("shared.leads.form.sales_information") %></h3>
-      </li>
-      <li class="string optional">
-        <%= form.input :purchase_decision_date, :as => :datepicker, :wrapper_html => {:class => "date"}, :hint => hint_for(@lead, :purchase_decision_date) %>
-      </li>
-    </ol>
-  </fieldset>
-</div>
+    <div class="pdd_10 no_pdd_t">
+      <fieldset class="inputs labels_ta_r labels_180">
+        <ol class="align_inputs">
+          <li class="header">
+            <h3><%= t("shared.leads.form.sales_information") %></h3>
+          </li>
+          <li class="string optional">
+            <%= form.input :purchase_decision_date, :as => :datepicker, :wrapper_html => {:class => "date"}, :hint => hint_for(@lead, :purchase_decision_date) %>
+          </li>
+        </ol>
+      </fieldset>
+    </div>
 
 
-<script>
+    <script>
         function set_beginnings_of_urls(fields_array) {
             $.each(fields_array, function(index, value) {
                 if ($('#' + value).val() == "") {
@@ -117,7 +118,7 @@
         <% if params[:action] == "new" or params[:action] == "create" %>
         set_beginnings_of_urls(["lead_linkedin_url", "lead_facebook_url", "lead_company_website"]);
         <% end %>
-    
+
         var language_names = [];
         <% Locale.all.each do |locale| %>
         <%= "language_names['#{locale.code}'] = '#{t('models.locale.' + locale.code)}';" -%>
