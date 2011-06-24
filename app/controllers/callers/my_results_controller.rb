@@ -31,7 +31,7 @@ class Callers::MyResultsController < Callers::CallerController
       @agents = User.assigned_to_campaigns.with_results.with_agents_without_call_centres
     else
       @search.for_campaigns = Campaign.available_for_user(current_user).map(&:id)
-      @agents = User.assigned_to_campaigns.with_results.for_campaigns(@search.for_campaigns).with_agents_without_call_centres
+      @agents = User.assigned_to_campaigns.with_results.for_campaigns(@search.for_campaigns).with_agents_without_call_centres.where("parent_id = ?", current_user.id)
     end
     @contacts = @search.select("DISTINCT(leads.id), leads.*").order("leads.last_call_result_at DESC").paginate(:page => params[:page], :per_page => 20)
   end
