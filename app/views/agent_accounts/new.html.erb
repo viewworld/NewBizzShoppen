@@ -1,5 +1,5 @@
 <column-mc:>
-  <%= render :partial => "shared/accounts/new_account_title", :locals => {:accounts_type => "agent_accounts", :user => @user } %>
+  <%= render :partial => "shared/accounts/new_account_title", :locals => {:accounts_type => "agent_accounts", :user => @user} %>
   <div class="pdd_5 no_pdd_b">
     <%= blurb('blurb_sign_up') %>
   </div>
@@ -8,19 +8,12 @@
 
   <div class="frm_tiny" style="margin-bottom:10px;">
     <div class="pdd_10">
-      <fieldset class="inputs labels_100 no_pdd" style="margin-top:-5px;">
-        <ol>
-          <li class="string social_login">
-            <label><%= t("agent_accounts.new.view.janrain_sign_up_label") %></label>
-            <div class="txt">
-              <% unless Rails.env.test? %>
-                  <%= link_to_rpx image_tag("icons/social_login.png"), agent_accounts_url %>
-                  <%= javascript_include_rpx agent_accounts_url %>
-              <% end %>
-            </div>
-          </li>
-        </ol>
-      </fieldset>
+      <p><%= t("agent_accounts.new.view.janrain_sign_up_label") %>
+        <% unless Rails.env.test? %>
+            <%= link_to_rpx image_tag("icons/social_login.png"), agent_accounts_url %>
+            <%= javascript_include_rpx agent_accounts_url %>
+        <% end %>
+      </p>
       <%= render(:partial => "shared/accounts/rpx_message", :locals => {:user => @user}) unless @user.rpx_identifier.blank? %>
     </div>
   </div>
