@@ -200,19 +200,19 @@ Scenario: User can login after changing his account to category buyer
   And I click hidden link by url regex "/users\/\d+\/edit/"
   And I follow translated "administration.users.edit.view.change_customer_interests_link"
   And I select "AnotherCategory" from "all_categories_for_interests"
-  And I follow "move_left" within "#category_interests"
+  And I follow "move_right" within "#category_interests"
   And I select "Electronics" from "all_categories_for_interests"
-  And I follow "move_left" within "#category_interests"
+  And I follow "move_right" within "#category_interests"
   And I select "Leisure" from "all_categories_for_interests"
-  And I follow "move_left" within "#category_interests"
+  And I follow "move_right" within "#category_interests"
   And I select "Business" from "all_categories_for_interests"
-  And I follow "move_left" within "#category_interests"
+  And I follow "move_right" within "#category_interests"
   Then I press translated "administration.categories.edit.view.button_update"
   And I follow translated "administration.users.edit.view.change_to_category_buyer"
   And I sign out
   And I sign in as kastomer@nbs.com with password secret
   And I follow translated "layout.main_menu.shared.browse_leads"
-  Then I should be on category leads page for CategoryBuyerCategory
+  Then I should be on category leads page for AnotherCategory
 
 @m6 @added @selenium @_done @_tested @requested
 Scenario: Subaccounts can login after changing his account to category buyer
@@ -225,20 +225,20 @@ Scenario: Subaccounts can login after changing his account to category buyer
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/users\/\d+\/edit/"
   And I follow translated "administration.users.edit.view.change_customer_interests_link"
-  And I select "AnotherCategory" from "user_customer_category_ids_"
-  And I follow "move_left" within "#category_interests"
-  And I select "Electronics" from "user_customer_category_ids_"
-  And I follow "move_left" within "#category_interests"
-  And I select "Leisure" from "user_customer_category_ids_"
-  And I follow "move_left" within "#category_interests"
-  And I select "Business" from "user_customer_category_ids_"
-  And I follow "move_left" within "#category_interests"
+  And I select "AnotherCategory" from "all_categories_for_interests"
+  And I follow "move_right" within "#category_interests"
+  And I select "Electronics" from "all_categories_for_interests"
+  And I follow "move_right" within "#category_interests"
+  And I select "Leisure" from "all_categories_for_interests"
+  And I follow "move_right" within "#category_interests"
+  And I select "Business" from "all_categories_for_interests"
+  And I follow "move_right" within "#category_interests"
   Then I press translated "administration.categories.edit.view.button_update"
   And I follow translated "administration.users.edit.view.change_to_category_buyer"
   And I sign out
   And I sign in as sub@nbs.com with password secret
   And I follow translated "layout.main_menu.shared.browse_leads"
-  Then I should be on category leads page for CategoryBuyerCategory
+  Then I should be on category leads page for AnotherCategory
 
 @m6 @_done @_tested  @requested @selenium
 Scenario: I can change regular buyer to category buyer
@@ -345,18 +345,6 @@ Scenario: I can change buyer to category buyer only if he has interests categori
   And I fill in "search_with_keyword" with "kastomer"
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/users\/\d+\/edit/"
-  And I follow translated "administration.users.edit.view.change_customer_interests_link"
-  And I select "CategoryBuyerCategory" from "user_customer_category_ids_"
-  And I follow "move_left" within "#category_interests"
-  And I select "AnotherCategory" from "user_customer_category_ids_"
-  And I follow "move_left" within "#category_interests"
-  And I select "Electronics" from "user_customer_category_ids_"
-  And I follow "move_left" within "#category_interests"
-  And I select "Leisure" from "user_customer_category_ids_"
-  And I follow "move_left" within "#category_interests"
-  And I select "Business" from "user_customer_category_ids_"
-  And I follow "move_left" within "#category_interests"
-  Then I press translated "administration.categories.edit.view.button_update"
   And I follow translated "administration.users.edit.view.change_to_category_buyer"
   Then I should see translated "activerecord.attributes.user.customer.base.must_have_interests"
   And I follow translated "administration.users.edit.view.change_customer_interests_link"
