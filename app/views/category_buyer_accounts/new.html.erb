@@ -1,5 +1,5 @@
 <column-mc:>
-  <%= render :partial => "shared/accounts/new_account_title", :locals => {:accounts_type => "category_buyer_accounts", :user => @user } %>
+  <%= render :partial => "shared/accounts/new_account_title", :locals => {:accounts_type => "category_buyer_accounts", :user => @user} %>
 
   <div class="pdd_5 no_pdd_b">
     <%= blurb('blurb_sign_up') %>
@@ -9,20 +9,12 @@
 
   <div class="frm_tiny" style="margin-bottom:10px;">
     <div class="pdd_10">
-      <fieldset class="inputs labels_100 no_pdd" style="margin-top:-5px;">
-        <ol class="no_pdd">
-          <li class="string social_login">
-            <label><%= t("purchase_manager_accounts.new.view.janrain_sign_up_label") %></label>
-
-            <div class="txt">
-              <% unless Rails.env.test? %>
-                  <%= link_to_rpx image_tag("icons/social_login.png"), "http#{"s" if RAILS_ENV == "production"}://#{Nbs::Application.config.action_mailer.default_url_options[:host]}/#{params[:slug]}/account" %>
-                  <%= javascript_include_rpx "http#{"s" if RAILS_ENV == "production"}://#{Nbs::Application.config.action_mailer.default_url_options[:host]}/#{params[:slug]}/account" %>
-              <% end %>
-            </div>
-          </li>
-        </ol>
-      </fieldset>
+      <p><%= t("purchase_manager_accounts.new.view.janrain_sign_up_label") %>
+        <% unless Rails.env.test? %>
+            <%= link_to_rpx image_tag("icons/social_login.png"), "http#{"s" if RAILS_ENV == "production"}://#{Nbs::Application.config.action_mailer.default_url_options[:host]}/#{params[:slug]}/account" %>
+            <%= javascript_include_rpx "http#{"s" if RAILS_ENV == "production"}://#{Nbs::Application.config.action_mailer.default_url_options[:host]}/#{params[:slug]}/account" %>
+        <% end %>
+      </p>
 
       <%= render(:partial => "shared/accounts/rpx_message", :locals => {:user => @user}) unless @user.rpx_identifier.blank? %>
     </div>
