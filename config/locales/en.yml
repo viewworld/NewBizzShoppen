@@ -2348,6 +2348,11 @@ en:
               password:
                 blank: "is blank"
                 confirmation: "doesn't match confirmation"
+          category_buyer:
+            attributes:
+              password:
+                blank: "is blank"
+                confirmation: "doesn't match confirmation"
           purchase_manager:
             attributes:
               password:
