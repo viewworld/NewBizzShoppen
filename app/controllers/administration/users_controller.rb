@@ -12,6 +12,10 @@ class Administration::UsersController < Administration::AdministrationController
     @user = "User::#{params[:role].to_s.camelize}".constantize.new
     @user.send(:attributes=, params["user_#{params[:role].to_s}".to_sym], false)
     if @user.save
+       if params[:user_category_buyer]
+        @user.reload
+        @user.update_attribute(:buying_category_ids, params[:user_category_buyer][:buying_category_ids])
+       end
       flash[:notice] = t("administration.users.create.flash.user_creation_successful")
       redirect_to administration_users_path
     else

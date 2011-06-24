@@ -2,10 +2,9 @@ module User::Subaccounts
 
   def self.included(base)
     base.class_eval do
-      attr_accessor :lead_buyer_role_enabled
+      attr_accessor :lead_buyer_role_enabled_flag
 
       before_update :check_lead_buyer_role
-      after_find :set_lead_buyer_role_enabled
       before_create :check_parent_for_category_buyer
     end
     base.send(:include, InstanceMethods)
@@ -13,10 +12,21 @@ module User::Subaccounts
 
   module InstanceMethods
 
+    def lead_buyer_role_enabled
+      if lead_buyer_role_enabled_flag.nil?
+        self.lead_buyer_role_enabled_flag = self.has_role?(:lead_buyer) ? true : false
+      end
+      lead_buyer_role_enabled_flag
+    end
+
+    def lead_buyer_role_enabled=(enabled)
+      self.lead_buyer_role_enabled_flag = enabled
+    end
+
     private
 
     def set_lead_buyer_role_enabled
-      self.lead_buyer_role_enabled = has_role?(:lead_buyer) ? true : false
+      self.lead_buyer_role_enabled_flag = self.has_role?(:lead_buyer) ? true : false
     end
 
     def check_lead_buyer_role
