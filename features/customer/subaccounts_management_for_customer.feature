@@ -251,3 +251,6 @@ Scenario: I should not have access to subaccounts without team buyers flag
 
 @m8b @requested @_done @non_testable
 Scenario: Team buyers should have "My assigned leads" tab reamed to "My leads"
+
+@m14 @requested @$_customer @team_buyers
+Scenario: I can not edit Team buyers flag

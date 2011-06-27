@@ -526,3 +526,19 @@ Feature: Agent campaign - calling session
       And last email sent should have content "/business"
       And last email sent should have content "Login: newcategory_buyer888@nbs.com"
       And last email sent should have content "Linked with account: not linked"
+
+    @m14 @requested @my_results @$_call_centre_agent
+    Scenario: I should see "My results" renamed to "Production" and displayed the same way as campaign's "Results"
+
+    @m14 @requested @google_it @$_call_centre_agent
+    Scenario: I can google for company name from agent work screen
+
+    @m14 @requested @new_result @$_call_centre_agent
+    Scenario: I can see a white list of available variables that can be inserted into email in a popup
+
+    @m14 @requested @new_result @$_call_centre_agent
+    Scenario: When I click an item on the variables list it should be inserted into rich text editor
+
+    @m14 @requested @note_information @$_call_centre_agent
+    Scenario: I can see result note on agent work screen
+

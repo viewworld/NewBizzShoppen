@@ -755,4 +755,9 @@ Feature: Agent campaign - management
           And I press translated "my_results.index.view.filter.search_button"
           Then I should see "ContactTest1"
 
+        @m14 @requested @my_results @$_call_centre
+        Scenario: I should see "My results" renamed to "Production" and displayed the same way as campaign's "Results"
+
+        @m14 @requested @my_results @$_admin
+        Scenario: I should see "My results" renamed to "Production" and displayed the same way as campaign's "Results"
 

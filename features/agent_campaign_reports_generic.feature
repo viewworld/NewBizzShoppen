@@ -1,4 +1,4 @@
-@m14 @reports @requested
+@m15 @reports @requested
 Feature: Reports
 
   Scenario: I can select which campaign to include in report (active, finished)
