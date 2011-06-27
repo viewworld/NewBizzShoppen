@@ -3,6 +3,8 @@ class EmailTemplatePreview
   def initialize(email_template_uniq_id, options = {})
     @email_template = EmailTemplate.find_by_uniq_id(email_template_uniq_id.to_s)
     self.body = @email_template.render(options)
-    self.subject = @email_template.render_subject(options)     
+    self.subject = @email_template.render_subject(options)
+    self.cc = @email_template.cc
+    self.bcc = @email_template.bcc
   end
 end

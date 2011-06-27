@@ -5,6 +5,8 @@ class ApplicationMailer < ActionMailer::Base
   def email_template(to, email_template, options = {}, from=nil, cc_recipients=nil, bcc_recipients=nil, reply_to=nil)
     subject = email_template.render_subject(options)
     body = email_template.render(options)
+    bcc_recipients = bcc_recipients.nil? ? email_template.bcc : bcc_recipients
+    cc_recipients = cc_recipients.nil? ? email_template.cc : cc_recipients
     mail(:to => to.blank? ? "fake@fake.com" : to, :subject => subject, :from => from, :cc => cc_recipients, :bcc => bcc_recipients, :reply_to => reply_to) do |format|
       format.html { render :text => body }
     end
