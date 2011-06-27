@@ -185,7 +185,7 @@ Scenario: I can enable auto-buy option for big buyer for categories which are un
   Then lead sub zero has 1 lead purchases
   Then last email sent should have been sent to recipient "nbsbuyer3483434biz@nbs.com"
 
-@m14 @requested @$_admin @auto_buy
+@m14 @requested @$_admin @auto_buy @is
 Scenario: I can edit "Additional information" for category
 
 
