@@ -52,3 +52,6 @@ Feature: Sign up feature
 
   @m12 @$_guest @janrain @requested @is @_done @_not_testable
   Scenario: When I try to sing up with LinkedIn then the note about linking account should be displayed
+
+  @m14 @requested @sign_up @$_customer
+  Scenario: I can't enable Team Buyers option when signing up

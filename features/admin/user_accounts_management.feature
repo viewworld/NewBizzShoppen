@@ -649,3 +649,14 @@ Scenario: Category buyer created by admin should have buying categories assigned
   Then I should see "TestingCategoryBuyer"
   And I should see translated "category_home.show.view.header"
   And category "TestingCategoryBuyer" is in interests of user "category@buyer.fake" "true"
+
+@m14 @requested @$_admin @auto_buy
+Scenario: When I assign unique categories to buyer I should see only categories which does not have auto-buy enabled
+
+@m14 @requested @$_admin @auto_buy
+Scenario: When I assign unique category to buyer the auto-buy option should be automatically enabled for that category
+
+@m14 @requested @$_admin @auto_buy
+Scenario: When user has unique category with auto-buy he should not be subscribed by email to that category any more
+
+

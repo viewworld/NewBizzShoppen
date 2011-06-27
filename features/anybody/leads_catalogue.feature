@@ -204,3 +204,9 @@ Scenario: I can see "Sold out" message when there are no leads in category
   And I go to browse leads
   Then I should see translated "layout.main_menu.shared.sold_out" within ".categories_node:nth-of-type(1)"
   And I should not see translated "layout.main_menu.shared.sold_out" within ".categories_node:nth-of-type(2)"
+
+@m14 @requested @$_guest @request_more_leads
+Scenario: I can provide additional information in Note field when requesting more leads for category
+
+@m14 @requested @$_guest @request_more_leads
+Scenario: I should receive copy of the email which is sent when I request more leads for category

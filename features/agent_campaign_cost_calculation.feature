@@ -1,4 +1,4 @@
-@m14 @cost_calculation @requested
+@m15 @cost_calculation @requested
 Feature: Cost calculation
 
   # radiobuttons for the following 4 options
