@@ -482,6 +482,7 @@ en:
       save_button: Create
       cancel_button: Back to contact
       result: Result
+      contact_company_name: "Company name"
       contact_first_name: "First name"
       contact_last_name: "Last name"
       contact_address_line_1: "Address line 1"
@@ -2202,6 +2203,7 @@ en:
     edit:
       view:
         header: "My profile"
+        header_contact_confirmation: "Confirm account information"
         change_password: "Change password"
         remove_category_buyer: "Change account to normal buyer"
         enable_team_buyers: "Enable team buyers"
@@ -2594,6 +2596,7 @@ en:
         email_address: "Email address"
         linkedin_url: "Linkedin url"
         facebook_url: "Facebook url"
+        note: "Internal note"
 
       invoice:
         number: "Number"
@@ -2796,6 +2799,8 @@ en:
         detailed_locale: "Language format"
       region:
         name: "Region name"
+      call_result:
+        note: "Internal note"
 
   users:
     passwords:

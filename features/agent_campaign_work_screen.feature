@@ -364,6 +364,7 @@ Feature: Agent campaign - calling session
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Upgrade to category buyer" from "selected_result_id"
       And I follow translated "call_results.edit.button_new_result"
+      And I fill in "call_result_contact_company_name" with "Custom company"
       And I fill in "call_result_contact_first_name" with "John"
       And I fill in "call_result_contact_last_name" with "Dohn"
       And I fill in "call_result_contact_address_line_1" with "LongRoad 2"
@@ -477,7 +478,7 @@ Feature: Agent campaign - calling session
       Given I am not sign in
       And I am on the homepage
       And I sign in as newcategory_buyer888@nbs.com with password testin
-      Then I should see translated "my_profile.edit.view.header"
+      Then I should see translated "my_profile.edit.view.header_contact_confirmation"
       And the "user_category_buyer_company_name" field should contain "Bon Jovi inc."
       And the "user_category_buyer_first_name" field should contain "John"
       And the "user_category_buyer_last_name" field should contain "Dohn"
@@ -500,7 +501,7 @@ Feature: Agent campaign - calling session
       Given I am not sign in
       And I am on the homepage
       And I sign in as newcategory_buyer888@nbs.com with password testin
-      Then I should see translated "my_profile.edit.view.header"
+      Then I should see translated "my_profile.edit.view.header_contact_confirmation"
       And I press translated "password.edit.view.button_update_user"
       Then I should see "Welcome to category: Business"
 
@@ -520,9 +521,18 @@ Feature: Agent campaign - calling session
       Given I am not sign in
       And I am on the homepage
       And I sign in as newcategory_buyer888@nbs.com with password testin
-      Then I should see translated "my_profile.edit.view.header"
+      Then I should see translated "my_profile.edit.view.header_contact_confirmation"
       And I press translated "password.edit.view.button_update_user"
       And last email sent should have been sent to recipient "newcategory_buyer888@nbs.com"
       And last email sent should have content "/business"
       And last email sent should have content "Login: newcategory_buyer888@nbs.com"
       And last email sent should have content "Linked with account: not linked"
+
+    @m14 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @tested_elsewhere @_done
+    Scenario: I should see company name when Upgrading contact to category buyer
+
+    @m14 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @tested_elsewhere @_done
+    Scenario: During confirmation of contact's account information header says Confirm account information instead of My profile
+
+    @m14 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @non_testable @_done
+    Scenario: Agent cannot customize email's field 'from' in popup template editor

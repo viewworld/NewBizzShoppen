@@ -80,7 +80,6 @@
           errors_count++;
       }
 
-      errors_count = validate_email_field('from', modal_box_id, errors_count);
       errors_count = validate_email_field('bcc', modal_box_id, errors_count);
       errors_count = validate_email_field('cc', modal_box_id, errors_count);
 

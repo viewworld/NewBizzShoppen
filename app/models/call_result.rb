@@ -1,6 +1,7 @@
 class CallResult < ActiveRecord::Base
   attr_accessor :contact_email_address, :contact_first_name, :contact_last_name, :contact_address_line_1, :contact_zip_code,
-                :buying_category_ids, :email_template_subject, :email_template_from, :email_template_bcc, :email_template_cc, :email_template_body
+                :contact_company_name, :buying_category_ids, :email_template_subject, :email_template_from, :email_template_bcc,
+                :email_template_cc, :email_template_body
 
   belongs_to :contact
   belongs_to :result
@@ -189,8 +190,11 @@ class CallResult < ActiveRecord::Base
     user = User::CategoryBuyer.new(:email => contact_email_address, :first_name => contact_first_name,
                             :last_name => contact_last_name,
                             :address_attributes => { :address_line_1 => contact_address_line_1, :zip_code => contact_zip_code,
-                                                     :country_id => contact.country_id }, :agreement_read => true, :company_name => contact.company_name,
-                            :contact => contact)
+                                                     :country_id => contact.country_id,  :address_line_2 => contact.address_line_2,
+                                                     :address_line_3 => contact.address_line_3, :region_id => contact.region_id},
+                            :agreement_read => true, :company_name => contact.company_name, :phone => contact.phone_number,
+                            :contact => contact, :company_registration_number => contact.company_vat_no,
+                            :company_ean_number => contact.company_ean_number)
 
     users_count = User.where("last_name = ?", contact_last_name).count
     user.screen_name = "#{contact_last_name}#{' ' + users_count.to_s if users_count > 0}"
@@ -217,7 +221,8 @@ class CallResult < ActiveRecord::Base
     ApplicationMailer.generic_email([contact_email_address],
                                     template.subject, template.body,
                                     template.from,
-                                    send_material_result_value.materials.map{ |material| Pathname.new(File.join([::Rails.root, 'public', material.url]))}).deliver
+                                    send_material_result_value.materials.map{ |material| Pathname.new(File.join([::Rails.root, 'public', material.url]))},
+                                    template.cc, template.bcc).deliver
   end
 
   def deliver_email_for_category_buyer(user, password)
@@ -225,7 +230,7 @@ class CallResult < ActiveRecord::Base
     template = customize_email_template(template)
     attachments_arr = send_material_result_value.materials.empty? ? [] : send_material_result_value.materials.map{ |material| Pathname.new(File.join([::Rails.root, 'public', material.url])) }
 
-    ApplicationMailer.generic_email([contact_email_address], template.subject, template.render({:user => user, :password => password}), template.from, attachments_arr).deliver
+    ApplicationMailer.generic_email([contact_email_address], template.subject, template.render({:user => user, :password => password}), template.from, attachments_arr, template.cc, template.bcc).deliver
   end
   
   def set_last_call_result_in_contact
