@@ -2385,16 +2385,25 @@ en:
               password:
                 blank: "is blank"
                 confirmation: "doesn't match confirmation"
+                too_short: "too short"
           customer:
             attributes:
               password:
                 blank: "is blank"
                 confirmation: "doesn't match confirmation"
+                too_short: "too short"
+          category_buyer:
+            attributes:
+              password:
+                blank: "is blank"
+                confirmation: "doesn't match confirmation"
+                too_short: "too short"
           purchase_manager:
             attributes:
               password:
                 blank: "is blank"
                 confirmation: "doesn't match confirmation"
+                too_short: "too short"
         bank_account:
           attributes:
             global_default:
