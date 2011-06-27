@@ -25,10 +25,6 @@ module User::Subaccounts
 
     private
 
-    def set_lead_buyer_role_enabled
-      self.lead_buyer_role_enabled_flag = self.has_role?(:lead_buyer) ? true : false
-    end
-
     def check_lead_buyer_role
       if lead_buyer_role_enabled
         self.lead_buyer_role_enabled = ActiveRecord::ConnectionAdapters::Column.value_to_boolean(lead_buyer_role_enabled)

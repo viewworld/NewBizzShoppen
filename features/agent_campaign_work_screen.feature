@@ -327,11 +327,11 @@ Feature: Agent campaign - calling session
       Given contact for company "Mleko company" has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       Then I follow translated "call_results.edit.my_results"
-      And I click hidden link by url regex "/callers\/campaigns\/\d+\/agent_work_screen\/my_results\/\d+\/edit/"
+      And I click hidden link by url regex "/callers\/campaigns\/\d+\/my_results\/\d+\/edit/"
       And I fill in "contact_company_website" with "http://mleko.pl"
       And I fill in "contact_contact_name" with "Bertrand Russell"
       And I press translated "agent_work_screen.my_results.edit.view.button_update"
-      And I click hidden link by url regex "/callers\/campaigns\/\d+\/agent_work_screen\/my_results\/\d+\/edit/"
+      And I click hidden link by url regex "/callers\/campaigns\/\d+\/my_results\/\d+\/edit/"
       And the "contact_company_website" field should contain "http://mleko.pl"
       And the "contact_contact_name" field should contain "Bertrand Russell"
 
