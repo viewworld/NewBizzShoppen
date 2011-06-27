@@ -13,5 +13,7 @@ class MoreLeadsRequestTemplatePreview < EmailTemplatePreview
     self.body = @email_template.render(options.merge({:category_name => category_name, :company_name => company_name, :contact_name => contact_name,
                                                       :contact_email => contact_email, :contact_phone => contact_phone}))
     self.subject = @email_template.render_subject(options)
+    self.cc = @email_template.cc
+    self.bcc = @email_template.bcc
   end
 end

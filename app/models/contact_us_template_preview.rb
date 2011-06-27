@@ -9,5 +9,7 @@ class ContactUsTemplatePreview < EmailTemplatePreview
     self.body = @email_template.render(options)
     self.subject = @email_template.render_subject(options)
     self.email_from = email_from
+    self.cc = @email_template.cc
+    self.bcc = @email_template.bcc
   end
 end
