@@ -528,14 +528,11 @@ Feature: Agent campaign - calling session
       And last email sent should have content "Login: newcategory_buyer888@nbs.com"
       And last email sent should have content "Linked with account: not linked"
 
+    #Note change to “Internal note”
+    #During confirmation of contact's account information header says "Confirm account information" instead of "My profile"
+    #I should see company name when Upgrading contact to category buyer
     @m14 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @tested_elsewhere @_done
-    Scenario: I should see company name when Upgrading contact to category buyer
-
-    @m14 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @tested_elsewhere @_done
-    Scenario: During confirmation of contact's account information header says Confirm account information instead of My profile
-
-    @m14 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @non_testable @_done
-    Scenario: Agent cannot customize email's field 'from' in popup template editor
+    Scenario: Category buyer changes
   
     @m14 @requested @my_results @$_call_centre_agent
     Scenario: I should see "My results" renamed to "Production" and displayed the same way as campaign's "Results"
