@@ -82,6 +82,7 @@
   </div>
 
   <%= render "shared/email_template_popup/template_editor" %>
+  <%= render :partial => "shared/email_template_popup/template_vars_popup", :locals => { :instance_name => "body_editor" } %>
 
 </column-mc:>
 
@@ -98,6 +99,7 @@
       });
 
       setup_jquery_dialog();
+      setup_jquery_vars_popup_dialog();
   </script>
 </js:>
 

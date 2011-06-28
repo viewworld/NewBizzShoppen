@@ -36,7 +36,7 @@ CKEDITOR.editorConfig = function( config )
   //config.startupFocus = true;
   
   // works only with en, ru, uk languages
-  config.extraPlugins = "embed,attachment";
+  config.extraPlugins = "embed,attachment,email_template_vars";
   
   config.toolbar = 'Easy';
   
@@ -66,6 +66,20 @@ CKEDITOR.editorConfig = function( config )
         ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
         ['Link','Unlink','Anchor'],
         ['Table','HorizontalRule','Smiley','SpecialChar','PageBreak']
+    ];
+
+  config.toolbar_EmailPopup =
+    [
+        ['Source','-','Preview','Templates'],
+        ['Cut','Copy','Paste','PasteText','PasteFromWord',],
+        ['Maximize','-','About'],
+        ['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
+        ['Styles','Format'],
+        ['Bold','Italic','Underline','Strike','-','Subscript','Superscript', 'TextColor'],
+        ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
+        ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
+        ['Link','Unlink','Anchor'],
+        ['Table','HorizontalRule','Smiley','SpecialChar','PageBreak', 'insertEmailTemplVars']
     ];
 };
 

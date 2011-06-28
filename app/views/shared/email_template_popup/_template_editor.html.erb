@@ -16,6 +16,9 @@
       <li id="template_editor_body_input" class="text">
         <%= text_area_tag :body, "<p></p>", {:class => "editor", :id => "body_editor"} %>
       </li>
+      <li class="hidden">
+        <%= hidden_field_tag :uniq_id, "", {:id => "email_template_editor_uniq_id"} %>
+      </li>
     </ol>
   </fieldset>
 </div>
