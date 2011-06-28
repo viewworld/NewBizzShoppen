@@ -97,15 +97,27 @@
   }
 
   function setup_jquery_dialog(){
-    $('#modal_for_email_template_edit').dialog({
-        autoOpen: false,
-        width: 1120,        
-        title: 'Edit email template',
-        open: function(event, ui){ init_ck_editor(); setTimeout("init_email_template_editor_with_values();",300);  },
-        beforeClose: function(event, ui){ if(validate_template_editor_fields() == 0){ return true } else {return false}},
-        buttons: { "Save": function() {
-            if(validate_template_editor_fields() == 0){ $(this).dialog("close");  }
-        }}
-    });
-    $('#modal_for_email_template_edit').dialog("option", "email_template_editor_init_values_function", "");
+      $('#modal_for_email_template_edit').dialog({
+          autoOpen: false,
+          width: 1120,
+
+          title: 'Edit email template',
+          open: function(event, ui) {
+              init_ck_editor();
+              setTimeout("init_email_template_editor_with_values();", 300);
+          },
+          beforeClose: function(event, ui) {
+              if (validate_template_editor_fields() == 0) {
+                  return true
+              } else {
+                  return false
+              }
+          },
+          buttons: { "Save": function() {
+              if (validate_template_editor_fields() == 0) {
+                  $(this).dialog("close");
+              }
+          }}
+      });
+      $('#modal_for_email_template_edit').dialog("option", "email_template_editor_init_values_function", "");
   }
