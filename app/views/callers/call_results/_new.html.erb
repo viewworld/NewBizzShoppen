@@ -5,11 +5,12 @@
 <%= semantic_form_for path, :method => :post, :remote => agent_work_screen do |form| %>
     <frm title="Create new for #{@contact.company_name}">
       <param:content>
+        <%= hidden_field_tag :serialized_materials_array_field, params[:serialized_materials_array_field] %>
         <%= render :partial => '/callers/call_results/form', :locals => {:form => form, :contact => @contact, :call_result => @call_result, :reload_path => reload_path, :agent_work_screen => agent_work_screen } %>
       </param:content>
       <param:actions>
         <ibt icon="save" c="fltri">
-        <%= link_to t("call_results.new.save_button"), "javascript:void(0)", :id => "commit_create_result", :class => "fltr", :onclick => "select_options_to_submit('call_result_buying_category_ids_')" %>
+        <%= link_to t("call_results.new.save_button"), "javascript:void(0)", :id => "commit_create_result", :class => "fltr", :onclick => "#{'serialize_materials_array_onsubmit(); ' if current_user.has_role?(:admin)}select_options_to_submit('call_result_buying_category_ids_')" %>
         </ibt>
         <%= bt_link_to(nil, t("call_results.edit.cancel_button"), back_path, :class => "bt_grey fltr") %>
       </param:actions>
@@ -22,4 +23,8 @@
  <% else %>
     $("#commit_create_result").click(function(){$(this).parents("form").submit();});
  <% end %>
+
+ function serialize_materials_array_onsubmit(){
+     $('#serialized_materials_array_field').val(serialize_material_repository_array());
+ }
 </script>

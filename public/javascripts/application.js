@@ -298,3 +298,17 @@ function select_file_from_repository_dialog(field_id, material_id, material_file
     select_file_from_repository(field_id, material_id, material_file_name);
     $('#materials_dialog').dialog('close');
 }
+
+function serialize_material_repository_array(){
+  return "[" + $.map(window.materials_repository_files, function (e) { return "[" + e[0] + ", \"" + e[1] + "\"," + e[2] + "]" }).join(",") + "]"
+}
+
+function deserialize_material_repository_array(serialized_array){
+    if(serialized_array != ""){
+        return eval(serialized_array)
+    }
+    else
+    {
+        return []
+    }
+}
