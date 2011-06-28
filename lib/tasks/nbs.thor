@@ -13,7 +13,7 @@ Settings.default_payout_delay = 0 if Settings.default_payout_delay.nil?
     Settings.certification_level_1 = 10 if Settings.certification_level_1.nil?
     Settings.certification_level_2 = 20 if Settings.certification_level_2.nil?
     Settings.logout_time = 5 if Settings.logout_time.nil? #minutes 
-    Settings.contact_us_email = "contact@nbs.fake.com" if Settings.contact_us_email.nil?
+    Settings.contact_us_email = (Rails.env.production? or Rails.env.test?) ? "admin@fairleads.com" : "contact@nbs.fake.com" if Settings.contact_us_email.nil?
     # Invoicing
     Settings.invoicing_default_payment_deadline_date = 14 if Settings.invoicing_default_payment_deadline_date.nil?
     Settings.big_buyer_purchase_limit = 10000 if Settings.big_buyer_purchase_limit.nil?
