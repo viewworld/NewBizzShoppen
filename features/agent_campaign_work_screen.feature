@@ -534,19 +534,19 @@ Feature: Agent campaign - calling session
     @m14 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @tested_elsewhere @_done
     Scenario: Category buyer changes
   
-    @m14 @requested @my_results @$_call_centre_agent
+    @m14 @requested @my_results @$_call_centre_agent @tgn
     Scenario: I should see "My results" renamed to "Production" and displayed the same way as campaign's "Results"
     
-    @m14 @requested @google_it @$_call_centre_agent
+    @m14 @requested @google_it @$_call_centre_agent @is
     Scenario: I can google for company name from agent work screen
     
-    @m14 @requested @new_result @$_call_centre_agent
+    @m14 @requested @new_result @$_call_centre_agent @tgn
     Scenario: I can see a white list of available variables that can be inserted into email in a popup
     
-    @m14 @requested @new_result @$_call_centre_agent
+    @m14 @requested @new_result @$_call_centre_agent @tgn
     Scenario: When I click an item on the variables list it should be inserted into rich text editor
     
-    @m14 @requested @note_information @$_call_centre_agent
+    @m14 @requested @note_information @$_call_centre_agent @is
     Scenario: I can see result note on agent work screen
 
   

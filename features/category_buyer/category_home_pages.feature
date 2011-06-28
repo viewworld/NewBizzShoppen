@@ -160,10 +160,10 @@ Feature: Category home pages
   @_done @_tested_elsewhere
   Scenario: When clicking on the row with lead (as customer in leads catalogue), prompt user if he wishes to add a lead to cart (and do so if he agrees)
 
-  @m14 @requested @$_category_buyer @auto_buy
+  @m14 @requested @$_category_buyer @auto_buy @is
   Scenario: I should see "Description" in the right column instead of "Latest leads" when I have auto-buy enabled
 
-  @m14 @requested @$_category_buyer @auto_buy
+  @m14 @requested @$_category_buyer @auto_buy @is
   Scenario: I should not have access to "Browse leads" when I have auto-buy enabled
 
 
