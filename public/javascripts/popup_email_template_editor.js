@@ -38,6 +38,12 @@
   }
 
   function fill_email_template_editor_with_values(subject, from, bcc, cc, body){
+
+      $.each(['subject', 'from', 'bcc', 'cc', 'body'], function(index, value) {
+          if( jQuery.trim($('#call_result_email_template_' + value).val()) != ""){
+              eval(value + " = \'" + $('#call_result_email_template_' + value).val().split("\n").join("") + "\'");
+          }
+      });
       modal_box_id = "#modal_for_email_template_edit";
       $(modal_box_id + ' #subject').val(subject);
       $(modal_box_id + ' #from').val(from);
@@ -88,4 +94,18 @@
       }
 
       return errors_count
+  }
+
+  function setup_jquery_dialog(){
+    $('#modal_for_email_template_edit').dialog({
+        autoOpen: false,
+        width: 1120,        
+        title: 'Edit email template',
+        open: function(event, ui){ init_ck_editor(); setTimeout("init_email_template_editor_with_values();",300);  },
+        beforeClose: function(event, ui){ if(validate_template_editor_fields() == 0){ return true } else {return false}},
+        buttons: { "Save": function() {
+            if(validate_template_editor_fields() == 0){ $(this).dialog("close");  }
+        }}
+    });
+    $('#modal_for_email_template_edit').dialog("option", "email_template_editor_init_values_function", "");
   }

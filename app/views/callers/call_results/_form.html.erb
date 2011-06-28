@@ -50,6 +50,10 @@
             window.template_initialised = 0;
             window.materials_repository_files = [];
           </script>
+           <% elsif !call_result.errors.empty? and current_user.has_role?(:admin) %>
+            <script type="text/javascript">
+            window.materials_repository_files = deserialize_material_repository_array($('#serialized_materials_array_field').val());
+            </script>
           <% end %>
 
           <li class="commit" style="padding-top:10px">
@@ -86,17 +90,18 @@
      <% end %>
   });
 
-<% if @campaign %>
+<% if @campaign or call_result.contact.campaign%>
+  <% campaign = @campaign.nil? ? call_result.contact.campaign : @campaign %>
 function fill_editor_with_upgrade_to_cat_buyer_template_values(){
     <%=
-     template = @campaign.upgrade_contact_to_category_buyer_email_template
+     template = campaign.upgrade_contact_to_category_buyer_email_template
      "fill_email_template_editor_with_values('#{template.subject}', '#{template.from}', '#{template.bcc}', '#{template.cc}', '#{template.body_sanitized}')".html_safe
      -%>
 }
 
 function fill_editor_with_send_result_material_template_values(){
     <%=
-     template = @campaign.send_material_email_template
+     template = campaign.send_material_email_template
      "fill_email_template_editor_with_values('#{template.subject}', '#{template.from}', '#{template.bcc}', '#{template.cc}', '#{template.body_sanitized}')".html_safe
      -%>
 }
