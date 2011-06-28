@@ -36,7 +36,7 @@
               mustMatch : false
           }
                   ).result(function(event, item) {
-              $("#autocomplter_result_form").attr("href", "/callers/campaigns/<%= @campaign.id %>/agent_work_screen/contacts/"+item[1]).click();
+              $("#autocomplter_result_form").attr("href", "/callers/campaigns/<%= @campaign.id %>/agent_work_screen/contacts/" + item[1]).click();
           });
 
           $("#autocompleter").autocomplete('contacts_for_search', function(event, data, formatted) {
@@ -82,16 +82,25 @@
   </div>
 
   <div id="modal_for_email_template_edit" style="display:none;">
-    <div class="pdd_10 no_pdd_t">
-      <fieldset class="inputs labels_ta_r labels_100">
-        <ol>
-          <li id="template_editor_subject_input"><%= label_tag t("agent_work_screen.index.email_templates_editor.subject") %><%= text_field_tag :subject %></li>
-          <li id="template_editor_bcc_input"><%= label_tag t("agent_work_screen.index.email_templates_editor.bcc") %><%= text_field_tag :bcc %></li>
-          <li id="template_editor_cc_input"><%= label_tag t("agent_work_screen.index.email_templates_editor.cc") %><%= text_field_tag :cc %></li>
-          <li id="template_editor_body_input"><%= text_area_tag :body, "<p></p>", { :class => "editor", :id => "body_editor" } %></li>
-        </ol>
-      </fieldset>
-    </div>
+    <fieldset class="inputs labels_ta_r labels_70">
+      <ol>
+        <li id="template_editor_subject_input" class="string">
+          <%= label_tag t("agent_work_screen.index.email_templates_editor.subject") %>
+          <%= text_field_tag :subject %>
+        </li>
+        <li id="template_editor_bcc_input" class="string">
+          <%= label_tag t("agent_work_screen.index.email_templates_editor.bcc") %>
+          <%= text_field_tag :bcc %>
+        </li>
+        <li id="template_editor_cc_input" class="string">
+          <%= label_tag t("agent_work_screen.index.email_templates_editor.cc") %>
+          <%= text_field_tag :cc %>
+        </li>
+        <li id="template_editor_body_input" class="text">
+          <%= text_area_tag :body, "<p></p>", {:class => "editor", :id => "body_editor"} %>
+        </li>
+      </ol>
+    </fieldset>
   </div>
 
 </column-mc:>
@@ -108,18 +117,29 @@
           $(this).parents("form").submit()
       });
 
-    $('#modal_for_email_template_edit').dialog({
-        autoOpen: false,
-        width: 1150,
-        height: 720,
-        title: 'Edit email template',
-        open: function(event, ui){ init_ck_editor(); setTimeout("init_email_template_editor_with_values();",300);  },
-        beforeClose: function(event, ui){ if(validate_template_editor_fields() == 0){ return true } else {return false}},
-        buttons: { "Save": function() {
-            if(validate_template_editor_fields() == 0){ $(this).dialog("close");  }
-        }}
-    });
-    $('#modal_for_email_template_edit').dialog("option", "email_template_editor_init_values_function", "");
+      $('#modal_for_email_template_edit').dialog({
+          autoOpen: false,
+          width: 1120,
+
+          title: 'Edit email template',
+          open: function(event, ui) {
+              init_ck_editor();
+              setTimeout("init_email_template_editor_with_values();", 300);
+          },
+          beforeClose: function(event, ui) {
+              if (validate_template_editor_fields() == 0) {
+                  return true
+              } else {
+                  return false
+              }
+          },
+          buttons: { "Save": function() {
+              if (validate_template_editor_fields() == 0) {
+                  $(this).dialog("close");
+              }
+          }}
+      });
+      $('#modal_for_email_template_edit').dialog("option", "email_template_editor_init_values_function", "");
   </script>
 </js:>
 
