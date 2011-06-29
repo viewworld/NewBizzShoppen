@@ -32,7 +32,6 @@
             <%= address_form.input :region_id, :hint => hint_for("my_profile", :address_region_id), :as => :select, :collection => regions_collection_for(@user.address.country) %>
         <% end %>
         <%= form.input :newsletter_on, :hint => hint_for("my_profile", :newsletter_on), :as => :boolean %>
-        <%= form.input :team_buyers, :hint => hint_for("my_profile", :team_buyers), :as => :boolean if current_user.has_role?(:customer) %>
         <%= form.input :time_zone, :wrapper_html => {:class => "select"}, :input_html => {:style => "width: 240px"} %>
 
         <% if current_user.buyer? %>
