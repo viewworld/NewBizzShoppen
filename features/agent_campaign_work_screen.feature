@@ -537,16 +537,21 @@ Feature: Agent campaign - calling session
     @m14 @requested @my_results @$_call_centre_agent @tgn
     Scenario: I should see "My results" renamed to "Production" and displayed the same way as campaign's "Results"
     
-    @m14 @requested @google_it @$_call_centre_agent @is
+    @m14 @requested @google_it @$_call_centre_agent @is @_done @_tested
     Scenario: I can google for company name from agent work screen
-    
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      Then I click xpath "//a[@id='google_search_for_company_name']"
+
     @m14 @requested @new_result @$_call_centre_agent @tgn
     Scenario: I can see a white list of available variables that can be inserted into email in a popup
     
     @m14 @requested @new_result @$_call_centre_agent @tgn
     Scenario: When I click an item on the variables list it should be inserted into rich text editor
     
-    @m14 @requested @note_information @$_call_centre_agent @is
+    @m14 @requested @note_information @$_call_centre_agent @is @_done @_tested
     Scenario: I can see result note on agent work screen
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      And I follow translated "agent_work_screen.index.show_pending_calls"
+      Then I should see translated "contacts.table.note" within "#contacts"
 
   

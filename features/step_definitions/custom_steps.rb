@@ -56,6 +56,10 @@ Then /^last email sent should have been sent to recipient "([^"]*)"$/ do |email|
   assert ActionMailer::Base.deliveries.last.to.include?(email)
 end
 
+Then /^last email sent should have been sent to cc "([^"]*)"$/ do |email|
+  assert ActionMailer::Base.deliveries.last.cc.include?(email)
+end
+
 Then /^no email has been send$/ do
   assert ActionMailer::Base.deliveries.empty? == true
 end

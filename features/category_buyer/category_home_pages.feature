@@ -160,10 +160,22 @@ Feature: Category home pages
   @_done @_tested_elsewhere
   Scenario: When clicking on the row with lead (as customer in leads catalogue), prompt user if he wishes to add a lead to cart (and do so if he agrees)
 
-  @m14 @requested @$_category_buyer @auto_buy @is
+  @m14 @requested @$_category_buyer @auto_buy @is @_done @_tested_elsewhere
   Scenario: I should see "Description" in the right column instead of "Latest leads" when I have auto-buy enabled
 
-  @m14 @requested @$_category_buyer @auto_buy @is
+  @m14 @requested @$_category_buyer @auto_buy @is @_done @_tested
   Scenario: I should not have access to "Browse leads" when I have auto-buy enabled
-
-
+    When Category named "Best Leads" already exists
+    And I am on the home page
+    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Best Leads"
+    And I sign in as jon@lajoie.ca with password secret
+    Then I should see "Best Leads"
+    And category "Best Leads" is unique for user with email "jon@lajoie.ca" role "category_buyer"
+    And I should see translated "layout.main_menu.shared.browse_leads"
+    And I should not see translated "category_home.show.view.header_additional_information_label"
+    And I follow translated logout link for jon@lajoie.ca
+    And category "Best Leads" has attributes "auto_buy:true"
+    And category named "Best Leads" is auto buy enabled
+    And I sign in as jon@lajoie.ca with password secret
+    And I should not see translated "layout.main_menu.shared.browse_leads"
+    And I should see translated "category_home.show.view.header_additional_information_label"
