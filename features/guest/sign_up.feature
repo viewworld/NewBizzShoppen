@@ -53,5 +53,9 @@ Feature: Sign up feature
   @m12 @$_guest @janrain @requested @is @_done @_not_testable
   Scenario: When I try to sing up with LinkedIn then the note about linking account should be displayed
 
-  @m14 @requested @sign_up @$_customer @tgn
+  @m14 @requested @sign_up @$_customer @tgn @_done @_tested
   Scenario: I can't enable Team Buyers option when signing up
+    Given I am on the homepage
+    And I follow translated "home.show.view.buyer"
+    Then I should not see "Team buyers"
+
