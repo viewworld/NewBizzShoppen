@@ -540,10 +540,10 @@ Feature: Agent campaign - calling session
     @m14 @requested @google_it @$_call_centre_agent @is
     Scenario: I can google for company name from agent work screen
     
-    @m14 @requested @new_result @$_call_centre_agent @tgn
+    @m14 @requested @new_result @$_call_centre_agent @tgn @non_testable @_done
     Scenario: I can see a white list of available variables that can be inserted into email in a popup
     
-    @m14 @requested @new_result @$_call_centre_agent @tgn
+    @m14 @requested @new_result @$_call_centre_agent @tgn @non_testable @_done
     Scenario: When I click an item on the variables list it should be inserted into rich text editor
     
     @m14 @requested @note_information @$_call_centre_agent @is
