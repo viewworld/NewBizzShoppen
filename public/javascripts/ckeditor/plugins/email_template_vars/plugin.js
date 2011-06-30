@@ -8,7 +8,7 @@ CKEDITOR.plugins.add( 'email_template_vars',
         {
             label: 'Insert e-mail variables',
             command: 'emailTemplVarsDialog',
-            icon: this.path + 'images/icon.gif'
+            icon: this.path + 'images/icon.png'
         } );
 	}
 } );
