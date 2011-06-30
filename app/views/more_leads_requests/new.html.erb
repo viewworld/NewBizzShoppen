@@ -27,6 +27,11 @@
               <%= f.text_field :contact_phone %><%= custom_error_for_object_and_field(@email_template_preview, :contact_phone) %>
               <p class="inline-hints"><%= hint_for("more_leads_requests", :contact_phone) %></p>
             </li>
+            <li class="string">
+              <%= f.label "#{t("more_leads_requests.new.view.note")}<abbr title=\"required\">*</abbr>".html_safe, :style => "width:140px" %>
+              <%= f.text_area :note, :style => "width:230px;height:70px" %><%= custom_error_for_object_and_field(@email_template_preview, :note) %>
+              <p class="inline-hints"><%= hint_for("more_leads_requests", :note) %></p>
+            </li>
           </ol>
         </fieldset>
       </div>

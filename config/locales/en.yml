@@ -423,6 +423,7 @@ en:
       contact_phone: Contact phone
       agent: Agent
       result: Result
+      note: Note
       actions: Actions
       last_result: "Result"
       edit: "Edit"
@@ -1879,6 +1880,7 @@ en:
         sign_up_sign_in: "Sign up or sign in"
         latest_leads: "Latest leads"
         header_latest_leads: "Latest leads"
+        header_additional_information_label: "Description"
         i_have_an_account: "I have an account"
         sign_in: "Sign in"
         remember_me: "Remember me"
@@ -2812,6 +2814,7 @@ en:
         contact_name: "Contact name"
         contact_email: "Contact email"
         contact_phone: "Contact phone"
+        note: "Note"
     create:
       flash:
         request_sent: "Your request has been sent"
