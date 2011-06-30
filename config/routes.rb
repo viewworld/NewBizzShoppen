@@ -155,6 +155,11 @@ Nbs::Application.routes.draw do
           post 'import_xls'
         end
       end
+      resources :advanced_import, :only => [:new, :create, :destroy] do
+        collection do
+          get 'browse'
+        end
+      end
       resources :agent_work_screen, :only => :index
       namespace :agent_work_screen do
         resources :contacts, :only => [:show, :destroy, :update] do
@@ -162,7 +167,7 @@ Nbs::Application.routes.draw do
         end
       end
       resources :my_results
-      resources :email_templates, :only => [:edit,:update]
+      resources :email_templates, :only => [:edit, :update]
     end
 
     resources :my_results
