@@ -13,3 +13,17 @@ Given /^category "([^"]*)" is unique for user with email "([^"]*)" role "([^"]*)
   end
   category.save
 end
+
+Given /^category "([^"]*)" is unique for some (agents|customers) users and (is|is not) auto buy$/ do |category_name, user_role, is_auto_buy|
+  category = Category.where(:name => category_name).first
+  category = Category.make!(:name => category_name) if category.nil?
+
+  if user_role == "customers"
+    category.is_customer_unique = true
+    category.auto_buy = is_auto_buy == "is" ? true : false
+  elsif user_role == "agents"
+    category.is_agent_unique = true
+  end
+
+  category.save
+end

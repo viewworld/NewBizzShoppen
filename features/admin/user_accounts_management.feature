@@ -650,13 +650,57 @@ Scenario: Category buyer created by admin should have buying categories assigned
   And I should see translated "category_home.show.view.header"
   And category "TestingCategoryBuyer" is in interests of user "category@buyer.fake" "true"
 
-@m14 @requested @$_admin @auto_buy @is
+@m14 @requested @$_admin @auto_buy @tgn @_tested @_done
 Scenario: When I assign unique categories to buyer I should see only categories which does not have auto-buy enabled
+  Given there are no categories
+  Then I have user with email nbsbuyer3483434biz@nbs.com and role customer
+  Then User nbsbuyer3483434biz@nbs.com with role customer is big buyer
+  Then Category Computers is created
+  And category "Computers" is unique for some customers users and is not auto buy
+  Then Category Phones is created
+  And category "Phones" is unique for some customers users and is auto buy
+  Then I fill in "search_with_keyword" with "nbsbuyer3483434biz@nbs.com"
+   And I press translated "administration.users.index.view.search_button"
+  And I click hidden link by url regex "/administration\/users\/\d+\/edit/"
+  And "all_categories" dropdown should have values "Computers"
+  And "all_categories" dropdown should not have values "Phones"
 
-@m14 @requested @$_admin @auto_buy @is
+@m14 @requested @$_admin @auto_buy @tgn @selenium @_tested @_done
 Scenario: When I assign unique category to buyer the auto-buy option should be automatically enabled for that category
+  Given there are no categories
+  Then I have user with email new_nbsbuyer3483434biz@nbs.com and role customer
+  Then User new_nbsbuyer3483434biz@nbs.com with role customer is big buyer
+  Then I have user with email nbsbuyer3483434biz@nbs.com and role customer
+  Then User nbsbuyer3483434biz@nbs.com with role customer is big buyer
+  Then I have user with email phonesnbsbuyer3483434biz@nbs.com and role customer
+  Then Category Computers is created
+  And category "Computers" is unique for some customers users and is not auto buy
+  Then Category Phones is created
+  And category "Phones" is unique for user with email "phonesnbsbuyer3483434biz@nbs.com" role "customer"
+  Then I fill in "search_with_keyword" with "new_nbsbuyer3483434biz@nbs.com"
+   And I press translated "administration.users.index.view.search_button"
+  And I click hidden link by url regex "/administration\/users\/\d+\/edit/"
+  Then I select "Computers" from "all_categories"
+  Then I follow "move_right" within "#unique_categories"
+  Then I select "Phones" from "all_categories"
+  Then I follow "move_right" within "#unique_categories"
+  Then I press translated "administration.users.edit.view.button_update_user"
+  And category named "Computers" is auto buy enabled
+  And category named "Phones" is not auto buy enabled
 
-@m14 @requested @$_admin @auto_buy @is
+@m14 @requested @$_admin @auto_buy @tgn @selenium @_tested @_done
 Scenario: When user has unique category with auto-buy he should not be subscribed by email to that category any more
-
+  Given there are no categories
+  Then I have user with email nbsbuyer3483434biz@nbs.com and role customer
+  Then User nbsbuyer3483434biz@nbs.com with role customer is big buyer
+  Then Category Computers is created
+  When I go to administration categories
+  Then I follow translated "administration.categories.index.view.edit_link"
+  Then I check "category_is_customer_unique"
+  Then I select "nbsbuyer3483434biz@nbs.com" from "all_customers"
+  Then I follow "move_right" within "#users_selection_customers_div"
+  Then I check "category_auto_buy"
+  Then I press "Save"
+  Then category named "Computers" is auto buy enabled
+  And category "Computers" is in interests of user "nbsbuyer3483434biz@nbs.com" "false"
 

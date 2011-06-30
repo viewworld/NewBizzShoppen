@@ -16,7 +16,7 @@ class Category < ActiveRecord::Base
   has_one :email_template, :as => :resource
 
   after_save :set_cached_slug
-  before_save :handle_locking_for_descendants
+  before_save :handle_locking_for_descendants, :handle_auto_buy
   after_create :generate_blurb
 
   validates_presence_of :name
@@ -66,6 +66,7 @@ class Category < ActiveRecord::Base
     LEFT JOIN category_customers ON categories.id = category_customers.category_id
   ").where("(categories.is_customer_unique = 't' and category_customers.user_id = :user_id) OR (categories_users.user_id = :user_id)", {:user_id => user.id})}
   scope :with_comment_threads, select("DISTINCT(categories.id), categories.*").joins("INNER JOIN leads ON leads.category_id=categories.id INNER JOIN comments ON comments.commentable_id=leads.id")
+  scope :without_auto_buy, where(:auto_buy => false)
   before_destroy :check_if_category_is_empty
   before_destroy :mark_articles_to_destroy
 
@@ -124,6 +125,13 @@ class Category < ActiveRecord::Base
   def refresh_published_leads_count_cache!
     Category.find(self_and_ancestors.map(&:id)).each do |c|
       c.update_attribute(:published_leads_count, c.published_leads.including_subcategories.count)
+    end
+  end
+
+  def handle_auto_buy
+    if auto_buy_changed? and auto_buy? and !customers.first.nil?
+      user_category_interest = customers.first.with_role.category_interests.where(:category_id => self.id).first
+      user_category_interest.destroy if user_category_interest
     end
   end
 
