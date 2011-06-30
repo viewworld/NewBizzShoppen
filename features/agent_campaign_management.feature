@@ -721,9 +721,9 @@ Feature: Agent campaign - management
           And contact for company "ContactTest1" has assigned result "Call back" created by "ccagent01@nbs.com"
           And contact for company "ContactTest2" and campaign "Testing One" is assigned to user "translator_call_centre_agent@nbs.com"
           And contact for company "ContactTest2" has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
-          And I click hidden link by url regex "/\/campaigns\/\d+\/my_results/"
-          Then I should see "ContactTest1"
-          Then I should see "ContactTest2"
+          And I follow translated "campaigns.header.my_results_global_button"
+          And I should see translated "production.show.view.header"
+          
 
         @m13 @requested @$_admin @after_m12_presentation @tgn @_tested @_done
         Scenario: Admin call see results from all agents
@@ -737,9 +737,9 @@ Feature: Agent campaign - management
           And contact for company "ContactTest2" has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
           And I sign in as blazejek@gmail.com with password secret
           And I follow translated "layout.main_menu.call_centre.campaigns"
-          And I click hidden link by url regex "/\/campaigns\/\d+\/my_results/"
-          Then I should see "ContactTest1"
-          Then I should see "ContactTest2"
+          And I follow translated "campaigns.header.my_results_global_button"
+          And I should see translated "production.show.view.header"
+          And I should see "Campaigns"
 
         @m13 @requested @$_call_centre @$_admin @after_m12_presentation @tgn @_tested @_done
         Scenario: I can select for which agents display the results
@@ -750,10 +750,12 @@ Feature: Agent campaign - management
           And contact for company "ContactTest1" has assigned result "Call back" created by "ccagent01@nbs.com"
           And contact for company "ContactTest2" and campaign "Testing One" is assigned to user "translator_call_centre_agent@nbs.com"
           And contact for company "ContactTest2" has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
-          And I click hidden link by url regex "/\/campaigns\/\d+\/my_results/"
-          And I select "Greg Foam" from "search_with_agents"
-          And I press translated "my_results.index.view.filter.search_button"
-          Then I should see "ContactTest1"
+          And I follow translated "layout.main_menu.call_centre.campaigns"
+          And I follow translated "campaigns.header.my_results_global_button"
+          And I select "Greg Foam" from "agent_ids"
+          And I press translated "campaigns.show.search_button"
+          And I should see translated "production.show.view.header"
+
 
         @m14 @requested @my_results @$_call_centre @tgn @_done @tested_elsewhere
         Scenario: I should see "My results" renamed to "Production" and displayed the same way as campaign's "Results"
