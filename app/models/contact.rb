@@ -90,7 +90,7 @@ class Contact < AbstractLead
   end
 
   def current_call_result_note
-    current_call_result ? current_call_result.result.note : "-"
+    current_call_result ? current_call_result.note : "-"
   end
 
   def agent_name
