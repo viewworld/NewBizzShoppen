@@ -34,9 +34,9 @@ Given /^category named "([^"]*)" (is|is not) locked$/ do |name, is_locked|
   category.update_attribute(:is_locked, is_locked == "is not" ? false : true)
 end
 
-Given /^category named "([^"]*)" is auto buy enabled/ do |name|
+Given /^category named "([^"]*)" (is|is not) auto buy enabled/ do |name, is_enabled|
   category = Category.where(:name => name).first
-  assert category.auto_buy == true
+  assert category.auto_buy == (is_enabled == "is" ? true : false)
 end
 
 Given /^category named "([^"]*)" (should|should not) be locked$/ do |name, is_locked|

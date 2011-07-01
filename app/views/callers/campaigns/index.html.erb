@@ -42,7 +42,7 @@
                       <%= bt_link_to :plus, t("campaigns.header.new_campaign_button"), "javascript:void", :onclick => "$('#form_new_campaign').submit()" %>
                     </li>
                     <li class="last">
-                      <%= bt_link_to nil, t("campaigns.header.my_results_global_button"), callers_my_results_path, :class => "fltr"  %>
+                      <%= bt_link_to nil, t("campaigns.header.my_results_global_button"), callers_production_path, :class => "fltr"  %>
                     </li>
                   </ul>
               <% end %>
@@ -69,9 +69,6 @@
                 </li>
                 <li>
                   <%= link_to t("campaigns.index.result"), callers_campaign_path(campaign) %>
-                </li>
-                <li>
-                  <%= link_to t("campaigns.index.my_results"), callers_campaign_my_results_path(campaign) %>
                 </li>
                 <li>
                   <%= link_to t("campaigns.index.destroy"), callers_campaign_path(campaign), :confirm => t("campaigns.index.destroy_confirmation"), :method => :delete %>

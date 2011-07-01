@@ -104,21 +104,34 @@
           </frm>
         </div>
     <% end %>
+
     <div class="column_1to3 fltl" id="latest_leads">
-      <frm title="#{t('category_home.show.view.header_latest_leads')}" c="no_marg">
-        <param:header>
-          <%= bt_link_to nil, t("category_home.show.view.complete_list_link"), category_home_page_leads_path(@home_category.cached_slug, :search => {:latest => true}), :class => "fltr" %>
-        </param:header>
-        <param:content>
-          <ul class="solid_list">
-            <% if @latest_leads.any? %>
-                <%= render :partial => 'lead', :collection => @latest_leads, :as => :lead %>
-            <% else %>
-                <%= render :partial => 'shared/blank_data_li' %>
-            <% end %>
-          </ul>
-        </param:content>
-      </frm>
+
+      <% if @auto_buy_category %>
+          <frm title="#{t('category_home.show.view.header_additional_information_label')}" c="no_marg">
+            <param:content>
+              <ul class="solid_list" style="padding:10px;">
+                <%= @home_category.additional_information %>
+              </ul>
+            </param:content>
+          </frm>
+      <% else %>
+          <frm title="#{t('category_home.show.view.header_latest_leads')}" c="no_marg">
+            <param:header>
+              <%= bt_link_to nil, t("category_home.show.view.complete_list_link"), category_home_page_leads_path(@home_category.cached_slug, :search => {:latest => true}), :class => "fltr" %>
+            </param:header>
+            <param:content>
+              <ul class="solid_list">
+                <% if @latest_leads.any? %>
+                    <%= render :partial => 'lead', :collection => @latest_leads, :as => :lead %>
+                <% else %>
+                    <%= render :partial => 'shared/blank_data_li' %>
+                <% end %>
+              </ul>
+            </param:content>
+          </frm>
+      <% end %>
+
     </div>
     <clb/>
   </div>

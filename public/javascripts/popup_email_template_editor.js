@@ -13,7 +13,7 @@
       if(window.ckeditor_initialised == 0){
       if (CKEDITOR.instances['body_editor']) {
         CKEDITOR.remove(CKEDITOR.instances['body_editor']);}
-        CKEDITOR.replace('body_editor', { height: '300px',filebrowserBrowseUrl: '/ckeditor/files',width: '1085px',filebrowserUploadUrl: '/ckeditor/create/file',language: 'en',filebrowserImageBrowseUrl: '/ckeditor/images',toolbar: 'Email',filebrowserImageUploadUrl: '/ckeditor/create/image' });
+        CKEDITOR.replace('body_editor', { height: '300px',filebrowserBrowseUrl: '/ckeditor/files',width: '1085px',filebrowserUploadUrl: '/ckeditor/create/file',language: 'en',filebrowserImageBrowseUrl: '/ckeditor/images',toolbar: 'EmailPopup',filebrowserImageUploadUrl: '/ckeditor/create/image' });
       window.ckeditor_initialised = 1;
       }
   }
@@ -37,12 +37,19 @@
       }
   }
 
-  function fill_email_template_editor_with_values(subject, from, bcc, cc, body){
+  function fill_email_template_editor_with_values(subject, from, bcc, cc, body, uniq_id){
+
+      $.each(['subject', 'from', 'bcc', 'cc', 'body'], function(index, value) {
+          if( jQuery.trim($('#call_result_email_template_' + value).val()) != ""){
+              eval(value + " = \'" + $('#call_result_email_template_' + value).val().split("\n").join("") + "\'");
+          }
+      });
       modal_box_id = "#modal_for_email_template_edit";
       $(modal_box_id + ' #subject').val(subject);
       $(modal_box_id + ' #from').val(from);
       $(modal_box_id + ' #bcc').val(bcc);
       $(modal_box_id + ' #cc').val(cc);
+      $('#email_template_editor_uniq_id').val(uniq_id);
       CKEDITOR.instances.body_editor.setData(body);
   }
 
@@ -88,4 +95,55 @@
       }
 
       return errors_count
+  }
+
+  function setup_jquery_dialog(){
+      $('#modal_for_email_template_edit').dialog({
+          autoOpen: false,
+          width: 1120,
+
+          title: 'Edit email template',
+          open: function(event, ui) {
+              init_ck_editor();
+              setTimeout("init_email_template_editor_with_values();", 300);
+          },
+          beforeClose: function(event, ui) {
+              if (validate_template_editor_fields() == 0) {
+                  return true
+              } else {
+                  return false
+              }
+          },
+          buttons: { "Save": function() {
+              if (validate_template_editor_fields() == 0) {
+                  $(this).dialog("close");
+              }
+          }}
+      });
+      $('#modal_for_email_template_edit').dialog("option", "email_template_editor_init_values_function", "");
+  }
+
+  function setup_jquery_vars_popup_dialog(){
+      $('#modal_for_email_template_vars').dialog({
+          autoOpen: false,
+          width: 700,
+          title: 'Insert variables',
+          modal: true
+      });
+  }
+
+  function open_email_variables_dialog(){
+      if($('#email_template_editor_uniq_id').val() == "upgrade_contact_to_category_buyer"){
+          $('#modal_for_email_template_vars').dialog('open');
+      }
+      else
+      {
+          alert("No variables are available for that template!")
+      }
+
+  }
+
+  function insert_variable_to_editor(variable, instance_name){
+      CKEDITOR.instances[instance_name].insertHtml( "{{" + variable + "}}" );
+      $('#modal_for_email_template_vars').dialog('close');
   }

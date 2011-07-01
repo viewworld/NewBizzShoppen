@@ -283,7 +283,7 @@ en:
     header:
       title: Campaigns
       new_campaign_button: New Campaign
-      my_results_global_button: "My results"
+      my_results_global_button: "Production"
     table:
       actions: "Actions"
       name: Name
@@ -320,6 +320,7 @@ en:
         agents: Agents
         results: Results
         final: only view completed contacts
+        campaigns: "Campaigns"
       search_button: Search
       table:
         results: Results
@@ -355,7 +356,7 @@ en:
       destroy: Destroy
       result: Result
       destroy_confirmation: Are you sure?
-      my_results: "My results"
+      my_results: "Production"
     call_result_details_table:
       date: Date
       contact: Contact
@@ -371,19 +372,6 @@ en:
     form:
       description: "Description"
       briefing: "Briefing"
-  my_results:
-    index:
-      view:
-        filter:
-          header: "Search"
-          keyword_label: "Keyword"
-          search_button: "Search"
-          agents_label: "Agents"
-        header: "My results"
-    edit:
-      view:
-        header: "Edit contact"
-        button_update: "Save"
   agent_work_screen:
     index:
       title: Agent work screen
@@ -400,25 +388,13 @@ en:
       briefing_area: "Briefing"
       hide_briefing_area: "Go to agent"
       show_briefing_area: "Show/Hide briefing"
-      show_my_results: "My results"
+      show_my_results: "Production"
       contact_search_label: "Search contact:"
       email_templates_editor:
         subject: "Subject"
         from: "From"
         bcc: "Bcc"
-        cc: "Cc"      
-    my_results:
-      index:
-        view:
-          filter:
-            header: "Search"
-            keyword_label: "Keyword"
-            search_button: "Search"
-          header: "My results"
-      edit:
-        view:
-          header: "Edit contact"
-          button_update: "Save"
+        cc: "Cc"
   contacts:
     filter:
       title: Search
@@ -447,6 +423,7 @@ en:
       contact_phone: Contact phone
       agent: Agent
       result: Result
+      note: Note
       actions: Actions
       last_result: "Result"
       edit: "Edit"
@@ -495,7 +472,7 @@ en:
       cancel_button: Cancel
       result: Result
       button_new_result: New result
-      my_results: "My results"
+      my_results: "Production"
     create:
       flash:
         successfully_added: Call result has been successfully added. Next contact has been selected.
@@ -1903,6 +1880,7 @@ en:
         sign_up_sign_in: "Sign up or sign in"
         latest_leads: "Latest leads"
         header_latest_leads: "Latest leads"
+        header_additional_information_label: "Description"
         i_have_an_account: "I have an account"
         sign_in: "Sign in"
         remember_me: "Remember me"
@@ -2836,6 +2814,7 @@ en:
         contact_name: "Contact name"
         contact_email: "Contact email"
         contact_phone: "Contact phone"
+        note: "Note"
     create:
       flash:
         request_sent: "Your request has been sent"
@@ -2926,3 +2905,7 @@ en:
       button_cancel: "Cancel"
     show:
       header: "Briefing area"
+  production:
+    show:
+      view:
+        header: "Production"

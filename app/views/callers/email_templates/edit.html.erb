@@ -1,5 +1,6 @@
 <column-mc:>
   <%= javascript_include_tag :ckeditor %>
+  <%= javascript_include_tag "popup_email_template_editor" %>
   <header back="true"><%= t("campaigns.email_templates.edit.view.title", :name => @email_template.subject) %><%= image_tag_for_locale %></header>
 
   <%= semantic_form_for [:callers, @campaign, @email_template], :url => callers_campaign_email_template_path(@campaign,@email_template), :method => :put do |form| %>
@@ -18,4 +19,13 @@
       </frm>
   <% end %>
 
+  <%= hidden_field_tag :uniq_id, @email_template.uniq_id, {:id => "email_template_editor_uniq_id"} %>
+  <%= render :partial => "shared/email_template_popup/template_vars_popup", :locals => { :instance_name => "email_template_body_editor" } %>
+
 </column-mc:>
+
+<js:>
+  <script type="text/javascript">
+      setup_jquery_vars_popup_dialog();
+  </script>
+</js:>

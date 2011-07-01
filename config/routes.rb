@@ -170,8 +170,8 @@ Nbs::Application.routes.draw do
       resources :email_templates, :only => [:edit, :update]
     end
 
-    resources :my_results
-
+    resource :production,  :controller => "production", :only => [:show]
+    
     resources :contacts do
       resources :call_results, :only => [:new, :create, :edit, :update, :destroy]
     end

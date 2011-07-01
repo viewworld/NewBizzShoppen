@@ -103,7 +103,8 @@ class User < ActiveRecord::Base
   before_destroy :can_be_removed
   after_create :auto_activate
 
-  liquid :email, :confirmation_instructions_url, :reset_password_instructions_url, :social_provider_name, :category_buyer_category_home_url, :screen_name
+  liquid :email, :confirmation_instructions_url, :reset_password_instructions_url, :social_provider_name, :category_buyer_category_home_url,
+         :screen_name, :first_name, :last_name
   require 'digest/sha1'
 
   private

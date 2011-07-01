@@ -1,0 +1,24 @@
+<div id="modal_for_email_template_edit" style="display:none;">
+  <fieldset class="inputs labels_ta_r labels_70">
+    <ol>
+      <li id="template_editor_subject_input" class="string">
+        <%= label_tag t("agent_work_screen.index.email_templates_editor.subject") %>
+        <%= text_field_tag :subject %>
+      </li>
+      <li id="template_editor_bcc_input" class="string">
+        <%= label_tag t("agent_work_screen.index.email_templates_editor.bcc") %>
+        <%= text_field_tag :bcc %>
+      </li>
+      <li id="template_editor_cc_input" class="string">
+        <%= label_tag t("agent_work_screen.index.email_templates_editor.cc") %>
+        <%= text_field_tag :cc %>
+      </li>
+      <li id="template_editor_body_input" class="text">
+        <%= text_area_tag :body, "<p></p>", {:class => "editor", :id => "body_editor"} %>
+      </li>
+      <li class="hidden">
+        <%= hidden_field_tag :uniq_id, "", {:id => "email_template_editor_uniq_id"} %>
+      </li>
+    </ol>
+  </fieldset>
+</div>

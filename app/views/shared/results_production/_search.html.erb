@@ -1,0 +1,80 @@
+    <div class="search_box">
+      <h2><%= t("campaigns.show.search_label") %></h2>
+
+      <div class="search_content">
+
+        <%= semantic_form_for search, :url => campaign.is_a?(Array) ? callers_production_path : callers_campaign_path(campaign) do |f| %>
+
+            <% if campaign.is_a?(Array) and current_user.has_any_role?(:admin, :call_centre) %>
+            <fieldset class="inputs_vertical grid_150 fltl">
+              <ol class="no_pdd">
+                <li class="select">
+                  <%= label_tag t("campaigns.show.search.campaigns") %>
+                  <%= select_tag :campaign_ids, options_from_collection_for_select(all_campaigns, "id", "name", campaign.map(&:id)), :include_blank => true, :multiple => true, :style => "height:80px;width:140px;" %>
+                </li>
+              </ol>
+            </fieldset>
+            <% end %>
+
+            <% if current_user.has_any_role?(:admin, :call_centre) %>
+            <fieldset class="inputs_vertical grid_150 fltl">
+              <ol class="no_pdd">
+                <li class="select">
+                  <%= label_tag t("campaigns.show.search.agents") %>
+                  <%= select_tag :agent_ids, options_from_collection_for_select(campaign_users, "id", "full_name", agent_ids), :include_blank => true, :multiple => true, :style => "height:80px;width:140px;" %>
+                </li>
+              </ol>
+            </fieldset>
+            <% end %>
+
+            <fieldset class="inputs_vertical grid_150 fltl">
+              <ol class="no_pdd">
+                <li class="select">
+                  <%= label_tag t("campaigns.show.search.results") %>
+                  <%= select_tag :result_ids, options_from_collection_for_select(all_results, "id", "name", result_ids), :include_blank => false, :multiple => true, :style => "height:80px;width:140px;" %>
+                </li>
+              </ol>
+            </fieldset>
+
+            <div class="fltl">
+
+              <fieldset class="inputs_vertical">
+                <ol class="no_pdd">
+                  <li class="date">
+                    <%= label_tag t("campaigns.show.search.date_from") %>
+                    <%= text_field_tag :date_from, date_from, :class => "datepicker", :onchange => "if($('#date_from').val() != '') {this.form.submit();}" %>
+                  </li>
+                  <li class="date">
+                    <%= label_tag t("campaigns.show.search.date_to") %>
+                    <%= text_field_tag :date_to, date_to, :class => "datepicker", :onchange => "if($('#date_to').val() != '') {this.form.submit();}" %>
+                  </li>
+                  <li class="boolean">
+                    <%= check_box_tag :final, "yes", final %>
+                    <%= label_tag :final, t("campaigns.show.search.final") %>
+                  </li>
+                  <li class="commit">
+                    <ibt c="bt_green" icon="magnify">
+                      <%= submit_tag t("campaigns.show.search_button") %>
+                    </ibt>
+                  </li>
+                </ol>
+              </fieldset>
+
+              <br/>
+
+              <p class="pdd_10 no_pdd_tb" style="margin-top:-8px;">
+                <%= t("campaigns.show.ranges_label") %>:<br/>
+                <% unless campaign.is_a?(Array) %>
+                    <%= link_to_function t("campaigns.show.ranges.whole_campaign"), "$('#date_from').val('#{campaign.is_a?(Array) ? date_from : campaign.start_date}');$('#date_to').val('#{campaign.is_a?(Array) ? date_to : campaign.end_date}');$('#search_new').submit()" %>
+                <% end %>
+                <%= link_to_function t("campaigns.show.ranges.this_month"), "$('#date_from').val('#{Date.today.beginning_of_month}');$('#date_to').val('#{Date.today.end_of_month}');$('#search_new').submit()" %>
+                <%= link_to_function t("campaigns.show.ranges.this_week"), "$('#date_from').val('#{Date.today.beginning_of_week}');$('#date_to').val('#{Date.today.end_of_week}');$('#search_new').submit()" %>
+                <%= link_to_function t("campaigns.show.ranges.today"), "$('#date_from').val('#{Date.today}');$('#date_to').val('#{Date.today}');$('#search_new').submit()" %>
+              </p>
+
+            </div>
+
+            <clb/>
+        <% end %>
+      </div>
+    </div>

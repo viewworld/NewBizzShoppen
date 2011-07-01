@@ -17,7 +17,8 @@
     <% unless agent_work_screen %>
         <th><%= t("contacts.table.agent") %></th>
     <% end %>
-    <th>Result</th>
+    <th><%= t("contacts.table.result") %></th>
+    <th><%= t("contacts.table.note") %></th>
     <% if block_tools %>
         <th class="ta_r">
           <%= t("contacts.table.actions") %>
@@ -29,24 +30,25 @@
   <tfoot>
   <tr>
     <td class="fl"></td>
-    <td colspan="<%= agent_work_screen ? 5 : 7 %>"></td>
+    <td colspan="<%= agent_work_screen ? 6 : 8 %>"></td>
     <td class="fr"></td>
   </tr>
   </tfoot>
   <tbody>
-    <% collection.each do |contact| %>
-        <tr class="<%= cycle("odd", "even") %><%= contact.completed? ? " completed" : "" %><%= @contact == contact ? " highlight_row" : "" %>">
-          <td class="cl"></td>
-          <% if show_checkboxes %>
-              <td class="no_pdd_lr"><%= check_box_tag "cb_contact_#{contact.id}", contact.id, false, :class => "cb_contact_id" %></td>
-          <% end %>
+  <% collection.each do |contact| %>
+      <tr class="<%= cycle("odd", "even") %><%= contact.completed? ? " completed" : "" %><%= @contact == contact ? " highlight_row" : "" %>">
+        <td class="cl"></td>
+        <% if show_checkboxes %>
+            <td class="no_pdd_lr"><%= check_box_tag "cb_contact_#{contact.id}", contact.id, false, :class => "cb_contact_id" %></td>
+        <% end %>
         <td><%= contact.company_name %></td>
-        <td class="ta_r"><%= contact.company_phone_number %></td>        
+        <td class="ta_r"><%= contact.company_phone_number %></td>
         <td class="ta_r"><%= contact.direct_phone_number %></td>
         <% unless agent_work_screen %>
             <td><%= contact.agent_name %></td>
-        <% end %>            
+        <% end %>
         <td><%= contact.current_call_result_name %> <%= "(#{contact.current_call_result.creator.full_name})" if contact.current_call_result %></td>
+        <td><%= contact.current_call_result_note %></td>
         <% if block_tools %>
             <td class="tda ta_r">
               <%= with_output_buffer { block_tools.call(contact) } %>

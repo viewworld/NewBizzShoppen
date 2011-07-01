@@ -290,63 +290,24 @@ Feature: Agent campaign - calling session
     Scenario: I can access "My results" from agent work screen
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       Then I follow translated "call_results.edit.my_results"
-      And I should see translated "agent_work_screen.my_results.index.view.header"
+      And I should see translated "production.show.view.header"
 
     # A list of contacts which have results (including final results) assigend to them
-    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested
+    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested @deprecated
     Scenario: I should see a list of contacts that have results assigned to them
-      Given contact for company "Mleko company" has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
-      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
-      Then I follow translated "call_results.edit.my_results"
-      And I should see "Mleko company"
-      And I should not see "Bon Jovi inc."
-      And I should not see "Stefanek corp"
 
 
-    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested
+    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested @deprecated
     Scenario: I should see latest results on top of My results list
-      Given contact for company "Mleko company" has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
-      And contact for company "Bon Jovi inc." has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
-      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
-      Then I follow translated "call_results.edit.my_results"
-      And I should see "Bon Jovi inc." before "Mleko company"
 
-    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested
+    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested @deprecated
     Scenario: I can search contacts on My results list
-      Given contact for company "Mleko company" has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
-      And contact for company "Bon Jovi inc." has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
-      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
-      Then I follow translated "call_results.edit.my_results"
-      And I fill in "search_with_keyword" with "mleko"
-      And I press translated "agent_work_screen.my_results.index.view.filter.search_button"
-      Then I should see "Mleko company"
-      And I should not see "Bon Jovi inc."
 
-    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested
+    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested @deprecated
     Scenario: I can edit contact when I click it on My results list
-      Given contact for company "Mleko company" has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
-      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
-      Then I follow translated "call_results.edit.my_results"
-      And I click hidden link by url regex "/callers\/campaigns\/\d+\/my_results\/\d+\/edit/"
-      And I fill in "contact_company_website" with "http://mleko.pl"
-      And I fill in "contact_contact_name" with "Bertrand Russell"
-      And I press translated "agent_work_screen.my_results.edit.view.button_update"
-      And I click hidden link by url regex "/callers\/campaigns\/\d+\/my_results\/\d+\/edit/"
-      And the "contact_company_website" field should contain "http://mleko.pl"
-      And the "contact_contact_name" field should contain "Bertrand Russell"
 
-    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested
+    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @tested_elsewhere
     Scenario: I can edit results when I click contact on My results list
-      Given contact for company "Mleko company" has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
-      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
-      Then I follow translated "call_results.edit.my_results"
-      And I click hidden link by url regex "/callers\/campaigns\/\d+\/my_results\/\d+\/edit/"
-      Then I fill in "contact_call_results_attributes_0_note" with "new note for call result #1"
-      And I fill in "contact_result_values_attributes_0_value" with "2011-09-22 12:00"
-      And I press translated "agent_work_screen.my_results.edit.view.button_update"
-      And I click hidden link by url regex "/callers\/campaigns\/\d+\/my_results\/\d+\/edit/"
-      And the "contact_call_results_attributes_0_note" field should contain "new note for call result #1"
-      And the "contact_result_values_attributes_0_value" field should contain "2011-09-22 12:00"
 
     @m13 @$_call_centre_agent @_done @_not_testable @is
     Scenario: I can find contact with auto complete search text field
@@ -534,19 +495,24 @@ Feature: Agent campaign - calling session
     @m14 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @tested_elsewhere @_done
     Scenario: Category buyer changes
   
-    @m14 @requested @my_results @$_call_centre_agent @tgn
+    @m14 @requested @my_results @$_call_centre_agent @tgn @_done @tested_elsewhere
     Scenario: I should see "My results" renamed to "Production" and displayed the same way as campaign's "Results"
     
-    @m14 @requested @google_it @$_call_centre_agent @is
+    @m14 @requested @google_it @$_call_centre_agent @is @_done @_tested
     Scenario: I can google for company name from agent work screen
-    
-    @m14 @requested @new_result @$_call_centre_agent @tgn
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      Then I click xpath "//a[@id='google_search_for_company_name']"
+
+    @m14 @requested @new_result @$_call_centre_agent @tgn @non_testable @_done
     Scenario: I can see a white list of available variables that can be inserted into email in a popup
     
-    @m14 @requested @new_result @$_call_centre_agent @tgn
+    @m14 @requested @new_result @$_call_centre_agent @tgn @non_testable @_done
     Scenario: When I click an item on the variables list it should be inserted into rich text editor
     
-    @m14 @requested @note_information @$_call_centre_agent @is
+    @m14 @requested @note_information @$_call_centre_agent @is @_done @_tested
     Scenario: I can see result note on agent work screen
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      And I follow translated "agent_work_screen.index.show_pending_calls"
+      Then I should see translated "contacts.table.note" within "#contacts"
 
   

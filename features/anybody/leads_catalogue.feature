@@ -205,8 +205,22 @@ Scenario: I can see "Sold out" message when there are no leads in category
   Then I should see translated "layout.main_menu.shared.sold_out" within ".categories_node:nth-of-type(1)"
   And I should not see translated "layout.main_menu.shared.sold_out" within ".categories_node:nth-of-type(2)"
 
-@m14 @requested @$_guest @request_more_leads @ao
+@m14 @requested @$_guest @request_more_leads @ao @_done @_tested
 Scenario: I can provide additional information in Note field when requesting more leads for category
+  When there are no leads
+  And I follow translated "layout.main_menu.shared.category_request"
+  Then I should see translated "category_requests.new.view.header"
+  When I go to browse leads
+  And I follow "Electronics"
+  And I follow translated "leads.index.request_more_leads"
+  And I fill in "email_template_preview_company_name" with "blah blah company name blah"
+  And I fill in "email_template_preview_contact_name" with "blah contact name blah blah"
+  And I fill in "email_template_preview_contact_email" with "zorro@zorro.pl"
+  And I fill in "email_template_preview_contact_phone" with "blah blah contact phone blah"
+  And I fill in "email_template_preview_note" with "blah note blah blah"
+  And I press translated "contact_us.new.view.send_email_button"
+  And last email sent should have been sent to cc "zorro@zorro.pl"
+  And last email sent should have content "blah note blah blah"
 
-@m14 @requested @$_guest @request_more_leads @ao
+@m14 @requested @$_guest @request_more_leads @ao @_done @_tested_elsewhere
 Scenario: I should receive copy of the email which is sent when I request more leads for category
