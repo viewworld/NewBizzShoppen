@@ -322,17 +322,17 @@ Feature: Agent campaign - calling session
 
     @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done
     Scenario: I can upgrade contact to category buyer
-#      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
-#      And I select "Upgrade to category buyer" from "selected_result_id"
-#      And I follow translated "call_results.edit.button_new_result"
-#      And I fill in "call_result_contact_company_name" with "Custom company"
-#      And I fill in "call_result_contact_first_name" with "John"
-#      And I fill in "call_result_contact_last_name" with "Dohn"
-#      And I fill in "call_result_contact_address_line_1" with "LongRoad 2"
-#      And I fill in "call_result_contact_zip_code" with "21-221"
-#      And I fill in "call_result_contact_email_address" with "newcategory_buyer888@nbs.com"
-#      And I follow translated "call_results.new.save_button"
-#      Then I should see translated "call_results.create.flash.successfully_added"
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      And I select "Upgrade to category buyer" from "selected_result_id"
+      And I follow translated "call_results.edit.button_new_result"
+      And I fill in "call_result_contact_company_name" with "Custom company"
+      And I fill in "call_result_contact_first_name" with "John"
+      And I fill in "call_result_contact_last_name" with "Dohn"
+      And I fill in "call_result_contact_address_line_1" with "LongRoad 2"
+      And I fill in "call_result_contact_zip_code" with "21-221"
+      And I fill in "call_result_contact_email_address" with "newcategory_buyer888@nbs.com"
+      And I follow translated "call_results.new.save_button"
+      Then I should see translated "call_results.create.flash.successfully_added"
 
     @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done
     Scenario: Category buyer upgraded from lead should be subscribed to campaign's category by default
