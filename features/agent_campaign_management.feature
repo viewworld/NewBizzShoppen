@@ -511,7 +511,7 @@ Feature: Agent campaign - management
       Then I execute js for display action block for "campaigns"
       Then I follow translated "campaigns.index.result"
       Then I should see "Total numbers of contacts: 4"
-      Then I should see "Total number of agents: 2"
+      Then I should see "Total number of agents: 1"
       Then I should see "Total number of calls: ??"
       #jak sie wysypie to bedzie wiadomo że trzeba dodać cyfre tam gdzie są teraz pytajniki :P
 
