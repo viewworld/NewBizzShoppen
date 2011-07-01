@@ -834,6 +834,7 @@ en:
           header_templates: Lead templates
           upload_image: "Upload image"
           button_update: "Save"
+          edit_email_template: "Edit email template"
           new_template: New template
           edit_template: Edit
           duplicate_template: Duplicate
