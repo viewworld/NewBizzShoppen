@@ -13,8 +13,8 @@ Feature: Home page
     When browser accepts "en" locale
     And I am on the home page
     Then I should see "Home"
+    And I reset page
     When browser accepts "da" locale
-    And I clear cookies
     And I am on the home page
     Then I should see "Hjem"
 
