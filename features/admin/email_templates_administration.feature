@@ -61,8 +61,9 @@ Scenario: I can edit global email template to be sent when lead is bought
 Scenario: I can edit category specific email template to be sent when lead is bought
   Then I follow translated "layout.main_menu.shared.browse_leads"
   Then category "Electronics" has email template - "No"
-  Then I follow "Edit ET"
+  Then I follow translated "administration.categories.index.view.edit_link"
   Then I should see "Electronics"
+  And I follow translated "administration.categories.edit.view.edit_email_template"
   Then I press translated "administration.email_templates.edit.view.button_update"
   Then I should see translated "administration.category_email_templates.update.controller.successful_update_notice"
   Then category "Electronics" has email template - "Yes"
