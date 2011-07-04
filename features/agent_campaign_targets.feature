@@ -4,7 +4,7 @@ Feature: Agent campaign targets
   Background:
     Given I am on the homepage
     And I make sure current locale is "en"
-    And I sign in as translator_call_centre@nbs.com with password secret
+    And I sign in as blazejek@gmail.com with password secret
     And I follow translated "layout.main_menu.call_centre.campaigns"
 
   @_done @_tested @selenium @_tested @_done
