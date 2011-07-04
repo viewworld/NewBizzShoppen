@@ -39,7 +39,7 @@
             <% end %>
         <% elsif !form.object.new_record? and (['lead_buyer', 'customer', 'category_buyer'].include?(params[:role]) or @user.has_any_role?(:lead_buyer, :customer, :category_buyer)) %>
             <%= form.input :bank_account_id, :as => :select, :collection => BankAccount.all %>
-        <% end %>        
+        <% end %>
       </ol>
     </fieldset>
   </div>
@@ -75,6 +75,10 @@
         <%= form.input :team_buyers, :as => :boolean if @user.has_role?(:customer) or params[:role] == "customer" %>
         <% if @user.new_record? %>
             <%= form.input :skip_email_verification, :as => :boolean %>
+        <% end %>
+        <% if ['agent', 'call_centre_agent'].include?(params[:role]) or @user.has_any_role?(:agent, :call_centre_agent) %>
+            <%= form.input :billing_rate %>
+            <%= form.input :currency_id, :collection => currencies_for_select, :include_blank => true %>
         <% end %>
       </ol>
     </fieldset>

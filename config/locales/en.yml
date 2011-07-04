@@ -272,6 +272,11 @@ en:
       signed: Signed
 
   campaigns:
+    cost_types:
+      cost_type0: "Fixed cost"
+      cost_type1: "Agent's billing rate"
+      cost_type2: "Fixed hourly rate"
+      cost_type3: "Don't calculate cost"
     filter:
       header: Search
       keyword_label: Keyword
@@ -2299,6 +2304,8 @@ en:
     locale:
       en: English
       dk: Danish
+    campaign:
+      fixed_cost_value_is_blank: "Fixed cost must be set"
   activerecord:
     models:
       article:

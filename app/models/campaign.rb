@@ -4,6 +4,7 @@ class Campaign < ActiveRecord::Base
   belongs_to :category
   belongs_to :country
   belongs_to :creator, :polymorphic => true, :foreign_key => "creator_id"
+  belongs_to :currency
   has_and_belongs_to_many :users
   has_and_belongs_to_many :results
   has_many :contacts, :dependent => :destroy
@@ -12,8 +13,9 @@ class Campaign < ActiveRecord::Base
   has_one :upgrade_contact_to_category_buyer_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'upgrade_contact_to_category_buyer'", :dependent => :destroy
 
   validates_uniqueness_of :name
-  validates_presence_of :name, :max_contact_number, :category_id, :country_id, :start_date, :end_date
+  validates_presence_of :name, :max_contact_number, :category_id, :country_id, :start_date, :end_date, :cost_type
   validates_numericality_of :max_contact_number, :only_integer => true, :greater_than_or_equal_to => 0
+  validate :fixed_cost_value_is_valid
 
   scope :with_keyword, lambda { |q| where("lower(name) like :keyword", {:keyword => "%#{q.downcase}%"}) }
   scope :with_state, lambda { |q|
@@ -35,9 +37,28 @@ class Campaign < ActiveRecord::Base
   scope :descend_by_country, order("countries.name DESC").joins_on_country
   scope :available_for_user, lambda { |user| includes(:users).where("users.id = :user_id OR campaigns.creator_id = :user_id", {:user_id => user.id}) unless user.has_role? :admin }
 
+  before_save :set_euro_fixed_cost_value
   after_save :check_send_material_email_template, :check_upgrade_to_category_buyer_email_template
 
+  FIXED_COST = 0.freeze
+  AGENT_BILLING_RATE_COST = 1.freeze
+  FIXED_HOURLY_RATE_COST = 2.freeze
+  NO_COST = 3.freeze
+  COST_TYPES = [FIXED_COST, AGENT_BILLING_RATE_COST, FIXED_HOURLY_RATE_COST, NO_COST]
+
   private
+
+  def fixed_cost_value_is_valid
+    if cost_type == FIXED_COST or cost_type == FIXED_HOURLY_RATE_COST and fixed_cost_value.blank?
+      self.errors.add(:fixed_cost_value, I18n.t("models.campaign.fixed_cost_value_is_blank"))
+    end
+  end
+
+  def set_euro_fixed_cost_value
+    if fixed_cost_value_changed? and fixed_cost_value.to_i > 0
+      self.euro_fixed_cost_value = currency.to_euro(fixed_cost_value)
+    end
+  end
 
   def check_send_material_email_template
     unless send_material_email_template
