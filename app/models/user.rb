@@ -182,7 +182,7 @@ class User < ActiveRecord::Base
   end
 
   def deliver_email_template(uniq_id)
-    ApplicationMailer.email_template(email, EmailTemplate.find_by_uniq_id(uniq_id), {:user => self}).deliver
+    ApplicationMailer.delay.email_template(email, EmailTemplate.find_by_uniq_id(uniq_id), {:user => self})
   end
 
   public
@@ -498,7 +498,7 @@ class User < ActiveRecord::Base
       unless subscribed_categories.empty?
         uniq_id = "lead_notification_#{lead_notification_type == LEAD_NOTIFICATION_ONCE_PER_DAY ? 'daily' : 'weekly'}"
         leads = Lead.for_notification(subscribed_categories, lead_notification_type)
-        ApplicationMailer.email_template(email, EmailTemplate.find_by_uniq_id(uniq_id), {:user => self, :leads => leads}).deliver
+        ApplicationMailer.delay.email_template(email, EmailTemplate.find_by_uniq_id(uniq_id), {:user => self, :leads => leads})
       end
     end
   end

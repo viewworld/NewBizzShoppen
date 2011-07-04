@@ -14,7 +14,7 @@ class ContactUsController < ApplicationController
       if @email_template_preview.valid?
         flash[:notice] = I18n.t("contact_us.create.flash.email_sent_successfully")
         params[:email_template_preview].tap do |email_params|
-          ApplicationMailer.generic_email([Settings.contact_us_email], email_params[:subject], email_params[:body], nil, [], @email_template_preview.cc, @email_template_preview.bcc, email_params[:email_from]).deliver
+          ApplicationMailer.delay.generic_email([Settings.contact_us_email], email_params[:subject], email_params[:body], nil, [], @email_template_preview.cc, @email_template_preview.bcc, email_params[:email_from])
         end
         redirect_to root_path
       else

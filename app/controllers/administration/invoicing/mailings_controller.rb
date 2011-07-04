@@ -10,7 +10,7 @@ class Administration::Invoicing::MailingsController < Administration::Administra
     @email_template_preview = EmailTemplatePreview.new(:invoice, {:invoice => @invoice})
     params[:email_template_preview].tap do |email_params|
       invoice_path = Pathname.new(File.join(::Rails.root.to_s,'public/html2pdf/invoice_cache',email_params[:invoice_filename]))
-      ApplicationMailer.generic_email(email_params[:recipients], email_params[:subject], email_params[:body], nil, Array(invoice_path), @email_template_preview.cc, @email_template_preview.bcc).deliver
+      ApplicationMailer.delay.generic_email(email_params[:recipients], email_params[:subject], email_params[:body], nil, Array(invoice_path), @email_template_preview.cc, @email_template_preview.bcc)
     end
     flash[:notice] = I18n.t("flash.bulk_lead_share_by_email.create.notice")
     redirect_to administration_invoicing_invoice_path(@invoice)

@@ -69,7 +69,7 @@ class ::User::CategoryBuyer < ::User
   end
 
   def deliver_welcome_email_for_upgraded_contact
-    ApplicationMailer.email_template(email, EmailTemplate.find_by_uniq_id("upgraded_contact_to_category_buyer_welcome"), {:user => self}).deliver
+    ApplicationMailer.delay.email_template(email, EmailTemplate.find_by_uniq_id("upgraded_contact_to_category_buyer_welcome"), {:user => self})
   end
 
 end
