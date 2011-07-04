@@ -365,7 +365,7 @@ Feature: Agent campaign - calling session
       And category "Business" is in interests of user "newcategory_buyer888@nbs.com" "true"
       And category "Leisure" is in interests of user "newcategory_buyer888@nbs.com" "true"
 
-    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @_wip
+    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done
     Scenario: Contact should receive customized emails with material and signup link
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Upgrade to category buyer" from "selected_result_id"
