@@ -17,7 +17,6 @@
         <%= form.input :category_id, :as => :select, :collection => Category.all, :include_blank => false %>
         <%= form.input :country_id, :as => :select, :collection => Country.all, :include_blank => false %>
         <%= form.input :currency_id, :collection => currencies_for_select, :include_blank => false %>
-        <%= form.input :currency_id, :collection => currencies_for_select, :include_blank => false %>
       </ol>
     </fieldset>
   </div>
