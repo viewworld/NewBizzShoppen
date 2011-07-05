@@ -27,6 +27,7 @@ class CallResult < ActiveRecord::Base
   scope :call_log_results, joins(:result).where(:results => {:final => false})
   scope :final_results, joins(:result).where(:results => {:final => true})
   scope :with_creator, lambda { |agent_id| where(:creator_id => agent_id) if agent_id.present? }
+  #scope :final_for_campaign, lambda { |campaign| where("leads.campaign_id = ? and results.final is true", campaign.id).joins(:contact).joins("INNER JOIN campaigns_results ON results.id = campaigns_results.result_id").joins("INNER JOIN results ON results.id = campaigns_results.result_id") }
 
   default_scope :order => 'call_results.created_at DESC'
 
