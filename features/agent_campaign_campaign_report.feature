@@ -1,4 +1,4 @@
-@m15 @campaign_report @requested
+@m15 @campaign_report @requested @is
 Feature: Campaign report
 
   Scenario: I can see all values per campaign
