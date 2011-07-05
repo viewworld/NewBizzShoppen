@@ -1,0 +1,104 @@
+<column-mc:>
+<search-box:>
+<div class="search_box">
+      <h2><%= t("campaign_reports.index.search_label") %></h2>
+
+      <div class="search_content">
+  <%= form_tag callers_campaign_reports_path, :method => :get, :id => "form_new_article" do %>
+              <fieldset class="inputs_vertical">
+                <ol class="no_pdd">
+                  <li class="date">
+                    <%= label_tag t("campaigns.show.search.date_from") %>
+                    <%= text_field_tag :date_from, @date_from, :class => "datepicker", :onchange => "if($('#date_from').val() != '') {this.form.submit();}" %>
+                  </li>
+                  <li class="date">
+                    <%= label_tag t("campaigns.show.search.date_to") %>
+                    <%= text_field_tag :date_to, @date_to, :class => "datepicker", :onchange => "if($('#date_to').val() != '') {this.form.submit();}" %>
+                  </li>
+                  <li class="hidden">
+                    <%= hidden_field_tag :per_user, @per_user ? "1" : "0" %>
+                  </li>
+                  <li class="commit">
+                    <ibt c="bt_green" icon="magnify">
+                      <%= submit_tag t("campaign_reports.index.search_button") %>
+                    </ibt>
+                  </li>
+                </ol>
+              </fieldset>
+  <% end %>
+      </div>
+</div>
+</search-box:>
+
+  <table id="call_results" class="generic">
+    <thead>
+    <tr>
+      <th class="hl"></th>
+      <th><%= t("campaign_reports.index.table.campaign_name") %></th>
+      <th colspan="4" class="ta_r pointer"><%= t("campaign_reports.index.table.campaign_targets") %></th>
+      <th colspan="5" class="ta_r pointer"><%= t("campaign_reports.index.table.completion") %></th>
+      <th colspan="4" class="ta_r pointer"><%= t("campaign_reports.index.table.campaign_results") %></th>
+      <th colspan="1" class="ta_r pointer"><%= t("campaign_reports.index.table.predicted_results") %></th>
+      <th colspan="1" class="ta_r pointer"><%= t("campaign_reports.index.table.realised_results") %></th>
+      <th class="hr"></th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+      <td class="fl"></td>
+      <td colspan="16"></td>
+      <td class="fr"></td>
+    </tr>
+    </tfoot>
+    <tbody>
+    <tr>
+      <td class="hl"></td>
+      <td>&nbsp;</td>
+      <td><%= t("campaign_reports.index.table.success_percent") %></td>
+      <td><%= t("campaign_reports.index.table.finish_cph") %></td>
+      <td><%= t("campaign_reports.index.table.final_result") %></td>
+      <td><%= t("campaign_reports.index.table.value_ph") %></td>
+
+      <td><%= t("campaign_reports.index.table.number_of_contacts") %></td>
+      <td><%= t("campaign_reports.index.table.percent") %></td>
+      <td><%= t("campaign_reports.index.table.number_of_calls_made") %></td>
+      <td><%= t("campaign_reports.index.table.avr_number_of_min_per_final_result") %></td>
+      <td><%= t("campaign_reports.index.table.avr_number_of_calls_per_finished_contacts") %></td>
+
+      <td><%= t("campaign_reports.index.table.value_created") %></td>
+      <td><%= t("campaign_reports.index.table.leads_sold") %></td>
+      <td><%= t("campaign_reports.index.table.hours_used") %></td>
+      <td><%= t("campaign_reports.index.table.production_cost") %></td>
+
+      <td><%= t("campaign_reports.index.table.result_value") %></td>
+
+      <td><%= t("campaign_reports.index.table.value_from_leads_sold") %></td>
+      <td class="hr"></td>
+    </tr>
+
+    <% if @per_user %>
+        <% @campaign_users.each do |user| %>
+            <tr>
+              <td class="cl"></td>
+              <td colspan="3"><b><%= user.screen_name %></b></td>
+              <td class="cr"></td>
+            </tr>
+            <%= render :partial => "campaigns", :locals => { :campaigns => @campaigns } %>
+        <% end %>
+    <% else %>
+        <%= render :partial => "campaigns", :locals => { :campaigns => @campaigns } %>
+    <% end %>
+
+    </tbody>
+
+  </table>
+
+</column-mc:>
+
+<js:>
+<script type="text/javascript">
+    $(function() {
+        $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+    });
+</script>
+</js:>

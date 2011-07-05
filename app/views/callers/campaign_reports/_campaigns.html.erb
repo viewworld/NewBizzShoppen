@@ -1,0 +1,10 @@
+    <% campaigns.each do |campaign| %>
+        <tr class="<%= cycle("odd", "even") %>">
+          <td class="cl"></td>
+          <td><%= campaign.name %></td>
+          <% (1..15).each do |i| %>
+          <td></td>
+          <% end %>
+          <td class="cr"></td>
+        </tr>
+    <% end %>

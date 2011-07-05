@@ -169,6 +169,8 @@ Nbs::Application.routes.draw do
     resources :contacts do
       resources :call_results, :only => [:new, :create, :edit, :update, :destroy]
     end
+
+    resources :campaign_reports, :only => [:index]
   end
 
   namespace :comments do

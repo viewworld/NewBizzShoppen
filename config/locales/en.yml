@@ -2918,3 +2918,29 @@ en:
     show:
       view:
         header: "Production"
+  campaign_reports:
+    index:
+      search_label: "Search"
+      search_button: "Search"
+      table:
+        campaign_name: "Campaign name"
+        campaign_targets: "Campaign targets"
+        completion: "Completion"
+        campaign_results: "Campaign results"
+        predicted_results: "Predicted results"
+        realised_results: "Realised results"
+        success_percent: "Success %"
+        finish_cph: "Finish C/P/H"
+        final_result: "Final result type X P/H"
+        value_ph: "Value P/H"
+        number_of_contacts: "# of contacts"
+        percent: "%"
+        number_of_calls_made: "Number of calls made"
+        avr_number_of_min_per_final_result: "Avr. # of min. pr final result"
+        avr_number_of_calls_per_finished_contacts: "Avr. # of calls / finished contact"
+        value_created: "Value created"
+        leads_sold: "Leads sold (value/number)"
+        hours_used: "Hours used"
+        production_cost: "Production cost"
+        result_value: "(Result value)"
+        value_from_leads_sold: "(Value from sold leads)"
