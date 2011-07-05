@@ -20,17 +20,18 @@ Feature: Agent campaign targets
     And I fill in "campaign_finished_contacts_per_hour" with "4"
     And I fill in "campaign_production_value_per_hour" with "3342"
     And I fill in "campaign_success_rate" with "48"
+    And I choose "campaign_cost_type_3"
     And I press "campaign_submit"
 
   # Number
-  @_done @_tested_elsewhere
+  @_done @tested_elsewhere
   Scenario: When creating new campaign I can specify the 'Finish contacts per hour'
 
   # Expected. Only final results has value
-  @_done @_tested_elsewhere
+  @_done @tested_elsewhere
   Scenario: When creating new campaign I can specify the 'Production value per hour'
 
   # Number of completed contacts with a successfull result Vs number of finished contacts
-  @_done @_tested_elsewhere
+  @_done @tested_elsewhere
   Scenario: When creating new campaign I can specify the 'Success rate'
 

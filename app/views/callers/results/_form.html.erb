@@ -29,7 +29,7 @@
   <%= bt_link_to :plus, t("shared.lead_templates.form.new_lead_template_field"), "javascript:void(0)", :onclick => "#{fields_for_result_fields(form)}" %>
 </div>
 <% end %>
-<% unless @result.campaigns_results.detect { |cr| cr.campaign_id == @campaign.id }.nil? %>
+<% if !@result.campaigns_results.detect { |cr| cr.campaign_id == @campaign.id }.nil? and @result.final? %>
     <%= form.fields_for :campaigns_results, @result.campaigns_results.detect { |cr| cr.campaign_id == @campaign.id } do |builder| %>
         <%= render :partial => "campaign_result", :locals => {:f => builder} %>
     <% end %>

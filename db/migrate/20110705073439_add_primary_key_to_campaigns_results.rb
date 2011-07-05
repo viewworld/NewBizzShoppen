@@ -27,7 +27,7 @@ class AddPrimaryKeyToCampaignsResults < ActiveRecord::Migration
 
     add_column :campaigns_results, :value, :float
     add_column :campaigns_results, :euro_value, :float
-    add_column :campaigns_results, :expected_completed_per_hour, :integer
+    add_column :campaigns_results, :expected_completed_per_hour, :float
   end
 
   def self.down
