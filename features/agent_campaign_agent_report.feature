@@ -1,4 +1,4 @@
-@m15 @agent_report @requested
+@m15 @agent_report @requested @tgn
 Feature: Agent report
 
   Scenario: I can see all values per agent per campaign

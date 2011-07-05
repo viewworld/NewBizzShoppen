@@ -1,7 +1,12 @@
 class Administration::CachesController < Administration::AdministrationController
 
   def destroy
-    I18n.cache_store.clear
+    begin
+      I18n.cache_store.clear
+    rescue
+      #nothing
+    end
+
     flash[:notice] = t("common.cache_cleared")
     redirect_to :back
   end
