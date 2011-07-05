@@ -2306,6 +2306,7 @@ en:
       dk: Danish
     campaign:
       fixed_cost_value_is_blank: "Fixed cost must be set"
+      agents_dont_have_billing_rates_defined: "Agents don't have billing rates defined."
   activerecord:
     models:
       article:
