@@ -11,9 +11,11 @@
           <li>
             <%= link_to t("campaigns.index.edit"), url_for(:controller => "callers/results", :action => "edit", :id => result, :campaign_id => campaign), :class => "default_action" %>
           </li>
+          <% unless result.generic? %>
           <li>
             <%= link_to t("campaigns.index.destroy"), url_for(:controller => "callers/results", :action => "destroy", :id => result, :campaign_id => campaign), :confirm => t("campaigns.index.destroy_confirmation"), :method => :delete %>
           </li>
+          <% end %>
         </ul-actions>
     <% end %>
   </td>

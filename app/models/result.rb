@@ -4,11 +4,13 @@ class Result < ActiveRecord::Base
 
   has_many :call_results
   has_many :contacts, :through => :call_results
-  has_and_belongs_to_many :campaigns, :join_table => "campaigns_results", :foreign_key => "result_id"
+  has_many :campaigns_results, :foreign_key => "result_id"
+  has_many :campaigns, :through => :campaigns_results, :foreign_key => "result_id"
   belongs_to :creator, :polymorphic => true, :foreign_key => "creator_id"
 
   has_many :result_fields, :dependent => :destroy
   accepts_nested_attributes_for :result_fields, :allow_destroy => true
+  accepts_nested_attributes_for :campaigns_results
 
   scope :call_log_results, where(:final => false)
   scope :final_results, where(:final => true)
@@ -26,7 +28,7 @@ class Result < ActiveRecord::Base
   end
 
   def can_be_managed_by?(user)
-    !generic? and (creator.id == user.id or user.has_role?(:admin))
+    (creator_id == user.id or user.has_role?(:admin))
   end
 
   def list_of_fields
