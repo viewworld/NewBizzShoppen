@@ -54,4 +54,8 @@ class Currency < ActiveRecord::Base
   def self.default_currency
     Currency.where(:global_default => true).first
   end
+
+  def self.euro
+    Currency.where(:name => "EUR").first
+  end
 end
