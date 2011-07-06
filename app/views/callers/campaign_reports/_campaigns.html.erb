@@ -1,10 +1,18 @@
-    <% campaigns.each do |campaign| %>
+    <% campaign_reports.each do |campaign_report| %>
         <tr class="<%= cycle("odd", "even") %>">
           <td class="cl"></td>
-          <td><%= campaign.name %></td>
-          <% (1..15).each do |i| %>
-          <td></td>
+          <td><%= campaign_report.campaign.name %></td>
+          <td><%= campaign_report.target_success_percent %> (<%= campaign_report.realised_success_percent  %>)</td>
+          <td><%= campaign_report.target_finished_contacts_per_hour %> (<%= campaign_report.realised_finished_contacts_per_hour %>)</td>
+          <% CampaignReport.final_results.each do |result| %>
+          <td><%= campaign_report.target_final_result(result) %> (<%= campaign_report.realised_final_result(result) %>)</td>
           <% end %>
+          <td><%= campaign_report.target_value_per_hour %> (<%= campaign_report.realised_value_per_hour %>)</td>
+          <td><%= campaign_report %></td>
+          <td><%= campaign_report %></td>
+          <td><%= campaign_report %></td>
+          <td><%= campaign_report %></td>
+          <td><%= campaign_report %></td>
           <td class="cr"></td>
         </tr>
     <% end %>

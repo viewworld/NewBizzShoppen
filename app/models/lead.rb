@@ -85,13 +85,19 @@ class Lead < AbstractLead
   after_find :set_buyers_notification
   before_update :notify_buyers_about_changes
 
-  before_save :handle_category_change
+  before_save :handle_category_change, :set_euro_price
   before_validation :handle_dialling_codes
   before_save :check_if_category_can_publish_leads
   after_create :send_instant_notification_to_subscribers
   after_save :auto_buy
 
   private
+
+  def set_euro_price
+    if price.to_i > 0 and currency.present? and price_changed?
+      self.euro_price = currency.to_euro(price)
+    end
+  end
 
   def check_if_category_can_publish_leads
     if category and !category.can_publish_leads?

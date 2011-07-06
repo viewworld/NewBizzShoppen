@@ -20,5 +20,7 @@ class Callers::CampaignReportsController < Callers::CallerController
                           User.assigned_to_campaigns.with_results.with_agents_without_call_centres :
                           User.assigned_to_campaigns.with_results.for_campaigns(@campaigns.map(&:id)).with_agents_without_call_centres.where("parent_id = ?", current_user.id)
     end
+
+    @campaign_reports = @campaigns.map { |campaign| CampaignReport.new(campaign, @date_from, @date_to) }
   end
 end

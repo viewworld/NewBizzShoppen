@@ -12,6 +12,7 @@ class Campaign < ActiveRecord::Base
   has_many :materials, :as => :resource, :class_name => "Material", :dependent => :destroy
   has_one :send_material_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'result_send_material'", :dependent => :destroy
   has_one :upgrade_contact_to_category_buyer_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'upgrade_contact_to_category_buyer'", :dependent => :destroy
+  has_many :user_session_logs
 
   validates_uniqueness_of :name
   validates_presence_of :name, :max_contact_number, :category_id, :country_id, :start_date, :end_date, :cost_type
@@ -38,7 +39,7 @@ class Campaign < ActiveRecord::Base
   scope :descend_by_country, order("countries.name DESC").joins_on_country
   scope :available_for_user, lambda { |user| includes(:users).where("users.id = :user_id OR campaigns.creator_id = :user_id", {:user_id => user.id}) unless user.has_role? :admin }
 
-  before_save :set_euro_fixed_cost_value
+  before_save :set_euro_fixed_cost_value, :set_euro_production_value_per_hour
   after_save :check_send_material_email_template, :check_upgrade_to_category_buyer_email_template
 
   FIXED_COST = 0.freeze
@@ -58,8 +59,14 @@ class Campaign < ActiveRecord::Base
   end
 
   def set_euro_fixed_cost_value
-    if fixed_cost_value_changed? and fixed_cost_value.to_i > 0
+    if fixed_cost_value_changed? and fixed_cost_value.to_i > 0 and currency.present?
       self.euro_fixed_cost_value = currency.to_euro(fixed_cost_value)
+    end
+  end
+
+  def set_euro_production_value_per_hour
+    if production_value_per_hour.to_i > 0 and currency.present? #and production_value_per_hour_changed?
+      self.euro_production_value_per_hour = currency.to_euro(production_value_per_hour)
     end
   end
 
@@ -105,7 +112,8 @@ class Campaign < ActiveRecord::Base
   end
 
   def completion
-    "#{contacts.with_completed_status(true).count * 100 / contacts.count}%" rescue "0%"
+    completed_contacts = contacts.with_completed_status(true)
+    contacts.count == 0 ? 0 : completed_contacts.count * 100 / contacts.count
   end
 
   def assign_contacts_to_agent(agent)
@@ -165,5 +173,4 @@ class Campaign < ActiveRecord::Base
   def default_materials_set
     materials.where(:is_default => true)
   end
-
 end

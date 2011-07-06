@@ -7,6 +7,7 @@ class Contact < AbstractLead
   belongs_to :campaign
   has_many :call_results, :dependent => :destroy
   has_many :result_values, :through => :call_results
+  belongs_to :lead
 
   belongs_to :agent, :class_name => "User"
   validates_presence_of :company_name, :company_phone_number, :creator_id, :category_id, :country_id, :campaign_id
@@ -101,6 +102,7 @@ class Contact < AbstractLead
     self.reload
     lead = self.deep_clone!({ :include => [:lead_purchases, :lead_translations, { :lead_template_values => :lead_template_value_translations} ]})
     lead.update_attribute :type, "Lead"
+    self.update_attribute(:lead_id, lead.id)
   end
 
   def assign_agent(agent_id)

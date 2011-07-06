@@ -56,7 +56,9 @@
       <td>&nbsp;</td>
       <td><%= t("campaign_reports.index.table.success_percent") %></td>
       <td><%= t("campaign_reports.index.table.finish_cph") %></td>
-      <td><%= t("campaign_reports.index.table.final_result") %></td>
+      <% CampaignReport.final_results.each do |result| %>
+        <td><%= result.name %></td>
+      <% end %>
       <td><%= t("campaign_reports.index.table.value_ph") %></td>
 
       <td><%= t("campaign_reports.index.table.number_of_contacts") %></td>
@@ -86,7 +88,7 @@
             <%= render :partial => "campaigns", :locals => { :campaigns => @campaigns } %>
         <% end %>
     <% else %>
-        <%= render :partial => "campaigns", :locals => { :campaigns => @campaigns } %>
+        <%= render :partial => "campaigns", :locals => { :campaign_reports => @campaign_reports } %>
     <% end %>
 
     </tbody>
