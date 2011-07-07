@@ -12,17 +12,10 @@
           </strong>
         </div>
       </li>
-      <li class="boolean">
-        <%= form.input :is_success %>
-      </li>
-      <li class="boolean">
-        <%= form.input :is_reported %>
-      </li>
-      <%= form.input :final, :as => :hidden %>
+        <%= form.input :final, :as => :hidden %>
     </ol>
   </fieldset>
 </div>
-
 
 <%= form.fields_for :result_fields, @result.result_fields do |builder| %>
     <%= render :partial => "/shared/results/result_field_fields", :locals => {:f => builder} %>
@@ -35,6 +28,22 @@
   <%= bt_link_to :plus, t("shared.lead_templates.form.new_lead_template_field"), "javascript:void(0)", :onclick => "#{fields_for_result_fields(form)}" %>
 </div>
 <% end %>
+
+<% if result.final? %>
+<div class="pdd_10 no_pdd_t">
+  <fieldset class="inputs labels_100 labels_ta_r">
+    <ol>
+      <li class="boolean">
+        <%= form.input :is_reported %>
+      </li>
+      <li class="boolean">
+        <%= form.input :is_success %>
+      </li>
+    </ol>
+  </fieldset>
+</div>
+<% end %>
+
 <% if !@result.campaigns_results.detect { |cr| cr.campaign_id == @campaign.id }.nil? and @result.final? %>
     <%= form.fields_for :campaigns_results, @result.campaigns_results.detect { |cr| cr.campaign_id == @campaign.id } do |builder| %>
         <%= render :partial => "campaign_result", :locals => {:f => builder} %>
