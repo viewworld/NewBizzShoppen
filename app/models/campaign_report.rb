@@ -35,11 +35,15 @@ class CampaignReport
 
   def target_final_result(result)
     cresult = campaign.campaigns_results.joins(:result).where("results.id = ?", result.id).first
-    cresult.nil? ? 0 : cresult.expected_completed_per_hour.to_f / total_hours
+    expected = cresult.nil? ? 0 : cresult.expected_completed_per_hour.to_f
+    total_hours_t = total_hours
+    (expected > 0 and total_hours_t > 0) ? (expected / total_hours_t) : 0
   end
 
   def realised_final_result(result)
-    final_results(result).count / total_hours
+    frc = final_results(result).count
+    th = total_hours
+    (frc > 0 and th > 0) ? (frc / th) : 0
   end
 
   def self.final_results
