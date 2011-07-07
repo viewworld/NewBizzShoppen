@@ -10,19 +10,27 @@ class CampaignReport
   end
 
   def target_success_percent
-    campaign.success_rate
+    campaign.success_rate.to_f
   end
 
   def realised_success_percent
-    (final_results.with_success.count.to_f / final_results.count) * 100
+    if frc = final_results.count.to_f and frc.eql?(0.0)
+      frc
+    else
+      (final_results.with_success.count.to_f / frc) * 100
+    end
   end
 
   def target_finished_contacts_per_hour
-    campaign.finished_contacts_per_hour
+    campaign.finished_contacts_per_hour.to_f
   end
 
   def realised_finished_contacts_per_hour
-    finished_contacts.count / total_hours
+    if th = total_hours and th.eql?(0.0)
+      th
+    else
+      finished_contacts.count / th
+    end
   end
 
   def target_final_result(result)
@@ -39,11 +47,15 @@ class CampaignReport
   end
 
   def target_value_per_hour
-    campaign.euro_production_value_per_hour
+    campaign.euro_production_value_per_hour.to_f
   end
 
   def realised_value_per_hour
-    total_value.to_f / total_hours
+    if th = total_hours and th.eql?(0.0)
+      th
+    else
+      total_value.to_f / th
+    end
   end
 
   def total_number_of_contacts
@@ -55,7 +67,7 @@ class CampaignReport
   end
 
   def completion_percent
-    campaign.completion
+    campaign.completion.to_f
   end
 
   def value_created

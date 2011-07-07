@@ -2,17 +2,23 @@
         <tr class="<%= cycle("odd", "even") %>">
           <td class="cl"></td>
           <td><%= campaign_report.campaign.name %></td>
-          <td><%= campaign_report.target_success_percent %> (<%= campaign_report.realised_success_percent  %>)</td>
+          <td><%= number_to_percentage(campaign_report.target_success_percent, :precision => 0) %> (<%= number_to_percentage(campaign_report.realised_success_percent, :precision => 0) %>)</td>
           <td><%= campaign_report.target_finished_contacts_per_hour %> (<%= campaign_report.realised_finished_contacts_per_hour %>)</td>
           <% CampaignReport.final_results.each do |result| %>
           <td><%= campaign_report.target_final_result(result) %> (<%= campaign_report.realised_final_result(result) %>)</td>
           <% end %>
           <td><%= campaign_report.target_value_per_hour %> (<%= campaign_report.realised_value_per_hour %>)</td>
-          <td><%= campaign_report %></td>
-          <td><%= campaign_report %></td>
-          <td><%= campaign_report %></td>
-          <td><%= campaign_report %></td>
-          <td><%= campaign_report %></td>
+          <td><%= campaign_report.total_number_of_contacts %> (<%= campaign_report.completed_number_of_contacts %>) </td>
+          <td><%= number_to_percentage(campaign_report.completion_percent, :precision => 0) %></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><%= as_currency(campaign_report.value_created, Currency.euro) %></td>
+          <td><%= as_currency(campaign_report.leads_sold_total_value, Currency.euro) %> (<%= campaign_report.leads_sold_count %>)</td>
+          <td><%= campaign_report.hours_used %></td>
+          <td><%= as_currency(campaign_report.production_cost, Currency.euro) %></td>
+          <td><%= as_currency(campaign_report.target_result, Currency.euro) %></td>
+          <td><%= as_currency(campaign_report.realised_result, Currency.euro) %></td>
           <td class="cr"></td>
         </tr>
     <% end %>
