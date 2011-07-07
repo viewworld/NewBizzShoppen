@@ -129,9 +129,9 @@ class CampaignReport
 
   def total_cost
     if campaign.cost_type == Campaign::FIXED_COST
-      euro_fixed_cost_value
+      campaign.euro_fixed_cost_value
     elsif campaign.cost_type == Campaign::FIXED_HOURLY_RATE_COST
-      euro_fixed_cost_value * total_hours
+      campaign.euro_fixed_cost_value * total_hours
     elsif campaign.cost_type == Campaign::AGENT_BILLING_RATE_COST
       campaign.users.with_agents_without_call_centres.map { |u| u.euro_billing_rate * total_hours }.sum
     elsif campaign.cost_type == Campaign::NO_COST
