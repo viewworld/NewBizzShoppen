@@ -8,8 +8,14 @@
                 <ol class="no_pdd">
                     <li class="select">
                     <%= label_tag t("campaigns.show.search.campaigns") %>
-                    <%= select_tag :campaign_ids, options_from_collection_for_select(@all_campaigns, "id", "name", @campaign_ids), :include_blank => false, :multiple => true, :style => "height:80px;width:140px;" %>
+                    <%= select_tag :campaign_ids, options_from_collection_for_select(@all_campaigns.select { |c| @campaign_selection == "active" ? c.active? : !c.active? }, "id", "name", @campaign_ids), :include_blank => false, :multiple => true, :style => "height:80px;width:140px;" %>
                     </li>
+                  <li class="radio">
+                    <%= label_tag "Active" %>
+                    <%= radio_button_tag :campaign_selection, :active, @campaign_selection == "active", {:onclick => "load_campaigns('active');"} %>
+                    <%= label_tag "Inactive" %>
+                    <%= radio_button_tag :campaign_selection, :inactive, @campaign_selection == "inactive", {:onclick => "load_campaigns('inactive');"} %>
+                  </li>
                 </ol>
               </fieldset>
               <fieldset class="inputs_vertical">
@@ -126,8 +132,39 @@
 
 <js:>
 <script type="text/javascript">
+
+    <% @all_campaigns.partition { |c| c.active? }.each_with_index do |campaigns_group, i| %>
+        <%=
+         %{
+         var #{i == 0 ? 'active' : 'inactive'}_campaigns = [
+          #{campaigns_group.map { |c| "['#{c.name}', #{c.id}]" }.join(',')}
+         ]
+         }
+
+         %>
+    <% end %>
+
     $(function() {
         $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
     });
+
+    function load_campaigns(campaign_selection){
+        c_array = eval(campaign_selection + "_campaigns");
+
+        $('#campaign_ids option').each(function()
+        {
+            $(this).remove();
+        });
+        $.each(c_array, function(index, value){
+        $('#campaign_ids').
+            append($("<option></option>").
+            attr("value", value[1]).
+            text(value[0]));
+        });
+        $("#campaign_ids option").each(function()
+        {
+            $(this).attr("selected","selected");
+        });
+    }
 </script>
 </js:>
