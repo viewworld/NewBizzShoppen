@@ -5,8 +5,8 @@ class Callers::CampaignReportsController < Callers::CallerController
   before_filter lambda {authorize_role(:call_centre, :admin)}
 
   def collection
-    @date_from = params[:date_from] ? params[:date_from].to_date : Date.today-3
-    @date_to = params[:date_to] ? params[:date_to].to_date : Date.today+3
+    @date_from = params[:date_from] ? params[:date_from].to_date : Date.today-7
+    @date_to = params[:date_to] ? params[:date_to].to_date : Date.today
     @per_user = params[:per_user].to_i == 1 ? true : false
 
     if current_user.has_role?(:admin)
