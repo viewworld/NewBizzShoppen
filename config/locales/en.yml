@@ -92,20 +92,24 @@ en:
         global: "Global"
         refunds: "Refunds"
         campaigns: Campaigns
+        reports: "Reports"
       agent:
         leads: My leads
         lead_templates: Lead templates
         campaigns: Campaigns
+        reports: "Reports"
       call_centre:
         call_centre_agents: "Team"
         leads: "My leads"
         lead_templates: "Lead templates"
         campaigns: Campaigns
+        reports: "Reports"
       call_centre_agent:
         leads: "My leads"
         lead_templates: "Lead templates"
         campaigns: Campaigns
         news: News
+        reports: "Reports"
       customer:
         subaccounts: Team
         lead_requests: Requested leads
@@ -2921,7 +2925,7 @@ en:
   campaign_reports:
     index:
       search_label: "Search"
-      search_button: "Search"
+      search_button: "Generate"
       table:
         campaign_name: "Campaign name"
         campaign_targets: "Campaign targets"
@@ -2944,3 +2948,7 @@ en:
         production_cost: "Production cost"
         result_value: "(Result value)"
         value_from_leads_sold: "(Value from sold leads)"
+      report_per_users: "Report per users"
+      header: "Reports"
+      ranges_label: "Predefined time ranges"
+      empty_report_msg: "Set the constraints and press Generate button to view report."
