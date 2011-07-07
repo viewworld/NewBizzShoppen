@@ -11,9 +11,9 @@
                     <%= select_tag :campaign_ids, options_from_collection_for_select(@all_campaigns.select { |c| @campaign_selection == "active" ? c.active? : !c.active? }, "id", "name", @campaign_ids), :include_blank => false, :multiple => true, :style => "height:80px;width:140px;" %>
                     </li>
                   <li class="radio">
-                    <%= label_tag "Active" %>
+                    <%= label_tag t("campaign_reports.index.search.active") %>
                     <%= radio_button_tag :campaign_selection, :active, @campaign_selection == "active", {:onclick => "load_campaigns('active');"} %>
-                    <%= label_tag "Inactive" %>
+                    <%= label_tag t("campaign_reports.index.search.inactive") %>
                     <%= radio_button_tag :campaign_selection, :inactive, @campaign_selection == "inactive", {:onclick => "load_campaigns('inactive');"} %>
                   </li>
                 </ol>

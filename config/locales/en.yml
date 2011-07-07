@@ -2952,3 +2952,6 @@ en:
       header: "Reports"
       ranges_label: "Predefined time ranges"
       empty_report_msg: "Set the constraints and press Generate button to view report."
+      search:
+        active: "Active"
+        inactive: "Inactive"
