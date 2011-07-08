@@ -160,6 +160,7 @@ Nbs::Application.routes.draw do
         resources :contacts, :only => [:show, :destroy, :update] do
           resources :call_results, :only => [:new, :create, :edit, :update, :destroy]
         end
+        resource :agent_information, :only => [:show]
       end
       resources :email_templates, :only => [:edit,:update]
     end

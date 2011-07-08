@@ -1,0 +1,24 @@
+<p class="fltl">
+    Value created today: <%= as_currency(AgentInformation.today(current_user).value_created, Currency.euro) %> /
+        this week: <%= as_currency(AgentInformation.week(current_user).value_created, Currency.euro) %> /
+        this quarter: <%= as_currency(AgentInformation.quarter(current_user).value_created, Currency.euro) %> /
+        this year: <%= as_currency(AgentInformation.year(current_user).value_created, Currency.euro) %>
+</p>
+
+<p class="fltr">
+    Top agents.
+        <% if top_agent_today = TopAgent.today and top_agent_today.valid? %>
+            today: <%= top_agent_today.user.screen_name %>: <%= as_currency(top_agent_today.value_created, Currency.euro) %> /
+        <% end %>
+        <% if top_agent_week = TopAgent.week and top_agent_week.valid? %>
+            this week: <%= top_agent_week.user.screen_name %>: <%= as_currency(top_agent_week.value_created, Currency.euro) %> /
+        <% end %>
+        <% if top_agent_quarter = TopAgent.quarter and top_agent_quarter.valid? %>
+            this quarter: <%= top_agent_quarter.user.screen_name %>: <%= as_currency(top_agent_quarter.value_created, Currency.euro) %> /
+        <% end %>
+        <% if top_agent_year = TopAgent.year and top_agent_year.valid? %>
+            this year: <%= top_agent_year.user.screen_name %>: <%= as_currency(top_agent_year.value_created, Currency.euro) %>
+        <% end %>
+</p>
+
+<clb/>
