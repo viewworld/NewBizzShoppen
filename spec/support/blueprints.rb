@@ -66,6 +66,7 @@ Currency.blueprint do
   name { Faker::Lorem.words(1).to_s + Time.now.to_f.to_s.sub('.','') }
   symbol { ['&euro;','&pound;','$'][rand(3)]}
   active { true }
+  exchange_rate { 1 }
 end
 
 LeadPurchase.blueprint do
@@ -332,4 +333,40 @@ Contact.blueprint do
   published { true }
   currency { Currency.make!}
   creator_name { Faker::Name.name }
+  campaign { Campaign.make! }
+  company_phone_number {  Faker.numerify("#######") }
+end
+
+Result.blueprint(:final_reported_success) do
+  name { Faker::Lorem.words(3).to_s.capitalize }
+  final { true }
+  is_reported { true }
+  is_success { true }
+end
+
+Result.blueprint(:final_reported_success_upgrades) do
+  name { Faker::Lorem.words(3).to_s.capitalize }
+  final { true }
+  is_reported { true }
+  is_success { true }
+  upgrades_to_lead { true }
+end
+
+Campaign.blueprint do
+  start_date { Date.today }
+  end_date { Date.today + 7.days }
+  category { Category.make! }
+  cost_type { Campaign::NO_COST }
+  max_contact_number { 5 }
+  country { Country.make! }
+  name { Faker::Lorem.words(4).to_s.capitalize }
+  creator { ::User::CallCentre.make! }
+  currency { Currency.make! }
+end
+
+CallResult.blueprint do
+  contact { Contact.make! }
+  result { Result.make! }
+  note { Faker::Lorem.words(5).to_s.capitalize }
+  creator { ::User::CallCentreAgent.make! }
 end
