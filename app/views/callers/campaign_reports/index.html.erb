@@ -1,133 +1,175 @@
 <search-box:>
-<div class="search_box">
-      <h2><%= t("campaign_reports.index.search_label") %></h2>
+  <div class="search_box">
+    <h2><%= t("campaign_reports.index.search_label") %></h2>
 
-      <div class="search_content">
-  <%= form_tag callers_campaign_reports_path, :method => :get, :id => "form_campaign_reports_search" do %>
-              <fieldset class="inputs_vertical grid_150 fltl">
-                <ol class="no_pdd">
-                    <li class="select">
-                    <%= label_tag t("campaigns.show.search.campaigns") %>
-                    <%= select_tag :campaign_ids, options_from_collection_for_select(@all_campaigns, "id", "name", @campaign_ids), :include_blank => false, :multiple => true, :style => "height:80px;width:140px;" %>
+    <div class="search_content">
+      <%= form_tag callers_campaign_reports_path, :method => :get, :id => "form_campaign_reports_search" do %>
+          <div class="grid_150 fltl">
+            <fieldset class="inputs_vertical">
+              <ol class="no_pdd">
+                <li class="select">
+                  <%= label_tag t("campaigns.show.search.campaigns") %>
+                  <%= select_tag :campaign_ids, options_from_collection_for_select(@all_campaigns.select { |c| @campaign_selection == "active" ? c.active? : !c.active? }, "id", "name", @campaign_ids), :include_blank => false, :multiple => true, :style => "height:80px;width:140px;" %>
+                </li>
+                <li class="radio no_pdd_t" style="padding-left: 10px">
+                  <%= label_tag t("campaign_reports.index.search.active") %>
+                  <%= radio_button_tag :campaign_selection, :active, @campaign_selection == "active", {:onclick => "load_campaigns('active');"} %>
+                  <%= label_tag t("campaign_reports.index.search.inactive") %>
+                  <%= radio_button_tag :campaign_selection, :inactive, @campaign_selection == "inactive", {:onclick => "load_campaigns('inactive');"} %>
+                </li>
+              </ol>
+            </fieldset>
+          </div>
+          <div class="fltl">
+            <fieldset class="inputs_vertical">
+              <ol class="no_pdd">
+                <li class="date">
+                  <%= label_tag :date_to, t("campaigns.show.search.date_from") %>
+                  <%= text_field_tag :date_from, @date_from, :class => "datepicker" %>
+                </li>
+                <li class="date">
+                  <%= label_tag :date_to,t("campaigns.show.search.date_to") %>
+                  <%= text_field_tag :date_to, @date_to, :class => "datepicker" %>
+                </li>
+                <% unless current_user.has_any_role?(:call_centre_agent, :agent) %>
+                    <li class="boolean">
+                      <%= label_tag :per_user, t("campaign_reports.index.report_per_users") %>
+                      <%= check_box_tag :per_user, "1", @per_user %>
                     </li>
-                </ol>
-              </fieldset>
-              <fieldset class="inputs_vertical">
-                <ol class="no_pdd">
-                  <li class="date">
-                    <%= label_tag t("campaigns.show.search.date_from") %>
-                    <%= text_field_tag :date_from, @date_from, :class => "datepicker" %>
-                  </li>
-                  <li class="date">
-                    <%= label_tag t("campaigns.show.search.date_to") %>
-                    <%= text_field_tag :date_to, @date_to, :class => "datepicker" %>
-                  </li>
-                  <% unless current_user.has_any_role?(:call_centre_agent, :agent) %>
-                  <li class="boolean">
-                    <%= label_tag t("campaign_reports.index.report_per_users") %>
-                    <%= check_box_tag :per_user, "1", @per_user  %>
-                  </li>
-                  <% end %>
-                  <li class="hidden">
-                    <%= hidden_field_tag :views_count, @views_count+1 %>
-                  </li>
-                  <li class="commit">
-                    <ibt c="bt_green" icon="magnify">
-                      <%= submit_tag t("campaign_reports.index.search_button") %>
-                    </ibt>
-                  </li>
-                </ol>
-              </fieldset>
-  <% end %>
-  <p class="pdd_10 no_pdd_tb" style="margin-top:-8px;">
-    <%= t("campaign_reports.index.ranges_label") %>:<br/>
-    <%= link_to_function t("campaigns.show.ranges.this_month"), "$('#date_from').val('#{Date.today.beginning_of_month}');$('#date_to').val('#{Date.today.end_of_month}');$('#form_campaign_reports_search').submit()" %>
-    <%= link_to_function t("campaigns.show.ranges.this_week"), "$('#date_from').val('#{Date.today.beginning_of_week}');$('#date_to').val('#{Date.today.end_of_week}');$('#form_campaign_reports_search').submit()" %>
-    <%= link_to_function t("campaigns.show.ranges.today"), "$('#date_from').val('#{Date.today}');$('#date_to').val('#{Date.today}');$('#form_campaign_reports_search').submit()" %>
-  </p>
-      </div>
-</div>
+                <% end %>
+                <li class="hidden">
+                  <%= hidden_field_tag :views_count, @views_count+1 %>
+                </li>
+                <li class="commit">
+                  <ibt c="bt_green" icon="magnify">
+                    <%= submit_tag t("campaign_reports.index.search_button") %>
+                  </ibt>
+                </li>
+              </ol>
+            </fieldset>
+            <p class="pdd_10">
+              <%= t("campaign_reports.index.ranges_label") %>:<br/>
+              <%= link_to_function t("campaigns.show.ranges.this_month"), "$('#date_from').val('#{Date.today.beginning_of_month}');$('#date_to').val('#{Date.today.end_of_month}');$('#form_campaign_reports_search').submit()" %>
+              <%= link_to_function t("campaigns.show.ranges.this_week"), "$('#date_from').val('#{Date.today.beginning_of_week}');$('#date_to').val('#{Date.today.end_of_week}');$('#form_campaign_reports_search').submit()" %>
+              <%= link_to_function t("campaigns.show.ranges.today"), "$('#date_from').val('#{Date.today}');$('#date_to').val('#{Date.today}');$('#form_campaign_reports_search').submit()" %>
+            </p>
+          </div>
+          <clb/>
+      <% end %>
+    </div>
+  </div>
 </search-box:>
 
 
 <column-mc:>
-<header><%= t("campaign_reports.index.header") %></header>
+  <header><%= t("campaign_reports.index.header") %></header>
 
   <% if @campaign_reports.empty? %>
-  <%= blank_state_message t("campaign_reports.index.empty_report_msg") %>
+      <%= blank_state_message t("campaign_reports.index.empty_report_msg") %>
   <% else %>
-  <% total_columns = 16 + CampaignReport.final_results.count %>
-  <table id="call_results" class="generic">
-    <thead>
-    <tr>
-      <th class="hl"></th>
-      <th><%= t("campaign_reports.index.table.campaign_name") %></th>
-      <th colspan="<%= 4 + CampaignReport.final_results.count %>" class="ta_r pointer"><%= t("campaign_reports.index.table.campaign_targets") %></th>
-      <th colspan="5" class="ta_r pointer"><%= t("campaign_reports.index.table.completion") %></th>
-      <th colspan="3" class="ta_r pointer"><%= t("campaign_reports.index.table.campaign_results") %></th>
-      <th colspan="1" class="ta_r pointer"><%= t("campaign_reports.index.table.predicted_results") %></th>
-      <th colspan="1" class="ta_r pointer"><%= t("campaign_reports.index.table.realised_results") %></th>
-      <th class="hr"></th>
-    </tr>
-    </thead>
-    <tfoot>
-    <tr>
-      <td class="fl"></td>
-      <td colspan="<%= total_columns %>"></td>
-      <td class="fr"></td>
-    </tr>
-    </tfoot>
-    <tbody>
-    <tr>
-      <td class="hl"></td>
-      <td>&nbsp;</td>
-      <td><%= t("campaign_reports.index.table.success_percent") %></td>
-      <td><%= t("campaign_reports.index.table.finish_cph") %></td>
-      <% CampaignReport.final_results.each do |result| %>
-        <td><%= result.name %></td>
-      <% end %>
-      <td><%= t("campaign_reports.index.table.value_ph") %></td>
+      <% total_columns = 16 + CampaignReport.final_results.count %>
+      <table id="call_results" class="generic">
+        <thead>
+        <tr>
+          <th class="hl"></th>
+          <th><%= t("campaign_reports.index.table.campaign_name") %></th>
+          <th colspan="<%= 4 + CampaignReport.final_results.count %>" class="ta_r pointer"><%= t("campaign_reports.index.table.campaign_targets") %></th>
+          <th colspan="5" class="ta_r pointer"><%= t("campaign_reports.index.table.completion") %></th>
+          <th colspan="3" class="ta_r pointer"><%= t("campaign_reports.index.table.campaign_results") %></th>
+          <th colspan="1" class="ta_r pointer"><%= t("campaign_reports.index.table.predicted_results") %></th>
+          <th colspan="1" class="ta_r pointer"><%= t("campaign_reports.index.table.realised_results") %></th>
+          <th class="hr"></th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+          <td class="fl"></td>
+          <td colspan="<%= total_columns %>"></td>
+          <td class="fr"></td>
+        </tr>
+        </tfoot>
+        <tbody>
+        <tr>
+          <td class="hl"></td>
+          <td>&nbsp;</td>
+          <td><%= t("campaign_reports.index.table.success_percent") %></td>
+          <td><%= t("campaign_reports.index.table.finish_cph") %></td>
+          <% CampaignReport.final_results.each do |result| %>
+              <td><%= result.name %></td>
+          <% end %>
+          <td><%= t("campaign_reports.index.table.value_ph") %></td>
 
-      <td><%= t("campaign_reports.index.table.number_of_contacts") %></td>
-      <td><%= t("campaign_reports.index.table.percent") %></td>
-      <td><%= t("campaign_reports.index.table.number_of_calls_made") %></td>
-      <td><%= t("campaign_reports.index.table.avr_number_of_min_per_final_result") %></td>
-      <td><%= t("campaign_reports.index.table.avr_number_of_calls_per_finished_contacts") %></td>
+          <td><%= t("campaign_reports.index.table.number_of_contacts") %></td>
+          <td><%= t("campaign_reports.index.table.percent") %></td>
+          <td><%= t("campaign_reports.index.table.number_of_calls_made") %></td>
+          <td><%= t("campaign_reports.index.table.avr_number_of_min_per_final_result") %></td>
+          <td><%= t("campaign_reports.index.table.avr_number_of_calls_per_finished_contacts") %></td>
 
-      <td><%= t("campaign_reports.index.table.value_created") %></td>
-      <td><%= t("campaign_reports.index.table.leads_sold") %></td>
-      <td><%= t("campaign_reports.index.table.hours_used") %></td>
-      <td><%= t("campaign_reports.index.table.production_cost") %></td>
+          <td><%= t("campaign_reports.index.table.value_created") %></td>
+          <td><%= t("campaign_reports.index.table.leads_sold") %></td>
+          <td><%= t("campaign_reports.index.table.hours_used") %></td>
+          <td><%= t("campaign_reports.index.table.production_cost") %></td>
 
-      <td><%= t("campaign_reports.index.table.result_value") %></td>
+          <td><%= t("campaign_reports.index.table.result_value") %></td>
 
-      <td><%= t("campaign_reports.index.table.value_from_leads_sold") %></td>
-      <td class="hr"></td>
-    </tr>
+          <td><%= t("campaign_reports.index.table.value_from_leads_sold") %></td>
+          <td class="hr"></td>
+        </tr>
 
-    <% if @per_user %>
-        <% @campaign_users.each do |user| %>
-            <tr>
-              <td class="cl"></td>
-              <td colspan="<%= total_columns %>"><b><%= user.screen_name %></b></td>
-              <td class="cr"></td>
-            </tr>
-            <%= render :partial => "campaigns", :locals => { :campaign_reports => @campaign_reports.select { |cr| cr.user == user }} %>
+        <% if @per_user %>
+            <% @campaign_users.each do |user| %>
+                <tr>
+                  <td class="cl"></td>
+                  <td colspan="<%= total_columns %>"><b><%= user.screen_name %></b></td>
+                  <td class="cr"></td>
+                </tr>
+                <%= render :partial => "campaigns", :locals => {:campaign_reports => @campaign_reports.select { |cr| cr.user == user }} %>
+            <% end %>
+        <% else %>
+            <%= render :partial => "campaigns", :locals => {:campaign_reports => @campaign_reports} %>
         <% end %>
-    <% else %>
-        <%= render :partial => "campaigns", :locals => { :campaign_reports => @campaign_reports } %>
-    <% end %>
 
-    </tbody>
+        </tbody>
 
-  </table>
+      </table>
   <% end %>
 </column-mc:>
 
 <js:>
-<script type="text/javascript">
-    $(function() {
-        $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
-    });
-</script>
+  <script type="text/javascript">
+
+      <% @all_campaigns.partition { |c| c.active? }.each_with_index do |campaigns_group, i| %>
+      <%=
+      %{
+      var #{i == 0 ? 'active' : 'inactive'}_campaigns = [
+       #{campaigns_group.map { |c| "['#{c.name}', #{c.id}]" }.join(',')}
+      ]
+      }
+
+      %>
+      <% end %>
+
+      $(function() {
+          $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+      });
+
+      function load_campaigns(campaign_selection) {
+          c_array = eval(campaign_selection + "_campaigns");
+
+          $('#campaign_ids option').each(function()
+          {
+              $(this).remove();
+          });
+          $.each(c_array, function(index, value) {
+              $('#campaign_ids').
+                      append($("<option></option>").
+                      attr("value", value[1]).
+                      text(value[0]));
+          });
+          $("#campaign_ids option").each(function()
+          {
+              $(this).attr("selected", "selected");
+          });
+      }
+  </script>
 </js:>

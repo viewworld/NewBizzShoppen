@@ -11,6 +11,7 @@ class Callers::CampaignReportsController < Callers::CallerController
     @per_user = params[:per_user].to_i == 1 ? true : false
     @per_user = true if current_user.has_any_role?(:call_centre_agent, :agent)
     @views_count = params[:views_count].to_i
+    @campaign_selection = params[:campaign_selection] || "active"
 
     if current_user.has_role?(:admin)
       @campaigns = Campaign.where("")
@@ -25,6 +26,8 @@ class Callers::CampaignReportsController < Callers::CallerController
     unless @campaign_ids.size == @campaigns.size
       @campaigns = !@campaign_ids.blank? ? @campaigns.where(:id => @campaign_ids) : @campaigns
     end
+
+    @campaigns = @campaigns.select { |c| @campaign_selection == "active" ? c.active? : !c.active? }
 
     if @views_count > 0
       if @per_user

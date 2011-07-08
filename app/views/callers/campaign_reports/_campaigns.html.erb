@@ -16,9 +16,9 @@
           <td><%= as_currency(campaign_report.value_created, Currency.euro) %></td>
           <td><%= as_currency(campaign_report.leads_sold_total_value, Currency.euro) %> (<%= campaign_report.leads_sold_count %>)</td>
           <td><%= number_with_precision(campaign_report.hours_used, :precision => 1) %></td>
-          <td><%= as_currency(campaign_report.production_cost, Currency.euro) %></td>
-          <td><%= as_currency(campaign_report.target_result, Currency.euro) %></td>
-          <td><%= as_currency(campaign_report.realised_result, Currency.euro) %></td>
+          <td><%= campaign_report.campaign.no_cost? ? "-" : as_currency(campaign_report.production_cost, Currency.euro) %></td>
+          <td><%= campaign_report.campaign.no_cost? ? "-" : as_currency(campaign_report.target_result, Currency.euro) %></td>
+          <td><%= campaign_report.campaign.no_cost? ? "-" : as_currency(campaign_report.realised_result, Currency.euro) %></td>
           <td class="cr"></td>
         </tr>
     <% end %>

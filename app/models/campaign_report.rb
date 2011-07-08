@@ -67,7 +67,10 @@ class CampaignReport
   end
 
   def completed_number_of_contacts
-    Contact.with_completed_status(true).where("campaign_id = ?", campaign.id).select("distinct(leads.id)").count
+    cc = Contact.with_completed_status(true).joins(:call_results).where("leads.campaign_id = ? and call_results.created_at BETWEEN ? AND ?",
+                                                                  campaign.id, date_from, date_to)
+    cc = cc.where("call_results.creator_id = ?", user.id) if user
+    cc.select("distinct(leads.id)").count
   end
 
   def completion_percent

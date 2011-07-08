@@ -173,4 +173,12 @@ class Campaign < ActiveRecord::Base
   def default_materials_set
     materials.where(:is_default => true)
   end
+
+  def no_cost?
+    cost_type == NO_COST
+  end
+
+  def active?
+    start_date <= Date.today and end_date >= Date.today
+  end
 end
