@@ -33,13 +33,18 @@ class AbstractLead < ActiveRecord::Base
   validate :check_category, :check_lead_templates, :if => :process_for_lead_information?
 
   after_create :cache_creator_name
-  before_save :change_creator
+  before_save :change_creator, :set_euro_price
   before_save :set_published_at
 
   accepts_nested_attributes_for :lead_translations, :allow_destroy => true
   accepts_nested_attributes_for :lead_template_values, :allow_destroy => true
 
 
+  def set_euro_price
+    if price.to_i > 0 and currency.present? and price_changed?
+      self.euro_price = currency.to_euro(price)
+    end
+  end
 
   def lead_templates(with_mandatory_only=nil)
     self.creator = current_user if creator.nil?
