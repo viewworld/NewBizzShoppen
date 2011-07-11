@@ -4,8 +4,8 @@ class CampaignReport
 
   def initialize(campaign, date_from, date_to, user=nil)
     self.campaign = campaign
-    self.date_from = date_from-1
-    self.date_to = date_to+1
+    self.date_from = date_from.to_date
+    self.date_to = date_to.to_date
     self.user = user
   end
 
@@ -35,9 +35,7 @@ class CampaignReport
 
   def target_final_result(result)
     cresult = campaign.campaigns_results.joins(:result).where("results.id = ?", result.id).first
-    expected = cresult.nil? ? 0 : cresult.expected_completed_per_hour.to_f
-    total_hours_t = total_hours
-    (expected > 0 and total_hours_t > 0) ? (expected / total_hours_t) : 0
+    cresult.nil? ? 0.0 : cresult.expected_completed_per_hour.to_f
   end
 
   def realised_final_result(result)
@@ -115,9 +113,10 @@ class CampaignReport
     rsp
   end
 
-  def total_hours
+  def total_hours(_user=nil)
     th = campaign.user_session_logs.where("created_at BETWEEN ? AND ?", date_from, date_to)
-    th = th.where("user_id = ?", user.id) if user
+    _user = user || _user
+    th = th.where("user_id = ?", _user.id) if _user
     th.sum(:hours_count).to_f
   end
 
@@ -152,7 +151,7 @@ class CampaignReport
     elsif campaign.cost_type == Campaign::FIXED_HOURLY_RATE_COST
       campaign.euro_fixed_cost_value * total_hours
     elsif campaign.cost_type == Campaign::AGENT_BILLING_RATE_COST
-      campaign.users.with_agents_without_call_centres.map { |u| u.euro_billing_rate * total_hours }.sum
+      campaign.users.with_agents_without_call_centres.map { |u| u.euro_billing_rate * total_hours(u) }.sum
     elsif campaign.cost_type == Campaign::NO_COST
       0.0
     end

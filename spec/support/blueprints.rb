@@ -219,6 +219,8 @@ end
   agreement_read { true }
   roles_mask { 8 }
   address { Address.make! }
+  currency { Currency.make! }
+  billing_rate { 10 }
 end
 
 ::User::CategoryBuyer.blueprint do
@@ -337,11 +339,26 @@ Contact.blueprint do
   company_phone_number {  Faker.numerify("#######") }
 end
 
-Result.blueprint(:final_reported_success) do
+Result.blueprint do
   name { Faker::Lorem.words(3).to_s.capitalize }
+  final { false }
+  is_reported { false }
+  is_success { false }
+end
+
+Result.blueprint(:final_reported_success) do
   final { true }
   is_reported { true }
   is_success { true }
+end
+
+Result.blueprint(:final_reported) do
+  final { true }
+  is_reported { true }
+end
+
+Result.blueprint(:final) do
+  final { true }
 end
 
 Result.blueprint(:upgrades_to_lead) do
@@ -370,4 +387,13 @@ CallResult.blueprint do
   result { Result.make! }
   note { Faker::Lorem.words(5).to_s.capitalize }
   creator { ::User::CallCentreAgent.make! }
+end
+
+UserSessionLog.blueprint do
+  user { ::User::CallCentreAgent.make! }
+  start_time { Time.now }
+  end_time { Time.now + 5.minutes }
+  euro_billing_rate { 10 }
+  log_type { UserSessionLog::TYPE_CAMPAIGN }
+  campaign { Campaign.make! }
 end

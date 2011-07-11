@@ -1,5 +1,6 @@
 class UserSessionLog < ActiveRecord::Base
   belongs_to :user
+  belongs_to :campaign
   validates_presence_of :start_time, :end_time, :log_type, :user_id
 
   before_save :cache_hours_count

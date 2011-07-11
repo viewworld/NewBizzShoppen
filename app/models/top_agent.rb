@@ -6,7 +6,7 @@ class TopAgent
     self.date_from = date_from
     self.date_to = date_to
     self.user_id, self.value = top_agent
-    self.user = User.find_by_id(user_id).with_role
+    self.user = User.find_by_id(user_id).with_role if user_id
   end
 
   def valid?
