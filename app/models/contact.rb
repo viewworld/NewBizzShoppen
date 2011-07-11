@@ -100,7 +100,7 @@ class Contact < AbstractLead
 
   def upgrade_to_lead
     self.reload
-    lead = self.deep_clone!({ :include => [:lead_purchases, :lead_translations, { :lead_template_values => :lead_template_value_translations} ]})
+    lead = self.deep_clone!({:with_callbacks => true, :include => [:lead_purchases, :lead_translations, { :lead_template_values => :lead_template_value_translations} ]})
     lead.update_attribute :type, "Lead"
     self.update_attribute(:lead_id, lead.id)
   end
