@@ -28,16 +28,40 @@ class Reports < Thor
 
     @results = Result.where(:generic => true)
 
+    @result = Result.make!(:final_reported_success)
+    @result_upgrades = Result.make!(:upgrades_to_lead)
+
     campaign_name_prefix = "CampaignTest#{Time.now.to_i} #"
     1.upto(options[:campaigns]) do |i|
       @campaign = Campaign.make!(:creator => @call_centre, :currency => @currency, :success_rate => 94, :name => "#{campaign_name_prefix}#{i}",
                                  :cost_type => Campaign::AGENT_BILLING_RATE_COST, :max_contact_number => options[:contacts])
+      @campaign.results = [@result,@result_upgrades]
+      @campaign.campaigns_results.first.update_attributes(:value => 100, :expected_completed_per_hour => 5)
+      @campaign.campaigns_results.last.update_attributes(:value => 10, :expected_completed_per_hour => 3)
+
       @campaign.users = [@call_centre] + @call_centre.subaccounts
       @campaign.results = @results
       @campaign.save
       @call_centre.subaccounts.each do |agent|
-        1.upto(options[:contacts]) do |i|
+        1.upto(options[:contacts]) do |contact_num|
           @contact = Contact.make!(:campaign => @campaign, :agent_id => agent.id)
+        end
+      end
+      @campaign.users.each do |campaign_user|
+        campaign_user.with_role.contacts.where(:campaign_id => @campaign.id).each do |contact|
+          1.upto(options[:results]).each do |res_num|
+            CallResult.make!(:contact => contact, :result => @result, :creator => campaign_user,
+                             :created_at => @campaign.start_date+res_num.minutes)
+          end
+          1.upto(options[:upgraded]).each do |res_num|
+            CallResult.make!(:contact => contact, :result => @result_upgrades, :creator => campaign_user,
+                             :created_at => @campaign.start_date+res_num.minutes)
+          end
+        end
+        1.upto(options[:spent]) do |hour_num|
+          UserSessionLog.make!(:user => campaign_user, :campaign => @campaign,
+                               :start_time => @campaign.start_date+i*60.minutes,
+                               :end_time => @campaign.end_date+i*60.minutes+60.minutes)
         end
       end
     end
