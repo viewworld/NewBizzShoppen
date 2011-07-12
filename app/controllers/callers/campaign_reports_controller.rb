@@ -5,6 +5,13 @@ class Callers::CampaignReportsController < Callers::CallerController
 
   before_filter lambda {authorize_role(:call_centre, :admin, :call_centre_agent, :agent)}
 
+  def index
+    super do |format|
+      format.html
+      format.pdf { send_file CampaignReport.store_pdf(params[:report]), :type => 'application/pdf'}
+    end
+  end
+
   def collection
     @date_from = params[:date_from] ? params[:date_from].to_date : Date.today-7
     @date_to = params[:date_to] ? params[:date_to].to_date : Date.today

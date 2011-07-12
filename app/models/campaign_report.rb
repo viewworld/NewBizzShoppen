@@ -1,5 +1,18 @@
 class CampaignReport
 
+  MARKUP_SCAFFOLD = %{<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+        <html xmlns="http://www.w3.org/1999/xhtml">
+          <head>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+            <style type="text/css">
+              @import url("../stylesheets/campaign_report.css") print;
+            </style>
+          </head>
+          <body>
+            %s
+          </body>
+        </html>}
+
   attr_accessor :campaign, :date_from, :date_to, :user
 
   def initialize(campaign, date_from, date_to, user=nil)
@@ -103,6 +116,25 @@ class CampaignReport
     leads_sold_total_value - production_cost
   end
 
+  def self.store_pdf(report_cache)
+    pdf_path = Rails.root.join "public/html2pdf/campaign_reports_cache/#{report_cache}.pdf"
+    html_path = Rails.root.join "public/html2pdf/campaign_reports_cache/#{report_cache}.html"
+    `python public/html2pdf/pisa.py #{html_path} #{pdf_path}`
+    File.delete(html_path)
+    pdf_path
+  end
+
+  def self.table(report_cache,campaign_reports,campaign_users,per_user=false)
+    av = ActionView::Base.new
+    av.view_paths << File.join(::Rails.root.to_s, "app", "views")
+    av.instance_eval do
+      extend ApplicationHelper
+    end
+    html = av.render(:partial => 'callers/campaign_reports/report', :type => :erb, :locals => { :per_user => per_user, :campaign_users => campaign_users, :campaign_reports => campaign_reports })
+    markup = MARKUP_SCAFFOLD % html
+    File.open(Rails.root.join("public/html2pdf/campaign_reports_cache/#{report_cache}.html"), 'w') {|f| f.write(markup) }
+    html
+  end
 
   private
 
@@ -156,4 +188,6 @@ class CampaignReport
       0.0
     end
   end
+
+
 end

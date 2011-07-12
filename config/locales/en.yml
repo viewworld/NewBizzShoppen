@@ -2950,6 +2950,7 @@ en:
         value_from_leads_sold: "(Value from sold leads)"
       report_per_users: "Report per users"
       header: "Reports"
+      download_pdf: "Download PDF"
       ranges_label: "Predefined time ranges"
       empty_report_msg: "Set the constraints and press Generate button to view report."
       search:
