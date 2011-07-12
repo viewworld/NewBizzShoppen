@@ -115,7 +115,7 @@ class CampaignReport
 
   def total_hours(_user=nil)
     th = campaign.user_session_logs.where("created_at BETWEEN ? AND ?", date_from, date_to)
-    _user = user || _user
+    _user = _user || user
     th = th.where("user_id = ?", _user.id) if _user
     th.sum(:hours_count).to_f
   end

@@ -422,6 +422,54 @@ describe CampaignReport do
       cr1.hours_used.should == 1.0 and cr2.hours_used.should == 2.0
     end
 
+    it "should return correct target result" do
+      @campaign1.update_attribute(:cost_type, Campaign::AGENT_BILLING_RATE_COST)
+      CallResult.make!(:contact => @contact1_1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
+      CallResult.make!(:contact => @contact1_3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
+      CallResult.make!(:contact => @contact1_4, :result => @result4, :creator => @call_centre_agent2, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
+      CallResult.make!(:contact => @contact1_2, :result => @result2, :creator => @call_centre_agent2, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
+      CallResult.make!(:contact => @contact1_2, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset-1.day)
+      CallResult.make!(:contact => @contact1_1, :result => @result_final_reported, :creator => @call_centre_agent1)
+      CallResult.make!(:contact => @contact1_1, :result => @result_final, :creator => @call_centre_agent1)
+      CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
+      (1..4).each do |i|
+        UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign1, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes+15.minutes)
+      end
+      (1..8).each do |i|
+        UserSessionLog.make!(:user => @call_centre_agent2, :campaign => @campaign1, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes+15.minutes)
+      end
+
+      UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign2, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+15.minutes)
+      cr1 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1)
+      cr2 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2)
+      cr1.target_result.should == 223.0 and cr2.target_result.should == -7.0
+    end
+
+    it "should return correct realised result" do
+      @campaign1.update_attribute(:cost_type, Campaign::AGENT_BILLING_RATE_COST)
+      CallResult.make!(:contact => @contact1_1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
+      CallResult.make!(:contact => @contact1_3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
+      CallResult.make!(:contact => @contact1_4, :result => @result4, :creator => @call_centre_agent2, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
+      CallResult.make!(:contact => @contact1_2, :result => @result2, :creator => @call_centre_agent2, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
+      CallResult.make!(:contact => @contact1_2, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset-1.day)
+      CallResult.make!(:contact => @contact1_1, :result => @result_final_reported, :creator => @call_centre_agent1)
+      CallResult.make!(:contact => @contact1_1, :result => @result_final, :creator => @call_centre_agent1)
+      CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
+      LeadPurchase.make!(:lead => @contact1_3.lead)
+      LeadPurchase.make!(:lead => @contact1_4.lead, :quantity => 5)
+      (1..4).each do |i|
+        UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign1, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes+15.minutes)
+      end
+      (1..8).each do |i|
+        UserSessionLog.make!(:user => @call_centre_agent2, :campaign => @campaign1, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+i*15.minutes+15.minutes)
+      end
+
+      UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign2, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+15.minutes)
+      cr1 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1)
+      cr2 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2)
+      cr1.realised_result.should == 100.0
+      cr2.realised_result.should == 35.0
+    end
   end
 
 end
