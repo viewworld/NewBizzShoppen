@@ -20,7 +20,7 @@ class UserSessionLog < ActiveRecord::Base
   end
 
   def cache_hours_count
-    self.hours_count = ((end_time - start_time) / 60) / 60.0
+    self.hours_count = (((end_time - start_time) / 60) / 60.0).to_f.round(2)
   end
 
 end
