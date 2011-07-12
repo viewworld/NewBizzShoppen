@@ -68,7 +68,7 @@
       <%= blank_state_message t("campaign_reports.index.empty_report_msg") %>
   <% else %>
       <% total_columns = 16 + CampaignReport.final_results.count %>
-      <table id="call_results" class="generic">
+      <table id="reports_table" class="generic">
         <thead>
         <tr>
           <th class="hl"></th>
