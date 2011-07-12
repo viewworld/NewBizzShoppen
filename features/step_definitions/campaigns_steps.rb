@@ -143,3 +143,60 @@ end
 Given /^there are no campaigns/ do
   Campaign.destroy_all
 end
+
+Given /^campaign report data is generated$/ do
+    @call_centre = User::CallCentre.make!(:screen_name => 'test report user CC', :email => "testreportscc@nbs.com", :password => "secret", :password_confirmation => "secret")
+    @call_centre_agent1 = User::CallCentreAgent.make!(:screen_name => 'test report user CCA1', :email => "testreportscca01@nbs.com", :password => "secret", :password_confirmation => "secret")
+    @call_centre_agent2 = User::CallCentreAgent.make!(:screen_name => 'test report user CCA2', :email => "testreportscca02@nbs.com", :password => "secret", :password_confirmation => "secret")
+    [@call_centre_agent1, @call_centre_agent1].each(&:confirm!)
+    @call_centre.subaccounts = [@call_centre_agent1, @call_centre_agent2]
+    @call_centre.save
+    @call_centre.confirm!
+
+    # create campaign
+    @currency = Currency.first
+    @campaign1 = Campaign.make!(:creator => @call_centre, :currency => @currency, :success_rate => 94, :name => "TestCampaignReport1")
+    @campaign2 = Campaign.make!(:creator => @call_centre, :currency => @currency, :success_rate => 94, :name => "TestCampaignReport2")
+
+    # assign users to campaign
+    @campaign1.users = [@call_centre,@call_centre_agent1,@call_centre_agent2]
+    @campaign2.users = [@call_centre,@call_centre_agent1,@call_centre_agent2]
+
+    # create results
+    @result1 = Result.make!(:final_reported_success, :name => "TEST Result 01")
+    @result2 = Result.make!(:final_reported_success, :name => "TEST Result 02")
+    @result3 = Result.make!(:upgrades_to_lead)
+    @result4 = Result.make!(:upgrades_to_lead)
+    @result_final_reported = Result.make!(:final_reported, :name => "TEST Result 03")
+    @result_final = Result.make!(:final)
+    @result_not_final = Result.make!
+
+    # assign results to campaign
+    @campaign1.results = [@result1,@result2,@result3,@result4,@result_final_reported,@result_final]
+    @campaign2.results = [@result1,@result2,@result3,@result4,@result_final_reported,@result_final]
+    @result1.campaigns_results.first.update_attributes(:value => 100, :expected_completed_per_hour => 5)
+    @result2.campaigns_results.first.update_attributes(:value => 10, :expected_completed_per_hour => 10)
+    @result1.campaigns_results.last.update_attributes(:value => 100, :expected_completed_per_hour => 5)
+    @result2.campaigns_results.last.update_attributes(:value => 10, :expected_completed_per_hour => 10)
+    @result_final_reported.campaigns_results.first.update_attributes(:value => 23, :expected_completed_per_hour => 5)
+    @result_final_reported.campaigns_results.last.update_attributes(:value => 23, :expected_completed_per_hour => 10)
+
+    # create contacts
+    @contact1_1 = Contact.make!(:campaign => @campaign1)
+    @contact1_2 = Contact.make!(:campaign => @campaign1)
+    @contact1_3 = Contact.make!(:campaign => @campaign1, :price => 130)
+    @contact1_4 = Contact.make!(:campaign => @campaign1, :price => 13)
+
+    @contact2_1 = Contact.make!(:campaign => @campaign2)
+
+    CallResult.make!(:contact => @contact1_1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
+    CallResult.make!(:contact => @contact1_3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
+    CallResult.make!(:contact => @contact1_4, :result => @result4, :creator => @call_centre_agent2, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
+    CallResult.make!(:contact => @contact1_2, :result => @result2, :creator => @call_centre_agent2, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset)
+    CallResult.make!(:contact => @contact1_2, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset-1.day)
+    CallResult.make!(:contact => @contact1_1, :result => @result_final_reported, :creator => @call_centre_agent1)
+    CallResult.make!(:contact => @contact1_1, :result => @result_final, :creator => @call_centre_agent1)
+    CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
+    LeadPurchase.make!(:lead => @contact1_3.lead)
+    LeadPurchase.make!(:lead => @contact1_4.lead, :quantity => 5)
+end

@@ -28,6 +28,7 @@ Feature: Result values
     And I fill in "result_campaigns_results_attributes_0_value" with "2159.99"
     And I press translated "campaigns.edit.button_update"
 
+  @_done @tested_elsewhere
   Scenario: Result 'Upgraded to lead' should have a value of created lead
 
   @_done @tested_elsewhere
