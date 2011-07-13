@@ -37,7 +37,7 @@ class TopAgent
     ActiveRecord::Base.connection.select_rows(%{
       SELECT user_id, sum(sum)
       FROM agent_information
-      WHERE created_at BETWEEN '#{date_from}' AND '#{date_to}'
+      WHERE created_at::DATE BETWEEN '#{date_from}' AND '#{date_to}'
       GROUP BY user_id
       ORDER BY sum DESC
       LIMIT 1

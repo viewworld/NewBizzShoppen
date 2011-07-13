@@ -12,7 +12,7 @@ class AgentInformation
     ActiveRecord::Base.connection.select_rows(%{
       SELECT sum(sum)
       FROM agent_information
-      WHERE created_at BETWEEN '#{date_from}' AND '#{date_to}' AND user_id = #{user.id}
+      WHERE created_at::DATE BETWEEN '#{date_from}' AND '#{date_to}' AND user_id = #{user.id}
       GROUP BY user_id
     }).flatten.first.to_f
   end
