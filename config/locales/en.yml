@@ -443,6 +443,18 @@ en:
     create:
       flash:
         successfully_imported: "%{count} contacts have been successfully imported."
+    batch_assign:
+      flash:
+        no_contacts_selected: "You have selected no contact."
+        max_contact_number_is_zero: "Maximum contact number for campaign must be greater then 0 to assign agents to contacts."
+        assigned_successfully: "Assignment has been performed successfully"
+    batch_remove:
+      flash:
+        no_contacts_selected: "You have selected no contact."
+        removed_successfully: "Removal has been performed successfully"
+    import_xls:
+      flash:
+        unknown_format: "Sorry. You can upload only ODC, XLS and XLSX files."
     update:
       flash:
         successfully_updated: Contact has been successfully updated.
