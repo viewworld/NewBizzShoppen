@@ -4,7 +4,7 @@ class Reports < Thor
   #::Usage::
   #When parameter is not specified then default is loaded
   #thor reports:create --campaigns 800 --users 10 --contacts 60 --spent 20
-  #thor reports:create --campaigns 1 --users 1 --contacts 1 --spent 1 --results 1 --upgraded 1
+  #thor reports:create --campaigns 1 --users 1 --contacts 1 --spent 1 --results 1 --upgraded 1 --sold 1
 
   desc "create", ""
 
@@ -31,15 +31,16 @@ class Reports < Thor
 
     @results = Result.where(:generic => true)
 
-    @result = Result.make!(:final_reported_success)
-    @result_upgrades = Result.make!(:upgrades_to_lead)
+    @result = Result.where(:is_reported => true, :is_success => true, :upgrades_to_lead => false, :final => true).first || Result.make!(:final_reported_success)
+    @result_upgrades = Result.where(:is_reported => true, :is_success => true, :upgrades_to_lead => true, :final => true).first || Result.make!(:upgrades_to_lead)
 
     campaign_name_prefix = "CampaignTest#{Time.now.to_i} #"
     1.upto(options[:campaigns]) do |i|
       puts "Generating ##{i} campaign..."
 
       @campaign = Campaign.make!(:creator => @call_centre, :currency => @currency, :success_rate => 94, :name => "#{campaign_name_prefix}#{i}",
-                                 :cost_type => Campaign::AGENT_BILLING_RATE_COST, :max_contact_number => options[:contacts])
+                                 :cost_type => Campaign::AGENT_BILLING_RATE_COST, :max_contact_number => options[:contacts],
+                                 :finished_contacts_per_hour => 0.07, :production_value_per_hour => 10.0)
       @campaign.results = [@result,@result_upgrades]
       @campaign.campaigns_results.first.update_attributes(:value => 100, :expected_completed_per_hour => 5)
       @campaign.campaigns_results.last.update_attributes(:value => 10, :expected_completed_per_hour => 3)
@@ -73,8 +74,8 @@ class Reports < Thor
         end
         1.upto(options[:spent]) do |hour_num|
           UserSessionLog.make!(:user => campaign_user, :campaign => @campaign, :log_type => UserSessionLog::TYPE_CAMPAIGN,
-                               :start_time => @campaign.start_date+i*60.minutes,
-                               :end_time => @campaign.end_date+i*60.minutes+60.minutes)
+                               :start_time => @campaign.start_date+(hour_num*60).minutes,
+                               :end_time => @campaign.start_date+(hour_num*60).minutes+60.minutes)
         end
       end
     end

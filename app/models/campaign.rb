@@ -65,7 +65,7 @@ class Campaign < ActiveRecord::Base
   end
 
   def set_euro_production_value_per_hour
-    if production_value_per_hour.to_i > 0 and currency.present? #and production_value_per_hour_changed?
+    if production_value_per_hour.to_i > 0 and currency.present? and production_value_per_hour_changed?
       self.euro_production_value_per_hour = currency.to_euro(production_value_per_hour)
     end
   end
