@@ -76,7 +76,7 @@
         <% if @user.new_record? %>
             <%= form.input :skip_email_verification, :as => :boolean %>
         <% end %>
-        <% if ['agent', 'call_centre_agent'].include?(params[:role]) or @user.has_any_role?(:agent, :call_centre_agent) %>
+        <% if ['agent', 'call_centre_agent', 'call_centre'].include?(params[:role]) or @user.has_any_role?(:agent, :call_centre_agent, :call_centre) %>
             <%= form.input :billing_rate %>
             <%= form.input :currency_id, :collection => currencies_for_select, :include_blank => true %>
         <% end %>

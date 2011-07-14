@@ -2385,8 +2385,26 @@ en:
             email:
               not_found: "not found"
               already_confirmed: "was already confirmed"
+          call_centre:
+            attributes:
+              currency_id:
+                blank: "is blank"
+              password:
+                blank: "is blank"
+                confirmation: "doesn't match confirmation"
+                too_short: "too short"
+          call_centre_agent:
+            attributes:
+              currency_id:
+                blank: "is blank"
+              password:
+                blank: "is blank"
+                confirmation: "doesn't match confirmation"
+                too_short: "too short"
           agent:
             attributes:
+              currency_id:
+                blank: "is blank"
               password:
                 blank: "is blank"
                 confirmation: "doesn't match confirmation"
