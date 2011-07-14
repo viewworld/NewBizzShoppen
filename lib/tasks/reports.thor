@@ -18,6 +18,8 @@ class Reports < Thor
     email = "call_centre_test#{Time.now.to_i}@nbs.com"
     @call_centre = User::CallCentre.make!(:email => email, :screen_name => email, :password => "secret", :password_confirmation => "secret")
 
+    puts "Generating users..."
+
     1.upto(options[:users]) do |i|
       email = "cca_test#{i}_#{@call_centre.email}"
       @call_centre_agent = User::CallCentreAgent.make!(:email => email, :screen_name => email, :password => "secret", :password_confirmation => "secret", :currency => @currency, :billing_rate => 10.0)
@@ -33,6 +35,8 @@ class Reports < Thor
 
     campaign_name_prefix = "CampaignTest#{Time.now.to_i} #"
     1.upto(options[:campaigns]) do |i|
+      puts "Generating ##{i} campaign..."
+
       @campaign = Campaign.make!(:creator => @call_centre, :currency => @currency, :success_rate => 94, :name => "#{campaign_name_prefix}#{i}",
                                  :cost_type => Campaign::AGENT_BILLING_RATE_COST, :max_contact_number => options[:contacts])
       @campaign.results = [@result,@result_upgrades]
@@ -47,8 +51,8 @@ class Reports < Thor
           @contact = Contact.make!(:campaign => @campaign, :agent_id => agent.id)
         end
       end
-      @campaign.users.each do |campaign_user|
-        campaign_user.with_role.contacts.where(:campaign_id => @campaign.id).each do |contact|
+      @campaign.users.select{ |u| u.has_any_role?(:agent, :call_centre_agent) }.map(&:with_role).each do |campaign_user|
+        campaign_user.contacts.where(:campaign_id => @campaign.id).each do |contact|
           1.upto(options[:results]).each do |res_num|
             CallResult.make!(:contact => contact, :result => @result, :creator => campaign_user,
                              :created_at => @campaign.start_date+res_num.minutes)
@@ -59,11 +63,14 @@ class Reports < Thor
           end
         end
         1.upto(options[:spent]) do |hour_num|
-          UserSessionLog.make!(:user => campaign_user, :campaign => @campaign,
+          UserSessionLog.make!(:user => campaign_user, :campaign => @campaign, :log_type => UserSessionLog::TYPE_CAMPAIGN,
                                :start_time => @campaign.start_date+i*60.minutes,
                                :end_time => @campaign.end_date+i*60.minutes+60.minutes)
         end
       end
     end
+
+    #claen up queued emails
+    ActiveRecord::Migration.execute "DELETE FROM delayed_jobs"
   end
 end
