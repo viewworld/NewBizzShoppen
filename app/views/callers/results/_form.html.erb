@@ -29,7 +29,7 @@
 </div>
 <% end %>
 
-<% if result.final? %>
+<% if result.final? and result.created_by_or_admin?(current_user) %>
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs labels_100 labels_ta_r">
     <ol>
