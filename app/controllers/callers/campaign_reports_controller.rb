@@ -5,6 +5,13 @@ class Callers::CampaignReportsController < Callers::CallerController
 
   before_filter lambda {authorize_role(:call_centre, :admin, :call_centre_agent, :agent)}
 
+  def index
+    super do |format|
+      format.html
+      format.pdf { send_file CampaignReport.store_pdf(params[:report]), :type => 'application/pdf'}
+    end
+  end
+
   def collection
     @date_from = params[:date_from] ? params[:date_from].to_date : Date.today-7
     @date_to = params[:date_to] ? params[:date_to].to_date : Date.today
@@ -32,9 +39,9 @@ class Callers::CampaignReportsController < Callers::CallerController
     if @views_count > 0
       if @per_user
         @campaign_users = if current_user.has_role?(:admin)
-                            User.assigned_to_campaigns.with_results.with_agents_without_call_centres
+                            User.assigned_to_campaigns.with_results
                           elsif current_user.has_role?(:call_centre)
-                            User.assigned_to_campaigns.with_results.for_campaigns(@campaigns.map(&:id)).with_agents_without_call_centres.where("parent_id = ?", current_user.id)
+                            User.assigned_to_campaigns.with_results.for_campaigns(@campaigns.map(&:id)).where("users.id = :current_user_id OR users.parent_id = :current_user_id", {:current_user_id => current_user.id})
                           elsif current_user.has_any_role?(:call_centre_agent, :agent)
                             [current_user]
                           end

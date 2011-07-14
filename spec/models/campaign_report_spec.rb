@@ -442,7 +442,7 @@ describe CampaignReport do
       UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign2, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+15.minutes)
       cr1 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1)
       cr2 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2)
-      cr1.target_result.should == 223.0 and cr2.target_result.should == -7.0
+      cr1.target_result.should == 243.0 and cr2.target_result.should == 3.0
     end
 
     it "should return correct realised result" do
@@ -467,8 +467,8 @@ describe CampaignReport do
       UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign2, :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset, :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+15.minutes)
       cr1 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent1)
       cr2 = CampaignReport.new(@campaign1, Time.new.beginning_of_week, Time.new.end_of_week, @call_centre_agent2)
-      cr1.realised_result.should == 100.0
-      cr2.realised_result.should == 35.0
+      cr1.realised_result.should == 120.0
+      cr2.realised_result.should == 45.0
     end
   end
 

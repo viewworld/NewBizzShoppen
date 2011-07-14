@@ -62,76 +62,27 @@
 
 
 <column-mc:>
-  <header><%= t("campaign_reports.index.header") %></header>
+  <% report_cache = "#{current_user.id}#{(Time.now.to_f*100000).to_i}" %>
+  <header>
+    <param:content>
+      <%= t("campaign_reports.index.header") %>
+    </param:content>
+
+    <% if @campaign_reports.any? %>
+        <param:actions>
+          <ul class="header_actions">
+            <li class="last">
+              <%= bt_link_to nil, t("campaign_reports.index.download_pdf"), callers_campaign_reports_path(:report => report_cache, :format => 'pdf') %>
+            </li>
+          </ul>
+        </param:actions>
+    <% end %>
+  </header>
 
   <% if @campaign_reports.empty? %>
-      <%= blank_state_message t("campaign_reports.index.empty_report_msg") %>
+    <%= blank_state_message t("campaign_reports.index.empty_report_msg") %>
   <% else %>
-      <% total_columns = 16 + CampaignReport.final_results.count %>
-      <table id="reports_table" class="generic">
-        <thead>
-        <tr>
-          <th class="hl"></th>
-          <th><%= t("campaign_reports.index.table.campaign_name") %></th>
-          <th colspan="<%= 4 + CampaignReport.final_results.count %>" class="ta_r pointer"><%= t("campaign_reports.index.table.campaign_targets") %></th>
-          <th colspan="5" class="ta_r pointer"><%= t("campaign_reports.index.table.completion") %></th>
-          <th colspan="3" class="ta_r pointer"><%= t("campaign_reports.index.table.campaign_results") %></th>
-          <th colspan="1" class="ta_r pointer"><%= t("campaign_reports.index.table.predicted_results") %></th>
-          <th colspan="1" class="ta_r pointer"><%= t("campaign_reports.index.table.realised_results") %></th>
-          <th class="hr"></th>
-        </tr>
-        </thead>
-        <tfoot>
-        <tr>
-          <td class="fl"></td>
-          <td colspan="<%= total_columns %>"></td>
-          <td class="fr"></td>
-        </tr>
-        </tfoot>
-        <tbody>
-        <tr>
-          <td class="hl"></td>
-          <td>&nbsp;</td>
-          <td><%= t("campaign_reports.index.table.success_percent") %></td>
-          <td><%= t("campaign_reports.index.table.finish_cph") %></td>
-          <% CampaignReport.final_results.each do |result| %>
-              <td><%= result.name %></td>
-          <% end %>
-          <td><%= t("campaign_reports.index.table.value_ph") %></td>
-
-          <td><%= t("campaign_reports.index.table.number_of_contacts") %></td>
-          <td><%= t("campaign_reports.index.table.percent") %></td>
-          <td><%= t("campaign_reports.index.table.number_of_calls_made") %></td>
-          <td><%= t("campaign_reports.index.table.avr_number_of_min_per_final_result") %></td>
-          <td><%= t("campaign_reports.index.table.avr_number_of_calls_per_finished_contacts") %></td>
-
-          <td><%= t("campaign_reports.index.table.value_created") %></td>
-          <td><%= t("campaign_reports.index.table.leads_sold") %></td>
-          <td><%= t("campaign_reports.index.table.hours_used") %></td>
-          <td><%= t("campaign_reports.index.table.production_cost") %></td>
-
-          <td><%= t("campaign_reports.index.table.result_value") %></td>
-
-          <td><%= t("campaign_reports.index.table.value_from_leads_sold") %></td>
-          <td class="hr"></td>
-        </tr>
-
-        <% if @per_user %>
-            <% @campaign_users.each do |user| %>
-                <tr>
-                  <td class="cl"></td>
-                  <td colspan="<%= total_columns %>"><b><%= user.screen_name %></b></td>
-                  <td class="cr"></td>
-                </tr>
-                <%= render :partial => "campaigns", :locals => {:campaign_reports => @campaign_reports.select { |cr| cr.user == user }} %>
-            <% end %>
-        <% else %>
-            <%= render :partial => "campaigns", :locals => {:campaign_reports => @campaign_reports} %>
-        <% end %>
-
-        </tbody>
-
-      </table>
+    <%= render(:text => CampaignReport.table(report_cache, @campaign_reports, @campaign_users, @per_user)).html_safe  %>
   <% end %>
 </column-mc:>
 

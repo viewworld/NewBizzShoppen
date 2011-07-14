@@ -1,5 +1,18 @@
 class CampaignReport
 
+  MARKUP_SCAFFOLD = %{<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+        <html xmlns="http://www.w3.org/1999/xhtml">
+          <head>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+            <style type="text/css">
+              @import url("../stylesheets/campaign_report.css") print;
+            </style>
+          </head>
+          <body>
+            %s
+          </body>
+        </html>}
+
   attr_accessor :campaign, :date_from, :date_to, :user
 
   def initialize(campaign, date_from, date_to, user=nil)
@@ -65,7 +78,7 @@ class CampaignReport
   end
 
   def completed_number_of_contacts
-    cc = Contact.with_completed_status(true).joins(:call_results).where("leads.campaign_id = ? and call_results.created_at BETWEEN ? AND ?",
+    cc = Contact.with_completed_status(true).joins(:call_results).where("leads.campaign_id = ? and call_results.created_at::DATE BETWEEN ? AND ?",
                                                                   campaign.id, date_from, date_to)
     cc = cc.where("call_results.creator_id = ?", user.id) if user
     cc.select("distinct(leads.id)").count
@@ -103,25 +116,44 @@ class CampaignReport
     leads_sold_total_value - production_cost
   end
 
+  def self.store_pdf(report_cache)
+    pdf_path = Rails.root.join "public/html2pdf/campaign_reports_cache/#{report_cache}.pdf"
+    html_path = Rails.root.join "public/html2pdf/campaign_reports_cache/#{report_cache}.html"
+    `python public/html2pdf/pisa.py #{html_path} #{pdf_path}`
+    File.delete(html_path)
+    pdf_path
+  end
+
+  def self.table(report_cache,campaign_reports,campaign_users,per_user=false)
+    av = ActionView::Base.new
+    av.view_paths << File.join(::Rails.root.to_s, "app", "views")
+    av.instance_eval do
+      extend ApplicationHelper
+    end
+    html = av.render(:partial => 'callers/campaign_reports/report', :type => :erb, :locals => { :per_user => per_user, :campaign_users => campaign_users, :campaign_reports => campaign_reports })
+    markup = MARKUP_SCAFFOLD % html
+    File.open(Rails.root.join("public/html2pdf/campaign_reports_cache/#{report_cache}.html"), 'w') {|f| f.write(markup) }
+    html
+  end
 
   private
 
   def final_results(result=nil)
-    rsp = CallResult.final_for_campaign(campaign).where("call_results.created_at BETWEEN ? AND ?", date_from, date_to).with_reported
+    rsp = CallResult.final_for_campaign(campaign).where("call_results.created_at::DATE BETWEEN ? AND ?", date_from, date_to).with_reported
     rsp = rsp.where("call_results.creator_id = ?", user.id) if user
     rsp = rsp.where("results.id = ?", result.id) if result
     rsp
   end
 
   def total_hours(_user=nil)
-    th = campaign.user_session_logs.where("created_at BETWEEN ? AND ?", date_from, date_to)
+    th = campaign.user_session_logs.where("created_at::DATE BETWEEN ? AND ?", date_from, date_to)
     _user = _user || user
     th = th.where("user_id = ?", _user.id) if _user
     th.sum(:hours_count).to_f
   end
 
   def finished_contacts
-    fc = Contact.with_completed_status(true).where("campaign_id = ? and call_results.created_at BETWEEN ? AND ? and results.final is true and results.is_reported is true", campaign.id, date_from, date_to).
+    fc = Contact.with_completed_status(true).where("campaign_id = ? and call_results.created_at::DATE BETWEEN ? AND ? and results.final is true and results.is_reported is true", campaign.id, date_from, date_to).
         joins(:call_results => [:result])
     fc = fc.where("call_results.creator_id = ?", user.id) if user
     fc
@@ -147,13 +179,15 @@ class CampaignReport
 
   def total_cost
     if campaign.cost_type == Campaign::FIXED_COST
-      campaign.euro_fixed_cost_value
+      user ?  (campaign.euro_fixed_cost_value / campaign.users.with_results.count) : campaign.euro_fixed_cost_value
     elsif campaign.cost_type == Campaign::FIXED_HOURLY_RATE_COST
       campaign.euro_fixed_cost_value * total_hours
     elsif campaign.cost_type == Campaign::AGENT_BILLING_RATE_COST
-      campaign.users.with_agents_without_call_centres.map { |u| u.euro_billing_rate * total_hours(u) }.sum
+      user ? (user.euro_billing_rate.to_f * total_hours(user)) : campaign.users.map { |u| u.euro_billing_rate.to_f * total_hours(u) }.sum
     elsif campaign.cost_type == Campaign::NO_COST
       0.0
     end
   end
+
+
 end
