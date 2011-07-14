@@ -17,7 +17,7 @@ class AddIndexes < ActiveRecord::Migration
     add_index :campaigns, :category_id
     add_index :campaigns, :country_id
     add_index :campaigns, [:creator_id,:creator_type]
-    add_index :campaigns, :currency_id
+#    add_index :campaigns, :currency_id
     add_index :campaigns, :start_date
     add_index :campaigns, :end_date
     add_index :campaigns_results, :campaign_id
@@ -42,7 +42,7 @@ class AddIndexes < ActiveRecord::Migration
     add_index :lead_purchases, :created_at
     add_index :lead_purchases, :accessible_from
     add_index :leads, :created_at
-    add_index :leads, :lead_id
+#    add_index :leads, :lead_id
     add_index :leads, :position
     add_index :leads, :lead_purchases_counter
     add_index :leads, :purchase_value
@@ -58,8 +58,8 @@ class AddIndexes < ActiveRecord::Migration
     add_index :results, :name
     add_index :translations, :key
     add_index :user_session_logs, :user_id
-    add_index :user_session_logs, :campaign_id
-    add_index :users, :currency_id
+    #add_index :user_session_logs, :campaign_id
+    #add_index :users, :currency_id
     add_index :users, :contact_id
     add_index :users, :bank_account_id
     add_index :users, :parent_id
