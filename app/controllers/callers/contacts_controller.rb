@@ -48,20 +48,22 @@ class Callers::ContactsController < Callers::CallerController
 
   def batch_assign
     if params[:contact_ids].blank?
-      flash[:notice] = "You have selected no contact."
+      flash[:notice] = t('contacts.batch_assign.flash.no_contacts_selected')
+    elsif @campaign.max_contact_number.to_i.eql?(0)
+      flash[:notice] = t('contacts.batch_assign.flash.max_contact_number_is_zero')
     else
       Contact.batch_assign(params[:contact_ids], params[:agent_id])
-      flash[:notice] = "Assignment has been performed successfully"
+      flash[:notice] = t('contacts.batch_assign.flash.assigned_successfully')
     end
     redirect_to edit_callers_campaign_path(@campaign)
   end
 
   def batch_remove
     if params[:contact_ids].blank?
-      flash[:notice] = "You have selected no contact."
+      flash[:notice] = t('contacts.batch_remove.flash.no_contacts_selected')
     else
       Contact.batch_remove(params[:contact_ids])
-      flash[:notice] = "Removal has been performed successfully"
+      flash[:notice] = t('contacts.batch_remove.flash.removed_successfully')
     end
     redirect_to edit_callers_campaign_path(@campaign)
   end
@@ -74,7 +76,7 @@ class Callers::ContactsController < Callers::CallerController
     if Sheet.file_validation(params["attachment"].original_filename)
       @campaign.create_contacts_from_xls(Sheet.new(params["attachment"]).roo_instance, current_user)
     else
-      flash[:notice] = "Sorry. You can upload only ODC, XLS and XLSX files."
+      flash[:notice] = t('contacts.import_xls.flash.unknown_format')
     end
     redirect_to edit_callers_campaign_path(@campaign)
   end
