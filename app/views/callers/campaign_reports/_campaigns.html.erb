@@ -7,7 +7,7 @@
           <% CampaignReport.final_results.each do |result| %>
           <td><%= number_with_precision(campaign_report.target_final_result(result), :precision => 2) %> (<%= number_with_precision(campaign_report.realised_final_result(result), :precision => 2) %>)</td>
           <% end %>
-          <td><%= number_with_precision(campaign_report.target_value_per_hour, :precision => 2) %> (<%= number_with_precision(campaign_report.realised_value_per_hour, :precision => 2) %>)</td>
+          <td><%= as_currency(campaign_report.target_value_per_hour, Currency.euro) %> (<%= as_currency(campaign_report.realised_value_per_hour, Currency.euro) %>)</td>
           <td><%= campaign_report.total_number_of_contacts %> (<%= campaign_report.completed_number_of_contacts %>) </td>
           <td><%= number_to_percentage(campaign_report.completion_percent, :precision => 0) %></td>
           <td></td>
