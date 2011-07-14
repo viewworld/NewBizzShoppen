@@ -181,12 +181,10 @@ class CampaignReport
     if campaign.cost_type == Campaign::FIXED_COST
       user ?  (campaign.euro_fixed_cost_value / campaign.users.with_results.count) : campaign.euro_fixed_cost_value
     elsif campaign.cost_type == Campaign::FIXED_HOURLY_RATE_COST
-      campaign.euro_fixed_cost_value * total_hours(u)
+      campaign.euro_fixed_cost_value * total_hours
     elsif campaign.cost_type == Campaign::AGENT_BILLING_RATE_COST
       user ? (user.euro_billing_rate.to_f * total_hours(user)) : campaign.users.map { |u| u.euro_billing_rate.to_f * total_hours(u) }.sum
     elsif campaign.cost_type == Campaign::NO_COST
-      0.0
-    else # should not happen for new campaigns
       0.0
     end
   end
