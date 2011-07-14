@@ -150,4 +150,12 @@ class Contact < AbstractLead
   def lower_contact
     contacts_list_conditions_for(:lower)
   end
+
+  def first_name
+    contact_name.to_s.split.first
+  end
+
+  def last_name
+    contact_name.to_s.split[1..-1].to_a.join(' ')
+  end
 end
