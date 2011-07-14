@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
   def update_log_entries
     if user_signed_in? and self.class.to_s != "UserSessionLogController"
       UserSessionLog.update_end_time(session[:current_usl_global], Settings.logout_time.to_i) if session[:current_usl_global].present?
-      if self.class.name.match(/^Callers::/) and params[:campaign_id]
+      if self.class.name.match(/::AgentWorkScreen::/) and params[:campaign_id]
         if session[:current_usl_campaigns].blank? or UserSessionLog.find(session[:current_usl_campaigns]).campaign_id != params[:campaign_id].to_i
           usl_campaign = UserSessionLog.create(:user_id => current_user.id, :start_time => Time.now,
                                                :end_time => (Time.now + Settings.logout_time.to_i.minutes),

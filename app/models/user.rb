@@ -189,7 +189,7 @@ class User < ActiveRecord::Base
 
   def check_billing_rate
     if billing_rate.to_i > 0 and currency.blank?
-      self.errors.add(:currency_id, :is_blank)
+      self.errors.add(:currency_id, :blank)
     end
   end
 

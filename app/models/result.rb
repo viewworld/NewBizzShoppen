@@ -27,8 +27,12 @@ class Result < ActiveRecord::Base
     name.gsub(" ","_").downcase.to_sym
   end
 
+  def created_by_or_admin?(user)
+    creator_id == user.id or user.has_role?(:admin)
+  end
+
   def can_be_managed_by?(user)
-    (creator_id == user.id or user.has_role?(:admin))
+    (created_by_or_admin?(user) or user.has_role?(:call_centre))
   end
 
   def list_of_fields
