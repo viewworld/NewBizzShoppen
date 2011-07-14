@@ -4,10 +4,11 @@ class Reports < Thor
   #::Usage::
   #When parameter is not specified then default is loaded
   #thor reports:create --campaigns 800 --users 10 --contacts 60 --spent 20
+  #thor reports:create --campaigns 1 --users 1 --contacts 1 --spent 1 --results 1 --upgraded 1
 
   desc "create", ""
 
-  method_options :campaigns => 10, :users => 5, :contacts => 10, :spent => 20, :results => 10, :upgraded => 12
+  method_options :campaigns => 10, :users => 5, :contacts => 10, :spent => 20, :results => 10, :upgraded => 12, :sold => 0
   def create
     require "spec/support/blueprints"
     puts "RAPORT#create"
@@ -48,7 +49,8 @@ class Reports < Thor
       @campaign.save
       @call_centre.subaccounts.each do |agent|
         1.upto(options[:contacts]) do |contact_num|
-          @contact = Contact.make!(:campaign => @campaign, :agent_id => agent.id)
+          @contact = Contact.make!(:campaign => @campaign)
+          @contact.assign_agent(agent.id)
         end
       end
       @campaign.users.select{ |u| u.has_any_role?(:agent, :call_centre_agent) }.map(&:with_role).each do |campaign_user|
@@ -57,9 +59,16 @@ class Reports < Thor
             CallResult.make!(:contact => contact, :result => @result, :creator => campaign_user,
                              :created_at => @campaign.start_date+res_num.minutes)
           end
+
+          all_upgraded = []
+
           1.upto(options[:upgraded]).each do |res_num|
-            CallResult.make!(:contact => contact, :result => @result_upgrades, :creator => campaign_user,
+            all_upgraded << CallResult.make!(:contact => contact, :result => @result_upgrades, :creator => campaign_user,
                              :created_at => @campaign.start_date+res_num.minutes)
+          end
+
+          all_upgraded.first(options[:sold]).each do |cr|
+            LeadPurchase.make!(:lead => cr.contact.lead)
           end
         end
         1.upto(options[:spent]) do |hour_num|
