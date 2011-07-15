@@ -34,22 +34,26 @@ Scenario: Before I execute any controller action then end time of current Regula
 Scenario: If I execute any campaign controller first time then new Campaign Log is created with start time and end time set to Time now and Time now plus 5 min
   Given I am on the homepage
   Then Count for model UserSessionLog is equal 0
-  Then I sign in as agent@nbs.com with password secret
+  Then I sign in as translator_call_centre_agent@nbs.com with password secret
   Then Count for model UserSessionLog is equal 1
   Then I follow translated "layout.main_menu.call_centre_agent.campaigns"
+  And I click hidden link by url regex "/callers\/campaigns\/\d+\/agent_work_screen/"
   Then Count for model UserSessionLog is equal 2
   Then Last campaign UserSessionLog is valid after create
   Then I wait 5 second
   Then I follow translated "layout.main_menu.call_centre_agent.campaigns"
+  And I click hidden link by url regex "/callers\/campaigns\/\d+\/agent_work_screen/"
   Then Last campaign UserSessionLog is valid after invoke some controller action
   Then Last regular UserSessionLog is valid after invoke some controller action
   Then I follow translated "layout.main_menu.shared.browse_leads"
   Then Last campaign UserSessionLog is valid after close
   Then I follow translated "layout.main_menu.call_centre_agent.campaigns"
-  Then Count for model UserSessionLog is equal 3
+  And I click hidden link by url regex "/callers\/campaigns\/\d+\/agent_work_screen/"
+  Then Count for model UserSessionLog is equal 4
   Then Last campaign UserSessionLog is valid after create
   Then I wait 5 second
   Then I follow translated "layout.main_menu.call_centre_agent.campaigns"
+  And I click hidden link by url regex "/callers\/campaigns\/\d+\/agent_work_screen/"
   Then Last campaign UserSessionLog is valid after invoke some controller action
   Then I go to the logout page
   Then Last campaign UserSessionLog is valid after close

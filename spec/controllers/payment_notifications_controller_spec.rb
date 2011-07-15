@@ -18,7 +18,11 @@ describe PaymentNotificationsController do
   context "create" do
     it "should create payment notification but not buy leads if validation fails" do
       PaymentNotification.count.should == 0
+      begin
       post :create
+      rescue
+
+      end
       PaymentNotification.count.should == 0
       @customer.lead_purchases.in_cart.size.should == 2
       @customer.lead_purchases.accessible.size.should == 0
