@@ -10,7 +10,9 @@ describe User do
       @customer = User::Customer.make!
       @lead_buyer1 = User::LeadBuyer.make!(:parent_id => @customer.id)
       @lead_buyer2 = User::LeadBuyer.make!(:parent_id => @customer.id)
-      @lead_buyer3 = User::LeadBuyer.make!
+      @lead_buyer3 = User::Customer.make!
+      @lead_buyer3 = User::LeadBuyer.find(@lead_buyer3.id)
+
       @lead_user1 = User::LeadUser.make!(:parent_id => @customer.id)
       @lead_user2 = User::LeadUser.make!(:parent_id => @customer.id)
       @lead_user3 = User::LeadUser.make!
