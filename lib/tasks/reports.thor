@@ -15,6 +15,8 @@ class Reports < Thor
     puts "campaigns: #{options[:campaigns]}, users per campaign: #{options[:users]}, contacts per user in campaign: #{options[:contacts]}, hours spent per user: #{options[:spent]}"
 
     @currency = Currency.euro
+    @category = Category.all.detect { |c| c.can_publish_leads? } || Category.make!
+    @country = Country.first || Country.make!
 
     email = "call_centre_test#{Time.now.to_i}@nbs.com"
     @call_centre = User::CallCentre.make!(:email => email, :screen_name => email, :password => "secret", :password_confirmation => "secret", :currency => @currency, :billing_rate => 10.0)
@@ -37,7 +39,7 @@ class Reports < Thor
 
       @campaign = Campaign.make!(:creator => @call_centre, :currency => @currency, :success_rate => 94, :name => "#{campaign_name_prefix}#{i}",
                                  :cost_type => Campaign::AGENT_BILLING_RATE_COST, :max_contact_number => options[:contacts],
-                                 :finished_contacts_per_hour => 0.07, :production_value_per_hour => 10.0)
+                                 :finished_contacts_per_hour => 0.07, :production_value_per_hour => 10.0, :category => @category, :country => @country)
       @campaign.results = @results
       @campaign.users = [@call_centre] + @call_centre.subaccounts
       @campaign.save
@@ -46,7 +48,7 @@ class Reports < Thor
 
       @campaign.users.each do |agent|
         1.upto(options[:contacts]) do |contact_num|
-          @contact = Contact.make!(:campaign => @campaign)
+          @contact = Contact.make!(:campaign => @campaign, :category => @campaign.category, :country => @campaign.country, :currency => @campaign.currency)
           @contact.assign_agent(agent.id)
         end
       end
@@ -66,6 +68,7 @@ class Reports < Thor
           end
 
           all_upgraded.first(options[:sold]).each do |cr|
+            cr.contact.lead.update_attribute(:currency, @currency)
             LeadPurchase.make!(:lead => cr.contact.lead)
           end
         end
