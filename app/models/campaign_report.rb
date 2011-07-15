@@ -171,7 +171,7 @@ class CampaignReport
   end
 
   def leads_sold
-    sold = CallResult.final_for_campaign(campaign).where("results.upgrades_to_lead is true and call_results.created_at BETWEEN ? AND ?", date_from, date_to).with_reported.
+    sold = CallResult.final_for_campaign(campaign).where("results.upgrades_to_lead is true and call_results.created_at::DATE BETWEEN ? AND ?", date_from, date_to).with_reported.
         joins(:contact => {:lead => [:lead_purchases]})
     sold = sold.where("call_results.creator_id = ?", user.id) if user
     sold
