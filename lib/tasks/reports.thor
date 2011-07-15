@@ -68,7 +68,7 @@ class Reports < Thor
           end
 
           all_upgraded.first(options[:sold]).each do |cr|
-            LeadPurchase.make!(:lead => cr.contact.lead)
+            LeadPurchase.make!(:lead_id => cr.contact.lead.id)
           end
         end
 
