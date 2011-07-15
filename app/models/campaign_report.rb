@@ -145,11 +145,21 @@ class CampaignReport
     rsp
   end
 
-  def total_hours(_user=nil)
+  def user_session_logs(_user=nil)
     th = campaign.user_session_logs.where("created_at::DATE BETWEEN ? AND ?", date_from, date_to)
     _user = _user || user
     th = th.where("user_id = ?", _user.id) if _user
+    th
+  end
+
+  def total_hours(_user=nil)
+    th = user_session_logs(_user || user)
     th.sum(:hours_count).to_f
+  end
+
+  def total_billing(_user=nil)
+    th = user_session_logs(_user || user)
+    th.sum("hours_count * euro_billing_rate").to_f
   end
 
   def finished_contacts
@@ -183,7 +193,7 @@ class CampaignReport
     elsif campaign.cost_type == Campaign::FIXED_HOURLY_RATE_COST
       campaign.euro_fixed_cost_value * total_hours
     elsif campaign.cost_type == Campaign::AGENT_BILLING_RATE_COST
-      user ? (user.euro_billing_rate.to_f * total_hours(user)) : campaign.users.map { |u| u.euro_billing_rate.to_f * total_hours(u) }.sum
+      user ? (user.euro_billing_rate.to_f * total_hours(user)) : campaign.users.map { |u| total_billing(u) }.sum
     elsif campaign.cost_type == Campaign::NO_COST
       0.0
     end
