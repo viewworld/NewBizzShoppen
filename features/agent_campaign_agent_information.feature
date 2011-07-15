@@ -13,7 +13,6 @@ Feature: Agent information
   Scenario: I can see my created value Today
     And I click hidden link by url regex "/callers\/campaigns\/\d+\/agent_work_screen/"
     And I wait 5 second
-    And I open page in browser
     And I should see "created today: €0.00"
     And I should see "this week: €130.00"
     And I should see "this quarter:"
