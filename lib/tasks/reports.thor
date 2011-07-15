@@ -37,7 +37,7 @@ class Reports < Thor
 
       @campaign = Campaign.make!(:creator => @call_centre, :currency => @currency, :success_rate => 94, :name => "#{campaign_name_prefix}#{i}",
                                  :cost_type => Campaign::AGENT_BILLING_RATE_COST, :max_contact_number => options[:contacts],
-                                 :finished_contacts_per_hour => 0.07, :production_value_per_hour => 10.0)
+                                 :finished_contacts_per_hour => 0.07, :production_value_per_hour => 10.0, :category => Category.order("RANDOM()").first)
       @campaign.results = @results
       @campaign.users = [@call_centre] + @call_centre.subaccounts
       @campaign.save
@@ -46,7 +46,7 @@ class Reports < Thor
 
       @campaign.users.each do |agent|
         1.upto(options[:contacts]) do |contact_num|
-          @contact = Contact.make!(:campaign => @campaign)
+          @contact = Contact.make!(:campaign => @campaign, :category_id => @campaign.category.id)
           @contact.assign_agent(agent.id)
         end
       end
