@@ -48,7 +48,7 @@ class Reports < Thor
 
       @campaign.users.each do |agent|
         1.upto(options[:contacts]) do |contact_num|
-          @contact = Contact.make!(:campaign => @campaign, :category => @campaign.category, :country => @campaign.country, :currency => @campaign.currency)
+          @contact = Contact.make!(:campaign => @campaign, :category_id => @campaign.category.id, :country => @campaign.country, :currency => @campaign.currency)
           @contact.assign_agent(agent.id)
         end
       end
@@ -68,7 +68,6 @@ class Reports < Thor
           end
 
           all_upgraded.first(options[:sold]).each do |cr|
-            cr.contact.lead.update_attribute(:currency, @currency)
             LeadPurchase.make!(:lead => cr.contact.lead)
           end
         end
