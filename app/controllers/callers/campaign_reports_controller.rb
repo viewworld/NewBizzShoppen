@@ -39,7 +39,7 @@ class Callers::CampaignReportsController < Callers::CallerController
     if @views_count > 0
       if @per_user
         @campaign_users = if current_user.has_role?(:admin)
-                            User.assigned_to_campaigns.with_results
+                            User.assigned_to_campaigns.with_results.for_campaigns(@campaigns.map(&:id))
                           elsif current_user.has_role?(:call_centre)
                             User.assigned_to_campaigns.with_results.for_campaigns(@campaigns.map(&:id)).where("users.id = :current_user_id OR users.parent_id = :current_user_id", {:current_user_id => current_user.id})
                           elsif current_user.has_any_role?(:call_centre_agent, :agent)
