@@ -542,6 +542,7 @@ en:
     edit:
       title: Edit result type
 
+      value_assignment_hint: "In order to assign Value and Expected per hour rate, you need to assign the result to this campaign."
   lead_requests:
     listing:
       purchase_value_label: "Purchase value:"

@@ -48,6 +48,16 @@
     <%= form.fields_for :campaigns_results, @result.campaigns_results.detect { |cr| cr.campaign_id == @campaign.id } do |builder| %>
         <%= render :partial => "campaign_result", :locals => {:f => builder} %>
     <% end %>
+<% else %>
+    <div class="pdd_10 no_pdd_t">
+      <fieldset class="inputs labels_100 labels_ta_r">
+        <ol>
+          <li class="string">
+            <%= t("results.edit.value_assignment_hint") %>
+          </li>
+        </ol>
+      </fieldset>
+    </div>
 <% end %>
 
 <script>
