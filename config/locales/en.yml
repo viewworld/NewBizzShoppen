@@ -118,6 +118,7 @@ en:
         not_invoiced: "Not Invoiced Leads"
       lead_buyer:
         lead_purchases: My leads
+        my_deals: My deals
       lead_user:
         lead_purchases: My leads
         lead_requests: My requested leads
