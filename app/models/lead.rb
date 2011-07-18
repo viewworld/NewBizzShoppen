@@ -21,6 +21,7 @@ class Lead < AbstractLead
   has_many :comment_threads, :class_name => "Comment", :foreign_key => :commentable_id, :conditions => {:commentable_type => 'AbstractLead'}
 
   scope :with_keyword, lambda { |q| where("lower(header) like :keyword OR lower(leads.description) like :keyword OR lower(creator_name) like :keyword", {:keyword => "%#{q.downcase}%"}) }
+  scope :published_is, lambda { |q| where("published = ?", q == "1")}
   scope :deal_value_from, lambda { |q| where(["purchase_value >= ?", q]) }
   scope :deal_value_to, lambda { |q| where(["purchase_value <= ?", q]) }
   scope :price_from, lambda { |q| where(["price >= ?", q]) }

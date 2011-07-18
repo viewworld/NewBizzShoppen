@@ -1,6 +1,8 @@
-<column-mc:>
-  <header back="true">Deals</header>
 
+<%= render :partial => "shared/deals/filter", :locals => {:search => @search, :path => buyers_deals_path} %>
+
+<column-mc:>
+  <header>My deals</header>
    <%= deals_table @deals do |blocks| %>
       <% blocks.tools do |deal| %>
           <ul-actions>
@@ -10,5 +12,4 @@
           </ul-actions>
       <% end %>
   <% end %>
-
 </column-mc:>
