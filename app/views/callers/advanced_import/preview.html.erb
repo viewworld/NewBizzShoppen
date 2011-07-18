@@ -1,0 +1,29 @@
+<column-mc:>
+
+  <header><%= t("callers.advanced_import.preview.view.title") %></header>
+
+  <% size = @contacts_to_preview.size %>
+  <% @contacts_to_preview.each_with_index do |contact, index| %>
+      <div id='contact_container_<%= index %>' class='contact_preview' style="<%= "display:none" if index != 0 %> ">
+        <%= index+1 %>/<%= size %><br/>
+        <% Contact::CSV_ATTRS.each do |field| %>
+            <span style="font-weight:bold"><%= field.humanize %>:</span> <%= contact[field] %>
+            <br/>
+        <% end %>
+        <%= index != 0 ? link_to_function(t("callers.advanced_import.preview.view.first_contact_button"), "$('#contact_container_#{index}').hide();$('#contact_container_0').show();") : t("callers.advanced_import.preview.view.first_contact_button") %>
+        <%= index != 0 ? link_to_function(t("callers.advanced_import.preview.view.prev_contact_button"), "$('#contact_container_#{index}').hide();$('#contact_container_#{index-1}').show();") : t("callers.advanced_import.preview.view.prev_contact_button") %>
+        <%= size-1 != index ? link_to_function(t("callers.advanced_import.preview.view.next_contact_button"), "$('#contact_container_#{index}').hide();$('#contact_container_#{index+1}').show();") : t("callers.advanced_import.preview.view.next_contact_button")  %>
+        <%= size-1 != index ? link_to_function(t("callers.advanced_import.preview.view.last_contact_button"), "$('#contact_container_#{index}').hide();$('#contact_container_#{size-1}').show();") : t("callers.advanced_import.preview.view.last_contact_button")  %>
+      </div>
+  <% end %>
+
+<% form_tag callers_campaign_advanced_import_index_path(@campaign), :id => "import_contacts_form", :method => :post, :multipart => true do %>
+      <%= hidden_field_tag :contact_field, @contact_field %>
+      <%= hidden_field_tag :spreadsheet_field, @spreadsheet_field %>
+      <%= hidden_field_tag :attachment, @attachment_file %>
+  <% end %>
+
+  <%= link_to_function t("callers.advanced_import.preview.view.cancel_button"), "javascript:history.back()" %>
+  <%= button_to_function t("callers.advanced_import.preview.view.import_button"), "$('#import_contacts_form').submit();" %>
+
+</column-mc:>

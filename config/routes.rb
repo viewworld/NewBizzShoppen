@@ -155,9 +155,10 @@ Nbs::Application.routes.draw do
           post 'import_xls'
         end
       end
-      resources :advanced_import, :only => [:new, :create, :destroy] do
+      resources :advanced_import, :only => [:create, :destroy] do
         collection do
-          get 'browse'
+          post 'choose'
+          post 'preview'
         end
       end
       resources :agent_work_screen, :only => :index
@@ -170,8 +171,8 @@ Nbs::Application.routes.draw do
       resources :email_templates, :only => [:edit, :update]
     end
 
-    resource :production,  :controller => "production", :only => [:show]
-    
+    resource :production, :controller => "production", :only => [:show]
+
     resources :contacts do
       resources :call_results, :only => [:new, :create, :edit, :update, :destroy]
     end
@@ -198,6 +199,12 @@ Nbs::Application.routes.draw do
   end
   match 'categories/:slag' => "leads#index"
 
+  resources :lead_advanced_import, :only => [:create, :destroy] do
+    collection do
+      post 'choose'
+      post 'preview'
+    end
+  end
 
   resources :agent_accounts, :only => [:new, :create]
   resources :buyer_accounts, :only => [:new, :create]

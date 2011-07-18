@@ -1,0 +1,19 @@
+<% form_tag choose_lead_advanced_import_index_path, :method => :post, :multipart => true, :style => "#{"display:none" unless show}", :id => "lead_advanced_import_form" do %>
+    <frm title="#{t('lead_advanced_import.form.view.title')}">
+      <param:content>
+        <div class="pdd_10 no_pdd_t">
+          <fieldset class="inputs labels_ta_r labels_180">
+            <ol class="align_inputs">
+              <%= file_field_tag 'attachment', :accept => 'spreadsheet/ods,spreadsheet/doc,spreadsheet/xdoc', :class => "fltl" %>
+              <%= select_tag :category_id, options_for_select(nested_set_options(categories), :selected => default_category_for_select(categories), :disabled => categories.select { |c| !c.can_publish_leads? }.map(&:id)) %>
+            </ol>
+          </fieldset>
+        </div>
+      </param:content>
+      <param:actions>
+        <ibt c="fltri" icon="save">
+          <%= submit_tag t("lead_advanced_import.form.view.button"), :name => "commit_create" %>
+        </ibt>
+      </param:actions>
+    </frm>
+<% end %>

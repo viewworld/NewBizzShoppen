@@ -336,6 +336,8 @@ en:
       button_import_contacts: Import CSV contacts
       button_assign_selected_contacts: Assign selected contacts
       button_remove_assignment_for_selected: "Remove assignments for selected"
+      button_remove_last_import: "Remove last import"
+      button_remove_last_import_confirm: "Are you sure? This action can not be undone."
       button_bulk_download_csv_link: "Export CSV contacts"
       button_remove_selected: Remove selected
       agent_assignment_button: Agent assignment
@@ -402,10 +404,13 @@ en:
       search_button: Search
     new:
       title_new_contact: New contact
+      title_import_from_excel: Create new from spreadsheet
+      title_advanced_import_from_excel: Advanced import - create new from spreadsheet
       title_import: Import contacts
       create_button: Create
       import_button: Import
       import_from_excel_button: Import from spreadsheet
+      advanced_import_from_excel_button: Import from spreadsheet
       cancel_button: Back to campaign
       button_show_import_contacts: import contacts
       button_show_new_contact: create new contact
@@ -2909,3 +2914,72 @@ en:
     show:
       view:
         header: "Production"
+
+  callers:
+    advanced_import:
+      choose:
+        flash:
+          error_wrong_title: "Sorry. We have found unsafe character in headers. Only underscore, space, number and letters are allowed."
+          error_wrong_file: "Sorry. You can upload only ODC, XLS and XLSX file."
+        view:
+          title: "Advanced Import"
+          contact_fields_label: "Contact fields"
+          contact_selected_fields_label: "use this fields"
+          contact_not_selected_fields_label: "removed fields"
+          spreadsheet_fields_label: "Spreadsheet fields"
+          spreadsheet_selected_fields_label: "use this fields"
+          spreadsheet_not_selected_fields_label: "removed fields"
+          cancel_button: Cancel
+          next_button: Next
+          warning_list_not_equal: "Sorry, you can not proceed. The number of elements in lists are different"
+      preview:
+        flash:
+          error_wrong_fields: "Sorry. There is problem with chosen fields."
+          error_wrong_file: "Sorry. There is problem with your uploaded file."
+        view:
+          title: "Advanced Import - contacts preview"
+          first_contact_button: "<< first"
+          prev_contact_button: "< prev"
+          next_contact_button: "next >"
+          last_contact_button: "last >>"
+          cancel_button: Cancel
+          import_button: Import
+      create:
+        flash:
+          success: "Import completed. %{counter} contacts have been successfully imported"
+          error_wrong_fields: "Sorry. There is problem with chosen fields."
+          error_wrong_file: "Sorry. There is problem with your uploaded file."
+        view:
+      destroy:
+        flash:
+          success: "Last import has been successfully canceled."
+
+  lead_advanced_import:
+    form:
+      view:
+        title: "Advanced import - create new leads from spreadsheet."
+        button: "Import from spreadsheet"
+    choose:
+      view:
+        title: "Lead advanced import for %{category} category - choose fields"
+        contact_fields_label: "Lead fields"
+        contact_selected_fields_label: "use this fields"
+        contact_not_selected_fields_label: "removed fields"
+        spreadsheet_fields_label: "Spreadsheet fields"
+        spreadsheet_selected_fields_label: "use this fields"
+        spreadsheet_not_selected_fields_label: "removed fields"
+        cancel_button: Cancel
+        next_button: Next
+        warning_list_not_equal: "Sorry, you can not proceed. The number of elements in lists are different"
+    preview:
+      view:
+        title: "Lead advanced import for %{category} category - contacts preview"
+        first_contact_button: "<< first"
+        prev_contact_button: "< prev"
+        next_contact_button: "next >"
+        last_contact_button: "last >>"
+        cancel_button: Cancel
+        import_button: Import
+    create:
+      flash:
+        success: "Import completed. %{counter} leads have been successfully imported"

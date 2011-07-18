@@ -6,9 +6,9 @@ class Category < ActiveRecord::Base
   has_many :category_translations
   has_one :image,
           :class_name => "Asset::CategoryImage",
-          :as         => :resource,
+          :as => :resource,
           :conditions => "asset_type = 'Asset::CategoryImage'",
-          :dependent  => :destroy
+          :dependent => :destroy
   has_many :category_interests
   has_many :customer_subscribers, :through => :category_interests, :source => :user
   has_many :news, :as => :resource, :class_name => "Article::News::CategoryHome", :dependent => :destroy
@@ -64,7 +64,7 @@ class Category < ActiveRecord::Base
     LEFT JOIN categories_users ON categories.id = categories_users.category_id
     LEFT JOIN users ON users.id = categories_users.user_id
     LEFT JOIN category_customers ON categories.id = category_customers.category_id
-  ").where("(categories.is_customer_unique = 't' and category_customers.user_id = :user_id) OR (categories_users.user_id = :user_id)", {:user_id => user.id})}
+  ").where("(categories.is_customer_unique = 't' and category_customers.user_id = :user_id) OR (categories_users.user_id = :user_id)", {:user_id => user.id}) }
   scope :with_comment_threads, select("DISTINCT(categories.id), categories.*").joins("INNER JOIN leads ON leads.category_id=categories.id INNER JOIN comments ON comments.commentable_id=leads.id")
   scope :without_auto_buy, where(:auto_buy => false)
   before_destroy :check_if_category_is_empty
@@ -103,7 +103,7 @@ class Category < ActiveRecord::Base
 
   def mark_articles_to_destroy
     blurb.force_destroy=true if blurb
-    news.each{|n| n.force_destroy=true}
+    news.each { |n| n.force_destroy=true }
   end
 
   def refresh_leads_count_cache!
@@ -111,16 +111,15 @@ class Category < ActiveRecord::Base
       c.update_attribute(:total_leads_count, c.leads.including_subcategories.count)
     end
   end
-  
 
-  
+
   def handle_locking_for_descendants
     if is_locked_changed?
       (self_and_descendants - [self]).each do |category|
         category.update_attribute(:is_locked, is_locked)
       end
     end
-  end 
+  end
 
   def refresh_published_leads_count_cache!
     Category.find(self_and_ancestors.map(&:id)).each do |c|
@@ -179,8 +178,59 @@ class Category < ActiveRecord::Base
         leads_scope = leads_scope.with_agent_unique_categories(user.id)
       end
     else
-     leads_scope = leads_scope.without_unique_categories
+      leads_scope = leads_scope.without_unique_categories
     end
     leads_scope.count
   end
+
+########################################################################################################################
+#
+#   IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT
+#
+########################################################################################################################
+
+  include AdvancedImport
+
+  def advanced_import_leads_from_xls(spreadsheet, lead_fields, spreadsheet_fields, current_user)
+    return false unless advanced_import_field_blank_validation(lead_fields, spreadsheet_fields)
+    lead_fields, spreadsheet_fields = lead_fields.split(","), spreadsheet_fields.split(",")
+    return false unless advanced_import_field_size_validation(lead_fields, spreadsheet_fields)
+
+      #leads_from_last_import_ids = leads.from_last_import.map(&:id) (cos nie tak)
+    headers, spreadsheet = advanced_import_headers(spreadsheet)
+    merged_fields = advanced_import_merged_fields(headers, lead_fields, spreadsheet_fields)
+    counter, errors = 0, []
+
+    2.upto(spreadsheet.last_row) do |line|
+      lead = leads.build
+      import_fields.each { |field| lead = assign_field(lead, field, spreadsheet.cell(line, merged_fields[field]), spreadsheet.celltype(line, merged_fields[field])) }
+      lead = assign_current_user(lead, current_user)
+        #lead.last_import = true
+      lead.save ? counter += 1 : errors << lead.errors.map { |k, v| "#{k} #{v}" }.*(", ")
+    end
+
+      #leads_from_last_import = lead.find_all_by_id(leads_from_last_import_ids)
+      #leads_from_last_import.each { |c| c.update_attribute(:last_import, false) } if counter > 0 and !leads_from_last_import.blank?
+
+    {:counter => "#{counter} / #{spreadsheet.last_row-1}", :errors => errors.*("<br/>")}
+  end
+
+  def import_fields
+    Lead::CSV_ATTRS + import_lead_templates_fields
+  end
+
+  def required_import_fields
+    Lead::REQUIRED_FIELDS + import_lead_templates_fields.map { |field| field if field.split("|").last == "true" }.compact
+  end
+
+  private
+
+  def assign_current_user(lead, current_user)
+    lead.creator_id = current_user.id
+    lead.creator_type = current_user.with_role.class.to_s
+    lead.category_id = id
+    lead.creator_name = current_user
+    lead
+  end
+
 end

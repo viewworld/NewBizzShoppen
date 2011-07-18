@@ -20,6 +20,7 @@ class Contact < AbstractLead
   scope :available_to_assign, where(:agent_id => nil).with_completed_status(false).with_pending_status(false)
   scope :with_results, joins(:call_results)
   scope :with_agents, lambda { |agent_ids| where("call_results.creator_id IN (:agent_ids)", {:agent_ids => agent_ids }) unless agent_ids.to_a.select{ |id| !id.blank? }.empty? }
+  scope :from_last_import, where(:last_import => true)
   scoped_order :company_name
 
   acts_as_list :scope => [:campaign_id, :agent_id, :pending]

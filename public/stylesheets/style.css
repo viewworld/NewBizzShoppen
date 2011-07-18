@@ -1,6 +1,6 @@
 .ui-widget
 {
-    font-family: Arial, Helvetica, Verdana, Tahoma, sans-serif !important;    
+    font-family: Arial, Helvetica, Verdana, Tahoma, sans-serif !important;
 }
 
 /* iPads (portrait and landscape) ----------- */
@@ -62,7 +62,7 @@ body
     -moz-border-radius: 16px;
     -webkit-border-radius: 16px;
     border-radius: 16px;
-    
+
     -moz-box-shadow: 0 0 10px #999;
     -webkit-box-shadow: 0 0 10px #999;
     box-shadow: 0 0 10px #999;
@@ -162,7 +162,7 @@ h4
 #user_menu
 {
     background: url(/images/bg_nav.png) no-repeat top left;
-    height: 45px;    
+    height: 45px;
     position: relative;
     z-index: 1000;
 }
@@ -205,12 +205,12 @@ h4
 
 #user_menu ul.nav li a:hover
 {
-    background-position: 0 -72px;    
+    background-position: 0 -72px;
 }
 
 #user_menu ul.nav li a:hover span
 {
-    background-position: right -108px;    
+    background-position: right -108px;
 }
 
 #user_menu ul.nav li.active a
@@ -222,7 +222,7 @@ h4
 {
     background-position: right -182px;
     height: 38px;
-    line-height: 38px;    
+    line-height: 38px;
 }
 
 #user_menu ul.nav li.has_child
@@ -236,9 +236,9 @@ h4
     padding-right: 35px;
 }
 
-#user_menu ul.nav li.has_child a:hover span    
+#user_menu ul.nav li.has_child a:hover span
 {
-    background-position: right -256px;    
+    background-position: right -256px;
 }
 
 #user_menu ul.nav li.has_child:hover ul.subnav
@@ -267,7 +267,7 @@ h4
 
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
-    border-radius: 5px; 
+    border-radius: 5px;
 }
 
 #user_menu ul.subnav li
@@ -360,7 +360,7 @@ h4
     background: #598E00;
     border-color: #4c6c0e;
     border-bottom-color: #2c4900;
-    
+
     -moz-box-shadow: 0 -3px 10px #2C4900 inset;
     -webkit-box-shadow: 0 -3px 10px #2C4900 inset;
     box-shadow: 0 -3px 10px #2C4900 inset;
@@ -425,7 +425,7 @@ h4
     top: 60px;
     right: 40px;
     width: 250px;
-    background: #fff;    
+    background: #fff;
     z-index: 9999;
     border: 2px solid #d8d8d8;
 
@@ -444,9 +444,9 @@ h4
 {
     -moz-border-radius: 8px 8px 0 0;
     -webkit-border-radius: 8px 8px 0 0;
-    border-radius: 8px 8px 0 0;    
+    border-radius: 8px 8px 0 0;
 
-    
+
     height: 30px;
     padding: 10px;
 
@@ -487,7 +487,7 @@ h4
 #cart_details .cart_content ul li
 {
     border-top: 1px solid #e0e0e0;
-    padding: 6px 0;    
+    padding: 6px 0;
 }
 
 #cart_details .cart_content ul li:first-child
@@ -504,7 +504,7 @@ h4
     -moz-border-radius: 0 0 8px 8px;
     -webkit-border-radius: 0 0 8px 8px;
     border-radius: 0 0 8px 8px;
-    
+
     background: #ededed;
     background: -webkit-gradient(linear, left top, left bottom, from(#f1f1f1), to(#e9e9e9));
     background: -moz-linear-gradient(top, #f1f1f1, #e9e9e9);
@@ -553,7 +553,7 @@ h4
     color: #ddd;
     text-decoration: none;
     display: inline-block;
-    padding: 0 10px 0 14px;    
+    padding: 0 10px 0 14px;
     height: 30px;
     line-height: 30px;
     background: url(/images/bg_user_panel_separator.png) repeat-y 0 0;
@@ -591,7 +591,7 @@ h4
 
 .langs_dropdown li a.lang_selected img
 {
-    margin-top: 9px;    
+    margin-top: 9px;
 }
 
 .langs_dropdown li #langs_list
@@ -609,7 +609,7 @@ h4
     border: 1px solid #131313;
     border-top: none;
     padding-top: 6px;
-    background: #2e2e34;    
+    background: #2e2e34;
 }
 
 .langs_dropdown li:hover #langs_list li
@@ -726,15 +726,15 @@ h4
 }
 
 .header_actions li a.bt:hover,
-.header_actions li a.bt.bt_active    
+.header_actions li a.bt.bt_active
 {
-    background-position: 0 -620px;    
+    background-position: 0 -620px;
 }
 
 .header_actions li a.bt:hover span,
-.header_actions li a.bt.bt_active:hover span    
+.header_actions li a.bt.bt_active:hover span
 {
-    background-position: 0 -646px;    
+    background-position: 0 -646px;
 }
 
 .header_actions li:first-child a.bt
@@ -772,9 +772,9 @@ h4
 }
 
 .header_actions li.last a.bt:hover span,
-.header_actions li.last a.bt.bt_active span    
+.header_actions li.last a.bt.bt_active span
 {
-    background-position: right -318px;    
+    background-position: right -318px;
 }
 
 .header_actions li.bt_back
@@ -842,7 +842,7 @@ h4
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
-    
+
     font-weight: bold;
     margin: 15px 0;
     padding: 12px;
@@ -885,7 +885,7 @@ h4
     box-shadow: 0 1px 0 #ff9a9a inset;
 
     color: #fff;
-    text-shadow: 1px 1px 0 #8e0000;    
+    text-shadow: 1px 1px 0 #8e0000;
 }
 
 
@@ -983,7 +983,7 @@ input:focus, textarea:focus, select:focus
     font-weight: bold;
 
     display: inline !ie7;
-    zoom: 1 !ie7;    
+    zoom: 1 !ie7;
 }
 
 .home_categories_tree .categories_tree li.categories_node
@@ -1028,7 +1028,7 @@ input:focus, textarea:focus, select:focus
 
 .subcategory_btn
 {
-    font-size: 12px;    
+    font-size: 12px;
     line-height: normal;
     padding: 5px 0 0;
     font-weight: bold;
@@ -1091,7 +1091,7 @@ input:focus, textarea:focus, select:focus
     background: -moz-linear-gradient(top, #f5f5f5, #e7e7e7);
     background: -o-linear-gradient(top, #f5f5f5, #e7e7e7);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = #f5f5f5, endColorstr = #e7e7e7);
-    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#f5f5f5, endColorstr=#e7e7e7)";    
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#f5f5f5, endColorstr=#e7e7e7)";
 }
 
 .solid_list li:hover
@@ -1336,7 +1336,7 @@ a.bt:hover,
 }
 
 a.bt:hover span,
-.tda_hover a.bt span    
+.tda_hover a.bt span
 {
     background-position: right -318px;
 }
@@ -1368,7 +1368,7 @@ a.bt_dropdown span
 a.bt_dropdown:hover span,
 .tda_hover a.bt span
 {
-    background-position: right -370px;    
+    background-position: right -370px;
 }
 
 
@@ -1392,7 +1392,7 @@ a.bt_grey_small:hover
 
 a.bt_grey_small:hover span
 {
-   background-position: right -750px !important;    
+   background-position: right -750px !important;
 }
 
 
@@ -1509,7 +1509,7 @@ div.bt span a
     height: 30px;
     line-height: 30px;
 
-    padding: 0 10px 0;    
+    padding: 0 10px 0;
     font-weight: bold;
     font-size: 11px;
     color: #fff;
@@ -1533,7 +1533,7 @@ div.bt:hover span
 
 
 div.bt_icon span input,
-div.bt_icon span a    
+div.bt_icon span a
 {
     padding: 0 10px 0 28px !important;
     position: relative;
@@ -1589,12 +1589,12 @@ div.bt_green span input
 
 div.bt_green:hover
 {
-    background-position: 0 -456px;    
+    background-position: 0 -456px;
 }
 
 div.bt_green:hover span
 {
-    background-position: right -486px;    
+    background-position: right -486px;
 }
 
 
@@ -1752,7 +1752,7 @@ span.cke_skin_kama
 
 .ui-dialog-content .materials_list.with_icon
 {
-    border-top: 1px solid #bbb;        
+    border-top: 1px solid #bbb;
     margin-top: 5px;
     padding: 5px 0 0;
 }
@@ -1810,3 +1810,41 @@ span.cke_skin_kama
 {
     overflow: hidden;
 }
+
+/* --- advanced import
+-------------------------------------------------------------------------------- */
+
+.sortable_contact_fields_class, .sortable_lead_fields_class, .sortable_spreadsheet_fields_class {
+          text-align: center;
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          float: left;
+          margin-right: 10px;
+          background-color: #9DCC45;
+          width: 268px;
+          display: block;
+      }
+
+      .sortable_contact_fields_class li, .sortable_lead_fields_class li, .sortable_spreadsheet_fields_class li {
+          margin: 0 5px 5px 5px;
+          padding: 0;
+          font-size: 1.2em;
+          width: 256px;
+      }
+
+      li.disabled {
+          font-weight: bold;
+          color: red;
+      }
+
+      .sortable_contact_fields_class p, .sortable_lead_fields_class p, .sortable_spreadsheet_fields_class p {
+          padding: 5px;
+      }
+
+      .sortable_div_header {
+          text-align: center;
+          font-weight: bolder;
+          font-size: larger;
+          padding: 5px;
+      }

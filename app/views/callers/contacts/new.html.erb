@@ -40,7 +40,7 @@
 
 
       <% form_tag import_xls_callers_campaign_contacts_path(@campaign), :method => :post, :multipart => true do %>
-        <frm title="Create new from spreadsheet">
+        <frm title="#{t('contacts.new.title_import_from_excel')}">
           <param:content>
             <div class="pdd_10 no_pdd_t">
               <fieldset class="inputs labels_ta_r labels_180">
@@ -59,8 +59,8 @@
         </frm>
       <% end %>
 
-    <% form_tag new_callers_campaign_advanced_import_path(@campaign), :method => :get, :multipart => true do %>
-        <frm title="Create new from spreadsheet">
+    <% form_tag choose_callers_campaign_advanced_import_index_path(@campaign), :method => :post, :multipart => true do %>
+        <frm title="#{t('contacts.new.title_advanced_import_from_excel')}">
           <param:content>
             <div class="pdd_10 no_pdd_t">
               <fieldset class="inputs labels_ta_r labels_180">
@@ -72,7 +72,7 @@
           </param:content>
           <param:actions>
             <ibt c="fltri" icon="save">
-              <%= submit_tag t("contacts.new.import_from_excel_button"), :name => "commit_create" %>
+              <%= submit_tag t("contacts.new.advanced_import_from_excel_button"), :name => "commit_create" %>
             </ibt>
             <%= bt_link_to nil, t("campaigns.new.button_cancel"), edit_callers_campaign_path(@campaign), :class => "bt_grey fltr" %>
           </param:actions>

@@ -1,0 +1,31 @@
+<column-mc:>
+
+  <header><%= t("lead_advanced_import.preview.view.title", :category => @category.name) %></header>
+
+  <% size = @leads_to_preview.size %>
+  <% @leads_to_preview.each_with_index do |lead, index| %>
+      <div id='lead_container_<%= index %>' class='lead_preview' style="<%= "display:none" if index != 0 %> ">
+        <%= index+1 %>/<%= size %>
+        <br/>
+        <% @category.import_fields.each do |field| %>
+            <span style="font-weight:bold"><%= field.include?("custom|") ? field.split("|")[1..2].join(" => ") : field.humanize %>:</span> <%= lead[field] %>
+            <br/>
+        <% end %>
+        <%= index != 0 ? link_to_function(t("lead_advanced_import.preview.view.first_contact_button"), "$('#lead_container_#{index}').hide();$('#lead_container_0').show();") : t("callers.advanced_import.preview.view.first_contact_button") %>
+        <%= index != 0 ? link_to_function(t("lead_advanced_import.preview.view.prev_contact_button"), "$('#lead_container_#{index}').hide();$('#lead_container_#{index-1}').show();") : t("callers.advanced_import.preview.view.prev_contact_button") %>
+        <%= size-1 != index ? link_to_function(t("lead_advanced_import.preview.view.next_contact_button"), "$('#lead_container_#{index}').hide();$('#lead_container_#{index+1}').show();") : t("callers.advanced_import.preview.view.next_contact_button") %>
+        <%= size-1 != index ? link_to_function(t("lead_advanced_import.preview.view.last_contact_button"), "$('#lead_container_#{index}').hide();$('#lead_container_#{size-1}').show();") : t("callers.advanced_import.preview.view.last_contact_button") %>
+      </div>
+  <% end %>
+
+  <% form_tag lead_advanced_import_index_path, :id => "import_leads_form", :method => :post, :multipart => true do %>
+      <%= hidden_field_tag :lead_field, @lead_field %>
+      <%= hidden_field_tag :spreadsheet_field, @spreadsheet_field %>
+      <%= hidden_field_tag :attachment, @attachment_file %>
+      <%= hidden_field_tag :category_id, @category.id %>
+  <% end %>
+
+  <%= link_to_function t("lead_advanced_import.preview.view.cancel_button"), "javascript:history.back()" %>
+  <%= button_to_function t("lead_advanced_import.preview.view.import_button"), "$('#import_leads_form').submit();" %>
+
+</column-mc:>
