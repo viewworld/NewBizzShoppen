@@ -12,6 +12,8 @@
                   <%= select_tag :campaign_ids, options_from_collection_for_select(@all_campaigns.select { |c| @campaign_selection == "active" ? c.active? : !c.active? }, "id", "name", @campaign_ids), :include_blank => false, :multiple => true, :style => "height:80px;width:140px;" %>
                 </li>
                 <li class="radio no_pdd_t" style="padding-left: 10px">
+                  <%= label_tag t("campaign_reports.index.search.all") %>
+                  <%= radio_button_tag :campaign_selection, :active, @campaign_selection == "all", {:onclick => "load_campaigns('all');"} %>
                   <%= label_tag t("campaign_reports.index.search.active") %>
                   <%= radio_button_tag :campaign_selection, :active, @campaign_selection == "active", {:onclick => "load_campaigns('active');"} %>
                   <%= label_tag t("campaign_reports.index.search.inactive") %>
@@ -88,6 +90,14 @@
 
 <js:>
   <script type="text/javascript">
+
+       <%=
+      %{
+      var all_campaigns = [
+       #{@all_campaigns.map { |c| "['#{c.name}', #{c.id}]" }.join(',')}
+      ]
+      }
+       %>
 
       <% @all_campaigns.partition { |c| c.active? }.each_with_index do |campaigns_group, i| %>
       <%=
