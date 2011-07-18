@@ -13,13 +13,14 @@ class CampaignReport
           </body>
         </html>}
 
-  attr_accessor :campaign, :date_from, :date_to, :user
+  attr_accessor :campaign, :date_from, :date_to, :user, :selected_result_ids
 
-  def initialize(campaign, date_from, date_to, user=nil)
+  def initialize(campaign, date_from, date_to, user=nil, selected_result_ids=nil)
     self.campaign = campaign
     self.date_from = date_from.to_date
     self.date_to = date_to.to_date
     self.user = user
+    self.selected_result_ids = selected_result_ids unless selected_result_ids.nil? or selected_result_ids.empty?
   end
 
   def target_success_percent
@@ -57,8 +58,10 @@ class CampaignReport
     (frc > 0 and th > 0) ? (frc / th) : 0
   end
 
-  def self.final_results
-    Result.where(:final => true, :is_reported => true).order("name")
+  def self.final_results(_selected_result_ids=nil)
+    res = Result.where(:final => true, :is_reported => true).order("name")
+    res = res.where(:id => _selected_result_ids) if _selected_result_ids
+    res
   end
 
   def target_value_per_hour
@@ -126,13 +129,13 @@ class CampaignReport
     pdf_path
   end
 
-  def self.table(report_cache,campaign_reports,campaign_users,per_user=false)
+  def self.table(report_cache,campaign_reports,campaign_users,per_user=false,result_ids=nil)
     av = ActionView::Base.new
     av.view_paths << File.join(::Rails.root.to_s, "app", "views")
     av.instance_eval do
       extend ApplicationHelper
     end
-    html = av.render(:partial => 'callers/campaign_reports/report', :type => :erb, :locals => { :per_user => per_user, :campaign_users => campaign_users, :campaign_reports => campaign_reports })
+    html = av.render(:partial => 'callers/campaign_reports/report', :type => :erb, :locals => { :per_user => per_user, :campaign_users => campaign_users, :campaign_reports => campaign_reports, :result_ids => result_ids })
     markup = MARKUP_SCAFFOLD % html
     File.open(Rails.root.join("public/html2pdf/campaign_reports_cache/#{report_cache}.html"), 'w') {|f| f.write(markup) }
     html
@@ -144,6 +147,7 @@ class CampaignReport
     rsp = CallResult.final_for_campaign(campaign).where("call_results.created_at::DATE BETWEEN ? AND ?", date_from, date_to).with_reported
     rsp = rsp.where("call_results.creator_id = ?", user.id) if user
     rsp = rsp.where("results.id = ?", result.id) if result
+    rsp = rsp.where("results.id IN (?)", selected_result_ids) if selected_result_ids
     rsp
   end
 
@@ -167,6 +171,7 @@ class CampaignReport
   def finished_contacts
     fc = Contact.with_completed_status(true).where("campaign_id = ? and call_results.created_at::DATE BETWEEN ? AND ? and results.final is true and results.is_reported is true", campaign.id, date_from, date_to).
         joins(:call_results => [:result])
+    fc = fc.where("results.id IN (?)", selected_result_ids) if selected_result_ids
     fc = fc.where("call_results.creator_id = ?", user.id) if user
     fc
   end
@@ -174,10 +179,12 @@ class CampaignReport
   def total_value
     not_upgraded = CallResult.final_for_campaign(campaign).where("results.upgrades_to_lead is false and call_results.created_at::DATE BETWEEN ? AND ?", date_from, date_to).with_reported
     not_upgraded = not_upgraded.where("call_results.creator_id = ?", user.id) if user
+    not_upgraded = not_upgraded.where("results.id IN (?)", selected_result_ids) if selected_result_ids
 
     upgraded = CallResult.final_for_campaign(campaign).where("results.upgrades_to_lead is true and call_results.created_at::DATE BETWEEN ? AND ?", date_from, date_to).with_reported.
         joins(:contact => :lead)
     upgraded = upgraded.where("call_results.creator_id = ?", user.id) if user
+    upgraded = upgraded.where("results.id IN (?)", selected_result_ids) if selected_result_ids
 
     not_upgraded.sum("campaigns_results.euro_value").to_f + upgraded.sum("leads_leads.euro_price").to_f
   end
@@ -186,6 +193,7 @@ class CampaignReport
     sold = CallResult.final_for_campaign(campaign).where("results.upgrades_to_lead is true and call_results.created_at::DATE BETWEEN ? AND ?", date_from, date_to).with_reported.
         joins(:contact => {:lead => [:lead_purchases]})
     sold = sold.where("call_results.creator_id = ?", user.id) if user
+    sold = sold.where("results.id IN (?)", selected_result_ids) if selected_result_ids
     sold
   end
 
@@ -200,6 +208,4 @@ class CampaignReport
       0.0
     end
   end
-
-
 end
