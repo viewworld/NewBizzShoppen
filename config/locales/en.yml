@@ -1886,6 +1886,7 @@ en:
         buyer_link: "click here if you are a sales manager"
         header_best_sellers: "Best sellers"
         header_latest_leads: "Latest leads"
+        header_latest_deals: "Latest deals"
         header_my_contact_requests: "My contact requests"
         header_news: "News"
         purchase_value_label: "Purchase value:"
@@ -2995,9 +2996,14 @@ en:
     index:
       view:
         header_for: "Deals for"
+        header_latest_leads: "Latest deals"
+        request_information: "Request information"
       search:
         keyword_label: "Keyword"
         search_button: "Search"
+        zip_code: "Zip code"
+        country_label: "Country"
+        region_label: "Region"
     listing:
       lead_description_label: "Deals description"
       stats_label: "Stats"

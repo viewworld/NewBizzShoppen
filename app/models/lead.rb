@@ -29,17 +29,12 @@ class Lead < AbstractLead
   scope :lead_purchases_counter_to, lambda { |q| where(["lead_purchases_counter <= ?", q]) }
   scope :purchase_value_from, lambda { |q| where(["purchase_value >= ?", q]) }
   scope :purchase_value_to, lambda { |q| where(["purchase_value <= ?", q]) }
-  scope :with_selected_categories, lambda { |q| where(:category_id => q) }
   scope :with_categories, lambda { |arr| where(:category_id => Category.where(:id => arr.map(&:self_and_descendants).flatten.map(&:id))) }
-  scope :with_country, lambda { |country_id| where(:country_id => country_id) }
-  scope :with_zip_code, lambda { |zip_code| where(:zip_code => zip_code) }
-  scope :with_region, lambda { |region_id| where(:region_id => region_id.to_i) }
   scope :with_ids_not_in, lambda { |q| where(["leads.id NOT IN (?)", q]) }
   scope :without_inactive, where("((select sum(quantity) from lead_purchases where lead_id = leads.id group by lead_id) is null or (select sum(quantity) from lead_purchases where lead_id = leads.id group by lead_id) < sale_limit)")
   scope :without_outdated, lambda { where("purchase_decision_date >= ?", Date.today.to_s) }
   scope :without_locked_users, joins("INNER JOIN users ON users.id=leads.creator_id").where("users.locked_at is NULL")
   scope :with_status, lambda { |q| where(["leads.published = ?", q]) }
-  scope :published_only, where(:published => true)
   scope :with_creator_type, lambda { |creator_type| where(["leads.creator_type = ?", "User::#{creator_type}"]) }
   scope :within_accessible_categories, lambda { |accessible_categories_ids| where("leads.category_id IN (?)", accessible_categories_ids) }
   scope :with_call_centre, lambda { |call_centre_id| where(["users.parent_id = ?", call_centre_id]).joins("INNER JOIN users ON leads.creator_id=users.id") }
@@ -48,7 +43,6 @@ class Lead < AbstractLead
   scope :purchased, where("lead_purchases_counter > 0")
   scope :without_bought_and_requested_by, lambda { |u| select("DISTINCT leads.*").joins("LEFT JOIN lead_purchases lp ON lp.lead_id = leads.id").where(["(lp.owner_id <> ? OR lp.owner_id IS NULL) AND (lp.assignee_id <> ? OR lp.assignee_id IS NULL) AND (lp.requested_by <> ? OR lp.requested_by IS NULL)", u.id, u.id, u.id]) if u }
   scope :bestsellers, order("lead_purchases_counter DESC")
-  scope :latest, order("created_at DESC")
   scope :contact_requests_for, lambda { |user_id| where("leads.creator_id = :id or leads.email_address = :email", {:id => user_id, :email => User.find(user_id).email}) }
   scope :interesting_for_user, lambda { |user| where("leads.category_id IN (?)", user.accessible_categories_ids) }
 

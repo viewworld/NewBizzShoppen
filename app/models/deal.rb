@@ -1,7 +1,7 @@
 class Deal < AbstractLead
 
 
-  scope :with_category, lambda { |q| where(:category_id => Category.find_by_id(q).self_and_descendants.map(&:id)) }
+  scope :without_inactive, where("purchase_decision_date >= ?", Date.today)
 
   private
 
