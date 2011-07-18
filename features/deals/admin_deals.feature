@@ -1,3 +1,4 @@
+@m16 @requested @deals
 Feature: Deals from admin perspective
 
   Scenario: I can see a tab "Deals" right to "Leads"
