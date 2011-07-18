@@ -36,6 +36,8 @@ class AbstractLead < ActiveRecord::Base
   before_save :change_creator, :set_euro_price
   before_save :set_published_at
 
+  scope :with_category, lambda { |q| where(:category_id => Category.find_by_id(q).self_and_descendants.map(&:id)) }
+
   accepts_nested_attributes_for :lead_translations, :allow_destroy => true
   accepts_nested_attributes_for :lead_template_values, :allow_destroy => true
 

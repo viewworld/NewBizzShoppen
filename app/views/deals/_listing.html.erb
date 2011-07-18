@@ -1,0 +1,91 @@
+<%
+   cols = 3
+   cols += 1 if show_checkboxes
+   cols += 1 if not block_tools.nil?
+-%>
+
+<table class="generic leads_table">
+  <thead>
+  <tr>
+    <th class="hl"></th>
+    <% if show_checkboxes %>
+        <th class="no_pdd_lr" style="width: 10px;"><%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %></th>
+    <% end %>
+    <th style="width: 550px;"><%= t("deals.listing.lead_description_label") %></th>
+    <th colspan="2"><%= t("deals.listing.stats_label") %></th>
+
+    <% if block_tools %>
+        <th class="ta_r"><%= t("deals.listing.actions_label") %></th>
+    <% end %>
+
+    <th class="hr"></th>
+  </tr>
+  </thead>
+
+  <tfoot>
+  <tr>
+    <td class="fl"></td>
+    <td colspan="<%= cols %>"></td>
+    <td class="fr"></td>
+  </tr>
+  </tfoot>
+
+  <tbody>
+  <% collection.each do |deal| %>
+      <tr class="lead <%= cycle("odd", "even") %>" id="<%= dom_id(deal) %>">
+
+        <td class="cl"></td>
+
+        <% if show_checkboxes %>
+            <td class="no_pdd_lr"><%= check_box_tag "lead_ids[]", deal.id %></td>
+        <% end %>
+
+        <td>
+          <h4><%= deal.header %></h4>
+
+          <p class="element_description i expandable"><%= deal.description %></p>
+        </td>
+
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+
+        <% if block_tools %>
+            <td class="tda ta_r">
+              <%= with_output_buffer { block_tools.call(deal) } %>
+            </td>
+        <% end %>
+
+        <td class="cr"></td>
+      </tr>
+  <% end %>
+
+  <% if will_paginate or show_checkboxes %>
+      <tr class="pagination">
+        <td colspan="<%= cols + 2 %>" class="ta_c">
+          <% if show_checkboxes %>
+              <div class="td_select_all">
+                <%= check_box_tag "td_mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %>
+                <%= label_tag "td_mark_all", "select all" %>
+              </div>
+          <% end %>
+          <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+        </td>
+      </tr>
+  <% end %>
+
+
+  <% if block_bottom %>
+      <tr class="main_actions">
+        <td class="cl"></td>
+        <td colspan="<%= cols %>" class="no_pdd_lr">
+          <%= with_output_buffer { block_bottom.call } %>
+        </td>
+        <td class="cr"></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

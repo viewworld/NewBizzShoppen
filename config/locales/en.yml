@@ -129,6 +129,7 @@ en:
         category_request: "Category request"
         comments: "Comments"
         sold_out: "Sold out"
+        browse_deals: "Browse deals"
       purchase_manager:
         leads: My leads
         lead_templates: "Lead templates"
@@ -2990,3 +2991,10 @@ en:
         active: "Active"
         inactive: "Inactive"
         all: "All"
+  deals:
+    index:
+      header_for: "Deals for"
+    listing:
+      lead_description_label: "Deals description"
+      stats_label: "Stats"
+      actions_label: "Actions"

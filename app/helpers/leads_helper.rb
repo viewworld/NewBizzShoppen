@@ -13,6 +13,13 @@ module LeadsHelper
     render(:partial => '/leads/listing', :locals => options.merge({:collection => collection}.merge(@hb.results)))
   end
 
+  def deals_listing(collection, options = {}, &block)
+    @hb = ApplicationHelper::HelperBlocks.new(:deal_details, :tools, :bottom)
+    block.call(@hb)
+    options[:show_checkboxes] ||= false
+    render(:partial => '/deals/listing', :locals => options.merge({:collection => collection}.merge(@hb.results)))
+  end
+
   def leads_listing_header
     header = if params[:search].is_a?(Hash)
       (['bestsellers','latest','featured','contact_requests_for'] & params[:search].keys).first

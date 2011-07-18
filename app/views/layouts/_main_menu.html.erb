@@ -3,7 +3,7 @@
   <% if @home_category %>
       <%= main_menu_link_to(t("layout.main_menu.shared.browse_leads"), category_home_page_leads_path(@home_category.cached_slug), :tab => "browse_leads") unless @auto_buy_category %>
   <% else %>
-      <%= main_menu_link_to t("layout.main_menu.shared.browse_leads"), categories_path, :tab => "browse_leads" %>
+      <%= main_menu_link_to (!user_signed_in? or (current_user and !current_user.has_role?(:purchase_manager))) ? t("layout.main_menu.shared.browse_leads") : t("layout.main_menu.shared.browse_deals"), categories_path, :tab => "browse_leads" %>
   <% end %>
   <% if current_user %>
       <% current_user.roles_sorted.each do |role| %>

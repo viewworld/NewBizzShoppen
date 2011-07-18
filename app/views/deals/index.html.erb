@@ -1,0 +1,39 @@
+<search-box:>
+  <div class="search_box">
+    <h2><%= t("common.search") %></h2>
+
+    <div class="search_content">
+      <%= form_for @search, :url => leads_path do |f| %>
+          <%#= render :partial => "/shared/leads/search_customer_form", :locals => {:f => f} %>
+      <% end %>
+    </div>
+  </div>
+</search-box:>
+
+<column-mc:>
+
+  <header back="true">
+
+    <param:content>
+      <%= " #{t("deals.index.header_for")} #{@category.name}" if @category %>
+    </param:content>
+
+    <param:actions>
+    </param:actions>
+
+  </header>
+
+  <% if @deals.empty? %>
+      <%= blank_state_message %>
+  <% else %>
+      <%= form_tag bulk_action_path do %>
+          <%= deals_listing @deals, :show_checkboxes => false do |blocks| %>
+
+              <% blocks.tools do |lead| %>
+
+              <% end %>
+
+          <% end %>
+      <% end %>
+  <% end %>
+</column-mc:>
