@@ -28,7 +28,11 @@ class SignInController < ApplicationController
     end
     respond_to do |format|
       if @user.save
-        flash[:notice] = @user.rpx_identifier.blank? ? success_notice : "Your account has been successfully created! Now you can log in."
+        unless @user.rpx_identifier.blank?
+          @user.confirm!
+          sign_in(@user)
+        end
+        flash[:notice] = @user.rpx_identifier.blank? ? success_notice : "Your account has been successfully created! You are now log in."
         format.html { redirect_to(path) }
       else
         format.html { render("new") }
