@@ -1,118 +1,15 @@
+
+<%= render :partial => "shared/deals/filter", :locals => {:search => @search, :path => buyers_deals_path} %>
+
 <column-mc:>
-  <header back="true">Deals</header>
-
-  <table id="deals" class="generic">
-    <thead>
-    <tr>
-      <th class="hl"></th>
-      <th><%= link_to "", order_for_scoped_search(:id) %></th>
-      <th><%= link_to "", order_for_scoped_search(:header) %></th>
-      <th><%= link_to "", order_for_scoped_search(:header) %></th>
-      <th><%= link_to "", order_for_scoped_search(:header) %></th>
-      <th class="ta_r"><%= t("leads.table.clicks") %></th>
-      <th class="ta_r"><%= t("leads.table.exposures") %></th>
-      <th class="ta_c"><%= t("leads.table.hottness") %></th>
-      <th class="ta_c"><%= t("leads.table.novelty") %></th>
-      <th class="ta_r"><%= link_to t("leads.table.sale_limit"), order_for_scoped_search(:sale_limit) %></th>
-      <th class="ta_r"><%= link_to t("leads.table.price"), order_for_scoped_search(:price) %></th>
-      <th class="ta_r"><%= link_to t("leads.table.sold"), order_for_scoped_search(:lead_purchases_counter) %></th>
-      <th class="ta_r"><%= link_to t("leads.table.purchase_value"), order_for_scoped_search(:purchase_value) %></th>
-      <th class="ta_c"><%= t("leads.table.paid_out") %></th>
-      <th class="ta_c"><%= link_to t("leads.table.unsatisfactory_rating"), order_for_scoped_search(:has_unsatisfactory_rating) %></th>
-      <th><%= link_to t("leads.table.status"), order_for_scoped_search(:published) %></th>
-
-
-      <th class="ta_r">
-        <%= t("leads.table.actions") %>
-      </th>
-
-      <th class="hr"></th>
-    </tr>
-    </thead>
-    <tfoot>
-    <tr>
-      <td class="fl"></td>
-      <td colspan="<%= cols + 1 %>"></td>
-      <td class="fr"></td>
-    </tr>
-    </tfoot>
-    <tbody>
-    <% collection.each do |lead| %>
-        <tr id="lead_<%= lead.id %>" class="<%= cycle("odd", "even") %>">
-          <td class="cl"></td>
-          <% if show_checkboxes %>
-              <td><%= check_box_tag("lead_ids[]", lead.id) %></td>
-          <% end %>
-          <td><%= lead.id %></td>
-          <td>
-            <div class="rltv" style="padding-bottom: 20px;">
-              <%= lead.header %>
-              <% if lead.can_be_commented? %>
-                  <div class="row_tooltip_actions">
-                    <%= link_to t("comments.shared.show_comments")+" (#{lead.comments_count_for(current_user)})", "#", :class => "toggle_row show_comments#{' toggle_row_unread' if lead.has_unread_comments_for_user?(current_user)}", :onclick => "mark_comments_as_read(#{lead.id}); mark_row_as_read('lead_#{lead.id}')" %>
-                    <%= link_to t("comments.shared.hide_comments"), "#", :class => "toggle_row hide_comments", :style => "display:none" %>
-                  </div>
-              <% end %>
-              <% if lead.creator == current_user or lead.creator.parent == current_user %>
-                  <% if lead.lead_certification_requests.last %>
-                      <br/>
-                      <%= t("leads.listing.certification_status") %>
-                      : <%= lead.lead_certification_requests.last.current_status %>
-                  <% end %>
-              <% end %>
-            </div>
-          </td>
-          <td class="ta_r"><%= lead.clicks_count %></td>
-          <td class="ta_r"><%= lead.exposures_count %></td>
-          <td class="ta_c"><%= t("models.lead.hotness.lvl#{lead.hotness_level}") %></td>
-          <td class="ta_c"><%= lead.published ? t("models.lead.novelty.lvl#{lead.novelty_level}") : "-" %></td>
-          <td class="ta_r"><%= lead.sale_limit %></td>
-          <td class="ta_r"><%= as_currency(lead.price, lead.currency) %></td>
-          <td class="ta_r"><%= lead.lead_purchases_counter %></td>
-          <td class="ta_r"><%= as_currency(lead.purchase_value, lead.currency) %></td>
-          <td></td>
-          <td class="ta_c"><%= link_to lead.has_unsatisfactory_rating ? t("leads.listing.has_unsatisfactory_rating_yes") : t("leads.listing.has_unsatisfactory_rating_no"), current_user.has_any_role?(:agent, :call_centre_agent) ? send("edit_#{current_user.role.to_s.pluralize}_lead_path".to_sym, lead) : edit_administration_lead_path(lead, :anchor => "lead_rating") %></td>
-          <td>
-            <% if block_status_column %>
-                <%= with_output_buffer { block_status_column.call(lead) } %>
-            <% else %>
-                <%= lead.published %>
-            <% end %>
-          </td>
-
-          <% if block_tools %>
-              <td class="tda ta_r">
-                <%= with_output_buffer { block_tools.call(lead) } %>
-              </td>
-          <% end %>
-          <td class="cr"></td>
-        </tr>
-
-        <% if block_rowtooltip %>
-
-            <tr class="row_tooltip">
-              <td class="cl no_pdd"></td>
-              <td colspan="<%= cols + 1 %>" class="no_pdd">
-                <div class="row_tooltip_content pdd_10">
-                  <%= with_output_buffer { block_rowtooltip.call(lead) } %>
-                </div>
-              </td>
-              <td class="cr no_pdd"></td>
-            </tr>
-
-        <% end %>
-
-    <% end %>
-
-    <% if will_paginate %>
-        <tr class="pagination">
-          <td colspan="<%= cols + 3 %>" class="ta_c">
-            <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
-          </td>
-        </tr>
-    <% end %>
-
-    </tbody>
-  </table>
-
+  <header>My deals</header>
+   <%= deals_table @deals do |blocks| %>
+      <% blocks.tools do |deal| %>
+          <ul-actions>
+            <li>
+              <%= link_to t("campaigns.index.edit"), edit_buyers_deal_path(deal), :class => "default_action" %>
+            </li>
+          </ul-actions>
+      <% end %>
+  <% end %>
 </column-mc:>
