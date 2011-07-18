@@ -1,4 +1,4 @@
-@m16 @deals @requested
+@m16 @procurement_manager_deals @requested @_deals @$_procurement_manager
 Feature: Deals from procurement manager perspective
 
   Scenario: I should see "My deals" tab instead of "My leads"

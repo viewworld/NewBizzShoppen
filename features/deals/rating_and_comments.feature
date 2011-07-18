@@ -1,4 +1,4 @@
-@m16 @deals @requested
+@m16 @deals_rating_and_comments @_deals @requested @$_procurement_manager
 Feature: Rating and comments
 
   Scenario: I can rate a a deal as a procurement manager
