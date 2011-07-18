@@ -36,7 +36,7 @@ gem 'whenever', :require => false
 gem 'acts_as_commentable_with_threading'
 gem 'memcache-client'
 gem "devise_rpx_connectable"
-
+gem "ajaxful_rating", :git => "git://github.com/edgarjs/ajaxful-rating.git", :branch => "rails3"
 
 group :development do
   gem 'diff-lcs'

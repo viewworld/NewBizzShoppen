@@ -18,6 +18,7 @@ class Result < ActiveRecord::Base
   scope :custom_results, where(:generic => false)
 
   validates :name, :presence => true
+  validate :check_is_reported_and_is_success
 
   def to_s
     name
@@ -45,5 +46,18 @@ class Result < ActiveRecord::Base
 
   def upgrades_to_category_buyer?
     name == "Upgrade to category buyer"
+  end
+
+  private
+
+  def check_is_reported_and_is_success
+    if call_results.any?
+      if !is_reported? and is_reported_changed?
+        self.errors.add(:is_reported, I18n.t("models.result_field.is_reported_cannot_be_disabled"))
+      end
+      if !is_success? and is_success_changed?
+        self.errors.add(:is_success, I18n.t("models.result_field.is_success_cannot_be_disabled"))
+      end
+    end
   end
 end

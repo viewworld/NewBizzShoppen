@@ -3,6 +3,7 @@ require 'app/modules/role_change'
 class User < ActiveRecord::Base
 
   self.abstract_class = true
+  ajaxful_rater
 
   ROLES_PRIORITY = [:admin, :call_centre, :agent, :call_centre_agent, :purchase_manager, :category_buyer, :customer, :lead_buyer, :lead_user, :translator]
   DEAL_VALUE_RANGE = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000]

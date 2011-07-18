@@ -23,4 +23,13 @@ class DealsController < ApplicationController
     end
     @categories = @category ? @categories_scope.with_leads.where("categories.id in (?)", @category.self_and_descendants.map(&:id)) : []
   end
+
+  def rate
+    @deal = Deal.find(params[:id])
+    @deal.rate(params[:stars], current_user, params[:dimension])
+    render :update do |page|
+      page.replace_html @deal.wrapper_dom_id(params), ratings_for(@deal, params.merge(:wrap => false))
+      page.visual_effect :highlight, @deal.wrapper_dom_id(params)
+    end
+  end
 end

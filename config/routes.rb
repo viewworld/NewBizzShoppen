@@ -193,7 +193,7 @@ Nbs::Application.routes.draw do
   match 'purchase_manager_home' => 'purchase_manager_home#show', :as => "purchase_manager_home"
 
   resources :leads, :except => [:new, :create, :destroy]
-  resources :deals, :except => [:new, :create, :destroy]
+  resources :deals, :except => [:new, :create, :destroy], :member => {:rate => :post}
 
   resources :categories, :only => [:index] do
     resources :more_leads_requests, :only => [:new, :create]
