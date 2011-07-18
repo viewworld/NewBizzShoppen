@@ -36,7 +36,7 @@ gem 'whenever', :require => false
 gem 'acts_as_commentable_with_threading'
 gem 'memcache-client'
 gem "devise_rpx_connectable"
-#gem "jammit"
+gem "jammit"
 
 
 group :development do
