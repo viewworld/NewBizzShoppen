@@ -17,7 +17,7 @@ Feature: Deals from procurement manager perspective
 
   Scenario: I can see contact information for deals when I am logged in
 
-  Scenario: I can click "Request information"
+  Scenario: I can click "Contact me"
 
-  Scenario: When I click "Request information" I can enter "Additional" template information and note field
+  Scenario: When I click "Contact me" I can enter "Additional" template information and note field
 
