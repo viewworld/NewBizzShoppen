@@ -2993,7 +2993,11 @@ en:
         all: "All"
   deals:
     index:
-      header_for: "Deals for"
+      view:
+        header_for: "Deals for"
+      search:
+        keyword_label: "Keyword"
+        search_button: "Search"
     listing:
       lead_description_label: "Deals description"
       stats_label: "Stats"

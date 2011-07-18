@@ -20,7 +20,6 @@ class Lead < AbstractLead
   has_many :lead_template_values
   has_many :comment_threads, :class_name => "Comment", :foreign_key => :commentable_id, :conditions => {:commentable_type => 'AbstractLead'}
 
-  scope :with_keyword, lambda { |q| where("lower(header) like :keyword OR lower(leads.description) like :keyword OR lower(creator_name) like :keyword", {:keyword => "%#{q.downcase}%"}) }
   scope :published_is, lambda { |q| where("published = ?", q == "1")}
   scope :deal_value_from, lambda { |q| where(["purchase_value >= ?", q]) }
   scope :deal_value_to, lambda { |q| where(["purchase_value <= ?", q]) }
@@ -30,7 +29,6 @@ class Lead < AbstractLead
   scope :lead_purchases_counter_to, lambda { |q| where(["lead_purchases_counter <= ?", q]) }
   scope :purchase_value_from, lambda { |q| where(["purchase_value >= ?", q]) }
   scope :purchase_value_to, lambda { |q| where(["purchase_value <= ?", q]) }
-
   scope :with_selected_categories, lambda { |q| where(:category_id => q) }
   scope :with_categories, lambda { |arr| where(:category_id => Category.where(:id => arr.map(&:self_and_descendants).flatten.map(&:id))) }
   scope :with_country, lambda { |country_id| where(:country_id => country_id) }

@@ -37,6 +37,7 @@ class AbstractLead < ActiveRecord::Base
   before_save :set_published_at
 
   scope :with_category, lambda { |q| where(:category_id => Category.find_by_id(q).self_and_descendants.map(&:id)) }
+  scope :with_keyword, lambda { |q| where("lower(header) like :keyword OR lower(leads.description) like :keyword OR lower(creator_name) like :keyword", {:keyword => "%#{q.downcase}%"}) }
 
   accepts_nested_attributes_for :lead_translations, :allow_destroy => true
   accepts_nested_attributes_for :lead_template_values, :allow_destroy => true

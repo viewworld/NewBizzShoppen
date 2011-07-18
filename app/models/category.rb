@@ -34,6 +34,12 @@ class Category < ActiveRecord::Base
     end
   end
 
+  has_many :deals do
+    def including_subcategories
+      Deal.where(:category_id => proxy_owner.self_and_descendants.map(&:id))
+    end
+  end
+
   has_many :category_customers
   has_many :category_agents
   has_many :customers, :through => :category_customers, :source => :user
@@ -163,6 +169,10 @@ class Category < ActiveRecord::Base
 
   def can_publish_leads?
     !root? or (root? and children.size == 0)
+  end
+
+  def deals_count_for_user(user)
+    deals.count
   end
 
   def leads_count_for_user(user)
