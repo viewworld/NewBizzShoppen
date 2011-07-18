@@ -2,8 +2,29 @@ embed_assets: on
 
 javascripts:
   common:
-    - public/javascripts/*.js
+    - public/javascripts/jquery-1.4.2.min.js
+    - public/javascripts/jquery-ui-1.8.5.custom.min.js
+    - public/javascripts/jquery.ui.timepicker.js
+    - public/javascripts/jquery-ujs/src/rails.js
+    - public/javascripts/application.js
+    - public/javascripts/jquery.colorbox-min.js
+    - public/javascripts/jquery.printElement.js
+    - public/javascripts/jquery.qtip.min.js
+    - public/javascripts/jquery.expander.js
+    - public/javascripts/i18n.js
+    - public/javascripts/translations.js
+    - public/javascripts/custom.js
+    - public/javascripts/comments.js
+    - public/javascripts/jquery.form.js
+    - public/javascripts/jquery.autocomplete.min.js
 
 stylesheets:
   common:
-    - public/stylesheets/*.css
+    - public/stylesheets/ocss_core.css
+    - public/stylesheets/style.css
+    - public/stylesheets/jquery-ui-1.8.5.custom.css
+    - public/stylesheets/colorbox.css
+    - public/stylesheets/invoice.css
+    - public/stylesheets/invoice_lines_edit.css
+    - public/stylesheets/jquery.checkboxtree.min.css
+    - public/stylesheets/jquery.autocomplete.css
