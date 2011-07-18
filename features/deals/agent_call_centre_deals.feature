@@ -1,4 +1,4 @@
-@m16 @requested @deals
+@m16 @requested @agent_deals @_deals @$_call_centre @$_agent
 Feature: Deals from Call Centre/Agent perspective
 
   Scenario: I can see "My Deals" to the right of "My Leads" tab
@@ -11,3 +11,5 @@ Feature: Deals from Call Centre/Agent perspective
 
   #(but the deal must sign up sales manager, and will not have the option not to sign up)
   Scenario: The recipient of the certification request email must register as new sales manager
+
+  Scenario: Call centre / agent is set to be the deal admin

@@ -2320,7 +2320,9 @@ en:
         type3: Note
         type4: Date & Time
       date_format: "format: yyyy-mm-dd"
-      datetime_format: "format: yyyy-mm-dd hh:mm"  
+      datetime_format: "format: yyyy-mm-dd hh:mm"
+      is_reported_cannot_be_disabled: "cannot be disabled because call results are generated for that result"
+      is_success_cannot_be_disabled: "cannot be disabled because call results are generated for that result"
     locale:
       en: English
       dk: Danish

@@ -1,4 +1,4 @@
-@m16 @requested @deals
+@m16 @requested @admin_deals @_deals @$_administrator
 Feature: Deals from admin perspective
 
   Scenario: I can see a tab "Deals" right to "Leads"
@@ -18,6 +18,8 @@ Feature: Deals from admin perspective
   Scenario: I can create a Deal
 
   Scenario: I can make an agent or call centre a Deal Maker
+
+  Scenario: I can set an agent to be deal admin in setting menu
 
   # The category that a lead is assigned to, when it is requested. If the deal is created by a sales manager it is set by default (se sales manager)
   Scenario: I can select Lead category

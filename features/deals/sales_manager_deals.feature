@@ -1,4 +1,4 @@
-@m16 @requested @deals
+@m16 @requested @sales_manager_deals @_deals @$_sales_manager
 Feature: Deals from Sales Manager perspective
 
   Scenario: I can see new tab "My deals" right to the "My leads"

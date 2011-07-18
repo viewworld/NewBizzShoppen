@@ -19,6 +19,9 @@ class Callers::CampaignReportsController < Callers::CallerController
     @per_user = true if current_user.has_any_role?(:call_centre_agent, :agent)
     @views_count = params[:views_count].to_i
     @campaign_selection = params[:campaign_selection] || "active"
+    @result_ids = params[:result_ids] || nil
+
+    @all_results = Result.where(:final => true, :is_reported => true)
 
     if current_user.has_role?(:admin)
       @campaigns = Campaign.where("")
@@ -34,7 +37,7 @@ class Callers::CampaignReportsController < Callers::CallerController
       @campaigns = !@campaign_ids.blank? ? @campaigns.where(:id => @campaign_ids) : @campaigns
     end
 
-    @campaigns = @campaigns.select { |c| @campaign_selection == "active" ? c.active? : !c.active? }
+    @campaigns = @campaigns.select { |c| @campaign_selection == "active" ? c.active? : !c.active? } unless @campaign_selection == "all"
 
     if @views_count > 0
       if @per_user
@@ -46,9 +49,9 @@ class Callers::CampaignReportsController < Callers::CallerController
                             [current_user]
                           end
 
-        @campaign_reports = @campaign_users.map { |user| @campaigns.map { |campaign| CampaignReport.new(campaign, @date_from, @date_to, user) } }.flatten
+        @campaign_reports = @campaign_users.map { |user| @campaigns.map { |campaign| CampaignReport.new(campaign, @date_from, @date_to, user, @result_ids) } }.flatten
       else
-        @campaign_reports = @campaigns.map { |campaign| CampaignReport.new(campaign, @date_from, @date_to) }
+        @campaign_reports = @campaigns.map { |campaign| CampaignReport.new(campaign, @date_from, @date_to, nil, @result_ids) }
       end
     else
       @campaign_reports = []
