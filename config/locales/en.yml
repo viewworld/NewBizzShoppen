@@ -755,6 +755,7 @@ en:
           show_all_users: "Show all users"
           search_button: "Search"
           delete: "Delete"
+          log_in_as: "Log in as"
           delete_confirmation_message: "Are you sure?"
           leads_created: "Leads created"
           unpaid_leads: "Unpaid leads"

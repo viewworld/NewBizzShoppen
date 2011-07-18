@@ -55,6 +55,11 @@ class Administration::UsersController < Administration::AdministrationController
     redirect_to administration_users_path
   end
 
+  def sign_in_as
+    user = User.find(params[:id])
+    sign_in(user)
+    redirect_to root_path
+  end
 
   protected
 
