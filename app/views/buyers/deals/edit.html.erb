@@ -1,0 +1,61 @@
+<column-mc:>
+  <header back="true" backurl="#{buyers_deals_path}"><%= "Edit deal" %></header>
+
+  <%= semantic_form_for [:buyers, @deal], :method => :put do |form| %>
+      <frm title="Edit deal">
+        <param:content>
+          <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal} %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit "Update", :name => "commit_create" %>
+          </ibt>
+        </param:actions>
+      </frm>
+  <% end %>
+
+  <%#= image_tag() %>
+
+  <%= semantic_form_for [:buyers, @deal, @logo], :url => buyers_deal_assets_path(@deal, @logo), :method => :post, :html => {:multipart => true} do |form| %>
+      <frm title="Deal Logo">
+        <param:content>
+          <%= form.file_field :asset %>
+          <%= hidden_field_tag :type, "logo" %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit "Add logo", :name => "commit_create" %>
+          </ibt>
+        </param:actions>
+      </frm>
+  <% end %>
+
+  <%= semantic_form_for [:buyers, @deal, @image], :url => buyers_deal_assets_path(@deal, @image), :method => :post, :html => {:multipart => true} do |form| %>
+      <frm title="Deal Image">
+        <param:content>
+          <%= form.file_field :asset %>
+          <%= hidden_field_tag :type, "image" %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit "Add image", :name => "commit_create" %>
+          </ibt>
+        </param:actions>
+      </frm>
+  <% end %>
+
+  <%= semantic_form_for [:buyers, @deal, @material], :url => buyers_deal_assets_path(@deal, @material), :method => :post, :html => {:multipart => true}  do |form| %>
+      <frm title="Deal Material">
+        <param:content>
+          <%= form.file_field :asset %>
+          <%= hidden_field_tag :type, "material" %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit "Add material", :name => "commit_create" %>
+          </ibt>
+        </param:actions>
+      </frm>
+  <% end %>
+
+</column-mc:>

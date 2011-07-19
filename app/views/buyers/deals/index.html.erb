@@ -1,13 +1,15 @@
-
 <%= render :partial => "shared/deals/filter", :locals => {:search => @search, :path => buyers_deals_path} %>
-
 <column-mc:>
-  <header>My deals</header>
+  <%= render :partial => "shared/deals/actions", :locals => {:path => new_buyers_deal_path} %>
+
    <%= deals_table @deals do |blocks| %>
       <% blocks.tools do |deal| %>
           <ul-actions>
             <li>
-              <%= link_to t("campaigns.index.edit"), edit_buyers_deal_path(deal), :class => "default_action" %>
+              <%= link_to "Edit", edit_buyers_deal_path(deal), :class => "default_action" %>
+            </li>
+            <li>
+              <%= link_to "Destroy", buyers_deal_path(deal), :method => :delete, :confirm => "Are you sure?" %>
             </li>
           </ul-actions>
       <% end %>
