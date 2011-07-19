@@ -41,7 +41,7 @@ class I18nUtils
   end
 
   def self.populate!(base_locale='en')
-    puts "=> Updating locales..."
+    #puts "=> Updating locales..."
     I18nUtils.parse_yaml_files if Translation.table_exists?
     I18nUtils.populate_active_record_model_names(base_locale)
   end
