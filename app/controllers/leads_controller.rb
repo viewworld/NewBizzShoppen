@@ -56,6 +56,11 @@ class LeadsController < ApplicationController
     current_user ? current_user : User.find_by_rss_token(params[:user_token])
   end
 
+  def creators
+    @with_created_by = params[:with_created_by]
+    @creators = (cu_or_user_from_rss_token and cu_or_user_from_rss_token.has_accessible_categories?) ? User.with_leads.within_accessible_categories(cu_or_user_from_rss_token) : User.screen_name_and_id_with_leads
+  end
+
   protected
 
   def collection
@@ -90,7 +95,6 @@ class LeadsController < ApplicationController
     end
 
     @countries = (cu_or_user_from_rss_token and cu_or_user_from_rss_token.has_accessible_categories?) ? Country.with_leads.within_accessible_categories(cu_or_user_from_rss_token) : Country.with_leads
-    @creators = (cu_or_user_from_rss_token and cu_or_user_from_rss_token.has_accessible_categories?) ? User.with_leads.within_accessible_categories(cu_or_user_from_rss_token) : User.screen_name_and_id_with_leads
 
     unless params[:search].keys.any? { |k| k =~ /scend_by/}
       params[:search][:descend_by_leads_id] = true
