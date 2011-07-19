@@ -133,6 +133,7 @@ en:
       purchase_manager:
         leads: My leads
         lead_templates: "Lead templates"
+        my_requests: "My requests"
     my_profile_link: My profile
     logout_link: "Logout %{user_email}"
     login_link: "Login"
@@ -1693,12 +1694,15 @@ en:
           option_not_published: "not published"
           filter_with_inactive: "Skip inactive"
           filter_with_outdated: "Skip outdated"
+          header: "My requests"
       show:
         view:
           header: "Ratings for lead: %{lead_header}"
           rating_level: "Rating:"
           rating_reason: "Reason:"
           view_all_leads_link: "View all leads"
+          confirmation_message: "We have successfully received the contact request, and that we will be in touch as soon as possible."
+          ok_confirmation: "OK"
       destroy:
         flash:
           lead_deletion_successful: "Lead has been deleted successfully."
@@ -1714,6 +1718,7 @@ en:
           button_create_and_continue: "Create & continue"
           button_create_and_duplicate: "Create & duplicate"
           remove_language: "Remove"
+          lead_note: "Note"
       edit:
         view:
           title: "Editing lead: %{name}"
@@ -3000,6 +3005,7 @@ en:
         header_for: "Deals for"
         header_latest_leads: "Latest deals"
         request_information: "Request information"
+        contact_me: "Contact me"
       search:
         keyword_label: "Keyword"
         search_button: "Search"
