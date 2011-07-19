@@ -36,7 +36,7 @@ gem 'whenever', :require => false
 gem 'acts_as_commentable_with_threading'
 gem 'memcache-client'
 gem "devise_rpx_connectable"
-gem 'jammit-s3', :git => "git://github.com/kmamykin/jammit-s3.git", :branch => "aws-s3"
+gem 'jammit-s3', :branch => "aws-s3"
 
 
 group :development do
