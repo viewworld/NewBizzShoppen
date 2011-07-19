@@ -1,4 +1,11 @@
 embed_assets: on
+s3_access_key_id: AKIAJUCLH3EUZBE7SS6A
+s3_secret_access_key: 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
+s3_permission: public_read
+s3_bucket: static-fairleads
+s3_upload_files:
+  - public/javascripts/**/*
+  - public/stylesheets/**/*
 
 javascripts:
   common:

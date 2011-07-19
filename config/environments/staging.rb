@@ -23,6 +23,9 @@ Nbs::Application.configure do
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
 
+  # Enable serving of images, stylesheets, and javascripts from an asset server
+  config.action_controller.asset_host = "http://static-fairleads.s3.amazonaws.com"
+
   #Required by Devise
   config.action_mailer.default_url_options = {:host => 'beta.fairleads.com'}
 
