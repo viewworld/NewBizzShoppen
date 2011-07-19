@@ -90,7 +90,7 @@ class LeadsController < ApplicationController
     end
 
     @countries = (cu_or_user_from_rss_token and cu_or_user_from_rss_token.has_accessible_categories?) ? Country.with_leads.within_accessible_categories(cu_or_user_from_rss_token) : Country.with_leads
-    @creators = (cu_or_user_from_rss_token and cu_or_user_from_rss_token.has_accessible_categories?) ? User.with_leads.within_accessible_categories(cu_or_user_from_rss_token) : User.with_leads
+    @creators = (cu_or_user_from_rss_token and cu_or_user_from_rss_token.has_accessible_categories?) ? User.with_leads.within_accessible_categories(cu_or_user_from_rss_token) : User.screen_name_and_id_with_leads
 
     unless params[:search].keys.any? { |k| k =~ /scend_by/}
       params[:search][:descend_by_leads_id] = true

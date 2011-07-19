@@ -84,6 +84,7 @@ class User < ActiveRecord::Base
   scope :assignees_for_lead_purchase_owner, lambda { |owner| select("DISTINCT(users.id), users.*").where("requested_by IS NULL and lead_purchases.owner_id = ? and accessible_from IS NOT NULL and users.parent_id = ?", owner.id, owner.id).joins("RIGHT JOIN lead_purchases on lead_purchases.assignee_id=users.id") }
   scope :with_leads, select("DISTINCT(email), users.*").joins("RIGHT JOIN leads on users.id=leads.creator_id")
   scope :within_accessible_categories, lambda { |customer| where("leads.category_id NOT IN (?)", customer.accessible_categories_ids) }
+  scope :screen_name_and_id_with_leads, select("DISTINCT(users.screen_name),users.id").joins("RIGHT JOIN leads on users.id=leads.creator_id")
 
   scope :assigned_to_campaigns, select("DISTINCT(users.id), users.*").joins("inner join campaigns_users on users.id=campaigns_users.user_id")
   scope :with_results, joins("inner join call_results on users.id=call_results.creator_id")
