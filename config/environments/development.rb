@@ -26,6 +26,9 @@ Nbs::Application.configure do
   #Required by Devise
   config.action_mailer.default_url_options = {:host => 'localhost:3000'}
 
+  # Enable serving of images, stylesheets, and javascripts from an asset server
+  #config.action_controller.asset_host = "http://static-fairleads.s3.amazonaws.com"
+
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {:address => "smtp.gmail.com",
                                         :port => 587,
