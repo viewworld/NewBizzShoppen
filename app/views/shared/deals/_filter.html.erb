@@ -12,7 +12,7 @@
               </li>
               <li class="select">
                 <%= f.label "Active" %>
-                <%= f.select :published_is, [["yes", 1], ["no", 0]], {:include_blank => true} %>
+                <%= f.select :active_is, [["yes", 1], ["no", 0]], {:include_blank => true} %>
               </li>
             </ol>
             <ol>
@@ -22,7 +22,6 @@
                 </ibt>
                 <p>
                   <%= bt_clear_filter_safe %>
-                  <%= link_to_function t("common.advanced_search"), "$('#advanced_search_1_div').toggle();$('#advanced_search_2_div').slideToggle();" %>
                 </p>
               </li>
             </ol>

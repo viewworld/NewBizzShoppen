@@ -1,0 +1,60 @@
+<div class="column_left">
+  <div class="pdd_10 no_pdd_t">
+    <fieldset class="inputs labels_ta_r labels_200">
+      <ol>
+        <%= form.input :category_id, :as => :select, :collection => Category.all, :include_blank => false %>
+        <%= form.input :header %>
+        <%= form.input :description %>
+        <%= form.input :hidden_description %>
+        <%= form.input :fine_print %>
+        picture<br/>
+        upload material to download<br/>
+        <%= form.input :start_date, :as => :string,
+                       :wrapper_html => {:class => "date"},
+                       :input_html => {:class => "datepicker", :value => deal.start_date},
+                       :hint => t('models.result_field.date_format')%>
+        <%= form.input :end_date, :as => :string,
+                       :wrapper_html => {:class => "date"},
+                       :input_html => {:class => "datepicker", :value => deal.end_date},
+                       :hint => t('models.result_field.date_format')%>
+        <%= form.input :currency_id, :collection => currencies_for_select, :include_blank => false %>
+      </ol>
+    </fieldset>
+  </div>
+</div>
+
+<div class="column_right">
+  <div class="pdd_10 no_pdd_t">
+    <fieldset class="inputs labels_ta_r">
+      <ol class="align_inputs">
+        <%= form.input :company_name %>
+        Logo<br/>
+        <%= form.input :company_description %>
+        <%= form.input :contact_name %>
+        <%= form.input :email_address %>
+        <%= form.input :phone_number %>
+        <%= form.input :address_line_1 %>
+        <%= form.input :address_line_2 %>
+        <%= form.input :address_line_3 %>
+        <%= form.input :zip_code %>
+        <%= form.input :country_id, :as => :select, :collection => Country.all, :include_blank => false %>
+        <%= form.input :region_id, :as => :select, :collection => Region.all, :include_blank => false %>
+        <%= form.input :deal_url %>
+      </ol>
+    </fieldset>
+  </div>
+</div>
+
+<clb/>
+
+<js:>
+  <script type="text/javascript">
+      $(function() {
+          $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+          $("#deal_description").counter({
+          count: 'up',
+          goal: 140
+          });
+      });
+  </script>
+</js:>
