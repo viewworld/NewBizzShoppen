@@ -5,6 +5,7 @@ class DealsController < ApplicationController
 
   def collection
     @search = Deal.scoped_search(params[:search])
+    @search.without_requested_by = current_user
     @search.published_only = true
     @search.without_inactive = true
 

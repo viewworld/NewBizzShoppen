@@ -172,7 +172,7 @@ class Category < ActiveRecord::Base
   end
 
   def deals_count_for_user(user)
-    deals.count
+    deals.including_subcategories.without_inactive.without_requested_by(user).count
   end
 
   def leads_count_for_user(user)

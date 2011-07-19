@@ -86,7 +86,9 @@
           <%= deals_listing @deals, :show_checkboxes => false do |blocks| %>
 
               <% blocks.tools do |deal| %>
-                  <%= bt_link_to nil, t("deals.index.view.contact_me"), new_purchase_managers_lead_path(:deal_id => deal.id) %>
+                  <% if current_user.has_role?(:purchase_manager) %>
+                    <%= bt_link_to nil, t("deals.index.view.contact_me"), new_purchase_managers_lead_path(:deal_id => deal.id) %>
+                  <% end %>
               <% end %>
 
           <% end %>

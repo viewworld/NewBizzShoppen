@@ -301,10 +301,9 @@ class Lead < AbstractLead
      !lead_purchases.where("purchased_by = #{user.id} and accessible_from IS NOT NULL").blank?
   end
 
-  #TODO: Expire time for DEAL!!!!!!
   def based_on_deal(deal, user)
     {:current_user => deal.creator.agent? ? deal.creator : User.find_by_email(Settings.default_deal_admin_email).with_role, :category => deal.category, :sale_limit => 1, :price => deal.price,
-     :purchase_decision_date => Date.today+7, :currency => deal.currency, :published => true, :requestee => user, :deal_id => deal.id
+     :purchase_decision_date => deal.end_date+7, :currency => deal.currency, :published => true, :requestee => user, :deal_id => deal.id
     }.each_pair do |key, value|
       self.send("#{key}=", value)
     end

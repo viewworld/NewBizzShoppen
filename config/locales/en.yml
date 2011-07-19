@@ -3016,3 +3016,8 @@ en:
       lead_description_label: "Deals description"
       stats_label: "Stats"
       actions_label: "Actions"
+    show:
+      view:
+        header: "Deal details"
+        description_label: "Description"
+        end_date: "Expires at"

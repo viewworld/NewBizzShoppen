@@ -73,7 +73,7 @@ module LeadsHelper
   end
 
   def advanced_search_active?(search_params={})
-    ![:with_country, :with_region, :with_zip_code, :with_deal_value_from, :with_deal_value_to, :with_created_by, :with_certification_level, :with_sale_limit, :with_hotness, :with_selected_categories].detect { |k| !search_params[k].blank?  }.nil?
+    ![:with_country, :with_region, :with_zip_code, :with_deal_value_from, :with_deal_value_to, :with_created_by, :with_certification_level, :with_sale_limit, :with_hotness].detect { |k| !search_params[k].blank?  }.nil?
   end
 
 end
