@@ -14,24 +14,38 @@
       </frm>
   <% end %>
 
-  <%#= image_tag() %>
-
-  <%= semantic_form_for [:buyers, @deal, @logo], :url => buyers_deal_assets_path(@deal, @logo), :method => :post, :html => {:multipart => true} do |form| %>
-      <frm title="Deal Logo">
-        <param:content>
-          <%= form.file_field :asset %>
-          <%= hidden_field_tag :type, "logo" %>
-        </param:content>
-        <param:actions>
-          <ibt c="fltri" icon="save">
-            <%= form.submit "Add logo", :name => "commit_create" %>
-          </ibt>
-        </param:actions>
-      </frm>
+  <% if @deal.logo.id %>
+      <h2>Logo</h2>
+      <%= image_tag @deal.logo.asset.url(:thumb) %> <%= link_to "full size", @deal.logo.asset.url, :target => "_blank" %>
+      <%= link_to "remove", buyers_deal_asset_path(@deal, @deal.logo), :method => :delete, :confirm => "are you sure?" %>
+  <% else %>
+      <%= semantic_form_for [:buyers, @deal, @logo], :url => buyers_deal_assets_path(@deal, @logo), :method => :post, :html => {:multipart => true} do |form| %>
+          <frm title="Add Deal Logo">
+            <param:content>
+              <%= form.file_field :asset %>
+              <%= hidden_field_tag :type, "logo" %>
+            </param:content>
+            <param:actions>
+              <ibt c="fltri" icon="save">
+                <%= form.submit "Add logo", :name => "commit_create" %>
+              </ibt>
+            </param:actions>
+          </frm>
+      <% end %>
+  <% end %>
+  <% unless @images.blank? %>
+      <h2>Images</h2>
+      <% @images.each do |image| %>
+          <% if image.id %>
+              <%= image_tag image.asset.url(:thumb) %> <%= link_to "full size", image.asset.url, :target => "_blank" %>
+              <%= link_to "remove", buyers_deal_asset_path(@deal, image), :method => :delete, :confirm => "are you sure?" %>
+              <br/>
+          <% end %>
+      <% end %>
   <% end %>
 
   <%= semantic_form_for [:buyers, @deal, @image], :url => buyers_deal_assets_path(@deal, @image), :method => :post, :html => {:multipart => true} do |form| %>
-      <frm title="Deal Image">
+      <frm title="Add Deal Image">
         <param:content>
           <%= form.file_field :asset %>
           <%= hidden_field_tag :type, "image" %>
@@ -44,8 +58,19 @@
       </frm>
   <% end %>
 
-  <%= semantic_form_for [:buyers, @deal, @material], :url => buyers_deal_assets_path(@deal, @material), :method => :post, :html => {:multipart => true}  do |form| %>
-      <frm title="Deal Material">
+  <% unless @materials.blank? %>
+      <h2>Materials</h2>
+      <% @materials.each do |material| %>
+          <% if material.id %>
+              <%= material.asset_file_name %> <%= link_to "download", download_buyers_deal_asset_path(@deal, material) %>
+              <%= link_to "remove", buyers_deal_asset_path(@deal, material), :method => :delete, :confirm => "are you sure?" %>
+              <br/>
+          <% end %>
+      <% end %>
+  <% end %>
+
+  <%= semantic_form_for [:buyers, @deal, @material], :url => buyers_deal_assets_path(@deal, @material), :method => :post, :html => {:multipart => true} do |form| %>
+      <frm title="Add Deal Material">
         <param:content>
           <%= form.file_field :asset %>
           <%= hidden_field_tag :type, "material" %>

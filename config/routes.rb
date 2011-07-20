@@ -65,7 +65,11 @@ Nbs::Application.routes.draw do
     root :to => "lead_purchases#index"
     resources :cart_items
     resources :deals do
-      resources :assets, :controller => "deal_assets"
+      resources :assets, :controller => "deal_assets", :only => [:create, :destroy] do
+        member do
+          get 'download'
+        end
+      end
     end
     resource :cart, :only => [:show, :update, :destroy], :controller => 'cart'
     resources :lead_purchases do
@@ -168,10 +172,10 @@ Nbs::Application.routes.draw do
         end
         resource :agent_information, :only => [:show]
       end
-      resources :email_templates, :only => [:edit,:update]
+      resources :email_templates, :only => [:edit, :update]
     end
 
-    resource :production,  :controller => "production", :only => [:show]
+    resource :production, :controller => "production", :only => [:show]
 
     resources :contacts do
       resources :call_results, :only => [:new, :create, :edit, :update, :destroy]
