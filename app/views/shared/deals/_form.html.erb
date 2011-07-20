@@ -47,6 +47,31 @@
 
 <clb/>
 
+    <div class="nested_locale_container"></div>
+
+    <%= form.fields_for :lead_translations, deal.lead_translations.select { |lt| lt.locale != I18n.locale.to_s } do |builder| %>
+        <%= render :partial => "/shared/deals/deal_fields", :locals => {:f => builder} %>
+    <% end %>
+
+<clb/>
+
+
+<div class="pdd_10 no_pdd_t" id="locale_picker_div">
+  <fieldset class="inputs labels_ta_r labels_180">
+    <ol class="align_inputs">
+      <li class="header">
+        <h3><%= t("shared.leads.form.additional_language") %></h3>
+      </li>
+      <li class="select">
+        <%= form.label :locale, "New translation" %>
+        <%= select_tag :locale, options_for_select(available_locales_list(deal.lead_translations)),
+                       {:id => "locale_picker", :include_blank => true, :onchange => fields_for_deals_translations(form)} %>
+      </li>
+    </ol>
+  </fieldset>
+</div>
+<hl/>
+
 <js:>
   <script type="text/javascript">
       $(function() {
@@ -56,5 +81,11 @@
           goal: 140
           });
       });
+   var nestedFormsCount = <%= deal.lead_translations.reject{ |lt| lt.locale == I18n.locale.to_s }.size %>;
+   var language_names = [];
+   <% Locale.all.each do |locale| %>
+    <%= "language_names['#{locale.code}'] = '#{t('models.locale.' + locale.code)}';" -%>
+   <% end %>
   </script>
+  <%= javascript_include_tag 'lead_translation_functions.js' %>
 </js:>

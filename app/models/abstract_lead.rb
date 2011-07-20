@@ -1,7 +1,7 @@
 class AbstractLead < ActiveRecord::Base
   set_table_name "leads"
 
-  translates :header, :description, :hidden_description
+  translates :header, :description, :hidden_description, :fine_print, :company_description
 
   include ScopedSearch::Model
 

@@ -6,7 +6,7 @@ class Deal < AbstractLead
   has_many :materials, :class_name => "Asset::DealMaterial", :as => :resource, :conditions => "asset_type = 'Asset::DealMaterial'", :dependent => :destroy
   has_many :leads, :class_name => "Lead", :foreign_key => "deal_id"
 
-  scope :without_inactive, where("leads.end_date >= ? and start_date <= ?", Date.today, Date.today)
+  scope :without_inactive, where("leads.end_date >= ? and leads.start_date <= ?", Date.today, Date.today)
   scope :without_requested_by, lambda { |u| select("DISTINCT leads.*").joins("LEFT JOIN leads lr ON lr.deal_id = leads.id").where(["(lr.requested_by <> ? OR lr.requested_by IS NULL)", u.id]) if u }
   scope :active_is, lambda { |q| where("#{q == "1" ? "end_date >= ? and start_date <= ?" : "end_date < ? or start_date > ?"}", Date.today, Date.today) }
   scope :for_user, lambda { |q| where("creator_id = ?", q.id) }
