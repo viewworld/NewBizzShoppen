@@ -60,6 +60,9 @@ Deal.blueprint do
   purchase_decision_date { (Date.today+5) }
   published { true }
   currency { Currency.make!}
+  start_date { Date.today-5 }
+  end_date { Date.today+5 }
+  company_description { Faker::Lorem.sentences(2).to_s }
 end
 
 Lead.blueprint(:featured) do
