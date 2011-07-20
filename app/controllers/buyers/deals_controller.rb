@@ -24,7 +24,9 @@ class Buyers::DealsController < Buyers::BuyerController
   end
 
   def edit
-    @logo = @deal.build_logo
+    @logo = @deal.build_logo unless @deal.logo
+    @images = @deal.images
+    @materials = @deal.materials
     @image = @deal.images.build
     @material = @deal.materials.build
   end
