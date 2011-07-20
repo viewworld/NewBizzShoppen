@@ -41,25 +41,8 @@
 
   <header>
     <param:content>
-      <%= "My created leads" %>
+      <%= t("purchase_manager.leads.index.view.header") %>
     </param:content>
-
-    <param:actions>
-      <%= form_tag new_purchase_managers_lead_path, :method => :get, :id => "form_new_lead" do %>
-          <span style="position:absolute;top: 5px; right: 110px;">
-            <% categories = Category.without_locked.with_agent_unique(current_user).all %>
-            <%= select_tag :category_id, options_for_select(nested_set_options(categories), :selected => default_category_for_select(categories), :disabled => categories.select { |c| !c.can_publish_leads? }.map(&:id)) %>
-          </span>
-          <ul class="header_actions">
-            <li class="last">
-              <div class="hidden">
-                <%= submit_tag "New" %>
-              </div>
-              <%= bt_link_to :plus, t("purchase_manager.leads.index.view.new_lead"), "javascript:void", :onclick => "$('#form_new_lead').submit()" %>
-            </li>
-          </ul>
-      <% end %>
-    </param:actions>
   </header>
 
   <% if @leads.blank? %>

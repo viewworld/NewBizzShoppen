@@ -38,7 +38,7 @@ class LeadPurchaseBase < ActiveRecord::Base
   scope :with_deal_value_to, lambda { |to| where("leads.purchase_value <= ?", to) }
   scope :with_country, lambda { |country_id| where("leads.country_id = ?", country_id) }
   scope :with_zip_code, lambda { |zip_code| where("leads.zip_code = ?", zip_code) }
-  scope :with_requested_by, lambda { |requested_by| where("requested_by = ?", requested_by) }
+  scope :with_requested_by, lambda { |requested_by| where("lead_purchases.requested_by = ?", requested_by) }
   scope :with_paid, lambda {|paid| where(:paid => paid) }
 
   scope :in_cart, where(:paid => false, :accessible_from => nil)

@@ -14,6 +14,7 @@ class Lead < AbstractLead
   belongs_to :country
   belongs_to :currency
   belongs_to :region
+  belongs_to :requestee, :class_name => "User::PurchaseManager", :foreign_key => :requested_by
   has_many :lead_certification_requests
   has_many :lead_translations, :dependent => :destroy
   has_many :lead_purchases
@@ -67,6 +68,8 @@ class Lead < AbstractLead
   scope :with_hotness, lambda { |hotness| where("hotness_counter = ?", hotness) }
   scope :for_notification, lambda { |categories, notification_type| where("category_id in (?) and DATE(created_at) between ? and ?", categories.map(&:id), notification_type == User::LEAD_NOTIFICATION_ONCE_PER_DAY ? Date.today : Date.today-7, Date.today).published_only.without_inactive.without_outdated.order("category_id") }
 
+  scope :requested_by_purchase_manager, lambda { |user| where("creator_id = ? or requested_by = ?", user.id, user.id) }
+
   scope :descend_by_leads_id, order("leads.id DESC")
 
   delegate :certification_level, :to => :creator
@@ -82,6 +85,7 @@ class Lead < AbstractLead
   before_save :check_if_category_can_publish_leads
   after_create :send_instant_notification_to_subscribers
   after_save :auto_buy
+  attr_accessor :creation_step
 
   private
 
@@ -295,6 +299,30 @@ class Lead < AbstractLead
 
   def bought_by_user?(user)
      !lead_purchases.where("purchased_by = #{user.id} and accessible_from IS NOT NULL").blank?
+  end
+
+  def based_on_deal(deal, user)
+    {:current_user => deal.creator.agent? ? deal.creator : User.find_by_email(Settings.default_deal_admin_email).with_role, :category => deal.category, :sale_limit => 1, :price => deal.price,
+     :purchase_decision_date => deal.end_date+7, :currency => deal.currency, :published => true, :requestee => user, :deal_id => deal.id
+    }.each_pair do |key, value|
+      self.send("#{key}=", value)
+    end
+
+    self.header = "A company interested in #{deal.header}"
+    self.description = "A company is interested in #{deal.description}"
+    [
+        [:contact_name, :full_name], [:phone_number, :phone], [:email_address, :email],
+        [:company_name], [:address_line_1, nil, :address], [:address_line_2, nil, :address],
+        [:address_line_3, nil, :address], [:zip_code, nil, :address], [:country_id, nil, :address],
+        [:region_id, nil, :address]
+    ].each do |field1, field2, field3|
+      field2 = field1 if field2.nil?
+      if field3
+        self.send("#{field1}=".to_sym, user.send(field3.to_sym).send(field2.to_sym)) if self.send(field1.to_sym).blank?
+      else
+        self.send("#{field1}=".to_sym, user.send(field2.to_sym)) if self.send(field1.to_sym).blank?
+      end
+    end
   end
 
 end

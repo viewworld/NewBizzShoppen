@@ -4,7 +4,7 @@ class PurchaseManagerHomeController < ApplicationController
 
   def show
     if user_signed_in? and current_user.has_role?(:purchase_manager)
-      @best_sellers = Deal.without_inactive.published_only.latest.limit(3)
+      @best_sellers = Deal.without_requested_by(current_user).without_inactive.published_only.latest.limit(3)
     else
       @best_sellers = Lead.scoped
       @best_sellers = @best_sellers.without_inactive.published_only.without_bought_and_requested_by(current_user).bestsellers
