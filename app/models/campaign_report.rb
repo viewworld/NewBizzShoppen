@@ -1,18 +1,5 @@
 class CampaignReport
 
-  MARKUP_SCAFFOLD = %{<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-        <html xmlns="http://www.w3.org/1999/xhtml">
-          <head>
-            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-            <style type="text/css">
-              @import url("../stylesheets/campaign_report.css") print;
-            </style>
-          </head>
-          <body>
-            %s
-          </body>
-        </html>}
-
   attr_accessor :campaign, :date_from, :date_to, :user, :selected_result_ids
 
   def initialize(campaign, date_from, date_to, user=nil, selected_result_ids=nil)
@@ -136,7 +123,7 @@ class CampaignReport
       extend ApplicationHelper
     end
     html = av.render(:partial => 'callers/campaign_reports/report', :type => :erb, :locals => { :per_user => per_user, :campaign_users => campaign_users, :campaign_reports => campaign_reports, :result_ids => result_ids })
-    markup = MARKUP_SCAFFOLD % html
+    markup = File.read(Rails.root.join("app/views/layouts/pdf_report.html")) % html
     File.open(Rails.root.join("public/html2pdf/campaign_reports_cache/#{report_cache}.html"), 'w') {|f| f.write(markup) }
     html
   end
