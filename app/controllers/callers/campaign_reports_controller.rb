@@ -8,7 +8,7 @@ class Callers::CampaignReportsController < Callers::CallerController
   def index
     super do |format|
       format.html
-      format.pdf { send_file CampaignReport.store_pdf(params[:report]), :type => 'application/pdf'}
+      format.pdf { send_file CampaignReport.store_pdf(params[:report]), :type => 'application/pdf', :layout => "pdf"}
     end
   end
 
