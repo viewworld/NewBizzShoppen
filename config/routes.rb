@@ -126,6 +126,7 @@ Nbs::Application.routes.draw do
     resource :bulk_subaccounts_update, :controller => "bulk_subaccounts_update", :only => [:update]
     resources :not_invoiced_leads, :only => [:index]
     resources :invoices, :only => [:show, :index]
+    resources :lead_templates
   end
 
   namespace :agents do

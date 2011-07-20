@@ -55,12 +55,12 @@ class AbstractLead < ActiveRecord::Base
     end
   end
 
-  def lead_templates(with_mandatory_only=nil)
+  def lead_templates(with_mandatory_only=nil, deal_creator=nil)
     self.creator = current_user if creator.nil?
     templates = LeadTemplate.with_category_and_its_ancestors(category).where("is_active = ?", true).
-        where("(is_global = ? or (creator_id = ? and creator_type = ?) or (creator_id = ? and creator_type = ?) or creator_type = ? or creator_id in (?))",
+        where("(is_global = ? or (creator_id = ? and creator_type = ?) or (creator_id = ? and creator_type = ?) or creator_type = ? or creator_id in (?) or creator_id = ?)",
                  true, creator.parent_id, creator.parent.nil? ? "" : creator.parent.send(:casted_class).to_s, creator.id, creator.class.to_s, "User::Admin",
-                 (creator.has_role?(:call_centre_agent) and creator.parent.present?) ? creator.parent.send(:casted_class).find(creator.parent_id).subaccounts : [])
+                 (creator.has_role?(:call_centre_agent) and creator.parent.present?) ? creator.parent.send(:casted_class).find(creator.parent_id).subaccounts : [], deal_creator.nil? ? 0 : deal_creator.id)
     templates = templates.where("is_mandatory = ?", with_mandatory_only) unless with_mandatory_only.nil?
     templates.order("lead_templates.name")
   end

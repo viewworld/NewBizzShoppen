@@ -2099,6 +2099,26 @@ en:
             with_assigned_at_date_before_and_including: Assigned before
             payment_status: Payment status
 
+    lead_templates:
+      index:
+        view:
+          search:
+            keyword_label: "Keyword"
+            category_label: "Category"
+          search_button: "Search"
+          header: "Request templates"
+          new_template: "New template"
+      new:
+        view:
+          header: "New request template"
+          button_create: "Create"
+          button_cancel: "Cancel"
+      edit:
+        view:
+          header: "Edit request template"
+          created_by: "Created by"
+          button_update: "Save"
+          button_cancel: "Cancel"
   lead_user:
     lead_purchases:
       index:
