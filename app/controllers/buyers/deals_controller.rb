@@ -1,5 +1,5 @@
 class Buyers::DealsController < Buyers::BuyerController
-  before_filter :set_deal, :only => [:edit, :updatem, :destroy]
+  before_filter :set_deal, :only => [:edit, :update, :destroy]
 
   def new
     @deal = Deal.new(
@@ -42,8 +42,8 @@ class Buyers::DealsController < Buyers::BuyerController
   end
 
   def index
-    @search = current_user.deals.scoped_search(params[:search])
-    @deals = @search.paginate(:page => params[:page])
+    @search = Deal.scoped_search(params[:search])
+    @deals = @search.where(:creator_id => current_user.id).paginate(:page => params[:page])
   end
 
   private
