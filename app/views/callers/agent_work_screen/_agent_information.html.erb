@@ -1,25 +1,10 @@
 <div class="frm_tiny pdd_10">
 
   <p>
-    <strong>Value created today: </strong><%= as_currency(AgentInformation.today(current_user).value_created, Currency.euro) %>,
-    this week: <%= as_currency(AgentInformation.week(current_user).value_created, Currency.euro) %>,
-    this quarter: <%= as_currency(AgentInformation.quarter(current_user).value_created, Currency.euro) %>,
-    this year: <%= as_currency(AgentInformation.year(current_user).value_created, Currency.euro) %>
+    <strong>Value created today: </strong><%= as_currency(AgentInformation.today(current_user).value_created, Currency.euro, 0) %> (<%= as_currency(TopAgent.value_for(:today), Currency.euro, 0) %>),
+    this week: <%= as_currency(AgentInformation.week(current_user).value_created, Currency.euro, 0) %> (<%= as_currency(TopAgent.value_for(:week), Currency.euro, 0) %>),
+    this quarter: <%= as_currency(AgentInformation.quarter(current_user).value_created, Currency.euro, 0) %> (<%= as_currency(TopAgent.value_for(:quarter), Currency.euro, 0) %>),
+    this year: <%= as_currency(AgentInformation.year(current_user).value_created, Currency.euro, 0) %> (<%= as_currency(TopAgent.value_for(:year), Currency.euro, 0) %>)
   </p>
 
-  <p>
-    Top agents.
-    <% if top_agent_today = TopAgent.today and top_agent_today.valid? %>
-        <%= top_agent_today.user.screen_name %>: today <%= as_currency(top_agent_today.value_created, Currency.euro) %> /
-    <% end %>
-    <% if top_agent_week = TopAgent.week and top_agent_week.valid? %>
-        <%= top_agent_week.user.screen_name %>: this week <%= as_currency(top_agent_week.value_created, Currency.euro) %> /
-    <% end %>
-    <% if top_agent_quarter = TopAgent.quarter and top_agent_quarter.valid? %>
-        <%= top_agent_quarter.user.screen_name %>: this quarter <%= as_currency(top_agent_quarter.value_created, Currency.euro) %> /
-    <% end %>
-    <% if top_agent_year = TopAgent.year and top_agent_year.valid? %>
-        this year: <%= top_agent_year.user.screen_name %>: <%= as_currency(top_agent_year.value_created, Currency.euro) %>
-    <% end %>
-  </p>
 </div>

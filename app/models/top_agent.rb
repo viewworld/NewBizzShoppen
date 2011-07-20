@@ -17,6 +17,14 @@ class TopAgent
     new(Date.today,Date.today)
   end
 
+  def self.value_for(symbol)
+    if ta = TopAgent.send(symbol) and ta.valid?
+      ta.value_created
+    else
+      0.0
+    end
+  end
+
   def self.week
     new(Time.now.beginning_of_week.to_date, Time.now.end_of_week.to_date)
   end

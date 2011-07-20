@@ -103,17 +103,17 @@ module ApplicationHelper
     link_to_function(content_tag(:span, icon_tag), script, opts)
   end
 
-  def as_currency(number,currency=nil)
+  def as_currency(number,currency=nil,precision=nil)
      if currency
       number_to_currency(number,
                          :format => currency.format,
                          :unit => currency.symbol,
                          :separator => currency.separator,
                          :delimiter => currency.delimiter,
-                         :precision => t("number.format.precision").to_i)
+                         :precision => precision || t("number.format.precision").to_i)
     else
       number_to_currency(number,
-                         :precision => t("number.format.precision").to_i,
+                         :precision => precision || t("number.format.precision").to_i,
                          :unit => "")
     end
   end
