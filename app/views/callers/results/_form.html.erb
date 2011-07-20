@@ -31,14 +31,10 @@
 
 <% if result.final? and result.created_by_or_admin?(current_user) %>
 <div class="pdd_10 no_pdd_t">
-  <fieldset class="inputs labels_100 labels_ta_r">
+  <fieldset class="inputs_vertical">
     <ol>
-      <li class="boolean">
         <%= form.input :is_reported %>
-      </li>
-      <li class="boolean">
         <%= form.input :is_success %>
-      </li>
     </ol>
   </fieldset>
 </div>

@@ -17,6 +17,9 @@
         <%= form.input :category_id, :as => :select, :collection => Category.all, :include_blank => false %>
         <%= form.input :country_id, :as => :select, :collection => Country.all, :include_blank => false %>
         <%= form.input :currency_id, :collection => currencies_for_select, :include_blank => false %>
+        <%= form.input :finished_contacts_per_hour, :input_html => {:style => "width:95px"} %>
+        <%= form.input :production_value_per_hour, :input_html => {:style => "width:95px"} %>
+        <%= form.input :success_rate, :input_html => {:style => "width:95px"} %>        
       </ol>
     </fieldset>
   </div>
@@ -35,9 +38,6 @@
                        :input_html => {:class => "datepicker", :value => campaign.end_date},
                        :hint => t('models.result_field.date_format')%>
         <%= form.input :max_contact_number, :input_html => {:style => "width:95px"} %>
-        <%= form.input :finished_contacts_per_hour, :input_html => {:style => "width:95px"} %>
-        <%= form.input :production_value_per_hour, :input_html => {:style => "width:95px"} %>
-        <%= form.input :success_rate, :input_html => {:style => "width:95px"} %>
         <%= form.input :cost_type, :as => :radio, :collection => Campaign::COST_TYPES.map { |lnt| [t("campaigns.cost_types.cost_type#{lnt}"), lnt] }, :wrapper_html => {:class => "collection"} %>
         <%= form.input :fixed_cost_value, :input_html => {:style => "width:95px"} %>
       </ol>
