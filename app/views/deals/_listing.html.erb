@@ -12,7 +12,7 @@
         <th class="no_pdd_lr" style="width: 10px;"><%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %></th>
     <% end %>
     <th style="width: 550px;"><%= t("deals.listing.lead_description_label") %></th>
-    <th colspan="2"><%= t("deals.listing.stats_label") %></th>
+    <th colspan="2"><%= t("deals.listing.contact_label") %></th>
 
     <% if block_tools %>
         <th class="ta_r"><%= t("deals.listing.actions_label") %></th>
@@ -47,8 +47,17 @@
         </td>
 
         <td>
-
+          <% if user_signed_in? and current_user.has_any_role?(:purchase_manager, :admin) %>
+            <p class="element"><%= t("deals.listing.contact_name_label") %><b> <%= deal.contact_name %></b></p>
+            <p class="element"><%= t("deals.listing.contact_email_label") %><b> <%= deal.email_address %></b></p>
+            <p class="element"><%= t("deals.listing.contact_phone_number_label") %><b> <%= deal.phone_number %></b></p>
+            <p class="element"><%= deal.address %></p>
+            <br />
+            <p class="element"><%= t("deals.listing.company_name_label") %><b> <%= deal.company_name %></b></p>
+            <p class="element"><%= t("deals.listing.company_description_label") %><b> <%= deal.company_description %></b></p>
+          <% end %>
         </td>
+
         <td>
 
         </td>

@@ -3014,8 +3014,13 @@ en:
         region_label: "Region"
     listing:
       lead_description_label: "Deals description"
-      stats_label: "Stats"
+      contact_label: "Contact information"
       actions_label: "Actions"
+      contact_name_label: "Contact name"
+      contact_email_label: "E-mail"
+      contact_phone_number_label: "Phone number"
+      company_name_label: "Company"
+      company_description_label: "Company description"
     show:
       view:
         header: "Deal details"
