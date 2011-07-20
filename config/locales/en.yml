@@ -338,6 +338,7 @@ en:
     edit:
       title: Edit campaign
       owner: Owner
+      campaign_targets: Campaign targets
       button_update: Update
       button_cancel: Back to campain listing
       button_create_contact: Create contact
