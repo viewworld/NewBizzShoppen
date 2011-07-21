@@ -5,7 +5,9 @@ end
 When /^I sign in as (.+) with password (.+)$/ do |login, password|
   rack_test_session_wrapper = Capybara.current_session.driver
   rack_test_session_wrapper.post("/users/sign_in", :user => {:email => login, :password => password})
-  click_link("redirected")
+  if rack_test_session_wrapper.status_code == 302
+    visit rack_test_session_wrapper.response_headers["Location"]
+  end
 end
 
 Then /^I should be signed in$/ do
