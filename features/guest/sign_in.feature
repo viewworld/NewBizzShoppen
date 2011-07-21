@@ -39,7 +39,9 @@ Feature: Sign in
     Given I am signed up and confirmed as user with email <login> and password <password> and role <role>
     And user with email "<login>" is a subaccount of user with email "<parent_email>" and role "<parent_role>"
     And user with email "<login>" has logged before
-    And I sign in as <login> with password <password>
+    And I fill in "user_email" with "<login>"
+    And I fill in "user_password" with "<password>"
+    And I press translated "home.show.view.sign_in"
 
     Then I should be on "<the page>"
 
