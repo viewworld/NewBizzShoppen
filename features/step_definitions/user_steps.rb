@@ -3,11 +3,9 @@ Given /^no user exists with an email of (.+) and role (.+)$/ do |email, role|
 end
 
 When /^I sign in as (.+) with password (.+)$/ do |login, password|
-  rack_test_session_wrapper = Capybara.current_session.driver
-  rack_test_session_wrapper.post("/users/sign_in", :user => {:email => login, :password => password})
-  if rack_test_session_wrapper.status_code == 302
-    visit rack_test_session_wrapper.response_headers["Location"]
-  end
+  And %{I fill in "user_email" with "#{login}"}
+  And %{I fill in "user_password" with "#{password}"}
+  And %{I press "Sign in"}
 end
 
 Then /^I should be signed in$/ do
