@@ -14,8 +14,13 @@ class Buyers::DealAssetsController < Buyers::BuyerController
                nil
              end
     if @asset
-      @asset.save!
-      flash[:notice] = "Asset has been successfully added."
+      @asset.resource_id = @deal.id
+      @asset.resource_type = "AbstractLead"
+      if @asset.save
+        flash[:notice] = "Asset has been successfully added."
+      else
+        flash[:alert] = "Asset is invalid"
+      end
     end
     redirect_to edit_buyers_deal_path(@deal)
   end

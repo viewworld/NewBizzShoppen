@@ -21,6 +21,9 @@ class Lead < AbstractLead
   has_many :lead_template_values
   has_many :comment_threads, :class_name => "Comment", :foreign_key => :commentable_id, :conditions => {:commentable_type => 'AbstractLead'}
 
+  validates_presence_of :price, :purchase_decision_date, :sale_limit, :category_id
+  validates_inclusion_of :sale_limit, :in => 0..10, :if => :process_for_lead_information?
+
   scope :deal_value_from, lambda { |q| where(["purchase_value >= ?", q]) }
   scope :deal_value_to, lambda { |q| where(["purchase_value <= ?", q]) }
   scope :price_from, lambda { |q| where(["price >= ?", q]) }

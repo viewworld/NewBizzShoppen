@@ -1815,6 +1815,10 @@ en:
         view:
           header: "Lead details"
 
+    deals:
+      form:
+        all_templates: "Available templates"
+        selected_templates: "Selected templates"
   categories:
     index:
       view:
