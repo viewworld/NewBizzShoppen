@@ -92,6 +92,10 @@ module NavigationHelpers
         '/purchase_manager_accounts/new'
     when /sample image/
         "#{::Rails.root.to_s}/spec/fixtures/sample.jpg"
+    when /lead advanced import spreadsheet/
+        "#{::Rails.root.to_s}/spec/fixtures/leads_adv_import.ods"
+    when /bad advanced import spreadsheet/
+        "#{::Rails.root.to_s}/spec/fixtures/bad_leads_adv_import.ods"
     when /resend confirmation instructions/
         '/users/confirmation/new'
     when /reset password/
