@@ -29,7 +29,9 @@
     <fieldset class="inputs labels_ta_r">
       <ol class="align_inputs">
         <%= form.input :company_name %>
-        <%= form.input :category_id, :disabled => categories.select { |c| !c.can_publish_leads? }.map(&:id),  :collection => nested_set_options(categories), :include_blank => false %>
+        <% unless current_user.buyer? %>
+            <%= form.input :category_id, :disabled => categories.select { |c| !c.can_publish_leads? }.map(&:id),  :collection => nested_set_options(categories), :include_blank => false %>
+        <% end %>
         Logo<br/>
         <%= form.input :company_description %>
         <%= form.input :contact_name %>
