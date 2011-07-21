@@ -302,14 +302,12 @@ class Lead < AbstractLead
   end
 
   def based_on_deal(deal, user)
-    {:current_user => deal.creator.agent? ? deal.creator : User.find_by_email(Settings.default_deal_admin_email).with_role, :category => deal.category, :sale_limit => 1, :price => deal.price,
+    {:current_user => deal.creator.agent? ? deal.creator : User.find_by_email(Settings.default_deal_admin_email).with_role, :category => deal.category, :sale_limit => 1, :price => deal.price.blank? ? 0 : deal.price,
      :purchase_decision_date => deal.end_date+7, :currency => deal.currency, :published => true, :requestee => user, :deal_id => deal.id
     }.each_pair do |key, value|
       self.send("#{key}=", value)
     end
 
-    self.header = "A company interested in #{deal.header}"
-    self.description = "A company is interested in #{deal.description}"
     [
         [:contact_name, :full_name], [:phone_number, :phone], [:email_address, :email],
         [:company_name], [:address_line_1, nil, :address], [:address_line_2, nil, :address],
@@ -323,6 +321,14 @@ class Lead < AbstractLead
         self.send("#{field1}=".to_sym, user.send(field2.to_sym)) if self.send(field1.to_sym).blank?
       end
     end
+
+    current_locale = I18n.locale
+    (deal.lead_translations.count > 1 ? ::Locale.all.map(&:code) : [current_locale]).each do |locale_code|
+      I18n.locale = locale_code
+      self.header = "#{I18n.t("models.lead.field_prefixes.header")} #{deal.header}"
+      self.description = "#{I18n.t("models.lead.field_prefixes.description")} #{deal.description}"
+    end
+    I18n.locale = current_locale
   end
 
 end
