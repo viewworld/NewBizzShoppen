@@ -244,7 +244,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
         article = Article::Cms::Hint.find_by_key("#{klass}_#{method}")
         article = Article::Cms::Hint.create(:key => "#{klass}_#{method}", :published => false) if article.nil?
         [:en, :dk].each do |locale|
-          I18n.locale = locale
+          ::I18n.locale = locale
           if article.content.blank?
             article.update_attributes({:content => Rails.env.production? ? "(write text here)" : "Hint for <b>#{klass.to_s}: #{method.humanize.downcase.gsub('_id', '')}</b>",
                                        :title => "#{klass.to_s.capitalize}##{method.gsub('_id', '')}"})
