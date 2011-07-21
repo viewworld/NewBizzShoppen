@@ -103,6 +103,13 @@ Nbs::Application.routes.draw do
       resources :certifications, :only => :create
     end
     resources :lead_templates
+    resources :deals do
+      resources :assets, :controller => "deal_assets", :only => [:create, :destroy] do
+        member do
+          get 'download'
+        end
+      end
+    end
   end
 
   namespace :lead_users do

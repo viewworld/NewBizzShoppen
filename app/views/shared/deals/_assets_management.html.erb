@@ -1,0 +1,68 @@
+  <% if @deal.logo.id %>
+      <h2><%= t("deals.common.assets.view.logo_label") %></h2>
+      <%= image_tag @deal.logo.asset.url(:thumb) %> <%= link_to "full size", @deal.logo.asset.url, :target => "_blank" %>
+      <%= link_to t("deals.common.assets.view.remove_logo"), buyers_deal_asset_path(@deal, @deal.logo), :method => :delete, :confirm => t("common.confirmation") %>
+  <% else %>
+      <%= semantic_form_for [:buyers, @deal, @logo], :url => buyers_deal_assets_path(@deal, @logo), :method => :post, :html => {:multipart => true} do |form| %>
+          <frm title="#{t('deals.common.assets.view.add_logo_label')}">
+            <param:content>
+              <%= form.file_field :asset %>
+              <%= hidden_field_tag :type, "logo" %>
+            </param:content>
+            <param:actions>
+              <ibt c="fltri" icon="save">
+                <%= form.submit t("deals.common.assets.view.add_logo_button"), :name => "commit_create" %>
+              </ibt>
+            </param:actions>
+          </frm>
+      <% end %>
+  <% end %>
+  <% unless @images.blank? %>
+      <h2><%= t("deals.common.assets.view.images_label") %></h2>
+      <% @images.each do |image| %>
+          <% if image.id %>
+              <%= image_tag image.asset.url(:thumb) %> <%= link_to "full size", image.asset.url, :target => "_blank" %>
+              <%= link_to t("deals.common.assets.view.remove_image"), buyers_deal_asset_path(@deal, image), :method => :delete, :confirm => "are you sure?" %>
+              <br/>
+          <% end %>
+      <% end %>
+  <% end %>
+
+  <%= semantic_form_for [:buyers, @deal, @image], :url => buyers_deal_assets_path(@deal, @image), :method => :post, :html => {:multipart => true} do |form| %>
+      <frm title="#{t('deals.common.assets.view.add_image_label')}">
+        <param:content>
+          <%= form.file_field :asset %>
+          <%= hidden_field_tag :type, "image" %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("deals.common.assets.view.add_image_button"), :name => "commit_create" %>
+          </ibt>
+        </param:actions>
+      </frm>
+  <% end %>
+
+  <% unless @materials.blank? %>
+      <h2><%= t("deals.common.assets.view.materials_label") %></h2>
+      <% @materials.each do |material| %>
+          <% if material.id %>
+              <%= material.asset_file_name %> <%= link_to "download", download_buyers_deal_asset_path(@deal, material) %>
+              <%= link_to t("deals.common.assets.view.remove_material"), buyers_deal_asset_path(@deal, material), :method => :delete, :confirm => "are you sure?" %>
+              <br/>
+          <% end %>
+      <% end %>
+  <% end %>
+
+  <%= semantic_form_for [:buyers, @deal, @material], :url => buyers_deal_assets_path(@deal, @material), :method => :post, :html => {:multipart => true} do |form| %>
+      <frm title="#{t('deals.common.assets.view.add_material_label')}">
+        <param:content>
+          <%= form.file_field :asset %>
+          <%= hidden_field_tag :type, "material" %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("deals.common.assets.view.add_material_button"), :name => "commit_create" %>
+          </ibt>
+        </param:actions>
+      </frm>
+  <% end %>

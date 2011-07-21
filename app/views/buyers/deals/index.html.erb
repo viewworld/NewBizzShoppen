@@ -6,10 +6,10 @@
       <% blocks.tools do |deal| %>
           <ul-actions>
             <li>
-              <%= link_to "Edit", edit_buyers_deal_path(deal), :class => "default_action" %>
+              <%= link_to t("buyer.deals.index.view.edit"), edit_buyers_deal_path(deal), :class => "default_action" %>
             </li>
             <li>
-              <%= link_to "Destroy", buyers_deal_path(deal), :method => :delete, :confirm => "Are you sure?" %>
+              <%= link_to t("buyer.deals.index.view.destroy"), buyers_deal_path(deal), :method => :delete, :confirm => t("common.confirmation") %>
             </li>
           </ul-actions>
       <% end %>

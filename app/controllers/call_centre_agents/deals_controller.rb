@@ -1,15 +1,22 @@
-class Buyers::DealsController < Buyers::BuyerController
+class CallCentreAgents::DealsController < CallCentreAgents::CallCentreAgentController
   before_filter :set_deal, :only => [:edit, :update, :destroy]
   before_filter :prepare_assets, :only => [:edit, :update]
 
   include ::DealActions
 
   def new
-    @deal = Deal.new_for_user(current_user)
+    @deal = Deal.new
+    respond_to do |content|
+      content.html { }
+      content.js {
+      @user = User::Customer.where(:email => params[:email]).first
+      }
+    end
   end
 
   def create
     @deal = current_user.deals.build(params[:deal])
+    @deal.creation_step = 1
     if @deal.save
       @deal.reload
       @deal.deal_template_ids = params[:deal][:deal_template_ids]
@@ -24,7 +31,7 @@ class Buyers::DealsController < Buyers::BuyerController
 
   def success(message)
     flash[:notice] = message
-    redirect_to buyers_deals_path
+    redirect_to call_centre_agents_deals_path
   end
 
 end

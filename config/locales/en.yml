@@ -110,6 +110,7 @@ en:
         campaigns: Campaigns
         news: News
         reports: "Reports"
+        deals: "My deals"
       customer:
         subaccounts: Team
         lead_requests: Requested leads
@@ -1681,6 +1682,20 @@ en:
           deletion_successful: "Lead template has been deleted successfully."
           deletion_failure: "Lead template could not be deleted"
 
+    deals:
+      index:
+        view:
+          edit: "Edit"
+          destroy: "Destroy"
+      new:
+        view:
+          create_button: "Create"
+          check_buyer_email: "Check sales manager email"
+          no_user_found_message: "No user with email %{email} was found!"
+          certify: "Certify"
+      edit:
+        view:
+          update_button: "Save"
   purchase_manager:
     leads:
       index:
@@ -1819,6 +1834,16 @@ en:
       form:
         all_templates: "Available templates"
         selected_templates: "Selected templates"
+      index:
+        view:
+          edit: "Edit"
+          destroy: "Destroy"
+      new:
+        view:
+          create_button: "Create"
+      edit:
+        view:
+          update_button: "Save"
   categories:
     index:
       view:
@@ -2574,6 +2599,13 @@ en:
     customer_interests:
       update:
         notice: "Customer interest have been successfully saved!"
+    deals:
+      create:
+        notice: "Deal has been successfully created."
+      destroy:
+        notice: "Deal has been successfully destroyed."
+      update:
+        notice: "Deal has been successfully updated"
   formtastic:
     date:
       formats:
@@ -3053,3 +3085,22 @@ en:
         header: "Deal details"
         description_label: "Description"
         end_date: "Expires at"
+    common:
+      assets:
+        view:
+          logo_label: "Logo"
+          add_logo_label: "Add deal logo"
+          add_image_label: "Add deal image"
+          add_material_label: "Add deal material"
+          add_logo_button: "Add logo"
+          remove_logo: "remove"
+          images_label: "Images"
+          remove_image: "remove"
+          add_image_button: "Add image"
+          materials_label: "Materials"
+          remove_material: "remove"
+          add_material_button: "Add material"
+      listing:
+        view:
+          header: "My deals"
+          new_deal: "Create new deal"

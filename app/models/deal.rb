@@ -12,7 +12,29 @@ class Deal < AbstractLead
   scope :active_is, lambda { |q| where("#{q == "1" ? "end_date >= ? and start_date <= ?" : "end_date < ? or start_date > ?"}", Date.today, Date.today) }
   scope :for_user, lambda { |q| where("creator_id = ?", q.id) }
 
+  validates_presence_of :start_date, :end_date, :email_address
+
   before_create :create_uniq_deal_category
+  after_create :certify_for_unknown_email
+
+  attr_accessor :creation_step
+
+  def self.new_for_user(user)
+    Deal.new(
+        :company_name => user.company_name,
+        :contact_name => user.full_name,
+        :email_address => user.email,
+        :phone_number => user.phone,
+        :address_line_1 => user.with_role.address.address_line_1,
+        :address_line_2 => user.with_role.address.address_line_2,
+        :address_line_3 => user.with_role.address.address_line_3,
+        :zip_code => user.with_role.address.zip_code,
+        :country_id => user.with_role.address.country_id,
+        :region_id => user.with_role.address.region_id,
+        :start_date => Date.today,
+        :end_date => Date.today,
+        :price => 0)
+  end
 
   private
 
@@ -34,6 +56,12 @@ class Deal < AbstractLead
       category.save
     end
     self.category_id = category.id
+  end
+
+  def certify_for_unknown_email
+    if creator.agent? or creator.admin? and User::Customer.where(:email => email_address).first.nil?
+      #certify!
+    end
   end
 
 end

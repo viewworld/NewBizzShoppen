@@ -17,6 +17,7 @@
                        :wrapper_html => {:class => "date"},
                        :input_html => {:class => "datepicker", :value => deal.end_date},
                        :hint => t('models.result_field.date_format')%>
+        <%= form.input :price, :as => current_user.buyer? ? :hidden : :string %>
         <%= form.input :currency_id, :collection => currencies_for_select, :include_blank => false %>
       </ol>
     </fieldset>
@@ -28,6 +29,7 @@
     <fieldset class="inputs labels_ta_r">
       <ol class="align_inputs">
         <%= form.input :company_name %>
+        <%= form.input :category_id, :disabled => categories.select { |c| !c.can_publish_leads? }.map(&:id),  :collection => nested_set_options(categories), :include_blank => false %>
         Logo<br/>
         <%= form.input :company_description %>
         <%= form.input :contact_name %>
@@ -40,7 +42,6 @@
         <%= form.input :country_id, :as => :select, :collection => Country.all, :include_blank => false %>
         <%= form.input :region_id, :as => :select, :collection => Region.all, :include_blank => false %>
         <%= form.input :deal_url %>
-        <%= form.input :price, :as => :hidden %>
       </ol>
     </fieldset>
   </div>
