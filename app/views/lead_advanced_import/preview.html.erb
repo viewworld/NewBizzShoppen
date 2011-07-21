@@ -23,6 +23,7 @@
       <%= hidden_field_tag :spreadsheet_field, @spreadsheet_field %>
       <%= hidden_field_tag :attachment, @attachment_file %>
       <%= hidden_field_tag :category_id, @category.id %>
+      <%= hidden_field_tag :creator_id, @creator_id %>
   <% end %>
 
   <%= link_to_function t("lead_advanced_import.preview.view.cancel_button"), "javascript:history.back()" %>

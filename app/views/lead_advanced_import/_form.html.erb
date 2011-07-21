@@ -6,6 +6,9 @@
             <ol class="align_inputs">
               <%= file_field_tag 'attachment', :accept => 'spreadsheet/ods,spreadsheet/doc,spreadsheet/xdoc', :class => "fltl" %>
               <%= select_tag :category_id, options_for_select(nested_set_options(categories), :selected => default_category_for_select(categories), :disabled => categories.select { |c| !c.can_publish_leads? }.map(&:id)) %>
+              <% if current_user.admin? %>
+                  <%= select_tag :creator_id, options_for_select(User.with_agents.map{|user| [user.to_s, user.id]}) %>
+              <% end %>
             </ol>
           </fieldset>
         </div>

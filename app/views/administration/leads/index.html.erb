@@ -74,7 +74,21 @@
 
 
 <column-mc:>
-  <header back="#{'true' if @search.with_created_by}"><%= t("administration.leads.index.view.title") %></header>
+  <header back="#{'true' if @search.with_created_by}">
+    <param:content>
+      <%= t("administration.leads.index.view.title") %>
+    </param:content>
+
+    <param:actions>
+          <ul class="header_actions">
+            <li class="last">
+              <%= bt_link_to_function :plus, "Import", "$('#lead_advanced_import_form').toggle()" %>
+            </li>
+          </ul>
+    </param:actions>
+  </header>
+
+  <%= render :partial => "lead_advanced_import/form", :locals => {:categories => Category.without_locked.with_agent_unique(current_user).all, :show => @show_import} %>
 
   <% if @leads.blank? %>
     <%= blank_state_message %>

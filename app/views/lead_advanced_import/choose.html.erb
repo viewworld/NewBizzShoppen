@@ -46,9 +46,10 @@
       <%= hidden_field_tag :spreadsheet_field, nil %>
       <%= hidden_field_tag :attachment, @attachment_file %>
       <%= hidden_field_tag :category_id, @category.id %>
+      <%= hidden_field_tag :creator_id, @creator_id %>
   <% end %>
 
-  <%= link_to t("lead_advanced_import.choose.view.cancel_button"), agents_leads_path %>
+  <%= link_to t("lead_advanced_import.choose.view.cancel_button"), @role == "admin" ? administration_leads_path : self.send("#{@role}s_leads_path".to_sym) %>
   <%= button_to_function t("lead_advanced_import.choose.view.next_button"), "advanced_import_next_button('#{t("callers.advanced_import.choose.view.warning_list_not_equal")}', 'lead');" %>
 
 </column-mc:>
