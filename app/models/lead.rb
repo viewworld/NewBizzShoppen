@@ -165,7 +165,7 @@ class Lead < AbstractLead
   end
 
   def deliver_email_template(email, uniq_id)
-    ApplicationMailer.email_template(email, EmailTemplate.find_by_uniq_id(uniq_id), {:lead => self}).deliver
+    ApplicationMailer.delay.email_template(email, EmailTemplate.find_by_uniq_id(uniq_id), {:lead => self})
   end
 
   def auto_buy

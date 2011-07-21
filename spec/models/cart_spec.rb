@@ -4,7 +4,9 @@ describe Cart do
   fixtures :all
 
   before(:each) do
-    @buyer = User::LeadBuyer.make!
+    @buyer = User::Customer.make!
+    @buyer.address.country.vat_rate.update_attribute(:rate, 50.0)
+    @buyer = User::LeadBuyer.find(@buyer.id)
   end
 
   context "Initialization" do
@@ -46,7 +48,7 @@ describe Cart do
 
     it "should add multiple leads to cart properly" do
       lead1 = Lead.make!
-      lead2 = Lead.make!
+      lead2 = Lead.make!(:currency => lead1.currency)
       cart  = Cart.new(@buyer)
       lambda { cart.add_leads(lead1.id, lead2.id) }.should change(cart, :empty?).from(true).to(false)
       cart.items.should have(2).things
@@ -54,7 +56,7 @@ describe Cart do
 
     it "should calculate the total properly" do
       lead1 = Lead.make!(:price => 100.0)
-      lead2 = Lead.make!(:price => 150.0)
+      lead2 = Lead.make!(:price => 150.0, :currency => lead1.currency)
 
       cart  = Cart.new(@buyer)
 
@@ -63,7 +65,7 @@ describe Cart do
 
       cart.empty?.should be false
       cart.items.should have(2).things
-      cart.total.should == 250.0
+      cart.total.to_f.should == 375.0
     end
 
 
@@ -73,15 +75,17 @@ describe Cart do
 
     it "should be emptied properly" do
       cart = Cart.new(@buyer)
-      cart.add_lead(Lead.make!)
-      cart.add_lead(Lead.make!)
+      currency = Currency.make!
+      cart.add_lead(Lead.make!(:currency => currency))
+      cart.add_lead(Lead.make!(:currency => currency))
       lambda { cart.empty! }.should change(cart, :count).from(2).to(0)
     end
 
     it "should remove specific item from cart properly" do
-      lead1 = Lead.make!
-      lead2 = Lead.make!
-      lead3 = Lead.make!
+      currency = Currency.make!
+      lead1 = Lead.make!(:currency => currency)
+      lead2 = Lead.make!(:currency => currency)
+      lead3 = Lead.make!(:currency => currency)
 
       cart  = Cart.new(@buyer)
 
@@ -101,8 +105,9 @@ describe Cart do
   context "Paid for lead in the card" do
 
     it "should decrease lead purchases in cart and increase accessible lead purchases " do
-      lead1 = Lead.make!
-      lead2 = Lead.make!
+      currency = Currency.make!
+      lead1 = Lead.make!(:currency => currency)
+      lead2 = Lead.make!(:currency => currency)
 
       cart  = Cart.new(@buyer)
 

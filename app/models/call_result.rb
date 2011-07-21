@@ -27,7 +27,9 @@ class CallResult < ActiveRecord::Base
   scope :call_log_results, joins(:result).where(:results => {:final => false})
   scope :final_results, joins(:result).where(:results => {:final => true})
   scope :with_creator, lambda { |agent_id| where(:creator_id => agent_id) if agent_id.present? }
-
+  scope :final_for_campaign, lambda { |campaign| final_results.where("campaigns_results.campaign_id = ? and contacts.type = 'Contact' and contacts.campaign_id = ?", campaign.id, campaign.id).joins("INNER JOIN campaigns_results ON results.id = campaigns_results.result_id").joins("INNER JOIN leads as contacts ON call_results.contact_id=contacts.id") }
+  scope :with_success, where("results.is_success is true")
+  scope :with_reported, where("results.is_reported is true")
   default_scope :order => 'call_results.created_at DESC'
 
   def called?
@@ -218,11 +220,11 @@ class CallResult < ActiveRecord::Base
   def deliver_material
     template = contact.campaign.send_material_email_template || EmailTemplate.global.where(:uniq_id => 'result_send_material').first
     template = customize_email_template(template)
-    ApplicationMailer.generic_email([contact_email_address],
+    ApplicationMailer.delay.generic_email([contact_email_address],
                                     template.subject, template.body,
                                     template.from,
                                     send_material_result_value.materials.map{ |material| Pathname.new(File.join([::Rails.root, 'public', material.url]))},
-                                    template.cc, template.bcc).deliver
+                                    template.cc, template.bcc)
   end
 
   def deliver_email_for_category_buyer(user, password)
@@ -230,7 +232,7 @@ class CallResult < ActiveRecord::Base
     template = customize_email_template(template)
     attachments_arr = send_material_result_value.materials.empty? ? [] : send_material_result_value.materials.map{ |material| Pathname.new(File.join([::Rails.root, 'public', material.url])) }
 
-    ApplicationMailer.generic_email([contact_email_address], template.subject, template.render({:user => user, :password => password}), template.from, attachments_arr, template.cc, template.bcc).deliver
+    ApplicationMailer.delay.generic_email([contact_email_address], template.subject, template.render({:user => user, :password => password}), template.from, attachments_arr, template.cc, template.bcc)
   end
   
   def set_last_call_result_in_contact

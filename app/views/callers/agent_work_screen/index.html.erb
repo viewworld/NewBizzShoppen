@@ -1,6 +1,10 @@
 <column-mc:>
   <%= javascript_include_tag :ckeditor %>
   <%= javascript_include_tag "popup_email_template_editor" %>
+
+  <div id="agent_information"></div>
+  <%#= render :partial => "agent_information", :locals => @locals if current_user.has_any_role?(:agent,:call_centre_agent) %>
+
   <header back="true" backurl="#{callers_campaigns_path}">
     <param:content>
       <%= t("agent_work_screen.index.title") %> - <%= @campaign.name %>
@@ -100,6 +104,10 @@
 
       setup_jquery_dialog();
       setup_jquery_vars_popup_dialog();
+
+      $(document).ready(function(){
+          $.get('<%= callers_campaign_agent_work_screen_agent_information_path(@campaign) %>');
+      });
   </script>
 </js:>
 

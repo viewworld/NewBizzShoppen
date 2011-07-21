@@ -61,8 +61,18 @@
       </li>
       <li class="select">
         <%= f.label :with_created_by, t("leads.index.search.created_by") %>
-        <%= f.select :with_created_by, @creators.map { |u| ["#{u.screen_name}", u.id] }, {:include_blank => true} %>
+        <%= f.select :with_created_by, [], {:include_blank => true} %>
       </li>
+      <script>
+        $.post('/leads/creators', {
+            with_created_by: <%= @search.with_created_by.to_i %>,
+            <% if @search.with_category %>
+            with_selected_categories: [<%= @search.with_category.to_i %>]
+            <% elsif @search.with_selected_categories %>
+            with_selected_categories: [<%= @search.with_selected_categories.to_a.join(',') %>]
+            <% end %>
+        });
+      </script>
       <li class="select">
         <%= f.label :with_certification_level, t("leads.index.search.certification") %>
         <%= f.select :with_certification_level, User::CERTIFICATION_LEVELS.first(4).map { |cl| [t("models.lead.certification.lvl#{cl}"), cl] }, {:include_blank => true} %>

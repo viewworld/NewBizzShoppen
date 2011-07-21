@@ -20,10 +20,14 @@ class ApplicationController < ActionController::Base
 
   def update_log_entries
     if user_signed_in? and self.class.to_s != "UserSessionLogController"
-      UserSessionLog.update_end_time(session[:current_usl_global], Settings.logout_time.to_i) if !session[:current_usl_global].blank?
-      if self.class.name.match(/^Callers::/)
-        if session[:current_usl_campaigns].blank?
-          usl_campaign = UserSessionLog.create(:user_id => current_user.id, :start_time => Time.now, :end_time => (Time.now + Settings.logout_time.to_i.minutes), :log_type => UserSessionLog::TYPE_CAMPAIGN)
+      UserSessionLog.update_end_time(session[:current_usl_global], Settings.logout_time.to_i) if session[:current_usl_global].present?
+      if self.class.name.match(/::AgentWorkScreen/) and params[:campaign_id]
+        if session[:current_usl_campaigns].blank? or UserSessionLog.find(session[:current_usl_campaigns]).campaign_id != params[:campaign_id].to_i
+          usl_campaign = UserSessionLog.create(:user_id => current_user.id, :start_time => Time.now,
+                                               :end_time => (Time.now + Settings.logout_time.to_i.minutes),
+                                               :log_type => UserSessionLog::TYPE_CAMPAIGN,
+                                               :euro_billing_rate => current_user.euro_billing_rate,
+                                               :campaign_id => params[:campaign_id])
           session[:current_usl_campaigns] = usl_campaign.id
         else
           UserSessionLog.update_end_time(session[:current_usl_campaigns], Settings.logout_time.to_i)
@@ -45,7 +49,7 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(resource)
     if resource.is_a?(User)
-      usl = UserSessionLog.create(:user_id => resource.id, :start_time => Time.now, :end_time => (Time.now + Settings.logout_time.to_i.minutes), :log_type => UserSessionLog::TYPE_REGULAR)
+      usl = UserSessionLog.create(:user_id => resource.id, :start_time => Time.now, :end_time => (Time.now + Settings.logout_time.to_i.minutes), :log_type => UserSessionLog::TYPE_REGULAR, :euro_billing_rate => current_user.euro_billing_rate)
       session[:current_usl_global] = usl.id
       if session[:user_requested_url].present?
         if session[:lead_id].to_i > 0 and resource.has_any_role?(:customer, :lead_buyer)

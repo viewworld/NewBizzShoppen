@@ -140,7 +140,7 @@ Scenario: If customer is category buyer with assigned unique categories he can a
 @added @tgn @_tested @requested @_deprecated
 Scenario: On the interests page the country should be selected based on current locale
 
-@m6 @tgn @_tested
+@m6 @tgn @_tested @selenium
 Scenario: I can use "Advanced search" in Browse leads with following fields: Deal value, Agent (creator), Agent’s (creator) rating (all,bronze, silver, gold), Uniqueness, Hotness
   Given I have user with email agent01@nbs.com and role agent
   And user "agent01@nbs.com" with role "agent" has attributes "certification_level:1, company_name:Xerox1"
@@ -165,6 +165,8 @@ Scenario: I can use "Advanced search" in Browse leads with following fields: Dea
 
   And I go to browse leads
   And I follow "Computers"
+  And I follow translated "common.advanced_search"
+  And I wait 1 second
   Then I select "Xerox2 Agent02" from "search_with_created_by"
   And I press translated "leads.index.search.search_button"
   Then I should see "Super printers #2"

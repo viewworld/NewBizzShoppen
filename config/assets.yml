@@ -1,0 +1,42 @@
+embed_assets: on
+s3_access_key_id: AKIAJUCLH3EUZBE7SS6A
+s3_secret_access_key: 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
+s3_permission: public_read
+s3_bucket: static-fairleads
+s3_upload_files:
+  - public/javascripts/**/*
+  - public/stylesheets/**/*
+
+javascripts:
+  common:
+    - public/javascripts/jquery-1.4.2.min.js
+    - public/javascripts/jquery-ui-1.8.5.custom.min.js
+    - public/javascripts/jquery.ui.timepicker.js
+    - public/javascripts/jquery-ujs/src/rails.js
+    - public/javascripts/application.js
+    - public/javascripts/jquery.colorbox-min.js
+    - public/javascripts/jquery.printElement.js
+    - public/javascripts/jquery.qtip.min.js
+    - public/javascripts/jquery.expander.js
+    - public/javascripts/i18n.js
+    - public/javascripts/translations.js
+    - public/javascripts/custom.js
+    - public/javascripts/comments.js
+    - public/javascripts/jquery.form.js
+    - public/javascripts/jquery.autocomplete.min.js
+
+stylesheets:
+  common:
+    - public/stylesheets/ocss/reset.css
+    - public/stylesheets/ocss/helpers.css
+    - public/stylesheets/ocss/columns.css
+    - public/stylesheets/ocss/frm.css
+    - public/stylesheets/ocss/table.css
+    - public/stylesheets/ocss/inputs.css
+    - public/stylesheets/style.css
+    - public/stylesheets/jquery-ui-1.8.5.custom.css
+    - public/stylesheets/colorbox.css
+    - public/stylesheets/invoice.css
+    - public/stylesheets/invoice_lines_edit.css
+    - public/stylesheets/jquery.checkboxtree.min.css
+    - public/stylesheets/jquery.autocomplete.css

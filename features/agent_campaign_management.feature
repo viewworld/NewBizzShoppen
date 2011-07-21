@@ -75,6 +75,7 @@ Feature: Agent campaign - management
       Then I fill in "campaign_end_date" with "2011-12-12"
       Then I select "Leisure" from "campaign_category_id"
       Then I select "United Kingdom" from "campaign_country_id"
+      And I choose "campaign_cost_type_3"
       Then I press "campaign_submit"
       Then I should see "Campaign was successfully created"
       And I follow translated "layout.main_menu.call_centre.campaigns"
@@ -511,7 +512,7 @@ Feature: Agent campaign - management
       Then I execute js for display action block for "campaigns"
       Then I follow translated "campaigns.index.result"
       Then I should see "Total numbers of contacts: 4"
-      Then I should see "Total number of agents: 2"
+      Then I should see "Total number of agents: 1"
       Then I should see "Total number of calls: ??"
       #jak sie wysypie to bedzie wiadomo że trzeba dodać cyfre tam gdzie są teraz pytajniki :P
 
@@ -672,6 +673,7 @@ Feature: Agent campaign - management
           And I fill in "campaign_end_date" with "2011-12-12"
           And I select "Leisure" from "campaign_category_id"
           And I select "United Kingdom" from "campaign_country_id"
+          And I choose "campaign_cost_type_3"
           And I press "campaign_submit"
           And I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
           And I follow translated "campaigns.edit.send_material_email_template"
@@ -692,6 +694,7 @@ Feature: Agent campaign - management
           Then I follow translated "campaigns.header.new_campaign_button"
           Then I fill in "campaign_name" with "Campaign for call centre"
           Then I fill in "campaign_max_contact_number" with "188"
+          And I choose "campaign_cost_type_3"
           And I press translated "campaigns.new.button_create"
           And I follow translated "campaigns.edit.agent_assignment_button"
           And I check "campaign_user_id_7"

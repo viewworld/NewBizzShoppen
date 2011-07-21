@@ -1,6 +1,9 @@
 class UserSessionLog < ActiveRecord::Base
   belongs_to :user
+  belongs_to :campaign
   validates_presence_of :start_time, :end_time, :log_type, :user_id
+
+  before_save :cache_hours_count
 
   TYPE_REGULAR = 0
   TYPE_CAMPAIGN = 1
@@ -14,6 +17,10 @@ class UserSessionLog < ActiveRecord::Base
 
   def expired?
     end_time <= Time.now
+  end
+
+  def cache_hours_count
+    self.hours_count = (((end_time - start_time) / 60) / 60.0).to_f.round(2)
   end
 
 end

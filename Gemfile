@@ -36,6 +36,9 @@ gem 'whenever', :require => false
 gem 'acts_as_commentable_with_threading'
 gem 'memcache-client'
 gem "devise_rpx_connectable"
+#gem "jammit"
+gem 'ruby-hmac', '0.4.0'
+gem 'jammit-s3', :path => "vendor/gems/jammit-s3"
 
 
 group :development do
@@ -60,7 +63,7 @@ group :test do
 
 # Added the following because rake features also complained about spec/expectations
   gem 'rspec', '=2.0.1'
-  gem 'launchy' # So you can do Then show me the page
+  gem 'launchy', '0.4.0'
   gem "rspec-rails", "= 2.0.1"
   gem 'autotest-rails'
   gem 'autotest'

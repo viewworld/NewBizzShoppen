@@ -244,7 +244,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
         article = Article::Cms::Hint.find_by_key("#{klass}_#{method}")
         article = Article::Cms::Hint.create(:key => "#{klass}_#{method}", :published => false) if article.nil?
         [:en, :dk].each do |locale|
-          I18n.locale = locale
+          ::I18n.locale = locale
           if article.content.blank?
             article.update_attributes({:content => Rails.env.production? ? "(write text here)" : "Hint for <b>#{klass.to_s}: #{method.humanize.downcase.gsub('_id', '')}</b>",
                                        :title => "#{klass.to_s.capitalize}##{method.gsub('_id', '')}"})
@@ -257,7 +257,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
     email_templates_array.each do |email_template|
       unless EmailTemplate.global.find_by_uniq_id(email_template[:uniq_id])
         [:en, :dk].each do |locale|
-          I18n.locale = locale
+          ::I18n.locale = locale
           et = EmailTemplate.find_or_initialize_by_uniq_id({:name => email_template[:name], :persist => true,
                                                             :from => "noreply@newbizzshoppen.com",
                                                             :uniq_id => email_template[:uniq_id]})
@@ -329,12 +329,14 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
       ResultField.create(result_field) unless ResultField.find_by_name_and_result_id(result_field[:name], result_field[:result].id)
     end
 
+    ActiveRecord::Migration.execute "UPDATE campaigns SET currency_id = #{Currency.default_currency.present? ? Currency.default_currency.id : Currency.active.first.id} WHERE currency_id IS NULL"
+
     unless Rails.env.production?
 
       if Category.count.zero?
         ['Electronics', 'Leisure', 'Business'].each do |name|
           [:en, :dk].each do |locale|
-            I18n.locale = locale
+            ::I18n.locale = locale
             if category = Category.where(:name => name).first
               category.name = name
               category.save
@@ -424,7 +426,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
       unless Article::Cms::MainPageArticle.includes(:translations).where(:article_translations => {:title => title}).first
         article = Article::Cms::MainPageArticle.make!(:title => title, :content => title, :key => title.parameterize('_'))
         [:en, :dk].each do |locale|
-          I18n.locale = locale
+          ::I18n.locale = locale
           article.title = title
           article.content = title
           article.save
@@ -453,7 +455,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
       unless Article::Cms::InterfaceContentText.where(:key => key).first
         article = Article::Cms::InterfaceContentText.make!(:title => key.humanize, :content => key.humanize, :key => key)
         [:en, :dk].each do |locale|
-          I18n.locale = locale
+          ::I18n.locale = locale
           article.title = key.humanize
           article.content = key.humanize
           article.save
@@ -469,7 +471,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
       unless Article::Cms::HelpPopup.where(:key => key).first
         article = Article::Cms::HelpPopup.make!(:title => key.humanize, :content => key.humanize, :key => key)
         [:en, :dk].each do |locale|
-          I18n.locale = locale
+          ::I18n.locale = locale
           article.title = key.humanize
           article.content = key.humanize
           article.save
@@ -495,7 +497,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
                                                 :max_contact_number => 3,
                                                 :creator => call_centre,
                                                 :start_date => Date.today,
-                                                :end_date => Date.today + 14.days})
+                                                :end_date => Date.today + 14.days, :currency => Currency.euro, :cost_type => Campaign::NO_COST})
     #inactive campaign
     Campaign.find_or_create_by_name({:name => "Testing Two",
                                      :category => Category.where(:name => "Electronics").first,
@@ -503,7 +505,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
                                      :max_contact_number => 3,
                                      :creator => call_centre,
                                      :start_date => Date.today - 15.days,
-                                     :end_date => Date.today - 1.days})
+                                     :end_date => Date.today - 1.days, :currency => Currency.euro, :cost_type => Campaign::NO_COST})
     campaign.results = Result.generic_results
     campaign.users = call_centre.subaccounts
 
@@ -554,7 +556,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
   desc "copy yml to database", ""
 
   def t
-    I18nUtils.populate!
+    ::I18nUtils.populate!
   end
 
   desc "check lead certification requests", ""

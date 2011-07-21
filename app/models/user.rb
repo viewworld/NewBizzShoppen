@@ -46,6 +46,7 @@ class User < ActiveRecord::Base
   has_many :owned_lead_requests, :class_name => 'LeadRequest', :foreign_key => :owner_id
   has_many :invoices
   has_many :user_session_logs
+  belongs_to :currency
   belongs_to :user, :class_name => "User", :foreign_key => "parent_id", :counter_cache => :subaccounts_counter
   belongs_to :bank_account, :foreign_key => :bank_account_id, :primary_key => :id, :class_name => 'BankAccount'
   belongs_to :vat_rate, :foreign_key => :country, :primary_key => :country_id
@@ -83,6 +84,9 @@ class User < ActiveRecord::Base
   scope :assignees_for_lead_purchase_owner, lambda { |owner| select("DISTINCT(users.id), users.*").where("requested_by IS NULL and lead_purchases.owner_id = ? and accessible_from IS NOT NULL and users.parent_id = ?", owner.id, owner.id).joins("RIGHT JOIN lead_purchases on lead_purchases.assignee_id=users.id") }
   scope :with_leads, select("DISTINCT(email), users.*").joins("RIGHT JOIN leads on users.id=leads.creator_id")
   scope :within_accessible_categories, lambda { |customer| where("leads.category_id NOT IN (?)", customer.accessible_categories_ids) }
+  scope :right_join_leads, joins("RIGHT JOIN leads on users.id=leads.creator_id")
+  scope :screen_name_and_id_with_leads, right_join_leads.select("DISTINCT(users.screen_name),users.id")
+  scope :with_leads_within_categories, lambda { |category_ids| right_join_leads.where("leads.category_id IN (?)", category_ids.to_a) }
 
   scope :assigned_to_campaigns, select("DISTINCT(users.id), users.*").joins("inner join campaigns_users on users.id=campaigns_users.user_id")
   scope :with_results, joins("inner join call_results on users.id=call_results.creator_id")
@@ -98,10 +102,11 @@ class User < ActiveRecord::Base
 
   attr_accessor :agreement_read, :locked, :skip_email_verification
 
-  before_save :handle_locking, :handle_team_buyers_flag, :refresh_certification_of_call_centre_agents
+  before_save :handle_locking, :handle_team_buyers_flag, :refresh_certification_of_call_centre_agents, :set_euro_billing_rate
   before_create :set_rss_token, :set_role
   before_destroy :can_be_removed
   after_create :auto_activate
+  validate :check_billing_rate
 
   liquid :email, :confirmation_instructions_url, :reset_password_instructions_url, :social_provider_name, :category_buyer_category_home_url,
          :screen_name, :first_name, :last_name
@@ -182,7 +187,19 @@ class User < ActiveRecord::Base
   end
 
   def deliver_email_template(uniq_id)
-    ApplicationMailer.email_template(email, EmailTemplate.find_by_uniq_id(uniq_id), {:user => self}).deliver
+    ApplicationMailer.delay.email_template(email, EmailTemplate.find_by_uniq_id(uniq_id), {:user => self})
+  end
+
+  def check_billing_rate
+    if billing_rate.to_i > 0 and currency.blank?
+      self.errors.add(:currency_id, :blank)
+    end
+  end
+
+  def set_euro_billing_rate
+    if currency.present? and billing_rate.to_i > 0 and (billing_rate_changed? or currency_id_changed?)
+      self.euro_billing_rate = currency.to_euro(billing_rate)
+    end
   end
 
   public
@@ -498,7 +515,7 @@ class User < ActiveRecord::Base
       unless subscribed_categories.empty?
         uniq_id = "lead_notification_#{lead_notification_type == LEAD_NOTIFICATION_ONCE_PER_DAY ? 'daily' : 'weekly'}"
         leads = Lead.for_notification(subscribed_categories, lead_notification_type)
-        ApplicationMailer.email_template(email, EmailTemplate.find_by_uniq_id(uniq_id), {:user => self, :leads => leads}).deliver
+        ApplicationMailer.delay.email_template(email, EmailTemplate.find_by_uniq_id(uniq_id), {:user => self, :leads => leads})
       end
     end
   end

@@ -18,6 +18,9 @@ Nbs::Application.routes.draw do
     root :to => redirect("/")
     resources :users do
       resource :password, :controller => 'password', :only => [:new, :update, :destroy]
+      member do
+        get :sign_in_as
+      end
     end
     resource :bulk_users_update, :controller => "bulk_users_update", :only => [:update]
     resources :categories
@@ -166,6 +169,7 @@ Nbs::Application.routes.draw do
         resources :contacts, :only => [:show, :destroy, :update] do
           resources :call_results, :only => [:new, :create, :edit, :update, :destroy]
         end
+        resource :agent_information, :only => [:show]
       end
       resources :my_results
       resources :email_templates, :only => [:edit, :update]
@@ -176,6 +180,8 @@ Nbs::Application.routes.draw do
     resources :contacts do
       resources :call_results, :only => [:new, :create, :edit, :update, :destroy]
     end
+
+    resources :campaign_reports, :only => [:index]
   end
 
   namespace :comments do
@@ -192,7 +198,11 @@ Nbs::Application.routes.draw do
   match 'agent_home' => 'agent_home#show', :as => "agent_home"
   match 'purchase_manager_home' => 'purchase_manager_home#show', :as => "purchase_manager_home"
 
-  resources :leads, :except => [:new, :create, :destroy]
+  resources :leads, :except => [:new, :create, :destroy] do
+    collection do
+      post :creators
+    end
+  end
 
   resources :categories, :only => [:index] do
     resources :more_leads_requests, :only => [:new, :create]

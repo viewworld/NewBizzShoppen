@@ -4,11 +4,13 @@ class Result < ActiveRecord::Base
 
   has_many :call_results
   has_many :contacts, :through => :call_results
-  has_and_belongs_to_many :campaigns, :join_table => "campaigns_results", :foreign_key => "result_id"
+  has_many :campaigns_results, :foreign_key => "result_id"
+  has_many :campaigns, :through => :campaigns_results, :foreign_key => "result_id"
   belongs_to :creator, :polymorphic => true, :foreign_key => "creator_id"
 
   has_many :result_fields, :dependent => :destroy
   accepts_nested_attributes_for :result_fields, :allow_destroy => true
+  accepts_nested_attributes_for :campaigns_results
 
   scope :call_log_results, where(:final => false)
   scope :final_results, where(:final => true)
@@ -16,6 +18,7 @@ class Result < ActiveRecord::Base
   scope :custom_results, where(:generic => false)
 
   validates :name, :presence => true
+  validate :check_is_reported_and_is_success
 
   def to_s
     name
@@ -25,8 +28,12 @@ class Result < ActiveRecord::Base
     name.gsub(" ","_").downcase.to_sym
   end
 
+  def created_by_or_admin?(user)
+    creator_id == user.id or user.has_role?(:admin)
+  end
+
   def can_be_managed_by?(user)
-    !generic? and (creator.id == user.id or user.has_role?(:admin))
+    (created_by_or_admin?(user) or user.has_role?(:call_centre))
   end
 
   def list_of_fields
@@ -39,5 +46,18 @@ class Result < ActiveRecord::Base
 
   def upgrades_to_category_buyer?
     name == "Upgrade to category buyer"
+  end
+
+  private
+
+  def check_is_reported_and_is_success
+    if call_results.any?
+      if !is_reported? and is_reported_changed?
+        self.errors.add(:is_reported, I18n.t("models.result_field.is_reported_cannot_be_disabled"))
+      end
+      if !is_success? and is_success_changed?
+        self.errors.add(:is_success, I18n.t("models.result_field.is_success_cannot_be_disabled"))
+      end
+    end
   end
 end

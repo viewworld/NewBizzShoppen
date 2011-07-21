@@ -15,7 +15,7 @@ class CategoryRequestsController < ApplicationController
 
       if @email_template_preview.valid?
         flash[:notice] = I18n.t("category_requests.create.flash.request_sent")
-        ApplicationMailer.generic_email([Settings.contact_us_email], @email_template_preview.subject, @email_template_preview.body, nil, [], @email_template_preview.cc, @email_template_preview.bcc, @email_template_preview.email_from).deliver
+        ApplicationMailer.delay.generic_email([Settings.contact_us_email], @email_template_preview.subject, @email_template_preview.body, nil, [], @email_template_preview.cc, @email_template_preview.bcc, @email_template_preview.email_from)
 
         if current_user
           redirect_to current_user.has_any_role?(:agent, :call_centre_agent, :purchase_manager) ? agent_home_path : buyer_home_path

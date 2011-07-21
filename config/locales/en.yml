@@ -92,20 +92,24 @@ en:
         global: "Global"
         refunds: "Refunds"
         campaigns: Campaigns
+        reports: "Reports"
       agent:
         leads: My leads
         lead_templates: Lead templates
         campaigns: Campaigns
+        reports: "Reports"
       call_centre:
         call_centre_agents: "Team"
         leads: "My leads"
         lead_templates: "Lead templates"
         campaigns: Campaigns
+        reports: "Reports"
       call_centre_agent:
         leads: "My leads"
         lead_templates: "Lead templates"
         campaigns: Campaigns
         news: News
+        reports: "Reports"
       customer:
         subaccounts: Team
         lead_requests: Requested leads
@@ -272,6 +276,11 @@ en:
       signed: Signed
 
   campaigns:
+    cost_types:
+      cost_type0: "Fixed cost"
+      cost_type1: "Agent's billing rate"
+      cost_type2: "Fixed hourly rate"
+      cost_type3: "Don't calculate cost"
     filter:
       header: Search
       keyword_label: Keyword
@@ -329,6 +338,7 @@ en:
     edit:
       title: Edit campaign
       owner: Owner
+      campaign_targets: Campaign targets
       button_update: Update
       button_cancel: Back to campain listing
       button_create_contact: Create contact
@@ -439,6 +449,18 @@ en:
     create:
       flash:
         successfully_imported: "%{count} contacts have been successfully imported."
+    batch_assign:
+      flash:
+        no_contacts_selected: "You have selected no contact."
+        max_contact_number_is_zero: "Maximum contact number for campaign must be greater then 0 to assign agents to contacts."
+        assigned_successfully: "Assignment has been performed successfully"
+    batch_remove:
+      flash:
+        no_contacts_selected: "You have selected no contact."
+        removed_successfully: "Removal has been performed successfully"
+    import_xls:
+      flash:
+        unknown_format: "Sorry. You can upload only ODC, XLS and XLSX files."
     update:
       flash:
         successfully_updated: Contact has been successfully updated.
@@ -526,6 +548,7 @@ en:
     edit:
       title: Edit result type
 
+      value_assignment_hint: "In order to assign Value and Expected per hour rate, you need to assign the result to this campaign."
   lead_requests:
     listing:
       purchase_value_label: "Purchase value:"
@@ -738,6 +761,7 @@ en:
           show_all_users: "Show all users"
           search_button: "Search"
           delete: "Delete"
+          log_in_as: "Log in as"
           delete_confirmation_message: "Are you sure?"
           leads_created: "Leads created"
           unpaid_leads: "Unpaid leads"
@@ -816,6 +840,7 @@ en:
           header_templates: Lead templates
           upload_image: "Upload image"
           button_update: "Save"
+          edit_email_template: "Edit email template"
           new_template: New template
           edit_template: Edit
           duplicate_template: Duplicate
@@ -2299,10 +2324,15 @@ en:
         type3: Note
         type4: Date & Time
       date_format: "format: yyyy-mm-dd"
-      datetime_format: "format: yyyy-mm-dd hh:mm"  
+      datetime_format: "format: yyyy-mm-dd hh:mm"
+      is_reported_cannot_be_disabled: "cannot be disabled because call results are generated for that result"
+      is_success_cannot_be_disabled: "cannot be disabled because call results are generated for that result"
     locale:
       en: English
       dk: Danish
+    campaign:
+      fixed_cost_value_is_blank: "Fixed cost must be set"
+      agents_dont_have_billing_rates_defined: "Agents don't have billing rates defined."
   activerecord:
     models:
       article:
@@ -2365,8 +2395,26 @@ en:
             email:
               not_found: "not found"
               already_confirmed: "was already confirmed"
+          call_centre:
+            attributes:
+              currency_id:
+                blank: "is blank"
+              password:
+                blank: "is blank"
+                confirmation: "doesn't match confirmation"
+                too_short: "too short"
+          call_centre_agent:
+            attributes:
+              currency_id:
+                blank: "is blank"
+              password:
+                blank: "is blank"
+                confirmation: "doesn't match confirmation"
+                too_short: "too short"
           agent:
             attributes:
+              currency_id:
+                blank: "is blank"
               password:
                 blank: "is blank"
                 confirmation: "doesn't match confirmation"
@@ -2914,6 +2962,41 @@ en:
     show:
       view:
         header: "Production"
+  campaign_reports:
+    index:
+      search_label: "Search"
+      search_button: "Generate"
+      table:
+        campaign_name: "Campaign name"
+        campaign_targets: "Campaign targets"
+        completion: "Completion"
+        campaign_results: "Campaign results"
+        predicted_results: "Predicted results"
+        realised_results: "Realised results"
+        success_percent: "Success %"
+        finish_cph: "Finish C/P/H"
+        final_result: "Final result type X P/H"
+        value_ph: "Value P/H"
+        number_of_contacts: "# of contacts"
+        percent: "%"
+        number_of_calls_made: "Number of calls made"
+        avr_number_of_min_per_final_result: "Avr. # of min. pr final result"
+        avr_number_of_calls_per_finished_contacts: "Avr. # of calls / finished contact"
+        value_created: "Value created"
+        leads_sold: "Leads sold (value/number)"
+        hours_used: "Hours used"
+        production_cost: "Production cost"
+        result_value: "(Result value)"
+        value_from_leads_sold: "(Value from sold leads)"
+      report_per_users: "Report per users"
+      header: "Reports"
+      download_pdf: "Download PDF"
+      ranges_label: "Predefined time ranges"
+      empty_report_msg: "Set the constraints and press Generate button to view report."
+      search:
+        active: "Active"
+        inactive: "Inactive"
+        all: "All"
 
   callers:
     advanced_import:
