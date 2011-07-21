@@ -166,6 +166,7 @@ Scenario: I can use "Advanced search" in Browse leads with following fields: Dea
   And I go to browse leads
   And I follow "Computers"
   And I follow translated "common.advanced_search"
+  And I wait 1 second
   Then I select "Xerox2 Agent02" from "search_with_created_by"
   And I press translated "leads.index.search.search_button"
   Then I should see "Super printers #2"
