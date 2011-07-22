@@ -77,7 +77,7 @@ class Callers::ContactsController < Callers::CallerController
       @campaign.create_contacts_from_xls(Sheet.new(params["attachment"]).roo_instance, current_user)
       redirect_to edit_callers_campaign_path(@campaign)
     else
-      flash[:notice] = "Sorry. You can upload only ODC, XLS and XLSX files."
+      flash[:notice] = t('contacts.import_xls.flash.unknown_format')
       redirect_to new_callers_campaign_contact_path(@campaign, :type => "import")
     end
   end

@@ -94,8 +94,12 @@ module NavigationHelpers
         "#{::Rails.root.to_s}/spec/fixtures/sample.jpg"
     when /lead advanced import spreadsheet/
         "#{::Rails.root.to_s}/spec/fixtures/leads_adv_import.ods"
-    when /bad advanced import spreadsheet/
+    when / bad lead advanced import spreadsheet/
         "#{::Rails.root.to_s}/spec/fixtures/bad_leads_adv_import.ods"
+    when /contact advanced import spreadsheet/
+        "#{::Rails.root.to_s}/spec/fixtures/con_adv_import.ods"
+    when /wcai spreadsheet/
+        "#{::Rails.root.to_s}/spec/fixtures/bad_con_adv_import.ods"
     when /resend confirmation instructions/
         '/users/confirmation/new'
     when /reset password/

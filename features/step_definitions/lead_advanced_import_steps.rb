@@ -22,7 +22,7 @@ Then /^lead advanced import wrong files, fields and cancel button$/ do
   And %{attach the file "sample image" to "attachment"}
   And %{I press translated "lead_advanced_import.form.view.button"}
   And %{I should see translated "callers.advanced_import.choose.flash.error_wrong_file"}
-  And %{attach the file "bad advanced import spreadsheet" to "attachment"}
+  And %{attach the file "bad lead advanced import spreadsheet" to "attachment"}
   And %{I press translated "lead_advanced_import.form.view.button"}
   And %{I should see translated "callers.advanced_import.choose.flash.error_wrong_title"}
   And %{I select "Business" from "category_id" within "#lead_advanced_import_form"}
@@ -34,4 +34,8 @@ Then /^lead advanced import wrong files, fields and cancel button$/ do
   And %{I should see "Value 4"}
   And %{I follow translated "lead_advanced_import.choose.view.cancel_button"}
   And %{I should see translated "lead_advanced_import.form.view.title"}
+end
+
+Then /^campaign "([^"]*)" should have "([^"]*)" contacts$/ do |name, number|
+  Campaign.find_by_name(name).contacts.size.should == number.to_i
 end

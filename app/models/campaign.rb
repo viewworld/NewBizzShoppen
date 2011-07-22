@@ -165,7 +165,7 @@ class Campaign < ActiveRecord::Base
     spreadsheet.default_sheet = spreadsheet.sheets.first
     2.upto(spreadsheet.last_row) do |line|
       contact = contacts.build
-      import_fields.each_with_index { |field, index| contact = assign_field(contact, field, spreadsheet, line, index+1) }
+      import_fields.each_with_index { |field, index| contact = assign_field(contact, field, spreadsheet.cell(line, index+1), spreadsheet.celltype(line, index+1)) }
       contact = assign_current_user(contact, current_user)
       contact.save
     end
