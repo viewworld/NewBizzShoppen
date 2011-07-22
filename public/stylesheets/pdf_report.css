@@ -1,7 +1,12 @@
+@page {
+    size: a4 landscape;
+    margin: 15mm;
+
+}
+
 table
-{
-    border-top: 1px solid #ccc;
-    border-left: 1px solid #ccc;    
+{    
+    border: none;
 }
 
 .hl, hr,
@@ -18,14 +23,24 @@ table th
     padding: 3px;
     font-size: 12px;
     vertical-align: top;    
-    border-right: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
+    border: 1px solid #aaa;    
+    text-align: center;
+    -pdf-keep-in-frame-mode: none;
 }
 
-table th
-{
-    vertical-align: middle;    
+table thead th
+{    
+    background: #ccc;
+    vertical-align: middle;
 }
+
+table tbody tr:first-child td
+{
+    background: #f0f0f0;
+    font-weight: bold;
+    vertical-align: middle;
+}
+
 
 table tfoot
 {
@@ -35,5 +50,5 @@ table tfoot
 h1
 {
     font-size: 24px;
-    padding-bottom: 8px;        
+    padding-bottom: 14px;        
 }

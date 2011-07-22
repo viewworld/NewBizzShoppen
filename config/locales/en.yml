@@ -2978,7 +2978,7 @@ en:
         avr_number_of_min_per_final_result: "Avr. # of min. pr final result"
         avr_number_of_calls_per_finished_contacts: "Avr. # of calls / finished contact"
         value_created: "Value created"
-        leads_sold: "Leads sold (value/number)"
+        leads_sold: "Leads sold (value / number)"
         hours_used: "Hours used"
         production_cost: "Production cost"
         result_value: "(Result value)"
