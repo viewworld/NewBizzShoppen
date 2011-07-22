@@ -2606,6 +2606,13 @@ en:
         notice: "Deal has been successfully destroyed."
       update:
         notice: "Deal has been successfully updated"
+    deal_assets:
+      create:
+        success: "Asset has been successfully added."
+        type_is_incorrect: "Asset type is incorrect!"
+        asset_is_invalid: "Asset is invalid"
+      destroy:
+        success: "Asset has been successfully removed."
   formtastic:
     date:
       formats:

@@ -14,6 +14,6 @@
       </frm>
   <% end %>
 
-  <%= render :partial => "shared/deals/assets_management" %>
+  <%= render :partial => "shared/deals/assets_management", :locals => {:path => "buyers_deal_assets_path", :download_path => "download_buyers_deal_asset_path", :remove_path => "buyers_deal_asset_path"} %>
 
 </column-mc:>
