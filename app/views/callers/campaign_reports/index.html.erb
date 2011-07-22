@@ -4,30 +4,26 @@
 
     <div class="search_content">
       <%= form_tag callers_campaign_reports_path, :method => :get, :id => "form_campaign_reports_search" do %>
-          <div class="grid_150 fltl">
+          <div class="grid_310 fltl">
             <fieldset class="inputs_vertical">
               <ol class="no_pdd">
                 <li class="select">
                   <%= label_tag t("campaigns.show.search.campaigns") %>
                   <%= select_tag :campaign_ids, options_from_collection_for_select(@campaign_selection == "all" ? @all_campaigns : @all_campaigns.select { |c| @campaign_selection == "active" ? c.active? : !c.active? }, "id", "name", @campaign_ids), :include_blank => false, :multiple => true, :style => "height:80px;width:140px;" %>
                 </li>
-                <li class="radio no_pdd_t" style="padding-left: 10px">
-                  <%= label_tag t("campaign_reports.index.search.all") %>
-                  <%= radio_button_tag :campaign_selection, :all, @campaign_selection == "all", {:onclick => "load_campaigns('all');"} %>
-                  <%= label_tag t("campaign_reports.index.search.active") %>
-                  <%= radio_button_tag :campaign_selection, :active, @campaign_selection == "active", {:onclick => "load_campaigns('active');"} %>
-                  <%= label_tag t("campaign_reports.index.search.inactive") %>
-                  <%= radio_button_tag :campaign_selection, :inactive, @campaign_selection == "inactive", {:onclick => "load_campaigns('inactive');"} %>
-                </li>
-              </ol>
-            </fieldset>
-          </div>
-          <div class="grid_150 fltl">
-            <fieldset class="inputs_vertical">
-              <ol class="no_pdd">
                 <li class="select">
                   <%= label_tag t("campaigns.show.search.results") %>
                   <%= select_tag :result_ids, options_from_collection_for_select(@all_results, "id", "name", @result_ids), :include_blank => false, :multiple => true, :style => "height:80px;width:140px;" %>
+                </li>                
+                <li class="radio no_pdd_t" style="padding-left: 10px">
+                  <%= radio_button_tag :campaign_selection, :all, @campaign_selection == "all", {:onclick => "load_campaigns('all');"} %>
+                  <%= label_tag t("campaign_reports.index.search.all") %>
+
+                  <%= radio_button_tag :campaign_selection, :active, @campaign_selection == "active", {:onclick => "load_campaigns('active');"} %>
+                  <%= label_tag t("campaign_reports.index.search.active") %>
+
+                  <%= radio_button_tag :campaign_selection, :inactive, @campaign_selection == "inactive", {:onclick => "load_campaigns('inactive');"} %>
+                  <%= label_tag t("campaign_reports.index.search.inactive") %>                                                                                                                             
                 </li>
               </ol>
             </fieldset>

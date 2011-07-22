@@ -1,0 +1,39 @@
+table
+{
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;    
+}
+
+.hl, hr,
+.cl, .cr,
+.fl, .fr
+{
+    padding: 0 !important;
+    width: 1px;
+}
+
+table td,
+table th    
+{
+    padding: 3px;
+    font-size: 12px;
+    vertical-align: top;    
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+table th
+{
+    vertical-align: middle;    
+}
+
+table tfoot
+{
+    display: none;
+}
+
+h1
+{
+    font-size: 24px;
+    padding-bottom: 8px;        
+}

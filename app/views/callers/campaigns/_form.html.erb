@@ -46,8 +46,9 @@
                        :input_html => {:class => "datepicker", :value => campaign.end_date},
                        :hint => t('models.result_field.date_format')%>
         <%= form.input :max_contact_number, :input_html => {:style => "width:95px"} %>
-        <%= form.input :cost_type, :as => :radio, :collection => Campaign::COST_TYPES.map { |lnt| [t("campaigns.cost_types.cost_type#{lnt}"), lnt] }, :wrapper_html => {:class => "collection"} %>
         <%= form.input :fixed_cost_value, :input_html => {:style => "width:95px"} %>
+        <%= form.input :cost_type, :as => :radio, :collection => Campaign::COST_TYPES.map { |lnt| [t("campaigns.cost_types.cost_type#{lnt}"), lnt] }, :wrapper_html => {:class => "collection"} %>
+        
       </ol>
     </fieldset>
   </div>
