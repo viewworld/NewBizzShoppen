@@ -35,8 +35,8 @@ class DealsController < ApplicationController
     @deal = Deal.find(params[:id])
     @deal.rate(params[:stars], current_user, params[:dimension])
     render :update do |page|
-      page.replace_html @deal.wrapper_dom_id(params), ratings_for(@deal, params.merge(:wrap => false))
-      page.visual_effect :highlight, @deal.wrapper_dom_id(params)
+      page << %{$('##{@deal.wrapper_dom_id(params)}').html('#{ratings_for(@deal, params.merge(:wrap => false))}');}.html_safe
+      page << %{$('##{@deal.wrapper_dom_id(params)}').effect('highlight', {}, 3000);}.html_safe
     end
   end
 end

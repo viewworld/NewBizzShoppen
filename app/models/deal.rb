@@ -21,6 +21,8 @@ class Deal < AbstractLead
 
   attr_accessor :creation_step
 
+  ajaxful_rateable :stars => 5, :allow_update => false, :cache_column => :deal_average_rating
+
   def self.new_for_user(user)
     Deal.new(
         :company_name => user.company_name,
