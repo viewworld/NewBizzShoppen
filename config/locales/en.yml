@@ -104,6 +104,7 @@ en:
         lead_templates: "Lead templates"
         campaigns: Campaigns
         reports: "Reports"
+        deals: "My deals"
       call_centre_agent:
         leads: "My leads"
         lead_templates: "Lead templates"
@@ -1618,6 +1619,19 @@ en:
           lead_deletion_successful: Lead has been successfully deleted!
           lead_deletion_failure: Lead could not be deleted!
 
+    deals:
+      index:
+        view:
+          edit: "Edit"
+          destroy: "Destroy"
+      edit:
+        view:
+          update_button: "Save"
+      new:
+        view:
+          check_buyer_email: "Check sales manager email"
+          certify: "Certify"
+          create_button: "Create"
   call_centre_agent:
     leads:
       index:

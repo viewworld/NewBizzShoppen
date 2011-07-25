@@ -1,0 +1,17 @@
+<%= render :partial => "shared/deals/filter", :locals => {:search => @search, :path => call_centres_deals_path} %>
+<column-mc:>
+  <%= render :partial => "shared/deals/actions", :locals => {:path => new_call_centres_deal_path} %>
+
+   <%= deals_table @deals do |blocks| %>
+      <% blocks.tools do |deal| %>
+          <ul-actions>
+            <li>
+              <%= link_to t("call_centre.deals.index.view.edit"), edit_call_centres_deal_path(deal), :class => "default_action" %>
+            </li>
+            <li>
+              <%= link_to t("call_centre.deals.index.view.destroy"), call_centres_deal_path(deal), :method => :delete, :confirm => t("common.confirmation") %>
+            </li>
+          </ul-actions>
+      <% end %>
+  <% end %>
+</column-mc:>

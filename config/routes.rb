@@ -91,6 +91,13 @@ Nbs::Application.routes.draw do
     resources :call_centre_agents do
       resource :password, :controller => 'password', :only => [:new, :update, :destroy]
     end
+   resources :deals do
+      resources :assets, :controller => "deal_assets", :only => [:create, :destroy] do
+        member do
+          get 'download'
+        end
+      end
+    end
     resource :bulk_call_centre_agents_update, :controller => "bulk_call_centre_agents_update", :only => [:update]
     resources :leads
     resources :lead_templates
