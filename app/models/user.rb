@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   self.abstract_class = true
   ajaxful_rater
 
-  ROLES_PRIORITY = [:admin, :call_centre, :agent, :call_centre_agent, :purchase_manager, :category_buyer, :customer, :lead_buyer, :lead_user, :translator]
+  ROLES_PRIORITY = [:admin, :call_centre, :agent, :call_centre_agent, :purchase_manager, :category_buyer, :customer, :lead_buyer, :lead_user, :translator, :deal_maker]
   DEAL_VALUE_RANGE = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000]
   BASIC_USER_ROLES_WITH_LABELS = [['Administrator', 'admin'], ['Agent', 'agent'], ['Buyer', 'customer'], ['Call centre', 'call_centre'], ['Purchase Manager', 'purchase_manager'], ['Category Buyer', 'category_buyer']]
   ADDITIONAL_USER_ROLES_WITH_LABELS = [['Lead user', "lead_user"], ['Lead buyer', "lead_buyer"], ["Call centre agent", "call_centre_agent"]]
@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
 
   # declare the valid roles -- do not change the order if you add more
   # roles later, always append them at the end!
-  roles :admin, :agent, :call_centre, :call_centre_agent, :customer, :lead_buyer, :lead_user, :purchase_manager, :category_buyer, :translator
+  roles :admin, :agent, :call_centre, :call_centre_agent, :customer, :lead_buyer, :lead_user, :purchase_manager, :category_buyer, :translator, :deal_maker
 
   validates_presence_of :email, :screen_name
   validates_presence_of :first_name, :last_name, :if => :validate_first_and_last_name?
@@ -98,9 +98,9 @@ class User < ActiveRecord::Base
 
   attr_protected :payout, :locked, :can_edit_payout_information, :paypal_email, :bank_swift_number, :bank_iban_number, :skip_email_verification
 
-  attr_accessor :agreement_read, :locked, :skip_email_verification
+  attr_accessor :agreement_read, :locked, :skip_email_verification, :deal_maker_role_enabled_flag
 
-  before_save :handle_locking, :handle_team_buyers_flag, :refresh_certification_of_call_centre_agents, :set_euro_billing_rate
+  before_save :handle_locking, :handle_team_buyers_flag, :refresh_certification_of_call_centre_agents, :set_euro_billing_rate, :handle_deal_maker_enabled
   before_create :set_rss_token, :set_role
   before_destroy :can_be_removed
   after_create :auto_activate
@@ -111,6 +111,14 @@ class User < ActiveRecord::Base
   require 'digest/sha1'
 
   private
+
+  def handle_deal_maker_enabled
+    if has_role?(:deal_maker) and !deal_maker_role_enabled
+      self.roles.delete(:deal_maker)
+    elsif !has_role?(:deal_maker) and deal_maker_role_enabled
+      self.roles << :deal_maker
+    end
+  end
 
   def auto_activate
     confirm! if skip_email_verification == "1"
@@ -522,5 +530,16 @@ class User < ActiveRecord::Base
     if has_role?(:category_buyer)
       "https://#{mailer_host}/#{buying_categories.first.cached_slug}"
     end
+  end
+
+  def deal_maker_role_enabled
+    if deal_maker_role_enabled_flag.nil?
+      self.deal_maker_role_enabled_flag = self.has_role?(:deal_maker) ? true : false
+    end
+    deal_maker_role_enabled_flag
+  end
+
+  def deal_maker_role_enabled=(enabled)
+    self.deal_maker_role_enabled_flag = ActiveRecord::ConnectionAdapters::Column.value_to_boolean(enabled)
   end
 end

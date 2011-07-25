@@ -89,6 +89,7 @@ class Lead < AbstractLead
   after_create :send_instant_notification_to_subscribers
   after_save :auto_buy
   attr_accessor :creation_step
+  attr_protected :published
 
   private
 
