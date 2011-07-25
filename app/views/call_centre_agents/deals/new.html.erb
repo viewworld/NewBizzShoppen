@@ -4,7 +4,7 @@
   <div id="buyer_email_form">
     <%= text_field_tag :buyer_email %>
     <%= bt_link_to nil, t("call_centre_agent.deals.new.view.check_buyer_email"), "javascript:void(0)", :onclick => "submit_query('check_email', 'call_centre_agents')" %>
-    <%= bt_link_to nil, t("call_centre_agent.deals.new.view.certify"), "javascript:void(0)", :onclick => "submit_query('certify')" %>
+    <%= bt_link_to nil, t("call_centre_agent.deals.new.view.certify"), "javascript:void(0)", :onclick => "submit_query('certify','call_centre_agents')" %>
   </div>
 
   <div id="deal_form" style="display:none;">

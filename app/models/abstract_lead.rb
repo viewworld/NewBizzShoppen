@@ -15,7 +15,8 @@ class AbstractLead < ActiveRecord::Base
   has_many :lead_purchases, :foreign_key => :lead_id
   has_many :lead_template_values, :foreign_key => :lead_id
   
-  liquid_methods :show_lead_details_url, :category_name, :header, :description, :hidden_description, :company_name, :contact_name, :phone_number, :email_address, :address, :www_address, :direct_phone_number
+  liquid_methods :show_lead_details_url, :category_name, :header, :description, :hidden_description, :company_name, :contact_name, :phone_number, :email_address, :address, :www_address, :direct_phone_number, :new_sales_manager_account_url
+
   #TODO ???
   liquid :header
 
@@ -102,6 +103,14 @@ class AbstractLead < ActiveRecord::Base
 
   def address
     [address_line_1, address_line_2, zip_code, address_line_3].join(" ")
+  end
+
+  def mailer_host
+    Nbs::Application.config.action_mailer.default_url_options[:host]
+  end
+
+  def new_sales_manager_account_url
+    "https://#{mailer_host}/buyer_accounts/new"
   end
 
   private
