@@ -53,7 +53,7 @@ class Campaign < ActiveRecord::Base
   def fixed_cost_value_is_valid
     if cost_type == FIXED_COST or cost_type == FIXED_HOURLY_RATE_COST and fixed_cost_value.blank?
       self.errors.add(:fixed_cost_value, I18n.t("models.campaign.fixed_cost_value_is_blank"))
-    elsif cost_type == AGENT_BILLING_RATE_COST and !users.detect { |u| u.billing_rate.to_i <= 0 }.nil?
+    elsif cost_type == AGENT_BILLING_RATE_COST and users.with_agents.any? { |u| u.billing_rate.to_i <= 0 }
       self.errors.add(:cost_type, I18n.t("models.campaign.agents_dont_have_billing_rates_defined"))
     end
   end
