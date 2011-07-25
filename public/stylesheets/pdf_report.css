@@ -25,7 +25,7 @@ table th
     vertical-align: top;    
     border: 1px solid #aaa;    
     text-align: center;
-    -pdf-keep-in-frame-mode: none;
+    -pdf-keep-in-frame-mode: shrink;
 }
 
 table thead th
