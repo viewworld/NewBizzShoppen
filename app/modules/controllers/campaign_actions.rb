@@ -4,7 +4,8 @@ module CampaignActions
 
   def show
     set_contacts
-    @all_results = @campaign.to_a.map(&:results).flatten.uniq
+    campaign_result_ids =  @campaign.to_a.map(&:results).flatten.uniq.map(&:id)
+    @all_results = Result.where("results.id IN (?)", campaign_result_ids)
     @result_ids = params[:result_ids] || @all_results.map(&:id)
     @date_from = params[:date_from] ? params[:date_from].to_date : @campaign.is_a?(Array) ? @campaign.map(&:start_date).sort.first : @campaign.start_date
     @date_to = params[:date_to] ? params[:date_to].to_date : @campaign.is_a?(Array) ? @campaign.map(&:end_date).sort.reverse.first : @campaign.end_date
