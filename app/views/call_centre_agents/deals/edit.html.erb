@@ -1,5 +1,5 @@
 <column-mc:>
-  <header back="true" backurl="#{buyers_deals_path}"><%= "Edit deal" %></header>
+  <header back="true" backurl="#{buyers_deals_path}"><%= t("call_centre_agent.deals.edit.view.title") %></header>
 
   <%= semantic_form_for [:buyers, @deal], :method => :put do |form| %>
       <frm title="Edit deal">

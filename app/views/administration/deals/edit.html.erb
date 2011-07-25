@@ -4,7 +4,7 @@
   <%= semantic_form_for [:administration, @deal], :method => :put do |form| %>
       <frm title="Edit deal">
         <param:content>
-          <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal} %>
+          <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal, :categories => Category.without_locked.all} %>
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="save">
