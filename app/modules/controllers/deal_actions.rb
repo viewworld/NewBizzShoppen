@@ -31,4 +31,10 @@ module DealActions
     @image = Asset::DealImage.new
     @material = Asset::DealMaterial.new
   end
+
+  def check_user
+    if current_user and current_user.has_any_role?(:call_centre_agent, :call_centre) and !current_user.has_role?(:deal_maker)
+      raise CanCan::AccessDenied
+    end
+  end
 end

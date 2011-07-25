@@ -19,7 +19,6 @@ class AbstractLead < ActiveRecord::Base
   #TODO ???
   liquid :header
 
-  attr_protected :published
   attr_accessor :category_is_changed
   attr_accessor :tmp_creator_id
   attr_accessor :current_user

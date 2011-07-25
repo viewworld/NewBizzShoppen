@@ -42,6 +42,11 @@
         <%= form.input :country_id, :as => :select, :collection => Country.all, :include_blank => false %>
         <%= form.input :region_id, :as => :select, :collection => Region.all, :include_blank => false %>
         <%= form.input :deal_url %>
+        <% if current_user.admin? or current_user.has_role?(:deal_maker) %>
+            <span id="deal_published">
+                <%= form.input :published %>
+            </span>
+        <% end %>
       </ol>
     </fieldset>
   </div>
