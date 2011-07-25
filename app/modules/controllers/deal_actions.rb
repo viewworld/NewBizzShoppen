@@ -7,7 +7,7 @@ module DealActions
 
   def index
     @search = Deal.scoped_search(params[:search])
-    @deals = @search.where(:creator_id => current_user.call_centre? ? current_user.subaccounts.map(&:id) : current_user.id).paginate(:page => params[:page])
+    @deals = current_user.admin? ? @search.paginate(:page => params[:page]) : @search.where(:creator_id => current_user.call_centre? ? current_user.subaccounts.map(&:id) : current_user.id).paginate(:page => params[:page])
   end
 
   def edit

@@ -1,0 +1,16 @@
+<column-mc:>
+  <header back="true" backurl="#{administration_deals_path}"><%= t("administration.deals.new.view.title") %></header>
+
+  <%= semantic_form_for [:administration, @deal], :method => :post do |form| %>
+      <frm title="Create new">
+        <param:content>
+          <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal} %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("administration.deals.new.view.create_button"), :name => "commit_create", :onclick => "select_options_to_submit('deal_deal_template_ids_')" %>
+          </ibt>
+        </param:actions>
+      </frm>
+  <% end %>
+</column-mc:>

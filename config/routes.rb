@@ -28,6 +28,13 @@ Nbs::Application.routes.draw do
     resource :setting, :only => [:edit, :update]
     resources :email_templates
     resources :leads
+    resources :deals do
+      resources :assets, :controller => "deal_assets", :only => [:create, :destroy] do
+        member do
+          get 'download'
+        end
+      end
+    end
     resources :articles
     resources :news
     resources :hints

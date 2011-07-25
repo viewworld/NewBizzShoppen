@@ -72,6 +72,7 @@ en:
     main_menu:
       admin:
         users: "Users"
+        deals: "Deals"
         categories: "Categories"
         email_templates: "Emails"
         settings: "Settings"
@@ -929,6 +930,22 @@ en:
           rating_header: "Ratings"
           button_update: "Save"
           button_cancel: "Cancel"
+    deals:
+      index:
+        view:
+          edit: "Edit"
+          destroy: "Destroy"
+      new:
+        view:
+          title: "New deal"
+          create_button: "Create"
+          check_buyer_email: "Check sales manager email"
+          no_user_found_message: "No user with email %{email} was found!"
+      edit:
+        view:
+          title: "Edit deal"
+          update_button: "Save"
+
     articles:
       show:
         view:
@@ -1854,9 +1871,11 @@ en:
           destroy: "Destroy"
       new:
         view:
+          title: "New Deal"
           create_button: "Create"
       edit:
         view:
+          title: "Edit deal"
           update_button: "Save"
   categories:
     index:
