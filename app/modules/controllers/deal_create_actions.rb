@@ -11,7 +11,7 @@ module DealCreateActions
   end
 
   def create
-    @deal = current_user.deals.build(params[:deal])
+    @deal = current_user.admin? ? Deal.new(params[:deal]) : current_user.deals.build(params[:deal])
     @deal.creation_step = 1
     if @deal.save
       @deal.reload
