@@ -41,7 +41,7 @@ class Lead < AbstractLead
   scope :with_creator_type, lambda { |creator_type| where(["leads.creator_type = ?", "User::#{creator_type}"]) }
   scope :within_accessible_categories, lambda { |accessible_categories_ids| where("leads.category_id IN (?)", accessible_categories_ids) }
   scope :with_call_centre, lambda { |call_centre_id| where(["users.parent_id = ?", call_centre_id]).joins("INNER JOIN users ON leads.creator_id=users.id") }
-  #====================
+    #====================
   scope :featured, where(:featured => true)
   scope :purchased, where("lead_purchases_counter > 0")
   scope :without_bought_and_requested_by, lambda { |u| select("DISTINCT leads.*").joins("LEFT JOIN lead_purchases lp ON lp.lead_id = leads.id").where(["(lp.owner_id <> ? OR lp.owner_id IS NULL) AND (lp.assignee_id <> ? OR lp.assignee_id IS NULL) AND (lp.requested_by <> ? OR lp.requested_by IS NULL)", u.id, u.id, u.id]) if u }
@@ -85,6 +85,7 @@ class Lead < AbstractLead
 
   before_save :handle_category_change
   before_validation :handle_dialling_codes
+  validate :check_lead_templates
   before_save :check_if_category_can_publish_leads
   after_create :send_instant_notification_to_subscribers
   after_save :auto_buy
@@ -103,7 +104,7 @@ class Lead < AbstractLead
     true
   end
 
-  #prevent dialling codes from saving when no proper phone number follows them
+    #prevent dialling codes from saving when no proper phone number follows them
   def handle_dialling_codes
     fields = [:direct_phone_number, :phone_number, :company_phone_number].select { |pn| self.send(pn).to_s.strip.size <= 3 }
     unless fields.empty?
@@ -113,7 +114,7 @@ class Lead < AbstractLead
     end
   end
 
-  #Handling case when category is changed during edit/create to prevent auto save
+    #Handling case when category is changed during edit/create to prevent auto save
   def handle_category_change
     if ActiveRecord::ConnectionAdapters::Column.value_to_boolean(category_is_changed)
       self.errors.add(:category_id, I18n.t("shared.leads.form.category_was_changed"))
@@ -169,6 +170,15 @@ class Lead < AbstractLead
     if published_changed? and published and category.auto_buy
       user = category.category_customers.first.user
       user.cart.add_lead(self) if user.big_buyer? and !bought_by_user?(user)
+    end
+  end
+
+  def check_lead_templates
+    if category_id_changed?
+      lead_template_fields = lead_templates(true).map { |lt| lt.lead_template_fields }.flatten.select { |f| f.is_mandatory }
+      unless lead_template_values.select { |ltv| lead_template_fields.map(&:id).include?(ltv.lead_template_field_id) }.size == lead_template_fields.size
+        self.errors.add(:category_id, I18n.t("shared.leads.form.not_all_templates_filled"))
+      end
     end
   end
 
@@ -289,10 +299,6 @@ class Lead < AbstractLead
     end
   end
 
-  def mailer_host
-    Nbs::Application.config.action_mailer.default_url_options[:host]
-  end
-
   def show_lead_details_url
     "https://#{mailer_host}/leads/#{self.id}"
   end
@@ -302,7 +308,7 @@ class Lead < AbstractLead
   end
 
   def bought_by_user?(user)
-     !lead_purchases.where("purchased_by = #{user.id} and accessible_from IS NOT NULL").blank?
+    !lead_purchases.where("purchased_by = #{user.id} and accessible_from IS NOT NULL").blank?
   end
 
   def based_on_deal(deal, user)

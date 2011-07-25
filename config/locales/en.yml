@@ -1720,12 +1720,14 @@ en:
           destroy: "Destroy"
       new:
         view:
+          title: "New deal"
           create_button: "Create"
           check_buyer_email: "Check sales manager email"
           no_user_found_message: "No user with email %{email} was found!"
           certify: "Certify"
       edit:
         view:
+          title: "Edit deal"
           update_button: "Save"
   purchase_manager:
     leads:

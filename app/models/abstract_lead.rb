@@ -15,7 +15,8 @@ class AbstractLead < ActiveRecord::Base
   has_many :lead_purchases, :foreign_key => :lead_id
   has_many :lead_template_values, :foreign_key => :lead_id
   
-  liquid_methods :show_lead_details_url, :category_name, :header, :description, :hidden_description, :company_name, :contact_name, :phone_number, :email_address, :address, :www_address, :direct_phone_number
+  liquid_methods :show_lead_details_url, :category_name, :header, :description, :hidden_description, :company_name, :contact_name, :phone_number, :email_address, :address, :www_address, :direct_phone_number, :new_sales_manager_account_url
+
   #TODO ???
   liquid :header
 
@@ -29,7 +30,7 @@ class AbstractLead < ActiveRecord::Base
   validates_presence_of :hidden_description, :unless => Proc.new{|l| l.created_by?('PurchaseManager')}, :if => :process_for_lead_information?
   validates_presence_of :email_address, :if => Proc.new{|l| l.validate_contact_email }
   validates_format_of :email_address, :allow_blank => true, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
-  validate :check_category, :check_lead_templates, :if => :process_for_lead_information?
+  validate :check_category, :if => :process_for_lead_information?
 
   after_create :cache_creator_name
   before_save :change_creator, :set_euro_price
@@ -104,20 +105,19 @@ class AbstractLead < ActiveRecord::Base
     [address_line_1, address_line_2, zip_code, address_line_3].join(" ")
   end
 
+  def mailer_host
+    Nbs::Application.config.action_mailer.default_url_options[:host]
+  end
+
+  def new_sales_manager_account_url
+    "https://#{mailer_host}/buyer_accounts/new"
+  end
+
   private
   def check_category
     self.creator = current_user if creator.nil?
     if category and category.is_agent_unique and !creator.has_role?(:admin) and !(creator.unique_categories.include?(category) or (creator.parent.present? and creator.parent.with_role.unique_categories.include?(category)))
       self.errors.add(:category_id, "Incorrect category!")
-    end
-  end
-
-  def check_lead_templates
-    if category_id_changed?
-      lead_template_fields = lead_templates(true).map{ |lt| lt.lead_template_fields }.flatten.select { |f| f.is_mandatory }
-      unless lead_template_values.select { |ltv| lead_template_fields.map(&:id).include?(ltv.lead_template_field_id) }.size == lead_template_fields.size
-        self.errors.add(:category_id, I18n.t("shared.leads.form.not_all_templates_filled"))
-      end
     end
   end
 

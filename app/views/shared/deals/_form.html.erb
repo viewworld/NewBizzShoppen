@@ -7,8 +7,6 @@
         <%= form.input :description %>
         <%= form.input :hidden_description %>
         <%= form.input :fine_print %>
-        picture<br/>
-        upload material to download<br/>
         <%= form.input :start_date, :as => :string,
                        :wrapper_html => {:class => "date"},
                        :input_html => {:class => "datepicker", :value => deal.start_date},
@@ -30,7 +28,6 @@
       <ol class="align_inputs">
         <%= form.input :company_name %>
         <%= form.input :category_id, :disabled => categories.select { |c| !c.can_publish_leads? }.map(&:id),  :collection => nested_set_options(categories), :include_blank => false %>
-        Logo<br/>
         <%= form.input :company_description %>
         <%= form.input :contact_name %>
         <%= form.input :email_address %>
