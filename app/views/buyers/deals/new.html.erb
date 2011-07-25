@@ -4,7 +4,7 @@
   <%= semantic_form_for [:buyers, @deal], :method => :post do |form| %>
       <frm title="Create new">
         <param:content>
-          <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal} %>
+          <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal, :categories => Category.without_locked.with_customer_unique(current_user).all} %>
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="save">

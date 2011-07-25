@@ -36,6 +36,10 @@ class Deal < AbstractLead
         :price => 0)
   end
 
+  def buyer
+    creator.buyer? ? creator : User::Customer.where(:email => email_address).first
+  end
+
   private
 
   def process_for_lead_information?
@@ -47,19 +51,20 @@ class Deal < AbstractLead
   end
 
   def create_uniq_deal_category
-    user = User.find(self.creator_id)
-    category = user.deal_category_id ? Category.find(user.deal_category_id) : Category.create(:name => user.company_name)
-    user.update_attribute(:deal_category_id, category.id) if user.deal_category_id.blank?
-    category.update_attribute(:is_customer_unique, true) unless category.is_customer_unique
-    unless category.customers.include?(user)
-      category.customers << user
-      category.save
+    if buyer
+        category = buyer.deal_category_id ? Category.find(buyer.deal_category_id) : Category.create(:name => buyer.company_name)
+        buyer.update_attribute(:deal_category_id, category.id) if buyer.deal_category_id.blank?
+        category.update_attribute(:is_customer_unique, true) unless category.is_customer_unique
+        unless category.customers.include?(buyer)
+          category.customers << buyer
+          category.save
+        end
+        self.lead_category_id = category.id
     end
-    self.category_id = category.id
   end
 
   def certify_for_unknown_email
-    if creator.agent? or creator.admin? and User::Customer.where(:email => email_address).first.nil?
+    if creator.agent? or creator.admin? and buyer.nil?
       #certify!
     end
   end
