@@ -485,3 +485,16 @@ div.pagination .disabled
     font-size: 12px;
     color: #aaa;
 }
+
+
+
+.reports_table_wrapper
+{
+    width: 100%;
+    overflow-x: auto;
+}
+
+#reports_table
+{
+    font-size: 11px;
+}
