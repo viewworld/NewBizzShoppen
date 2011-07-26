@@ -40,3 +40,4 @@ stylesheets:
     - public/stylesheets/invoice_lines_edit.css
     - public/stylesheets/jquery.checkboxtree.min.css
     - public/stylesheets/jquery.autocomplete.css
+    - public/stylesheets/ajaxful_rating.css
