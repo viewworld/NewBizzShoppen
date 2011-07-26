@@ -20,6 +20,7 @@ Settings.default_payout_delay = 0 if Settings.default_payout_delay.nil?
     #Certification
     Settings.resend_certification_notification_after_days = 15 if Settings.resend_certification_notification_after_days.nil?
     Settings.expire_certification_notification_after_days = 15 if Settings.expire_certification_notification_after_days.nil?
+    Settings.default_deal_admin_email = Rails.env.production? ? "" : "agent@nbs.com" if Settings.default_deal_admin_email.nil?
 
     Country.find_or_create_by_name("Denmark", :locale => "dk", :detailed_locale => "dk", :vat_rate => VatRate.new(:rate => 25))
     Country.find_or_create_by_name("United Kingdom", :locale => "en", :detailed_locale => "gb", :vat_rate => VatRate.new(:rate => 20))
@@ -215,6 +216,14 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
                     :body => "<p>Login: {{user.email}}</p><p>Linked with account: {{user.social_provider_name}}</p><p><a href=\"{{user.category_buyer_category_home_url}}\">{{user.category_buyer_category_home_url}}</a></p>"},
             :dk => {:subject => "[DK] Welcome to Fairleads.com!",
                     :body => "<p>Login: {{user.email}}</p><p>Linked with account: {{user.social_provider_name}}</p><p><a href=\"{{user.category_buyer_category_home_url}}\">{{user.category_buyer_category_home_url}}</a></p>"}
+        },
+        {
+            :name => "Deal certification request",
+            :uniq_id => "deal_certification_request",
+            :en => {:subject => "Deal certification request from Fairleads.com.",
+                    :body => "<p>In order to certificate deal created for you please crete new sales manager account on Fairleads.com</p><p><a href=\"{{deal.new_sales_manager_account_url}}\">crete new sales manager account</a></p>"},
+            :dk => {:subject => "[DK] Deal certification request from Fairleads.com.",
+                    :body => "<p>[DK] In order to certificate deal created for you please crete new sales manager account on Fairleads.com</p><p><a href=\"{{deal.new_sales_manager_account_url}}\">crete new sales manager account</a></p>"}
         }
     ]
 

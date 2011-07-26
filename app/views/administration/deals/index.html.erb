@@ -1,0 +1,20 @@
+<%= render :partial => "shared/deals/filter", :locals => {:search => @search, :path => administration_deals_path} %>
+<column-mc:>
+  <%= render :partial => "shared/deals/actions", :locals => {:path => new_administration_deal_path} %>
+
+   <%= deals_table @deals do |blocks| %>
+      <% blocks.tools do |deal| %>
+          <ul-actions>
+            <li>
+              <%= link_to t("administration.deals.index.view.edit"), edit_administration_deal_path(deal), :class => "default_action" %>
+            </li>
+            <li>
+              <%= link_to t("administration.deals.index.view.destroy"), administration_deal_path(deal), :method => :delete, :confirm => t("common.confirmation") %>
+            </li>
+          </ul-actions>
+      <% end %>
+      <% blocks.rowtooltip do |deal| %>
+          <p><%= render :partial => "/shared/deal_comments/deal_threads", :locals => { :deal => deal, :threads => deal.comment_threads.roots.order("created_at DESC") } %></p>
+      <% end %>
+  <% end %>
+</column-mc:>

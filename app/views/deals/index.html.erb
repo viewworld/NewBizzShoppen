@@ -1,0 +1,98 @@
+<search-box:>
+  <div class="search_box">
+    <h2><%= t("common.search") %></h2>
+
+    <div class="search_content">
+      <%= form_for @search, :url => deals_path do |f| %>
+        <fieldset class="inputs_vertical">
+          <ol class="no_pdd">
+            <li class="string">
+              <%= f.label :with_keyword, t("deals.index.search.keyword_label") %>
+              <%= f.text_field :with_keyword %>
+            </li>
+          </ol>
+          <div id="advanced_search_1_div" style="<%= 'display: none;' unless advanced_search_active?(params[:search]) -%>;">
+            <ol class="no_pdd">
+              <li class="string">
+                <%= f.label t("deals.index.search.zip_code") %>
+                <%= f.text_field :with_zip_code, :style => "width: 90px" %>
+              </li>
+              <li class="select">
+                <%= f.label t("deals.index.search.country_label") %>
+                <%= f.select :with_country, @countries.map { |c| [c.name, c.id] }, {:include_blank => true}, :onchange => "refresh_regions_list_custom('search_with_country', 'search_with_region');" %>
+              </li>
+              <li class="select">
+                <%= f.label t("deals.index.search.region_label") %>
+                <%= f.select :with_region, regions_collection_for(Country.find_by_id(@search.with_country)).map { |r| [r.name, r.id] }, :include_blank => true %>
+              </li>
+            </ol>
+          </div>
+          <ol>
+            <li class="commit">
+              <ibt c="bt_green" icon="magnify">
+                <%= submit_tag t("deals.index.search.search_button") %>
+              </ibt>
+              <p>
+                <%= bt_clear_filter_safe %>
+                <%= link_to_function t("common.advanced_search"), "$('#advanced_search_1_div').toggle();$('#advanced_search_2_div').slideToggle();" %>
+              </p>
+            </li>
+          </ol>
+        </fieldset>
+        <div id="advanced_search_2_div" style="<%= 'display: none;' unless advanced_search_active?(params[:search]) -%>;">
+            <div class="pdd_10">
+              <table class="categories_table">
+                <tbody>
+                <% @categories.select { |c| c.parent_id.blank? }.in_groups_of(5).each do |categories| %>
+                    <tr>
+                      <% categories.each do |category| %>
+                          <td style="width: 20%">
+                            <% unless category.nil? %>
+                                <%= categories_structure_root(category, @categories, :leads_catalog) %>
+                            <% end %>
+                          </td>
+                      <% end %>
+                    </tr>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</search-box:>
+
+<column-mc:>
+  <header back="true">
+
+    <param:content>
+      <% if ActiveRecord::ConnectionAdapters::Column.value_to_boolean(@search.latest) %>
+        <%= t("deals.index.view.header_latest_leads") %>
+      <% else %>
+        <%= " #{t("deals.index.view.header_for")} #{@category.name}" if @category %>
+      <% end %>
+    </param:content>
+
+    <param:actions>
+    </param:actions>
+
+  </header>
+
+  <% if @deals.empty? %>
+      <%= blank_state_message %>
+  <% else %>
+          <%= deals_listing @deals, :show_checkboxes => false do |blocks| %>
+
+              <% blocks.tools do |deal| %>
+                  <% if user_signed_in? and current_user.has_role?(:purchase_manager) %>
+                    <%= bt_link_to nil, t("deals.index.view.contact_me"), new_purchase_managers_lead_path(:deal_id => deal.id) %>
+                  <% end %>
+              <% end %>
+
+          <% end %>
+  <% end %>
+</column-mc:>
+<js:>
+  <%= javascript_include_tag 'deal_comments' %>
+</js:>

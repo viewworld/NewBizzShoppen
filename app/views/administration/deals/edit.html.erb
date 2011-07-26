@@ -1,0 +1,19 @@
+<column-mc:>
+  <header back="true" backurl="#{administration_deals_path}"><%= t('administration.deals.edit.view.title') %></header>
+
+  <%= semantic_form_for [:administration, @deal], :method => :put do |form| %>
+      <frm title="Edit deal">
+        <param:content>
+          <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal, :categories => Category.without_locked.all} %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("administration.deals.edit.view.update_button"), :name => "commit_update", :onclick => "select_options_to_submit('deal_deal_template_ids_')" %>
+          </ibt>
+        </param:actions>
+      </frm>
+  <% end %>
+
+  <%= render :partial => "shared/deals/assets_management", :locals => {:path => "administration_deal_assets_path", :download_path => "download_administration_deal_asset_path", :remove_path => "administration_deal_asset_path"} %>
+
+</column-mc:>

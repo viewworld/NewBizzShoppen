@@ -1,0 +1,21 @@
+<column-mc:>
+  <header back="true" backurl="#{buyers_deals_path}"><%= t("call_centre_agent.deals.edit.view.title") %></header>
+
+  <%= semantic_form_for [:buyers, @deal], :method => :put do |form| %>
+      <frm title="Edit deal">
+        <param:content>
+          <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal, :categories => Category.without_locked.with_call_centre_unique(current_user).all} %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("call_centre_agent.deals.edit.view.update_button"), :name => "commit_update", :onclick => "select_options_to_submit('deal_deal_template_ids_')" %>
+          </ibt>
+        </param:actions>
+      </frm>
+  <% end %>
+
+  <%= render :partial => "shared/deals/assets_management", :locals => {:path => "call_centre_agents_deal_assets_path",
+                                                                       :download_path => "download_call_centre_agents_deal_asset_path",
+                                                                       :remove_path => "buyers_call_centre_agents_asset_path"} %>
+
+</column-mc:>

@@ -1,0 +1,16 @@
+<column-mc:>
+  <header back="true" backurl="#{buyers_deals_path}"><%= t("buyer.deals.new.view.title") %></header>
+
+  <%= semantic_form_for [:buyers, @deal], :method => :post do |form| %>
+      <frm title="Create new">
+        <param:content>
+          <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal, :categories => Category.without_locked.with_customer_unique(current_user).all} %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("buyer.deals.new.view.create_button"), :name => "commit_create", :onclick => "select_options_to_submit('deal_deal_template_ids_')" %>
+          </ibt>
+        </param:actions>
+      </frm>
+  <% end %>
+</column-mc:>

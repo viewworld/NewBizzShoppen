@@ -1,7 +1,11 @@
 @m16 @requested @sales_manager_deals @_deals @$_sales_manager
 Feature: Deals from Sales Manager perspective
+  Background:
+    Given I am on the homepage
+    And I sign in as buyer@nbs.com with password secret
 
   Scenario: I can see new tab "My deals" right to the "My leads"
+  Then I should see translated "layout.main_menu.lead_buyer.deals"
 
   Scenario: I can see a list of my created deals sorted by creation date when I click "My deals"
 
@@ -40,18 +44,18 @@ Feature: Deals from Sales Manager perspective
 
   Scenario: I can select currency
 
-  Scenario: I can click a link to see public deal description (shows the deal as presented to procuremenet manager)
+  Scenario: I can click a link to see public deal description (shows the deal as presented to procurement manager)
 
   # "Contact"
   Scenario: Contact data should be populated from sales manager
 
-  Scenario: I can edit comapny name / contact person / email / direct number / mobile number
+  Scenario: I can edit company name / contact person / email / direct number / mobile number
 
   Scenario: I can edit address
 
   Scenario: I can edit URL
 
-  Scenario: I can edit Company log
+  Scenario: I can edit Company logo
 
   Scenario: I can edit Company description (note field)
 
@@ -61,10 +65,9 @@ Feature: Deals from Sales Manager perspective
 
   Scenario: I can use existing templates for this category
 
-  Scenario: Mandatory tempaltes for category should be automatically included
+  Scenario: Mandatory templates for category should be automatically included
 
   # Backend
   Scenario: When a deal is created a new lead category should be created named the same as sales manager's company name
 
   Scenario: The category is company unique to the sales manager
-

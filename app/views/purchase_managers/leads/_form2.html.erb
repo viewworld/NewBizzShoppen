@@ -1,0 +1,13 @@
+<clb/>
+<div class="pdd_10 no_pdd_t">
+    <fieldset class="inputs labels_ta_r labels_180">
+        <ol class="align_inputs">
+            <%= form.input :hidden_description, :label => t("purchase_manager.leads.new.view.lead_note")  %>
+        </ol>
+    </fieldset>
+</div>
+<% unless @lead.lead_templates.empty? %>
+    <%= render :partial => "/shared/leads/lead_template_fields", :locals => {:lead => @lead, :form => form } %>
+    <hl/>
+<% end %>
+<div class="nested_locale_container"></div>

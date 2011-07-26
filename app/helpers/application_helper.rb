@@ -26,6 +26,15 @@ module ApplicationHelper
     "add_fields(this, \"#{escape_javascript(fields)}\")"
   end
 
+  def fields_for_deals_translations(f)
+    new_object = current_user.has_any_role?(:admin, :call_centre) ? Lead.new : current_user.leads.build
+    new_object.lead_translations = [LeadTranslation.new]
+    fields = f.fields_for :lead_translations, new_object.lead_translations do |builder|
+       render("/shared/deals/deal_fields", :f => builder)
+    end
+    "add_fields(this, \"#{escape_javascript(fields)}\")"
+  end
+
   def fields_for_leads_template_fields(f)
     lead_template_field = LeadTemplateField.new
     fields = f.fields_for :lead_template_fields, lead_template_field do |builder|

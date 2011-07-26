@@ -72,6 +72,7 @@ en:
     main_menu:
       admin:
         users: "Users"
+        deals: "Deals"
         categories: "Categories"
         email_templates: "Emails"
         settings: "Settings"
@@ -104,12 +105,14 @@ en:
         lead_templates: "Lead templates"
         campaigns: Campaigns
         reports: "Reports"
+        deals: "My deals"
       call_centre_agent:
         leads: "My leads"
         lead_templates: "Lead templates"
         campaigns: Campaigns
         news: News
         reports: "Reports"
+        deals: "My deals"
       customer:
         subaccounts: Team
         lead_requests: Requested leads
@@ -118,6 +121,7 @@ en:
         not_invoiced: "Not Invoiced Leads"
       lead_buyer:
         lead_purchases: My leads
+        my_deals: My deals
       lead_user:
         lead_purchases: My leads
         lead_requests: My requested leads
@@ -128,9 +132,11 @@ en:
         category_request: "Category request"
         comments: "Comments"
         sold_out: "Sold out"
+        browse_deals: "Browse deals"
       purchase_manager:
         leads: My leads
         lead_templates: "Lead templates"
+        my_requests: "My requests"
     my_profile_link: My profile
     logout_link: "Logout %{user_email}"
     login_link: "Login"
@@ -856,6 +862,7 @@ en:
             logout_time: "Logout after (min)"
             resend_certification_notification_after_days: "Resend certification notification after days"
             youtube_introduction: "YouTube introduction video URL"
+            default_deal_admin_email: "Default deal admin email"
       edit:
         view:
           title: "Settings"
@@ -925,6 +932,22 @@ en:
           rating_header: "Ratings"
           button_update: "Save"
           button_cancel: "Cancel"
+    deals:
+      index:
+        view:
+          edit: "Edit"
+          destroy: "Destroy"
+      new:
+        view:
+          title: "New deal"
+          create_button: "Create"
+          check_buyer_email: "Check sales manager email"
+          no_user_found_message: "No user with email %{email} was found!"
+      edit:
+        view:
+          title: "Edit deal"
+          update_button: "Save"
+
     articles:
       show:
         view:
@@ -1615,6 +1638,19 @@ en:
           lead_deletion_successful: Lead has been successfully deleted!
           lead_deletion_failure: Lead could not be deleted!
 
+    deals:
+      index:
+        view:
+          edit: "Edit"
+          destroy: "Destroy"
+      edit:
+        view:
+          update_button: "Save"
+      new:
+        view:
+          check_buyer_email: "Check sales manager email"
+          certify: "Certify"
+          create_button: "Create"
   call_centre_agent:
     leads:
       index:
@@ -1679,6 +1715,22 @@ en:
           deletion_successful: "Lead template has been deleted successfully."
           deletion_failure: "Lead template could not be deleted"
 
+    deals:
+      index:
+        view:
+          edit: "Edit"
+          destroy: "Destroy"
+      new:
+        view:
+          title: "New deal"
+          create_button: "Create"
+          check_buyer_email: "Check sales manager email"
+          no_user_found_message: "No user with email %{email} was found!"
+          certify: "Certify"
+      edit:
+        view:
+          title: "Edit deal"
+          update_button: "Save"
   purchase_manager:
     leads:
       index:
@@ -1692,12 +1744,15 @@ en:
           option_not_published: "not published"
           filter_with_inactive: "Skip inactive"
           filter_with_outdated: "Skip outdated"
+          header: "My requests"
       show:
         view:
           header: "Ratings for lead: %{lead_header}"
           rating_level: "Rating:"
           rating_reason: "Reason:"
           view_all_leads_link: "View all leads"
+          confirmation_message: "We have successfully received the contact request, and that we will be in touch as soon as possible."
+          ok_confirmation: "OK"
       destroy:
         flash:
           lead_deletion_successful: "Lead has been deleted successfully."
@@ -1713,6 +1768,7 @@ en:
           button_create_and_continue: "Create & continue"
           button_create_and_duplicate: "Create & duplicate"
           remove_language: "Remove"
+          lead_note: "Note"
       edit:
         view:
           title: "Editing lead: %{name}"
@@ -1809,6 +1865,22 @@ en:
         view:
           header: "Lead details"
 
+    deals:
+      form:
+        all_templates: "Available templates"
+        selected_templates: "Selected templates"
+      index:
+        view:
+          edit: "Edit"
+          destroy: "Destroy"
+      new:
+        view:
+          title: "New Deal"
+          create_button: "Create"
+      edit:
+        view:
+          title: "Edit deal"
+          update_button: "Save"
   categories:
     index:
       view:
@@ -1885,6 +1957,7 @@ en:
         buyer_link: "click here if you are a sales manager"
         header_best_sellers: "Best sellers"
         header_latest_leads: "Latest leads"
+        header_latest_deals: "Latest deals"
         header_my_contact_requests: "My contact requests"
         header_news: "News"
         purchase_value_label: "Purchase value:"
@@ -2092,6 +2165,26 @@ en:
             with_assigned_at_date_before_and_including: Assigned before
             payment_status: Payment status
 
+    lead_templates:
+      index:
+        view:
+          search:
+            keyword_label: "Keyword"
+            category_label: "Category"
+          search_button: "Search"
+          header: "Request templates"
+          new_template: "New template"
+      new:
+        view:
+          header: "New request template"
+          button_create: "Create"
+          button_cancel: "Cancel"
+      edit:
+        view:
+          header: "Edit request template"
+          created_by: "Created by"
+          button_update: "Save"
+          button_cancel: "Cancel"
   lead_user:
     lead_purchases:
       index:
@@ -2281,6 +2374,14 @@ en:
         category_was_changed: Category has been changed
         category_no_leads_can_be_published: "No leads can be published in that category"
         category_cannot_be_changed: "Category cannot be changed due to filled out templates!"
+    deals:
+      table:
+        creation_date: Creation date
+        name: Deal name
+        expires: Expire
+        likes: Likes
+        published: Published/waiting approval
+        actions: Actions
   models:
     call_result:
       not_unique_email_address: "User with this e-mail already exists!"
@@ -2305,6 +2406,9 @@ en:
         lvl11: Bronze (locked)
         lvl12: Silver (locked)
         lvl13: Gold (locked)
+      field_prefixes:
+        header: "A company interested in"
+        description: "A company interested in"
     lead_template_field:
       field_type:
         type0: Text
@@ -2541,6 +2645,20 @@ en:
     customer_interests:
       update:
         notice: "Customer interest have been successfully saved!"
+    deals:
+      create:
+        notice: "Deal has been successfully created."
+      destroy:
+        notice: "Deal has been successfully destroyed."
+      update:
+        notice: "Deal has been successfully updated"
+    deal_assets:
+      create:
+        success: "Asset has been successfully added."
+        type_is_incorrect: "Asset type is incorrect!"
+        asset_is_invalid: "Asset is invalid"
+      destroy:
+        success: "Asset has been successfully removed."
   formtastic:
     date:
       formats:
@@ -2993,3 +3111,52 @@ en:
         active: "Active"
         inactive: "Inactive"
         all: "All"
+  deals:
+    index:
+      view:
+        header_for: "Deals for"
+        header_latest_leads: "Latest deals"
+        request_information: "Request information"
+        contact_me: "Contact me"
+      search:
+        keyword_label: "Keyword"
+        search_button: "Search"
+        zip_code: "Zip code"
+        country_label: "Country"
+        region_label: "Region"
+    listing:
+      lead_description_label: "Deals description"
+      contact_label: "Contact information"
+      actions_label: "Actions"
+      contact_name_label: "Contact name"
+      contact_email_label: "E-mail"
+      contact_phone_number_label: "Phone number"
+      company_name_label: "Company"
+      company_description_label: "Company description"
+      create_comment: "Create comment"
+      show_comments: "Show comments"
+      hide_comments: "Hide comments"
+    show:
+      view:
+        header: "Deal details"
+        description_label: "Description"
+        end_date: "Expires at"
+    common:
+      assets:
+        view:
+          logo_label: "Logo"
+          add_logo_label: "Add deal logo"
+          add_image_label: "Add deal image"
+          add_material_label: "Add deal material"
+          add_logo_button: "Add logo"
+          remove_logo: "remove"
+          images_label: "Images"
+          remove_image: "remove"
+          add_image_button: "Add image"
+          materials_label: "Materials"
+          remove_material: "remove"
+          add_material_button: "Add material"
+      listing:
+        view:
+          header: "My deals"
+          new_deal: "Create new deal"

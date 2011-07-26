@@ -28,6 +28,13 @@ Nbs::Application.routes.draw do
     resource :setting, :only => [:edit, :update]
     resources :email_templates
     resources :leads
+    resources :deals do
+      resources :assets, :controller => "deal_assets", :only => [:create, :destroy] do
+        member do
+          get 'download'
+        end
+      end
+    end
     resources :articles
     resources :news
     resources :hints
@@ -64,6 +71,13 @@ Nbs::Application.routes.draw do
   namespace :buyers do
     root :to => "lead_purchases#index"
     resources :cart_items
+    resources :deals do
+      resources :assets, :controller => "deal_assets", :only => [:create, :destroy] do
+        member do
+          get 'download'
+        end
+      end
+    end
     resource :cart, :only => [:show, :update, :destroy], :controller => 'cart'
     resources :lead_purchases do
       collection do
@@ -84,6 +98,13 @@ Nbs::Application.routes.draw do
     resources :call_centre_agents do
       resource :password, :controller => 'password', :only => [:new, :update, :destroy]
     end
+   resources :deals do
+      resources :assets, :controller => "deal_assets", :only => [:create, :destroy] do
+        member do
+          get 'download'
+        end
+      end
+    end
     resource :bulk_call_centre_agents_update, :controller => "bulk_call_centre_agents_update", :only => [:update]
     resources :leads
     resources :lead_templates
@@ -96,6 +117,13 @@ Nbs::Application.routes.draw do
       resources :certifications, :only => :create
     end
     resources :lead_templates
+    resources :deals do
+      resources :assets, :controller => "deal_assets", :only => [:create, :destroy] do
+        member do
+          get 'download'
+        end
+      end
+    end
   end
 
   namespace :lead_users do
@@ -119,6 +147,7 @@ Nbs::Application.routes.draw do
     resource :bulk_subaccounts_update, :controller => "bulk_subaccounts_update", :only => [:update]
     resources :not_invoiced_leads, :only => [:index]
     resources :invoices, :only => [:show, :index]
+    resources :lead_templates
   end
 
   namespace :agents do
@@ -165,10 +194,10 @@ Nbs::Application.routes.draw do
         end
         resource :agent_information, :only => [:show]
       end
-      resources :email_templates, :only => [:edit,:update]
+      resources :email_templates, :only => [:edit, :update]
     end
 
-    resource :production,  :controller => "production", :only => [:show]
+    resource :production, :controller => "production", :only => [:show]
 
     resources :contacts do
       resources :call_results, :only => [:new, :create, :edit, :update, :destroy]
@@ -187,6 +216,15 @@ Nbs::Application.routes.draw do
     resources :comment_readers, :only => [:create]
   end
 
+  namespace :deal_comments do
+    resources :threads
+    resources :deals do
+      resources :threads
+    end
+    resources :replies
+    resources :comment_readers, :only => [:create]
+  end
+
   match 'buyer_home' => 'buyer_home#show', :as => "buyer_home"
   match 'agent_home' => 'agent_home#show', :as => "agent_home"
   match 'purchase_manager_home' => 'purchase_manager_home#show', :as => "purchase_manager_home"
@@ -196,11 +234,18 @@ Nbs::Application.routes.draw do
       post :creators
     end
   end
-
+  
+  resources :deals, :except => [:new, :create, :destroy] do
+    member do
+      post 'rate'
+    end
+  end
+  
   resources :categories, :only => [:index] do
     resources :more_leads_requests, :only => [:new, :create]
   end
   match 'categories/:slag' => "leads#index"
+  match 'categories/deals/:slag' => "deals#index"
 
 
   resources :agent_accounts, :only => [:new, :create]
