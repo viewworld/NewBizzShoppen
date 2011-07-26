@@ -39,7 +39,15 @@
             <td><%= check_box_tag("deal_ids[]", deal.id) %></td>
         <% end %>
         <td><%= deal.created_at %></td>
-        <td><%= deal.header %></td>
+        <td>
+          <%= deal.header %>
+           <div class="rltv" style="padding-bottom: 20px;">
+           <div class="row_tooltip_actions">
+           <%= link_to t("comments.shared.show_comments")+" (#{deal.comments_count_for(current_user)})", "#", :class => "toggle_row show_comments#{' toggle_row_unread' if deal.has_unread_comments_for_user?(current_user)}", :onclick => "deal_mark_comments_as_read(#{deal.id}); mark_row_as_read('lead_#{deal.id}')" %>
+           <%= link_to t("comments.shared.hide_comments"), "#", :class => "toggle_row hide_comments", :style => "display:none" %>
+           </div>
+           </div>
+        </td>
         <td><%= deal.end_date %></td>
         <td></td>
         <td><%= deal.published %></td>
@@ -48,8 +56,21 @@
               <%= with_output_buffer { block_tools.call(deal) } %>
             </td>
         <% end %>
-        <td class="cr"></td>
+        <td class="cr">
+        </td>
       </tr>
+
+      <% if block_rowtooltip %>
+      <tr class="row_tooltip">
+        <td class="cl no_pdd"></td>
+        <td colspan="<%= cols + 1 %>" class="no_pdd">
+          <div class="row_tooltip_content pdd_10">
+            <%= with_output_buffer { block_rowtooltip.call(deal) } %>
+          </div>
+        </td>
+        <td class="cr no_pdd"></td>
+      </tr>
+      <% end %>
   <% end %>
 
   <% if will_paginate %>
@@ -62,3 +83,42 @@
 
   </tbody>
 </table>
+
+<script type=text/javascript>
+
+    function hideRowButtons()
+    {
+        $(".toggle_row.hide_comments:visible").hide().prev().show();
+    }
+
+    jQuery(document).ready(function()
+    {
+        $(".toggle_row.show_comments").bind("click", function()
+        {
+            $(".row_tooltip").filter(":not(:eq(" + $(this).parents("tr:first").next().index(".row_tooltip") + "))")
+                    .filter(":visible").find(".row_tooltip_content:visible").slideUp("normal", function() {
+                $(this).parents("tr.row_tooltip").hide()
+            });
+
+            hideRowButtons();
+
+
+            $(this).hide().next().show().parents("tr:first")
+                    .next("tr.row_tooltip").show()
+                    .find(".row_tooltip_content").slideDown();
+        });
+
+        $(".toggle_row.hide_comments").bind("click", function()
+        {
+            hideRowButtons();
+
+            $(this).hide().prev().show().parents("tr:first")
+                    .next("tr.row_tooltip")
+                    .find(".row_tooltip_content").slideUp('normal', function() {
+                $(this).parents("tr.row_tooltip").hide();
+            });
+        });
+    });
+
+</script>
+<%= javascript_include_tag 'deal_comments' %>

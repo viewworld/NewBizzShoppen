@@ -285,10 +285,6 @@ class Lead < AbstractLead
     current_lcr.present? and current_lcr.email != email_address and LeadCertificationRequest::STATES_THAT_COULD_BE_RECERTIFICATED.include?(current_lcr.state)
   end
 
-  def comments_count_for(user)
-    user.has_role?(:admin) ? comment_threads.roots.count : comment_threads.roots.without_blocked.count
-  end
-
   def send_instant_notification_to_subscribers
     self.delay.deliver_instant_notification_to_subscribers
   end

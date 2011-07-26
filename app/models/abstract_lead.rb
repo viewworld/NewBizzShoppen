@@ -113,6 +113,10 @@ class AbstractLead < ActiveRecord::Base
     "https://#{mailer_host}/buyer_accounts/new"
   end
 
+  def comments_count_for(user)
+    user.has_role?(:admin) ? comment_threads.roots.count : comment_threads.roots.without_blocked.count
+  end
+
   private
   def check_category
     self.creator = current_user if creator.nil?
