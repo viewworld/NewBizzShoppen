@@ -9,6 +9,6 @@ class Administration::DealsController < Administration::AdministrationController
 
   def success(message)
     flash[:notice] = message
-    redirect_to buyers_deals_path
+    redirect_to administration_deals_path
   end
 end

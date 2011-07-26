@@ -4,9 +4,8 @@ Feature: Deals from Sales Manager perspective
     Given I am on the homepage
     And I sign in as buyer@nbs.com with password secret
 
-  @wip
   Scenario: I can see new tab "My deals" right to the "My leads"
-  Then I should see translated "layout.main_menu.lead_buyer.lead_purchases"
+  Then I should see translated "layout.main_menu.lead_buyer.deals"
 
   Scenario: I can see a list of my created deals sorted by creation date when I click "My deals"
 
