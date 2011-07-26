@@ -1,0 +1,17 @@
+<div id="new_comment_div_<%= deal.id %>"></div>
+<%= semantic_remote_form_for Comment.new, :as => :comment, :url => deal_comments_deal_threads_path(deal), :html => {:method => :post, :id => "new_comment_#{deal.id}"} do |f| %>
+    <fieldset class="inputs labels_ta_r labels_80">
+      <ol class="align_inputs">
+        <li class="header">
+          <h3><%= t('comments.threads.show.view.start_new_thread') %></h3>          
+        </li>
+        <%= f.input :title %>
+        <%= f.input :body, :as => :text, :input_html => {:style => "width:380px;height: 100px;"} %>
+        <li class="commit">
+          <ibt icon="plus">
+            <%= button_to_function t("comments.threads.show.view.create_comment_button"), "validate_form('#new_comment_#{deal.id}')" %>
+          </ibt>
+        </li>
+      </ol>
+    </fieldset>
+<% end %>

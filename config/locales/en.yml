@@ -3131,6 +3131,9 @@ en:
       contact_phone_number_label: "Phone number"
       company_name_label: "Company"
       company_description_label: "Company description"
+      create_comment: "Create comment"
+      show_comments: "Show comments"
+      hide_comments: "Hide comments"
     show:
       view:
         header: "Deal details"

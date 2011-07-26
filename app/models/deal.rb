@@ -7,6 +7,7 @@ class Deal < AbstractLead
   has_many :images, :class_name => "Asset::DealImage", :as => :resource, :conditions => "asset_type = 'Asset::DealImage'", :dependent => :destroy
   has_many :materials, :class_name => "Asset::DealMaterial", :as => :resource, :conditions => "asset_type = 'Asset::DealMaterial'", :dependent => :destroy
   has_many :leads, :class_name => "Lead", :foreign_key => "deal_id"
+  has_many :comment_threads, :class_name => "Comment", :foreign_key => :commentable_id, :conditions => {:commentable_type => 'AbstractLead'}
   has_and_belongs_to_many :deal_templates, :class_name => "LeadTemplate", :join_table => "leads_lead_templates", :foreign_key => "lead_id", :association_foreign_key => "lead_template_id"
   belongs_to :lead_category, :class_name => "Category", :foreign_key => "lead_category_id"
 
@@ -26,6 +27,7 @@ class Deal < AbstractLead
   attr_accessor :creation_step
 
   ajaxful_rateable :stars => 5, :allow_update => false, :cache_column => :deal_average_rating
+  acts_as_commentable
 
   def self.new_for_user(user)
     Deal.new(
@@ -46,6 +48,10 @@ class Deal < AbstractLead
 
   def buyer
     creator.buyer? ? creator : User::Customer.where(:email => email_address).first
+  end
+
+  def has_unread_comments_for_user?(user)
+    user ? comment_threads.unread_by_user(user).count > 0 : false
   end
 
   private
