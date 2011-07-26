@@ -61,6 +61,7 @@ class User < ActiveRecord::Base
   has_many :comment_readers
   has_many :read_comments, :through => :comment_readers, :source => :comment
   belongs_to :contact
+  has_many :deal_comment_threads, :class_name => "Comment", :foreign_key => "user_id"
   alias_method :parent, :user
 
   scope :with_customers, where("roles_mask & #{2**User.valid_roles.index(:customer)} > 0 ")
@@ -541,5 +542,9 @@ class User < ActiveRecord::Base
 
   def deal_maker_role_enabled=(enabled)
     self.deal_maker_role_enabled_flag = ActiveRecord::ConnectionAdapters::Column.value_to_boolean(enabled)
+  end
+
+  def can_start_new_deal_thread?
+    true
   end
 end

@@ -216,6 +216,15 @@ Nbs::Application.routes.draw do
     resources :comment_readers, :only => [:create]
   end
 
+  namespace :deal_comments do
+    resources :threads
+    resources :deals do
+      resources :threads
+    end
+    resources :replies
+    resources :comment_readers, :only => [:create]
+  end
+
   match 'buyer_home' => 'buyer_home#show', :as => "buyer_home"
   match 'agent_home' => 'agent_home#show', :as => "agent_home"
   match 'purchase_manager_home' => 'purchase_manager_home#show', :as => "purchase_manager_home"

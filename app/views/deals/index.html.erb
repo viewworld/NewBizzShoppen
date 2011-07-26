@@ -82,16 +82,17 @@
   <% if @deals.empty? %>
       <%= blank_state_message %>
   <% else %>
-      <%= form_tag bulk_action_path do %>
           <%= deals_listing @deals, :show_checkboxes => false do |blocks| %>
 
               <% blocks.tools do |deal| %>
-                  <% if current_user.has_role?(:purchase_manager) %>
+                  <% if user_signed_in? and current_user.has_role?(:purchase_manager) %>
                     <%= bt_link_to nil, t("deals.index.view.contact_me"), new_purchase_managers_lead_path(:deal_id => deal.id) %>
                   <% end %>
               <% end %>
 
           <% end %>
-      <% end %>
   <% end %>
 </column-mc:>
+<js:>
+  <%= javascript_include_tag 'deal_comments' %>
+</js:>

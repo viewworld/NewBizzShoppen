@@ -56,6 +56,7 @@
             <p class="element"><%= t("deals.listing.company_name_label") %><b> <%= deal.company_name %></b></p>
             <p class="element"><%= t("deals.listing.company_description_label") %><b> <%= deal.company_description %></b></p>
             <p class="element"><%= ratings_for deal %></p>
+            <br/>
           <% end %>
         </td>
 
@@ -69,7 +70,20 @@
             </td>
         <% end %>
 
-        <td class="cr"></td>
+        <td class="cr va_b">
+          <div class="row_tooltip_actions">
+                <%= link_to deal.comment_threads.count.zero? ? t("deals.listing.create_comment") : t("deals.listing.show_comments"), "javascript:void(0)", :class => "toggle_row show_comments#{' toggle_row_unread' if deal.has_unread_comments_for_user?(current_user)}", :onclick => "if(#{user_signed_in? ? 'true' : 'false'}){deal_mark_comments_as_read(#{deal.id}); mark_row_as_read('#{dom_id(deal)}')}" %>
+                <%= link_to t("deals.listing.hide_comments"), "javascript:void(0)", :class => "toggle_row hide_comments", :style => "display:none" %>
+          </div>
+        </td>
+      </tr>
+
+      <tr class="row_tooltip">
+        <td colspan="6">
+          <div class="row_tooltip_content comments_details">
+            <%= render :partial => "/shared/deal_comments/deal_threads", :locals => { :deal => deal, :threads => deal.comment_threads.roots.order("created_at DESC") } %>
+          </div>
+        </td>
       </tr>
   <% end %>
 
@@ -99,3 +113,70 @@
   <% end %>
   </tbody>
 </table>
+
+<script type=text/javascript>
+
+    function hideRowButtons()
+    {
+        $(".toggle_row.hide_details:visible, .toggle_row.hide_comments:visible").hide().prev().show();
+    }
+
+    jQuery(document).ready(function() {
+
+        $(".toggle_row.show_details").bind("click", function() {
+
+            $(".row_tooltip").filter(":not(:eq(" + $(this).parents("tr:first").next().index(".row_tooltip") + "))")
+                    .filter(":visible").find(".row_tooltip_content:visible").slideUp("normal", function() {
+                $(this).parents("tr.row_tooltip").hide()
+            });
+
+            hideRowButtons();
+
+            $(this).hide().next().show().parents("tr:first")
+                    .next("tr.row_tooltip").show()
+                    .find(".comments_details:visible").slideUp().end()
+                    .find(".lead_details").slideDown();
+        });
+
+        $(".toggle_row.hide_details").bind("click", function() {
+
+            hideRowButtons();
+
+            $(this).hide().prev().show().parents("tr:first")
+                    .next("tr.row_tooltip")
+                    .find(".lead_details").slideUp('normal', function() {
+                $(this).parents("tr.row_tooltip").hide();
+            });
+        });
+
+
+        $(".toggle_row.show_comments").bind("click", function()
+        {
+            $(".row_tooltip").filter(":not(:eq(" + $(this).parents("tr:first").next().index(".row_tooltip") + "))")
+                    .filter(":visible").find(".row_tooltip_content:visible").slideUp("normal", function() {
+                $(this).parents("tr.row_tooltip").hide()
+            });
+
+            hideRowButtons();
+
+
+            $(this).hide().next().show().parents("tr:first")
+                    .next("tr.row_tooltip").show()
+                    .find(".lead_details:visible").slideUp().end()
+                    .find(".comments_details").slideDown();
+
+        });
+
+        $(".toggle_row.hide_comments").bind("click", function()
+        {
+            hideRowButtons();
+
+            $(this).hide().prev().show().parents("tr:first")
+                    .next("tr.row_tooltip")
+                    .find(".comments_details").slideUp('normal', function() {
+                $(this).parents("tr.row_tooltip").hide();
+            });
+        });
+    });
+
+</script>
