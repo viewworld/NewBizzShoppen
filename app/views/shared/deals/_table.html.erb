@@ -4,7 +4,6 @@
    cols += 1 if not block_tools.nil?
 -%>
 
-
 <table id="leads" class="generic">
   <thead>
   <tr>
@@ -12,14 +11,14 @@
     <% if show_checkboxes %>
         <th></th>
     <% end %>
-    <th><%= link_to "creation date", order_for_scoped_search(:created_at) %></th>
-    <th><%= link_to "deal name", order_for_scoped_search(:header) %></th>
-    <th><%= link_to "expires", order_for_scoped_search(:end_date) %></th>
-    <th>likes</th>
-    <th><%= link_to "publish/waiting approval", order_for_scoped_search(:published) %></th>
+    <th><%= link_to t("shared.deals.table.creation_date"), order_for_scoped_search(:created_at) %></th>
+    <th><%= link_to t("shared.deals.table.name"), order_for_scoped_search(:header) %></th>
+    <th><%= link_to t("shared.deals.table.expires"), order_for_scoped_search(:end_date) %></th>
+    <th><%= t("shared.deals.table.likes") %></th>
+    <th><%= link_to t("shared.deals.table.published"), order_for_scoped_search(:published) %></th>
     <% if block_tools %>
         <th class="ta_r">
-          Actions
+          <%= t("shared.deals.table.actions") %>
         </th>
     <% end %>
     <th class="hr"></th>
@@ -42,7 +41,7 @@
         <td><%= deal.created_at %></td>
         <td><%= deal.header %></td>
         <td><%= deal.end_date %></td>
-        <td><%= deal.id %></td>
+        <td></td>
         <td><%= deal.published %></td>
         <% if block_tools %>
             <td class="tda ta_r">

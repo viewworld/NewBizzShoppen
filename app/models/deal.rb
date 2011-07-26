@@ -1,6 +1,8 @@
 class Deal < AbstractLead
   ajaxful_rateable :stars => 5, :dimensions => [:rating]
 
+  include ScopedSearch::Model
+
   has_one :logo, :class_name => "Asset::DealLogo", :as => :resource, :conditions => "asset_type = 'Asset::DealLogo'", :dependent => :destroy
   has_many :images, :class_name => "Asset::DealImage", :as => :resource, :conditions => "asset_type = 'Asset::DealImage'", :dependent => :destroy
   has_many :materials, :class_name => "Asset::DealMaterial", :as => :resource, :conditions => "asset_type = 'Asset::DealMaterial'", :dependent => :destroy
@@ -12,6 +14,8 @@ class Deal < AbstractLead
   scope :without_requested_by, lambda { |u| select("DISTINCT leads.*").joins("LEFT JOIN leads lr ON lr.deal_id = leads.id").where(["(lr.requested_by <> ? OR lr.requested_by IS NULL)", u.id]) if u }
   scope :active_is, lambda { |q| where("#{q == "1" ? "end_date >= ? and start_date <= ?" : "end_date < ? or start_date > ?"}", Date.today, Date.today) }
   scope :for_user, lambda { |q| where("creator_id = ?", q.id) }
+
+  scoped_order :header, :end_date, :published, :created_at
 
   validates_presence_of :start_date, :end_date, :email_address
 

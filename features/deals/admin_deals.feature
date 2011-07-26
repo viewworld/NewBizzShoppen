@@ -11,12 +11,48 @@ Feature: Deals from admin perspective
 
   @_done @_tested_elsewhere
   Scenario: I can list deals
+    Then a deal is created by "admin@nbs.com" for user "buyer@nbs.com" and category "Business" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
+    Then I wait 2 second
+    Then a deal is created by "admin@nbs.com" for user "buyer@nbs.com" and category "Business" with attributes "header:awesome|description:awesome|hidden_description:awesome|start_date:2011-01-01|end_date:2011-01-01|company_name:starks"
+    Then I follow translated "layout.main_menu.admin.deals"
+    Then I should see "super"
+    Then I should see "awesome"
+    Then I select translated "common.yes_label" from "search_active_is"
+    Then I press translated "leads.index.search.search_button"
+    Then I should see "super"
+    Then I should not see "awesome"
+    Then I select translated "common.no_label" from "search_active_is"
+    Then I press translated "leads.index.search.search_button"
+    Then I should not see "super"
+    Then I should see "awesome"
+    Then I follow translated "layout.main_menu.admin.deals"
+    Then I should see "super"
+    Then I should see "awesome"
+    Then I fill in "search_with_keyword" with "super"
+    Then I press translated "leads.index.search.search_button"
+    Then I should see "super"
+    Then I should not see "awesome"
+    Then I follow translated "layout.main_menu.admin.deals"
+    Then I follow translated "shared.deals.table.creation_date"
+    Then I should see "super" before "awesome"
+    Then I follow translated "shared.deals.table.creation_date"
+    Then I should see "awesome" before "super"
+    Then I follow translated "shared.deals.table.name"
+    Then I should see "awesome" before "super"
+    Then I follow translated "shared.deals.table.name"
+    Then I should see "super" before "awesome"
+    Then I follow translated "shared.deals.table.expires"
+    Then I should see "awesome" before "super"
+    Then I follow translated "shared.deals.table.expires"
+    Then I should see "super" before "awesome"
 
+  @_done @_tested_elsewhere
   Scenario: I can search deals
 
+  @_done @_tested_elsewhere
   Scenario: I can filter list of deals
 
-  @wip @selenium
+  @_done @_tested_elsewhere @selenium
   Scenario: I can create a Deal
     Then I follow translated "layout.main_menu.admin.deals"
     Then I follow translated "deals.common.listing.view.new_deal"
@@ -56,7 +92,10 @@ Feature: Deals from admin perspective
 
   Scenario: I can make an agent or call centre a Deal Maker
 
+  @_done @_tested @selenium
   Scenario: I can set an agent to be deal admin in setting menu
+    Then I click hidden link by url regex "/administration\/setting\/edit/"
+    Then I should see "administration.settings.common.view.vars.default_deal_admin_email"
 
 # The category that a lead is assigned to, when it is requested. If the deal is created by a sales manager it is set by default (se sales manager)
 
