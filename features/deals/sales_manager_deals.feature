@@ -100,7 +100,7 @@ Feature: Deals from Sales Manager perspective
     Then I follow translated "deals.common.assets.view.remove_logo"
     Then I should see translated "flash.deal_assets.destroy.success"
 
-  @_done @_tested @wip
+  @_done @_tested
   Scenario: I can attach multiple pictures
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
     Then I follow translated "layout.main_menu.lead_buyer.my_deals"
