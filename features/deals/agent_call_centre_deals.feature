@@ -1,7 +1,18 @@
 @m16 @requested @agent_deals @_deals @$_call_centre @$_agent
 Feature: Deals from Call Centre/Agent perspective
 
+  Background:
+    Given I am on the homepage
+
+  @_done @_tested @wip
   Scenario: I can see "My Deals" to the right of "My Leads" tab
+    Then user "translator_call_centre@nbs.com" has deal maker role enabled
+    And I sign in as translator_call_centre@nbs.com with password secret
+    Then I follow translated logout link for translator_call_centre@nbs.com
+    Then I should see translated ""
+    Then user "translator_call_centre_agent@nbs.com" has deal maker role enabled
+    And I sign in as translator_call_centre_agent@nbs.com with password secret
+    Then I should see translated ""
 
   #A test id function which display the company name and contact name for the email for the sales manger which provides the deal
   Scenario: I can create new deal by entering sales manager email

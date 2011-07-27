@@ -80,9 +80,9 @@ class Deal < AbstractLead
   end
 
   def certify_for_unknown_email
-    #if creator.agent? or creator.admin? and buyer.nil?
+    if creator.agent? or creator.admin? and buyer.nil?
       ApplicationMailer.delay.email_template(email_address, EmailTemplate.find_by_uniq_id("deal_certification_request"), {:deal => self})
-    #end
+    end
   end
 
   def handle_published

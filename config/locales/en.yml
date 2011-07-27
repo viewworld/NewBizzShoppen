@@ -944,6 +944,7 @@ en:
           title: "New deal"
           create_button: "Create"
           check_buyer_email: "Check sales manager email"
+          certify: "Certify"
           no_user_found_message: "No user with email %{email} was found!"
       edit:
         view:
