@@ -1,6 +1,4 @@
 class Deal < AbstractLead
-  ajaxful_rateable :stars => 5, :dimensions => [:rating]
-
   include ScopedSearch::Model
 
   has_one :logo, :class_name => "Asset::DealLogo", :as => :resource, :conditions => "asset_type = 'Asset::DealLogo'", :dependent => :destroy

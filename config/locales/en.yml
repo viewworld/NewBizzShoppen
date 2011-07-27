@@ -3138,6 +3138,7 @@ en:
       create_comment: "Create comment"
       show_comments: "Show comments"
       hide_comments: "Hide comments"
+      rating_label: "Rating"
     show:
       view:
         header: "Deal details"
