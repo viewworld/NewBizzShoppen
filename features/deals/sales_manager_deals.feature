@@ -73,18 +73,47 @@ Feature: Deals from Sales Manager perspective
   @_done @_tested_elsewhere
   Scenario: I can enter fine print (note field)
 
-  @wip
+  @_done @_tested
   Scenario: I can edit Company logo
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
     Then I follow translated "layout.main_menu.lead_buyer.my_deals"
     Then I follow translated "buyer.deals.index.view.edit"
     Then attach the file "sample image" to "asset_deal_logo_asset" within "#deal_logo_form"
     Then I press translated "deals.common.assets.view.add_logo_button" within "#deal_logo_form"
-    Then I should
+    Then I should see translated "flash.deal_assets.create.success"
+    Then I should see translated "deals.common.assets.view.show_image"
+    Then I follow translated "deals.common.assets.view.remove_logo"
+    Then I should see translated "flash.deal_assets.destroy.success"
 
+  @_done @_tested
   Scenario: I can upload material to download
+    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
+    Then I follow translated "layout.main_menu.lead_buyer.my_deals"
+    Then I follow translated "buyer.deals.index.view.edit"
+    Then attach the file "document" to "asset_deal_material_asset" within "#deal_material_form"
+    Then I press translated "deals.common.assets.view.add_material_button" within "#deal_material_form"
+    Then I should see translated "flash.deal_assets.create.success"
+    Then I should see translated "deals.common.assets.view.download"
+    Then attach the file "document" to "asset_deal_material_asset" within "#deal_material_form"
+    Then I press translated "deals.common.assets.view.add_material_button" within "#deal_material_form"
+    Then I should see translated "flash.deal_assets.create.success"
+    Then I follow translated "deals.common.assets.view.remove_logo"
+    Then I should see translated "flash.deal_assets.destroy.success"
 
+  @_done @_tested @wip
   Scenario: I can attach multiple pictures
+    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
+    Then I follow translated "layout.main_menu.lead_buyer.my_deals"
+    Then I follow translated "buyer.deals.index.view.edit"
+    Then attach the file "sample image" to "asset_deal_image_asset" within "#deal_image_form"
+    Then I press translated "deals.common.assets.view.add_image_button" within "#deal_image_form"
+    Then I should see translated "flash.deal_assets.create.success"
+    Then I should see translated "deals.common.assets.view.show_image"
+    Then attach the file "sample image" to "asset_deal_image_asset" within "#deal_image_form"
+    Then I press translated "deals.common.assets.view.add_image_button" within "#deal_image_form"
+    Then I should see translated "flash.deal_assets.create.success"
+    Then I follow translated "deals.common.assets.view.remove_logo"
+    Then I should see translated "flash.deal_assets.destroy.success"
 
   @_done @_not_testable
   Scenario: I can see thumbnails when I attach pictures
@@ -98,6 +127,7 @@ Feature: Deals from Sales Manager perspective
   Scenario: I can click a link to see public deal description (shows the deal as presented to procurement manager)
 
   # "Contact"
+  @_done @_tested_elsewhere
   Scenario: Contact data should be populated from sales manager
 
   @_done @_tested_elsewhere
