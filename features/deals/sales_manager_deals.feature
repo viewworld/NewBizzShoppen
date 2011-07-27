@@ -11,10 +11,10 @@ Feature: Deals from Sales Manager perspective
 
   @_done @_tested
   Scenario: I can see a list of my created deals sorted by creation date when I click "My deals"
-    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
+    Then a deal is created by "admin@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:awesome|description:awesome|hidden_description:awesome|start_date:2011-01-01|end_date:2011-01-01|company_name:starks"
     Then I wait 1 second
-    Then a deal is created by "admin@nbs.com" for user "buyer@nbs.com" and category "Business" with attributes "header:awesome|description:awesome|hidden_description:awesome|start_date:2011-01-01|end_date:2011-01-01|company_name:starks"
-    Then a deal is created by "translator_customer@nbs.com" for user "translator_customer@nbs.com" and category "Business" with attributes "header:hidden|description:hidden|hidden_description:hidden|start_date:2011-01-01|end_date:2011-01-01|company_name:starks"
+    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
+    Then a deal is created by "translator_customer@nbs.com" for user "translator_customer@nbs.com" and category "Business deals" with attributes "header:hidden|description:hidden|hidden_description:hidden|start_date:2011-01-01|end_date:2011-01-01|company_name:starks"
     Then I follow translated "layout.main_menu.lead_buyer.my_deals"
     Then I should not see "hidden"
     Then I should see "super" before "awesome"
@@ -25,7 +25,7 @@ Feature: Deals from Sales Manager perspective
 
   @_done @_tested
   Scenario: I can see creation date, deal name, expire time, likes, publish/awaiting approval on deal list
-    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
+    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
     Then I follow translated "layout.main_menu.lead_buyer.my_deals"
     Then I should see translated "shared.deals.table.creation_date"
     Then I should see translated "shared.deals.table.name"
@@ -75,7 +75,7 @@ Feature: Deals from Sales Manager perspective
 
   @_done @_tested
   Scenario: I can edit Company logo
-    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
+    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
     Then I follow translated "layout.main_menu.lead_buyer.my_deals"
     Then I follow translated "buyer.deals.index.view.edit"
     Then attach the file "sample image" to "asset_deal_logo_asset" within "#deal_logo_form"
@@ -87,7 +87,7 @@ Feature: Deals from Sales Manager perspective
 
   @_done @_tested
   Scenario: I can upload material to download
-    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
+    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
     Then I follow translated "layout.main_menu.lead_buyer.my_deals"
     Then I follow translated "buyer.deals.index.view.edit"
     Then attach the file "document" to "asset_deal_material_asset" within "#deal_material_form"
@@ -102,7 +102,7 @@ Feature: Deals from Sales Manager perspective
 
   @_done @_tested @wip
   Scenario: I can attach multiple pictures
-    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
+    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
     Then I follow translated "layout.main_menu.lead_buyer.my_deals"
     Then I follow translated "buyer.deals.index.view.edit"
     Then attach the file "sample image" to "asset_deal_image_asset" within "#deal_image_form"

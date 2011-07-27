@@ -43,9 +43,9 @@ Then /^I filter and sort deals with my deals translation "([^"]*)"$/ do |transla
   Then %{I should not see "awesome"}
   Then %{I follow translated "#{translation}"}
   Then %{I follow translated "shared.deals.table.creation_date"}
-  Then %{I should see "super" before "awesome"}
-  Then %{I follow translated "shared.deals.table.creation_date"}
   Then %{I should see "awesome" before "super"}
+  Then %{I follow translated "shared.deals.table.creation_date"}
+  Then %{I should see "super" before "awesome"}
   Then %{I follow translated "shared.deals.table.name"}
   Then %{I should see "awesome" before "super"}
   Then %{I follow translated "shared.deals.table.name"}
@@ -71,7 +71,7 @@ end
 
 Then /^I fill deal edit form and submit with translated button "([^"]*)"$/ do |translation|
   Then %{I check "deal_published"}
-  Then %{I select "Business" from "deal_category_id"}
+  Then %{I select "Business deals" from "deal_category_id"}
   Then %{I fill in "deal_header" with "super amazing deal"}
   Then %{I press translated "#{translation}"}
   Then %{I should see "super amazing deal"}

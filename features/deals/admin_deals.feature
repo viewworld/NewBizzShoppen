@@ -11,9 +11,9 @@ Feature: Deals from admin perspective
 
   @_done @_tested
   Scenario: I can list deals
-    Then a deal is created by "admin@nbs.com" for user "buyer@nbs.com" and category "Business" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
+    Then a deal is created by "admin@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:awesome|description:awesome|hidden_description:awesome|start_date:2011-01-01|end_date:2011-01-01|company_name:starks"
     Then I wait 1 second
-    Then a deal is created by "admin@nbs.com" for user "buyer@nbs.com" and category "Business" with attributes "header:awesome|description:awesome|hidden_description:awesome|start_date:2011-01-01|end_date:2011-01-01|company_name:starks"
+    Then a deal is created by "admin@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
     Then I filter and sort deals with my deals translation "layout.main_menu.admin.deals"
 
   @_done @_tested_elsewhere
@@ -60,7 +60,6 @@ Feature: Deals from admin perspective
     Then I fill in "search_with_keyword" with "translator_agent@nbs.com"
     Then I press translated "administration.users.index.view.search_button"
     Then I follow translated "administration.users.index.view.edit"
-    Then show me the page
     Then I check "user_agent_deal_maker_role_enabled"
     # call centre
     Then I follow translated "layout.main_menu.admin.users"
@@ -75,10 +74,10 @@ Feature: Deals from admin perspective
     Then I follow translated "administration.users.index.view.edit"
     Then I check "user_call_centre_agent_deal_maker_role_enabled"
 
-  @_done @_tested @selenium
+  @_done @_tested @selenium @_wip
   Scenario: I can set an agent to be deal admin in setting menu
     Then I click hidden link by url regex "/administration\/setting\/edit/"
-    Then I should see "administration.settings.common.view.vars.default_deal_admin_email"
+    Then I should see translated "administration.settings.common.view.vars.default_deal_admin_email"
 
 # The category that a lead is assigned to, when it is requested. If the deal is created by a sales manager it is set by default (se sales manager)
 
