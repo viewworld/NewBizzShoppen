@@ -387,7 +387,7 @@ class User < ActiveRecord::Base
   end
 
   def can_create_lead_templates?
-    has_any_role?(:admin, :call_centre, :agent, :call_centre_agent, :purchase_manager, :customer)
+    has_any_role?(:admin, :call_centre, :agent, :call_centre_agent, :customer)
   end
 
   def country_vat_rate
