@@ -52,14 +52,14 @@ end
 
 Given /^lead (.+) exists within category (.+)$/ do |header, category_name|
   category = Category.where(:name => category_name).first
-  category = Category.make!(:name => category_name) if category.nil?
+  category = LeadCategory.make!(:name => category_name) if category.nil?
 
   lead = Lead.make!(:header => header, :category => category)
 end
 
 Given /^bought lead (.+) exists within category (.+)$/ do |header, category_name|
   category = Category.where(:name => category_name).first
-  category = Category.make!(:name => category_name) if category.nil?
+  category = LeadCategory.make!(:name => category_name) if category.nil?
 
   lead = Lead.make!(:header => header, :category => category)
   LeadSinglePurchase.make!(:lead_id => lead.id, :owner => User::Customer.make!, :paid => true, :accessible_from => Time.now)
@@ -67,7 +67,7 @@ end
 
 Given /^a lead (.+) exists within category (.+) and is bought by user (.+) with role (.+)$/ do |header, category_name, email, role|
   category = Category.where(:name => category_name).first
-  category = Category.make!(:name => category_name) if category.nil?
+  category = LeadCategory.make!(:name => category_name) if category.nil?
 
   customer = "User::#{role.camelize}".constantize.find_by_email(email)
   customer = "User::#{role.camelize}".constantize.make!(:email => email) if customer.nil?

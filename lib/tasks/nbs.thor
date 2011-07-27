@@ -368,11 +368,11 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
       if Lead.count.zero?
         agent = User::Agent.find_by_email("agent@nbs.com")
         ["Big deal on printers", "Drills required", "Need assistance in selling a car", "Ipod shipment", "Trip to amazonia - looking for offer", "LCD - Huge amounts", "GPS receivers required"].each do |header|
-          Lead.make!(:category_id => Category.last.id, :header => header, :creator_id => agent.id, :currency => Currency.where(:name => "EUR").first)
+          Lead.make!(:category_id => LeadCategory.last.id, :header => header, :creator_id => agent.id, :currency => Currency.where(:name => "EUR").first)
         end
       end
 
-      Category.all.each { |c| c.send(:refresh_leads_count_cache!) }
+      LeadCategory.all.each { |c| c.send(:refresh_leads_count_cache!) }
 
       unless User::Admin.find_by_email("admin@nbs.com")
         u = User::Admin.make!(:email => "admin@nbs.com", :password => "secret", :password_confirmation => "secret")
@@ -409,7 +409,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
       klass = "User::#{role.to_s.camelize}".constantize
       unless klass.find_by_email("translator_#{role}@nbs.com")
         if role == :category_buyer
-          user = klass.make!(:email => "translator_#{role}@nbs.com", :password => "secret", :password_confirmation => "secret", :buying_categories => [Category.first])
+          user = klass.make!(:email => "translator_#{role}@nbs.com", :password => "secret", :password_confirmation => "secret", :buying_categories => [LeadCategory.first])
         elsif role == :call_centre
           user = klass.make!(:email => "translator_#{role}@nbs.com", :password => "secret", :password_confirmation => "secret", :first_name => "Johnny", :last_name => "Mnemonic")
         else

@@ -17,7 +17,7 @@ Then /^a deal is created by "([^"]*)" for user "([^"]*)" and category "([^"]*)" 
   deal.update_attributes(deal_attributes)
   deal.currency_id = Currency.first.id
   deal.creator = User.find_by_email(user)
-  deal.category_id = Category.find_by_name(category)
+  deal.category_id = DealCategory.find_by_name(category)
     #throw deal
   deal.save!
 end

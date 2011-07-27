@@ -27,7 +27,7 @@ module User::CommonBuyer
     public
 
     def accessible_categories
-      unique_categories.any? ? unique_categories : Category.without_locked
+      unique_categories.any? ? unique_categories : LeadCategory.without_locked
     end
 
   end

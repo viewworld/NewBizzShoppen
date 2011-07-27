@@ -42,7 +42,7 @@ class LeadsController < ApplicationController
         @leads = @search.includes(:currency).paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)
         Lead.update_all("exposures_count = exposures_count+1", {:id => @leads.map(&:id)})
         if @search.with_category.present?
-          @search.with_selected_categories = Category.find_by_id(@search.with_category).self_and_descendants.map(&:id)
+          @search.with_selected_categories = LeadCategory.find_by_id(@search.with_category).self_and_descendants.map(&:id)
         end
       end
       format.rss do
@@ -88,11 +88,11 @@ class LeadsController < ApplicationController
     params[:search][:without_inactive] = true
 
     if cu_or_user_from_rss_token and cu_or_user_from_rss_token.has_role?(:admin)
-      @categories_scope = Category.scoped
+      @categories_scope = LeadCategory.scoped
     elsif cu_or_user_from_rss_token
-      @categories_scope = cu_or_user_from_rss_token.has_accessible_categories? ? Category.within_accessible(cu_or_user_from_rss_token).without_locked_and_not_published : cu_or_user_from_rss_token.has_role?(:customer) ? Category.without_locked_and_not_published.with_customer_unique(cu_or_user_from_rss_token).scoped : Category.without_locked_and_not_published.with_agent_unique(cu_or_user_from_rss_token).scoped
+      @categories_scope = cu_or_user_from_rss_token.has_accessible_categories? ? LeadCategory.within_accessible(cu_or_user_from_rss_token).without_locked_and_not_published : cu_or_user_from_rss_token.has_role?(:customer) ? LeadCategory.without_locked_and_not_published.with_customer_unique(cu_or_user_from_rss_token).scoped : LeadCategory.without_locked_and_not_published.with_agent_unique(cu_or_user_from_rss_token).scoped
     else
-      @categories_scope = Category.without_locked_and_not_published.without_unique.scoped
+      @categories_scope = LeadCategory.without_locked_and_not_published.without_unique.scoped
     end
 
     unless params[:search].keys.any? { |k| k =~ /scend_by/}

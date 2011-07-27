@@ -2,11 +2,6 @@ require 'machinist/active_record'
 require 'faker'
 require 'spec/support/overwrites/lorem'
 
-Category.blueprint do
-  name { Faker::Lorem.words(2).to_s + Time.now.to_f.to_s.sub('.','') }
-  description { Faker::Lorem.sentences(2).to_s }
-end
-
 LeadCategory.blueprint do
   name { Faker::Lorem.words(2).to_s + Time.now.to_f.to_s.sub('.','') }
   description { Faker::Lorem.sentences(2).to_s }
@@ -42,7 +37,7 @@ Lead.blueprint do
   zip_code { Faker::Address.zip_code }
   creator_id { User::Agent.make!.id }
   creator_type { "User::Agent" }
-  category_id { Category.make!.id }
+  category_id { LeadCategory.make!.id }
   sale_limit { 10 }
   purchase_decision_date { (Date.today+5) }
   published { true }
@@ -65,7 +60,7 @@ Deal.blueprint do
   zip_code { Faker::Address.zip_code }
   creator_id { User::Agent.make!.id }
   creator_type { "User::Agent" }
-  category_id { Category.make!.id }
+  category_id { DealCategory.make!.id }
   sale_limit { 10 }
   purchase_decision_date { (Date.today+5) }
   published { true }
@@ -92,7 +87,7 @@ Lead.blueprint(:featured) do
   zip_code { Faker::Address.zip_code }
   creator_id { User::Agent.make!.id }
   creator_type { "User::Agent" }
-  category_id { Category.make!.id }
+  category_id { LeadCategory.make!.id }
   sale_limit { 10 }
   purchase_decision_date { (Date.today+5) }
   featured { true }
@@ -269,7 +264,7 @@ end
   first_name { Faker::Name.first_name + Time.now.to_f.to_s.sub('.','') }
   last_name { Faker::Name.last_name }
   agreement_read { true }
-  buying_categories { Array(Category.make!) }
+  buying_categories { Array(LeadCategory.make!) }
   roles_mask { 304 }
   company_name { Faker::Company.name }
   address { Address.make! }
@@ -308,7 +303,7 @@ end
 ::Article::News::CategoryHome.blueprint do
   title { Faker::Lorem.words(4).to_s.capitalize }
   content { Faker::Lorem.sentences(2).to_s }
-  resource { Category.make! }
+  resource { LeadCategory.make! }
 end
 
 ::Article::Cms::Hint.blueprint do
@@ -366,7 +361,7 @@ Contact.blueprint do
   zip_code { Faker::Address.zip_code }
   creator_id { User::Agent.make!.id }
   creator_type { "User::Agent" }
-  category_id { Category.make!.id }
+  category_id { LeadCategory.make!.id }
   sale_limit { 10 }
   purchase_decision_date { (Date.today+5) }
   published { true }
@@ -410,7 +405,7 @@ end
 Campaign.blueprint do
   start_date { Date.today }
   end_date { Date.today + 7.days }
-  category { Category.make! }
+  category { LeadCategory.make! }
   cost_type { Campaign::NO_COST }
   max_contact_number { 5 }
   country { Country.make! }

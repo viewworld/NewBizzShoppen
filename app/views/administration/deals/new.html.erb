@@ -11,7 +11,7 @@
     <%= semantic_form_for [:administration, @deal], :method => :post do |form| %>
         <frm title="Create new">
           <param:content>
-            <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal, :categories => Category.without_locked.all} %>
+            <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal, :categories => DealCategory.without_locked.all} %>
           </param:content>
           <param:actions>
             <ibt c="fltri" icon="save">
