@@ -3139,6 +3139,7 @@ en:
       show_comments: "Show comments"
       hide_comments: "Hide comments"
       rating_label: "Rating"
+      no_comments: "No comments"
     show:
       view:
         header: "Deal details"

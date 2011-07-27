@@ -89,6 +89,7 @@ class Deal < AbstractLead
     if published_changed? and published and buyer.nil?
       self.published = false
     end
+    true
   end
 
 end

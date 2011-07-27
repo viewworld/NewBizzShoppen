@@ -77,7 +77,7 @@
 
         <td class="cr va_b">
           <div class="row_tooltip_actions">
-                <%= link_to deal.comment_threads.count.zero? ? t("deals.listing.create_comment") : t("deals.listing.show_comments"), "javascript:void(0)", :class => "toggle_row show_comments#{' toggle_row_unread' if deal.has_unread_comments_for_user?(current_user)}", :onclick => "if(#{user_signed_in? ? 'true' : 'false'}){deal_mark_comments_as_read(#{deal.id}); mark_row_as_read('#{dom_id(deal)}')}" %>
+                <%= link_to deal.comment_threads.count.zero? ? !user_signed_in? ? t("deals.listing.no_comments") : t("deals.listing.create_comment") : t("deals.listing.show_comments"), "javascript:void(0)", :class => "toggle_row show_comments#{' toggle_row_unread' if deal.has_unread_comments_for_user?(current_user)}", :onclick => "if(#{user_signed_in? ? 'true' : 'false'}){deal_mark_comments_as_read(#{deal.id}); mark_row_as_read('#{dom_id(deal)}')}" %>
                 <%= link_to t("deals.listing.hide_comments"), "javascript:void(0)", :class => "toggle_row hide_comments", :style => "display:none" %>
           </div>
         </td>
