@@ -55,7 +55,12 @@
             <br />
             <p class="element"><%= t("deals.listing.company_name_label") %><b> <%= deal.company_name %></b></p>
             <p class="element"><%= t("deals.listing.company_description_label") %><b> <%= deal.company_description %></b></p>
-            <p class="element"><%= ratings_for deal %></p>
+            <p class="element"><%= t("deals.listing.rating_label") %>
+              <% if deal.rated_by?(current_user) %>
+                  <b><%= deal.deal_average_rating %>/5</b><br />
+              <% else %>
+                <%= ratings_for(deal) %></p>
+              <% end %>
             <br/>
           <% end %>
         </td>

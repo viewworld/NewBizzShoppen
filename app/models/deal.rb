@@ -1,6 +1,4 @@
 class Deal < AbstractLead
-  ajaxful_rateable :stars => 5, :dimensions => [:rating]
-
   include ScopedSearch::Model
 
   has_one :logo, :class_name => "Asset::DealLogo", :as => :resource, :conditions => "asset_type = 'Asset::DealLogo'", :dependent => :destroy
@@ -52,6 +50,10 @@ class Deal < AbstractLead
 
   def has_unread_comments_for_user?(user)
     user ? comment_threads.unread_by_user(user).count > 0 : false
+  end
+
+  def requested_by?(user)
+    leads.where(:requested_by => user.id).any?
   end
 
   private
