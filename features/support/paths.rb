@@ -90,6 +90,8 @@ module NavigationHelpers
         '/buyer_accounts/new'
     when /purchase manager sign up/
         '/purchase_manager_accounts/new'
+    when /document/
+        "#{::Rails.root.to_s}/spec/fixtures/sample_document.odt"
     when /sample image/
         "#{::Rails.root.to_s}/spec/fixtures/sample.jpg"
     when /resend confirmation instructions/

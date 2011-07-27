@@ -1,9 +1,9 @@
   <% if @deal.logo.id %>
       <h2><%= t("deals.common.assets.view.logo_label") %></h2>
-      <%= image_tag @deal.logo.asset.url(:thumb) %> <%= link_to "full size", @deal.logo.asset.url, :target => "_blank" %>
+      <%= image_tag @deal.logo.asset.url(:thumb) %> <%= link_to t("deals.common.assets.view.show_image"), @deal.logo.asset.url, :target => "_blank" %>
       <%= link_to t("deals.common.assets.view.remove_logo"), self.send(remove_path, @deal, @deal.logo), :method => :delete, :confirm => t("common.confirmation") %>
   <% else %>
-      <%= semantic_form_for [:buyers, @deal, @logo], :url => self.send(path, @deal, @logo), :method => :post, :html => {:multipart => true} do |form| %>
+      <%= semantic_form_for [:buyers, @deal, @logo], :url => self.send(path, @deal, @logo), :method => :post, :html => {:multipart => true, :id => "deal_logo_form"} do |form| %>
           <frm title="#{t('deals.common.assets.view.add_logo_label')}">
             <param:content>
               <%= form.file_field :asset %>
@@ -21,14 +21,14 @@
       <h2><%= t("deals.common.assets.view.images_label") %></h2>
       <% @images.each do |image| %>
           <% if image.id %>
-              <%= image_tag image.asset.url(:thumb) %> <%= link_to "full size", image.asset.url, :target => "_blank" %>
-              <%= link_to t("deals.common.assets.view.remove_image"), self.send(remove_path, @deal, image), :method => :delete, :confirm => "are you sure?" %>
+              <%= image_tag image.asset.url(:thumb) %> <%= link_to t("deals.common.assets.view.show_image"), image.asset.url, :target => "_blank" %>
+              <%= link_to t("deals.common.assets.view.remove_image"), self.send(remove_path, @deal, image), :method => :delete, :confirm => t("common.confirmation") %>
               <br/>
           <% end %>
       <% end %>
   <% end %>
 
-  <%= semantic_form_for [:buyers, @deal, @image], :url => self.send(path, @deal, @image), :method => :post, :html => {:multipart => true} do |form| %>
+  <%= semantic_form_for [:buyers, @deal, @image], :url => self.send(path, @deal, @image), :method => :post, :html => {:multipart => true, :id => "deal_image_form"} do |form| %>
       <frm title="#{t('deals.common.assets.view.add_image_label')}">
         <param:content>
           <%= form.file_field :asset %>
@@ -46,14 +46,14 @@
       <h2><%= t("deals.common.assets.view.materials_label") %></h2>
       <% @materials.each do |material| %>
           <% if material.id %>
-              <%= material.asset_file_name %> <%= link_to "download", self.send(download_path, @deal, material) %>
-              <%= link_to t("deals.common.assets.view.remove_material"), self.send(remove_path, @deal, material), :method => :delete, :confirm => "are you sure?" %>
+              <%= material.asset_file_name %> <%= link_to t("deals.common.assets.view.download"), self.send(download_path, @deal, material) %>
+              <%= link_to t("deals.common.assets.view.remove_material"), self.send(remove_path, @deal, material), :method => :delete, :confirm => t("common.confirmation") %>
               <br/>
           <% end %>
       <% end %>
   <% end %>
 
-  <%= semantic_form_for [:buyers, @deal, @material], :url => self.send(path, @deal, @material), :method => :post, :html => {:multipart => true} do |form| %>
+  <%= semantic_form_for [:buyers, @deal, @material], :url => self.send(path, @deal, @material), :method => :post, :html => {:multipart => true, :id => "deal_material_form"} do |form| %>
       <frm title="#{t('deals.common.assets.view.add_material_label')}">
         <param:content>
           <%= form.file_field :asset %>

@@ -73,11 +73,21 @@ Feature: Deals from Sales Manager perspective
   @_done @_tested_elsewhere
   Scenario: I can enter fine print (note field)
 
-  Scenario: I can attach multiple pictures
-
-  Scenario: I can see thumbnails when I attach pictures
+  @wip
+  Scenario: I can edit Company logo
+    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
+    Then I follow translated "layout.main_menu.lead_buyer.my_deals"
+    Then I follow translated "buyer.deals.index.view.edit"
+    Then attach the file "sample image" to "asset_deal_logo_asset" within "#deal_logo_form"
+    Then I press translated "deals.common.assets.view.add_logo_button" within "#deal_logo_form"
+    Then I should
 
   Scenario: I can upload material to download
+
+  Scenario: I can attach multiple pictures
+
+  @_done @_not_testable
+  Scenario: I can see thumbnails when I attach pictures
 
   @_done @_tested_elsewhere
   Scenario: I can specify start and end dates
@@ -98,8 +108,6 @@ Feature: Deals from Sales Manager perspective
 
   @_done @_tested_elsewhere
   Scenario: I can edit URL
-
-  Scenario: I can edit Company logo
 
   @_done @_tested_elsewhere
   Scenario: I can edit Company description (note field)
