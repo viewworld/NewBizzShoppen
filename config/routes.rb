@@ -244,6 +244,8 @@ Nbs::Application.routes.draw do
   resources :categories, :only => [:index] do
     resources :more_leads_requests, :only => [:new, :create]
   end
+  resources :deal_categories, :only => [:index]
+
   match 'categories/:slag' => "leads#index"
   match 'categories/deals/:slag' => "deals#index"
 

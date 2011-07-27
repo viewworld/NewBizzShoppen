@@ -831,10 +831,12 @@ en:
           new_category: "New category"
           edit_link: "Edit"
           destroy_link: "Delete"
+          new_deal_category: "New deal category"
       new:
         view:
           button_create: "Create"
         title: "Create new category"
+        deal_title: "New deal category"
       edit:
         view:
           header: "Editing category: %{category_name}"
@@ -3162,3 +3164,7 @@ en:
         view:
           header: "My deals"
           new_deal: "Create new deal"
+  deal_categories:
+    index:
+      view:
+        header: "Deal categories"
