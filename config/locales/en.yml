@@ -3156,6 +3156,8 @@ en:
           materials_label: "Materials"
           remove_material: "remove"
           add_material_button: "Add material"
+          show_image: "Full size"
+          download: "Download"
       listing:
         view:
           header: "My deals"
