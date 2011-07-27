@@ -9,42 +9,12 @@ Feature: Deals from admin perspective
   Scenario: I can see a tab "Deals" right to "Leads"
     Then I should see translated "layout.main_menu.admin.deals"
 
-  @_done @_tested_elsewhere
+  @_done @_tested @wip
   Scenario: I can list deals
     Then a deal is created by "admin@nbs.com" for user "buyer@nbs.com" and category "Business" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
-    Then I wait 2 second
+    Then I wait 1 second
     Then a deal is created by "admin@nbs.com" for user "buyer@nbs.com" and category "Business" with attributes "header:awesome|description:awesome|hidden_description:awesome|start_date:2011-01-01|end_date:2011-01-01|company_name:starks"
-    Then I follow translated "layout.main_menu.admin.deals"
-    Then I should see "super"
-    Then I should see "awesome"
-    Then I select translated "common.yes_label" from "search_active_is"
-    Then I press translated "leads.index.search.search_button"
-    Then I should see "super"
-    Then I should not see "awesome"
-    Then I select translated "common.no_label" from "search_active_is"
-    Then I press translated "leads.index.search.search_button"
-    Then I should not see "super"
-    Then I should see "awesome"
-    Then I follow translated "layout.main_menu.admin.deals"
-    Then I should see "super"
-    Then I should see "awesome"
-    Then I fill in "search_with_keyword" with "super"
-    Then I press translated "leads.index.search.search_button"
-    Then I should see "super"
-    Then I should not see "awesome"
-    Then I follow translated "layout.main_menu.admin.deals"
-    Then I follow translated "shared.deals.table.creation_date"
-    Then I should see "super" before "awesome"
-    Then I follow translated "shared.deals.table.creation_date"
-    Then I should see "awesome" before "super"
-    Then I follow translated "shared.deals.table.name"
-    Then I should see "awesome" before "super"
-    Then I follow translated "shared.deals.table.name"
-    Then I should see "super" before "awesome"
-    Then I follow translated "shared.deals.table.expires"
-    Then I should see "awesome" before "super"
-    Then I follow translated "shared.deals.table.expires"
-    Then I should see "super" before "awesome"
+    Then I filter and sort deals with my deals translation "layout.main_menu.admin.deals"
 
   @_done @_tested_elsewhere
   Scenario: I can search deals
@@ -52,7 +22,7 @@ Feature: Deals from admin perspective
   @_done @_tested_elsewhere
   Scenario: I can filter list of deals
 
-  @_done @_tested_elsewhere @selenium
+  @_done @_tested @selenium
   Scenario: I can create a Deal
     Then I follow translated "layout.main_menu.admin.deals"
     Then I follow translated "deals.common.listing.view.new_deal"
@@ -88,9 +58,35 @@ Feature: Deals from admin perspective
   @_done @_tested_elsewhere
   Scenario: I can publish a deal
 
+  @_done @_tested
   Scenario: I can make Sales Manager a Deal Maker (can publish deals)
+    Then I follow translated "layout.main_menu.admin.users"
+    Then I fill in "search_with_keyword" with "buyer@nbs.com"
+    Then I press translated "administration.users.index.view.search_button"
+    Then I follow translated "administration.users.index.view.edit"
+    Then I check "user_customer_deal_maker_role_enabled"
 
+  @_done @_tested
   Scenario: I can make an agent or call centre a Deal Maker
+    # agent
+    Then I follow translated "layout.main_menu.admin.users"
+    Then I fill in "search_with_keyword" with "translator_agent@nbs.com"
+    Then I press translated "administration.users.index.view.search_button"
+    Then I follow translated "administration.users.index.view.edit"
+    Then show me the page
+    Then I check "user_agent_deal_maker_role_enabled"
+    # call centre
+    Then I follow translated "layout.main_menu.admin.users"
+    Then I fill in "search_with_keyword" with "translator_call_centre@nbs.com"
+    Then I press translated "administration.users.index.view.search_button"
+    Then I follow translated "administration.users.index.view.edit"
+    Then I check "user_call_centre_deal_maker_role_enabled"
+    # call centre agent
+    Then I follow translated "layout.main_menu.admin.users"
+    Then I fill in "search_with_keyword" with "translator_call_centre_agent@nbs.com"
+    Then I press translated "administration.users.index.view.search_button"
+    Then I follow translated "administration.users.index.view.edit"
+    Then I check "user_call_centre_agent_deal_maker_role_enabled"
 
   @_done @_tested @selenium
   Scenario: I can set an agent to be deal admin in setting menu

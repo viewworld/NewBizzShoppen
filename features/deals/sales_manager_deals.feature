@@ -2,16 +2,39 @@
 Feature: Deals from Sales Manager perspective
   Background:
     Given I am on the homepage
+    Then user "buyer@nbs.com" has deal maker role enabled
     And I sign in as buyer@nbs.com with password secret
 
+  @_done @_tested
   Scenario: I can see new tab "My deals" right to the "My leads"
-  Then I should see translated "layout.main_menu.lead_buyer.deals"
+    Then I should see translated "layout.main_menu.lead_buyer.my_deals"
 
+  @_done @_tested
   Scenario: I can see a list of my created deals sorted by creation date when I click "My deals"
+    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
+    Then I wait 1 second
+    Then a deal is created by "admin@nbs.com" for user "buyer@nbs.com" and category "Business" with attributes "header:awesome|description:awesome|hidden_description:awesome|start_date:2011-01-01|end_date:2011-01-01|company_name:starks"
+    Then a deal is created by "translator_customer@nbs.com" for user "translator_customer@nbs.com" and category "Business" with attributes "header:hidden|description:hidden|hidden_description:hidden|start_date:2011-01-01|end_date:2011-01-01|company_name:starks"
+    Then I follow translated "layout.main_menu.lead_buyer.my_deals"
+    Then I should not see "hidden"
+    Then I should see "super" before "awesome"
+    Then I filter and sort deals with my deals translation "layout.main_menu.lead_buyer.my_deals"
 
+  @_done @_tested_elsewhere
   Scenario: I can filter the list by "active" and "inactive" deals
 
+  @_done @_tested
   Scenario: I can see creation date, deal name, expire time, likes, publish/awaiting approval on deal list
+    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
+    Then I follow translated "layout.main_menu.lead_buyer.my_deals"
+    Then I should see translated "shared.deals.table.creation_date"
+    Then I should see translated "shared.deals.table.name"
+    Then I should see translated "shared.deals.table.expires"
+    Then I should see translated "shared.deals.table.likes"
+    Then I should see translated "shared.deals.table.published"
+    Then I should see "super" within "#deals"
+    Then I should see "2016-12-12" within "#deals"
+    Then I should see "false" within "#deals"
 
   # when I am Deal Maker
   Scenario: I can publish deals
