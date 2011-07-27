@@ -68,7 +68,7 @@ class Deal < AbstractLead
 
   def create_uniq_deal_category
     if buyer
-        category = buyer.deal_category_id ? Category.find(buyer.deal_category_id) : Category.create(:name => buyer.company_name)
+        category = buyer.deal_category_id ? LeadCategory.find(buyer.deal_category_id) : LeadCategory.create(:name => buyer.company_name)
         buyer.update_attribute(:deal_category_id, category.id) if buyer.deal_category_id.blank?
         category.update_attribute(:is_customer_unique, true) unless category.is_customer_unique
         unless category.customers.include?(buyer)

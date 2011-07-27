@@ -143,10 +143,33 @@ Feature: Deals from Sales Manager perspective
   Scenario: I can edit Company description (note field)
 
   # "Additional information"
-
+  @_done @_tested @selenium
   Scenario: I can create a new template for this Deal
+    And user buyer@nbs.com with role customer exists with attributes "company_name:Xeper"
+    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
+    Then I follow translated "layout.main_menu.shared.browse_leads"
+    And I follow translated "categories.index.view.view_lead_templates"
 
+    And I follow translated "customer.lead_templates.index.view.new_template"
+    Then I fill in "lead_template_name" with "Computer details"
+    And I check "lead_template_is_mandatory"
+    And I follow translated "shared.lead_templates.form.new_lead_template_field"
+    And I fill in "lead_template_lead_template_fields_attributes_0_name" with "example attr 1"
+    And I follow translated "shared.lead_templates.form.new_lead_template_field"
+    And I fill in "lead_template_lead_template_fields_attributes_1_name" with "example attr 2"
+    And I check "lead_template_lead_template_fields_attributes_1_is_hidden"
+    And I check "lead_template_lead_template_fields_attributes_1_is_mandatory"
+    Then I press translated "agent.lead_templates.new.view.button_create"
+
+  #not Done
   Scenario: I can use existing templates for this category
+    And user buyer@nbs.com with role customer exists with attributes "company_name:Xeper"
+    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
+    Then I follow translated "layout.main_menu.lead_buyer.my_deals"
+    Then I follow translated "deals.common.listing.view.new_deal"
+    Then I fill deal creation form
+    Then I press translated "buyer.deals.new.view.create_button"
+
 
   Scenario: Mandatory templates for category should be automatically included
 
