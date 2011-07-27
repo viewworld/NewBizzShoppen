@@ -4,6 +4,7 @@
   <div id="buyer_email_form">
     <%= text_field_tag :buyer_email %>
     <%= bt_link_to nil, t("administration.deals.new.view.check_buyer_email"), "javascript:void(0)", :onclick => "submit_query('check_email','administration')" %>
+    <%= bt_link_to nil, t("administration.deals.new.view.certify"), "javascript:void(0)", :onclick => "submit_query('certify', 'administration')" %>
   </div>
 
   <div id="deal_form" style="display:none;">
