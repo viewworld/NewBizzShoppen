@@ -10,13 +10,17 @@
         <%= form.input :start_date, :as => :string,
                        :wrapper_html => {:class => "date"},
                        :input_html => {:class => "datepicker", :value => deal.start_date},
-                       :hint => t('models.result_field.date_format')%>
+                       :hint => t('models.result_field.date_format') %>
         <%= form.input :end_date, :as => :string,
                        :wrapper_html => {:class => "date"},
                        :input_html => {:class => "datepicker", :value => deal.end_date},
-                       :hint => t('models.result_field.date_format')%>
+                       :hint => t('models.result_field.date_format') %>
         <%= form.input :price, :as => current_user.buyer? ? :hidden : :string %>
-        <%= form.input :currency_id, :collection => currencies_for_select, :include_blank => false %>
+        <% if current_user.buyer? %>
+            <%= form.input :currency_id, :value => Currency.default_currency.id, :as => :hidden %>
+        <% else %>
+            <%= form.input :currency_id, :collection => currencies_for_select, :include_blank => false %>
+        <% end %>
       </ol>
     </fieldset>
   </div>
@@ -27,7 +31,7 @@
     <fieldset class="inputs labels_ta_r">
       <ol class="align_inputs">
         <%= form.input :company_name %>
-        <%= form.input :category_id, :disabled => categories.select { |c| !c.can_publish_leads? }.map(&:id),  :collection => nested_set_options(categories), :include_blank => false %>
+        <%= form.input :category_id, :disabled => categories.select { |c| !c.can_publish_leads? }.map(&:id), :collection => nested_set_options(categories), :include_blank => false %>
         <%= form.input :company_description %>
         <%= form.input :contact_name %>
         <%= form.input :email_address %>
@@ -50,7 +54,7 @@
 </div>
 
 <% if current_user.buyer? %>
-<clb/>
+    <clb/>
 
     <hl/>
     <div id="deal_templates">
@@ -78,11 +82,11 @@
 
 <clb/>
 
-    <div class="nested_locale_container"></div>
+<div class="nested_locale_container"></div>
 
-    <%= form.fields_for :lead_translations, deal.lead_translations.select { |lt| lt.locale != I18n.locale.to_s } do |builder| %>
-        <%= render :partial => "/shared/deals/deal_fields", :locals => {:f => builder} %>
-    <% end %>
+<%= form.fields_for :lead_translations, deal.lead_translations.select { |lt| lt.locale != I18n.locale.to_s } do |builder| %>
+    <%= render :partial => "/shared/deals/deal_fields", :locals => {:f => builder} %>
+<% end %>
 
 <clb/>
 
@@ -104,19 +108,20 @@
 <hl/>
 
 <js:>
+  <%= javascript_include_tag 'jquery.counter-1.0.min.js' %>
   <script type="text/javascript">
       $(function() {
           $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
           $("#deal_description").counter({
-          count: 'up',
-          goal: 140
+              count: 'up',
+              goal: 140
           });
       });
-   var nestedFormsCount = <%= deal.lead_translations.reject{ |lt| lt.locale == I18n.locale.to_s }.size %>;
-   var language_names = [];
-   <% Locale.all.each do |locale| %>
-    <%= "language_names['#{locale.code}'] = '#{t('models.locale.' + locale.code)}';" -%>
-   <% end %>
+      var nestedFormsCount = <%= deal.lead_translations.reject{ |lt| lt.locale == I18n.locale.to_s }.size %>;
+      var language_names = [];
+      <% Locale.all.each do |locale| %>
+      <%= "language_names['#{locale.code}'] = '#{t('models.locale.' + locale.code)}';" -%>
+      <% end %>
   </script>
   <%= javascript_include_tag 'lead_translation_functions.js' %>
 </js:>

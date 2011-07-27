@@ -9,7 +9,7 @@ Feature: Deals from admin perspective
   Scenario: I can see a tab "Deals" right to "Leads"
     Then I should see translated "layout.main_menu.admin.deals"
 
-  @_done @_tested @wip
+  @_done @_tested
   Scenario: I can list deals
     Then a deal is created by "admin@nbs.com" for user "buyer@nbs.com" and category "Business" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
     Then I wait 1 second
@@ -28,29 +28,16 @@ Feature: Deals from admin perspective
     Then I follow translated "deals.common.listing.view.new_deal"
     Then I fill in "buyer_email" with "buyer@nbs.com"
     Then I follow translated "administration.deals.new.view.check_buyer_email"
-    Then I fill in "deal_header" with "very important deal"
-    Then I should see "0 characters (140 max)"
-    Then I fill in "deal_description" with "batman"
-    Then I should see "6 characters (140 max)"
-    Then I fill in "deal_hidden_description" with "cat woman"
-    Then I fill in "deal_fine_print" with "gotham city"
-    Then I fill in "deal_start_date" with "2011-06-06"
-    Then I fill in "deal_end_date" with "2016-12-12"
-    Then I fill in "deal_price" with "10"
+    Then I fill deal creation form
     Then I select "DKK" from "deal_currency_id"
+    Then I fill in "deal_price" with "10"
     Then I press translated "administration.deals.new.view.create_button"
     Then I should see translated "flash.deals.create.notice"
     Then I should see translated "deals.common.listing.view.header"
     Then I should see "very important deal"
     Then I click hidden link by url regex "/administration\/deals\/\d+\/edit/"
     Then I should see translated "administration.deals.edit.view.title"
-    Then I check "deal_published"
-    Then I select "Business" from "deal_category_id"
-    Then I fill in "deal_header" with "super amazing deal"
-    Then I press translated "administration.deals.edit.view.update_button"
-    Then I should see "super amazing deal"
-    Then I should see translated "flash.deals.update.notice"
-    Then I should not see "very important deal"
+    Then I fill deal edit form and submit with translated button "administration.deals.edit.view.update_button"
 
   @_done @_tested_elsewhere
   Scenario: I can edit deals

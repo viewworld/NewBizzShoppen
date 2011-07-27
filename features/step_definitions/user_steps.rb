@@ -50,9 +50,9 @@ Given /^user "([^"]*)" has team buyers enabled$/ do |email|
 end
 
 Given /^user "([^"]*)" has deal maker role enabled$/ do |email|
-  user = User.where(:email => email).first
+  user = User.where(:email => email).first.with_role
   user.roles << :deal_maker
-  user.with_role.save
+  user.save
 end
 
 Given /^user "([^"]*)" with role "([^"]*)" is confirmed$/ do |email, role|
