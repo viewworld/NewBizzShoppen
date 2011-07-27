@@ -54,6 +54,10 @@ class Deal < AbstractLead
     user ? comment_threads.unread_by_user(user).count > 0 : false
   end
 
+  def requested_by?(user)
+    leads.where(:requested_by => user.id).any?
+  end
+
   private
 
   def process_for_lead_information?
