@@ -74,7 +74,7 @@ Feature: Deals from admin perspective
     Then I follow translated "administration.users.index.view.edit"
     Then I check "user_call_centre_agent_deal_maker_role_enabled"
 
-  @_done @_tested @selenium @_wip
+  @_done @_tested @selenium
   Scenario: I can set an agent to be deal admin in setting menu
     Then I click hidden link by url regex "/administration\/setting\/edit/"
     Then I should see translated "administration.settings.common.view.vars.default_deal_admin_email"

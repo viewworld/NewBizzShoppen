@@ -189,4 +189,3 @@ Scenario: Agent can see his latest comments on home page
   And comments for lead "Lead#1" are read by by users "agent@nbs.com"
   Then I sign in as agent@nbs.com with password secret
   Given I am on agent home
-  Then show me the page
