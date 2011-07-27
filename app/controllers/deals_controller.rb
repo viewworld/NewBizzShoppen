@@ -1,7 +1,7 @@
 class DealsController < ApplicationController
   inherit_resources
   actions :index, :show
-  set_tab "browse_leads"
+  set_tab "browse_deals"
 
   def collection
     @search = Deal.scoped_search(params[:search])

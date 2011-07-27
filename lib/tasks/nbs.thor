@@ -342,15 +342,18 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
 
     unless Rails.env.production?
 
-      if Category.count.zero?
-        ['Electronics', 'Leisure', 'Business'].each do |name|
-          [:en, :dk].each do |locale|
-            ::I18n.locale = locale
-            if category = Category.where(:name => name).first
-              category.name = name
-              category.save
-            else
-              Category.make!(:name => name)
+      ['LeadCategory', 'DealCategory'].map(&:constantize).each do |model_name|
+        if model_name.count.zero?
+          ['Electronics', 'Leisure', 'Business'].each do |name|
+            name = model_name == DealCategory ? "#{name} deals" : name
+            [:en, :dk].each do |locale|
+              ::I18n.locale = locale
+              if category = model_name.where(:name => name).first
+                category.name = name
+                category.save
+              else
+                model_name.make!(:name => name)
+              end
             end
           end
         end

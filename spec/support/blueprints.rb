@@ -7,6 +7,16 @@ Category.blueprint do
   description { Faker::Lorem.sentences(2).to_s }
 end
 
+LeadCategory.blueprint do
+  name { Faker::Lorem.words(2).to_s + Time.now.to_f.to_s.sub('.','') }
+  description { Faker::Lorem.sentences(2).to_s }
+end
+
+DealCategory.blueprint do
+  name { Faker::Lorem.words(2).to_s + Time.now.to_f.to_s.sub('.','') }
+  description { Faker::Lorem.sentences(2).to_s }
+end
+
 Country.blueprint do
   name { Faker::Address.uk_country + Time.now.to_f.to_s.sub('.','') }
 end

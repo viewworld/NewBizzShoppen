@@ -1,11 +1,12 @@
 <column-mc:>
-  <header back="true"><%= t("administration.categories.new.title") %><%= image_tag_for_locale %></header>
-  <%= semantic_form_for [:administration, @category], :method => :put, :html => {:multipart => true} do |form| %>
+  <header back="true"><%= @category_type == "LeadCategory" ? t("administration.categories.new.title") : t("administration.categories.new.deal_title") %><%= image_tag_for_locale %></header>
+  <%= semantic_form_for  @category, :as => :category, :url => administration_categories_path, :method => :put, :html => {:multipart => true} do |form| %>
       <frm>
         <param:header>
         </param:header>
         <param:content>
           <%= render :partial => 'form', :locals => {:form => form} %>
+          <%= hidden_field_tag :category_type, @category_type %>
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="plus">

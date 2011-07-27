@@ -1,6 +1,6 @@
 <column-mc:>
   <header back="true"><%= t("administration.categories.edit.view.header", :category_name => @category.name) %><%= image_tag_for_locale %></header>
-  <%= semantic_form_for [:administration, @category], :method => :post, :html => {:multipart => true} do |form| %>
+  <%= semantic_form_for @category, :as => :category, :url => administration_category_path(@category), :method => :post, :html => {:multipart => true} do |form| %>
       <frm title="">
         <param:header>
           <%= bt_link_to nil, t("administration.categories.edit.view.edit_email_template"), edit_administration_category_email_template_path(@category), :class => "fltr" %>

@@ -1,0 +1,3 @@
+class DealCategory < Category
+
+end
