@@ -51,12 +51,13 @@ Nbs::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation        = :notify
 
-  config.action_mailer.delivery_method     = :smtp
-  config.action_mailer.smtp_settings       = {:address              => "smtp.gmail.com",
-                                              :port                 => 587,
-                                              :domain               => 'fairleads.com',
-                                              :user_name            => 'noreply@fairleads.com',
-                                              :password             => 'myfairleads',
-                                              :authentication       => 'plain',
-                                              :enable_starttls_auto => true}
+  config.action_mailer.delivery_method     = :postmark
+  config.action_mailer.postmark_settings = { :api_key => "a132d83a-7585-444a-b3cf-a522acfcb9fb" }
+  #config.action_mailer.smtp_settings       = {:address              => "smtp.gmail.com",
+  #                                            :port                 => 587,
+  #                                            :domain               => 'fairleads.com',
+  #                                            :user_name            => 'noreply@fairleads.com',
+  #                                            :password             => 'myfairleads',
+  #                                            :authentication       => 'plain',
+  #                                            :enable_starttls_auto => true}
 end

@@ -39,6 +39,7 @@ gem "devise_rpx_connectable"
 #gem "jammit"
 gem 'ruby-hmac', '0.4.0'
 gem 'jammit-s3', :path => "vendor/gems/jammit-s3"
+gem 'postmark-rails'
 
 
 group :development do
