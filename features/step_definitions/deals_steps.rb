@@ -70,7 +70,6 @@ Then /^I fill deal creation form$/ do
   Then %{I fill in "deal_start_date" with "2011-06-06"}
   Then %{I fill in "deal_end_date" with "2016-12-12"}
   Then %{I fill in "deal_company_description" with "bruce wayne inc."}
-  Then %{I fill in "deal_deal_url" with "www.deal.com"}
 end
 
 Then /^I fill deal edit form and submit with translated button "([^"]*)"$/ do |translation|
