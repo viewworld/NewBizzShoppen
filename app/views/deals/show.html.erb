@@ -8,6 +8,35 @@
       <h3><%= t("deals.show.view.description_label") %></h3>
 
       <p><%= @deal.description %></p>
+
+      <h3><%= "Hidden description" %></h3>
+
+      <p><%= @deal.hidden_description %></p>
+
+      <h3><%= "Fine print" %></h3>
+
+      <p><%= @deal.hidden_description %></p>
+
+      <% if @deal.logo %>
+          <h3><%= "Company logo" %></h3>
+
+          <p><%= image_tag(@deal.logo.asset.url) %></p>
+      <% end %>
+
+
+      <h3><%= "Company description" %></h3>
+
+      <p><%= @deal.company_description %></p>
+
+      <% unless @deal.images.blank? %>
+          <h3><%= "images" %></h3>
+
+          <p>
+            <% @deal.images.each do |image| %>
+                <%= image_tag(image.asset.url) %>
+            <% end %>
+          </p>
+      <% end %>
     </div>
   </div>
 
@@ -17,12 +46,85 @@
         <ul class="elements_list">
           <li>
             <div>
+              <span class="label"><%= "Star date" %></span>
+              <%= format_date @deal.start_date %>
+            </div>
+          </li>
+          <li>
+            <div>
               <span class="label"><%= t("deals.show.view.end_date") %></span>
               <%= format_date @deal.end_date %>
             </div>
           </li>
+          <li>
+            <div>
+              <span class="label"><%= "Category" %></span>
+              <%= @deal.category %>
+            </div>
+          </li>
+          <li>
+            <div>
+              <span class="label"><%= "Price" %></span>
+              <%= @deal.price %> <%= @deal.currency %>
+            </div>
+          </li>
 
+          <li>
+            <div>
+              <span class="label"><%= "Contact name" %></span>
+              <%= @deal.contact_name %>
+            </div>
+          </li>
 
+          <li>
+            <div>
+              <span class="label"><%= "Email address" %></span>
+              <%= @deal.email_address %>
+            </div>
+          </li>
+
+          <li>
+            <div>
+              <span class="label"><%= "Phone number" %></span>
+              <%= @deal.phone_number %>
+            </div>
+          </li>
+          <li>
+            <div>
+              <span class="label"><%= "Address line 1" %></span>
+              <%= @deal.address_line_1 %>
+            </div>
+          </li>
+          <li>
+            <div>
+              <span class="label"><%= "Address line 2" %></span>
+              <%= @deal.address_line_2 %>
+            </div>
+          </li>
+          <li>
+            <div>
+              <span class="label"><%= "Address line 3" %></span>
+              <%= @deal.address_line_3 %>
+            </div>
+          </li>
+          <li>
+            <div>
+              <span class="label"><%= "Zip code" %></span>
+              <%= @deal.zip_code %>
+            </div>
+          </li>
+          <li>
+            <div>
+              <span class="label"><%= "Country" %></span>
+              <%= @deal.country %>
+            </div>
+          </li>
+          <li>
+            <div>
+              <span class="label"><%= "Region" %></span>
+              <%= @deal.region %>
+            </div>
+          </li>
         </ul>
       </div>
     </div>
