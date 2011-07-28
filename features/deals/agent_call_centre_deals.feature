@@ -56,4 +56,5 @@ Feature: Deals from Call Centre/Agent perspective
   #(but the deal must sign up sales manager, and will not have the option not to sign up)
   Scenario: The recipient of the certification request email must register as new sales manager
 
+  @_done @_tested_elsewhere
   Scenario: Call centre / agent is set to be the deal admin
