@@ -34,8 +34,31 @@
         <% if deal.current_dcr and deal.current_dcr.active? %>
             <%= hidden_field_tag "accept", "false" %>
         <% else %>
-            <%= form.input :category_id, :disabled => categories.select { |c| !c.can_publish_leads? }.map(&:id), :collection => nested_set_options(categories), :include_blank => false %>
+            <%
+              deal_categories = if current_user.buyer?
+                                    DealCategory.without_locked.with_customer_unique(current_user).all
+                                elsif current_user.agent?
+                                    DealCategory.without_locked.with_agent_unique(current_user).all
+                                elsif current_user.admin?
+                                    DealCategory.without_locked.all
+                                end
+            %>
+            <%= form.input :category_id, :disabled => deal_categories.select { |c| !c.can_publish_leads? }.map(&:id), :collection => nested_set_options(deal_categories), :include_blank => false %>
         <% end %>
+
+        <% if current_user.has_any_role?(:call_centre, :call_centre_agent, :admin) %>
+        <%
+            lead_categories =   if current_user.agent?
+                                    LeadCategory.without_locked.with_agent_unique(current_user).all
+                                elsif current_user.admin?
+                                    LeadCategory.without_locked.all
+                                end
+
+        %>
+
+        <%= form.input :lead_category_id, :disabled => lead_categories.select { |c| !c.can_publish_leads? }.map(&:id), :collection => nested_set_options(lead_categories), :include_blank => false %>
+        <% end %>
+
         <%= form.input :company_description %>
         <%= form.input :contact_name %>
         <%= form.input :email_address %>
