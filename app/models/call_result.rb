@@ -222,7 +222,7 @@ class CallResult < ActiveRecord::Base
     template = customize_email_template(template)
     ApplicationMailer.delay.generic_email([contact_email_address],
                                     template.subject, template.body,
-                                    template.from,
+                                    nil,
                                     send_material_result_value.materials.map{ |material| Pathname.new(File.join([::Rails.root, 'public', material.url]))},
                                     template.cc, template.bcc)
   end
@@ -232,7 +232,7 @@ class CallResult < ActiveRecord::Base
     template = customize_email_template(template)
     attachments_arr = send_material_result_value.materials.empty? ? [] : send_material_result_value.materials.map{ |material| Pathname.new(File.join([::Rails.root, 'public', material.url])) }
 
-    ApplicationMailer.delay.generic_email([contact_email_address], template.subject, template.render({:user => user, :password => password}), template.from, attachments_arr, template.cc, template.bcc)
+    ApplicationMailer.delay.generic_email([contact_email_address], template.subject, template.render({:user => user, :password => password}), nil, attachments_arr, template.cc, template.bcc)
   end
   
   def set_last_call_result_in_contact
