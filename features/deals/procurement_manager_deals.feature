@@ -20,13 +20,13 @@ Feature: Deals from procurement manager perspective
   @_tested @_done @tgn
   Scenario: I can see list of deals categories and subcategories
     Then I follow translated "layout.main_menu.shared.browse_deals"
-    And I should see "Electronics"
+    And I should see "Electronics deals"
 
   @_tested @_done @tgn
   Scenario: I can browse deals in seelcted category
-    Given a deal named "Some deal #1" exists within category "Electronics"
+    Given a deal named "Some deal #1" exists within category "Electronics deals"
     Then I follow translated "layout.main_menu.shared.browse_deals"
-    And I follow "Electronics"
+    And I follow "Electronics deals"
     Then I should see "Some deal #1"
 
   @_done @tested_elsewhere @tgn
@@ -45,7 +45,7 @@ Feature: Deals from procurement manager perspective
 
   @_done @_tested @tgn
   Scenario: I can see contact information for deals when I am logged in
-    Given a deal named "Some deal #1" exists within category "Electronics"
+    Given a deal named "Some deal #1" exists within category "Electronics deals"
     Given a deal named "Some deal #1" exists with attributes "contact_name:SE Cupps"
     Then I follow translated "layout.main_menu.shared.browse_deals"
     And I follow "Electronics"
@@ -55,30 +55,12 @@ Feature: Deals from procurement manager perspective
 
   @_done @_tested @tgn
   Scenario: I can click "Contact me"
-    Given a deal named "Some deal #1" exists within category "Electronics"
+    Given a deal named "Some deal #1" exists within category "Electronics deals"
     Then I follow translated "layout.main_menu.shared.browse_deals"
     And I follow "Electronics"
     Then I should see translated "deals.index.view.contact_me"
 
-  @_done @_tested @tgn @selenium
+  #tested under sales manager deals
+  @_done @tgn @tested_elsewhere
   Scenario: When I click "Contact me" I can enter "Additional" template information and note field
-    Given a deal named "Some deal #1" exists within category "Electronics"
-    And template named "Electrical storm" for category "Electronics" is created by user "blazejek@gmail.com" with role "admin"
-    And template named "Electrical storm" is mandatory
-    And template named "Electrical storm" has following fields "field1:false:true:1, field2:false:false:1"
-    Then I follow translated "layout.main_menu.shared.browse_deals"
-    And I follow "Electronics"
-    Then I follow translated "deals.index.view.contact_me"
-    And I press translated "purchase_manager.leads.new.view.button_create"
-    Then I should see translated "common.js.field_cant_be_blank"
-    And I fill in "lead_company_name" with "CorpX"
-    And I press translated "purchase_manager.leads.new.view.button_create"
-    And I should see translated "purchase_manager.leads.new.view.lead_note"
-    And I fill in "lead_hidden_description" with "My note 1234"
-    And I press translated "purchase_manager.leads.new.view.button_create"
-    Then I should see translated "common.js.field_cant_be_blank"
-    And I fill in "lead_lead_template_values_attributes_0_value" with "field value 1"
-    And I press translated "purchase_manager.leads.new.view.button_create"
-    Then I should see translated "purchase_manager.leads.show.view.confirmation_message"
-    And I press translated "purchase_manager.leads.show.view.ok_confirmation"
-    Then I should see "Welcome procurement manager"
+
