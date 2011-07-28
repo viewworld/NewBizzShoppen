@@ -6,23 +6,32 @@ Feature: Generating leads from deals
     Then user "buyer@nbs.com" has deal maker role enabled
     And I sign in as buyer@nbs.com with password secret
 
+  @_done @tested_elsewhere
   Scenario: A public header should be set to "A company is interested in" + short description
 
+  @_done @tested_elsewhere
   Scenario: A public description should be set to "A company is interested in" + short description
 
   # The hidden description: is the note field from the “request information” which is field out by the procurement manager
+  @_done @tested_elsewhere
   Scenario: A hidden description field should be set to the note field from "request information"
 
+  @_done @tested_elsewhere
   Scenario: Company and contact information should be set to procurement manager information
 
+  @_done @tested_elsewhere
   Scenario: Lead creator is set to "Deal admin" if deal was created by sales manager or admin
 
+  @_done @tested_elsewhere
   Scenario: Lead creator is set to callcentre/agent is deal was created by callcentre/agent
 
+  @_done @tested_elsewhere
   Scenario: Lead price is set to 0 unless specified otherwise in the deal setup by admin, call center or agent
 
+  @_done @tested_elsewhere
   Scenario: Purchase decision date for lead is the expire time for deal + 7 days
 
+  @_done @tested_elsewhere
   Scenario: Sales limit should be set to 1
 
   # Step one: Please make sure your information is correct. (Validate company and contact information) Including linking to face book and LinkedIn.

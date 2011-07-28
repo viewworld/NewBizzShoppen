@@ -63,7 +63,7 @@
       <% if block_rowtooltip %>
       <tr class="row_tooltip">
         <td class="cl no_pdd"></td>
-        <td colspan="<%= cols + 1 %>" class="no_pdd">
+        <td colspan="<%= cols %>" class="no_pdd">
           <div class="row_tooltip_content pdd_10">
             <%= with_output_buffer { block_rowtooltip.call(deal) } %>
           </div>

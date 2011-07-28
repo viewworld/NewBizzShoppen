@@ -2429,8 +2429,8 @@ en:
         lvl12: Silver (locked)
         lvl13: Gold (locked)
       field_prefixes:
-        header: "A company interested in"
-        description: "A company interested in"
+        header: "A company is interested in"
+        description: "A company is interested in"
     lead_template_field:
       field_type:
         type0: Text
