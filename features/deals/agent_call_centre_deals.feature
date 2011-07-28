@@ -15,7 +15,7 @@ Feature: Deals from Call Centre/Agent perspective
     Then I should see translated "layout.main_menu.call_centre_agent.deals"
 
   #A test id function which display the company name and contact name for the email for the sales manger which provides the deal
-  @wip @selenium
+  @selenium
   Scenario: I can create new deal by entering sales manager email
     And I sign in as translator_call_centre@nbs.com with password secret
     Then I follow translated "layout.main_menu.call_centre.deals"

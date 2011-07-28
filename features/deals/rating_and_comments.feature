@@ -10,10 +10,13 @@ Background:
   Then I sign in as purchase_manager88@nbs.com with password secret
   And I follow translated "layout.main_menu.shared.browse_deals"
 
-@selenium
+@selenium @_tested @_done
 Scenario: I can rate a a deal as a procurement manager
   When I follow "Electronics deals"
   And I should see translated "deals.listing.rating_label"
+  Then a deal named "Electrical deal" has rating set to "0"
+  Then I click xpath "(//ul[@class='ajaxful-rating']//li)[5]/a"
+  Then a deal named "Electrical deal" has rating set to "4"
 
 @selenium @_tested @_done
 Scenario: I can comment a deal

@@ -22,6 +22,10 @@ Then /^a deal is created by "([^"]*)" for user "([^"]*)" and category "([^"]*)" 
   deal.save!
 end
 
+Then /^a deal named "([^"]*)" has rating set to "([^"]*)"$/ do |name, rating|
+  Deal.find_by_header(name).first.deal_average_rating.to_i.should == rating.to_i
+end
+
 Then /^I filter and sort deals with my deals translation "([^"]*)"$/ do |translation|
   Then %{I follow translated "#{translation}"}
   Then %{I should see "super"}
