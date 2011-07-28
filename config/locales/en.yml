@@ -1885,6 +1885,24 @@ en:
         view:
           title: "Edit deal"
           update_button: "Save"
+    deal_certification_requests:
+      index:
+        view:
+          title: "Deals to certify"
+          certify: "Certify"
+          name: "Name"
+          requested_by: "Requested by"
+          requested_at: "Requested at"
+      edit:
+        view:
+          title: "Deal certification"
+          certify: "Certify"
+          reject: "Reject"
+      update:
+        flash:
+          certify_success: "Deal has been successfully certified"
+          reject_success: "Deal has been successfully rejected."
+          not_authorized: "You are not authorized to perform this action!"
   categories:
     index:
       view:
