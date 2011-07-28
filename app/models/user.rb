@@ -102,9 +102,9 @@ class User < ActiveRecord::Base
 
   attr_protected :payout, :locked, :can_edit_payout_information, :paypal_email, :bank_swift_number, :bank_iban_number, :skip_email_verification
 
-  attr_accessor :agreement_read, :locked, :skip_email_verification, :deal_maker_role_enabled_flag
+  attr_accessor :agreement_read, :locked, :skip_email_verification, :deal_maker_role_enabled_flag, :is_deal_admin_flag
 
-  before_save :handle_locking, :handle_team_buyers_flag, :refresh_certification_of_call_centre_agents, :set_euro_billing_rate, :handle_deal_maker_enabled
+  before_save :handle_locking, :handle_team_buyers_flag, :refresh_certification_of_call_centre_agents, :set_euro_billing_rate, :handle_deal_maker_enabled, :handle_is_deal_admin
   before_create :set_rss_token, :set_role
   before_destroy :can_be_removed
   after_create :auto_activate
@@ -549,5 +549,23 @@ class User < ActiveRecord::Base
 
   def can_start_new_deal_thread?
     true
+  end
+
+  def is_deal_admin
+    if is_deal_admin_flag.nil?
+      self.is_deal_admin_flag = Settings.default_deal_admin_email == email ? true : false
+    end
+    is_deal_admin_flag
+  end
+
+  def is_deal_admin=(enabled)
+    self.is_deal_admin_flag = ActiveRecord::ConnectionAdapters::Column.value_to_boolean(enabled.to_i)
+  end
+
+  def handle_is_deal_admin
+    #throw is_deal_admin
+    if is_deal_admin and Settings.default_deal_admin_email != email
+      Settings.default_deal_admin_email = email
+    end
   end
 end
