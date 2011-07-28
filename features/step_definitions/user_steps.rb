@@ -331,3 +331,9 @@ Then /^user "([^"]*)" is no longer category buyer as all his subaccounts$/ do |e
   user.has_role?(:category_buyer).should == false
   user.subaccounts.each { |sub_account| sub_account.has_role?(:category_buyer).should == false }
 end
+
+When /^user "([^"]*)" has assigned role "([^"]*)"$/ do |email, role|
+  user = User.where(:email => email).first.with_role
+  user.roles << role.to_sym
+  user.save
+end

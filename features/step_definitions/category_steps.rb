@@ -66,3 +66,11 @@ Then /^category "([^"]*)" has email template with subject "([^"]*)"$/ do |name, 
   global_et = EmailTemplate.find_by_uniq_id('bought_lead_notification')
    Category.find_by_name(name).first.create_email_template(:subject => subject, :body => global_et.body, :from => global_et.from)
 end
+
+When /^there is no category named "([^"]*)"$/ do |name|
+  assert Category.where(:name => name).first.nil?
+end
+
+When /^there is a category named "([^"]*)"$/ do |name|
+  assert !Category.where(:name => name).first.nil?
+end

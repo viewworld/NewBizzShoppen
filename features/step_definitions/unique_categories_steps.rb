@@ -27,3 +27,16 @@ Given /^category "([^"]*)" is unique for some (agents|customers) users and (is|i
 
   category.save
 end
+
+Given /^category named "([^"]*)" should be unique for "([^"]*)"$/ do |name, email|
+  category = Category.where(:name => name).first
+  user = User.where(:email => email).first
+
+  if user.buyer?
+    assert category.is_customer_unique?
+  else
+    assert category.is_agent_unique?
+  end
+
+  assert category.category_customers.map(&:user).include?(user)
+end
