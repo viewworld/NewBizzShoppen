@@ -31,7 +31,11 @@
     <fieldset class="inputs labels_ta_r">
       <ol class="align_inputs">
         <%= form.input :company_name %>
-        <%= form.input :category_id, :disabled => categories.select { |c| !c.can_publish_leads? }.map(&:id), :collection => nested_set_options(categories), :include_blank => false %>
+        <% if deal.current_dcr and deal.current_dcr.active? %>
+            <%= hidden_field_tag "accept", "false" %>
+        <% else %>
+            <%= form.input :category_id, :disabled => categories.select { |c| !c.can_publish_leads? }.map(&:id), :collection => nested_set_options(categories), :include_blank => false %>
+        <% end %>
         <%= form.input :company_description %>
         <%= form.input :contact_name %>
         <%= form.input :email_address %>
@@ -54,30 +58,32 @@
 </div>
 
 <% if current_user.buyer? %>
-    <clb/>
-
-    <hl/>
-    <div id="deal_templates">
-      <div class="pdd_10">
-        <div class="grid_210 fltl">&nbsp;</div>
-        <div class="grid_240 fltl">
-          <h3><%= t("buyer.deals.form.all_templates") %></h3>
-          <%= select_tag "all_templates", options_for_select((LeadTemplate.with_category(current_user.deal_category_id).with_creator(current_user.id)-@deal.deal_templates).map { |c| [c.name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
-        </div>
-
-        <div class="grid_160 fltl" style="margin-right: 10px;margin-top:10px;">
-          <p class="ta_c pdd_5 no_pdd_lr"><%= bt_link_to nil, t("administration.categories.form.move_users_right"), "javascript:move_selected('all_templates','deal_deal_template_ids_')", :id => "move_right" %></p>
-
-          <p class="ta_c"><%= bt_link_to nil, t("administration.categories.form.move_users_left"), "javascript:move_selected('deal_deal_template_ids_','all_templates')", :id => "move_left" %></p>
-        </div>
-
-        <div class="grid_240 fltl">
-          <h3><%= t("buyer.deals.form.selected_templates") %></h3>
-          <%= select_tag "deal[deal_template_ids][]", options_for_select(@deal.deal_templates.map { |c| [c.name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
-        </div>
+    <% unless (deal.current_dcr and deal.current_dcr.active?) %>
         <clb/>
-      </div>
-    </div>
+
+        <hl/>
+        <div id="deal_templates">
+          <div class="pdd_10">
+            <div class="grid_210 fltl">&nbsp;</div>
+            <div class="grid_240 fltl">
+              <h3><%= t("buyer.deals.form.all_templates") %></h3>
+              <%= select_tag "all_templates", options_for_select((LeadTemplate.with_category(current_user.deal_category_id).with_creator(current_user.id)-@deal.deal_templates).map { |c| [c.name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+            </div>
+
+            <div class="grid_160 fltl" style="margin-right: 10px;margin-top:10px;">
+              <p class="ta_c pdd_5 no_pdd_lr"><%= bt_link_to nil, t("administration.categories.form.move_users_right"), "javascript:move_selected('all_templates','deal_deal_template_ids_')", :id => "move_right" %></p>
+
+              <p class="ta_c"><%= bt_link_to nil, t("administration.categories.form.move_users_left"), "javascript:move_selected('deal_deal_template_ids_','all_templates')", :id => "move_left" %></p>
+            </div>
+
+            <div class="grid_240 fltl">
+              <h3><%= t("buyer.deals.form.selected_templates") %></h3>
+              <%= select_tag "deal[deal_template_ids][]", options_for_select(@deal.deal_templates.map { |c| [c.name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+            </div>
+            <clb/>
+          </div>
+        </div>
+    <% end %>
 <% end %>
 
 <clb/>

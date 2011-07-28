@@ -1,0 +1,20 @@
+<column-mc:>
+  <header back="true" backurl="#{buyers_deal_certification_requests_path}"><%= "Certify deal" %></header>
+
+  <%= semantic_form_for [:buyers, @deal], :method => :put, :url => buyers_deal_certification_request_path(@deal) do |form| %>
+      <frm title="Edit deal">
+        <param:content>
+          <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal, :categories => []} %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit "Decline", :name => "commit_update", :onclick => "$('#accept').val('false');select_options_to_submit('deal_deal_template_ids_')" %>
+          </ibt>
+          <ibt c="fltri" icon="save">
+            <%= form.submit "Certify", :name => "commit_update", :onclick => "$('#accept').val('true');select_options_to_submit('deal_deal_template_ids_')" %>
+          </ibt>
+        </param:actions>
+      </frm>
+  <% end %>
+
+</column-mc:>

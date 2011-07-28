@@ -71,6 +71,7 @@ Nbs::Application.routes.draw do
   namespace :buyers do
     root :to => "lead_purchases#index"
     resources :cart_items
+    resources :deal_certification_requests, :only => [:index, :edit, :update]
     resources :deals do
       resources :assets, :controller => "deal_assets", :only => [:create, :destroy] do
         member do

@@ -1,0 +1,37 @@
+<column-mc:>
+  <header><%= "Deals to certify" %></header>
+
+  <table id="deal_certification_requests_table" class="generic">
+    <thead>
+    <tr>
+      <th class="hl"></th>
+      <th>Name</th>
+      <th>Requested by</th>
+      <th>Requested at</th>
+      <th class="ta_r"></th>
+      <th class="hr"></th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+      <td class="fl"></td>
+      <td colspan="4"></td>
+      <td class="fr"></td>
+    </tr>
+    </tfoot>
+    <tbody>
+    <% @deal_certification_requests.each do |deal_certification_request| %>
+        <tr class="<%= cycle("odd", "even") %>">
+          <td class="cl"></td>
+          <td><%= deal_certification_request.deal.header %></td>
+          <td><%= deal_certification_request.deal.creator %> (<%= deal_certification_request.deal.creator.email %>)</td>
+          <td><%= deal_certification_request.created_at %></td>
+          <td class="tda ta_r">
+            <%= bt_link_to nil, "Certify", edit_buyers_deal_certification_request_path(deal_certification_request.deal.id), :class => "default_action" %>
+          </td>
+          <td class="cr"></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</column-mc:>

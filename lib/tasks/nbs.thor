@@ -221,9 +221,9 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
             :name => "Deal certification request",
             :uniq_id => "deal_certification_request",
             :en => {:subject => "Deal certification request from Fairleads.com.",
-                    :body => "<p>In order to certificate deal created for you please crete new sales manager account on Fairleads.com</p><p><a href=\"{{deal.new_sales_manager_account_url}}\">crete new sales manager account</a></p>"},
+                    :body => "<p>In order to certificate deal created for you please crete new sales manager account on Fairleads.com</p><p><a href=\"{{deal_certification_request.new_sales_manager_account_url}}\">crete new sales manager account</a></p>"},
             :dk => {:subject => "[DK] Deal certification request from Fairleads.com.",
-                    :body => "<p>[DK] In order to certificate deal created for you please crete new sales manager account on Fairleads.com</p><p><a href=\"{{deal.new_sales_manager_account_url}}\">crete new sales manager account</a></p>"}
+                    :body => "<p>[DK] In order to certificate deal created for you please crete new sales manager account on Fairleads.com</p><p><a href=\"{{deal_certification_request.new_sales_manager_account_url}}\">crete new sales manager account</a></p>"}
         }
     ]
 
