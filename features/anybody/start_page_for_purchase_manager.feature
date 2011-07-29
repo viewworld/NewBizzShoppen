@@ -167,7 +167,7 @@ Scenario: I should not see leads from agent unique categories I'm not assigned t
 
 # best sellers removed in m16
 @m5 @unique_categories @tgn @added @_tested  @requested @_deprecated
-#Scenario: I should not see leads from agent unique categories I'm not assigned to on Bestsellers listing
+Scenario: I should not see leads from agent unique categories I'm not assigned to on Bestsellers listing
 #  Given lead CommonLead1 exists within category Common Category1
 #  And CommonLead1 is a best seller
 #  And lead CommonLead2 exists within category Common Category2
