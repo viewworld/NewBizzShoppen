@@ -184,7 +184,6 @@ Scenario: I should not see leads from agent unique categories I'm not assigned t
 #  Then I sign in as agent34234234@nbs.com with password secret
 #  And I go to the home page
 #  And I follow translated "home.show.view.purchase_manager"
-#  And I open page in browser
 #  And I should see "CommonLead1" within "#best_sellers"
 #  And I should see "CommonLead2" within "#best_sellers"
 #  And I should not see "UniqueLead1" within "#best_sellers"
