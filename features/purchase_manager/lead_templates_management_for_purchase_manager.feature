@@ -72,22 +72,23 @@ Scenario: I can delete lead template that was created by me and was not filled o
   And I follow translated "purchase_manager.lead_templates.index.view.destroy"
   Then I should see translated "purchase_manager.lead_templates.destroy.flash.deletion_failure"
 
-@added @_tested @selenium
+# since m16 purchase manager cant create leads - will change in m17
+@added @_tested @selenium @_deprecated
 Scenario: I can add translation for the lead template name and its fields
-  Given I click hidden link by url regex "/locales\/dk/"
-  Given I go to browse leads
-  And I follow translated "categories.index.view.view_lead_templates"
-  And I follow translated "purchase_manager.lead_templates.index.view.new_template"
-  Then I fill in "lead_template_name" with "Computer details"
-  And I follow translated "shared.lead_templates.form.new_lead_template_field"
-  And I fill in "lead_template_lead_template_fields_attributes_0_name" with "example attr 1"
-  And I follow translated "shared.lead_templates.form.new_lead_template_field"
-  And I fill in "lead_template_lead_template_fields_attributes_1_name" with "example attr 2"
-  And I check "lead_template_lead_template_fields_attributes_1_is_hidden"
-  Then I press translated "purchase_manager.lead_templates.new.view.button_create"
-  And I click hidden link by url regex "/purchase_managers\/lead_templates\/\d+\/edit/"
-  Then the "lead_template_lead_template_fields_attributes_0_name" field should contain "example attr 1"
-  And the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 2"
+#  Given I click hidden link by url regex "/locales\/dk/"
+#  Given I go to browse leads
+#  And I follow translated "categories.index.view.view_lead_templates"
+#  And I follow translated "purchase_manager.lead_templates.index.view.new_template"
+#  Then I fill in "lead_template_name" with "Computer details"
+#  And I follow translated "shared.lead_templates.form.new_lead_template_field"
+#  And I fill in "lead_template_lead_template_fields_attributes_0_name" with "example attr 1"
+#  And I follow translated "shared.lead_templates.form.new_lead_template_field"
+#  And I fill in "lead_template_lead_template_fields_attributes_1_name" with "example attr 2"
+#  And I check "lead_template_lead_template_fields_attributes_1_is_hidden"
+#  Then I press translated "purchase_manager.lead_templates.new.view.button_create"
+#  And I click hidden link by url regex "/purchase_managers\/lead_templates\/\d+\/edit/"
+#  Then the "lead_template_lead_template_fields_attributes_0_name" field should contain "example attr 1"
+#  And the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 2"
 
 # since m16 purchase manager cant create leads - will change in m17
 @m6 @tgn @_tested @_deprecated
