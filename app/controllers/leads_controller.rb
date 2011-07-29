@@ -109,7 +109,7 @@ class LeadsController < ApplicationController
       @category = category ? category.root : nil
     end
     @categories = @category ? @categories_scope.with_leads.where("categories.id in (?)", @category.self_and_descendants.map(&:id)) : []
-    @countries = (cu_or_user_from_rss_token and cu_or_user_from_rss_token.has_accessible_categories?) ? Country.with_leads.within_accessible_categories(cu_or_user_from_rss_token) : Country.with_leads_in_categories(@search.with_category || @search.with_selected_categories || [])
+    @countries = (cu_or_user_from_rss_token and cu_or_user_from_rss_token.has_accessible_categories?) ? Country.with_leads.within_accessible_categories(cu_or_user_from_rss_token) : Country.with_leads_in_categories(@search.with_category ? Category.find_by_id(@search.with_category).self_and_descendants.map(&:id) : @search.with_selected_categories )
   end
 
   private
