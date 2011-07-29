@@ -27,7 +27,7 @@ end
 
 Given /^lead (.+) exists with attributes "([^"]*)"$/ do |header, options|
   lead = Lead.where(:header => header).first
-  lead = Lead.make!(:header => header, :category => Category.make!) if lead.nil?
+  lead = Lead.make!(:header => header, :category => LeadCategory.make!) if lead.nil?
   lead.update_attributes(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys)
 end
 
@@ -37,7 +37,7 @@ Given /^lead (.+) exists with currency "([^"]*)"$/ do |header, currency_name|
   end
   lead = Lead.where(:header => header).first
   if lead.nil?
-    Lead.make!(:header => header, :currency => currency, :category => Category.make!)
+    Lead.make!(:header => header, :currency => currency, :category => LeadCategory.make!)
   else
     lead.update_attribute(:currency, currency)
   end
@@ -264,7 +264,7 @@ end
 
 Given /^lead "([^"]*)" is created for country "([^"]*)"(?: with region "([^"]*)")?$/ do |header, country, region|
   lead = Lead.where(:header => header).first
-  lead = Lead.make!(:header => header, :category => Category.make!) if lead.nil?
+  lead = Lead.make!(:header => header, :category => LeadCategory.make!) if lead.nil?
   country = Country.find_by_name(country)
   region = country.nil? ? nil : country.regions.detect { |r| r.name == region }
   lead.update_attributes(:country_id => country.id, :region => region)
