@@ -160,7 +160,7 @@ module ApplicationHelper
   end
 
   def link_to_view_templates(category)
-    if user_signed_in? and current_user.can_create_lead_templates? and !current_user.has_role?(:admin) and (current_user.has_role?(:customer) and current_user.deal_category_id == category.id)
+    if user_signed_in? and current_user.can_create_lead_templates? and !current_user.has_role?(:admin) and (!current_user.has_role?(:customer) or (current_user.has_role?(:customer) and current_user.deal_category_id == category.id))
       role = current_user.role.to_s.pluralize
       link_to(t("categories.index.view.view_lead_templates"), self.send("#{role}_lead_templates_path", :search => { :with_category => category.id }), :class => "text_action")
     end
