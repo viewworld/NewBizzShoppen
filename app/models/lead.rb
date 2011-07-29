@@ -52,10 +52,10 @@ class Lead < AbstractLead
   scope :joins_on_lead_purchases, joins("INNER JOIN lead_purchases ON lead_purchases.lead_id=leads.id")
   scope :with_created_by, lambda { |agent_id| where("creator_id = ?", agent_id) }
   scope :with_created_by_call_centre, lambda { |call_centre| where("creator_id IN (?)", call_centre.subaccount_ids) }
-  scope :with_revenue_by, lambda { |agent| select("sum(lead_purchases.euro_price) as id").where("creator_id IN (?) and requested_by IS NULL", agent.has_role?(:call_centre) ? agent.subaccount_ids : agent.id).joins_on_lead_purchases }
-  scope :with_rated_good_by, lambda { |agent| where("creator_id = ? and lead_purchases.rating_level > -1 and lead_purchases.rating_level <= ? and requested_by IS NULL", agent.id, LeadPurchase::RATING_SATISFACTORY).joins_on_lead_purchases }
-  scope :with_rated_bad_by, lambda { |agent| where("creator_id = ? and lead_purchases.rating_level > ? and requested_by IS NULL", agent.id, LeadPurchase::RATING_SATISFACTORY).joins_on_lead_purchases }
-  scope :with_not_rated_by, lambda { |agent| where("creator_id = ? and (lead_purchases.rating_level = -1 or lead_purchases.rating_level is NULL) and requested_by IS NULL", agent.id).joins_on_lead_purchases }
+  scope :with_revenue_by, lambda { |agent| select("sum(lead_purchases.euro_price) as id").where("leads.creator_id IN (?) and lead_purchases.requested_by IS NULL", agent.has_role?(:call_centre) ? agent.subaccount_ids : agent.id).joins_on_lead_purchases }
+  scope :with_rated_good_by, lambda { |agent| where("creator_id = ? and lead_purchases.rating_level > -1 and lead_purchases.rating_level <= ? and lead_purchases.requested_by IS NULL", agent.id, LeadPurchase::RATING_SATISFACTORY).joins_on_lead_purchases }
+  scope :with_rated_bad_by, lambda { |agent| where("creator_id = ? and lead_purchases.rating_level > ? and lead_purchases.requested_by IS NULL", agent.id, LeadPurchase::RATING_SATISFACTORY).joins_on_lead_purchases }
+  scope :with_not_rated_by, lambda { |agent| where("creator_id = ? and (lead_purchases.rating_level = -1 or lead_purchases.rating_level is NULL) and lead_purchases.requested_by IS NULL", agent.id).joins_on_lead_purchases }
 
   scope :with_not_invoiced_for_user, lambda { |user| joins("RIGHT JOIN lead_purchases ON lead_purchases.lead_id = leads.id LEFT JOIN invoice_lines ON invoice_lines.payable_id = lead_purchases.id LEFT JOIN users ON users.id = lead_purchases.owner_id").where(["invoice_lines.payable_id IS NULL AND users.big_buyer IS TRUE AND users.id = ?", user.to_i]) }
 
@@ -71,7 +71,7 @@ class Lead < AbstractLead
   scope :with_hotness, lambda { |hotness| where("hotness_counter = ?", hotness) }
   scope :for_notification, lambda { |categories, notification_type| where("category_id in (?) and DATE(created_at) between ? and ?", categories.map(&:id), notification_type == User::LEAD_NOTIFICATION_ONCE_PER_DAY ? Date.today : Date.today-7, Date.today).published_only.without_inactive.without_outdated.order("category_id") }
 
-  scope :requested_by_purchase_manager, lambda { |user| where("creator_id = ? or requested_by = ?", user.id, user.id) }
+  scope :requested_by_purchase_manager, lambda { |user| where("leads.creator_id = ? or leads.requested_by = ?", user.id, user.id) }
 
   scope :descend_by_leads_id, order("leads.id DESC")
 
