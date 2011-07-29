@@ -4,13 +4,14 @@
   <div id="buyer_email_form">
     <%= text_field_tag :buyer_email %>
     <%= bt_link_to nil, t("administration.deals.new.view.check_buyer_email"), "javascript:void(0)", :onclick => "submit_query('check_email','administration')" %>
+    <%= bt_link_to nil, t("administration.deals.new.view.certify"), "javascript:void(0)", :onclick => "submit_query('certify', 'administration')" %>
   </div>
 
   <div id="deal_form" style="display:none;">
     <%= semantic_form_for [:administration, @deal], :method => :post do |form| %>
         <frm title="Create new">
           <param:content>
-            <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal, :categories => Category.without_locked.all} %>
+            <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal, :categories => DealCategory.without_locked.all} %>
           </param:content>
           <param:actions>
             <ibt c="fltri" icon="save">

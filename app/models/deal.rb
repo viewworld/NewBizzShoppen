@@ -1,6 +1,4 @@
 class Deal < AbstractLead
-  ajaxful_rateable :stars => 5, :dimensions => [:rating]
-
   include ScopedSearch::Model
 
   has_one :logo, :class_name => "Asset::DealLogo", :as => :resource, :conditions => "asset_type = 'Asset::DealLogo'", :dependent => :destroy
@@ -8,6 +6,7 @@ class Deal < AbstractLead
   has_many :materials, :class_name => "Asset::DealMaterial", :as => :resource, :conditions => "asset_type = 'Asset::DealMaterial'", :dependent => :destroy
   has_many :leads, :class_name => "Lead", :foreign_key => "deal_id"
   has_many :comment_threads, :class_name => "Comment", :foreign_key => :commentable_id, :conditions => {:commentable_type => 'AbstractLead'}
+  has_many :deal_certification_requests
   has_and_belongs_to_many :deal_templates, :class_name => "LeadTemplate", :join_table => "leads_lead_templates", :foreign_key => "lead_id", :association_foreign_key => "lead_template_id"
   belongs_to :lead_category, :class_name => "Category", :foreign_key => "lead_category_id"
 
@@ -54,6 +53,18 @@ class Deal < AbstractLead
     user ? comment_threads.unread_by_user(user).count > 0 : false
   end
 
+  def requested_by?(user)
+    leads.where(:requested_by => user.id).any?
+  end
+
+  def current_dcr
+    deal_certification_requests.last
+  end
+
+  def certified?
+    !deal_certification_requests.blank? and current_dcr.approved?
+  end
+
   private
 
   def process_for_lead_information?
@@ -65,8 +76,8 @@ class Deal < AbstractLead
   end
 
   def create_uniq_deal_category
-    if buyer
-        category = buyer.deal_category_id ? Category.find(buyer.deal_category_id) : Category.create(:name => buyer.company_name)
+    if buyer and creator.buyer?
+        category = buyer.deal_category_id ? LeadCategory.find(buyer.deal_category_id) : LeadCategory.create(:name => buyer.company_name)
         buyer.update_attribute(:deal_category_id, category.id) if buyer.deal_category_id.blank?
         category.update_attribute(:is_customer_unique, true) unless category.is_customer_unique
         unless category.customers.include?(buyer)
@@ -78,9 +89,9 @@ class Deal < AbstractLead
   end
 
   def certify_for_unknown_email
-    #if creator.agent? or creator.admin? and buyer.nil?
-      ApplicationMailer.delay.email_template(email_address, EmailTemplate.find_by_uniq_id("deal_certification_request"), {:deal => self})
-    #end
+    if creator.agent? or creator.admin? and buyer.nil?
+      deal_certification_requests.create
+    end
   end
 
   def handle_published
@@ -88,6 +99,7 @@ class Deal < AbstractLead
       self.published = false
       nil
     end
+    true
   end
 
 end

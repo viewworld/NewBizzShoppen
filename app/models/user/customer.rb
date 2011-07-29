@@ -54,7 +54,12 @@ class ::User::Customer < ::User
     true
   end
 
+  def deal_certification_requests
+    DealCertificationRequest.active.for_email(email)
+  end
+
   private
+
   def handle_interests
     if (categories.select { |c| c.is_customer_unique } - unique_categories).size > 0
       (categories.select { |c| c.is_customer_unique } - unique_categories).each { |c| category_interests.detect { |ci| ci.category_id == c.id }.destroy }

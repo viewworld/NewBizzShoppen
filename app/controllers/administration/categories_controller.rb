@@ -1,10 +1,12 @@
 class Administration::CategoriesController < Administration::AdministrationController
   inherit_resources
 
+  before_filter :set_category_type
+  
   set_tab "browse_leads"
 
   def create
-    @category = Category.new(params[:category])
+    @category = @category_type.constantize.new(params[:category])
     @category.customers = []
     @category.agents = []
     respond_to do |format|
@@ -14,7 +16,7 @@ class Administration::CategoriesController < Administration::AdministrationContr
         @category.save
         @category.move_leads_to_subcategory
         flash[:notice] = I18n.t("flash.categories.create.notice")
-        format.html { redirect_to categories_path }
+        format.html { redirect_to @category_type == "LeadCategory" ? categories_path : deal_categories_path }
       else
         format.html { render 'new' }
       end
@@ -23,7 +25,7 @@ class Administration::CategoriesController < Administration::AdministrationContr
 
   def update
     update! do |success, failure|
-      success.html { redirect_to categories_path }
+      success.html { redirect_to @category.is_a?(LeadCategory) ? categories_path : deal_categories_path }
       failure.html { render 'edit' }
     end
   end
@@ -37,5 +39,10 @@ class Administration::CategoriesController < Administration::AdministrationContr
         flash[:notice] = I18n.t("flash.categories.destroy.error")
         redirect_to categories_path }
     end
+  end
+
+  private
+  def set_category_type
+    @category_type = params[:category_type] || "LeadCategory"
   end
 end

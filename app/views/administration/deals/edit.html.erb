@@ -4,7 +4,7 @@
   <%= semantic_form_for [:administration, @deal], :method => :put do |form| %>
       <frm title="Edit deal">
         <param:content>
-          <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal, :categories => Category.without_locked.all} %>
+          <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal, :categories => DealCategory.without_locked.all} %>
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="save">
@@ -14,6 +14,8 @@
       </frm>
   <% end %>
 
-  <%= render :partial => "shared/deals/assets_management", :locals => {:path => "administration_deal_assets_path", :download_path => "download_administration_deal_asset_path", :remove_path => "administration_deal_asset_path"} %>
+  <%= render :partial => "shared/deals/assets_management", :locals => {:path => "administration_deal_assets_path",
+                                                                       :download_path => "download_administration_deal_asset_path",
+                                                                       :remove_path => "administration_deal_asset_path"} %>
 
 </column-mc:>

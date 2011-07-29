@@ -40,4 +40,9 @@ class ::User::LeadBuyer < ::User
   def comment_threads
     Comment.for_users(self.self_and_descendants)
   end
+
+  def deal_certification_requests
+    DealCertificationRequest.active.for_email(email)
+  end
+
 end

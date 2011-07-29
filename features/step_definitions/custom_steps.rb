@@ -3,7 +3,7 @@ And /^I wait (.*) second$/ do |n|
 end
 
 Given /^Category (.+) is created$/ do |name|
-  Category.create(:name => name)
+  LeadCategory.create(:name => name)
 end
 
 Given /^Country (.+) is created$/ do |name|

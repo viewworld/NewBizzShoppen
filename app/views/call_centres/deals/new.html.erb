@@ -1,5 +1,5 @@
 <column-mc:>
-  <header back="true" backurl="#{call_centre_agents_deals_path}"><%= "New deal" %></header>
+  <header back="true" backurl="#{call_centre_agents_deals_path}"><%= t("call_centre.deals.new.view.title") %></header>
 
   <div id="buyer_email_form">
   <%= text_field_tag :buyer_email %>
@@ -11,7 +11,7 @@
   <%= semantic_form_for [:call_centres, @deal], :method => :post do |form| %>
       <frm title="Create new">
         <param:content>
-          <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal, :categories => Category.without_locked.with_call_centre_unique(current_user).all} %>
+          <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal} %>
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="save">

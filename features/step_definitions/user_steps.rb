@@ -49,6 +49,12 @@ Given /^user "([^"]*)" has team buyers enabled$/ do |email|
   User::Customer.where(:email => email).first.update_attribute(:team_buyers, true)
 end
 
+Given /^user "([^"]*)" has deal maker role enabled$/ do |email|
+  user = User.where(:email => email).first.with_role
+  user.roles << :deal_maker
+  user.save
+end
+
 Given /^user "([^"]*)" with role "([^"]*)" is confirmed$/ do |email, role|
   "User::#{role.camelize}".constantize.where(:email => email).first.confirm!
 end
@@ -324,4 +330,14 @@ Then /^user "([^"]*)" is no longer category buyer as all his subaccounts$/ do |e
   user = User.find_by_email(email)
   user.has_role?(:category_buyer).should == false
   user.subaccounts.each { |sub_account| sub_account.has_role?(:category_buyer).should == false }
+end
+
+When /^user "([^"]*)" has assigned role "([^"]*)"$/ do |email, role|
+  user = User.where(:email => email).first.with_role
+  user.roles << role.to_sym
+  user.save
+end
+
+Given /^there are no object for model "([^"]*)"$/ do |model|
+  model.constantize.destroy_all
 end

@@ -1,5 +1,5 @@
 <%= main_menu_link_to t("layout.main_menu.call_centre_agent.leads"), call_centre_agents_leads_path, :tab => "leads" %>
-<% if false and current_user.has_role?(:deal_maker) %>
+<% if current_user.has_role?(:deal_maker) %>
     <%= main_menu_link_to t("layout.main_menu.call_centre_agent.deals"), call_centre_agents_deals_path, :tab => "deals" %>
 <% end %>
 <%#= main_menu_link_to t("layout.main_menu.call_centre_agent.lead_templates"), call_centre_agents_lead_templates_path, :tab => "lead_templates" %>

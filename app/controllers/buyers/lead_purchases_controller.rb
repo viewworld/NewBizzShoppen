@@ -18,7 +18,7 @@ class Buyers::LeadPurchasesController < Buyers::BuyerController
     params[:search][:with_owner] = current_user.id
     params[:search][:accessible] = true
     @countries = Country.with_lead_purchase_owner(current_user).map{|c| [c.name, c.id]}
-    @categories = Category.with_lead_purchase_owner(current_user).map{|c| [c.name, c.id]}
+    @categories = LeadCategory.with_lead_purchase_owner(current_user).map{|c| [c.name, c.id]}
     @assignees = User.assignees_for_lead_purchase_owner(current_user).map{|c| [c.screen_name, c.id]}
     @search = LeadPrimaryPurchase.scoped_search(params[:search])
     @lead_purchases = @search.order("accessible_from DESC").paginate(:page => params[:page], :per_page => LeadPurchase.per_page)

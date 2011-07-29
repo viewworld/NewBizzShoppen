@@ -4,11 +4,9 @@ class AddDealFieldsToLead < ActiveRecord::Migration
     add_column :leads, :company_description, :text
     add_column :leads, :start_date, :date
     add_column :leads, :end_date, :date
-    add_column :leads, :deal_url, :string
   end
 
   def self.down
-    remove_column :leads, :deal_url
     remove_column :leads, :end_date
     remove_column :leads, :start_date
     remove_column :leads, :company_description

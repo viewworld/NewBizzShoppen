@@ -71,6 +71,7 @@ Nbs::Application.routes.draw do
   namespace :buyers do
     root :to => "lead_purchases#index"
     resources :cart_items
+    resources :deal_certification_requests, :only => [:index, :edit, :update]
     resources :deals do
       resources :assets, :controller => "deal_assets", :only => [:create, :destroy] do
         member do
@@ -244,6 +245,8 @@ Nbs::Application.routes.draw do
   resources :categories, :only => [:index] do
     resources :more_leads_requests, :only => [:new, :create]
   end
+  resources :deal_categories, :only => [:index]
+
   match 'categories/:slag' => "leads#index"
   match 'categories/deals/:slag' => "deals#index"
 

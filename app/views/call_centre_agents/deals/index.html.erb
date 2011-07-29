@@ -13,5 +13,9 @@
             </li>
           </ul-actions>
       <% end %>
+
+      <% blocks.rowtooltip do |deal| %>
+          <p><%= render :partial => "/shared/deal_comments/deal_threads", :locals => { :deal => deal, :threads => deal.comment_threads.roots.order("created_at DESC") } %></p>
+      <% end %>
   <% end %>
 </column-mc:>

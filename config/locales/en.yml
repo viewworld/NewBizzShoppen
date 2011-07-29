@@ -122,6 +122,7 @@ en:
       lead_buyer:
         lead_purchases: My leads
         my_deals: My deals
+        deals_to_certify: "Deals to certify"
       lead_user:
         lead_purchases: My leads
         lead_requests: My requested leads
@@ -831,10 +832,12 @@ en:
           new_category: "New category"
           edit_link: "Edit"
           destroy_link: "Delete"
+          new_deal_category: "New deal category"
       new:
         view:
           button_create: "Create"
         title: "Create new category"
+        deal_title: "New deal category"
       edit:
         view:
           header: "Editing category: %{category_name}"
@@ -942,6 +945,7 @@ en:
           title: "New deal"
           create_button: "Create"
           check_buyer_email: "Check sales manager email"
+          certify: "Certify"
           no_user_found_message: "No user with email %{email} was found!"
       edit:
         view:
@@ -1645,9 +1649,11 @@ en:
           destroy: "Destroy"
       edit:
         view:
+          title: "Edit deal"
           update_button: "Save"
       new:
         view:
+          title: "New deal"
           check_buyer_email: "Check sales manager email"
           certify: "Certify"
           create_button: "Create"
@@ -1881,6 +1887,24 @@ en:
         view:
           title: "Edit deal"
           update_button: "Save"
+    deal_certification_requests:
+      index:
+        view:
+          title: "Deals to certify"
+          certify: "Certify"
+          name: "Name"
+          requested_by: "Requested by"
+          requested_at: "Requested at"
+      edit:
+        view:
+          title: "Deal certification"
+          certify: "Certify"
+          reject: "Reject"
+      update:
+        flash:
+          certify_success: "Deal has been successfully certified"
+          reject_success: "Deal has been successfully rejected."
+          not_authorized: "You are not authorized to perform this action!"
   categories:
     index:
       view:
@@ -2407,8 +2431,8 @@ en:
         lvl12: Silver (locked)
         lvl13: Gold (locked)
       field_prefixes:
-        header: "A company interested in"
-        description: "A company interested in"
+        header: "A company is interested in"
+        description: "A company is interested in"
     lead_template_field:
       field_type:
         type0: Text
@@ -3136,6 +3160,8 @@ en:
       create_comment: "Create comment"
       show_comments: "Show comments"
       hide_comments: "Hide comments"
+      rating_label: "Rating"
+      no_comments: "No comments"
     show:
       view:
         header: "Deal details"
@@ -3156,7 +3182,13 @@ en:
           materials_label: "Materials"
           remove_material: "remove"
           add_material_button: "Add material"
+          show_image: "Full size"
+          download: "Download"
       listing:
         view:
           header: "My deals"
           new_deal: "Create new deal"
+  deal_categories:
+    index:
+      view:
+        header: "Deal categories"

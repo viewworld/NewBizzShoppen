@@ -11,7 +11,7 @@ class Callers::CampaignsController < Callers::CallerController
 
   def new
     @campaign = Campaign.new(:start_date => Date.today, :end_date => Date.today+1.week, :max_contact_number => 0,
-                             :category_id => Category.first.id, :country_id => Country.first.id)
+                             :category_id => LeadCategory.first.id, :country_id => Country.first.id)
   end
 
   def create

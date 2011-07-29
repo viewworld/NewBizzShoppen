@@ -1,10 +1,10 @@
 <column-mc:>
-  <header back="true" backurl="#{buyers_deals_path}"><%= "Edit deal" %></header>
+  <header back="true" backurl="#{call_centres_deals_path}"><%= t("call_centre.deals.edit.view.title") %></header>
 
   <%= semantic_form_for [:call_centres, @deal], :method => :put do |form| %>
       <frm title="Edit deal">
         <param:content>
-          <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal, :categories => Category.without_locked.with_call_centre_unique(current_user).all} %>
+          <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal} %>
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="save">
@@ -16,6 +16,6 @@
 
   <%= render :partial => "shared/deals/assets_management", :locals => {:path => "call_centres_deal_assets_path",
                                                                        :download_path => "download_call_centres_deal_asset_path",
-                                                                       :remove_path => "buyers_call_centres_asset_path"} %>
+                                                                       :remove_path => "call_centres_asset_path"} %>
 
 </column-mc:>

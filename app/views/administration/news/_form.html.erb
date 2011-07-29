@@ -4,7 +4,7 @@
       <%= form.input :title %>
       <% if form.object.is_a? Article::News::CategoryHome %>
         <%= form.input :resource_type, :as => :hidden, :value => "Category" %>
-        <%= form.input :resource, :collection => nested_set_options(Category.all), :label => t("administration.news.edit.view.category_label"), :include_blank => false %>
+        <%= form.input :resource, :collection => nested_set_options(LeadCategory.all), :label => t("administration.news.edit.view.category_label"), :include_blank => false %>
       <% end %>
       <%= form.input :content,
                         :label => false,
