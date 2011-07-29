@@ -94,6 +94,7 @@ Feature: Deals from Call Centre/Agent perspective
     Then I should not see translated "layout.main_menu.lead_buyer.deals_to_certify"
 
   #(but the deal must sign up sales manager, and will not have the option not to sign up)
+  @_done @_deprecated
   Scenario: The recipient of the certification request email must register as new sales manager
 
   @_done @_tested_elsewhere

@@ -293,17 +293,17 @@ Feature: Agent campaign - calling session
       And I should see translated "production.show.view.header"
 
     # A list of contacts which have results (including final results) assigend to them
-    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested @deprecated
+    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested @_deprecated
     Scenario: I should see a list of contacts that have results assigned to them
 
 
-    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested @deprecated
+    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested @_deprecated
     Scenario: I should see latest results on top of My results list
 
-    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested @deprecated
+    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested @_deprecated
     Scenario: I can search contacts on My results list
 
-    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested @deprecated
+    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested @_deprecated
     Scenario: I can edit contact when I click it on My results list
 
     @m12 @$_call_centre_agent @requested @my_results @tgn @_done @tested_elsewhere
