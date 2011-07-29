@@ -45,7 +45,7 @@
         <td><%= deal.end_date %></td>
         <td>
           <% if Rails.env != "test" %>
-              <fb:like href="<%= deal_url(deal) %>" send="false" layout="button_count" show_faces="false"></fb:like>
+              <iframe src="http://www.facebook.com/plugins/like.php?layout=button_count&href=<%= escape_uri(deal_url(deal)) %>" scrolling="no" frameborder="0" style="height:20px;width: 100%" allowTransparency="true"></iframe>
           <% end %>
         </td>
         <td><%= deal.published %></td>
@@ -86,21 +86,7 @@
   </tbody>
 </table>
 
-<div id="fb-root"></div>
 <script type=text/javascript>
-    <% if Rails.env != "test" %>
-    //facebook like button
-    window.fbAsyncInit = function() {
-        FB.init({appId: '224183294261266', status: true, cookie: true, xfbml: true});
-    };
-    (function() {
-        var e = document.createElement('script');
-        e.async = true;
-        e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
-        document.getElementById('fb-root').appendChild(e);
-    }());
-    <% end %>
-
     function hideRowButtons() {
         $(".toggle_row.hide_comments:visible").hide().prev().show();
     }
