@@ -1649,9 +1649,11 @@ en:
           destroy: "Destroy"
       edit:
         view:
+          title: "Edit deal"
           update_button: "Save"
       new:
         view:
+          title: "New deal"
           check_buyer_email: "Check sales manager email"
           certify: "Certify"
           create_button: "Create"

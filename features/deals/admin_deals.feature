@@ -31,6 +31,7 @@ Feature: Deals from admin perspective
     Then I fill deal creation form
     Then I select "DKK" from "deal_currency_id"
     Then I fill in "deal_price" with "10"
+    Then I select "Business" from "deal_lead_category_id"
     Then I press translated "administration.deals.new.view.create_button"
     Then I should see translated "flash.deals.create.notice"
     Then I should see translated "deals.common.listing.view.header"

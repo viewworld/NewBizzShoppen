@@ -337,3 +337,7 @@ When /^user "([^"]*)" has assigned role "([^"]*)"$/ do |email, role|
   user.roles << role.to_sym
   user.save
 end
+
+Given /^there are no object for model "([^"]*)"$/ do |model|
+  model.constantize.destroy_all
+end

@@ -13,7 +13,7 @@ class Buyers::DealCertificationRequestsController < Buyers::BuyerController
     if @deal.update_attributes(params[:deal])
       @deal.current_dcr.change_state(params[:accept] == "true" ? "agreed" : "fail")
       flash[:notice] = params[:accept] == "true" ? t("buyer.deal_certification_requests.update.flash.certify_success") : t("buyer.deal_certification_requests.update.flash.reject_success")
-      redirect_to current_user.deal_certification_requests.blank? ? root_path : buyer_deal_certification_requests_path
+      redirect_to current_user.deal_certification_requests.blank? ? root_path : buyers_deal_certification_requests_path
     else
       render :edit
     end

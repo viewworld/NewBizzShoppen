@@ -18,7 +18,6 @@ Then /^a deal is created by "([^"]*)" for user "([^"]*)" and category "([^"]*)" 
   deal.currency_id = Currency.first.id
   deal.creator = User.find_by_email(user)
   deal.category_id = DealCategory.find_by_name(category)
-    #throw deal
   deal.save!
 end
 
@@ -80,4 +79,26 @@ Then /^I fill deal edit form and submit with translated button "([^"]*)"$/ do |t
   Then %{I should see "super amazing deal"}
   Then %{I should see translated "flash.deals.update.notice"}
   Then %{I should not see "very important deal"}
+end
+
+Then /^I certify deal with translation "([^"]*)"$/ do |translation|
+  Then %{I fill deal creation form}
+  Then %{I select "DKK" from "deal_currency_id"}
+  Then %{I fill in "deal_price" with "10"}
+  Then %{I select "Business" from "deal_lead_category_id"}
+  Then %{I fill in "deal_company_name" with "Starks"}
+  Then %{I fill in "deal_contact_name" with "Ned Stark"}
+  Then %{I fill in "deal_email_address" with "ned@stark.com"}
+  Then %{I fill in "deal_phone_number" with "123 123 123"}
+  Then %{I fill in "deal_address_line_1" with "North"}
+  Then %{I fill in "deal_address_line_2" with "Fort"}
+  Then %{I fill in "deal_address_line_3" with "Winter is coming"}
+  Then %{I fill in "deal_zip_code" with "33-333"}
+  Then %{I press translated "#{translation}"}
+  Then %{last email sent should have been sent to recipient "ned@stark.com"}
+  Then %{last email sent should have subject "Deal certification request from Fairleads.com"}
+  Then %{last email sent should have content "/buyer_accounts/new"}
+  Then %{I should see translated "flash.deals.create.notice"}
+  Then %{I should see translated "deals.common.listing.view.header"}
+  Then %{I should see "very important deal"}
 end
