@@ -1,7 +1,14 @@
 <column-mc:>
 
-  <p><%= t("purchase_manager.leads.show.view.confirmation_message") %></p>
+  <div class="frm_tiny pdd_15 ta_c">    
+    <h2><%= t("purchase_manager.leads.show.view.confirmation_message") %></h2>
+    <div class="pdd_10 grid_50 grid_c">
+        <ibt>
+          <%= button_to t("purchase_manager.leads.show.view.ok_confirmation"), purchase_manager_home_path %>
+        </ibt>
+    </div>
+    <clb/>
 
-  <%= button_to t("purchase_manager.leads.show.view.ok_confirmation"), purchase_manager_home_path %>
+  </div>
 
 </column-mc:>
