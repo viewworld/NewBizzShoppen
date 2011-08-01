@@ -1887,6 +1887,7 @@ en:
         view:
           title: "Edit deal"
           update_button: "Save"
+          preview: "Preview"
     deal_certification_requests:
       index:
         view:

@@ -1,5 +1,16 @@
 <column-mc:>
-  <header back="true" backurl="#{buyers_deals_path}"><%= t("buyer.deals.edit.view.title") %></header>
+  <header back="true" backurl="#{buyers_deals_path}">
+    <param:content>
+      <%= t("buyer.deals.edit.view.title") %>
+    </param:content>
+    <param:actions>
+      <ul class="header_actions">
+        <li class="last">
+          <%= bt_link_to nil, t("buyer.deals.edit.view.preview"), deal_path(@deal) %>
+        </li>
+      </ul>
+    </param:actions>
+  </header>
 
   <%= semantic_form_for [:buyers, @deal], :method => :put do |form| %>
       <frm title="Edit deal">
