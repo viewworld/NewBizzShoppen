@@ -2,6 +2,7 @@
    cols = 5
    cols += 1 if show_checkboxes
    cols += 1 if not block_tools.nil?
+   cols -= 1 if current_user.admin?
 -%>
 
 <table id="deals" class="generic">
@@ -14,7 +15,9 @@
     <th><%= link_to t("shared.deals.table.creation_date"), order_for_scoped_search(:created_at) %></th>
     <th><%= link_to t("shared.deals.table.name"), order_for_scoped_search(:header) %></th>
     <th><%= link_to t("shared.deals.table.expires"), order_for_scoped_search(:end_date) %></th>
-    <th><%= t("shared.deals.table.likes") %></th>
+    <% unless current_user.admin? %>
+        <th><%= t("shared.deals.table.likes") %></th>
+    <% end %>
     <th><%= link_to t("shared.deals.table.published"), order_for_scoped_search(:published) %></th>
     <% if block_tools %>
         <th class="ta_r">
@@ -43,11 +46,13 @@
           <%= deal.header %>
         </td>
         <td><%= deal.end_date %></td>
-        <td>
-          <% if Rails.env != "test" %>
-              <fb:like href="<%= deal_path(deal) %>" send="false" layout="button_count" show_faces="false"></fb:like>
-          <% end %>
-        </td>
+        <% unless current_user.admin? %>
+            <td>
+              <% if Rails.env != "test" %>
+                  <fb:like href="<%= deal_path(deal) %>" send="false" layout="button_count" show_faces="false"></fb:like>
+              <% end %>
+            </td>
+        <% end %>
         <td><%= deal.published %></td>
         <% if block_tools %>
             <td class="tda ta_r">
@@ -109,8 +114,8 @@
         $(".toggle_row.show_comments").bind("click", function() {
             $(".row_tooltip").filter(":not(:eq(" + $(this).parents("tr:first").next().index(".row_tooltip") + "))")
                     .filter(":visible").find(".row_tooltip_content:visible").slideUp("normal", function() {
-                $(this).parents("tr.row_tooltip").hide()
-            });
+                        $(this).parents("tr.row_tooltip").hide()
+                    });
 
             hideRowButtons();
 
@@ -126,8 +131,8 @@
             $(this).hide().prev().show().parents("tr:first")
                     .next("tr.row_tooltip")
                     .find(".row_tooltip_content").slideUp('normal', function() {
-                $(this).parents("tr.row_tooltip").hide();
-            });
+                        $(this).parents("tr.row_tooltip").hide();
+                    });
         });
     });
 

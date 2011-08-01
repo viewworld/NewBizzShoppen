@@ -2411,6 +2411,7 @@ en:
         name_label: "Name"
         short_description_label: "Short description"
         detailed_description_label: "Detailed description"
+        deal_category_label: "Deal category"
   models:
     call_result:
       not_unique_email_address: "User with this e-mail already exists!"
