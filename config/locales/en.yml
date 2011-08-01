@@ -69,6 +69,9 @@ en:
     format:
       standard: "%d-%m-%Y"
   layout:
+    fairdeals:
+      main_menu:
+        deals: "Deals"
     main_menu:
       admin:
         users: "Users"
@@ -684,6 +687,11 @@ en:
     show:
       view:
         header: "News"
+
+  fairdeals_home:
+    show:
+      view:
+        header: "Home"
 
   home:
     show:
@@ -1448,6 +1456,7 @@ en:
         no_videos: "There are no introduction videos specified"
         add_video: "Add video"
         locale: "Locale"
+        site: "Site"
         url: "URL address"
         actions: "Actions"
         edit: "Edit"

@@ -210,4 +210,9 @@ module ApplicationHelper
     require 'uri'
     URI.escape(uri, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
   end
+
+  def main_menu
+    session[:site] ? "layouts/#{session[:site]}/main_menu" : "layouts/main_menu"
+  end
+
 end
