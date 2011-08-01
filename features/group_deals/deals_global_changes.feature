@@ -1,9 +1,7 @@
-@m17 @_group_deals
+@m17 @global_deal_changes
 Feature: Deals global changes
 
-  Scenario: As PM I should be able to share the short deal info on the social networks (facebook, twitter, linkedin, mail, google+)
-
-  Scenario: I should be able to add new social media accounts available for publishing deal info
+  Scenario: As PM I should be able to share the short deal info on the social networks (facebook, twitter, linkedin)
 
   Scenario: I should be able to set normal price and discounted
 

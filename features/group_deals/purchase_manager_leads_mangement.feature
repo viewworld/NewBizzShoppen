@@ -1,4 +1,4 @@
-@m17 @_group_deals
+@m17 @procurement_leads_management
 Feature: Purchase manager leads management
 
   Scenario: I should be able to create new lead as purchase manager
