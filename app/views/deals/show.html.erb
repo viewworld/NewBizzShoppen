@@ -59,12 +59,14 @@
           <%= deal_show_li(format_date(@deal.end_date), t("deals.show.view.end_date_label")) %>
           <%= deal_show_li(@deal.category, t("deals.show.view.category_label")) %>
 
-          <li>
-            <div>
-              <span class="label"><%= t("deals.show.view.price_label") %></span>
-              <%= @deal.price %> <%= @deal.currency %>
-            </div>
-          </li>
+          <% unless @deal.price.blank? %>
+              <li>
+                <div>
+                  <span class="label"><%= t("deals.show.view.price_label") %></span>
+                  <%= @deal.price %> <%= @deal.currency %>
+                </div>
+              </li>
+          <% end %>
 
           <%= deal_show_li(@deal.contact_name, t("deals.show.view.contact_name_label")) %>
           <%= deal_show_li(@deal.email_address, t("deals.show.view.email_address_label")) %>
