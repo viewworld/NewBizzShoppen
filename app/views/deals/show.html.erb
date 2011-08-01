@@ -16,31 +16,31 @@
     <div class="element_description">
       <h2><%= @deal.header %></h2>
 
-      <h3><%= t("deals.show.view.description_label") %></h3>
+      <h3><%= t("deals.show.view.short_description_label") %></h3>
 
       <p><%= @deal.description %></p>
 
-      <h3><%= "Hidden description" %></h3>
+      <h3><%= t("deals.show.view.detailed_description_label") %></h3>
 
       <p><%= @deal.hidden_description %></p>
 
-      <h3><%= "Fine print" %></h3>
+      <h3><%= t("deals.show.view.fine_print_label") %></h3>
 
       <p><%= @deal.hidden_description %></p>
 
       <% if @deal.logo %>
-          <h3><%= "Company logo" %></h3>
+          <h3><%= t("deals.show.view.company_logo_label") %></h3>
 
           <p><%= image_tag(@deal.logo.asset.url) %></p>
       <% end %>
 
 
-      <h3><%= "Company description" %></h3>
+      <h3><%= t("deals.show.view.company_description_label") %></h3>
 
       <p><%= @deal.company_description %></p>
 
       <% unless @deal.images.blank? %>
-          <h3><%= "images" %></h3>
+          <h3><%= t("deals.show.view.images_label") %></h3>
 
           <p>
             <% @deal.images.each do |image| %>
@@ -55,87 +55,26 @@
     <div class="frm_tiny">
       <div class="pdd_10">
         <ul class="elements_list">
+          <%= deal_show_li(format_date(@deal.start_date), t("deals.show.view.start_date_label")) %>
+          <%= deal_show_li(format_date(@deal.end_date), t("deals.show.view.end_date_label")) %>
+          <%= deal_show_li(@deal.category, t("deals.show.view.category_label")) %>
+
           <li>
             <div>
-              <span class="label"><%= "Star date" %></span>
-              <%= format_date @deal.start_date %>
-            </div>
-          </li>
-          <li>
-            <div>
-              <span class="label"><%= t("deals.show.view.end_date") %></span>
-              <%= format_date @deal.end_date %>
-            </div>
-          </li>
-          <li>
-            <div>
-              <span class="label"><%= "Category" %></span>
-              <%= @deal.category %>
-            </div>
-          </li>
-          <li>
-            <div>
-              <span class="label"><%= "Price" %></span>
+              <span class="label"><%= t("deals.show.view.price_label") %></span>
               <%= @deal.price %> <%= @deal.currency %>
             </div>
           </li>
 
-          <li>
-            <div>
-              <span class="label"><%= "Contact name" %></span>
-              <%= @deal.contact_name %>
-            </div>
-          </li>
-
-          <li>
-            <div>
-              <span class="label"><%= "Email address" %></span>
-              <%= @deal.email_address %>
-            </div>
-          </li>
-
-          <li>
-            <div>
-              <span class="label"><%= "Phone number" %></span>
-              <%= @deal.phone_number %>
-            </div>
-          </li>
-          <li>
-            <div>
-              <span class="label"><%= "Address line 1" %></span>
-              <%= @deal.address_line_1 %>
-            </div>
-          </li>
-          <li>
-            <div>
-              <span class="label"><%= "Address line 2" %></span>
-              <%= @deal.address_line_2 %>
-            </div>
-          </li>
-          <li>
-            <div>
-              <span class="label"><%= "Address line 3" %></span>
-              <%= @deal.address_line_3 %>
-            </div>
-          </li>
-          <li>
-            <div>
-              <span class="label"><%= "Zip code" %></span>
-              <%= @deal.zip_code %>
-            </div>
-          </li>
-          <li>
-            <div>
-              <span class="label"><%= "Country" %></span>
-              <%= @deal.country %>
-            </div>
-          </li>
-          <li>
-            <div>
-              <span class="label"><%= "Region" %></span>
-              <%= @deal.region %>
-            </div>
-          </li>
+          <%= deal_show_li(@deal.contact_name, t("deals.show.view.contact_name_label")) %>
+          <%= deal_show_li(@deal.email_address, t("deals.show.view.email_address_label")) %>
+          <%= deal_show_li(@deal.phone_number, t("deals.show.view.phone_number_label")) %>
+          <%= deal_show_li(@deal.address_line_1, t("deals.show.view.address_line_1_label")) %>
+          <%= deal_show_li(@deal.address_line_2, t("deals.show.view.address_line_2_label")) %>
+          <%= deal_show_li(@deal.address_line_3, t("deals.show.view.address_line_3_label")) %>
+          <%= deal_show_li(@deal.zip_code, t("deals.show.view.zip_code_label")) %>
+          <%= deal_show_li(@deal.country, t("deals.show.view.country_label")) %>
+          <%= deal_show_li(@deal.region, t("deals.show.view.region_label")) %>
         </ul>
       </div>
     </div>

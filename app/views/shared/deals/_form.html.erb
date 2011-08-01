@@ -3,9 +3,9 @@
     <fieldset class="inputs labels_ta_r labels_200">
       <ol>
         <%#= form.input :category_id, :as => :select, :collection => Category.all, :include_blank => false %>
-        <%= form.input :header %>
-        <%= form.input :description, :input_html => {:style => "height: 150px;width:280px;"} %>
-        <%= form.input :hidden_description, :input_html => {:style => "height: 150px;width:280px;"} %>
+        <%= form.input :header, :label => t("shared.deals.form.name_label") %>
+        <%= form.input :description, :input_html => {:style => "height: 150px;width:280px;"}, :label => t("shared.deals.form.short_description_label") %>
+        <%= form.input :hidden_description, :input_html => {:style => "height: 150px;width:280px;"}, :label => t("shared.deals.form.detailed_description_label") %>
         <%= form.input :fine_print, :input_html => {:style => "height: 150px;width:280px;"} %>
         <%= form.input :start_date, :as => :string,
                        :wrapper_html => {:class => "date"},
