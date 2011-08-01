@@ -4,9 +4,9 @@
       <ol>
         <%#= form.input :category_id, :as => :select, :collection => Category.all, :include_blank => false %>
         <%= form.input :header %>
-        <%= form.input :description, :input_html => {:style => "height: 150px"} %>
-        <%= form.input :hidden_description, :input_html => {:style => "height: 150px"} %>
-        <%= form.input :fine_print, :input_html => {:style => "height: 150px"} %>
+        <%= form.input :description, :input_html => {:style => "height: 150px;width:280px;"} %>
+        <%= form.input :hidden_description, :input_html => {:style => "height: 150px;width:280px;"} %>
+        <%= form.input :fine_print, :input_html => {:style => "height: 150px;width:280px;"} %>
         <%= form.input :start_date, :as => :string,
                        :wrapper_html => {:class => "date"},
                        :input_html => {:class => "datepicker", :value => deal.start_date},
@@ -59,7 +59,7 @@
         <%= form.input :lead_category_id, :disabled => lead_categories.select { |c| !c.can_publish_leads? }.map(&:id), :collection => nested_set_options(lead_categories), :include_blank => false %>
         <% end %>
 
-        <%= form.input :company_description, :input_html => {:style => "height: 150px"} %>
+        <%= form.input :company_description, :input_html => {:style => "height: 150px;width:280px;"} %>
         <%= form.input :contact_name %>
         <%= form.input :email_address %>
         <%= form.input :phone_number %>
