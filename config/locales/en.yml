@@ -374,6 +374,7 @@ en:
       result: Result
       destroy_confirmation: Are you sure?
       my_results: "Production"
+      not_allowed_to_edit: "You are not allowed to edit this settings"
     call_result_details_table:
       date: Date
       contact: Contact
@@ -535,6 +536,8 @@ en:
         generic_types: Generic types
         custom_types: Custom types
         fields: Fields
+        value: Value
+        expected_completed_per_hour: 'Expected completed per hour'
     new:
       title: Add result type
       type: Type

@@ -40,7 +40,7 @@ class Callers::ResultsController < Callers::CallerController
   end
 
   def batch_assign
-    @campaign.assign_results(params[:campaign_result_ids])
+    @campaign.assign_results(params)
     redirect_to edit_callers_campaign_path(@campaign)
   end
 
