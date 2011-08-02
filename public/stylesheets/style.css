@@ -1810,3 +1810,30 @@ span.cke_skin_kama
 {
     overflow: hidden;
 }
+
+
+/* --- deal - assets list ---
+-------------------------------------------------------------------------------- */
+
+.assets_elements
+{
+    padding: 10px 0;
+}
+
+.assets_elements h2
+{
+    margin-bottom: 6px;
+}
+
+.assets_elements ul li
+{
+    margin: 1px 0;
+}
+
+.assets_elements ul li img
+{
+    vertical-align: middle;
+    padding: 1px;
+    background: #fff;
+    border: 1px solid #ddd;
+}

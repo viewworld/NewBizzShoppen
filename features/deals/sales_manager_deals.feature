@@ -48,6 +48,7 @@ Feature: Deals from Sales Manager perspective
     Then I follow translated "layout.main_menu.lead_buyer.my_deals"
     Then I follow translated "deals.common.listing.view.new_deal"
     Then I fill deal creation form
+    Then I should not see "Lead category"
     Then I press translated "buyer.deals.new.view.create_button"
     Then I should see translated "deals.common.listing.view.header"
     Then I should see "very important deal"
@@ -78,41 +79,41 @@ Feature: Deals from Sales Manager perspective
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
     Then I follow translated "layout.main_menu.lead_buyer.my_deals"
     Then I follow translated "buyer.deals.index.view.edit"
-    Then attach the file "sample image" to "asset_deal_logo_asset" within "#deal_logo_form"
-    Then I press translated "deals.common.assets.view.add_logo_button" within "#deal_logo_form"
-    Then I should see translated "flash.deal_assets.create.success"
+    Then attach the file "sample image" to "deal_logo_attributes_asset"
+    Then I press translated "buyer.deals.edit.view.update_button"
+    Then I follow translated "buyer.deals.index.view.edit"
     Then I should see translated "deals.common.assets.view.show_image"
     Then I follow translated "deals.common.assets.view.remove_logo"
     Then I should see translated "flash.deal_assets.destroy.success"
 
-  @_done @_tested
+  @_done @_tested @wip
   Scenario: I can upload material to download
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
     Then I follow translated "layout.main_menu.lead_buyer.my_deals"
     Then I follow translated "buyer.deals.index.view.edit"
-    Then attach the file "document" to "asset_deal_material_asset" within "#deal_material_form"
-    Then I press translated "deals.common.assets.view.add_material_button" within "#deal_material_form"
-    Then I should see translated "flash.deal_assets.create.success"
+    Then attach the file "document" to "deal_materials_attributes_0_asset"
+    Then I press translated "buyer.deals.edit.view.update_button"
+    Then I follow translated "buyer.deals.index.view.edit"
     Then I should see translated "deals.common.assets.view.download"
-    Then attach the file "document" to "asset_deal_material_asset" within "#deal_material_form"
-    Then I press translated "deals.common.assets.view.add_material_button" within "#deal_material_form"
-    Then I should see translated "flash.deal_assets.create.success"
-    Then I follow translated "deals.common.assets.view.remove_logo"
+    Then attach the file "document" to "deal_materials_attributes_0_asset"
+    Then I press translated "buyer.deals.edit.view.update_button"
+    Then I follow translated "buyer.deals.index.view.edit"
+    Then I follow translated "deals.common.assets.view.remove_material"
     Then I should see translated "flash.deal_assets.destroy.success"
 
-  @_done @_tested
+  @_done @_tested @wip
   Scenario: I can attach multiple pictures
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
     Then I follow translated "layout.main_menu.lead_buyer.my_deals"
     Then I follow translated "buyer.deals.index.view.edit"
-    Then attach the file "sample image" to "asset_deal_image_asset" within "#deal_image_form"
-    Then I press translated "deals.common.assets.view.add_image_button" within "#deal_image_form"
-    Then I should see translated "flash.deal_assets.create.success"
+    Then attach the file "sample image" to "deal_images_attributes_0_asset"
+    Then I press translated "buyer.deals.edit.view.update_button"
+    Then I follow translated "buyer.deals.index.view.edit"
     Then I should see translated "deals.common.assets.view.show_image"
-    Then attach the file "sample image" to "asset_deal_image_asset" within "#deal_image_form"
-    Then I press translated "deals.common.assets.view.add_image_button" within "#deal_image_form"
-    Then I should see translated "flash.deal_assets.create.success"
-    Then I follow translated "deals.common.assets.view.remove_logo"
+    Then attach the file "sample image" to "deal_images_attributes_0_asset"
+    Then I press translated "buyer.deals.edit.view.update_button"
+    Then I follow translated "buyer.deals.index.view.edit"
+    Then I follow translated "deals.common.assets.view.remove_image"
     Then I should see translated "flash.deal_assets.destroy.success"
 
   @_done @_not_testable
@@ -124,7 +125,13 @@ Feature: Deals from Sales Manager perspective
   @_done @_deprecated
   Scenario: I can select currency
 
+  @_done @_tested
   Scenario: I can click a link to see public deal description (shows the deal as presented to procurement manager)
+    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
+    Then I follow translated "layout.main_menu.lead_buyer.my_deals"
+    Then I follow translated "buyer.deals.index.view.edit"
+    Then I follow translated "buyer.deals.edit.view.preview"
+    Then I should see "super"
 
   # "Contact"
   @_done @_tested_elsewhere
@@ -212,4 +219,5 @@ Feature: Deals from Sales Manager perspective
   @_done @tested_elsewhere
   Scenario: The category is company unique to the sales manager
 
+  @_done @tested_elsewhere
   Scenario: Lead category is set by default when deal is generated by sales manager

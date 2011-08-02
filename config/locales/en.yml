@@ -1890,6 +1890,7 @@ en:
         view:
           title: "Edit deal"
           update_button: "Save"
+          preview: "Preview"
     deal_certification_requests:
       index:
         view:
@@ -2409,6 +2410,11 @@ en:
         likes: Likes
         published: Published/waiting approval
         actions: Actions
+      form:
+        name_label: "Name"
+        short_description_label: "Short description"
+        detailed_description_label: "Detailed description"
+        deal_category_label: "Deal category"
   models:
     call_result:
       not_unique_email_address: "User with this e-mail already exists!"
@@ -3168,8 +3174,27 @@ en:
     show:
       view:
         header: "Deal details"
-        description_label: "Description"
-        end_date: "Expires at"
+        name_label: "Name"
+        short_description_label: "Short description"
+        detailed_description_label: "Detailed description"
+        fine_print_label: "Fine print"
+        company_logo_label: "Company logo"
+        company_description_label: "Company description"
+        images_label: "Images"
+        materials_label: "Materials"
+        start_date_label: "Start date"
+        end_date_label: "End date"
+        category_label: "Category"
+        price_label: "Price"
+        contact_name_label: "Contact name"
+        email_address_label: "Email address"
+        phone_number_label: "Phone number"
+        address_line_1_label: "Address line 1"
+        address_line_2_label: "Address line 2"
+        address_line_3_label: "Address line 3"
+        zip_code_label: "Zip code"
+        country_label: "Country"
+        region_label: "Region"
     common:
       assets:
         view:

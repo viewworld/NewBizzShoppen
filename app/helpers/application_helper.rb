@@ -21,7 +21,7 @@ module ApplicationHelper
     new_object = current_user.has_any_role?(:admin, :call_centre) ? Lead.new : current_user.leads.build
     new_object.lead_translations = [LeadTranslation.new]
     fields = f.fields_for :lead_translations, new_object.lead_translations do |builder|
-       render("/shared/leads/lead_fields", :f => builder)
+      render("/shared/leads/lead_fields", :f => builder)
     end
     "add_fields(this, \"#{escape_javascript(fields)}\")"
   end
@@ -30,7 +30,7 @@ module ApplicationHelper
     new_object = current_user.has_any_role?(:admin, :call_centre) ? Lead.new : current_user.leads.build
     new_object.lead_translations = [LeadTranslation.new]
     fields = f.fields_for :lead_translations, new_object.lead_translations do |builder|
-       render("/shared/deals/deal_fields", :f => builder)
+      render("/shared/deals/deal_fields", :f => builder)
     end
     "add_fields(this, \"#{escape_javascript(fields)}\")"
   end
@@ -38,7 +38,7 @@ module ApplicationHelper
   def fields_for_leads_template_fields(f)
     lead_template_field = LeadTemplateField.new
     fields = f.fields_for :lead_template_fields, lead_template_field do |builder|
-       render("/shared/lead_templates/lead_template_field_fields", :f => builder)
+      render("/shared/lead_templates/lead_template_field_fields", :f => builder)
     end
     "add_lead_template_field(this, \"#{escape_javascript(fields)}\")"
   end
@@ -46,15 +46,15 @@ module ApplicationHelper
   def fields_for_result_fields(f)
     result_field = ResultField.new
     fields = f.fields_for :result_fields, result_field do |builder|
-       render("/shared/results/result_field_fields", :f => builder)
+      render("/shared/results/result_field_fields", :f => builder)
     end
     "add_result_field(this, \"#{escape_javascript(fields)}\")"
-  end  
+  end
 
   def fields_for_region_fields(f)
     region = Region.new
     fields = f.fields_for :regions, region do |builder|
-       render("region_fields", :f => builder)
+      render("region_fields", :f => builder)
     end
     "add_region(this, \"#{escape_javascript(fields)}\")"
   end
@@ -91,29 +91,29 @@ module ApplicationHelper
   end
 
   def bt_link_to(icon_name, text, url, opts = {})
-    icon_alt   = text || icon_name.to_s.capitalize
+    icon_alt = text || icon_name.to_s.capitalize
     link_class = text.nil? ? "bt bt_icon" : "bt"
     opts[:class].nil? ? opts[:class] = link_class : opts[:class] = "#{link_class} #{opts[:class]}"
-    icon_tag   = ""
+    icon_tag = ""
     icon_tag = icon(icon_name, icon_alt) unless icon_name.nil?
     icon_tag << "#{text}" unless text.nil?
-    _url       = 'javascript:void(0)'
+    _url = 'javascript:void(0)'
     _url = url_for(url) unless url.nil?
     link_to(content_tag(:span, icon_tag), _url, opts)
   end
 
   def bt_link_to_function(icon_name, text, script, opts = {})
-    icon_alt   = text || icon_name.to_s.capitalize
+    icon_alt = text || icon_name.to_s.capitalize
     link_class = text.nil? ? "bt bt_icon" : "bt"
     opts[:class].nil? ? opts[:class] = link_class : opts[:class] = "#{link_class} #{opts[:class]}"
-    icon_tag   = ""
+    icon_tag = ""
     icon_tag = icon(icon_name, icon_alt) unless icon_name.nil?
     icon_tag << "#{text}" unless text.nil?
     link_to_function(content_tag(:span, icon_tag), script, opts)
   end
 
-  def as_currency(number,currency=nil,precision=nil)
-     if currency
+  def as_currency(number, currency=nil, precision=nil)
+    if currency
       number_to_currency(number,
                          :format => currency.format,
                          :unit => currency.symbol,
@@ -186,10 +186,10 @@ module ApplicationHelper
     content_tag(:div, :class => "frm_tiny") do
       content_tag(:div, :class => "pdd_10") do
         content_tag(:p, msg, :class => "ta_c")
-     end
+      end
     end
   end
-  
+
   def bt_clear_filter(url=nil)
     link_to_function t("common.clear_filter"), "document.location = '#{url || request.path}'"
   end
@@ -197,7 +197,7 @@ module ApplicationHelper
   def bt_clear_filter_safe
     link_to t("common.clear_filter"), "javascript:clear_filter()"
   end
-  
+
   def format_date(date, with_time=false)
     date.strftime("#{I18n.t("date.formats.default")}#{' %H:%M' if with_time}") if date
   end
@@ -209,5 +209,13 @@ module ApplicationHelper
   def escape_uri(uri)
     require 'uri'
     URI.escape(uri, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
+  end
+
+  def deal_show_li(value, label)
+    unless value.blank?
+      content_tag(:li) do
+        content_tag(:div, content_tag(:span, label, :class => "label")+value)
+      end
+    end
   end
 end
