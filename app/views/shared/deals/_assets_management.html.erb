@@ -1,6 +1,6 @@
-<% if @deal.logo.id %>
+<h2><%= t("deals.common.assets.view.logo_label") %></h2>
+<% if @deal.logo and @deal.logo.id %>
     <div class="assets_elements">
-      <h2><%= t("deals.common.assets.view.logo_label") %></h2>
       <ul>
         <li>
           <%= image_tag @deal.logo.asset.url(:thumb) %> <%= link_to t("deals.common.assets.view.show_image"), @deal.logo.asset.url, :target => "_blank" %>
@@ -9,25 +9,19 @@
       </ul>
     </div>
 <% else %>
-    <%= semantic_form_for [:buyers, @deal, @logo], :url => self.send(path, @deal, @logo), :method => :post, :html => {:multipart => true, :id => "deal_logo_form"} do |form| %>
-        <frm title="#{t('deals.common.assets.view.add_logo_label')}">
-          <param:content>
-            <div class="pdd_10">
-              <%= form.file_field :asset %>
-              <%= hidden_field_tag :type, "logo" %>
-            </div>
-          </param:content>
-          <param:actions>
-            <ibt c="fltri" icon="save">
-              <%= form.submit t("deals.common.assets.view.add_logo_button"), :name => "commit_create" %>
-            </ibt>
-          </param:actions>
-        </frm>
+    <%= form.semantic_fields_for :logo, @deal.build_logo do |logo_form| %>
+        <fieldset class="inputs labels_ta_r labels_200">
+          <ol>
+            <%= logo_form.input :asset, :as => :file, :label => "Upload logo" %>
+          </ol>
+        </fieldset>
     <% end %>
 <% end %>
+
+
+<h2><%= t("deals.common.assets.view.images_label") %></h2>
 <% unless @images.blank? %>
     <div class="assets_elements">
-      <h2><%= t("deals.common.assets.view.images_label") %></h2>
       <ul>
         <% @images.each do |image| %>
             <% if image.id %>
@@ -41,25 +35,17 @@
     </div>
 <% end %>
 
-<%= semantic_form_for [:buyers, @deal, @image], :url => self.send(path, @deal, @image), :method => :post, :html => {:multipart => true, :id => "deal_image_form"} do |form| %>
-    <frm title="#{t('deals.common.assets.view.add_image_label')}">
-      <param:content>
-        <div class="pdd_10">
-          <%= form.file_field :asset %>
-          <%= hidden_field_tag :type, "image" %>
-        </div>
-      </param:content>
-      <param:actions>
-        <ibt c="fltri" icon="save">
-          <%= form.submit t("deals.common.assets.view.add_image_button"), :name => "commit_create" %>
-        </ibt>
-      </param:actions>
-    </frm>
+<%= form.semantic_fields_for :images, @deal.images.build do |images_form| %>
+    <fieldset class="inputs labels_ta_r labels_200">
+      <ol>
+        <%= images_form.input :asset, :as => :file, :label => "Upload image" %>
+      </ol>
+    </fieldset>
 <% end %>
 
+<h2><%= t("deals.common.assets.view.materials_label") %></h2>
 <% unless @materials.blank? %>
     <div class="assets_elements">
-      <h2><%= t("deals.common.assets.view.materials_label") %></h2>
       <ul>
         <% @materials.each do |material| %>
             <% if material.id %>
@@ -73,18 +59,10 @@
     </div>
 <% end %>
 
-<%= semantic_form_for [:buyers, @deal, @material], :url => self.send(path, @deal, @material), :method => :post, :html => {:multipart => true, :id => "deal_material_form"} do |form| %>
-    <frm title="#{t('deals.common.assets.view.add_material_label')}">
-      <param:content>
-        <div class="pdd_10">
-          <%= form.file_field :asset %>
-          <%= hidden_field_tag :type, "material" %>
-        </div>
-      </param:content>
-      <param:actions>
-        <ibt c="fltri" icon="save">
-          <%= form.submit t("deals.common.assets.view.add_material_button"), :name => "commit_create" %>
-        </ibt>
-      </param:actions>
-    </frm>
+<%= form.semantic_fields_for :materials, @deal.images.build do |materials_form| %>
+    <fieldset class="inputs labels_ta_r labels_200">
+      <ol>
+        <%= materials_form.input :asset, :as => :file, :label => "Upload material" %>
+      </ol>
+    </fieldset>
 <% end %>

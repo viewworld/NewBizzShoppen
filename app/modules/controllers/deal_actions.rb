@@ -26,11 +26,8 @@ module DealActions
   end
 
   def prepare_assets
-    @logo = @deal.build_logo unless @deal.logo
     @images = @deal.images
     @materials = @deal.materials
-    @image = Asset::DealImage.new
-    @material = Asset::DealMaterial.new
   end
 
   def check_user

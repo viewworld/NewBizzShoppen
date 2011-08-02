@@ -25,6 +25,10 @@ class Deal < AbstractLead
 
   attr_accessor :creation_step
 
+  accepts_nested_attributes_for :logo, :reject_if => proc { |attributes| attributes['asset'].blank? }
+  accepts_nested_attributes_for :images, :reject_if => proc { |attributes| attributes['asset'].blank? }
+  accepts_nested_attributes_for :materials, :reject_if => proc { |attributes| attributes['asset'].blank? }
+
   ajaxful_rateable :stars => 5, :allow_update => false, :cache_column => :deal_average_rating
   acts_as_commentable
 
@@ -77,14 +81,14 @@ class Deal < AbstractLead
 
   def create_uniq_deal_category
     if buyer and creator.buyer?
-        category = buyer.deal_category_id ? LeadCategory.find(buyer.deal_category_id) : LeadCategory.create(:name => buyer.company_name)
-        buyer.update_attribute(:deal_category_id, category.id) if buyer.deal_category_id.blank?
-        category.update_attribute(:is_customer_unique, true) unless category.is_customer_unique
-        unless category.customers.include?(buyer)
-          category.customers << buyer
-          category.save
-        end
-        self.lead_category_id = category.id
+      category = buyer.deal_category_id ? LeadCategory.find(buyer.deal_category_id) : LeadCategory.create(:name => buyer.company_name)
+      buyer.update_attribute(:deal_category_id, category.id) if buyer.deal_category_id.blank?
+      category.update_attribute(:is_customer_unique, true) unless category.is_customer_unique
+      unless category.customers.include?(buyer)
+        category.customers << buyer
+        category.save
+      end
+      self.lead_category_id = category.id
     end
   end
 

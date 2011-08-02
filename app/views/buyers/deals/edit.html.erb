@@ -12,10 +12,13 @@
     </param:actions>
   </header>
 
-  <%= semantic_form_for [:buyers, @deal], :method => :put do |form| %>
+  <%= semantic_form_for [:buyers, @deal], :method => :put, :html => {:multipart => true} do |form| %>
       <frm title="Edit deal">
         <param:content>
           <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal} %>
+          <%= render :partial => "shared/deals/assets_management", :locals => {:form => form, :path => "buyers_deal_assets_path",
+                                                                               :download_path => "download_buyers_deal_asset_path",
+                                                                               :remove_path => "buyers_deal_asset_path"} %>
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="save">
@@ -24,9 +27,4 @@
         </param:actions>
       </frm>
   <% end %>
-
-  <%= render :partial => "shared/deals/assets_management", :locals => {:path => "buyers_deal_assets_path",
-                                                                       :download_path => "download_buyers_deal_asset_path",
-                                                                       :remove_path => "buyers_deal_asset_path"} %>
-
 </column-mc:>

@@ -43,7 +43,7 @@
         <td>
           <h4><%= deal.header %></h4>
 
-          <p class="element_description i expandable"><%= deal.description %></p>
+          <p class="element_description i expandable"><%= image_tag(deal.images.first.asset.url(:thumb), :style => "float:left;margin:4px") unless deal.images.blank? %><%= deal.description %></p>
         </td>
 
         <td>
