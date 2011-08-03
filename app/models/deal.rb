@@ -9,6 +9,7 @@ class Deal < AbstractLead
   has_many :deal_certification_requests
   has_and_belongs_to_many :deal_templates, :class_name => "LeadTemplate", :join_table => "leads_lead_templates", :foreign_key => "lead_id", :association_foreign_key => "lead_template_id"
   belongs_to :lead_category, :class_name => "Category", :foreign_key => "lead_category_id"
+  belongs_to :deal_admin, :class_name => "User", :foreign_key => "deal_admin_email", :primary_key => "email"
 
   scope :without_inactive, where("leads.end_date >= ? and leads.start_date <= ?", Date.today, Date.today)
   scope :without_requested_by, lambda { |u| select("DISTINCT leads.*").joins("LEFT JOIN leads lr ON lr.deal_id = leads.id").where(["(lr.requested_by <> ? OR lr.requested_by IS NULL)", u.id]) if u }
@@ -18,9 +19,11 @@ class Deal < AbstractLead
   scoped_order :header, :end_date, :published, :created_at
 
   validates_presence_of :start_date, :end_date, :email_address
+  validates_presence_of :deal_admin_email, :unless => Proc.new{|d| d.new_record? }
+  validate :deal_admin_presence, :unless => Proc.new{|d| d.new_record? }
 
   before_create :create_uniq_deal_category
-  after_create :certify_for_unknown_email
+  after_create :certify_for_unknown_email, :assign_deal_admin
   before_save :handle_published
 
   attr_accessor :creation_step
@@ -31,6 +34,14 @@ class Deal < AbstractLead
 
   ajaxful_rateable :stars => 5, :allow_update => false, :cache_column => :deal_average_rating
   acts_as_commentable
+
+  def deal_admin_presence
+    self.errors.add(:deal_admin_email, :invalid) if !deal_admin or !deal_admin.has_any_role?(:call_centre, :call_centre_agent)
+  end
+
+  def assign_deal_admin
+    update_attribute(:deal_admin_email, (creator.agent? ? creator.email : Settings.default_deal_admin_email))
+  end
 
   def self.new_for_user(user)
     Deal.new(

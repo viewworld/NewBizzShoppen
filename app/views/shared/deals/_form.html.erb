@@ -72,6 +72,11 @@
                 <%= form.input :published %>
             </span>
         <% end %>
+        <% if current_user.admin? and !form.object.new_record? %>
+            <span id="deal_admin">
+                <%= form.input :deal_admin_email %>
+            </span>
+        <% end %>
       </ol>
     </fieldset>
   </div>
