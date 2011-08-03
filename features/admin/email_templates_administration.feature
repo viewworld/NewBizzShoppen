@@ -68,8 +68,8 @@ Scenario: I can edit category specific email template to be sent when lead is bo
   Then I should see translated "administration.category_email_templates.update.controller.successful_update_notice"
   Then category "Electronics" has email template - "Yes"
 
-@m17 @requested @email_signature
+@m17 @requested @email_signature @is
 Scenario: For each country I can specify email signature
 
-@m17 @requested @email_signature
+@m17 @requested @email_signature @is
 Scenario: The email signature should include Fairleads logo

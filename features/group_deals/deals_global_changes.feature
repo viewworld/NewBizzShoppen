@@ -1,4 +1,4 @@
-@m17 @global_deal_changes
+@m17 @global_deal_changes @is
 Feature: Deals global changes
 
   Scenario: As PM I should be able to share the short deal info on the social networks (facebook, twitter, linkedin)

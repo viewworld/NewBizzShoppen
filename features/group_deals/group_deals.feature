@@ -1,4 +1,4 @@
-@m17 @group_deals
+@m17 @group_deals @is
 Feature: Group deals
 
   Scenario: Normal price, discounted, social media short deal info are mandatory

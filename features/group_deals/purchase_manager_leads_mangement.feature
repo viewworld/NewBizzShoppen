@@ -1,4 +1,4 @@
-@m17 @procurement_leads_management
+@m17 @procurement_leads_management @is
 Feature: Purchase manager leads management
 
   Scenario: I should be able to create new lead as purchase manager

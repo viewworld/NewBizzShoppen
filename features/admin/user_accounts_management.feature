@@ -704,6 +704,6 @@ Scenario: When user has unique category with auto-buy he should not be subscribe
   Then category named "Computers" is auto buy enabled
   And category "Computers" is in interests of user "nbsbuyer3483434biz@nbs.com" "false"
 
-@m17 @requested @log_in_as
+@m17 @requested @log_in_as @is
 Scenario: I can log in as selected user
 
