@@ -43,14 +43,15 @@ Feature: Deals from procurement manager perspective
     Then I should see translated "purchase_manager_home.show.view.header_latest_deals"
     And I should not see "Best sellers"
 
-  @_done @_tested @tgn
+  @_done @_tested @tgn @wip @_deprecated
   Scenario: I can see contact information for deals when I am logged in
     Given a deal named "Some deal #1" exists within category "Electronics deals"
-    Given a deal named "Some deal #1" exists with attributes "contact_name:SE Cupps"
+    #Given a deal named "Some deal #1" exists with attributes "contact_name:SE Cupps"
+    Given a deal named "Some deal #1" exists with attributes "company_name:SE Cupps"
     Then I follow translated "layout.main_menu.shared.browse_deals"
     And I follow "Electronics"
-    Then I should see translated "deals.listing.contact_label"
-    And I should see translated "deals.listing.contact_name_label"
+    #Then I should see translated "deals.listing.contact_label"
+    #And I should see translated "deals.listing.contact_name_label"
     And I should see "SE Cupps"
 
   @_done @_tested @tgn

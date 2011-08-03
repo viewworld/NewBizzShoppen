@@ -17,7 +17,7 @@
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="save">
-            <%= button_to_function t("purchase_manager.leads.new.view.button_create"), "load_next_step()" %>
+            <%= button_to_function t("purchase_manager.leads.new.view.button_create"), @lead.lead_templates.empty? ? "if(validate_lead_form()){$('#new_lead').submit();}" : "load_next_step()" %>
           </ibt>
           <ibt c="bt_grey fltri">
             <%= button_to_function t("administration.settings.edit.view.button_cancel"), "history.go(-1)" %>
@@ -36,7 +36,7 @@
         var is_valid = true;
 
         $.each(['lead_company_name', 'lead_address_line_1', 'lead_address_line_3', 'lead_zip_code', 'lead_zip_code',
-                'lead_country_id', 'lead_contact_name', 'lead_phone_number'], function(index, value) {
+                'lead_country_id', 'lead_contact_name', 'lead_phone_number', 'lead_hidden_description'], function(index, value) {
             field_id = "#" + value;
             if(jQuery.trim($(field_id).val()) == ""){
                 $("li[id='" + value + "_input']").addClass("error");
