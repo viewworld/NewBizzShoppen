@@ -44,7 +44,7 @@
 
           <p>
             <% @deal.images.each do |image| %>
-                <%= image_tag(image.asset.url) %>
+                <%= link_to image_tag(image.asset.url(:medium)), image.asset.url, :rel => "colorbox" %>
             <% end %>
           </p>
       <% end %>
@@ -89,3 +89,12 @@
       <fb:like href="<%= deal_url(@deal) %>" send="false" layout="button_count" width="450" show_faces="false" font=""></fb:like>
   <% end %>
 </column-mc:>
+
+<js:>
+  <script type="text/javascript">
+      jQuery(document).ready(function()
+      {
+          $('a[rel=colorbox]').colorbox();
+      })
+  </script>
+</js:>
