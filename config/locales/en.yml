@@ -1769,7 +1769,7 @@ en:
 
       new:
         view:
-          title: "New lead"
+          title: "Contact request"
           button_create: "Create"
           button_create_and_continue: "Create & continue"
           button_create_and_duplicate: "Create & duplicate"
@@ -3147,7 +3147,7 @@ en:
         header_for: "Deals for"
         header_latest_leads: "Latest deals"
         request_information: "Request information"
-        contact_me: "Contact me"
+        contact_me: "Get deal"
       search:
         keyword_label: "Keyword"
         search_button: "Search"

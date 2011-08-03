@@ -12,7 +12,7 @@
         <th class="no_pdd_lr" style="width: 10px;"><%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %></th>
     <% end %>
     <th style="width: 550px;"><%= t("deals.listing.lead_description_label") %></th>
-    <th colspan="2"><%= t("deals.listing.contact_label") %></th>
+    <th colspan="2"><%#= t("deals.listing.contact_label") %></th>
 
     <% if block_tools %>
         <th class="ta_r"><%= t("deals.listing.actions_label") %></th>
@@ -42,26 +42,55 @@
 
         <td>
           <h4><%= deal.header %></h4>
+          (Activation date: <%= format_date deal.start_date %> - <%= format_date deal.end_date %>)
+          <p class="element_description i expandable"><b>Description:</b> <%= deal.description %></p>
 
-          <p class="element_description i expandable"><%= image_tag(deal.images.first.asset.url(:thumb), :style => "float:left;margin:4px") unless deal.images.blank? %><%= deal.description %></p>
+          <% unless deal.fine_print.blank? %>
+              <p class="element_description i expandable"><b>Fine print:</b> <%= deal.fine_print %></p>
+          <% end %>
+
+          <% unless deal.images.blank? %>
+              <p>
+                <% deal.images.each do |image| %>
+                    <%= link_to image_tag(image.asset.url(:thumb)), image.asset.url, :rel => "colorbox_#{deal.id}" %>
+                <% end %></p>
+          <% end %>
+
+          <% unless deal.materials.blank? %>
+              <p>
+                <% deal.materials.each do |material| %>
+                    <%= link_to material.asset_file_name, download_buyers_deal_asset_path(deal, material) %>&nbsp;&nbsp;&nbsp;
+                <% end %></p>
+          <% end %>
+
+
         </td>
 
         <td>
           <% if user_signed_in? and current_user.has_any_role?(:purchase_manager, :admin) %>
-            <p class="element"><%= t("deals.listing.contact_name_label") %><b> <%= deal.contact_name %></b></p>
-            <p class="element"><%= t("deals.listing.contact_email_label") %><b> <%= deal.email_address %></b></p>
-            <p class="element"><%= t("deals.listing.contact_phone_number_label") %><b> <%= deal.phone_number %></b></p>
-            <p class="element"><%= deal.address %></p>
-            <br />
-            <p class="element"><%= t("deals.listing.company_name_label") %><b> <%= deal.company_name %></b></p>
-            <p class="element"><%= t("deals.listing.company_description_label") %><b> <%= deal.company_description %></b></p>
-            <p class="element"><%= t("deals.listing.rating_label") %>
-              <% if deal.rated_by?(current_user) %>
-                  <b><%= deal.deal_average_rating %>/5</b><br />
-              <% else %>
-                <%= ratings_for(deal) %></p>
+              <!--<p class="element"><%= t("deals.listing.contact_name_label") %><b> <%= deal.contact_name %></b></p>-->
+              <!--<p class="element"><%= t("deals.listing.contact_email_label") %><b> <%= deal.email_address %></b></p>-->
+              <!--<p class="element"><%= t("deals.listing.contact_phone_number_label") %><b> <%= deal.phone_number %></b></p>-->
+              <!--<p class="element"><%= deal.address %></p>-->
+              <!--<br />-->
+
+              <% unless deal.logo.blank? %>
+                  <%= image_tag(deal.logo.asset.url(:thumb), :style => "float:left;margin:4px") %>
               <% end %>
-            <br/>
+
+              <p class="element"><%= t("deals.listing.company_name_label") %>
+                <b> <%= deal.company_name %></b></p>
+
+              <p class="element"><%= t("deals.listing.company_description_label") %>
+                <b> <%= deal.company_description %></b></p>
+
+              <p class="element"><%= t("deals.listing.rating_label") %>
+                <% if deal.rated_by?(current_user) %>
+                    <b><%= deal.deal_average_rating %>/5</b><br/>
+                <% else %>
+                    <%= ratings_for(deal) %></p>
+                <% end %>
+                <br/>
           <% end %>
         </td>
 
@@ -77,8 +106,8 @@
 
         <td class="cr va_b">
           <div class="row_tooltip_actions">
-                <%= link_to deal.comment_threads.count.zero? ? !user_signed_in? ? t("deals.listing.no_comments") : t("deals.listing.create_comment") : t("deals.listing.show_comments"), "javascript:void(0)", :class => "toggle_row show_comments#{' toggle_row_unread' if deal.has_unread_comments_for_user?(current_user)}", :onclick => "if(#{user_signed_in? ? 'true' : 'false'}){deal_mark_comments_as_read(#{deal.id}); mark_row_as_read('#{dom_id(deal)}')}" %>
-                <%= link_to t("deals.listing.hide_comments"), "javascript:void(0)", :class => "toggle_row hide_comments", :style => "display:none" %>
+            <%= link_to deal.comment_threads.count.zero? ? !user_signed_in? ? t("deals.listing.no_comments") : t("deals.listing.create_comment") : t("deals.listing.show_comments"), "javascript:void(0)", :class => "toggle_row show_comments#{' toggle_row_unread' if deal.has_unread_comments_for_user?(current_user)}", :onclick => "if(#{user_signed_in? ? 'true' : 'false'}){deal_mark_comments_as_read(#{deal.id}); mark_row_as_read('#{dom_id(deal)}')}" %>
+            <%= link_to t("deals.listing.hide_comments"), "javascript:void(0)", :class => "toggle_row hide_comments", :style => "display:none" %>
           </div>
         </td>
       </tr>
@@ -87,7 +116,7 @@
         <td class="cl"></td>
         <td colspan="4">
           <div class="row_tooltip_content comments_details">
-            <%= render :partial => "/shared/deal_comments/deal_threads", :locals => { :deal => deal, :threads => deal.comment_threads.roots.order("created_at DESC") } %>
+            <%= render :partial => "/shared/deal_comments/deal_threads", :locals => {:deal => deal, :threads => deal.comment_threads.roots.order("created_at DESC")} %>
           </div>
         </td>
         <td class="cr"></td>
@@ -123,8 +152,7 @@
 
 <script type=text/javascript>
 
-    function hideRowButtons()
-    {
+    function hideRowButtons() {
         $(".toggle_row.hide_details:visible, .toggle_row.hide_comments:visible").hide().prev().show();
     }
 
@@ -134,8 +162,8 @@
 
             $(".row_tooltip").filter(":not(:eq(" + $(this).parents("tr:first").next().index(".row_tooltip") + "))")
                     .filter(":visible").find(".row_tooltip_content:visible").slideUp("normal", function() {
-                $(this).parents("tr.row_tooltip").hide()
-            });
+                        $(this).parents("tr.row_tooltip").hide()
+                    });
 
             hideRowButtons();
 
@@ -152,17 +180,16 @@
             $(this).hide().prev().show().parents("tr:first")
                     .next("tr.row_tooltip")
                     .find(".lead_details").slideUp('normal', function() {
-                $(this).parents("tr.row_tooltip").hide();
-            });
+                        $(this).parents("tr.row_tooltip").hide();
+                    });
         });
 
 
-        $(".toggle_row.show_comments").bind("click", function()
-        {
+        $(".toggle_row.show_comments").bind("click", function() {
             $(".row_tooltip").filter(":not(:eq(" + $(this).parents("tr:first").next().index(".row_tooltip") + "))")
                     .filter(":visible").find(".row_tooltip_content:visible").slideUp("normal", function() {
-                $(this).parents("tr.row_tooltip").hide()
-            });
+                        $(this).parents("tr.row_tooltip").hide()
+                    });
 
             hideRowButtons();
 
@@ -174,16 +201,16 @@
 
         });
 
-        $(".toggle_row.hide_comments").bind("click", function()
-        {
+        $(".toggle_row.hide_comments").bind("click", function() {
             hideRowButtons();
 
             $(this).hide().prev().show().parents("tr:first")
                     .next("tr.row_tooltip")
                     .find(".comments_details").slideUp('normal', function() {
-                $(this).parents("tr.row_tooltip").hide();
-            });
+                        $(this).parents("tr.row_tooltip").hide();
+                    });
         });
     });
+
 
 </script>
