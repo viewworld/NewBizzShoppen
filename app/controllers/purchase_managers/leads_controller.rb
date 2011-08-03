@@ -50,7 +50,7 @@ class PurchaseManagers::LeadsController < PurchaseManagers::PurchaseManagerContr
     @lead = Lead.new(params[:lead])
     @lead.based_on_deal(@deal, current_user)
     session[:selected_category] = @lead.category_id
-    @lead.creation_step = 2
+    @lead.creation_step = 3
     create! do |success, failure|
       success.html {
         redirect_to purchase_managers_lead_path(@lead)
