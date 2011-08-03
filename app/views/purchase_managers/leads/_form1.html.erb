@@ -15,7 +15,6 @@
         <%= form.input :country_id, :as => :select, :collection => Country.all, :required => true, :input_html => {:onchange => "refresh_phone_codes(); refresh_regions_list('lead');"}, :hint => hint_for(@lead, :country_id) %>
         <%= form.input :region_id, :as => :select, :collection => @lead.country.present? ? @lead.country.regions : [], :hint => hint_for(@lead, :region_id) %>
         <%= form.input :company_vat_no, :hint => hint_for(@lead, :company_vat_no) %>
-        <%= form.input :company_ean_number, :hint => hint_for(@lead, :company_ean_number) %>
       </ol>
     </fieldset>
   </div>
@@ -34,7 +33,8 @@
         <%= form.input :email_address, :hint => hint_for(@lead, :email_address) %>
         <%= form.input :linkedin_url, :hint => hint_for(@lead, :linkedin_url) %>
         <%= form.input :facebook_url, :hint => hint_for(@lead, :facebook_url) %>
-        <%= form.input :note, :as => :text, :hint => hint_for(@lead, :note), :input_html => {:cols => 40, :rows => 10 } if @contact %>
+        <%= form.input :note, :as => :text, :hint => hint_for(@lead, :note), :input_html => {:style => "height: 150px;width:230px;"} if @contact %>
+        <%= form.input :hidden_description, :label => t("purchase_manager.leads.new.view.lead_note"), :input_html => {:style => "height: 150px;width:230px;"}  %>
       </ol>
     </fieldset>
   </div>
