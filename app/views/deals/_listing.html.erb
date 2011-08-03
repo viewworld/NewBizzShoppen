@@ -90,12 +90,8 @@
                 <b> <%= deal.company_description %></b></p>
 
               <p class="element"><%= t("deals.listing.rating_label") %>
-                <% if deal.rated_by?(current_user) %>
-                    <b><%= deal.deal_average_rating %>/5</b><br/>
-                <% else %>
-                    <%= ratings_for(deal) %></p>
-                <% end %>
-                <br/>
+                <%= ratings_for(deal) %></p>
+                <br/><br/>
           <% end %>
         </td>
 
