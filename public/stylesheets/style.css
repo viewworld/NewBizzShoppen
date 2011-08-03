@@ -1817,7 +1817,12 @@ span.cke_skin_kama
 
 .assets_elements
 {
-    padding: 10px 0;
+    margin-top: 0 !important;
+}
+
+.assets_elements.materials
+{
+    margin-top: 6px !important;
 }
 
 .assets_elements h2

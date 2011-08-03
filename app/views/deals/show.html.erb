@@ -44,7 +44,7 @@
 
           <p>
             <% @deal.images.each do |image| %>
-                <%= image_tag(image.asset.url) %>
+                <%= link_to image_tag(image.asset.url(:medium)), image.asset.url, :rel => "colorbox" %>
             <% end %>
           </p>
       <% end %>
@@ -87,3 +87,12 @@
       <iframe src="http://www.facebook.com/plugins/like.php?app_id=101408449959161&amp;href=<%= escape_uri(deal_url(@deal)) %>&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:21px;" allowTransparency="true"></iframe>
   <% end %>
 </column-mc:>
+
+<js:>
+  <script type="text/javascript">
+      jQuery(document).ready(function()
+      {
+          $('a[rel=colorbox]').colorbox();
+      })
+  </script>
+</js:>
