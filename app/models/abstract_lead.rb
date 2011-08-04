@@ -35,10 +35,14 @@ class AbstractLead < ActiveRecord::Base
   after_create :cache_creator_name
   before_save :change_creator, :set_euro_price
   before_save :set_published_at
+  before_validation :strip_email_address
 
   accepts_nested_attributes_for :lead_translations, :allow_destroy => true
   accepts_nested_attributes_for :lead_template_values, :allow_destroy => true
 
+  def strip_email_address
+    self.email_address.to_s.strip!
+  end
 
   def set_euro_price
     if price.to_i > 0 and currency.present? and price_changed?
