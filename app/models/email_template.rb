@@ -16,10 +16,14 @@ class EmailTemplate < ActiveRecord::Base
     body.gsub(/\n/,"").gsub(/\r/,"").gsub(/[']/, '\\\\\'')
   end
 
+  def signature
+    "<table border=\"0\" cellpadding=\"4\" cellspacing=\"4\" style=\"height: 55px; width: 800px\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td>\r\n\t\t\t\t<img alt=\"Logo Fairleads\" src=\"{{country.email_template_signature_logo_url}}\" /></td>\r\n\t\t\t<td>\r\n\t\t\t\t{{country.email_template_signature}}</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n<p>\r\n\t&nbsp;</p>\r\n"
+  end
+
   private
 
   #Template cannot be cached due to dynamic translations
   def template
-    Liquid::Template.parse body
+    Liquid::Template.parse(body + signature)
   end
 end

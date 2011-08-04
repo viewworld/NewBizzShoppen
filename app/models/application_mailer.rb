@@ -3,6 +3,7 @@ class ApplicationMailer < ActionMailer::Base
           :return_path => "admin@fairleads.com"
 
   def email_template(to, email_template, options = {})
+    options[:country] = Country.find_by_locale(I18n.locale)
     subject = email_template.render_subject(options)
     body = email_template.render(options)
     bcc_recipients = options.delete(:bcc_recipients) || email_template.bcc

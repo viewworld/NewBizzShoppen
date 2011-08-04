@@ -68,8 +68,16 @@ Scenario: I can edit category specific email template to be sent when lead is bo
   Then I should see translated "administration.category_email_templates.update.controller.successful_update_notice"
   Then category "Electronics" has email template - "Yes"
 
-@m17 @requested @email_signature
+@m17 @requested @email_signature @wip
 Scenario: For each country I can specify email signature
+  Then I follow translated "layout.main_menu.admin.countries"
+  Then I follow translated "administration.countries.index.view.edit"
+  Then I fill in "country_email_template_signature" with "marvel vs dc comics"
+  Then attach the file "sample image" to "country_logo_attributes_asset"
+  Then I follow translated "administration.countries.edit.view.button_update_country"
+  Then I follow translated "administration.countries.index.view.edit"
+  Then show me the page
+
 
 @m17 @requested @email_signature
 Scenario: The email signature should include Fairleads logo

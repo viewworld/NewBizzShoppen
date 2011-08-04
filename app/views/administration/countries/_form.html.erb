@@ -1,12 +1,48 @@
-<div class="pdd_10 no_pdd_t">
-  <fieldset class="inputs labels_ta_r labels_240">
-    <ol class="align_inputs">
-      <%= form.input :name %>
-      <%= form.input :locale %>
-      <%= form.input :detailed_locale %>
-    </ol>
-  </fieldset>
+<div class="column_left">
+  <div class="pdd_10 no_pdd_t">
+    <fieldset class="inputs labels_ta_r labels_200">
+      <ol class="align_inputs">
+        <%= form.input :name %>
+        <%= form.input :locale %>
+        <%= form.input :detailed_locale %>
+
+        <% if @country.logo and @country.logo.id %>
+            <ol>
+              <li class="string">
+                <label><%= "Email template signature logo" %></label>
+
+                <div class="txt assets_elements">
+                  <ul>
+                    <li>
+                      <%= image_tag @country.logo.asset.url %>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </ol>
+        <% else %>
+            <%= form.semantic_fields_for :logo, @country.build_logo do |logo_form| %>
+                <ol>
+                  <%= logo_form.input :asset, :as => :file, :label => "Upload signature logo" %>
+                </ol>
+            <% end %>
+        <% end %>
+
+      </ol>
+    </fieldset>
+  </div>
 </div>
+
+<div class="column_right">
+  <div class="pdd_10 no_pdd_t">
+    <fieldset class="inputs labels_ta_r labels_200">
+      <ol class="align_inputs">
+        <%= form.input :email_template_signature, :as => :text, :input_html => {:style => "width:230px;height:130px"} %>
+      </ol>
+    </fieldset>
+  </div>
+</div>
+<clb/>
 
 <%= form.fields_for :regions, @country.regions do |builder| %>
     <%= render :partial => "region_fields", :locals => {:f => builder} %>
@@ -33,12 +69,10 @@
     function remove_region(id, record_id) {
         nestedFormsCount = nestedFormsCount - 1;
 
-        if (record_id == null)
-        {
+        if (record_id == null) {
             $('#region_field_form_' + id).remove();
         }
-        else
-        {
+        else {
             $('#region_field_form_' + id).hide();
             $('#destroy_hidden_field_' + record_id.toString()).val('true')
         }
