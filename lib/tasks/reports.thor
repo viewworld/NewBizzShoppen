@@ -15,7 +15,7 @@ class Reports < Thor
     puts "campaigns: #{options[:campaigns]}, users per campaign: #{options[:users]}, contacts per user in campaign: #{options[:contacts]}, hours spent per user: #{options[:spent]}"
 
     @currency = Currency.euro
-    @category = Category.all.detect { |c| c.can_publish_leads? } || Category.make!
+    @category = LeadCategory.all.detect { |c| c.can_publish_leads? } || LeadCategory.make!
     @country = Country.first || Country.make!
 
     email = "call_centre_test#{Time.now.to_i}@nbs.com"

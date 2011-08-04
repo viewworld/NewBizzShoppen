@@ -21,7 +21,16 @@ module ApplicationHelper
     new_object = current_user.has_any_role?(:admin, :call_centre) ? Lead.new : current_user.leads.build
     new_object.lead_translations = [LeadTranslation.new]
     fields = f.fields_for :lead_translations, new_object.lead_translations do |builder|
-       render("/shared/leads/lead_fields", :f => builder)
+      render("/shared/leads/lead_fields", :f => builder)
+    end
+    "add_fields(this, \"#{escape_javascript(fields)}\")"
+  end
+
+  def fields_for_deals_translations(f)
+    new_object = current_user.has_any_role?(:admin, :call_centre) ? Lead.new : current_user.leads.build
+    new_object.lead_translations = [LeadTranslation.new]
+    fields = f.fields_for :lead_translations, new_object.lead_translations do |builder|
+      render("/shared/deals/deal_fields", :f => builder)
     end
     "add_fields(this, \"#{escape_javascript(fields)}\")"
   end
@@ -29,7 +38,7 @@ module ApplicationHelper
   def fields_for_leads_template_fields(f)
     lead_template_field = LeadTemplateField.new
     fields = f.fields_for :lead_template_fields, lead_template_field do |builder|
-       render("/shared/lead_templates/lead_template_field_fields", :f => builder)
+      render("/shared/lead_templates/lead_template_field_fields", :f => builder)
     end
     "add_lead_template_field(this, \"#{escape_javascript(fields)}\")"
   end
@@ -37,15 +46,15 @@ module ApplicationHelper
   def fields_for_result_fields(f)
     result_field = ResultField.new
     fields = f.fields_for :result_fields, result_field do |builder|
-       render("/shared/results/result_field_fields", :f => builder)
+      render("/shared/results/result_field_fields", :f => builder)
     end
     "add_result_field(this, \"#{escape_javascript(fields)}\")"
-  end  
+  end
 
   def fields_for_region_fields(f)
     region = Region.new
     fields = f.fields_for :regions, region do |builder|
-       render("region_fields", :f => builder)
+      render("region_fields", :f => builder)
     end
     "add_region(this, \"#{escape_javascript(fields)}\")"
   end
@@ -82,29 +91,29 @@ module ApplicationHelper
   end
 
   def bt_link_to(icon_name, text, url, opts = {})
-    icon_alt   = text || icon_name.to_s.capitalize
+    icon_alt = text || icon_name.to_s.capitalize
     link_class = text.nil? ? "bt bt_icon" : "bt"
     opts[:class].nil? ? opts[:class] = link_class : opts[:class] = "#{link_class} #{opts[:class]}"
-    icon_tag   = ""
+    icon_tag = ""
     icon_tag = icon(icon_name, icon_alt) unless icon_name.nil?
     icon_tag << "#{text}" unless text.nil?
-    _url       = 'javascript:void(0)'
+    _url = 'javascript:void(0)'
     _url = url_for(url) unless url.nil?
     link_to(content_tag(:span, icon_tag), _url, opts)
   end
 
   def bt_link_to_function(icon_name, text, script, opts = {})
-    icon_alt   = text || icon_name.to_s.capitalize
+    icon_alt = text || icon_name.to_s.capitalize
     link_class = text.nil? ? "bt bt_icon" : "bt"
     opts[:class].nil? ? opts[:class] = link_class : opts[:class] = "#{link_class} #{opts[:class]}"
-    icon_tag   = ""
+    icon_tag = ""
     icon_tag = icon(icon_name, icon_alt) unless icon_name.nil?
     icon_tag << "#{text}" unless text.nil?
     link_to_function(content_tag(:span, icon_tag), script, opts)
   end
 
-  def as_currency(number,currency=nil,precision=nil)
-     if currency
+  def as_currency(number, currency=nil, precision=nil)
+    if currency
       number_to_currency(number,
                          :format => currency.format,
                          :unit => currency.symbol,
@@ -151,9 +160,19 @@ module ApplicationHelper
   end
 
   def link_to_view_templates(category)
+    role = current_user.role.to_s.pluralize
+    link_to(t("categories.index.view.view_lead_templates"), self.send("#{role}_lead_templates_path", :search => { :with_category => category.id }), :class => "text_action")
+  end
+
+  def link_to_view_deal_templates(category)
+    if user_signed_in? and current_user.can_create_lead_templates? and !current_user.has_role?(:admin) and (current_user.has_role?(:customer) and current_user.deal_category_id == category.id)
+      link_to_view_templates(category)
+    end
+  end
+
+  def link_to_view_lead_templates(category)
     if user_signed_in? and current_user.can_create_lead_templates? and !current_user.has_role?(:admin)
-      role = current_user.role.to_s.pluralize
-      link_to(t("categories.index.view.view_lead_templates"), self.send("#{role}_lead_templates_path", :search => { :with_category => category.id }), :class => "text_action")
+      link_to_view_templates(category)
     end
   end
 
@@ -167,10 +186,10 @@ module ApplicationHelper
     content_tag(:div, :class => "frm_tiny") do
       content_tag(:div, :class => "pdd_10") do
         content_tag(:p, msg, :class => "ta_c")
-     end
+      end
     end
   end
-  
+
   def bt_clear_filter(url=nil)
     link_to_function t("common.clear_filter"), "document.location = '#{url || request.path}'"
   end
@@ -178,7 +197,7 @@ module ApplicationHelper
   def bt_clear_filter_safe
     link_to t("common.clear_filter"), "javascript:clear_filter()"
   end
-  
+
   def format_date(date, with_time=false)
     date.strftime("#{I18n.t("date.formats.default")}#{' %H:%M' if with_time}") if date
   end
@@ -187,15 +206,16 @@ module ApplicationHelper
     "window.location.href='#{url}'"
   end
 
-  def t(key, options = {})
-    super
-#    if current_user_has_any_role? [:admin, :translator]
-#      (super + link_to_function(" [edit]", "update_translation('#{I18n.locale}','#{key}')", :class => "update_translation_link")).html_safe
-#      raw super + javascript_tag("attach_update_translation_link('#{I18n.locale}','#{key}')")
-#      raw super + content_tag(:t, " [edit]", :id => "translate_#{locale}_#{key.gsub('.','_')}").html_safe
-#      super + "#{I18n.locale.to_s}::#{key}"
-#    else
-#      super + "#{I18n.locale.to_s}::#{key}"
-#    end
+  def escape_uri(uri)
+    require 'uri'
+    URI.escape(uri, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
+  end
+
+  def deal_show_li(value, label)
+    unless value.blank?
+      content_tag(:li) do
+        content_tag(:div, content_tag(:span, label, :class => "label")+value)
+      end
+    end
   end
 end

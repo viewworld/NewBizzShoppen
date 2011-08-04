@@ -103,8 +103,21 @@ class Campaign < ActiveRecord::Base
     return_contact_to_the_pool
   end
 
-  def assign_results(ids)
-    self.results = ids.blank? ? [] : Result.find(ids)
+  def assign_results(params)
+    self.results = params[:campaign_result_ids].blank? ? [] : Result.find(params[:campaign_result_ids])
+    self.results.each do |r|
+      if params["result"] and params["result"][r.id.to_s] and params["result"][r.id.to_s]["campaign_result"] and cr = r.campaigns_results.detect { |cr| cr.campaign_id == self.id }
+        cr.value = params["result"][r.id.to_s]["campaign_result"]["value"] if params["result"][r.id.to_s]["campaign_result"]["value"]
+        cr.expected_completed_per_hour = params["result"][r.id.to_s]["campaign_result"]["expected_completed_per_hour"] if params["result"][r.id.to_s]["campaign_result"]["expected_completed_per_hour"]
+        cr.save
+      elsif params["result"] and params["result"][r.id.to_s] and params["result"][r.id.to_s]["campaign_result"]
+        r.campaigns_results.create(
+            :campaign_id => id,
+            :value => params["result"][r.id.to_s]["campaign_result"]["value"],
+            :expected_completed_per_hour => params["result"][r.id.to_s]["campaign_result"]["expected_completed_per_hour"]
+        )
+      end
+    end
   end
 
   def results_for_select

@@ -38,7 +38,7 @@ class LeadPurchaseBase < ActiveRecord::Base
   scope :with_deal_value_to, lambda { |to| where("leads.purchase_value <= ?", to) }
   scope :with_country, lambda { |country_id| where("leads.country_id = ?", country_id) }
   scope :with_zip_code, lambda { |zip_code| where("leads.zip_code = ?", zip_code) }
-  scope :with_requested_by, lambda { |requested_by| where("requested_by = ?", requested_by) }
+  scope :with_requested_by, lambda { |requested_by| where("lead_purchases.requested_by = ?", requested_by) }
   scope :with_paid, lambda {|paid| where(:paid => paid) }
 
   scope :in_cart, where(:paid => false, :accessible_from => nil)
@@ -53,7 +53,7 @@ class LeadPurchaseBase < ActiveRecord::Base
   scope :with_not_invoiced_keyword, lambda { |keyword| where("lower(leads.header) LIKE :keyword OR lower(leads.contact_name) LIKE :keyword OR lower(leads.company_name) LIKE :keyword", { :keyword => "%#{keyword.downcase}%" }) }
   scope :with_assigned_at_date_after_and_including, lambda{ |date| where(["assigned_at::DATE >= ?",date.to_postgresql_date])}
   scope :with_assigned_at_date_before_and_including, lambda{ |date| where(["assigned_at::DATE <= ?",date.to_postgresql_date])}
-  scope :with_purchased_by, lambda { |buyer| where("requested_by IS NULL and (owner_id = ? or purchased_by = ?)", buyer.id, buyer.id) }
+  scope :with_purchased_by, lambda { |buyer| where("lead_purchases.requested_by IS NULL and (lead_purchases.owner_id = ? or lead_purchases.purchased_by = ?)", buyer.id, buyer.id) }
   scope :with_not_invoiced_for_user, lambda { |user| joins("LEFT JOIN invoice_lines ON invoice_lines.payable_id = lead_purchases.id LEFT JOIN users ON users.id = lead_purchases.owner_id").where(["invoice_lines.payable_id IS NULL AND users.big_buyer IS TRUE AND users.id = ?", user.to_i]) }
   scope :with_lead, lambda {|lead_id| where(:lead_id => lead_id)}
 

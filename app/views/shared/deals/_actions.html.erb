@@ -1,0 +1,19 @@
+<header>
+  <param:content>
+    <%= t("deals.common.listing.view.header") %>
+  </param:content>
+  <% if current_user.has_one_of_roles?(:customer, :admin, :call_centre_agent, :call_centre) %>
+      <param:actions>
+        <%= form_tag path, :method => :get, :id => "form_new_deal" do %>
+            <ul class="header_actions">
+              <li class="last">
+                <div class="hidden">
+                  <%= submit_tag "New" %>
+                </div>
+                <%= bt_link_to :plus, t("deals.common.listing.view.new_deal"), "javascript:void", :onclick => "$('#form_new_deal').submit()" %>
+              </li>
+            </ul>
+        <% end %>
+      </param:actions>
+  <% end %>
+</header>

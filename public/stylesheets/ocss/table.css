@@ -151,6 +151,11 @@
     margin-top: 0;
 }
 
+#deals .row_tooltip_actions
+{
+    left: 900px;
+}
+
 
 .row_tooltip_actions a.toggle_row
 {

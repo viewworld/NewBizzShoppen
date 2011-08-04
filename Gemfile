@@ -39,8 +39,8 @@ gem "devise_rpx_connectable"
 #gem "jammit"
 gem 'ruby-hmac', '0.4.0'
 gem 'jammit-s3', :path => "vendor/gems/jammit-s3"
+gem "ajaxful_rating", :path => 'vendor/gems/ajaxful-rating'
 gem 'postmark-rails'
-
 
 group :development do
   gem 'diff-lcs'

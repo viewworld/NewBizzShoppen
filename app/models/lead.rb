@@ -14,13 +14,16 @@ class Lead < AbstractLead
   belongs_to :country
   belongs_to :currency
   belongs_to :region
+  belongs_to :requestee, :class_name => "User::PurchaseManager", :foreign_key => :requested_by
   has_many :lead_certification_requests
   has_many :lead_translations, :dependent => :destroy
   has_many :lead_purchases
   has_many :lead_template_values
   has_many :comment_threads, :class_name => "Comment", :foreign_key => :commentable_id, :conditions => {:commentable_type => 'AbstractLead'}
 
-  scope :with_keyword, lambda { |q| where("lower(header) like :keyword OR lower(leads.description) like :keyword OR lower(creator_name) like :keyword", {:keyword => "%#{q.downcase}%"}) }
+  validates_presence_of :price, :purchase_decision_date, :sale_limit, :category_id
+  validates_inclusion_of :sale_limit, :in => 0..10, :if => :process_for_lead_information?
+
   scope :deal_value_from, lambda { |q| where(["purchase_value >= ?", q]) }
   scope :deal_value_to, lambda { |q| where(["purchase_value <= ?", q]) }
   scope :price_from, lambda { |q| where(["price >= ?", q]) }
@@ -29,37 +32,30 @@ class Lead < AbstractLead
   scope :lead_purchases_counter_to, lambda { |q| where(["lead_purchases_counter <= ?", q]) }
   scope :purchase_value_from, lambda { |q| where(["purchase_value >= ?", q]) }
   scope :purchase_value_to, lambda { |q| where(["purchase_value <= ?", q]) }
-  scope :with_category, lambda { |q| where(:category_id => Category.find_by_id(q).self_and_descendants.map(&:id)) }
-  scope :with_selected_categories, lambda { |q| where(:category_id => q) }
   scope :with_categories, lambda { |arr| where(:category_id => Category.where(:id => arr.map(&:self_and_descendants).flatten.map(&:id))) }
-  scope :with_country, lambda { |country_id| where(:country_id => country_id) }
-  scope :with_zip_code, lambda { |zip_code| where(:zip_code => zip_code) }
-  scope :with_region, lambda { |region_id| where(:region_id => region_id.to_i) }
   scope :with_ids_not_in, lambda { |q| where(["leads.id NOT IN (?)", q]) }
   scope :without_inactive, where("((select sum(quantity) from lead_purchases where lead_id = leads.id group by lead_id) is null or (select sum(quantity) from lead_purchases where lead_id = leads.id group by lead_id) < sale_limit)")
   scope :without_outdated, lambda { where("purchase_decision_date >= ?", Date.today.to_s) }
   scope :without_locked_users, joins("INNER JOIN users ON users.id=leads.creator_id").where("users.locked_at is NULL")
   scope :with_status, lambda { |q| where(["leads.published = ?", q]) }
-  scope :published_only, where(:published => true)
   scope :with_creator_type, lambda { |creator_type| where(["leads.creator_type = ?", "User::#{creator_type}"]) }
   scope :within_accessible_categories, lambda { |accessible_categories_ids| where("leads.category_id IN (?)", accessible_categories_ids) }
   scope :with_call_centre, lambda { |call_centre_id| where(["users.parent_id = ?", call_centre_id]).joins("INNER JOIN users ON leads.creator_id=users.id") }
-  #====================
+    #====================
   scope :featured, where(:featured => true)
   scope :purchased, where("lead_purchases_counter > 0")
   scope :without_bought_and_requested_by, lambda { |u| select("DISTINCT leads.*").joins("LEFT JOIN lead_purchases lp ON lp.lead_id = leads.id").where(["(lp.owner_id <> ? OR lp.owner_id IS NULL) AND (lp.assignee_id <> ? OR lp.assignee_id IS NULL) AND (lp.requested_by <> ? OR lp.requested_by IS NULL)", u.id, u.id, u.id]) if u }
   scope :bestsellers, order("lead_purchases_counter DESC")
-  scope :latest, order("created_at DESC")
   scope :contact_requests_for, lambda { |user_id| where("leads.creator_id = :id or leads.email_address = :email", {:id => user_id, :email => User.find(user_id).email}) }
   scope :interesting_for_user, lambda { |user| where("leads.category_id IN (?)", user.accessible_categories_ids) }
 
   scope :joins_on_lead_purchases, joins("INNER JOIN lead_purchases ON lead_purchases.lead_id=leads.id")
   scope :with_created_by, lambda { |agent_id| where("creator_id = ?", agent_id) }
   scope :with_created_by_call_centre, lambda { |call_centre| where("creator_id IN (?)", call_centre.subaccount_ids) }
-  scope :with_revenue_by, lambda { |agent| select("sum(lead_purchases.euro_price) as id").where("creator_id IN (?) and requested_by IS NULL", agent.has_role?(:call_centre) ? agent.subaccount_ids : agent.id).joins_on_lead_purchases }
-  scope :with_rated_good_by, lambda { |agent| where("creator_id = ? and lead_purchases.rating_level > -1 and lead_purchases.rating_level <= ? and requested_by IS NULL", agent.id, LeadPurchase::RATING_SATISFACTORY).joins_on_lead_purchases }
-  scope :with_rated_bad_by, lambda { |agent| where("creator_id = ? and lead_purchases.rating_level > ? and requested_by IS NULL", agent.id, LeadPurchase::RATING_SATISFACTORY).joins_on_lead_purchases }
-  scope :with_not_rated_by, lambda { |agent| where("creator_id = ? and (lead_purchases.rating_level = -1 or lead_purchases.rating_level is NULL) and requested_by IS NULL", agent.id).joins_on_lead_purchases }
+  scope :with_revenue_by, lambda { |agent| select("sum(lead_purchases.euro_price) as id").where("leads.creator_id IN (?) and lead_purchases.requested_by IS NULL", agent.has_role?(:call_centre) ? agent.subaccount_ids : agent.id).joins_on_lead_purchases }
+  scope :with_rated_good_by, lambda { |agent| where("creator_id = ? and lead_purchases.rating_level > -1 and lead_purchases.rating_level <= ? and lead_purchases.requested_by IS NULL", agent.id, LeadPurchase::RATING_SATISFACTORY).joins_on_lead_purchases }
+  scope :with_rated_bad_by, lambda { |agent| where("creator_id = ? and lead_purchases.rating_level > ? and lead_purchases.requested_by IS NULL", agent.id, LeadPurchase::RATING_SATISFACTORY).joins_on_lead_purchases }
+  scope :with_not_rated_by, lambda { |agent| where("creator_id = ? and (lead_purchases.rating_level = -1 or lead_purchases.rating_level is NULL) and lead_purchases.requested_by IS NULL", agent.id).joins_on_lead_purchases }
 
   scope :with_not_invoiced_for_user, lambda { |user| joins("RIGHT JOIN lead_purchases ON lead_purchases.lead_id = leads.id LEFT JOIN invoice_lines ON invoice_lines.payable_id = lead_purchases.id LEFT JOIN users ON users.id = lead_purchases.owner_id").where(["invoice_lines.payable_id IS NULL AND users.big_buyer IS TRUE AND users.id = ?", user.to_i]) }
 
@@ -75,6 +71,8 @@ class Lead < AbstractLead
   scope :with_hotness, lambda { |hotness| where("hotness_counter = ?", hotness) }
   scope :for_notification, lambda { |categories, notification_type| where("category_id in (?) and DATE(created_at) between ? and ?", categories.map(&:id), notification_type == User::LEAD_NOTIFICATION_ONCE_PER_DAY ? Date.today : Date.today-7, Date.today).published_only.without_inactive.without_outdated.order("category_id") }
 
+  scope :requested_by_purchase_manager, lambda { |user| where("leads.creator_id = ? or leads.requested_by = ?", user.id, user.id) }
+
   scope :descend_by_leads_id, order("leads.id DESC")
 
   delegate :certification_level, :to => :creator
@@ -87,9 +85,12 @@ class Lead < AbstractLead
 
   before_save :handle_category_change
   before_validation :handle_dialling_codes
+  validate :check_lead_templates
   before_save :check_if_category_can_publish_leads
   after_create :send_instant_notification_to_subscribers
   after_save :auto_buy
+  attr_accessor :creation_step
+  attr_protected :published
 
   private
 
@@ -103,7 +104,7 @@ class Lead < AbstractLead
     true
   end
 
-  #prevent dialling codes from saving when no proper phone number follows them
+    #prevent dialling codes from saving when no proper phone number follows them
   def handle_dialling_codes
     fields = [:direct_phone_number, :phone_number, :company_phone_number].select { |pn| self.send(pn).to_s.strip.size <= 3 }
     unless fields.empty?
@@ -113,7 +114,7 @@ class Lead < AbstractLead
     end
   end
 
-  #Handling case when category is changed during edit/create to prevent auto save
+    #Handling case when category is changed during edit/create to prevent auto save
   def handle_category_change
     if ActiveRecord::ConnectionAdapters::Column.value_to_boolean(category_is_changed)
       self.errors.add(:category_id, I18n.t("shared.leads.form.category_was_changed"))
@@ -169,6 +170,15 @@ class Lead < AbstractLead
     if published_changed? and published and category.auto_buy
       user = category.category_customers.first.user
       user.cart.add_lead(self) if user.big_buyer? and !bought_by_user?(user)
+    end
+  end
+
+  def check_lead_templates
+    if category_id_changed?
+      lead_template_fields = lead_templates(true).map { |lt| lt.lead_template_fields }.flatten.select { |f| f.is_mandatory }
+      unless lead_template_values.select { |ltv| lead_template_fields.map(&:id).include?(ltv.lead_template_field_id) }.size == lead_template_fields.size
+        self.errors.add(:category_id, I18n.t("shared.leads.form.not_all_templates_filled"))
+      end
     end
   end
 
@@ -275,10 +285,6 @@ class Lead < AbstractLead
     current_lcr.present? and current_lcr.email != email_address and LeadCertificationRequest::STATES_THAT_COULD_BE_RECERTIFICATED.include?(current_lcr.state)
   end
 
-  def comments_count_for(user)
-    user.has_role?(:admin) ? comment_threads.roots.count : comment_threads.roots.without_blocked.count
-  end
-
   def send_instant_notification_to_subscribers
     self.delay.deliver_instant_notification_to_subscribers
   end
@@ -287,10 +293,6 @@ class Lead < AbstractLead
     category.customer_subscribers.where("lead_notification_type = ?", User::LEAD_NOTIFICATION_INSTANT).each do |user|
       deliver_email_template(user.email, "lead_notification_instant")
     end
-  end
-
-  def mailer_host
-    Nbs::Application.config.action_mailer.default_url_options[:host]
   end
 
   def show_lead_details_url
@@ -302,7 +304,37 @@ class Lead < AbstractLead
   end
 
   def bought_by_user?(user)
-     !lead_purchases.where("purchased_by = #{user.id} and accessible_from IS NOT NULL").blank?
+    !lead_purchases.where("purchased_by = #{user.id} and accessible_from IS NOT NULL").blank?
+  end
+
+  def based_on_deal(deal, user)
+    {:current_user => User.find_by_email(deal.deal_admin_email).with_role, :category => deal.lead_category, :sale_limit => 1, :price => deal.price.blank? ? 0 : deal.price,
+     :purchase_decision_date => deal.end_date+7, :currency => deal.currency, :published => true, :requestee => user, :deal_id => deal.id
+    }.each_pair do |key, value|
+      self.send("#{key}=", value)
+    end
+
+    [
+        [:contact_name, :full_name], [:phone_number, :phone], [:email_address, :email],
+        [:company_name], [:address_line_1, nil, :address], [:address_line_2, nil, :address],
+        [:address_line_3, nil, :address], [:zip_code, nil, :address], [:country_id, nil, :address],
+        [:region_id, nil, :address]
+    ].each do |field1, field2, field3|
+      field2 = field1 if field2.nil?
+      if field3
+        self.send("#{field1}=".to_sym, user.send(field3.to_sym).send(field2.to_sym)) if self.send(field1.to_sym).blank?
+      else
+        self.send("#{field1}=".to_sym, user.send(field2.to_sym)) if self.send(field1.to_sym).blank?
+      end
+    end
+
+    current_locale = I18n.locale
+    (deal.lead_translations.count > 1 ? ::Locale.all.map(&:code) : [current_locale]).each do |locale_code|
+      I18n.locale = locale_code
+      self.header = "#{I18n.t("models.lead.field_prefixes.header")} #{deal.header}"
+      self.description = "#{I18n.t("models.lead.field_prefixes.description")} #{deal.description}"
+    end
+    I18n.locale = current_locale
   end
 
 end

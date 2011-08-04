@@ -18,7 +18,7 @@
       </header>
 
 
-      <%= render :partial => "callers/results/table", :locals => {:results => @results.call_log_results, :campaign => @campaign} %>
+      <%= render :partial => "callers/results/table", :locals => {:results => @results.call_log_results, :campaign => @campaign, :final => false} %>
       <br/>
 
       <header>
@@ -34,7 +34,7 @@
         </param:actions>
       </header>
 
-      <%= render :partial => "callers/results/table", :locals => {:results => @results.final_results, :campaign => @campaign} %>
+      <%= render :partial => "callers/results/table", :locals => {:results => @results.final_results, :campaign => @campaign, :final => true} %>
       <br/>
 
   <% end %>

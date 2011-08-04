@@ -1,0 +1,31 @@
+<column-mc:>
+  <header back="true" backurl="#{call_centre_agents_deals_path}"><%= t("call_centre_agent.deals.new.view.title") %></header>
+
+  <div id="buyer_email_form">
+    <%= text_field_tag :buyer_email %>
+    <%= bt_link_to nil, t("call_centre_agent.deals.new.view.check_buyer_email"), "javascript:void(0)", :onclick => "submit_query('check_email', 'call_centre_agents')" %>
+    <%= bt_link_to nil, t("call_centre_agent.deals.new.view.certify"), "javascript:void(0)", :onclick => "submit_query('certify','call_centre_agents')" %>
+  </div>
+
+  <div id="deal_form" style="display:none;">
+    <%= semantic_form_for [:call_centre_agents, @deal], :method => :post do |form| %>
+        <frm title="Create new">
+          <param:content>
+            <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal} %>
+          </param:content>
+          <param:actions>
+            <ibt c="fltri" icon="save">
+              <%= form.submit t("call_centre_agent.deals.new.view.create_button"), :name => "commit_create", :onclick => "select_options_to_submit('deal_deal_template_ids_')" %>
+            </ibt>
+          </param:actions>
+        </frm>
+    <% end %>
+  </div>
+</column-mc:>
+
+<js:>
+<%= javascript_include_tag("deal_creation") %>
+  <script type="text/javascript">
+      setup_step(<%= @deal.creation_step.to_i -%>)
+  </script>
+</js:>

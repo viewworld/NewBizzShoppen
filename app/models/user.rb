@@ -3,8 +3,9 @@ require 'app/modules/role_change'
 class User < ActiveRecord::Base
 
   self.abstract_class = true
+  ajaxful_rater
 
-  ROLES_PRIORITY = [:admin, :call_centre, :agent, :call_centre_agent, :purchase_manager, :category_buyer, :customer, :lead_buyer, :lead_user, :translator]
+  ROLES_PRIORITY = [:admin, :call_centre, :agent, :call_centre_agent, :purchase_manager, :category_buyer, :customer, :lead_buyer, :lead_user, :translator, :deal_maker]
   DEAL_VALUE_RANGE = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000]
   BASIC_USER_ROLES_WITH_LABELS = [['Administrator', 'admin'], ['Agent', 'agent'], ['Buyer', 'customer'], ['Call centre', 'call_centre'], ['Purchase Manager', 'purchase_manager'], ['Category Buyer', 'category_buyer']]
   ADDITIONAL_USER_ROLES_WITH_LABELS = [['Lead user', "lead_user"], ['Lead buyer', "lead_buyer"], ["Call centre agent", "call_centre_agent"]]
@@ -35,7 +36,7 @@ class User < ActiveRecord::Base
 
   # declare the valid roles -- do not change the order if you add more
   # roles later, always append them at the end!
-  roles :admin, :agent, :call_centre, :call_centre_agent, :customer, :lead_buyer, :lead_user, :purchase_manager, :category_buyer, :translator
+  roles :admin, :agent, :call_centre, :call_centre_agent, :customer, :lead_buyer, :lead_user, :purchase_manager, :category_buyer, :translator, :deal_maker
 
   validates_presence_of :email, :screen_name
   validates_presence_of :first_name, :last_name, :if => :validate_first_and_last_name?
@@ -60,6 +61,7 @@ class User < ActiveRecord::Base
   has_many :comment_readers
   has_many :read_comments, :through => :comment_readers, :source => :comment
   belongs_to :contact
+  has_many :deal_comment_threads, :class_name => "Comment", :foreign_key => "user_id"
   alias_method :parent, :user
 
   scope :with_customers, where("roles_mask & #{2**User.valid_roles.index(:customer)} > 0 ")
@@ -71,17 +73,17 @@ class User < ActiveRecord::Base
   scope :with_subaccounts, lambda { |parent_id| where("parent_id = ?", parent_id) }
   scope :without_locked, where("locked_at IS NULL")
 
-  scope :requestees_for_lead_request_owner, lambda { |owner| select("DISTINCT(users.id), users.*").where("requested_by IS NOT NULL and lead_purchases.owner_id = ? and users.parent_id = ?", owner.id, owner.id).joins("RIGHT JOIN lead_purchases on lead_purchases.requested_by=users.id") }
-  scope :assignees_for_lead_purchase_owner, lambda { |owner| select("DISTINCT(users.id), users.*").where("requested_by IS NULL and lead_purchases.owner_id = ? and accessible_from IS NOT NULL and users.parent_id = ?", owner.id, owner.id).joins("RIGHT JOIN lead_purchases on lead_purchases.assignee_id=users.id") }
+  scope :requestees_for_lead_request_owner, lambda { |owner| select("DISTINCT(users.id), users.*").where("lead_purchases.requested_by IS NOT NULL and lead_purchases.owner_id = ? and users.parent_id = ?", owner.id, owner.id).joins("RIGHT JOIN lead_purchases on lead_purchases.requested_by=users.id") }
+  scope :assignees_for_lead_purchase_owner, lambda { |owner| select("DISTINCT(users.id), users.*").where("lead_purchases.requested_by IS NULL and lead_purchases.owner_id = ? and accessible_from IS NOT NULL and users.parent_id = ?", owner.id, owner.id).joins("RIGHT JOIN lead_purchases on lead_purchases.assignee_id=users.id") }
 
 
   scope :join_lead_purchases_and_leads, joins("INNER JOIN lead_purchases ON lead_purchases.assignee_id=users.id").joins("INNER JOIN leads on leads.id=lead_purchases.lead_id")
   scope :with_completed_leads, lambda { |assignee| select("leads.id").where("assignee_id = ? and state = ?", assignee.id, 3).join_lead_purchases_and_leads }
-  scope :with_requested_leads, lambda { |requestee| select("leads.id").where("assignee_id IS NULL and requested_by = ?", requestee.id).joins("INNER JOIN lead_purchases ON lead_purchases.requested_by=users.id").joins("INNER JOIN leads on leads.id=lead_purchases.lead_id") }
+  scope :with_requested_leads, lambda { |requestee| select("leads.id").where("lead_purchases.assignee_id IS NULL and lead_purchases.requested_by = ?", requestee.id).joins("INNER JOIN lead_purchases ON lead_purchases.requested_by=users.id").joins("INNER JOIN leads on leads.id=lead_purchases.lead_id") }
   scope :with_assigned_leads_time_ago, lambda { |assignee, time| select("leads.id").where("assignee_id = ? and lead_purchases.assigned_at >= ?", assignee.id, time).join_lead_purchases_and_leads }
   scope :with_assigned_leads_total, lambda { |assignee| select("leads.id").where("assignee_id = ?", assignee.id).join_lead_purchases_and_leads }
   scope :with_lead_creators_for, lambda { |parent| select("DISTINCT(users.id), users.*").where("users.parent_id = ?", parent.id).joins("INNER JOIN leads ON leads.creator_id=users.id") }
-  scope :assignees_for_lead_purchase_owner, lambda { |owner| select("DISTINCT(users.id), users.*").where("requested_by IS NULL and lead_purchases.owner_id = ? and accessible_from IS NOT NULL and users.parent_id = ?", owner.id, owner.id).joins("RIGHT JOIN lead_purchases on lead_purchases.assignee_id=users.id") }
+  scope :assignees_for_lead_purchase_owner, lambda { |owner| select("DISTINCT(users.id), users.*").where("lead_purchases.requested_by IS NULL and lead_purchases.owner_id = ? and accessible_from IS NOT NULL and users.parent_id = ?", owner.id, owner.id).joins("RIGHT JOIN lead_purchases on lead_purchases.assignee_id=users.id") }
   scope :with_leads, select("DISTINCT(email), users.*").joins("RIGHT JOIN leads on users.id=leads.creator_id")
   scope :within_accessible_categories, lambda { |customer| where("leads.category_id NOT IN (?)", customer.accessible_categories_ids) }
   scope :right_join_leads, joins("RIGHT JOIN leads on users.id=leads.creator_id")
@@ -100,9 +102,9 @@ class User < ActiveRecord::Base
 
   attr_protected :payout, :locked, :can_edit_payout_information, :paypal_email, :bank_swift_number, :bank_iban_number, :skip_email_verification
 
-  attr_accessor :agreement_read, :locked, :skip_email_verification
+  attr_accessor :agreement_read, :locked, :skip_email_verification, :deal_maker_role_enabled_flag, :is_deal_admin_flag
 
-  before_save :handle_locking, :handle_team_buyers_flag, :refresh_certification_of_call_centre_agents, :set_euro_billing_rate
+  before_save :handle_locking, :handle_team_buyers_flag, :refresh_certification_of_call_centre_agents, :set_euro_billing_rate, :handle_deal_maker_enabled, :handle_is_deal_admin
   before_create :set_rss_token, :set_role
   before_destroy :can_be_removed
   after_create :auto_activate
@@ -113,6 +115,14 @@ class User < ActiveRecord::Base
   require 'digest/sha1'
 
   private
+
+  def handle_deal_maker_enabled
+    if has_role?(:deal_maker) and !deal_maker_role_enabled
+      self.roles.delete(:deal_maker)
+    elsif !has_role?(:deal_maker) and deal_maker_role_enabled
+      self.roles << :deal_maker
+    end
+  end
 
   def auto_activate
     confirm! if skip_email_verification == "1"
@@ -377,7 +387,7 @@ class User < ActiveRecord::Base
   end
 
   def can_create_lead_templates?
-    has_any_role?(:admin, :call_centre, :agent, :call_centre_agent, :purchase_manager)
+    has_any_role?(:admin, :call_centre, :agent, :call_centre_agent, :customer)
   end
 
   def country_vat_rate
@@ -523,6 +533,39 @@ class User < ActiveRecord::Base
   def category_buyer_category_home_url
     if has_role?(:category_buyer)
       "https://#{mailer_host}/#{buying_categories.first.cached_slug}"
+    end
+  end
+
+  def deal_maker_role_enabled
+    if deal_maker_role_enabled_flag.nil?
+      self.deal_maker_role_enabled_flag = self.has_role?(:deal_maker) ? true : false
+    end
+    deal_maker_role_enabled_flag
+  end
+
+  def deal_maker_role_enabled=(enabled)
+    self.deal_maker_role_enabled_flag = ActiveRecord::ConnectionAdapters::Column.value_to_boolean(enabled)
+  end
+
+  def can_start_new_deal_thread?
+    true
+  end
+
+  def is_deal_admin
+    if is_deal_admin_flag.nil?
+      self.is_deal_admin_flag = Settings.default_deal_admin_email == email ? true : false
+    end
+    is_deal_admin_flag
+  end
+
+  def is_deal_admin=(enabled)
+    self.is_deal_admin_flag = ActiveRecord::ConnectionAdapters::Column.value_to_boolean(enabled.to_i)
+  end
+
+  def handle_is_deal_admin
+    #throw is_deal_admin
+    if is_deal_admin and Settings.default_deal_admin_email != email
+      Settings.default_deal_admin_email = email
     end
   end
 end

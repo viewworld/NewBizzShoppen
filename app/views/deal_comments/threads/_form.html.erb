@@ -1,0 +1,19 @@
+<%= semantic_remote_form_for comment, :as => :comment, :url => comments_thread_path(comment), :html => {:method => :put, :id => "edit_comment_#{comment.id}", :style => "display:none"} do |f| %>
+ <fieldset class="inputs labels_ta_r labels_80">
+  <ol class="align_inputs">
+    <li class="header">
+      <h3><%= t("comments.threads.edit.view.edit_comment", :title => comment.title) %></h3>
+    </li>
+    <%= f.input :title %>
+    <%= f.input :body, :as => :text, :input_html => {:style => "width:380px;height: 100px;"} %>
+    <li class="commit">
+      <ibt icon="save">
+        <%= button_to_function t("comments.threads.edit.view.update_comment_button"), "validate_form('#edit_comment_#{comment.id}')"  %>
+      </ibt>
+      <ibt c="bt_grey">
+        <%= button_to_function t("common.cancel_link"), "$('#edit_comment_#{comment.id}').slideUp('slow');" %>
+      </ibt>
+    </li>
+  </ol>
+</fieldset>
+<% end %>

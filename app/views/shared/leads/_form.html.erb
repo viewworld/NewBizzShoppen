@@ -1,3 +1,5 @@
+<%= javascript_include_tag 'lead_template_functions.js' %>
+<%= javascript_include_tag 'lead_translation_functions.js' %>
 <div class="column_left">
   <div class="pdd_10 no_pdd_t">
     <fieldset class="inputs labels_ta_r labels_180">
@@ -55,7 +57,7 @@
           <li class="header">
             <h3><%= t("shared.leads.form.lead_information") %></h3>
           </li>
-          <% categories = current_user.has_role?(:admin) ? Category.without_locked.all : current_user.has_role?(:call_centre) ? Category.without_locked.with_call_centre_unique(current_user).all : Category.without_locked.with_agent_unique(current_user).all %>
+          <% categories = current_user.has_role?(:admin) ? LeadCategory.without_locked.all : current_user.has_role?(:call_centre) ? LeadCategory.without_locked.with_call_centre_unique(current_user).all : LeadCategory.without_locked.with_agent_unique(current_user).all %>
           <%= form.input :category_id, :disabled => categories.select { |c| !c.can_publish_leads? }.map(&:id), :collection => nested_set_options(categories), :include_blank => false, :input_html => {:onchange => (@contact ? "" : "check_templates_compatibility(#{@lead.new_record? ? 0 : @lead.id}, $('#lead_category_id').val());")}, :hint => hint_for(@lead, :category_id) %>
           <%= form.input :category_is_changed, :as => :hidden, :value => "0" %>
           <%= form.input :is_international, :as => :select, :collection => [[t("shared.leads.form.country_local_label"), 0], [t("shared.leads.form.country_international"), 1]], :include_blank => false, :hint => hint_for(@lead, :is_international) %>
@@ -125,41 +127,7 @@
     $(function() {
         $("#datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
     });
-    function add_fields(link, content) {
-        if ($('#locale_picker').text() != null)
-        {
-            var new_id = new Date().getTime();
-            var regexp = new RegExp("");
-            content = content.replace(/lead_lead_translations_attributes_\d+/g, "lead_lead_translations_attributes_" + nestedFormsCount.toString());
-            content = content.replace(/lead\[lead_translations_attributes\]\[\d+\]/g, "lead[lead_translations_attributes][" + new_id.toString() + "]");
-            content = content.replace(/LOCALE_LANG/, $('#locale_picker').val());
-            $('.nested_locale_container:last').append(content);
-            $('.locale_hidden_field:last').val($('#locale_picker').val());
-            $('.locale_title:last').html(language_names[$('#locale_picker').val()]);
-            $('.lead_template_value_translations_container_' + $('#locale_picker').val()).show();
-            $('.destroy_hidden_field_template_value_tr_' + $('#locale_picker').val()).val('');
-            $("#locale_picker option[value=" + $('#locale_picker').val() + "]").remove();
-            nestedFormsCount = nestedFormsCount + 1;
-            if ($("#locale_picker option[value!='']").size() == 0) {
-                $("#locale_picker_div").hide();
-            }
-        }
-    }
 
-        function remove_language(id, locale, record_id) {
-            nestedFormsCount = nestedFormsCount - 1;
-            $('.lead_template_value_translations_container_' + locale).hide();
-            $('.destroy_hidden_field_template_value_tr_' + locale).val('true');
-            $('#locale_picker').append($("<option></option>").attr("value", locale).text(language_names[locale]));
-            if (record_id == null) {
-                $('#lead_translation_form_' + id).remove();
-            }
-            else {
-                $('#lead_translation_form_' + id).hide();
-                $('#destroy_hidden_field_' + record_id.toString()).val('true')
-            }
-            $("#locale_picker_div").show();
-        }
 
         function set_beginnings_of_urls(fields_array) {
             $.each(fields_array, function(index, value) {
@@ -168,27 +136,6 @@
                 }
             });
 
-        }
-
-        function add_template() {
-            $('#lead_template_container_' + $('#optional_templates_picker').val()).show();
-            $('.destroy_hidden_field_lead_template_fields_' + $('#optional_templates_picker').val()).val('');
-            $("#optional_templates_picker option[value=" + $('#optional_templates_picker').val() + "]").remove();
-            if ($('#optional_templates_picker option').length == 1) {
-                $('#optional_templates_span').hide();
-            }
-            else {
-                $('#optional_templates_span').show();
-            }
-        }
-
-        function remove_template(template_id, template_name) {
-            $('#lead_template_container_' + template_id.toString()).hide();
-            $('.destroy_hidden_field_lead_template_fields_' + template_id.toString()).val('true');
-            $('#optional_templates_picker').append($("<option></option>").attr("value", template_id).text(template_name));
-            if ($('#optional_templates_picker option').length > 1) {
-                $('#optional_templates_span').show();
-            }
         }
 
         function refresh_phone_codes() {

@@ -1,0 +1,158 @@
+<div class="column_left">
+  <div class="pdd_10 no_pdd_t">
+    <fieldset class="inputs labels_ta_r labels_200">
+      <ol>
+        <% if deal.current_dcr and deal.current_dcr.active? %>
+            <%= hidden_field_tag "accept", "false" %>
+        <% else %>
+            <%
+              deal_categories = if current_user.buyer?
+                                    DealCategory.without_locked.with_customer_unique(current_user).all
+                                elsif current_user.agent?
+                                    DealCategory.without_locked.with_agent_unique(current_user).all
+                                elsif current_user.admin?
+                                    DealCategory.without_locked.all
+                                end
+            %>
+            <%= form.input :category_id, :disabled => deal_categories.select { |c| !c.can_publish_leads? }.map(&:id), :collection => nested_set_options(deal_categories), :include_blank => false, :label => t("shared.deals.form.deal_category_label") %>
+        <% end %>
+
+        <% if current_user.has_any_role?(:call_centre, :call_centre_agent, :admin) %>
+        <%
+            lead_categories =   if current_user.agent?
+                                    LeadCategory.without_locked.with_agent_unique(current_user).all
+                                elsif current_user.admin?
+                                    LeadCategory.without_locked.all
+                                end
+
+        %>
+
+        <%= form.input :lead_category_id, :disabled => lead_categories.select { |c| !c.can_publish_leads? }.map(&:id), :collection => nested_set_options(lead_categories), :include_blank => false %>
+        <% end %>
+        <%= form.input :header, :label => t("shared.deals.form.name_label") %>
+        <%= form.input :description, :input_html => {:style => "height: 150px;width:280px;"}, :label => t("shared.deals.form.short_description_label") %>
+        <%= form.input :hidden_description, :input_html => {:style => "height: 150px;width:280px;"}, :label => t("shared.deals.form.detailed_description_label") %>
+        <%= form.input :fine_print, :input_html => {:style => "height: 150px;width:280px;"} %>
+        <%= form.input :start_date, :as => :string,
+                       :wrapper_html => {:class => "date"},
+                       :input_html => {:class => "datepicker", :value => deal.start_date},
+                       :hint => t('models.result_field.date_format') %>
+        <%= form.input :end_date, :as => :string,
+                       :wrapper_html => {:class => "date"},
+                       :input_html => {:class => "datepicker", :value => deal.end_date},
+                       :hint => t('models.result_field.date_format') %>
+        <%= form.input :price, :as => current_user.buyer? ? :hidden : :string %>
+        <% if current_user.buyer? %>
+            <%= form.input :currency_id, :value => Currency.default_currency.id, :as => :hidden %>
+        <% else %>
+            <%= form.input :currency_id, :collection => currencies_for_select, :include_blank => false %>
+        <% end %>
+      </ol>
+    </fieldset>
+  </div>
+</div>
+
+<div class="column_right">
+  <div class="pdd_10 no_pdd_t">
+    <fieldset class="inputs labels_ta_r">
+      <ol class="align_inputs">
+        <%= form.input :company_name %>
+        <%= form.input :company_description, :input_html => {:style => "height: 150px;width:280px;"} %>
+        <%= form.input :contact_name %>
+        <%= form.input :email_address %>
+        <%= form.input :phone_number %>
+        <%= form.input :address_line_1 %>
+        <%= form.input :address_line_2 %>
+        <%= form.input :address_line_3 %>
+        <%= form.input :zip_code %>
+        <%= form.input :country_id, :as => :select, :collection => Country.all, :include_blank => false %>
+        <%= form.input :region_id, :as => :select, :collection => Region.all, :include_blank => false %>
+        <% if current_user.admin? or current_user.has_role?(:deal_maker) %>
+            <span id="deal_published">
+                <%= form.input :published %>
+            </span>
+        <% end %>
+        <% if current_user.admin? and !form.object.new_record? %>
+            <span id="deal_admin">
+                <%= form.input :deal_admin_email %>
+            </span>
+        <% end %>
+      </ol>
+    </fieldset>
+  </div>
+</div>
+
+<% if current_user.buyer? %>
+    <% unless (deal.current_dcr and deal.current_dcr.active?) %>
+        <clb/>
+
+        <hl/>
+        <div id="deal_templates">
+          <div class="pdd_10">
+            <div class="grid_210 fltl">&nbsp;</div>
+            <div class="grid_240 fltl">
+              <h3><%= t("buyer.deals.form.all_templates") %></h3>
+              <%= select_tag "all_templates", options_for_select((LeadTemplate.with_category(current_user.deal_category_id).with_creator(current_user.id)-@deal.deal_templates).map { |c| [c.name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+            </div>
+
+            <div class="grid_160 fltl" style="margin-right: 10px;margin-top:10px;">
+              <p class="ta_c pdd_5 no_pdd_lr"><%= bt_link_to nil, t("administration.categories.form.move_users_right"), "javascript:move_selected('all_templates','deal_deal_template_ids_')", :id => "move_right" %></p>
+
+              <p class="ta_c"><%= bt_link_to nil, t("administration.categories.form.move_users_left"), "javascript:move_selected('deal_deal_template_ids_','all_templates')", :id => "move_left" %></p>
+            </div>
+
+            <div class="grid_240 fltl">
+              <h3><%= t("buyer.deals.form.selected_templates") %></h3>
+              <%= select_tag "deal[deal_template_ids][]", options_for_select(@deal.deal_templates.map { |c| [c.name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+            </div>
+            <clb/>
+          </div>
+        </div>
+    <% end %>
+<% end %>
+
+<clb/>
+
+<div class="nested_locale_container"></div>
+
+<%= form.fields_for :lead_translations, deal.lead_translations.select { |lt| lt.locale != I18n.locale.to_s } do |builder| %>
+    <%= render :partial => "/shared/deals/deal_fields", :locals => {:f => builder} %>
+<% end %>
+
+<clb/>
+
+
+<div class="pdd_10 no_pdd_t" id="locale_picker_div">
+  <fieldset class="inputs labels_ta_r labels_200">
+    <ol class="align_inputs">
+      <li class="header">
+        <h3><%= t("shared.leads.form.additional_language") %></h3>
+      </li>
+      <li class="select">
+        <%= form.label :locale, "New translation" %>
+        <%= select_tag :locale, options_for_select(available_locales_list(deal.lead_translations)),
+                       {:id => "locale_picker", :include_blank => true, :onchange => fields_for_deals_translations(form)} %>
+      </li>
+    </ol>
+  </fieldset>
+</div>
+<hl/>
+
+<js:>
+  <%= javascript_include_tag 'jquery.counter-1.0.min.js' %>
+  <script type="text/javascript">
+      $(function() {
+          $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+          $("#deal_description").counter({
+              count: 'up',
+              goal: 140
+          });
+      });
+      var nestedFormsCount = <%= deal.lead_translations.reject{ |lt| lt.locale == I18n.locale.to_s }.size %>;
+      var language_names = [];
+      <% Locale.all.each do |locale| %>
+      <%= "language_names['#{locale.code}'] = '#{t('models.locale.' + locale.code)}';" -%>
+      <% end %>
+  </script>
+  <%= javascript_include_tag 'lead_translation_functions.js' %>
+</js:>

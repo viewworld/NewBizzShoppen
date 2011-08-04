@@ -1,0 +1,16 @@
+<div class="deal_threads_container_div">
+  <% if threads.empty? %>
+      <% unless (user_signed_in? and current_user.can_start_new_deal_thread?) %>
+        <p><%= t("comments.shared.no_comments") %></p>
+      <% end %>
+  <% else %>
+      <% threads.each do |thread| %>
+          <%= render :partial => 'deal_comments/shared/thread', :locals => {:thread => thread} %>
+          <hl/>
+      <% end %>
+  <% end %>
+</div>
+
+<div class="lead_new_thread_container_div">
+  <%= render :partial => "deal_comments/threads/new", :locals => {:deal => deal} if user_signed_in? and current_user.can_start_new_deal_thread? %>
+</div>

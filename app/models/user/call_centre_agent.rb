@@ -6,7 +6,8 @@ class ::User::CallCentreAgent < ::User
   include BankAccounts
 
   has_and_belongs_to_many :campaigns, :join_table => "campaigns_users", :foreign_key => "user_id"
-  has_many :contacts, :foreign_key => :agent_id, :order => "leads.position ASC"  
+  has_many :contacts, :foreign_key => :agent_id, :order => "leads.position ASC"
+  has_many :deals, :as => :creator
 
   before_validation :skip_address_validation
 

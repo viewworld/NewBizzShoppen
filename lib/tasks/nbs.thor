@@ -20,6 +20,7 @@ Settings.default_payout_delay = 0 if Settings.default_payout_delay.nil?
     #Certification
     Settings.resend_certification_notification_after_days = 15 if Settings.resend_certification_notification_after_days.nil?
     Settings.expire_certification_notification_after_days = 15 if Settings.expire_certification_notification_after_days.nil?
+    Settings.default_deal_admin_email = Rails.env.production? ? "" : "agent@nbs.com" if Settings.default_deal_admin_email.nil?
 
     Country.find_or_create_by_name("Denmark", :locale => "dk", :detailed_locale => "dk", :vat_rate => VatRate.new(:rate => 25))
     Country.find_or_create_by_name("United Kingdom", :locale => "en", :detailed_locale => "gb", :vat_rate => VatRate.new(:rate => 20))
@@ -215,6 +216,14 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
                     :body => "<p>Login: {{user.email}}</p><p>Linked with account: {{user.social_provider_name}}</p><p><a href=\"{{user.category_buyer_category_home_url}}\">{{user.category_buyer_category_home_url}}</a></p>"},
             :dk => {:subject => "[DK] Welcome to Fairleads.com!",
                     :body => "<p>Login: {{user.email}}</p><p>Linked with account: {{user.social_provider_name}}</p><p><a href=\"{{user.category_buyer_category_home_url}}\">{{user.category_buyer_category_home_url}}</a></p>"}
+        },
+        {
+            :name => "Deal certification request",
+            :uniq_id => "deal_certification_request",
+            :en => {:subject => "Deal certification request from Fairleads.com.",
+                    :body => "<p>In order to certificate deal created for you please crete new sales manager account on Fairleads.com</p><p><a href=\"{{deal_certification_request.new_sales_manager_account_url}}\">crete new sales manager account</a></p>"},
+            :dk => {:subject => "[DK] Deal certification request from Fairleads.com.",
+                    :body => "<p>[DK] In order to certificate deal created for you please crete new sales manager account on Fairleads.com</p><p><a href=\"{{deal_certification_request.new_sales_manager_account_url}}\">crete new sales manager account</a></p>"}
         }
     ]
 
@@ -333,15 +342,18 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
 
     unless Rails.env.production?
 
-      if Category.count.zero?
-        ['Electronics', 'Leisure', 'Business'].each do |name|
-          [:en, :dk].each do |locale|
-            ::I18n.locale = locale
-            if category = Category.where(:name => name).first
-              category.name = name
-              category.save
-            else
-              Category.make!(:name => name)
+      ['LeadCategory', 'DealCategory'].map(&:constantize).each do |model_name|
+        if model_name.count.zero?
+          ['Electronics', 'Leisure', 'Business'].each do |name|
+            name = model_name == DealCategory ? "#{name} deals" : name
+            [:en, :dk].each do |locale|
+              ::I18n.locale = locale
+              if category = model_name.where(:name => name).first
+                category.name = name
+                category.save
+              else
+                model_name.make!(:name => name)
+              end
             end
           end
         end
@@ -356,11 +368,11 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
       if Lead.count.zero?
         agent = User::Agent.find_by_email("agent@nbs.com")
         ["Big deal on printers", "Drills required", "Need assistance in selling a car", "Ipod shipment", "Trip to amazonia - looking for offer", "LCD - Huge amounts", "GPS receivers required"].each do |header|
-          Lead.make!(:category_id => Category.last.id, :header => header, :creator_id => agent.id, :currency => Currency.where(:name => "EUR").first)
+          Lead.make!(:category_id => LeadCategory.last.id, :header => header, :creator_id => agent.id, :currency => Currency.where(:name => "EUR").first)
         end
       end
 
-      Category.all.each { |c| c.send(:refresh_leads_count_cache!) }
+      LeadCategory.all.each { |c| c.send(:refresh_leads_count_cache!) }
 
       unless User::Admin.find_by_email("admin@nbs.com")
         u = User::Admin.make!(:email => "admin@nbs.com", :password => "secret", :password_confirmation => "secret")
@@ -397,7 +409,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
       klass = "User::#{role.to_s.camelize}".constantize
       unless klass.find_by_email("translator_#{role}@nbs.com")
         if role == :category_buyer
-          user = klass.make!(:email => "translator_#{role}@nbs.com", :password => "secret", :password_confirmation => "secret", :buying_categories => [Category.first])
+          user = klass.make!(:email => "translator_#{role}@nbs.com", :password => "secret", :password_confirmation => "secret", :buying_categories => [LeadCategory.first])
         elsif role == :call_centre
           user = klass.make!(:email => "translator_#{role}@nbs.com", :password => "secret", :password_confirmation => "secret", :first_name => "Johnny", :last_name => "Mnemonic")
         else
