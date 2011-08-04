@@ -6,7 +6,7 @@
             <%= form.input :first_name %>
             <%= form.input :last_name %>
         <% end %>
-        <%= form.input :company_name if @user.has_any_role?(:customer, :category_buyer, :call_centre) or ["customer", "category_buyer", "call_centre"].include?((params[:role])) %>
+        <%= form.input :company_name if @user.has_any_role?(:customer, :category_buyer, :call_centre, :purchase_manager) or ["customer", "category_buyer", "call_centre", "purchase_manager"].include?((params[:role])) %>
         <% if defined? form.object.address %>
             <%= form.fields_for :address do |address_form| %>
                 <%= address_form.input :address_line_1 %>
