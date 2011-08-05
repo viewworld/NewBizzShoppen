@@ -9,7 +9,7 @@ Background:  Sign in user and set locale
   Then I sign in as bob@person.com with password supersecret
   And I go to customers subaccounts
 
-@_done @not_testable @done
+@_done @not_testable
 Scenario: I do not and cannot belong to other customer
 
 @_tested

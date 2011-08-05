@@ -20,6 +20,12 @@ class Deal < AbstractLead
 
   validates_presence_of :start_date, :end_date, :email_address
   validates_presence_of :deal_admin_email, :unless => Proc.new{|d| d.new_record? }
+
+  validates_numericality_of :price, :discounted_price, :greater_than => 0, :if => Proc.new{|d| d.group_deal == true }
+  validates_numericality_of :created_leads, :greater_than_or_equal_to => 0, :only_integer => true
+
+  validates_presence_of :price, :discounted_price, :social_media_description, :if => Proc.new{|d| d.group_deal == true }
+
   validate :deal_admin_presence, :unless => Proc.new{|d| d.new_record? }
 
   before_create :create_uniq_deal_category
@@ -78,6 +84,10 @@ class Deal < AbstractLead
 
   def certified?
     !deal_certification_requests.blank? and current_dcr.approved?
+  end
+
+  def saving
+    (!price.blank? and price > 0 and !discounted_price.blank? and discounted_price > 0 and price > discounted_price) ? "#{(100 - discounted_price * 100 / price).to_i}%" : "0%"
   end
 
   private
