@@ -15,7 +15,7 @@ Feature: Deals from Call Centre/Agent perspective
     Then I should see translated "layout.main_menu.call_centre_agent.deals"
 
   #A test id function which display the company name and contact name for the email for the sales manger which provides the deal
-  @selenium @_done @_tested
+  @selenium @_done @_tested @wip
   Scenario: I can create new deal by entering sales manager email
     # call centre
     And I sign in as translator_call_centre@nbs.com with password secret
@@ -34,6 +34,10 @@ Feature: Deals from Call Centre/Agent perspective
     Then I click hidden link by url regex "/call_centres\/deals\/\d+\/edit/"
     Then I should see translated "call_centre.deals.edit.view.title"
     Then I fill deal edit form and submit with translated button "call_centre.deals.edit.view.update_button"
+    # next three lines testing group deal
+    Then I click hidden link by url regex "/call_centres\/deals\/\d+\/edit/"
+    Then I fill group deal edit form and submit with translated button "call_centre.deals.edit.view.update_button"
+    Then I click hidden link by url regex "/call_centres\/deals\/\d+\/edit/"
     Then I follow translated logout link for translator_call_centre@nbs.com
     # call centre agent
     And I sign in as translator_call_centre_agent@nbs.com with password secret
@@ -52,6 +56,10 @@ Feature: Deals from Call Centre/Agent perspective
     Then I click hidden link by url regex "/call_centre_agents\/deals\/\d+\/edit/"
     Then I should see translated "call_centre_agent.deals.edit.view.title"
     Then I fill deal edit form and submit with translated button "call_centre_agent.deals.edit.view.update_button"
+    # next three lines testing group deal
+    Then I follow translated "layout.main_menu.call_centre_agent.deals"
+    Then I click hidden link by url regex "/call_centre_agents\/deals\/\d+\/edit/"
+    Then I fill group deal edit form and submit with translated button "call_centre_agent.deals.edit.view.update_button"
 
   #the admin/call center/agent can create the deal and "certify it" in the same way a lead is certified.
   @selenium @_done @_tested

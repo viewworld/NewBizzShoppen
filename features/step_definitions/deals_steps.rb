@@ -102,3 +102,17 @@ Then /^I certify deal with translation "([^"]*)"$/ do |translation|
   Then %{I should see translated "deals.common.listing.view.header"}
   Then %{I should see "very important deal"}
 end
+
+Then /^I fill group deal edit form and submit with translated button "([^"]*)"$/ do |translation|
+  Then %{I check "deal_group_deal"}
+  Then %{I press translated "#{translation}"}
+  Then %{I fill in "deal_social_media_description" with "face book is better then link ed in, are you agree?"}
+  Then %{I press translated "#{translation}"}
+  Then %{I fill in "deal_price" with "0"}
+  Then %{I fill in "deal_discounted_price" with "0"}
+  Then %{I press translated "#{translation}"}
+  Then %{I fill in "deal_price" with "100"}
+  Then %{I fill in "deal_discounted_price" with "44.4"}
+  Then %{I press translated "#{translation}"}
+  Then %{I should see translated "flash.deals.update.notice"}
+end
