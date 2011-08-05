@@ -950,6 +950,9 @@ en:
           check_buyer_email: "Check sales manager email"
           certify: "Certify"
           no_user_found_message: "No user with email %{email} was found!"
+          or: "or"
+          confirm: "Confirm"
+          email: "Email address"
       edit:
         view:
           title: "Edit deal"
@@ -1660,6 +1663,9 @@ en:
           check_buyer_email: "Check sales manager email"
           certify: "Certify"
           create_button: "Create"
+          email: "Email"
+          or: "or"
+          confirm: "Confirm"
   call_centre_agent:
     leads:
       index:
@@ -1736,6 +1742,9 @@ en:
           check_buyer_email: "Check sales manager email"
           no_user_found_message: "No user with email %{email} was found!"
           certify: "Certify"
+          email: "Email address"
+          or: "or"
+          confirm: "Confirm"
       edit:
         view:
           title: "Edit deal"
