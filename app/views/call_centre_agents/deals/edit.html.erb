@@ -1,7 +1,7 @@
 <column-mc:>
   <header back="true" backurl="#{call_centre_agents_deals_path}"><%= t("call_centre_agent.deals.edit.view.title") %></header>
 
-  <%= semantic_form_for [:call_centre_agents, @deal], :method => :put do |form| %>
+  <%= semantic_form_for [:call_centre_agents, @deal], :method => :put, :html => {:multipart => true} do |form| %>
       <frm title="Edit deal">
         <param:content>
           <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal} %>

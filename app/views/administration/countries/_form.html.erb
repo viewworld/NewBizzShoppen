@@ -9,7 +9,7 @@
         <% if @country.logo and @country.logo.id %>
             <ol>
               <li class="string">
-                <label><%= "Email template signature logo" %></label>
+                <label><%= t("administration.countries.form.logo_label") %></label>
 
                 <div class="txt assets_elements">
                   <ul>
@@ -23,7 +23,7 @@
         <% else %>
             <%= form.semantic_fields_for :logo, @country.build_logo do |logo_form| %>
                 <ol>
-                  <%= logo_form.input :asset, :as => :file, :label => "Upload signature logo" %>
+                  <%= logo_form.input :asset, :as => :file, :label => t("administration.countries.form.upload_logo_label") %>
                 </ol>
             <% end %>
         <% end %>

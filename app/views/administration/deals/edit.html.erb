@@ -1,7 +1,7 @@
 <column-mc:>
   <header back="true" backurl="#{administration_deals_path}"><%= t('administration.deals.edit.view.title') %></header>
 
-  <%= semantic_form_for [:administration, @deal], :method => :put do |form| %>
+  <%= semantic_form_for [:administration, @deal], :method => :put, :html => {:multipart => true} do |form| %>
       <frm title="Edit deal">
         <param:content>
           <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal, :categories => DealCategory.without_locked.all} %>

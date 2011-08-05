@@ -1,4 +1,4 @@
-@m16 @generating_leals @required @_deals @$_procurement_manager
+@m16 @generating_leals @required @_deals @$_procurement_manager @tgn
 Feature: Generating leads from deals
 
   Background:

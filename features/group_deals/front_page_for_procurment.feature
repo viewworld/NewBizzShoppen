@@ -1,4 +1,4 @@
-@m17 @procurement_front_page
+@m17 @procurement_front_page @ao
 Feature: Front page for procurment
 
   Scenario: When an user enters www.fairdeals.dk he will be redirected to Danish version of procurment
@@ -33,12 +33,16 @@ Feature: Front page for procurment
 
   Scenario: Featured group deal should have time left displayed
 
+  @is
   Scenario: It should be possible to tweet the featured group deal
 
+  @is
   Scenario: It should be possible to share on FB the featured group deal
 
+  @is
   Scenario: It should be possible to share on Linkedin the featured group deal
 
+  @is
   Scenario: It should be possible to share by email the featured group deal
 
   Scenario: I can click get deal which generates a standard lead

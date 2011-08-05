@@ -42,12 +42,12 @@
         </tfoot>
         <tbody>
         <% @countries.each do |country| %>
-            <tr id="currency_<%= country.id %>" class="<%= cycle("odd", "even") %>">
+            <tr id="country_<%= country.id %>" class="<%= cycle("odd", "even") %>">
               <td class="cl"></td>
               <td class="ta_c"><%= country.id %></td>
               <td><%= country.name %></td>
               <td><%= "#{country.locale.to_s}#{'-'+country.detailed_locale.upcase if country.detailed_locale.present?}" %></td>
-              <td class="tda ta_r">
+              <td class="tda ta_r" id="country_actions_td_<%= country.name.gsub(" ", "_") %>">
                 <ul-actions>
                   <li>
                     <%= link_to t("administration.countries.index.view.edit"), edit_administration_country_path(country), :class => "default_action" %>

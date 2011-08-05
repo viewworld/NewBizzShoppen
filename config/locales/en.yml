@@ -1074,6 +1074,8 @@ en:
         new_region: New region
         delete_region: Delete
         region_name: "Region name"
+        upload_logo_label: "Upload signature logo"
+        logo_label: "Email template signature logo"
       index:
         view:
           title: Countries

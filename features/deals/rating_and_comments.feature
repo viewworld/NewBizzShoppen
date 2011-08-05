@@ -1,4 +1,4 @@
-@m16 @deals_rating_and_comments @_deals @requested @$_procurement_manager
+@m16 @deals_rating_and_comments @_deals @requested @$_procurement_manager @tgn
 Feature: Rating and comments
 
 Background:

@@ -41,8 +41,8 @@ Scenario: I can edit and update email template fields for different language whe
   And I fill in "email_template_subject" with "Confirmation message corrected"
   And I fill in "email_template_body_editor" ckeditor with "Confirmation message corrected body"
   Then I press translated "administration.email_templates.edit.view.button_update"
-  
-  
+
+
 @m4 @tgn @_done @non_testable
 Scenario: I should be able to edit email templates using WYSIWYG editor and applying basic styling
 
@@ -68,16 +68,18 @@ Scenario: I can edit category specific email template to be sent when lead is bo
   Then I should see translated "administration.category_email_templates.update.controller.successful_update_notice"
   Then category "Electronics" has email template - "Yes"
 
-@m17 @requested @email_signature @wip
+@m17 @requested @email_signature @is @_done @_tested
 Scenario: For each country I can specify email signature
   Then I follow translated "layout.main_menu.admin.countries"
-  Then I follow translated "administration.countries.index.view.edit"
+  Then I follow translated "administration.countries.index.view.edit" within "#country_actions_td_United_Kingdom"
   Then I fill in "country_email_template_signature" with "marvel vs dc comics"
   Then attach the file "sample image" to "country_logo_attributes_asset"
-  Then I follow translated "administration.countries.edit.view.button_update_country"
-  Then I follow translated "administration.countries.index.view.edit"
-  Then show me the page
+  Then I press translated "administration.countries.edit.view.button_update_country"
+  Then I follow translated "administration.countries.index.view.edit" within "#country_actions_td_United_Kingdom"
+  Then I should see translated "administration.countries.form.logo_label"
+  Then I send email using email template "certification_request" for email address "john@rambo.pl"
+  Then last email sent should have content "marvel vs dc comics"
+  Then last email sent should have content "http://static-fairleads.s3.amazonaws.com/images/logo_fairleads_with_border.jpg"
 
-
-@m17 @requested @email_signature
+@m17 @requested @email_signature @is @_done @_tested_elsewhere
 Scenario: The email signature should include Fairleads logo

@@ -84,8 +84,10 @@ class LeadsController < ApplicationController
       params[:search][:without_unique_categories] = "1"
     end
 
-    params[:search][:published_only] = "1"
-    params[:search][:without_inactive] = true
+    if !user_signed_in? or (user_signed_in? and !current_user.has_role?(:purchase_manager))
+      params[:search][:published_only] = "1"
+      params[:search][:without_inactive] = true
+    end
 
     if cu_or_user_from_rss_token and cu_or_user_from_rss_token.has_role?(:admin)
       @categories_scope = LeadCategory.scoped

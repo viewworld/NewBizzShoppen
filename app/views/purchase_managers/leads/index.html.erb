@@ -14,14 +14,6 @@
                 <%= f.label t("leads.index.search.category_label") %>
                 <%= f.select :with_category, nested_set_options(@categories.all), :include_blank => true %>
               </li>
-              <li class="boolean">
-                <%= f.check_box :without_inactive, {}, "true", "false" %>
-                <%= f.label :without_inactive, t("purchase_manager.leads.index.view.filter_with_inactive") %>
-              </li>
-              <li class="boolean">
-                <%= f.check_box :without_outdated, {}, "true", "false" %>
-                <%= f.label :without_outdated, t("purchase_manager.leads.index.view.filter_with_outdated") %>
-              </li>
               <li class="commit">
                 <ibt c="bt_green" icon="magnify">
                   <%= submit_tag t("purchase_manager.leads.index.view.search_button") %>

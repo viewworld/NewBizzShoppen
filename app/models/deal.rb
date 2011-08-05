@@ -36,7 +36,7 @@ class Deal < AbstractLead
   acts_as_commentable
 
   def deal_admin_presence
-    self.errors.add(:deal_admin_email, :invalid) if !deal_admin or !deal_admin.has_any_role?(:call_centre, :call_centre_agent)
+    self.errors.add(:deal_admin_email, :invalid) if !deal_admin or !deal_admin.has_any_role?(:agent, :call_centre, :call_centre_agent)
   end
 
   def assign_deal_admin
