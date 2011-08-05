@@ -17,6 +17,9 @@
             <ibt c="fltri" icon="save">
               <%= form.submit t("administration.deals.new.view.create_button"), :name => "commit_create", :onclick => "select_options_to_submit('deal_deal_template_ids_')" %>
             </ibt>
+          <ibt c="fltri bt_grey">
+            <%= button_to_function t("common.cancel_link"), "history.go(-1)" %>
+          </ibt>
           </param:actions>
         </frm>
     <% end %>
