@@ -136,6 +136,7 @@ en:
         browse_deals: "Browse deals"
       purchase_manager:
         leads: My leads
+        tenders: My tenders
         lead_templates: "Lead templates"
         my_requests: "My requests"
     my_profile_link: My profile
@@ -1771,7 +1772,6 @@ en:
       update:
         errors:
           only_admin_can_change_status: "Only administrator can change lead status"
-
       new:
         view:
           title: "Contact request"
@@ -1812,6 +1812,44 @@ en:
         flash:
           deletion_successful: "Lead template has been deleted successfully."
           deletion_failure: "Lead template could not be deleted"
+    tenders:
+      index:
+        view:
+          title: "My tenders"
+          new_tender: "New tender"
+          edit: "Edit"
+          certify: "Certify"
+          recertify: "Recertify"
+          destroy: "Destroy"
+          destroy_confirmation: "Are you sure?"
+          option_published: published
+          option_not_published: not published
+          search:
+            keyword_label: Keyword
+            keyword_label: "Keyword"
+            category_label: "Category"
+            filter_with_inactive: "Skip inactive"
+            filter_with_outdated: "Skip outdated"
+            search_button: "Search"
+      new:
+        view:
+          title: New tender
+          button_create_and_continue: Create & continue
+          button_create_and_duplicate: Create & duplicate
+          button_create: Create
+          button_cancel: Cancel
+          button_create_and_certify: "Create & certify"
+      edit:
+        view:
+          title: "Editing lead: %{name}"
+          button_update: Save
+          button_cancel: Cancel
+          certify: "Certify"
+          recertify: "Recertify"
+      destroy:
+        flash:
+          tender_deletion_successful: Tender has been successfully deleted!
+          tender_deletion_failure: Tender could not be deleted!
 
   agent_accounts:
     new:
@@ -2404,6 +2442,12 @@ en:
         category_was_changed: Category has been changed
         category_no_leads_can_be_published: "No leads can be published in that category"
         category_cannot_be_changed: "Category cannot be changed due to filled out templates!"
+        purchase_manager:
+          lead_information: "What product or service are you looking for?"
+          sales_information: "Tender information"
+          header_label: "Header"
+          description_label: "Description"
+          sale_limit_label: "How many venders do you want offers from?"
     deals:
       table:
         creation_date: Creation date

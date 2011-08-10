@@ -2,8 +2,12 @@ class Administration::CategoriesController < Administration::AdministrationContr
   inherit_resources
 
   before_filter :set_category_type
-  
+
   set_tab "browse_leads"
+
+  def new
+    @category = @category_type.constantize.new
+  end
 
   def create
     @category = @category_type.constantize.new(params[:category])

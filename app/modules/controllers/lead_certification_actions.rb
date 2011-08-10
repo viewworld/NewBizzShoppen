@@ -14,7 +14,7 @@ module LeadCertificationActions
     else
       flash[:notice] = "You can not perform this action"
     end
-    redirect_to send("#{current_user.role.to_s.pluralize}_leads_path".to_sym)
+    redirect_to send("#{current_user.role.to_s.pluralize}_#{model_name}_path".to_sym)
   end
 
 end

@@ -320,3 +320,8 @@ When /^lead "([^"]*)" should be in category "([^"]*)"$/ do |header, name|
   lead = Lead.where(:header => header).first
   assert lead.category == Category.where(:name => name).first
 end
+
+When /^price for lead "([^"]*)" is set to "([^"]*)"$/ do |header, default_price|
+  lead = Lead.where(:header => header).first
+  assert lead.price.to_s == default_price
+end

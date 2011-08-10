@@ -9,6 +9,8 @@
         </li>
         <%= form.input :description, :as => :text, :input_html => {:style => "width:350px;height:150px"} %>
         <%= form.input :additional_information, :as => :text, :input_html => {:style => "width:350px;height:150px"} %>
+
+        <%= form.input(:default_price) if @category.type == "LeadCategory" and current_user.admin? %>
         <%= form.input :is_locked %>
         <%= form.input :buyout_enabled %>
         <%= form.input :no_prices_for_team_members %>
@@ -134,5 +136,3 @@
         });
     }
 </script>
-
-

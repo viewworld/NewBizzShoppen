@@ -161,7 +161,10 @@ Nbs::Application.routes.draw do
 
   namespace :purchase_managers do
     root :to => "leads#index"
-    resources :leads
+    resources :leads, :path => :requests
+    resources :tenders, :path => :leads do
+      resources :certifications, :only => :create
+    end
     resources :lead_templates
   end
 

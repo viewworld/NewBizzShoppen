@@ -1,0 +1,98 @@
+<search-box:>
+  <div class="search_box">
+    <h2><%= t("common.search") %></h2>
+
+    <div class="search_content">
+      <%= form_for @search, :url => purchase_managers_tenders_path do |f| %>
+          <fieldset class="inputs_vertical">
+            <ol class="no_pdd">
+              <li class="string">
+                <%= f.label :with_keyword, t("purchase_manager.tenders.index.view.search.keyword_label") %>
+                <%= f.text_field :with_keyword %>
+              </li>
+              <li class="select">
+                <%= f.label t("purchase_manager.tenders.index.view.search.category_label") %>
+                <%= f.select :with_category, nested_set_options(@categories.all), :include_blank => true %>
+              </li>
+              <li class="boolean">
+                <%= f.check_box :without_inactive, {}, "true", "false" %>
+                <%= f.label :without_inactive, t("purchase_manager.tenders.index.view.search.filter_with_inactive") %>
+              </li>
+              <li class="boolean">
+                <%= f.check_box :without_outdated, {}, "true", "false" %>
+                <%= f.label :without_outdated, t("purchase_manager.tenders.index.view.search.filter_with_outdated") %>
+              </li>
+              <li class="commit">
+                <ibt c="bt_green" icon="magnify">
+                  <%= submit_tag t("purchase_manager.tenders.index.view.search.search_button") %>
+                </ibt>
+                <p>
+                  <%= bt_clear_filter %>
+                </p>
+              </li>
+            </ol>
+          </fieldset>
+      <% end %>
+    </div>
+  </div>
+</search-box:>
+
+<column-mc:>
+
+  <header>
+    <param:content>
+      <%= t("purchase_manager.tenders.index.view.title") %>
+    </param:content>
+
+    <param:actions>
+      <%= form_tag new_purchase_managers_tender_path, :method => :get, :id => "form_new_lead" do %>
+          <span style="position:absolute;top: 5px; right: 110px;">
+            <%= select_tag :category_id, options_for_select(nested_set_options(@categories), :selected => default_category_for_select(@categories), :disabled => @categories.select { |c| !c.can_publish_leads? }.map(&:id)) %>
+          </span>
+          <ul class="header_actions">
+            <li class="last">
+              <div class="hidden">
+                <%= submit_tag "New" %>
+              </div>
+              <%= bt_link_to :plus, t("purchase_manager.tenders.index.view.new_tender"), "javascript:void", :onclick => "$('#form_new_lead').submit()" %>
+            </li>
+          </ul>
+      <% end %>
+    </param:actions>
+  </header>
+  <% @tenders = @leads %>
+  <%= leads_table @leads, :show_checkboxes => false do |blocks| %>
+      <% blocks.tools do |lead| %>
+          <ul-actions>
+            <li>
+              <%= link_to t("purchase_manager.tenders.index.view.edit"), edit_purchase_managers_tender_path(lead), :class => "default_action" %>
+            </li>
+            <% if lead.can_be_certified? %>
+                <li>
+                  <%= link_to t("purchase_manager.tenders.index.view.certify"), purchase_managers_tender_certifications_path(lead), :method => :post %>
+                </li>
+              <% elsif lead.can_be_recertified? %>
+                <li>
+                    <%= link_to t("purchase_manager.tenders.index.view.recertify"), purchase_managers_tender_certifications_path(lead), :method => :post %>
+                </li>
+              <% end %>
+              <li>
+                <%= link_to t("purchase_manager.tenders.index.view.destroy"), purchase_managers_tender_path(lead), :confirm => t("purchase_manager.tenders.index.view.destroy_confirmation"), :method => :delete %>
+              </li>
+            </ul-actions>
+      <% end %>
+      <% blocks.status_column do |lead| %>
+          <% if current_user.can_publish_leads? %>
+              <%= form_for [:purchase_manager, lead], :method => :put do |f| %>
+                  <%= f.select :published, [[t("purchase_manager.tenders.index.view.option_published"), 1], [t("purchase_manager.tenders.index.view.option_not_published"), 0]], {:selected => lead.published ? 1 : 0}, {:onchange => "jQuery(this.form).callRemote()"} %>
+              <% end %>
+          <% else %>
+              <%= lead.published ? t("purchase_manager.tenders.index.view.option_published") : t("purchase_manager.tenders.index.view.option_not_published") %>
+          <% end %>
+      <% end %>
+      <% blocks.rowtooltip do |lead| %>
+          <p><%= render :partial => "/shared/comments/lead_threads", :locals => {:lead => lead, :threads => lead.comment_threads.roots.order("created_at DESC")} %></p>
+      <% end %>
+  <% end %>
+
+</column-mc:>

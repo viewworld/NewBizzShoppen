@@ -20,6 +20,7 @@ class Category < ActiveRecord::Base
   after_create :generate_blurb
 
   validates_presence_of :name
+  validates_numericality_of :default_price, :greater_than_or_equal_to => 0
   validates_uniqueness_of :name, :scope => :parent_id
 
   has_many :leads do
@@ -52,8 +53,8 @@ class Category < ActiveRecord::Base
 
   scope :without_locked_and_not_published, where("is_locked = ? or (is_locked = ? and published_leads_count > 0)", false, true)
   scope :within_accessible, lambda { |customer| where("categories.id IN (?)", customer.accessible_categories_ids) }
-  scope :without_locked, where("is_locked = ?", false)
-  scope :with_leads, where("total_leads_count > 0")
+  scope :without_locked, where("is_locked = ?", false).order("name")
+  scope :with_leads, where("total_leads_count > 0").order("name")
   scope :with_lead_request_owner, lambda { |owner| select("DISTINCT(name), categories.*").where("lead_purchases.requested_by IS NOT NULL and lead_purchases.owner_id = ?", owner.id).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
   scope :with_lead_request_requested_by, lambda { |requested_by| select("DISTINCT(name), categories.*").where("lead_purchases.requested_by = ?", requested_by.id).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
   scope :with_lead_purchase_owner, lambda { |owner| select("DISTINCT(name), categories.*").where("lead_purchases.requested_by IS NULL and lead_purchases.owner_id = ? and accessible_from IS NOT NULL", owner.id).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
