@@ -6,7 +6,13 @@ class YoutubeIntroduction < ActiveRecord::Base
           :conditions => "asset_type = 'Asset::YoutubeImage'",
           :dependent  => :destroy
 
-  validates_presence_of :url, :locale_code
+  SITES = ['fairleads', 'fairdeals']
+
+  validates_presence_of :url, :locale_code, :site
+
+  validates_uniqueness_of :locale_code, :scope => :site
+
+  scope :for_site, lambda{|site| where(:site => site)}
 
   accepts_nested_attributes_for :image
 

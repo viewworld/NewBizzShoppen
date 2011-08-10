@@ -1,7 +1,7 @@
 class Callers::MaterialsController < Callers::CallerController
   inherit_resources
   set_tab "campaigns"
-  layout proc{ |c| c.request.xhr? ? "send_material" : "application" }
+  layout proc{ |c| c.request.xhr? ? "send_material" : site_layout }
 
   before_filter :fetch_campaign
   before_filter lambda {authorize_access_rights(@campaign)}

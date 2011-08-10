@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
   before_filter :authorize_with_http_basic_for_staging, :check_category_buyer, :update_log_entries
   after_filter :do_something
 
+  layout proc{|c| session[:site] ? "layouts/#{session[:site]}/application" : "layouts/fairleads/application" }
+
   def authorize_with_http_basic_for_staging
     if Rails.env.staging?
       authenticate_or_request_with_http_basic do |user_name, password|

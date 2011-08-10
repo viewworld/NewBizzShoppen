@@ -46,6 +46,9 @@ module Nbs
     require "locale_setter"
     config.middleware.use "Rack::LocaleSetter"
 
+    require "fairdeals"
+    config.middleware.use "Rack::Fairdeals"
+
     require "bulk_process"
     config.middleware.use "BulkProcess"
 

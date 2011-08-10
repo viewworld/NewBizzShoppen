@@ -211,6 +211,10 @@ module ApplicationHelper
     URI.escape(uri, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]"))
   end
 
+  def main_menu
+    session[:site] ? "layouts/#{session[:site]}/main_menu" : "layouts/main_menu"
+  end
+  
   def deal_show_li(value, label)
     unless value.blank?
       content_tag(:li) do
@@ -218,4 +222,5 @@ module ApplicationHelper
       end
     end
   end
+
 end

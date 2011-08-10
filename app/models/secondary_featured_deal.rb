@@ -1,0 +1,2 @@
+class SecondaryFeaturedDeal < FeaturedDeal
+end
