@@ -96,6 +96,7 @@ en:
         reports: "Reports"
       agent:
         leads: My leads
+        deals: My deals
         lead_templates: Lead templates
         campaigns: Campaigns
         reports: "Reports"
@@ -1492,7 +1493,6 @@ en:
         flash:
           lead_deletion_successful: "Lead has been deleted successfully."
           lead_deletion_failure: "Lead could not be deleted"
-
       new:
         view:
           title: "New lead"
@@ -1540,6 +1540,25 @@ en:
         flash:
           deletion_successful: "Lead template has been deleted successfully."
           deletion_failure: "Lead template could not be deleted"
+    deals:
+      index:
+        view:
+          edit: "Edit"
+          destroy: "Destroy"
+      new:
+        view:
+          title: "New deal"
+          create_button: "Create"
+          check_buyer_email: "Check sales manager email"
+          no_user_found_message: "No user with email %{email} was found!"
+          certify: "Certify"
+          email: "Email address"
+          or: "or"
+          confirm: "Confirm"
+      edit:
+        view:
+          title: "Edit deal"
+          update_button: "Save"
 
   call_centre:
     lead_templates:
