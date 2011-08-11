@@ -44,7 +44,7 @@
 
         <td>
           <% unless deal.logo.blank? %>
-              <%= image_tag(deal.logo.asset.url(:thumb), :style => "float:left;margin:4px") %>
+              <%= image_tag(deal.logo.url(:thumb), :style => "float:left;margin:4px") %>
           <% end %>
         </td>
 
@@ -65,7 +65,7 @@
           <% unless deal.images.blank? %>
               <p>
                 <% deal.images.each do |image| %>
-                    <%= link_to image_tag(image.asset.url(:thumb)), image.asset.url, :rel => "colorbox_#{deal.id}" %>
+                    <%= link_to image_tag(image.url(:thumb)), image.url, :rel => "colorbox_#{deal.id}" %>
                 <% end %></p>
           <% end %>
 
