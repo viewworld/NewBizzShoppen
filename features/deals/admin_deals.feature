@@ -28,6 +28,8 @@ Feature: Deals from admin perspective
     Then I follow translated "deals.common.listing.view.new_deal"
     Then I fill in "buyer_email" with "buyer@nbs.com"
     Then I follow translated "administration.deals.new.view.check_buyer_email"
+    And I wait 1 second
+    And I follow translated "call_centre_agent.deals.new.view.confirm"
     Then I fill deal creation form
     Then I select "DKK" from "deal_currency_id"
     Then I fill in "deal_price" with "10"
