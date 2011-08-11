@@ -30,7 +30,7 @@ module DealAssetActions
   end
 
   def download
-    send_file @asset.asset.path
+    send_file Rails.env == "prouction" ? @asset.url : @asset.path
   end
 
   private
