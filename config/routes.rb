@@ -26,6 +26,7 @@ Nbs::Application.routes.draw do
     resources :categories
     resources :category_email_templates, :only => [:edit, :update]
     resource :setting, :only => [:edit, :update]
+    resources :featured_deals, :only => [:index, :create]
     resources :email_templates
     resources :leads
     resources :deals do

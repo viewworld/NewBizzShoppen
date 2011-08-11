@@ -15,6 +15,7 @@ class Deal < AbstractLead
   scope :without_requested_by, lambda { |u| select("DISTINCT leads.*").joins("LEFT JOIN leads lr ON lr.deal_id = leads.id").where(["(lr.requested_by <> ? OR lr.requested_by IS NULL)", u.id]) if u }
   scope :active_is, lambda { |q| where("#{q == "1" ? "end_date >= ? and start_date <= ?" : "end_date < ? or start_date > ?"}", Date.today, Date.today) }
   scope :for_user, lambda { |q| where("creator_id = ?", q.id) }
+  scope :group_deals, where(:group_deal => true)
 
   scoped_order :header, :end_date, :published, :created_at
 
@@ -64,6 +65,14 @@ class Deal < AbstractLead
         :start_date => Date.today,
         :end_date => Date.today,
         :price => 0)
+  end
+
+  def self.group_deals_for_select
+      group_deals.without_inactive.map{|gd| [gd.to_s_for_group_deals_for_select, gd.id]}
+  end
+
+  def to_s_for_group_deals_for_select
+    "#{header} (#{start_date.strftime("%d.%m.%Y")}-#{end_date.strftime("%d.%m.%Y")})"
   end
 
   def buyer

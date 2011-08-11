@@ -1,0 +1,34 @@
+<column-mc:>
+  <header><%= "Fetured deals" %></header>
+
+  <%= form_tag administration_featured_deals_path, :method => :post do %>
+      <frm title="">
+        <param:content>
+          <div class="pdd_10 no_pdd_t">
+            <div class="column_left">
+              <fieldset class="inputs labels_260 labels_ta_r inputs_120">
+                <ol>
+                  <% FeaturedDeal::POSITIONS.each do |position| %>
+                      <li class="string">
+                        <%= label_tag position == 0 ? "Main position" : "Position #{position}" %>
+                        <%= select_tag "featured_deals[#{position}]", options_for_select(@group_deals_for_select, FeaturedDeal.find_by_position(position).deal_id) %>
+                      </li>
+                  <% end %>
+                </ol>
+              </fieldset>
+            </div>
+          </div>
+          <clb/>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="plus">
+            <%= submit_tag "Set featured deals" %>
+          </ibt>
+          <ibt c="bt_grey fltri">
+            <%= button_to_function "Cancel", "history.go(-1)" %>
+          </ibt>
+        </param:actions>
+      </frm>
+  <% end %>
+
+</column-mc:>

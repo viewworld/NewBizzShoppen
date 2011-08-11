@@ -49,6 +49,8 @@ Feature: Front page for procurment
 
   Scenario: I should be able to browse deals by the arrows on the left and right side of the big featured group deal
 
+  @is
   Scenario: As admin I can select primary featured deal to be displayed on procurement page
 
+  @is
   Scenario: As admin I can select three secondary featured deals to be displayed on procurement page

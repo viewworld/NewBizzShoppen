@@ -86,6 +86,7 @@ en:
         translations: "Translations"
         currencies: "Currencies"
         countries: Countries
+        featured_deals: "Feat deals"
         invoices: "Invoices"
         upcoming_invoices: "Debtors"
         payment_transactions: "Payments"
