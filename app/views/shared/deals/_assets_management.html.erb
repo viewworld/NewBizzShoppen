@@ -7,7 +7,7 @@
           <div class="txt assets_elements">
             <ul>
               <li>
-                <%= image_tag @deal.logo.url(:thumb) %> <%= link_to t("deals.common.assets.view.show_image"), @deal.logo.url(:medium), :rel => "colorbox_logo" %>
+                <%= image_tag @deal.logo.url(:thumb) %> <%= link_to t("deals.common.assets.view.show_image"), @deal.logo.url, :rel => "colorbox_logo" %>
                 <%= link_to t("deals.common.assets.view.remove_logo"), self.send(remove_path, @deal, @deal.logo), :method => :delete, :confirm => t("common.confirmation") %>
               </li>
             </ul>
