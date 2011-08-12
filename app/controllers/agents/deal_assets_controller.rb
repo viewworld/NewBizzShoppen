@@ -7,7 +7,7 @@ class Agents::DealAssetsController < Agents::AgentController
   private
 
   def path
-    edit_agent_deal_path(@deal)
+    edit_agents_deal_path(@deal)
   end
 
 end

@@ -2,6 +2,7 @@
 Feature: Deals from Call Centre/Agent perspective
 
   Background:
+    Then user "agent@nbs.com" has deal maker role enabled
     Then user "translator_call_centre@nbs.com" has deal maker role enabled
     Then user "translator_call_centre_agent@nbs.com" has deal maker role enabled
     Given I am on the homepage
@@ -56,6 +57,27 @@ Feature: Deals from Call Centre/Agent perspective
     Then I click hidden link by url regex "/call_centre_agents\/deals\/\d+\/edit/"
     Then I should see translated "call_centre_agent.deals.edit.view.title"
     Then I fill deal edit form and submit with translated button "call_centre_agent.deals.edit.view.update_button"
+    Then I follow translated logout link for translator_call_centre_agent@nbs.com
+    # agent
+    And I sign in as agent@nbs.com with password secret
+    Then I follow translated "layout.main_menu.agent.deals"
+    Then I follow translated "deals.common.listing.view.new_deal"
+    Then I fill in "buyer_email" with "buyer@nbs.com"
+    Then I follow translated "agent.deals.new.view.check_buyer_email"
+    And I wait 1 second
+    And I follow translated "agent.deals.new.view.confirm"
+    Then I fill deal creation form
+    Then I select "DKK" from "deal_currency_id"
+    Then I fill in "deal_price" with "10"
+    Then I wait 30 second
+    Then I select "Business" from "deal_lead_category_id"
+    Then I press translated "agent.deals.new.view.create_button"
+    Then I should see translated "flash.deals.create.notice"
+    Then I should see translated "deals.common.listing.view.header"
+    Then I should see "very important deal"
+    Then I click hidden link by url regex "/agents\/deals\/\d+\/edit/"
+    Then I should see translated "agent.deals.edit.view.title"
+    Then I fill deal edit form and submit with translated button "agent.deals.edit.view.update_button"
 
   #the admin/call center/agent can create the deal and "certify it" in the same way a lead is certified.
   @selenium @_done @_tested
@@ -81,6 +103,13 @@ Feature: Deals from Call Centre/Agent perspective
     Then I follow translated "administration.deals.new.view.certify"
     Then I certify deal with translation "administration.deals.new.view.create_button"
     Then I follow translated logout link for admin@nbs.com
+    # agent
+    And I sign in as agent@nbs.com with password secret
+    Then I follow translated "layout.main_menu.agent.deals"
+    Then I follow translated "deals.common.listing.view.new_deal"
+    Then I follow translated "agent.deals.new.view.certify"
+    Then I certify deal with translation "agent.deals.new.view.create_button"
+    Then I follow translated logout link for agent@nbs.com
     # certification by buyer
     Then I have user with email ned@stark.com and role customer
     Then user "ned@stark.com" is confirmed
@@ -95,7 +124,79 @@ Feature: Deals from Call Centre/Agent perspective
     Then I follow translated "buyer.deal_certification_requests.index.view.certify"
     Then I press translated "buyer.deal_certification_requests.edit.view.reject"
     Then I should see translated "buyer.deal_certification_requests.update.flash.reject_success"
+    Then I follow translated "buyer.deal_certification_requests.index.view.certify"
+    Then I press translated "buyer.deal_certification_requests.edit.view.reject"
+    Then I should see translated "buyer.deal_certification_requests.update.flash.reject_success"
     Then I should not see translated "layout.main_menu.lead_buyer.deals_to_certify"
+
+  @_added @_done @_tested
+  Scenario: admin/call center/call center agent/agent can edit Company logo
+    # admin
+    And I sign in as admin@nbs.com with password secret
+    Then a deal is created by "admin@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
+    Then I add and remove logo for deal as "administration"
+    Then I follow translated logout link for admin@nbs.com
+    # call centre
+    And I sign in as translator_call_centre@nbs.com with password secret
+    Then a deal is created by "translator_call_centre@nbs.com" for user "translator_call_centre@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
+    Then I add and remove logo for deal as "call_centre"
+    Then I follow translated logout link for translator_call_centre@nbs.com
+    # call centre agent
+    And I sign in as translator_call_centre_agent@nbs.com with password secret
+    Then a deal is created by "translator_call_centre_agent@nbs.com" for user "translator_call_centre_agent@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
+    Then I add and remove logo for deal as "call_centre_agent"
+    Then I follow translated logout link for translator_call_centre_agent@nbs.com
+    # agent
+    And I sign in as agent@nbs.com with password secret
+    Then a deal is created by "agent@nbs.com" for user "agent@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
+    Then I add and remove logo for deal as "agent"
+    Then I follow translated logout link for agent@nbs.com
+
+  @_added @_done @_tested
+  Scenario: admin/call center/call center agent/agent can upload material to download
+    # admin
+    And I sign in as admin@nbs.com with password secret
+    Then a deal is created by "admin@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
+    Then I add and remove document for deal as "administration"
+    Then I follow translated logout link for admin@nbs.com
+    # call centre
+    And I sign in as translator_call_centre@nbs.com with password secret
+    Then a deal is created by "translator_call_centre@nbs.com" for user "translator_call_centre@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
+    Then I add and remove document for deal as "call_centre"
+    Then I follow translated logout link for translator_call_centre@nbs.com
+    # call centre agent
+    And I sign in as translator_call_centre_agent@nbs.com with password secret
+    Then a deal is created by "translator_call_centre_agent@nbs.com" for user "translator_call_centre_agent@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
+    Then I add and remove document for deal as "call_centre_agent"
+    Then I follow translated logout link for translator_call_centre_agent@nbs.com
+    # agent
+    And I sign in as agent@nbs.com with password secret
+    Then a deal is created by "agent@nbs.com" for user "agent@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
+    Then I add and remove document for deal as "agent"
+    Then I follow translated logout link for agent@nbs.com
+
+  @_added @_done @_tested
+  Scenario: admin/call center/call center agent/agent can attach multiple pictures
+    # admin
+    And I sign in as admin@nbs.com with password secret
+    Then a deal is created by "admin@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
+    Then I add and remove image for deal as "administration"
+    Then I follow translated logout link for admin@nbs.com
+    # call centre
+    And I sign in as translator_call_centre@nbs.com with password secret
+    Then a deal is created by "translator_call_centre@nbs.com" for user "translator_call_centre@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
+    Then I add and remove image for deal as "call_centre"
+    Then I follow translated logout link for translator_call_centre@nbs.com
+    # call centre agent
+    And I sign in as translator_call_centre_agent@nbs.com with password secret
+    Then a deal is created by "translator_call_centre_agent@nbs.com" for user "translator_call_centre_agent@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
+    Then I add and remove image for deal as "call_centre_agent"
+    Then I follow translated logout link for translator_call_centre_agent@nbs.com
+    # agent
+    And I sign in as agent@nbs.com with password secret
+    Then a deal is created by "agent@nbs.com" for user "agent@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
+    Then I add and remove image for deal as "agent"
+    Then I follow translated logout link for agent@nbs.com
 
   #(but the deal must sign up sales manager, and will not have the option not to sign up)
   @_done @_deprecated
