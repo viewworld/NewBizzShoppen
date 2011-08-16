@@ -26,7 +26,7 @@ class Deal < AbstractLead
   after_create :certify_for_unknown_email, :assign_deal_admin
   before_save :handle_published
 
-  attr_accessor :creation_step
+  attr_accessor :creation_step, :use_company_name_as_category
 
   accepts_nested_attributes_for :logo, :reject_if => proc { |attributes| attributes['asset'].blank? }
   accepts_nested_attributes_for :images, :reject_if => proc { |attributes| attributes['asset'].blank? }
@@ -91,11 +91,15 @@ class Deal < AbstractLead
   end
 
   def create_uniq_deal_category
-    if buyer and creator.buyer?
-      category = buyer.deal_category_id ? LeadCategory.find(buyer.deal_category_id) : LeadCategory.create(:name => buyer.company_name)
-      buyer.update_attribute(:deal_category_id, category.id) if buyer.deal_category_id.blank?
+    if (buyer and creator.buyer?) or ActiveRecord::ConnectionAdapters::Column.value_to_boolean(use_company_name_as_category)
+      if buyer
+        category = buyer.deal_category_id ? LeadCategory.find(buyer.deal_category_id) : LeadCategory.create(:name => buyer.company_name)
+      else
+        category = LeadCategory.create(:name => company_name)
+      end
+      buyer.update_attribute(:deal_category_id, category.id) if buyer and buyer.deal_category_id.blank?
       category.update_attribute(:is_customer_unique, true) unless category.is_customer_unique
-      unless category.customers.include?(buyer)
+      if buyer and !category.customers.include?(buyer)
         category.customers << buyer
         category.save
       end
