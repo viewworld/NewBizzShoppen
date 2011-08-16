@@ -88,7 +88,7 @@ function loadScripts() {
     {
 //      old method
 //      $('td:not(.cl, .cr, .tda)', 'table tbody tr:not(.pagination, .main_actions)').filter(":not(:has(:checkbox, select, a))")
-        $('tr:has(.default_action) td').filter(":not(:has(:checkbox, select, a))")
+        $('tr:has(.default_action) td,h4').filter(":not(:has(:checkbox, select, a))")
                 .addClass("pointer")
                 .click(function()
         {
