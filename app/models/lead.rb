@@ -193,7 +193,7 @@ class Lead < AbstractLead
   end
 
   def buyable?
-    lead_purchases.sum("quantity") < sale_limit
+    published? and lead_purchases.sum("quantity") < sale_limit
   end
 
   def calculate_average_rating
