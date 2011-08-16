@@ -3,6 +3,7 @@ Feature: Deals from Call Centre/Agent perspective
 
   Background:
     Then user "agent@nbs.com" has deal maker role enabled
+    Then user "translator_agent@nbs.com" has deal maker role enabled
     Then user "translator_call_centre@nbs.com" has deal maker role enabled
     Then user "translator_call_centre_agent@nbs.com" has deal maker role enabled
     Given I am on the homepage
