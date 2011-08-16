@@ -674,6 +674,7 @@ en:
         novelty_label: Novelty
         hotness_label: Hotness
         certification_label: Certification
+        no_longer_active: "The lead you were trying to view is no longer available"
 
   news:
     index:

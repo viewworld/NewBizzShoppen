@@ -337,4 +337,8 @@ class Lead < AbstractLead
     I18n.locale = current_locale
   end
 
+  def can_be_shown_to?(cu)
+    published? or (cu and ((cu == creator) or (cu.has_role?(:admin))))
+  end
+
 end
