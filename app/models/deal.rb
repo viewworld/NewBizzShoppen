@@ -40,7 +40,7 @@ class Deal < AbstractLead
   end
 
   def assign_deal_admin
-    update_attribute(:deal_admin_email, (creator.agent? ? creator.email : Settings.default_deal_admin_email))
+    update_attribute(:deal_admin_email, (creator.has_any_role?(:agent, :call_centre, :call_centre_agent) ? creator.email : Settings.default_deal_admin_email))
   end
 
   def self.new_for_user(user)

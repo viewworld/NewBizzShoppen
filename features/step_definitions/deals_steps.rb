@@ -13,10 +13,10 @@ end
 
 Then /^a deal is created by "([^"]*)" for user "([^"]*)" and category "([^"]*)" with attributes "([^"]*)"$/ do |creator, user, category, attributes|
   deal_attributes = {}; attributes.split("|").each { |attr| deal_attributes[attr.split(":").first] = attr.split(":").last }
-  deal = Deal.new_for_user(User.find_by_email(creator))
+  deal = Deal.new_for_user(User.find_by_email(user))
   deal.update_attributes(deal_attributes)
   deal.currency_id = Currency.first.id
-  deal.creator = User.find_by_email(user)
+  deal.creator = User.find_by_email(creator)
   deal.category_id = DealCategory.find_by_name(category)
   deal.save!
 end
