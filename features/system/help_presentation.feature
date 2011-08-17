@@ -1,7 +1,7 @@
 @help @m3 @ao
 Feature: Help presentation
 
-@selenium @_done
+@selenium @_done @ff5
 Scenario: I can click the button help to display a popup with the relevant help for element that has a help content associated
   Given I am on the homepage
   And I make sure current locale is "en"
