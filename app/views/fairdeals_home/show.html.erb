@@ -8,6 +8,35 @@
           <%= link_to image_tag(youtube_introduction.image ? youtube_introduction.image.url : "http://img.youtube.com/vi/#{youtube_introduction.url.extract_youtube_video_id}/default.jpg", :class => "thumb"), "http://www.youtube.com/embed/#{youtube_introduction.url.extract_youtube_video_id}?autoplay=1&rel=0&border=0", :class => "introduction_video", :id => "introduction_video_link" %>
         </div>
     <% end %>
+    <div class="intro_content">
+      <%= blurb("blurb_start_page_fairdeals") %>
+    </div>
+    <clb/>
+  </div>
+
+  <div class="grid_750 fltl" id="primary_featured_deal">
+    <% if featured = FeaturedDeal.where(:position => 0).first and featured.deal %>
+        <%= featured.deal.header %>
+    <% end %>
+  </div>
+  <clb/>
+
+  <div class="grid_250 fltl" id="secondary_featured_deal_1">
+    <% if featured = FeaturedDeal.where(:position => 1).first and featured.deal %>
+        <%= featured.deal.header %>
+    <% end %>
+  </div>
+
+  <div class="grid_250 fltl" id="secondary_featured_deal_2">
+    <% if featured = FeaturedDeal.where(:position => 2).first and featured.deal %>
+        <%= featured.deal.header %>
+    <% end %>
+  </div>
+
+  <div class="grid_250 fltl" id="secondary_featured_deal_3">
+    <% if featured = FeaturedDeal.where(:position => 3).first and featured.deal %>
+        <%= featured.deal.header %>
+    <% end %>
   </div>
 
   <% unless user_signed_in? %>
@@ -40,6 +69,9 @@
           </div>
           <hl/>
           <div style="padding:5px 10px">
+            <p>
+              <%= t("fairdeals_home.show.view.dont_have_account") %> <%= link_to t("fairdeals_home.show.view.sign_up_here"), new_purchase_manager_account_path %>
+            </p>
             <p>
               <%= link_to t("home.show.view.resend_confirmation_instructions"), new_confirmation_path(User) %>
             </p>

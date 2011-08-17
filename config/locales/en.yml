@@ -697,6 +697,8 @@ en:
     show:
       view:
         header: "Home"
+        dont_have_account: "Don't have account?"
+        sign_up_here: "Sign up here"
 
   home:
     show:
