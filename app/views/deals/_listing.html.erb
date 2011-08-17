@@ -51,6 +51,7 @@
         </td>
 
         <td>
+          <%= link_to deal.header, deal, :class => "default_action", :style => "display:none" %>
           <h4>
             <%= deal.header %>
             <% if current_user and current_user.admin? %>
