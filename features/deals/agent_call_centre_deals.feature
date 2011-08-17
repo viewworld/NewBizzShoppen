@@ -81,7 +81,7 @@ Feature: Deals from Call Centre/Agent perspective
     Then I fill deal edit form and submit with translated button "agent.deals.edit.view.update_button"
 
   #the admin/call center/agent can create the deal and "certify it" in the same way a lead is certified.
-  @selenium @_done @_tested @_wip
+  @selenium @_done @_tested
   Scenario: I can create new deal and certify (enter future sales manager's email)
     # call centre
     And I sign in as translator_call_centre@nbs.com with password secret
