@@ -30,6 +30,8 @@ class Cart
           else
             return :creation_successful
           end
+        else
+          :cannot_be_bought
         end
       else
         :currencies_mismatch

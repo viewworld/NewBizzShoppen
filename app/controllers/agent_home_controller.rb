@@ -3,7 +3,7 @@ class AgentHomeController < ApplicationController
   set_tab "home"
 
   def agent
-    #@new_leads = current_user.leads.without_outdated.without_inactive.order("created_at DESC").limit(3)
+    @new_leads = current_user.leads.without_outdated.without_inactive.order("created_at DESC").limit(3)
     @new_comments = current_user.comment_threads.order("last_thread_created_at DESC").limit(3)
     @sold_leads = current_user.leads.joins_on_lead_purchases.purchased.order("lead_purchases.created_at DESC").limit(3)
     render :agent

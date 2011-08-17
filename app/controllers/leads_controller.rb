@@ -9,8 +9,15 @@ class LeadsController < ApplicationController
 
   def show
     show! do |format|
-      @lead.update_stats!(:clicks_count)
-      format.html {}
+      if @lead.can_be_shown_to?(current_user)
+        @lead.update_stats!(:clicks_count)
+        format.html {}
+      else
+        format.html {
+          flash[:alert] = t("leads.show.view.no_longer_active")
+          redirect_to root_path
+        }
+      end
     end
   end
 

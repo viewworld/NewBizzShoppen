@@ -36,7 +36,9 @@
   <% collection.each do |deal| %>
       <tr class="lead <%= cycle("odd", "even") %>" id="<%= dom_id(deal) %>">
 
-        <td class="cl"></td>
+        <td class="cl">
+          <%= link_to deal.header, deal, :class => "default_action", :style => "display:none" %>
+        </td>
 
         <% if show_checkboxes %>
             <td class="no_pdd_lr"><%= check_box_tag "lead_ids[]", deal.id %></td>

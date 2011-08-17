@@ -193,7 +193,7 @@ class Lead < AbstractLead
   end
 
   def buyable?
-    lead_purchases.sum("quantity") < sale_limit
+    published? and lead_purchases.sum("quantity") < sale_limit
   end
 
   def calculate_average_rating
@@ -335,6 +335,10 @@ class Lead < AbstractLead
       self.description = "#{I18n.t("models.lead.field_prefixes.description")} #{deal.description}"
     end
     I18n.locale = current_locale
+  end
+
+  def can_be_shown_to?(cu)
+    published? or (cu and ((cu == creator) or (cu.has_role?(:admin))))
   end
 
 end
