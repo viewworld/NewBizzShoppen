@@ -5,12 +5,12 @@ class ApplicationController < ActionController::Base
   after_filter :do_something
 
   def authorize_with_http_basic_for_staging
-    if Rails.env.staging?
-      authenticate_or_request_with_http_basic do |user_name, password|
-        user_name == "fairleads" && password == "staging"
-      end
-      warden.custom_failure! if performed?
-    end
+    #if Rails.env.staging?
+    #  authenticate_or_request_with_http_basic do |user_name, password|
+    #    user_name == "fairleads" && password == "staging"
+    #  end
+    #  warden.custom_failure! if performed?
+    #end
   end
 
   before_filter :set_locale
