@@ -3250,3 +3250,8 @@ en:
     index:
       view:
         header: "Deal categories"
+  deal_buyer_accounts:
+    new:
+      view:
+        header: "New buyer account"
+        button_create_account: "Create account"
