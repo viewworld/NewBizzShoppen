@@ -15,28 +15,63 @@
   </div>
 
   <div class="grid_750 fltl" id="primary_featured_deal">
-    <% if featured = FeaturedDeal.where(:position => 0).first and featured.deal %>
-        <%= featured.deal.header %>
-    <% end %>
+    <frm c="no_marg">
+      <param:content>
+        <% if featured = FeaturedDeal.where(:position => 0).first and featured.deal %>
+            <%= featured.deal.header %>
+        <% end %>
+      </param:content>
+    </frm>
   </div>
   <clb/>
 
   <div class="grid_250 fltl" id="secondary_featured_deal_1">
-    <% if featured = FeaturedDeal.where(:position => 1).first and featured.deal %>
-        <%= featured.deal.header %>
-    <% end %>
+    <frm c="no_marg">
+      <param:content>
+        <% if featured = FeaturedDeal.where(:position => 1).first and featured.deal %>
+            <%= featured.deal.header %>
+        <% end %>
+      </param:content>
+    </frm>
   </div>
 
   <div class="grid_250 fltl" id="secondary_featured_deal_2">
-    <% if featured = FeaturedDeal.where(:position => 2).first and featured.deal %>
-        <%= featured.deal.header %>
-    <% end %>
+    <frm c="no_marg">
+      <param:content>
+        <% if featured = FeaturedDeal.where(:position => 2).first and featured.deal %>
+            <%= featured.deal.header %>
+        <% end %>
+      </param:content>
+    </frm>
   </div>
 
   <div class="grid_250 fltl" id="secondary_featured_deal_3">
-    <% if featured = FeaturedDeal.where(:position => 3).first and featured.deal %>
-        <%= featured.deal.header %>
-    <% end %>
+    <frm c="no_marg">
+      <param:content>
+        <% if featured = FeaturedDeal.where(:position => 3).first and featured.deal %>
+            <%= featured.deal.header %>
+        <% end %>
+      </param:content>
+    </frm>
+  </div>
+  <clb/>
+
+  <div class="column_1to3 fltl" id="news">
+    <frm title="#{t('purchase_manager_home.show.view.header_news')}" c="no_marg">
+      <param:header>
+        <%= bt_link_to nil, t("purchase_manager_home.show.view.complete_list_link"), news_index_path(:search => {:with_subclass => 'PurchaseManager'}), :class => "fltr" %>
+      </param:header>
+      <param:content>
+        <ul class="solid_list">
+          <% if @news.any? %>
+              <%= render :partial => 'news', :collection => @news, :as => :news %>
+          <% else %>
+              <%= render :partial => 'shared/blank_data_li' %>
+          <% end %>
+        </ul>
+      </param:content>
+
+    </frm>
   </div>
 
   <% unless user_signed_in? %>
