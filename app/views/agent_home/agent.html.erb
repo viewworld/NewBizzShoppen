@@ -63,6 +63,8 @@
           <ul class="solid_list">
             <% if @new_comments.any? %>
                 <%= render :partial => 'comment', :collection => @new_comments, :as => :comment %>
+            <% elsif @new_leads.any? %>
+                <%= render :partial => 'lead', :collection => @new_leads, :as => :lead %>
             <% else %>
                 <%= render :partial => 'shared/blank_data_li' %>
             <% end %>         
