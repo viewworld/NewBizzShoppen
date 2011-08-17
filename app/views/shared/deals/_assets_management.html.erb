@@ -70,7 +70,7 @@
               <% @materials.each do |material| %>
                   <% if material.id %>
                       <li>
-                        <strong><%= material.asset_file_name %></strong> <%= link_to t("deals.common.assets.view.download"), self.send(download_path, @deal, material) %>
+                        <strong><%= material.asset_file_name %></strong> <%= link_to t("deals.common.assets.view.download"), material.url %>
                         <%= link_to t("deals.common.assets.view.remove_material"), self.send(remove_path, @deal, material), :method => :delete, :confirm => t("common.confirmation") %>
                       </li>
                   <% end %>

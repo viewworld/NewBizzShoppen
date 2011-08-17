@@ -29,11 +29,7 @@ Nbs::Application.routes.draw do
     resources :email_templates
     resources :leads
     resources :deals do
-      resources :assets, :controller => "deal_assets", :only => [:create, :destroy] do
-        member do
-          get 'download'
-        end
-      end
+      resources :assets, :controller => "deal_assets", :only => [:create, :destroy]
     end
     resources :articles
     resources :news
@@ -73,11 +69,7 @@ Nbs::Application.routes.draw do
     resources :cart_items
     resources :deal_certification_requests, :only => [:index, :edit, :update]
     resources :deals do
-      resources :assets, :controller => "deal_assets", :only => [:create, :destroy] do
-        member do
-          get 'download'
-        end
-      end
+      resources :assets, :controller => "deal_assets", :only => [:create, :destroy]
     end
     resource :cart, :only => [:show, :update, :destroy], :controller => 'cart'
     resources :lead_purchases do
@@ -100,11 +92,7 @@ Nbs::Application.routes.draw do
       resource :password, :controller => 'password', :only => [:new, :update, :destroy]
     end
     resources :deals do
-      resources :assets, :controller => "deal_assets", :only => [:create, :destroy] do
-        member do
-          get 'download'
-        end
-      end
+      resources :assets, :controller => "deal_assets", :only => [:create, :destroy]
     end
     resource :bulk_call_centre_agents_update, :controller => "bulk_call_centre_agents_update", :only => [:update]
     resources :leads
@@ -119,11 +107,7 @@ Nbs::Application.routes.draw do
     end
     resources :lead_templates
     resources :deals do
-      resources :assets, :controller => "deal_assets", :only => [:create, :destroy] do
-        member do
-          get 'download'
-        end
-      end
+      resources :assets, :controller => "deal_assets", :only => [:create, :destroy]
     end
   end
 
@@ -158,11 +142,7 @@ Nbs::Application.routes.draw do
       resources :certifications, :only => :create
     end
     resources :deals do
-      resources :assets, :controller => "deal_assets", :only => [:create, :destroy] do
-        member do
-          get 'download'
-        end
-      end
+      resources :assets, :controller => "deal_assets", :only => [:create, :destroy]
     end
   end
 
@@ -246,11 +226,6 @@ Nbs::Application.routes.draw do
   resources :deals, :except => [:new, :create, :destroy] do
     member do
       post 'rate'
-    end
-    resources :assets, :controller => "deal_assets", :only => [] do
-      member do
-        get 'download'
-      end
     end
   end
 
