@@ -60,6 +60,23 @@ class Deal < AbstractLead
         :price => 0)
   end
 
+  def build_buyer(params={})
+    if buyer
+      buyer
+    else
+      existing_users_count = User::Customer.where(:screen_name => contact_name).count
+      contact_name_arr = contact_name.strip.split(" ")
+      contact_name_arr = contact_name_arr.size == 1 ? contact_name_arr : [contact_name_arr.first, contact_name_arr[1..-1].join(' ')]
+      user = User::Customer.new({:email => email_address, :company_name => company_name, :phone => phone_number,
+                                 :screen_name => "#{contact_name}#{existing_users_count.zero? ? '' : existing_users_count+1}",
+                                 :agreement_read => true, :first_name => contact_name_arr.first, :last_name => contact_name_arr.last}.merge(params))
+      user.skip_email_verification = "1"
+      user.address = Address.new(:address_line_1 => address_line_1, :address_line_2 => address_line_2, :address_line_3 => address_line_3,
+                                 :zip_code => zip_code, :country_id => country_id, :region_id => region_id)
+      user
+    end
+  end
+
   def buyer
     creator.buyer? ? creator : User::Customer.where(:email => email_address).first
   end
@@ -78,6 +95,19 @@ class Deal < AbstractLead
 
   def certified?
     !deal_certification_requests.blank? and current_dcr.approved?
+  end
+
+  def assign_lead_category_to_buyer!
+    if buyer and lead_category.is_customer_unique?
+      buyer.update_attribute(:deal_category_id, lead_category.id)
+      lead_category.customers << buyer
+      lead_category.save
+    end
+  end
+
+  def send_buyer_welcome_email(password)
+    template = EmailTemplate.find_by_uniq_id("deal_certification_buyer_welcome")
+    ApplicationMailer.delay.generic_email([buyer.email], template.subject, template.render({:user => buyer, :password => password}), nil, [], template.cc, template.bcc)
   end
 
   private

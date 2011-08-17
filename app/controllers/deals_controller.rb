@@ -1,7 +1,10 @@
 class DealsController < ApplicationController
   inherit_resources
-  actions :index, :show
+  actions :index, :show, :update
   set_tab "browse_deals"
+
+  include ::DealCertificationRequestActions
+  before_filter :set_deal, :only => [:edit, :update]
 
   def collection
     @search = Deal.scoped_search(params[:search])

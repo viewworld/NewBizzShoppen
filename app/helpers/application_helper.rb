@@ -27,7 +27,7 @@ module ApplicationHelper
   end
 
   def fields_for_deals_translations(f)
-    new_object = current_user.has_any_role?(:admin, :call_centre) ? Lead.new : current_user.leads.build
+    new_object = (!user_signed_in? or current_user.has_any_role?(:admin, :call_centre)) ? Lead.new : current_user.leads.build
     new_object.lead_translations = [LeadTranslation.new]
     fields = f.fields_for :lead_translations, new_object.lead_translations do |builder|
       render("/shared/deals/deal_fields", :f => builder)

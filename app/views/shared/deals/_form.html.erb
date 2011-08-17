@@ -4,7 +4,7 @@
       <ol>
         <% if deal.current_dcr and deal.current_dcr.active? %>
             <%= hidden_field_tag "accept", "false" %>
-        <% else %>
+        <% elsif user_signed_in? %>
             <%
               deal_categories = if current_user.buyer?
                                     DealCategory.without_locked.with_customer_unique(current_user).all
@@ -17,7 +17,7 @@
             <%= form.input :category_id, :disabled => deal_categories.select { |c| !c.can_publish_leads? }.map(&:id), :collection => nested_set_options(deal_categories), :include_blank => false, :label => t("shared.deals.form.deal_category_label") %>
         <% end %>
 
-        <% if current_user.has_any_role?(:call_centre, :call_centre_agent, :admin, :agent) %>
+        <% if user_signed_in? and current_user.has_any_role?(:call_centre, :call_centre_agent, :admin, :agent) %>
         <%
             lead_categories =   if current_user.agent?
                                     LeadCategory.without_locked.with_agent_unique(current_user).all
@@ -44,8 +44,8 @@
                        :wrapper_html => {:class => "date"},
                        :input_html => {:class => "datepicker", :value => deal.end_date},
                        :hint => t('models.result_field.date_format') %>
-        <%= form.input :price, :as => current_user.buyer? ? :hidden : :string %>
-        <% if current_user.buyer? %>
+        <%= form.input :price, :as => (!user_signed_in? or current_user.buyer?) ? :hidden : :string %>
+        <% if !user_signed_in? or current_user.buyer? %>
             <%= form.input :currency_id, :value => Currency.default_currency.id, :as => :hidden %>
         <% else %>
             <%= form.input :currency_id, :collection => currencies_for_select, :include_blank => false %>
@@ -70,12 +70,12 @@
         <%= form.input :zip_code %>
         <%= form.input :country_id, :as => :select, :collection => Country.all, :include_blank => false %>
         <%= form.input :region_id, :as => :select, :collection => Region.all, :include_blank => false %>
-        <% if current_user.admin? or current_user.has_role?(:deal_maker) %>
+        <% if user_signed_in? and (current_user.admin? or current_user.has_role?(:deal_maker)) %>
             <span id="deal_published">
                 <%= form.input :published %>
             </span>
         <% end %>
-        <% if current_user.admin? and !form.object.new_record? %>
+        <% if user_signed_in? and current_user.admin? and !form.object.new_record? %>
             <span id="deal_admin">
                 <%= form.input :deal_admin_email %>
             </span>
@@ -85,7 +85,7 @@
   </div>
 </div>
 
-<% if current_user.buyer? %>
+<% if user_signed_in? and current_user.buyer? %>
     <% unless (deal.current_dcr and deal.current_dcr.active?) %>
         <clb/>
 

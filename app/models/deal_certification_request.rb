@@ -16,16 +16,22 @@ class DealCertificationRequest < ActiveRecord::Base
   scope :active, where("state <= ?", STATE_SENT_SECOND_REMINDER)
   scope :for_email, lambda {|email| where(:email => email) }
 
-  liquid :new_sales_manager_account_url, :contact_name, :contact_email
+  liquid :login_url, :contact_name, :contact_email
 
   private
 
   def process
+    self.token = generate_token
     self.last_email_sent_at = Time.now
     self.state = STATE_SENT
     self.email = contact_email
     self.save!
     ApplicationMailer.delay.email_template(contact_email, EmailTemplate.find_by_uniq_id("deal_certification_request"), {:deal_certification_request => self})
+  end
+
+  def generate_token(size=40)
+    charset = (0..9).to_a + ("a".."z").to_a + ("A".."Z").to_a
+    (0...size).map { charset[rand(charset.size)] }.join+id.to_s
   end
 
   public
@@ -42,8 +48,8 @@ class DealCertificationRequest < ActiveRecord::Base
     Nbs::Application.config.action_mailer.default_url_options[:host]
   end
 
-  def new_sales_manager_account_url
-    "https://#{mailer_host}/buyer_accounts/new"
+  def login_url
+    "https://#{Nbs::Application.config.action_mailer.default_url_options[:host]}/deals/#{deal_id}/edit?token=#{token}"
   end
 
 
