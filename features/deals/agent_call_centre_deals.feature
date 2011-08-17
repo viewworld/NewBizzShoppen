@@ -130,6 +130,25 @@ Feature: Deals from Call Centre/Agent perspective
     Then I should see translated "buyer.deal_certification_requests.update.flash.reject_success"
     Then I should not see translated "layout.main_menu.lead_buyer.deals_to_certify"
 
+  @added @tgn @_done @_tested @selenium @m17
+  Scenario: When certification request is created for non-existing user than I can access that link from the email
+    And I sign in as translator_call_centre@nbs.com with password secret
+    Then I follow translated "layout.main_menu.call_centre.deals"
+    Then I follow translated "deals.common.listing.view.new_deal"
+    Then I follow translated "call_centre.deals.new.view.certify"
+    Then I certify deal with translation "call_centre.deals.new.view.create_button"
+    Then I follow translated logout link for translator_call_centre@nbs.com
+    And I visit certification url for last deal
+    And I should see translated "buyer.deal_certification_requests.edit.view.title"
+    And I press translated "buyer.deal_certification_requests.edit.view.certify"
+    Then the last deal should not be certified
+    Then I should see translated "deal_buyer_accounts.new.view.header"
+    And I fill in "user_customer_password" with "s3cr3t"
+    And I fill in "user_customer_password_confirmation" with "s3cr3t"
+    And I press translated "deal_buyer_accounts.new.view.button_create_account"
+    Then the last deal should be certified
+    Then last email sent should have content "Password: s3cr3t"
+
   @_added @_done @_tested
   Scenario: admin/call center/call center agent/agent can edit Company logo
     # admin

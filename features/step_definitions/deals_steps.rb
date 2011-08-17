@@ -144,3 +144,13 @@ Then /I add and remove image for deal as "([^"]*)"/ do |role|
   Then %{I should see translated "flash.deal_assets.destroy.success"}
   Then %{I should see translated "#{role}.deals.edit.view.title"}
 end
+
+When /^I visit certification url for last deal$/ do
+  deal = Deal.order("created_at DESC").first
+  visit "/deals/#{deal.id}/edit?token=#{deal.current_dcr.token}"
+end
+
+When /^the last deal should (be|not be) certified$/ do |is_certified|
+  deal = Deal.order("created_at DESC").first
+  assert deal.current_dcr.approved? == (is_certified == "be")
+end
