@@ -27,7 +27,7 @@ module ApplicationHelper
   end
 
   def fields_for_deals_translations(f)
-    new_object = current_user.has_any_role?(:admin, :call_centre) ? Lead.new : current_user.leads.build
+    new_object = (!user_signed_in? or current_user.has_any_role?(:admin, :call_centre)) ? Lead.new : current_user.leads.build
     new_object.lead_translations = [LeadTranslation.new]
     fields = f.fields_for :lead_translations, new_object.lead_translations do |builder|
       render("/shared/deals/deal_fields", :f => builder)
@@ -149,7 +149,7 @@ module ApplicationHelper
     else
       if @home_category and current_user.has_role?(:category_buyer)
         category_home_page_path(@home_category.cached_slug)
-      elsif current_user.has_role?(:call_centre)
+      elsif current_user.has_any_role?(:call_centre, :call_centre_agent)
         agent_home_path
       elsif current_user.has_any_role?(:customer, :lead_buyer, :lead_user, :agent, :purchase_manager)
         (current_user.has_any_role?(:customer, :lead_buyer, :lead_user)) ? buyer_home_path : self.send("#{current_user.role.to_s}_home_path")

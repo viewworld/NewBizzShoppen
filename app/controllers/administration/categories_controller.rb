@@ -2,7 +2,7 @@ class Administration::CategoriesController < Administration::AdministrationContr
   inherit_resources
 
   before_filter :set_category_type
-
+  
   set_tab "browse_leads"
 
   def new
@@ -46,7 +46,13 @@ class Administration::CategoriesController < Administration::AdministrationContr
   end
 
   private
+
   def set_category_type
     @category_type = params[:category_type] || "LeadCategory"
   end
+
+  def set_tab
+    self.class.set_tab (@category_type == "LeadCategory" ? "browse_leads" : "browse_deals")
+  end
+
 end

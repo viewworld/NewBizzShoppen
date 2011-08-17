@@ -1,4 +1,4 @@
-class CallCentres::DealAssetsController < CallCentres::CallCentreController
+class Agents::DealAssetsController < Agents::AgentController
   before_filter :set_deal
   before_filter :set_asset, :except => :create
 
@@ -7,7 +7,7 @@ class CallCentres::DealAssetsController < CallCentres::CallCentreController
   private
 
   def path
-    edit_call_centres_deal_path(@deal)
+    edit_agents_deal_path(@deal)
   end
 
 end

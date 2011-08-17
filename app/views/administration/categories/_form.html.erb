@@ -12,17 +12,19 @@
 
         <%= form.input(:default_price) if @category.type == "LeadCategory" and current_user.admin? %>
         <%= form.input :is_locked %>
-        <%= form.input :buyout_enabled %>
-        <%= form.input :no_prices_for_team_members %>
-        <%= form.input :is_customer_unique, :onclick => "show_hide_users_selection('customer')" %>
+        <% if @category_type == "LeadCategory" or @category.class == LeadCategory %>
+            <%= form.input :buyout_enabled %>
+            <%= form.input :no_prices_for_team_members %>
+            <%= form.input :is_customer_unique, :onclick => "show_hide_users_selection('customer')" %>
 
-        <%= render :partial => "users_selection", :locals => {:users_type => "customers", :form => form} %>
+            <%= render :partial => "users_selection", :locals => {:users_type => "customers", :form => form} %>
 
-        <%= form.input :is_agent_unique, :onclick => "show_hide_users_selection('agent')" %>
+            <%= form.input :is_agent_unique, :onclick => "show_hide_users_selection('agent')" %>
 
-        <%= render :partial => "users_selection", :locals => {:users_type => "agents", :form => form} %>
+            <%= render :partial => "users_selection", :locals => {:users_type => "agents", :form => form} %>
 
-        <%= form.input :auto_buy %>
+            <%= form.input :auto_buy %>
+          <% end %>
 
       </ol>
     </fieldset>

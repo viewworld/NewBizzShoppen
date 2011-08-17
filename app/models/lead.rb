@@ -69,7 +69,7 @@ class Lead < AbstractLead
   scope :with_certification_level, lambda { |cl| joins("INNER JOIN users ON users.id=leads.creator_id").where("certification_level = ? or certification_level = ?", cl.to_i, cl.to_i + 10) }
   scope :with_sale_limit, lambda { |sale_limit| where("sale_limit = ?", sale_limit.to_i) }
   scope :with_hotness, lambda { |hotness| where("hotness_counter = ?", hotness) }
-  scope :for_notification, lambda { |categories, notification_type| where("category_id in (?) and DATE(created_at) between ? and ?", categories.map(&:id), notification_type == User::LEAD_NOTIFICATION_ONCE_PER_DAY ? Date.today : Date.today-7, Date.today).published_only.without_inactive.without_outdated.order("category_id") }
+  scope :for_notification, lambda { |categories, notification_type| where("category_id in (?) and DATE(published_at) between ? and ?", categories.map(&:id), notification_type == User::LEAD_NOTIFICATION_ONCE_PER_DAY ? Date.today : Date.today-7, Date.today).published_only.without_inactive.without_outdated.order("category_id") }
 
   scope :requested_by_purchase_manager, lambda { |user| where("leads.creator_id = ? or leads.requested_by = ?", user.id, user.id) }
 
@@ -87,7 +87,7 @@ class Lead < AbstractLead
   before_validation :handle_dialling_codes
   validate :check_lead_templates
   before_save :check_if_category_can_publish_leads
-  after_create :send_instant_notification_to_subscribers
+  after_update :send_instant_notification_to_subscribers
   after_save :auto_buy
   attr_accessor :creation_step
   attr_protected :published
@@ -193,7 +193,7 @@ class Lead < AbstractLead
   end
 
   def buyable?
-    lead_purchases.sum("quantity") < sale_limit
+    published? and lead_purchases.sum("quantity") < sale_limit
   end
 
   def calculate_average_rating
@@ -286,7 +286,9 @@ class Lead < AbstractLead
   end
 
   def send_instant_notification_to_subscribers
-    self.delay.deliver_instant_notification_to_subscribers
+    if published and published_changed?
+      self.delay.deliver_instant_notification_to_subscribers
+    end
   end
 
   def deliver_instant_notification_to_subscribers
@@ -335,6 +337,10 @@ class Lead < AbstractLead
       self.description = "#{I18n.t("models.lead.field_prefixes.description")} #{deal.description}"
     end
     I18n.locale = current_locale
+  end
+
+  def can_be_shown_to?(cu)
+    published? or (cu and ((cu == creator) or (cu.has_role?(:admin))))
   end
 
 end

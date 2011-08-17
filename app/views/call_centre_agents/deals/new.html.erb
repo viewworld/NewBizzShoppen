@@ -2,9 +2,15 @@
   <header back="true" backurl="#{call_centre_agents_deals_path}"><%= t("call_centre_agent.deals.new.view.title") %></header>
 
   <div id="buyer_email_form">
+    <%= label_tag :buyer_email, t("call_centre_agent.deals.new.view.email") %>
     <%= text_field_tag :buyer_email %>
-    <%= bt_link_to nil, t("call_centre_agent.deals.new.view.check_buyer_email"), "javascript:void(0)", :onclick => "submit_query('check_email', 'call_centre_agents')" %>
+    <%= bt_link_to nil, t("call_centre_agent.deals.new.view.check_buyer_email"), "javascript:void(0)", :onclick => "$('div#buyer_confirmation').hide();submit_query('check_email', 'call_centre_agents')" %>
+    <%= t("call_centre_agent.deals.new.view.or") %>
     <%= bt_link_to nil, t("call_centre_agent.deals.new.view.certify"), "javascript:void(0)", :onclick => "submit_query('certify','call_centre_agents')" %>
+  </div>
+  <div id="buyer_confirmation" style="margin-top:10px;display:none">
+    <div id="buyer_info" style="margin-bottom: 10px"></div>
+    <%= bt_link_to nil, t("call_centre_agent.deals.new.view.confirm"), "javascript:void(0)", :onclick => "setup_step(1);$('div#buyer_confirmation').hide();" %>
   </div>
 
   <div id="deal_form" style="display:none;">
@@ -16,6 +22,9 @@
           <param:actions>
             <ibt c="fltri" icon="save">
               <%= form.submit t("call_centre_agent.deals.new.view.create_button"), :name => "commit_create", :onclick => "select_options_to_submit('deal_deal_template_ids_')" %>
+            </ibt>
+            <ibt c="fltri bt_grey">
+              <%= button_to_function t("common.cancel_link"), "history.go(-1)" %>
             </ibt>
           </param:actions>
         </frm>

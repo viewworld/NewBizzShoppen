@@ -77,44 +77,17 @@ Feature: Deals from Sales Manager perspective
   @_done @_tested
   Scenario: I can edit Company logo
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
-    Then I follow translated "layout.main_menu.lead_buyer.my_deals"
-    Then I follow translated "buyer.deals.index.view.edit"
-    Then attach the file "sample image" to "deal_logo_attributes_asset"
-    Then I press translated "buyer.deals.edit.view.update_button"
-    Then I follow translated "buyer.deals.index.view.edit"
-    Then I should see translated "deals.common.assets.view.show_image"
-    Then I follow translated "deals.common.assets.view.remove_logo"
-    Then I should see translated "flash.deal_assets.destroy.success"
+    Then I add and remove logo for deal as "buyer"
 
   @_done @_tested
   Scenario: I can upload material to download
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
-    Then I follow translated "layout.main_menu.lead_buyer.my_deals"
-    Then I follow translated "buyer.deals.index.view.edit"
-    Then attach the file "document" to "deal_materials_attributes_0_asset"
-    Then I press translated "buyer.deals.edit.view.update_button"
-    Then I follow translated "buyer.deals.index.view.edit"
-    Then I should see translated "deals.common.assets.view.download"
-    Then attach the file "document" to "deal_materials_attributes_0_asset"
-    Then I press translated "buyer.deals.edit.view.update_button"
-    Then I follow translated "buyer.deals.index.view.edit"
-    Then I follow translated "deals.common.assets.view.remove_material"
-    Then I should see translated "flash.deal_assets.destroy.success"
+    Then I add and remove document for deal as "buyer"
 
   @_done @_tested
   Scenario: I can attach multiple pictures
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
-    Then I follow translated "layout.main_menu.lead_buyer.my_deals"
-    Then I follow translated "buyer.deals.index.view.edit"
-    Then attach the file "sample image" to "deal_images_attributes_0_asset"
-    Then I press translated "buyer.deals.edit.view.update_button"
-    Then I follow translated "buyer.deals.index.view.edit"
-    Then I should see translated "deals.common.assets.view.show_image"
-    Then attach the file "sample image" to "deal_images_attributes_0_asset"
-    Then I press translated "buyer.deals.edit.view.update_button"
-    Then I follow translated "buyer.deals.index.view.edit"
-    Then I follow translated "deals.common.assets.view.remove_image"
-    Then I should see translated "flash.deal_assets.destroy.success"
+    Then I add and remove image for deal as "buyer"
 
   @_done @_not_testable
   Scenario: I can see thumbnails when I attach pictures

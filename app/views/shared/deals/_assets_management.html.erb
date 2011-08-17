@@ -7,7 +7,7 @@
           <div class="txt assets_elements">
             <ul>
               <li>
-                <%= image_tag @deal.logo.asset.url(:thumb) %> <%= link_to t("deals.common.assets.view.show_image"), @deal.logo.asset.url(:medium), :rel => "colorbox_logo" %>
+                <%= image_tag @deal.logo.url(:thumb) %> <%= link_to t("deals.common.assets.view.show_image"), @deal.logo.url, :rel => "colorbox_logo" %>
                 <%= link_to t("deals.common.assets.view.remove_logo"), self.send(remove_path, @deal, @deal.logo), :method => :delete, :confirm => t("common.confirmation") %>
               </li>
             </ul>
@@ -37,7 +37,7 @@
               <% @images.each do |image| %>
                   <% if image.id %>
                       <li>
-                        <%= image_tag image.asset.url(:thumb) %> <%= link_to t("deals.common.assets.view.show_image"), image.asset.url, :rel => "colorbox" %>
+                        <%= image_tag image.url(:thumb) %> <%= link_to t("deals.common.assets.view.show_image"), image.url, :rel => "colorbox" %>
                         <%= link_to t("deals.common.assets.view.remove_image"), self.send(remove_path, @deal, image), :method => :delete, :confirm => t("common.confirmation") %>
                       </li>
                   <% end %>

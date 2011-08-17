@@ -100,7 +100,7 @@ Nbs::Application.routes.draw do
     resources :call_centre_agents do
       resource :password, :controller => 'password', :only => [:new, :update, :destroy]
     end
-   resources :deals do
+    resources :deals do
       resources :assets, :controller => "deal_assets", :only => [:create, :destroy] do
         member do
           get 'download'
@@ -154,10 +154,17 @@ Nbs::Application.routes.draw do
 
   namespace :agents do
     root :to => "leads#index"
+    resources :lead_templates
     resources :leads do
       resources :certifications, :only => :create
     end
-    resources :lead_templates
+    resources :deals do
+      resources :assets, :controller => "deal_assets", :only => [:create, :destroy] do
+        member do
+          get 'download'
+        end
+      end
+    end
   end
 
   namespace :purchase_managers do
@@ -239,13 +246,13 @@ Nbs::Application.routes.draw do
       post :creators
     end
   end
-  
+
   resources :deals, :except => [:new, :create, :destroy] do
     member do
       post 'rate'
     end
   end
-  
+
   resources :categories, :only => [:index] do
     resources :more_leads_requests, :only => [:new, :create]
   end
@@ -260,6 +267,7 @@ Nbs::Application.routes.draw do
   resources :purchase_manager_accounts, :only => [:new, :create]
   resources :category_buyer_accounts, :only => [:new, :create]
   resources :certification_accounts, :only => [:new, :create]
+  resources :deal_buyer_accounts, :only => [:new, :create]
   resources :locales
   resources :phone_codes
   resources :regions

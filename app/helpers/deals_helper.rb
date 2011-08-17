@@ -15,7 +15,8 @@ module DealsHelper
        :address_line_2, :address_line_3, :zip_code, :country_id, :region_id, :category_id].each do |field|
         page << "$('#deal_#{field}').val(\"#{deal.send(field)}\")"
       end
-      page << "setup_step(1)"
+      page << "$('div#buyer_info').html('#{escape_javascript(user.company_name)}, #{escape_javascript(user.screen_name)}')"
+      page << "$('div#buyer_confirmation').show()"
     elsif params[:query_type] == "check_email"
       page << "alert('#{I18n.t('call_centre_agent.deals.new.view.no_user_found_message', :email => params[:email])}')"
     elsif params[:query_type] == "certify"

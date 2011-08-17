@@ -7,7 +7,7 @@ class CallCentreAgents::DealAssetsController < CallCentreAgents::CallCentreAgent
   private
 
   def path
-    edit_call_centre_agent_deal_path(@deal)
+    edit_call_centre_agents_deal_path(@deal)
   end
 
 end

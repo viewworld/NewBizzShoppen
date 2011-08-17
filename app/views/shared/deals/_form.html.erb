@@ -4,7 +4,7 @@
       <ol>
         <% if deal.current_dcr and deal.current_dcr.active? %>
             <%= hidden_field_tag "accept", "false" %>
-        <% else %>
+        <% elsif user_signed_in? %>
             <%
                deal_categories = if current_user.buyer?
                                      DealCategory.without_locked.with_customer_unique(current_user).all
@@ -28,7 +28,10 @@
             %>
 
             <%= form.input :lead_category_id, :disabled => lead_categories.select { |c| !c.can_publish_leads? }.map(&:id), :collection => nested_set_options(lead_categories), :include_blank => false %>
-        <% end %>
+                <% if deal.new_record? %>
+                    <%= form.input :use_company_name_as_category, :as => :boolean %>
+                <% end %>
+            <% end %>
         <%= form.input :header, :label => t("shared.deals.form.name_label") %>
         <%= form.input :description, :input_html => {:style => "height: 50px;width:280px;"}, :label => t("shared.deals.form.short_description_label") %>
         <%= form.input :hidden_description, :input_html => {:style => "height: 150px;width:280px;"}, :label => t("shared.deals.form.detailed_description_label") %>
@@ -81,12 +84,12 @@
         <% if current_user.admin? %>
             <%= form.input :created_leads %>
         <% end %>
-        <% if current_user.admin? or current_user.has_role?(:deal_maker) %>
+        <% if user_signed_in? and (current_user.admin? or current_user.has_role?(:deal_maker)) %>
             <span id="deal_published">
                 <%= form.input :published %>
             </span>
         <% end %>
-        <% if current_user.admin? and !form.object.new_record? %>
+        <% if user_signed_in? and current_user.admin? and !form.object.new_record? %>
             <span id="deal_admin">
                 <%= form.input :deal_admin_email %>
             </span>
@@ -97,7 +100,7 @@
   </div>
 </div>
 
-<% if current_user.buyer? %>
+<% if user_signed_in? and current_user.buyer? %>
     <% unless (deal.current_dcr and deal.current_dcr.active?) %>
         <clb/>
 

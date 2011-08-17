@@ -13,10 +13,10 @@ end
 
 Then /^a deal is created by "([^"]*)" for user "([^"]*)" and category "([^"]*)" with attributes "([^"]*)"$/ do |creator, user, category, attributes|
   deal_attributes = {}; attributes.split("|").each { |attr| deal_attributes[attr.split(":").first] = attr.split(":").last }
-  deal = Deal.new_for_user(User.find_by_email(creator))
+  deal = Deal.new_for_user(User.find_by_email(user))
   deal.update_attributes(deal_attributes)
   deal.currency_id = Currency.first.id
-  deal.creator = User.find_by_email(user)
+  deal.creator = User.find_by_email(creator)
   deal.category_id = DealCategory.find_by_name(category)
   deal.save!
 end
@@ -97,7 +97,7 @@ Then /^I certify deal with translation "([^"]*)"$/ do |translation|
   Then %{I press translated "#{translation}"}
   Then %{last email sent should have been sent to recipient "ned@stark.com"}
   Then %{last email sent should have subject "Deal certification request from Fairleads.com"}
-  Then %{last email sent should have content "/buyer_accounts/new"}
+  Then %{last email sent should have content "Certify the deal"}
   Then %{I should see translated "flash.deals.create.notice"}
   Then %{I should see translated "deals.common.listing.view.header"}
   Then %{I should see "very important deal"}
@@ -115,4 +115,46 @@ Then /^I fill group deal edit form and submit with translated button "([^"]*)"$/
   Then %{I fill in "deal_discounted_price" with "44.4"}
   Then %{I press translated "#{translation}"}
   Then %{I should see translated "flash.deals.update.notice"}
+end
+
+Then /I add and remove logo for deal as "([^"]*)"/ do |role|
+  Then %{I follow translated "layout.main_menu.#{role == "administration" ? "admin" : role == "buyer" ? "lead_buyer" : role}.#{"my_" if role == "buyer"}deals"}
+  Then %{I follow translated "#{role}.deals.index.view.edit"}
+  Then %{attach the file "sample image" to "deal_logo_attributes_asset"}
+  Then %{I press translated "#{role}.deals.edit.view.update_button"}
+  Then %{I follow translated "#{role}.deals.index.view.edit"}
+  Then %{I should see translated "deals.common.assets.view.show_image"}
+  Then %{I follow translated "deals.common.assets.view.remove_logo"}
+  Then %{I should see translated "flash.deal_assets.destroy.success"}
+  Then %{I should see translated "#{role}.deals.edit.view.title"}
+end
+
+Then /I add and remove document for deal as "([^"]*)"/ do |role|
+  Then %{I follow translated "layout.main_menu.#{role == "administration" ? "admin" : role == "buyer" ? "lead_buyer" : role}.#{"my_" if role == "buyer"}deals"}
+  Then %{I follow translated "#{role}.deals.index.view.edit"}
+  Then %{attach the file "document" to "deal_materials_attributes_0_asset"}
+  Then %{I press translated "#{role}.deals.edit.view.update_button"}
+  Then %{I follow translated "#{role}.deals.index.view.edit"}
+  Then %{I should see translated "deals.common.assets.view.download"}
+  Then %{attach the file "document" to "deal_materials_attributes_0_asset"}
+  Then %{I press translated "#{role}.deals.edit.view.update_button"}
+  Then %{I follow translated "#{role}.deals.index.view.edit"}
+  Then %{I follow translated "deals.common.assets.view.remove_material"}
+  Then %{I should see translated "flash.deal_assets.destroy.success"}
+  Then %{I should see translated "#{role}.deals.edit.view.title"}
+end
+
+Then /I add and remove image for deal as "([^"]*)"/ do |role|
+  Then %{I follow translated "layout.main_menu.#{role == "administration" ? "admin" : role == "buyer" ? "lead_buyer" : role}.#{"my_" if role == "buyer"}deals"}
+  Then %{I follow translated "#{role}.deals.index.view.edit"}
+  Then %{attach the file "sample image" to "deal_images_attributes_0_asset"}
+  Then %{I press translated "#{role}.deals.edit.view.update_button"}
+  Then %{I follow translated "#{role}.deals.index.view.edit"}
+  Then %{I should see translated "deals.common.assets.view.show_image"}
+  Then %{attach the file "sample image" to "deal_images_attributes_0_asset"}
+  Then %{I press translated "#{role}.deals.edit.view.update_button"}
+  Then %{I follow translated "#{role}.deals.index.view.edit"}
+  Then %{I follow translated "deals.common.assets.view.remove_material"}
+  Then %{I should see translated "flash.deal_assets.destroy.success"}
+  Then %{I should see translated "#{role}.deals.edit.view.title"}
 end

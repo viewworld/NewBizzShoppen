@@ -33,7 +33,7 @@ class Deal < AbstractLead
   after_create :certify_for_unknown_email, :assign_deal_admin
   before_save :handle_published
 
-  attr_accessor :creation_step
+  attr_accessor :creation_step, :use_company_name_as_category
 
   accepts_nested_attributes_for :logo, :reject_if => proc { |attributes| attributes['asset'].blank? }
   accepts_nested_attributes_for :images, :reject_if => proc { |attributes| attributes['asset'].blank? }
@@ -47,7 +47,7 @@ class Deal < AbstractLead
   end
 
   def assign_deal_admin
-    update_attribute(:deal_admin_email, (creator.agent? ? creator.email : Settings.default_deal_admin_email))
+    update_attribute(:deal_admin_email, (creator.has_any_role?(:agent, :call_centre, :call_centre_agent) ? creator.email : Settings.default_deal_admin_email))
   end
 
   def self.new_for_user(user)
@@ -65,6 +65,23 @@ class Deal < AbstractLead
         :start_date => Date.today,
         :end_date => Date.today,
         :price => 0)
+  end
+  
+  def build_buyer(params={})
+    if buyer
+      buyer
+    else
+      existing_users_count = User::Customer.where(:screen_name => contact_name).count
+      contact_name_arr = contact_name.strip.split(" ")
+      contact_name_arr = contact_name_arr.size == 1 ? contact_name_arr : [contact_name_arr.first, contact_name_arr[1..-1].join(' ')]
+      user = User::Customer.new({:email => email_address, :company_name => company_name, :phone => phone_number,
+                                 :screen_name => "#{contact_name}#{existing_users_count.zero? ? '' : existing_users_count+1}",
+                                 :agreement_read => true, :first_name => contact_name_arr.first, :last_name => contact_name_arr.last}.merge(params))
+      user.skip_email_verification = "1"
+      user.address = Address.new(:address_line_1 => address_line_1, :address_line_2 => address_line_2, :address_line_3 => address_line_3,
+                                 :zip_code => zip_code, :country_id => country_id, :region_id => region_id)
+      user
+    end
   end
 
   def self.group_deals_for_select
@@ -98,6 +115,19 @@ class Deal < AbstractLead
   def saving
     (!price.blank? and price > 0 and !discounted_price.blank? and discounted_price > 0 and price > discounted_price) ? "#{(100 - discounted_price * 100 / price).to_i}%" : "0%"
   end
+  
+  def assign_lead_category_to_buyer!
+    if buyer and lead_category.is_customer_unique?
+      buyer.update_attribute(:deal_category_id, lead_category.id)
+      lead_category.customers << buyer
+      lead_category.save
+    end
+  end
+
+  def send_buyer_welcome_email(password)
+    template = EmailTemplate.find_by_uniq_id("deal_certification_buyer_welcome")
+    ApplicationMailer.delay.generic_email([buyer.email], template.subject, template.render({:user => buyer, :password => password}), nil, [], template.cc, template.bcc)
+  end
 
   private
 
@@ -110,11 +140,15 @@ class Deal < AbstractLead
   end
 
   def create_uniq_deal_category
-    if buyer and creator.buyer?
-      category = buyer.deal_category_id ? LeadCategory.find(buyer.deal_category_id) : LeadCategory.create(:name => buyer.company_name)
-      buyer.update_attribute(:deal_category_id, category.id) if buyer.deal_category_id.blank?
+    if (buyer and creator.buyer?) or ActiveRecord::ConnectionAdapters::Column.value_to_boolean(use_company_name_as_category)
+      if buyer
+        category = buyer.deal_category_id ? LeadCategory.find(buyer.deal_category_id) : LeadCategory.create(:name => buyer.company_name)
+      else
+        category = LeadCategory.create(:name => company_name)
+      end
+      buyer.update_attribute(:deal_category_id, category.id) if buyer and buyer.deal_category_id.blank?
       category.update_attribute(:is_customer_unique, true) unless category.is_customer_unique
-      unless category.customers.include?(buyer)
+      if buyer and !category.customers.include?(buyer)
         category.customers << buyer
         category.save
       end
