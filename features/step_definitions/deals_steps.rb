@@ -97,7 +97,7 @@ Then /^I certify deal with translation "([^"]*)"$/ do |translation|
   Then %{I press translated "#{translation}"}
   Then %{last email sent should have been sent to recipient "ned@stark.com"}
   Then %{last email sent should have subject "Deal certification request from Fairleads.com"}
-  Then %{last email sent should have content "/buyer_accounts/new"}
+  Then %{last email sent should have content "Certify the deal"}
   Then %{I should see translated "flash.deals.create.notice"}
   Then %{I should see translated "deals.common.listing.view.header"}
   Then %{I should see "very important deal"}
