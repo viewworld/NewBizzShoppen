@@ -247,6 +247,11 @@ Nbs::Application.routes.draw do
     member do
       post 'rate'
     end
+    resources :assets, :controller => "deal_assets", :only => [] do
+      member do
+        get 'download'
+      end
+    end
   end
 
   resources :categories, :only => [:index] do
