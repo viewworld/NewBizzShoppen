@@ -7,6 +7,14 @@ class FeaturedDeal < ActiveRecord::Base
 
   class << self
 
+    def primary
+      if fd = where(:position => 0).first
+        fd.deal
+      else
+        nil
+      end
+    end
+
     def display_all
       POSITIONS.each { |number| FeaturedDeal.find_or_create_by_position(:position => number) } if all.size != POSITIONS.size
       all
