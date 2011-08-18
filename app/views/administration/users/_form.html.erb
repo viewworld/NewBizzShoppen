@@ -2,7 +2,7 @@
   <div class="pdd_10 no_pdd_t">
     <fieldset class="inputs labels_ta_r labels_200">
       <ol class="align_inputs">
-        <%= form.input :company_name if @user.has_any_role?(:customer, :category_buyer, :call_centre, :purchase_manager) or ["customer", "category_buyer", "call_centre", "purchase_manager"].include?((params[:role])) %>
+        <%= form.input :company_name if @user.has_any_role?(:customer, :category_buyer, :call_centre, :purchase_manager, :call_centre_agent, :agent) or ["customer", "category_buyer", "call_centre", "purchase_manager", "call_centre_agent", "agent"].include?((params[:role])) %>
         <% unless @user.has_role?(:call_centre) or ["call_centre"].include?((params[:role])) %>
             <%= form.input :first_name %>
             <%= form.input :last_name %>
@@ -82,7 +82,6 @@
         <% if ['agent', 'call_centre_agent', 'call_centre'].include?(params[:role]) or @user.has_any_role?(:call_centre_agent, :call_centre, :agent) %>
             <%= form.input :billing_rate %>
             <%= form.input :currency_id, :collection => currencies_for_select, :include_blank => true %>
-            <%= form.input :is_deal_admin, :as => :boolean %>
         <% end %>
       </ol>
     </fieldset>

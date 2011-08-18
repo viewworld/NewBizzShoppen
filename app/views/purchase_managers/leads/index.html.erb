@@ -54,6 +54,9 @@
           <% blocks.status_column do |lead| %>
               <%= lead_status(lead) %>
           <% end %>
+          <% blocks.rowtooltip do |lead| %>
+              <p><%= render :partial => "/shared/comments/lead_threads", :locals => {:lead => lead, :threads => lead.comment_threads.roots.order("created_at DESC")} %></p>
+          <% end %>
       <% end %>
   <% end %>
 </column-mc:>

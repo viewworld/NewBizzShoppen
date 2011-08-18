@@ -29,10 +29,6 @@ module DealAssetActions
     redirect_to path
   end
 
-  def download
-    send_file Rails.env == "prouction" ? @asset.url : @asset.path
-  end
-
   private
 
   def set_deal
