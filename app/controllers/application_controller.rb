@@ -70,6 +70,12 @@ class ApplicationController < ActionController::Base
         session[:lead_id] = nil
         session[:buyout] = nil
         requested_path
+      elsif !resource.has_role? :purchase_manager and session[:site] == "fairdeals"
+        key = current_user.generate_login_key!
+        sign_out(current_user)
+        "http://fairleads.com/login_keys/?key=#{key}"
+      elsif resource.has_role? :purchase_manager and session[:site] == "fairdeals"
+        root_path
       elsif resource.has_role? :category_buyer and resource.sign_in_count == 1 and resource.contact.present?
         my_profile_path
       elsif resource.has_role? :category_buyer
