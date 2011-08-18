@@ -49,8 +49,26 @@ Feature: Front page for procurment
 
   Scenario: I should be able to browse deals by the arrows on the left and right side of the big featured group deal
 
-  @is
+  @is @_tested @_done
   Scenario: As admin I can select primary featured deal to be displayed on procurement page
+    Given I am on the homepage
+    And I make sure current locale is "en"
+    Given a deal named "GroupDealA" exists within category "Electronics deals"
+    And a deal named "GroupDealA" exists with attributes "published:1,group_deal:1,price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
+    Given a deal named "GroupDealB" exists within category "Electronics deals"
+    And a deal named "GroupDealB" exists with attributes "published:1,group_deal:1,price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
+    Given a deal named "GroupDealC" exists within category "Electronics deals"
+    And a deal named "GroupDealC" exists with attributes "published:1,group_deal:1,price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
+    Given a deal named "GroupDealD" exists within category "Electronics deals"
+    And a deal named "GroupDealD" exists with attributes "published:1,group_deal:1,price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
+    And I am signed up and confirmed as user with email bob@person.com and password supersecret and role admin
+    Then I sign in as bob@person.com with password supersecret
+    And I follow translated "layout.main_menu.admin.featured_deals"
+    And I select "GroupDealA (01.01.2011-01.01.2013)" from "featured_deals_0"
+    And I select "GroupDealB (01.01.2011-01.01.2013)" from "featured_deals_1"
+    And I select "GroupDealC (01.01.2011-01.01.2013)" from "featured_deals_2"
+    And I select "GroupDealD (01.01.2011-01.01.2013)" from "featured_deals_3"
+    And I press "Set featured deals"
 
-  @is
+  @is @tested_elsewhere @_done
   Scenario: As admin I can select three secondary featured deals to be displayed on procurement page
