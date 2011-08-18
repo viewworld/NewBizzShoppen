@@ -55,21 +55,25 @@
         <% if @primary_deal %>
             <%= image_tag @primary_deal.logo.url if @primary_deal.logo %>
             <%= @primary_deal.header %>
-            <%= @primary_deal.description %>
+            <p>
+                <%= @primary_deal.description %>
+            </p>
         <% end %>
       </param:content>
     </frm>
   </div>
 
   <div class="grid_250 fltr">
-    <p>
-      <%= link_to t("fairdeals_home.show.view.get_free_account"), new_purchase_manager_account_path  %>
-    </p>
+    <% unless user_signed_in? %>
+        <p>
+          <%= link_to t("fairdeals_home.show.view.get_free_account"), new_purchase_manager_account_path  %>
+        </p>
+    <% end %>
     <p>
       <%= link_to t("fairdeals_home.show.view.browse_our_deals"), deal_categories_path  %>
     </p>
     <p>
-      <%= link_to t("fairdeals_home.show.view.find_a_vendor"), new_purchase_manager_account_path  %>
+      <%= link_to t("fairdeals_home.show.view.find_a_vendor"), new_purchase_managers_tender_path  %>
     </p>
   </div>
 

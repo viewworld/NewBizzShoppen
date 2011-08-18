@@ -72,6 +72,7 @@ en:
     fairdeals:
       main_menu:
         deals: "Deals"
+        tenders: "Tenders"
     main_menu:
       admin:
         users: "Users"
@@ -702,7 +703,7 @@ en:
         dont_have_account: "Don't have account?"
         sign_up_here: "Sign up here"
         get_free_account: "Get a free account now"
-        browse_our_deals: "Browse out deals"
+        browse_our_deals: "Browse our deals"
         find_a_vendor: "Find a vendor - make a tender"
   home:
     show:

@@ -2,7 +2,7 @@
   <%= main_menu_link_to_role_specific_home_page %>
   <%= main_menu_link_to(t("layout.fairdeals.main_menu.deals"), deal_categories_path, :tab => "browse_deals") %>
   <% if current_user %>
-
+      <%= main_menu_link_to t("layout.fairdeals.main_menu.tenders"), purchase_managers_tenders_path, :tab => "tenders" %>
   <% end %>
 </ul>
 
