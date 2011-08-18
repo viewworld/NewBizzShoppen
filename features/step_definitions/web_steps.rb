@@ -418,3 +418,9 @@ end
 Then /^select "([^"]*)" should have option "([^"]*)" disabled$/ do |id, name|
   page.find("select[id='#{id}'] option[disabled]").text.should =~ /#{name}/
 end
+
+Given /^I visit domain (.+)$/ do |domain|
+  Capybara.default_host = domain #for Rack::Test
+  Capybara.app_host = "http://#{domain}:9887" if Capybara.current_driver == :selenium
+  visit("/fairdeals/")
+end
