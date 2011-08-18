@@ -13,7 +13,7 @@ class DealsController < ApplicationController
 
     @category = Category.find_by_id(@search.with_category)
     @countries = (current_user and current_user.has_accessible_categories?) ? Country.with_leads.within_accessible_categories(current_user) : Country.with_leads
-    @deals = @search.paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)
+    @deals = @search.order("group_deal DESC, header").paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)
 
     if user_signed_in? and current_user.has_role?(:admin)
       @categories_scope = Category.scoped
@@ -31,6 +31,10 @@ class DealsController < ApplicationController
       @category = category ? category.root : nil
     end
     @categories = @category ? @categories_scope.with_leads.where("categories.id in (?)", @category.self_and_descendants.map(&:id)) : []
+  end
+
+  def show
+    @deal = Deal.find(params[:id].split("-").first)
   end
 
   def rate
