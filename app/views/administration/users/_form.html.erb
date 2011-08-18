@@ -82,7 +82,6 @@
         <% if ['agent', 'call_centre_agent', 'call_centre'].include?(params[:role]) or @user.has_any_role?(:call_centre_agent, :call_centre, :agent) %>
             <%= form.input :billing_rate %>
             <%= form.input :currency_id, :collection => currencies_for_select, :include_blank => true %>
-            <%= form.input :is_deal_admin, :as => :boolean %>
         <% end %>
       </ol>
     </fieldset>
