@@ -24,4 +24,8 @@ class User::PurchaseManager < ::User
       self.address.send("#{field}=".to_sym, lead.send(field))
     end
   end
+
+  def comment_threads
+    Comment.with_leads_created_by(self)
+  end
 end

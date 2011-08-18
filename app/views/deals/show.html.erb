@@ -31,7 +31,7 @@
       <% if @deal.logo %>
           <h3><%= t("deals.show.view.company_logo_label") %></h3>
 
-          <p><%= image_tag(@deal.logo.asset.url) %></p>
+          <p><%= image_tag(@deal.logo.url) %></p>
       <% end %>
 
 
@@ -44,7 +44,7 @@
 
           <p>
             <% @deal.images.each do |image| %>
-                <%= link_to image_tag(image.asset.url(:medium)), image.asset.url, :rel => "colorbox" %>
+                <%= link_to image_tag(image.url(:medium)), image.url, :rel => "colorbox" %>
             <% end %>
           </p>
       <% end %>
