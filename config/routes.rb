@@ -282,6 +282,8 @@ Nbs::Application.routes.draw do
 
   resource :user_session_log, :controller => "user_session_log", :only => [:create]
 
+  resource :share_deal_by_email, :controller => "share_deal_by_email", :only => [:new, :create]
+
   constraints(Fairdeals) do
     match '/(:id)' => "fairdeals_home#show"
   end

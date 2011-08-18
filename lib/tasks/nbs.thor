@@ -232,6 +232,14 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
                     :body => "<p>Login: {{user.email}}</p><p>Password: {{password}}</p>"},
             :dk => {:subject => "[DK] Welcome to Fairleads.com!",
                     :body => "<p>Login: {{user.email}}</p><p>Password: {{password}}</p>"}
+        },
+        {
+            :name => "Share deal by email",
+            :uniq_id => "share_deal_by_email",
+            :en => {:subject => "{{name}} wants to share the deal with you",
+                    :body => "<p>{{description}}</p><p><a href=\"{{deal_url}}\">Click here for details</a></p>"},
+            :dk => {:subject => "[DK] {{name}} wants to share the deal with you",
+                    :body => "<p>{{description}}</p><p><a href=\"{{deal_url}}\">Click here for details</a></p>"}
         }
     ]
 

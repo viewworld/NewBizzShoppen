@@ -3287,6 +3287,9 @@ en:
         zip_code_label: "Zip code"
         country_label: "Country"
         region_label: "Region"
+        share_by_email: "Share by email"
+        share_by_email_modal_title: "Share by email"
+        send_share_by_email_button: "Send"
     common:
       assets:
         view:
@@ -3317,3 +3320,12 @@ en:
       view:
         header: "New buyer account"
         button_create_account: "Create account"
+  share_deal_by_email:
+    new:
+      view:
+        email_from: "Email from"
+        email_to: "Email to"
+        name: "Name"
+    create:
+      flash:
+        email_sent: "Deal has been successfully sent to the selected recipient"
