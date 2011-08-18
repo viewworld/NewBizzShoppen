@@ -169,5 +169,4 @@ class Deal < AbstractLead
     end
     true
   end
-
 end

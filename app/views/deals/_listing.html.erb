@@ -59,6 +59,14 @@
             <% end %>
           </h4>
           (Activation date: <%= format_date deal.start_date %> - <%= format_date deal.end_date %>)
+
+          <% if deal.price.to_i > 0 %>
+            <p><b><%= t("deals.listing.price") %>:</b> <%= as_currency(deal.price, deal.currency) %></p>
+              <% if deal.discounted_price.to_i > 0 %>
+                <p><b><%= t("deals.listing.discounted_price") %>:</b> <%= as_currency(deal.discounted_price, deal.currency) %> (<%= t("deals.listing.price_saving") %>: <%= deal.saving %>)</p>
+              <% end %>
+          <% end %>
+
           <p class="element_description i expandable"><b>Description:</b> <%= deal.description %></p>
 
           <% unless deal.fine_print.blank? %>

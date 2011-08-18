@@ -3259,6 +3259,9 @@ en:
       hide_comments: "Hide comments"
       rating_label: "Rating"
       no_comments: "No comments"
+      price: "Price"
+      price_saving: "Save"
+      discounted_price: "Discounted price"
     show:
       view:
         header: "Deal details"
