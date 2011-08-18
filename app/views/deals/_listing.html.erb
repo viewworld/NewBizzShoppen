@@ -37,7 +37,7 @@
       <tr class="lead <%= cycle("odd", "even") %>" id="<%= dom_id(deal) %>">
 
         <td class="cl">
-          <%= link_to deal.header, deal, :class => "default_action", :style => "display:none" %>
+          <%= link_to deal.header, deal_path(:id => deal.slug), :class => "default_action", :style => "display:none" %>
         </td>
 
         <% if show_checkboxes %>
@@ -51,7 +51,7 @@
         </td>
 
         <td>
-          <%= link_to deal.header, deal, :class => "default_action", :style => "display:none" %>
+          <%= link_to deal.header, deal_path(:id => deal.slug), :class => "default_action", :style => "display:none" %>
           <h4>
             <%= deal.header %>
             <% if current_user and current_user.admin? %>
@@ -66,6 +66,8 @@
                 <p><b><%= t("deals.listing.discounted_price") %>:</b> <%= as_currency(deal.discounted_price, deal.currency) %> (<%= t("deals.listing.price_saving") %>: <%= deal.saving %>)</p>
               <% end %>
           <% end %>
+
+          <p><b><%= t("deals.listing.created_leads") %>:</b> <%= deal.created_leads.to_i %></p>
 
           <p class="element_description i expandable"><b>Description:</b> <%= deal.description %></p>
 

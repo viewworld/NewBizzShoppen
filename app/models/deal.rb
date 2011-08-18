@@ -129,6 +129,10 @@ class Deal < AbstractLead
     ApplicationMailer.delay.generic_email([buyer.email], template.subject, template.render({:user => buyer, :password => password}), nil, [], template.cc, template.bcc)
   end
 
+  def slug
+    "#{id}#{ '-' + header unless header.blank?}".to_url
+  end
+
   private
 
   def process_for_lead_information?

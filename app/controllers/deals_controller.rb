@@ -33,6 +33,10 @@ class DealsController < ApplicationController
     @categories = @category ? @categories_scope.with_leads.where("categories.id in (?)", @category.self_and_descendants.map(&:id)) : []
   end
 
+  def show
+    @deal = Deal.find(params[:id].split("-").first)
+  end
+
   def rate
     @deal = Deal.find(params[:id])
     @deal.rate(params[:stars], current_user, params[:dimension])

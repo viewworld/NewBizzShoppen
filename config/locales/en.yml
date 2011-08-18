@@ -3262,6 +3262,7 @@ en:
       price: "Price"
       price_saving: "Save"
       discounted_price: "Discounted price"
+      created_leads: "Created leads"
     show:
       view:
         header: "Deal details"
