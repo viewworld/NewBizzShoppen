@@ -71,8 +71,22 @@ Feature: Front page for procurment
   @is
   Scenario: It should be possible to share on Linkedin the featured group deal
 
-  @is
+  @tgn @_done @_tested @selenium
   Scenario: It should be possible to share by email the featured group deal
+    Given a deal named "GroupDealA" exists within category "Electronics deals"
+    And a deal named "GroupDealA" exists with attributes "published:1,group_deal:1,price:100,discounted_price:25,social_media_description:super ultra deal social medias,start_date:01-01-2011,end_date:01-01-2013"
+    And I am on the homepage
+    And I follow translated "layout.main_menu.shared.browse_deals"
+    And I follow "Electronics deals"
+    And I click hidden link by url regex "/\/deals\/\d+/"
+    And I follow translated "deals.show.view.share_by_email"
+    And I fill in "email_from" with "john_done@doe.com"
+    And I fill in "email_to" with "jane1@doe.com"
+    And I fill in "name" with "John Doe"
+    And I press translated "deals.show.view.send_share_by_email_button"
+    And last email sent should have content "super ultra deal social media" 
+    And last email sent should have subject "John Doe wants to share the deal with you"
+
 
   Scenario: I can click get deal which generates a standard lead
 

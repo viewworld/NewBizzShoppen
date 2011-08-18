@@ -2,11 +2,12 @@
   <% if Rails.env != "test" %>
       <meta property="og:title" content="<%= @deal.header %>"/>
       <meta property="og:type" content="website"/>
-      <meta property="og:url" content="<%= deal_url(@deal) %>"/>
+      <meta property="og:url" content="<%= deal_url(:id => @deal.slug) %>"/>
       <meta property="og:image" content="<%= path_to_image("logo_fairleads_with_border.jpg") %>"/>
       <meta property="og:site_name" content="Fairleads"/>
       <meta property="fb:app_id" content="198584516868482"/>
   <% end %>
+  <%= javascript_include_tag "global_template_editor" %>
 </head:>
 
 <column-mc:>
@@ -88,13 +89,22 @@
   </div>
   <clb/>
 
+  <%= link_to_function t("deals.show.view.share_by_email"), "$('#modal_for_share_deal_by_email').dialog('open');" %>
+
+  <br />
+  <br />
+
   <% if Rails.env != "test" %>
-      <iframe src="http://www.facebook.com/plugins/like.php?app_id=101408449959161&amp;href=<%= escape_uri(deal_url(@deal)) %>&amp;send=false&amp;layout=button_count&amp;width=250&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:250px; height:21px;" allowTransparency="true"></iframe>
+      <iframe src="http://www.facebook.com/plugins/like.php?app_id=101408449959161&amp;href=<%= escape_uri(deal_url(:id => @deal.slug)) %>&amp;send=false&amp;layout=button_count&amp;width=250&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:250px; height:21px;" allowTransparency="true"></iframe>
 
       <clb/>
       <a href="http://twitter.com/share" class="twitter-share-button" data-text="<%= @deal.social_media_description %>" data-count="horizontal">Tweet</a>
       <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
   <% end %>
+
+  <div id="modal_for_share_deal_by_email" style="display:none;">
+    <%= render :partial => "share_deal_by_email/new", :locals => { :deal => @deal } %>
+  </div>
 
 </column-mc:>
 
@@ -103,6 +113,19 @@
       jQuery(document).ready(function() {
           $('a[rel=colorbox]').colorbox();
 
-      })
+      });
+
+      $('#modal_for_share_deal_by_email').dialog({
+          autoOpen: false,
+          width: 700,
+          title: '<%= t("deals.show.view.share_by_email_modal_title") %>',
+          modal: true,
+          buttons: { "<%= t("deals.show.view.send_share_by_email_button") %>": function() {
+              if (validate_template_editor_fields("#modal_for_share_deal_by_email") == 0) {
+                  $('#form_share_deal_by_email').submit();
+                  $(this).dialog("close");
+              }
+          }}
+      });
   </script>
 </js:>
