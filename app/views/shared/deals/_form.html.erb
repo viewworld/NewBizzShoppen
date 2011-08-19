@@ -38,11 +38,11 @@
         <%= form.input :fine_print, :input_html => {:style => "height: 150px;width:280px;"} %>
         <%= form.input :start_date, :as => :string,
                        :wrapper_html => {:class => "date"},
-                       :input_html => {:class => "datepicker", :value => deal.start_date},
+                       :input_html => {:class => "datepicker", :value => deal.start_date.to_date},
                        :hint => t('models.result_field.date_format') %>
         <%= form.input :end_date, :as => :string,
                        :wrapper_html => {:class => "date"},
-                       :input_html => {:class => "datepicker", :value => deal.end_date},
+                       :input_html => {:class => "datepicker", :value => deal.end_date.to_date},
                        :hint => t('models.result_field.date_format') %>
         <% if current_user.buyer? %>
             <%= form.input :price, :as => :hidden %>

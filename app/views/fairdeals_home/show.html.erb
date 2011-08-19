@@ -50,17 +50,62 @@
   <hl pdd="15"/>
 
   <div class="grid_750 fltl" id="primary_featured_deal">
-    <frm c="no_marg">
-      <param:content>
-        <% if @primary_deal %>
-            <%= image_tag @primary_deal.logo.url if @primary_deal.logo %>
-            <%= @primary_deal.header %>
-            <p>
+    <% if @primary_deal %>
+        <frm c="no_marg" title="#{link_to @primary_deal.header, @primary_deal}">
+          <param:content>
+            <div class="fltl">
+              <p>
+                <%= image_tag @primary_deal.logo.url if @primary_deal.logo %>
                 <%= @primary_deal.description %>
-            </p>
-        <% end %>
-      </param:content>
-    </frm>
+                </p>
+              <p>
+                Price <%= as_currency(@primary_deal.discounted_price, @primary_deal.currency) %>
+                Save <%= @primary_deal.saving %>
+              </p>
+              <% if user_signed_in? and current_user.has_role?(:purchase_manager) and !@primary_deal.requested_by?(current_user) %>
+                <%= bt_link_to nil, t("deals.index.view.contact_me"), new_purchase_managers_lead_path(:deal_id => @primary_deal.id) %>
+              <% end %>
+              <p>
+                  <% if Rails.env != "test" %>
+                      <iframe src="http://www.facebook.com/plugins/like.php?app_id=101408449959161&amp;href=<%= escape_uri(deal_url(:id => @primary_deal.slug)) %>&amp;send=false&amp;layout=button_count&amp;width=250&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:250px; height:21px;" allowTransparency="true"></iframe>
+
+                      <clb/>
+                      <a href="http://twitter.com/share" class="twitter-share-button" data-text="<%= @primary_deal.social_media_description %>" data-count="horizontal">Tweet</a>
+                      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+                  <% end %>
+
+                  <div id="modal_for_share_deal_by_email" style="display:none;">
+                    <%= render :partial => "share_deal_by_email/new", :locals => { :deal => @primary_deal } %>
+                  </div>
+              </p>
+            </div>
+			<div id="countdown" class="fltr">
+				<div class="dash days_dash">
+					<span class="dash_title">days</span>
+					<div class="digit">0</div>
+					<div class="digit">0</div>
+					<div class="digit">0</div>
+				</div>
+				<div class="dash hours_dash">
+					<span class="dash_title">hours</span>
+					<div class="digit">0</div>
+					<div class="digit">0</div>
+				</div>
+				<div class="dash minutes_dash">
+					<span class="dash_title">minutes</span>
+					<div class="digit">0</div>
+					<div class="digit">0</div>
+				</div>
+				<div class="dash seconds_dash">
+					<span class="dash_title">seconds</span>
+					<div class="digit">0</div>
+					<div class="digit">0</div>
+				</div>
+			</div>
+            <clb/>
+          </param:content>
+        </frm>
+    <% end %>
   </div>
 
   <div class="grid_250 fltr">
@@ -81,36 +126,57 @@
   <hl pdd="15"/>
 
   <div class="grid_250 fltl" id="secondary_featured_deal_1">
-    <frm c="no_marg">
-      <param:content>
-        <% if featured = FeaturedDeal.where(:position => 1).first and featured.deal %>
+    <% if featured = FeaturedDeal.where(:position => 1).first and featured.deal %>
+        <frm c="no_marg" title="#{link_to featured.deal.header, featured.deal}">
+          <param:content>
             <%= image_tag featured.deal.logo.url if featured.deal.logo %>
-            <%= featured.deal.header %>
-        <% end %>
-      </param:content>
-    </frm>
+            <p>
+              Price <%= as_currency(featured.deal.discounted_price, featured.deal.currency) %>
+              Save <%= featured.deal.saving %>
+            </p>
+            <% if user_signed_in? and current_user.has_role?(:purchase_manager) and !featured.deal.requested_by?(current_user) %>
+              <%= bt_link_to nil, t("deals.index.view.contact_me"), new_purchase_managers_lead_path(:deal_id => featured.deal.id) %>
+            <% end %>
+            <clb/>
+          </param:content>
+        </frm>
+    <% end %>
   </div>
 
   <div class="grid_250 fltl" id="secondary_featured_deal_2">
-    <frm c="no_marg">
-      <param:content>
-        <% if featured = FeaturedDeal.where(:position => 2).first and featured.deal %>
+    <% if featured = FeaturedDeal.where(:position => 2).first and featured.deal %>
+        <frm c="no_marg" title="#{link_to featured.deal.header, featured.deal}">
+          <param:content>
             <%= image_tag featured.deal.logo.url if featured.deal.logo %>
-            <%= featured.deal.header %>
-        <% end %>
-      </param:content>
-    </frm>
+            <p>
+              Price <%= as_currency(featured.deal.discounted_price, featured.deal.currency) %>
+              Save <%= featured.deal.saving %>
+            </p>
+            <% if user_signed_in? and current_user.has_role?(:purchase_manager) and !featured.deal.requested_by?(current_user) %>
+              <%= bt_link_to nil, t("deals.index.view.contact_me"), new_purchase_managers_lead_path(:deal_id => featured.deal.id) %>
+            <% end %>
+            <clb/>
+          </param:content>
+        </frm>
+    <% end %>
   </div>
 
   <div class="grid_250 fltl" id="secondary_featured_deal_3">
-    <frm c="no_marg">
-      <param:content>
-        <% if featured = FeaturedDeal.where(:position => 3).first and featured.deal %>
+    <% if featured = FeaturedDeal.where(:position => 3).first and featured.deal %>
+        <frm c="no_marg" title="#{link_to featured.deal.header, featured.deal}">
+          <param:content>
             <%= image_tag featured.deal.logo.url if featured.deal.logo %>
-            <%= featured.deal.header %>
-        <% end %>
-      </param:content>
-    </frm>
+            <p>
+              Price <%= as_currency(featured.deal.discounted_price, featured.deal.currency) %>
+              Save <%= featured.deal.saving %>
+            </p>
+            <% if user_signed_in? and current_user.has_role?(:purchase_manager) and !featured.deal.requested_by?(current_user) %>
+              <%= bt_link_to nil, t("deals.index.view.contact_me"), new_purchase_managers_lead_path(:deal_id => featured.deal.id) %>
+            <% end %>
+            <clb/>
+          </param:content>
+        </frm>
+    <% end %>
   </div>
 
   <div class="column_1to3 fltr" id="news">
@@ -137,6 +203,37 @@
       $(document).ready(function() {
           $('.introduction_video').colorbox({iframe:true, innerWidth:560, innerHeight:349});
       });
+
+      <% if @primary_deal %>
+      jQuery(document).ready(function() {
+          d = new Date();
+          seconds = (<%= @primary_deal.end_date.to_i %> - parseInt(d.getTime()/1000));
+          $('#countdown').countDown({
+              targetOffset: {
+                  'year':     0,
+                  'month':    0,
+                  'day':      0,
+                  'hour':     0,
+                  'min':      0,
+                  'sec':      seconds
+              },
+              omitWeeks: true
+          });
+      });
+
+      $('#modal_for_share_deal_by_email').dialog({
+          autoOpen: false,
+          width: 700,
+          title: '<%= t("deals.show.view.share_by_email_modal_title") %>',
+          modal: true,
+          buttons: { "<%= t("deals.show.view.send_share_by_email_button") %>": function() {
+              if (validate_template_editor_fields("#modal_for_share_deal_by_email") == 0) {
+                  $('#form_share_deal_by_email').submit();
+                  $(this).dialog("close");
+              }
+          }}
+      });
+      <% end %>
   </script>
 
 </column-mc:>

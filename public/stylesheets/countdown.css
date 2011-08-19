@@ -1,0 +1,34 @@
+#example_pane {
+	text-align: center;
+}
+
+#countdown {
+	height: 46px;
+	width: 284px;
+	margin: auto;
+}
+
+.dash {
+	width: 35px;
+	height: 20px;
+	float: left;
+	margin-top: 10px;
+	margin-left: 2px;
+	padding-left: 23px;
+	position: relative;
+	color: black;
+}
+
+.days_dash {
+	width: 45px;
+	margin-left: 10px;
+}
+
+.dash .digit {
+	font: bold 12pt Verdana;
+	font-weight: bold;
+	float: left;
+	width: 14px;
+	text-align: center;
+	position: relative;
+}

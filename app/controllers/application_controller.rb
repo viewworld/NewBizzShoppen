@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  before_filter :authorize_with_http_basic_for_staging, :check_category_buyer, :update_log_entries
+  before_filter :authorize_with_http_basic_for_staging, :check_category_buyer, :update_log_entries, :set_user_time_zone
   after_filter :do_something
 
   layout proc{|c| session[:site] ? "layouts/#{session[:site]}/application" : "layouts/fairleads/application" }
@@ -114,6 +114,10 @@ class ApplicationController < ActionController::Base
 
   def locale
     @locale ||= I18n.locale
+  end
+
+  def set_user_time_zone
+    Time.zone = current_user.time_zone if user_signed_in?
   end
 
   def redirect_to_root_path_if_signed_in
