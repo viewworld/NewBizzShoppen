@@ -51,7 +51,7 @@
 
   <div class="grid_750 fltl" id="primary_featured_deal">
     <% if @primary_deal %>
-        <frm c="no_marg" title="#{link_to @primary_deal.header, @primary_deal}">
+        <frm c="no_marg" title="#{link_to(@primary_deal.header, deal_path(@primary_deal.slug))}">
           <param:content>
             <div class="fltl">
               <p>
@@ -130,7 +130,7 @@
 
   <div class="grid_250 fltl" id="secondary_featured_deal_1">
     <% if featured = FeaturedDeal.where(:position => 1).first and featured.deal %>
-        <frm c="no_marg" title="#{link_to featured.deal.header, featured.deal}">
+        <frm c="no_marg" title="#{link_to featured.deal.header, deal_path(featured.deal.slug)}">
           <param:content>
             <%= image_tag featured.deal.logo.url if featured.deal.logo %>
             <p>
@@ -148,7 +148,7 @@
 
   <div class="grid_250 fltl" id="secondary_featured_deal_2">
     <% if featured = FeaturedDeal.where(:position => 2).first and featured.deal %>
-        <frm c="no_marg" title="#{link_to featured.deal.header, featured.deal}">
+        <frm c="no_marg" title="#{link_to featured.deal.header, deal_path(featured.deal.slug)}">
           <param:content>
             <%= image_tag featured.deal.logo.url if featured.deal.logo %>
             <p>
@@ -166,7 +166,7 @@
 
   <div class="grid_250 fltl" id="secondary_featured_deal_3">
     <% if featured = FeaturedDeal.where(:position => 3).first and featured.deal %>
-        <frm c="no_marg" title="#{link_to featured.deal.header, featured.deal}">
+        <frm c="no_marg" title="#{link_to featured.deal.header, deal_path(featured.deal.slug)}">
           <param:content>
             <%= image_tag featured.deal.logo.url if featured.deal.logo %>
             <p>
