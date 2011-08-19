@@ -50,14 +50,13 @@
   <hl pdd="15"/>
 
   <div class="grid_750 fltl" id="primary_featured_deal">
-    <frm c="no_marg">
-      <param:content>
-        <% if @primary_deal %>
+    <% if @primary_deal %>
+        <frm c="no_marg" title="#{@primary_deal.header}">
+          <param:content>
             <div class="fltl">
+              <p>
                 <%= image_tag @primary_deal.logo.url if @primary_deal.logo %>
-                <%= @primary_deal.header %>
-                <p>
-                    <%= @primary_deal.description %>
+                <%= @primary_deal.description %>
                 </p>
             </div>
 			<div id="countdown" class="fltr">
@@ -84,9 +83,9 @@
 				</div>
 			</div>
             <clb/>
-        <% end %>
-      </param:content>
-    </frm>
+          </param:content>
+        </frm>
+    <% end %>
   </div>
 
   <div class="grid_250 fltr">
@@ -107,36 +106,36 @@
   <hl pdd="15"/>
 
   <div class="grid_250 fltl" id="secondary_featured_deal_1">
-    <frm c="no_marg">
-      <param:content>
-        <% if featured = FeaturedDeal.where(:position => 1).first and featured.deal %>
+    <% if featured = FeaturedDeal.where(:position => 1).first and featured.deal %>
+        <frm c="no_marg" title="#{featured.deal.header}">
+          <param:content>
             <%= image_tag featured.deal.logo.url if featured.deal.logo %>
-            <%= featured.deal.header %>
-        <% end %>
-      </param:content>
-    </frm>
+            <clb/>
+          </param:content>
+        </frm>
+    <% end %>
   </div>
 
   <div class="grid_250 fltl" id="secondary_featured_deal_2">
-    <frm c="no_marg">
-      <param:content>
-        <% if featured = FeaturedDeal.where(:position => 2).first and featured.deal %>
+    <% if featured = FeaturedDeal.where(:position => 2).first and featured.deal %>
+        <frm c="no_marg" title="#{featured.deal.header}">
+          <param:content>
             <%= image_tag featured.deal.logo.url if featured.deal.logo %>
-            <%= featured.deal.header %>
-        <% end %>
-      </param:content>
-    </frm>
+            <clb/>
+          </param:content>
+        </frm>
+    <% end %>
   </div>
 
   <div class="grid_250 fltl" id="secondary_featured_deal_3">
-    <frm c="no_marg">
-      <param:content>
-        <% if featured = FeaturedDeal.where(:position => 3).first and featured.deal %>
+    <% if featured = FeaturedDeal.where(:position => 3).first and featured.deal %>
+        <frm c="no_marg" title="#{featured.deal.header}">
+          <param:content>
             <%= image_tag featured.deal.logo.url if featured.deal.logo %>
-            <%= featured.deal.header %>
-        <% end %>
-      </param:content>
-    </frm>
+            <clb/>
+          </param:content>
+        </frm>
+    <% end %>
   </div>
 
   <div class="column_1to3 fltr" id="news">
