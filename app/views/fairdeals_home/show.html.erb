@@ -111,7 +111,7 @@
     <% end %>
   </div>
 
-  <div class="grid_250 fltr">
+  <div class="grid_250 fltr" id="side_menu">
     <% unless user_signed_in? %>
         <p>
           <%= link_to t("fairdeals_home.show.view.get_free_account"), new_purchase_manager_account_path  %>

@@ -168,3 +168,18 @@ When /^the last deal should (be|not be) certified$/ do |is_certified|
   deal = Deal.order("created_at DESC").first
   assert deal.current_dcr.approved? == (is_certified == "be")
 end
+
+Given /^deal named "([^"]*)" is a primary featured deal$/ do |deal_header|
+  deal = Deal.where(:header => deal_header).first
+  FeaturedDeal.create!(:position => 0, :deal_id => deal.id)
+end
+
+Given /^deal named "([^"]*)" is "([^"]*)" secondary featured deal$/ do |deal_header, num|
+  deal = Deal.where(:header => deal_header).first
+  FeaturedDeal.create!(:position => num, :deal_id => deal.id)
+end
+
+When /^I append id of deal "([^"]*)" to url$/ do |deal_header|
+  deal = Deal.where(:header => deal_header).first
+  visit "/#{deal.id}"
+end

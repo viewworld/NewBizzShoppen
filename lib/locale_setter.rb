@@ -9,7 +9,7 @@ module Rack
     end
 
     def translate_locale(locale)
-      dictionary = {'da' => 'dk', 'eu' => 'en'}
+      dictionary = {'da' => 'dk', 'eu' => 'en', 'com' => 'en'}
       locale = dictionary[locale.to_s] || locale.to_s
       locales.include?(locale) ? locale : 'en'
     end

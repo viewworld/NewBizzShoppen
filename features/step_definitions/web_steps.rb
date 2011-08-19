@@ -262,6 +262,10 @@ Given /^I make sure current locale is "([^"]*)"$/ do |locale|
   visit "/locales/#{locale}"
 end
 
+Then /^locale should be set to "([^"]*)"$/ do |locale|
+  I18n.locale.should == locale.to_sym
+end
+
 Then /^The flash message should be set to translated "([^"]*)"$/ do |key|
   assert page.body.match(I18n.t(key))
 end
