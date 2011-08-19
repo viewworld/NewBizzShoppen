@@ -59,13 +59,16 @@
                 <%= @primary_deal.description %>
                 </p>
               <p>
-                Price <%= as_currency(@primary_deal.discounted_price, @primary_deal.currency) %>
+                Usual price <%= as_currency(@primary_deal.price, @primary_deal.currency) %>
+                Now <%= as_currency(@primary_deal.discounted_price, @primary_deal.currency) %>
                 Save <%= @primary_deal.saving %>
               </p>
               <% if user_signed_in? and current_user.has_role?(:purchase_manager) and !@primary_deal.requested_by?(current_user) %>
                 <%= bt_link_to nil, t("deals.index.view.contact_me"), new_purchase_managers_lead_path(:deal_id => @primary_deal.id) %>
               <% end %>
               <p>
+                  <%= link_to_function t("deals.show.view.share_by_email"), "$('#modal_for_share_deal_by_email').dialog('open');" %>
+
                   <% if Rails.env != "test" %>
                       <iframe src="http://www.facebook.com/plugins/like.php?app_id=101408449959161&amp;href=<%= escape_uri(deal_url(:id => @primary_deal.slug)) %>&amp;send=false&amp;layout=button_count&amp;width=250&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:250px; height:21px;" allowTransparency="true"></iframe>
 
