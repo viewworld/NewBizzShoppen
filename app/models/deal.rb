@@ -31,7 +31,7 @@ class Deal < AbstractLead
 
   before_create :create_uniq_deal_category
   after_create :certify_for_unknown_email, :assign_deal_admin
-  before_save :handle_published
+  before_save :handle_published, :set_dates
 
   attr_accessor :creation_step, :use_company_name_as_category
 
@@ -48,6 +48,12 @@ class Deal < AbstractLead
 
   def assign_deal_admin
     update_attribute(:deal_admin_email, (creator.has_any_role?(:agent, :call_centre, :call_centre_agent) ? creator.email : Settings.default_deal_admin_email))
+  end
+
+  def set_dates
+    if end_date_changed?
+      self.end_date = end_date.end_of_day
+    end
   end
 
   def self.new_for_user(user)
@@ -131,10 +137,6 @@ class Deal < AbstractLead
 
   def slug
     "#{id}#{ '-' + header unless header.blank?}".to_url
-  end
-
-  def time_left
-    (end_date.present? and end_date.end_of_day > Time.now.utc) ? (end_date.end_of_day - Time.now) : 0.0
   end
 
   private
