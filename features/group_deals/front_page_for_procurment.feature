@@ -27,14 +27,14 @@ Feature: Front page for procurment
     And I select "fairdeals" from "youtube_introduction_site"
     And I press translated "administration.introduction_video.new.view.button_create"
     And I make sure current locale is "en"
-    Given I visit domain http://fairdeals.dk
+    Given I visit domain http://fairdeals.com
     Then I should see "1" elements within CSS path ".introduction_video"
 
   # Join - log in fairdeals: (as is “create procurement manager account”)
   @_done @_tested
   Scenario: I can create procurement manager account
-    Given I visit domain http://fairdeals.dk
-    And I follow translated "fairdeals_home.show.view.sign_up_here"
+    Given I visit domain http://thefairdeals.com
+    And I follow translated "fairdeals_home.show.view.get_free_account"
     And I should see translated "purchase_manager_accounts.new.view.header"
 
   # Find a vender - make a tender: (as is ” Create a lead as procurement manager) Some field labels should be renamed in the create lead page:
