@@ -133,6 +133,10 @@ class Deal < AbstractLead
     "#{id}#{ '-' + header unless header.blank?}".to_url
   end
 
+  def time_left
+    (end_date.present? and end_date.end_of_day > Time.now.utc) ? (end_date.end_of_day - Time.now) : 0.0
+  end
+
   private
 
   def process_for_lead_information?

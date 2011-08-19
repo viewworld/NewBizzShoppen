@@ -25,6 +25,19 @@ javascripts:
     - public/javascripts/jquery.form.js
     - public/javascripts/jquery.autocomplete.min.js
 
+  fairdeals:
+    - public/javascripts/jquery-1.4.2.min.js
+    - public/javascripts/jquery-ui-1.8.5.custom.min.js
+    - public/javascripts/jquery-ujs/src/rails.js
+    - public/javascripts/application.js
+    - public/javascripts/jquery.colorbox-min.js
+    - public/javascripts/jquery.expander.js
+    - public/javascripts/i18n.js
+    - public/javascripts/translations.js
+    - public/javascripts/custom.js
+    - public/javascripts/jquery.lwtCountdown-1.0.js
+
+
 stylesheets:
   common:
     - public/stylesheets/ocss/reset.css
@@ -41,3 +54,15 @@ stylesheets:
     - public/stylesheets/jquery.checkboxtree.min.css
     - public/stylesheets/jquery.autocomplete.css
     - public/stylesheets/ajaxful_rating.css
+
+  fairdeals:
+    - public/stylesheets/ocss/reset.css
+    - public/stylesheets/ocss/helpers.css
+    - public/stylesheets/ocss/columns.css
+    - public/stylesheets/ocss/frm.css
+    - public/stylesheets/ocss/table.css
+    - public/stylesheets/ocss/inputs.css
+    - public/stylesheets/style.css
+    - public/stylesheets/jquery-ui-1.8.5.custom.css
+    - public/stylesheets/colorbox.css
+    - public/stylesheets/countdown.css

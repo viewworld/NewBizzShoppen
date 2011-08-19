@@ -53,11 +53,37 @@
     <frm c="no_marg">
       <param:content>
         <% if @primary_deal %>
-            <%= image_tag @primary_deal.logo.url if @primary_deal.logo %>
-            <%= @primary_deal.header %>
-            <p>
-                <%= @primary_deal.description %>
-            </p>
+            <div class="fltl">
+                <%= image_tag @primary_deal.logo.url if @primary_deal.logo %>
+                <%= @primary_deal.header %>
+                <p>
+                    <%= @primary_deal.description %>
+                </p>
+            </div>
+			<div id="countdown" class="fltr">
+				<div class="dash days_dash">
+					<span class="dash_title">days</span>
+					<div class="digit">0</div>
+					<div class="digit">0</div>
+					<div class="digit">0</div>
+				</div>
+				<div class="dash hours_dash">
+					<span class="dash_title">hours</span>
+					<div class="digit">0</div>
+					<div class="digit">0</div>
+				</div>
+				<div class="dash minutes_dash">
+					<span class="dash_title">minutes</span>
+					<div class="digit">0</div>
+					<div class="digit">0</div>
+				</div>
+				<div class="dash seconds_dash">
+					<span class="dash_title">seconds</span>
+					<div class="digit">0</div>
+					<div class="digit">0</div>
+				</div>
+			</div>
+            <clb/>
         <% end %>
       </param:content>
     </frm>
@@ -137,6 +163,22 @@
       $(document).ready(function() {
           $('.introduction_video').colorbox({iframe:true, innerWidth:560, innerHeight:349});
       });
+
+      <% if @primary_deal %>
+      jQuery(document).ready(function() {
+          $('#countdown').countDown({
+              targetOffset: {
+                  'year':     0,
+                  'month':    0,
+                  'day':      0,
+                  'hour':     0,
+                  'min':      0,
+                  'sec':      <%= @primary_deal.time_left.as_seconds %>
+              },
+              omitWeeks: true
+          });
+      });
+      <% end %>
   </script>
 
 </column-mc:>
