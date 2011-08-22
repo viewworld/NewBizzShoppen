@@ -14,7 +14,7 @@ Feature: Front page for procurment
     And I should see CSS path "#primary_featured_deal"
 
   # Top bar video as-fairleads, but uniqe video with jpeg
-  @_done @_tested
+  @_done @_tested @wip
   Scenario: There should be separate blurb and youtube video for the front page
     Given I am on the homepage
     And I make sure current locale is "en"
