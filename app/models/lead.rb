@@ -46,7 +46,7 @@ class Lead < AbstractLead
   scope :purchased, where("lead_purchases_counter > 0")
   scope :without_bought_and_requested_by, lambda { |u| select("DISTINCT leads.*").joins("LEFT JOIN lead_purchases lp ON lp.lead_id = leads.id").where(["(lp.owner_id <> ? OR lp.owner_id IS NULL) AND (lp.assignee_id <> ? OR lp.assignee_id IS NULL) AND (lp.requested_by <> ? OR lp.requested_by IS NULL)", u.id, u.id, u.id]) if u }
   scope :bestsellers, order("lead_purchases_counter DESC")
-  scope :contact_requests_for, lambda { |user_id| where("leads.creator_id = :id or leads.email_address = :email", {:id => user_id, :email => User.find(user_id).email}) }
+  scope :contact_requests_for, lambda { |user_id| where("leads.creator_id = :id or leads.email_address = :email", {:id => user_id, :email => User.find(user_id).email}).order("leads.created_at DESC") }
   scope :interesting_for_user, lambda { |user| where("leads.category_id IN (?)", user.accessible_categories_ids) }
 
   scope :joins_on_lead_purchases, joins("INNER JOIN lead_purchases ON lead_purchases.lead_id=leads.id")
