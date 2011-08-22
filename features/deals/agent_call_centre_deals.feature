@@ -67,6 +67,8 @@ Feature: Deals from Call Centre/Agent perspective
     Then I click hidden link by url regex "/call_centre_agents\/deals\/\d+\/edit/"
     Then I fill group deal edit form and submit with translated button "call_centre_agent.deals.edit.view.update_button"
     # agent
+    And I am not sign in
+    And I am on the homepage
     And I sign in as agent@nbs.com with password secret
     Then I follow translated "layout.main_menu.agent.deals"
     Then I follow translated "deals.common.listing.view.new_deal"
@@ -78,7 +80,7 @@ Feature: Deals from Call Centre/Agent perspective
     Then I select "DKK" from "deal_currency_id"
     Then I fill in "deal_price" with "10"
     Then I wait 30 second
-    Then I select "Business" from "deal_lead_category_id"
+    Then I select "Business" from "deal_category_id"
     Then I press translated "agent.deals.new.view.create_button"
     Then I should see translated "flash.deals.create.notice"
     Then I should see translated "deals.common.listing.view.header"
