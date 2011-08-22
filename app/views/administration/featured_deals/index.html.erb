@@ -1,15 +1,15 @@
 <column-mc:>
-  <header><%= "Fetured deals" %></header>
+  <header><%= t("administration.featured_deals.view.index.header") %></header>
 
   <%= form_tag administration_featured_deals_path, :method => :post do %>
-      <frm title="">
+      <frm title="#{t('administration.featured_deals.view.index.title')}">
         <param:content>
           <div class="pdd_10 no_pdd_t">
             <div class="column_left">
               <fieldset class="inputs labels_260 labels_ta_r inputs_120">
-                <ol>
+                <ol class="align_inputs">
                   <% FeaturedDeal::POSITIONS.each do |position| %>
-                      <li class="string">
+                      <li class="select">
                         <%= label_tag position == 0 ? "Main position" : "Position #{position}" %>
                         <%= select_tag "featured_deals[#{position}]", options_for_select(@group_deals_for_select, FeaturedDeal.find_by_position(position).deal_id) %>
                       </li>
@@ -18,7 +18,7 @@
               </fieldset>
             </div>
           </div>
-          <clb/>
+          <clb/><br/>
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="plus">

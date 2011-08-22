@@ -747,6 +747,11 @@ en:
         new_password_confirmation_label: "New password confirmation"
 
   administration:
+    featured_deals:
+      view:
+        index:
+          header: "Featured deals"
+          title: "Select featured deals to be displayed on Faideals home page"
     password:
       destroy:
         flash:

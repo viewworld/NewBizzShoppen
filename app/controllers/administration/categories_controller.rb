@@ -56,7 +56,9 @@ class Administration::CategoriesController < Administration::AdministrationContr
 
   def resource
     @category = Category.find(params[:id])
-    self.class.set_tab (@category.class.to_s == "LeadCategory" ? "browse_leads" : "browse_deals")
+    @category_type = @category.class.to_s
+    set_tab
+    @category
   end
 
 end
