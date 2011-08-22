@@ -39,7 +39,7 @@ class DealsController < ApplicationController
 
   def rate
     @deal = Deal.find(params[:id])
-    @deal.rate(params[:stars], current_user, params[:dimension])
+    @deal.rate(params[:stars], current_user, params[:dimension]) unless @deal.rated_by?(current_user, params[:dimension])
     render :update do |page|
       page << %{$('##{@deal.wrapper_dom_id(params)}').html('#{ratings_for(@deal, params.merge(:wrap => false))}');}.html_safe
       page << %{$('##{@deal.wrapper_dom_id(params)}').effect('highlight', {}, 3000);}.html_safe
