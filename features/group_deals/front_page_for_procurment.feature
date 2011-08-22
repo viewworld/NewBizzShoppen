@@ -14,15 +14,13 @@ Feature: Front page for procurment
     And I should see CSS path "#primary_featured_deal"
 
   # Top bar video as-fairleads, but uniqe video with jpeg
-  @_done @_tested @wip
+  @_done @_tested
   Scenario: There should be separate blurb and youtube video for the front page
     Given I am on the homepage
     And I make sure current locale is "en"
     And I am signed up and confirmed as user with email bob@person.com and password supersecret and role admin
     Then I sign in as bob@person.com with password supersecret
-    And I open page in browser
     Then I go to administration settings
-    And I open page in browser
     When I follow translated "administration.introduction_video.view.add_video"
     And I fill in "youtube_introduction_url" with "http://www.youtube.com/watch?v=SBjQ9tuuTJQ"
     And I select "en" from "youtube_introduction_locale_code"
