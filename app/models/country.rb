@@ -25,7 +25,7 @@ class Country < ActiveRecord::Base
   scope :within_accessible_categories, lambda { |customer| where("leads.category_id NOT IN (?)", customer.accessible_categories_ids) }
 
   def email_template_signature_logo_url
-    (logo and logo.id and logo.asset) ? logo.asset.path : default_email_template_signature_logo_url
+    (logo and logo.id) ? logo.url : default_email_template_signature_logo_url
   end
 
   def default_email_template_signature_logo_url
