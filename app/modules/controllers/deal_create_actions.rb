@@ -1,7 +1,7 @@
 module DealCreateActions
 
   def new
-    @deal = Deal.new
+    @deal = Deal.new(:start_date => Date.today, :end_date => Date.today)
     respond_to do |content|
       content.html {}
       content.js {
