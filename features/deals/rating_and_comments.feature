@@ -16,6 +16,7 @@ Scenario: I can rate a a deal as a procurement manager
   And I should see translated "deals.listing.rating_label"
   Then a deal named "Electrical deal" has rating set to "0"
   Then I click xpath "(//ul[@class='ajaxful-rating']//li)[5]/a"
+  And I wait 2 second
   Then a deal named "Electrical deal" has rating set to "4"
 
 @selenium @_tested @_done
