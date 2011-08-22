@@ -2,8 +2,7 @@ class Administration::CategoriesController < Administration::AdministrationContr
   inherit_resources
 
   before_filter :set_category_type
-  
-  set_tab "browse_leads"
+  before_filter :set_tab, :only => [:new,:create]
 
   def new
     @category = @category_type.constantize.new
@@ -53,6 +52,11 @@ class Administration::CategoriesController < Administration::AdministrationContr
 
   def set_tab
     self.class.set_tab (@category_type == "LeadCategory" ? "browse_leads" : "browse_deals")
+  end
+
+  def resource
+    @category = Category.find(params[:id])
+    self.class.set_tab (@category.class.to_s == "LeadCategory" ? "browse_leads" : "browse_deals")
   end
 
 end
