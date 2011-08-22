@@ -46,6 +46,7 @@ Spork.prefork do
 
   require 'database_cleaner'
   DatabaseCleaner.strategy = :truncation
+  Capybara::Selenium::Driver::DEFAULT_OPTIONS[:resynchronize] = false
 
   `rake db:test:prepare`
   load_db
