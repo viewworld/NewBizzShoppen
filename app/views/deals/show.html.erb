@@ -5,10 +5,11 @@
       <meta property="og:url" content="<%= deal_url(:id => @deal.slug) %>"/>
       <meta property="og:image" content="<%= path_to_image("logo_fairleads_with_border.jpg") %>"/>
       <meta property="og:site_name" content="Fairleads"/>
-      <meta property="og:description" content=""><%= @deal.group_deal? and !@deal.social_media_description.blank? ? @deal.social_media_description : @deal.description %>
+      <meta property="og:description" content="<%= @deal.group_deal? and !@deal.social_media_description.blank? ? @deal.social_media_description : @deal.description %>">
       <meta property="fb:app_id" content="198584516868482"/>
   <% end %>
   <%= javascript_include_tag "global_template_editor" %>
+  <%= javascript_include_tag 'http://static.ak.fbcdn.net/connect.php/js/FB.Share' %>
 </head:>
 
 <column-mc:>
@@ -90,21 +91,12 @@
   </div>
   <clb/>
 
-  <%= link_to_function t("deals.show.view.share_by_email"), "$('#modal_for_share_deal_by_email').dialog('open');" %>
-
-  <br/>
-  <br/>
-
-  <% if Rails.env != "test" %>
-
-
-      <iframe src="http://www.facebook.com/plugins/like.php?app_id=101408449959161&amp;href=<%= escape_uri(deal_url(:id => @deal.slug)) %>&amp;send=true&amp;layout=button_count&amp;width=250&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:250px; height:21px;" allowTransparency="true"></iframe>
-
-
-
-      <div id="fb-root"></div>
-      <script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
-      <fb:comments href="<%= escape_uri(deal_url(:id => @deal.slug)) %>" num_posts="2" width="500"></fb:comments>
+  <% if Rails.env != "test" and user_signed_in? and current_user.purchase_manager? %>
+      <a name="fb_share" share_url="<%= escape_uri(deal_url(:id => @deal.slug)) %>"></a>
+      <!--<iframe src="http://www.facebook.com/plugins/like.php?app_id=101408449959161&amp;href=<%= escape_uri(deal_url(:id => @deal.slug)) %>&amp;send=true&amp;layout=button_count&amp;width=250&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:250px; height:21px;" allowTransparency="true"></iframe>-->
+      <!--<div id="fb-root"></div>-->
+      <!--<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>-->
+      <!--<fb:comments href="<%= escape_uri(deal_url(:id => @deal.slug)) %>" num_posts="2" width="500"></fb:comments>-->
 
       <clb/>
 
@@ -114,8 +106,8 @@
       <clb/>
       <a href="http://twitter.com/share" class="twitter-share-button" data-text="<%= @deal.social_media_description %>" data-count="horizontal">Tweet</a>
       <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-
-
+  <% elsif user_signed_in? and current_user.purchase_manager? %>
+      <%= link_to_function t("deals.show.view.share_by_email"), "$('#modal_for_share_deal_by_email').dialog('open');" %>
   <% end %>
 
   <div id="modal_for_share_deal_by_email" style="display:none;">
@@ -133,15 +125,19 @@
 
       $('#modal_for_share_deal_by_email').dialog({
           autoOpen: false,
-          width: 700,
+          width: 400,
           title: '<%= t("deals.show.view.share_by_email_modal_title") %>',
           modal: true,
-          buttons: { "<%= t("deals.show.view.send_share_by_email_button") %>": function() {
+          buttons:
+          { "<%= t("deals.show.view.send_share_by_email_button") %>": function() {
               if (validate_template_editor_fields("#modal_for_share_deal_by_email") == 0) {
                   $('#form_share_deal_by_email').submit();
                   $(this).dialog("close");
+              }},
+            "<%= t("deals.show.view.cancel") %>": function() {
+                  $(this).dialog('close');
               }
-          }}
+          }
       });
   </script>
 </js:>
