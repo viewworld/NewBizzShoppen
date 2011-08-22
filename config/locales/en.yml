@@ -3293,6 +3293,7 @@ en:
         share_by_email: "Share by email"
         share_by_email_modal_title: "Share by email"
         send_share_by_email_button: "Send"
+        cancel: "Cancel"
     common:
       assets:
         view:
@@ -3329,6 +3330,7 @@ en:
         email_from: "Email from"
         email_to: "Email to"
         name: "Name"
+        message: "Message"
     create:
       flash:
         email_sent: "Deal has been successfully sent to the selected recipient"
