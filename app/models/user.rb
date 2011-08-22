@@ -433,7 +433,7 @@ class User < ActiveRecord::Base
   end
 
   def buyer?
-    has_any_role?([:customer, :purchase_manager, :category_buyer, :lead_buyer])
+    has_any_role?([:customer, :category_buyer, :lead_buyer])
   end
 
   def admin?
