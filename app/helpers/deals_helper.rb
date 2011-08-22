@@ -20,7 +20,6 @@ module DealsHelper
     elsif params[:query_type] == "check_email"
       page << "alert('#{I18n.t('call_centre_agent.deals.new.view.no_user_found_message', :email => params[:email])}')"
     elsif params[:query_type] == "certify"
-      page << "$('#deal_published').hide();"
       page << "setup_step(1)"
     end
   end
