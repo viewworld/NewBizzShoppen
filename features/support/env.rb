@@ -55,6 +55,12 @@ Spork.prefork do
   load_db if EmailTemplate.count < 1
   end
 
+  Around('@_done') do |scenario, block|
+  block.call
+  Capybara.default_host = 'http://localhost' #for Rack::Test
+  Capybara.app_host = "http://localhost:9887" if Capybara.current_driver == :selenium
+  end
+
 # If you set this to false, any error raised from within your app will bubble
 # up to your step definition and out to cucumber unless you catch it somewhere
 # on the way. You can make Rails rescue errors and render error pages on a
