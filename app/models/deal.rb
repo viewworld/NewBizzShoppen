@@ -31,7 +31,7 @@ class Deal < AbstractLead
 
   before_create :create_uniq_deal_category
   after_create :certify_for_unknown_email, :assign_deal_admin
-  before_save :handle_published, :set_dates
+  before_save :set_dates
 
   attr_accessor :creation_step, :use_company_name_as_category
 
@@ -170,13 +170,5 @@ class Deal < AbstractLead
     if creator.agent? or creator.admin? and buyer.nil?
       deal_certification_requests.create
     end
-  end
-
-  def handle_published
-    if published_changed? and published and buyer.nil?
-      self.published = false
-      nil
-    end
-    true
   end
 end

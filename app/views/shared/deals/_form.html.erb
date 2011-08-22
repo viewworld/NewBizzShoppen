@@ -4,7 +4,8 @@
       <ol>
         <% if deal.current_dcr and deal.current_dcr.active? %>
             <%= hidden_field_tag "accept", "false" %>
-        <% elsif user_signed_in? %>
+        <% end %>
+        <% if user_signed_in? %>
             <%
                deal_categories = if current_user.buyer?
                                      DealCategory.without_locked.with_customer_unique(current_user).all
@@ -17,7 +18,7 @@
             <%= form.input :category_id, :disabled => deal_categories.select { |c| !c.can_publish_leads? }.map(&:id), :collection => nested_set_options(deal_categories), :include_blank => false, :label => t("shared.deals.form.deal_category_label") %>
         <% end %>
 
-        <% if current_user.has_any_role?(:call_centre, :call_centre_agent, :admin) %>
+        <% if current_user.has_any_role?(:agent, :call_centre, :call_centre_agent, :admin) %>
             <%
                lead_categories = if current_user.agent?
                                      LeadCategory.without_locked.with_agent_unique(current_user).all
