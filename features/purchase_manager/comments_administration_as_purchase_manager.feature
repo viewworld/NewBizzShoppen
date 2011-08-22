@@ -11,4 +11,4 @@ Background:
 Scenario: I can't see comments when signed in as purchase manager
   Then I should not see translated "layout.main_menu.shared.comments"
   When I go to comments threads
-  Then I should see "You are not authorized to access this page."
+  Then I should not see "You are not authorized to access this page."
