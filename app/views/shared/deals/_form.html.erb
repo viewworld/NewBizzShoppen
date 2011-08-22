@@ -18,7 +18,7 @@
             <%= form.input :category_id, :disabled => deal_categories.select { |c| !c.can_publish_leads? }.map(&:id), :collection => nested_set_options(deal_categories), :include_blank => false, :label => t("shared.deals.form.deal_category_label") %>
         <% end %>
 
-        <% if current_user.has_any_role?(:agent, :call_centre, :call_centre_agent, :admin) %>
+        <% if user_signed_in? and current_user.has_any_role?(:agent, :call_centre, :call_centre_agent, :admin) %>
             <%
                lead_categories = if current_user.agent?
                                      LeadCategory.without_locked.with_agent_unique(current_user).all
@@ -45,14 +45,14 @@
                        :wrapper_html => {:class => "date"},
                        :input_html => {:class => "datepicker", :value => deal.end_date.to_date},
                        :hint => t('models.result_field.date_format') %>
-        <% if current_user.buyer? %>
+        <% if user_signed_in? and current_user.buyer? %>
             <%= form.input :price, :as => :hidden %>
             <%= form.input :currency_id, :value => Currency.default_currency.id, :as => :hidden %>
         <% else %>
             <%= form.input :price, :as => :string, :required => @deal.group_deal == true %>
             <%= form.input :currency_id, :collection => currencies_for_select, :include_blank => false %>
         <% end %>
-        <% unless current_user.buyer? %>
+        <% unless user_signed_in? and current_user.buyer? %>
         <span>
             <%= form.input :group_deal, :wrapper_html => {:style => "margin-left:200px"}, :onclick => "if($('#deal_group_deal').is(':checked')){$('<abbr title=\"required\">*</abbr>').appendTo('#deal_price_input label'); $('#group_deal_fields').show();} else {$('#deal_price_input label abbr').remove();$('#group_deal_fields').hide();}" %>
         </span>
@@ -82,7 +82,7 @@
         <%= form.input :zip_code %>
         <%= form.input :country_id, :as => :select, :collection => Country.all, :include_blank => false %>
         <%= form.input :region_id, :as => :select, :collection => Region.all, :include_blank => false %>
-        <% if current_user.admin? %>
+        <% if user_signed_in? and current_user.admin? %>
             <%= form.input :created_leads %>
         <% end %>
         <% if user_signed_in? and (current_user.admin? or current_user.has_role?(:deal_maker)) %>
