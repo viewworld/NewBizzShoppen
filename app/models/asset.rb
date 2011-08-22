@@ -35,7 +35,7 @@ class Asset < ActiveRecord::Base
   end
 
   def self.s3_storage?
-    Rails.env == 'production'
+    ['production','staging'].include?(Rails.env)
   end
 
   def self.attachment_options
@@ -44,9 +44,9 @@ class Asset < ActiveRecord::Base
         :storage        => :s3,
         :s3_credentials => "#{Rails.root}/config/s3.yml",
         :s3_permissions => :public_read,
-        :bucket         => "fairleads",
-        :url            => "http://fairleads.s3.amazonaws.com/assets/:id/:style/:basename.:extension",
-        :path           => "assets/:id/:style/:basename.:extension"
+        :bucket         => "fairleads/#{Rails.env}",
+        :url            => "http://fairleads.s3.amazonaws.com/#{Rails.env}/assets/:id/:style/:basename.:extension",
+        :path           => "#{Rails.env}/assets/:id/:style/:basename.:extension"
       }
     else
       {
