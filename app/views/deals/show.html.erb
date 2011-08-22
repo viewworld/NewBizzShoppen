@@ -106,7 +106,8 @@
       <clb/>
       <a href="http://twitter.com/share" class="twitter-share-button" data-text="<%= @deal.social_media_description %>" data-count="horizontal">Tweet</a>
       <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-  <% elsif user_signed_in? and current_user.purchase_manager? %>
+  <% end %>
+  <% if user_signed_in? and current_user.purchase_manager? %>
       <%= link_to_function t("deals.show.view.share_by_email"), "$('#modal_for_share_deal_by_email').dialog('open');" %>
   <% end %>
 
@@ -120,7 +121,6 @@
   <script type="text/javascript">
       jQuery(document).ready(function() {
           $('a[rel=colorbox]').colorbox();
-
       });
 
       $('#modal_for_share_deal_by_email').dialog({
