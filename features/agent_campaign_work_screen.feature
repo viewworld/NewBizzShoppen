@@ -37,6 +37,7 @@ Feature: Agent campaign - calling session
       And I follow translated "agent_work_screen.index.show_current_call_sheet"
       And the "contact_company_name" field should contain "Bon Jovi inc."
       And I follow translated action "campaigns.edit.show_button" within row containing "Stefanek corp"
+      And I wait 5 second
       Then I should see "Stefanek corp" within "#contact_info"
       Then the "contact_company_name" field should contain "Stefanek corp"
     
