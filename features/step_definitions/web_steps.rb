@@ -425,6 +425,6 @@ end
 
 Given /^I visit domain (.+)$/ do |domain|
   Capybara.default_host = domain #for Rack::Test
-  Capybara.app_host = "http://#{domain}:9887" if Capybara.current_driver == :selenium
+  Capybara.app_host = "#{domain}:9887" if Capybara.current_driver == :selenium
   visit("/fairdeals/")
 end
