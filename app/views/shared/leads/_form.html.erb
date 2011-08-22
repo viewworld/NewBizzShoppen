@@ -120,7 +120,7 @@
           </li>
           <%= form.input :notify_buyers_after_update, :as => :boolean, :hint => hint_for(@lead, :notify_buyers_after_update) unless @lead.lead_purchases.empty? %>
           <%= form.input :sale_limit, :as => :select, :collection => (1..10), :include_blank => false, :hint => hint_for(@lead, :sale_limit), :label => current_user.has_role?(:purchase_manager) ? t("shared.leads.form.purchase_manager.sale_limit_label") : true %>
-          <%= form.input :purchase_decision_date, :as => :string, :wrapper_html => {:class => "date"}, :hint => hint_for(@lead, :purchase_decision_date) %>
+          <%= form.input :purchase_decision_date, :as => (user_signed_in? and current_user.has_role?(:purchase_manager)) ? :string : :datepicker, :wrapper_html => {:class => "date"}, :hint => hint_for(@lead, :purchase_decision_date) %>
         </ol>
       </fieldset>
     </div>
