@@ -25,7 +25,7 @@ class PurchaseManagers::TendersController < PurchaseManagers::PurchaseManagerCon
     session[:selected_category] = @lead.category_id
     @lead.validate_contact_email = true if params[:commit_certify] and @lead.email_address.blank?
     @lead.price = @lead.category.default_price
-    @lead.currency = Currency.default_currency
+    @lead.currency = @lead.category.currency
     @tender = @lead
 
     create! do |success, failure|
