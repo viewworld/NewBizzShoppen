@@ -516,4 +516,7 @@ Feature: Agent campaign - calling session
       And I follow translated "agent_work_screen.index.show_pending_calls"
       Then I should see translated "contacts.table.note" within "#contacts"
 
+    @m18 @campaign_results
+    Scenario: It should not be possible to create new results when campaign expired
+
   
