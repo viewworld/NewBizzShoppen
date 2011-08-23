@@ -15,7 +15,7 @@ class Lead < AbstractLead
   belongs_to :currency
   belongs_to :region
   belongs_to :requestee, :class_name => "User::PurchaseManager", :foreign_key => :requested_by
-  has_many :lead_certification_requests
+  has_many :lead_certification_requests, :dependent => :destroy
   has_many :lead_translations, :dependent => :destroy
   has_many :lead_purchases
   has_many :lead_template_values
