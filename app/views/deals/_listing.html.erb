@@ -136,7 +136,7 @@
 
       <tr class="row_tooltip">
         <td class="cl"></td>
-        <td colspan="4">
+        <td colspan="6">
           <div class="row_tooltip_content comments_details">
             <%= render :partial => "/shared/deal_comments/deal_threads", :locals => {:deal => deal, :threads => deal.comment_threads.roots.order("created_at DESC")} %>
           </div>
