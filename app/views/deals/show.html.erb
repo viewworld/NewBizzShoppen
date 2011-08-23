@@ -104,7 +104,7 @@
       <script type="IN/Share" data-url="<%= deal_url(:id => @deal.slug) %>" data-counter="right"></script>
 
       <clb/>
-      <a href="http://twitter.com/share" class="twitter-share-button" data-text="<%= @deal.social_media_description %>" data-count="horizontal">Tweet</a>
+      <a href="http://twitter.com/share" class="twitter-share-button" data-text="<%= @deal.social_media_description %>" data-count="horizontal"><%= t("deals.show.view.tweet") %></a>
       <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
   <% end %>
   <% if user_signed_in? and current_user.purchase_manager? %>

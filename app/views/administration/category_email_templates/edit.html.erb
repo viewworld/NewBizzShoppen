@@ -3,7 +3,7 @@
   <header back="true"><%= t("administration.email_templates.edit.view.title", :name => "#{@category.name} - #{@email_template.subject}") %><%= image_tag_for_locale %></header>
 
   <%= semantic_form_for @email_template, :url => administration_category_email_template_path(@category), :method => :put do |form| %>
-      <frm title="Edit">
+      <frm title="#{t('administration.email_templates.edit.view.edit')}">
         <param:content>
           <%= render :partial => 'administration/email_templates/form', :locals => {:form => form} %>
         </param:content>

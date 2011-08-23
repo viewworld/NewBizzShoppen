@@ -45,4 +45,8 @@ class ::User::LeadBuyer < ::User
     DealCertificationRequest.active.for_email(email)
   end
 
+  def address
+    parent.with_role.address
+  end
+
 end

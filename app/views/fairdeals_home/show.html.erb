@@ -86,7 +86,7 @@
                       <script type="IN/Share" data-url="<%= deal_url(:id => @primary_deal.slug) %>" data-counter="right"></script>
 
                       <clb/>
-                      <a href="http://twitter.com/share" class="twitter-share-button" data-text="<%= @primary_deal.social_media_description %>" data-count="horizontal">Tweet</a>
+                      <a href="http://twitter.com/share" class="twitter-share-button" data-text="<%= @primary_deal.social_media_description %>" data-count="horizontal"><%= t("deals.show.view.share_by_email") %></a>
                       <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
                   <% elsif user_signed_in? and current_user.purchase_manager? %>
                       <%= link_to_function t("deals.show.view.share_by_email"), "$('#modal_for_share_deal_by_email').dialog('open');" %><br/>
@@ -99,23 +99,23 @@
             </div>
 			<div id="countdown" class="fltr">
 				<div class="dash days_dash">
-					<span class="dash_title">days</span>
+					<span class="dash_title"><%= t("deals.show.view.days") %></span>
 					<div class="digit">0</div>
 					<div class="digit">0</div>
 					<div class="digit">0</div>
 				</div>
 				<div class="dash hours_dash">
-					<span class="dash_title">hours</span>
+					<span class="dash_title"><%= t("deals.show.view.hours") %></span>
 					<div class="digit">0</div>
 					<div class="digit">0</div>
 				</div>
 				<div class="dash minutes_dash">
-					<span class="dash_title">minutes</span>
+					<span class="dash_title"><%= t("deals.show.view.minutes") %></span>
 					<div class="digit">0</div>
 					<div class="digit">0</div>
 				</div>
 				<div class="dash seconds_dash">
-					<span class="dash_title">seconds</span>
+					<span class="dash_title"><%= t("deals.show.view.seconds") %></span>
 					<div class="digit">0</div>
 					<div class="digit">0</div>
 				</div>
