@@ -20,7 +20,6 @@ class Category < ActiveRecord::Base
   after_create :generate_blurb
 
   validates_presence_of :name
-  validates_numericality_of :default_price, :greater_than_or_equal_to => 0
   validates_uniqueness_of :name, :scope => :parent_id
 
   has_many :leads do
