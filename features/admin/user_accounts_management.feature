@@ -710,3 +710,6 @@ Scenario: I can log in as selected user
   Then I press translated "administration.users.index.view.search_button"
   Then I follow translated "administration.users.index.view.log_in_as"
   Then I follow translated logout link for translator_call_centre_agent@nbs.com
+
+@m18 @category_buyer_deals
+Scenario: I can enable deals for category buyer

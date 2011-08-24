@@ -3,7 +3,7 @@ class Address < ActiveRecord::Base
   belongs_to :addressable, :polymorphic => true
   belongs_to :country
 
-  validates_presence_of :address_line_1, :zip_code, :country, :unless => Proc.new { |a| ActiveRecord::ConnectionAdapters::Column.value_to_boolean(a.disabled_validations) == true  }
+  validates_presence_of :address_line_1, :zip_code, :country_id, :unless => Proc.new { |a| ActiveRecord::ConnectionAdapters::Column.value_to_boolean(a.disabled_validations) == true  }
 
   attr_accessor :disabled_validations
 

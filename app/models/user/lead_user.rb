@@ -29,6 +29,10 @@ class ::User::LeadUser < ::User
     true
   end
 
+  def address
+    parent.with_role.address
+  end
+
   private
 
   def set_owner(lead_request)

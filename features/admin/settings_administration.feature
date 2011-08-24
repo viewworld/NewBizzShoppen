@@ -117,3 +117,13 @@ Scenario: I can specify youtube url for each locale
   And I press translated "administration.introduction_video.new.view.button_create"
   And I am on the home page
   Then I should see "1" elements within CSS path ".introduction_video"
+
+@m18 @auto_buy_max
+Scenario: I can set default auto buy max for 4 weeks
+
+@m18 @settings
+Scenario: I can enable/disable email verification for procurement managers
+
+@m18 @settings
+Scenario: I can enable/disable email verification for sales managers
+

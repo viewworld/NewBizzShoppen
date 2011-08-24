@@ -388,6 +388,7 @@ en:
       agent: Agent
       result: Result
       call: Call
+      actions: "Actions"
     email_templates:
       edit:
         view:
@@ -752,6 +753,10 @@ en:
         index:
           header: "Featured deals"
           title: "Select featured deals to be displayed on Faideals home page"
+          main_position: "Main position"
+          position: "Position %{position}"
+          set_featured_deals: "Set featured deals"
+          cancel: "Cancel"
     password:
       destroy:
         flash:
@@ -854,6 +859,7 @@ en:
         agents_with_access: "Agent with access"
       index:
         view:
+          header: "Categories"
           new_category: "New category"
           edit_link: "Edit"
           destroy_link: "Delete"
@@ -914,6 +920,7 @@ en:
       edit:
         view:
           title: "Editing template: %{name}"
+          edit: "Edit"
           button_update: "Save"
 
     category_email_templates:
@@ -1201,6 +1208,7 @@ en:
           header: "Editing invoice for %{name}"
           save_button: "Save"
           save_changes: "Save changes"
+          edit: "Edit"
           add_line: "Add line"
           remove_line: "Remove line"
           set_as_paid: "Set as paid"
@@ -1337,6 +1345,7 @@ en:
         view:
           header: "Editing invoice #%{number} transaction for %{name}"
           button_update: "Save"
+          edit: "Edit"
     upcoming_invoices:
       index:
         view:
@@ -1464,6 +1473,7 @@ en:
         view:
           header: "Translations"
           clear_cache: "Clear cache"
+          key: "Key"
           search:
             with_keyword: "Keyword"
             search_button: "Search"
@@ -3299,6 +3309,11 @@ en:
         share_by_email_modal_title: "Share by email"
         send_share_by_email_button: "Send"
         cancel: "Cancel"
+        tweet: "Tweet"
+        days: "days"
+        hours: "hours"
+        minutes: "minutes"
+        seconds: "seconds"
     common:
       assets:
         view:
