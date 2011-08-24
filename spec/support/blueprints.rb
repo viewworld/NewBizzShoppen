@@ -6,7 +6,7 @@ LeadCategory.blueprint do
   name { Faker::Lorem.words(2).to_s + Time.now.to_f.to_s.sub('.','') }
   description { Faker::Lorem.sentences(2).to_s }
   default_price { 0.0 }
-  currency_id { Currency.make!.id }
+  currency { Currency.make! }
 end
 
 DealCategory.blueprint do
