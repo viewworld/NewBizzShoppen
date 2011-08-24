@@ -140,7 +140,7 @@ Scenario: In users listing I can see unpaid leads count
   And I press translated "administration.users.index.view.search_button"
   Then I should have value "1" in the css path "tr:nth-child(1) td:nth-child(8)"
 
-@m6 @_done @_tested @requested
+@m6 @_done @_tested @requested @wip
 Scenario: I can change category buyer to regular buyer
   When I follow translated "layout.main_menu.admin.users"
   And Category CategoryBuyerCategory is created
@@ -712,4 +712,7 @@ Scenario: I can log in as selected user
   Then I follow translated logout link for translator_call_centre_agent@nbs.com
 
 @m18 @category_buyer_deals
-Scenario: I can enable deals for category buyer
+Scenario: I can enable deals for each category buyer
+
+@m18 @create_buttons
+Scenario: I can send welcome email to member / supplier

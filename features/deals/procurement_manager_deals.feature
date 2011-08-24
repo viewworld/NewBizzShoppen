@@ -20,6 +20,10 @@ Feature: Deals from procurement manager perspective
   @m18
   Scenario: I should see "View all" by the pagination links under Browse deals
 
+  # only child (1 level)
+  @m18
+  Scenario: I can see the dropdown menu of subcategories on the particular category leads listing
+
   @_tested @_done @tgn
   Scenario: I can see list of deals categories and subcategories
     Then I follow translated "layout.main_menu.shared.browse_deals"

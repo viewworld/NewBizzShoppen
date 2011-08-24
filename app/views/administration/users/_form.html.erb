@@ -7,7 +7,7 @@
             <%= form.input :first_name %>
             <%= form.input :last_name %>
       <% end %>
-        <% if defined? form.object.address %>
+        <% if defined? form.object.address and form.object.parent.blank? %>
             <%= form.fields_for :address do |address_form| %>
                 <%= address_form.input :address_line_1 %>
                 <%= address_form.input :address_line_2 %>
