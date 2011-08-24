@@ -9,7 +9,7 @@ class LeadUsers::LeadEmailsController < LeadUsers::LeadUserController
 
   def create
     params[:email_template_preview].tap do |email_params|
-      ApplicationMailer.delay.email_template(email_params[:recipients], :blank_template, Country.get_country_from_locale,
+      TemplateMailer.delay.new(email_params[:recipients], :blank_template, Country.get_country_from_locale,
                                        {:subject_content => email_params[:subject], :body_content => email_params[:body],
                                         :reply_to => current_user.email})
     end

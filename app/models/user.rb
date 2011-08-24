@@ -198,7 +198,7 @@ class User < ActiveRecord::Base
   end
 
   def deliver_email_template(uniq_id)
-    ApplicationMailer.delay.email_template(email, uniq_id.to_sym, with_role.address.present? ? with_role.address.country : Country.get_country_from_locale, {:user => self.with_role})
+    TemplateMailer.delay.new(email, uniq_id.to_sym, with_role.address.present? ? with_role.address.country : Country.get_country_from_locale, {:user => self.with_role})
   end
 
   def check_billing_rate
@@ -530,7 +530,7 @@ class User < ActiveRecord::Base
       unless subscribed_categories.empty?
         uniq_id = "lead_notification_#{lead_notification_type == LEAD_NOTIFICATION_ONCE_PER_DAY ? 'daily' : 'weekly'}"
         leads = Lead.for_notification(subscribed_categories, lead_notification_type)
-        ApplicationMailer.delay.email_template(email, uniq_id.to_sym, user.with_role.address.country, {:user => self, :leads => leads})
+        TemplateMailer.new(email, uniq_id.to_sym, user.with_role.address.country, {:user => self, :leads => leads}).delay!
       end
     end
   end
