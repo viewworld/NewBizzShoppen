@@ -712,4 +712,7 @@ Scenario: I can log in as selected user
   Then I follow translated logout link for translator_call_centre_agent@nbs.com
 
 @m18 @category_buyer_deals
-Scenario: I can enable deals for category buyer
+Scenario: I can enable deals for each category buyer
+
+@m18 @create_buttons
+Scenario: I can send welcome email to member / supplier
