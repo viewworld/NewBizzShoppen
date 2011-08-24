@@ -6,6 +6,8 @@ class EmailTemplate < ActiveRecord::Base
 
   validates_uniqueness_of :uniq_id, :scope => [:resource_type,:resource_id]
 
+  attr_accessor :preview
+
   scope :global, where("resource_type IS NULL and resource_id IS NULL")
 
   def can_be_managed_by?(user)
@@ -24,6 +26,8 @@ class EmailTemplate < ActiveRecord::Base
 
   #Template cannot be cached due to dynamic translations
   def template
-    Liquid::Template.parse(body + signature)
+    template_content = body
+    template_content += signature unless preview
+    Liquid::Template.parse(template_content)
   end
 end

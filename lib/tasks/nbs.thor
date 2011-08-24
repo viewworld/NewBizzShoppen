@@ -50,6 +50,14 @@ Settings.default_payout_delay = 0 if Settings.default_payout_delay.nil?
     end
 
     email_templates_array = [
+        {:name => "Blank template",
+         :uniq_id => "blank_template",
+         :en => {:subject => "{{subject_content}}",
+                 :body => "{{body_content}}"},
+         :dk => {:subject => "{{subject_content}}",
+                 :body => "{{body_content}}"}
+        },
+
         {:name => "confirmation instructions",
          :uniq_id => "confirmation_instructions",
          :en => {:subject => "Confirmation instructions",

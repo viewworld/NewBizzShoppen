@@ -7,6 +7,7 @@ class MoreLeadsRequestTemplatePreview < EmailTemplatePreview
 
   def initialize(email_template_uniq_id, params, user, options = {})
     @email_template = EmailTemplate.find_by_uniq_id(email_template_uniq_id.to_s)
+    @email_template.preview = true
     params.each_pair do |method, value|
       self.send("#{method}=".to_sym, value)
     end
