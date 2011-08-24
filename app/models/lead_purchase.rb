@@ -117,7 +117,7 @@ class LeadPurchase < LeadPurchaseBase
   end
 
   def deliver_email_template(uniq_id, to=nil)
-    ApplicationMailer.delay.email_template(to.blank? ? owner.email : to, EmailTemplate.find_by_uniq_id(uniq_id), {:lead_purchase => self})
+    ApplicationMailer.delay.email_template(to.blank? ? owner.email : to, uniq_id.to_sym, Country.get_country_from_locale, {:lead_purchase => self})
   end
 
   def about_to_expire!
