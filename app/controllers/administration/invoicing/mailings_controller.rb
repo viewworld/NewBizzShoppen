@@ -2,7 +2,7 @@ class Administration::Invoicing::MailingsController < Administration::Administra
   before_filter :get_invoice
 
   def new
-    @email_template_preview = EmailTemplatePreview.new(:invoice, {:invoice => @invoice})
+    @email_template_preview = EmailTemplatePreview.new(:invoice, {:invoice => @invoice, :country => Country.get_country_from_locale})
     @email_template_preview.invoice_filename = @invoice.store_pdf(current_user).basename
   end
 

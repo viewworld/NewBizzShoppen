@@ -17,7 +17,7 @@ class MoreLeadsRequestsController < ApplicationController
 
   def create
     params[:email_template_preview].tap do |email_params|
-      @email_template_preview = MoreLeadsRequestTemplatePreview.new(:more_leads_request, email_params.merge(:category_name => @category.name), current_user)
+      @email_template_preview = MoreLeadsRequestTemplatePreview.new(:more_leads_request, email_params.merge(:category_name => @category.name, :country => Country.get_country_from_locale), current_user)
     end
 
       if @email_template_preview.valid?

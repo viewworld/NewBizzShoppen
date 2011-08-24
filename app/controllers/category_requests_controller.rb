@@ -10,7 +10,7 @@ class CategoryRequestsController < ApplicationController
 
   def create
     params[:email_template_preview].tap do |email_params|
-      @email_template_preview = CategoryRequestTemplatePreview.new(:category_request, email_params, current_user)
+      @email_template_preview = CategoryRequestTemplatePreview.new(:category_request, email_params.merge(:country => Country.get_country_from_locale), current_user)
     end
 
       if @email_template_preview.valid?

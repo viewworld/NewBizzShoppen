@@ -110,10 +110,17 @@ class ApplicationController < ActionController::Base
     @locales = Locale.all
     session[:locale_code] = locale_code || session[:locale_code] || I18n.locale.to_s
     I18n.locale = session[:locale_code]
+    Thread.current[:globalize_detailed_locale] = (user_signed_in? and current_user.with_role.address.present?) ? current_user.with_role.address.country.detailed_locale : browser_locale
   end
 
   def locale
     @locale ||= I18n.locale
+  end
+
+  def browser_locale
+    accept_lang = request.env['HTTP_ACCEPT_LANGUAGE'] || ""
+    (accept_lang.scan(/^([a-z]{2})-([a-z]{2})/).first.blank? ? accept_lang.scan(/^([a-z]{2})/) : accept_lang.scan(/^([a-z]{2})-([a-z]{2})/)).flatten.last
+
   end
 
   def set_user_time_zone

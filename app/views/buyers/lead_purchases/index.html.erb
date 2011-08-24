@@ -219,6 +219,7 @@
             $(this).attr('checked', false);
         });
         $("#lead_purchase_checkbox_" + lead_purchase_id.toString()).attr('checked', true);
+        copy_checkboxes_to_bulk_form();
         submitBulkForm('<%= bulk_lead_share_by_email_path %>#GET');
     }
 
