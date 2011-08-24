@@ -2628,6 +2628,7 @@ en:
         taken: "has already been taken"
         invalid: "is invalid"
         not_a_number: "is not a number"
+        record_invalid: "is invalid"
       models:
         user:
           attributes:
