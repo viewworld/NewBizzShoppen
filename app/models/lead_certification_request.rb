@@ -25,7 +25,7 @@ class LeadCertificationRequest < ActiveRecord::Base
     self.state = STATE_SENT
     self.email = contact_email
     self.save!
-    ApplicationMailer.delay.email_template(contact_email, :certification_request, Country.get_country_from_locale, {:lead_certification_request => self})
+    TemplateMailer.new(contact_email, :certification_request, Country.get_country_from_locale, {:lead_certification_request => self}).delay!
   end
 
   def generate_token(size=40)
@@ -64,7 +64,7 @@ class LeadCertificationRequest < ActiveRecord::Base
       self.state = state + 1
       self.last_email_sent_at = Time.now
       self.save
-      ApplicationMailer.delay.email_template(contact_email, :certification_request_reminder, Country.get_country_from_locale, {:lead_certification_request => self})
+      TemplateMailer.new(contact_email, :certification_request_reminder, Country.get_country_from_locale, {:lead_certification_request => self}).delay!
     elsif state == STATE_SENT_SECOND_REMINDER and last_email_sent_at.to_date+Settings.expire_certification_notification_after_days.to_i == Date.today
       expire!
     end

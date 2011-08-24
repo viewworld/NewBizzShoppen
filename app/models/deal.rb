@@ -132,9 +132,9 @@ class Deal < AbstractLead
 
   def send_buyer_welcome_email(password)
     template = EmailTemplate.find_by_uniq_id("deal_certification_buyer_welcome")
-    ApplicationMailer.delay.email_template(buyer.email, :blank_template, Country.get_country_from_locale,
+    TemplateMailer.new(buyer.email, :blank_template, Country.get_country_from_locale,
                                        {:subject_content => template.subject, :body_content => template.render({:user => buyer, :password => password}),
-                                        :bcc_recipients => template.bcc, :cc_recipients => template.cc})
+                                        :bcc_recipients => template.bcc, :cc_recipients => template.cc}).delay!
   end
 
   def slug
