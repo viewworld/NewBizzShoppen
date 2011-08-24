@@ -3,7 +3,6 @@ class ApplicationMailer < ActionMailer::Base
           :return_path => "admin@fairleads.com"
 
   def email_template(to, email_template, country, options = {}, attachment_paths=[])
-    I18n.locale = country.locale.to_sym
     email_template = email_template.is_a?(Symbol) ? EmailTemplate.find_by_uniq_id(email_template) : email_template
     email_template.preview = true if options[:preview] == true
     options.merge!(:country => country)
