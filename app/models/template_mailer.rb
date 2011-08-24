@@ -12,11 +12,11 @@ class TemplateMailer
 
   def delay!
     ApplicationMailer.delay.email_template(
-        TemplateMailer.to,
-        TemplateMailer.email_template,
-        TemplateMailer.country,
-        TemplateMailer.options,
-        TemplateMailer.attachment_paths
+        @to,
+        @email_template,
+        @country,
+        @options,
+        @attachment_paths
     )
   end
 end
