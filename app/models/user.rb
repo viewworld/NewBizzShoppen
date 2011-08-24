@@ -530,7 +530,7 @@ class User < ActiveRecord::Base
       unless subscribed_categories.empty?
         uniq_id = "lead_notification_#{lead_notification_type == LEAD_NOTIFICATION_ONCE_PER_DAY ? 'daily' : 'weekly'}"
         leads = Lead.for_notification(subscribed_categories, lead_notification_type)
-        TemplateMailer.new(email, uniq_id.to_sym, user.with_role.address.country, {:user => self, :leads => leads}).delay!
+        TemplateMailer.delay.new(email, uniq_id.to_sym, user.with_role.address.country, {:user => self, :leads => leads})
       end
     end
   end

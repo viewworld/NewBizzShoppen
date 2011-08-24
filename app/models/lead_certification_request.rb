@@ -64,7 +64,7 @@ class LeadCertificationRequest < ActiveRecord::Base
       self.state = state + 1
       self.last_email_sent_at = Time.now
       self.save
-      TemplateMailer.new(contact_email, :certification_request_reminder, Country.get_country_from_locale, {:lead_certification_request => self}).delay!
+      TemplateMailer.delay.new(contact_email, :certification_request_reminder, Country.get_country_from_locale, {:lead_certification_request => self})
     elsif state == STATE_SENT_SECOND_REMINDER and last_email_sent_at.to_date+Settings.expire_certification_notification_after_days.to_i == Date.today
       expire!
     end
