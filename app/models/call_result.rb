@@ -221,10 +221,10 @@ class CallResult < ActiveRecord::Base
     template = contact.campaign.send_material_email_template || EmailTemplate.global.where(:uniq_id => 'result_send_material').first
     template = customize_email_template(template)
 
-    TemplateMailer.new(contact_email_address, :blank_template, Country.get_country_from_locale,
+    ApplicationMailer.delay.email_template(contact_email_address, :blank_template, Country.get_country_from_locale,
                                        {:subject_content => template.subject, :body_content => template.body,
                                         :bcc_recipients => template.bcc, :cc_recipients => template.cc},
-                                        send_material_result_value.materials.map{ |material| Pathname.new(File.join([::Rails.root, 'public', material.url]))}).delay!
+                                        send_material_result_value.materials.map{ |material| Pathname.new(File.join([::Rails.root, 'public', material.url]))})
   end
 
   def deliver_email_for_category_buyer(user, password)

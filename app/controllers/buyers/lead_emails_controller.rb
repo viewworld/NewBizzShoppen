@@ -9,9 +9,9 @@ class Buyers::LeadEmailsController < Buyers::BuyerController
 
   def create
     params[:email_template_preview].tap do |email_params|
-      TemplateMailer.new(email_params[:recipients], :blank_template, Country.get_country_from_locale,
+      ApplicationMailer.delay.email_template(email_params[:recipients], :blank_template, Country.get_country_from_locale,
                                        {:subject_content => email_params[:subject], :body_content => email_params[:body],
-                                        :reply_to => current_user.email}).delay!
+                                        :reply_to => current_user.email})
     end
     flash[:notice] = I18n.t("flash.contact_lead_by_email.create.notice")
     redirect_to buyers_lead_purchases_path

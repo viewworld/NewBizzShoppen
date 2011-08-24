@@ -14,10 +14,10 @@ class ContactUsController < ApplicationController
       if @email_template_preview.valid?
         flash[:notice] = I18n.t("contact_us.create.flash.email_sent_successfully")
         params[:email_template_preview].tap do |email_params|
-          TemplateMailer.new(Settings.contact_us_email, :blank_template, Country.get_country_from_locale,
+          ApplicationMailer.delay.email_template(Settings.contact_us_email, :blank_template, Country.get_country_from_locale,
                                        {:subject_content => email_params[:subject], :body_content => email_params[:body],
                                         :bcc_recipients => @email_template_preview.bcc, :cc_recipients => @email_template_preview.cc,
-                                        :reply_to => email_params[:email_from]}).delay!
+                                        :reply_to => email_params[:email_from]})
         end
         redirect_to root_path
       else

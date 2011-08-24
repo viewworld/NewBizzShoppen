@@ -15,10 +15,10 @@ class CategoryRequestsController < ApplicationController
 
       if @email_template_preview.valid?
         flash[:notice] = I18n.t("category_requests.create.flash.request_sent")
-        TemplateMailer.new(Settings.contact_us_email, :blank_template, Country.get_country_from_locale,
+        ApplicationMailer.delay.email_template(Settings.contact_us_email, :blank_template, Country.get_country_from_locale,
                                        {:subject_content => @email_template_preview.subject, :body_content => @email_template_preview.body,
                                         :bcc_recipients => @email_template_preview.bcc, :cc_recipients => @email_template_preview.cc,
-                                        :reply_to => @email_template_preview.email_from}).delay!
+                                        :reply_to => @email_template_preview.email_from})
 
         if current_user
           redirect_to current_user.has_any_role?(:agent, :call_centre_agent, :purchase_manager) ? agent_home_path : buyer_home_path
