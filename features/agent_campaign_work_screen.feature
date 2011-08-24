@@ -519,4 +519,5 @@ Feature: Agent campaign - calling session
     @m18 @campaign_results
     Scenario: It should not be possible to create new results when campaign expired
 
-  
+    @m18 @campaign_results @tgn
+    Scenario: I should be able to edit the result type of the final types

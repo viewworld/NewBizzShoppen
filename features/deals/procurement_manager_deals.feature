@@ -17,6 +17,9 @@ Feature: Deals from procurement manager perspective
     Then I should see translated "layout.main_menu.shared.browse_deals"
     And I should not see "Browse leads"
 
+  @m18
+  Scenario: I should see "View all" by the pagination links under Browse deals
+
   @_tested @_done @tgn
   Scenario: I can see list of deals categories and subcategories
     Then I follow translated "layout.main_menu.shared.browse_deals"

@@ -224,3 +224,9 @@ Scenario: I can provide additional information in Note field when requesting mor
 
 @m14 @requested @$_guest @request_more_leads @ao @_done @_tested_elsewhere
 Scenario: I should receive copy of the email which is sent when I request more leads for category
+
+@m18
+Scenario: I can see the dropdown menu of subcategories on the particular category leads listing
+
+@m18
+Scenario: I should see "View all" by the pagination links under Browse leads

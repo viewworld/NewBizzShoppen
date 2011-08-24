@@ -195,3 +195,5 @@ Scenario: I can edit "Additional information" for category
   Then I press "Save"
 
 
+@m18
+Scenario: Buyout for all categories is disabled by default
