@@ -163,7 +163,7 @@ class Lead < AbstractLead
   end
 
   def deliver_email_template(email, uniq_id)
-    ApplicationMailer.delay.email_template(email, EmailTemplate.find_by_uniq_id(uniq_id), {:lead => self})
+    ApplicationMailer.delay.email_template(email, uniq_id.to_sym, Country.get_country_from_locale, {:lead => self})
   end
 
   def auto_buy

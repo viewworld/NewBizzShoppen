@@ -75,7 +75,7 @@ class LeadPurchase < LeadPurchaseBase
       if lead.category.email_template.blank?
         deliver_email_template("bought_lead_notification", owner.email)
       else
-        ApplicationMailer.delay.email_template(owner.email, lead.category.email_template, {:lead_purchase => self})
+        ApplicationMailer.delay.email_template(owner.email, lead.category.email_template, Country.get_country_from_locale, {:lead_purchase => self})
       end
     end
   end

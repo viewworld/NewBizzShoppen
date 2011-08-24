@@ -7,7 +7,9 @@ class Buyers::BulkLeadShareByEmailController < Buyers::BuyerController
   def create
     @email_template_preview = EmailTemplatePreview.new(:share_leads_by_email_message)
     params[:email_template_preview].tap do |email_params|
-      ApplicationMailer.delay.generic_email(email_params[:recipients], email_params[:subject], email_params[:body], nil, [], @email_template_preview.cc, @email_template_preview.bcc)
+      ApplicationMailer.delay.email_template(email_params[:recipients], :blank_template, Country.get_country_from_locale,
+                                       {:subject_content => email_params[:subject], :body_content => email_params[:body],
+                                        :bcc_recipients => @email_template_preview.bcc, :cc_recipients => @email_template_preview.cc})
     end
     flash[:notice] = I18n.t("flash.bulk_lead_share_by_email.create.notice")
     redirect_to buyers_lead_purchases_path
