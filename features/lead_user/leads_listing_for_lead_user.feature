@@ -42,14 +42,14 @@ Scenario: I can click bulk request leads and I will see a notification “You ad
   Then I should not see "Printers ultimate deal"
   And I should not see "Another Printers ultimate deal"
 
-@m3 @__category_restrictions @tgn @_done @_tested @noguess 
+@m3 @__category_restrictions @tgn @_done @_tested @noguess
 Scenario: I should not see categories that I have been restricted access to by customer in category listing
   And lead Chairs ultimate deal exists within category Office
   And lead Pipes ultimate deal exists within category Building
   And lead AP ultimate deal exists within category Wireless Devices
   And user "customer@person.com" with role "customer" has interest in following categories "Office,Wireless Devices"
   When I am not sign in
-  Then I sign in as lead_user2@person.com with password supersecret
+  Then I sign in as lead_user2@person.com with password secret
   Given I go to browse leads
   Then I should see "Office"
   Then I should see "Wireless Devices"
@@ -63,7 +63,7 @@ Scenario: I should not see categories that I have been restricted access to by c
   And lead AP ultimate deal exists within category Wireless Devices
   And user "customer@person.com" with role "customer" has interest in following categories "Office,Wireless Devices"
   When I am not sign in
-  Then I sign in as lead_user2@person.com with password supersecret
+  Then I sign in as lead_user2@person.com with password secret
   Given I go to browse leads
   And I should see "Office"
   And I should see "Wireless Devices"

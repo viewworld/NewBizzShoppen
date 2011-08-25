@@ -13,7 +13,7 @@ Background:  Sign in user and set locale
   And comment for lead "Lead#1" was posted by user "lead_user.customer1@nbs.com" with attributes "created_at: 2011-01-01, last_thread_created_at:2011-01-01"
   And comment for lead "Lead#2" was posted by user "lead_user.customer1@nbs.com" with attributes "last_thread_created_at:2011-01-02"
   And comment for lead "Lead#3" was posted by user "customer1@nbs.com" with attributes "title: Customers comment for lead3, body: body for customers comment for lead3, created_at: 2010-01-01, last_thread_created_at:2011-01-30"
-  Then I sign in as lead_user.customer1@nbs.com with password supersecret
+  Then I sign in as lead_user.customer1@nbs.com with password secret
 
 @_tested @selenium
 Scenario: I can create a comment for a lead that is assigned to me

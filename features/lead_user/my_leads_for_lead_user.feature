@@ -123,7 +123,6 @@ Scenario: I can see company contact on lead details page
 #Have a look at bulk_lead_share_by_email_controller.rb for sume hints regarding prerendering email template
 @ao @_done @_tested
 Scenario: I can email the lead if email information were provided
-  Given I am signed up and confirmed as user with email leaduser87@nbs.com and password secret and role lead_user
   And an user with role lead_user and email leaduser87@nbs.com exists as subaccount for customer customer@nbs.com
   And I sign out
   And I sign in as leaduser87@nbs.com with password secret
