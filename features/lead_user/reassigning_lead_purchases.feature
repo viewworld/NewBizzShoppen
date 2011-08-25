@@ -4,7 +4,6 @@ Feature: Reassigning lead purchases
   Background:
     Given I am on the homepage
     And I make sure current locale is "en"
-    Given I am signed up and confirmed as user with email lead_user2@person.com and password supersecret and role lead_user
     And an user with role lead_user and email lead_user2@person.com exists as subaccount for customer customer@person.com
     And an user with role lead_user and email lead_user44@person.com exists as subaccount for customer customer@person.com
     And user lead_user2@person.com with role lead_user exists with attributes "screen_name:John McCoy,first_name:John,last_name:McCoy"
@@ -15,7 +14,7 @@ Feature: Reassigning lead purchases
     And lead Printers ultimate deal is bought by user customer@person.com with role customer and is assigned to user lead_user2@person.com with role lead_user
     And lead Monitors LCD deal is bought by user customer@person.com with role customer and is assigned to user lead_user2@person.com with role lead_user
     And lead Keyboards deal is bought by user customer@person.com with role customer and is assigned to user lead_user2@person.com with role lead_user
-    Then I sign in as lead_user2@person.com with password supersecret
+    Then I sign in as lead_user2@person.com with password secret
 
   @tgn @_done @_tested @selenium
   Scenario: I can transfer lead access to other lead handler that belong to the same customer (!!)
