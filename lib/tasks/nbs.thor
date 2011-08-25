@@ -411,17 +411,14 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
         u.save
       end
 
+      buyer = User::Customer.find_by_email("buyer@nbs.com")
       unless User::LeadUser.find_by_email("leaduser@nbs.com")
-        u = User::LeadUser.make!(:email => "leaduser@nbs.com", :password => "secret", :password_confirmation => "secret")
+        u = User::LeadUser.make!(:email => "leaduser@nbs.com", :password => "secret", :password_confirmation => "secret", :parent_id => buyer.id)
         u.confirm!
         u.save
       end
 
-
-      buyer = User::Customer.find_by_email("buyer@nbs.com")
       user = User::LeadUser.find_by_email("leaduser@nbs.com")
-
-
       unless buyer.subaccounts.include?(user)
         buyer.subaccounts << user
       end
