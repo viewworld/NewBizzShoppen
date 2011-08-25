@@ -416,6 +416,9 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
         u = User::LeadUser.make!(:email => "leaduser@nbs.com", :password => "secret", :password_confirmation => "secret", :parent_id => buyer.id)
         u.confirm!
         u.save
+        u = User::LeadBuyer.make!(:email => "leadbuyer@nbs.com", :password => "secret", :password_confirmation => "secret", :parent_id => buyer.id)
+        u.confirm!
+        u.save
       end
 
       user = User::LeadUser.find_by_email("leaduser@nbs.com")

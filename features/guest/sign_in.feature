@@ -34,7 +34,7 @@ Feature: Sign in
     | bbo   | supersecret    |
     | bob   | wrong-password |
 
-  @_tested
+  @_tested @_wip
   Scenario Outline: A registered user can login and be directed to their home page
     Given I am signed up and confirmed as user with email <login> and password <password> and role <role>
     And user with email "<login>" is a subaccount of user with email "<parent_email>" and role "<parent_role>"
@@ -53,8 +53,8 @@ Feature: Sign in
     | bob@person.com  | supersecret | call_centre_agent | agent home            | call_centre2121@nbs.com | call_centre |
     | bob@person.com  | supersecret | purchase_manager  | purchase manager home | | |
     | bob@person.com  | supersecret | customer          | buyer home            | ||
-    | bob@person.com  | supersecret | lead_buyer        | buyer home            | customer234@nbs.com  | customer |
-    | bob@person.com  | supersecret | lead_user         | buyer home            | customer234@nbs.com  | customer |
+    | leadbuyer@nbs.com  | secret | lead_buyer        | buyer home            |  | |
+    | leaduser@nbs.com  | secret | lead_user         | buyer home            |  | |
 
   @_tested
   Scenario: A logged in user on the login page should just redirect to their home page
