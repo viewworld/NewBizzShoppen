@@ -202,6 +202,7 @@ end
   last_name { Faker::Name.last_name }
   agreement_read { true }
   roles_mask { 64 }
+  parent_id { User::Customer.make!.id }
 end
 
 ::User::LeadBuyer.blueprint do
@@ -214,6 +215,7 @@ end
   last_name { Faker::Name.last_name }
   agreement_read { true }
   roles_mask { 96 }
+  parent_id { User::Customer.make!.id }
 end
 
 ::User::Agent.blueprint do
