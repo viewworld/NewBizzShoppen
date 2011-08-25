@@ -34,7 +34,7 @@ Feature: Sign in
     | bbo   | supersecret    |
     | bob   | wrong-password |
 
-  @_tested @_wip
+  @_tested
   Scenario Outline: A registered user can login and be directed to their home page
     Given I am signed up and confirmed as user with email <login> and password <password> and role <role>
     And user with email "<login>" is a subaccount of user with email "<parent_email>" and role "<parent_role>"
