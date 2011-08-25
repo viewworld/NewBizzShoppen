@@ -118,5 +118,5 @@ Scenario: Screen name has to be unique
 Scenario: I can see a link to agreement when signin up
   When I go to agent sign up
   And I follow "Terms & Conditions"
-  And I wait 1 second
+  And I wait 3 second
   Then I should see "Terms & Conditions" within "#container_popup"
