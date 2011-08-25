@@ -15,6 +15,7 @@ dbname = ActiveRecord::Base.configurations[ENV["RAILS_ENV"]]["database"]
 dbuser = ActiveRecord::Base.configurations[ENV["RAILS_ENV"]]["username"]
 
 `psql -U #{dbuser} -d #{dbname} -f #{backup}`
+
 end
 
 Spork.prefork do
@@ -53,7 +54,7 @@ Spork.prefork do
 
   Around('@selenium') do |scenario, block|
   block.call
-  load_db if EmailTemplate.count < 1
+  load_db
   end
 
   Around('@_done') do |scenario, block|

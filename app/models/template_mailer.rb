@@ -4,7 +4,7 @@ class TemplateMailer
   def initialize(to, email_template, country, options = {}, attachment_paths=[])
     orig_locale = I18n.locale
     I18n.locale = country.locale.to_sym
-    ApplicationMailer.delay.email_template(
+    ApplicationMailer.email_template(
         to,
         email_template,
         country,
