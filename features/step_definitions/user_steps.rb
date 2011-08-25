@@ -341,3 +341,7 @@ end
 Given /^there are no object for model "([^"]*)"$/ do |model|
   model.constantize.destroy_all
 end
+
+Given /^there is bounced email for "([^"]*)"$/ do |email|
+  EmailBounce.make!(:email => email)
+end

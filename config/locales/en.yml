@@ -80,6 +80,7 @@ en:
         categories: "Categories"
         email_templates: "Emails"
         settings: "Settings"
+        alerts: "Alerts"
         leads: "Leads"
         articles: "Articles"
         news: "News"
@@ -138,6 +139,7 @@ en:
         site_home: "Site home"
         category_request: "Category request"
         comments: "Comments"
+        bounce: "Bounce"
         sold_out: "Sold out"
         browse_deals: "Browse deals"
       purchase_manager:
@@ -986,6 +988,35 @@ en:
         view:
           title: "Edit deal"
           update_button: "Save"
+
+    email_bounces:
+      index:
+        view:
+          header: "Bounce"
+          name: "Name"
+          postmark_id: "Postmark ID"
+          email: "Email"
+          subject: "Subject"
+          bounced_at: "Bounced at"
+          actions: "Actions"
+          details: "Details"
+      show:
+        view:
+          header: "Bounce details"
+          subject: "Subject"
+          name: "Name"
+          inactive: "Inactive"
+          content: "Content"
+          tag: "Tag"
+          message_id: "MessageID"
+          details: "Details"
+          postmark_id: "Postmark ID"
+          can_activate: "Can activate"
+          bounced_at: "Bounced at"
+          description: "Description"
+          email: "Email"
+          type_code: "Type code"
+          dump_available: "Dump available"
 
     articles:
       show:

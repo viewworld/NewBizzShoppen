@@ -62,6 +62,8 @@ class User < ActiveRecord::Base
   has_many :read_comments, :through => :comment_readers, :source => :comment
   belongs_to :contact
   has_many :deal_comment_threads, :class_name => "Comment", :foreign_key => "user_id"
+  has_many :email_bounces, :foreign_key => :email, :primary_key => :email
+
   alias_method :parent, :user
 
   scope :with_customers, where("roles_mask & #{2**User.valid_roles.index(:customer)} > 0 ")

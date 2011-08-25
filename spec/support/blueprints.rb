@@ -431,3 +431,20 @@ UserSessionLog.blueprint do
   log_type { UserSessionLog::TYPE_CAMPAIGN }
   campaign { Campaign.make! }
 end
+
+EmailBounce.blueprint do
+  subject { Faker::Lorem.words(3).to_s }
+  name { "Hard bounce" }
+  inactive { true }
+  content { Faker::Lorem.words(10).to_s }
+  tag { Faker::Lorem.words(1).to_s }
+  message_id { Faker.numerify("#########") }
+  details { Faker::Lorem.words(3).to_s }
+  postmark_id { Faker.numerify("###") }
+  can_activate { true }
+  bounced_at { Time.now }
+  description { Faker::Lorem.words(3).to_s }
+  email { User::Agent.make!.email }
+  type_code { "HardBounce" }
+  dump_available { true }
+end
