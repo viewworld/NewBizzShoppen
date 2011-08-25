@@ -10,7 +10,7 @@ class TemplateMailer
         country,
         options,
         attachment_paths
-    )
+    ).deliver
     I18n.locale = orig_locale
   end
 
