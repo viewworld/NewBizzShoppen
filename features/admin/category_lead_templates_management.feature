@@ -15,6 +15,7 @@ Scenario: I can create a category and add new lead templates to it which I can m
   And I fill in "category_name" with "Test category"
   And I fill in "category_description" with "Description"
   And attach the file "sample image" to "category_image_attributes_asset"
+  And I select "EUR" from "category_currency_id"
   Then I press translated "administration.categories.new.view.button_create"
   And I follow translated "administration.categories.index.view.edit_link"
   And I follow translated "administration.categories.edit.view.new_template"

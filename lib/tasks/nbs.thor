@@ -50,14 +50,6 @@ Settings.default_payout_delay = 0 if Settings.default_payout_delay.nil?
     end
 
     email_templates_array = [
-        {:name => "Blank template",
-         :uniq_id => "blank_template",
-         :en => {:subject => "{{subject_content}}",
-                 :body => "{{body_content}}"},
-         :dk => {:subject => "{{subject_content}}",
-                 :body => "{{body_content}}"}
-        },
-
         {:name => "confirmation instructions",
          :uniq_id => "confirmation_instructions",
          :en => {:subject => "Confirmation instructions",
@@ -248,6 +240,14 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
                     :body => "<p>{{description}}</p><p><a href=\"{{deal_url}}\">Click here for details</a></p>"},
             :dk => {:subject => "[DK] {{name}} wants to share the deal with you",
                     :body => "<p>{{description}}</p><p><a href=\"{{deal_url}}\">Click here for details</a></p>"}
+        },
+
+        {:name => "Blank template",
+         :uniq_id => "blank_template",
+         :en => {:subject => "{{subject_content}}",
+                 :body => "{{body_content}}"},
+         :dk => {:subject => "{{subject_content}}",
+                 :body => "{{body_content}}"}
         }
     ]
 
