@@ -4,7 +4,6 @@ Feature: Comments administration as lead user/buyer
 Background:  Sign in user and set locale
   Given I am on the homepage
   And I make sure current locale is "en"
-  And I am signed up and confirmed as user with email lead_user.customer1@nbs.com and password supersecret and role lead_user
   And an user with role lead_user and email lead_user.customer1@nbs.com exists as subaccount for customer customer1@nbs.com
   And user "lead_user.customer1@nbs.com" with role "lead_user" has attributes "screen_name: John Doe"
   And user "customer1@nbs.com" with role "customer" has attributes "screen_name: Customer1@Nbs"

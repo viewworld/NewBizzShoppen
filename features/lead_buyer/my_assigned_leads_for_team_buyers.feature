@@ -3,7 +3,6 @@ Feature: My assigned leads for team buyers
 
 Background:
   Given I have user with email buyer.jim.jones@nbs.com and role customer
-  And I am signed up and confirmed as user with email leadbuyer.jon@nbs.com and password secret and role lead_buyer
   And an user with role lead_buyer and email leadbuyer.jon@nbs.com exists as subaccount for customer buyer.jim.jones@nbs.com
   And lead Lead #1111 is bought by user buyer.jim.jones@nbs.com with role customer and is assigned to user leadbuyer.jon@nbs.com with role lead_buyer
   Given I am on the homepage

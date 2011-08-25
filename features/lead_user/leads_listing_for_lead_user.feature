@@ -6,9 +6,8 @@ Background: Sign in user and set English locale
   And a lead Monitors LCD deal exists within category Computers and is bought by user customer@person.com with role customer
   And I am on the homepage
   And I make sure current locale is "en"
-  And I am signed up and confirmed as user with email lead_user2@person.com and password supersecret and role lead_user
   And an user with role lead_user and email lead_user2@person.com exists as subaccount for customer customer@person.com
-  Then I sign in as lead_user2@person.com with password supersecret
+  Then I sign in as lead_user2@person.com with password secret
 
 @_tested @noguess
 Scenario: Listings should not show leads that are already bought or requested within my ownership branch

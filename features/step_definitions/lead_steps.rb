@@ -128,7 +128,7 @@ Given /^lead "([^"]*)" was requested by user "([^"]*)" with role "([^"]*)"(?: an
   u = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
   lead = Lead.where(:header => header).first
   owner = User::Customer.first(:conditions => { :email => owner_email })
-  LeadRequest.make!(:requestee => u, :lead => lead, :owner => owner)
+  LeadRequest.make!(:requested_by => u.id, :lead => lead, :owner => owner)
 end
 
 Given /^I make ajax call to save lead purchase for lead (.+)$/ do |header|

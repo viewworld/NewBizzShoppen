@@ -4,7 +4,6 @@ Feature: My leads for lead user
 Background:
   Given I am on the homepage
   And I make sure current locale is "en"
-  Given I am signed up and confirmed as user with email lead_user2@person.com and password supersecret and role lead_user
   And an user with role lead_user and email lead_user2@person.com exists as subaccount for customer customer@person.com
   And an user with role lead_user and email lead_user44@person.com exists as subaccount for customer customer@person.com
   And lead Printers ultimate deal exists within category Computers
@@ -19,7 +18,7 @@ Background:
   And lead Monitors LCD deal is bought by user customer@person.com with role customer and is assigned to user lead_user2@person.com with role lead_user
   And lead Keyboards deal is bought by user customer@person.com with role customer and is assigned to user lead_user2@person.com with role lead_user
   And lead Mouses deal is bought by user customer@person.com with role customer and is assigned to user lead_user44@person.com with role lead_user
-  Then I sign in as lead_user2@person.com with password supersecret
+  Then I sign in as lead_user2@person.com with password secret
   And I follow translated "layout.main_menu.lead_user.lead_purchases"
 
 @tgn @_done @_tested

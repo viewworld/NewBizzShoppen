@@ -23,7 +23,6 @@ Scenario: When I buy a lead it is automatically assigned to me
 @_tested
 Scenario: Lead purchases are owned by topmost owner (to customer, if exists, otherwise to self)
   Given someone is signed up and confirmed as user with email buyer.jim.jones@nbs.com and password secret and role customer
-  And I am signed up and confirmed as user with email leadbuyer.jon@nbs.com and password secret and role lead_buyer
   And an user with role lead_buyer and email leadbuyer.jon@nbs.com exists as subaccount for customer buyer.jim.jones@nbs.com
   Then I sign in as leadbuyer.jon@nbs.com with password secret
   And I go to browse leads
@@ -37,7 +36,6 @@ Scenario: Lead purchases are owned by topmost owner (to customer, if exists, oth
 @m8b @requested @tgn @_tested
 Scenario: When team buyer with buying permissions buys a leads, then it should be assigned to him/her, not the sales manager
   Given someone is signed up and confirmed as user with email buyer.jim.jones@nbs.com and password secret and role customer
-  And I am signed up and confirmed as user with email leadbuyer.jon@nbs.com and password secret and role lead_buyer
   And an user with role lead_buyer and email leadbuyer.jon@nbs.com exists as subaccount for customer buyer.jim.jones@nbs.com
   Then I sign in as leadbuyer.jon@nbs.com with password secret
   And I go to browse leads

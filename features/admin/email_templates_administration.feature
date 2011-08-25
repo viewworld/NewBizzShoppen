@@ -79,7 +79,7 @@ Scenario: For each country I can specify email signature
   Then I should see translated "administration.countries.form.logo_label"
   Then I send email using email template "certification_request" for email address "john@rambo.pl"
   Then last email sent should have content "marvel vs dc comics"
-  Then last email sent should have content "http://static-fairleads.s3.amazonaws.com/images/logo_fairleads_with_border.jpg"
+  Then last email sent should have content "original.jpg"
 
 @m17 @requested @email_signature @is @_done @_tested_elsewhere
 Scenario: The email signature should include Fairleads logo

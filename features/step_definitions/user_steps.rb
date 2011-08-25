@@ -41,7 +41,9 @@ Given /^(?:|I am |someone is )signed up and confirmed as user with email ([^"]*)
   if country_id = opts.delete(:country) and country = Country.find(country_id)
     opts.merge!(:address => Address.make!(:country => country))
   end
-  u = "User::#{role.camelize}".constantize.make!(opts)
+  unless u = User.where(:email => email).first
+    u = "User::#{role.camelize}".constantize.make!(opts)
+  end
   u.confirm!
 end
 
