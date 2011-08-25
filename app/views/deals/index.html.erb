@@ -35,6 +35,7 @@
                 <p>
                   <%= bt_clear_filter_safe %>
                   <%= link_to_function t("common.advanced_search"), "$('#advanced_search_1_div').toggle();$('#advanced_search_2_div').slideToggle();" %>
+                  <%= f.select :with_category, @category.children.map{|c| [c.name,c.id]}, {:include_blank => true}, :onchange => "this.form.submit()" %>
                 </p>
               </li>
             </ol>
