@@ -26,6 +26,7 @@ Feature: Categories rules
     And I select "Computers" from "category_parent_id"
     And I fill in "category_description" with "Description"
     And attach the file "sample image" to "category_image_attributes_asset"
+    And I select "EUR" from "category_currency_id"
     And I press translated "administration.categories.new.view.button_create"
     Then lead "Laptop Toshiba" should be in category "Laptops"
 

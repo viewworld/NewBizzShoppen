@@ -4,7 +4,6 @@ Feature: Comments administration as lead user/buyer
 Background:  Sign in user and set locale
   Given I am on the homepage
   And I make sure current locale is "en"
-  And I am signed up and confirmed as user with email lead_user.customer1@nbs.com and password supersecret and role lead_user
   And an user with role lead_user and email lead_user.customer1@nbs.com exists as subaccount for customer customer1@nbs.com
   And user "lead_user.customer1@nbs.com" with role "lead_user" has attributes "screen_name: John Doe"
   And user "customer1@nbs.com" with role "customer" has attributes "screen_name: Customer1@Nbs"
@@ -14,7 +13,7 @@ Background:  Sign in user and set locale
   And comment for lead "Lead#1" was posted by user "lead_user.customer1@nbs.com" with attributes "created_at: 2011-01-01, last_thread_created_at:2011-01-01"
   And comment for lead "Lead#2" was posted by user "lead_user.customer1@nbs.com" with attributes "last_thread_created_at:2011-01-02"
   And comment for lead "Lead#3" was posted by user "customer1@nbs.com" with attributes "title: Customers comment for lead3, body: body for customers comment for lead3, created_at: 2010-01-01, last_thread_created_at:2011-01-30"
-  Then I sign in as lead_user.customer1@nbs.com with password supersecret
+  Then I sign in as lead_user.customer1@nbs.com with password secret
 
 @_tested @selenium
 Scenario: I can create a comment for a lead that is assigned to me

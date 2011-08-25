@@ -51,5 +51,5 @@ Given /^template named "([^"]*)" is filled out by someone$/ do |name|
 end
 
 Then /^I send email using email template "([^"]*)" for email address "([^"]*)"$/ do |et_name, email|
-  ApplicationMailer.email_template(email, EmailTemplate.find_by_uniq_id(et_name), {}).deliver
+  ApplicationMailer.email_template(email, EmailTemplate.find_by_uniq_id(et_name), Country.find_by_name("United Kingdom"), {}).deliver
 end

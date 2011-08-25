@@ -20,7 +20,7 @@ Scenario: Invoice is not automatically generated for big buyers (do big buyers u
 @_tested
 Scenario: Invoice lines are marked as paid after payment has been processed by paypal
   Given I have user with email gerard.jones@paerson22.com and role customer
-  And I have user with email lead_user.jones@paerson22.com and role lead_user
+  And an user with role lead_user and email lead_user.jones@paerson22.com exists as subaccount for customer gerard.jones@paerson22.com
   And lead Monitors deal exists within category Computers
   And lead Monitors deal is bought by user gerard.jones@paerson22.com with role customer and is assigned to user lead_user.jones@paerson22.com with role lead_user
   And user with email "gerard.jones@paerson22.com" and role "customer" has invoice for lead "Monitors deal" and transaction created by paypal
@@ -29,7 +29,7 @@ Scenario: Invoice lines are marked as paid after payment has been processed by p
 @_done
 Scenario: Invoice lines are marked as paid after invoice has been marked as paid by administrator (multiple types of  “payment” object)
   Given I have user with email gerard.jones@paerson22.com and role customer
-  And I have user with email lead_user.jones@paerson22.com and role lead_user
+  And an user with role lead_user and email lead_user.jones@paerson22.com exists as subaccount for customer gerard.jones@paerson22.com
   And lead Monitors deal exists within category Computers
   And lead Monitors deal is bought by user gerard.jones@paerson22.com with role customer and is assigned to user lead_user.jones@paerson22.com with role lead_user
   And user with email "gerard.jones@paerson22.com" and role "customer" has invoice for lead "Monitors deal" and transaction created manually

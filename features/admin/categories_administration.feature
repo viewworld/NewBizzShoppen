@@ -27,6 +27,7 @@ Scenario: I can create a category
   And I fill in "category_name" with "Test category"
   And I fill in "category_description" with "Description"
   And attach the file "sample image" to "category_image_attributes_asset"
+  And I select "EUR" from "category_currency_id"
   Then I press translated "administration.categories.new.view.button_create"
   And I should be on browse leads
   And I should see translated "flash.categories.create.notice"
@@ -39,6 +40,7 @@ Scenario: I can create a category even when I am on DK locales (slug is not set 
   And I fill in "category_name" with "Test category"
   And I fill in "category_description" with "Description"
   And attach the file "sample image" to "category_image_attributes_asset"
+  And I select "EUR" from "category_currency_id"
   Then I press translated "administration.categories.new.view.button_create"
   And I should be on browse leads
   And I should see translated "flash.categories.create.notice"
@@ -51,6 +53,7 @@ Scenario: I can edit category - name and description
   And I fill in "category_name" with "Test category correction"
   And I fill in "category_description" with "Description correction"
   And attach the file "sample image" to "category_image_attributes_asset"
+  And I select "EUR" from "category_currency_id"
   Then I press translated "administration.categories.edit.view.button_update"
   And I should be on browse leads
   And I should see translated "flash.categories.update.notice"
@@ -133,6 +136,7 @@ Scenario: When creating new category it is marked with buyout flag by default
   And I fill in "category_name" with "New category"
   And I fill in "category_description" with "Description"
   And checkbox named "category_buyout_enabled" should be checked
+  And I select "EUR" from "category_currency_id"
   Then I press translated "administration.categories.new.view.button_create"
   And I am on administration edit category New category
   Then checkbox named "category_buyout_enabled" should be checked
@@ -153,7 +157,6 @@ Scenario: I can flag a category to not show prices to team members
   And lead Monitors deal #2 exists within category Computers
   And lead "Monitors deal #2" has attributes "price:439.58"
   And someone is signed up and confirmed as user with email buyer888@nbs.com and password secret and role customer
-  And someone is signed up and confirmed as user with email lead_buyer888@nbs.com and password secret and role lead_buyer
   And an user with role lead_buyer and email lead_buyer888@nbs.com exists as subaccount for customer buyer888@nbs.com
   Then I sign in as lead_buyer888@nbs.com with password secret
   And I go to browse leads
