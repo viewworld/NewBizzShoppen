@@ -42,7 +42,7 @@ Scenario: I can search leads with filtering by:skip inactive, skip outdated
   And I should not see "Lead 3"
 
 
-@tgn @_tested @selenium @_wip
+@tgn @_tested @selenium
 Scenario: I can change lead status from lead list
   Given I fill in "search_with_keyword" with "Lead 2"
   And I press translated "agent.leads.index.view.search_button"
