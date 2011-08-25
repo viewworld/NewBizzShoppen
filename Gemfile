@@ -13,7 +13,6 @@ gem 'formtastic', '1.1.0'
 gem 'liquid'
 gem 'devise', '1.1.3'
 gem 'delayed_job', '2.1.4'
-gem 'hoptoad_notifier'
 gem "transitions", :require => ["transitions", "active_record/transitions"]
 gem 'paperclip', "2.3.6"
 gem 'scoped-search', '0.7.1', :require => "scoped_search"
@@ -41,6 +40,14 @@ gem 'ruby-hmac', '0.4.0'
 gem 'jammit-s3', :path => "vendor/gems/jammit-s3"
 gem "ajaxful_rating", :path => 'vendor/gems/ajaxful-rating'
 gem 'postmark-rails'
+
+group :production do
+  gem 'hoptoad_notifier'
+end
+
+group :staging do
+  gem 'hoptoad_notifier'
+end
 
 group :development do
   gem 'diff-lcs'
