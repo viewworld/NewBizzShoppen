@@ -13,6 +13,8 @@
               </li>
               <li class="commit">
                 <ibt c="bt_green" icon="magnify">
+                  <%= hidden_field_tag "lang_1", params[:lang_1] %>
+                  <%= hidden_field_tag "lang_2", params[:lang_2] %>
                   <%= submit_tag t("administration.translations.show.view.search.search_button") %>
                 </ibt>
                 <p>
@@ -43,16 +45,16 @@
   <table class="generic">
     <thead>
       <th><%= t("administration.translations.show.view.key") %></th>
-      <% @locales.each do |locale| %>
-        <th><%= locale %></th>
-      <% end %>
+        <% @languages.each_with_index do |lang,i| %>
+          <th><%= select_tag "temp_lang_#{i+1}", options_for_select(Locale.all.map{|l| [l.language,l.code]}, lang.code), :onchange => "fill_languages_and_submit()" %></th>
+        <% end %>
     </thead>
     <tbody>
       <% @keys.each do |key| %>
         <tr>
           <td id="<%= "td.#{locale}.#{key}" %>"><%= translation_key(key) %></td>
-          <% @locales.each do |locale| %>
-            <td><%= text_field_tag "#{locale}.#{key}", (@translations[key][locale] ? @translations[key][locale].first.value : ''), :locale => locale, :key => key, :onblur => "update_translation(this)" %></td>
+          <% @languages.each do |lang| %>
+            <td><%= text_field_tag "#{lang.code}.#{key}", (@translations[key][lang.code] ? @translations[key][lang.code].first.value : ''), :locale => lang.code, :key => key, :onblur => "update_translation(this)" %></td>
           <% end %>
         </tr>
       <% end %>
@@ -73,6 +75,12 @@
               alert(textStatus);
           }
         });
+    }
+
+    function fill_languages_and_submit() {
+        $('#lang_1').val($('#temp_lang_1').val());
+        $('#lang_2').val($('#temp_lang_2').val());
+        $('#search_new').submit();
     }
   </script>
 </column-mc:>

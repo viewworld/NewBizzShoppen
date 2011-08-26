@@ -5,7 +5,9 @@ class Administration::TranslationsController < Administration::AdministrationCon
   private
 
   def collection
-    @locales = Locale.all.map(&:code)
+    params[:lang_1] ||= 'en'
+    params[:lang_2] ||= 'da'
+    @languages = Locale.where(:code => [params[:lang_1],params[:lang_2]])
     @search = Translation.scoped_search(params[:search])
     @translations = @search.select("locale,key,value").order("key ASC").group_by(&:key)
     @keys = @translations.keys

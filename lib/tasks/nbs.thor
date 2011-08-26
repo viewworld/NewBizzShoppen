@@ -558,6 +558,41 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
       contact.update_attribute(:last_call_result_at, last_call_result.nil? ? nil : last_call_result.created_at)
     end
 
+    puts "Importing languages..."
+
+    languages = {
+      "Czech" => {:code => "cs", :enabled => false, :symbol => "CZ"},
+      "Danish" => {:code => "da", :enabled => true, :symbol => "DK"},
+      "German" => {:code => "de", :enabled => false, :symbol => "DE"},
+      "Greek" => {:code => "el", :enabled => false, :symbol => "GR"},
+      "English" => {:code => "en", :enabled => true, :symbol => "EN"},
+      "Spanish" => {:code => "es", :enabled => false, :symbol => "ES"},
+      "Estonian" => {:code => "et", :enabled => false, :symbol => "ET"},
+      "Finnish" => {:code => "fi", :enabled => false, :symbol => "FI"},
+      "French" => {:code => "fr", :enabled => false, :symbol => "FR"},
+      "Croatian" => {:code => "hr", :enabled => false, :symbol => "HR"},
+      "Hungarian" => {:code => "hu", :enabled => false, :symbol => "HU"},
+      "Icelandic" => {:code => "is", :enabled => false, :symbol => "IS"},
+      "Italian" => {:code => "it", :enabled => false, :symbol => "IT"},
+      "Lithuanian" => {:code => "lt", :enabled => false, :symbol => "LT"},
+      "Latvian" => {:code => "lv", :enabled => false, :symbol => "LV"},
+      "Norwegian" => {:code => "no", :enabled => false, :symbol => "NO"},
+      "Dutch" => {:code => "nl", :enabled => false, :symbol => "NL"},
+      "Polish" => {:code => "pl", :enabled => false, :symbol => "PL"},
+      "Portuguese" => {:code => "pt", :enabled => false, :symbol => "PT"},
+      "Russian" => {:code => "ru", :enabled => false, :symbol => "RU"},
+      "Slovak" => {:code => "sk", :enabled => false, :symbol => "SK"},
+      "Slovene" => {:code => "sl", :enabled => false, :symbol => "SL"},
+      "Swedish" => {:code => "sv", :enabled => false, :symbol => "SV"},
+      "Turkish" => {:code => "tr", :enabled => false, :symbol => "TR"},
+      "Ukrainian" => {:code => "uk", :enabled => false, :symbol => "uk"}
+    }
+
+    languages.each do |lang,attrs|
+      unless Locale.where(:code => attrs[:code]).present?
+        Locale.create!(:code => attrs[:code], :language => lang, :enabled => attrs[:enabled], :symbol => attrs[:symbol])
+      end
+    end
   end
 
   desc "recalculate_leads_average_ratings", ""

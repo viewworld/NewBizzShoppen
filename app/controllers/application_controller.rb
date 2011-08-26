@@ -107,7 +107,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_locale(locale_code=nil)
-    @locales = Locale.all
+    @locales = Locale.enabled.all
     session[:locale_code] = locale_code || session[:locale_code] || I18n.locale.to_s
     I18n.locale = session[:locale_code]
     Thread.current[:globalize_detailed_locale] = ((user_signed_in? and current_user) and current_user.with_role.address.present?) ? current_user.with_role.address.country.detailed_locale : browser_locale

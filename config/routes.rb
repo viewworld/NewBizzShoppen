@@ -64,6 +64,7 @@ Nbs::Application.routes.draw do
     resources :customer_interests, :only => [:edit, :update]
     resources :youtube_introductions
     resources :email_bounces
+    resources :languages
   end
 
   namespace :buyers do
