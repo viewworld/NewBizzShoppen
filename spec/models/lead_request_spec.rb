@@ -14,7 +14,8 @@ describe Lead do
 
   context "Creation and scoping" do
     it "should properly assign itself to creator" do
-      lead_user = User::LeadUser.make!
+      customer = User::Customer.make!
+      lead_user = User::LeadUser.make!(:parent_id => customer.id)
       lead = Lead.make!
       lead_user.lead_requests.create!(:lead_id => lead.id)
 

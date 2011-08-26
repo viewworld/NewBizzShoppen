@@ -93,7 +93,7 @@ describe Lead do
     end
 
     it "should have creator set as deal admin because it was created by sales manager" do
-      @lead.creator.should == @deal.creator
+      @lead.creator.email.should == @deal.deal_admin.email
     end
   end
 

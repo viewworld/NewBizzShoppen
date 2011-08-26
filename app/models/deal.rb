@@ -154,17 +154,18 @@ class Deal < AbstractLead
   def create_uniq_deal_category
     if (buyer and creator.buyer?) or ActiveRecord::ConnectionAdapters::Column.value_to_boolean(use_company_name_as_category)
       if buyer
-        category = buyer.deal_category_id ? LeadCategory.find(buyer.deal_category_id) : LeadCategory.create(:name => buyer.company_name)
+        lead_category = buyer.deal_category_id ? LeadCategory.find(buyer.deal_category_id) : LeadCategory.create(:name => buyer.company_name, :currency => Currency.default_currency)
       else
-        category = LeadCategory.create(:name => company_name)
+        lead_category = LeadCategory.create(:name => company_name)
       end
-      buyer.update_attribute(:deal_category_id, category.id) if buyer and buyer.deal_category_id.blank?
-      category.update_attribute(:is_customer_unique, true) unless category.is_customer_unique
-      if buyer and !category.customers.include?(buyer)
-        category.customers << buyer
-        category.save
+
+      buyer.update_attribute(:deal_category_id, lead_category.id) if buyer and buyer.deal_category_id.blank?
+      lead_category.update_attribute(:is_customer_unique, true) unless lead_category.is_customer_unique
+      if buyer and !lead_category.customers.include?(buyer)
+        lead_category.customers << buyer
+        lead_category.save
       end
-      self.lead_category_id = category.id
+      self.lead_category_id = lead_category.id
     end
   end
 
