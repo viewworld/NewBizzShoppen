@@ -12,7 +12,7 @@ Scenario: I should see apropriate language version of the content if I change th
 Scenario: Lead translations
   Given lead Printers ultimate deal exists within category Computers
   Given lead Printers ultimate deal exists with attributes "description:Description for printers deal"
-  And lead "Printers ultimate deal" has translation for lang "dk" with attributes "header:Printere ultimative aftale,description:Beskrivelse til printere behandle,hidden_description:Skjult beskrivelse til printere behandle"
+  And lead "Printers ultimate deal" has translation for lang "da" with attributes "header:Printere ultimative aftale,description:Beskrivelse til printere behandle,hidden_description:Skjult beskrivelse til printere behandle"
   When I follow translated "locales.dk_locale"
   Then I go to browse leads
   And I follow "Computers"
@@ -75,8 +75,8 @@ Scenario: Article translations
 
 @m3 @tgn @_tested
 Scenario: Email translations
-  When email "confirmation_instructions" has translation for lang "dk" with attributes "subject:Bekraeftelse instruktioner,body:Du kan bekraefte din konto via nedenstaende link"
-  And confirmation email is sent for locale "dk"
+  When email "confirmation_instructions" has translation for lang "da" with attributes "subject:Bekraeftelse instruktioner,body:Du kan bekraefte din konto via nedenstaende link"
+  And confirmation email is sent for locale "da"
   Then last email sent should have content "Du kan bekraefte din konto via nedenstaende link"
 
 @tgn @_done @_tested_elsewhere

@@ -108,12 +108,12 @@ Scenario: I can specify youtube url for each locale
   And I make sure current locale is "en"
   And I am on the home page
   Then I should see "1" elements within CSS path ".introduction_video"
-  When I make sure current locale is "dk"
+  When I make sure current locale is "da"
   Then I should not see CSS path ".introduction_video"
   When I go to administration settings
   When I follow translated "administration.introduction_video.view.add_video"
   And I fill in "youtube_introduction_url" with "http://www.youtube.com/watch?v=SBjQ9tuuTJQ"
-  And I select "dk" from "youtube_introduction_locale_code"
+  And I select "da" from "youtube_introduction_locale_code"
   And I press translated "administration.introduction_video.new.view.button_create"
   And I am on the home page
   Then I should see "1" elements within CSS path ".introduction_video"

@@ -4,7 +4,7 @@ Feature: Front page for procurment
   @_done @_tested
   Scenario: When an user enters www.fairdeals.dk he will be redirected to Danish version of procurment
     Given I visit domain http://fairdeals.dk
-    Then locale should be set to "dk"
+    Then locale should be set to "da"
     And I should see CSS path "#primary_featured_deal"
 
   @_done @_tested

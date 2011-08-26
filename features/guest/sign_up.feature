@@ -6,7 +6,7 @@ Feature: Sign up feature
     When I make sure current locale is "en"
     And I am on agent sign up page
     Then "user_agent_address_attributes_country_id" should be selected for value "United Kingdom"
-    When I make sure current locale is "dk"
+    When I make sure current locale is "da"
     And I am on buyer sign up page
     Then "user_customer_address_attributes_country_id" should be selected for value "Denmark"
 
@@ -15,7 +15,7 @@ Feature: Sign up feature
   Scenario: When I am on sign up page, the coutry should be selected to my browser locale/country
     Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role agent
     And I am on the homepage
-    And I make sure current locale is "dk"
+    And I make sure current locale is "da"
     Then I sign in as bob@person.com with password supersecret
     And I go to agents leads
     Given Category Test category 1 is created

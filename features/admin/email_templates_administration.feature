@@ -31,7 +31,7 @@ Scenario: I can edit and update following email template fields: name, subject, 
 
 @_done @_tested @selenium
 Scenario: I can edit and update email template fields for different language when I switch interface language
-  Given email "confirmation_instructions" has translation for lang "dk" with attributes "subject:Bekraeftelse instruktioner"
+  Given email "confirmation_instructions" has translation for lang "da" with attributes "subject:Bekraeftelse instruktioner"
   Then I click hidden link by url regex "/administration\/email_templates\/(\d+)\/edit/"
   And the "email_template_subject" field should contain "Confirmation instructions"
   Then I click hidden link by url regex "/locales\/dk/"
