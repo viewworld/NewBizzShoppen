@@ -72,9 +72,9 @@
       </frm>
     </div>
     <div class="column_1to3 fltl" style="padding: 0 15px" id="best_sellers">
-      <frm title="#{t('purchase_manager_home.show.view.header_best_sellers')}" c="no_marg">
+      <frm title="#{(user_signed_in? and current_user.has_role?(:purchase_manager)) ? t('purchase_manager_home.show.view.header_latest_deals') : t('purchase_manager_home.show.view.header_best_sellers')}" c="no_marg">
         <param:header>
-          <%= bt_link_to nil, t("purchase_manager_home.show.view.complete_list_link"), leads_path(:search => {:bestsellers => true}), :class => "fltr" %>
+          <%= bt_link_to nil, t("purchase_manager_home.show.view.complete_list_link"), (user_signed_in? and current_user.has_role?(:purchase_manager)) ? deals_path(:search => {:latest => true}) : leads_path(:search => {:bestsellers => true}), :class => "fltr" %>
         </param:header>
         <param:content>
           <ul class="solid_list">

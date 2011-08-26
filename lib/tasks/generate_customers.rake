@@ -13,7 +13,7 @@ namespace :nbs do
 
     categories = []
     (1..3).each do |i|
-      categories << Category.make!
+      categories << LeadCategory.make!
     end
 
     leads = []

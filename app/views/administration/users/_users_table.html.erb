@@ -53,9 +53,9 @@
             <li>
               <%= link_to t("administration.users.index.view.delete"), administration_user_path(user), {:method => :delete, :confirm => t("administration.users.index.view.delete_confirmation_message")} %>
             </li>
-            <!--<li>-->
-              <%#= link_to t("administration.users.index.view.log_in_as"), sign_in_as_administration_user_path(user) %>
-            <!--</li>-->
+            <li>
+              <%= link_to t("administration.users.index.view.log_in_as"), sign_in_as_administration_user_path(user) %>
+            </li>
             <% unless user.subaccounts.empty? %>
                 <li>
                   <%= link_to t("administration.users.index.view.subaccounts"), administration_users_path({:search => {:with_subaccounts => user.id}}) %>

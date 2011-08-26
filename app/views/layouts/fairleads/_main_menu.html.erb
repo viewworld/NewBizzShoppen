@@ -1,0 +1,29 @@
+<ul class="nav<%= (user_signed_in? and current_user.has_role?(:admin)) ? " admin_nav" : "" %>">
+  <%= main_menu_link_to_role_specific_home_page %>
+  <% if @home_category %>
+      <%= main_menu_link_to(t("layout.main_menu.shared.browse_leads"), category_home_page_leads_path(@home_category.cached_slug), :tab => "browse_leads") unless @auto_buy_category %>
+  <% else %>
+      <% unless user_signed_in? and current_user.has_role?(:purchase_manager) %>
+        <%= main_menu_link_to t("layout.main_menu.shared.browse_leads"), categories_path, :tab => "browse_leads" %>
+      <% end %>
+      <%= main_menu_link_to(t("layout.main_menu.shared.browse_deals"), deal_categories_path, :tab => "browse_deals") %>
+  <% end %>
+  <% if current_user %>
+      <% current_user.roles_sorted.each do |role| %>
+          <%= render "/layouts/fairleads/menu_sections/#{role.to_s}" %>
+      <% end %>
+  <% end %>
+</ul>
+
+<script type="text/javascript">
+    jQuery(document).ready(function()
+    {
+        $('.has_child').each(function() {
+            var t = $(this);
+            if ( t.width() > t.find(".subnav").width())
+            {
+                t.find(".subnav").css("width", t.width());
+            }
+        })
+    })
+</script>

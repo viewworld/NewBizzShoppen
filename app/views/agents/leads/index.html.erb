@@ -46,8 +46,8 @@
 
     <param:actions>
       <%= form_tag new_agents_lead_path, :method => :get, :id => "form_new_lead" do %>
-          <span style="position:absolute;top: 5px; right: 200px;">
-            <% categories = Category.without_locked.with_agent_unique(current_user).all %>
+          <span style="position:absolute;top: 5px; right: 110px;">
+            <% categories = LeadCategory.without_locked.with_agent_unique(current_user).all %>
             <%= select_tag :category_id, options_for_select(nested_set_options(categories), :selected => default_category_for_select(categories), :disabled => categories.select { |c| !c.can_publish_leads? }.map(&:id)) %>
           </span>
           <ul class="header_actions">

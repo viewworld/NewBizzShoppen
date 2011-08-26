@@ -2,13 +2,21 @@ require 'machinist/active_record'
 require 'faker'
 require 'spec/support/overwrites/lorem'
 
-Category.blueprint do
+LeadCategory.blueprint do
+  name { Faker::Lorem.words(2).to_s + Time.now.to_f.to_s.sub('.','') }
+  description { Faker::Lorem.sentences(2).to_s }
+  default_price { 0.0 }
+  currency { Currency.make! }
+end
+
+DealCategory.blueprint do
   name { Faker::Lorem.words(2).to_s + Time.now.to_f.to_s.sub('.','') }
   description { Faker::Lorem.sentences(2).to_s }
 end
 
 Country.blueprint do
   name { Faker::Address.uk_country + Time.now.to_f.to_s.sub('.','') }
+  locale { "en" }
 end
 
 VatRate.blueprint do
@@ -32,11 +40,38 @@ Lead.blueprint do
   zip_code { Faker::Address.zip_code }
   creator_id { User::Agent.make!.id }
   creator_type { "User::Agent" }
-  category_id { Category.make!.id }
+  category_id { LeadCategory.make!.id }
   sale_limit { 10 }
   purchase_decision_date { (Date.today+5) }
   published { true }
   currency { Currency.make!}
+end
+
+Deal.blueprint do
+  header { Faker::Lorem.words(4).to_s.capitalize }
+  description { Faker::Lorem.sentences(2).to_s }
+  hidden_description { Faker::Lorem.sentences(2).to_s }
+  purchase_value { Faker.numerify("###").to_f }
+  price { Faker.numerify("###").to_f }
+  country_id { 1 }
+  company_name { Faker::Internet.domain_word.capitalize }
+  contact_name { Faker::Name.name }
+  phone_number { Faker::PhoneNumber.phone_number }
+  email_address { Faker::Internet.email }
+  address_line_1 { Faker::Address.street_address }
+  address_line_3 { Faker::Address.city }
+  zip_code { Faker::Address.zip_code }
+  creator_id { User::Agent.make!.id }
+  creator_type { "User::Agent" }
+  category_id { DealCategory.make!.id }
+  sale_limit { 10 }
+  purchase_decision_date { (Date.today+5) }
+  published { true }
+  currency { Currency.make!}
+  start_date { Date.today-5 }
+  end_date { Date.today+5 }
+  company_description { Faker::Lorem.sentences(2).to_s }
+  published { true }
 end
 
 Lead.blueprint(:featured) do
@@ -55,7 +90,7 @@ Lead.blueprint(:featured) do
   zip_code { Faker::Address.zip_code }
   creator_id { User::Agent.make!.id }
   creator_type { "User::Agent" }
-  category_id { Category.make!.id }
+  category_id { LeadCategory.make!.id }
   sale_limit { 10 }
   purchase_decision_date { (Date.today+5) }
   featured { true }
@@ -95,7 +130,7 @@ Address.blueprint do
   address_line_2 { Faker::Address.city }
   address_line_3 { Faker::Address.uk_county }
   zip_code { Faker::Address.zip_code }
-  country { Country.first.nil? ? Country.make!(:name => "Denmark") : Country.first}
+  country { Country.first.nil? ? Country.make!(:name => "Denmark", :locale => "dk") : Country.first}
 end
 
 Address::Bank.blueprint do
@@ -167,6 +202,7 @@ end
   last_name { Faker::Name.last_name }
   agreement_read { true }
   roles_mask { 64 }
+  parent_id { User::Customer.make!.id }
 end
 
 ::User::LeadBuyer.blueprint do
@@ -179,6 +215,7 @@ end
   last_name { Faker::Name.last_name }
   agreement_read { true }
   roles_mask { 96 }
+  parent_id { User::Customer.make!.id }
 end
 
 ::User::Agent.blueprint do
@@ -232,7 +269,7 @@ end
   first_name { Faker::Name.first_name + Time.now.to_f.to_s.sub('.','') }
   last_name { Faker::Name.last_name }
   agreement_read { true }
-  buying_categories { Array(Category.make!) }
+  buying_categories { Array(LeadCategory.make!) }
   roles_mask { 304 }
   company_name { Faker::Company.name }
   address { Address.make! }
@@ -271,7 +308,7 @@ end
 ::Article::News::CategoryHome.blueprint do
   title { Faker::Lorem.words(4).to_s.capitalize }
   content { Faker::Lorem.sentences(2).to_s }
-  resource { Category.make! }
+  resource { LeadCategory.make! }
 end
 
 ::Article::Cms::Hint.blueprint do
@@ -329,7 +366,7 @@ Contact.blueprint do
   zip_code { Faker::Address.zip_code }
   creator_id { User::Agent.make!.id }
   creator_type { "User::Agent" }
-  category_id { Category.make!.id }
+  category_id { LeadCategory.make!.id }
   sale_limit { 10 }
   purchase_decision_date { (Date.today+5) }
   published { true }
@@ -373,7 +410,7 @@ end
 Campaign.blueprint do
   start_date { Date.today }
   end_date { Date.today + 7.days }
-  category { Category.make! }
+  category { LeadCategory.make! }
   cost_type { Campaign::NO_COST }
   max_contact_number { 5 }
   country { Country.make! }

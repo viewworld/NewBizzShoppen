@@ -34,6 +34,12 @@ class Category < ActiveRecord::Base
     end
   end
 
+  has_many :deals do
+    def including_subcategories
+      Deal.where(:category_id => proxy_owner.self_and_descendants.map(&:id))
+    end
+  end
+
   has_many :category_customers
   has_many :category_agents
   has_many :customers, :through => :category_customers, :source => :user
@@ -46,11 +52,11 @@ class Category < ActiveRecord::Base
 
   scope :without_locked_and_not_published, where("is_locked = ? or (is_locked = ? and published_leads_count > 0)", false, true)
   scope :within_accessible, lambda { |customer| where("categories.id IN (?)", customer.accessible_categories_ids) }
-  scope :without_locked, where("is_locked = ?", false)
-  scope :with_leads, where("total_leads_count > 0")
-  scope :with_lead_request_owner, lambda { |owner| select("DISTINCT(name), categories.*").where("requested_by IS NOT NULL and lead_purchases.owner_id = ?", owner.id).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
+  scope :without_locked, where("is_locked = ?", false).order("name")
+  scope :with_leads, where("total_leads_count > 0").order("name")
+  scope :with_lead_request_owner, lambda { |owner| select("DISTINCT(name), categories.*").where("lead_purchases.requested_by IS NOT NULL and lead_purchases.owner_id = ?", owner.id).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
   scope :with_lead_request_requested_by, lambda { |requested_by| select("DISTINCT(name), categories.*").where("lead_purchases.requested_by = ?", requested_by.id).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
-  scope :with_lead_purchase_owner, lambda { |owner| select("DISTINCT(name), categories.*").where("requested_by IS NULL and lead_purchases.owner_id = ? and accessible_from IS NOT NULL", owner.id).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
+  scope :with_lead_purchase_owner, lambda { |owner| select("DISTINCT(name), categories.*").where("lead_purchases.requested_by IS NULL and lead_purchases.owner_id = ? and accessible_from IS NOT NULL", owner.id).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
   scope :with_lead_purchase_assignee, lambda { |assignee| select("DISTINCT(name), categories.*").where("lead_purchases.assignee_id = ? and accessible_from IS NOT NULL", assignee.id).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
   scope :with_lead_templates_created_by, lambda { |creator| select("DISTINCT(categories.name), categories.*").where("lead_templates.creator_id = ?", creator.id).joins(:lead_templates) }
   scope :without_unique, where("is_customer_unique = ? and is_agent_unique = ?", false, false)
@@ -162,6 +168,10 @@ class Category < ActiveRecord::Base
 
   def can_publish_leads?
     !root? or (root? and children.size == 0)
+  end
+
+  def deals_count_for_user(user)
+    deals.including_subcategories.without_inactive.published_only.count
   end
 
   def leads_count_for_user(user)

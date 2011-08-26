@@ -151,6 +151,11 @@
     margin-top: 0;
 }
 
+#deals .row_tooltip_actions
+{
+    left: 900px;
+}
+
 
 .row_tooltip_actions a.toggle_row
 {
@@ -484,4 +489,17 @@ div.pagination .disabled
 {
     font-size: 12px;
     color: #aaa;
+}
+
+
+
+.reports_table_wrapper
+{
+    width: 100%;
+    overflow-x: auto;
+}
+
+#reports_table
+{
+    font-size: 11px;
 }

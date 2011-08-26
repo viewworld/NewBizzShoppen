@@ -1127,3 +1127,11 @@ input.date.hasDatepicker
     z-index: 2000;
     cursor: pointer;
 }
+
+
+#deal_description_counter
+{
+    padding-left: 210px;
+    margin-bottom: 10px;
+    clear: both;
+}

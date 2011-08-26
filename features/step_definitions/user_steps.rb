@@ -41,12 +41,20 @@ Given /^(?:|I am |someone is )signed up and confirmed as user with email ([^"]*)
   if country_id = opts.delete(:country) and country = Country.find(country_id)
     opts.merge!(:address => Address.make!(:country => country))
   end
-  u = "User::#{role.camelize}".constantize.make!(opts)
+  unless u = User.where(:email => email).first
+    u = "User::#{role.camelize}".constantize.make!(opts)
+  end
   u.confirm!
 end
 
 Given /^user "([^"]*)" has team buyers enabled$/ do |email|
   User::Customer.where(:email => email).first.update_attribute(:team_buyers, true)
+end
+
+Given /^user "([^"]*)" has deal maker role enabled$/ do |email|
+  user = User.where(:email => email).first.with_role
+  user.roles << :deal_maker
+  user.save
 end
 
 Given /^user "([^"]*)" with role "([^"]*)" is confirmed$/ do |email, role|
@@ -324,4 +332,14 @@ Then /^user "([^"]*)" is no longer category buyer as all his subaccounts$/ do |e
   user = User.find_by_email(email)
   user.has_role?(:category_buyer).should == false
   user.subaccounts.each { |sub_account| sub_account.has_role?(:category_buyer).should == false }
+end
+
+When /^user "([^"]*)" has assigned role "([^"]*)"$/ do |email, role|
+  user = User.where(:email => email).first.with_role
+  user.roles << role.to_sym
+  user.save
+end
+
+Given /^there are no object for model "([^"]*)"$/ do |model|
+  model.constantize.destroy_all
 end

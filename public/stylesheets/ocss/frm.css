@@ -351,3 +351,7 @@
 {
     display: block;
 }
+
+.frm_hc h2 a {
+    font-size: 12px;
+}

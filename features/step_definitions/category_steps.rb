@@ -5,7 +5,7 @@ end
 
 Given /^Category named "([^"]*)" already exists(?: within category named "([^"]*)")?$/ do |name, parent_category_name|
   parent_category_id =  parent_category_name.present? ? Category.where(:name => parent_category_name).last.id : nil
-  Category.make!(:name => name, :parent_id => parent_category_id)
+  LeadCategory.make!(:name => name, :parent_id => parent_category_id)
 end
 
 
@@ -13,7 +13,7 @@ Given /^Lead named "([^"]*)" exists within "([^"]*)" category$/ do |name, catego
   category_id =  if category_name
                    Category.where(:name => category_name).first.id
                  else
-                   Category.make!(:name => category_name).id
+                   LeadCategory.make!(:name => category_name).id
                  end
   Lead.make!(:header => name, :category_id =>category_id)
 end
@@ -65,4 +65,12 @@ end
 Then /^category "([^"]*)" has email template with subject "([^"]*)"$/ do |name, subject|
   global_et = EmailTemplate.find_by_uniq_id('bought_lead_notification')
    Category.find_by_name(name).first.create_email_template(:subject => subject, :body => global_et.body, :from => global_et.from)
+end
+
+When /^there is no category named "([^"]*)"$/ do |name|
+  assert Category.where(:name => name).first.nil?
+end
+
+When /^there is a category named "([^"]*)"$/ do |name|
+  assert !Category.where(:name => name).first.nil?
 end

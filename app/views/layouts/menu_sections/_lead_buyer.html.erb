@@ -1,4 +1,0 @@
-<% if current_user and current_user.has_role?(:customer) %>
-    <%= main_menu_link_to t("layout.main_menu.lead_buyer.lead_purchases"), buyers_lead_purchases_path, :tab => "owned_leads" %>
-<% end %>
-

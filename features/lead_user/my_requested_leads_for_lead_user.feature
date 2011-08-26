@@ -4,8 +4,8 @@ Feature: My requested leads for lead user
 Background: Sign in user and set English locale
   Given I am on the homepage
   And I make sure current locale is "en"
-  Given I am signed up and confirmed as user with email lead_user2@person.com and password supersecret and role lead_user with attributes "first_name:Jacek,last_name:Smietana"
   And an user with role lead_user and email lead_user2@person.com exists as subaccount for customer customer@person.com
+  And user "lead_user2@person.com" with role "lead_user" has attributes "first_name:Jacek,last_name:Smietana"
   And lead Printers ultimate deal exists within category Computers
   And lead Printers ultimate deal exists with attributes "creator_name:John McCain,clicks_count:17,exposures_count:887,price:989.78,purchase_value:3030.03,description:Lorem ipsum public desc"
   And lead Monitors LCD deal exists within category Computers
@@ -19,7 +19,7 @@ Background: Sign in user and set English locale
   And lead "Keyboards deal" was requested by user "lead_user2@person.com" with role "lead_user"
   And lead "Faxes ultimate deal" was requested by user "lead_user2@person.com" with role "lead_user"
   And lead "Copy machines ultimate deal" was requested by user "lead_user2@person.com" with role "lead_user"
-  Then I sign in as lead_user2@person.com with password supersecret
+  Then I sign in as lead_user2@person.com with password secret
   And I go to lead user lead requests
 
 @tgn @_tested

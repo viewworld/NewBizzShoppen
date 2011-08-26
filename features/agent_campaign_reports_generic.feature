@@ -27,3 +27,9 @@ Feature: Reports
 
   @_done @testes_elsewhere
   Scenario: I can generate campaign results report for custom period of time
+
+  @m18 @admin_reports
+  Scenario: As admin I can generate report for one selected call centre
+
+  @m18 @admin_reports
+  Scenario: As admin I can generate report for one or more selected agents

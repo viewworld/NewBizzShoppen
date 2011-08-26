@@ -3,7 +3,8 @@ And /^I wait (.*) second$/ do |n|
 end
 
 Given /^Category (.+) is created$/ do |name|
-  Category.create(:name => name)
+  currency = Currency.make!
+  LeadCategory.create!(:name => name, :currency => currency)
 end
 
 Given /^Country (.+) is created$/ do |name|

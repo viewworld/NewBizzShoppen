@@ -73,7 +73,7 @@ class Callers::CallResultsController < Callers::CallerController
   end
 
   def set_category
-    category = Category.find_by_id(params[:category_id])
+    category = LeadCategory.find_by_id(params[:category_id])
     @contact.update_attribute(:category, category) if category
   end
 

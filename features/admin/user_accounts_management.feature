@@ -323,9 +323,7 @@ Scenario: I can manage user's access to unique categories as well
 @requested @m7 @_tested @tgn
 Scenario: I can see a list of subaccounts and edit them when editing parent account
   Given I have user with email buyer2932biz@nbs.com and role customer
-  And I have user with email lead_buyer29321biz@nbs.com and role lead_buyer
   And an user with role lead_buyer and email lead_buyer29321biz@nbs.com exists as subaccount for customer buyer2932biz@nbs.com
-  And I have user with email lead_user29322biz@nbs.com and role lead_user
   And an user with role lead_user and email lead_user29322biz@nbs.com exists as subaccount for customer buyer2932biz@nbs.com
   And I go to administration users
   And I fill in "search_with_keyword" with "buyer2932biz"
@@ -704,3 +702,15 @@ Scenario: When user has unique category with auto-buy he should not be subscribe
   Then category named "Computers" is auto buy enabled
   And category "Computers" is in interests of user "nbsbuyer3483434biz@nbs.com" "false"
 
+@m17 @requested @log_in_as @is @_tested @_done
+Scenario: I can log in as selected user
+  Then I fill in "search_with_keyword" with "translator_call_centre_agent"
+  Then I press translated "administration.users.index.view.search_button"
+  Then I follow translated "administration.users.index.view.log_in_as"
+  Then I follow translated logout link for translator_call_centre_agent@nbs.com
+
+@m18 @category_buyer_deals
+Scenario: I can enable deals for each category buyer
+
+@m18 @create_buttons
+Scenario: I can send welcome email to member / supplier

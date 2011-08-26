@@ -37,14 +37,14 @@ Scenario: I should not have access to subaccounts without team buyers flag
   And I go to customers lead requests
   Then I should see "You are not authorized"
 
-@m4 @added @_done @deprecated
+@m4 @added @_done @_deprecated
 Scenario: I can't disable Team Buyers when there are lead requests
 #  When I follow translated "layout.my_profile_link"
 #  And I uncheck "user_customer_team_buyers"
 #  And I press translated "password.edit.view.button_update_user"
 #  Then I should see translated "errors.messages.user.team_buyers.has_lead_requests"
 
-@m4 @added @_done @deprecated
+@m4 @added @_done @_deprecated
 Scenario: I can disable Team Buyers when there are no subaccounts and no lead requests
 #  Given I am signed up and confirmed as user with email flag@nbs.com and password secret and role customer
 #  And User flag@nbs.com with role customer is big buyer
@@ -57,7 +57,7 @@ Scenario: I can disable Team Buyers when there are no subaccounts and no lead re
 #  Then I should see translated "my_profile.update.controller.successful_update_notice"
 #  Then the "user_customer_team_buyers" checkbox should not be checked
 
-@m4 @added @_done @deprecated
+@m4 @added @_done @_deprecated
 Scenario: I can't disable Team Buyers when there are subaccounts
 #  Given I am signed up and confirmed as user with email flag@nbs.com and password secret and role customer
 #  And User flag@nbs.com with role customer is big buyer

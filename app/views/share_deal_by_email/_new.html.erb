@@ -1,0 +1,23 @@
+<%= form_tag share_deal_by_email_path, :method => :post, :id => "form_share_deal_by_email" do %>
+  <fieldset class="inputs labels_ta_r labels_70">
+    <ol>
+      <li id="template_editor_email_from_input" class="string">
+        <%= label_tag t("share_deal_by_email.new.view.email_from") %>
+        <%= text_field_tag :email_from, user_signed_in? ? current_user.email : "" %>
+      </li>
+      <li id="template_editor_name_input" class="string">
+        <%= label_tag t("share_deal_by_email.new.view.name") %>
+        <%= text_field_tag :name, user_signed_in? ? current_user.full_name : "" %>
+      </li>
+      <li id="template_editor_email_to_input" class="string">
+        <%= label_tag t("share_deal_by_email.new.view.email_to") %>
+        <%= text_field_tag :email_to %>
+      </li>
+      <li id="template_editor_body_input" class="text">
+        <%= label_tag t("share_deal_by_email.new.view.message") %>
+        <%= text_area_tag :body, deal.social_media_description, :style => "width:230px;height:120px" %>
+      </li>
+      <%= hidden_field_tag :deal_id, deal.id %>
+    </ol>
+  </fieldset>
+<% end %>

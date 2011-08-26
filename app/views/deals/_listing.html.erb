@@ -1,0 +1,238 @@
+<%
+   cols = 5
+   cols += 1 if show_checkboxes
+   cols += 1 if not block_tools.nil?
+-%>
+
+<table class="generic leads_table">
+  <thead>
+  <tr>
+    <th class="hl"></th>
+    <% if show_checkboxes %>
+        <th class="no_pdd_lr" style="width: 10px;"><%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %></th>
+    <% end %>
+    <th style="width: 36px;"></th>
+    <th style="width: 350px;"><%= t("deals.listing.lead_description_label") %></th>
+    <th style="width: 250px;"></th>
+    <th colspan="2"><%#= t("deals.listing.contact_label") %></th>
+
+    <% if block_tools %>
+        <th class="ta_r"><%= t("deals.listing.actions_label") %></th>
+    <% end %>
+
+    <th class="hr"></th>
+  </tr>
+  </thead>
+
+  <tfoot>
+  <tr>
+    <td class="fl"></td>
+    <td colspan="<%= cols %>"></td>
+    <td class="fr"></td>
+  </tr>
+  </tfoot>
+
+  <tbody>
+  <% collection.each do |deal| %>
+      <tr class="lead <%= cycle("odd", "even") %>" id="<%= dom_id(deal) %>">
+
+        <td class="cl">
+          <%= link_to deal.header, deal_path(:id => deal.slug), :class => "default_action", :style => "display:none" %>
+        </td>
+
+        <% if show_checkboxes %>
+            <td class="no_pdd_lr"><%= check_box_tag "lead_ids[]", deal.id %></td>
+        <% end %>
+
+        <td>
+          <% unless deal.logo.blank? %>
+              <%= image_tag(deal.logo.url(:thumb), :style => "float:left;margin:4px") %>
+          <% end %>
+        </td>
+
+        <td>
+          <%= link_to deal.header, deal_path(:id => deal.slug), :class => "default_action", :style => "display:none" %>
+          <h4>
+            <%= deal.header %>
+            <% if current_user and current_user.admin? %>
+                <%= link_to t("administration.deals.index.view.edit"), edit_administration_deal_path(deal), :class => "default_action" %>
+            <% end %>
+          </h4>
+          (Activation date: <%= format_date deal.start_date %> - <%= format_date deal.end_date %>)
+
+          <% if deal.price.to_i > 0 %>
+            <p><b><%= t("deals.listing.price") %>:</b> <%= as_currency(deal.price, deal.currency) %></p>
+              <% if deal.discounted_price.to_i > 0 %>
+                <p><b><%= t("deals.listing.discounted_price") %>:</b> <%= as_currency(deal.discounted_price, deal.currency) %> (<%= t("deals.listing.price_saving") %>: <%= deal.saving %>)</p>
+              <% end %>
+          <% end %>
+
+          <p><b><%= t("deals.listing.created_leads") %>:</b> <%= deal.created_leads.to_i %></p>
+
+          <p class="element_description i expandable"><b>Description:</b> <%= deal.description %></p>
+
+          <% unless deal.fine_print.blank? %>
+              <p class="element_description i expandable"><b>Fine print:</b> <%= deal.fine_print %></p>
+          <% end %>
+
+          <% unless deal.images.blank? %>
+              <p>
+                <% deal.images.each do |image| %>
+                    <%= link_to image_tag(image.url(:thumb)), image.url, :rel => "colorbox_#{deal.id}" %>
+                <% end %></p>
+          <% end %>
+
+          <% unless deal.materials.blank? %>
+              <p>
+                <% deal.materials.each do |material| %>
+                    <%= link_to material.asset_file_name, material.url, :target => :blank %>&nbsp;&nbsp;&nbsp;
+                <% end %></p>
+          <% end %>
+
+
+        </td>
+
+        <td>
+          <iframe src="http://www.facebook.com/plugins/like.php?app_id=101408449959161&amp;href=<%= escape_uri(deal_url(deal)) %>&amp;send=false&amp;layout=button_count&amp;width=250&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:250px; height:21px;" allowTransparency="true"></iframe>
+        </td>
+
+        <td>
+          <% if user_signed_in? and current_user.has_any_role?(:purchase_manager, :admin) %>
+              <!--<p class="element"><%= t("deals.listing.contact_name_label") %><b> <%= deal.contact_name %></b></p>-->
+              <!--<p class="element"><%= t("deals.listing.contact_email_label") %><b> <%= deal.email_address %></b></p>-->
+              <!--<p class="element"><%= t("deals.listing.contact_phone_number_label") %><b> <%= deal.phone_number %></b></p>-->
+              <!--<p class="element"><%= deal.address %></p>-->
+              <!--<br />-->
+
+              <p class="element"><%= t("deals.listing.company_name_label") %>
+                <b> <%= deal.company_name %></b></p>
+
+              <p class="element"><%= t("deals.listing.company_description_label") %>
+                <b> <%= deal.company_description %></b></p>
+
+              <p class="element"><%= t("deals.listing.rating_label") %>
+                <%= ratings_for(deal) %></p>
+                <br/><br/>
+          <% end %>
+        </td>
+
+        <td>
+
+        </td>
+
+        <% if block_tools %>
+            <td class="tda ta_r">
+              <%= with_output_buffer { block_tools.call(deal) } %>
+            </td>
+        <% end %>
+
+        <td class="cr va_b">
+          <div class="row_tooltip_actions">
+            <%= link_to deal.comment_threads.count.zero? ? !user_signed_in? ? t("deals.listing.no_comments") : t("deals.listing.create_comment") : t("deals.listing.show_comments"), "javascript:void(0)", :class => "toggle_row show_comments#{' toggle_row_unread' if deal.has_unread_comments_for_user?(current_user)}", :onclick => "if(#{user_signed_in? ? 'true' : 'false'}){deal_mark_comments_as_read(#{deal.id}); mark_row_as_read('#{dom_id(deal)}')}" %>
+            <%= link_to t("deals.listing.hide_comments"), "javascript:void(0)", :class => "toggle_row hide_comments", :style => "display:none" %>
+          </div>
+        </td>
+      </tr>
+
+      <tr class="row_tooltip">
+        <td class="cl"></td>
+        <td colspan="6">
+          <div class="row_tooltip_content comments_details">
+            <%= render :partial => "/shared/deal_comments/deal_threads", :locals => {:deal => deal, :threads => deal.comment_threads.roots.order("created_at DESC")} %>
+          </div>
+        </td>
+        <td class="cr"></td>
+      </tr>
+  <% end %>
+
+  <% if will_paginate or show_checkboxes %>
+      <tr class="pagination">
+        <td colspan="<%= cols + 2 %>" class="ta_c">
+          <% if show_checkboxes %>
+              <div class="td_select_all">
+                <%= check_box_tag "td_mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %>
+                <%= label_tag "td_mark_all", "select all" %>
+              </div>
+          <% end %>
+          <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+        </td>
+      </tr>
+  <% end %>
+
+
+  <% if block_bottom %>
+      <tr class="main_actions">
+        <td class="cl"></td>
+        <td colspan="<%= cols %>" class="no_pdd_lr">
+          <%= with_output_buffer { block_bottom.call } %>
+        </td>
+        <td class="cr"></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<script type=text/javascript>
+
+    function hideRowButtons() {
+        $(".toggle_row.hide_details:visible, .toggle_row.hide_comments:visible").hide().prev().show();
+    }
+
+    jQuery(document).ready(function() {
+
+        $(".toggle_row.show_details").bind("click", function() {
+
+            $(".row_tooltip").filter(":not(:eq(" + $(this).parents("tr:first").next().index(".row_tooltip") + "))")
+                    .filter(":visible").find(".row_tooltip_content:visible").slideUp("normal", function() {
+                        $(this).parents("tr.row_tooltip").hide()
+                    });
+
+            hideRowButtons();
+
+            $(this).hide().next().show().parents("tr:first")
+                    .next("tr.row_tooltip").show()
+                    .find(".comments_details:visible").slideUp().end()
+                    .find(".lead_details").slideDown();
+        });
+
+        $(".toggle_row.hide_details").bind("click", function() {
+
+            hideRowButtons();
+
+            $(this).hide().prev().show().parents("tr:first")
+                    .next("tr.row_tooltip")
+                    .find(".lead_details").slideUp('normal', function() {
+                        $(this).parents("tr.row_tooltip").hide();
+                    });
+        });
+
+
+        $(".toggle_row.show_comments").bind("click", function() {
+            $(".row_tooltip").filter(":not(:eq(" + $(this).parents("tr:first").next().index(".row_tooltip") + "))")
+                    .filter(":visible").find(".row_tooltip_content:visible").slideUp("normal", function() {
+                        $(this).parents("tr.row_tooltip").hide()
+                    });
+
+            hideRowButtons();
+
+
+            $(this).hide().next().show().parents("tr:first")
+                    .next("tr.row_tooltip").show()
+                    .find(".lead_details:visible").slideUp().end()
+                    .find(".comments_details").slideDown();
+
+        });
+
+        $(".toggle_row.hide_comments").bind("click", function() {
+            hideRowButtons();
+
+            $(this).hide().prev().show().parents("tr:first")
+                    .next("tr.row_tooltip")
+                    .find(".comments_details").slideUp('normal', function() {
+                        $(this).parents("tr.row_tooltip").hide();
+                    });
+        });
+    });
+
+
+</script>

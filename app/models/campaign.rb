@@ -53,7 +53,7 @@ class Campaign < ActiveRecord::Base
   def fixed_cost_value_is_valid
     if cost_type == FIXED_COST or cost_type == FIXED_HOURLY_RATE_COST and fixed_cost_value.blank?
       self.errors.add(:fixed_cost_value, I18n.t("models.campaign.fixed_cost_value_is_blank"))
-    elsif cost_type == AGENT_BILLING_RATE_COST and !users.detect { |u| u.billing_rate.to_i <= 0 }.nil?
+    elsif cost_type == AGENT_BILLING_RATE_COST and users.with_agents.any? { |u| u.billing_rate.to_i <= 0 }
       self.errors.add(:cost_type, I18n.t("models.campaign.agents_dont_have_billing_rates_defined"))
     end
   end
@@ -103,8 +103,21 @@ class Campaign < ActiveRecord::Base
     return_contact_to_the_pool
   end
 
-  def assign_results(ids)
-    self.results = ids.blank? ? [] : Result.find(ids)
+  def assign_results(params)
+    self.results = params[:campaign_result_ids].blank? ? [] : Result.find(params[:campaign_result_ids])
+    self.results.each do |r|
+      if params["result"] and params["result"][r.id.to_s] and params["result"][r.id.to_s]["campaign_result"] and cr = r.campaigns_results.detect { |cr| cr.campaign_id == self.id }
+        cr.value = params["result"][r.id.to_s]["campaign_result"]["value"] if params["result"][r.id.to_s]["campaign_result"]["value"]
+        cr.expected_completed_per_hour = params["result"][r.id.to_s]["campaign_result"]["expected_completed_per_hour"] if params["result"][r.id.to_s]["campaign_result"]["expected_completed_per_hour"]
+        cr.save
+      elsif params["result"] and params["result"][r.id.to_s] and params["result"][r.id.to_s]["campaign_result"]
+        r.campaigns_results.create(
+            :campaign_id => id,
+            :value => params["result"][r.id.to_s]["campaign_result"]["value"],
+            :expected_completed_per_hour => params["result"][r.id.to_s]["campaign_result"]["expected_completed_per_hour"]
+        )
+      end
+    end
   end
 
   def results_for_select

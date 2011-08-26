@@ -15,6 +15,7 @@ dbname = ActiveRecord::Base.configurations[ENV["RAILS_ENV"]]["database"]
 dbuser = ActiveRecord::Base.configurations[ENV["RAILS_ENV"]]["username"]
 
 `psql -U #{dbuser} -d #{dbname} -f #{backup}`
+
 end
 
 Spork.prefork do
@@ -46,13 +47,20 @@ Spork.prefork do
 
   require 'database_cleaner'
   DatabaseCleaner.strategy = :truncation
+  Capybara::Selenium::Driver::DEFAULT_OPTIONS[:resynchronize] = false
 
   `rake db:test:prepare`
   load_db
 
   Around('@selenium') do |scenario, block|
   block.call
-  load_db if EmailTemplate.count < 1
+  load_db
+  end
+
+  Around('@_done') do |scenario, block|
+  block.call
+  Capybara.default_host = 'http://localhost' #for Rack::Test
+  Capybara.app_host = "http://localhost:9887" if Capybara.current_driver == :selenium
   end
 
 # If you set this to false, any error raised from within your app will bubble

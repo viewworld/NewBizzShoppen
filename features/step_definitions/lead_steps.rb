@@ -27,7 +27,7 @@ end
 
 Given /^lead (.+) exists with attributes "([^"]*)"$/ do |header, options|
   lead = Lead.where(:header => header).first
-  lead = Lead.make!(:header => header, :category => Category.make!) if lead.nil?
+  lead = Lead.make!(:header => header, :category => LeadCategory.make!) if lead.nil?
   lead.update_attributes(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys)
 end
 
@@ -37,7 +37,7 @@ Given /^lead (.+) exists with currency "([^"]*)"$/ do |header, currency_name|
   end
   lead = Lead.where(:header => header).first
   if lead.nil?
-    Lead.make!(:header => header, :currency => currency, :category => Category.make!)
+    Lead.make!(:header => header, :currency => currency, :category => LeadCategory.make!)
   else
     lead.update_attribute(:currency, currency)
   end
@@ -52,14 +52,14 @@ end
 
 Given /^lead (.+) exists within category (.+)$/ do |header, category_name|
   category = Category.where(:name => category_name).first
-  category = Category.make!(:name => category_name) if category.nil?
+  category = LeadCategory.make!(:name => category_name) if category.nil?
 
   lead = Lead.make!(:header => header, :category => category)
 end
 
 Given /^bought lead (.+) exists within category (.+)$/ do |header, category_name|
   category = Category.where(:name => category_name).first
-  category = Category.make!(:name => category_name) if category.nil?
+  category = LeadCategory.make!(:name => category_name) if category.nil?
 
   lead = Lead.make!(:header => header, :category => category)
   LeadSinglePurchase.make!(:lead_id => lead.id, :owner => User::Customer.make!, :paid => true, :accessible_from => Time.now)
@@ -67,7 +67,7 @@ end
 
 Given /^a lead (.+) exists within category (.+) and is bought by user (.+) with role (.+)$/ do |header, category_name, email, role|
   category = Category.where(:name => category_name).first
-  category = Category.make!(:name => category_name) if category.nil?
+  category = LeadCategory.make!(:name => category_name) if category.nil?
 
   customer = "User::#{role.camelize}".constantize.find_by_email(email)
   customer = "User::#{role.camelize}".constantize.make!(:email => email) if customer.nil?
@@ -128,7 +128,7 @@ Given /^lead "([^"]*)" was requested by user "([^"]*)" with role "([^"]*)"(?: an
   u = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
   lead = Lead.where(:header => header).first
   owner = User::Customer.first(:conditions => { :email => owner_email })
-  LeadRequest.make!(:requestee => u, :lead => lead, :owner => owner)
+  LeadRequest.make!(:requested_by => u.id, :lead => lead, :owner => owner)
 end
 
 Given /^I make ajax call to save lead purchase for lead (.+)$/ do |header|
@@ -264,7 +264,7 @@ end
 
 Given /^lead "([^"]*)" is created for country "([^"]*)"(?: with region "([^"]*)")?$/ do |header, country, region|
   lead = Lead.where(:header => header).first
-  lead = Lead.make!(:header => header, :category => Category.make!) if lead.nil?
+  lead = Lead.make!(:header => header, :category => LeadCategory.make!) if lead.nil?
   country = Country.find_by_name(country)
   region = country.nil? ? nil : country.regions.detect { |r| r.name == region }
   lead.update_attributes(:country_id => country.id, :region => region)
@@ -319,4 +319,9 @@ end
 When /^lead "([^"]*)" should be in category "([^"]*)"$/ do |header, name|
   lead = Lead.where(:header => header).first
   assert lead.category == Category.where(:name => name).first
+end
+
+When /^price for lead "([^"]*)" is set to "([^"]*)"$/ do |header, default_price|
+  lead = Lead.where(:header => header).first
+  assert lead.price.to_s == default_price
 end

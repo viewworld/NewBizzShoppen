@@ -1,26 +1,26 @@
 Given /^template named "([^"]*)" for category "([^"]*)" is created by user "([^"]*)" with role "([^"]*)"$/ do |name, category_name, email, role|
   category = Category.where(:name => category_name).first
-  category = Category.make!(:name => category_name) if category.nil?
-  user = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
+  category = LeadCategory.make!(:name => category_name) if category.nil?
+  user = "User::#{role.camelize}".constantize.first(:conditions => {:email => email})
   user = "User::#{role.camelize}".constantize.make!(:email => email, :password => "secret", :password_confirmation => "secret") if user.nil?
   template = LeadTemplate.new(:current_user => user, :creator => user, :category => category)
-  template.attributes = { :name => name }
+  template.attributes = {:name => name}
   template.save!
 end
 
 Given /^template named "([^"]*)" (is|is not) mandatory$/ do |name, is_mandatory|
   template = LeadTemplate.where(:name => name).first
-  template.update_attributes(:is_mandatory => is_mandatory != "is not" )
+  template.update_attributes(:is_mandatory => is_mandatory != "is not")
 end
 
 Given /^template named "([^"]*)" (is|is not) active$/ do |name, is_active|
   template = LeadTemplate.where(:name => name).first
-  template.update_attributes(:is_active => is_active != "is not" )
+  template.update_attributes(:is_active => is_active != "is not")
 end
 
 Given /^template named "([^"]*)" (is|is not) global$/ do |name, is_global|
   template = LeadTemplate.where(:name => name).first
-  template.update_attributes(:is_global => is_global != "is not" )
+  template.update_attributes(:is_global => is_global != "is not")
 end
 
 #fields are entered as four values: name:is_hidden:is_mandatory :field_type -- example -- computer count:false:true:1, conditions:true:false:3
@@ -37,7 +37,7 @@ end
 Given /^template named "([^"]*)" for lead "([^"]*)" has values "([^"]*)"$/ do |template_name, lead_header, values|
   lead = Lead.where(:header => lead_header).first
   template = LeadTemplate.where(:name => template_name).first
-  values.split(",").map{ |v| v.to_s.strip.split(":") }.each do |field_name, value|
+  values.split(",").map { |v| v.to_s.strip.split(":") }.each do |field_name, value|
     lead_template_field = template.lead_template_fields.detect { |ltf| ltf.name == field_name }
     LeadTemplateValue.create(:lead_template_field => lead_template_field, :value => value, :lead => lead)
   end
@@ -48,4 +48,8 @@ Given /^template named "([^"]*)" is filled out by someone$/ do |name|
   template.lead_template_fields.create(:name => "Some field", :field_type => 0) if template.lead_template_fields.empty?
   template.reload
   LeadTemplateValue.create(:lead_template_field => template.lead_template_fields.first, :value => "Some value")
+end
+
+Then /^I send email using email template "([^"]*)" for email address "([^"]*)"$/ do |et_name, email|
+  ApplicationMailer.email_template(email, EmailTemplate.find_by_uniq_id(et_name), Country.find_by_name("United Kingdom"), {}).deliver
 end

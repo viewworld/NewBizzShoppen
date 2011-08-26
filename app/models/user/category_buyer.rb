@@ -45,7 +45,7 @@ class ::User::CategoryBuyer < ::User
   end
 
   def accessible_categories
-    Category.category_buyer_accessible_categories(self)
+    LeadCategory.category_buyer_accessible_categories(self)
   end
 
   def parent_accessible_categories
@@ -57,7 +57,7 @@ class ::User::CategoryBuyer < ::User
   end
 
   def buying_categories_with_descendants
-    Category.where(buying_categories.map { |bc| "lft between #{bc.lft} and #{bc.rgt}" }.join(" or "))
+    LeadCategory.where(buying_categories.map { |bc| "lft between #{bc.lft} and #{bc.rgt}" }.join(" or "))
   end
 
   def remove_category_buyer
@@ -69,7 +69,7 @@ class ::User::CategoryBuyer < ::User
   end
 
   def deliver_welcome_email_for_upgraded_contact
-    ApplicationMailer.delay.email_template(email, EmailTemplate.find_by_uniq_id("upgraded_contact_to_category_buyer_welcome"), {:user => self})
+    TemplateMailer.delay.new(email, :upgraded_contact_to_category_buyer_welcome, with_role.address.country, {:user => self})
   end
 
 end

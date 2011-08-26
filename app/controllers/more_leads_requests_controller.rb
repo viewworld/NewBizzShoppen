@@ -17,12 +17,14 @@ class MoreLeadsRequestsController < ApplicationController
 
   def create
     params[:email_template_preview].tap do |email_params|
-      @email_template_preview = MoreLeadsRequestTemplatePreview.new(:more_leads_request, email_params.merge(:category_name => @category.name), current_user)
+      @email_template_preview = MoreLeadsRequestTemplatePreview.new(:more_leads_request, email_params.merge(:category_name => @category.name, :country => Country.get_country_from_locale), current_user)
     end
 
       if @email_template_preview.valid?
         flash[:notice] = I18n.t("more_leads_requests.create.flash.request_sent")
-        ApplicationMailer.delay.generic_email([Settings.contact_us_email], @email_template_preview.subject, @email_template_preview.body, nil, [], @email_template_preview.cc, @email_template_preview.bcc,  @email_template_preview.contact_email)
+        TemplateMailer.delay.new(Settings.contact_us_email, :blank_template, Country.get_country_from_locale,
+                                       {:subject_content => @email_template_preview.subject, :body_content => @email_template_preview.body,
+                                        :bcc_recipients => @email_template_preview.bcc, :cc_recipients => @email_template_preview.cc, :reply_to => @email_template_preview.contact_email})
 
         if current_user
           redirect_to current_user.has_any_role?(:agent, :call_centre_agent, :purchase_manager) ? agent_home_path : buyer_home_path
@@ -43,6 +45,6 @@ class MoreLeadsRequestsController < ApplicationController
   end
 
   def fetch_category
-    @category = Category.find(params[:category_id])
+    @category = LeadCategory.find(params[:category_id])
   end
 end

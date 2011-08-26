@@ -26,8 +26,12 @@ Nbs::Application.routes.draw do
     resources :categories
     resources :category_email_templates, :only => [:edit, :update]
     resource :setting, :only => [:edit, :update]
+    resources :featured_deals, :only => [:index, :create]
     resources :email_templates
     resources :leads
+    resources :deals do
+      resources :assets, :controller => "deal_assets", :only => [:create, :destroy]
+    end
     resources :articles
     resources :news
     resources :hints
@@ -64,6 +68,10 @@ Nbs::Application.routes.draw do
   namespace :buyers do
     root :to => "lead_purchases#index"
     resources :cart_items
+    resources :deal_certification_requests, :only => [:index, :edit, :update]
+    resources :deals do
+      resources :assets, :controller => "deal_assets", :only => [:create, :destroy]
+    end
     resource :cart, :only => [:show, :update, :destroy], :controller => 'cart'
     resources :lead_purchases do
       collection do
@@ -84,6 +92,9 @@ Nbs::Application.routes.draw do
     resources :call_centre_agents do
       resource :password, :controller => 'password', :only => [:new, :update, :destroy]
     end
+    resources :deals do
+      resources :assets, :controller => "deal_assets", :only => [:create, :destroy]
+    end
     resource :bulk_call_centre_agents_update, :controller => "bulk_call_centre_agents_update", :only => [:update]
     resources :leads
     resources :lead_templates
@@ -96,6 +107,9 @@ Nbs::Application.routes.draw do
       resources :certifications, :only => :create
     end
     resources :lead_templates
+    resources :deals do
+      resources :assets, :controller => "deal_assets", :only => [:create, :destroy]
+    end
   end
 
   namespace :lead_users do
@@ -119,19 +133,26 @@ Nbs::Application.routes.draw do
     resource :bulk_subaccounts_update, :controller => "bulk_subaccounts_update", :only => [:update]
     resources :not_invoiced_leads, :only => [:index]
     resources :invoices, :only => [:show, :index]
+    resources :lead_templates
   end
 
   namespace :agents do
     root :to => "leads#index"
+    resources :lead_templates
     resources :leads do
       resources :certifications, :only => :create
     end
-    resources :lead_templates
+    resources :deals do
+      resources :assets, :controller => "deal_assets", :only => [:create, :destroy]
+    end
   end
 
   namespace :purchase_managers do
     root :to => "leads#index"
-    resources :leads
+    resources :leads, :path => :requests
+    resources :tenders, :path => :leads do
+      resources :certifications, :only => :create
+    end
     resources :lead_templates
   end
 
@@ -171,7 +192,6 @@ Nbs::Application.routes.draw do
         end
         resource :agent_information, :only => [:show]
       end
-      resources :my_results
       resources :email_templates, :only => [:edit, :update]
     end
 
@@ -194,6 +214,15 @@ Nbs::Application.routes.draw do
     resources :comment_readers, :only => [:create]
   end
 
+  namespace :deal_comments do
+    resources :threads
+    resources :deals do
+      resources :threads
+    end
+    resources :replies
+    resources :comment_readers, :only => [:create]
+  end
+
   match 'buyer_home' => 'buyer_home#show', :as => "buyer_home"
   match 'agent_home' => 'agent_home#show', :as => "agent_home"
   match 'purchase_manager_home' => 'purchase_manager_home#show', :as => "purchase_manager_home"
@@ -204,10 +233,19 @@ Nbs::Application.routes.draw do
     end
   end
 
+  resources :deals, :except => [:new, :create, :destroy] do
+    member do
+      post 'rate'
+    end
+  end
+
   resources :categories, :only => [:index] do
     resources :more_leads_requests, :only => [:new, :create]
   end
+  resources :deal_categories, :only => [:index]
+
   match 'categories/:slag' => "leads#index"
+  match 'categories/deals/:slag' => "deals#index"
 
   resources :lead_advanced_import, :only => [:create, :destroy] do
     collection do
@@ -221,6 +259,7 @@ Nbs::Application.routes.draw do
   resources :purchase_manager_accounts, :only => [:new, :create]
   resources :category_buyer_accounts, :only => [:new, :create]
   resources :certification_accounts, :only => [:new, :create]
+  resources :deal_buyer_accounts, :only => [:new, :create]
   resources :locales
   resources :phone_codes
   resources :regions
@@ -254,6 +293,12 @@ Nbs::Application.routes.draw do
   resource :lead_templates
 
   resource :user_session_log, :controller => "user_session_log", :only => [:create]
+
+  resource :share_deal_by_email, :controller => "share_deal_by_email", :only => [:new, :create]
+
+  constraints(Fairdeals) do
+    match '/(:id)' => "fairdeals_home#show"
+  end
 
   match ':slug' => 'category_home#show', :as => :category_home_page
   match ':slug/account/new' => 'category_buyer_accounts#new', :as => :new_category_home_page_account

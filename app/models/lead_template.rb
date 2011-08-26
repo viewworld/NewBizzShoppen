@@ -2,6 +2,7 @@ class LeadTemplate < ActiveRecord::Base
   belongs_to :creator, :polymorphic => true, :foreign_key => "creator_id"
   belongs_to :category
   has_many :lead_template_fields, :dependent => :destroy, :order => "name"
+  has_and_belongs_to_many :deals, :class_name => "Deal", :join_table => "leads_lead_templates", :foreign_key => "lead_template_id", :association_foreign_key => "lead_id"
 
   scope :with_creator, lambda { |creator_id| where("creator_id = ?", creator_id) }
   scope :with_keyword, lambda { |q| where("lower(name) like :keyword", {:keyword => "%#{q.downcase}%"}) }

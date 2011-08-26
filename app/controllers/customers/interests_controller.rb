@@ -4,12 +4,12 @@ class Customers::InterestsController <  Customers::CustomerController
   before_filter :authorize_for_interests
 
   def edit
-    @categories = Category.with_customer_unique(current_user)
+    @categories = LeadCategory.with_customer_unique(current_user)
     @countries = Country.all(:order => "name")
   end
 
   def update
-    @categories = params[:categories].nil? ? [] : Category.with_customer_unique(current_user).where(:id => params[:categories])
+    @categories = params[:categories].nil? ? [] : LeadCategory.with_customer_unique(current_user).where(:id => params[:categories])
     @countries = params[:countries].nil? ? [] : Country.where(:id => params[:countries])
 
     current_user.categories = @categories

@@ -262,6 +262,10 @@ Given /^I make sure current locale is "([^"]*)"$/ do |locale|
   visit "/locales/#{locale}"
 end
 
+Then /^locale should be set to "([^"]*)"$/ do |locale|
+  I18n.locale.should == locale.to_sym
+end
+
 Then /^The flash message should be set to translated "([^"]*)"$/ do |key|
   assert page.body.match(I18n.t(key))
 end
@@ -417,4 +421,10 @@ end
 
 Then /^select "([^"]*)" should have option "([^"]*)" disabled$/ do |id, name|
   page.find("select[id='#{id}'] option[disabled]").text.should =~ /#{name}/
+end
+
+Given /^I visit domain (.+)$/ do |domain|
+  Capybara.default_host = domain #for Rack::Test
+  Capybara.app_host = "#{domain}:9887" if Capybara.current_driver == :selenium
+  visit("/fairdeals/")
 end

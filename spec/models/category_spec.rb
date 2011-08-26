@@ -3,8 +3,8 @@ require 'spec_helper'
 describe Lead do
 
   before(:each) do
-    @category1 = Category.make!
-    @category2 = Category.make!
+    @category1 = LeadCategory.make!
+    @category2 = LeadCategory.make!
   end
 
   it "should update total lead count properly when new lead has been created" do
@@ -41,7 +41,7 @@ describe Lead do
   end
 
   it "should update total lead count properly for category with subcategories" do
-    @category3 = Category.make!(:parent_id => @category2.id)
+    @category3 = LeadCategory.make!(:parent_id => @category2.id)
 
     lambda {
       lambda {

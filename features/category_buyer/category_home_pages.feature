@@ -153,6 +153,7 @@ Feature: Category home pages
     And I fill in "category_name" with "CategoryWithImage"
     And I fill in "category_description" with "Description"
     And attach the file "sample image" to "category_image_attributes_asset"
+    And I select "EUR" from "category_currency_id"
     And I press translated "administration.categories.new.view.button_create"
     And I am on category home page for CategoryWithImage
     Then I should see CSS path "#category_image"

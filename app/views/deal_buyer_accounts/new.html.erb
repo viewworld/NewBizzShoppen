@@ -1,0 +1,30 @@
+<column-mc:>
+
+  <header><%= t("deal_buyer_accounts.new.view.header") %></header>
+
+  <%= semantic_form_for @user, :url => deal_buyer_accounts_path do |form| %>
+      <frm title="#{t('deal_buyer_accounts.new.view.header')}" c="no_marg">
+        <param:content>
+          <div class="column_left">
+            <div class="pdd_10 no_pdd_t">
+              <fieldset class="inputs labels_ta_r labels_200">
+                <ol>
+                  <%= form.input :password, :hint => hint_for(@user, :password) %>
+                  <%= form.input :password_confirmation, :hint => hint_for(@user, :password_confirmation) %>
+                  <%= hidden_field_tag :id, params[:id] %>
+                  <%= hidden_field_tag :token, params[:token] %>
+                </ol>
+              </fieldset>
+            </div>
+          </div>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="plus">
+            <%= form.submit t("deal_buyer_accounts.new.view.button_create_account") %>
+          </ibt>
+          <%= bt_link_to nil, t("shared.accounts.new_account_form.button_cancel"), root_path, :class => "bt_grey fltr" %>
+        </param:actions>
+      </frm>
+  <% end %>
+
+</column-mc:>

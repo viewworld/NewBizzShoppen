@@ -1848,3 +1848,34 @@ span.cke_skin_kama
           font-size: larger;
           padding: 5px;
       }
+
+/* --- deal - assets list ---
+-------------------------------------------------------------------------------- */
+
+.assets_elements
+{
+    margin-top: 0 !important;
+}
+
+.assets_elements.materials
+{
+    margin-top: 6px !important;
+}
+
+.assets_elements h2
+{
+    margin-bottom: 6px;
+}
+
+.assets_elements ul li
+{
+    margin: 1px 0;
+}
+
+.assets_elements ul li img
+{
+    vertical-align: middle;
+    padding: 1px;
+    background: #fff;
+    border: 1px solid #ddd;
+}

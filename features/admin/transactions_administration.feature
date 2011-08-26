@@ -6,7 +6,7 @@ Background:
   And I make sure current locale is "en"
   And I have user with email gerard.jones@paerson22.com and role customer
   And user gerard.jones@paerson22.com with role customer exists with attributes "first_name:John,last_name:Kohen, company_name:Xanesra"
-  And I have user with email lead_user.jones@paerson22.com and role lead_user
+  And an user with role lead_user and email lead_user.jones@paerson22.com exists as subaccount for customer gerard.jones@paerson22.com
   And lead Monitors deal exists within category Computers
   And lead Printers deal exists within category Computers
   And lead Monitors deal exists with attributes "price:321.23"

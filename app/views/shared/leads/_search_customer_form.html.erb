@@ -67,7 +67,7 @@
         $.post('/leads/creators', {
             with_created_by: <%= @search.with_created_by.to_i %>,
             <% if @search.with_category %>
-            with_selected_categories: [<%= @search.with_category.to_i %>]
+            with_selected_categories: [<%= Category.find_by_id(@search.with_category).self_and_descendants.map(&:id).join(',') %>]
             <% elsif @search.with_selected_categories %>
             with_selected_categories: [<%= @search.with_selected_categories.to_a.join(',') %>]
             <% end %>

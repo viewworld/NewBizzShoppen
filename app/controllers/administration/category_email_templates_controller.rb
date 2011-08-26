@@ -22,7 +22,7 @@ class Administration::CategoryEmailTemplatesController < Administration::Adminis
   private
 
   def set_category
-    @category = Category.find(params[:id])
+    @category = LeadCategory.find(params[:id])
   end
 
 

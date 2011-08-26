@@ -1,3 +1,6 @@
+<% if campaign.cost_type == Campaign::AGENT_BILLING_RATE_COST and campaign.users.with_agents.empty? %>
+    <p style="color: red; padding:  5px;"><%= t("models.campaign.no_agent_assigned") %></p>
+<% end %>
 <div class="column_left">
   <div class="pdd_10 no_pdd_t">
     <fieldset class="inputs labels_ta_r labels_200">
@@ -14,7 +17,7 @@
           </li>
         <% end %>   
         <%= form.input :name %>
-        <%= form.input :category_id, :as => :select, :collection => Category.all, :include_blank => false %>
+        <%= form.input :category_id, :as => :select, :collection => LeadCategory.all, :include_blank => false %>
         <%= form.input :country_id, :as => :select, :collection => Country.all, :include_blank => false %>
         <%= form.input :currency_id, :collection => currencies_for_select, :include_blank => false %>
       </ol>
@@ -26,7 +29,7 @@
           <h3><%= t("campaigns.edit.campaign_targets") %></h3>
         </li>
         <%= form.input :finished_contacts_per_hour, :input_html => {:style => "width:95px"} %>
-        <%= form.input :production_value_per_hour, :input_html => {:style => "width:95px"} %>
+        <%= form.input :production_value_per_hour, :input_html => {:style => "width:95px"} %><p style="padding: 5px;">&euro;</p>
         <%= form.input :success_rate, :input_html => {:style => "width:95px"} %>        
       </ol>
     </fieldset>
@@ -46,8 +49,9 @@
                        :input_html => {:class => "datepicker", :value => campaign.end_date},
                        :hint => t('models.result_field.date_format')%>
         <%= form.input :max_contact_number, :input_html => {:style => "width:95px"} %>
+        <%= form.input :fixed_cost_value, :input_html => {:style => "width:95px"} %><p style="padding: 5px;">&euro;</p>
         <%= form.input :cost_type, :as => :radio, :collection => Campaign::COST_TYPES.map { |lnt| [t("campaigns.cost_types.cost_type#{lnt}"), lnt] }, :wrapper_html => {:class => "collection"} %>
-        <%= form.input :fixed_cost_value, :input_html => {:style => "width:95px"} %>
+        
       </ol>
     </fieldset>
   </div>

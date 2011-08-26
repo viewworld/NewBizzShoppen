@@ -31,19 +31,20 @@ Feature: Agent campaign - calling session
     @_todo @snom
     Scenario: I can enable/disable dynamic calling
 
-    @_done @_tested
+    @_done @_tested @ff5
     Scenario: I can navigate through contacts on call sheet when call is over
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I follow translated "agent_work_screen.index.show_current_call_sheet"
       And the "contact_company_name" field should contain "Bon Jovi inc."
       And I follow translated action "campaigns.edit.show_button" within row containing "Stefanek corp"
+      And I wait 5 second
       Then I should see "Stefanek corp" within "#contact_info"
       Then the "contact_company_name" field should contain "Stefanek corp"
     
     @_done @_tested_elsewhere
     Scenario: I can navigate through contacts details / results history / add result
 
-    @_done @_tested @requested
+    @_done @_tested @requested @ff5
     Scenario: I can go to previous/next contact through arrows
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And the "contact_company_name" field should contain "Bon Jovi inc."
@@ -69,7 +70,7 @@ Feature: Agent campaign - calling session
     @_done @tested_elsewhere
     Scenario: I can see contact form based on currently selected contact
 
-    @_done @_tested @selenium
+    @_done @_tested @selenium @ff5
     Scenario: I can see new result form for specifying notes and result
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Call back" from "selected_result_id"
@@ -293,17 +294,17 @@ Feature: Agent campaign - calling session
       And I should see translated "production.show.view.header"
 
     # A list of contacts which have results (including final results) assigend to them
-    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested @deprecated
+    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested @_deprecated
     Scenario: I should see a list of contacts that have results assigned to them
 
 
-    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested @deprecated
+    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested @_deprecated
     Scenario: I should see latest results on top of My results list
 
-    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested @deprecated
+    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested @_deprecated
     Scenario: I can search contacts on My results list
 
-    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested @deprecated
+    @m12 @$_call_centre_agent @requested @my_results @tgn @_done @_tested @_deprecated
     Scenario: I can edit contact when I click it on My results list
 
     @m12 @$_call_centre_agent @requested @my_results @tgn @_done @tested_elsewhere
@@ -320,7 +321,7 @@ Feature: Agent campaign - calling session
     @m13 @$_call_centre_agent @_done @_not_testable @is
     Scenario: I can open contact when I click on result from contact search
 
-    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done
+    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
     Scenario: I can upgrade contact to category buyer
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Upgrade to category buyer" from "selected_result_id"
@@ -334,7 +335,7 @@ Feature: Agent campaign - calling session
       And I follow translated "call_results.new.save_button"
       Then I should see translated "call_results.create.flash.successfully_added"
 
-    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done
+    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
     Scenario: Category buyer upgraded from lead should be subscribed to campaign's category by default
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Upgrade to category buyer" from "selected_result_id"
@@ -348,7 +349,7 @@ Feature: Agent campaign - calling session
       Then I should see translated "call_results.create.flash.successfully_added"
       And category "Business" is in interests of user "newcategory_buyer888@nbs.com" "true"
 
-    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done
+    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
     Scenario: When upgrading contact to category buyer, agent can select more subscription categories for created category buyer
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Upgrade to category buyer" from "selected_result_id"
@@ -365,7 +366,7 @@ Feature: Agent campaign - calling session
       And category "Business" is in interests of user "newcategory_buyer888@nbs.com" "true"
       And category "Leisure" is in interests of user "newcategory_buyer888@nbs.com" "true"
 
-    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done
+    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
     Scenario: Contact should receive customized emails with material and signup link
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Upgrade to category buyer" from "selected_result_id"
@@ -385,7 +386,7 @@ Feature: Agent campaign - calling session
       And last email sent should have content "Screen name: Dohn"
       And last email sent should have content "Fairleads username: newcategory_buyer888@nbs.com"
 
-    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done
+    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
     Scenario: Agent can assign materials when upgrading contact to category buyer
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Upgrade to category buyer" from "selected_result_id"
@@ -406,7 +407,7 @@ Feature: Agent campaign - calling session
     @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_done @not_testable
     Scenario: Agent can customize email when upgrading contact to category buyer
 
-    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done
+    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
     Scenario: Contact can sign up by clicking on link in email and entering password or using Facebook/Google/Linkedin
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Upgrade to category buyer" from "selected_result_id"
@@ -424,7 +425,7 @@ Feature: Agent campaign - calling session
       Then I should see translated "my_profile.edit.view.header"
 
     # his name account will already be set up by the contact information allready in the system.
-    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done
+    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
     Scenario: After sign up contact can confirm his account information
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Upgrade to category buyer" from "selected_result_id"
@@ -447,7 +448,7 @@ Feature: Agent campaign - calling session
       And the "user_category_buyer_address_attributes_address_line_1" field should contain "LongRoad 2"
       And the "user_category_buyer_address_attributes_zip_code" field should contain "21-221"
 
-    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent  @_tested @_done
+    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent  @_tested @_done @ff5
     Scenario: After confirming his account information, contact should be redirected to his account home page
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Upgrade to category buyer" from "selected_result_id"
@@ -467,7 +468,7 @@ Feature: Agent campaign - calling session
       Then I should see "Welcome to category: Business"
 
     # After he has confirmed his details he will receive a default (buyer welcome mail) with a link to the the category homepage, how he sign up (Facebook, Google of LinkedIn) just so he can remember to log on to fairleads again.
-    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done
+    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
     Scenario: After confirming his account information, contact should receive welcome mail link link to his home page and login information
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Upgrade to category buyer" from "selected_result_id"
@@ -515,4 +516,8 @@ Feature: Agent campaign - calling session
       And I follow translated "agent_work_screen.index.show_pending_calls"
       Then I should see translated "contacts.table.note" within "#contacts"
 
-  
+    @m18 @campaign_results
+    Scenario: It should not be possible to create new results when campaign expired
+
+    @m18 @campaign_results @tgn
+    Scenario: I should be able to edit the result type of the final types

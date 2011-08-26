@@ -11,16 +11,14 @@ class PurchaseManagers::LeadsController < PurchaseManagers::PurchaseManagerContr
 
   def collection
     if current_user
-      @categories = current_user.has_accessible_categories? ? Category.with_leads.within_accessible(current_user).without_locked_and_not_published : current_user.has_role?(:customer) ? Category.with_leads.without_locked_and_not_published.with_customer_unique(current_user) : Category.with_leads.without_locked_and_not_published.with_agent_unique(current_user)
+      @categories = current_user.has_accessible_categories? ? LeadCategory.with_leads.within_accessible(current_user).without_locked : current_user.has_role?(:customer) ? LeadCategory.with_leads.without_locked.with_customer_unique(current_user) : LeadCategory.with_leads.without_locked.with_agent_unique(current_user)
     else
-      @categories = Category.with_leads.without_locked_and_not_published.without_unique
+      @categories = LeadCategory.with_leads.without_locked_and_not_published.without_unique
     end
 
     params[:search] ||= {}
     @search = Lead.scoped_search(params[:search])
-    @search.without_inactive = true if params[:search][:without_inactive].nil?
-    @search.without_outdated = true if params[:search][:without_outdated].nil?
-    @leads = @search.where(:creator_id => current_user.id).paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)
+    @leads = @search.where(:requested_by => current_user.id).paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)
   end
 
   def default_params_hash(params={})
@@ -40,33 +38,35 @@ class PurchaseManagers::LeadsController < PurchaseManagers::PurchaseManagerContr
   public
 
   def new
-    @lead = Lead.new(default_params_hash)
-    @lead.category_id = params[:category_id]
-    @lead.duplicate_fields(current_user.leads.find_by_id(params[:lead_id]))
+    @deal = Deal.find_by_id(params[:deal_id])
+    @lead = Lead.new(params[:lead])
+    @lead.based_on_deal(@deal, current_user)
   end
 
   def create
-    @lead = current_user.leads.build(default_params_hash(params[:lead]))
+    @deal = Deal.find_by_id(params[:deal_id])
+    @lead = Lead.new(params[:lead])
+    @lead.based_on_deal(@deal, current_user)
     session[:selected_category] = @lead.category_id
-
+    @lead.creation_step = 3
     create! do |success, failure|
       success.html {
-        if !params[:commit_duplicate].blank?
-          redirect_to new_purchase_managers_lead_path(:lead_id => @lead.id, :category_id => @lead.category_id)
-        elsif !params[:commit_continue].blank?
-          redirect_to new_purchase_managers_lead_path(:category_id => @lead.category_id)
-        else
-          redirect_to purchase_managers_leads_path
-        end
+        redirect_to purchase_managers_lead_path(@lead)
       }
-      end
+    end
+  end
+
+  def edit
+    @lead = Lead.requested_by_purchase_manager(current_user).find(params[:id])
   end
 
   def show
-    @lead = current_user.leads.find(params[:id])
+    @lead = Lead.requested_by_purchase_manager(current_user).find(params[:id])
   end
 
   def update
+    @lead = Lead.requested_by_purchase_manager(current_user).find(params[:id])
+
     update! do |success, failure|
       success.html { redirect_to purchase_managers_leads_path }
       success.js { render :nothing => true }
@@ -76,7 +76,8 @@ class PurchaseManagers::LeadsController < PurchaseManagers::PurchaseManagerContr
   end
 
   def destroy
-    @lead = current_user.leads.find(params[:id])
+    @lead = Lead.requested_by_purchase_manager(current_user).find(params[:id])
+
     if @lead.destroy
       flash[:notice] = I18n.t("purchase_manager.leads.destroy.flash.lead_deletion_successful")
     else

@@ -85,7 +85,7 @@
       <div class="frm_hr"></div>
       <div class="frm_hc">
         <param:header/>
-        <h2><%= title %></h2>
+        <h2><%= title.html_safe if title %></h2>
       </div>
     </div>
     <div class="frm_content">

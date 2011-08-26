@@ -697,7 +697,7 @@ Feature: Agent campaign - management
           And I choose "campaign_cost_type_3"
           And I press translated "campaigns.new.button_create"
           And I follow translated "campaigns.edit.agent_assignment_button"
-          And I check "campaign_user_id_7"
+          And I check "campaign_user_id_8"
           And I follow translated "campaigns_users.index.button_assign"
           And I am not sign in
           And I sign in as translator_call_centre@nbs.com with password secret

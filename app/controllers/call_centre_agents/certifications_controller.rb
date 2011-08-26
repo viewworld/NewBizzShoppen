@@ -2,4 +2,8 @@ class CallCentreAgents::CertificationsController < CallCentreAgents::CallCentreA
   set_tab "created_leads"
   include ::LeadCertificationActions
 
+  def model_name
+   "leads"
+  end
+
 end

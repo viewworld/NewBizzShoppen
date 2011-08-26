@@ -18,3 +18,9 @@ Scenario: I can see list of all translatable strings in the system
 
 @non_testable @_done
 Scenario: I can change each translation
+
+@m18 @languages
+Scenario: I can translate all languages
+
+@m18 @languages
+Scenario: I can select which 2 languages to display when translating

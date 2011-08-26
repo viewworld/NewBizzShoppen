@@ -13,7 +13,7 @@ Feature: Agent information
   Scenario: I can see my created value Today
     And I click hidden link by url regex "/callers\/campaigns\/\d+\/agent_work_screen/"
     And I wait 5 second
-    And I should see "created today: €0 (€0)"
+    And I should see "created today: €130 (€130)"
     And I should see "this week: €130 (€130)"
     And I should see "this quarter: €"
     And I should see "this year: €"
@@ -31,7 +31,7 @@ Feature: Agent information
   Scenario: I can see Top agent name for Today
     And I click hidden link by url regex "/callers\/campaigns\/\d+\/agent_work_screen/"
     And I wait 5 second
-    And I should see "created today: €0 (€0)"
+    And I should see "created today: €130 (€130)"
     And I should see "this week: €130 (€130)"
     And I should see "this quarter: €"
     And I should see "this year: €"

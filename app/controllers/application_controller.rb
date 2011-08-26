@@ -1,8 +1,10 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  before_filter :authorize_with_http_basic_for_staging, :check_category_buyer, :update_log_entries
+  before_filter :authorize_with_http_basic_for_staging, :check_category_buyer, :update_log_entries, :set_user_time_zone
   after_filter :do_something
+
+  layout proc{|c| session[:site] ? "layouts/#{session[:site]}/application" : "layouts/fairleads/application" }
 
   def authorize_with_http_basic_for_staging
     if Rails.env.staging?
@@ -68,6 +70,12 @@ class ApplicationController < ActionController::Base
         session[:lead_id] = nil
         session[:buyout] = nil
         requested_path
+      elsif !resource.has_role? :purchase_manager and session[:site] == "fairdeals"
+        key = current_user.generate_login_key!
+        sign_out(current_user)
+        "http://fairleads.com/login_keys/?key=#{key}"
+      elsif resource.has_role? :purchase_manager and session[:site] == "fairdeals"
+        root_path
       elsif resource.has_role? :category_buyer and resource.sign_in_count == 1 and resource.contact.present?
         my_profile_path
       elsif resource.has_role? :category_buyer
@@ -102,10 +110,21 @@ class ApplicationController < ActionController::Base
     @locales = Locale.all
     session[:locale_code] = locale_code || session[:locale_code] || I18n.locale.to_s
     I18n.locale = session[:locale_code]
+    Thread.current[:globalize_detailed_locale] = ((user_signed_in? and current_user) and current_user.with_role.address.present?) ? current_user.with_role.address.country.detailed_locale : browser_locale
   end
 
   def locale
     @locale ||= I18n.locale
+  end
+
+  def browser_locale
+    accept_lang = request.env['HTTP_ACCEPT_LANGUAGE'] || ""
+    (accept_lang.scan(/^([a-z]{2})-([a-z]{2})/).first.blank? ? accept_lang.scan(/^([a-z]{2})/) : accept_lang.scan(/^([a-z]{2})-([a-z]{2})/)).flatten.last
+
+  end
+
+  def set_user_time_zone
+    #Time.zone = current_user.time_zone if user_signed_in?
   end
 
   def redirect_to_root_path_if_signed_in

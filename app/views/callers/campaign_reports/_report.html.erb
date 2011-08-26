@@ -1,4 +1,4 @@
-<% total_columns = 16 + CampaignReport.final_results(result_ids).count %>
+<% total_columns = 15 + CampaignReport.final_results(result_ids).count %>
 <table id="reports_table" class="generic">
   <thead>
   <tr>
@@ -21,7 +21,7 @@
   </tfoot>
   <tbody>
   <tr>
-    <td class="hl"></td>
+    <td class="cl"></td>
     <td>&nbsp;</td>
     <td><%= t("campaign_reports.index.table.success_percent") %></td>
     <td><%= t("campaign_reports.index.table.finish_cph") %></td>
@@ -44,7 +44,7 @@
     <td><%= t("campaign_reports.index.table.result_value") %></td>
 
     <td><%= t("campaign_reports.index.table.value_from_leads_sold") %></td>
-    <td class="hr"></td>
+    <td class="cr"></td>
   </tr>
 
   <% if per_user %>

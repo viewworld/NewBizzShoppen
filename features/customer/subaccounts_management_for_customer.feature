@@ -9,7 +9,7 @@ Background:  Sign in user and set locale
   Then I sign in as bob@person.com with password supersecret
   And I go to customers subaccounts
 
-@_done @not_testable @done
+@_done @not_testable
 Scenario: I do not and cannot belong to other customer
 
 @_tested
@@ -31,7 +31,7 @@ Scenario: I can add new lead buyer that belongs to my account (checkbox selected
 
 @_tested  @noguess
 Scenario: Each lead buyer added has lead user role automatically assigned
-  When I have user with email lead_buyer11@person.com and role lead_buyer
+  And an user with role lead_buyer and email lead_buyer11@person.com exists as subaccount for customer bob@person.com
   Then user "lead_buyer11@person.com" with role "lead_buyer" also has role "lead_user"
 
 @_tested

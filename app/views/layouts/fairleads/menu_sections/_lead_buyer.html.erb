@@ -1,0 +1,8 @@
+<% if current_user and current_user.has_role?(:customer) %>
+    <%= main_menu_link_to t("layout.main_menu.lead_buyer.lead_purchases"), buyers_lead_purchases_path, :tab => "owned_leads" %>
+    <%= main_menu_link_to t("layout.main_menu.lead_buyer.my_deals"), buyers_deals_path, :tab => "deals" %>
+    <% unless current_user.has_role?(:category_buyer) %>
+      <%= main_menu_link_to(t("layout.main_menu.lead_buyer.deals_to_certify"), buyers_deal_certification_requests_path, :tab => "deal_certification_requests") unless current_user.deal_certification_requests.blank? %>
+    <% end %>
+<% end %>
+

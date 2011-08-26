@@ -22,7 +22,7 @@ class LeadTemplatesController < ApplicationController
 
   def set_lead_and_category
     @lead = current_user.leads.find(params[:lead_id])
-    @category = Category.find(params[:category_id])
+    @category = LeadCategory.find(params[:category_id])
     @templates = @lead.lead_templates - LeadTemplate.with_category_and_its_ancestors(@category).where("is_active = ?", true)
   end
 

@@ -1,0 +1,213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>Fairleads</title>
+  <link rel="shortcut icon" href="/images/favicon.ico"/>
+  <%= include_stylesheets :fairdeals %>
+  <%= include_javascripts :fairdeals %>
+  <%= ajaxful_rating_style %>
+
+  <%= csrf_meta_tag %>
+
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <link rel="apple-touch-icon" href="/images/iOS/touch-icon-iphone.png"/>
+  <link rel="apple-touch-icon" sizes="72x72" href="/images/iOS/touch-icon-ipad.png"/>
+  <link rel="apple-touch-icon" sizes="114x114" href="/images/iOS/touch-icon-iphone4.png"/>
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="apple-touch-startup-image" href="/images/iOS/splash.png">
+
+  <head:/>
+
+</head>
+<body>
+
+<div id="global_loader"></div>
+
+<div id="head">
+  <div id="head_bg"></div>
+</div>
+
+<div id="container" class="c">
+  <div id="top">
+
+    <div id="user_panel">
+      <%= render '/layouts/locale_selection' %>
+      <% if user_signed_in? %>
+          <% unless current_user.hide_profile_page? %>
+              <%= link_to t("layout.my_profile_link"), my_profile_path, :class => "sl" %>
+          <% end %>
+          <%= link_to t("layout.logout_link", :user_email => current_user.email), '/logout', :class => "sl" %>
+      <% else %>
+          <%= link_to t("layout.login_link"), url_to_role_specific_home_page, :class => "sl" %>
+      <% end %>
+    </div>
+
+    <%= link_to image_tag("logo_fairleads.png"), root_path, :class => "logo" %>
+  </div>
+
+  <%= render('/layouts/cart') if current_user && current_user.has_role?(:lead_buyer) && !current_user.big_buyer %>
+
+  <div id="user_menu">
+    <%= render main_menu %>
+
+    <% if session[:show_cart_hint] == "1" %>
+        <div class="hidden">
+          <div id="cart_hint_div"><%= t("layout.cart.lead_added_to_cart_hint", :link => link_to(t("layout.cart.here_link"), buyers_cart_path)).html_safe %> <%= link_to_function t("layout.cart.close_hint"), "$.post('#{buyers_cart_path(:show_cart_hint => 0)}', {'_method':'put'})" %></div>
+        </div>
+    <% end %>
+
+    <% if current_user && current_user.has_role?(:lead_buyer) && !current_user.big_buyer %>
+        <div id="cart">
+          <ul class="nav">
+            <li>
+              <%= link_to(content_tag(:span, image_tag("icons/basket.png") + t("layout.cart.cart_header", :count => current_user.cart.count)), "#", :id => "basket_bt") %>
+            </li>
+          </ul>
+        </div>
+    <% end %>
+  </div>
+
+  <div id="modal_for_longer_session" style="display:none">
+    You will be log out after 20 seconds unless you click cancel...
+  </div>
+
+  <div id="content">
+
+    <search-box:/>
+
+    <div class="pdd_10 no_pdd_t">
+      <% unless notice.blank? %>
+          <div class="flash flash_notice">
+            <%= notice %>
+          </div>
+      <% end %>
+
+      <% unless alert.blank? %>
+          <div class="flash flash_alert">
+            <%= alert %>
+          </div>
+      <% end %>
+
+      <column-mc:/>
+    </div>
+  </div>
+
+  <div id="footer">
+    <%= render "layouts/footer" %>
+  </div>
+</div>
+
+<script type="text/javascript">
+
+    I18n.defaultLocale = "<%= I18n.default_locale %>";
+    I18n.locale = "<%= I18n.locale %>";
+
+    <% if session[:show_cart_hint] == "1" %>
+    jQuery("#cart").qtip(
+    {
+        content: {
+            text: $("#cart_hint_div").html()
+        },
+        position: {
+            corner: {
+                target: 'leftMiddle',
+                tooltip: 'rightMiddle'
+            },
+            adjust: {
+                x: 5
+            }
+        },
+        hide: {
+            fixed: true,
+            when: {
+                event: "click"
+            }
+        },
+        show: {
+            ready: true
+        },
+        style: {
+            name: "cream",
+            border: {
+                radius: 3
+            },
+            tip: {
+                corner: 'rightMiddle',
+                size: {
+                    x: 8,
+                    y : 12
+                }
+            }
+        }
+    });
+
+    jQuery("#cart").qtip("show").bind("mouseover", function() {
+        $.post('<%= buyers_cart_path(:show_cart_hint => 0) %>', {'_method':'put'});
+        $(this).qtip("destroy");
+    });
+    <% end %>
+
+    $(document).ready(function() {
+        $('input.formtastic-ui-datepicker').datepicker({ dateFormat: '<%= I18n.t("date.formats.datepicker") %>' });
+    });
+
+    <% if !current_user.blank? and !Rails.env.development? and current_user.agent? %>
+    TIME_OUT = <%= Settings.logout_time.to_i %> * 60;
+
+    function set_logout_time() {
+        return setTimeout("top.location='<%= logout_path %>'", TIME_OUT * 1000 + 20 * 1000);
+    }
+
+    function set_logout_dialog_time() {
+        return setTimeout("check_session()", TIME_OUT * 1000);
+    }
+
+    function check_session(){
+        $.post("/user_session_log.js")
+    }
+
+    function extend_session(){
+        clearTimeout(window.t);
+        window.t = set_logout_time();
+        window.t2 = set_logout_dialog_time();
+    }
+
+    var t = set_logout_time();
+    var t2 = set_logout_dialog_time();
+
+    $('#modal_for_longer_session').dialog({
+        autoOpen: false,
+        buttons: { "Cancel": function() {
+            extend_session();
+            $(this).dialog("close");
+        }}
+    });
+
+    <% end %>
+
+</script>
+
+<% if Rails.env.production? %>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-24542608-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<% end %>
+
+<js:/>
+
+</body>
+</html>
