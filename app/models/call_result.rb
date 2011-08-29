@@ -195,7 +195,7 @@ class CallResult < ActiveRecord::Base
                                                      :country_id => contact.country_id,  :address_line_2 => contact.address_line_2,
                                                      :address_line_3 => contact.address_line_3, :region_id => contact.region_id},
                             :agreement_read => true, :company_name => contact.company_name, :phone => contact.phone_number,
-                            :contact => contact, :company_registration_number => contact.company_vat_no,
+                            :contact => contact, :vat_number => contact.company_vat_no,
                             :company_ean_number => contact.company_ean_number)
 
     users_count = User.where("last_name = ?", contact_last_name).count
