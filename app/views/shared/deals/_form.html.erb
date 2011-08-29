@@ -54,12 +54,12 @@
         <% end %>
         <% unless user_signed_in? and current_user.buyer? %>
         <span>
-            <%= form.input :group_deal, :wrapper_html => {:style => "margin-left:200px"}, :onclick => "if($('#deal_group_deal').is(':checked')){$('<abbr title=\"required\">*</abbr>').appendTo('#deal_price_input label'); $('#group_deal_fields').show();} else {$('#deal_price_input label abbr').remove();$('#group_deal_fields').hide();}" %>
+            <%= form.input :group_deal, :wrapper_html => {:style => "margin-left:200px"}, :onclick => "enable_group_deal();" %>
         </span>
 
-            <div id="group_deal_fields" <%= " style='display: none'" unless @deal.group_deal == true %>>
-              <%= form.input :discounted_price, :required => true %>
-              <%= form.input :social_media_description, :input_html => {:style => "height: 150px;width:280px;"}, :required => true %>
+            <div id="group_deal_fields">
+              <%= form.input :discounted_price, :required => @deal.group_deal == true %>
+              <%= form.input :social_media_description, :input_html => {:style => "height: 150px;width:280px;"}, :required => @deal.group_deal == true %>
             </div>
         <% end %>
       </ol>
@@ -172,6 +172,30 @@
       <% Locale.all.each do |locale| %>
       <%= "language_names['#{locale.code}'] = '#{t('models.locale.' + locale.code)}';" -%>
       <% end %>
+
+      function mark_as_required(field_id, is_enabled){
+          if(is_enabled){
+              $('<abbr title=\"required\">*</abbr>').appendTo(field_id + ' label');
+          }
+          else
+          {
+              $(field_id + ' label abbr').remove();
+          }
+      }
+
+      function enable_group_deal(){
+          if($('#deal_group_deal').is(':checked')){
+              mark_as_required('#deal_price_input', true);
+              mark_as_required('#deal_discounted_price_input', true);
+              mark_as_required('#deal_social_media_description_input', true);
+          }
+          else
+          {
+              mark_as_required('#deal_price_input', false);
+              mark_as_required('#deal_discounted_price_input', false);
+              mark_as_required('#deal_social_media_description_input', false);
+          }
+      }
 
   </script>
   <%= javascript_include_tag 'lead_translation_functions.js' %>
