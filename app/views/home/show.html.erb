@@ -7,7 +7,7 @@
   <div class="introduction">
     <% if youtube_introduction %>
         <div class="youtube_thumb">
-          <%= link_to image_tag(youtube_introduction.image ? youtube_introduction.image.url : "http://img.youtube.com/vi/#{youtube_introduction.url.extract_youtube_video_id}/default.jpg", :class => "thumb"), "http://www.youtube.com/embed/#{youtube_introduction.url.extract_youtube_video_id}?autoplay=1&rel=0&border=0", :class => "introduction_video", :id => "introduction_video_link" %>
+          <%= link_to image_tag(youtube_introduction.image ? youtube_introduction.image.url : "https://img.youtube.com/vi/#{youtube_introduction.url.extract_youtube_video_id}/default.jpg", :class => "thumb"), "https://www.youtube.com/embed/#{youtube_introduction.url.extract_youtube_video_id}?autoplay=1&rel=0&border=0", :class => "introduction_video", :id => "introduction_video_link" %>
         </div>
     <% end %>
     <div class="intro_content">

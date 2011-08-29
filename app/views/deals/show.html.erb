@@ -9,7 +9,6 @@
       <meta property="fb:app_id" content="198584516868482"/>
   <% end %>
   <%= javascript_include_tag "global_template_editor" %>
-  <%= javascript_include_tag 'http://static.ak.fbcdn.net/connect.php/js/FB.Share' %>
 </head:>
 
 <column-mc:>
@@ -100,12 +99,12 @@
 
       <clb/>
 
-      <script src="http://platform.linkedin.com/in.js" type="text/javascript"></script>
+      <script src="https://platform.linkedin.com/in.js" type="text/javascript"></script>
       <script type="IN/Share" data-url="<%= deal_url(:id => @deal.slug) %>" data-counter="right"></script>
 
       <clb/>
-      <a href="http://twitter.com/share" class="twitter-share-button" data-text="<%= @deal.social_media_description %>" data-count="horizontal"><%= t("deals.show.view.tweet") %></a>
-      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-text="<%= @deal.social_media_description %>" data-count="horizontal"><%= t("deals.show.view.tweet") %></a>
+      <script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script>
   <% end %>
   <% if user_signed_in? and current_user.purchase_manager? %>
       <%= link_to_function t("deals.show.view.share_by_email"), "$('#modal_for_share_deal_by_email').dialog('open');" %>

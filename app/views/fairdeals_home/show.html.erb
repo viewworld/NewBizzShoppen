@@ -1,6 +1,5 @@
 <head:>
   <%= javascript_include_tag "global_template_editor" %>
-  <%= javascript_include_tag 'http://static.ak.fbcdn.net/connect.php/js/FB.Share' %>
 </head:>
 
 <column-mc:>
@@ -10,7 +9,7 @@
   <div class="grid_750 fltl" id="introduction_video">
     <% if youtube_introduction %>
         <div class="youtube_thumb">
-          <%= link_to image_tag(youtube_introduction.image ? youtube_introduction.image.url : "http://img.youtube.com/vi/#{youtube_introduction.url.extract_youtube_video_id}/default.jpg", :class => "thumb"), "http://www.youtube.com/embed/#{youtube_introduction.url.extract_youtube_video_id}?autoplay=1&rel=0&border=0", :class => "introduction_video", :id => "introduction_video_link" %>
+          <%= link_to image_tag(youtube_introduction.image ? youtube_introduction.image.url : "https://img.youtube.com/vi/#{youtube_introduction.url.extract_youtube_video_id}/default.jpg", :class => "thumb"), "https://www.youtube.com/embed/#{youtube_introduction.url.extract_youtube_video_id}?autoplay=1&rel=0&border=0", :class => "introduction_video", :id => "introduction_video_link" %>
         </div>
     <% end %>
     <div class="intro_content">
@@ -82,12 +81,12 @@
 
                       <clb/>
 
-                      <script src="http://platform.linkedin.com/in.js" type="text/javascript"></script>
+                      <script src="https://platform.linkedin.com/in.js" type="text/javascript"></script>
                       <script type="IN/Share" data-url="<%= deal_url(:id => @primary_deal.slug) %>" data-counter="right"></script>
 
                       <clb/>
-                      <a href="http://twitter.com/share" class="twitter-share-button" data-text="<%= @primary_deal.social_media_description %>" data-count="horizontal"><%= t("deals.show.view.share_by_email") %></a>
-                      <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+                      <a href="https://twitter.com/share" class="twitter-share-button" data-text="<%= @primary_deal.social_media_description %>" data-count="horizontal"><%= t("deals.show.view.share_by_email") %></a>
+                      <script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script>
                   <% elsif user_signed_in? and current_user.purchase_manager? %>
                       <%= link_to_function t("deals.show.view.share_by_email"), "$('#modal_for_share_deal_by_email').dialog('open');" %><br/>
                   <% end %>
