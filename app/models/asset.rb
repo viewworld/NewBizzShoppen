@@ -45,7 +45,7 @@ class Asset < ActiveRecord::Base
         :s3_credentials => "#{Rails.root}/config/s3.yml",
         :s3_permissions => :public_read,
         :bucket         => "fairleads/#{Rails.env}",
-        :url            => "http://fairleads.s3.amazonaws.comassets/:id/:style/:basename.:extension",
+        :url            => "https://fairleads.s3.amazonaws.comassets/:id/:style/:basename.:extension",
         :path           => "assets/:id/:style/:basename.:extension"
       }
     else
