@@ -49,7 +49,7 @@
             <%= form.input :price, :as => :hidden %>
             <%= form.input :currency_id, :value => Currency.default_currency.id, :as => :hidden %>
         <% else %>
-            <%= form.input :price, :as => :string, :required => @deal.group_deal == true %>
+            <%= form.input :price, :as => :string, :label => t("shared.deals.form.price_label") %>
             <%= form.input :currency_id, :collection => currencies_for_select, :include_blank => false %>
         <% end %>
         <% unless user_signed_in? and current_user.buyer? %>
@@ -58,9 +58,16 @@
         </span>
 
             <div id="group_deal_fields">
-              <%= form.input :discounted_price, :required => @deal.group_deal == true %>
+              <%= form.input :deal_price, :required => @deal.group_deal == true %>
+              <%= form.input :discounted_price, :required => @deal.group_deal == true, :label => t("shared.deals.form.discounted_price_label") %> <%= "#{t("shared.deals.form.saving_percent_label")} (#{@deal.saving})" if @deal.discounted_price.to_i > 0 %>
               <%= form.input :social_media_description, :input_html => {:style => "height: 150px;width:280px;"}, :required => @deal.group_deal == true %>
             </div>
+
+            <% unless @deal.new_record? %>
+                <li class="string"><%= form.label :url %>
+                  <%= link_to deal_url(:id => @deal.slug), deal_url(:id => @deal.slug) %>
+                </li>
+            <% end %>
         <% end %>
       </ol>
     </fieldset>
@@ -185,13 +192,13 @@
 
       function enable_group_deal(){
           if($('#deal_group_deal').is(':checked')){
-              mark_as_required('#deal_price_input', true);
+              mark_as_required('#deal_deal_price_input', true);
               mark_as_required('#deal_discounted_price_input', true);
               mark_as_required('#deal_social_media_description_input', true);
           }
           else
           {
-              mark_as_required('#deal_price_input', false);
+              mark_as_required('#deal_deal_price_input', false);
               mark_as_required('#deal_discounted_price_input', false);
               mark_as_required('#deal_social_media_description_input', false);
           }

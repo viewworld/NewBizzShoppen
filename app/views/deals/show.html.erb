@@ -67,11 +67,20 @@
           <%= deal_show_li(format_date(@deal.end_date), t("deals.show.view.end_date_label")) %>
           <%= deal_show_li(@deal.category, t("deals.show.view.category_label")) %>
 
-          <% unless @deal.price.blank? %>
+          <% unless @deal.deal_price.blank? %>
               <li>
                 <div>
                   <span class="label"><%= t("deals.show.view.price_label") %></span>
-                  <%= @deal.price %> <%= @deal.currency %>
+                  <%= @deal.deal_price %> <%= @deal.currency %>
+                </div>
+              </li>
+          <% end %>
+
+          <% unless @deal.discounted_price.blank? %>
+              <li>
+                <div>
+                  <span class="label"><%= t("deals.show.view.discounted_price_label") %></span>
+                  <%= @deal.discounted_price %> <%= @deal.currency %> (<%= t("deals.show.view.saving_label") %> <%= @deal.saving %>)
                 </div>
               </li>
           <% end %>
