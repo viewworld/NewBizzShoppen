@@ -7,9 +7,9 @@ Feature: Group deals
   @_done @_tested @tgn
   Scenario: Under browse deals, the group deals should be displayed on the top
     Given a deal named "Zzzzzzz group deal #1" exists within category "Electronics deals"
-    And a deal named "Zzzzzzz group deal #1" exists with attributes "published:1,group_deal:1,price:20,discounted_price:10,social_media_description:quo vadis"
+    And a deal named "Zzzzzzz group deal #1" exists with attributes "published:1,group_deal:1,price:11,deal_price:20,discounted_price:10,social_media_description:quo vadis"
     Given a deal named "Zzzzzzz group deal #2" exists within category "Electronics deals"
-    And a deal named "Zzzzzzz group deal #2" exists with attributes "published:1,group_deal:1,price:20,discounted_price:10,social_media_description:quo vadis"
+    And a deal named "Zzzzzzz group deal #2" exists with attributes "published:1,group_deal:1,price:11,deal_price:20,discounted_price:10,social_media_description:quo vadis"
     Given a deal named "Aaaaaa common deal #1" exists within category "Electronics deals"
     And a deal named "Aaaaaa common deal #1" exists with attributes "published:1,group_deal:0"
     Given a deal named "Dddddd common deal #1" exists within category "Electronics deals"
