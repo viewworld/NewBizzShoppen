@@ -1,5 +1,8 @@
 Given /^campaign named "([^"]*)" exists with attributes "([^"]*)"$/ do |campaign_name, options|
   campaign = Campaign.where(:name => campaign_name).first
+  if campaign.nil?
+    campaign = Campaign.make!(:name => campaign_name)
+  end
   campaign.update_attributes(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys)
 end
 
