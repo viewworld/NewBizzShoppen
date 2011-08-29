@@ -1,7 +1,13 @@
 @m18 @general_deals
 Feature: General deals
 
+  @_done @_wip
   Scenario: Default end date for deal should be set to 1 year from current date
+    When there are no deals
+    And user buyer@nbs.com with role customer exists with attributes "company_name:Asd"
+    And user "buyer@nbs.com" has assigned role "deal_maker"
+    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|company_name:starks"
+    Then the only deal should have end date set to one year from now
 
   Scenario: Leads created from deal requests should be certified by default
 

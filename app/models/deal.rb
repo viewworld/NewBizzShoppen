@@ -69,7 +69,7 @@ class Deal < AbstractLead
         :country_id => user.with_role.address.country_id,
         :region_id => user.with_role.address.region_id,
         :start_date => Date.today,
-        :end_date => Date.today,
+        :end_date => Date.today + 1.year,
         :price => 0)
   end
   

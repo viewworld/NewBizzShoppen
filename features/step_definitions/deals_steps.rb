@@ -183,3 +183,12 @@ When /^I append id of deal "([^"]*)" to url$/ do |deal_header|
   deal = Deal.where(:header => deal_header).first
   visit "/#{deal.id}"
 end
+
+Given /^there are no deals$/ do
+  Deal.delete_all
+end
+
+Then /^the only deal should have end date set to one year from now$/ do
+  (Deal.first.end_date.to_date - Date.today).to_i.should >= 365
+end
+
