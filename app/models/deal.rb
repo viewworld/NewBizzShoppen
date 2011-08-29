@@ -119,7 +119,7 @@ class Deal < AbstractLead
   end
 
   def saving
-    (!price.blank? and price > 0 and !discounted_price.blank? and discounted_price > 0 and price > discounted_price) ? "#{(100 - discounted_price * 100 / price).to_i}%" : "0%"
+    (!deal_price.blank? and deal_price > 0 and !discounted_price.blank? and discounted_price > 0 and deal_price > discounted_price) ? "#{(100 - discounted_price * 100 / deal_price).to_i}%" : "0%"
   end
   
   def assign_lead_category_to_buyer!

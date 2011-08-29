@@ -29,7 +29,7 @@ class Country < ActiveRecord::Base
   end
 
   def default_email_template_signature_logo_url
-    "http://static-fairleads.s3.amazonaws.com/images/logo_fairleads_with_border.jpg"
+    "https://static-fairleads.s3.amazonaws.com/images/logo_fairleads_with_border.jpg"
   end
 
   def default_bank_account

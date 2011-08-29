@@ -20,7 +20,7 @@ class Category < ActiveRecord::Base
   after_create :generate_blurb
 
   validates_presence_of :name
-  validates_uniqueness_of :name, :scope => :parent_id
+  validates_uniqueness_of :name, :scope => [:type, :parent_id]
 
   has_many :leads do
     def including_subcategories

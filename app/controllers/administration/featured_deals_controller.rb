@@ -10,7 +10,7 @@ class Administration::FeaturedDealsController < Administration::AdministrationCo
 
   def create
     FeaturedDeal.set_all(params[:featured_deals])
-    flash[:notice] = "Featured deals have been successfully set."
+    flash[:notice] = "Featured deals have been updated."
     redirect_to administration_featured_deals_path
   end
 

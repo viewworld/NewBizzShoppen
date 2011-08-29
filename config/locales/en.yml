@@ -2565,6 +2565,9 @@ en:
         short_description_label: "Short description"
         detailed_description_label: "Detailed description"
         deal_category_label: "Deal category"
+        price_label: "Lead price"
+        discounted_price_label: "Discounted deal price"
+        saving_percent_label: "Saving:"
   models:
     call_result:
       not_unique_email_address: "User with this e-mail already exists!"
@@ -3359,6 +3362,8 @@ en:
         hours: "hours"
         minutes: "minutes"
         seconds: "seconds"
+        saving_label: "Saving:"
+        discounted_price_label: "Discounted price"
     common:
       assets:
         view:
