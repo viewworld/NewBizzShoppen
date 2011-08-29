@@ -6,7 +6,9 @@
       <% unless user_signed_in? and current_user.has_role?(:purchase_manager) %>
         <%= main_menu_link_to t("layout.main_menu.shared.browse_leads"), categories_path, :tab => "browse_leads" %>
       <% end %>
-      <%= main_menu_link_to(t("layout.main_menu.shared.browse_deals"), deal_categories_path, :tab => "browse_deals") %>
+  <% end %>
+  <% if !user_signed_in? or !current_user.has_role?(:category_buyer) or current_user.show_deals? %>
+    <%= main_menu_link_to(t("layout.main_menu.shared.browse_deals"), deal_categories_path, :tab => "browse_deals") %>
   <% end %>
   <% if current_user %>
       <% current_user.roles_sorted.each do |role| %>
