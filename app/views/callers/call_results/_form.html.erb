@@ -1,14 +1,19 @@
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs labels_ta_r labels_200">
     <ol>
-      <li class="string">
-        <label><%= t("call_results.new.result") %></label>
+      <% if call_result.new_record? or (call_result.valid? and (call_result.result.upgrades_to_lead? or call_result.result.upgrades_to_category_buyer? or call_result.result.send_material?)) %>
+          <li class="string">
+            <label><%= t("call_results.new.result") %></label>
 
-        <div class="txt">
-          <strong><%= call_result.result.name %></strong>
-        </div>
-      </li>
-      <%= form.input :result_id, :as => :hidden %>
+            <div class="txt">
+              <strong><%= call_result.result.name %></strong>
+            </div>
+          </li>
+          <%= form.input :result_id, :as => :hidden %>
+      <% else %>
+        <%= form.input :result_id_changed, :as => :hidden %>
+        <%= form.input :result_id, :as => :select,  :collection => call_result.contact.campaign.results, :include_blank => false, :input_html => { :onchange => "$('#call_result_result_id_changed').val('1');$('#edit_call_result_#{call_result.id}').submit();" } %>
+      <% end %>
       <%= form.input :note, :as => :text, :input_html => {:style => "width: 400px;height:120px"} %>
 
       <% if call_result.result.upgrades_to_category_buyer? %>

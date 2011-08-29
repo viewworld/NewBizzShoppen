@@ -1,7 +1,7 @@
 class CallResult < ActiveRecord::Base
   attr_accessor :contact_email_address, :contact_first_name, :contact_last_name, :contact_address_line_1, :contact_zip_code,
                 :contact_company_name, :buying_category_ids, :email_template_subject, :email_template_from, :email_template_bcc,
-                :email_template_cc, :email_template_body
+                :email_template_cc, :email_template_body, :result_id_changed
 
   belongs_to :contact
   belongs_to :result
@@ -19,8 +19,9 @@ class CallResult < ActiveRecord::Base
   validate :validate_uniqueness_of_contact_email_address, :if => Proc.new { |cr| cr.result.upgrades_to_category_buyer? }
 
   after_create :process_side_effects, :update_contact_note, :set_last_call_result_in_contact, :update_contact_email, :update_contact_address
-  after_update :process_side_effects
+  after_update :process_side_effects, :update_contact_email, :update_contact_address
   after_destroy :update_completed_status, :update_pending_status
+  before_update :process_for_changed_result_type
 
   PENDING_RESULT_TYPES = [:call_back, :not_interested_now]
 
@@ -240,5 +241,13 @@ class CallResult < ActiveRecord::Base
   
   def set_last_call_result_in_contact
     self.contact.update_attribute(:last_call_result_at, created_at)
+  end
+
+  def process_for_changed_result_type
+    if result_id_changed? and ActiveRecord::ConnectionAdapters::Column.value_to_boolean(result_id_changed)
+      self.errors.add(:result_id_changed)
+      self.result_id_changed = 0
+      false
+    end
   end
 end
