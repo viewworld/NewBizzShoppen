@@ -32,6 +32,7 @@ class SignInController < ApplicationController
           @user.confirm!
           sign_in(@user)
         end
+        success_notice = I18n.t("flash.accounts.create.no_verification") if @user.confirmed?
         flash[:notice] = @user.rpx_identifier.blank? ? success_notice : "Your account has been successfully created! You are now log in."
         format.html { redirect_to(path) }
       else

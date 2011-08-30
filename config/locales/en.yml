@@ -900,6 +900,8 @@ en:
             resend_certification_notification_after_days: "Resend certification notification after days"
             youtube_introduction: "YouTube introduction video URL"
             default_deal_admin_email: "Default deal admin email"
+            email_verification_for_procurement_managers: "Email verification for procurement managers"
+            email_verification_for_sales_managers: "Email verification for sales managers"
       edit:
         view:
           title: "Settings"
@@ -2747,6 +2749,9 @@ en:
         invalid: "is invalid"
 
   flash:
+    accounts:
+      create:
+        no_verification: "Your account has been successfully created! You can now sign in."
     agent_accounts:
       create:
         notice: "Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account."
