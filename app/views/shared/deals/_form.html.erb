@@ -52,11 +52,11 @@
             <%= form.input :price, :as => :string, :label => t("shared.deals.form.price_label") %>
             <%= form.input :currency_id, :collection => currencies_for_select, :include_blank => false %>
         <% end %>
+        <%= form.input :max_auto_buy, :as => :string, :label => t("shared.deals.form.max_auto_buy_label") %>
         <% unless user_signed_in? and current_user.buyer? %>
         <span>
             <%= form.input :group_deal, :wrapper_html => {:style => "margin-left:200px"}, :onclick => "enable_group_deal();" %>
         </span>
-
             <div id="group_deal_fields">
               <%= form.input :deal_price, :required => @deal.group_deal == true %>
               <%= form.input :discounted_price, :required => @deal.group_deal == true, :label => t("shared.deals.form.discounted_price_label") %> <%= "#{t("shared.deals.form.saving_percent_label")} (#{@deal.saving})" if @deal.discounted_price.to_i > 0 %>

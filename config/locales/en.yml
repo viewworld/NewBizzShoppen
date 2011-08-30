@@ -902,6 +902,7 @@ en:
             default_deal_admin_email: "Default deal admin email"
             email_verification_for_procurement_managers: "Email verification for procurement managers"
             email_verification_for_sales_managers: "Email verification for sales managers"
+            default_max_auto_buy_per_4_weeks: "Default max auto buy per 4 weeks"
       edit:
         view:
           title: "Settings"
@@ -2570,6 +2571,7 @@ en:
         price_label: "Lead price"
         discounted_price_label: "Discounted deal price"
         saving_percent_label: "Saving:"
+        max_auto_buy_label: "Max auto buy per 4 weeks"
   models:
     call_result:
       not_unique_email_address: "User with this e-mail already exists!"

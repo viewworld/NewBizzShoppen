@@ -24,6 +24,7 @@ class Nbs < Thor
     # email verification settings
     Settings.email_verification_for_procurement_managers = "0" if Settings.email_verification_for_procurement_managers.nil?
     Settings.email_verification_for_sales_managers = "0" if Settings.email_verification_for_sales_managers.nil?
+    Settings.default_max_auto_buy_per_4_weeks = 5 if Settings.default_max_auto_buy_per_4_weeks.nil?
 
     Country.find_or_create_by_name("Denmark", :locale => "dk", :detailed_locale => "dk", :vat_rate => VatRate.new(:rate => 25), :email_template_signature => "some amazing signature that will keep everyone happy all day long")
     Country.find_or_create_by_name("United Kingdom", :locale => "en", :detailed_locale => "gb", :vat_rate => VatRate.new(:rate => 20), :email_template_signature => "some amazing signature that will keep everyone happy all day long")

@@ -29,7 +29,7 @@ class Deal < AbstractLead
 
   validate :deal_admin_presence, :unless => Proc.new{|d| d.new_record? }
 
-  before_create :create_uniq_deal_category
+  before_create :create_uniq_deal_category, :set_default_max_auto_buy
   after_create :certify_for_unknown_email, :assign_deal_admin
   before_save :set_dates
 
@@ -70,7 +70,8 @@ class Deal < AbstractLead
         :region_id => user.with_role.address.region_id,
         :start_date => Date.today,
         :end_date => Date.today + 1.year,
-        :price => 0)
+        :price => 0,
+        :max_auto_buy => Settings.default_max_auto_buy_per_4_weeks.to_i)
   end
   
   def build_buyer(params={})
@@ -141,6 +142,11 @@ class Deal < AbstractLead
     "#{id}#{ '-' + header unless header.blank?}".to_url
   end
 
+  def current_four_week_period_start_date
+    time_diff = ((Time.now.to_i) - (created_at.to_i)) / (24 * 60 * 60)
+    (created_at + ((time_diff / 28).to_i * 28).days).to_date
+  end
+
   private
 
   def process_for_lead_information?
@@ -173,5 +179,9 @@ class Deal < AbstractLead
     if creator.agent? or creator.admin? and buyer.nil?
       deal_certification_requests.create
     end
+  end
+
+  def set_default_max_auto_buy
+    self.max_auto_buy = Settings.default_max_auto_buy_per_4_weeks.to_i unless max_auto_buy
   end
 end
