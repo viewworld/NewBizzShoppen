@@ -325,3 +325,9 @@ When /^price for lead "([^"]*)" is set to "([^"]*)"$/ do |header, default_price|
   lead = Lead.where(:header => header).first
   assert lead.price.to_s == default_price
 end
+
+Given /^lead "([^"]*)" should be bought by user with email "([^"]*)"$/ do |header, email|
+  lead = Lead.where(:header => header).first
+  user = User.where(:email => email).first.with_role
+  assert !lead.lead_purchases.detect { |lp| lp.owner_id == user.id }.nil?
+end

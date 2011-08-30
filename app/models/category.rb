@@ -138,6 +138,9 @@ class Category < ActiveRecord::Base
     if auto_buy_changed? and auto_buy? and !customers.first.nil?
       user_category_interest = customers.first.with_role.category_interests.where(:category_id => self.id).first
       user_category_interest.destroy if user_category_interest
+      Lead.without_bought_and_requested_by(customers.first).published_only.without_inactive.where(:category_id => self.id).each do |lead|
+        customers.first.cart.add_lead(lead)
+      end
     end
   end
 
