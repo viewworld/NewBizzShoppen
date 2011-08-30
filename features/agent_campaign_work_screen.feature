@@ -527,7 +527,7 @@ Feature: Agent campaign - calling session
     When I follow translated action "campaigns.table.work_screen" within row containing "Expired campaign"
     Then I should not see translated "call_results.edit.button_new_result"
 
-    @m18 @campaign_results @tgn @wip
+    @m18 @campaign_results @tgn @_done @_tested @hanging_js
     Scenario: I should be able to edit the result type of the final types
     And contact for company "Xena1" and campaign "Testing One" is assigned to user "translator_call_centre_agent@nbs.com"
     And contact for company "Xena1" has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
@@ -539,3 +539,4 @@ Feature: Agent campaign - calling session
     And I select "Upgrade to category buyer" from "call_result_result_id"
     And I wait 2 second
     And I press translated "call_results.edit.save_button"
+    And I wait 2 second
