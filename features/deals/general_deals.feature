@@ -1,7 +1,7 @@
 @m18 @general_deals
 Feature: General deals
 
-  @_done @_wip
+  @_done
   Scenario: Default end date for deal should be set to 1 year from current date
     When there are no deals
     And user buyer@nbs.com with role customer exists with attributes "company_name:Asd"
