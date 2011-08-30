@@ -71,7 +71,7 @@ class Deal < AbstractLead
         :start_date => Date.today,
         :end_date => Date.today + 1.year,
         :price => 0,
-        :max_auto_buy => Settings.default_auto_buy_per_4_weeks.to_i)
+        :max_auto_buy => Settings.default_max_auto_buy_per_4_weeks.to_i)
   end
   
   def build_buyer(params={})
@@ -182,6 +182,6 @@ class Deal < AbstractLead
   end
 
   def set_default_max_auto_buy
-    self.max_auto_buy = Settings.default_auto_buy_per_4_weeks.to_i unless max_auto_buy
+    self.max_auto_buy = Settings.default_max_auto_buy_per_4_weeks.to_i unless max_auto_buy
   end
 end

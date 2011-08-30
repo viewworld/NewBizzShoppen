@@ -21,7 +21,7 @@ Settings.default_payout_delay = 0 if Settings.default_payout_delay.nil?
     Settings.resend_certification_notification_after_days = 15 if Settings.resend_certification_notification_after_days.nil?
     Settings.expire_certification_notification_after_days = 15 if Settings.expire_certification_notification_after_days.nil?
     Settings.default_deal_admin_email = Rails.env.production? ? "" : "agent@nbs.com" if Settings.default_deal_admin_email.nil?
-    Settings.default_auto_buy_per_4_weeks = 5 if Settings.default_auto_buy_per_4_weeks.nil?
+    Settings.default_max_auto_buy_per_4_weeks = 5 if Settings.default_max_auto_buy_per_4_weeks.nil?
 
     Country.find_or_create_by_name("Denmark", :locale => "dk", :detailed_locale => "dk", :vat_rate => VatRate.new(:rate => 25), :email_template_signature => "some amazing signature that will keep everyone happy all day long")
     Country.find_or_create_by_name("United Kingdom", :locale => "en", :detailed_locale => "gb", :vat_rate => VatRate.new(:rate => 20), :email_template_signature => "some amazing signature that will keep everyone happy all day long")

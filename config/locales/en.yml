@@ -900,6 +900,7 @@ en:
             resend_certification_notification_after_days: "Resend certification notification after days"
             youtube_introduction: "YouTube introduction video URL"
             default_deal_admin_email: "Default deal admin email"
+            default_max_auto_buy_per_4_weeks: "Default max auto buy per 4 weeks"
       edit:
         view:
           title: "Settings"

@@ -118,8 +118,9 @@ Scenario: I can specify youtube url for each locale
   And I am on the home page
   Then I should see "1" elements within CSS path ".introduction_video"
 
-@m18 @auto_buy_max
+@m18 @auto_buy_max @_done @_tested @tgn
 Scenario: I can set default auto buy max for 4 weeks
+  And I fill in "setting_5" with "11"
 
 @m18 @settings
 Scenario: I can enable/disable email verification for procurement managers

@@ -15,7 +15,7 @@ Feature: General deals
 
   @_done @_tested @selenium @tgn
   Scenario: I can set a default auto buy max per deal per 4 weeks
-    Given setting for "default_auto_buy_per_4_weeks" is set to "7"
+    Given setting for "default_max_auto_buy_per_4_weeks" is set to "7"
     And user buyer@nbs.com with role customer exists with attributes "company_name:Asd"
     And user "buyer@nbs.com" has assigned role "deal_maker"
     And I am on the homepage
