@@ -88,6 +88,7 @@ class Lead < AbstractLead
   before_validation :handle_dialling_codes
   validate :check_lead_templates
   before_save :check_if_category_can_publish_leads
+  after_create :certify_lead_if_created_from_deal
   after_update :send_instant_notification_to_subscribers
   after_save :auto_buy
   attr_accessor :creation_step
@@ -182,6 +183,13 @@ class Lead < AbstractLead
       unless lead_template_values.select { |ltv| lead_template_fields.map(&:id).include?(ltv.lead_template_field_id) }.size == lead_template_fields.size
         self.errors.add(:category_id, I18n.t("shared.leads.form.not_all_templates_filled"))
       end
+    end
+  end
+
+  def certify_lead_if_created_from_deal
+    if deal
+      lcr = self.lead_certification_requests.create(:do_not_send_email => true)
+      lcr.update_attribute(:state, LeadCertificationRequest::STATE_APPROVED)
     end
   end
 

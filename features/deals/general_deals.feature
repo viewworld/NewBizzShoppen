@@ -9,7 +9,23 @@ Feature: General deals
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|company_name:starks"
     Then the only deal should have end date set to one year from now
 
+  @_done @_tested @tgn @selenium
   Scenario: Leads created from deals should be marked as certified
+    When there are no deals
+    And user buyer@nbs.com with role customer exists with attributes "company_name:Asd"
+    And user "buyer@nbs.com" has assigned role "deal_maker"
+    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "max_auto_buy:1|header:super|description:super|hidden_description:super|start_date:2011-01-01|company_name:Asd|published:1"
+    Then I am not sign in
+    And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role purchase_manager
+    Then I sign in as purchase_manager101@nbs.com with password supersecret
+    And I follow translated "layout.main_menu.shared.browse_deals"
+    And I follow "Business deals"
+    And I follow translated "deals.index.view.contact_me"
+    And I fill in "lead_company_name" with "Some name"
+    And I fill in "lead_hidden_description" with "some hidden note"
+    And I press translated "purchase_manager.leads.new.view.button_create"
+    And I press translated "purchase_manager.leads.show.view.ok_confirmation"
+    And lead "A company is interested in super" certification status should be "3"
 
   @_done @_tested @selenium @tgn
   Scenario: I can set a default auto buy max per deal per 4 weeks

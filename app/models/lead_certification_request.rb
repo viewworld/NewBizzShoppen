@@ -12,6 +12,7 @@ class LeadCertificationRequest < ActiveRecord::Base
   STATES_THAT_COULD_BE_RECERTIFICATED = [STATE_SENT, STATE_SENT_REMINDER, STATE_SENT_SECOND_REMINDER, STATE_TIMED_OUT]
 
   after_create :process
+  attr_accessor :do_not_send_email
 
   scope :active, where("state <= ?", STATE_SENT_SECOND_REMINDER)
 
@@ -25,7 +26,7 @@ class LeadCertificationRequest < ActiveRecord::Base
     self.state = STATE_SENT
     self.email = contact_email
     self.save!
-    TemplateMailer.delay.new(contact_email, :certification_request, Country.get_country_from_locale, {:lead_certification_request => self})
+    TemplateMailer.delay.new(contact_email, :certification_request, Country.get_country_from_locale, {:lead_certification_request => self}) unless do_not_send_email
   end
 
   def generate_token(size=40)
