@@ -141,6 +141,26 @@ class Deal < AbstractLead
     "#{id}#{ '-' + header unless header.blank?}".to_url
   end
 
+  def next_group_deal
+    if Deal.group_deals.order("end_date ASC").where("end_date >= ? and id <> ?", self.end_date, self.id).any?
+      Deal.group_deals.order("end_date ASC").where("end_date >= ? and id <> ?", self.end_date, self.id).first
+    elsif Deal.group_deals.order("end_date ASC").where("id <> ?", self.id).any?
+      Deal.group_deals.order("end_date ASC").where("id <> ?", self.id).first
+    else
+      self
+    end
+  end
+
+  def previous_group_deal
+    if Deal.group_deals.order("end_date DESC").where("end_date <= ? and id <> ?", self.end_date, self.id).any?
+      Deal.group_deals.order("end_date DESC").where("end_date <= ? and id <> ?", self.end_date, self.id).first
+    elsif Deal.group_deals.order("end_date DESC").where("id <> ?", self.id).any?
+      Deal.group_deals.order("end_date DESC").where("id <> ?", self.id).first
+    else
+      self
+    end
+  end
+
   private
 
   def process_for_lead_information?

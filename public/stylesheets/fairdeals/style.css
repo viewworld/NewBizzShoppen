@@ -1322,6 +1322,11 @@ span.cke_skin_kama
     zoom: 1 !ie7;
 }
 
+.primary_deal .frm_head a
+{
+    color: #3C3C3C;
+}
+
 .primary_deal .frm_head h2
 {
     font-size: 18px;    
@@ -1443,14 +1448,14 @@ span.cke_skin_kama
 .other_deals .deal_thumb
 {
     float: left;
-    width: 90px;
+    width: 70px;
     height: 20px;
 }
 
 .other_deals .deal_price
 {
     float: right;
-    width: 100px;
+    width: 120px;
     font-size: 13px;
 }
 

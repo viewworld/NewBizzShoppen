@@ -3261,6 +3261,8 @@ en:
         header_latest_leads: "Latest deals"
         request_information: "Request information"
         contact_me: "Get deal"
+        price: "Price"
+        save: "Save"
       search:
         keyword_label: "Keyword"
         search_button: "Search"
@@ -3320,6 +3322,7 @@ en:
         seconds: "secs"
         saving_label: "Saving:"
         discounted_price_label: "Discounted price"
+        time_left: "Time left"
     common:
       assets:
         view:
