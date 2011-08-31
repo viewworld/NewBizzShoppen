@@ -137,7 +137,13 @@ class Category < ActiveRecord::Base
   def handle_auto_buy
     if auto_buy_changed? and auto_buy? and !customers.first.nil?
       user_category_interest = customers.first.with_role.category_interests.where(:category_id => self.id).first
-      user_category_interest.destroy if user_category_interest
+      if user_category_interest and customers.first.deal_category_id != self.id
+        user_category_interest.destroy
+      elsif !user_category_interest and customers.first.deal_category_id == self.id
+        user = customers.first.with_role
+        user.categories << self
+        user.save
+      end
       Lead.without_bought_and_requested_by(customers.first).published_only.without_inactive.where(:category_id => self.id).each do |lead|
         customers.first.cart.add_lead(lead)
       end

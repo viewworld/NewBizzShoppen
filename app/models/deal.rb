@@ -166,11 +166,13 @@ class Deal < AbstractLead
       end
 
       buyer.update_attribute(:deal_category_id, lead_category.id) if buyer and buyer.deal_category_id.blank?
+      buyer.update_attribute(:big_buyer, true) if buyer and !buyer.big_buyer?
       lead_category.update_attribute(:is_customer_unique, true) unless lead_category.is_customer_unique
       if buyer and !lead_category.customers.include?(buyer)
         lead_category.customers << buyer
         lead_category.save
       end
+      lead_category.update_attribute(:auto_buy, true) unless lead_category.auto_buy?
       self.lead_category_id = lead_category.id
     end
   end

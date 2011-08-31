@@ -104,3 +104,18 @@ Feature: General deals
     And category "TestRemainingLeads" is unique for some customers users and is auto buy
     And lead "Test remaining leads #1" should be bought by user with email "buyer@nbs.com"
     And lead "Test remaining leads #2" should be bought by user with email "buyer@nbs.com"
+
+  @added @selenium @_done @_tested @tgn
+  Scenario: When small buyer creates deal he/she becomes big buyer and the category created is added to his/hers subscriptions
+    Given I am signed up and confirmed as user with email small_buyer@nbs.com and password secret and role customer
+    And user small_buyer@nbs.com with role customer exists with attributes "company_name:Xeper"
+    And I am on the homepage
+    And I make sure current locale is "en"
+    Then I sign in as small_buyer@nbs.com with password secret
+    Then I follow translated "layout.main_menu.lead_buyer.my_deals"
+    Then I follow translated "deals.common.listing.view.new_deal"
+    Then I fill deal creation form
+    Then I press translated "buyer.deals.new.view.create_button"
+    And user "small_buyer@nbs.com" should be big buyer
+    And category "Xeper" is in interests of user "small_buyer@nbs.com" "true"
+    And category named "Xeper" is auto buy enabled
