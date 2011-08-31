@@ -33,7 +33,7 @@ class AbstractLead < ActiveRecord::Base
   validate :check_category, :if => :process_for_lead_information?
 
   after_create :cache_creator_name
-  before_save :change_creator, :set_euro_price
+  before_save :change_creator, :set_euro_price, :set_creator
   before_save :set_published_at
   before_validation :strip_email_address
 
@@ -123,6 +123,10 @@ class AbstractLead < ActiveRecord::Base
     if category and category.is_agent_unique and !creator.has_role?(:admin) and !(creator.unique_categories.include?(category) or (creator.parent.present? and creator.parent.with_role.unique_categories.include?(category)))
       self.errors.add(:category_id, "Incorrect category!")
     end
+  end
+
+  def set_creator
+    self.creator = current_user if creator.nil?
   end
 
   def cache_creator_name

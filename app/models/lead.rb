@@ -86,7 +86,7 @@ class Lead < AbstractLead
 
   before_save :handle_category_change
   before_validation :handle_dialling_codes
-  validate :check_lead_templates
+  validate :check_lead_templates, :unless => Proc.new { |l| l.requestee and l.requestee.has_role?(:purchase_manager) }
   before_save :check_if_category_can_publish_leads
   after_create :certify_lead_if_created_from_deal
   after_update :send_instant_notification_to_subscribers
@@ -103,7 +103,7 @@ class Lead < AbstractLead
   end
 
   def process_for_lead_information?
-    true
+    !(requestee and requestee.has_role?(:purchase_manager))
   end
 
     #prevent dialling codes from saving when no proper phone number follows them

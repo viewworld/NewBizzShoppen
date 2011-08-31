@@ -1885,11 +1885,16 @@ en:
           button_create_and_continue: "Create & continue"
           button_create_and_duplicate: "Create & duplicate"
           remove_language: "Remove"
-          lead_note: "Note"
+          lead_note: "Please tell us about your needs:"
       edit:
         view:
           title: "Editing lead: %{name}"
           button_update: "Save"
+          contact_name_label: "Company contact name"
+          company_name_label: "Company name"
+          contact_email_label: "Contact e-mail"
+          contact_phone_number_label: "Contact phone number"
+          company_website_label: "Company website"
     lead_templates:
       index:
         view:
@@ -3344,6 +3349,7 @@ en:
         detailed_description_label: "Detailed description"
         fine_print_label: "Fine print"
         company_logo_label: "Company logo"
+        company_name_label: "Company name"
         company_description_label: "Company description"
         images_label: "Images"
         materials_label: "Materials"
@@ -3371,6 +3377,7 @@ en:
         seconds: "seconds"
         saving_label: "Saving:"
         discounted_price_label: "Discounted price"
+        get_deal_confirmation_msg: "Do you want to get the deal?"
     common:
       assets:
         view:
