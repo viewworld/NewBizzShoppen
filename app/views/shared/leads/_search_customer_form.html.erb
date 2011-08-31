@@ -40,7 +40,7 @@
       <ol class="no_pdd">
         <li class="select" style="float:right">
           <%= label "category", t("leads.index.search.category_label") %>
-          <%= select_tag "category", options_for_select(current_user.parent_accessible_categories.map { |c| [c.name, c.cached_slug] }, @home_category.cached_slug),
+          <%= select_tag "category", options_for_select(current_user.parent_accessible_categories_without_auto_buy.map { |c| [c.name, c.cached_slug] }, @home_category.cached_slug),
                          :include_blank => false,
                          :onchange => "uncheck_category_checkboxes();this.form.action='/'+this.value+'/leads';this.form.submit();"
           %>

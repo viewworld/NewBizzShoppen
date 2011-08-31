@@ -48,6 +48,10 @@ class ::User::CategoryBuyer < ::User
     LeadCategory.category_buyer_accessible_categories(self)
   end
 
+  def parent_accessible_categories_without_auto_buy
+    parent_accessible_categories.where(:auto_buy => false)
+  end
+
   def parent_accessible_categories
     parent ? parent.with_role.accessible_categories : accessible_categories
   end

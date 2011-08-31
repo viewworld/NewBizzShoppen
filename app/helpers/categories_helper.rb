@@ -49,7 +49,7 @@ module CategoriesHelper
       if current_user.has_role?(:admin)
         category_model.roots
       elsif current_user.has_role?(:category_buyer) and category_model == LeadCategory
-        current_user.parent_accessible_categories
+        current_user.parent_accessible_categories_without_auto_buy
       else
         current_user.has_accessible_categories? ? category_model.roots.within_accessible(current_user) : current_user.has_role?(:customer) ? category_model.roots.with_customer_unique(current_user) : category_model.roots.with_agent_unique(current_user)
       end
