@@ -198,5 +198,8 @@ Scenario: I can edit "Additional information" for category
   Then I press "Save"
 
 
-@m18
+@m18 @_tested @_done @tgn
 Scenario: Buyout for all categories is disabled by default
+  Given I go to browse leads
+  And I follow translated "administration.categories.index.view.new_category"
+  And the "category_buyout_enabled" checkbox should not be checked
