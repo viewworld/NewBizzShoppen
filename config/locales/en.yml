@@ -3315,9 +3315,9 @@ en:
         cancel: "Cancel"
         tweet: "Tweet"
         days: "days"
-        hours: "hours"
-        minutes: "minutes"
-        seconds: "seconds"
+        hours: "hrs"
+        minutes: "mins"
+        seconds: "secs"
         saving_label: "Saving:"
         discounted_price_label: "Discounted price"
     common:

@@ -57,13 +57,13 @@ stylesheets:
     - public/stylesheets/ajaxful_rating.css
 
   fairdeals:
-    - public/stylesheets/ocss/reset.css
-    - public/stylesheets/ocss/helpers.css
-    - public/stylesheets/ocss/columns.css
-    - public/stylesheets/ocss/frm.css
-    - public/stylesheets/ocss/table.css
-    - public/stylesheets/ocss/inputs.css
-    - public/stylesheets/style.css
+    - public/stylesheets/fairdeals/ocss/reset.css
+    - public/stylesheets/fairdeals/ocss/helpers.css
+    - public/stylesheets/fairdeals/ocss/columns.css
+    - public/stylesheets/fairdeals/ocss/frm.css
+    - public/stylesheets/fairdeals/ocss/table.css
+    - public/stylesheets/fairdeals/ocss/inputs.css
+    - public/stylesheets/fairdeals/style.css
     - public/stylesheets/jquery-ui-1.8.5.custom.css
     - public/stylesheets/colorbox.css
     - public/stylesheets/countdown.css

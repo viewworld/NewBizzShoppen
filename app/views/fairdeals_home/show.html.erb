@@ -4,257 +4,308 @@
 
 <column-mc:>
 
-  <hl pdd="15"/>
 
-  <div class="grid_750 fltl" id="introduction_video">
-    <% if youtube_introduction %>
-        <div class="youtube_thumb">
-          <%= link_to image_tag(youtube_introduction.image ? youtube_introduction.image.url : "https://img.youtube.com/vi/#{youtube_introduction.url.extract_youtube_video_id}/default.jpg", :class => "thumb"), "https://www.youtube.com/embed/#{youtube_introduction.url.extract_youtube_video_id}?autoplay=1&rel=0&border=0", :class => "introduction_video", :id => "introduction_video_link" %>
+<div class="grid_680 fltl">
+  <div class="homepage_intro">
+    <%= link_to image_tag('fairdeals/intro.png'), "#" %>
+  </div>
+  <% if @primary_deal %>
+      <div class="frm_plain primary_deal">
+        <%= link_to "previous", "#", :class => "arrow_left" %>
+        <%= link_to "next", "#", :class => "arrow_right" %>
+        <div class="frm_head">
+          <h2>Test</h2>
         </div>
-    <% end %>
-    <div class="intro_content">
-      <%= blurb("blurb_start_page_fairdeals") %>
+        <div class="frm_content">
+
+          <div class="deal_info">
+            <p>
+              <%= image_tag("fairdeals/fakes/big_thumb.png", :class => "thumb") %>
+              <%= image_tag @primary_deal.logo.url if @primary_deal.logo %>
+            </p>
+
+            <p class="b">
+              <%= as_currency(@primary_deal.price, @primary_deal.currency) %> - Save <%= @primary_deal.saving %>
+            </p>
+
+            <p class="new_price">
+              <%= as_currency(@primary_deal.discounted_price, @primary_deal.currency) %>
+            </p>        
+
+            <% if user_signed_in? and current_user.has_role?(:purchase_manager) and !@primary_deal.requested_by?(current_user) %>
+                <p>
+                  <%= bt_link_to nil, t("deals.index.view.contact_me"), new_purchase_managers_lead_path(:deal_id => @primary_deal.id) %>
+                </p>
+            <% end %>
+
+          </div>
+
+          <div class="deal_desc">
+            <p>
+              <%= @primary_deal.description %>
+            </p>
+
+            <div id="countdown" class="countdown">
+              <span class="countdown_title">Time left:</span>
+              <div class="dash days_dash">
+                <span class="dash_title"><%= t("deals.show.view.days") %></span>
+                
+                <div class="digit">0</div>
+                <div class="digit">0</div>
+              </div>
+              <div class="dash hours_dash">
+                <span class="dash_title"><%= t("deals.show.view.hours") %></span>
+
+                <div class="digit">0</div>
+                <div class="digit">0</div>
+              </div>
+              <div class="dash minutes_dash">
+                <span class="dash_title"><%= t("deals.show.view.minutes") %></span>
+
+                <div class="digit">0</div>
+                <div class="digit">0</div>
+              </div>
+              <div class="dash seconds_dash">
+                <span class="dash_title"><%= t("deals.show.view.seconds") %></span>
+
+                <div class="digit">0</div>
+                <div class="digit">0</div>
+              </div>
+            </div>
+          </div>
+
+          <clb/>
+
+          <div>
+            <% if Rails.env != "test" and user_signed_in? and current_user.purchase_manager? %>
+                <a name="fb_share" share_url="<%= escape_uri(deal_url(:id => @primary_deal.slug)) %>"></a>
+
+                <!--<iframe src="http://www.facebook.com/plugins/like.php?app_id=101408449959161&amp;href=<%= escape_uri(deal_url(:id => @primary_deal.slug)) %>&amp;send=true&amp;layout=button_count&amp;width=250&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:250px; height:21px;" allowTransparency="true"></iframe>-->
+                <!--<div id="fb-root"></div>-->
+                <!--<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>-->
+                <!--<fb:comments href="<%= escape_uri(deal_url(:id => @primary_deal.slug)) %>" num_posts="2" width="500"></fb:comments>-->
+
+                <clb/>
+
+                <script src="https://platform.linkedin.com/in.js" type="text/javascript"></script>
+                <script type="IN/Share" data-url="<%= deal_url(:id => @primary_deal.slug) %>" data-counter="right"></script>
+
+                <clb/>
+                <a href="https://twitter.com/share" class="twitter-share-button" data-text="<%= @primary_deal.social_media_description %>" data-count="horizontal"><%= t("deals.show.view.share_by_email") %></a>
+                <script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script>
+            <% elsif user_signed_in? and current_user.purchase_manager? %>
+                <%= link_to_function t("deals.show.view.share_by_email"), "$('#modal_for_share_deal_by_email').dialog('open');" %>
+                <br/>
+            <% end %>
+
+            <div id="modal_for_share_deal_by_email" style="display:none;">
+              <%= render :partial => "share_deal_by_email/new", :locals => {:deal => @primary_deal} %>
+            </div>
+          </div>
+
+
+          <!-- end / main deal -->
+        </div>
+        <div class="frm_foot">
+          <p>
+            <%= link_to image_tag("fairdeals/bt/social_email.png"), "#" %>
+            <%= link_to image_tag("fairdeals/bt/social_linkedin.png"), "#" %>
+            <%= link_to image_tag("fairdeals/bt/social_facebook.png"), "#" %>
+            <%= link_to image_tag("fairdeals/bt/social_twitter.png"), "#" %>
+          </p>
+        </div>
+      </div>
+
+  <% end %>
+
+  <!--- other deals --->
+
+  <div class="other_deals">
+
+    <div class="col" id="secondary_featured_deal_1">
+      <% if featured = FeaturedDeal.where(:position => 1).first and featured.deal %>
+          <frm c="no_marg" title="#{link_to featured.deal.header, deal_path(featured.deal.slug)}">
+            <param:content>
+              <div class="pdd_10">
+                <p class="deal_desc">£80 for Philips 22” Full HD Monitor with free delivery</p>
+
+                <p class="deal_thumb">
+                  <%= image_tag featured.deal.logo.url, :class => "thumb" if featured.deal.logo %>
+                </p>
+
+                <p class="deal_price">
+                  Price
+                  <span class="b green"><%= as_currency(featured.deal.discounted_price, featured.deal.currency) %></span>
+                  <br/>
+                  Save Price <span class="b red"><%= featured.deal.saving %></span>
+                  <% if user_signed_in? and current_user.has_role?(:purchase_manager) and !featured.deal.requested_by?(current_user) %>
+                      <%= bt_link_to nil, t("deals.index.view.contact_me"), new_purchase_managers_lead_path(:deal_id => featured.deal.id) %>
+                  <% end %>
+                </p>
+              </div>
+            </param:content>
+          </frm>
+      <% end %>
+    </div>
+
+    <div class="col col_middle" id="secondary_featured_deal_2">
+      <% if featured = FeaturedDeal.where(:position => 2).first and featured.deal %>
+          <frm c="no_marg" title="#{link_to featured.deal.header, deal_path(featured.deal.slug)}">
+            <param:content>
+              <div class="pdd_10">
+                <p class="deal_desc">£80 for Philips 22” Full HD Monitor with free delivery</p>
+
+                <p class="deal_thumb">
+                  <%= image_tag featured.deal.logo.url, :class => "thumb" if featured.deal.logo %>
+                </p>
+
+                <p class="deal_price">
+                  Price
+                  <span class="b green"><%= as_currency(featured.deal.discounted_price, featured.deal.currency) %></span>
+                  <br/>
+                  Save Price <span class="b red"><%= featured.deal.saving %></span>
+                  <% if user_signed_in? and current_user.has_role?(:purchase_manager) and !featured.deal.requested_by?(current_user) %>
+                      <%= bt_link_to nil, t("deals.index.view.contact_me"), new_purchase_managers_lead_path(:deal_id => featured.deal.id) %>
+                  <% end %>
+                </p>
+              </div>
+            </param:content>
+          </frm>
+      <% end %>
+    </div>
+
+    <div class="col" id="secondary_featured_deal_3">
+      <% if featured = FeaturedDeal.where(:position => 3).first and featured.deal %>
+          <frm c="no_marg" title="#{link_to featured.deal.header, deal_path(featured.deal.slug)}">
+            <param:content>
+              <div class="pdd_10">
+                <p class="deal_desc">£80 for Philips 22” Full HD Monitor with free delivery</p>
+
+                <p class="deal_thumb">
+                  <%= image_tag featured.deal.logo.url, :class => "thumb" if featured.deal.logo %>
+                </p>
+
+                <p class="deal_price">
+                  Price
+                  <span class="b green"><%= as_currency(featured.deal.discounted_price, featured.deal.currency) %></span>
+                  <br/>
+                  Save Price <span class="b red"><%= featured.deal.saving %></span>
+                  <% if user_signed_in? and current_user.has_role?(:purchase_manager) and !featured.deal.requested_by?(current_user) %>
+                      <%= bt_link_to nil, t("deals.index.view.contact_me"), new_purchase_managers_lead_path(:deal_id => featured.deal.id) %>
+                  <% end %>
+                </p>
+              </div>
+            </param:content>
+          </frm>
+      <% end %>
     </div>
   </div>
+  <!--- end / other deals --->
+</div>
+<div class="grid_280 fltr">
+
+  <div class="homepage_actions frm_dark pdd_10">
+    <% unless user_signed_in? %>
+        <%= bt_link_to nil, t("fairdeals_home.show.view.get_free_account"), new_purchase_manager_account_path, :class => "bt_max" %>
+    <% end %>
+    <%= bt_link_to nil, t("fairdeals_home.show.view.browse_our_deals"), deal_categories_path, :class => "bt_grey bt_max" %>
+    <%= bt_link_to nil, t("fairdeals_home.show.view.find_a_vendor"), new_purchase_managers_tender_path, :class => "bt_grey bt_max" %>
+  </div>
+
 
 
   <% unless user_signed_in? %>
-      <div class="grid_340 fltr">
-        <frm title="I have an account" c="no_marg">
-          <div class="pdd_10">
-            <%= semantic_form_for(:user, :url => session_path(:user)) do |f| %>
 
-                <!--<fieldset class="inputs labels_100 inputs_180 no_pdd">-->
-                  <!--<ol class="align_inputs no_pdd">-->
-                    <!--<%= render :partial => "shared/accounts/social_login_for_sign_in" %>-->
-                  <!--</ol>-->
-                <!--</fieldset>-->
+      <frm title="I have an account" c="no_marg">
+        <div class="pdd_10">
+          <%= semantic_form_for(:user, :url => session_path(:user)) do |f| %>
+              <fieldset class="inputs labels_90 inputs_130 no_pdd">
+                <ol class="align_inputs no_pdd">
+                  <%= f.input :email, :input_html => {:tabindex => 1} %>
+                  <%= f.input :password, :label => raw(I18n.t("activerecord.attributes.user.password") + content_tag(:span, link_to(t("home.show.view.forgotten_password_link"), new_password_path(User)), :class => "label_link")), :input_html => {:tabindex => 2}, :wrapper_html => {:class => "rltv"} %>
+                  <%= f.input :remember_me, :as => :boolean, :required => false, :input_html => {:tabindex => 3} %>
+                  <li class="commit">
+                    <ibt>
+                      <%= f.submit t("home.show.view.sign_in"), :tabindex => 4 %>
+                    </ibt>
+                  </li>
+                </ol>
+              </fieldset>
+          <% end %>
+        </div>
+      </frm>
 
-
-                <fieldset class="inputs labels_100 inputs_180 no_pdd">
-                  <ol class="align_inputs no_pdd">
-
-                    <%= f.input :email, :input_html => {:tabindex => 1} %>
-                    <%= f.input :password, :label => raw(I18n.t("activerecord.attributes.user.password") + content_tag(:span, link_to(t("home.show.view.forgotten_password_link"), new_password_path(User)), :class => "label_link")), :input_html => {:tabindex => 2}, :wrapper_html => {:class => "rltv"} %>
-                    <%= f.input :remember_me, :as => :boolean, :required => false, :input_html => {:tabindex => 3} %>
-                    <li class="commit">
-                      <ibt>
-                        <%= f.submit t("home.show.view.sign_in"), :tabindex => 4 %>
-                      </ibt>
-                    </li>
-                  </ol>
-                </fieldset>
-            <% end %>
-          </div>
-        </frm>
-      </div>
   <% end %>
 
-  <clb/>
-  <hl pdd="15"/>
 
-  <div class="grid_750 fltl" id="primary_featured_deal">
-    <% if @primary_deal %>
-        <frm c="no_marg" title="#{link_to(@primary_deal.header, deal_path(@primary_deal.slug))}">
-          <param:content>
-            <div class="fltl">
-              <p>
-                <%= image_tag @primary_deal.logo.url if @primary_deal.logo %>
-                <%= @primary_deal.description %>
-                </p>
-              <p>
-                Usual price <%= as_currency(@primary_deal.price, @primary_deal.currency) %>
-                Now <%= as_currency(@primary_deal.discounted_price, @primary_deal.currency) %>
-                Save <%= @primary_deal.saving %>
-              </p>
-              <% if user_signed_in? and current_user.has_role?(:purchase_manager) and !@primary_deal.requested_by?(current_user) %>
-                <%= bt_link_to nil, t("deals.index.view.contact_me"), new_purchase_managers_lead_path(:deal_id => @primary_deal.id) %>
-              <% end %>
-              <p>
-                  <% if Rails.env != "test" and user_signed_in? and current_user.purchase_manager? %>
-                      <a name="fb_share" share_url="<%= escape_uri(deal_url(:id => @primary_deal.slug)) %>"></a>
-
-                      <!--<iframe src="http://www.facebook.com/plugins/like.php?app_id=101408449959161&amp;href=<%= escape_uri(deal_url(:id => @primary_deal.slug)) %>&amp;send=true&amp;layout=button_count&amp;width=250&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:250px; height:21px;" allowTransparency="true"></iframe>-->
-                      <!--<div id="fb-root"></div>-->
-                      <!--<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>-->
-                      <!--<fb:comments href="<%= escape_uri(deal_url(:id => @primary_deal.slug)) %>" num_posts="2" width="500"></fb:comments>-->
-
-                      <clb/>
-
-                      <script src="https://platform.linkedin.com/in.js" type="text/javascript"></script>
-                      <script type="IN/Share" data-url="<%= deal_url(:id => @primary_deal.slug) %>" data-counter="right"></script>
-
-                      <clb/>
-                      <a href="https://twitter.com/share" class="twitter-share-button" data-text="<%= @primary_deal.social_media_description %>" data-count="horizontal"><%= t("deals.show.view.share_by_email") %></a>
-                      <script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script>
-                  <% elsif user_signed_in? and current_user.purchase_manager? %>
-                      <%= link_to_function t("deals.show.view.share_by_email"), "$('#modal_for_share_deal_by_email').dialog('open');" %><br/>
-                  <% end %>
-
-                  <div id="modal_for_share_deal_by_email" style="display:none;">
-                    <%= render :partial => "share_deal_by_email/new", :locals => { :deal => @primary_deal } %>
-                  </div>
-              </p>
-            </div>
-			<div id="countdown" class="fltr">
-				<div class="dash days_dash">
-					<span class="dash_title"><%= t("deals.show.view.days") %></span>
-					<div class="digit">0</div>
-					<div class="digit">0</div>
-					<div class="digit">0</div>
-				</div>
-				<div class="dash hours_dash">
-					<span class="dash_title"><%= t("deals.show.view.hours") %></span>
-					<div class="digit">0</div>
-					<div class="digit">0</div>
-				</div>
-				<div class="dash minutes_dash">
-					<span class="dash_title"><%= t("deals.show.view.minutes") %></span>
-					<div class="digit">0</div>
-					<div class="digit">0</div>
-				</div>
-				<div class="dash seconds_dash">
-					<span class="dash_title"><%= t("deals.show.view.seconds") %></span>
-					<div class="digit">0</div>
-					<div class="digit">0</div>
-				</div>
-			</div>
-            <clb/>
-          </param:content>
-        </frm>
-    <% end %>
-  </div>
-
-  <div class="grid_250 fltr" id="side_menu">
-    <% unless user_signed_in? %>
-        <p>
-          <%= link_to t("fairdeals_home.show.view.get_free_account"), new_purchase_manager_account_path  %>
-        </p>
-    <% end %>
-    <p>
-      <%= link_to t("fairdeals_home.show.view.browse_our_deals"), deal_categories_path  %>
-    </p>
-    <p>
-      <%= link_to t("fairdeals_home.show.view.find_a_vendor"), new_purchase_managers_tender_path  %>
-    </p>
-  </div>
-
-  <clb/>
-  <hl pdd="15"/>
-
-  <div class="grid_250 fltl" id="secondary_featured_deal_1">
-    <% if featured = FeaturedDeal.where(:position => 1).first and featured.deal %>
-        <frm c="no_marg" title="#{link_to featured.deal.header, deal_path(featured.deal.slug)}">
-          <param:content>
-            <%= image_tag featured.deal.logo.url if featured.deal.logo %>
-            <p>
-              Price <%= as_currency(featured.deal.discounted_price, featured.deal.currency) %>
-              Save <%= featured.deal.saving %>
-            </p>
-            <% if user_signed_in? and current_user.has_role?(:purchase_manager) and !featured.deal.requested_by?(current_user) %>
-              <%= bt_link_to nil, t("deals.index.view.contact_me"), new_purchase_managers_lead_path(:deal_id => featured.deal.id) %>
-            <% end %>
-            <clb/>
-          </param:content>
-        </frm>
-    <% end %>
-  </div>
-
-  <div class="grid_250 fltl" id="secondary_featured_deal_2">
-    <% if featured = FeaturedDeal.where(:position => 2).first and featured.deal %>
-        <frm c="no_marg" title="#{link_to featured.deal.header, deal_path(featured.deal.slug)}">
-          <param:content>
-            <%= image_tag featured.deal.logo.url if featured.deal.logo %>
-            <p>
-              Price <%= as_currency(featured.deal.discounted_price, featured.deal.currency) %>
-              Save <%= featured.deal.saving %>
-            </p>
-            <% if user_signed_in? and current_user.has_role?(:purchase_manager) and !featured.deal.requested_by?(current_user) %>
-              <%= bt_link_to nil, t("deals.index.view.contact_me"), new_purchase_managers_lead_path(:deal_id => featured.deal.id) %>
-            <% end %>
-            <clb/>
-          </param:content>
-        </frm>
-    <% end %>
-  </div>
-
-  <div class="grid_250 fltl" id="secondary_featured_deal_3">
-    <% if featured = FeaturedDeal.where(:position => 3).first and featured.deal %>
-        <frm c="no_marg" title="#{link_to featured.deal.header, deal_path(featured.deal.slug)}">
-          <param:content>
-            <%= image_tag featured.deal.logo.url if featured.deal.logo %>
-            <p>
-              Price <%= as_currency(featured.deal.discounted_price, featured.deal.currency) %>
-              Save <%= featured.deal.saving %>
-            </p>
-            <% if user_signed_in? and current_user.has_role?(:purchase_manager) and !featured.deal.requested_by?(current_user) %>
-              <%= bt_link_to nil, t("deals.index.view.contact_me"), new_purchase_managers_lead_path(:deal_id => featured.deal.id) %>
-            <% end %>
-            <clb/>
-          </param:content>
-        </frm>
-    <% end %>
-  </div>
-
-  <div class="column_1to3 fltr" id="news">
-    <frm title="#{t('purchase_manager_home.show.view.header_news')}" c="no_marg">
-      <param:header>
-        <%= bt_link_to nil, t("purchase_manager_home.show.view.complete_list_link"), news_index_path(:search => {:with_subclass => 'PurchaseManager'}), :class => "fltr" %>
-      </param:header>
-      <param:content>
-        <ul class="solid_list">
-          <% if @news.any? %>
-              <%= render :partial => 'news', :collection => @news, :as => :news %>
-          <% else %>
-              <%= render :partial => 'shared/blank_data_li' %>
-          <% end %>
-        </ul>
-      </param:content>
-
-    </frm>
-  </div>
-
-  <clb/>
-
-  <script>
-      $(document).ready(function() {
-          $('.introduction_video').colorbox({iframe:true, innerWidth:560, innerHeight:349});
-      });
-
-      <% if @primary_deal %>
-      jQuery(document).ready(function() {
-          d = new Date();
-          seconds = (<%= @primary_deal.end_date.to_i %> - parseInt(d.getTime()/1000));
-          $('#countdown').countDown({
-              targetOffset: {
-                  'year':     0,
-                  'month':    0,
-                  'day':      0,
-                  'hour':     0,
-                  'min':      0,
-                  'sec':      seconds
-              },
-              omitWeeks: true
-          });
-      });
-
-      $('#modal_for_share_deal_by_email').dialog({
-          autoOpen: false,
-          width: 400,
-          title: '<%= t("deals.show.view.share_by_email_modal_title") %>',
-          modal: true,
-          buttons:
-          { "<%= t("deals.show.view.send_share_by_email_button") %>": function() {
-              if (validate_template_editor_fields("#modal_for_share_deal_by_email") == 0) {
-                  $('#form_share_deal_by_email').submit();
-                  $(this).dialog("close");
-              }},
-            "<%= t("deals.show.view.cancel") %>": function() {
-                  $(this).dialog('close');
-              }
-          }
-      });
+  <div class="news">
+    <!--
+    <h2><%= t('purchase_manager_home.show.view.header_news') %><%= link_to t("purchase_manager_home.show.view.complete_list_link"), news_index_path(:search => {:with_subclass => 'PurchaseManager'}) %></h2>
+    -->
+    <ul>
+      <% if @news.any? %>
+          <%= render :partial => 'news', :collection => @news, :as => :news %>
+      <% else %>
+          <%= render :partial => 'shared/blank_data_li' %>
       <% end %>
-  </script>
+    </ul>
+
+  </div>
+
+</div>
+<clb/>
+
+<div id="introduction_video">
+  <% if youtube_introduction %>
+      <div class="youtube_thumb">
+        <%= link_to image_tag(youtube_introduction.image ? youtube_introduction.image.url : "https://img.youtube.com/vi/#{youtube_introduction.url.extract_youtube_video_id}/default.jpg", :class => "thumb"), "https://www.youtube.com/embed/#{youtube_introduction.url.extract_youtube_video_id}?autoplay=1&rel=0&border=0", :class => "introduction_video", :id => "introduction_video_link" %>
+      </div>
+  <% end %>
+  <div class="intro_content">
+    <%= blurb("blurb_start_page_fairdeals") %>
+  </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('.introduction_video').colorbox({iframe:true, innerWidth:560, innerHeight:349});
+    });
+
+    <% if @primary_deal %>
+    jQuery(document).ready(function() {
+        d = new Date();
+        seconds = (<%= @primary_deal.end_date.to_i %> - parseInt(d.getTime() / 1000));
+        $('#countdown').countDown({
+            targetOffset: {
+                'year':     0,
+                'month':    0,
+                'day':      0,
+                'hour':     0,
+                'min':      0,
+                'sec':      seconds
+            },
+            omitWeeks: true
+        });
+    });
+
+    $('#modal_for_share_deal_by_email').dialog({
+        autoOpen: false,
+        width: 400,
+        title: '<%= t("deals.show.view.share_by_email_modal_title") %>',
+        modal: true,
+        buttons:
+        { "<%= t("deals.show.view.send_share_by_email_button") %>": function() {
+            if (validate_template_editor_fields("#modal_for_share_deal_by_email") == 0) {
+                $('#form_share_deal_by_email').submit();
+                $(this).dialog("close");
+            }
+        },
+            "<%= t("deals.show.view.cancel") %>": function() {
+                $(this).dialog('close');
+            }
+        }
+    });
+    <% end %>
+</script>
 
 </column-mc:>

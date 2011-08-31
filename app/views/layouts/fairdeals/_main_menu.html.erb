@@ -5,16 +5,3 @@
       <%= main_menu_link_to t("layout.fairdeals.main_menu.tenders"), purchase_managers_tenders_path, :tab => "tenders" %>
   <% end %>
 </ul>
-
-<script type="text/javascript">
-    jQuery(document).ready(function()
-    {
-        $('.has_child').each(function() {
-            var t = $(this);
-            if ( t.width() > t.find(".subnav").width())
-            {
-                t.find(".subnav").css("width", t.width());
-            }
-        })
-    })
-</script>
