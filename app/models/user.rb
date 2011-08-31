@@ -108,7 +108,7 @@ class User < ActiveRecord::Base
   attr_accessor :agreement_read, :locked, :skip_email_verification, :deal_maker_role_enabled_flag
 
   before_save :handle_locking, :handle_team_buyers_flag, :refresh_certification_of_call_centre_agents, :set_euro_billing_rate, :handle_deal_maker_enabled
-  before_create :set_rss_token, :set_role
+  before_create :set_rss_token, :set_role, :set_email_verification
   before_destroy :can_be_removed
   after_create :auto_activate
   validate :check_billing_rate
@@ -118,6 +118,15 @@ class User < ActiveRecord::Base
   require 'digest/sha1'
 
   private
+
+  def set_email_verification
+    if new_record?
+      if (has_role?(:customer) and Settings.email_verification_for_sales_managers == "0") or
+         (has_role?(:purchase_manager) and Settings.email_verification_for_procurement_managers == "0")
+        self.skip_email_verification = "1"
+      end
+    end
+  end
 
   def handle_deal_maker_enabled
     if has_role?(:deal_maker) and !deal_maker_role_enabled

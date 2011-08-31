@@ -25,7 +25,7 @@
             <%= address_form.input :address_line_3, :hint => hint_for("my_profile", :address_address_line_3) %>
             <%= address_form.input :zip_code, :hint => hint_for("my_profile", :address_zip_code), :required => !current_user.has_role?(:call_centre_agent) %>
         <% end %>
-        <%= form.input :vat_number, :hint => hint_for("my_profile", :vat_number) if current_user.has_role?(:customer) %>
+        <%= form.input :vat_number, :hint => hint_for("my_profile", :vat_number) %>
         <%= form.fields_for :address do |address_form| %>
             <%= address_form.input :country_id, :hint => hint_for("my_profile", :address_country_id), :as => :select, :collection => Country.all, :input_html => {:onchange => "refresh_regions_list('user_#{@user.role.to_s}_address_attributes');"} %>
             <%= address_form.input :region_id, :hint => hint_for("my_profile", :address_region_id), :as => :select, :collection => regions_collection_for(@user.address.country) %>
