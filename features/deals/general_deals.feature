@@ -9,8 +9,6 @@ Feature: General deals
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|company_name:starks"
     Then the only deal should have end date set to one year from now
 
-  Scenario: Leads created from deal requests should be certified by default
-
   Scenario: Leads created from deals should be marked as certified
 
   @_done @_tested @selenium @tgn
@@ -105,7 +103,7 @@ Feature: General deals
     And lead "Test remaining leads #1" should be bought by user with email "buyer@nbs.com"
     And lead "Test remaining leads #2" should be bought by user with email "buyer@nbs.com"
 
-  @added @selenium @_done @_tested @tgn
+  @selenium @_done @_tested @tgn
   Scenario: When small buyer creates deal he/she becomes big buyer and the category created is added to his/hers subscriptions
     Given I am signed up and confirmed as user with email small_buyer@nbs.com and password secret and role customer
     And user small_buyer@nbs.com with role customer exists with attributes "company_name:Xeper"
