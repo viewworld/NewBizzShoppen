@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  before_filter :redirect_to_fairleads
   before_filter :authorize_with_http_basic_for_staging, :check_category_buyer, :update_log_entries, :set_user_time_zone
   after_filter :do_something
 
@@ -19,6 +20,13 @@ class ApplicationController < ActionController::Base
 
   helper_method :locale
 
+  def redirect_to_fairleads
+    if user_signed_in? and !current_user.has_role? :purchase_manager and session[:site] == "fairdeals"
+      key = current_user.generate_login_key!
+      sign_out(current_user)
+      redirect_to "http://#{Rails.env == 'staging' ? 'beta.fairleads.com' : 'fairleads.com'}/login_keys/?key=#{key}"
+    end
+  end
 
   def update_log_entries
     if user_signed_in? and self.class.to_s != "UserSessionLogController"
@@ -70,10 +78,6 @@ class ApplicationController < ActionController::Base
         session[:lead_id] = nil
         session[:buyout] = nil
         requested_path
-      elsif !resource.has_role? :purchase_manager and session[:site] == "fairdeals"
-        key = current_user.generate_login_key!
-        sign_out(current_user)
-        "https://fairleads.com/login_keys/?key=#{key}"
       elsif resource.has_role? :purchase_manager and session[:site] == "fairdeals"
         root_path
       elsif resource.has_role? :category_buyer and resource.sign_in_count == 1 and resource.contact.present?
