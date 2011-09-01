@@ -112,6 +112,7 @@ class User < ActiveRecord::Base
   before_create :set_rss_token, :set_role, :set_email_verification
   before_destroy :can_be_removed
   after_create :auto_activate
+  after_update :send_invitation_if_enabled
   validate :check_billing_rate
 
   liquid :email, :confirmation_instructions_url, :reset_password_instructions_url, :social_provider_name, :category_buyer_category_home_url,
@@ -223,6 +224,10 @@ class User < ActiveRecord::Base
     if currency.present? and billing_rate.to_i > 0 and (billing_rate_changed? or currency_id_changed?)
       self.euro_billing_rate = currency.to_euro(billing_rate)
     end
+  end
+
+  def send_invitation_if_enabled
+    send_invitation_email if ActiveRecord::ConnectionAdapters::Column.value_to_boolean(send_invitation)
   end
 
   public
@@ -574,6 +579,7 @@ class User < ActiveRecord::Base
     unless new_password
       new_password = generate_token(12)
       self.password = new_password
+      self.send_invitation = false
       self.save(:validate => false)
     end
     TemplateMailer.delay.new(email, "#{uniq_id}_invitation".to_sym, with_role.address.present? ? with_role.address.country : Country.get_country_from_locale,

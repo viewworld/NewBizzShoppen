@@ -19,9 +19,6 @@ class DealMakerUsersController < SecuredController
     @user.skip_email_verification = params[:user][:skip_email_verification]
     @user.created_by = current_user.id
     if @user.save
-      if ActiveRecord::ConnectionAdapters::Column.value_to_boolean(@user.send_invitation)
-        @user.send_invitation_email(params[:user][:password])
-      end
       flash[:notice] = t("deal_maker_users.create.flash.user_creation_successful")
       redirect_to deal_maker_users_path
     else

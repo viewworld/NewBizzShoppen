@@ -725,5 +725,10 @@ Scenario: I can enable deals for each category buyer
   Then I should see CSS path "a[tab='browse_deals']"
   And I should see CSS path "a[tab='deals']"
 
-@m18 @create_buttons
+@m18 @create_buttons @_done @_tested @tgn
 Scenario: I can send welcome email to member / supplier
+   Given I have user with email customer101@person.com and role customer
+  Then I fill in "search_with_keyword" with "customer101@person.com"
+  And I press translated "administration.users.index.view.search_button"
+  And I follow translated "administration.users.send_invitation"
+  And last email sent should have been sent to recipient "customer101@person.com"

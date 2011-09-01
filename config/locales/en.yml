@@ -833,6 +833,7 @@ en:
         flash:
           user_deletion_successful: "User was successfully deleted!"
           user_deletion_failure: "User could not be deleted!"
+      send_invitation: "Send invitation"
     lead_templates:
       new:
         view:
