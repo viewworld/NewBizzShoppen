@@ -143,6 +143,7 @@ en:
         bounce: "Bounce"
         sold_out: "Sold out"
         browse_deals: "Browse deals"
+        deal_maker_users: "Users"
       purchase_manager:
         leads: My leads
         tenders: My tenders
@@ -3418,3 +3419,27 @@ en:
     create:
       flash:
         email_sent: "Deal has been successfully sent to the selected recipient"
+  deal_maker_users:
+    index:
+      view:
+        title: "Users"
+        new_member: "New member"
+        new_supplier: "New supplier"
+        type: "Type"
+        email: "Email"
+        actions: "Actions"
+        user_member: "Member"
+        user_supplier: "Supplier"
+        name: "Name"
+        send_invitation: "Send invitation"
+    new:
+      view:
+        new_account: "New %{role} account"
+        button_create: "Create"
+        button_cancel: "Cancel"
+    create:
+      flash:
+        user_creation_successful: "User's account has been successfully created."
+    update:
+      flash:
+        invitation_sent: "Invitation has been sent."

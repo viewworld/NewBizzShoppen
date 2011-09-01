@@ -96,6 +96,7 @@ class User < ActiveRecord::Base
   scope :assigned_to_campaigns, select("DISTINCT(users.id), users.*").joins("inner join campaigns_users on users.id=campaigns_users.user_id")
   scope :with_results, joins("inner join call_results on users.id=call_results.creator_id")
   scope :for_campaigns, lambda { |campaign_ids| where("campaigns_users.campaign_id in (?)", campaign_ids) unless campaign_ids.empty? }
+  scope :created_by, lambda { |user_id| where(:created_by => user_id) }
 
   scoped_order :id, :roles_mask, :first_name, :last_name, :email, :age, :department, :mobile_phone, :completed_leads_counter, :leads_requested_counter,
                :leads_assigned_month_ago_counter, :leads_assigned_year_ago_counter, :total_leads_assigned_counter, :leads_created_counter,
@@ -105,7 +106,7 @@ class User < ActiveRecord::Base
 
   attr_protected :payout, :locked, :can_edit_payout_information, :paypal_email, :bank_swift_number, :bank_iban_number, :skip_email_verification
 
-  attr_accessor :agreement_read, :locked, :skip_email_verification, :deal_maker_role_enabled_flag
+  attr_accessor :agreement_read, :locked, :skip_email_verification, :deal_maker_role_enabled_flag, :send_invitation
 
   before_save :handle_locking, :handle_team_buyers_flag, :refresh_certification_of_call_centre_agents, :set_euro_billing_rate, :handle_deal_maker_enabled
   before_create :set_rss_token, :set_role, :set_email_verification
@@ -565,5 +566,17 @@ class User < ActiveRecord::Base
 
   def can_start_new_deal_thread?
     true
+  end
+
+  #for members and suppliers
+  def send_invitation_email(new_password=nil)
+    uniq_id = has_role?(:purchase_manager) ? "member" : "supplier"
+    unless new_password
+      new_password = generate_token(12)
+      self.password = new_password
+      self.save(:validate => false)
+    end
+    TemplateMailer.delay.new(email, "#{uniq_id}_invitation".to_sym, with_role.address.present? ? with_role.address.country : Country.get_country_from_locale,
+                             {:user => self.with_role, :new_password => new_password})
   end
 end

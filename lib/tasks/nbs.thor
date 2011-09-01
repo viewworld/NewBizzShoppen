@@ -252,6 +252,22 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
                  :body => "{{body_content}}"},
          :dk => {:subject => "{{subject_content}}",
                  :body => "{{body_content}}"}
+        },
+
+        {:name => "Member invitation",
+         :uniq_id => "member_invitation",
+         :en => {:subject => "Welcome to fairdeals.dk",
+                 :body => "<p>Username: {{user.email}}</p><p>Password: {{new_password}}</p><p><a href=\"http://fairdeals.dk\">Login at fairdeals.dk</a></p>"},
+         :dk => {:subject => "[DK] Welcome to fairdeals.dk",
+                 :body => "<p>Username: {{user.email}}</p><p>Password: {{new_password}}</p><p><a href=\"http://fairdeals.dk\">Login at fairdeals.dk</a></p>"}
+        },
+
+        {:name => "Supplier invitation",
+         :uniq_id => "supplier_invitation",
+         :en => {:subject => "Welcome to fairleads.dk",
+                 :body => "<p>Username: {{user.email}}</p><p>Password: {{new_password}}</p><p><a href=\"http://fairleads.com\">Login at fairleads.com</a></p>"},
+         :dk => {:subject => "[DK] Welcome to fairleads.dk",
+                 :body => "<p>Username: {{user.email}}</p><p>Password: {{new_password}}</p><p><a href=\"http://fairleads.com\">Login at fairleads.com</a></p>"}
         }
     ]
 
