@@ -2,10 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-  <title>Fairleads</title>
+  <title>Fairdeals</title>
   <link rel="shortcut icon" href="/images/favicon.ico"/>
-  <%= include_stylesheets :fairdeals %>
-  <%= include_javascripts :fairdeals %>
+  <% if controller.class.to_s == "FairdealsHomeController" %>
+      <%= include_stylesheets :fairdeals %>
+      <%= include_javascripts :fairdeals %>
+  <% else %>
+      <%= include_stylesheets :common %>
+      <%= include_javascripts :common %>
+  <% end %>
   <%= ajaxful_rating_style %>
 
   <%= csrf_meta_tag %>
