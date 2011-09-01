@@ -1,9 +1,4 @@
-<head:>
-  <%= javascript_include_tag "global_template_editor" %>
-</head:>
-
 <column-mc:>
-
 
 <div class="grid_680 fltl">
   <div class="homepage_intro">
@@ -12,9 +7,6 @@
         <%= link_to image_tag(youtube_introduction.image ? youtube_introduction.image.url : "https://img.youtube.com/vi/#{youtube_introduction.url.extract_youtube_video_id}/default.jpg", :class => "thumb"), "https://www.youtube.com/embed/#{youtube_introduction.url.extract_youtube_video_id}?autoplay=1&rel=0&border=0", :class => "introduction_video", :id => "introduction_video_link" %>
       </div>
     <% end %>
-    <div class="intro_content">
-      <%= blurb("blurb_start_page_fairdeals") %>
-    </div>
   </div>
   <% if @primary_deal %>
       <div id="primary_group_deal" class="frm_plain primary_deal">
@@ -48,8 +40,8 @@
 
   <!--- end / other deals --->
 </div>
-<div class="grid_280 fltr">
 
+<div class="grid_280 fltr">
   <div class="homepage_actions frm_dark pdd_10">
     <% unless user_signed_in? %>
         <%= bt_link_to nil, t("fairdeals_home.show.view.get_free_account"), new_purchase_manager_account_path, :class => "bt_max" %>

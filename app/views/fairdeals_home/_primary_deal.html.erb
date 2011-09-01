@@ -77,10 +77,6 @@
 
                 <script src="https://platform.linkedin.com/in.js" type="text/javascript"></script>
                 <script type="IN/Share" data-url="<%= deal_url(:id => primary_deal.slug) %>" data-counter="right"></script>
-
-                <clb/>
-                <a href="https://twitter.com/share" class="twitter-share-button" data-text="<%= primary_deal.social_media_description %>" data-count="horizontal"><%= t("deals.show.view.share_by_email") %></a>
-                <script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script>
             <% end %>
 
             <div id="modal_for_share_deal_by_email" style="display:none;">
@@ -93,9 +89,9 @@
         <div class="frm_foot">
           <p>
             <%= link_to_function image_tag("fairdeals/bt/social_email.png"), "$('#modal_for_share_deal_by_email').dialog('open');" %>
-            <%= link_to image_tag("fairdeals/bt/social_linkedin.png"), "#" %>
-            <%= link_to image_tag("fairdeals/bt/social_facebook.png"), "#" %>
-            <%= link_to image_tag("fairdeals/bt/social_twitter.png"), "#" %>
+            <%= link_to_function image_tag("fairdeals/bt/social_linkedin.png"), "window.open('https://www.linkedin.com/cws/share?url=#{escape_uri(deal_url(:id => primary_deal.slug))}&text=#{escape_javascript(primary_deal.social_media_description)}&isFramed=true','tweet', 'width=400,height=320,location=0,toolbar=0,menubar=0')" %>
+            <%= link_to_function image_tag("fairdeals/bt/social_facebook.png"), "window.open('https://www.facebook.com/sharer.php?u=#{escape_uri(deal_url(:id => primary_deal.slug))}&text=#{escape_javascript(primary_deal.social_media_description)}','tweet', 'width=400,height=320,location=0,toolbar=0,menubar=0')" %>
+            <%= link_to_function image_tag("fairdeals/bt/social_twitter.png"), "window.open('https://twitter.com/share?url=#{escape_uri(deal_url(:id => primary_deal.slug))}&text=#{escape_javascript(primary_deal.social_media_description)}','tweet', 'width=400,height=320,location=0,toolbar=0,menubar=0')"  %>
           </p>
         </div>
       </div>
