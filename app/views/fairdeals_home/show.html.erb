@@ -9,7 +9,7 @@
   <div class="homepage_intro">
     <% if youtube_introduction %>
       <div class="youtube_thumb">
-        <%= link_to image_tag(youtube_introduction.image ? youtube_introduction.image.url : "https://img.youtube.com/vi/#{youtube_introduction.url.extract_youtube_video_id}/default.jpg", :class => "thumb"), "https://www.youtube.com/embed/#{youtube_introduction.url.extract_youtube_video_id}?autoplay=1&rel=0&border=0", :class => "introduction_video", :id => "introduction_video_link" %>
+        <%= link_to image_tag(youtube_introduction.image ? youtube_introduction.image.url : "https://img.youtube.com/vi/#{youtube_introduction.url.extract_youtube_video_id}/default.jpg"), "https://www.youtube.com/embed/#{youtube_introduction.url.extract_youtube_video_id}?autoplay=1&rel=0&border=0", :class => "introduction_video", :id => "introduction_video_link" %>
       </div>
     <% end %>
     <div class="intro_content">
@@ -17,7 +17,7 @@
     </div>
   </div>
   <% if @primary_deal %>
-      <div id="primary_group_deal" class="frm_plain primary_deal">
+      <div id="primary_group_deal">
           <%= render :partial => 'primary_deal', :locals => {:primary_deal => @primary_deal} %>
       </div>
   <% end %>
