@@ -54,7 +54,6 @@ Feature: Deals from procurement manager perspective
     And I should see "Various podcasts"
     And I select "Scientific" from "category_selector"
     And I should see "Skeptical Guide To Universe"
-    And I open page in browser
 
   @_tested @_done @tgn
   Scenario: I can see list of deals categories and subcategories
