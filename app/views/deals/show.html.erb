@@ -70,7 +70,7 @@
               <li>
                 <div>
                   <span class="label"><%= t("deals.show.view.price_label") %></span>
-                  <%= @deal.deal_price %> <%= @deal.currency %>
+                  <%= as_currency(@deal.deal_price, @deal.currency) %>
                 </div>
               </li>
           <% end %>
@@ -79,7 +79,7 @@
               <li>
                 <div>
                   <span class="label"><%= t("deals.show.view.discounted_price_label") %></span>
-                  <%= @deal.discounted_price %> <%= @deal.currency %> (<%= t("deals.show.view.saving_label") %> <%= @deal.saving %>)
+                  <%= as_currency(@deal.discounted_price, @deal.currency) %> (<%= t("deals.show.view.saving_label") %> <%= @deal.saving %>)
                 </div>
               </li>
           <% end %>
