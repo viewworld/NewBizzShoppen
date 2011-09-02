@@ -3,7 +3,7 @@ class FeaturedDeal < ActiveRecord::Base
 
   validates_presence_of :position
 
-  POSITIONS = [0, 1, 2, 3]
+  POSITIONS = [0, 1, 2, 3, 4, 5 , 6, 7, 8, 9]
 
   class << self
 

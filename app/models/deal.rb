@@ -146,6 +146,26 @@ class Deal < AbstractLead
     time_diff = ((Time.now.to_i) - (created_at.to_i)) / (24 * 60 * 60)
     (created_at + ((time_diff / 28).to_i * 28).days).to_date
   end
+  
+  def next_group_deal
+    if Deal.group_deals.order("end_date ASC").where("end_date >= ? and id <> ?", self.end_date, self.id).any?
+      Deal.group_deals.order("end_date ASC").where("end_date >= ? and id <> ?", self.end_date, self.id).first
+    elsif Deal.group_deals.order("end_date ASC").where("id <> ?", self.id).any?
+      Deal.group_deals.order("end_date ASC").where("id <> ?", self.id).first
+    else
+      self
+    end
+  end
+
+  def previous_group_deal
+    if Deal.group_deals.order("end_date DESC").where("end_date <= ? and id <> ?", self.end_date, self.id).any?
+      Deal.group_deals.order("end_date DESC").where("end_date <= ? and id <> ?", self.end_date, self.id).first
+    elsif Deal.group_deals.order("end_date DESC").where("id <> ?", self.id).any?
+      Deal.group_deals.order("end_date DESC").where("id <> ?", self.id).first
+    else
+      self
+    end
+  end  
 
   private
 

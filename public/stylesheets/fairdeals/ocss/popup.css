@@ -1,0 +1,17 @@
+body
+{
+    background: #fff !important;
+}
+
+#container_popup
+{
+    padding: 8px 10px 12px;
+}
+
+#container_popup h1
+{
+    font-size: 20px;
+    border-bottom: 1px solid #e9e9e9;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}

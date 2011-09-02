@@ -11,7 +11,6 @@ Feature: Front page for procurment
   Scenario: When an user enters www.fairdeals.eu he will be redirected to UK version of procurment
     Given I visit domain http://thefairdeals.com
     Then locale should be set to "en"
-    And I should see CSS path "#primary_featured_deal"
 
   # Top bar video as-fairleads, but uniqe video with jpeg
   @_done @_tested
@@ -53,15 +52,14 @@ Feature: Front page for procurment
   Scenario: I can browse news for Procurement manager
     Given published purchase manager news exists with attributes "title:sample procurment news,content:quo vadis"
     Given I visit domain http://fairdeals.dk
-    And I should see translated "purchase_manager_home.show.view.header_news"
     And I should see "sample procurment news"
     And I should see "quo vadis"
 
   @_done @_tested
   Scenario: As not logged user I should have a menu on the right side with buttons
     Given I visit domain http://fairdeals.dk
-    Then I should see CSS path "#side_menu"
-    And I should see "3" elements within CSS path "#side_menu a"
+    Then I should see CSS path ".homepage_actions"
+    And I should see "3" elements within CSS path ".homepage_actions a"
 
   @_done @_tested
   Scenario: I should see one primary group deal
@@ -69,7 +67,7 @@ Feature: Front page for procurment
     And a deal named "PrimaryGroupDeal" exists with attributes "published:1,group_deal:1,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
     And deal named "PrimaryGroupDeal" is a primary featured deal
     Given I visit domain http://fairdeals.dk
-    Then I should see "PrimaryGroupDeal" within "div#primary_featured_deal"
+    Then I should see "PrimaryGroupDeal" within "div#primary_group_deal"
 
   @_done @_tested
   Scenario: I can select a primary deal to display by accessing the page with deal number in the URL like www.fairdeals.dk/1223
@@ -80,9 +78,9 @@ Feature: Front page for procurment
     And a deal named "SecondaryGroupDeal" exists with attributes "published:1,group_deal:1,price:99,deal_price:200,discounted_price:50,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
     And deal named "PrimaryGroupDeal" is "1" secondary featured deal
     And I visit domain http://fairdeals.dk
-    Then I should see "PrimaryGroupDeal" within "div#primary_featured_deal"
+    Then I should see "PrimaryGroupDeal" within "div#primary_group_deal"
     When I append id of deal "SecondaryGroupDeal" to url
-    Then I should see "SecondaryGroupDeal" within "div#primary_featured_deal"
+    Then I should see "SecondaryGroupDeal" within "div#primary_group_deal"
 
   @_done @_tested
   Scenario: I should see three minor deals
@@ -99,7 +97,7 @@ Feature: Front page for procurment
     And a deal named "SecondaryGroupDealThree" exists with attributes "published:1,group_deal:1,price:99,deal_price:200,discounted_price:50,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
     And deal named "SecondaryGroupDealThree" is "3" secondary featured deal
     And I visit domain http://fairdeals.dk
-    Then I should see "PrimaryGroupDeal" within "div#primary_featured_deal"
+    Then I should see "PrimaryGroupDeal" within "div#primary_group_deal"
     Then I should see "SecondaryGroupDealOne" within "div#secondary_featured_deal_1"
     Then I should see "SecondaryGroupDeal" within "div#secondary_featured_deal_2"
     Then I should see "SecondaryGroupDeal" within "div#secondary_featured_deal_3"

@@ -235,6 +235,8 @@ Nbs::Application.routes.draw do
     end
   end
 
+  resources :group_deals, :only => [:show]
+
   resources :categories, :only => [:index] do
     resources :more_leads_requests, :only => [:new, :create]
   end

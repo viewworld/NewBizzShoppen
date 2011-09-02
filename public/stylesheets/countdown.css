@@ -1,34 +1,53 @@
-#example_pane {
-	text-align: center;
-}
-
-#countdown {
-	height: 46px;
-	width: 284px;
+.countdown
+{
+	height: 50px;
+	/*width: 284px;*/
 	margin: auto;
+    position: relative;
 }
 
-.dash {
-	width: 35px;
-	height: 20px;
-	float: left;
-	margin-top: 10px;
-	margin-left: 2px;
-	padding-left: 23px;
-	position: relative;
-	color: black;
+.countdown_title
+{
+    position: absolute;
+    left: -60px;
+    top: 10px;   
+    font-size: 12px;
+    font-weight: bold;
 }
 
-.days_dash {
-	width: 45px;
-	margin-left: 10px;
+.countdown .dash_title
+{
+    display: block;
+    position: absolute;
+    top: 36px;
+    left: 0;
+    width: 38px;
+    text-align: center;
+    font-size: 10px;
+    color: #777;
 }
 
-.dash .digit {
-	font: bold 12pt Verdana;
-	font-weight: bold;
-	float: left;
-	width: 14px;
-	text-align: center;
+.countdown .dash
+{
+    background: url(/images/fairdeals/primary_lead/flip.png) no-repeat top center;
+    width: 33px;
+    height: 33px;
+    padding: 4px 0 0 9px;
+    margin-left: -2px ;
+    text-align: center;
+    position: relative;
+
+    vertical-align: top;
+    display: inline-block;
+    display: inline !ie7;
+    zoom: 1 !ie7;    
+}
+
+.dash .digit
+{
+    color: #fff;
+    font-size: 22px;
+    font-weight: bold;
+    float: left;          
 	position: relative;
 }

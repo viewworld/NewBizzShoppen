@@ -1,0 +1,134 @@
+  <% if primary_deal %>
+      <div class="frm_plain primary_deal">
+        <%= link_to "previous", group_deal_path(primary_deal, :previous => true), :class => "arrow_left", :remote => true %>
+        <%= link_to "next", group_deal_path(primary_deal, :next => true), :class => "arrow_right", :remote => true %>
+        <div class="frm_head">
+            <h2><%= link_to primary_deal.header, deal_path(primary_deal.slug) %></h2>
+        </div>
+        <div class="frm_content">
+
+          <div class="deal_info">
+            <p>
+              <%= image_tag primary_deal.logo.url if primary_deal.logo %>
+            </p>
+
+            <p class="b">
+              <%= as_currency(primary_deal.deal_price, primary_deal.currency) %> - <%= t("deals.index.view.save") %> <%= primary_deal.saving %>
+            </p>
+
+            <p class="new_price">
+              <%= as_currency(primary_deal.discounted_price, primary_deal.currency) %>
+            </p>        
+
+            <% if user_signed_in? and current_user.has_role?(:purchase_manager) and !primary_deal.requested_by?(current_user) %>
+                <p>
+                  <%= bt_link_to nil, t("deals.index.view.contact_me"), new_purchase_managers_lead_path(:deal_id => primary_deal.id) %>
+                </p>
+            <% end %>
+
+          </div>
+
+          <div class="deal_desc">
+            <p>
+              <%= primary_deal.description %>
+            </p>
+
+            <div id="countdown" class="countdown">
+              <span class="countdown_title">Time left:</span>
+              <div class="dash days_dash">
+                <span class="dash_title"><%= t("deals.show.view.days") %></span>
+                
+                <div class="digit">0</div>
+                <div class="digit">0</div>
+              </div>
+              <div class="dash hours_dash">
+                <span class="dash_title"><%= t("deals.show.view.hours") %></span>
+
+                <div class="digit">0</div>
+                <div class="digit">0</div>
+              </div>
+              <div class="dash minutes_dash">
+                <span class="dash_title"><%= t("deals.show.view.minutes") %></span>
+
+                <div class="digit">0</div>
+                <div class="digit">0</div>
+              </div>
+              <div class="dash seconds_dash">
+                <span class="dash_title"><%= t("deals.show.view.seconds") %></span>
+
+                <div class="digit">0</div>
+                <div class="digit">0</div>
+              </div>
+            </div>
+          </div>
+
+          <clb/>
+
+          <div>
+            <% if false and Rails.env != "test" and user_signed_in? and current_user.purchase_manager? %>
+                <a name="fb_share" share_url="<%= escape_uri(deal_url(:id => primary_deal.slug)) %>"></a>
+
+                <!--<iframe src="http://www.facebook.com/plugins/like.php?app_id=101408449959161&amp;href=<%= escape_uri(deal_url(:id => primary_deal.slug)) %>&amp;send=true&amp;layout=button_count&amp;width=250&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:250px; height:21px;" allowTransparency="true"></iframe>-->
+                <!--<div id="fb-root"></div>-->
+                <!--<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>-->
+                <!--<fb:comments href="<%= escape_uri(deal_url(:id => primary_deal.slug)) %>" num_posts="2" width="500"></fb:comments>-->
+
+                <clb/>
+
+                <script src="https://platform.linkedin.com/in.js" type="text/javascript"></script>
+                <script type="IN/Share" data-url="<%= deal_url(:id => primary_deal.slug) %>" data-counter="right"></script>
+            <% end %>
+
+            <div id="modal_for_share_deal_by_email" style="display:none;">
+              <%= render :partial => "share_deal_by_email/new", :locals => {:deal => primary_deal} %>
+            </div>
+          </div>
+          <!-- end / main deal -->
+        </div>
+
+        <div class="frm_foot">
+          <p>
+            <%= link_to_function image_tag("fairdeals/bt/social_email.png"), "$('#modal_for_share_deal_by_email').dialog('open');" %>
+            <%= link_to_function image_tag("fairdeals/bt/social_linkedin.png"), "window.open('https://www.linkedin.com/cws/share?url=#{escape_uri(deal_url(:id => primary_deal.slug))}&text=#{escape_javascript(primary_deal.social_media_description)}&isFramed=true','tweet', 'width=400,height=320,location=0,toolbar=0,menubar=0')" %>
+            <%= link_to_function image_tag("fairdeals/bt/social_facebook.png"), "window.open('https://www.facebook.com/sharer.php?u=#{escape_uri(deal_url(:id => primary_deal.slug))}&text=#{escape_javascript(primary_deal.social_media_description)}','tweet', 'width=400,height=320,location=0,toolbar=0,menubar=0')" %>
+            <%= link_to_function image_tag("fairdeals/bt/social_twitter.png"), "window.open('https://twitter.com/share?url=#{escape_uri(deal_url(:id => primary_deal.slug))}&text=#{escape_javascript(primary_deal.social_media_description)}','tweet', 'width=400,height=320,location=0,toolbar=0,menubar=0')"  %>
+          </p>
+        </div>
+      </div>
+
+    <script>
+    jQuery(document).ready(function() {
+        d = new Date();
+        seconds = (<%= primary_deal.end_date.to_i %> - parseInt(d.getTime() / 1000));
+        $('#countdown').countDown({
+            targetOffset: {
+                'year':     0,
+                'month':    0,
+                'day':      0,
+                'hour':     0,
+                'min':      0,
+                'sec':      seconds
+            },
+            omitWeeks: true
+        });
+    });
+
+    $('#modal_for_share_deal_by_email').dialog({
+        autoOpen: false,
+        width: 400,
+        title: '<%= t("deals.show.view.share_by_email_modal_title") %>',
+        modal: true,
+        buttons:
+        { "<%= t("deals.show.view.send_share_by_email_button") %>": function() {
+            if (validate_template_editor_fields("#modal_for_share_deal_by_email") == 0) {
+                $('#form_share_deal_by_email').submit();
+                $(this).dialog("close");
+            }
+        },
+            "<%= t("deals.show.view.cancel") %>": function() {
+                $(this).dialog('close');
+            }
+        }
+    });
+    </script>
+  <% end %>

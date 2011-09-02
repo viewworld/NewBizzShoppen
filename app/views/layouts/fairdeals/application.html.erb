@@ -2,10 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-  <title>Fairleads</title>
+  <title>Fairdeals</title>
   <link rel="shortcut icon" href="/images/favicon.ico"/>
-  <%= include_stylesheets :fairdeals %>
-  <%= include_javascripts :fairdeals %>
+  <% if controller.class.to_s == "FairdealsHomeController" %>
+      <%= include_stylesheets :fairdeals %>
+      <%= include_javascripts :fairdeals %>
+  <% else %>
+      <%= include_stylesheets :common %>
+      <%= include_javascripts :common %>
+  <% end %>
   <%= ajaxful_rating_style %>
 
   <%= csrf_meta_tag %>
@@ -46,7 +51,7 @@
       <% end %>
     </div>
 
-    <%= link_to image_tag("logo_fairleads.png"), root_path, :class => "logo" %>
+    <%= link_to image_tag("fairdeals/logo.png"), root_path, :class => "logo" %>
   </div>
 
   <%= render('/layouts/cart') if current_user && current_user.has_role?(:lead_buyer) && !current_user.big_buyer %>
@@ -79,7 +84,7 @@
 
     <search-box:/>
 
-    <div class="pdd_10 no_pdd_t">
+
       <% unless notice.blank? %>
           <div class="flash flash_notice">
             <%= notice %>
@@ -93,7 +98,7 @@
       <% end %>
 
       <column-mc:/>
-    </div>
+    
   </div>
 
   <div id="footer">
