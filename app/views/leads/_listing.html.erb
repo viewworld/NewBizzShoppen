@@ -12,7 +12,7 @@
         <th class="no_pdd_lr" style="width: 10px;"><%= check_box_tag "mark_all", 1, false, :onclick => "mark_all_cbs_with_selector(this)" %></th>
     <% end %>
     <th style="width: 550px;"><%= t("leads.listing.lead_description_label") %></th>
-    <th colspan="2"><%= t("leads.listing.stats_label") %></th>
+    <th colspan="2"><%= session[:site] == "fairleads" ? t("leads.listing.stats_label") : t("leads.listing.details_label") %></th>
 
     <% if block_tools %>        
         <th class="ta_r"><%= t("leads.listing.actions_label") %></th>
@@ -53,18 +53,23 @@
           <% end %>
             <%= link_to_edit_lead(lead) %></h4>
 
-          <% unless BigDecimal(lead.purchase_value.to_s).zero? %>
-              <p class="element"><%= t("leads.listing.purchase_value_label") %>
-                <span class="green"><%= as_currency(lead.purchase_value, lead.currency) %></span></p>
-          <% end %>
+          <% if session[:site] == "fairdeals" and lead.deal %>
+              <p class="element"><%= t("leads.listing.date_label") %>
+                    <span class="green"><%= format_date lead.created_at %></span></p>
+          <% else %>
+              <% unless BigDecimal(lead.purchase_value.to_s).zero? %>
+                  <p class="element"><%= t("leads.listing.purchase_value_label") %>
+                    <span class="green"><%= as_currency(lead.purchase_value, lead.currency) %></span></p>
+              <% end %>
 
-          <% if lead.category.price_visible_for?(current_user) %>
-              <p class="element"><%= t("leads.listing.lead_price_label") %>
-                <span class="green"><%= as_currency(lead.price, lead.currency) %></span></p>
+              <% if lead.category.price_visible_for?(current_user) %>
+                  <p class="element"><%= t("leads.listing.lead_price_label") %>
+                    <span class="green"><%= as_currency(lead.price, lead.currency) %></span></p>
 
-              <% if lead.buyout_possible_for?(current_user) %>
-                  <p class="element"><%= t("leads.listing.buyout_price_label") %>
-                    <span class="green"><%= as_currency(lead.buyout_price, lead.currency) %></span></p>
+                  <% if lead.buyout_possible_for?(current_user) %>
+                      <p class="element"><%= t("leads.listing.buyout_price_label") %>
+                        <span class="green"><%= as_currency(lead.buyout_price, lead.currency) %></span></p>
+                  <% end %>
               <% end %>
           <% end %>
 
@@ -75,17 +80,38 @@
         </td>
 
         <td>
-          <p class="element"><%= t("leads.listing.clicks_count_label") %><b> <%= lead.clicks_count %></b></p>
+          <% if session[:site] == "fairdeals" and lead.deal %>
+              <% if lead.deal.logo %>
+                <p class="element"><%= image_tag lead.deal.logo.url(:thumb) %></p>
+              <% end %>
 
-          <p class="element"><%= t("leads.listing.exposures_count_label") %><b> <%= lead.exposures_count %></b></p>
+              <p class="element"><%= t("leads.listing.company_name_label") %><b> <%= lead.deal.company_name %></b></p>
 
-          <p class="element"><%= t("leads.listing.average_rating_label") %>
-            <b> <%= lead.average_rating == -1 ? t("leads.listing.average_rating_none_label") : lead.average_rating_as_text %></b>
-          </p>
+              <p class="element">
+                <%= lead.deal.address_line_1 %>
+                <%= lead.deal.address_line_2 %><br />
+                <%= lead.deal.zip_code %><%= lead.deal.address_line_3 %><br />
+                <%= lead.deal.country.name %>
+              </p>
 
-          <p class="element"><%= t("leads.listing.sale_limit_label") %><b> <%= lead.sale_limit %></b></p>
+          <% else %>
+              <p class="element"><%= t("leads.listing.clicks_count_label") %><b> <%= lead.clicks_count %></b></p>
+
+              <p class="element"><%= t("leads.listing.exposures_count_label") %><b> <%= lead.exposures_count %></b></p>
+
+              <p class="element"><%= t("leads.listing.average_rating_label") %>
+                <b> <%= lead.average_rating == -1 ? t("leads.listing.average_rating_none_label") : lead.average_rating_as_text %></b>
+              </p>
+
+              <p class="element"><%= t("leads.listing.sale_limit_label") %><b> <%= lead.sale_limit %></b></p>
+          <% end %>
         </td>
         <td>
+          <% if session[:site] == "fairdeals" and lead.deal %>
+              <p class="element"><%= lead.deal.contact_name %></p>
+              <p class="element"><%= link_to lead.deal.email_address, "mailto:#{lead.deal.email_address}" %></p>
+              <p class="element"><%= lead.deal.phone_number %></p>
+          <% else %>
           <p class="element"><%= t("leads.listing.novelty_label") %><b> <%= t("models.lead.novelty.lvl#{lead.novelty_level}") %></b></p>
 
           <p class="element"><%= t("leads.listing.hotness_label") %><b> <%= t("models.lead.hotness.lvl#{lead.hotness_level}") %></b></p>
@@ -94,7 +120,8 @@
             <b> <%= t("models.lead.certification.lvl#{lead.certification_level}") %></b></p>
             <p class="element">
               <%= t("leads.listing.certified_by_procurement_label") %> <b><%= lead.certified? ? t('common.yes_label') : t('common.no_label') %></b>
-            </p>
+          </p>
+          <% end %>
         </td>
 
         <% if block_tools %>

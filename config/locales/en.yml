@@ -75,6 +75,8 @@ en:
       main_menu:
         deals: "Deals"
         tenders: "Tenders"
+        purchase_manager:
+          my_requests: "My requests"
     main_menu:
       admin:
         users: "Users"
@@ -623,6 +625,9 @@ en:
       has_unsatisfactory_rating_no: "No"
       edit_label: Edit
       certification_status: "Certification status"
+      details_label: "Details"
+      company_name_label: "Company name"
+      date_label: "Date"
     table:
       id: "ID"
       header: "Lead title"
@@ -643,6 +648,9 @@ en:
       rating: Lead rating
       average_rating_none_label: None
       certification: Certification
+      company_name: "Company name"
+      date: "Date"
+      company_logo: "Company logo"
     index:
       header: Leads
       header_for: "for"

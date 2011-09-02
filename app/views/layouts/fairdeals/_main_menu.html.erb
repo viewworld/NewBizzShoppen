@@ -1,5 +1,6 @@
 <ul class="nav<%= (user_signed_in? and current_user.has_role?(:admin)) ? " admin_nav" : "" %>">
   <%= main_menu_link_to_role_specific_home_page %>
+  <%= main_menu_link_to t("layout.fairdeals.main_menu.purchase_manager.my_requests"), purchase_managers_leads_path, :tab => "created_leads" %>
   <%= main_menu_link_to(t("layout.fairdeals.main_menu.deals"), deal_categories_path, :tab => "browse_deals") %>
   <% if current_user %>
       <%= main_menu_link_to t("layout.fairdeals.main_menu.tenders"), purchase_managers_tenders_path, :tab => "tenders" %>
