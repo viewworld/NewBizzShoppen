@@ -34,8 +34,27 @@ Feature: Deals from procurement manager perspective
     And I follow translated "common.show_paginated"
 
   # only child (1 level)
-  @m18
+  @m18 @selenium @_done @_tested @tgn
   Scenario: I can see the dropdown menu of subcategories on the particular category leads listing
+    Given Deal category Sound files is created
+    And Deal category named "Podcasts" already exists within category named "Sound files"
+    And Deal category named "Music" already exists within category named "Sound files"
+    And Deal category named "Scientific" already exists within category named "Podcasts"
+    And Deal category named "Comedy" already exists within category named "Podcasts"
+    Given a deal named "Some deal #1" exists within category "Electronics deals"
+    Then a deal named "Various music" exists within category "Music"
+    Then a deal named "Various podcasts" exists within category "Podcasts"
+    Then a deal named "Skeptical Guide To Universe" exists within category "Scientific"
+    Then a deal named "Funny pod" exists within category "Comedy"
+    Then I follow translated "layout.main_menu.shared.browse_deals"
+    And I follow "Sound files"
+    And "category_selector" dropdown should have values "Podcasts,Music"
+    And I select "Podcasts" from "category_selector"
+    And "category_selector" dropdown should have values "Scientific,Comedy"
+    And I should see "Various podcasts"
+    And I select "Scientific" from "category_selector"
+    And I should see "Skeptical Guide To Universe"
+    And I open page in browser
 
   @_tested @_done @tgn
   Scenario: I can see list of deals categories and subcategories

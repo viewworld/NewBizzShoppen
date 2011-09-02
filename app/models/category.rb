@@ -154,7 +154,7 @@ class Category < ActiveRecord::Base
   public
 
   def move_leads_to_subcategory
-    if parent and parent.descendants.size == 1 and parent.leads.present?
+    if parent and parent.root? and parent.descendants.size == 1 and parent.leads.present?
       parent.leads.each do |lead|
         lead.update_attributes(:notify_buyers_after_update => false, :category => self)
       end

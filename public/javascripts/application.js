@@ -317,3 +317,9 @@ function show_all_pages(form_id, is_enabled){
     $('#show_all').val(is_enabled);
     $(form_id).submit();
 }
+
+function submit_category_filter_form(form_id){
+    $('input[type=checkbox][id^=category]').attr("checked", "");
+    $('#category_' + $('#category_selector').val()).attr("checked", "checked");
+    $(form_id).submit();
+}

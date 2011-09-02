@@ -111,10 +111,12 @@ class LeadsController < ApplicationController
     @leads = @search.includes(:currency).paginate(:page => params[:page], :per_page => Settings.default_leads_per_page, :show_all => params[:show_all] == "1")
     if @search.with_category.present?
       @category = @categories_scope.find(@search.with_category)
+      @nested_category = @category
       @category = @category.root unless @category.root?
     elsif @search.with_selected_categories.present?
       category = @categories_scope.where("categories.id in (?)", @search.with_selected_categories).first
       @category = category ? category.root : nil
+      @nested_category = category ? category : nil
     end
     @categories = @category ? @categories_scope.with_leads.where("categories.id in (?)", @category.self_and_descendants.map(&:id)) : []
     @countries = (cu_or_user_from_rss_token and cu_or_user_from_rss_token.has_accessible_categories?) ? Country.with_leads.within_accessible_categories(cu_or_user_from_rss_token) : Country.with_leads_in_categories(@search.with_category ? Category.find_by_id(@search.with_category).self_and_descendants.map(&:id) : @search.with_selected_categories )

@@ -226,8 +226,25 @@ Scenario: I can provide additional information in Note field when requesting mor
 Scenario: I should receive copy of the email which is sent when I request more leads for category
 
 # only child (1 level)
-@m18
+@m18 @selenium @_done @_tested @tgn
 Scenario: I can see the dropdown menu of subcategories on the particular category leads listing
+  Given Category Sound files is created
+  And Category named "Podcasts" already exists within category named "Sound files"
+  And Category named "Music" already exists within category named "Sound files"
+  And Category named "Scientific" already exists within category named "Podcasts"
+  And Category named "Comedy" already exists within category named "Podcasts"
+  Then Lead named "Various music" exists within "Music" category
+  Then Lead named "Various podcasts" exists within "Podcasts" category
+  Then Lead named "Skeptical Guide To Universe" exists within "Scientific" category
+  Then Lead named "Funny pod" exists within "Comedy" category
+  When I go to browse leads
+  And I follow "Sound files"
+  And "category_selector" dropdown should have values "Podcasts,Music"
+  And I select "Podcasts" from "category_selector"
+  And "category_selector" dropdown should have values "Scientific,Comedy"
+  And I should see "Various podcasts"
+  And I select "Scientific" from "category_selector"
+  And I should see "Skeptical Guide To Universe"
 
 @m18 @selenium @_tested @_done @tgn
 Scenario: I should see "View all" by the pagination links under Browse leads
