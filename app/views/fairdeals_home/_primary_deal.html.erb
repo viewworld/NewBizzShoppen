@@ -108,7 +108,7 @@
         buttons:
         { "<%= t("deals.show.view.send_share_by_email_button") %>": function() {
             if (validate_template_editor_fields("#modal_for_share_deal_by_email_<%= email_form_id %>") == 0) {
-                $('#form_share_deal_by_email').submit();
+                $('#form_share_deal_by_email_<%= email_form_id %>').submit();
                 $(this).dialog("close");
             }
         },
