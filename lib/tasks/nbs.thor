@@ -275,7 +275,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
     {"lead" => %w{ company_name company_phone_number company_website address_line_1 address_line_2 address_line_3 zip_code country_id
               region_id country_id company_vat_no company_ean_number contact_name direct_phone_number phone_number email_address linkedin_url
               facebook_url category_id is_international header description hidden_description purchase_value price currency_id published
-              notify_buyers_after_update sale_limit purchase_decision_date},
+              notify_buyers_after_update sale_limit purchase_decision_date contact_title},
      "user/customer" => %w{first_name last_name company_name address_address_line_1 address_address_line_2 address_address_line_3 address_zip_code
               address_country_id address_region_id vat_number screen_name phone email password password_confirmation team_buyers agreement_read newsletter_on },
      "user/purchase_manager" => %w{first_name last_name address_address_line_1 address_address_line_2 address_address_line_3 address_zip_code address_country_id
