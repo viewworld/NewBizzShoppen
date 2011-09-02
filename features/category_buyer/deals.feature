@@ -10,5 +10,21 @@ Feature: Deals
     Then I should not see CSS path "a[tab='browse_deals']"
     Then I should not see CSS path "a[tab='deals']"
 
-  @_deprecated
+  @_done @_tested
   Scenario: Admin should be able to check an option in settings to show deals for category buyers
+    When Category CategoryBuyerCategory is created
+    And I am signed up and confirmed as user with email "kategory_bajer@nbs.com" and password "secret" and role "category_buyer" for category "CategoryBuyerCategory"
+    Given I am not sign in
+    And I sign in as blazejek@gmail.com with password secret
+    And I follow translated "layout.main_menu.admin.users"
+    And I fill in "search_with_keyword" with "kategory_bajer@nbs.com"
+    And I press translated "administration.users.index.view.search_button"
+    And I follow translated "administration.users.index.view.edit"
+    And I check "user_category_buyer_show_deals"
+    And I press translated "administration.users.edit.view.button_update_user"
+    Given I am not sign in
+    And I sign in as kategory_bajer@nbs.com with password secret
+    Then I should see CSS path "a[tab='browse_deals']"
+    Then I should see CSS path "a[tab='deals']"
+
+

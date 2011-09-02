@@ -257,6 +257,8 @@ When /^I am signed up and confirmed as user with email "([^"]*)" and password "(
   opts = options ? Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys.merge(std_opts) : std_opts
   u = "User::#{role_name.camelize}".constantize.make!(opts)
   u.confirm!
+  u.buying_categories = std_opts[:buying_categories]
+  u.save
 end
 
 Then /^user "([^"]*)" should have role "([^"]*)"$/ do |email, role_name|
