@@ -17,8 +17,21 @@ Feature: Deals from procurement manager perspective
     Then I should see translated "layout.main_menu.shared.browse_deals"
     And I should not see "Browse leads"
 
-  @m18
+  @m18 @selenium @_done @_tested @tgn
   Scenario: I should see "View all" by the pagination links under Browse deals
+    Given pagination page size for leads is set to 2
+    And a deal named "Some deal #1" exists within category "Electronics deals"
+    And a deal named "Some deal #2" exists within category "Electronics deals"
+    And a deal named "Some deal #3" exists within category "Electronics deals"
+    And a deal named "Some deal #4" exists within category "Electronics deals"
+    Then I follow translated "layout.main_menu.shared.browse_deals"
+    And I follow "Electronics deals"
+    And I follow translated "common.show_all"
+    And I should see "Some deal #1"
+    And I should see "Some deal #2"
+    And I should see "Some deal #3"
+    And I should see "Some deal #4"
+    And I follow translated "common.show_paginated"
 
   # only child (1 level)
   @m18

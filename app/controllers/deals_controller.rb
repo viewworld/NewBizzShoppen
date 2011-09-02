@@ -13,7 +13,7 @@ class DealsController < ApplicationController
 
     @category = Category.find_by_id(@search.with_category)
     @countries = (current_user and current_user.has_accessible_categories?) ? Country.with_leads.within_accessible_categories(current_user) : Country.with_leads
-    @deals = @search.order("group_deal DESC, header").paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)
+    @deals = @search.order("group_deal DESC, header").paginate(:page => params[:page], :per_page => Settings.default_leads_per_page, :show_all => params[:show_all] == "1")
 
     if user_signed_in? and current_user.has_role?(:admin)
       @categories_scope = Category.scoped

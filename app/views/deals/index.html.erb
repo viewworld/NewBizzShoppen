@@ -3,7 +3,8 @@
     <h2><%= t("common.search") %></h2>
 
     <div class="search_content">
-      <%= form_for @search, :url => deals_path do |f| %>
+      <%= form_for @search, :url => deals_path, :html => { :id => "deals_search_form" } do |f| %>
+          <%= hidden_field_tag :show_all, params[:show_all] %>
           <fieldset class="inputs_vertical">
             <ol class="no_pdd">
               <li class="string">
@@ -35,7 +36,7 @@
                 <p>
                   <%= bt_clear_filter_safe %>
                   <%= link_to_function t("common.advanced_search"), "$('#advanced_search_1_div').toggle();$('#advanced_search_2_div').slideToggle();" %>
-                  <%= f.select :with_category, @category.children.map{|c| [c.name,c.id]}, {:include_blank => true}, :onchange => "this.form.submit()" %>
+                  <%= f.select :with_category, [[' ', @category.id]] + @category.children.map{|c| [c.name,c.id]}, {:include_blank => false}, :onchange => "this.form.submit()" %>
                 </p>
               </li>
             </ol>

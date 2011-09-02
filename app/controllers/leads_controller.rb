@@ -46,7 +46,6 @@ class LeadsController < ApplicationController
   def index
     index! do |format|
       format.html do
-        @leads = @search.includes(:currency).paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)
         Lead.update_all("exposures_count = exposures_count+1", {:id => @leads.map(&:id)})
         if @search.with_category.present?
           @search.with_selected_categories = LeadCategory.find_by_id(@search.with_category).self_and_descendants.map(&:id)
@@ -109,7 +108,7 @@ class LeadsController < ApplicationController
     end
 
     @search = Lead.scoped_search(params[:search])
-    @leads = @search.includes(:currency).paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)
+    @leads = @search.includes(:currency).paginate(:page => params[:page], :per_page => Settings.default_leads_per_page, :show_all => params[:show_all] == "1")
     if @search.with_category.present?
       @category = @categories_scope.find(@search.with_category)
       @category = @category.root unless @category.root?

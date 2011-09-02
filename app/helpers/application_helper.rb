@@ -225,4 +225,8 @@ module ApplicationHelper
     end
   end
 
+  def link_to_show_all_without_pagination(form_id)
+    show_all_enabled = params[:show_all] == "1"
+    link_to show_all_enabled ? t("common.show_paginated") : t("common.show_all"), "javascript:show_all_pages('#{form_id}', '#{show_all_enabled ? 0 : 1}')"
+  end
 end

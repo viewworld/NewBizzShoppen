@@ -229,5 +229,13 @@ Scenario: I should receive copy of the email which is sent when I request more l
 @m18
 Scenario: I can see the dropdown menu of subcategories on the particular category leads listing
 
-@m18
+@m18 @selenium @_tested @_done @tgn
 Scenario: I should see "View all" by the pagination links under Browse leads
+  Given pagination page size for leads is set to 2
+  And I follow "Computers"
+  And I follow translated "common.show_all"
+  And I should see "Printers ultimate deal"
+  And I should see "Faxes ultimate deal"
+  And I should see "Monitors ultimate deal"
+  And I should see "Cheap mouses ultimate deal"
+  And I follow translated "common.show_paginated"

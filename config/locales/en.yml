@@ -38,6 +38,8 @@ en:
     remove_hint: "Remove hint"
     advanced_search: "Advanced search"
     cache_cleared: "Cache has been cleared"
+    show_all: "Show all"
+    show_paginated: "Show paginated"
   ckeditor:
     upload_new_files: "Upload new files"
     file_manager: "File Manager"

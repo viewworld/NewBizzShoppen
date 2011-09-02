@@ -312,3 +312,8 @@ function deserialize_material_repository_array(serialized_array){
         return []
     }
 }
+
+function show_all_pages(form_id, is_enabled){
+    $('#show_all').val(is_enabled);
+    $(form_id).submit();
+}

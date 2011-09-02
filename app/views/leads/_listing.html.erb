@@ -107,7 +107,7 @@
       </tr>
   <% end %>
 
-  <% if will_paginate or show_checkboxes %>
+  <% if will_paginate or show_checkboxes or params[:show_all] == "1" %>
       <tr class="pagination">
         <td colspan="<%= cols + 2 %>" class="ta_c">
           <% if show_checkboxes %>
@@ -116,6 +116,8 @@
                 <%= label_tag "td_mark_all", "select all" %>
               </div>
           <% end %>
+
+          <%= link_to_show_all_without_pagination "#leads_search_form" %>
           <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
         </td>
       </tr>
