@@ -1,4 +1,5 @@
   <% if primary_deal %>
+    <% email_form_id = ActiveSupport::SecureRandom.hex(16) %>
       <div class="frm_plain primary_deal">
         <%= link_to "previous", group_deal_path(primary_deal, :previous => true), :class => "arrow_left", :remote => true %>
         <%= link_to "next", group_deal_path(primary_deal, :next => true), :class => "arrow_right", :remote => true %>
@@ -65,7 +66,7 @@
           <clb/>
 
           <div>
-            <div id="modal_for_share_deal_by_email_<%= primary_deal.id %>" style="display:none;">
+            <div id="modal_for_share_deal_by_email_<%= email_form_id %>" style="display:none;">
               <%= render :partial => "share_deal_by_email/new", :locals => {:deal => primary_deal} %>
             </div>
           </div>
@@ -74,7 +75,7 @@
 
         <div class="frm_foot">
           <p>
-            <%= link_to_function image_tag("fairdeals/bt/social_email.png"), "$('#modal_for_share_deal_by_email_#{primary_deal.id}').dialog('open');" %>
+            <%= link_to_function image_tag("fairdeals/bt/social_email.png"), "$('#modal_for_share_deal_by_email_#{email_form_id}').dialog('open');" %>
             <%= link_to_function image_tag("fairdeals/bt/social_linkedin.png"), "window.open('https://www.linkedin.com/cws/share?url=#{escape_uri(deal_url(:id => primary_deal.slug))}&text=#{escape_javascript(primary_deal.social_media_description)}&isFramed=true','tweet', 'width=400,height=320,location=0,toolbar=0,menubar=0')" %>
             <%= link_to_function image_tag("fairdeals/bt/social_facebook.png"), "window.open('https://www.facebook.com/sharer.php?u=#{escape_uri(deal_url(:id => primary_deal.slug))}&text=#{escape_javascript(primary_deal.social_media_description)}','tweet', 'width=400,height=320,location=0,toolbar=0,menubar=0')" %>
             <%= link_to_function image_tag("fairdeals/bt/social_twitter.png"), "window.open('https://twitter.com/share?url=#{escape_uri(deal_url(:id => primary_deal.slug))}&text=#{escape_javascript(primary_deal.social_media_description)}','tweet', 'width=400,height=320,location=0,toolbar=0,menubar=0')"  %>
@@ -99,14 +100,14 @@
         });
     });
 
-    $('#modal_for_share_deal_by_email_<%= primary_deal.id %>').dialog({
+    $('#modal_for_share_deal_by_email_<%= email_form_id %>').dialog({
         autoOpen: false,
         width: 400,
         title: '<%= t("deals.show.view.share_by_email_modal_title") %>',
         modal: true,
         buttons:
         { "<%= t("deals.show.view.send_share_by_email_button") %>": function() {
-            if (validate_template_editor_fields("#modal_for_share_deal_by_email") == 0) {
+            if (validate_template_editor_fields("#modal_for_share_deal_by_email_<%= email_form_id %>") == 0) {
                 $('#form_share_deal_by_email').submit();
                 $(this).dialog("close");
             }
