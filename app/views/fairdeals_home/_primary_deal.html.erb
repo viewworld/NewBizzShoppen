@@ -67,7 +67,7 @@
 
           <div>
             <div id="modal_for_share_deal_by_email_<%= email_form_id %>" style="display:none;">
-              <%= render :partial => "share_deal_by_email/new", :locals => {:deal => primary_deal} %>
+              <%= render :partial => "share_deal_by_email/new", :locals => {:deal => primary_deal, :email_form_id => email_form_id } %>
             </div>
           </div>
           <!-- end / main deal -->

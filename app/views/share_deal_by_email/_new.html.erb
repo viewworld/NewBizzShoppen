@@ -1,4 +1,5 @@
-<%= form_tag share_deal_by_email_path, :method => :post, :id => "form_share_deal_by_email" do %>
+<% form_id = defined?(email_form_id) ? "form_share_deal_by_email_#{email_form_id}" : "form_share_deal_by_email" %>
+<%= form_tag share_deal_by_email_path, :method => :post, :id => form_id do %>
   <fieldset class="inputs labels_ta_r labels_70">
     <ol>
       <li id="template_editor_email_from_input" class="string">
