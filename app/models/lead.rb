@@ -309,13 +309,7 @@ class Lead < AbstractLead
     !lead_purchases.where("purchased_by = #{user.id} and accessible_from IS NOT NULL").blank?
   end
 
-  def based_on_deal(deal, user)
-    {:current_user => User.find_by_email(deal.deal_admin_email).with_role, :category => deal.lead_category, :sale_limit => 1, :price => deal.price.blank? ? 0 : deal.price,
-     :purchase_decision_date => deal.end_date+7, :currency => deal.currency, :published => true, :requestee => user, :deal_id => deal.id
-    }.each_pair do |key, value|
-      self.send("#{key}=", value)
-    end
-
+  def copy_user_profile(user)
     [
         [:contact_name, :full_name], [:phone_number, :phone], [:email_address, :email],
         [:company_name], [:address_line_1, nil, :address], [:address_line_2, nil, :address],
@@ -329,6 +323,16 @@ class Lead < AbstractLead
         self.send("#{field1}=".to_sym, user.send(field2.to_sym)) if self.send(field1.to_sym).blank?
       end
     end
+  end
+
+  def based_on_deal(deal, user)
+    {:current_user => User.find_by_email(deal.deal_admin_email).with_role, :category => deal.lead_category, :sale_limit => 1, :price => deal.price.blank? ? 0 : deal.price,
+     :purchase_decision_date => deal.end_date+7, :currency => deal.currency, :published => true, :requestee => user, :deal_id => deal.id
+    }.each_pair do |key, value|
+      self.send("#{key}=", value)
+    end
+
+    copy_user_profile(user)
 
     current_locale = I18n.locale
     (deal.lead_translations.count > 1 ? ::Locale.all.map(&:code) : [current_locale]).each do |locale_code|

@@ -194,7 +194,22 @@ class User < ActiveRecord::Base
   end
 
   def mailer_host
-    Nbs::Application.config.action_mailer.default_url_options[:host]
+    if has_role?(:purchase_manager)
+      mailer_fairdeals_host
+    else
+      Nbs::Application.config.action_mailer.default_url_options[:host]
+    end
+  end
+
+  def mailer_fairdeals_host
+    dom_lang = with_role.address.present? ? with_role.address.country.locale == "en" ? "eu" : "dk" : "dk"
+    if Rails.env.production?
+      "fairdeals.#{dom_lang}"
+    elsif Rails.env.staging?
+      "beta.fairdeals.#{dom_lang}"
+    else
+      "fairdeals.#{dom_lang}:3000"
+    end
   end
 
   def deliver_email_template(uniq_id)

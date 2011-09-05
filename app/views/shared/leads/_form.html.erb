@@ -96,6 +96,7 @@
         <%= render :partial => "/shared/leads/lead_fields", :locals => {:f => builder} %>
     <% end %>
 
+    <% unless current_user and current_user.has_role?(:purchase_manager) %>
     <div class="pdd_10 no_pdd_t" id="locale_picker_div">
       <fieldset class="inputs labels_ta_r labels_180">
         <ol class="align_inputs">
@@ -111,6 +112,7 @@
       </fieldset>
     </div>
     <hl/>
+   <% end %>
 
     <div class="pdd_10 no_pdd_t">
       <fieldset class="inputs labels_ta_r labels_180">
