@@ -1907,6 +1907,7 @@ en:
           contact_email_label: "Contact e-mail"
           contact_phone_number_label: "Contact phone number"
           company_website_label: "Company website"
+          company_address_label: "Address"
     lead_templates:
       index:
         view:
