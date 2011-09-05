@@ -9,8 +9,8 @@
                   <ol class="align_inputs">
                     <li class="string"><%= form.label t("purchase_manager.leads.edit.view.company_name_label") %><%= @lead.deal.company_name %></li>
                     <li class="string"><%= form.label t("purchase_manager.leads.edit.view.company_address_label") %>
-                      <%= @lead.deal.address_line_1 %><%= @lead.deal.address_line_2 %>
-                      <%= @lead.deal.zip_code %><%= @lead.deal.address_line_3 %><%= @lead.deal.country.name %>
+                      <%= @lead.deal.address_line_1 %><%= @lead.deal.address_line_2 %><br />
+                      <%= @lead.deal.zip_code %> <%= @lead.deal.address_line_3 %> <%= @lead.deal.country.name %>
                     </li>
                     <li class="string"><%= form.label t("purchase_manager.leads.edit.view.contact_name_label") %><%= @lead.deal.contact_name %></li>
                     <li class="string"><%= form.label t("purchase_manager.leads.edit.view.contact_email_label") %><%= link_to @lead.deal.email_address, "mailto:#{@lead.deal.company_website}" %></li>
@@ -25,7 +25,9 @@
             </div>
               <%= hidden_field_tag :get_deal, params[:get_deal] %>
 
-            <%= render :partial => "form1", :locals => { :form => form } %>
+              <% unless params[:get_deal] == "1" %>
+                <%= render :partial => "form1", :locals => { :form => form } %>
+              <% end %>
 
 
           <%= render :partial => "form2", :locals => { :form => form } %>
