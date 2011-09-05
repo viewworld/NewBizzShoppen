@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
   helper_method :locale
 
   def redirect_to_fairleads
-    if user_signed_in? and !current_user.has_role? :purchase_manager and session[:site] == "fairdeals"
+    if user_signed_in? and current_user and !current_user.has_role? :purchase_manager and session[:site] == "fairdeals"
       key = current_user.generate_login_key!
       sign_out(current_user)
       redirect_to "http://#{Rails.env == 'staging' ? 'beta.fairleads.com' : 'fairleads.com'}/login_keys/?key=#{key}"
@@ -90,7 +90,7 @@ class ApplicationController < ActionController::Base
           sign_out(resource_name)
           root_path
         end
-      elsif session[:last_url_before_logout].present? and !current_user.has_any_role?(:agent, :call_centre, :call_centre_agent, :purchase_manager)
+      elsif session[:last_url_before_logout].present? and !current_user.has_any_role?(:agent, :call_centre, :call_centre_agent, :purchase_manager, :customer, :lead_buyer)
         last_url = session[:last_url_before_logout]
         session[:last_url_before_logout] = nil
         last_url
@@ -107,6 +107,21 @@ class ApplicationController < ActionController::Base
       end
     else
       super
+    end
+  end
+
+  def after_sign_out_path_for(resource)
+    role = session[:logout_user_role].to_s
+    session[:logout_user_role] = nil
+
+    if ["customer", "lead_buyer", "category_buyer", "lead_user"].include?(role)
+      buyer_home_path
+    elsif ["agent", "call_centre", "call_centre_agent"].include?(role)
+      agent_home_path
+    elsif role == "purchase_manager"
+      purchase_manager_home_path
+    else
+      root_path
     end
   end
 
@@ -184,6 +199,7 @@ class ApplicationController < ActionController::Base
         session[key] = nil
       end
     end
+    session[:logout_user_role] = user.role
   end
 
   def do_something

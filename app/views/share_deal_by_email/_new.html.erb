@@ -1,4 +1,5 @@
-<%= form_tag share_deal_by_email_path, :method => :post, :id => "form_share_deal_by_email" do %>
+<% form_id = defined?(email_form_id) ? "form_share_deal_by_email_#{email_form_id}" : "form_share_deal_by_email" %>
+<%= form_tag share_deal_by_email_path, :method => :post, :id => form_id do %>
   <fieldset class="inputs labels_ta_r labels_70">
     <ol>
       <li id="template_editor_email_from_input" class="string">
@@ -15,7 +16,7 @@
       </li>
       <li id="template_editor_body_input" class="text">
         <%= label_tag t("share_deal_by_email.new.view.message") %>
-        <%= text_area_tag :body, deal.social_media_description, :style => "width:230px;height:120px" %>
+        <%= text_area_tag :body, deal.social_media_description.to_s, :style => "width:230px;height:120px" %>
       </li>
       <%= hidden_field_tag :deal_id, deal.id %>
     </ol>
