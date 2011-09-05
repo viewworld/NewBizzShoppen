@@ -2142,6 +2142,8 @@ en:
         create_new_agent_account: "Create new agent account"
         i_have_an_account: "I have an account"
 
+        new_lead: "New lead"
+        new_deal: "New deal"
   purchase_manager_home:
     show:
       view:

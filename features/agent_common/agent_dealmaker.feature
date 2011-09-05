@@ -77,7 +77,12 @@ Feature: Agent dealmaker
     And last email sent should have been sent to recipient "annalee@nbs.com"
     And last email sent should have content "fairleads.com"
 
-
+  @_tested @_done @tgn
   Scenario: I can create a new deal from the home page
+  Given I follow translated "layout.main_menu.shared.home"
+    And I should see translated "agent_home.show.view.new_lead"
 
+  @_tested @_done @tgn
   Scenario: I can create a new lead from the home page
+    Given I follow translated "layout.main_menu.shared.home"
+    And I should see translated "agent_home.show.view.new_deal"
