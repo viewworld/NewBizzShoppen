@@ -199,7 +199,7 @@ class ApplicationController < ActionController::Base
         session[key] = nil
       end
     end
-    session[:logout_user_role] = user.role
+    session[:logout_user_role] = user.role if user
   end
 
   def do_something
