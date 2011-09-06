@@ -84,7 +84,7 @@
                   </div>
             </td>
             <td><%= image_tag lead.deal.logo.url(:thumb) if lead.deal and lead.deal.logo %></td>
-            <td><%= lead.deal.company_name %></td>
+            <td><%= lead.deal ? lead.deal.company_name : lead.company_name %></td>
             <td><%= format_date lead.created_at %></td>
 
             <td class="tda ta_r">
