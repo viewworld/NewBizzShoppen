@@ -125,7 +125,13 @@
             <div class="grid_160 fltl" style="margin-right: 10px;margin-top:10px;">
               <p class="ta_c pdd_5 no_pdd_lr"><%= bt_link_to nil, t("administration.categories.form.move_users_right"), "javascript:move_selected('all_templates','deal_deal_template_ids_')", :id => "move_right" %></p>
 
-              <p class="ta_c"><%= bt_link_to nil, t("administration.categories.form.move_users_left"), "javascript:move_selected('deal_deal_template_ids_','all_templates')", :id => "move_left" %></p>
+              <p class="ta_c pdd_5"><%= bt_link_to nil, t("administration.categories.form.move_users_left"), "javascript:move_selected('deal_deal_template_ids_','all_templates')", :id => "move_left" %></p>
+
+              <p class="ta_c pdd_5 no_pdd_lr">
+                <% if current_user.buyer? and current_user.deal_category_id.present? %>
+                    <%= bt_link_to nil, t("buyer.deals.edit.view.new_template"), new_customers_lead_template_path %>
+                <% end %>
+              </p>
             </div>
 
             <div class="grid_240 fltl">

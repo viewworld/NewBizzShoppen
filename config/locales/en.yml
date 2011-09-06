@@ -2063,6 +2063,7 @@ en:
           title: "Edit deal"
           update_button: "Save"
           preview: "Preview"
+          new_template: "New template"
     deal_certification_requests:
       index:
         view:
