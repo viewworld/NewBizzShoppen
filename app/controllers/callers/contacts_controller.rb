@@ -73,7 +73,7 @@ class Callers::ContactsController < Callers::CallerController
   end
 
   def import_xls
-    if Sheet.file_validation(params["attachment"].original_filename)
+    if Sheet.validate_attachment(params["attachment"], true)
       @campaign.create_contacts_from_xls(Sheet.new(params["attachment"]).roo_instance, current_user)
     else
       flash[:notice] = t('contacts.import_xls.flash.unknown_format')
