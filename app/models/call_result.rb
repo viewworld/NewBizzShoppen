@@ -1,5 +1,6 @@
 class CallResult < ActiveRecord::Base
-  attr_accessor :contact_email_address, :contact_first_name, :contact_last_name, :contact_address_line_1, :contact_zip_code,
+  attr_accessor :contact_email_address, :contact_first_name, :contact_last_name, :contact_address_line_1, :contact_address_line_2,
+                :contact_address_line_3, :contact_zip_code, :contact_country_id, :contact_phone_number,
                 :contact_company_name, :buying_category_ids, :email_template_subject, :email_template_from, :email_template_bcc,
                 :email_template_cc, :email_template_body
 
@@ -192,9 +193,9 @@ class CallResult < ActiveRecord::Base
     user = User::CategoryBuyer.new(:email => contact_email_address, :first_name => contact_first_name,
                             :last_name => contact_last_name,
                             :address_attributes => { :address_line_1 => contact_address_line_1, :zip_code => contact_zip_code,
-                                                     :country_id => contact.country_id,  :address_line_2 => contact.address_line_2,
-                                                     :address_line_3 => contact.address_line_3, :region_id => contact.region_id},
-                            :agreement_read => true, :company_name => contact.company_name, :phone => contact.phone_number,
+                                                     :country_id => contact_country_id,  :address_line_2 => contact_address_line_2,
+                                                     :address_line_3 => contact_address_line_3, :region_id => contact.region_id},
+                            :agreement_read => true, :company_name => contact.company_name, :phone => contact_phone_number,
                             :contact => contact, :vat_number => contact.company_vat_no,
                             :company_ean_number => contact.company_ean_number)
 

@@ -501,8 +501,13 @@ en:
       contact_first_name: "First name"
       contact_last_name: "Last name"
       contact_address_line_1: "Address line 1"
+      contact_address_line_2: "Address line 2"
+      contact_address_line_3: "City"
+      contact_country_id: "Country"
+      contact_phone_number: "Phone"
       contact_zip_code: "Zip code"
       customize_email_template: "Customize email"
+      contact_country: "Country"
     edit:
       title: Edit result
       form_title: Edit
