@@ -197,7 +197,11 @@ Nbs::Application.routes.draw do
       resources :call_results, :only => [:new, :create, :edit, :update, :destroy]
     end
 
-    resources :campaign_reports, :only => [:index]
+    resources :campaign_reports, :only => [:index] do
+      collection do
+        post 'load_agents'
+      end
+    end
   end
 
   namespace :comments do

@@ -352,6 +352,8 @@ en:
         results: Results
         final: only view completed contacts
         campaigns: "Campaigns"
+        call_centres: "Call centres"
+        call_centre_agents: "Call centre agents"
       search_button: Search
       table:
         results: Results

@@ -10,6 +10,11 @@ class CampaignReport
     self.selected_result_ids = selected_result_ids unless selected_result_ids.nil? or selected_result_ids.empty?
   end
 
+  def selected_users?(_user=nil)
+    _user = _user || user
+    !_user.nil? and _user.is_a?(Array) and !_user.empty?
+  end
+
   def target_success_percent
     campaign.success_rate.to_f
   end
@@ -70,7 +75,11 @@ class CampaignReport
   def completed_number_of_contacts
     cc = Contact.with_completed_status(true).joins(:call_results).where("leads.campaign_id = ? and call_results.created_at::DATE BETWEEN ? AND ?",
                                                                   campaign.id, date_from, date_to)
-    cc = cc.where("call_results.creator_id = ?", user.id) if user
+    if selected_users?
+      cc = cc.where("call_results.creator_id in (?)", user.map(&:id))
+    elsif user
+      cc = cc.where("call_results.creator_id = ?", user.id)
+    end
     cc.select("distinct(leads.id)").count
   end
 
@@ -132,7 +141,11 @@ class CampaignReport
 
   def final_results(result=nil)
     rsp = CallResult.final_for_campaign(campaign).where("call_results.created_at::DATE BETWEEN ? AND ?", date_from, date_to).with_reported
-    rsp = rsp.where("call_results.creator_id = ?", user.id) if user
+    if selected_users?
+      rsp = rsp.where("call_results.creator_id in (?)", user.map(&:id))
+    elsif user
+      rsp = rsp.where("call_results.creator_id = ?", user.id)
+    end
     rsp = rsp.where("results.id = ?", result.id) if result
     rsp = rsp.where("results.id IN (?)", selected_result_ids) if selected_result_ids
     rsp
@@ -141,7 +154,11 @@ class CampaignReport
   def user_session_logs(_user=nil)
     th = campaign.user_session_logs.where("created_at::DATE BETWEEN ? AND ?", date_from, date_to)
     _user = _user || user
-    th = th.where("user_id = ?", _user.id) if _user
+    if selected_users?(_user)
+      th = th.where("user_id in (?)", _user.map(&:id))
+    elsif _user
+      th = th.where("user_id = ?", _user.id)
+    end
     th
   end
 
@@ -159,18 +176,30 @@ class CampaignReport
     fc = Contact.with_completed_status(true).where("campaign_id = ? and call_results.created_at::DATE BETWEEN ? AND ? and results.final is true and results.is_reported is true", campaign.id, date_from, date_to).
         joins(:call_results => [:result])
     fc = fc.where("results.id IN (?)", selected_result_ids) if selected_result_ids
-    fc = fc.where("call_results.creator_id = ?", user.id) if user
+    if selected_users?
+      fc = fc.where("call_results.creator_id in (?)", user.map(&:id))
+    elsif user
+      fc = fc.where("call_results.creator_id = ?", user.id)
+    end
     fc
   end
 
   def total_value
     not_upgraded = CallResult.final_for_campaign(campaign).where("results.upgrades_to_lead is false and call_results.created_at::DATE BETWEEN ? AND ?", date_from, date_to).with_reported
-    not_upgraded = not_upgraded.where("call_results.creator_id = ?", user.id) if user
+    if selected_users?
+      not_upgraded = not_upgraded.where("call_results.creator_id in (?)", user.map(&:id))
+    elsif user
+      not_upgraded = not_upgraded.where("call_results.creator_id = ?", user.id)
+    end
     not_upgraded = not_upgraded.where("results.id IN (?)", selected_result_ids) if selected_result_ids
 
     upgraded = CallResult.final_for_campaign(campaign).where("results.upgrades_to_lead is true and call_results.created_at::DATE BETWEEN ? AND ?", date_from, date_to).with_reported.
         joins(:contact => :lead)
-    upgraded = upgraded.where("call_results.creator_id = ?", user.id) if user
+    if selected_users?
+      upgraded = upgraded.where("call_results.creator_id in (?)", user.map(&:id))
+    elsif user
+      upgraded = upgraded.where("call_results.creator_id = ?", user.id)
+    end
     upgraded = upgraded.where("results.id IN (?)", selected_result_ids) if selected_result_ids
 
     not_upgraded.sum("campaigns_results.euro_value").to_f + upgraded.sum("leads_leads.euro_price").to_f
@@ -179,7 +208,12 @@ class CampaignReport
   def leads_sold
     sold = CallResult.final_for_campaign(campaign).where("results.upgrades_to_lead is true and call_results.created_at::DATE BETWEEN ? AND ?", date_from, date_to).with_reported.
         joins(:contact => {:lead => [:lead_purchases]})
-    sold = sold.where("call_results.creator_id = ?", user.id) if user
+
+    if selected_users?
+      sold = sold.where("call_results.creator_id in (?)", user.map(&:id))
+    elsif user
+      sold = sold.where("call_results.creator_id = ?", user.id)
+    end
     sold = sold.where("results.id IN (?)", selected_result_ids) if selected_result_ids
     sold
   end
@@ -190,7 +224,7 @@ class CampaignReport
     elsif campaign.cost_type == Campaign::FIXED_HOURLY_RATE_COST
       campaign.euro_fixed_cost_value * total_hours
     elsif campaign.cost_type == Campaign::AGENT_BILLING_RATE_COST
-      user ? (user.euro_billing_rate.to_f * total_hours(user)) : campaign.users.map { |u| total_billing(u) }.sum
+      user ? selected_users? ? user.map { |u| u.euro_billing_rate.to_f * total_hours(u)}.sum : (user.euro_billing_rate.to_f * total_hours(user)) : campaign.users.map { |u| total_billing(u) }.sum
     elsif campaign.cost_type == Campaign::NO_COST
       0.0
     end
