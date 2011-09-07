@@ -2646,7 +2646,7 @@ en:
       is_success_cannot_be_disabled: "cannot be disabled because call results are generated for that result"
     locale:
       en: English
-      dk: Danish
+      da: Danish
     campaign:
       fixed_cost_value_is_blank: "Fixed cost must be set"
       agents_dont_have_billing_rates_defined: "Agents don't have billing rates defined."

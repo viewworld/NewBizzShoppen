@@ -77,7 +77,7 @@ module ApplicationHelper
 
   def available_locales_list(translations)
     existing = translations.map(&:locale)
-    Locale.all.map(&:code).reject { |c| c == I18n.locale.to_s or existing.include?(c) }.map { |c| [t('models.locale.' + c), c] }
+    Locale.enabled.map(&:code).reject { |c| c == I18n.locale.to_s or existing.include?(c) }.map { |c| [t('models.locale.' + c), c] }
   end
 
 

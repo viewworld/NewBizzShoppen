@@ -193,7 +193,7 @@
         <% end %>
 
         var language_names = [];
-        <% Locale.all.each do |locale| %>
+        <% Locale.enabled.each do |locale| %>
         <%= "language_names['#{locale.code}'] = '#{t('models.locale.' + locale.code)}';" -%>
         <% end %>
     </script>
