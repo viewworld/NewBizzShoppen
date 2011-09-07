@@ -131,8 +131,9 @@ Given /^contact for company "([^"]*)" and campaign "([^"]*)" is assigned to user
   campaign = Campaign.where(:name => campaign_name).first
   contact = Contact.find_by_company_name(company_name)
   if contact.nil?
-    Contact.make!(:campaign => campaign, :company_name => company_name, :agent_id => user.id, :creator => campaign.creator,
+    contact = Contact.make!(:campaign => campaign, :company_name => company_name, :agent_id => user.id, :creator => campaign.creator,
                        :country_id => campaign.country_id, :category_id => campaign.category_id, :company_phone_number => "+48 493756349734")
+    contact.update_attribute(:creator, campaign.creator)
   else
     contact.update_attribute(:agent_id, user.id)
   end

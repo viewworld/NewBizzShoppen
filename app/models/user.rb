@@ -227,7 +227,7 @@ class User < ActiveRecord::Base
   end
 
   def deliver_email_template(uniq_id)
-    TemplateMailer.delay.new(email, uniq_id.to_sym, with_role.address.present? ? with_role.address.country : Country.get_country_from_locale, {:user => self.with_role})
+    TemplateMailer.delay.new(email, uniq_id.to_sym, country, {:user => self.with_role})
   end
 
   def check_billing_rate
@@ -600,5 +600,15 @@ class User < ActiveRecord::Base
     end
     TemplateMailer.delay.new(email, "#{uniq_id}_invitation".to_sym, with_role.address.present? ? with_role.address.country : Country.get_country_from_locale,
                              {:user => self.with_role, :new_password => new_password})
+  end
+
+  def country
+    if respond_to?(:address)
+      return address.country if address.present?
+    else
+      return with_role.address.country if with_role.address.present?
+    end
+
+    Country.get_country_from_locale
   end
 end

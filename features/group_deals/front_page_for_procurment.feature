@@ -3,9 +3,12 @@ Feature: Front page for procurment
 
   @_done @_tested
   Scenario: When an user enters www.fairdeals.dk he will be redirected to Danish version of procurment
+    Given a deal named "PrimaryGroupDeal" exists within category "Electronics deals"
+    And a deal named "PrimaryGroupDeal" exists with attributes "published:1,group_deal:1,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
+    And deal named "PrimaryGroupDeal" is a primary featured deal
     Given I visit domain http://fairdeals.dk
     Then locale should be set to "da"
-    And I should see CSS path "#primary_featured_deal"
+    And I should see CSS path "#primary_group_deal"
 
   @_done @_tested
   Scenario: When an user enters www.fairdeals.eu he will be redirected to UK version of procurment
