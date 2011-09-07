@@ -410,6 +410,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
       end
 
       if Lead.count.zero?
+        ::I18n.locale = :en
         agent = User::Agent.find_by_email("agent@nbs.com")
         ["Big deal on printers", "Drills required", "Need assistance in selling a car", "Ipod shipment", "Trip to amazonia - looking for offer", "LCD - Huge amounts", "GPS receivers required"].each do |header|
           Lead.make!(:category_id => LeadCategory.last.id, :header => header, :creator_id => agent.id, :currency => Currency.where(:name => "EUR").first)
