@@ -171,11 +171,14 @@ Feature: Deals from Sales Manager perspective
     Then I sign in as purchase_manager101@nbs.com with password supersecret
     And I follow translated "layout.main_menu.shared.browse_deals"
     And I follow "Electronics deals"
+    And I confirm a js popup on the next step
     And I follow translated "deals.index.view.contact_me"
-    And I fill in "lead_company_name" with "Some name"
-    And I press translated "purchase_manager.leads.new.view.button_create"
+    And I fill in "lead_hidden_description" with "Some name"
+    And I fill in "lead_lead_template_values_attributes_0_value" with "some val1"
+    And I fill in "lead_lead_template_values_attributes_3_value" with "some val2"
     Then I should see "Computer details1"
     Then I should see "Computer details2"
+    And I press translated "purchase_manager.leads.edit.view.button_update"
 
   @_done @tested_elsewhere
   Scenario: Mandatory templates for category should be automatically included
