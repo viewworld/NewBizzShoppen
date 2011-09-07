@@ -77,7 +77,7 @@ Scenario: I can delete lead template that was created by me and was not filled o
 
 @added @_tested @selenium
 Scenario: I can add translation for the lead template name and its fields
-  Given I click hidden link by url regex "/locales\/dk/"
+  Given I click hidden link by url regex "/locales\/da/"
   Given I go to browse leads
   And I follow translated "categories.index.view.view_lead_templates"
   And I follow translated "agent.lead_templates.index.view.new_template"

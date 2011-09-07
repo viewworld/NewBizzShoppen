@@ -34,7 +34,7 @@ Scenario: I can edit and update email template fields for different language whe
   Given email "confirmation_instructions" has translation for lang "da" with attributes "subject:Bekraeftelse instruktioner"
   Then I click hidden link by url regex "/administration\/email_templates\/(\d+)\/edit/"
   And the "email_template_subject" field should contain "Confirmation instructions"
-  Then I click hidden link by url regex "/locales\/dk/"
+  Then I click hidden link by url regex "/locales\/da/"
   And I go to administration email templates
   Then I click hidden link by url regex "/administration\/email_templates\/(\d+)\/edit/"
   And the "email_template_subject" field should contain "Bekraeftelse instruktioner"

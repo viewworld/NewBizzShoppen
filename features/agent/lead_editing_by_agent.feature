@@ -21,7 +21,7 @@ Scenario: I can edit lead
 Scenario: I can add a language - title, purchase, hidden, language
   Given I go to agents leads
   Then I click hidden link by url regex "/agents\/leads\/\d+\/edit/"
-  And I select translated "models.locale.dk" from "locale_picker"
+  And I select translated "models.locale.da" from "locale_picker"
   And I fill in "lead_lead_translations_attributes_0_header" with "DK header"
   And I fill in "lead_lead_translations_attributes_0_description" with "DK description"
   And I fill in "lead_lead_translations_attributes_0_hidden_description" with "DK hidden description"
@@ -32,9 +32,9 @@ Scenario: I can add a language - title, purchase, hidden, language
 Scenario: I can delete a language
   Given I go to agents leads
   Then I click hidden link by url regex "/agents\/leads\/\d+\/edit/"
-  And I select translated "models.locale.dk" from "locale_picker"
+  And I select translated "models.locale.da" from "locale_picker"
   Then I follow translated "agent.leads.new.view.remove_language"
-  And I select translated "models.locale.dk" from "locale_picker"
+  And I select translated "models.locale.da" from "locale_picker"
   And I fill in "lead_lead_translations_attributes_0_header" with "DK header"
   And I fill in "lead_lead_translations_attributes_0_description" with "DK description"
   And I fill in "lead_lead_translations_attributes_0_hidden_description" with "DK hidden description"
@@ -108,7 +108,7 @@ Scenario: When new translation to lead is added I can also write translation for
   Then I click hidden link by url regex "/agents\/leads\/\d+\/edit/"
   And I fill in "lead_lead_template_values_attributes_0_value" with "123"
   And I fill in "lead_lead_template_values_attributes_1_value" with "Ms Windows Vista"
-  And I select translated "models.locale.dk" from "locale_picker"
+  And I select translated "models.locale.da" from "locale_picker"
   And I fill in "lead_lead_translations_attributes_0_header" with "DK header"
   And I fill in "lead_lead_translations_attributes_0_description" with "DK description"
   And I fill in "lead_lead_translations_attributes_0_hidden_description" with "DK hidden description"
