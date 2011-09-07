@@ -119,7 +119,7 @@
       <script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script>
   <% end %>
   <% if user_signed_in? and current_user.purchase_manager? %>
-      <%= link_to_function t("deals.show.view.share_by_email"), "$('#modal_for_share_deal_by_email').dialog('open');" %>
+      <p><%= link_to_function image_tag('fairdeals/bt/social_email.png', :height => "20", :alt => t("deals.show.view.share_by_email")), "$('#modal_for_share_deal_by_email').dialog('open');" %></p>
   <% end %>
 
   <div id="modal_for_share_deal_by_email" style="display:none;">

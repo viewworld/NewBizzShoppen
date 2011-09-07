@@ -84,21 +84,29 @@
 
     <search-box:/>
 
+    <% if controller.class.to_s != "FairdealsHomeController" %>
+        <div class="pdd_10">
+    <% end %>
 
-      <% unless notice.blank? %>
-          <div class="flash flash_notice">
-            <%= notice %>
-          </div>
-      <% end %>
+    <% unless notice.blank? %>
+        <div class="flash flash_notice">
+          <%= notice %>
+        </div>
+    <% end %>
 
-      <% unless alert.blank? %>
-          <div class="flash flash_alert">
-            <%= alert %>
-          </div>
-      <% end %>
+    <% unless alert.blank? %>
+        <div class="flash flash_alert">
+          <%= alert %>
+        </div>
+    <% end %>
 
-      <column-mc:/>
-    
+    <column-mc:/>
+
+
+    <% if controller.class.to_s != "FairdealsHomeController" %>
+        </div>
+    <% end %>
+
   </div>
 
   <div id="footer">
@@ -161,7 +169,9 @@
     });
 
     <% if !current_user.blank? and !Rails.env.development? and current_user.agent? %>
-    TIME_OUT = <%= Settings.logout_time.to_i %> * 60;
+    TIME_OUT =
+    <%= Settings.logout_time.to_i %> *
+    60;
 
     function set_logout_time() {
         return setTimeout("top.location='<%= logout_path %>'", TIME_OUT * 1000 + 20 * 1000);
@@ -171,11 +181,11 @@
         return setTimeout("check_session()", TIME_OUT * 1000);
     }
 
-    function check_session(){
+    function check_session() {
         $.post("/user_session_log.js")
     }
 
-    function extend_session(){
+    function extend_session() {
         clearTimeout(window.t);
         window.t = set_logout_time();
         window.t2 = set_logout_dialog_time();
@@ -197,19 +207,22 @@
 </script>
 
 <% if Rails.env.production? %>
-<script type="text/javascript">
+    <script type="text/javascript">
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-24542608-1']);
-  _gaq.push(['_trackPageview']);
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-24542608-1']);
+        _gaq.push(['_trackPageview']);
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
+        (function() {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
 
-</script>
+    </script>
 <% end %>
 
 <js:/>
