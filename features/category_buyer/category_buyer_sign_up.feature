@@ -3,6 +3,7 @@ Feature: Category buyer sign up
 
   @_done
   Scenario: I can create new Category Buyer account from category home page
+    Given setting for "email_verification_for_sales_managers" is set to "1"
     When Category named "Best Leads" already exists
     And I am on category home page for Best Leads
     And I follow translated "category_home.show.view.category_buyer_signup"
