@@ -19,7 +19,7 @@ Scenario: I can’t edit lead if the lead was already sold
 Scenario: I can add a language - title, purchase, hidden, language
   Given I follow translated "layout.main_menu.call_centre_agent.leads"
   Then I click hidden link by url regex "/call_centre_agents\/leads\/\d+\/edit/"
-  And I select translated "models.locale.dk" from "locale_picker"
+  And I select translated "models.locale.da" from "locale_picker"
   And I fill in "lead_lead_translations_attributes_0_header" with "DK header"
   And I fill in "lead_lead_translations_attributes_0_description" with "DK description"
   And I fill in "lead_lead_translations_attributes_0_hidden_description" with "DK hidden description"
@@ -30,9 +30,9 @@ Scenario: I can add a language - title, purchase, hidden, language
 Scenario: I can delete a language
   Given I follow translated "layout.main_menu.call_centre_agent.leads"
   Then I click hidden link by url regex "/call_centre_agents\/leads\/\d+\/edit/"
-  And I select translated "models.locale.dk" from "locale_picker"
+  And I select translated "models.locale.da" from "locale_picker"
   Then I follow translated "agent.leads.new.view.remove_language"
-  And I select translated "models.locale.dk" from "locale_picker"
+  And I select translated "models.locale.da" from "locale_picker"
   And I fill in "lead_lead_translations_attributes_0_header" with "DK header"
   And I fill in "lead_lead_translations_attributes_0_description" with "DK description"
   And I fill in "lead_lead_translations_attributes_0_hidden_description" with "DK hidden description"
