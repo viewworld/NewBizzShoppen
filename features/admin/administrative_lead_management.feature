@@ -43,7 +43,7 @@ Scenario: I can edit lead information if lead has been sold
   And I should see /666\.00/
   And I should see "Changed header"
 
-@selenium @_done
+@selenium @_done @wip
 Scenario: I can add a language
   When there are no leads
   And I have user with email bigbuyer1@person.com and role customer
@@ -51,7 +51,7 @@ Scenario: I can add a language
   And a lead Monitors ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role customer
   And I follow translated "layout.main_menu.admin.leads"
   And I follow translated "administration.leads.index.view.edit"
-  And I select translated "models.locale.dk" from "locale_picker"
+  And I select translated "models.locale.da" from "locale_picker"
   And I fill in "lead_lead_translations_attributes_0_header" with "dk Header"
   And I fill in "lead_lead_translations_attributes_0_description" with "dk Description"
   And I fill in "lead_lead_translations_attributes_0_hidden_description" with "dk Hidden description"
