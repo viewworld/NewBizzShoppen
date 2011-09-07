@@ -43,7 +43,7 @@ Scenario: I can edit lead information if lead has been sold
   And I should see /666\.00/
   And I should see "Changed header"
 
-@selenium @_done @wip
+@selenium @_done
 Scenario: I can add a language
   When there are no leads
   And I have user with email bigbuyer1@person.com and role customer
