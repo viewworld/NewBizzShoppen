@@ -17,6 +17,7 @@ class Languages < Thor
 
     ActiveRecord::Base.connection.execute("UPDATE youtube_introductions SET locale_code = 'da' WHERE locale_code = 'dk'")
     ActiveRecord::Base.connection.execute("UPDATE countries SET locale = 'da' WHERE locale = 'dk'")
+    ActiveRecord::Base.connection.execute("UPDATE countries SET detailed_locale = 'da' WHERE detailed_locale = 'dk'")
   end
 
 end
