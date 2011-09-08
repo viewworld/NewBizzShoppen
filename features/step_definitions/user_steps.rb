@@ -165,6 +165,11 @@ Then /^User (.+) with role (.+) is big buyer$/ do |email, role|
   user.update_attribute(:big_buyer, true)
 end
 
+Then /^User (.+) with role (.+) is from country (.+)$/ do |email, role, country_name|
+  user = "User::#{role.camelize}".constantize.first(:conditions => {:email => email})
+  user.address.update_attribute(:country, Country.where(:name => country_name).first)
+end
+
 Then /^user (.+) with role (.+) exists with attributes "([^"]*)"$/ do |email, role, options|
   user = "User::#{role.camelize}".constantize.first(:conditions => {:email => email})
   options_hash = Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys

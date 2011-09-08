@@ -96,7 +96,9 @@ Feature: VAT rates
     And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
     And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role customer
     And User kastomer@nbs.fake with role customer is big buyer
+    And User kastomer@nbs.fake with role customer is from country Denmark
     And user "kastomer@nbs.fake" with role "lead_buyer" added lead "Awesome Lead" to cart
+    And I run ruby "puts User.where(:email => 'kastomer@nbs.fake').first.with_role.country.name"
     And I sign in as jon@lajoie.ca with password secret
     And I follow translated "layout.main_menu.admin.upcoming_invoices"
     And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
@@ -111,6 +113,7 @@ Feature: VAT rates
     And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
     And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role customer with attributes "not_charge_vat:1"
     And User kastomer@nbs.fake with role customer is big buyer
+    And User kastomer@nbs.fake with role customer is from country Denmark
     And user "kastomer@nbs.fake" with role "lead_buyer" added lead "Awesome Lead" to cart
     And I sign in as jon@lajoie.ca with password secret
     And I follow translated "layout.main_menu.admin.upcoming_invoices"
