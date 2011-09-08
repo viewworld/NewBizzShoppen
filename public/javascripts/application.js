@@ -203,7 +203,7 @@ function clear_filter() {
     $.each($(".search_box form option:selected"), function(idx, option) {
         option.selected = false;
     });
-    $('.search_box #search_new').submit();
+    $('.search_box #search_new').click();
 }
 
 function show_agent_work_screen_dashboard() {
