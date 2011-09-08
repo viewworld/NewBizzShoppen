@@ -57,14 +57,13 @@ Feature: Generating leads from deals
     Then I sign in as purchase_manager101@nbs.com with password supersecret
     And I follow translated "layout.main_menu.shared.browse_deals"
     And I follow "Electronics deals"
+    And I confirm a js popup on the next step
     And I follow translated "deals.index.view.contact_me"
-    And I fill in "lead_company_name" with "Some name"
     And I fill in "lead_hidden_description" with "some hidden note"
-    And I press translated "purchase_manager.leads.new.view.button_create"
     And I fill in "lead_lead_template_values_attributes_0_value" with "lorem ipsum 1"
     And I fill in "lead_lead_template_values_attributes_1_value" with "lorem ipsum 2"
     And I fill in "lead_lead_template_values_attributes_2_value" with "lorem ipsum 3"
-    And I press translated "purchase_manager.leads.new.view.button_create"
+    And I press translated "purchase_manager.leads.edit.view.button_update"
     And I should see translated "purchase_manager.leads.show.view.confirmation_message"
     And I press translated "purchase_manager.leads.show.view.ok_confirmation"
     And I should see "Welcome procurement manager"

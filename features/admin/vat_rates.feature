@@ -127,6 +127,7 @@ Feature: VAT rates
      When VAT rate for "Denmark" is set to "27"
      And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
      And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role customer with attributes "first_name:Wielki,last_name:Szu,company_name:WielkiSzuLtd"
+     And User kastomer@nbs.fake with role customer is from country Denmark
      And I sign in as jon@lajoie.ca with password secret
      And I click hidden link by url regex "/administration\/invoicing\/invoices/"
      And I select "WielkiSzuLtd, kastomer@nbs.fake" from "invoice_user_id"
