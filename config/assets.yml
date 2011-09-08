@@ -67,3 +67,6 @@ stylesheets:
     - public/stylesheets/jquery-ui-1.8.5.custom.css
     - public/stylesheets/colorbox.css
     - public/stylesheets/countdown.css
+
+  fairdeals_thin:
+    - public/stylesheets/fairdeals/style_thin.css

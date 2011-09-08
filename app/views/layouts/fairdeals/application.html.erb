@@ -9,7 +9,8 @@
       <%= include_javascripts :fairdeals %>
   <% else %>
       <%= include_stylesheets :common %>
-      <%= include_javascripts :common %>
+      <%= include_stylesheets :fairdeals_thin %>
+      <%= include_javascripts :common %>              
   <% end %>
   <%= ajaxful_rating_style %>
 
