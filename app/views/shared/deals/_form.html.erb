@@ -88,8 +88,8 @@
         <%= form.input :address_line_2 %>
         <%= form.input :address_line_3 %>
         <%= form.input :zip_code %>
-        <%= form.input :country_id, :as => :select, :collection => Country.all, :include_blank => false %>
-        <%= form.input :region_id, :as => :select, :collection => Region.all, :include_blank => false %>
+        <%= form.input :country_id, :as => :select, :collection => Country.all, :input_html => {:onchange => "refresh_regions_list('deal');"}, :include_blank => false %>
+        <%= form.input :region_id, :as => :select, :collection => @deal.country.present? ? @deal.country.regions : [], :include_blank => false %>
         <% if user_signed_in? and current_user.admin? %>
             <%= form.input :created_leads %>
         <% end %>
