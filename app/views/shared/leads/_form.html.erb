@@ -91,11 +91,11 @@
         <hl/>
     <% end %>
 
-    <div class="nested_locale_container"></div>
-
     <%= form.fields_for :lead_translations, @lead.lead_translations.select { |lt| lt.locale != I18n.locale.to_s } do |builder| %>
         <%= render :partial => "/shared/leads/lead_fields", :locals => {:f => builder} %>
     <% end %>
+
+    <div class="nested_locale_container"></div>
 
     <% unless current_user and current_user.has_role?(:purchase_manager) %>
     <div class="pdd_10 no_pdd_t" id="locale_picker_div">
