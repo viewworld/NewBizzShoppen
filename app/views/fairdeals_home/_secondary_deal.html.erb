@@ -14,7 +14,7 @@
               <span class="b green"><%= as_currency(featured.deal.discounted_price, featured.deal.currency) %></span>
               <br/>
               <%= t("deals.index.view.save") %> <span class="b red"><%= featured.deal.saving %></span>
-              <%= bt_link_to nil, t("deals.index.view.view_deal"), lead_path(featured.deal.slug) %>
+              <%= bt_link_to nil, t("deals.index.view.view_deal"), deal_path(featured.deal.slug) %>
             </p>
           </div>
         </param:content>

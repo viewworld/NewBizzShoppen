@@ -67,7 +67,7 @@ Feature: Generating leads from deals
     And I press translated "purchase_manager.leads.new.view.button_create"
     And I should see translated "purchase_manager.leads.show.view.confirmation_message"
     And I press translated "purchase_manager.leads.show.view.ok_confirmation"
-    And I should see "Welcome procurement manager"
+    And I should be on the homepage
 
   # If there is any template information associated with the deal the procurement manager is prompted for the information. And the procurement manager can enter some note information (will go into hidden description)
   @_done @tested_elsewhere
