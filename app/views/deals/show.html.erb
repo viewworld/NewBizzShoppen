@@ -53,15 +53,10 @@
             <% end %>
           </p>
       <% end %>
-
-      <br/>
-      <% if user_signed_in? and current_user.has_role?(:purchase_manager) and !@deal.requested_by?(current_user) %>
-          <%= bt_link_to nil, t("deals.index.view.contact_me"), new_purchase_managers_lead_path(:deal_id => @deal.id), :confirm => t("deals.show.view.get_deal_confirmation_msg") %>
-      <% end %>
     </div>
   </div>
 
-  <div class="column_1to3 fltri">
+  <div class="grid_300 fltr">
     <div class="frm_tiny">
       <div class="pdd_10">
         <ul class="elements_list">
@@ -101,28 +96,43 @@
         </ul>
       </div>
     </div>
+
+    <br/>
+
+        <% if user_signed_in? and current_user.has_role?(:purchase_manager) and !@deal.requested_by?(current_user) %>
+            <%= bt_link_to nil, t("deals.index.view.contact_me"), new_purchase_managers_lead_path(:deal_id => @deal.id), :confirm => t("deals.show.view.get_deal_confirmation_msg"), :class => "bt_max bt_big" %>
+        <% end %>    
   </div>
   <clb/>
 
-  <% if Rails.env != "test" and user_signed_in? and current_user.purchase_manager? %>
-      <a name="fb_share" share_url="<%= escape_uri(deal_url(:id => @deal.slug)) %>"></a>
-      <!--<iframe src="http://www.facebook.com/plugins/like.php?app_id=101408449959161&amp;href=<%= escape_uri(deal_url(:id => @deal.slug)) %>&amp;send=true&amp;layout=button_count&amp;width=250&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:250px; height:21px;" allowTransparency="true"></iframe>-->
-      <!--<div id="fb-root"></div>-->
-      <!--<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>-->
-      <!--<fb:comments href="<%= escape_uri(deal_url(:id => @deal.slug)) %>" num_posts="2" width="500"></fb:comments>-->
 
-      <clb/>
+  <ul class="social_share">
+    <% if Rails.env != "test" and user_signed_in? and current_user.purchase_manager? %>
+        <li>
+          <a name="fb_share" share_url="<%= escape_uri(deal_url(:id => @deal.slug)) %>"></a>
 
-      <script src="https://platform.linkedin.com/in.js" type="text/javascript"></script>
-      <script type="IN/Share" data-url="<%= deal_url(:id => @deal.slug) %>" data-counter="right"></script>
+          <!--<iframe src="http://www.facebook.com/plugins/like.php?app_id=101408449959161&amp;href=<%= escape_uri(deal_url(:id => @deal.slug)) %>&amp;send=true&amp;layout=button_count&amp;width=250&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:250px; height:21px;" allowTransparency="true"></iframe>-->
+          <!--<div id="fb-root"></div>-->
+          <!--<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>-->
+          <!--<fb:comments href="<%= escape_uri(deal_url(:id => @deal.slug)) %>" num_posts="2" width="500"></fb:comments>-->
 
-      <clb/>
-      <a href="https://twitter.com/share" class="twitter-share-button" data-text="<%= @deal.social_media_description %>" data-count="horizontal"><%= t("deals.show.view.tweet") %></a>
-      <script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script>
-  <% end %>
-  <% if user_signed_in? and current_user.purchase_manager? %>
-      <p><%= link_to_function image_tag('fairdeals/bt/social_email.png', :height => "20", :alt => t("deals.show.view.share_by_email")), "$('#modal_for_share_deal_by_email').dialog('open');" %></p>
-  <% end %>
+        </li>
+        <li>
+          <script src="https://platform.linkedin.com/in.js" type="text/javascript"></script>
+          <script type="IN/Share" data-url="<%= deal_url(:id => @deal.slug) %>" data-counter="right"></script>
+        </li>
+        <li>
+          <a href="https://twitter.com/share" class="twitter-share-button" data-text="<%= @deal.social_media_description %>" data-count="horizontal"><%= t("deals.show.view.tweet") %></a>
+          <script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script>
+        </li>
+    <% end %>
+    <% if user_signed_in? and current_user.purchase_manager? %>
+        <li>
+          <%= link_to_function image_tag('fairdeals/bt/social_email.png', :height => "20", :alt => t("deals.show.view.share_by_email")), "$('#modal_for_share_deal_by_email').dialog('open');" %>
+        </li>
+    <% end %>
+  </ul>
+
 
   <div id="modal_for_share_deal_by_email" style="display:none;">
     <%= render :partial => "share_deal_by_email/new", :locals => {:deal => @deal} %>
@@ -146,8 +156,9 @@
               if (validate_template_editor_fields("#modal_for_share_deal_by_email") == 0) {
                   $('#form_share_deal_by_email').submit();
                   $(this).dialog("close");
-              }},
-            "<%= t("deals.show.view.cancel") %>": function() {
+              }
+          },
+              "<%= t("deals.show.view.cancel") %>": function() {
                   $(this).dialog('close');
               }
           }
