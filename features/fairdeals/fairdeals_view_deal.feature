@@ -38,6 +38,10 @@ Feature: Fairdeals view deal
     And I follow "Business deals"
     And I follow "super"
     And I follow translated "deals.index.view.contact_me"
+    And I press translated "purchase_manager.leads.new.view.button_create"
+    Then I follow translated "layout.fairdeals.main_menu.deals"
+    And I follow "Business deals"
+    And I follow "super"
     And I should see "Azazel"
     And I should see "Ed Yudkovsky"
     And I should see "buyer@nbs.com"
@@ -59,7 +63,7 @@ Feature: Fairdeals view deal
     And I fill in "lead_lead_template_values_attributes_0_value" with "some value1"
     And I fill in "lead_lead_template_values_attributes_1_value" with "some value2"
     And I fill in "lead_lead_template_values_attributes_2_value" with "some value3"
-    And I press translated "purchase_manager.leads.edit.view.button_update"
+    And I press translated "purchase_manager.leads.new.view.button_create"
     And I press translated "purchase_manager.leads.show.view.ok_confirmation"
 
   @_done @tested_elsewhere @tgn
