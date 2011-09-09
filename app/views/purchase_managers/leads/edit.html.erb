@@ -44,6 +44,19 @@
                       <%= @lead.deal.company_website.present? ? link_to(@lead.deal.company_website, @lead.deal.company_website) : "-" %>
                     </div>
                   </li>
+                  <li class="string">
+                    <%= form.label t("purchase_manager.leads.edit.view.short_deal_description_label") %>
+                    <div class="txt">
+                      <%= @lead.deal.description %>
+                    </div>
+                  </li>
+                  <li class="string">
+                    <%= form.label t("purchase_manager.leads.edit.view.deal_description_label") %>
+                    <div class="txt">
+                      <%= link_to t("purchase_manager.leads.edit.view.view_description_link"), deal_path(:slug => @lead.deal.slug) %>
+                    </div>
+                  </li>
+
                   <% if params[:get_deal] == "1" %>
                       <%= form.input :hidden_description, :required => false, :label => t("purchase_manager.leads.new.view.lead_note"), :input_html => {:style => "height: 150px;width:230px;"} %>
                   <% end %>

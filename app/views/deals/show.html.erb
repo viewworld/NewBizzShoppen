@@ -107,7 +107,11 @@
 
 
   <ul class="social_share">
-    <% if Rails.env != "test" and user_signed_in? and current_user.purchase_manager? %>
+    <li>
+      <%= link_to_function image_tag('fairdeals/bt/social_email.png', :height => "20", :alt => t("deals.show.view.share_by_email")), "$('#modal_for_share_deal_by_email').dialog('open');" %>
+    </li>
+    <% if Rails.env != "test" %>
+        <% if false %>
         <li>
           <a name="fb_share" share_url="<%= escape_uri(deal_url(:id => @deal.slug)) %>"></a>
 
@@ -117,6 +121,7 @@
           <!--<fb:comments href="<%= escape_uri(deal_url(:id => @deal.slug)) %>" num_posts="2" width="500"></fb:comments>-->
 
         </li>
+        <% end %>
         <li>
           <script src="https://platform.linkedin.com/in.js" type="text/javascript"></script>
           <script type="IN/Share" data-url="<%= deal_url(:id => @deal.slug) %>" data-counter="right"></script>
@@ -125,12 +130,9 @@
           <a href="https://twitter.com/share" class="twitter-share-button" data-text="<%= @deal.social_media_description %>" data-count="horizontal"><%= t("deals.show.view.tweet") %></a>
           <script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script>
         </li>
+        <li><iframe src="https://www.facebook.com/plugins/like.php?app_id=101408449959161&amp;href=<%= escape_uri(deal_url(@deal)) %>&amp;send=false&amp;layout=button_count&amp;width=250&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:250px; height:21px;" allowTransparency="true"></iframe></li>
     <% end %>
-    <% if user_signed_in? and current_user.purchase_manager? %>
-        <li>
-          <%= link_to_function image_tag('fairdeals/bt/social_email.png', :height => "20", :alt => t("deals.show.view.share_by_email")), "$('#modal_for_share_deal_by_email').dialog('open');" %>
-        </li>
-    <% end %>
+
   </ul>
 
 

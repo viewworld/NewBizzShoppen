@@ -21,11 +21,9 @@
               <%= as_currency(primary_deal.discounted_price, primary_deal.currency) %>
             </p>        
 
-            <% if user_signed_in? and current_user.has_role?(:purchase_manager) and !primary_deal.requested_by?(current_user) %>
-                <p>
-                  <%= bt_link_to nil, t("deals.index.view.view_deal"), deal_path(primary_deal.slug) %>
-                </p>
-            <% end %>
+            <p>
+              <%= bt_link_to nil, t("deals.index.view.view_deal"), deal_path(primary_deal.slug) %>
+            </p>
 
           </div>
 

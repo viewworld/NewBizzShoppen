@@ -6,6 +6,10 @@ class User::PurchaseManager < ::User
   include Addresses
   include BankAccounts
 
+  validates_presence_of :company_name, :phone, :password_confirmation
+
+  validate :check_address_city
+
   def can_publish_leads?
     false
   end
@@ -27,5 +31,14 @@ class User::PurchaseManager < ::User
 
   def comment_threads
     Comment.with_leads_created_by(self)
+  end
+
+  private
+
+  def check_address_city
+    if address and address.address_line_3.blank?
+      return address.errors.add(:address_line_3, :blank)
+    end
+    true
   end
 end

@@ -1915,6 +1915,9 @@ en:
           contact_phone_number_label: "Contact phone number"
           company_website_label: "Company website"
           company_address_label: "Address"
+          short_deal_description_label: "Short deal description"
+          deal_description_label: "Deal description"
+          view_description_link: "See description..."
     lead_templates:
       index:
         view:
@@ -3449,6 +3452,9 @@ en:
         view:
           header: "My deals"
           new_deal: "Create new deal"
+    new:
+      view:
+        frame_header: "Get deal"
   deal_categories:
     index:
       view:
