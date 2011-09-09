@@ -5,13 +5,16 @@
   <%= semantic_form_for [:purchase_managers, @lead], :method => :post do |form| %>
       <frm title="Create new">
         <param:content>
+          <div class="column_left">            
             <div id="step_1">
-              <%= render :partial => "form1", :locals => { :form => form } %>
+              <%= render :partial => "form1", :locals => {:form => form} %>
             </div>
             <%= hidden_field_tag :deal_id, params[:deal_id] %>
-          <clb/>
+            <clb/>
 
-          <%= render :partial => "form2", :locals => {:form => form} %>
+            <%= render :partial => "form2", :locals => {:form => form} %>
+          </div>
+          <div class="column_right">[text]</div>
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="save">
