@@ -103,3 +103,20 @@ Feature: Deals from procurement manager perspective
   @_done @tgn @tested_elsewhere
   Scenario: When I click "Contact me" I can enter "Additional" template information and note field
 
+  @_done @_tested @tgn @added @m18
+  Scenario: When I sign up on fairdeals.dk/eu and confirmation is turned off I should still get email and be signed in afterword
+  Given setting for "email_verification_for_procurement_managers" is set to "0"
+  Given I visit domain http://fairdeals.dk
+  And I follow translated "fairdeals_home.show.view.get_free_account"
+  And I fill in "user_purchase_manager_first_name" with "Ana"
+  And I fill in "user_purchase_manager_last_name" with "Kasparian"
+  And I fill in "user_purchase_manager_address_attributes_address_line_1" with "2222"
+  And I fill in "user_purchase_manager_address_attributes_zip_code" with "2222"
+  And I fill in "user_purchase_manager_screen_name" with "Ana Kasparian"
+  And I fill in "user_purchase_manager_password" with "secret"
+  And I fill in "user_purchase_manager_password_confirmation" with "secret"
+  And I fill in "user_purchase_manager_email" with "anakasparian@tyt.com"
+  And I check "user_purchase_manager_agreement_read"
+  And I press translated "purchase_manager_accounts.new.view.button_create_account"
+  And I should be signed in
+  And last email sent should have been sent to recipient "anakasparian@tyt.com"

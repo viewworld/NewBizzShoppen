@@ -3,7 +3,6 @@ Feature: Fairdeals view deal
   Background:
     When there are no deals
     Given I am signed up and confirmed as user with email procurment@nbs.com and password secret and role purchase_manager
-    Given I visit domain http://fairdeals.dk
     And user buyer@nbs.com with role customer exists with attributes "company_name:Azazel"
     And user "buyer@nbs.com" has assigned role "deal_maker"
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super descr|fine_print:super fine print|hidden_description:super detailed|company_description:super company desc|start_date:2011-01-01|company_name:Azazel|published:1|deal_admin_email:agent@nbs.com|contact_name:Ed Yudkovsky|phone_number:+49887755|company_website:www.azazelinc.com"
@@ -14,10 +13,11 @@ Feature: Fairdeals view deal
     Given template named "Computer details2" for category "Azazel" is created by user "buyer@nbs.com" with role "customer"
     And template named "Computer details2" is mandatory
     And template named "Computer details2" has following fields "field #1:true:true,field #2:true:false,field #3:false:false"
-    Then I sign in as procurment@nbs.com with password secret
 
   @_tested @_done @tgn
   Scenario: I should see Short description, Detailed description, Fine Print, Images, Company logo, Company name, Company description
+    Given I visit domain http://fairdeals.dk
+    Then I sign in as procurment@nbs.com with password secret
     Then I follow translated "layout.fairdeals.main_menu.deals"
     And I follow "Business deals"
     And I follow "super"
@@ -32,6 +32,8 @@ Feature: Fairdeals view deal
 
   @_done @_tested @tgn
   Scenario: I should see Company contact name, Company contact e-mail, Company weblink, Company contact telephone number when I click OK
+    Given I visit domain http://fairdeals.dk
+    Then I sign in as procurment@nbs.com with password secret
     Then I follow translated "layout.fairdeals.main_menu.deals"
     And I follow "Business deals"
     And I follow "super"
@@ -47,6 +49,8 @@ Feature: Fairdeals view deal
 
   @_done @_tested @tgn
   Scenario: As PM I can fill in additional field for lead "Please tell us about your needs"
+    Given I visit domain http://fairdeals.dk
+    Then I sign in as procurment@nbs.com with password secret
     Then I follow translated "layout.fairdeals.main_menu.deals"
     And I follow "Business deals"
     And I follow "super"
