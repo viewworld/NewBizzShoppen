@@ -54,7 +54,7 @@ class Country < ActiveRecord::Base
   end
 
   def self.get_country_from_locale
-    country = where(:detailed_locale => Thread.current[:globalize_detailed_locale]).first
+    country = Thread.current[:globalize_detailed_locale].blank? ? nil : where(:detailed_locale => Thread.current[:globalize_detailed_locale]).first
     country = where(:locale => I18n.locale.to_s).first unless country
     country
   end

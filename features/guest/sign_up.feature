@@ -14,7 +14,7 @@ Feature: Sign up feature
   @m12 @$_guest @requested @tgn @_done @_tested @selenium
   Scenario: When I am on sign up page, the coutry should be selected to my browser locale/country
     Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role agent
-    And I am on the homepage
+    And User bob@person.com with role agent is from country Denmark
     And I make sure current locale is "da"
     Then I sign in as bob@person.com with password supersecret
     And I go to agents leads
@@ -22,6 +22,7 @@ Feature: Sign up feature
     And I go to agents leads
     And I select "Test category 1" from "category_id"
     And I follow translated "agent.leads.index.view.new_lead"
+    And I open page in browser
   Then "lead_country_id" should be selected for value "Denmark"
 
   #If the user chooses link he is prompted with a modal window with the text:
