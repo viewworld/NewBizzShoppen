@@ -3365,6 +3365,7 @@ en:
         contact_me: "Get deal"
         price: "Price"
         save: "Save"
+        view_deal: "View deal"
       search:
         keyword_label: "Keyword"
         search_button: "Search"

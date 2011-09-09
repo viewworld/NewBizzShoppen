@@ -60,7 +60,7 @@ class PurchaseManagers::LeadsController < PurchaseManagers::PurchaseManagerContr
     @lead.creation_step = 3
     create! do |success, failure|
       success.html {
-        redirect_to edit_purchase_managers_lead_path(@lead, :get_deal => "1")
+        redirect_to purchase_managers_lead_path(@lead)
       }
     end
   end

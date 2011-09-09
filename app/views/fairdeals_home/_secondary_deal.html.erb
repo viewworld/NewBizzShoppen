@@ -14,9 +14,7 @@
               <span class="b green"><%= as_currency(featured.deal.discounted_price, featured.deal.currency) %></span>
               <br/>
               <%= t("deals.index.view.save") %> <span class="b red"><%= featured.deal.saving %></span>
-              <% if user_signed_in? and current_user.has_role?(:purchase_manager) and !featured.deal.requested_by?(current_user) %>
-                  <%= bt_link_to nil, t("deals.index.view.contact_me"), new_purchase_managers_lead_path(:deal_id => featured.deal.id) %>
-              <% end %>
+              <%= bt_link_to nil, t("deals.index.view.view_deal"), lead_path(featured.deal.slug) %>
             </p>
           </div>
         </param:content>

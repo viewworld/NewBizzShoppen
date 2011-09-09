@@ -56,7 +56,7 @@
 
       <br/>
       <% if user_signed_in? and current_user.has_role?(:purchase_manager) and !@deal.requested_by?(current_user) %>
-          <%= bt_link_to nil, t("deals.index.view.contact_me"), purchase_managers_leads_path(:deal_id => @deal.id), :method => :post, :confirm => t("deals.show.view.get_deal_confirmation_msg") %>
+          <%= bt_link_to nil, t("deals.index.view.contact_me"), new_purchase_managers_lead_path(:deal_id => @deal.id), :confirm => t("deals.show.view.get_deal_confirmation_msg") %>
       <% end %>
     </div>
   </div>
@@ -87,15 +87,17 @@
               </li>
           <% end %>
 
-          <%= deal_show_li(@deal.contact_name, t("deals.show.view.contact_name_label")) %>
-          <%= deal_show_li(@deal.email_address, t("deals.show.view.email_address_label")) %>
-          <%= deal_show_li(@deal.phone_number, t("deals.show.view.phone_number_label")) %>
-          <%= deal_show_li(@deal.address_line_1, t("deals.show.view.address_line_1_label")) %>
-          <%= deal_show_li(@deal.address_line_2, t("deals.show.view.address_line_2_label")) %>
-          <%= deal_show_li(@deal.address_line_3, t("deals.show.view.address_line_3_label")) %>
-          <%= deal_show_li(@deal.zip_code, t("deals.show.view.zip_code_label")) %>
-          <%= deal_show_li(@deal.country, t("deals.show.view.country_label")) %>
-          <%= deal_show_li(@deal.region, t("deals.show.view.region_label")) %>
+          <% if user_signed_in? and current_user.has_role?(:purchase_manager) and @deal.requested_by?(current_user) %>
+              <%= deal_show_li(@deal.contact_name, t("deals.show.view.contact_name_label")) %>
+              <%= deal_show_li(@deal.email_address, t("deals.show.view.email_address_label")) %>
+              <%= deal_show_li(@deal.phone_number, t("deals.show.view.phone_number_label")) %>
+              <%= deal_show_li(@deal.address_line_1, t("deals.show.view.address_line_1_label")) %>
+              <%= deal_show_li(@deal.address_line_2, t("deals.show.view.address_line_2_label")) %>
+              <%= deal_show_li(@deal.address_line_3, t("deals.show.view.address_line_3_label")) %>
+              <%= deal_show_li(@deal.zip_code, t("deals.show.view.zip_code_label")) %>
+              <%= deal_show_li(@deal.country, t("deals.show.view.country_label")) %>
+              <%= deal_show_li(@deal.region, t("deals.show.view.region_label")) %>
+          <% end %>
         </ul>
       </div>
     </div>
