@@ -10,9 +10,10 @@ Feature: My requests listing
     Then I sign in as purchase_manager101@nbs.com with password supersecret
     And I follow translated "layout.main_menu.shared.browse_deals"
     And I follow "Business deals"
+    And I follow translated "deals.index.view.view_deal"
     And I follow translated "deals.index.view.contact_me"
     And I fill in "lead_hidden_description" with "some hidden note"
-    And I press translated "purchase_manager.leads.edit.view.button_update"
+    And I press translated "purchase_manager.leads.new.view.button_create"
     And I should see translated "purchase_manager.leads.show.view.confirmation_message"
     And I press translated "purchase_manager.leads.show.view.ok_confirmation"
     And I follow translated "layout.main_menu.purchase_manager.my_requests"

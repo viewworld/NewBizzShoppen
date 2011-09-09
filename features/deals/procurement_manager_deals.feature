@@ -97,7 +97,7 @@ Feature: Deals from procurement manager perspective
     Given a deal named "Some deal #1" exists within category "Electronics deals"
     Then I follow translated "layout.main_menu.shared.browse_deals"
     And I follow "Electronics"
-    Then I should see translated "deals.index.view.contact_me"
+    Then I should see translated "deals.index.view.view_deal"
 
   #tested under sales manager deals
   @_done @tgn @tested_elsewhere
