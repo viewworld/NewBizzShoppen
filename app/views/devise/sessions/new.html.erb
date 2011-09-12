@@ -62,7 +62,11 @@
                     <%= f.submit "Sign in" %>
                   </ibt>
                   <% unless @failed_rpx %>
-                      <p>or <%= link_to t("buyer_home.show.view.create_new_buyer_account"), new_buyer_account_path %></p>
+                      <% if session[:site] == "fairleads" %>
+                        <p>or <%= link_to t("buyer_home.show.view.create_new_buyer_account"), new_buyer_account_path %></p>
+                      <% else %>
+                        <p>or <%= link_to t("buyer_home.show.view.create_new_membership_account"), new_purchase_manager_account_path %></p>
+                      <% end %>
                   <% end %>
                 </li>
               </ol>

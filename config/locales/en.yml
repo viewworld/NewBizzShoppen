@@ -2133,6 +2133,7 @@ en:
         add_team_member: "Add team member"
         i_have_an_account: "I have an account"
 
+        create_new_membership_account: "Create a new membership account"
   agent_home:
     show:
       view:
