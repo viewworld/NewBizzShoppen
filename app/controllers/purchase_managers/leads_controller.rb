@@ -20,7 +20,7 @@ class PurchaseManagers::LeadsController < PurchaseManagers::PurchaseManagerContr
 
     params[:search] ||= {}
     @search = Lead.scoped_search(params[:search])
-    @leads = @search.where(:requested_by => current_user.id).paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)
+    @leads = @search.order("created_at DESC").where(:requested_by => current_user.id).paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)
   end
 
   def default_params_hash(params={})
