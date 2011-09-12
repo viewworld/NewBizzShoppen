@@ -38,6 +38,7 @@ Feature: Fairdeals view deal
     And I follow "Business deals"
     And I follow "super"
     And I follow translated "deals.index.view.contact_me"
+    And I fill in "lead_lead_template_values_attributes_0_value" with "value1"
     And I press translated "purchase_manager.leads.new.view.button_create"
     Then I follow translated "layout.fairdeals.main_menu.deals"
     And I follow "Business deals"
@@ -46,7 +47,7 @@ Feature: Fairdeals view deal
     And I should see "Ed Yudkovsky"
     And I should see "buyer@nbs.com"
     And I should see "+49887755"
-    And I should see "www.azazelinc.com"
+    #And I should see "www.azazelinc.com"
 
   @_done @non_testable @tgn
   Scenario: Lead is generated using only the existing information about the procurement manager

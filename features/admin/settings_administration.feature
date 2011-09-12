@@ -131,6 +131,7 @@ Scenario: I can enable/disable email verification for procurement managers
   And I fill in the following:
     | user_purchase_manager_first_name            | Jon             |
     | user_purchase_manager_last_name             | Lajoie          |
+    | user_purchase_manager_company_name          | Lajoie Inc      |
     | user_purchase_manager_phone                 | 48928217272     |
     | user_purchase_manager_screen_name           | Normal Guy Verified      |
     | user_purchase_manager_email                 | jon@lajoie.ca   |
@@ -153,6 +154,7 @@ Scenario: I can enable/disable email verification for procurement managers
   And I fill in the following:
     | user_purchase_manager_first_name            | Jon             |
     | user_purchase_manager_last_name             | Lajoie          |
+    | user_purchase_manager_company_name          | Lajoie Inc      |
     | user_purchase_manager_phone                 | 48928217272     |
     | user_purchase_manager_screen_name           | Normal Guy Non Verified      |
     | user_purchase_manager_email                 | jon2@lajoie.ca   |

@@ -22,7 +22,7 @@ class User::PurchaseManager < ::User
                   :first_name => contact_name_arr.first,
                   :last_name => contact_name_arr.last,
                   :screen_name => "#{lead.contact_name}#{' ' unless lead.contact_name.blank?}(#{lead.email_address})",
-                  :time_zone => "UTC"}
+                  :time_zone => "UTC", :company_name => lead.company_name}
     self.attributes = lead_attrs
     [:address_line_1, :address_line_2, :address_line_3, :zip_code, :country_id, :region_id].each do |field|
       self.address.send("#{field}=".to_sym, lead.send(field))

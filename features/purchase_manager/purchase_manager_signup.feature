@@ -27,6 +27,7 @@ Feature: Purchase Manager signup
     And I fill in the following:
       | user_purchase_manager_first_name            | Jon             |
       | user_purchase_manager_last_name             | Lajoie          |
+      | user_purchase_manager_company_name          | LajoieInc       |
       | user_purchase_manager_phone                 | 48928217272     |
       | user_purchase_manager_screen_name           | Normal Guy      |
       | user_purchase_manager_email                 | jon@lajoie.ca   |
