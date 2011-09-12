@@ -202,4 +202,8 @@ class Category < ActiveRecord::Base
     end
     leads_scope.count
   end
+
+  def is_company_unique?
+    User.where(:deal_category_id => id).any?
+  end
 end
