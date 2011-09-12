@@ -204,6 +204,10 @@ class Category < ActiveRecord::Base
   end
 
   def is_company_unique?
-    User.where(:deal_category_id => id).any?
+    if new_record?
+      false
+    else
+      User.where(:deal_category_id => id).first.present?
+    end
   end
 end
