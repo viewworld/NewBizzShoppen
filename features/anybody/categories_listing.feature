@@ -42,3 +42,6 @@ Scenario: I can see customised total number of leads on the browse categories pa
   When I follow translated "leads.index.buy_lead"
   Then I follow translated "layout.main_menu.shared.browse_leads"
   And I should see "(2)"
+
+@m19 @requested @non_testable
+Scenario: Categories should be in a form of a list

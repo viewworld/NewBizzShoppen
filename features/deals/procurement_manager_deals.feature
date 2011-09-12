@@ -124,3 +124,19 @@ Feature: Deals from procurement manager perspective
   And I press translated "purchase_manager_accounts.new.view.button_create_account"
   And I should be signed in
   And last email sent should have been sent to recipient "anakasparian@tyt.com"
+
+  ##7659
+  @m19 @requested
+  Scenario: When I am not logged in I should still see Get deal button and when click I should be prompted to log in or create new account
+
+  ##7659
+  @m19 @requested
+  Scenario: After I sign up or sign in from Get deal button I should return to the deal page I started
+
+  #7531
+  @m19 @requested
+  Scenario: When I get deal then I should get the email with all deal information and all materials included as attachments
+
+  #7531
+  @m19 @requested
+  Scenario: Email with deal information for procurment manager should be customizable per deal (with default template)

@@ -72,3 +72,7 @@ Feature: Fairdeals view deal
 
   @_done @tested_elsewhere @tgn
   Scenario: I should see all fields on one page
+
+  ##7631
+  @m19 @requested
+  Scenario: I should see www address for company if provided on the deal view

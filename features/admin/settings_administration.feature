@@ -215,3 +215,7 @@ Scenario: I can enable/disable email verification for sales managers
   And I check "user_customer_agreement_read"
   And I press translated "buyer_accounts.new.view.button_create_account"
   Then I should see translated "flash.buyer_accounts.create.notice"
+
+#7450
+@m19 @requested @settings
+Scenario: I can set contact info for home page like Phone number, Email, Skype

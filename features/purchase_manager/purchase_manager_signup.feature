@@ -51,3 +51,7 @@ Feature: Purchase Manager signup
     Then I should see translated "devise.confirmations.confirmed"
     And I should see translated "layout.my_profile_link"
     And I should be signed in
+
+  #7549
+  @m19 @requested
+  Scenario: All fields for procurment sign up must be mandatory

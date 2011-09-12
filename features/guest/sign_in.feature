@@ -149,3 +149,7 @@ Scenario: I can see Facebook/Linkedin/Google icons on bottom of signing in box
 
   @m13 @$_guest @janrain @requested @is @$_signed_in_user @_done @_not_testable
   Scenario: In header of the creation of new account page I can see who am I and what social account am I using right now
+
+  #7554
+  @m19 @requested
+  Scenario: When user confirms his account he should be redirected to his home page

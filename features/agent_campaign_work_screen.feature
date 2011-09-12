@@ -495,6 +495,10 @@ Feature: Agent campaign - calling session
     #I should see company name when Upgrading contact to category buyer
     @m14 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @tested_elsewhere @_done
     Scenario: Category buyer changes
+
+    #7630
+    @m19 @requested @upgrade_to_category_buyer @$_call_centre_agent
+    Scenario: I should be able to set for category buyer following properties: Newsletter, Allow invoicing, Do not charge vat, Team buyer and Deal maker enabled
   
     @m14 @requested @my_results @$_call_centre_agent @tgn @_done @tested_elsewhere
     Scenario: I should see "My results" renamed to "Production" and displayed the same way as campaign's "Results"
@@ -539,3 +543,11 @@ Feature: Agent campaign - calling session
 #    And I select "Upgrade to category buyer" from "call_result_result_id"
 #    And I wait 2 second
 #    And I press translated "call_results.edit.save_button"
+
+    #7574
+    @m19 @requested @upgrade_to_buyer @$_call_centre_agent
+    Scenario: I can upgrade contact to category buyer
+
+    #7574
+    @m19 @requested @upgrade_to_member @$_call_centre_agent
+    Scenario: I can upgrade contact to member (procurment manager)

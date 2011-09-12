@@ -94,3 +94,7 @@ Feature: Agent dealmaker
   Scenario: I can create a new lead from the home page
     Given I follow translated "layout.main_menu.shared.home"
     And I should see translated "agent_home.show.view.new_deal"
+
+  ##7650
+  @m19 @requested
+  Scenario: I can check checkbox "Auto generate password" or uncheck it and provide password for supplier or member

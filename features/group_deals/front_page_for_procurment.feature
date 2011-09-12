@@ -177,3 +177,11 @@ Feature: Front page for procurment
 
   @is @tested_elsewhere @_done
   Scenario: As admin I can select three secondary featured deals to be displayed on procurement page
+
+  #7450
+  @m19 @requested
+  Scenario: I should see box with contact info: Phone number, Email, Skype on the home page
+
+  #7449
+  @m19 @requested
+  Scenario: I should see box where I can request deal from default deal admin, I should be able to fill in name, phone number, email and details of my request
