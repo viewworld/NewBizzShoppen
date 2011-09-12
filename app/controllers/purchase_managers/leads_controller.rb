@@ -53,7 +53,7 @@ class PurchaseManagers::LeadsController < PurchaseManagers::PurchaseManagerContr
 
   def create
     @deal = Deal.find_by_id(params[:deal_id])
-    @lead = Lead.new
+    @lead = Lead.new(params[:lead])
     @lead.based_on_deal(@deal, current_user)
     session[:selected_category] = @lead.category_id
 

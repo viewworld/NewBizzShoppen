@@ -6,7 +6,7 @@ class User::PurchaseManager < ::User
   include Addresses
   include BankAccounts
 
-  validates_presence_of :company_name, :phone, :password_confirmation
+  validates_presence_of :company_name, :phone
 
   validate :check_address_city
 

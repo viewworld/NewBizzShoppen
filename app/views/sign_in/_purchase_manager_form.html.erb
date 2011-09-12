@@ -29,7 +29,7 @@
                 <%= form.input :phone, :hint => hint_for(user, :phone) %>
                 <%= form.input :email, :hint => hint_for(user, :email) %>
                 <%= form.input :password, :hint => hint_for(user, :password), :as => user.rpx_identifier.blank? ? :password : :hidden %>
-                <%= form.input :password_confirmation, :hint => hint_for(user, :password_confirmation), :as => user.rpx_identifier.blank? ? :password : :hidden %>
+                <%= form.input :password_confirmation, :hint => hint_for(user, :password_confirmation), :as => user.rpx_identifier.blank? ? :password : :hidden, :required => true %>
                 <%= form.input :time_zone, :wrapper_html => {:class => "select"}, :input_html => {:style => "width: 240px"} %>
                 <%= form.input :agreement_read, :as => :boolean, :hint => hint_for(user, :agreement_read), :label => "#{t("common.agree_to")} #{link_to_main_page_article('terms_conditions', {:popup => true}, {:id => 'agreement_modal_box'})}".html_safe, :required => true %>
                 <%= form.input :newsletter_on, :as => :boolean, :hint => hint_for(user, :newsletter_on) %>
