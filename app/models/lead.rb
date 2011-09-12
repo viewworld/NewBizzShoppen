@@ -303,8 +303,10 @@ class Lead < AbstractLead
   end
 
   def deliver_instant_notification_to_subscribers
-    category.customer_subscribers.where("lead_notification_type = ?", User::LEAD_NOTIFICATION_INSTANT).each do |user|
-      deliver_email_template(user.email, "lead_notification_instant")
+    unless category.auto_buy?
+      category.customer_subscribers.where("lead_notification_type = ?", User::LEAD_NOTIFICATION_INSTANT).each do |user|
+        deliver_email_template(user.email, "lead_notification_instant")
+      end
     end
   end
 
