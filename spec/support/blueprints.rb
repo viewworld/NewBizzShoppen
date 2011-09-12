@@ -180,6 +180,7 @@ end
 end
 
 ::User::PurchaseManager.blueprint do
+  company_name { Faker::Company.name }
   email { Faker::Internet.email }
   password { "secret" }
   password_confirmation { "secret" }
