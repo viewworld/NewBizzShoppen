@@ -76,3 +76,7 @@ Feature: Fairdeals view deal
   ##7631
   @m19 @requested
   Scenario: I should see www address for company if provided on the deal view
+
+  #7630
+  @m19 @requested
+  Scenario: I can see javascript counter on the group deals details page

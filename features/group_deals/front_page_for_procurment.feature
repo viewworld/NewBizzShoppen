@@ -185,3 +185,15 @@ Feature: Front page for procurment
   #7449
   @m19 @requested
   Scenario: I should see box where I can request deal from default deal admin, I should be able to fill in name, phone number, email and details of my request
+
+  #7630
+  @m19 @requested @group_deals
+  Scenario: Group deal should be marked by a splash saying "Group deal" on the main page in the featured deal box
+
+  #7630
+  @m19 @requested @group_deals
+  Scenario: On the main page in the featured group deal I should see how many leads were generated and how many are missing to reach the minimum (5 leads / 2 missing)
+
+  #7630
+  @m19 @requested @group_deals
+  Scenario: As admin I can set per deal minimum number of leads that needs to be generated to give the displayed price
