@@ -95,6 +95,10 @@ class Deal < AbstractLead
       group_deals.without_inactive.map{|gd| [gd.to_s_for_group_deals_for_select, gd.id]}
   end
 
+  def self.all_deals_for_select
+      without_inactive.map{|gd| [gd.to_s_for_group_deals_for_select, gd.id]}
+  end
+
   def to_s_for_group_deals_for_select
     "#{header} (#{start_date.strftime("%d.%m.%Y")}-#{end_date.strftime("%d.%m.%Y")})"
   end
