@@ -130,7 +130,7 @@ Address.blueprint do
   address_line_2 { Faker::Address.city }
   address_line_3 { Faker::Address.uk_county }
   zip_code { Faker::Address.zip_code }
-  country { Country.first.nil? ? Country.make!(:name => "Denmark", :locale => "dk") : Country.first}
+  country { Country.first.nil? ? Country.make!(:name => "Denmark", :locale => "da") : Country.first}
 end
 
 Address::Bank.blueprint do

@@ -25,13 +25,13 @@ describe Lead do
     lead = Lead.make!
 
     nested_params = {"lead_translations_attributes"=>[ {"header"=>"Fake header",
-    "locale"=>"dk",
+    "locale"=>"da",
     "description"=>"Fake description",
     "hidden_description"=>"Fake hidden description"}]}
 
     lead.update_attributes(nested_params)
     lead.valid?.should == true
-    lead.lead_translations.detect { |lt| lt.locale.to_s == "dk" }.should_not == nil
+    lead.lead_translations.detect { |lt| lt.locale.to_s == "da" }.should_not == nil
   end
 
 
