@@ -10,7 +10,7 @@ class DealMakerUsersController < SecuredController
   end
 
   def new
-    @user = "User::#{params[:user_type] == "member" ? "PurchaseManager" : "Customer"}".constantize.new(:big_buyer => (params[:user_type] == "supplier"))
+    @user = "User::#{params[:user_type] == "member" ? "PurchaseManager" : "Customer"}".constantize.new(:big_buyer => (params[:user_type] == "supplier"), :auto_generate_password => true)
     @user.skip_email_verification = true
   end
 
