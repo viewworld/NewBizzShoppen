@@ -127,11 +127,7 @@ Feature: Deals from procurement manager perspective
 
   ##7659
   @m19 @requested
-  Scenario: When I am not logged in I should still see Get deal button and when click I should be prompted to log in or create new account
-
-  ##7659
-  @m19 @requested
-  Scenario: After I sign up or sign in from Get deal button I should return to the deal page I started
+  Scenario: When I am not logged in I should still see Get deal button and when click I should be prompted to log in or create new account and return to the get deal
 
   #7531
   @m19 @requested
