@@ -61,6 +61,10 @@ Given /^user "([^"]*)" with role "([^"]*)" is confirmed$/ do |email, role|
   "User::#{role.camelize}".constantize.where(:email => email).first.confirm!
 end
 
+Then /^I have not confirmed user with email (.+) and role (.+)$/ do |email, role|
+  "User::#{role.camelize}".constantize.make!(:email => email)
+end
+
 Then /^I have user with email (.+) and role (.+)$/ do |email, role|
   u = "User::#{role.camelize}".constantize.make!(:email => email)
   u.confirm!
