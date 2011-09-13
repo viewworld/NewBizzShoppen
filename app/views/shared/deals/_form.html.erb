@@ -119,7 +119,7 @@
             <div class="grid_210 fltl">&nbsp;</div>
             <div class="grid_240 fltl">
               <h3><%= t("buyer.deals.form.all_templates") %></h3>
-              <%= select_tag "all_templates", options_for_select((LeadTemplate.with_category(current_user.deal_category_id).with_creator(current_user.id)-@deal.deal_templates).map { |c| [c.name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+              <%= select_tag "all_templates", options_for_select((LeadTemplate.with_category(current_user.deal_category_id).with_creator(current_user.id)-(@deal.deal_templates + [@template]).compact.uniq).map { |c| [c.name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
             </div>
 
             <div class="grid_160 fltl" style="margin-right: 10px;margin-top:10px;">
@@ -129,14 +129,14 @@
 
               <p class="ta_c pdd_5 no_pdd_lr">
                 <% if current_user.buyer? and current_user.deal_category_id.present? %>
-                    <%= bt_link_to nil, t("buyer.deals.edit.view.new_template"), new_customers_lead_template_path %>
+                    <%= bt_link_to nil, t("buyer.deals.edit.view.new_template"), new_customers_lead_template_path(:deal_id => @deal.id) %>
                 <% end %>
               </p>
             </div>
 
             <div class="grid_240 fltl">
               <h3><%= t("buyer.deals.form.selected_templates") %></h3>
-              <%= select_tag "deal[deal_template_ids][]", options_for_select(@deal.deal_templates.map { |c| [c.name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+              <%= select_tag "deal[deal_template_ids][]", options_for_select(([@template]+@deal.deal_templates).compact.uniq.map { |c| [c.name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
             </div>
             <clb/>
           </div>

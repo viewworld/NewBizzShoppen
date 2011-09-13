@@ -5,6 +5,7 @@ class Buyers::DealsController < Buyers::BuyerController
   include ::DealActions
 
   def new
+    @template = LeadTemplate.find_by_id(params[:template_id])
     @deal = Deal.new_for_user(current_user)
   end
 

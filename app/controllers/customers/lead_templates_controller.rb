@@ -13,7 +13,7 @@ class Customers::LeadTemplatesController < Customers::CustomerController
     @lead_template.attributes = params[:lead_template]
 
     create! do |success, failure|
-      success.html { redirect_to customers_lead_templates_path }
+      success.html { redirect_to params[:deal_id].present? ? edit_buyers_deal_path(:id => params[:deal_id], :template_id => @lead_template.id) : new_buyers_deal_path(:template_id => @lead_template.id) }
       failure.html { render 'new' }
     end
   end

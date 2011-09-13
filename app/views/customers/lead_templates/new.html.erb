@@ -4,6 +4,7 @@
       <frm title="">
         <param:content>
           <%= render :partial => '/shared/lead_templates/form', :locals => {:form => form} %>
+          <%= hidden_field_tag :deal_id, params[:deal_id] %>
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="plus">
