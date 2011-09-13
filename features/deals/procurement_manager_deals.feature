@@ -126,8 +126,33 @@ Feature: Deals from procurement manager perspective
   And last email sent should have been sent to recipient "anakasparian@tyt.com"
 
   ##7659
-  @m19 @requested
+  @m19 @requested @_done @_tested @tgn
   Scenario: When I am not logged in I should still see Get deal button and when click I should be prompted to log in or create new account and return to the get deal
+    Given I visit domain http://fairdeals.dk
+    Given user buyer@nbs.com with role customer exists with attributes "company_name:Xeper"
+    And user "buyer@nbs.com" has assigned role "deal_maker"
+    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper"
+    Then I follow translated "layout.fairdeals.main_menu.deals"
+    And I follow "Business deals"
+    And I follow translated "deals.index.view.view_deal"
+    And I follow translated "deals.index.view.contact_me"
+    And I follow translated "buyer_home.show.view.create_new_membership_account"
+    And I fill in "user_purchase_manager_company_name" with "The Young Turks"
+    And I fill in "user_purchase_manager_first_name" with "Ana"
+    And I fill in "user_purchase_manager_last_name" with "Kasparian"
+    And I fill in "user_purchase_manager_address_attributes_address_line_1" with "2222"
+    And I fill in "user_purchase_manager_address_attributes_address_line_2" with "2222"
+    And I fill in "user_purchase_manager_address_attributes_address_line_3" with "2222"
+    And I fill in "user_purchase_manager_address_attributes_zip_code" with "2222"
+    And I fill in "user_purchase_manager_screen_name" with "Ana Kasparian"
+    And I fill in "user_purchase_manager_phone" with "+44 325423454"
+    And I fill in "user_purchase_manager_password" with "secret"
+    And I fill in "user_purchase_manager_password_confirmation" with "secret"
+    And I fill in "user_purchase_manager_email" with "anakasparian@tyt.com"
+    And I check "user_purchase_manager_agreement_read"
+    And I press translated "purchase_manager_accounts.new.view.button_create_account"
+    And I should see translated "deals.new.view.frame_header"
+
 
   #7531
   @m19 @requested
