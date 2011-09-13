@@ -12,7 +12,7 @@ Scenario: I should see apropriate language version of the content if I change th
 Scenario: Lead translations
   Given lead Printers ultimate deal exists within category Computers
   Given lead Printers ultimate deal exists with attributes "description:Description for printers deal"
-  And lead "Printers ultimate deal" has translation for lang "dk" with attributes "header:Printere ultimative aftale,description:Beskrivelse til printere behandle,hidden_description:Skjult beskrivelse til printere behandle"
+  And lead "Printers ultimate deal" has translation for lang "da" with attributes "header:Printere ultimative aftale,description:Beskrivelse til printere behandle,hidden_description:Skjult beskrivelse til printere behandle"
   When I follow translated "locales.dk_locale"
   Then I go to browse leads
   And I follow "Computers"
@@ -30,7 +30,7 @@ Scenario: News translations
   And I fill in "news_content_editor" ckeditor with "[EN]Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   And I check "news_published"
   And I press translated "administration.news.edit.view.button_save"
-  When I click hidden link by url regex "/locales\/dk/"
+  When I click hidden link by url regex "/locales\/da/"
   When I click hidden link by url regex "/administration\/news/"
   And I click hidden link by url regex "/administration\/news\/\d+\/edit/"
   And I fill in "news_title" with "[DK]FirstNews"
@@ -55,7 +55,7 @@ Scenario: Article translations
   And I fill in "article_content_editor" ckeditor with "[EN]Lorem ipsum dolor sit amet, consectetur adipiscing elit."
   And I check "article_published"
   And I press translated "administration.articles.edit.view.button_save"
-  When I click hidden link by url regex "/locales\/dk/"
+  When I click hidden link by url regex "/locales\/da/"
   When I click hidden link by url regex "/administration\/articles/"
   And I click hidden link by url regex "/administration\/articles\/\d+\/edit/"
   And I fill in "article_title" with "[DK]FirstArticle"
@@ -75,8 +75,8 @@ Scenario: Article translations
 
 @m3 @tgn @_tested
 Scenario: Email translations
-  When email "confirmation_instructions" has translation for lang "dk" with attributes "subject:Bekraeftelse instruktioner,body:Du kan bekraefte din konto via nedenstaende link"
-  And confirmation email is sent for locale "dk"
+  When email "confirmation_instructions" has translation for lang "da" with attributes "subject:Bekraeftelse instruktioner,body:Du kan bekraefte din konto via nedenstaende link"
+  And confirmation email is sent for locale "da"
   Then last email sent should have content "Du kan bekraefte din konto via nedenstaende link"
 
 @tgn @_done @_tested_elsewhere

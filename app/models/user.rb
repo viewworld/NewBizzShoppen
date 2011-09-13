@@ -62,6 +62,8 @@ class User < ActiveRecord::Base
   has_many :read_comments, :through => :comment_readers, :source => :comment
   belongs_to :contact
   has_many :deal_comment_threads, :class_name => "Comment", :foreign_key => "user_id"
+  has_many :email_bounces, :foreign_key => :email, :primary_key => :email
+
   alias_method :parent, :user
 
   scope :with_customers, where("roles_mask & #{2**User.valid_roles.index(:customer)} > 0 ")
@@ -69,6 +71,7 @@ class User < ActiveRecord::Base
   scope :with_possible_deal_admins, where("(roles_mask & #{2**User.valid_roles.index(:agent)} > 0) or (roles_mask & #{2**User.valid_roles.index(:call_centre_agent) } > 0) or (roles_mask & #{2**User.valid_roles.index(:call_centre) } > 0)").order("email ASC")
   scope :with_agents_without_call_centres, where("(roles_mask & #{2**User.valid_roles.index(:agent)} > 0) or (roles_mask & #{2**User.valid_roles.index(:call_centre_agent) } > 0) or (roles_mask & #{2**User.valid_roles.index(:purchase_manager)} > 0)")
   scope :with_call_centre_agents, lambda { |call_centre| where("(roles_mask & #{2**User.valid_roles.index(:call_centre_agent)} > 0) and parent_id = ?", call_centre.id) }
+  scope :with_call_centres, where("roles_mask & #{2**User.valid_roles.index(:call_centre)} > 0")
   scope :with_role, lambda { |role| where("roles_mask & #{2**User.valid_roles.index(role.to_sym)} > 0 ") }
   scope :with_keyword, lambda { |q| where("lower(first_name) like :keyword OR lower(last_name) like :keyword OR lower(email) like :keyword or lower(company_name) like :keyword", {:keyword => "%#{q.downcase}%"}) }
   scope :with_subaccounts, lambda { |parent_id| where("parent_id = ?", parent_id) }
@@ -94,6 +97,7 @@ class User < ActiveRecord::Base
   scope :assigned_to_campaigns, select("DISTINCT(users.id), users.*").joins("inner join campaigns_users on users.id=campaigns_users.user_id")
   scope :with_results, joins("inner join call_results on users.id=call_results.creator_id")
   scope :for_campaigns, lambda { |campaign_ids| where("campaigns_users.campaign_id in (?)", campaign_ids) unless campaign_ids.empty? }
+  scope :created_by, lambda { |user_id| where(:created_by => user_id) }
 
   scoped_order :id, :roles_mask, :first_name, :last_name, :email, :age, :department, :mobile_phone, :completed_leads_counter, :leads_requested_counter,
                :leads_assigned_month_ago_counter, :leads_assigned_year_ago_counter, :total_leads_assigned_counter, :leads_created_counter,
@@ -103,12 +107,13 @@ class User < ActiveRecord::Base
 
   attr_protected :payout, :locked, :can_edit_payout_information, :paypal_email, :bank_swift_number, :bank_iban_number, :skip_email_verification
 
-  attr_accessor :agreement_read, :locked, :skip_email_verification, :deal_maker_role_enabled_flag
+  attr_accessor :agreement_read, :locked, :skip_email_verification, :deal_maker_role_enabled_flag, :send_invitation
 
   before_save :handle_locking, :handle_team_buyers_flag, :refresh_certification_of_call_centre_agents, :set_euro_billing_rate, :handle_deal_maker_enabled
-  before_create :set_rss_token, :set_role
+  before_create :set_rss_token, :set_role, :set_email_verification
   before_destroy :can_be_removed
   after_create :auto_activate
+  after_update :send_invitation_if_enabled
   validate :check_billing_rate
 
   liquid :email, :confirmation_instructions_url, :reset_password_instructions_url, :social_provider_name, :category_buyer_category_home_url,
@@ -116,6 +121,15 @@ class User < ActiveRecord::Base
   require 'digest/sha1'
 
   private
+
+  def set_email_verification
+    if new_record?
+      if (has_role?(:customer) and Settings.email_verification_for_sales_managers == "0") or
+         (has_role?(:purchase_manager) and Settings.email_verification_for_procurement_managers == "0")
+        self.skip_email_verification = "1"
+      end
+    end
+  end
 
   def handle_deal_maker_enabled
     if has_role?(:deal_maker) and !deal_maker_role_enabled
@@ -194,11 +208,26 @@ class User < ActiveRecord::Base
   end
 
   def mailer_host
-    Nbs::Application.config.action_mailer.default_url_options[:host]
+    if has_role?(:purchase_manager)
+      mailer_fairdeals_host
+    else
+      Nbs::Application.config.action_mailer.default_url_options[:host]
+    end
+  end
+
+  def mailer_fairdeals_host
+    dom_lang = with_role.address.present? ? with_role.address.country.locale == "en" ? "eu" : "dk" : "dk"
+    if Rails.env.production?
+      "fairdeals.#{dom_lang}"
+    elsif Rails.env.staging?
+      "beta.fairdeals.#{dom_lang}"
+    else
+      "fairdeals.#{dom_lang}:3000"
+    end
   end
 
   def deliver_email_template(uniq_id)
-    TemplateMailer.delay.new(email, uniq_id.to_sym, with_role.address.present? ? with_role.address.country : Country.get_country_from_locale, {:user => self.with_role})
+    TemplateMailer.delay.new(email, uniq_id.to_sym, country, {:user => self.with_role})
   end
 
   def check_billing_rate
@@ -211,6 +240,10 @@ class User < ActiveRecord::Base
     if currency.present? and billing_rate.to_i > 0 and (billing_rate_changed? or currency_id_changed?)
       self.euro_billing_rate = currency.to_euro(billing_rate)
     end
+  end
+
+  def send_invitation_if_enabled
+    send_invitation_email if ActiveRecord::ConnectionAdapters::Column.value_to_boolean(send_invitation)
   end
 
   public
@@ -554,5 +587,28 @@ class User < ActiveRecord::Base
 
   def can_start_new_deal_thread?
     true
+  end
+
+  #for members and suppliers
+  def send_invitation_email(new_password=nil)
+    uniq_id = has_role?(:purchase_manager) ? "member" : "supplier"
+    unless new_password
+      new_password = generate_token(12)
+      self.password = new_password
+      self.send_invitation = false
+      self.save(:validate => false)
+    end
+    TemplateMailer.delay.new(email, "#{uniq_id}_invitation".to_sym, with_role.address.present? ? with_role.address.country : Country.get_country_from_locale,
+                             {:user => self.with_role, :new_password => new_password})
+  end
+
+  def country
+    if respond_to?(:address)
+      return address.country if address.present?
+    else
+      return with_role.address.country if with_role.address.present?
+    end
+
+    Country.get_country_from_locale
   end
 end

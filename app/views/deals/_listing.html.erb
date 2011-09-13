@@ -1,3 +1,4 @@
+<%= javascript_include_tag "global_template_editor" %>
 <%
    cols = 5
    cols += 1 if show_checkboxes
@@ -60,14 +61,16 @@
           </h4>
           (Activation date: <%= format_date deal.start_date %> - <%= format_date deal.end_date %>)
 
-          <% if deal.price.to_i > 0 %>
-            <p><b><%= t("deals.listing.price") %>:</b> <%= as_currency(deal.price, deal.currency) %></p>
+          <% if deal.deal_price.to_i > 0 %>
+            <p><b><%= t("deals.listing.price") %>:</b> <%= as_currency(deal.deal_price, deal.currency) %></p>
               <% if deal.discounted_price.to_i > 0 %>
                 <p><b><%= t("deals.listing.discounted_price") %>:</b> <%= as_currency(deal.discounted_price, deal.currency) %> (<%= t("deals.listing.price_saving") %>: <%= deal.saving %>)</p>
               <% end %>
           <% end %>
 
-          <p><b><%= t("deals.listing.created_leads") %>:</b> <%= deal.created_leads.to_i %></p>
+          <% if deal.created_leads.to_i > 0 %>
+            <p><b><%= t("deals.listing.created_leads") %>:</b> <%= deal.created_leads.to_i %></p>
+          <% end %>
 
           <p class="element_description i expandable"><b>Description:</b> <%= deal.description %></p>
 
@@ -93,11 +96,21 @@
         </td>
 
         <td>
-          <iframe src="http://www.facebook.com/plugins/like.php?app_id=101408449959161&amp;href=<%= escape_uri(deal_url(deal)) %>&amp;send=false&amp;layout=button_count&amp;width=250&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:250px; height:21px;" allowTransparency="true"></iframe>
+
+          <ul>
+            <li><iframe src="https://www.facebook.com/plugins/like.php?app_id=101408449959161&amp;href=<%= escape_uri(deal_url(deal)) %>&amp;send=false&amp;layout=button_count&amp;width=250&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:250px; height:21px;" allowTransparency="true"></iframe></li>
+            <li>
+              <%= link_to_function image_tag('fairdeals/bt/social_email.png', :height => "20", :alt => t("deals.show.view.share_by_email")), "$('#modal_for_share_deal_by_email_#{deal.id}').dialog('open');" %>
+            </li>
+            <li><%= link_to_function image_tag("fairdeals/bt/social_linkedin.png", :height => "20"), "window.open('https://www.linkedin.com/cws/share?url=#{escape_uri(deal_url(:id => deal.slug))}&text=#{escape_javascript(deal.social_media_description)}&isFramed=true','tweet', 'width=400,height=320,location=0,toolbar=0,menubar=0')" %></li>
+            <li><%= link_to_function image_tag("fairdeals/bt/social_twitter.png", :height => "20"), "window.open('https://twitter.com/share?url=#{escape_uri(deal_url(:id => deal.slug))}&text=#{escape_javascript(deal.social_media_description)}','tweet', 'width=400,height=320,location=0,toolbar=0,menubar=0')"  %></li>
+          </ul>
+            <div id="modal_for_share_deal_by_email_<%= deal.id %>" style="display:none;">
+            <%= render :partial => "share_deal_by_email/new", :locals => {:deal => deal, :email_form_id => deal.id} %>
+            </div>
         </td>
 
         <td>
-          <% if user_signed_in? and current_user.has_any_role?(:purchase_manager, :admin) %>
               <!--<p class="element"><%= t("deals.listing.contact_name_label") %><b> <%= deal.contact_name %></b></p>-->
               <!--<p class="element"><%= t("deals.listing.contact_email_label") %><b> <%= deal.email_address %></b></p>-->
               <!--<p class="element"><%= t("deals.listing.contact_phone_number_label") %><b> <%= deal.phone_number %></b></p>-->
@@ -110,10 +123,11 @@
               <p class="element"><%= t("deals.listing.company_description_label") %>
                 <b> <%= deal.company_description %></b></p>
 
+          <% if  user_signed_in? and current_user.has_any_role?(:purchase_manager) %>
               <p class="element"><%= t("deals.listing.rating_label") %>
-                <%= ratings_for(deal) %></p>
-                <br/><br/>
+                <%=ratings_for(deal) %></p>
           <% end %>
+                <br/><br/>
         </td>
 
         <td>
@@ -145,7 +159,7 @@
       </tr>
   <% end %>
 
-  <% if will_paginate or show_checkboxes %>
+  <% if will_paginate or show_checkboxes or params[:show_all] == "1" %>
       <tr class="pagination">
         <td colspan="<%= cols + 2 %>" class="ta_c">
           <% if show_checkboxes %>
@@ -154,6 +168,7 @@
                 <%= label_tag "td_mark_all", "select all" %>
               </div>
           <% end %>
+          <%= link_to_show_all_without_pagination "#deals_search_form" %>
           <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
         </td>
       </tr>
@@ -172,6 +187,27 @@
   </tbody>
 </table>
 
+<% collection.each do |deal| %>
+<script type="text/javascript">
+  $('#modal_for_share_deal_by_email_<%= deal.id %>').dialog({
+      autoOpen: false,
+      width: 400,
+      title: '<%= t("deals.show.view.share_by_email_modal_title") %>',
+      modal: true,
+      buttons:
+      { "<%= t("deals.show.view.send_share_by_email_button") %>": function() {
+          if (validate_template_editor_fields("#modal_for_share_deal_by_email_<%= deal.id %>") == 0) {
+              $('#form_share_deal_by_email_<%= deal.id %>').submit();
+              $(this).dialog("close");
+          }
+      },
+          "<%= t("deals.show.view.cancel") %>": function() {
+              $(this).dialog('close');
+          }
+      }
+  });
+</script>
+<% end %>
 <script type=text/javascript>
 
     function hideRowButtons() {

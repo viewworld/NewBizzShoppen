@@ -12,7 +12,7 @@
     <h2><%= t("common.search") %></h2>
 
     <div class="search_content">
-      <%= form_for @search, :url => leads_path do |f| %>
+      <%= form_for @search, :url => leads_path, :html => {:id => "leads_search_form"} do |f| %>
           <%= render :partial => "/shared/leads/search_customer_form", :locals => {:f => f} %>
       <% end %>
     </div>

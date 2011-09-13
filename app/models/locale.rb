@@ -1,7 +1,12 @@
-class Locale < Struct.new(:code)
-  CODES = ['en', 'dk']
-  def self.all
-    CODES.map{|c|new(c)}
+class Locale < ActiveRecord::Base
+
+  validates_presence_of :language, :code
+
+  scope :enabled, where(:enabled => true)
+  default_scope order("language ASC")
+
+  def to_s
+    code
   end
-  alias_method :to_s, :code
+
 end

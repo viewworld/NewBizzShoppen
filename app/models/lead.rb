@@ -18,6 +18,7 @@ class Lead < AbstractLead
   belongs_to :currency
   belongs_to :region
   belongs_to :requestee, :class_name => "User::PurchaseManager", :foreign_key => :requested_by
+  belongs_to :deal, :class_name => "Deal", :foreign_key => "deal_id"
   has_many :lead_certification_requests, :dependent => :destroy
   has_many :lead_translations, :dependent => :destroy
   has_many :lead_purchases
@@ -88,8 +89,9 @@ class Lead < AbstractLead
 
   before_save :handle_category_change
   before_validation :handle_dialling_codes
-  validate :check_lead_templates
+  validate :check_lead_templates, :unless => Proc.new { |l| l.requestee and l.requestee.has_role?(:purchase_manager) }
   before_save :check_if_category_can_publish_leads
+  after_create :certify_lead_if_created_from_deal
   after_update :send_instant_notification_to_subscribers
   after_save :auto_buy
   attr_accessor :creation_step
@@ -104,7 +106,7 @@ class Lead < AbstractLead
   end
 
   def process_for_lead_information?
-    true
+    !(requestee and requestee.has_role?(:purchase_manager))
   end
 
     #prevent dialling codes from saving when no proper phone number follows them
@@ -171,8 +173,10 @@ class Lead < AbstractLead
 
   def auto_buy
     if published_changed? and published and category.auto_buy
-      user = category.category_customers.first.user
-      user.cart.add_lead(self) if user.big_buyer? and !bought_by_user?(user)
+      user = category.category_customers.first.user.with_role
+      if user.big_buyer? and !bought_by_user?(user) and user.can_auto_buy?(self)
+        user.cart.add_lead(self)
+      end
     end
   end
 
@@ -182,6 +186,13 @@ class Lead < AbstractLead
       unless lead_template_values.select { |ltv| lead_template_fields.map(&:id).include?(ltv.lead_template_field_id) }.size == lead_template_fields.size
         self.errors.add(:category_id, I18n.t("shared.leads.form.not_all_templates_filled"))
       end
+    end
+  end
+
+  def certify_lead_if_created_from_deal
+    if deal
+      lcr = self.lead_certification_requests.create(:do_not_send_email => true)
+      lcr.update_attribute(:state, LeadCertificationRequest::STATE_APPROVED)
     end
   end
 
@@ -295,8 +306,10 @@ class Lead < AbstractLead
   end
 
   def deliver_instant_notification_to_subscribers
-    category.customer_subscribers.where("lead_notification_type = ?", User::LEAD_NOTIFICATION_INSTANT).each do |user|
-      deliver_email_template(user.email, "lead_notification_instant")
+    unless category.auto_buy?
+      category.customer_subscribers.where("lead_notification_type = ?", User::LEAD_NOTIFICATION_INSTANT).each do |user|
+        deliver_email_template(user.email, "lead_notification_instant")
+      end
     end
   end
 
@@ -312,13 +325,7 @@ class Lead < AbstractLead
     !lead_purchases.where("purchased_by = #{user.id} and accessible_from IS NOT NULL").blank?
   end
 
-  def based_on_deal(deal, user)
-    {:current_user => User.find_by_email(deal.deal_admin_email).with_role, :category => deal.lead_category, :sale_limit => 1, :price => deal.price.blank? ? 0 : deal.price,
-     :purchase_decision_date => deal.end_date+7, :currency => deal.currency, :published => true, :requestee => user, :deal_id => deal.id
-    }.each_pair do |key, value|
-      self.send("#{key}=", value)
-    end
-
+  def copy_user_profile(user)
     [
         [:contact_name, :full_name], [:phone_number, :phone], [:email_address, :email],
         [:company_name], [:address_line_1, nil, :address], [:address_line_2, nil, :address],
@@ -332,9 +339,19 @@ class Lead < AbstractLead
         self.send("#{field1}=".to_sym, user.send(field2.to_sym)) if self.send(field1.to_sym).blank?
       end
     end
+  end
+
+  def based_on_deal(deal, user)
+    {:current_user => User.find_by_email(deal.deal_admin_email).with_role, :category => deal.lead_category, :sale_limit => 1, :price => deal.price.blank? ? 0 : deal.price,
+     :purchase_decision_date => deal.end_date+7, :currency => deal.currency, :published => true, :requestee => user, :deal_id => deal.id
+    }.each_pair do |key, value|
+      self.send("#{key}=", value)
+    end
+
+    copy_user_profile(user)
 
     current_locale = I18n.locale
-    (deal.lead_translations.count > 1 ? ::Locale.all.map(&:code) : [current_locale]).each do |locale_code|
+    (deal.lead_translations.count > 1 ? ::Locale.enabled.map(&:code) : [current_locale]).each do |locale_code|
       I18n.locale = locale_code
       self.header = "#{I18n.t("models.lead.field_prefixes.header")} #{deal.header}"
       self.description = "#{I18n.t("models.lead.field_prefixes.description")} #{deal.description}"

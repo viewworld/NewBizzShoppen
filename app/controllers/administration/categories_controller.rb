@@ -5,7 +5,7 @@ class Administration::CategoriesController < Administration::AdministrationContr
   before_filter :set_tab, :only => [:new,:create]
 
   def new
-    @category = @category_type.constantize.new
+    @category = @category_type.constantize.new(:buyout_enabled => false)
   end
 
   def create

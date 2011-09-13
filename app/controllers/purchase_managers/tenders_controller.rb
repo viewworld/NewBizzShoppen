@@ -7,6 +7,7 @@ class PurchaseManagers::TendersController < PurchaseManagers::PurchaseManagerCon
 
   def new
     @lead = Lead.new(:current_user => current_user, :currency => Currency.default_currency, :country => Country.get_country_from_locale)
+    @lead.copy_user_profile(current_user)
     @lead.category_id = if params[:category_id]
       params[:category_id]
     elsif @categories.any?

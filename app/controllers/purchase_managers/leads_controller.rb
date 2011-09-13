@@ -3,6 +3,8 @@ class PurchaseManagers::LeadsController < PurchaseManagers::PurchaseManagerContr
 
   set_tab "created_leads"
 
+  before_filter :check_if_deal_is_already_requested, :only => [:create]
+
   protected
 
   def begin_of_association_chain
@@ -18,7 +20,7 @@ class PurchaseManagers::LeadsController < PurchaseManagers::PurchaseManagerContr
 
     params[:search] ||= {}
     @search = Lead.scoped_search(params[:search])
-    @leads = @search.where(:requested_by => current_user.id).paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)
+    @leads = @search.order("created_at DESC").where(:requested_by => current_user.id).paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)
   end
 
   def default_params_hash(params={})
@@ -35,6 +37,12 @@ class PurchaseManagers::LeadsController < PurchaseManagers::PurchaseManagerContr
     })
   end
 
+  def check_if_deal_is_already_requested
+    if @deal = Deal.find_by_id(params[:deal_id]) and @deal.requested_by?(current_user)
+      redirect_to :back
+    end
+  end
+
   public
 
   def new
@@ -48,6 +56,7 @@ class PurchaseManagers::LeadsController < PurchaseManagers::PurchaseManagerContr
     @lead = Lead.new(params[:lead])
     @lead.based_on_deal(@deal, current_user)
     session[:selected_category] = @lead.category_id
+
     @lead.creation_step = 3
     create! do |success, failure|
       success.html {
@@ -68,7 +77,7 @@ class PurchaseManagers::LeadsController < PurchaseManagers::PurchaseManagerContr
     @lead = Lead.requested_by_purchase_manager(current_user).find(params[:id])
 
     update! do |success, failure|
-      success.html { redirect_to purchase_managers_leads_path }
+      success.html { redirect_to params[:get_deal] == "1" ? purchase_managers_lead_path(@lead) : purchase_managers_leads_path }
       success.js { render :nothing => true }
       failure.html { redirect_to purchase_managers_leads_path }
       failure.js { render :nothing => true }

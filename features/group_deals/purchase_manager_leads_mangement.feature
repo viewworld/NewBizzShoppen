@@ -80,3 +80,7 @@ Feature: Purchase manager leads management
     Then I press translated "administration.categories.edit.view.button_update"
     Then I follow translated "administration.categories.index.view.new_category"
     Then I should see "Default price"
+
+  #7553
+  @m19 @requested
+  Scenario: On the My tenders view I should see only the following columns: Title, Creation date, deadline, number of suppliers

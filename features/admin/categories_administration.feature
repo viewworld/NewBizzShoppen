@@ -34,7 +34,7 @@ Scenario: I can create a category
 
 @_tested @added @tgn
 Scenario: I can create a category even when I am on DK locales (slug is not set then)
-  Given I click hidden link by url regex "/locales\/dk/"
+  Given I click hidden link by url regex "/locales\/da/"
   And I go to browse leads
   And I follow translated "administration.categories.index.view.new_category"
   And I fill in "category_name" with "Test category"
@@ -129,17 +129,17 @@ Scenario: I can mark category to allow buyouts
   And I am on administration edit category Sample category
   Then checkbox named "category_buyout_enabled" should be checked
 
-@m6 @ao @_done @_tested  @requested
+@m6 @ao @_done @_tested @requested @deprecated
 Scenario: When creating new category it is marked with buyout flag by default
-  When I go to administration categories
-  And I follow translated "administration.categories.index.view.new_category"
-  And I fill in "category_name" with "New category"
-  And I fill in "category_description" with "Description"
-  And checkbox named "category_buyout_enabled" should be checked
-  And I select "EUR" from "category_currency_id"
-  Then I press translated "administration.categories.new.view.button_create"
-  And I am on administration edit category New category
-  Then checkbox named "category_buyout_enabled" should be checked
+#  When I go to administration categories
+#  And I follow translated "administration.categories.index.view.new_category"
+#  And I fill in "category_name" with "New category"
+#  And I fill in "category_description" with "Description"
+#  And checkbox named "category_buyout_enabled" should be checked
+#  And I select "EUR" from "category_currency_id"
+#  Then I press translated "administration.categories.new.view.button_create"
+#  And I am on administration edit category New category
+#  Then checkbox named "category_buyout_enabled" should be checked
 
 # Allow admin to flag a category with option “Do not show prices to team members” - this will basically make team-buyers (subeaccounts) not see lead price when browsing leads within that particular category.
 @requested @m7 @tgn @_tested
@@ -198,5 +198,8 @@ Scenario: I can edit "Additional information" for category
   Then I press "Save"
 
 
-@m18
+@m18 @_tested @_done @tgn
 Scenario: Buyout for all categories is disabled by default
+  Given I go to browse leads
+  And I follow translated "administration.categories.index.view.new_category"
+  And the "category_buyout_enabled" checkbox should not be checked

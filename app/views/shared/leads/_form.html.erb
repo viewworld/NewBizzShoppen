@@ -34,6 +34,7 @@
           <h3><%= t("shared.leads.form.contact_information") %></h3>
         </li>
         <%= form.input :contact_name, :hint => hint_for(@lead, :contact_name) %>
+        <%= form.input :contact_title, :hint => hint_for(@lead, :contact_title) %>
         <%= form.input :direct_phone_number, :hint => hint_for(@lead, :direct_phone_number) %>
         <%= form.input :phone_number, :hint => hint_for(@lead, :phone_number) %>
         <%= form.input :email_address, :hint => hint_for(@lead, :email_address) %>
@@ -90,12 +91,13 @@
         <hl/>
     <% end %>
 
-    <div class="nested_locale_container"></div>
-
     <%= form.fields_for :lead_translations, @lead.lead_translations.select { |lt| lt.locale != I18n.locale.to_s } do |builder| %>
         <%= render :partial => "/shared/leads/lead_fields", :locals => {:f => builder} %>
     <% end %>
 
+    <div class="nested_locale_container"></div>
+
+    <% unless current_user and current_user.has_role?(:purchase_manager) %>
     <div class="pdd_10 no_pdd_t" id="locale_picker_div">
       <fieldset class="inputs labels_ta_r labels_180">
         <ol class="align_inputs">
@@ -111,6 +113,7 @@
       </fieldset>
     </div>
     <hl/>
+   <% end %>
 
     <div class="pdd_10 no_pdd_t">
       <fieldset class="inputs labels_ta_r labels_180">
@@ -190,7 +193,7 @@
         <% end %>
 
         var language_names = [];
-        <% Locale.all.each do |locale| %>
+        <% Locale.enabled.each do |locale| %>
         <%= "language_names['#{locale.code}'] = '#{t('models.locale.' + locale.code)}';" -%>
         <% end %>
     </script>

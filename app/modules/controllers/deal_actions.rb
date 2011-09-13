@@ -12,7 +12,7 @@ module DealActions
   end
 
   def edit
-
+    @template = LeadTemplate.find_by_id(params[:template_id])
   end
 
   def update

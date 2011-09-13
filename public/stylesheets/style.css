@@ -1420,6 +1420,29 @@ a.bt_max
     text-align: center;
 }
 
+a.bt_big
+{
+    background-position: 0 -776px
+}
+
+a.bt_big span
+{
+    background-position: right -816px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+}
+
+a.bt_big:hover
+{
+    background-position: 0 -856px;
+}
+
+a.bt_big:hover span
+{
+    background-position: right -896px;
+}
+
 
 
 .frm .frm_head .frm_hc a.bt
@@ -1878,4 +1901,17 @@ span.cke_skin_kama
     padding: 1px;
     background: #fff;
     border: 1px solid #ddd;
+}
+
+
+/* --- deal - social share buttons --- */
+
+.social_share
+{
+    padding: 20px 0;
+}
+
+.social_share li
+{
+    display: inline;
 }

@@ -3,15 +3,17 @@ Feature: Front page for procurment
 
   @_done @_tested
   Scenario: When an user enters www.fairdeals.dk he will be redirected to Danish version of procurment
+    Given a deal named "PrimaryGroupDeal" exists within category "Electronics deals"
+    And a deal named "PrimaryGroupDeal" exists with attributes "published:1,group_deal:1,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
+    And deal named "PrimaryGroupDeal" is a primary featured deal
     Given I visit domain http://fairdeals.dk
-    Then locale should be set to "dk"
-    And I should see CSS path "#primary_featured_deal"
+    Then locale should be set to "da"
+    And I should see CSS path "#primary_group_deal"
 
   @_done @_tested
   Scenario: When an user enters www.fairdeals.eu he will be redirected to UK version of procurment
     Given I visit domain http://thefairdeals.com
     Then locale should be set to "en"
-    And I should see CSS path "#primary_featured_deal"
 
   # Top bar video as-fairleads, but uniqe video with jpeg
   @_done @_tested
@@ -53,53 +55,52 @@ Feature: Front page for procurment
   Scenario: I can browse news for Procurement manager
     Given published purchase manager news exists with attributes "title:sample procurment news,content:quo vadis"
     Given I visit domain http://fairdeals.dk
-    And I should see translated "purchase_manager_home.show.view.header_news"
     And I should see "sample procurment news"
     And I should see "quo vadis"
 
   @_done @_tested
   Scenario: As not logged user I should have a menu on the right side with buttons
     Given I visit domain http://fairdeals.dk
-    Then I should see CSS path "#side_menu"
-    And I should see "3" elements within CSS path "#side_menu a"
+    Then I should see CSS path ".homepage_actions"
+    And I should see "3" elements within CSS path ".homepage_actions a"
 
   @_done @_tested
   Scenario: I should see one primary group deal
     Given a deal named "PrimaryGroupDeal" exists within category "Electronics deals"
-    And a deal named "PrimaryGroupDeal" exists with attributes "published:1,group_deal:1,price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
+    And a deal named "PrimaryGroupDeal" exists with attributes "published:1,group_deal:1,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
     And deal named "PrimaryGroupDeal" is a primary featured deal
     Given I visit domain http://fairdeals.dk
-    Then I should see "PrimaryGroupDeal" within "div#primary_featured_deal"
+    Then I should see "PrimaryGroupDeal" within "div#primary_group_deal"
 
   @_done @_tested
   Scenario: I can select a primary deal to display by accessing the page with deal number in the URL like www.fairdeals.dk/1223
     Given a deal named "PrimaryGroupDeal" exists within category "Electronics deals"
-    And a deal named "PrimaryGroupDeal" exists with attributes "published:1,group_deal:1,price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
+    And a deal named "PrimaryGroupDeal" exists with attributes "published:1,group_deal:1,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
     And deal named "PrimaryGroupDeal" is a primary featured deal
     And a deal named "SecondaryGroupDeal" exists within category "Electronics deals"
-    And a deal named "SecondaryGroupDeal" exists with attributes "published:1,group_deal:1,price:200,discounted_price:50,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
+    And a deal named "SecondaryGroupDeal" exists with attributes "published:1,group_deal:1,price:99,deal_price:200,discounted_price:50,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
     And deal named "PrimaryGroupDeal" is "1" secondary featured deal
     And I visit domain http://fairdeals.dk
-    Then I should see "PrimaryGroupDeal" within "div#primary_featured_deal"
+    Then I should see "PrimaryGroupDeal" within "div#primary_group_deal"
     When I append id of deal "SecondaryGroupDeal" to url
-    Then I should see "SecondaryGroupDeal" within "div#primary_featured_deal"
+    Then I should see "SecondaryGroupDeal" within "div#primary_group_deal"
 
   @_done @_tested
   Scenario: I should see three minor deals
     Given a deal named "PrimaryGroupDeal" exists within category "Electronics deals"
-    And a deal named "PrimaryGroupDeal" exists with attributes "published:1,group_deal:1,price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
+    And a deal named "PrimaryGroupDeal" exists with attributes "published:1,group_deal:1,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
     And deal named "PrimaryGroupDeal" is a primary featured deal
     And a deal named "SecondaryGroupDealOne" exists within category "Electronics deals"
-    And a deal named "SecondaryGroupDealOne" exists with attributes "published:1,group_deal:1,price:200,discounted_price:50,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
+    And a deal named "SecondaryGroupDealOne" exists with attributes "published:1,group_deal:1,price:99,deal_price:200,discounted_price:50,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
     And deal named "SecondaryGroupDealOne" is "1" secondary featured deal
     And a deal named "SecondaryGroupDealTwo" exists within category "Electronics deals"
-    And a deal named "SecondaryGroupDealTwo" exists with attributes "published:1,group_deal:1,price:200,discounted_price:50,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
+    And a deal named "SecondaryGroupDealTwo" exists with attributes "published:1,group_deal:1,price:99,deal_price:200,discounted_price:50,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
     And deal named "SecondaryGroupDealTwo" is "2" secondary featured deal
     And a deal named "SecondaryGroupDealThree" exists within category "Electronics deals"
-    And a deal named "SecondaryGroupDealThree" exists with attributes "published:1,group_deal:1,price:200,discounted_price:50,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
+    And a deal named "SecondaryGroupDealThree" exists with attributes "published:1,group_deal:1,price:99,deal_price:200,discounted_price:50,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
     And deal named "SecondaryGroupDealThree" is "3" secondary featured deal
     And I visit domain http://fairdeals.dk
-    Then I should see "PrimaryGroupDeal" within "div#primary_featured_deal"
+    Then I should see "PrimaryGroupDeal" within "div#primary_group_deal"
     Then I should see "SecondaryGroupDealOne" within "div#secondary_featured_deal_1"
     Then I should see "SecondaryGroupDeal" within "div#secondary_featured_deal_2"
     Then I should see "SecondaryGroupDeal" within "div#secondary_featured_deal_3"
@@ -108,7 +109,7 @@ Feature: Front page for procurment
   @_done @_tested
   Scenario: Featured group deal on the front page should have highlights, graphic and full description
     Given a deal named "PrimaryGroupDeal" exists within category "Electronics deals"
-    And a deal named "PrimaryGroupDeal" exists with attributes "published:1,group_deal:1,price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
+    And a deal named "PrimaryGroupDeal" exists with attributes "published:1,group_deal:1,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
     And deal named "PrimaryGroupDeal" is a primary featured deal
     And I visit domain http://fairdeals.dk
     # then I should see desc
@@ -116,7 +117,7 @@ Feature: Front page for procurment
   @_done @_tested
   Scenario: Featured group deal should have time left displayed
     Given a deal named "PrimaryGroupDeal" exists within category "Electronics deals"
-    And a deal named "PrimaryGroupDeal" exists with attributes "published:1,group_deal:1,price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
+    And a deal named "PrimaryGroupDeal" exists with attributes "published:1,group_deal:1,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
     And deal named "PrimaryGroupDeal" is a primary featured deal
     And I visit domain http://fairdeals.dk
     Then I should see CSS path "#countdown"
@@ -133,7 +134,7 @@ Feature: Front page for procurment
   @tgn @_done @_tested @selenium
   Scenario: It should be possible to share by email the featured group deal
     Given a deal named "GroupDealA" exists within category "Electronics deals"
-    And a deal named "GroupDealA" exists with attributes "published:1,group_deal:1,price:100,discounted_price:25,social_media_description:super ultra deal social medias,start_date:01-01-2011,end_date:01-01-2013"
+    And a deal named "GroupDealA" exists with attributes "published:1,group_deal:1,price:99,deal_price:100,discounted_price:25,social_media_description:super ultra deal social medias,start_date:01-01-2011,end_date:01-01-2013"
     Given I am signed up and confirmed as user with email purchase_manager@nbs.com and password secret and role purchase_manager
     And I am on the homepage
     And I make sure current locale is "en"
@@ -158,13 +159,13 @@ Feature: Front page for procurment
     Given I am on the homepage
     And I make sure current locale is "en"
     Given a deal named "GroupDealA" exists within category "Electronics deals"
-    And a deal named "GroupDealA" exists with attributes "published:1,group_deal:1,price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
+    And a deal named "GroupDealA" exists with attributes "published:1,group_deal:1,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
     Given a deal named "GroupDealB" exists within category "Electronics deals"
-    And a deal named "GroupDealB" exists with attributes "published:1,group_deal:1,price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
+    And a deal named "GroupDealB" exists with attributes "published:1,group_deal:1,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
     Given a deal named "GroupDealC" exists within category "Electronics deals"
-    And a deal named "GroupDealC" exists with attributes "published:1,group_deal:1,price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
+    And a deal named "GroupDealC" exists with attributes "published:1,group_deal:1,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
     Given a deal named "GroupDealD" exists within category "Electronics deals"
-    And a deal named "GroupDealD" exists with attributes "published:1,group_deal:1,price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
+    And a deal named "GroupDealD" exists with attributes "published:1,group_deal:1,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
     And I am signed up and confirmed as user with email bob@person.com and password supersecret and role admin
     Then I sign in as bob@person.com with password supersecret
     And I follow translated "layout.main_menu.admin.featured_deals"
@@ -176,3 +177,23 @@ Feature: Front page for procurment
 
   @is @tested_elsewhere @_done
   Scenario: As admin I can select three secondary featured deals to be displayed on procurement page
+
+  #7450
+  @m19 @requested
+  Scenario: I should see box with contact info: Phone number, Email, Skype on the home page
+
+  #7449
+  @m19 @requested
+  Scenario: I should see box where I can request deal from default deal admin, I should be able to fill in name, phone number, email and details of my request
+
+  #7630
+  @m19 @requested @group_deals
+  Scenario: Group deal should be marked by a splash saying "Group deal" on the main page in the featured deal box
+
+  #7630
+  @m19 @requested @group_deals
+  Scenario: On the main page in the featured group deal I should see how many leads were generated and how many are missing to reach the minimum (5 leads / 2 missing)
+
+  #7630
+  @m19 @requested @group_deals
+  Scenario: As admin I can set per deal minimum number of leads that needs to be generated to give the displayed price

@@ -11,7 +11,7 @@
                 <%= form.fields_for :address do |address_form| %>
                     <%= address_form.input :address_line_1, :hint => hint_for(user, :address_address_line_1) %>
                     <%= address_form.input :address_line_2, :hint => hint_for(user, :address_address_line_2) %>
-                    <%= address_form.input :address_line_3, :hint => hint_for(user, :address_address_line_3) %>
+                    <%= address_form.input :address_line_3, :hint => hint_for(user, :address_address_line_3), :required => true %>
                     <%= address_form.input :zip_code, :hint => hint_for(user, :address_zip_code) %>
                     <%= address_form.input :country_id, :as => :select, :hint => hint_for(user, :address_country_id), :collection => Country.all, :input_html => {:onchange => "refresh_regions_list('user_purchase_manager_address_attributes');"} %>
                     <%= address_form.input :region_id, :as => :select, :hint => hint_for(user, :address_region_id), :collection => regions_collection_for(user.address.country) %>
@@ -29,7 +29,7 @@
                 <%= form.input :phone, :hint => hint_for(user, :phone) %>
                 <%= form.input :email, :hint => hint_for(user, :email) %>
                 <%= form.input :password, :hint => hint_for(user, :password), :as => user.rpx_identifier.blank? ? :password : :hidden %>
-                <%= form.input :password_confirmation, :hint => hint_for(user, :password_confirmation), :as => user.rpx_identifier.blank? ? :password : :hidden %>
+                <%= form.input :password_confirmation, :hint => hint_for(user, :password_confirmation), :as => user.rpx_identifier.blank? ? :password : :hidden, :required => true %>
                 <%= form.input :time_zone, :wrapper_html => {:class => "select"}, :input_html => {:style => "width: 240px"} %>
                 <%= form.input :agreement_read, :as => :boolean, :hint => hint_for(user, :agreement_read), :label => "#{t("common.agree_to")} #{link_to_main_page_article('terms_conditions', {:popup => true}, {:id => 'agreement_modal_box'})}".html_safe, :required => true %>
                 <%= form.input :newsletter_on, :as => :boolean, :hint => hint_for(user, :newsletter_on) %>

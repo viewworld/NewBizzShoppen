@@ -29,7 +29,7 @@ class Country < ActiveRecord::Base
   end
 
   def default_email_template_signature_logo_url
-    "http://static-fairleads.s3.amazonaws.com/images/logo_fairleads_with_border.jpg"
+    "https://static-fairleads.s3.amazonaws.com/images/logo_fairleads_with_border.jpg"
   end
 
   def default_bank_account
@@ -54,7 +54,7 @@ class Country < ActiveRecord::Base
   end
 
   def self.get_country_from_locale
-    country = where(:detailed_locale => Thread.current[:globalize_detailed_locale]).first
+    country = Thread.current[:globalize_detailed_locale].blank? ? nil : where(:detailed_locale => Thread.current[:globalize_detailed_locale]).first
     country = where(:locale => I18n.locale.to_s).first unless country
     country
   end
@@ -66,7 +66,7 @@ class Country < ActiveRecord::Base
       ["BW", "267"], ["BR", "55"], ["IO", ""], ["VG", "1 284"], ["BN", "673"], ["BG", "359"], ["BF", "226"], ["MM", "95"], ["BI", "257"],
       ["KH", "855"], ["CM", "237"], ["CA", "1"], ["CV", "238"], ["KY", "1 345"], ["CF", "236"], ["TD", "235"], ["CL", "56"], ["CN", "86"],
       ["CX", "61"], ["CC", "61"], ["CO", "57"], ["KM", "269"], ["CK", "682"], ["CR", "506"], ["HR", "385"], ["CU", "53"], ["CY", "357"],
-      ["CZ", "420"], ["CD", "243"], ["DK", "45"], ["DJ", "253"], ["DM", "1 767"], ["DO", "1 809"], ["EC", "593"], ["EG", "20"], ["SV", "503"],
+      ["CZ", "420"], ["CD", "243"], ["DA", "45"], ["DJ", "253"], ["DM", "1 767"], ["DO", "1 809"], ["EC", "593"], ["EG", "20"], ["SV", "503"],
       ["GQ", "240"], ["ER", "291"], ["EE", "372"], ["ET", "251"], ["FK", "500"], ["FO", "298"], ["FJ", "679"], ["FI", "358"], ["FR", "33"],
       ["PF", "689"], ["GA", "241"], ["GM", "220"], ["", "970"], ["GE", "995"], ["DE", "49"], ["GH", "233"], ["GI", "350"], ["GR", "30"],
       ["GL", "299"], ["GD", "1 473"], ["GU", "1 671"], ["GT", "502"], ["GN", "224"], ["GW", "245"], ["GY", "592"], ["HT", "509"], ["VA", "39"],

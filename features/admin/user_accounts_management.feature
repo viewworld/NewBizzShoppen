@@ -448,6 +448,7 @@ Scenario: I can login without confirmation when 'Don't verify email address' is 
 
 @added @m8b @_done @_tested
 Scenario: I can login without confirmation when 'Don't verify email address' is checked
+  Given setting for "email_verification_for_sales_managers" is set to "1"
   When I go to administration users
   Given I select "Buyer" from "role"
   And I press translated "administration.users.index.view.new_user"
@@ -709,8 +710,26 @@ Scenario: I can log in as selected user
   Then I follow translated "administration.users.index.view.log_in_as"
   Then I follow translated logout link for translator_call_centre_agent@nbs.com
 
-@m18 @category_buyer_deals
+@m18 @category_buyer_deals @_done @_tested
 Scenario: I can enable deals for each category buyer
+  When I follow translated "layout.main_menu.admin.users"
+  And Category CategoryBuyerCategory is created
+  And I am signed up and confirmed as user with email "kategory_bajer@nbs.com" and password "secret" and role "category_buyer" for category "CategoryBuyerCategory"
+  And I fill in "search_with_keyword" with "kategory_bajer"
+  And I press translated "administration.users.index.view.search_button"
+  And I follow translated "administration.users.index.view.edit"
+  And I check "user_category_buyer_show_deals"
+  Then I press "Save"
+  And I sign out
+  And I am on the home page
+  And I sign in as kategory_bajer@nbs.com with password secret
+  Then I should see CSS path "a[tab='browse_deals']"
+  And I should see CSS path "a[tab='deals']"
 
-@m18 @create_buttons
+@m18 @create_buttons @_done @_tested @tgn
 Scenario: I can send welcome email to member / supplier
+   Given I have user with email customer101@person.com and role customer
+  Then I fill in "search_with_keyword" with "customer101@person.com"
+  And I press translated "administration.users.index.view.search_button"
+  And I follow translated "administration.users.send_invitation"
+  And last email sent should have been sent to recipient "customer101@person.com"

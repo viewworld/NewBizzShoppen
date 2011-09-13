@@ -5,12 +5,13 @@ class Administration::FeaturedDealsController < Administration::AdministrationCo
 
   def index
     @group_deals_for_select = Deal.group_deals_for_select
+    @all_deals_for_select = Deal.all_deals_for_select
     @featured_deals = FeaturedDeal.display_all
   end
 
   def create
     FeaturedDeal.set_all(params[:featured_deals])
-    flash[:notice] = "Featured deals have been successfully set."
+    flash[:notice] = "Featured deals have been updated."
     redirect_to administration_featured_deals_path
   end
 

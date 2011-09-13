@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  before_filter :redirect_to_fairleads
   before_filter :authorize_with_http_basic_for_staging, :check_category_buyer, :update_log_entries, :set_user_time_zone
   after_filter :do_something
 
@@ -19,6 +20,13 @@ class ApplicationController < ActionController::Base
 
   helper_method :locale
 
+  def redirect_to_fairleads
+    if user_signed_in? and current_user and !current_user.has_role? :purchase_manager and session[:site] == "fairdeals"
+      key = current_user.generate_login_key!
+      sign_out(current_user)
+      redirect_to "http://#{Rails.env == 'staging' ? 'beta.fairleads.com' : 'fairleads.com'}/login_keys/?key=#{key}"
+    end
+  end
 
   def update_log_entries
     if user_signed_in? and self.class.to_s != "UserSessionLogController"
@@ -70,10 +78,6 @@ class ApplicationController < ActionController::Base
         session[:lead_id] = nil
         session[:buyout] = nil
         requested_path
-      elsif !resource.has_role? :purchase_manager and session[:site] == "fairdeals"
-        key = current_user.generate_login_key!
-        sign_out(current_user)
-        "http://fairleads.com/login_keys/?key=#{key}"
       elsif resource.has_role? :purchase_manager and session[:site] == "fairdeals"
         root_path
       elsif resource.has_role? :category_buyer and resource.sign_in_count == 1 and resource.contact.present?
@@ -86,7 +90,7 @@ class ApplicationController < ActionController::Base
           sign_out(resource_name)
           root_path
         end
-      elsif session[:last_url_before_logout].present? and !current_user.has_any_role?(:agent, :call_centre, :call_centre_agent, :purchase_manager)
+      elsif session[:last_url_before_logout].present? and !current_user.has_any_role?(:agent, :call_centre, :call_centre_agent, :purchase_manager, :customer, :lead_buyer)
         last_url = session[:last_url_before_logout]
         session[:last_url_before_logout] = nil
         last_url
@@ -106,8 +110,23 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def after_sign_out_path_for(resource)
+    role = session[:logout_user_role].to_s
+    session[:logout_user_role] = nil
+
+    if ["customer", "lead_buyer", "category_buyer", "lead_user"].include?(role)
+      buyer_home_path
+    elsif ["agent", "call_centre", "call_centre_agent"].include?(role)
+      agent_home_path
+    elsif role == "purchase_manager"
+      purchase_manager_home_path
+    else
+      root_path
+    end
+  end
+
   def set_locale(locale_code=nil)
-    @locales = Locale.all
+    @locales = Locale.enabled.all
     session[:locale_code] = locale_code || session[:locale_code] || I18n.locale.to_s
     I18n.locale = session[:locale_code]
     Thread.current[:globalize_detailed_locale] = ((user_signed_in? and current_user) and current_user.with_role.address.present?) ? current_user.with_role.address.country.detailed_locale : browser_locale
@@ -150,7 +169,7 @@ class ApplicationController < ActionController::Base
                        elsif requested_category
                          redirect_to category_home_page_path(current_user.with_role.parent_buying_categories.first.cached_slug)
                        elsif current_user.has_role?(:category_buyer)
-                         current_user.with_role.parent_buying_categories.first
+                         current_user.with_role.parent_accessible_categories_without_auto_buy.first
                        end
                      elsif requested_category
                        requested_category
@@ -180,6 +199,7 @@ class ApplicationController < ActionController::Base
         session[key] = nil
       end
     end
+    session[:logout_user_role] = user.role if user
   end
 
   def do_something

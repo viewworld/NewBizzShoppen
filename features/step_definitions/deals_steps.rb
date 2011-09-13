@@ -183,3 +183,18 @@ When /^I append id of deal "([^"]*)" to url$/ do |deal_header|
   deal = Deal.where(:header => deal_header).first
   visit "/#{deal.id}"
 end
+
+Given /^there are no deals$/ do
+  Deal.delete_all
+end
+
+Then /^the only deal should have end date set to one year from now$/ do
+  (Deal.first.end_date.to_date - Date.today).to_i.should >= 365
+end
+
+Then /^lead generated from deal in category "([^"]*)" by "([^"]*)" (is|is not) bought$/ do |category_name, email, is_bought|
+  user = User.where(:email => email).first.with_role
+  category = Category.where(:name => category_name).first
+  lead = Lead.where(:category_id => category.id, :requested_by => user.id).first
+  assert lead.lead_purchases.any? == (is_bought == "is")
+end

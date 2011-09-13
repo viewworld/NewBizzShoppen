@@ -8,7 +8,7 @@ class Nbs < Thor
 
     require "spec/support/blueprints"
     #Default settings
-Settings.default_payout_delay = 0 if Settings.default_payout_delay.nil?
+    Settings.default_payout_delay = 0 if Settings.default_payout_delay.nil?
     Settings.default_leads_per_page = 5 if Settings.default_leads_per_page.nil?
     Settings.certification_level_1 = 10 if Settings.certification_level_1.nil?
     Settings.certification_level_2 = 20 if Settings.certification_level_2.nil?
@@ -21,8 +21,12 @@ Settings.default_payout_delay = 0 if Settings.default_payout_delay.nil?
     Settings.resend_certification_notification_after_days = 15 if Settings.resend_certification_notification_after_days.nil?
     Settings.expire_certification_notification_after_days = 15 if Settings.expire_certification_notification_after_days.nil?
     Settings.default_deal_admin_email = Rails.env.production? ? "" : "agent@nbs.com" if Settings.default_deal_admin_email.nil?
+    # email verification settings
+    Settings.email_verification_for_procurement_managers = "0" if Settings.email_verification_for_procurement_managers.nil?
+    Settings.email_verification_for_sales_managers = "0" if Settings.email_verification_for_sales_managers.nil?
+    Settings.default_max_auto_buy_per_4_weeks = 5 if Settings.default_max_auto_buy_per_4_weeks.nil?
 
-    Country.find_or_create_by_name("Denmark", :locale => "dk", :detailed_locale => "dk", :vat_rate => VatRate.new(:rate => 25), :email_template_signature => "some amazing signature that will keep everyone happy all day long")
+    Country.find_or_create_by_name("Denmark", :locale => "da", :detailed_locale => "da", :vat_rate => VatRate.new(:rate => 25), :email_template_signature => "some amazing signature that will keep everyone happy all day long")
     Country.find_or_create_by_name("United Kingdom", :locale => "en", :detailed_locale => "gb", :vat_rate => VatRate.new(:rate => 20), :email_template_signature => "some amazing signature that will keep everyone happy all day long")
 
     if BankAccount.count == 0
@@ -54,7 +58,7 @@ Settings.default_payout_delay = 0 if Settings.default_payout_delay.nil?
          :uniq_id => "confirmation_instructions",
          :en => {:subject => "Confirmation instructions",
                  :body => "<p>Welcome {{user.email}}!</p><p>You can confirm your account through the link below:</p><p><a href=\"{{user.confirmation_instructions_url}}\">Confirm my account</a></p>"},
-         :dk => {:subject => "[DK] Confirmation instructions",
+         :da => {:subject => "[DK] Confirmation instructions",
                  :body => "<p>Welcome {{user.email}}!</p><p>You can confirm your account through the link below:</p><p><a href=\"{{user.confirmation_instructions_url}}\">Confirm my account</a></p>"}
         },
 
@@ -62,7 +66,7 @@ Settings.default_payout_delay = 0 if Settings.default_payout_delay.nil?
          :uniq_id => "reset_password_instructions",
          :en => {:subject => "Reset password instructions",
                  :body => "<p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href=\"{{ user.reset_password_instructions_url }}\">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>"},
-         :dk => {:subject => "[DK] Reset password instructions",
+         :da => {:subject => "[DK] Reset password instructions",
                  :body => "<p>Hello {{ user.email }} !</p><p>Someone has requested a link to change your password, and you can do this through the link below.</p><p><a href=\"{{ user.reset_password_instructions_url }}\">Change my password</a></p><p>If you didn't request this, please ignore this email.</p><p>Your password won't change until you access the link above and create a new one.</p>"}
         },
 
@@ -75,7 +79,7 @@ Settings.default_payout_delay = 0 if Settings.default_payout_delay.nil?
 {{lead.hidden_description}}<br />
 Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.phone_number}}, {{lead.direct_phone_number}}</p>
 {% endfor %}"},
-         :dk => {:subject => "[DK] Somebody shared leads with you",
+         :da => {:subject => "[DK] Somebody shared leads with you",
                  :body => "{% for lead in leads %}
 <p>{{lead.header}}<br />
 {{lead.description}}<br />
@@ -88,7 +92,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
          :uniq_id => "contact_lead_by_email_message",
          :en => {:subject => "Contact regarding lead",
                  :body => "<p>{{lead.id}}</p>"},
-         :dk => {:subject => "[DK] Contact regarding lead",
+         :da => {:subject => "[DK] Contact regarding lead",
                  :body => "<p>{{lead.id}}</p>"}
         },
 
@@ -96,7 +100,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
          :uniq_id => "lead_purchase_is_about_to_expire",
          :en => {:subject => "Lead Purchase is about to expire",
                  :body => "<p>{{lead_purchase.id}}</p>"},
-         :dk => {:subject => "[DK] Lead Purchase is about to expire",
+         :da => {:subject => "[DK] Lead Purchase is about to expire",
                  :body => "<p>{{lead_purchase.id}}</p>"}
         },
 
@@ -104,7 +108,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
          :uniq_id => "lead_rated_as_unsatisfactory",
          :en => {:subject => "Lead has been rated as unsatisfactory",
                  :body => "<p>Lead {{lead_purchase.header}} has been rated as {{lead_purchase.rating_level_as_text}} with the following reason: {{lead_purchase.rating_reason}}.</p>"},
-         :dk => {:subject => "[DK] Lead has been rated as unsatisfactory",
+         :da => {:subject => "[DK] Lead has been rated as unsatisfactory",
                  :body => "<p>Lead {{lead_purchase.header}} has been rated as {{lead_purchase.rating_level_as_text}} with the following reason: {{lead_purchase.rating_reason}}.</p>"}
         },
 
@@ -112,7 +116,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
          :uniq_id => "notify_buyers_about_lead_update",
          :en => {:subject => "Lead has been updated",
                  :body => "<p>Lead {{lead.header}} has been updated by agent.</p>"},
-         :dk => {:subject => "[DK] Lead has been updated",
+         :da => {:subject => "[DK] Lead has been updated",
                  :body => "<p>Lead {{lead.header}} has been updated by agent.</p>"}
         },
 
@@ -120,7 +124,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
          :uniq_id => "contact_us",
          :en => {:subject => "Question",
                  :body => "<p></p>"},
-         :dk => {:subject => "[DK] Question",
+         :da => {:subject => "[DK] Question",
                  :body => "<p></p>"}
         },
 
@@ -128,7 +132,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
          :uniq_id => "invoice",
          :en => {:subject => "Invoice",
                  :body => "<p></p>"},
-         :dk => {:subject => "[DK] Invoice",
+         :da => {:subject => "[DK] Invoice",
                  :body => "<p></p>"}
         },
 
@@ -137,7 +141,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
             :uniq_id => "category_request",
             :en => {:subject => "Category request",
                     :body => "<p>{{request_type}} category request:</p><p>Category name: {{category_name}}</p><p>Lead description: {{lead_description}}</p><p>Leads count per month: {{leads_count_per_month}}</p><p>Can be contacted: {{can_be_contacted}}</p>"},
-            :dk => {:subject => "[DK] Category request",
+            :da => {:subject => "[DK] Category request",
                     :body => "<p>{{request_type}} category request:</p><p>Category name: {{category_name}}</p><p>Lead description: {{lead_description}}</p><p>Leads count per month: {{leads_count_per_month}}</p><p>Can be contacted: {{can_be_contacted}}</p>"}
         },
         {
@@ -145,7 +149,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
             :uniq_id => "more_leads_request",
             :en => {:subject => "More leads request",
                     :body => "<p>More leads request:</p><p>Category name: {{category_name}}</p><p>Company name: {{company_name}}</p><p>Contact name: {{contact_name}}</p><p>Contact email: {{contact_email}}</p><p>Contact phone: {{contact_phone}}</p><p>>Note: {{note}}</p>"},
-            :dk => {:subject => "[DK] More leads  request",
+            :da => {:subject => "[DK] More leads  request",
                     :body => "<p>More leads request:</p><p>Category name: {{category_name}}</p><p>Company name: {{company_name}}</p><p>Contact name: {{contact_name}}</p><p>Contact email: {{contact_email}}</p><p>Contact phone: {{contact_phone}}</p><p>>Note: {{note}}</p>"}
         },
         {
@@ -153,7 +157,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
             :uniq_id => "certification_request",
             :en => {:subject => "Certification request",
                     :body => "<p>Login url: {{lead_certification_request.login_url}}</p><p>Contact name: {{lead_certification_request.contact_name}}</p><p>Contact email: {{lead_certification_request.contact_email}}</p>"},
-            :dk => {:subject => "[DK] Certification request",
+            :da => {:subject => "[DK] Certification request",
                     :body => "[DK] <p>Login url: {{lead_certification_request.login_url}}</p><p>Contact name: {{lead_certification_request.contact_name}}</p><p>Contact email: {{lead_certification_request.contact_email}}</p>"}
         },
             {
@@ -161,7 +165,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
             :uniq_id => "bought_lead_notification",
             :en => {:subject => "Bought lead notification",
                     :body => "<p>Link to lead: {{lead_purchase.url}}</p>"},
-            :dk => {:subject => "[DK] Bought lead notification",
+            :da => {:subject => "[DK] Bought lead notification",
                     :body => "[DK] <p>Link to lead: {{lead_purchase.url}}</p>"}
         },
         {
@@ -169,28 +173,28 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
             :uniq_id => "certification_request_reminder",
             :en => {:subject => "Certification request reminder",
                     :body => "<p>Login url: {{lead_certification_request.login_url}}</p><p>Contact name: {{lead_certification_request.contact_name}}</p><p>Contact email: {{lead_certification_request.contact_email}}</p>"},
-            :dk => {:subject => "[DK] Certification request reminder",
+            :da => {:subject => "[DK] Certification request reminder",
                     :body => "[DK] <p>Login url: {{lead_certification_request.login_url}}</p><p>Contact name: {{lead_certification_request.contact_name}}</p><p>Contact email: {{lead_certification_request.contact_email}}</p>"}
         },
         {:name => "Lead notification instant",
          :uniq_id => "lead_notification_instant",
          :en => {:subject => "New lead has been added to the subscribed category",
                  :body => "<p>New lead&nbsp;<a href=\"{{lead.show_lead_details_url}}\">{{lead.header}}</a>&nbsp;has been created in category {{lead.category_name}}</p>"},
-         :dk => {:subject => "[DK] New lead has been added to the subscribed category",
+         :da => {:subject => "[DK] New lead has been added to the subscribed category",
                  :body => "<p>New lead&nbsp;<a href=\"{{lead.show_lead_details_url}}\">{{lead.header}}</a>&nbsp;has been created in category {{lead.category_name}}</p>"}
         },
         {:name => "Lead notification daily",
          :uniq_id => "lead_notification_daily",
          :en => {:subject => "New leads added to your subscribed categories today",
                  :body => "<p>{% for lead in leads %}<p><a href=\"{{lead.show_lead_details_url}}\">{{lead.header}}</a><br />{{lead.description}}</p>{% endfor %}</p>"},
-         :dk => {:subject => "[DK] New leads added to your subscribed categories today",
+         :da => {:subject => "[DK] New leads added to your subscribed categories today",
                  :body => "<p>{% for lead in leads %}<p><a href=\"{{lead.show_lead_details_url}}\">{{lead.header}}</a><br />{{lead.description}}</p>{% endfor %}</p>"}
         },
         {:name => "Lead notification weekly",
          :uniq_id => "lead_notification_weekly",
          :en => {:subject => "New leads added to your subscribed categories this week",
                  :body => "<p>{% for lead in leads %}<p><a href=\"{{lead.show_lead_details_url}}\">{{lead.header}}</a><br />{{lead.description}}</p>{% endfor %}</p>"},
-         :dk => {:subject => "[DK] New leads added to your subscribed categories this week",
+         :da => {:subject => "[DK] New leads added to your subscribed categories this week",
                  :body => "<p>{% for lead in leads %}<p><a href=\"{{lead.show_lead_details_url}}\">{{lead.header}}</a><br />{{lead.description}}</p>{% endfor %}</p>"}
         },
         {
@@ -198,7 +202,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
             :uniq_id => "result_send_material",
             :en => {:subject => "Additional materials",
                     :body => "<p></p>"},
-            :dk => {:subject => "[DK] Additional materials",
+            :da => {:subject => "[DK] Additional materials",
                     :body => "<p></p>"}
         },
         {
@@ -206,7 +210,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
             :uniq_id => "upgrade_contact_to_category_buyer",
             :en => {:subject => "You have been upgraded to category buyer",
                     :body => "<p>Fairleads username: {{user.email}}</p><p>Fairleads password: {{password}}</p><p>Screen name: {{user.screen_name}}</p><p><a href=\"{{user.category_buyer_category_home_url}}\">{{user.category_buyer_category_home_url}}</a></p>"},
-            :dk => {:subject => "[DK] You have been upgraded to category buyer",
+            :da => {:subject => "[DK] You have been upgraded to category buyer",
                     :body => "<p>Fairleads username: {{user.email}}</p><p>Fairleads password: {{password}}</p><p>Screen name: {{user.screen_name}}</p><p><a href=\"{{user.category_buyer_category_home_url}}\">{{user.category_buyer_category_home_url}}</a></p>"}
         },
         {
@@ -214,7 +218,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
             :uniq_id => "upgraded_contact_to_category_buyer_welcome",
             :en => {:subject => "Welcome to Fairleads.com!",
                     :body => "<p>Login: {{user.email}}</p><p>Linked with account: {{user.social_provider_name}}</p><p><a href=\"{{user.category_buyer_category_home_url}}\">{{user.category_buyer_category_home_url}}</a></p>"},
-            :dk => {:subject => "[DK] Welcome to Fairleads.com!",
+            :da => {:subject => "[DK] Welcome to Fairleads.com!",
                     :body => "<p>Login: {{user.email}}</p><p>Linked with account: {{user.social_provider_name}}</p><p><a href=\"{{user.category_buyer_category_home_url}}\">{{user.category_buyer_category_home_url}}</a></p>"}
         },
         {
@@ -222,7 +226,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
             :uniq_id => "deal_certification_request",
             :en => {:subject => "Deal certification request from Fairleads.com.",
                     :body => "<p>Login url: <a href=\"{{deal_certification_request.login_url}}\">Certify the deal</a></p>"},
-            :dk => {:subject => "[DK] Deal certification request from Fairleads.com.",
+            :da => {:subject => "[DK] Deal certification request from Fairleads.com.",
                     :body => "[DK] <p>Login url: <a href=\"{{deal_certification_request.login_url}}\">Certify the deal</a></p>"}
         },
         {
@@ -230,7 +234,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
             :uniq_id => "deal_certification_buyer_welcome",
             :en => {:subject => "Welcome to Fairleads.com!",
                     :body => "<p>Login: {{user.email}}</p><p>Password: {{password}}</p>"},
-            :dk => {:subject => "[DK] Welcome to Fairleads.com!",
+            :da => {:subject => "[DK] Welcome to Fairleads.com!",
                     :body => "<p>Login: {{user.email}}</p><p>Password: {{password}}</p>"}
         },
         {
@@ -238,7 +242,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
             :uniq_id => "share_deal_by_email",
             :en => {:subject => "{{name}} wants to share the deal with you",
                     :body => "<p>{{description}}</p><p><a href=\"{{deal_url}}\">Click here for details</a></p>"},
-            :dk => {:subject => "[DK] {{name}} wants to share the deal with you",
+            :da => {:subject => "[DK] {{name}} wants to share the deal with you",
                     :body => "<p>{{description}}</p><p><a href=\"{{deal_url}}\">Click here for details</a></p>"}
         },
 
@@ -246,8 +250,24 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
          :uniq_id => "blank_template",
          :en => {:subject => "{{subject_content}}",
                  :body => "{{body_content}}"},
-         :dk => {:subject => "{{subject_content}}",
+         :da => {:subject => "{{subject_content}}",
                  :body => "{{body_content}}"}
+        },
+
+        {:name => "Member invitation",
+         :uniq_id => "member_invitation",
+         :en => {:subject => "Welcome to fairdeals.dk",
+                 :body => "<p>Username: {{user.email}}</p><p>Password: {{new_password}}</p><p><a href=\"http://fairdeals.dk\">Login at fairdeals.dk</a></p>"},
+         :da => {:subject => "[DK] Welcome to fairdeals.dk",
+                 :body => "<p>Username: {{user.email}}</p><p>Password: {{new_password}}</p><p><a href=\"http://fairdeals.dk\">Login at fairdeals.dk</a></p>"}
+        },
+
+        {:name => "Supplier invitation",
+         :uniq_id => "supplier_invitation",
+         :en => {:subject => "Welcome to fairleads.dk",
+                 :body => "<p>Username: {{user.email}}</p><p>Password: {{new_password}}</p><p><a href=\"http://fairleads.com\">Login at fairleads.com</a></p>"},
+         :da => {:subject => "[DK] Welcome to fairleads.dk",
+                 :body => "<p>Username: {{user.email}}</p><p>Password: {{new_password}}</p><p><a href=\"http://fairleads.com\">Login at fairleads.com</a></p>"}
         }
     ]
 
@@ -255,7 +275,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
     {"lead" => %w{ company_name company_phone_number company_website address_line_1 address_line_2 address_line_3 zip_code country_id
               region_id country_id company_vat_no company_ean_number contact_name direct_phone_number phone_number email_address linkedin_url
               facebook_url category_id is_international header description hidden_description purchase_value price currency_id published
-              notify_buyers_after_update sale_limit purchase_decision_date},
+              notify_buyers_after_update sale_limit purchase_decision_date contact_title},
      "user/customer" => %w{first_name last_name company_name address_address_line_1 address_address_line_2 address_address_line_3 address_zip_code
               address_country_id address_region_id vat_number screen_name phone email password password_confirmation team_buyers agreement_read newsletter_on },
      "user/purchase_manager" => %w{first_name last_name address_address_line_1 address_address_line_2 address_address_line_3 address_zip_code address_country_id
@@ -266,7 +286,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
               address_region_id phone mobile_phone email screen_name password password_confirmation agreement_read newsletter_on department},
      "user/lead_buyer" => %w{first_name last_name mobile_phone screen_name phone email mobile_phone department lead_buyer_role_enabled password password_confirmation hide_profile_page hide_lead_prices},
      "user/lead_user" => %w{first_name last_name mobile_phone screen_name phone email mobile_phone department lead_buyer_role_enabled password password_confirmation hide_profile_page hide_lead_prices},
-     "my_profile" => %w{company_name first_name last_name phone email screen_name company_registration_number company_ean_number address_address_line_1
+     "my_profile" => %w{company_name first_name last_name phone email screen_name company_ean_number address_address_line_1
               address_address_line_2 address_address_line_3 address_zip_code address_country_id address_region_id newsletter_on bank_address_address_line_1
               bank_address_address_line_2 bank_address_address_line_3 bank_address_zip_code bank_address_country_id bank_address_region_id paypal_email bank_swift_number
               bank_iban_number payout bank_name team_buyers},
@@ -276,7 +296,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
       methods.each do |method|
         article = Article::Cms::Hint.find_by_key("#{klass}_#{method}")
         article = Article::Cms::Hint.create(:key => "#{klass}_#{method}", :published => false) if article.nil?
-        [:en, :dk].each do |locale|
+        [:en, :da].each do |locale|
           ::I18n.locale = locale
           if article.content.blank?
             article.update_attributes({:content => Rails.env.production? ? "(write text here)" : "Hint for <b>#{klass.to_s}: #{method.humanize.downcase.gsub('_id', '')}</b>",
@@ -289,7 +309,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
 
     email_templates_array.each do |email_template|
       unless EmailTemplate.global.find_by_uniq_id(email_template[:uniq_id])
-        [:en, :dk].each do |locale|
+        [:en, :da].each do |locale|
           ::I18n.locale = locale
           et = EmailTemplate.find_or_initialize_by_uniq_id({:name => email_template[:name], :persist => true,
                                                             :from => "noreply@newbizzshoppen.com",
@@ -370,7 +390,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
         if model_name.count.zero?
           ['Electronics', 'Leisure', 'Business'].each do |name|
             name = model_name == DealCategory ? "#{name} deals" : name
-            [:en, :dk].each do |locale|
+            [:en, :da].each do |locale|
               ::I18n.locale = locale
               if category = model_name.where(:name => name).first
                 category.name = name
@@ -390,6 +410,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
       end
 
       if Lead.count.zero?
+        ::I18n.locale = :en
         agent = User::Agent.find_by_email("agent@nbs.com")
         ["Big deal on printers", "Drills required", "Need assistance in selling a car", "Ipod shipment", "Trip to amazonia - looking for offer", "LCD - Huge amounts", "GPS receivers required"].each do |header|
           Lead.make!(:category_id => LeadCategory.last.id, :header => header, :creator_id => agent.id, :currency => Currency.where(:name => "EUR").first)
@@ -461,7 +482,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
     ].each do |title|
       unless Article::Cms::MainPageArticle.includes(:translations).where(:article_translations => {:title => title}).first
         article = Article::Cms::MainPageArticle.make!(:title => title, :content => title, :key => title.parameterize('_'))
-        [:en, :dk].each do |locale|
+        [:en, :da].each do |locale|
           ::I18n.locale = locale
           article.title = title
           article.content = title
@@ -491,7 +512,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
     ].each do |key|
       unless Article::Cms::InterfaceContentText.where(:key => key).first
         article = Article::Cms::InterfaceContentText.make!(:title => key.humanize, :content => key.humanize, :key => key)
-        [:en, :dk].each do |locale|
+        [:en, :da].each do |locale|
           ::I18n.locale = locale
           article.title = key.humanize
           article.content = key.humanize
@@ -507,7 +528,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
     ].each do |key|
       unless Article::Cms::HelpPopup.where(:key => key).first
         article = Article::Cms::HelpPopup.make!(:title => key.humanize, :content => key.humanize, :key => key)
-        [:en, :dk].each do |locale|
+        [:en, :da].each do |locale|
           ::I18n.locale = locale
           article.title = key.humanize
           article.content = key.humanize
@@ -558,6 +579,41 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
       contact.update_attribute(:last_call_result_at, last_call_result.nil? ? nil : last_call_result.created_at)
     end
 
+    puts "Importing languages..."
+
+    languages = {
+      "Czech" => {:code => "cs", :enabled => false, :symbol => "CZ"},
+      "Danish" => {:code => "da", :enabled => true, :symbol => "DK"},
+      "German" => {:code => "de", :enabled => false, :symbol => "DE"},
+      "Greek" => {:code => "el", :enabled => false, :symbol => "GR"},
+      "English" => {:code => "en", :enabled => true, :symbol => "EN"},
+      "Spanish" => {:code => "es", :enabled => false, :symbol => "ES"},
+      "Estonian" => {:code => "et", :enabled => false, :symbol => "ET"},
+      "Finnish" => {:code => "fi", :enabled => false, :symbol => "FI"},
+      "French" => {:code => "fr", :enabled => false, :symbol => "FR"},
+      "Croatian" => {:code => "hr", :enabled => false, :symbol => "HR"},
+      "Hungarian" => {:code => "hu", :enabled => false, :symbol => "HU"},
+      "Icelandic" => {:code => "is", :enabled => false, :symbol => "IS"},
+      "Italian" => {:code => "it", :enabled => false, :symbol => "IT"},
+      "Lithuanian" => {:code => "lt", :enabled => false, :symbol => "LT"},
+      "Latvian" => {:code => "lv", :enabled => false, :symbol => "LV"},
+      "Norwegian" => {:code => "no", :enabled => false, :symbol => "NO"},
+      "Dutch" => {:code => "nl", :enabled => false, :symbol => "NL"},
+      "Polish" => {:code => "pl", :enabled => false, :symbol => "PL"},
+      "Portuguese" => {:code => "pt", :enabled => false, :symbol => "PT"},
+      "Russian" => {:code => "ru", :enabled => false, :symbol => "RU"},
+      "Slovak" => {:code => "sk", :enabled => false, :symbol => "SK"},
+      "Slovene" => {:code => "sl", :enabled => false, :symbol => "SL"},
+      "Swedish" => {:code => "sv", :enabled => false, :symbol => "SV"},
+      "Turkish" => {:code => "tr", :enabled => false, :symbol => "TR"},
+      "Ukrainian" => {:code => "uk", :enabled => false, :symbol => "uk"}
+    }
+
+    languages.each do |lang,attrs|
+      unless Locale.where(:code => attrs[:code]).present?
+        Locale.create!(:code => attrs[:code], :language => lang, :enabled => attrs[:enabled], :symbol => attrs[:symbol])
+      end
+    end
   end
 
   desc "recalculate_leads_average_ratings", ""

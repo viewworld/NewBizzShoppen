@@ -6,6 +6,10 @@ class User::PurchaseManager < ::User
   include Addresses
   include BankAccounts
 
+  validates_presence_of :company_name, :phone
+
+  validate :check_address_city
+
   def can_publish_leads?
     false
   end
@@ -18,7 +22,7 @@ class User::PurchaseManager < ::User
                   :first_name => contact_name_arr.first,
                   :last_name => contact_name_arr.last,
                   :screen_name => "#{lead.contact_name}#{' ' unless lead.contact_name.blank?}(#{lead.email_address})",
-                  :time_zone => "UTC"}
+                  :time_zone => "UTC", :company_name => lead.company_name}
     self.attributes = lead_attrs
     [:address_line_1, :address_line_2, :address_line_3, :zip_code, :country_id, :region_id].each do |field|
       self.address.send("#{field}=".to_sym, lead.send(field))
@@ -27,5 +31,14 @@ class User::PurchaseManager < ::User
 
   def comment_threads
     Comment.with_leads_created_by(self)
+  end
+
+  private
+
+  def check_address_city
+    if address and address.address_line_3.blank?
+      return address.errors.add(:address_line_3, :blank)
+    end
+    true
   end
 end

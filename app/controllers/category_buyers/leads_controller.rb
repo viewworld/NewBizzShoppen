@@ -36,9 +36,11 @@ class CategoryBuyers::LeadsController < ApplicationController
     @countries = (current_user and current_user.has_accessible_categories?) ? Country.with_leads.within_accessible_categories(current_user) : Country.with_leads
     @creators = (current_user and current_user.has_accessible_categories?) ? User.with_leads.within_accessible_categories(current_user) : User.with_leads
 
-    @displayed_category = @home_category
+    @displayed_category = @category = @home_category
     @search = Lead.scoped_search(params[:search])
-    if @search.with_selected_categories.nil?
+    if @search.with_category.present?
+      @search.with_selected_categories = @categories.find(@search.with_category).self_and_descendants.map(&:id)
+    elsif @search.with_selected_categories.nil?
       @search.with_selected_categories = @home_category.self_and_descendants.map(&:id)
     else
       roots = @categories.select { |c| @search.with_selected_categories.map(&:to_i).include?(c.id) and c.parent_id.nil? }

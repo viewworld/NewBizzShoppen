@@ -63,6 +63,8 @@ Nbs::Application.routes.draw do
     resource :stats_recalculation, :controller => "stats_recalculation", :only => [:update]
     resources :customer_interests, :only => [:edit, :update]
     resources :youtube_introductions
+    resources :email_bounces
+    resources :languages
   end
 
   namespace :buyers do
@@ -201,7 +203,11 @@ Nbs::Application.routes.draw do
       resources :call_results, :only => [:new, :create, :edit, :update, :destroy]
     end
 
-    resources :campaign_reports, :only => [:index]
+    resources :campaign_reports, :only => [:index] do
+      collection do
+        post 'load_agents'
+      end
+    end
   end
 
   namespace :comments do
@@ -238,6 +244,8 @@ Nbs::Application.routes.draw do
       post 'rate'
     end
   end
+
+  resources :group_deals, :only => [:show]
 
   resources :categories, :only => [:index] do
     resources :more_leads_requests, :only => [:new, :create]
@@ -295,6 +303,8 @@ Nbs::Application.routes.draw do
   resource :user_session_log, :controller => "user_session_log", :only => [:create]
 
   resource :share_deal_by_email, :controller => "share_deal_by_email", :only => [:new, :create]
+
+  resources :deal_maker_users
 
   constraints(Fairdeals) do
     match '/(:id)' => "fairdeals_home#show"

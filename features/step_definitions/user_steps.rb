@@ -165,6 +165,11 @@ Then /^User (.+) with role (.+) is big buyer$/ do |email, role|
   user.update_attribute(:big_buyer, true)
 end
 
+Then /^User (.+) with role (.+) is from country (.+)$/ do |email, role, country_name|
+  user = "User::#{role.camelize}".constantize.first(:conditions => {:email => email})
+  user.address.update_attribute(:country, Country.where(:name => country_name).first)
+end
+
 Then /^user (.+) with role (.+) exists with attributes "([^"]*)"$/ do |email, role, options|
   user = "User::#{role.camelize}".constantize.first(:conditions => {:email => email})
   options_hash = Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys
@@ -257,6 +262,8 @@ When /^I am signed up and confirmed as user with email "([^"]*)" and password "(
   opts = options ? Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys.merge(std_opts) : std_opts
   u = "User::#{role_name.camelize}".constantize.make!(opts)
   u.confirm!
+  u.buying_categories = std_opts[:buying_categories]
+  u.save
 end
 
 Then /^user "([^"]*)" should have role "([^"]*)"$/ do |email, role_name|
@@ -342,4 +349,8 @@ end
 
 Given /^there are no object for model "([^"]*)"$/ do |model|
   model.constantize.destroy_all
+end
+
+Given /^there is bounced email for "([^"]*)"$/ do |email|
+  EmailBounce.make!(:email => email)
 end

@@ -5,12 +5,12 @@ In order to create and manage leads I sell
 As a Purchase Manager
 I can use my purchase manager panel
 
-Background:
-    Given I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role purchase_manager
-    And I am on the homepage
-    And I make sure current locale is "en"
-    Then I sign in as jon@lajoie.ca with password secret
-    And I go to purchase managers leads
+#Background:
+#    Given I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role purchase_manager
+#    And I am on the homepage
+#    And I make sure current locale is "en"
+#    Then I sign in as jon@lajoie.ca with password secret
+#    And I go to purchase managers leads
 
 # since m16 purchase manager cant create leads - will change in m17
 @added @_done @selenium @selenium @_deprecated

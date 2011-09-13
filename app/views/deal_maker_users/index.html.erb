@@ -1,0 +1,63 @@
+<column-mc:>
+
+  <header>
+    <param:content>
+        <%= t("deal_maker_users.index.view.title") %>
+    </param:content>
+
+    <param:actions>
+        <ul class="header_actions">
+        <li>
+          <%= bt_link_to :plus, t("deal_maker_users.index.view.new_member"), new_deal_maker_user_path(:user_type => "member") %>
+        </li>
+        <li class="last">
+          <%= bt_link_to :plus, t("deal_maker_users.index.view.new_supplier"), new_deal_maker_user_path(:user_type => "supplier") %>
+        </li>
+        </ul>
+    </param:actions>
+  </header>
+
+<table id="users_table" class="generic small_padding">
+  <thead>
+  <tr>
+    <th class="hl"></th>
+    <th><%= t("deal_maker_users.index.view.type") %></th>
+    <th><%= t("deal_maker_users.index.view.email") %></th>
+    <th><%= t("deal_maker_users.index.view.name") %></th>
+    <th class="ta_r"><%= t("deal_maker_users.index.view.actions") %></th>
+    <th class="hr"></th>
+  </tr>
+  </thead>
+  <tfoot>
+  <tr>
+    <td class="fl"></td>
+    <td colspan="4"></td>
+    <td class="fr"></td>
+  </tr>
+  </tfoot>
+  <tbody>
+  <% @users.each do |user| %>
+      <tr class="<%= cycle("odd", "even") %>">
+        <td class="cl"></td>
+        <td><%= user.has_role?(:purchase_manager) ? t("deal_maker_users.index.view.user_member") : t("deal_maker_users.index.view.user_supplier") %></td>
+        <td><%= user.email %></td>
+        <td><%= user.full_name %></td>
+        <td class="tda ta_r">
+          <ul-actions>
+            <li>
+              <%= link_to t("deal_maker_users.index.view.send_invitation"), deal_maker_user_path(user), :method => :put %>
+            </li>
+          </ul-actions>
+        </td>
+        <td class="cr"></td>
+      </tr>
+  <% end %>
+  <tr class="pagination">
+    <td colspan="6" class="ta_c">
+      <%= will_paginate @users %>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+</column-mc:>

@@ -3,7 +3,7 @@ class FeaturedDeal < ActiveRecord::Base
 
   validates_presence_of :position
 
-  POSITIONS = [0, 1, 2, 3]
+  POSITIONS = [0, 1, 2, 3, 4, 5 , 6, 7, 8, 9]
 
   class << self
 
@@ -22,8 +22,10 @@ class FeaturedDeal < ActiveRecord::Base
 
     def set_all(params)
       POSITIONS.each do |number|
-        deal = FeaturedDeal.find_by_position(number)
-        deal.update_attribute(:deal_id, params[number.to_s])
+        if params and params[number.to_s]
+          deal = FeaturedDeal.find_by_position(number)
+          deal.update_attribute(:deal_id, params[number.to_s])
+        end
       end
     end
 

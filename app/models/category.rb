@@ -20,7 +20,7 @@ class Category < ActiveRecord::Base
   after_create :generate_blurb
 
   validates_presence_of :name
-  validates_uniqueness_of :name, :scope => :parent_id
+  validates_uniqueness_of :name, :scope => [:type, :parent_id]
 
   has_many :leads do
     def including_subcategories
@@ -136,7 +136,16 @@ class Category < ActiveRecord::Base
   def handle_auto_buy
     if auto_buy_changed? and auto_buy? and !customers.first.nil?
       user_category_interest = customers.first.with_role.category_interests.where(:category_id => self.id).first
-      user_category_interest.destroy if user_category_interest
+      if user_category_interest and customers.first.deal_category_id != self.id
+        user_category_interest.destroy
+      elsif !user_category_interest and customers.first.deal_category_id == self.id
+        user = customers.first.with_role
+        user.categories << self
+        user.save
+      end
+      Lead.without_bought_and_requested_by(customers.first).published_only.without_inactive.where(:category_id => self.id).each do |lead|
+        customers.first.cart.add_lead(lead)
+      end
     end
   end
 
@@ -144,7 +153,7 @@ class Category < ActiveRecord::Base
   public
 
   def move_leads_to_subcategory
-    if parent and parent.descendants.size == 1 and parent.leads.present?
+    if parent and parent.root? and parent.descendants.size == 1 and parent.leads.present?
       parent.leads.each do |lead|
         lead.update_attributes(:notify_buyers_after_update => false, :category => self)
       end
@@ -193,6 +202,14 @@ class Category < ActiveRecord::Base
     leads_scope.count
   end
 
+  def is_company_unique?
+    if new_record?
+      false
+    else
+      User.where(:deal_category_id => id).first.present?
+    end
+  end
+  
 ########################################################################################################################
 #
 #   IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT

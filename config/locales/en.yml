@@ -38,6 +38,8 @@ en:
     remove_hint: "Remove hint"
     advanced_search: "Advanced search"
     cache_cleared: "Cache has been cleared"
+    show_all: "Show all"
+    show_paginated: "Show paginated"
   ckeditor:
     upload_new_files: "Upload new files"
     file_manager: "File Manager"
@@ -73,6 +75,8 @@ en:
       main_menu:
         deals: "Deals"
         tenders: "Tenders"
+        purchase_manager:
+          my_requests: "My requests"
     main_menu:
       admin:
         users: "Users"
@@ -80,6 +84,7 @@ en:
         categories: "Categories"
         email_templates: "Emails"
         settings: "Settings"
+        alerts: "Alerts"
         leads: "Leads"
         articles: "Articles"
         news: "News"
@@ -87,6 +92,7 @@ en:
         translations: "Translations"
         currencies: "Currencies"
         countries: Countries
+        languages: "Languages"
         featured_deals: "Feat deals"
         invoices: "Invoices"
         upcoming_invoices: "Debtors"
@@ -138,8 +144,10 @@ en:
         site_home: "Site home"
         category_request: "Category request"
         comments: "Comments"
+        bounce: "Bounce"
         sold_out: "Sold out"
         browse_deals: "Browse deals"
+        deal_maker_users: "Users"
       purchase_manager:
         leads: My leads
         tenders: My tenders
@@ -344,6 +352,8 @@ en:
         results: Results
         final: only view completed contacts
         campaigns: "Campaigns"
+        call_centres: "Call centres"
+        call_centre_agents: "Call centre agents"
       search_button: Search
       table:
         results: Results
@@ -506,8 +516,13 @@ en:
       contact_first_name: "First name"
       contact_last_name: "Last name"
       contact_address_line_1: "Address line 1"
+      contact_address_line_2: "Address line 2"
+      contact_address_line_3: "City"
+      contact_country_id: "Country"
+      contact_phone_number: "Phone"
       contact_zip_code: "Zip code"
       customize_email_template: "Customize email"
+      contact_country: "Country"
     edit:
       title: Edit result
       form_title: Edit
@@ -622,6 +637,9 @@ en:
       has_unsatisfactory_rating_no: "No"
       edit_label: Edit
       certification_status: "Certification status"
+      details_label: "Details"
+      company_name_label: "Company name"
+      date_label: "Date"
     table:
       id: "ID"
       header: "Lead title"
@@ -642,6 +660,9 @@ en:
       rating: Lead rating
       average_rating_none_label: None
       certification: Certification
+      company_name: "Company name"
+      date: "Date"
+      company_logo: "Company logo"
     index:
       header: Leads
       header_for: "for"
@@ -834,6 +855,7 @@ en:
         flash:
           user_deletion_successful: "User was successfully deleted!"
           user_deletion_failure: "User could not be deleted!"
+      send_invitation: "Send invitation"
     lead_templates:
       new:
         view:
@@ -902,6 +924,9 @@ en:
             resend_certification_notification_after_days: "Resend certification notification after days"
             youtube_introduction: "YouTube introduction video URL"
             default_deal_admin_email: "Default deal admin email"
+            email_verification_for_procurement_managers: "Email verification for procurement managers"
+            email_verification_for_sales_managers: "Email verification for sales managers"
+            default_max_auto_buy_per_4_weeks: "Default max auto buy per 4 weeks"
       edit:
         view:
           title: "Settings"
@@ -991,6 +1016,35 @@ en:
         view:
           title: "Edit deal"
           update_button: "Save"
+
+    email_bounces:
+      index:
+        view:
+          header: "Bounce"
+          name: "Name"
+          postmark_id: "Postmark ID"
+          email: "Email"
+          subject: "Subject"
+          bounced_at: "Bounced at"
+          actions: "Actions"
+          details: "Details"
+      show:
+        view:
+          header: "Bounce details"
+          subject: "Subject"
+          name: "Name"
+          inactive: "Inactive"
+          content: "Content"
+          tag: "Tag"
+          message_id: "MessageID"
+          details: "Details"
+          postmark_id: "Postmark ID"
+          can_activate: "Can activate"
+          bounced_at: "Bounced at"
+          description: "Description"
+          email: "Email"
+          type_code: "Type code"
+          dump_available: "Dump available"
 
     articles:
       show:
@@ -1136,6 +1190,18 @@ en:
           header: Edit country %{name}
           button_update_country: Save
           button_cancel: Cancel
+
+    languages:
+      index:
+        view:
+          header: "Languages"
+          no_languages_defined: "No languages defined"
+          language: "Language"
+          code: "Code"
+          enabled: "Enabled"
+          enable: "Enable"
+          disable: "Disable"
+          actions: "Actions"
 
     invoices:
       common:
@@ -1843,11 +1909,20 @@ en:
           button_create_and_continue: "Create & continue"
           button_create_and_duplicate: "Create & duplicate"
           remove_language: "Remove"
-          lead_note: "Note"
+          lead_note: "Please tell us about your needs:"
       edit:
         view:
           title: "Editing lead: %{name}"
           button_update: "Save"
+          contact_name_label: "Company contact name"
+          company_name_label: "Company name"
+          contact_email_label: "Contact e-mail"
+          contact_phone_number_label: "Contact phone number"
+          company_website_label: "Company website"
+          company_address_label: "Address"
+          short_deal_description_label: "Short deal description"
+          deal_description_label: "Deal description"
+          view_description_link: "See description..."
     lead_templates:
       index:
         view:
@@ -1996,6 +2071,7 @@ en:
           title: "Edit deal"
           update_button: "Save"
           preview: "Preview"
+          new_template: "New template"
     deal_certification_requests:
       index:
         view:
@@ -2062,6 +2138,7 @@ en:
         add_team_member: "Add team member"
         i_have_an_account: "I have an account"
 
+        create_new_membership_account: "Create a new membership account"
   agent_home:
     show:
       view:
@@ -2082,6 +2159,8 @@ en:
         create_new_agent_account: "Create new agent account"
         i_have_an_account: "I have an account"
 
+        new_lead: "New lead"
+        new_deal: "New deal"
   purchase_manager_home:
     show:
       view:
@@ -2526,6 +2605,10 @@ en:
         short_description_label: "Short description"
         detailed_description_label: "Detailed description"
         deal_category_label: "Deal category"
+        price_label: "Lead price"
+        discounted_price_label: "Discounted deal price"
+        saving_percent_label: "Saving:"
+        max_auto_buy_label: "Max auto buy per 4 weeks"
   models:
     call_result:
       not_unique_email_address: "User with this e-mail already exists!"
@@ -2572,7 +2655,30 @@ en:
       is_success_cannot_be_disabled: "cannot be disabled because call results are generated for that result"
     locale:
       en: English
-      dk: Danish
+      da: Danish
+      lv: "Latvian"
+      uk: "Ukrainian"
+      sk: "Slovak"
+      pt: "Portuguese"
+      it: "Italian"
+      el: "Greek"
+      hu: "Hungarian"
+      no: "Norwegian"
+      lt: "Lithuanian"
+      is: "Icelandic"
+      hr: "Croatian"
+      fi: "Finnish"
+      tr: "Turkish"
+      pl: "Polish"
+      fr: "French"
+      cs: "Czech"
+      sv: "Swedish"
+      es: "Spanish"
+      sl: "Slovene"
+      ru: "Russian"
+      nl: "Dutch"
+      et: "Estonian"
+      de: "German"
     campaign:
       fixed_cost_value_is_blank: "Fixed cost must be set"
       agents_dont_have_billing_rates_defined: "Agents don't have billing rates defined."
@@ -2705,6 +2811,9 @@ en:
         invalid: "is invalid"
 
   flash:
+    accounts:
+      create:
+        no_verification: "Your account has been successfully created! You can now sign in."
     agent_accounts:
       create:
         notice: "Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account."
@@ -3333,6 +3442,9 @@ en:
         header_latest_leads: "Latest deals"
         request_information: "Request information"
         contact_me: "Get deal"
+        price: "Price"
+        save: "Save"
+        view_deal: "View deal"
       search:
         keyword_label: "Keyword"
         search_button: "Search"
@@ -3365,6 +3477,7 @@ en:
         detailed_description_label: "Detailed description"
         fine_print_label: "Fine print"
         company_logo_label: "Company logo"
+        company_name_label: "Company name"
         company_description_label: "Company description"
         images_label: "Images"
         materials_label: "Materials"
@@ -3387,9 +3500,13 @@ en:
         cancel: "Cancel"
         tweet: "Tweet"
         days: "days"
-        hours: "hours"
-        minutes: "minutes"
-        seconds: "seconds"
+        hours: "hrs"
+        minutes: "mins"
+        seconds: "secs"
+        saving_label: "Saving:"
+        discounted_price_label: "Discounted price"
+        get_deal_confirmation_msg: "Do you want to get the deal?"
+        time_left: "Time left"
     common:
       assets:
         view:
@@ -3411,6 +3528,9 @@ en:
         view:
           header: "My deals"
           new_deal: "Create new deal"
+    new:
+      view:
+        frame_header: "Get deal"
   deal_categories:
     index:
       view:
@@ -3430,4 +3550,27 @@ en:
     create:
       flash:
         email_sent: "Deal has been successfully sent to the selected recipient"
-   
+  deal_maker_users:
+    index:
+      view:
+        title: "Users"
+        new_member: "New member"
+        new_supplier: "New supplier"
+        type: "Type"
+        email: "Email"
+        actions: "Actions"
+        user_member: "Member"
+        user_supplier: "Supplier"
+        name: "Name"
+        send_invitation: "Send invitation"
+    new:
+      view:
+        new_account: "New %{role} account"
+        button_create: "Create"
+        button_cancel: "Cancel"
+    create:
+      flash:
+        user_creation_successful: "User's account has been successfully created."
+    update:
+      flash:
+        invitation_sent: "Invitation has been sent."

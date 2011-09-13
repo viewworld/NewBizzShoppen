@@ -1,7 +1,8 @@
 class CallResult < ActiveRecord::Base
-  attr_accessor :contact_email_address, :contact_first_name, :contact_last_name, :contact_address_line_1, :contact_zip_code,
+  attr_accessor :contact_email_address, :contact_first_name, :contact_last_name, :contact_address_line_1, :contact_address_line_2,
+                :contact_address_line_3, :contact_zip_code, :contact_country_id, :contact_phone_number,
                 :contact_company_name, :buying_category_ids, :email_template_subject, :email_template_from, :email_template_bcc,
-                :email_template_cc, :email_template_body
+                :email_template_cc, :email_template_body, :result_id_changed
 
   belongs_to :contact
   belongs_to :result
@@ -19,8 +20,9 @@ class CallResult < ActiveRecord::Base
   validate :validate_uniqueness_of_contact_email_address, :if => Proc.new { |cr| cr.result.upgrades_to_category_buyer? }
 
   after_create :process_side_effects, :update_contact_note, :set_last_call_result_in_contact, :update_contact_email, :update_contact_address
-  after_update :process_side_effects
+  after_update :process_side_effects, :update_contact_email, :update_contact_address
   after_destroy :update_completed_status, :update_pending_status
+  before_update :process_for_changed_result_type
 
   PENDING_RESULT_TYPES = [:call_back, :not_interested_now]
 
@@ -192,10 +194,10 @@ class CallResult < ActiveRecord::Base
     user = User::CategoryBuyer.new(:email => contact_email_address, :first_name => contact_first_name,
                             :last_name => contact_last_name,
                             :address_attributes => { :address_line_1 => contact_address_line_1, :zip_code => contact_zip_code,
-                                                     :country_id => contact.country_id,  :address_line_2 => contact.address_line_2,
-                                                     :address_line_3 => contact.address_line_3, :region_id => contact.region_id},
-                            :agreement_read => true, :company_name => contact.company_name, :phone => contact.phone_number,
-                            :contact => contact, :company_registration_number => contact.company_vat_no,
+                                                     :country_id => contact_country_id,  :address_line_2 => contact_address_line_2,
+                                                     :address_line_3 => contact_address_line_3, :region_id => contact.region_id},
+                            :agreement_read => true, :company_name => contact.company_name, :phone => contact_phone_number,
+                            :contact => contact, :vat_number => contact.company_vat_no,
                             :company_ean_number => contact.company_ean_number)
 
     users_count = User.where("last_name = ?", contact_last_name).count
@@ -240,5 +242,13 @@ class CallResult < ActiveRecord::Base
   
   def set_last_call_result_in_contact
     self.contact.update_attribute(:last_call_result_at, created_at)
+  end
+
+  def process_for_changed_result_type
+    if result_id_changed? and ActiveRecord::ConnectionAdapters::Column.value_to_boolean(result_id_changed)
+      self.errors.add(:result_id_changed)
+      self.result_id_changed = 0
+      false
+    end
   end
 end

@@ -1,23 +1,56 @@
 <column-mc:>
   <%= javascript_include_tag 'lead_template_functions.js' %>
-  <header back="true"><%= t("purchase_manager.leads.new.view.title") %><%= image_tag_for_locale %></header>
+  <header back="true"><%= @deal.header %><%= image_tag_for_locale %></header>
 
   <%= semantic_form_for [:purchase_managers, @lead], :method => :post do |form| %>
-      <frm title="Create new">
+      <frm title="#{t('deals.new.view.frame_header')}">
         <param:content>
+          <div class="column_left">
             <div id="step_1">
-              <%= render :partial => "form1", :locals => { :form => form } %>
-            </div>
-
-            <div id="step_2" style="display:none;">
-              <%= render :partial => "form2", :locals => { :form => form } %>
+              <%= render :partial => "form1", :locals => {:form => form} %>
             </div>
             <%= hidden_field_tag :deal_id, params[:deal_id] %>
+            <clb/>
+
+            <%= render :partial => "form2", :locals => {:form => form} %>
+          </div>
+          <div class="column_right">
+            <div class="pdd_10">
+              <div class="element_description">
+                <h3><%= t("deals.show.view.short_description_label") %></h3>
+
+                <p class="i expandable"><%= @deal.description %></p>
+
+                <h3><%= t("deals.show.view.detailed_description_label") %></h3>
+
+                <p class="i expandable"><%= @deal.hidden_description %></p>
+
+                <h3><%= t("deals.show.view.fine_print_label") %></h3>
+
+                <p class="i expandable"><%= @deal.fine_print %></p>
+
+                <% if @deal.logo %>
+                    <h3><%= t("deals.show.view.company_logo_label") %></h3>
+
+                    <p><%= image_tag(@deal.logo.url) %></p>
+                <% end %>
+
+                <h3><%= t("deals.show.view.company_name_label") %></h3>
+
+                <p><%= @deal.company_name %></p>
+
+                <h3><%= t("deals.show.view.company_description_label") %></h3>
+
+                <p class="i expandable"><%= @deal.company_description %></p>
+              </div>
+            </div>
+          </div>
           <clb/>
+
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="save">
-            <%= button_to_function t("purchase_manager.leads.new.view.button_create"), @lead.lead_templates.empty? ? "if(validate_lead_form()){$('#new_lead').submit();}" : "load_next_step()" %>
+            <%= form.submit t("purchase_manager.leads.new.view.button_create") %>
           </ibt>
           <ibt c="bt_grey fltri">
             <%= button_to_function t("administration.settings.edit.view.button_cancel"), "history.go(-1)" %>
@@ -26,60 +59,3 @@
       </frm>
   <% end %>
 </column-mc:>
-
-<js:>
-  <script type="text/javascript">
-
-    var current_step = <%=  @lead.creation_step.to_i > 0 ? @lead.creation_step : 1  -%>;
-
-    function validate_lead_form(){
-        var is_valid = true;
-
-        $.each(['lead_company_name', 'lead_address_line_1', 'lead_address_line_3', 'lead_zip_code', 'lead_zip_code',
-                'lead_country_id', 'lead_contact_name', 'lead_phone_number', 'lead_hidden_description'], function(index, value) {
-            field_id = "#" + value;
-            if(jQuery.trim($(field_id).val()) == ""){
-                $("li[id='" + value + "_input']").addClass("error");
-                $("li[id='" + value + "_input']").append("<p class='inline-errors'>" + I18n.t("common.js.field_cant_be_blank") + "</p>");
-                is_valid = false;
-            }
-            else
-            {
-                $("li[id='" + value + "_input']").removeClass("error");
-                $("li[id='" + value + "_input'] p").remove();
-            }
-        });
-        return is_valid;
-    }
-
-    function load_next_step(){
-        if(window.current_step == 1){
-            if(validate_lead_form()){
-                $('#step_1').hide();
-                $('#step_2').show();
-                window.current_step = 2;
-            }
-        }
-        else if(window.current_step == 2){
-            $('#new_lead').submit();
-        }
-    }
-
-    function setup_step(){
-        if(window.current_step == 1){
-             $('#step_1').show();
-             $('#step_2').hide();
-        }
-        else if(window.current_step == 2){
-            $('#step_1').hide();
-            $('#step_2').show();
-        }
-        else if(window.current_step == 3){
-            $('#step_1').show();
-            $('#step_2').show();
-        }
-    }
-
-    setup_step();
-  </script>
-</js:>

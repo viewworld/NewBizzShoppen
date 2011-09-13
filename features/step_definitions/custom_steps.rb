@@ -33,7 +33,7 @@ Given /^email "([^"]*)" has translation for lang "([^"]*)" with attributes "([^"
   I18n.locale = :en
   email_template = EmailTemplate.find_by_uniq_id(email_unique_id)
   if email_template.email_template_translations.select{ |ett| ett.locale == locale_lang }.blank?
-    email_translation = EmailTranslation.create(:email_template => email_template, :locale => locale_lang)
+    email_translation = EmailTemplateTranslation.create(:email_template_id => email_template.id, :locale => locale_lang)
   else
     email_translation = email_template.email_template_translations.detect{ |ett| ett.locale == locale_lang }
   end
@@ -42,7 +42,7 @@ end
 
 When /^confirmation email is sent for locale "([^"]*)"$/ do |locale_lang|
   I18n.locale = locale_lang.to_sym
-  User::Agent.make!
+  User::Agent.make!(:address => Address.make(:country => Country.where(:locale => locale_lang).first))
 end
 
 Then /^last email sent should have subject "([^"]*)"$/ do |content|

@@ -1,11 +1,77 @@
 <column-mc:>
+  <%= javascript_include_tag 'lead_template_functions.js' %>
   <header back="true"><%= t("purchase_manager.leads.edit.view.title", :name => @lead.header) %><%= image_tag_for_locale %></header>
-<%= semantic_form_for [:purchase_managers, @lead], :method => :put do |form| %>
+  <%= semantic_form_for [:purchase_managers, @lead], :method => :put do |form| %>
       <frm title="Edit">
         <param:content>
-          <%= render :partial => "form1", :locals => { :form => form } %>
+          <div class="column_left">
+            <div class="pdd_10 no_pdd_t">
+              <fieldset class="inputs labels_ta_r labels_160">
+                <ol class="align_inputs">
+                  <li class="string">
+                    <%= form.label t("purchase_manager.leads.edit.view.company_name_label") %>
+                    <div class="txt"><strong><%= @lead.deal.company_name %></strong></div>
+                  </li>
+                  <li class="string">
+                    <%= form.label t("purchase_manager.leads.edit.view.company_address_label") %>
+                    <div class="txt">
+                      <%= @lead.deal.address_line_1 %><%= @lead.deal.address_line_2 %>
+                      <br/>
+                      <%= @lead.deal.zip_code %> <%= @lead.deal.address_line_3 %> <%= @lead.deal.country.name %>
+                    </div>
+                  </li>
+                  <li class="string">
+                    <%= form.label t("purchase_manager.leads.edit.view.contact_name_label") %>
+                    <div class="txt">
+                      <%= @lead.deal.contact_name %>
+                    </div>
+                  </li>
+                  <li class="string">
+                    <%= form.label t("purchase_manager.leads.edit.view.contact_email_label") %>
+                    <div class="txt">
+                      <%= link_to @lead.deal.email_address, "mailto:#{@lead.deal.company_website}" %>
+                    </div>
+                  </li>
+                  <li class="string">
+                    <%= form.label t("purchase_manager.leads.edit.view.contact_phone_number_label") %>
+                    <div class="txt">
+                      <%= @lead.deal.phone_number %>
+                    </div>
+                  </li>
+                  <li class="string">
+                    <%= form.label t("purchase_manager.leads.edit.view.company_website_label") %>
+                    <div class="txt">
+                      <%= @lead.deal.company_website.present? ? link_to(@lead.deal.company_website, @lead.deal.company_website) : "-" %>
+                    </div>
+                  </li>
+                  <li class="string">
+                    <%= form.label t("purchase_manager.leads.edit.view.short_deal_description_label") %>
+                    <div class="txt">
+                      <%= @lead.deal.description %>
+                    </div>
+                  </li>
+                  <li class="string">
+                    <%= form.label t("purchase_manager.leads.edit.view.deal_description_label") %>
+                    <div class="txt">
+                      <%= link_to t("purchase_manager.leads.edit.view.view_description_link"), deal_path(:slug => @lead.deal.slug) %>
+                    </div>
+                  </li>
 
-          <%= render :partial => "form2", :locals => { :form => form } %>
+                  <% if params[:get_deal] == "1" %>
+                      <%= form.input :hidden_description, :required => false, :label => t("purchase_manager.leads.new.view.lead_note"), :input_html => {:style => "height: 150px;width:230px;"} %>
+                  <% end %>
+                </ol>
+              </fieldset>
+            </div>
+          </div>
+          <%= hidden_field_tag :get_deal, params[:get_deal] %>
+
+          <% unless params[:get_deal] == "1" %>
+              <%= render :partial => "form1", :locals => {:form => form} %>
+          <% end %>
+
+
+          <%= render :partial => "form2", :locals => {:form => form} %>
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="save">
@@ -16,5 +82,5 @@
           </ibt>
         </param:actions>
       </frm>
-<% end %>
+  <% end %>
 </column-mc:>

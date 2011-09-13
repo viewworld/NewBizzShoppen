@@ -36,6 +36,7 @@ javascripts:
     - public/javascripts/translations.js
     - public/javascripts/custom.js
     - public/javascripts/jquery.lwtCountdown-1.0.js
+    - public/javascripts/global_template_editor.js
 
 
 stylesheets:
@@ -56,13 +57,16 @@ stylesheets:
     - public/stylesheets/ajaxful_rating.css
 
   fairdeals:
-    - public/stylesheets/ocss/reset.css
-    - public/stylesheets/ocss/helpers.css
-    - public/stylesheets/ocss/columns.css
-    - public/stylesheets/ocss/frm.css
-    - public/stylesheets/ocss/table.css
-    - public/stylesheets/ocss/inputs.css
-    - public/stylesheets/style.css
+    - public/stylesheets/fairdeals/ocss/reset.css
+    - public/stylesheets/fairdeals/ocss/helpers.css
+    - public/stylesheets/fairdeals/ocss/columns.css
+    - public/stylesheets/fairdeals/ocss/frm.css
+    - public/stylesheets/fairdeals/ocss/table.css
+    - public/stylesheets/fairdeals/ocss/inputs.css
+    - public/stylesheets/fairdeals/style.css
     - public/stylesheets/jquery-ui-1.8.5.custom.css
     - public/stylesheets/colorbox.css
     - public/stylesheets/countdown.css
+
+  fairdeals_thin:
+    - public/stylesheets/fairdeals/style_thin.css

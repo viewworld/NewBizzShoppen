@@ -29,7 +29,7 @@ class Deal < AbstractLead
 
   validate :deal_admin_presence, :unless => Proc.new{|d| d.new_record? }
 
-  before_create :create_uniq_deal_category
+  before_create :create_uniq_deal_category, :set_default_max_auto_buy
   after_create :certify_for_unknown_email, :assign_deal_admin
   before_save :set_dates
 
@@ -69,8 +69,9 @@ class Deal < AbstractLead
         :country_id => user.with_role.address.country_id,
         :region_id => user.with_role.address.region_id,
         :start_date => Date.today,
-        :end_date => Date.today,
-        :price => 0)
+        :end_date => Date.today + 1.year,
+        :price => 0,
+        :max_auto_buy => Settings.default_max_auto_buy_per_4_weeks.to_i)
   end
   
   def build_buyer(params={})
@@ -92,6 +93,10 @@ class Deal < AbstractLead
 
   def self.group_deals_for_select
       group_deals.without_inactive.map{|gd| [gd.to_s_for_group_deals_for_select, gd.id]}
+  end
+
+  def self.all_deals_for_select
+      without_inactive.map{|gd| [gd.to_s_for_group_deals_for_select, gd.id]}
   end
 
   def to_s_for_group_deals_for_select
@@ -119,7 +124,7 @@ class Deal < AbstractLead
   end
 
   def saving
-    (!price.blank? and price > 0 and !discounted_price.blank? and discounted_price > 0 and price > discounted_price) ? "#{(100 - discounted_price * 100 / price).to_i}%" : "0%"
+    (!deal_price.blank? and deal_price > 0 and !discounted_price.blank? and discounted_price > 0 and deal_price > discounted_price) ? "#{(100 - discounted_price * 100 / deal_price).to_i}%" : "0%"
   end
   
   def assign_lead_category_to_buyer!
@@ -141,6 +146,31 @@ class Deal < AbstractLead
     "#{id}#{ '-' + header unless header.blank?}".to_url
   end
 
+  def current_four_week_period_start_date
+    time_diff = ((Time.now.to_i) - (created_at.to_i)) / (24 * 60 * 60)
+    (created_at + ((time_diff / 28).to_i * 28).days).to_date
+  end
+  
+  def next_group_deal
+    if Deal.group_deals.order("end_date ASC").where("end_date >= ? and id <> ?", self.end_date, self.id).any?
+      Deal.group_deals.order("end_date ASC").where("end_date >= ? and id <> ?", self.end_date, self.id).first
+    elsif Deal.group_deals.order("end_date ASC").where("id <> ?", self.id).any?
+      Deal.group_deals.order("end_date ASC").where("id <> ?", self.id).first
+    else
+      self
+    end
+  end
+
+  def previous_group_deal
+    if Deal.group_deals.order("end_date DESC").where("end_date <= ? and id <> ?", self.end_date, self.id).any?
+      Deal.group_deals.order("end_date DESC").where("end_date <= ? and id <> ?", self.end_date, self.id).first
+    elsif Deal.group_deals.order("end_date DESC").where("id <> ?", self.id).any?
+      Deal.group_deals.order("end_date DESC").where("id <> ?", self.id).first
+    else
+      self
+    end
+  end  
+
   private
 
   def process_for_lead_information?
@@ -160,11 +190,13 @@ class Deal < AbstractLead
       end
 
       buyer.update_attribute(:deal_category_id, lead_category.id) if buyer and buyer.deal_category_id.blank?
+      buyer.update_attribute(:big_buyer, true) if buyer and !buyer.big_buyer?
       lead_category.update_attribute(:is_customer_unique, true) unless lead_category.is_customer_unique
       if buyer and !lead_category.customers.include?(buyer)
         lead_category.customers << buyer
         lead_category.save
       end
+      lead_category.update_attribute(:auto_buy, true) unless lead_category.auto_buy?
       self.lead_category_id = lead_category.id
     end
   end
@@ -173,5 +205,9 @@ class Deal < AbstractLead
     if creator.agent? or creator.admin? and buyer.nil?
       deal_certification_requests.create
     end
+  end
+
+  def set_default_max_auto_buy
+    self.max_auto_buy = Settings.default_max_auto_buy_per_4_weeks.to_i unless max_auto_buy
   end
 end

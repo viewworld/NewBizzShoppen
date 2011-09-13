@@ -17,12 +17,43 @@ Feature: Deals from procurement manager perspective
     Then I should see translated "layout.main_menu.shared.browse_deals"
     And I should not see "Browse leads"
 
-  @m18
+  @m18 @selenium @_done @_tested @tgn
   Scenario: I should see "View all" by the pagination links under Browse deals
+    Given pagination page size for leads is set to 2
+    And a deal named "Some deal #1" exists within category "Electronics deals"
+    And a deal named "Some deal #2" exists within category "Electronics deals"
+    And a deal named "Some deal #3" exists within category "Electronics deals"
+    And a deal named "Some deal #4" exists within category "Electronics deals"
+    Then I follow translated "layout.main_menu.shared.browse_deals"
+    And I follow "Electronics deals"
+    And I follow translated "common.show_all"
+    And I should see "Some deal #1"
+    And I should see "Some deal #2"
+    And I should see "Some deal #3"
+    And I should see "Some deal #4"
+    And I follow translated "common.show_paginated"
 
   # only child (1 level)
-  @m18
+  @m18 @selenium @_done @_tested @tgn
   Scenario: I can see the dropdown menu of subcategories on the particular category leads listing
+    Given Deal category Sound files is created
+    And Deal category named "Podcasts" already exists within category named "Sound files"
+    And Deal category named "Music" already exists within category named "Sound files"
+    And Deal category named "Scientific" already exists within category named "Podcasts"
+    And Deal category named "Comedy" already exists within category named "Podcasts"
+    Given a deal named "Some deal #1" exists within category "Electronics deals"
+    Then a deal named "Various music" exists within category "Music"
+    Then a deal named "Various podcasts" exists within category "Podcasts"
+    Then a deal named "Skeptical Guide To Universe" exists within category "Scientific"
+    Then a deal named "Funny pod" exists within category "Comedy"
+    Then I follow translated "layout.main_menu.shared.browse_deals"
+    And I follow "Sound files"
+    And "category_selector" dropdown should have values "Podcasts,Music"
+    And I select "Podcasts" from "category_selector"
+    And "category_selector" dropdown should have values "Scientific,Comedy"
+    And I should see "Various podcasts"
+    And I select "Scientific" from "category_selector"
+    And I should see "Skeptical Guide To Universe"
 
   @_tested @_done @tgn
   Scenario: I can see list of deals categories and subcategories
@@ -66,9 +97,42 @@ Feature: Deals from procurement manager perspective
     Given a deal named "Some deal #1" exists within category "Electronics deals"
     Then I follow translated "layout.main_menu.shared.browse_deals"
     And I follow "Electronics"
-    Then I should see translated "deals.index.view.contact_me"
+    Then I should see translated "deals.index.view.view_deal"
 
   #tested under sales manager deals
   @_done @tgn @tested_elsewhere
   Scenario: When I click "Contact me" I can enter "Additional" template information and note field
 
+  @_done @_tested @tgn @added @m18
+  Scenario: When I sign up on fairdeals.dk/eu and confirmation is turned off I should still get email and be signed in afterword
+  Given setting for "email_verification_for_procurement_managers" is set to "0"
+  Given I visit domain http://fairdeals.dk
+  And I follow translated "fairdeals_home.show.view.get_free_account"
+  And I fill in "user_purchase_manager_company_name" with "The Young Tturks"
+  And I fill in "user_purchase_manager_first_name" with "Ana"
+  And I fill in "user_purchase_manager_last_name" with "Kasparian"
+  And I fill in "user_purchase_manager_address_attributes_address_line_1" with "2222"
+  And I fill in "user_purchase_manager_address_attributes_address_line_2" with "2222"
+  And I fill in "user_purchase_manager_address_attributes_address_line_3" with "2222"
+  And I fill in "user_purchase_manager_address_attributes_zip_code" with "2222"
+  And I fill in "user_purchase_manager_screen_name" with "Ana Kasparian"
+  And I fill in "user_purchase_manager_phone" with "+44 325423454"
+  And I fill in "user_purchase_manager_password" with "secret"
+  And I fill in "user_purchase_manager_password_confirmation" with "secret"
+  And I fill in "user_purchase_manager_email" with "anakasparian@tyt.com"
+  And I check "user_purchase_manager_agreement_read"
+  And I press translated "purchase_manager_accounts.new.view.button_create_account"
+  And I should be signed in
+  And last email sent should have been sent to recipient "anakasparian@tyt.com"
+
+  ##7659
+  @m19 @requested
+  Scenario: When I am not logged in I should still see Get deal button and when click I should be prompted to log in or create new account and return to the get deal
+
+  #7531
+  @m19 @requested
+  Scenario: When I get deal then I should get the email with all deal information and all materials included as attachments
+
+  #7531
+  @m19 @requested
+  Scenario: Email with deal information for procurment manager should be customizable per deal (with default template)

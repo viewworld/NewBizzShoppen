@@ -3,7 +3,8 @@
     <h2><%= t("common.search") %></h2>
 
     <div class="search_content">
-      <%= form_for @search, :url => deals_path do |f| %>
+      <%= form_for @search, :url => deals_path, :html => { :id => "deals_search_form" } do |f| %>
+          <%= hidden_field_tag :show_all, params[:show_all] %>
           <fieldset class="inputs_vertical">
             <ol class="no_pdd">
               <li class="string">
@@ -30,11 +31,19 @@
             <ol>
               <li class="commit">
                 <ibt c="bt_green" icon="magnify">
-                  <%= submit_tag t("deals.index.search.search_button") %>
+                  <%= submit_tag t("deals.index.search.search_button"), :id => "search_new" %>
                 </ibt>
                 <p>
                   <%= bt_clear_filter_safe %>
                   <%= link_to_function t("common.advanced_search"), "$('#advanced_search_1_div').toggle();$('#advanced_search_2_div').slideToggle();" %>
+
+                  <%
+                      category = @nested_category.present? ? @nested_category : @category
+                      subcategories_for_select = [[' ', category.id]] + category.children.select{ |c| c.deals_count_for_user(current_user) > 0 }.map{|c| [c.name,c.id]}
+                  %>
+                  <% if subcategories_for_select.size > 1 %>
+                      <%= select_tag :category_selector, options_for_select(subcategories_for_select), {:include_blank => false, :onchange => "submit_category_filter_form('#deals_search_form')"} %>
+                  <% end %>
                 </p>
               </li>
             </ol>
@@ -85,9 +94,7 @@
       <%= deals_listing @deals, :show_checkboxes => false do |blocks| %>
 
           <% blocks.tools do |deal| %>
-              <% if user_signed_in? and current_user.has_role?(:purchase_manager) and !deal.requested_by?(current_user) %>
-                  <%= bt_link_to nil, t("deals.index.view.contact_me"), new_purchase_managers_lead_path(:deal_id => deal.id) %>
-              <% end %>
+            <%= bt_link_to nil, t("deals.index.view.view_deal"), deal_path(deal.slug) %>
           <% end %>
 
       <% end %>

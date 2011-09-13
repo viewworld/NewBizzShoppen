@@ -4,7 +4,7 @@
     <h2><%= t("purchase_manager.leads.show.view.confirmation_message") %></h2>
     <div class="pdd_10 grid_50 grid_c">
         <ibt>
-          <%= button_to t("purchase_manager.leads.show.view.ok_confirmation"), purchase_manager_home_path %>
+          <%= button_to t("purchase_manager.leads.show.view.ok_confirmation"), root_path, :method => :get %>
         </ibt>
     </div>
     <clb/>

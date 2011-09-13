@@ -22,10 +22,12 @@ Feature: Purchase Manager signup
 
   @added @_done
   Scenario: User signs up with valid data as a Purchase Manager
+    Given setting for "email_verification_for_procurement_managers" is set to "1"
     When I go to purchase manager sign up
     And I fill in the following:
       | user_purchase_manager_first_name            | Jon             |
       | user_purchase_manager_last_name             | Lajoie          |
+      | user_purchase_manager_company_name          | LajoieInc       |
       | user_purchase_manager_phone                 | 48928217272     |
       | user_purchase_manager_screen_name           | Normal Guy      |
       | user_purchase_manager_email                 | jon@lajoie.ca   |
@@ -43,8 +45,13 @@ Feature: Purchase Manager signup
 
   @added @_done
   Scenario: Purchase Manager confirms his email account
+    Given setting for "email_verification_for_procurement_managers" is set to "1"
     Given I am signed up with email jon@lajoie.ca and password secret and role purchase_manager
     When I follow the confirmation link sent to jon@lajoie.ca with role purchase_manager
     Then I should see translated "devise.confirmations.confirmed"
     And I should see translated "layout.my_profile_link"
     And I should be signed in
+
+  #7549
+  @m19 @requested
+  Scenario: All fields for procurment sign up must be mandatory

@@ -9,15 +9,37 @@
     </param:content>
 
     <param:actions>
+      <%= form_tag self.send((user_signed_in? and !current_user.call_centre? and current_user.agent?) ? "new_#{current_user.role.to_s.pluralize}_lead_path" : "root_path"), :method => :get, :id => "form_new_lead" do %>
+      <% if user_signed_in? and !current_user.call_centre? and current_user.agent? %>
+      <span style="position:absolute;top: 5px; right: 300px;">
+        <% categories = LeadCategory.without_locked.with_agent_unique(current_user).all %>
+        <%= select_tag :category_id, options_for_select(nested_set_options(categories), :selected => default_category_for_select(categories), :disabled => categories.select { |c| !c.can_publish_leads? }.map(&:id)) %>
+      </span>
+      <% end %>
       <ul class="header_actions">
-        <li class="last">
-          <% if user_signed_in? %>
+        <% if user_signed_in? %>
+            <% if !current_user.call_centre? and current_user.agent? %>
+            <li>
+              <div class="hidden">
+                <%= submit_tag "New" %>
+              </div>
+              <%= bt_link_to :plus, t("agent_home.show.view.new_lead"), "javascript:void", :onclick => "$('#form_new_lead').submit()" %>
+            </li>
+            <% end %>
+            <% if current_user.has_role?(:deal_maker) %>
+            <li>
+                <%= bt_link_to :plus, t("agent_home.show.view.new_deal"), self.send("new_#{current_user.role.to_s.pluralize}_deal_path") %>
+            </li>
+            <% end %>
+            <li class="last">
+
               <%= bt_link_to :key, t("buyer_home.show.view.sign_out"), '/logout' %>
           <% else %>
               <%= bt_link_to :user, t("agent_home.show.view.create_new_agent_account"), new_agent_account_path %>
           <% end %>
         </li>
       </ul>
+      <% end %>
     </param:actions>
   </header>
 

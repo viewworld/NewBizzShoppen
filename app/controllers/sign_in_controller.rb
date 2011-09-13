@@ -26,12 +26,18 @@ class SignInController < ApplicationController
     if request.referer.to_s.include?("certification_accounts")
       @user.skip_email_verification = "1"
     end
+
     respond_to do |format|
       if @user.save
+        if session[:site] == "fairdeals" and @user.has_role?(:purchase_manager) and @user.confirmed? and @user.rpx_identifier.blank?
+          @user.send_invitation_email(params[param_key][:password])
+          sign_in(@user)
+        end
         unless @user.rpx_identifier.blank?
           @user.confirm!
           sign_in(@user)
         end
+        success_notice = I18n.t("flash.accounts.create.no_verification") if @user.confirmed?
         flash[:notice] = @user.rpx_identifier.blank? ? success_notice : "Your account has been successfully created! You are now log in."
         format.html { redirect_to(path) }
       else

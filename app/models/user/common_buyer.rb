@@ -30,5 +30,18 @@ module User::CommonBuyer
       unique_categories.any? ? unique_categories : LeadCategory.without_locked
     end
 
+    def can_auto_buy?(lead)
+      if lead.deal.present?
+        if lead.deal.max_auto_buy.to_i > 0
+          LeadPurchase.where("leads.category_id = ? and lead_purchases.owner_id = ? and lead_purchases.created_at::DATE BETWEEN ? AND ? and leads.deal_id = ?",
+                             lead.category_id, self.id, lead.deal.current_four_week_period_start_date, Date.today, lead.deal_id).joins(:lead).count < lead.deal.max_auto_buy
+        else
+          false
+        end
+      else
+        true
+      end
+    end
+
   end
 end

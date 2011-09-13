@@ -73,7 +73,7 @@ Scenario: I can mark any of my lead templates as active/inactive
 
 @added @_tested @selenium
 Scenario: I can add translation for the lead template name and its fields
-  Given I click hidden link by url regex "/locales\/dk/"
+  Given I click hidden link by url regex "/locales\/da/"
   And I go to browse leads
   Then I follow translated "categories.index.view.view_lead_templates"
   And I follow translated "call_centre.lead_templates.index.view.new_template"

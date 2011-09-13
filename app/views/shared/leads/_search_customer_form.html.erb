@@ -26,11 +26,20 @@
   <ol>
     <li class="commit">
       <ibt c="bt_green" icon="magnify">
-        <%= submit_tag t("leads.index.search.search_button") %>
+        <%= submit_tag t("leads.index.search.search_button"), :id => "search_new" %>
       </ibt>
       <p>
         <%= bt_clear_filter_safe %>
         <%= link_to_function t("common.advanced_search"), "$('#advanced_search_1_div').toggle();$('#advanced_search_2_div').slideToggle();" %>
+        <% if @nested_category.present? or @category.present? %>
+            <%
+               category = @nested_category.present? ? @nested_category : @category
+               subcategories_for_select = [[' ', category.id]] + category.children.select{ |c| c.leads_count_for_user(current_user) > 0 }.map{|c| [c.name,c.id]}
+            %>
+            <% if subcategories_for_select.size > 1 %>
+                <%= select_tag :category_selector, options_for_select(subcategories_for_select), {:include_blank => false, :onchange => "submit_category_filter_form('#leads_search_form')"} %>
+            <% end %>
+        <% end %>
       </p>
     </li>
   </ol>
@@ -39,7 +48,7 @@
       <ol class="no_pdd">
         <li class="select" style="float:right">
           <%= label "category", t("leads.index.search.category_label") %>
-          <%= select_tag "category", options_for_select(current_user.parent_accessible_categories.map { |c| [c.name, c.cached_slug] }, @home_category.cached_slug),
+          <%= select_tag "category", options_for_select(current_user.parent_accessible_categories_without_auto_buy.map { |c| [c.name, c.cached_slug] }, @home_category.cached_slug),
                          :include_blank => false,
                          :onchange => "uncheck_category_checkboxes();this.form.action='/'+this.value+'/leads';this.form.submit();"
           %>
@@ -105,4 +114,6 @@
   </table>
 </div>
 </div>
+
+<%= hidden_field_tag :show_all, params[:show_all] %>
 

@@ -19,7 +19,7 @@ class LeadTemplateValue < ActiveRecord::Base
   end
 
   def all_lead_template_value_translations(current_locale_code)
-    ::Locale.all.select { |l| l.code != current_locale_code }.map do |locale|
+    ::Locale.enabled.select { |l| l.code != current_locale_code }.map do |locale|
       translation = lead_template_value_translations.detect { |vt| vt.locale == locale.code }
       translation = LeadTemplateValueTranslation.new(:locale => locale.code, :lead_template_value => self, :cached_field_type => lead_template_field.field_type) if translation.nil?
       translation

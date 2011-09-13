@@ -2,7 +2,7 @@
   <fieldset class="inputs labels_ta_r labels_240">
     <ol>
       <%= form.input :url %>
-      <%= form.input :locale_code, :collection => Locale.all.map(&:code), :as => :select, :include_blank => false %>
+      <%= form.input :locale_code, :collection => Locale.enabled.map(&:code), :as => :select, :include_blank => false %>
       <%= form.input :site, :collection => YoutubeIntroduction::SITES, :as => :select, :include_blank => false %>
       <%= form.semantic_fields_for :image, @youtube_introduction.image || Asset::YoutubeImage.new do |image| %>
         <%= image.input :asset,

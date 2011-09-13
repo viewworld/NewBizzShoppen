@@ -28,6 +28,22 @@
               </ol>
             </fieldset>
           </div>
+          <% if current_user.has_role?(:admin) %>
+              <div class="grid_310 fltl">
+                <fieldset id="agents_selection" class="inputs_vertical">
+                  <ol class="no_pdd">
+                    <li class="select">
+                      <%= label_tag t("campaigns.show.search.call_centres") %>
+                      <%= select_tag :call_centre_id, options_from_collection_for_select(@all_call_centres, "id", "email", @call_centre_id), :include_blank => true, :multiple => false, :style => "width:140px;", :onchange => "load_agents_for_call_centre($('#call_centre_id').val())" %>
+                    </li>
+                    <li class="select">
+                      <%= label_tag t("campaigns.show.search.call_centre_agents") %>
+                      <%= select_tag :call_centre_agent_ids, options_from_collection_for_select(@all_call_centre_agents, "id", "email", @call_centre_agent_ids), :include_blank => false, :multiple => true, :style => "height:80px;width:140px;" %>
+                    </li>
+                  </ol>
+                </fieldset>
+              </div>
+          <% end %>
           <div class="fltl">
             <fieldset class="inputs_vertical">
               <ol class="no_pdd">

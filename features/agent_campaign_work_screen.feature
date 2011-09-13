@@ -495,6 +495,10 @@ Feature: Agent campaign - calling session
     #I should see company name when Upgrading contact to category buyer
     @m14 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @tested_elsewhere @_done
     Scenario: Category buyer changes
+
+    #7630
+    @m19 @requested @upgrade_to_category_buyer @$_call_centre_agent
+    Scenario: I should be able to set for category buyer following properties: Newsletter, Allow invoicing, Do not charge vat, Team buyer and Deal maker enabled
   
     @m14 @requested @my_results @$_call_centre_agent @tgn @_done @tested_elsewhere
     Scenario: I should see "My results" renamed to "Production" and displayed the same way as campaign's "Results"
@@ -516,8 +520,34 @@ Feature: Agent campaign - calling session
       And I follow translated "agent_work_screen.index.show_pending_calls"
       Then I should see translated "contacts.table.note" within "#contacts"
 
-    @m18 @campaign_results
+    @m18 @campaign_results @_done @_tested @tgn
     Scenario: It should not be possible to create new results when campaign expired
+    Given campaign named "Expired campaign" exists with attributes "start_date:10-01-2011,end_date:02-04-2011"
+    And contact for company "Xena1" and campaign "Expired campaign" is assigned to user "translator_call_centre_agent@nbs.com"
+    And I follow translated "layout.main_menu.call_centre.campaigns"
+    When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+    Then I should see translated "call_results.edit.button_new_result"
+    And I follow translated "layout.main_menu.call_centre.campaigns"
+    When I follow translated action "campaigns.table.work_screen" within row containing "Expired campaign"
+    Then I should not see translated "call_results.edit.button_new_result"
 
-    @m18 @campaign_results @tgn
+    @m18 @campaign_results @tgn @_done @_tested @hanging_js
     Scenario: I should be able to edit the result type of the final types
+#    And contact for company "Xena1" and campaign "Testing One" is assigned to user "translator_call_centre_agent@nbs.com"
+#    And contact for company "Xena1" has assigned result "Call back" created by "translator_call_centre_agent@nbs.com"
+#    And I follow translated "layout.main_menu.call_centre.campaigns"
+#    When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+#    And I follow translated "agent_work_screen.index.show_call_log_for_current_contact"
+#    When I follow action "Edit" within row containing "Call back"
+#    And I wait 2 second
+#    And I select "Upgrade to category buyer" from "call_result_result_id"
+#    And I wait 2 second
+#    And I press translated "call_results.edit.save_button"
+
+    #7574
+    @m19 @requested @upgrade_to_buyer @$_call_centre_agent
+    Scenario: I can upgrade contact to category buyer
+
+    #7574
+    @m19 @requested @upgrade_to_member @$_call_centre_agent
+    Scenario: I can upgrade contact to member (procurment manager)
