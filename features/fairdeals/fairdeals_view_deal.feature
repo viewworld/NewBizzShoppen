@@ -47,7 +47,7 @@ Feature: Fairdeals view deal
     And I should see "Ed Yudkovsky"
     And I should see "buyer@nbs.com"
     And I should see "+49887755"
-    #And I should see "www.azazelinc.com"
+    And I should see "http://www.azazelinc.com"
 
   @_done @non_testable @tgn
   Scenario: Lead is generated using only the existing information about the procurement manager
@@ -74,7 +74,7 @@ Feature: Fairdeals view deal
   Scenario: I should see all fields on one page
 
   ##7631
-  @m19 @requested
+  @m19 @requested @_done @tested_elsewhere
   Scenario: I should see www address for company if provided on the deal view
 
   #7630

@@ -117,6 +117,13 @@ class AbstractLead < ActiveRecord::Base
     user.has_role?(:admin) ? comment_threads.roots.count : comment_threads.roots.without_blocked.count
   end
 
+  def company_website_with_protocol
+    if company_website
+      return "http://#{company_website.gsub('http://', '')}"
+    end
+    ""
+  end
+
   private
   def check_category
     self.creator = current_user if creator.nil?

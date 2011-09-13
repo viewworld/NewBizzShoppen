@@ -3432,6 +3432,7 @@ en:
         discounted_price_label: "Discounted price"
         get_deal_confirmation_msg: "Do you want to get the deal?"
         time_left: "Time left"
+        company_website_label: "Company website"
     common:
       assets:
         view:
