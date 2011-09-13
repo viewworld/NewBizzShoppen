@@ -496,9 +496,12 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
     [
         'blurb_sign_up',
         'blurb_buyer_home',
+        'blurb_buyer_home_logged_in',
         'blurb_agent_home',
+        'blurb_agent_home_logged_in',
         'blurb_call_centre_home',
         'blurb_purchase_manager_home',
+        'blurb_purchase_manager_home_logged_in',
         'blurb_start_page_role_selection',
         'blurb_currencies',
         'blurb_category_home',
