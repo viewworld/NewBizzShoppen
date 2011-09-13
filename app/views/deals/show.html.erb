@@ -85,7 +85,7 @@
           <% if user_signed_in? and current_user.has_role?(:purchase_manager) and @deal.requested_by?(current_user) %>
               <%= deal_show_li(@deal.contact_name, t("deals.show.view.contact_name_label")) %>
               <%= deal_show_li(@deal.email_address, t("deals.show.view.email_address_label")) %>
-              <%= deal_show_li(link_to(@deal.company_website_with_protocol, @deal.company_website_with_protocol), t("deals.show.view.company_website_label")) if @deal.company_website %>
+              <%= deal_show_li(link_to(@deal.company_website_with_protocol, @deal.company_website_with_protocol), t("deals.show.view.company_website_label")) unless @deal.company_website.blank? %>
               <%= deal_show_li(@deal.phone_number, t("deals.show.view.phone_number_label")) %>
               <%= deal_show_li(@deal.address_line_1, t("deals.show.view.address_line_1_label")) %>
               <%= deal_show_li(@deal.address_line_2, t("deals.show.view.address_line_2_label")) %>

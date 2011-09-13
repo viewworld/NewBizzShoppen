@@ -620,4 +620,14 @@ class User < ActiveRecord::Base
 
     Country.get_country_from_locale
   end
+
+  def role_to_deal_namespace
+    if has_role?(:admin)
+      "administration"
+    elsif has_role?(:customer)
+      "buyers"
+    elsif has_any_role?(:agent, :call_centre, :call_centre_agent)
+      role.to_s.pluralize
+    end
+  end
 end

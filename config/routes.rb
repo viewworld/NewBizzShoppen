@@ -294,6 +294,8 @@ Nbs::Application.routes.draw do
 
   resources :deal_maker_users
 
+  resources :email_templates, :only => [:edit, :update]
+
   constraints(Fairdeals) do
     match '/(:id)' => "fairdeals_home#show"
   end

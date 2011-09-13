@@ -120,7 +120,7 @@ class Asset::DealImage < Asset
   validates_attachment_content_type :asset, :content_type => Asset::IMAGE_FILE_TYPES, :message => " - #{I18n.t(:validation_asset_images_type)}"
 
   # TODO there must be a better way..
-  def url(style=nil)
+  def url(style=nil, use_timestamp=false)
     if self.class.s3_storage?
       super.gsub('//s3','//fairleads.s3').gsub('/fairleads/','/')
     else
@@ -138,7 +138,7 @@ class Asset::DealMaterial < Asset
   validates_attachment_content_type :asset, :content_type => Asset::DOCUMENT_FILE_TYPES, :message => " - #{I18n.t(:validation_document_images_type)}"
 
   # TODO there must be a better way..
-  def url(style=nil)
+  def url(style=nil, use_timestamp=false)
     if self.class.s3_storage?
       super.gsub('//s3','//fairleads.s3').gsub('/fairleads/','/')
     else

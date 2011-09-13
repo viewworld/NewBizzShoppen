@@ -88,7 +88,7 @@ class Lead < AbstractLead
   before_validation :handle_dialling_codes
   validate :check_lead_templates, :unless => Proc.new { |l| l.requestee and l.requestee.has_role?(:purchase_manager) }
   before_save :check_if_category_can_publish_leads
-  after_create :certify_lead_if_created_from_deal
+  after_create :certify_lead_if_created_from_deal, :send_email_with_deal_details_and_files
   after_update :send_instant_notification_to_subscribers
   after_save :auto_buy
   attr_accessor :creation_step
@@ -190,6 +190,13 @@ class Lead < AbstractLead
     if deal
       lcr = self.lead_certification_requests.create(:do_not_send_email => true)
       lcr.update_attribute(:state, LeadCertificationRequest::STATE_APPROVED)
+    end
+  end
+
+  def send_email_with_deal_details_and_files
+    if deal
+      TemplateMailer.delay.new(requestee.email, deal.deal_request_details_email_template || :deal_request_details, Country.get_country_from_locale, {:deal => deal},
+      (deal.images + deal.materials).map{ |material| Pathname.new(File.join([::Rails.root, 'public', material.url])) })
     end
   end
 

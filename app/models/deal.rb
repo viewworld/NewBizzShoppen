@@ -1,6 +1,7 @@
 class Deal < AbstractLead
   include ScopedSearch::Model
 
+  has_one :deal_request_details_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'deal_request_details'", :dependent => :destroy
   has_one :logo, :class_name => "Asset::DealLogo", :as => :resource, :conditions => "asset_type = 'Asset::DealLogo'", :dependent => :destroy
   has_many :images, :class_name => "Asset::DealImage", :as => :resource, :conditions => "asset_type = 'Asset::DealImage'", :dependent => :destroy
   has_many :materials, :class_name => "Asset::DealMaterial", :as => :resource, :conditions => "asset_type = 'Asset::DealMaterial'", :dependent => :destroy
@@ -31,7 +32,7 @@ class Deal < AbstractLead
 
   before_create :create_uniq_deal_category, :set_default_max_auto_buy
   after_create :certify_for_unknown_email, :assign_deal_admin
-  before_save :set_dates
+  before_save :set_dates, :check_deal_request_details_email_template
 
   attr_accessor :creation_step, :use_company_name_as_category
 
@@ -172,6 +173,17 @@ class Deal < AbstractLead
   end  
 
   private
+
+  def check_deal_request_details_email_template
+    unless deal_request_details_email_template
+      global_template = EmailTemplate.global.where(:uniq_id => 'deal_request_details').first
+      self.deal_request_details_email_template = global_template.clone
+      global_template.translations.each do |translation|
+        self.deal_request_details_email_template.translations << translation.clone
+      end
+      self.save
+    end
+  end
 
   def process_for_lead_information?
     true

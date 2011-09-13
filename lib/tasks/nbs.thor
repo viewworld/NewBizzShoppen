@@ -268,6 +268,14 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
                  :body => "<p>Username: {{user.email}}</p><p>Password: {{new_password}}</p><p><a href=\"http://fairleads.com\">Login at fairleads.com</a></p>"},
          :da => {:subject => "[DK] Welcome to fairleads.dk",
                  :body => "<p>Username: {{user.email}}</p><p>Password: {{new_password}}</p><p><a href=\"http://fairleads.com\">Login at fairleads.com</a></p>"}
+        },
+
+        {:name => "Deal request details",
+         :uniq_id => "deal_request_details",
+         :en => {:subject => "You have requested a deal",
+                 :body => "<p><b>Name:</b> {{deal.header}}</p><p><b>Short description:</b> {{deal.description}}</p><p><b>Detailed description:</b> {{deal.hidden_description}}</p><p><b>Fine print:</b> {{deal.fine_print}}</p><p><b>Company:</b> {{deal.company_name}}</p><p><b>Company description:</b> {{deal.company_description}}</p><p><b>Contact name:</b> {{deal.contact_name}}</p><p><b>Email:</b> {{deal.email_address}}</p><p><b>Phone number:</b> {{deal.phone_number}}</p><p><b>Address:</b> {{deal.address_line_1}} {{deal.address_line_2}}, {{deal.zip_code}} {{deal.address_line_3}}</p><p><b>:</b> {{deal}}</p><p><b>:</b> {{deal}}</p><p><b>:</b> {{deal}}</p>"},
+         :da => {:subject => "[DK] You have requested a deal",
+                 :body => "<p><b>Name:</b> {{deal.header}}</p><p><b>Short description:</b> {{deal.description}}</p><p><b>Detailed description:</b> {{deal.hidden_description}}</p><p><b>Fine print:</b> {{deal.fine_print}}</p><p><b>Company:</b> {{deal.company_name}}</p><p><b>Company description:</b> {{deal.company_description}}</p><p><b>Contact name:</b> {{deal.contact_name}}</p><p><b>Email:</b> {{deal.email_address}}</p><p><b>Phone number:</b> {{deal.phone_number}}</p><p><b>Address:</b> {{deal.address_line_1}} {{deal.address_line_2}}, {{deal.zip_code}} {{deal.address_line_3}}</p><p><b>:</b> {{deal}}</p><p><b>:</b> {{deal}}</p><p><b>:</b> {{deal}}</p>"}
         }
     ]
 

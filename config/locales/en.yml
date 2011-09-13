@@ -2067,6 +2067,7 @@ en:
           update_button: "Save"
           preview: "Preview"
           new_template: "New template"
+          edit_deal_request_details_email_template: "Edit email template"
     deal_certification_requests:
       index:
         view:
@@ -3500,3 +3501,8 @@ en:
     update:
       flash:
         invitation_sent: "Invitation has been sent."
+  email_templates:
+    edit:
+      view:
+        title: "Editing email template %{name}"
+        button_cancel: "Cancel"
