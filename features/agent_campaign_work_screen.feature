@@ -546,7 +546,7 @@ Feature: Agent campaign - calling session
 
     #7574
     @m19 @requested @upgrade_to_buyer @$_call_centre_agent
-    Scenario: I can upgrade contact to category buyer
+    Scenario: I can upgrade contact to buyer
 
     #7574
     @m19 @requested @upgrade_to_member @$_call_centre_agent
