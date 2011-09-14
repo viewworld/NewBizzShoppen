@@ -658,6 +658,8 @@ en:
       company_name: "Company name"
       date: "Date"
       company_logo: "Company logo"
+      deadline: "Deadline"
+      number_of_suppliers: "Number of suppliers"
     index:
       header: Leads
       header_for: "for"

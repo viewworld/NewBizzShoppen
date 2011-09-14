@@ -82,5 +82,24 @@ Feature: Purchase manager leads management
     Then I should see "Default price"
 
   #7553
-  @m19 @requested
+  @m19 @requested @selenium @tgn @_done @_tested
   Scenario: On the My tenders view I should see only the following columns: Title, Creation date, deadline, number of suppliers
+    Given I am signed up and confirmed as user with email procurment@nbs.com and password secret and role purchase_manager
+    Then I sign in as procurment@nbs.com with password secret
+    Then category "Business" has attributes "default_price:44.44"
+    Then I follow translated "layout.main_menu.purchase_manager.tenders"
+    Then I follow translated "purchase_manager.tenders.index.view.new_tender"
+    Then I select "Business" from "lead_category_id"
+    Then I fill in "lead_header" with "Tender for project outsourcing"
+    Then I fill in "lead_description" with "project outsourcing ultra description"
+    Then I fill in "lead_purchase_decision_date" with "2016-12-12"
+    Then I press translated "purchase_manager.tenders.new.view.button_create"
+    And I should see translated "leads.table.header"
+    And I should see translated "leads.table.sale_limit"
+    And I should see translated "leads.table.date"
+    And I should see translated "leads.table.deadline"
+    And I should see translated "leads.table.number_of_suppliers"
+    And I should see translated "leads.table.status"
+    And I should see translated "leads.table.actions"
+    Then I should see "Tender for project outsourcing"
+    And I should see translated "purchase_manager.tenders.index.view.option_not_published"
