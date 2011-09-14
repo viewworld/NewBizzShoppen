@@ -1,7 +1,7 @@
 <div class="pdd_10 no_pdd_t">
   <fieldset class="inputs labels_ta_r labels_200">
     <ol>
-      <% if call_result.new_record? or (call_result.valid? and (call_result.result.upgrades_to_lead? or call_result.result.upgrades_to_category_buyer? or call_result.result.send_material?)) %>
+      <% if call_result.new_record? or (call_result.valid? and (call_result.result.upgrades_to_lead? or call_result.result.upgrades_to_any_user? or call_result.result.send_material?)) %>
           <li class="string">
             <label><%= t("call_results.new.result") %></label>
 
@@ -16,10 +16,15 @@
       <% end %>
       <%= form.input :note, :as => :text, :input_html => {:style => "width: 400px;height:120px"} %>
 
-      <% if call_result.result.upgrades_to_category_buyer? %>
+      <% if call_result.result.upgrades_to_any_user? %>
           <% [:company_name, :first_name, :last_name, :phone_number, :address_line_1, :address_line_2, :address_line_3, :zip_code].each do |field| %>
           <li class="string">
-            <%= label_tag "call_result[contact_email_address]", "#{t("call_results.new.contact_#{field}")}#{'<abbr>*</abbr>' if [:first_name, :last_name, :address_line_1, :zip_code].include?(field)}".html_safe %>
+            <%
+               required_fields = [:first_name, :last_name, :address_line_1, :zip_code]
+               required_fields << [:company_name, :phone_number, :address_line_3] if call_result.result.upgrades_to_member?
+               required_fields.flatten!
+            %>
+            <%= label_tag "call_result[contact_email_address]", "#{t("call_results.new.contact_#{field}")}#{'<abbr>*</abbr>' if required_fields.include?(field)}".html_safe %>
             <%= text_field_tag "call_result[contact_#{field}]", call_result.send("contact_#{field}".to_sym) || (contact.send(field) if contact.respond_to?(field)) %>
             <%= custom_error_for_object_and_field(call_result, "contact_#{field}".to_sym) %>
           </li>
@@ -29,6 +34,7 @@
             <%= select_tag "call_result[contact_country_id]", options_for_select(Country.all.map{|c| [c.name, c.id]}, call_result.contact_country_id || (contact.country_id if contact.respond_to?(:country_id))) %>
             <%= custom_error_for_object_and_field(call_result, :contact_country_id) %>
           </li>
+          <% if call_result.result.upgrades_to_category_buyer? %>
           <li>
             <div id="category_buyer_categories">
                 <div class="grid_210 fltl">&nbsp;</div>
@@ -50,6 +56,7 @@
                 <clb/>
               </div>
           </li>
+          <% end %>
       <% end %>
       <% if call_result.result.upgrades_to_category_buyer? or call_result.result.send_material? %>
           <% [:subject, :from, :bcc, :cc, :body].each do |field| %>
@@ -67,7 +74,7 @@
           <% end %>
 
           <li class="commit" style="padding-top:10px">
-            <%= bt_link_to_function nil, t("call_results.new.customize_email_template"), "javascript:set_email_template_editor_init_values_function_name('#{call_result.result.upgrades_to_category_buyer? ? 'fill_editor_with_upgrade_to_cat_buyer_template_values()' : 'fill_editor_with_send_result_material_template_values()'}');$('#modal_for_email_template_edit').dialog('open');#{'reload_ck_editor();' if call_result.result.send_material?}" %>
+            <%= bt_link_to_function nil, t("call_results.new.customize_email_template"), "javascript:set_email_template_editor_init_values_function_name('fill_editor_with_#{call_result.result.email_template_name_for_type}_template_values()');$('#modal_for_email_template_edit').dialog('open');#{'reload_ck_editor();' if call_result.result.send_material?}" %>
           </li>
       <% end %>
     </ol>
@@ -102,19 +109,13 @@
 
 <% if @campaign or call_result.contact.campaign%>
   <% campaign = @campaign.nil? ? call_result.contact.campaign : @campaign %>
-function fill_editor_with_upgrade_to_cat_buyer_template_values(){
-    <%=
-     template = campaign.upgrade_contact_to_category_buyer_email_template
-     "fill_email_template_editor_with_values('#{template.subject}', '#{template.from}', '#{template.bcc}', '#{template.cc}', '#{template.body_sanitized}', '#{template.uniq_id}')".html_safe
-     -%>
-}
 
-function fill_editor_with_send_result_material_template_values(){
-    <%=
-     template = campaign.send_material_email_template
+  <% campaign.cloned_email_templates.each do |template| %>
+    function fill_editor_with_<%= template.uniq_id -%>_template_values(){
+     <%=
      "fill_email_template_editor_with_values('#{template.subject}', '#{template.from}', '#{template.bcc}', '#{template.cc}', '#{template.body_sanitized}', '#{template.uniq_id}')".html_safe
      -%>
-}
+    }
+  <% end %>
 <% end %>
-
 </script>

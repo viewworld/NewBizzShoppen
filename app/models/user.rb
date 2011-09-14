@@ -118,7 +118,7 @@ class User < ActiveRecord::Base
   before_validation :set_auto_generated_password_if_required
 
   liquid :email, :confirmation_instructions_url, :reset_password_instructions_url, :social_provider_name, :category_buyer_category_home_url,
-         :screen_name, :first_name, :last_name
+         :screen_name, :first_name, :last_name, :home_page_url
   require 'digest/sha1'
 
   private
@@ -583,6 +583,18 @@ class User < ActiveRecord::Base
     end
   end
 
+  def home_page_url
+    if has_role?(:category_buyer)
+      category_buyer_category_home_url
+    elsif has_role?(:customer)
+      "https://#{mailer_host}/buyer_home"
+    elsif has_role?(:purchase_manager)
+      "https://#{mailer_host}/purchase_manager_home"
+    else
+      "https://#{mailer_host}/"
+    end
+  end
+
   def deal_maker_role_enabled
     if deal_maker_role_enabled_flag.nil?
       self.deal_maker_role_enabled_flag = self.has_role?(:deal_maker) ? true : false
@@ -628,6 +640,16 @@ class User < ActiveRecord::Base
       "buyers"
     elsif has_any_role?(:agent, :call_centre, :call_centre_agent)
       role.to_s.pluralize
+    end
+  end
+
+  def role_to_campaign_template_name
+    if has_role?(:category_buyer)
+      "category_buyer"
+    elsif has_role?(:customer)
+      "buyer"
+    elsif has_role?(:purchase_manager)
+      "member"
     end
   end
 end

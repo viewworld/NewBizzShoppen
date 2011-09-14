@@ -48,6 +48,30 @@ class Result < ActiveRecord::Base
     name == "Upgrade to category buyer"
   end
 
+  def upgrades_to_buyer?
+    name == "Upgrade to buyer"
+  end
+
+  def upgrades_to_member?
+    name == "Upgrade to member"
+  end
+
+  def upgrades_to_any_user?
+    upgrades_to_category_buyer? or upgrades_to_buyer? or upgrades_to_member?
+  end
+
+  def email_template_name_for_type
+    if upgrades_to_member?
+      "upgrade_contact_to_member"
+    elsif upgrades_to_buyer?
+      "upgrade_contact_to_buyer"
+    elsif upgrades_to_category_buyer?
+      "upgrade_contact_to_category_buyer"
+    elsif send_material?
+      "result_send_material"
+    end
+  end
+
   private
 
   def check_is_reported_and_is_success

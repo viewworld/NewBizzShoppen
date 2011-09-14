@@ -214,12 +214,44 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
                     :body => "<p>Fairleads username: {{user.email}}</p><p>Fairleads password: {{password}}</p><p>Screen name: {{user.screen_name}}</p><p><a href=\"{{user.category_buyer_category_home_url}}\">{{user.category_buyer_category_home_url}}</a></p>"}
         },
         {
+            :name => "Upgrade contact to buyer",
+            :uniq_id => "upgrade_contact_to_buyer",
+            :en => {:subject => "You have been upgraded to buyer",
+                    :body => "<p>Fairleads username: {{user.email}}</p><p>Fairleads password: {{password}}</p><p>Screen name: {{user.screen_name}}</p><p><a href=\"{{user.home_page_url}}\">{{user.home_page_url}}</a></p>"},
+            :da => {:subject => "[DK] You have been upgraded to category buyer",
+                    :body => "<p>Fairleads username: {{user.email}}</p><p>Fairleads password: {{password}}</p><p>Screen name: {{user.screen_name}}</p><p><a href=\"{{user.home_page_url}}\">{{user.home_page_url}}</a></p>"}
+        },
+        {
+            :name => "Upgrade contact to member",
+            :uniq_id => "upgrade_contact_to_member",
+            :en => {:subject => "You have been upgraded to member",
+                    :body => "<p>Fairdeals username: {{user.email}}</p><p>Fairdeals password: {{password}}</p><p>Screen name: {{user.screen_name}}</p><p><a href=\"{{user.home_page_url}}\">{{user.home_page_url}}</a></p>"},
+            :da => {:subject => "[DK] You have been upgraded to category buyer",
+                    :body => "<p>Fairdeals username: {{user.email}}</p><p>Fairdeals password: {{password}}</p><p>Screen name: {{user.screen_name}}</p><p><a href=\"{{user.home_page_url}}\">{{user.home_page_url}}</a></p>"}
+        },
+        {
             :name => "Upgraded category buyer welcome",
             :uniq_id => "upgraded_contact_to_category_buyer_welcome",
             :en => {:subject => "Welcome to Fairleads.com!",
                     :body => "<p>Login: {{user.email}}</p><p>Linked with account: {{user.social_provider_name}}</p><p><a href=\"{{user.category_buyer_category_home_url}}\">{{user.category_buyer_category_home_url}}</a></p>"},
             :da => {:subject => "[DK] Welcome to Fairleads.com!",
                     :body => "<p>Login: {{user.email}}</p><p>Linked with account: {{user.social_provider_name}}</p><p><a href=\"{{user.category_buyer_category_home_url}}\">{{user.category_buyer_category_home_url}}</a></p>"}
+        },
+        {
+            :name => "Upgraded buyer welcome",
+            :uniq_id => "upgraded_contact_to_buyer_welcome",
+            :en => {:subject => "Welcome to Fairleads.com!",
+                    :body => "<p>Login: {{user.email}}</p><p>Linked with account: {{user.social_provider_name}}</p><p><a href=\"{{user.home_page_url}}\">{{user.home_page_url}}</a></p>"},
+            :da => {:subject => "[DK] Welcome to Fairleads.com!",
+                    :body => "<p>Login: {{user.email}}</p><p>Linked with account: {{user.social_provider_name}}</p><p><a href=\"{{user.home_page_url}}\">{{user.home_page_url}}</a></p>"}
+        },
+        {
+            :name => "Upgraded member welcome",
+            :uniq_id => "upgraded_contact_to_member_welcome",
+            :en => {:subject => "Welcome to Fairdeals.dk!",
+                    :body => "<p>Login: {{user.email}}</p><p>Linked with account: {{user.social_provider_name}}</p><p><a href=\"{{user.home_page_url}}\">{{user.home_page_url}}</a></p>"},
+            :da => {:subject => "[DK] Welcome to Fairdeals.dk!",
+                    :body => "<p>Login: {{user.email}}</p><p>Linked with account: {{user.social_provider_name}}</p><p><a href=\"{{user.home_page_url}}\">{{user.home_page_url}}</a></p>"}
         },
         {
             :name => "Deal certification request",
@@ -375,7 +407,9 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
      {:name => "Meeting booked", :final => true, :generic => true},
      {:name => "Custom result", :final => true, :generic => true},
      {:name => "Send material", :final => false, :generic => true},
-     {:name => "Upgrade to category buyer", :final => true, :generic => true}].each do |result|
+     {:name => "Upgrade to category buyer", :final => true, :generic => true},
+     {:name => "Upgrade to buyer", :final => true, :generic => true},
+     {:name => "Upgrade to member", :final => true, :generic => true}].each do |result|
       Result.create(result) unless Result.find_by_name(result[:name])
     end
 
@@ -385,7 +419,9 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
      {:name => "Result message", :field_type => "0", :is_mandatory => true, :result => Result.find_by_name("Custom result") },
      {:name => "Call back date", :field_type => "4", :is_mandatory => true, :result => Result.find_by_name("Send material") },
      {:name => "Material", :field_type => "5", :is_mandatory => true, :result => Result.find_by_name("Send material") },
-     {:name => "Material", :field_type => "5", :is_mandatory => false, :result => Result.find_by_name("Upgrade to category buyer") }
+     {:name => "Material", :field_type => "5", :is_mandatory => false, :result => Result.find_by_name("Upgrade to category buyer") },
+     {:name => "Material", :field_type => "5", :is_mandatory => false, :result => Result.find_by_name("Upgrade to buyer") },
+     {:name => "Material", :field_type => "5", :is_mandatory => false, :result => Result.find_by_name("Upgrade to member") }
     ].each do |result_field|
       ResultField.create(result_field) unless ResultField.find_by_name_and_result_id(result_field[:name], result_field[:result].id)
     end
