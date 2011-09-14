@@ -80,3 +80,7 @@ Feature: Fairdeals view deal
   #7630
   @m19 @requested
   Scenario: I can see javascript counter on the group deals details page
+
+  #7651
+  @m19 @requested
+  Scenario: When deal does not have price but has discounted price, its value should be displayed as saving

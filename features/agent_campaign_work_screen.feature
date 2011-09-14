@@ -496,7 +496,7 @@ Feature: Agent campaign - calling session
     @m14 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @tested_elsewhere @_done
     Scenario: Category buyer changes
 
-    #7630
+    #7581
     @m19 @requested @upgrade_to_category_buyer @$_call_centre_agent
     Scenario: I should be able to set for category buyer following properties: Newsletter, Allow invoicing, Do not charge vat, Team buyer and Deal maker enabled
   
@@ -546,7 +546,7 @@ Feature: Agent campaign - calling session
 
     #7574
     @m19 @requested @upgrade_to_buyer @$_call_centre_agent
-    Scenario: I can upgrade contact to category buyer
+    Scenario: I can upgrade contact to buyer
 
     #7574
     @m19 @requested @upgrade_to_member @$_call_centre_agent
