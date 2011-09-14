@@ -730,6 +730,13 @@ en:
         browse_our_deals: "Browse our deals"
         find_a_vendor: "Find a vendor - make a tender"
         contact_us: "Contact us"
+        deal_request:
+          name: "Name"
+          email_from: "E-mail"
+          phone_number: "Phone number"
+          description: "Request"
+          send_email_button: "Send"
+        request_a_deal: "Request a deal"
   home:
     show:
       view:
