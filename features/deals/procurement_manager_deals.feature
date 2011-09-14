@@ -155,7 +155,7 @@ Feature: Deals from procurement manager perspective
 
 
   #7531
-  @m19 @requested @_done @_tested
+  @m19 @requested @_done @_tested @tgn
   Scenario: When I get deal then I should get the email with all deal information and all materials included as attachments
     Given I visit domain http://fairdeals.dk
     Given user buyer@nbs.com with role customer exists with attributes "company_name:Xeper"
@@ -177,9 +177,10 @@ Feature: Deals from procurement manager perspective
 
 
   #7531
-  @m19 @requested @wip
+  @m19 @requested @_done @_tested @tgn
   Scenario: Email with deal information for procurment manager should be customizable per deal (with default template)
     Given I am not sign in
+    And I make sure current locale is "da"
     Given user buyer@nbs.com with role customer exists with attributes "company_name:Xeper"
     And user "buyer@nbs.com" has assigned role "deal_maker"
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper"
@@ -188,4 +189,20 @@ Feature: Deals from procurement manager perspective
     And I follow translated "layout.main_menu.lead_buyer.my_deals"
     And I follow translated "buyer.deals.index.view.edit"
     And I follow translated "buyer.deals.edit.view.edit_deal_request_details_email_template"
-  And I open page in browser
+    And I fill in "email_template_subject" with "Customized You got the deal"
+    And I fill in "email_template_body_editor" with "Customized email for {{deal.header}}"
+    And I press translated "campaigns.email_templates.edit.view.button_update"
+    Given I visit domain http://fairdeals.dk
+    And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role purchase_manager
+    Then I sign in as purchase_manager101@nbs.com with password supersecret
+    And User purchase_manager101@nbs.com with role purchase_manager is from country Denmark
+    Then I follow translated "layout.fairdeals.main_menu.deals"
+    And I follow "Business deals"
+    And I follow translated "deals.index.view.view_deal"
+    And I follow translated "deals.index.view.contact_me"
+    And I fill in "lead_hidden_description" with "some hidden note"
+    And I press translated "purchase_manager.leads.new.view.button_create"
+    And I press translated "purchase_manager.leads.show.view.ok_confirmation"
+    And last email sent should have been sent to recipient "purchase_manager101@nbs.com"
+    And last email sent should have subject "Customized You got the deal"
+    And last email sent should have content "Customized email for software components"

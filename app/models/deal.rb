@@ -170,7 +170,11 @@ class Deal < AbstractLead
     else
       self
     end
-  end  
+  end
+
+  def can_be_managed_by?(user)
+    user.has_role?(:admin) or creator == user or email_address == user.email or (user.has_role?(:call_centre) and user.with_role.subaccounts.map(&:id).include?(creator.id))
+  end
 
   private
 

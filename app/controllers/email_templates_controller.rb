@@ -14,7 +14,8 @@ class EmailTemplatesController < SecuredController
   end
 
   def authorize_for_controller!
-    authorize_role(:deal_maker)
+    authorize_role(:admin, :deal_maker)
+    authorize_manage_rights(@deal)
   end
 
   public

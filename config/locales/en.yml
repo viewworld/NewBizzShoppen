@@ -1012,6 +1012,8 @@ en:
           title: "Edit deal"
           update_button: "Save"
 
+          preview: "Preview"
+          edit_deal_request_details_email_template: "Edit email template"
     email_bounces:
       index:
         view:
@@ -1776,6 +1778,8 @@ en:
         view:
           title: "Edit deal"
           update_button: "Save"
+          edit_deal_request_details_email_template: "Edit email template"
+          preview: "Preview"
       new:
         view:
           title: "New deal"
@@ -1868,6 +1872,8 @@ en:
         view:
           title: "Edit deal"
           update_button: "Save"
+          edit_deal_request_details_email_template: "Edit email template"
+          preview: "Preview"
   purchase_manager:
     leads:
       index:

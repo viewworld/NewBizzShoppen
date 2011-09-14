@@ -1,5 +1,21 @@
 <column-mc:>
-  <header back="true" backurl="#{call_centre_agents_deals_path}"><%= t("call_centre_agent.deals.edit.view.title") %></header>
+  <header back="true" backurl="#{call_centre_agents_deals_path}">
+    <param:content>
+    <%= t("call_centre_agent.deals.edit.view.title") %>
+    </param:content>
+      <param:actions>
+      <ul class="header_actions">
+        <li>
+          <% if current_user.has_role?(:deal_maker) %>
+            <%= bt_link_to nil, t("call_centre_agent.deals.edit.view.edit_deal_request_details_email_template"), edit_email_template_path(@deal.deal_request_details_email_template, :deal_id => @deal.id) %>
+          <% end %>
+        </li>
+        <li class="last">
+          <%= bt_link_to nil, t("call_centre_agent.deals.edit.view.preview"), deal_path(@deal) %>
+        </li>
+      </ul>
+    </param:actions>
+  </header>
 
   <%= semantic_form_for [:call_centre_agents, @deal], :method => :put, :html => {:multipart => true} do |form| %>
       <frm title="Edit deal">
