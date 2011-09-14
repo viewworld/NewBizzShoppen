@@ -11,12 +11,12 @@ class MyProfileController < SecuredController
     @user = current_user
     if @user.update_attributes(params["user_#{@user.role.to_s}".to_sym])
       flash[:notice] = I18n.t("my_profile.update.controller.successful_update_notice")
-      if @user.has_role?(:category_buyer) and @user.contact.present? and @user.sign_in_count == 1
-        unless session[:category_buyer_confirmed_account_info] == "1"
+      if @user.contact.present? and @user.has_any_role?(:category_buyer, :customer, :purchase_manager) and @user.sign_in_count == 1
+        unless session[:user_confirmed_account_info] == "1"
           @user.deliver_welcome_email_for_upgraded_contact
-          session[:category_buyer_confirmed_account_info] = "1"
+          session[:user_confirmed_account_info] = "1"
         end
-        redirect_to category_home_page_path(:slug => @user.buying_categories.first.cached_slug)
+        redirect_to @user.has_role?(:category_buyer) ? category_home_page_path(:slug => @user.buying_categories.first.cached_slug) : @user.has_role?(:customer) ? buyer_home_path : purchase_manager_home_path
       else
         redirect_to my_profile_path
       end

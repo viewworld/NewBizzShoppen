@@ -589,7 +589,7 @@ class User < ActiveRecord::Base
     elsif has_role?(:customer)
       "https://#{mailer_host}/buyer_home"
     elsif has_role?(:purchase_manager)
-      "https://#{mailer_host}/purchase_manager_home"
+      "https://#{mailer_host}"
     else
       "https://#{mailer_host}/"
     end
@@ -651,5 +651,9 @@ class User < ActiveRecord::Base
     elsif has_role?(:purchase_manager)
       "member"
     end
+  end
+
+  def deliver_welcome_email_for_upgraded_contact
+    TemplateMailer.delay.new(email, "upgraded_contact_to_#{role_to_campaign_template_name}_welcome".to_sym, with_role.address.country, {:user => self})
   end
 end

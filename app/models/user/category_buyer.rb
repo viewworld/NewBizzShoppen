@@ -71,9 +71,4 @@ class ::User::CategoryBuyer < ::User
     save
     true
   end
-
-  def deliver_welcome_email_for_upgraded_contact
-    TemplateMailer.delay.new(email, :upgraded_contact_to_category_buyer_welcome, with_role.address.country, {:user => self})
-  end
-
 end
