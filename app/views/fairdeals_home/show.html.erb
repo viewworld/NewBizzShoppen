@@ -83,6 +83,13 @@
 
     <% end %>
 
+    <div class="homepage_actions frm_dark pdd_10">
+      <h2><%= t("fairdeals_home.show.view.contact_us") %></h2>
+
+      <p>[Phone ico]: <%= Settings.contact_us_phone %></p>
+      <p>[E-mail ico]: <%= link_to Settings.contact_us_email, "mailto:#{Settings.contact_us_email}" %></p>
+      <p>[Skype ico]: <%= link_to Settings.contact_us_skype, "skype:#{Settings.contact_us_skype}" %></p>
+    </div>
 
     <div class="news">
       <!--
