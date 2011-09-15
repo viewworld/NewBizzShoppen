@@ -8,6 +8,8 @@
       <meta property="og:description" content="<%= @deal.group_deal? and !@deal.social_media_description.blank? ? @deal.social_media_description : @deal.description %>">
       <meta property="fb:app_id" content="198584516868482"/>
   <% end %>
+  <%= javascript_include_tag "jquery.lwtCountdown-1.0" %>
+  <%= stylesheet_link_tag "countdown" %>
   <%= javascript_include_tag "global_template_editor" %>
 </head:>
 
@@ -29,6 +31,39 @@
       <h3><%= t("deals.show.view.fine_print_label") %></h3>
 
       <p><%= @deal.fine_print %></p>
+
+      <% if @deal.group_deal? %>
+      <h3><%= t("deals.show.view.time_left_label") %></h3>
+
+      <p>
+            <div id="countdown" class="countdown">
+              <div class="dash days_dash">
+                <span class="dash_title"><%= t("deals.show.view.days") %></span>
+
+                <div class="digit">0</div>
+                <div class="digit">0</div>
+              </div>
+              <div class="dash hours_dash">
+                <span class="dash_title"><%= t("deals.show.view.hours") %></span>
+
+                <div class="digit">0</div>
+                <div class="digit">0</div>
+              </div>
+              <div class="dash minutes_dash">
+                <span class="dash_title"><%= t("deals.show.view.minutes") %></span>
+
+                <div class="digit">0</div>
+                <div class="digit">0</div>
+              </div>
+              <div class="dash seconds_dash">
+                <span class="dash_title"><%= t("deals.show.view.seconds") %></span>
+
+                <div class="digit">0</div>
+                <div class="digit">0</div>
+              </div>
+            </div>
+      </p>
+      <% end %>
 
       <% if @deal.logo %>
           <h3><%= t("deals.show.view.company_logo_label") %></h3>
@@ -145,6 +180,22 @@
 
 <js:>
   <script type="text/javascript">
+    jQuery(document).ready(function() {
+        d = new Date();
+        seconds = (<%= @deal.end_date.to_i %> - parseInt(d.getTime() / 1000));
+        $('#countdown').countDown({
+            targetOffset: {
+                'year':     0,
+                'month':    0,
+                'day':      0,
+                'hour':     0,
+                'min':      0,
+                'sec':      seconds
+            },
+            omitWeeks: true
+        });
+    });
+
       jQuery(document).ready(function() {
           $('a[rel=colorbox]').colorbox();
       });

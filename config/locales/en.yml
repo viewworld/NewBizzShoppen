@@ -2629,6 +2629,7 @@ en:
         discounted_price_label: "Discounted deal price"
         saving_percent_label: "Saving:"
         max_auto_buy_label: "Max auto buy per 4 weeks"
+        min_created_leads: "Min created leads"
   models:
     call_result:
       not_unique_email_address: "User with this e-mail already exists!"
@@ -3458,6 +3459,7 @@ en:
         get_deal_confirmation_msg: "Do you want to get the deal?"
         time_left: "Time left"
         company_website_label: "Company website"
+        time_left_label: "Time left"
     common:
       assets:
         view:
@@ -3479,6 +3481,8 @@ en:
         view:
           header: "My deals"
           new_deal: "Create new deal"
+      created_leads_count: "leads"
+      missing_leads_count: "missing"
     new:
       view:
         frame_header: "Get deal"

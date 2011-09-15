@@ -91,6 +91,7 @@ class Lead < AbstractLead
   after_create :certify_lead_if_created_from_deal, :send_email_with_deal_details_and_files
   after_update :send_instant_notification_to_subscribers
   after_save :auto_buy
+  after_create :update_deal_created_leads_count
   attr_accessor :creation_step
   attr_protected :published
 
@@ -197,6 +198,12 @@ class Lead < AbstractLead
     if deal
       TemplateMailer.delay.new(requestee.email, deal.deal_request_details_email_template || :deal_request_details, Country.get_country_from_locale, {:deal => deal},
       (deal.images + deal.materials).map{ |material| Pathname.new(File.join([::Rails.root, 'public', material.url])) })
+    end
+  end
+
+  def update_deal_created_leads_count
+    if deal
+      deal.increment!(:created_leads)
     end
   end
 
