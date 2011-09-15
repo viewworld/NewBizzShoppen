@@ -1,0 +1,38 @@
+<frm title="">
+<param:content>
+  <div class="pdd_10 no_pdd_t">
+    <% if settings.size > 10 %>
+    <% settings_left, settings_right = settings.chunk(2) %>
+    <% else %>
+        <% settings_left, settings_right = [settings, []] %>
+    <% end %>
+    <div class="column_left">
+    <fieldset class="inputs labels_260 labels_ta_r inputs_180">
+      <ol>
+        <% settings_left.each_with_index do |setting, i| %>
+            <%= render :partial => "setting", :locals => {:setting => setting, :i => i} %>
+        <% end %>
+      </ol>
+    </fieldset>
+    </div>
+    <div class="column_right">
+    <fieldset class="inputs labels_260 labels_ta_r inputs_180">
+      <ol>
+        <% settings_right.each_with_index do |setting, i| %>
+            <%= render :partial => "setting", :locals => {:setting => setting, :i => i} %>
+        <% end %>
+      </ol>
+    </fieldset>
+    </div>
+    <clb/>
+  </div>
+</param:content>
+<param:actions>
+  <ibt c="fltri" icon="plus">
+    <%= submit_tag t("administration.settings.edit.view.button_update_settings"), :onclick => "if(confirm('#{t("administration.settings.edit.view.confirmation_update_message")}')){ this.form.submit(); } else {return false;}" %>
+  </ibt>
+  <ibt c="bt_grey fltri">
+    <%= button_to_function t("administration.settings.edit.view.button_cancel"), "history.go(-1)" %>
+  </ibt>
+</param:actions>
+</frm>

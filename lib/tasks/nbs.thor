@@ -14,8 +14,8 @@ class Nbs < Thor
     Settings.certification_level_2 = 20 if Settings.certification_level_2.nil?
     Settings.logout_time = 5 if Settings.logout_time.nil? #minutes 
     Settings.contact_us_email = (Rails.env.production? or Rails.env.test?) ? "admin@fairleads.com" : "contact@nbs.fake.com" if Settings.contact_us_email.nil?
-    Settings.contact_us_phone = "+44 0000000" if Settings.contact_us_phone.nil?
-    Settings.contact_us_skype = "nbs_contact" if Settings.contact_us_skype.nil?
+    Settings.contact_us_phone = Rails.env.production? ? "" : "+44 0000000" if Settings.contact_us_phone.nil?
+    Settings.contact_us_skype = Rails.env.production? ? "" : "fairleads_contact" if Settings.contact_us_skype.nil?
     # Invoicing
     Settings.invoicing_default_payment_deadline_date = 14 if Settings.invoicing_default_payment_deadline_date.nil?
     Settings.big_buyer_purchase_limit = 10000 if Settings.big_buyer_purchase_limit.nil?

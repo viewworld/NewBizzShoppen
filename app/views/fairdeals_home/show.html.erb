@@ -83,13 +83,21 @@
 
     <% end %>
 
+    <% if Settings.contact_us_phone.present? or Settings.contact_us_email.present? or Settings.contact_us_skype.present? %>
     <div class="homepage_actions frm_dark pdd_10">
       <h2><%= t("fairdeals_home.show.view.contact_us") %></h2>
 
-      <p>[Phone ico]: <%= Settings.contact_us_phone %></p>
-      <p>[E-mail ico]: <%= link_to Settings.contact_us_email, "mailto:#{Settings.contact_us_email}" %></p>
-      <p>[Skype ico]: <%= link_to Settings.contact_us_skype, "skype:#{Settings.contact_us_skype}" %></p>
+      <% if Settings.contact_us_phone.present? %>
+        <p>[Phone ico]: <%= Settings.contact_us_phone %></p>
+      <% end %>
+      <% if Settings.contact_us_email.present? %>
+        <p>[E-mail ico]: <%= link_to Settings.contact_us_email, "mailto:#{Settings.contact_us_email}" %></p>
+      <% end %>
+      <% if Settings.contact_us_skype.present? %>
+        <p>[Skype ico]: <%= link_to Settings.contact_us_skype, "skype:#{Settings.contact_us_skype}" %></p>
+      <% end %>
     </div>
+    <% end %>
 
     <div class="homepage_actions frm_dark pdd_10">
     <h2><%= t("fairdeals_home.show.view.request_a_deal") %></h2>

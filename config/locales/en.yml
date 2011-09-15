@@ -937,6 +937,8 @@ en:
             email_verification_for_procurement_managers: "Email verification for procurement managers"
             email_verification_for_sales_managers: "Email verification for sales managers"
             default_max_auto_buy_per_4_weeks: "Default max auto buy per 4 weeks"
+            contact_us_phone: "Contact us phone number"
+            contact_us_skype: "Contact us Skype username"
       edit:
         view:
           title: "Settings"
@@ -945,6 +947,7 @@ en:
           confirmation_update_message: "Are you sure?"
           title_stats: "Statistics recalculation"
           button_update_stats: "Update stats"
+          contacts_settings_title: "Contact settings"
       update:
         controller:
           successful_update_notice: "Settings were successfully updated."
