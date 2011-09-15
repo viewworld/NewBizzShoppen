@@ -34,6 +34,17 @@
             <%= select_tag "call_result[contact_country_id]", options_for_select(Country.all.map{|c| [c.name, c.id]}, call_result.contact_country_id || (contact.country_id if contact.respond_to?(:country_id))) %>
             <%= custom_error_for_object_and_field(call_result, :contact_country_id) %>
           </li>
+
+          <% if call_result.result.upgrades_to_category_buyer? or call_result.result.upgrades_to_buyer? %>
+              <span id="big_buyer_purchase_limit_span" style="display: none;">
+              <%= form.input :user_big_buyer_purchase_limit %>
+              </span>
+              <%= form.input :user_big_buyer, :as => :boolean, :onclick => "show_hide_big_buyer_purchase_limit()" %>
+              <%= form.input :user_not_charge_vat, :as => :boolean %>
+              <%= form.input :user_team_buyers, :as => :boolean %>
+              <%= form.input :user_deal_maker_role_enabled, :as => :boolean %>
+          <% end %>
+
           <% if call_result.result.upgrades_to_category_buyer? %>
           <li>
             <div id="category_buyer_categories">
@@ -118,4 +129,16 @@
     }
   <% end %>
 <% end %>
+
+function show_hide_big_buyer_purchase_limit(){
+    if($('#call_result_user_big_buyer').attr("checked")){
+        $('#big_buyer_purchase_limit_span').show();
+    }
+    else
+    {
+        $('#big_buyer_purchase_limit_span').hide();
+    }
+}
+
+show_hide_big_buyer_purchase_limit();
 </script>

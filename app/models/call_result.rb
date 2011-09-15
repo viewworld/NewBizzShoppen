@@ -2,7 +2,8 @@ class CallResult < ActiveRecord::Base
   attr_accessor :contact_email_address, :contact_first_name, :contact_last_name, :contact_address_line_1, :contact_address_line_2,
                 :contact_address_line_3, :contact_zip_code, :contact_country_id, :contact_phone_number,
                 :contact_company_name, :buying_category_ids, :email_template_subject, :email_template_from, :email_template_bcc,
-                :email_template_cc, :email_template_body, :result_id_changed
+                :email_template_cc, :email_template_body, :result_id_changed, :user_big_buyer_purchase_limit, :user_big_buyer, :user_not_charge_vat,
+                :user_team_buyers, :user_deal_maker_role_enabled
 
   belongs_to :contact
   belongs_to :result
