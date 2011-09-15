@@ -217,5 +217,10 @@ Scenario: I can enable/disable email verification for sales managers
   Then I should see translated "flash.buyer_accounts.create.notice"
 
 #7450
-@m19 @requested @settings
+@m19 @requested @settings @_done @_tested @tgn
 Scenario: I can set contact info for home page like Phone number, Email, Skype
+  Given I should see translated "administration.settings.edit.view.contacts_settings_title"
+  Then I fill in "settings[6]" with "my_email@fairleads.com"
+  And I fill in "settings[7]" with "+44 8888888"
+  And I fill in "settings[8]" with "skype_fairleads"
+  And I press translated "administration.settings.edit.view.button_update_settings"
