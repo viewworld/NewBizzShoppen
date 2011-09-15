@@ -179,8 +179,14 @@ Feature: Front page for procurment
   Scenario: As admin I can select three secondary featured deals to be displayed on procurement page
 
   #7450
-  @m19 @requested
+  @m19 @requested @_done @_tested @tgn
   Scenario: I should see box with contact info: Phone number, Email, Skype on the home page
+    Given I visit domain http://fairdeals.dk
+    Then I should see translated "fairdeals_home.show.view.contact_us"
+    And I should see "+44 0000000"
+    And I should see "admin@fairleads.com"
+    And I should see "fairleads_contact"
+
 
   #7449
   @m19 @requested
