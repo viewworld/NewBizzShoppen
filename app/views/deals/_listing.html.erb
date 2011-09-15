@@ -47,7 +47,7 @@
 
         <td>
           <% unless deal.logo.blank? %>
-              <%= image_tag(deal.logo.url(:thumb), :style => "float:left;margin:4px") %>
+              <%= image_tag(deal.logo.url(:medium), :style => "float:left;margin:4px; width:60px;") %>
           <% end %>
         </td>
 

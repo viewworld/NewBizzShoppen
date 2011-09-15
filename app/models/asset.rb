@@ -96,7 +96,7 @@ end
 
 class Asset::DealLogo < Asset
   belongs_to :deal, :foreign_key => "resource_id"
-  has_attached_file :asset, attachment_options.merge(:styles => {:original => "150x100>", :medium => "60x40>", :thumb => "32>x32"})
+  has_attached_file :asset, attachment_options.merge(:styles => {:original => "150x100>", :medium => "60>x40", :thumb => "32>x32"})
   validates_attachment_presence :asset
   validates_attachment_size :asset, :less_than => 1.megabyte
   validates_attachment_content_type :asset, :content_type => Asset::IMAGE_FILE_TYPES, :message => " - #{I18n.t(:validation_asset_images_type)}"
