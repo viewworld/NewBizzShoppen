@@ -68,8 +68,11 @@
               <% end %>
           <% end %>
 
-          <% if deal.created_leads.to_i > 0 %>
+          <% if !deal.group_deal? and deal.created_leads.to_i > 0 %>
             <p><b><%= t("deals.listing.created_leads") %>:</b> <%= deal.created_leads.to_i %></p>
+          <% elsif deal.created_leads.to_i > 0 or deal.min_created_leads.to_i > 0 %>
+           <p><b><%= t("deals.listing.created_leads") %>:</b> <%= group_deal_leads_created_and_missing(deal) %></p>
+
           <% end %>
 
           <p class="element_description i expandable"><b>Description:</b> <%= deal.description %></p>

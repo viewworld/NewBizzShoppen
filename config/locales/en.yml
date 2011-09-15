@@ -3460,6 +3460,7 @@ en:
         time_left: "Time left"
         company_website_label: "Company website"
         time_left_label: "Time left"
+        created_leads_label: "Created leads"
     common:
       assets:
         view:
@@ -3483,6 +3484,7 @@ en:
           new_deal: "Create new deal"
       created_leads_count: "leads"
       missing_leads_count: "missing"
+      leads_label: "leads"
     new:
       view:
         frame_header: "Get deal"

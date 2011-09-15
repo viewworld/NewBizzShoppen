@@ -197,9 +197,21 @@ Feature: Front page for procurment
   Scenario: Group deal should be marked by a splash saying "Group deal" on the main page in the featured deal box
 
   #7630
-  @m19 @requested @group_deals
+  @m19 @requested @group_deals @_tested @_done @tgn
   Scenario: On the main page in the featured group deal I should see how many leads were generated and how many are missing to reach the minimum (5 leads / 2 missing)
+    Given a deal named "Abc group deal #1" exists within category "Electronics deals"
+    And a deal named "Abc group deal #1" exists with attributes "published:1,group_deal:1,price:123,deal_price:100,discounted_price:25,social_media_description:quo vadis,created_leads:5,min_created_leads:7"
+    And deal named "Abc group deal #1" is a primary featured deal
+    Given I visit domain http://fairdeals.dk
+    And I should see "5 leads / 2 missing"
 
   #7630
-  @m19 @requested @group_deals
+  @m19 @requested @group_deals @_tested @_done @tgn
   Scenario: As admin I can set per deal minimum number of leads that needs to be generated to give the displayed price
+    Given a deal named "Abc group deal #1" exists with attributes "published:1,group_deal:1,price:123,deal_price:100,discounted_price:25,social_media_description:quo vadis,created_leads:5,min_created_leads:7"
+    And I am on the homepage
+    And I sign in as blazejek@gmail.com with password secret
+    And I follow translated "layout.main_menu.admin.deals"
+    And I follow translated "administration.deals.index.view.edit"
+    And I fill in "deal_min_created_leads" with "22"
+    And I press translated "administration.deals.edit.view.update_button"

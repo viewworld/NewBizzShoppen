@@ -11,6 +11,7 @@ class Buyers::DealsController < Buyers::BuyerController
 
   def create
     @deal = current_user.deals.build(params[:deal])
+    @deal.min_created_leads = Settings.default_group_deal_min_leads_created.to_i
     if @deal.save
       @deal.reload
       @deal.deal_template_ids = params[:deal][:deal_template_ids]

@@ -15,6 +15,8 @@
               <br/>
               <%= t("deals.index.view.save") %> <span class="b red"><%= featured.deal.saving %></span>
               <%= bt_link_to nil, t("deals.index.view.view_deal"), deal_path(featured.deal.slug) %>
+              <br />
+              <%= group_deal_leads_created_and_missing(featured.deal) %>
             </p>
           </div>
         </param:content>

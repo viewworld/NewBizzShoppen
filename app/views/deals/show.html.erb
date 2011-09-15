@@ -33,6 +33,10 @@
       <p><%= @deal.fine_print %></p>
 
       <% if @deal.group_deal? %>
+      <h3><%= t("deals.show.view.created_leads_label") %></h3>
+
+      <p><%= group_deal_leads_created_and_missing(@deal) %></p>
+
       <h3><%= t("deals.show.view.time_left_label") %></h3>
 
       <p>

@@ -25,9 +25,11 @@ module DealsHelper
   end
 
   def group_deal_leads_created_and_missing(deal)
-    temp_arr = []
-    temp_arr << "#{deal.created_leads} #{I18n.t("deals.common.created_leads_count")}" if deal.created_leads.to_i > 0
-    temp_arr << "#{deal.min_created_leads - deal.created_leads} #{I18n.t("deals.common.missing_leads_count")}" if deal.min_created_leads.to_i > 0 and deal.min_created_leads > deal.created_leads
-    temp_arr.join(" / ")
+    if deal.group_deal?
+      temp_arr = []
+      temp_arr << "#{deal.created_leads} #{I18n.t("deals.common.created_leads_count")}" if deal.created_leads.to_i > 0
+      temp_arr << "#{deal.min_created_leads - deal.created_leads} #{I18n.t("deals.common.missing_leads_count")}#{" " + I18n.t("deals.common.leads_label") if deal.created_leads.to_i <= 0}" if deal.min_created_leads.to_i > 0 and deal.min_created_leads > deal.created_leads
+      temp_arr.join(" / ")
+    end
   end
 end

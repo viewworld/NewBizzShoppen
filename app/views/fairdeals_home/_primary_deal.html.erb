@@ -24,6 +24,8 @@
             <p>
               <%= bt_link_to nil, t("deals.index.view.view_deal"), deal_path(primary_deal.slug) %>
             </p>
+            <br />
+            <p><%= group_deal_leads_created_and_missing(primary_deal) %></p>
 
           </div>
 
