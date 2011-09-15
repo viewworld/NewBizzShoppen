@@ -545,9 +545,62 @@ Feature: Agent campaign - calling session
 #    And I press translated "call_results.edit.save_button"
 
     #7574
-    @m19 @requested @upgrade_to_buyer @$_call_centre_agent
+    @m19 @requested @upgrade_to_buyer @$_call_centre_agent @_done @_tested @tgn
     Scenario: I can upgrade contact to buyer
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      And I select "Upgrade to buyer" from "selected_result_id"
+      And I follow translated "call_results.edit.button_new_result"
+      And I fill in "call_result_contact_company_name" with "Custom company"
+      And I fill in "call_result_contact_first_name" with "John"
+      And I fill in "call_result_contact_last_name" with "Dohn"
+      And I fill in "call_result_contact_address_line_1" with "LongRoad 2"
+      And I fill in "call_result_contact_zip_code" with "21-221"
+      And I fill in "call_result_contact_email_address" with "new_buyer888@nbs.com"
+      And I follow translated "call_results.new.save_button"
+      Then I should see translated "call_results.create.flash.successfully_added"
+      And last email sent should have been sent to recipient "new_buyer888@nbs.com"
+      And last email sent should have content "/buyer_home"
+      And last email sent should have content "Fairleads password: testin"
+      And last email sent should have content "Screen name: Dohn"
+      And last email sent should have content "Fairleads username: new_buyer888@nbs.com"
+      Then I am not sign in
+      And I am on the homepage
+      And I sign in as new_buyer888@nbs.com with password testin
+      Then I should see translated "my_profile.edit.view.header_contact_confirmation"
+      And I press translated "password.edit.view.button_update_user"
+      And last email sent should have been sent to recipient "new_buyer888@nbs.com"
+      And last email sent should have content "/buyer_home"
+      And last email sent should have content "Login: new_buyer888@nbs.com"
+      And last email sent should have content "Linked with account: not linked"
+
 
     #7574
-    @m19 @requested @upgrade_to_member @$_call_centre_agent
+    @m19 @requested @upgrade_to_member @$_call_centre_agent @_done @_tested @tgn
     Scenario: I can upgrade contact to member (procurment manager)
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      And I select "Upgrade to member" from "selected_result_id"
+      And I follow translated "call_results.edit.button_new_result"
+      And I fill in "call_result_contact_company_name" with "Custom company"
+      And I fill in "call_result_contact_first_name" with "John"
+      And I fill in "call_result_contact_last_name" with "Dohn"
+      And I fill in "call_result_contact_address_line_1" with "LongRoad 2"
+      And I fill in "call_result_contact_address_line_3" with "NY"
+      And I fill in "call_result_contact_zip_code" with "21-221"
+      And I fill in "call_result_contact_phone_number" with "+44 92423423232"
+      And I fill in "call_result_contact_email_address" with "new_member888@nbs.com"
+      And I follow translated "call_results.new.save_button"
+      Then I should see translated "call_results.create.flash.successfully_added"
+      And last email sent should have been sent to recipient "new_member888@nbs.com"
+      And last email sent should have content "fairdeals"
+      And last email sent should have content "Fairdeals password: testin"
+      And last email sent should have content "Screen name: Dohn"
+      And last email sent should have content "Fairdeals username: new_member888@nbs.com"
+      Then I am not sign in
+      And I am on the homepage
+      And I sign in as new_member888@nbs.com with password testin
+      Then I should see translated "my_profile.edit.view.header_contact_confirmation"
+      And I press translated "password.edit.view.button_update_user"
+      And last email sent should have been sent to recipient "new_member888@nbs.com"
+      And last email sent should have content "fairdeals"
+      And last email sent should have content "Login: new_member888@nbs.com"
+      And last email sent should have content "Linked with account: not linked"
