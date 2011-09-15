@@ -1478,6 +1478,18 @@ span.cke_skin_kama
     margin-top: 5px;
 }
 
+
+.contact_us_frm p
+{
+    padding: 3px 0;
+}
+.contact_us_frm p img
+{
+    padding-right: 7px;
+    vertical-align: middle;
+}
+
+
 /* --- other styles ----
 ------------------------------------------------------------------------------------ */
 
