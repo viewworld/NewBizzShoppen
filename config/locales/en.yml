@@ -738,7 +738,7 @@ en:
         deal_request:
           name: "Name"
           email_from: "E-mail"
-          phone_number: "Phone number"
+          phone_number: "Phone"
           description: "Request"
           send_email_button: "Send"
         request_a_deal: "Request a deal"

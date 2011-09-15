@@ -57,7 +57,7 @@
 
     <% unless user_signed_in? %>
 
-        <frm title="I have an account" c="no_marg">
+        <frm title="I have an account">
           <div class="pdd_10">
             <%= semantic_form_for(:user, :url => session_path(:user)) do |f| %>
                 <fieldset class="inputs labels_100 inputs_180 no_pdd">
@@ -84,55 +84,67 @@
     <% end %>
 
     <% if Settings.contact_us_phone.present? or Settings.contact_us_email.present? or Settings.contact_us_skype.present? %>
-    <div class="homepage_actions frm_dark pdd_10">
-      <h2><%= t("fairdeals_home.show.view.contact_us") %></h2>
+        <div class="frm_dark pdd_10 contact_us_frm">
+          <h2><%= t("fairdeals_home.show.view.contact_us") %></h2>
 
-      <% if Settings.contact_us_phone.present? %>
-        <p>[Phone ico]: <%= Settings.contact_us_phone %></p>
-      <% end %>
-      <% if Settings.contact_us_email.present? %>
-        <p>[E-mail ico]: <%= link_to Settings.contact_us_email, "mailto:#{Settings.contact_us_email}" %></p>
-      <% end %>
-      <% if Settings.contact_us_skype.present? %>
-        <p>[Skype ico]: <%= link_to Settings.contact_us_skype, "skype:#{Settings.contact_us_skype}" %></p>
-      <% end %>
-    </div>
+          <% if Settings.contact_us_phone.present? %>
+              <p><%= image_tag("fairdeals/icons/phone.png") %><strong><%= Settings.contact_us_phone %></strong></p>
+          <% end %>
+          <% if Settings.contact_us_email.present? %>
+              <p><%= image_tag("fairdeals/icons/mail.png") %><strong><%= link_to Settings.contact_us_email, "mailto:#{Settings.contact_us_email}" %></strong></p>
+          <% end %>
+          <% if Settings.contact_us_skype.present? %>
+              <p><%= image_tag("fairdeals/icons/skype.png") %><strong><%= link_to Settings.contact_us_skype, "skype:#{Settings.contact_us_skype}" %></strong></p>
+          <% end %>
+        </div>
     <% end %>
 
-    <div class="homepage_actions frm_dark pdd_10">
-    <h2><%= t("fairdeals_home.show.view.request_a_deal") %></h2>
+    <div class="frm_dark pdd_10">
+      <h2><%= t("fairdeals_home.show.view.request_a_deal") %></h2>
 
-    <%= form_for :email_deal_request_preview, :url => category_requests_path do |f| %>
-      <div class="pdd_10 no_pdd_t">
+      <%= form_for :email_deal_request_preview, :url => category_requests_path do |f| %>
 
-        <fieldset class="inputs labels_ta_r">
-          <ol class="align_inputs">
-            <li class="string">
-              <%= f.label t("fairdeals_home.show.view.deal_request.name") %>
-              <%= f.text_field :email_from %> <%= custom_error_for_object_and_field(@email_deal_request_preview, :email_from) %>
-              <p class="inline-hints"><%= hint_for("category_request", :email_from) %></p>
-            </li>
-            <li class="string">
-              <%= f.label t("fairdeals_home.show.view.deal_request.email_from") %>
-              <%= f.text_field :email_from %> <%= custom_error_for_object_and_field(@email_deal_request_preview, :email_from) %>
-              <p class="inline-hints"><%= hint_for("category_request", :email_from) %></p>
-            </li>
-            <li class="string">
-              <%= f.label t("fairdeals_home.show.view.deal_request.phone_number") %>
-              <%= f.text_field :phone_number %> <%= custom_error_for_object_and_field(@email_deal_request_preview, :phone_number) %>
-              <p class="inline-hints"><%= hint_for("category_request", :phone_number) %></p>
-            </li>
-            <li class="text">
-              <%= f.label t("fairdeals_home.show.view.deal_request.description") %>
-              <%= f.text_area :lead_description, :size => "30x8" %><%= custom_error_for_object_and_field(@email_deal_request_preview, :lead_description) %>
-              <p class="inline-hints"><%= hint_for("category_request", :lead_description) %></p>
-            </li>
-          </ol>
-        </fieldset>
-      </div>
-          <%= submit_tag t("fairdeals_home.show.view.deal_request.send_email_button") %>
 
-    <% end %>
+          <fieldset class="inputs labels_70 inputs_160 no_pdd">
+            <ol class="no_pdd">
+              <li class="string">
+                <%= f.label t("fairdeals_home.show.view.deal_request.name") %>
+                <%= f.text_field :email_from %> <%= custom_error_for_object_and_field(@email_deal_request_preview, :email_from) %>
+                <% if !hint_for("category_request", :email_from).nil? %>
+                    <p class="inline-hints"><%= hint_for("category_request", :email_from) %></p>
+                <% end %>
+              </li>
+              <li class="string">
+                <%= f.label t("fairdeals_home.show.view.deal_request.email_from") %>
+                <%= f.text_field :email_from %> <%= custom_error_for_object_and_field(@email_deal_request_preview, :email_from) %>
+                <% if !hint_for("category_request", :email_from).nil? %>
+                    <p class="inline-hints"><%= hint_for("category_request", :email_from) %></p>
+                <% end %>
+              </li>
+              <li class="string">
+                <%= f.label t("fairdeals_home.show.view.deal_request.phone_number") %>
+                <%= f.text_field :phone_number %> <%= custom_error_for_object_and_field(@email_deal_request_preview, :phone_number) %>
+                <% if !hint_for("category_request", :phone_number).nil? %>
+                  <p class="inline-hints"><%= hint_for("category_request", :phone_number) %></p>
+                <% end %>
+              </li>
+              <li class="text">
+                <%#= f.label t("fairdeals_home.show.view.deal_request.description") %>
+                <%= f.text_area :lead_description, :style => "width:240px;height: 80px;" %><%= custom_error_for_object_and_field(@email_deal_request_preview, :lead_description) %>
+                <% if !hint_for("category_request", :lead_description).nil? %>
+                  <p class="inline-hints"><%= hint_for("category_request", :lead_description) %></p>
+                <% end %>
+              </li>
+              <li class="commit">
+                <ibt c="fltri">
+                  <%= submit_tag t("fairdeals_home.show.view.deal_request.send_email_button") %>
+                </ibt>
+              </li>
+            </ol>
+          </fieldset>
+
+
+      <% end %>
     </div>
 
     <div class="news">
