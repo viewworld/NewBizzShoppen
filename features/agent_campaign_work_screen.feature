@@ -497,8 +497,27 @@ Feature: Agent campaign - calling session
     Scenario: Category buyer changes
 
     #7581
-    @m19 @requested @upgrade_to_category_buyer @$_call_centre_agent
+    @m19 @requested @upgrade_to_category_buyer @$_call_centre_agent @_done @_tested @tgn
     Scenario: I should be able to set for category buyer following properties: Newsletter, Allow invoicing, Do not charge vat, Team buyer and Deal maker enabled
+      When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
+      And I select "Upgrade to buyer" from "selected_result_id"
+      And I follow translated "call_results.edit.button_new_result"
+      And I fill in "call_result_contact_company_name" with "Custom company"
+      And I fill in "call_result_contact_first_name" with "John"
+      And I fill in "call_result_contact_last_name" with "Dohn"
+      And I fill in "call_result_contact_address_line_1" with "LongRoad 2"
+      And I fill in "call_result_contact_zip_code" with "21-221"
+      And I fill in "call_result_contact_email_address" with "new_buyer888@nbs.com"
+      And I check "call_result_user_big_buyer"
+      And I check "call_result_user_not_charge_vat"
+      And I check "call_result_user_team_buyers"
+      And I check "call_result_user_deal_maker_role_enabled"
+      And I fill in "call_result_user_big_buyer_purchase_limit" with "2398"
+      And I follow translated "call_results.new.save_button"
+      Then I should see translated "call_results.create.flash.successfully_added"
+      And last email sent should have been sent to recipient "new_buyer888@nbs.com"
+      And user "new_buyer888@nbs.com" with role "customer" should have attributes "big_buyer:true, not_charge_vat:true, team_buyers:true, big_buyer_purchase_limit:2398.0"
+      And user "new_buyer888@nbs.com" has deal maker role enabled
   
     @m14 @requested @my_results @$_call_centre_agent @tgn @_done @tested_elsewhere
     Scenario: I should see "My results" renamed to "Production" and displayed the same way as campaign's "Results"

@@ -243,6 +243,14 @@ When /^user "([^"]*)" with role "([^"]*)" has attributes "([^"]*)"$/ do |email, 
   user.update_attributes(attrs)
 end
 
+When /^user "([^"]*)" with role "([^"]*)" should have attributes "([^"]*)"$/ do |email, role_name, options|
+  user = "User::#{role_name.camelize}".constantize.first(:conditions => {:email => email})
+  attrs = Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys
+  attrs.each_pair do |method, value|
+    assert user.send(method) == eval(value)
+  end
+end
+
 When /^user "([^"]*)" with role "([^"]*)" added lead "([^"]*)" to cart$/ do |email, role_name, lead_name|
   user = "User::#{role_name.camelize}".constantize.first(:conditions => {:email => email})
   lead = Lead.where(:header => lead_name).first

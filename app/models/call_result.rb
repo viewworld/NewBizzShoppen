@@ -203,14 +203,21 @@ class CallResult < ActiveRecord::Base
   end
 
   def upgrade_to_user(role)
-    user = "User::#{role.camelize}".constantize.new(:email => contact_email_address, :first_name => contact_first_name,
-                            :last_name => contact_last_name,
-                            :address_attributes => { :address_line_1 => contact_address_line_1, :zip_code => contact_zip_code,
-                                                     :country_id => contact_country_id,  :address_line_2 => contact_address_line_2,
-                                                     :address_line_3 => contact_address_line_3, :region_id => contact.region_id},
-                            :agreement_read => true, :company_name => contact.company_name, :phone => contact_phone_number,
-                            :contact => contact, :vat_number => contact.company_vat_no,
-                            :company_ean_number => contact.company_ean_number)
+    user_params = {:email => contact_email_address, :first_name => contact_first_name,
+                   :last_name => contact_last_name,
+                   :address_attributes => { :address_line_1 => contact_address_line_1, :zip_code => contact_zip_code,
+                                             :country_id => contact_country_id,  :address_line_2 => contact_address_line_2,
+                                             :address_line_3 => contact_address_line_3, :region_id => contact.region_id},
+                   :agreement_read => true, :company_name => contact.company_name, :phone => contact_phone_number,
+                   :contact => contact, :vat_number => contact.company_vat_no,
+                   :company_ean_number => contact.company_ean_number}
+
+    if ["category_buyer", "customer"].include?(role)
+      user_params.merge!(:big_buyer => user_big_buyer, :not_charge_vat => user_not_charge_vat, :team_buyers => user_team_buyers,
+                         :deal_maker_role_enabled => user_deal_maker_role_enabled, :big_buyer_purchase_limit => user_big_buyer_purchase_limit.to_f)
+    end
+
+    user = "User::#{role.camelize}".constantize.new(user_params)
 
     users_count = User.where("last_name = ?", contact_last_name).count
     user.screen_name = "#{contact_last_name}#{' ' + users_count.to_s if users_count > 0}"

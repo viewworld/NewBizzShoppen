@@ -35,14 +35,14 @@
             <%= custom_error_for_object_and_field(call_result, :contact_country_id) %>
           </li>
 
-          <% if call_result.result.upgrades_to_category_buyer? or call_result.result.upgrades_to_buyer? %>
+          <% if (call_result.result.upgrades_to_category_buyer? or call_result.result.upgrades_to_buyer?) and call_result.new_record? %>
               <span id="big_buyer_purchase_limit_span" style="display: none;">
-              <%= form.input :user_big_buyer_purchase_limit %>
+              <%= form.input :user_big_buyer_purchase_limit, :label => t("call_results.new.user_big_buyer_purchase_limit") %>
               </span>
-              <%= form.input :user_big_buyer, :as => :boolean, :onclick => "show_hide_big_buyer_purchase_limit()" %>
-              <%= form.input :user_not_charge_vat, :as => :boolean %>
-              <%= form.input :user_team_buyers, :as => :boolean %>
-              <%= form.input :user_deal_maker_role_enabled, :as => :boolean %>
+              <%= form.input :user_big_buyer, :as => :boolean, :onclick => "show_hide_big_buyer_purchase_limit()", :label => t("call_results.new.user_big_buyer") %>
+              <%= form.input :user_not_charge_vat, :as => :boolean, :label => t("call_results.new.user_not_charge_vat") %>
+              <%= form.input :user_team_buyers, :as => :boolean, :label => t("call_results.new.user_team_buyers") %>
+              <%= form.input :user_deal_maker_role_enabled, :as => :boolean, :label => t("call_results.new.user_deal_maker_role_enabled") %>
           <% end %>
 
           <% if call_result.result.upgrades_to_category_buyer? %>

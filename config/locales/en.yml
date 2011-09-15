@@ -518,6 +518,11 @@ en:
       contact_zip_code: "Zip code"
       customize_email_template: "Customize email"
       contact_country: "Country"
+      user_big_buyer_purchase_limit: "Big buyer purchase limit (in Euro)"
+      user_big_buyer: "Big buyer"
+      user_not_charge_vat: "Not charge vat"
+      user_team_buyers: "Team buyer"
+      user_deal_maker_role_enabled: "Deal maker role enabled"
     edit:
       title: Edit result
       form_title: Edit
