@@ -260,6 +260,7 @@ Nbs::Application.routes.draw do
   resources :phone_codes
   resources :regions
   resources :category_requests, :only => [:new, :create]
+  resources :deal_requests, :only => [:create]
   resources :category_interests, :only => [:create]
 
   resources :news

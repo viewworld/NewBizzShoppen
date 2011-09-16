@@ -102,16 +102,16 @@
     <div class="frm_dark pdd_10">
       <h2><%= t("fairdeals_home.show.view.request_a_deal") %></h2>
 
-      <%= form_for :email_deal_request_preview, :url => category_requests_path do |f| %>
+      <%= form_for :email_deal_request_preview, :url => deal_requests_path do |f| %>
 
 
           <fieldset class="inputs labels_70 inputs_160 no_pdd">
             <ol class="no_pdd">
               <li class="string">
                 <%= f.label t("fairdeals_home.show.view.deal_request.name") %>
-                <%= f.text_field :email_from %> <%= custom_error_for_object_and_field(@email_deal_request_preview, :email_from) %>
-                <% if !hint_for("category_request", :email_from).nil? %>
-                    <p class="inline-hints"><%= hint_for("category_request", :email_from) %></p>
+                <%= f.text_field :name %> <%= custom_error_for_object_and_field(@email_deal_request_preview, :name) %>
+                <% if !hint_for("category_request", :name).nil? %>
+                    <p class="inline-hints"><%= hint_for("category_request", :name) %></p>
                 <% end %>
               </li>
               <li class="string">
@@ -130,9 +130,9 @@
               </li>
               <li class="text">
                 <%#= f.label t("fairdeals_home.show.view.deal_request.description") %>
-                <%= f.text_area :lead_description, :style => "width:240px;height: 80px;" %><%= custom_error_for_object_and_field(@email_deal_request_preview, :lead_description) %>
-                <% if !hint_for("category_request", :lead_description).nil? %>
-                  <p class="inline-hints"><%= hint_for("category_request", :lead_description) %></p>
+                <%= f.text_area :deal_description, :style => "width:240px;height: 80px;" %><%= custom_error_for_object_and_field(@email_deal_request_preview, :deal_description) %>
+                <% if !hint_for("category_request", :deal_description).nil? %>
+                  <p class="inline-hints"><%= hint_for("category_request", :deal_description) %></p>
                 <% end %>
               </li>
               <li class="commit">
