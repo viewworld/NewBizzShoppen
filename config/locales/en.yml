@@ -3536,3 +3536,7 @@ en:
       view:
         title: "Editing email template %{name}"
         button_cancel: "Cancel"
+  deal_requests:
+    create:
+      flash:
+        email_sent: "Deal request has been sent"
