@@ -3396,6 +3396,7 @@ en:
         price: "Price"
         save: "Save"
         view_deal: "View deal"
+        group_deal_splash_label: "Group deal"
       search:
         keyword_label: "Keyword"
         search_button: "Search"

@@ -5,7 +5,7 @@
         <%= link_to "next", group_deal_path(primary_deal, :next => true), :class => "arrow_right", :remote => true %>
         <div class="frm_head">
             <h2><%= link_to primary_deal.header, deal_path(primary_deal.slug) %></h2>
-            <div class="splash splash_red">Group deal</div>
+            <div class="splash splash_red"><%= t("deals.index.view.group_deal_splash_label") %></div>
         </div>
         <div class="frm_content">
 
