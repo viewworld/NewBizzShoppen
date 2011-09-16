@@ -193,8 +193,13 @@ Feature: Front page for procurment
   Scenario: I should see box where I can request deal from default deal admin, I should be able to fill in name, phone number, email and details of my request
 
   #7630
-  @m19 @requested @group_deals
+  @m19 @requested @group_deals @_done @_tested @rb
   Scenario: Group deal should be marked by a splash saying "Group deal" on the main page in the featured deal box
+    Given a deal named "PrimaryGroupDeal" exists within category "Electronics deals"
+    And a deal named "PrimaryGroupDeal" exists with attributes "published:1,group_deal:1,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
+    And deal named "PrimaryGroupDeal" is a primary featured deal
+    Given I visit domain http://fairdeals.dk
+    And I should see "1" occurrences of css class "splash_red" for tag "div"
 
   #7630
   @m19 @requested @group_deals @_tested @_done @tgn
