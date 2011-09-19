@@ -103,7 +103,7 @@
           <%= deal_show_li(format_date(@deal.end_date), t("deals.show.view.end_date_label")) %>
           <%= deal_show_li(@deal.category.name, t("deals.show.view.category_label")) %>
 
-          <% unless @deal.deal_price.blank? %>
+          <% if !@deal.deal_price.blank? and @deal.deal_price > 0 %>
               <li>
                 <div>
                   <span class="label"><%= t("deals.show.view.price_label") %></span>
@@ -112,11 +112,20 @@
               </li>
           <% end %>
 
-          <% unless @deal.discounted_price.blank? %>
+          <% if !@deal.discounted_price.blank? and @deal.discounted_price > 0 and !@deal.general_discount? %>
               <li>
                 <div>
                   <span class="label"><%= t("deals.show.view.discounted_price_label") %></span>
                   <%= as_currency(@deal.discounted_price, @deal.currency) %> (<%= t("deals.show.view.saving_label") %> <%= @deal.saving %>)
+                </div>
+              </li>
+          <% end %>
+
+          <% if @deal.general_discount? %>
+              <li>
+                <div>
+                  <span class="label"><%= t("deals.show.view.saving_label") %></span>
+                  <%= @deal.saving %>
                 </div>
               </li>
           <% end %>

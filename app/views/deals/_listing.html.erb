@@ -66,6 +66,8 @@
               <% if deal.discounted_price.to_i > 0 %>
                 <p><b><%= t("deals.listing.discounted_price") %>:</b> <%= as_currency(deal.discounted_price, deal.currency) %> (<%= t("deals.listing.price_saving") %>: <%= deal.saving %>)</p>
               <% end %>
+          <% elsif deal.general_discount? %>
+                <p><b><%= t("deals.listing.price_saving") %>:</b> <%= deal.saving %></p>
           <% end %>
 
           <% if !deal.group_deal? and deal.created_leads.to_i > 0 %>
