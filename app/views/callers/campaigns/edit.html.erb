@@ -9,7 +9,7 @@
 
           <%= bt_link_to nil, t("campaigns.edit.results"), callers_campaign_path(@campaign), :class => "fltr" %>
           <%= bt_link_to nil, t("campaigns.edit.agent_assignment_button"), callers_campaign_campaigns_users_path(@campaign), :class => "fltr" %>
-          <%= bt_link_to nil,  t("campaigns.edit.edit_template"),"javascript:void(0)", :onclick => "edit_template()", :class => "fltr" %>
+          <%= bt_link_to nil,  t("campaigns.edit.edit_template"),"javascript:void(0)", :onclick => "edit_template(#{@campaign.id})", :class => "fltr" %>
           <%= select_tag :email_template_id, options_for_select(@campaign.cloned_email_templates.map { |t| [t.name, t.id] }), { :class => "fltr" } %>
         </param:header>
         <param:content>
@@ -93,10 +93,10 @@
 
 <js:>
   <script type="text/javascript">
-    function edit_template()
+    function edit_template(campaign_id)
     {
         if($('#email_template_id option:selected').val() != ''){
-            window.location.href = '/callers/campaigns/17/email_templates/' + $('#email_template_id option:selected').val() + '/edit'
+            window.location.href = '/callers/campaigns/' + campaign_id.toString() + '/email_templates/' + $('#email_template_id option:selected').val() + '/edit'
         }
     }
   </script>
