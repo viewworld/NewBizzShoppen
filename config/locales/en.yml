@@ -3521,6 +3521,7 @@ en:
         user_supplier: "Supplier"
         name: "Name"
         send_invitation: "Send invitation"
+        company_name: "Company name"
     new:
       view:
         new_account: "New %{role} account"
