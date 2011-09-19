@@ -189,8 +189,17 @@ Feature: Front page for procurment
 
 
   #7449
-  @m19 @requested
+  @m19 @requested @selenium @wip
   Scenario: I should see box where I can request deal from default deal admin, I should be able to fill in name, phone number, email and details of my request
+    Given I visit domain http://fairdeals.dk
+    Then I should see translated "fairdeals_home.show.view.request_a_deal"
+    And I fill in "email_deal_request_preview_name" with "Ana Kasparian"
+    And I fill in "email_deal_request_preview_email_from" with "anakasparian@tyt.com"
+    And I fill in "email_deal_request_preview_phone_number" with "+44 4234254345"
+    And I fill in "email_deal_request_preview_deal_description" with "I would like to buy a deal that..."
+    And I press translated "fairdeals_home.show.view.deal_request.send_email_button"
+    And I should see translated "deal_requests.create.flash.email_sent"
+
 
   #7630
   @m19 @requested @group_deals @_done @_tested @rb
