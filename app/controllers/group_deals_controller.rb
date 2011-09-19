@@ -9,6 +9,11 @@ class GroupDealsController < ApplicationController
     else
       @current_deal
     end
+
+    respond_to do |format|
+      format.html {redirect_to root_path(:id => @deal)}
+      format.js {}
+    end
   end
 
 end

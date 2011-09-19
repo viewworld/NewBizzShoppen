@@ -20,6 +20,7 @@ class ResultValue < ActiveRecord::Base
 
   private
   def value_format
+    return true if !result_field.is_mandatory and value.blank?
     case result_field.field_type.to_i
       when ResultField::DATE then
         errors.add(:value, :incorrect_date_format) unless /^(19|20)\d\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/.match value.strip
