@@ -118,8 +118,6 @@ class ApplicationController < ActionController::Base
       buyer_home_path
     elsif ["agent", "call_centre", "call_centre_agent"].include?(role)
       agent_home_path
-    elsif role == "purchase_manager"
-      purchase_manager_home_path
     else
       root_path
     end
