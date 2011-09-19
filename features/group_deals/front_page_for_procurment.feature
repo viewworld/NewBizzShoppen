@@ -206,6 +206,7 @@ Feature: Front page for procurment
     And last email sent should have content "Phone number: +44 4234254345"
     And last email sent should have content "E-mail: anakasparian@tyt.com"
     And last email sent should have content "Request: I would like to buy a deal that..."
+    Given I visit domain http://localhost
 
 
   #7630

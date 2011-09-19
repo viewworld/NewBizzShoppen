@@ -60,7 +60,7 @@ Spork.prefork do
   Around('@_done') do |scenario, block|
   block.call
   Capybara.default_host = 'http://localhost' #for Rack::Test
-  Capybara.app_host = "http://localhost:9887" if Capybara.current_driver == :selenium
+  Capybara.app_host = Capybara.app_host.to_s.gsub("fairdeals.dk", "localhost") if Capybara.current_driver == :selenium
   end
 
 # If you set this to false, any error raised from within your app will bubble
