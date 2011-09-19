@@ -7,12 +7,12 @@ class Ckeditor::AttachmentFile < ::Asset
     if [:thumb, :content].include?(args.first)
       send("url_#{args.first}")
     else
-      data.url(*args)
+      asset.url(*args)
     end
   end
   
   def url_content
-	  data.url
+	  asset.url
 	end
 	
 	def url_thumb
