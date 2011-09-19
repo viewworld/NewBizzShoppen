@@ -384,6 +384,7 @@ en:
       send_material_email_template: "Edit 'Send material' email template"
       upgrade_to_category_buyer_email_template: "Edit 'Upgrade to category buyer' email"
       materials_repository: "Materials repository"
+      edit_template: "Edit template"
     index:
       title: Campaigns
       edit: Edit
