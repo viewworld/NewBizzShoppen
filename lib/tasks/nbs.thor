@@ -221,7 +221,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
             :uniq_id => "upgrade_contact_to_buyer",
             :en => {:subject => "You have been upgraded to buyer",
                     :body => "<p>Fairleads username: {{user.email}}</p><p>Fairleads password: {{password}}</p><p>Screen name: {{user.screen_name}}</p><p><a href=\"{{user.home_page_url}}\">{{user.home_page_url}}</a></p>"},
-            :da => {:subject => "[DK] You have been upgraded to category buyer",
+            :da => {:subject => "[DK] You have been upgraded to buyer",
                     :body => "<p>Fairleads username: {{user.email}}</p><p>Fairleads password: {{password}}</p><p>Screen name: {{user.screen_name}}</p><p><a href=\"{{user.home_page_url}}\">{{user.home_page_url}}</a></p>"}
         },
         {
@@ -229,7 +229,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
             :uniq_id => "upgrade_contact_to_member",
             :en => {:subject => "You have been upgraded to member",
                     :body => "<p>Fairdeals username: {{user.email}}</p><p>Fairdeals password: {{password}}</p><p>Screen name: {{user.screen_name}}</p><p><a href=\"{{user.home_page_url}}\">{{user.home_page_url}}</a></p>"},
-            :da => {:subject => "[DK] You have been upgraded to category buyer",
+            :da => {:subject => "[DK] You have been upgraded to member",
                     :body => "<p>Fairdeals username: {{user.email}}</p><p>Fairdeals password: {{password}}</p><p>Screen name: {{user.screen_name}}</p><p><a href=\"{{user.home_page_url}}\">{{user.home_page_url}}</a></p>"}
         },
         {
