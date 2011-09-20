@@ -12,6 +12,8 @@ class Campaign < ActiveRecord::Base
   has_many :materials, :as => :resource, :class_name => "Material", :dependent => :destroy
   has_one :send_material_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'result_send_material'", :dependent => :destroy
   has_one :upgrade_contact_to_category_buyer_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'upgrade_contact_to_category_buyer'", :dependent => :destroy
+  has_one :upgrade_contact_to_buyer_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'upgrade_contact_to_buyer'", :dependent => :destroy
+  has_one :upgrade_contact_to_member_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'upgrade_contact_to_member'", :dependent => :destroy
   has_many :user_session_logs
 
   validates_uniqueness_of :name
@@ -40,13 +42,17 @@ class Campaign < ActiveRecord::Base
   scope :available_for_user, lambda { |user| includes(:users).where("users.id = :user_id OR campaigns.creator_id = :user_id", {:user_id => user.id}) unless user.has_role? :admin }
 
   before_save :set_euro_fixed_cost_value, :set_euro_production_value_per_hour
-  after_save :check_send_material_email_template, :check_upgrade_to_category_buyer_email_template
+  after_save :check_email_templates
 
   FIXED_COST = 0.freeze
   AGENT_BILLING_RATE_COST = 1.freeze
   FIXED_HOURLY_RATE_COST = 2.freeze
   NO_COST = 3.freeze
   COST_TYPES = [FIXED_COST, AGENT_BILLING_RATE_COST, FIXED_HOURLY_RATE_COST, NO_COST]
+  CLONED_TEMPLATES = {
+      :send_material_email_template => 'result_send_material', :upgrade_contact_to_category_buyer_email_template => 'upgrade_contact_to_category_buyer',
+      :upgrade_contact_to_buyer_email_template => 'upgrade_contact_to_buyer', :upgrade_contact_to_member_email_template => 'upgrade_contact_to_member'
+  }
 
   private
 
@@ -70,29 +76,24 @@ class Campaign < ActiveRecord::Base
     end
   end
 
-  def check_send_material_email_template
-    unless send_material_email_template
-      global_template = EmailTemplate.global.where(:uniq_id => 'result_send_material').first
-      self.send_material_email_template = global_template.clone
-      global_template.translations.each do |translation|
-        self.send_material_email_template.translations << translation.clone
+  def check_email_templates
+    CLONED_TEMPLATES.each_pair do |template_clone_method, template_name|
+      unless send(template_clone_method)
+        global_template = EmailTemplate.global.where(:uniq_id => template_name).first
+        self.send("#{template_clone_method}=".to_sym, global_template.clone)
+        global_template.translations.each do |translation|
+          self.send(template_clone_method).translations.send("<<".to_sym, translation.clone)
+        end
+        self.save
       end
-      self.save
-    end
-  end
-
-  def check_upgrade_to_category_buyer_email_template
-    unless upgrade_contact_to_category_buyer_email_template
-      global_template = EmailTemplate.global.where(:uniq_id => 'upgrade_contact_to_category_buyer').first
-      self.upgrade_contact_to_category_buyer_email_template = global_template.clone
-      global_template.translations.each do |translation|
-        self.upgrade_contact_to_category_buyer_email_template.translations << translation.clone
-      end
-      self.save
     end
   end
 
   public
+
+  def cloned_email_templates
+    CLONED_TEMPLATES.keys.map { |template_method| send(template_method)}
+  end
 
   def return_contact_to_the_pool
     contacts.where("agent_id NOT IN (?)", user_ids).each { |c| c.update_attribute(:agent_id, nil) }

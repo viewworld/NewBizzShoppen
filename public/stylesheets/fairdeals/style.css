@@ -1478,6 +1478,40 @@ span.cke_skin_kama
     margin-top: 5px;
 }
 
+
+.contact_us_frm p
+{
+    padding: 3px 0;
+}
+.contact_us_frm p img
+{
+    padding-right: 7px;
+    vertical-align: middle;
+}
+
+
+
+.splash 
+{
+    background: url("/images/fairdeals/icons/splash_red.png") no-repeat 0 0;
+    width: 83px;
+    height: 60px;
+    padding-top: 24px;
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    
+    text-align:center;
+    text-shadow: 0 1px 0 #e77b6d;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 16px;
+
+    color: #782300;
+}
+
+
+
 /* --- other styles ----
 ------------------------------------------------------------------------------------ */
 

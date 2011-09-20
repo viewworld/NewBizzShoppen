@@ -14,7 +14,7 @@
     <% end %>
     <th style="width: 36px;"></th>
     <th style="width: 350px;"><%= t("deals.listing.lead_description_label") %></th>
-    <th style="width: 250px;"></th>
+    <th style="width: 80px;"></th>
     <th colspan="2"><%#= t("deals.listing.contact_label") %></th>
 
     <% if block_tools %>
@@ -47,7 +47,7 @@
 
         <td>
           <% unless deal.logo.blank? %>
-              <%= image_tag(deal.logo.url(:thumb), :style => "float:left;margin:4px") %>
+              <%= image_tag(deal.logo.url(:medium), :style => "float:left;margin:4px; width:60px;") %>
           <% end %>
         </td>
 
@@ -66,10 +66,15 @@
               <% if deal.discounted_price.to_i > 0 %>
                 <p><b><%= t("deals.listing.discounted_price") %>:</b> <%= as_currency(deal.discounted_price, deal.currency) %> (<%= t("deals.listing.price_saving") %>: <%= deal.saving %>)</p>
               <% end %>
+          <% elsif deal.general_discount? %>
+                <p><b><%= t("deals.listing.price_saving") %>:</b> <%= deal.saving %></p>
           <% end %>
 
-          <% if deal.created_leads.to_i > 0 %>
+          <% if !deal.group_deal? and deal.created_leads.to_i > 0 %>
             <p><b><%= t("deals.listing.created_leads") %>:</b> <%= deal.created_leads.to_i %></p>
+          <% elsif deal.created_leads.to_i > 0 or deal.min_created_leads.to_i > 0 %>
+           <p><b><%= t("deals.listing.created_leads") %>:</b> <%= group_deal_leads_created_and_missing(deal) %></p>
+
           <% end %>
 
           <p class="element_description i expandable"><b>Description:</b> <%= deal.description %></p>
@@ -98,7 +103,7 @@
         <td>
 
           <ul>
-            <li><iframe src="https://www.facebook.com/plugins/like.php?app_id=101408449959161&amp;href=<%= escape_uri(deal_url(deal)) %>&amp;send=false&amp;layout=button_count&amp;width=250&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:250px; height:21px;" allowTransparency="true"></iframe></li>
+            <li><iframe src="https://www.facebook.com/plugins/like.php?app_id=101408449959161&amp;href=<%= escape_uri(deal_url(deal)) %>&amp;send=false&amp;layout=button_count&amp;width=250&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px;" allowTransparency="true"></iframe></li>
             <li>
               <%= link_to_function image_tag('fairdeals/bt/social_email.png', :height => "20", :alt => t("deals.show.view.share_by_email")), "$('#modal_for_share_deal_by_email_#{deal.id}').dialog('open');" %>
             </li>

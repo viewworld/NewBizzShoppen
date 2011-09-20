@@ -53,5 +53,9 @@ Feature: Purchase Manager signup
     And I should be signed in
 
   #7549
-  @m19 @requested
+  @m19 @requested @_done @_done @tgn
   Scenario: All fields for procurment sign up must be mandatory
+    When I go to purchase manager sign up
+    And I select "" from "user_purchase_manager_address_attributes_country_id"
+    And I press translated "purchase_manager_accounts.new.view.button_create_account"
+    And I should see "12" occurrences of css class "inline-errors" for tag "p"

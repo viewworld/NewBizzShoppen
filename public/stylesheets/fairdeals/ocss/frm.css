@@ -31,7 +31,7 @@
 
 .frm
 {
-    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .frm .frm_head
@@ -133,4 +133,12 @@
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
     border-radius: 10px;    
+}
+
+.frm_dark h2
+{
+    font-size:14px;
+    padding-bottom: 6px;
+    margin-bottom: 7px;
+    background: url(/images/fairdeals/frm/hl_darkfrm.png) repeat-x bottom left;
 }

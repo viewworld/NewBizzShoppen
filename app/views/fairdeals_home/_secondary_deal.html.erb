@@ -6,15 +6,22 @@
             <p class="deal_desc"><%= featured.deal.description.to_s.truncate_letters(55) %></p>
 
             <p class="deal_thumb">
-              <%= image_tag featured.deal.logo.url(:medium), :class => "thumb" if featured.deal.logo %>
+              <%= image_tag featured.deal.logo.url(:medium), :height => "80", :class => "thumb" if featured.deal.logo %>
             </p>
 
             <p class="deal_price">
+              <% if featured.deal.general_discount? %>
+                <%= t("deals.index.view.save") %> <span class="b red"><%= featured.deal.saving %></span>
+              <% else %>
               <%= t("deals.index.view.price") %>
               <span class="b green"><%= as_currency(featured.deal.discounted_price, featured.deal.currency) %></span>
               <br/>
               <%= t("deals.index.view.save") %> <span class="b red"><%= featured.deal.saving %></span>
+              <% end %>
               <%= bt_link_to nil, t("deals.index.view.view_deal"), deal_path(featured.deal.slug) %>
+              <br />
+              <%= group_deal_leads_created_and_missing(featured.deal) %>
+              <clb/>
             </p>
           </div>
         </param:content>

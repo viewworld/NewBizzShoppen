@@ -5,6 +5,11 @@
     </param:content>
     <param:actions>
       <ul class="header_actions">
+        <li>
+          <% if current_user.has_role?(:deal_maker) %>
+            <%= bt_link_to nil, t("buyer.deals.edit.view.edit_deal_request_details_email_template"), edit_email_template_path(@deal.deal_request_details_email_template, :deal_id => @deal.id) %>
+          <% end %>
+        </li>
         <li class="last">
           <%= bt_link_to nil, t("buyer.deals.edit.view.preview"), deal_path(@deal) %>
         </li>

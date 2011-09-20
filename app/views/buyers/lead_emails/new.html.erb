@@ -1,4 +1,5 @@
 <column-mc:>
+  <%= javascript_include_tag :ckeditor %>
   <header back="true"><%= t("lead_buyer.contact_lead_by_email.new.view.header") %></header>
 
   <%= form_for @email_template_preview, :as => :email_template_preview, :url => buyers_lead_purchase_lead_email_path() do |f| %>
@@ -17,10 +18,11 @@
                   <%= f.text_field :subject %>
                 </li>
                 <li class="text">
-                  <%= f.label :body, t("lead_buyer.contact_lead_by_email.new.view.body_label") %>
-                  <%= f.text_area :body, :style => "width: 600px; height: 250px" %>
+
                 </li>
               </ol>
+                  <%= f.label :body, t("lead_buyer.contact_lead_by_email.new.view.body_label") %>
+                  <%= f.cktext_area :body, :width => '1085px', :height => '300px', :toolbar => "Email"  %>
             </fieldset>
           </div>
           

@@ -96,7 +96,7 @@ end
 
 class Asset::DealLogo < Asset
   belongs_to :deal, :foreign_key => "resource_id"
-  has_attached_file :asset, attachment_options.merge(:styles => {:original => "150x100>", :medium => "60x40>", :thumb => "32>x32"})
+  has_attached_file :asset, attachment_options.merge(:styles => {:original => "150x100>", :medium => "60>x40", :thumb => "32>x32"})
   validates_attachment_presence :asset
   validates_attachment_size :asset, :less_than => 1.megabyte
   validates_attachment_content_type :asset, :content_type => Asset::IMAGE_FILE_TYPES, :message => " - #{I18n.t(:validation_asset_images_type)}"
@@ -120,7 +120,7 @@ class Asset::DealImage < Asset
   validates_attachment_content_type :asset, :content_type => Asset::IMAGE_FILE_TYPES, :message => " - #{I18n.t(:validation_asset_images_type)}"
 
   # TODO there must be a better way..
-  def url(style=nil)
+  def url(style=nil, use_timestamp=false)
     if self.class.s3_storage?
       super.gsub('//s3','//fairleads.s3').gsub('/fairleads/','/')
     else
@@ -138,7 +138,7 @@ class Asset::DealMaterial < Asset
   validates_attachment_content_type :asset, :content_type => Asset::DOCUMENT_FILE_TYPES, :message => " - #{I18n.t(:validation_document_images_type)}"
 
   # TODO there must be a better way..
-  def url(style=nil)
+  def url(style=nil, use_timestamp=false)
     if self.class.s3_storage?
       super.gsub('//s3','//fairleads.s3').gsub('/fairleads/','/')
     else

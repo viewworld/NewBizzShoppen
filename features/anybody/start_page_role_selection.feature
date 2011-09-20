@@ -32,9 +32,60 @@ Scenario: I can set remember me option by selecting a checkbox and logging in
   Then I should see translated "devise.sessions.signed_in"
 
 #7455
-@m19 @requested
+@m19 @requested @_done @_tested
 Scenario: For each role homepage there should be two separate blurbs: for logged in and logged out user
+  #buyer
+  Given I am not sign in
+  And I am on the home page
+  And I follow translated "home.show.view.buyer"
+  And I should see "Blurb buyer home"
+  And I should not see "Blurb buyer home logged in"
+  And I sign in as buyer@nbs.com with password secret
+  And I am on the home page
+  And I follow translated "home.show.view.buyer"
+  And I should see "Blurb buyer home logged in"
+  #agent
+  Given I am not sign in
+  And I am on the home page
+  And I follow translated "home.show.view.agent"
+  And I should see "Blurb agent home"
+  And I should not see "Blurb agent home logged in"
+  And I sign in as agent@nbs.com with password secret
+  And I am on the home page
+  And I follow translated "home.show.view.agent"
+  And I should see "Blurb agent home logged in"
+  #purchase manager
+  Given I am not sign in
+  And I am on the home page
+  And I follow translated "home.show.view.purchase_manager"
+  And I should see "Blurb purchase manager home"
+  And I should not see "Blurb agent home logged in"
+  And I sign in as translator_purchase_manager@nbs.com with password secret
+  And I am on the home page
+  And I follow translated "home.show.view.purchase_manager"
+  And I should see "Blurb purchase manager home logged in"
 
 #7452
-@m19 @requested
+@m19 @requested @_done @_tested
 Scenario: When user logs out then he lands on his specific role home page
+  #buyer
+  Given I am not sign in
+  And I am on the home page
+  And I sign in as buyer@nbs.com with password secret
+  And I should be on buyer home
+  Then I am not sign in
+  And I should be on buyer home
+  #agent
+  Given I am not sign in
+  And I am on the home page
+  And I sign in as agent@nbs.com with password secret
+  And I should be on agent home
+  Then I am not sign in
+  And I should be on agent home
+  #purchase manager
+  Given I am not sign in
+  And I am on the home page
+  And I sign in as translator_purchase_manager@nbs.com with password secret
+  And I should be on purchase manager home
+  Then I am not sign in
+  And I should be on the homepage

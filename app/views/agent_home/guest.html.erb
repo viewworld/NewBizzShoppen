@@ -44,7 +44,7 @@
     <% end %>
 
     <div class="<%= "grid_730 fltl" unless user_signed_in? %>">
-      <p><%= blurb("blurb_agent_home") %></p>
+      <p><%= blurb("blurb_agent_home#{'_logged_in' if user_signed_in?}") %></p>
     </div>
 
     <clb/>

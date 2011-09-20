@@ -384,6 +384,7 @@ en:
       send_material_email_template: "Edit 'Send material' email template"
       upgrade_to_category_buyer_email_template: "Edit 'Upgrade to category buyer' email"
       materials_repository: "Materials repository"
+      edit_template: "Edit template"
     index:
       title: Campaigns
       edit: Edit
@@ -518,6 +519,11 @@ en:
       contact_zip_code: "Zip code"
       customize_email_template: "Customize email"
       contact_country: "Country"
+      user_big_buyer_purchase_limit: "Big buyer purchase limit (in Euro)"
+      user_big_buyer: "Big buyer"
+      user_not_charge_vat: "Not charge vat"
+      user_team_buyers: "Team buyer"
+      user_deal_maker_role_enabled: "Deal maker role enabled"
     edit:
       title: Edit result
       form_title: Edit
@@ -658,6 +664,8 @@ en:
       company_name: "Company name"
       date: "Date"
       company_logo: "Company logo"
+      deadline: "Deadline"
+      number_of_suppliers: "Number of suppliers"
     index:
       header: Leads
       header_for: "for"
@@ -727,6 +735,14 @@ en:
         get_free_account: "Get a free account now"
         browse_our_deals: "Browse our deals"
         find_a_vendor: "Find a vendor - make a tender"
+        contact_us: "Contact us"
+        deal_request:
+          name: "Name"
+          email_from: "E-mail"
+          phone_number: "Phone"
+          description: "Request"
+          send_email_button: "Send"
+        request_a_deal: "Request a deal"
   home:
     show:
       view:
@@ -922,6 +938,8 @@ en:
             email_verification_for_procurement_managers: "Email verification for procurement managers"
             email_verification_for_sales_managers: "Email verification for sales managers"
             default_max_auto_buy_per_4_weeks: "Default max auto buy per 4 weeks"
+            contact_us_phone: "Contact us phone number"
+            contact_us_skype: "Contact us Skype username"
       edit:
         view:
           title: "Settings"
@@ -930,6 +948,7 @@ en:
           confirmation_update_message: "Are you sure?"
           title_stats: "Statistics recalculation"
           button_update_stats: "Update stats"
+          contacts_settings_title: "Contact settings"
       update:
         controller:
           successful_update_notice: "Settings were successfully updated."
@@ -1012,6 +1031,8 @@ en:
           title: "Edit deal"
           update_button: "Save"
 
+          preview: "Preview"
+          edit_deal_request_details_email_template: "Edit email template"
     email_bounces:
       index:
         view:
@@ -1776,6 +1797,8 @@ en:
         view:
           title: "Edit deal"
           update_button: "Save"
+          edit_deal_request_details_email_template: "Edit email template"
+          preview: "Preview"
       new:
         view:
           title: "New deal"
@@ -1868,6 +1891,8 @@ en:
         view:
           title: "Edit deal"
           update_button: "Save"
+          edit_deal_request_details_email_template: "Edit email template"
+          preview: "Preview"
   purchase_manager:
     leads:
       index:
@@ -2067,6 +2092,7 @@ en:
           update_button: "Save"
           preview: "Preview"
           new_template: "New template"
+          edit_deal_request_details_email_template: "Edit email template"
     deal_certification_requests:
       index:
         view:
@@ -2604,6 +2630,7 @@ en:
         discounted_price_label: "Discounted deal price"
         saving_percent_label: "Saving:"
         max_auto_buy_label: "Max auto buy per 4 weeks"
+        min_created_leads: "Min created leads"
   models:
     call_result:
       not_unique_email_address: "User with this e-mail already exists!"
@@ -3370,6 +3397,7 @@ en:
         price: "Price"
         save: "Save"
         view_deal: "View deal"
+        group_deal_splash_label: "Group deal"
       search:
         keyword_label: "Keyword"
         search_button: "Search"
@@ -3432,6 +3460,9 @@ en:
         discounted_price_label: "Discounted price"
         get_deal_confirmation_msg: "Do you want to get the deal?"
         time_left: "Time left"
+        company_website_label: "Company website"
+        time_left_label: "Time left"
+        created_leads_label: "Created leads"
     common:
       assets:
         view:
@@ -3453,6 +3484,9 @@ en:
         view:
           header: "My deals"
           new_deal: "Create new deal"
+      created_leads_count: "leads"
+      missing_leads_count: "missing"
+      leads_label: "leads"
     new:
       view:
         frame_header: "Get deal"
@@ -3488,6 +3522,7 @@ en:
         user_supplier: "Supplier"
         name: "Name"
         send_invitation: "Send invitation"
+        company_name: "Company name"
     new:
       view:
         new_account: "New %{role} account"
@@ -3499,3 +3534,12 @@ en:
     update:
       flash:
         invitation_sent: "Invitation has been sent."
+  email_templates:
+    edit:
+      view:
+        title: "Editing email template %{name}"
+        button_cancel: "Cancel"
+  deal_requests:
+    create:
+      flash:
+        email_sent: "Deal request has been sent"

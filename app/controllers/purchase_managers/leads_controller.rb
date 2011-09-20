@@ -3,7 +3,7 @@ class PurchaseManagers::LeadsController < PurchaseManagers::PurchaseManagerContr
 
   set_tab "created_leads"
 
-  before_filter :check_if_deal_is_already_requested, :only => [:create]
+  before_filter :check_if_deal_is_already_requested, :only => [:new, :create]
 
   protected
 
@@ -39,7 +39,7 @@ class PurchaseManagers::LeadsController < PurchaseManagers::PurchaseManagerContr
 
   def check_if_deal_is_already_requested
     if @deal = Deal.find_by_id(params[:deal_id]) and @deal.requested_by?(current_user)
-      redirect_to :back
+      redirect_to deal_path(:id => @deal.slug)
     end
   end
 

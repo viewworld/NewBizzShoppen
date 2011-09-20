@@ -47,7 +47,7 @@ Feature: Fairdeals view deal
     And I should see "Ed Yudkovsky"
     And I should see "buyer@nbs.com"
     And I should see "+49887755"
-    #And I should see "www.azazelinc.com"
+    And I should see "http://www.azazelinc.com"
 
   @_done @non_testable @tgn
   Scenario: Lead is generated using only the existing information about the procurement manager
@@ -74,9 +74,29 @@ Feature: Fairdeals view deal
   Scenario: I should see all fields on one page
 
   ##7631
-  @m19 @requested
+  @m19 @requested @_done @tested_elsewhere
   Scenario: I should see www address for company if provided on the deal view
 
   #7630
-  @m19 @requested
+  @m19 @requested @_tested @_done @tgn
   Scenario: I can see javascript counter on the group deals details page
+    Given a deal named "Abc group deal #1" exists within category "Electronics deals"
+    And a deal named "Abc group deal #1" exists with attributes "published:1,group_deal:1,price:123,deal_price:100,discounted_price:25,social_media_description:quo vadis"
+    Given I visit domain http://fairdeals.dk
+    Then I follow translated "layout.fairdeals.main_menu.deals"
+    And I follow "Electronics deals"
+    And I follow "Abc group deal #1"
+    And I should see "1" occurrences of css class "countdown" for tag "div"
+
+  #7651
+  @m19 @requested @_tested @_done @tgn
+  Scenario: When deal does not have price but has discounted price, its value should be displayed as saving
+    Given a deal named "Abc group deal #1" exists within category "Electronics deals"
+    And a deal named "Abc group deal #1" exists with attributes "published:1,group_deal:1,price:123,deal_price:0,discounted_price:25,social_media_description:quo vadis"
+    Given I visit domain http://fairdeals.dk
+    Then I follow translated "layout.fairdeals.main_menu.deals"
+    And I follow "Electronics deals"
+    And I follow "Abc group deal #1"
+    Then I should not see translated "deals.listing.price"
+    And I should not see translated "deals.listing.discounted_price"
+    But I should see "25%"

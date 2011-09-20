@@ -1,5 +1,19 @@
 <column-mc:>
-  <header back="true" backurl="#{administration_deals_path}"><%= t('administration.deals.edit.view.title') %></header>
+  <header back="true" backurl="#{administration_deals_path}">
+     <param:content>
+        <%= t('administration.deals.edit.view.title') %>
+     </param:content>
+      <param:actions>
+      <ul class="header_actions">
+        <li>
+            <%= bt_link_to nil, t("administration.deals.edit.view.edit_deal_request_details_email_template"), edit_email_template_path(@deal.deal_request_details_email_template, :deal_id => @deal.id) %>
+        </li>
+        <li class="last">
+          <%= bt_link_to nil, t("administration.deals.edit.view.preview"), deal_path(@deal) %>
+        </li>
+      </ul>
+    </param:actions>
+  </header>
 
   <%= semantic_form_for [:administration, @deal], :method => :put, :html => {:multipart => true} do |form| %>
       <frm title="Edit deal">
