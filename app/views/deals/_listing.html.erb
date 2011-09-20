@@ -45,9 +45,9 @@
             <td class="no_pdd_lr"><%= check_box_tag "lead_ids[]", deal.id %></td>
         <% end %>
 
-        <td>
+        <td class="ta_c">
           <% unless deal.logo.blank? %>
-              <%= image_tag(deal.logo.url(:medium), :style => "float:left;margin:4px; width:60px;") %>
+              <%= image_tag(deal.logo.url(:medium)) %>
           <% end %>
         </td>
 
