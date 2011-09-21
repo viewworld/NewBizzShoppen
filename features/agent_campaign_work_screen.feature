@@ -566,7 +566,7 @@ Feature: Agent campaign - calling session
     And I go to the homepage
 
     #7574
-    @m19 @requested @upgrade_to_buyer @$_call_centre_agent @_done @_tested @tgn @wip
+    @m19 @requested @upgrade_to_buyer @$_call_centre_agent @_done @_tested @tgn
     Scenario: I can upgrade contact to buyer
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Upgrade to buyer" from "selected_result_id"
