@@ -2135,6 +2135,11 @@ en:
         header: Categories
         view_lead_templates: View templates
 
+        view_leads: "View leads"
+        view_deals: "View deals"
+    listing:
+      category_details_label: "Category description"
+      actions_label: "Actions"
   buyer_accounts:
     new:
       view:

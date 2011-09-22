@@ -210,4 +210,36 @@ class Category < ActiveRecord::Base
       User.where(:deal_category_id => id).first.present?
     end
   end
+
+  def self.roots_for(user)
+    root_categories = if user
+      if user.admin?
+        roots
+      elsif user.has_role?(:category_buyer) and category_model == LeadCategory
+        user.parent_accessible_categories_without_auto_buy
+      else
+        user.has_accessible_categories? ? roots.within_accessible(user) : user.has_role?(:customer) ? roots.with_customer_unique(user) : roots.with_agent_unique(user)
+      end
+    else
+      roots.without_unique
+    end
+
+    root_categories = root_categories.without_locked_and_not_published unless user and user.admin?
+    root_categories
+  end
+
+  def children_for(user)
+    if user
+      if user.admin?
+        children_categories = children
+      else
+        children_categories = user.has_accessible_categories? ? children.within_accessible(user) : user.has_role?(:customer) ? children.with_customer_unique(user) : children.with_agent_unique(user)
+      end
+    else
+      children_categories = children.without_unique
+    end
+
+    children_categories =  children_categories.without_locked_and_not_published unless user and user.admin?
+    children_categories
+  end
 end
