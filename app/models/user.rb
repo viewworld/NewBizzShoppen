@@ -549,7 +549,7 @@ class User < ActiveRecord::Base
     if rpx_identifier
       User.social_provider(rpx_identifier)
     else
-      "not linked"
+      I18n.t("models.user.not_linked_to_social_provider")
     end
   end
 

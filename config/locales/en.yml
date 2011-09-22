@@ -168,6 +168,8 @@ en:
       lead_added_to_cart_hint: "Your lead has been added to cart. Click %{link} here to checkout."
       here_link: here
       close_hint: "Close"
+    logout_warning_message: "You will be log out after 20 seconds unless you click cancel..."
+    cancel_logout_button: "Cancel"
   errors:
     messages:
       not_found: "not found"
@@ -752,6 +754,7 @@ en:
         purchase_manager: "Procurement manager"
         remember_me: "Remember me"
         sign_in: "Sign in"
+        sign_in_form_title: "I have an account"
         signup_message: "Don't have an account yet"
         agent_signup: "Freelance agent signup"
         buyer_signup: "Sales manager signup"
@@ -780,6 +783,7 @@ en:
         button_update_user: "Save"
         change_password: "Change password"
         password_label: "Password"
+        form_title: "Change your password"
         change_users_password: "Change user's password"
         new_password_label: "New password"
         new_password_confirmation_label: "New password confirmation"
@@ -996,6 +1000,10 @@ en:
           status_label: Status
           owner_type_label: Owner type
           article_label: Article
+          price_range_label: "Price range"
+          sold_range_label: "Sold range"
+          value_range_label: "Value range"
+          user_role_label: "User role"
         ajax:
           not_updated: Lead was not updated
       show:
@@ -1019,6 +1027,7 @@ en:
       new:
         view:
           title: "New deal"
+          form_title: "Create new"
           create_button: "Create"
           check_buyer_email: "Check sales manager email"
           certify: "Certify"
@@ -1362,6 +1371,7 @@ en:
             recipeints: "Recipeints"
             subject: "Subject"
             body: "Body"
+            title: "Send invoice"
     sellers:
       index:
         view:
@@ -1604,6 +1614,7 @@ en:
           filter_with_inactive: "Skip inactive"
           filter_with_outdated: "Skip outdated"
           certify: "Certify"
+          header: "My created leads"
       show:
         view:
           header: "Ratings for lead: %{lead_header}"
@@ -1617,6 +1628,7 @@ en:
       new:
         view:
           title: "New lead"
+          form_title: "Create new"
           button_create: "Create"
           button_create_and_continue: "Create & continue"
           button_create_and_duplicate: "Create & duplicate"
@@ -1669,6 +1681,7 @@ en:
       new:
         view:
           title: "New deal"
+          form_title: "Create new"
           create_button: "Create"
           check_buyer_email: "Check sales manager email"
           no_user_found_message: "No user with email %{email} was found!"
@@ -1802,6 +1815,7 @@ en:
       new:
         view:
           title: "New deal"
+          form_title: "Create new"
           check_buyer_email: "Check sales manager email"
           certify: "Certify"
           create_button: "Create"
@@ -1829,6 +1843,7 @@ en:
       new:
         view:
           title: New lead
+          form_title: "Create new"
           button_create_and_continue: Create & continue
           button_create_and_duplicate: Create & duplicate
           button_create: Create
@@ -1880,6 +1895,7 @@ en:
       new:
         view:
           title: "New deal"
+          form_title: "Create new"
           create_button: "Create"
           check_buyer_email: "Check sales manager email"
           no_user_found_message: "No user with email %{email} was found!"
@@ -1993,6 +2009,7 @@ en:
       new:
         view:
           title: New tender
+          form_title: "Create new"
           button_create_and_continue: Create & continue
           button_create_and_duplicate: Create & duplicate
           button_create: Create
@@ -2085,6 +2102,7 @@ en:
       new:
         view:
           title: "New Deal"
+          form_title: "Create new"
           create_button: "Create"
       edit:
         view:
@@ -2131,6 +2149,7 @@ en:
     new:
       view:
         title: "Category buyer signup"
+        form_title: "Create new account"
         rpx_title: "You are creating Category Buyer account as %{full_name} using %{account_type} account"
         button_create_account: "Create"
         enable_team_buyers: "Enable team buyers"
@@ -2469,6 +2488,7 @@ en:
       new:
         view:
           header: Contact Lead by email
+          form_title: "Email"
           recipient_label: Recipient
           subject_label: Subject
           body_label: Body
@@ -2557,10 +2577,17 @@ en:
         success: "You are not category buyer any more"
         failure: "You are not authorized to perform this action"
 
+    unlink:
+      view:
+        header: "Unlink social account"
+        form_title: "Change your password"
+        button_unlink: "Unlink"
+        button_cancel: "Cancel"
   contact_us:
     new:
       view:
         header: "Contact us"
+        form_title: "Contact form"
         send_email_button: "Send"
         email_subjects:
           agent_inquiry: "Agent inquiry"
@@ -2578,6 +2605,7 @@ en:
         failed_rpx_label: "Hi %{first_name}! We have no fairleads account associated to your %{account_type} profile, do you want to create a new fairleds account and link it to this %{account_type} account?"
         failed_rpx_label_2: "If yes, then just fill up the form below."
       new_account_form:
+        form_title: "Create new account"
         button_cancel: Cancel
     lead_templates:
       listing:
@@ -2613,6 +2641,7 @@ en:
           header_label: "Header"
           description_label: "Description"
           sale_limit_label: "How many venders do you want offers from?"
+        new_translation: "New translation"
     deals:
       table:
         creation_date: Creation date
@@ -2631,12 +2660,21 @@ en:
         saving_percent_label: "Saving:"
         max_auto_buy_label: "Max auto buy per 4 weeks"
         min_created_leads: "Min created leads"
+        header_label: "Name"
+        description_label: "Short description"
+        hidden_description_label: "Detailed description"
+        fine_print_label: "Fine print"
+        company_description_label: "Company description"
+        url_label: "URL"
+        additional_language: "Additional language"
+        new_translation: "New translation"
   models:
     call_result:
       not_unique_email_address: "User with this e-mail already exists!"
     user:
       payout_validation_message: "can only be between 0 and 100"
       agreement_read_validation_message: "You have to accept the agreement"
+      not_linked_to_social_provider: "not linked"
     lead:
       hotness:
         lvl0: Upcoming
@@ -2658,6 +2696,7 @@ en:
       field_prefixes:
         header: "A company is interested in"
         description: "A company is interested in"
+      incorrect_category: "Incorrect category!"
     lead_template_field:
       field_type:
         type0: Text
@@ -2705,6 +2744,16 @@ en:
       fixed_cost_value_is_blank: "Fixed cost must be set"
       agents_dont_have_billing_rates_defined: "Agents don't have billing rates defined."
       no_agent_assigned: "Notice: You selected Agent's billing rate as campaign's cost type but there are no agents assigned to this campaign."
+    category_request_template:
+      yes: "Yes"
+      no: "No"
+      guest: "Guest"
+      agent: "Agent"
+      buyer: "Buyer"
+    credit_note:
+      type:
+        credit: "credit"
+        refund: "refund"
   activerecord:
     models:
       article:
@@ -2935,6 +2984,9 @@ en:
         asset_is_invalid: "Asset is invalid"
       destroy:
         success: "Asset has been successfully removed."
+    featured_deals:
+      create:
+        notice: "Featured deals have been updated."
   formtastic:
     date:
       formats:
@@ -2946,6 +2998,8 @@ en:
         address_line_3: "City"
         zip_code: "Zip code"
         country: "Country"
+        country_id: "Country"
+        region_id: "Region"
       bank_account:
         bank_name: "Bank name"
         iban_no: "Iban no"
@@ -2956,6 +3010,7 @@ en:
         global_default: "Global default"
       lead:
         company_name: "Name"
+        contact_title: "Contact title"
         company_phone_number: "Company phone number"
         company_website: "Company website"
         address_line_1: "Address line 1"
@@ -2985,6 +3040,48 @@ en:
         email_address: "Email address"
         linkedin_url: "Linkedin url"
         facebook_url: "Facebook url"
+      lead_translation:
+        header: "Header"
+        description: "Description"
+        hidden_description: "Hidden description"
+      deal:
+        company_name: "Name"
+        company_phone_number: "Company phone number"
+        company_website: "Company website"
+        address_line_1: "Address line 1"
+        address_line_2: "Address line 2"
+        address_line_3: "City"
+        zip_code: "Zip code"
+        city: "City"
+        country_id: "Country"
+        region_id: "Region"
+        company_vat_no: "Company REG/VAT"
+        company_ean_number: "Company EAN number"
+        tmp_creator_id: "Creator"
+        lead_category_id: "Lead category"
+        is_international: "Country"
+        fine_print: "Fine print"
+        company_description: "Company description"
+        social_media_description: "Social media description"
+        start_date: "Start date"
+        end_date: "End date"
+        use_company_name_as_category: "Use company name as category"
+        deal_price: "Deal price"
+        purchase_value: "Purchase value"
+        price: "Price"
+        currency_id: "Currency"
+        published: "Published"
+        sale_limit: "Sale limit"
+        purchase_decision_date: "Purchase decision date"
+        contact_name: "Name"
+        direct_phone_number: "Direct phone number"
+        phone_number: "Phone number"
+        email_address: "Email address"
+        linkedin_url: "Linkedin url"
+        facebook_url: "Facebook url"
+        created_leads: "Created leads"
+        group_deal: "Group deal"
+        deal_admin_email: "Deal admin email"
       contact:
         company_name: "Name"
         company_phone_number: "Company phone number"
@@ -3092,6 +3189,7 @@ en:
         agreement_read: "Agreement read"
         skip_email_verification: "Don't verify email address"
       user/agent:
+        company_name: "Company name"
         first_name: "First name"
         last_name: "Last name"
         can_edit_payout_information: "Can edit payout information"
@@ -3109,7 +3207,11 @@ en:
         agreement_read: "Agreement read"
         certification_level: "Certification level"
         skip_email_verification: "Don't verify email address"
-      user/administrator:
+        time_zone: "Time zone"
+        deal_maker_role_enabled: "Deal maker role enabled"
+        billing_rate: "Billing rate"
+        currency_id: "Currency"
+      user/admin:
         first_name: "First name"
         last_name: "Last name"
         screen_name: "Screen name"
@@ -3121,6 +3223,7 @@ en:
         not_charge_vat: "Do not charge VAT"
         agreement_read: "Agreement read"
         skip_email_verification: "Don't verify email address"
+        time_zone: "Time zone"
       user/customer:
         first_name: "First name"
         last_name: "Last name"
@@ -3229,6 +3332,10 @@ en:
         view:
           header: "Change your password"
           contact_upgraded_to_category_buyer_info: "In order to start using Fairleads please set your new password below"
+      new:
+        view:
+          header: "Forgot your password?"
+          form_title: "Type your email"
     lead_notification_types:
       notification_type0: "Instant"
       notification_type1: "Once per dey"
@@ -3253,6 +3360,7 @@ en:
     new:
       view:
         header: "Request more leads for category %{category}"
+        form_title: "Contact form"
         company_name: "Company name"
         contact_name: "Contact name"
         contact_email: "Contact email"
@@ -3298,6 +3406,7 @@ en:
           read_by_number_of_users: "read by %{count} users"
           show_thread: "Show thread"
           hide_thread: "Hide thread"
+          title_reply_prefix: "Re:"
       new:
         view:
           header: "Post new comment for %{header}"

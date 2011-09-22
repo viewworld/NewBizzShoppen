@@ -4,7 +4,7 @@
   <header back="true"><%= t("email_templates.edit.view.title", :name => @email_template.subject) %><%= image_tag_for_locale %></header>
 
   <%= semantic_form_for @email_template, :url => email_template_path(@email_template, :deal_id => @deal.id), :method => :put do |form| %>
-      <frm title="Edit">
+      <frm title="#{@email_template.subject}">
         <param:content>
           <%= render :partial => 'form', :locals => {:form => form} %>
         </param:content>

@@ -2,7 +2,7 @@
   <header><%= t("password.edit.view.password_label") %></header>
 
   <%= semantic_form_for @user, :url => password_path, :method => :put do |form| %>
-      <frm title="Change your password">
+      <frm title="#{t('password.edit.view.form_title')}">
         <param:content>
           <div class="pdd_10 no_pdd_t">
             <fieldset class="inputs labels_ta_r labels_240">
