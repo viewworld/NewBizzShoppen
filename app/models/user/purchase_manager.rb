@@ -1,5 +1,7 @@
 class User::PurchaseManager < ::User
   ROLES = [:purchase_manager]
+  CSV_ATTRS = %w{email first_name last_name company_name screen_name address_line_1 address_line_2 address_line_3 zip_code country region  phone vat_number}
+  REQUIRED_FIELDS = %w{email first_name last_name company_name screen_name address_line_1 address_line_3 zip_code}
 
   include User::RegistrationValidations
   include User::CommonAgent
@@ -9,6 +11,17 @@ class User::PurchaseManager < ::User
   validates_presence_of :company_name, :phone
 
   validate :check_address_city
+
+  private
+
+  def check_address_city
+    if address and address.address_line_3.blank?
+      return address.errors.add(:address_line_3, :blank)
+    end
+    true
+  end
+
+  public
 
   def can_publish_leads?
     false
@@ -33,12 +46,21 @@ class User::PurchaseManager < ::User
     Comment.with_leads_created_by(self)
   end
 
-  private
+########################################################################################################################
+#
+#   IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT
+#
+########################################################################################################################
 
-  def check_address_city
-    if address and address.address_line_3.blank?
-      return address.errors.add(:address_line_3, :blank)
-    end
-    true
+  include AdvancedImport
+  include AdvancedUserImport
+
+  class << self
+
+
+
   end
+
+########################################################################################################################
+
 end

@@ -1,5 +1,7 @@
 class ::User::CategoryBuyer < ::User
   ROLES = [:category_buyer, :lead_buyer, :customer]
+  CSV_ATTRS = %w{email first_name last_name company_name screen_name address_line_1 address_line_2 address_line_3 zip_code country region  phone vat_number}
+  REQUIRED_FIELDS = %w{email first_name last_name company_name screen_name address_line_1 address_line_3 zip_code}
 
   after_save :set_interests
 
@@ -71,4 +73,16 @@ class ::User::CategoryBuyer < ::User
     save
     true
   end
+  
+########################################################################################################################
+#
+#   IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT
+#
+########################################################################################################################
+
+  include AdvancedImport
+  include AdvancedUserImport
+
+########################################################################################################################
+
 end

@@ -74,7 +74,11 @@
 
 
 <column-mc:>
-  <header back="#{'true' if @search.with_created_by}"><%= t("administration.leads.index.view.title") %></header>
+  <header back="#{'true' if @search.with_created_by}">
+    <param:content>
+      <%= t("administration.leads.index.view.title") %>
+    </param:content>
+  </header>
 
   <% if @leads.blank? %>
     <%= blank_state_message %>

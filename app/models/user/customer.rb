@@ -1,5 +1,7 @@
 class ::User::Customer < ::User
   ROLES = [:customer, :lead_buyer]
+  CSV_ATTRS = %w{email first_name last_name company_name screen_name address_line_1 address_line_2 address_line_3 zip_code country region  phone vat_number}
+  REQUIRED_FIELDS = %w{email first_name last_name company_name screen_name address_line_1 address_line_3 zip_code}
 
   include User::RegistrationValidations
   include Addresses
@@ -65,4 +67,15 @@ class ::User::Customer < ::User
       (categories.select { |c| c.is_customer_unique } - unique_categories).each { |c| category_interests.detect { |ci| ci.category_id == c.id }.destroy }
     end
   end
+
+########################################################################################################################
+#
+#   IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT
+#
+########################################################################################################################
+
+  include AdvancedImport
+  include AdvancedUserImport
+
+########################################################################################################################
 end

@@ -159,34 +159,86 @@ class Campaign < ActiveRecord::Base
     user.has_role?(:admin) or creator.id == user.id or has_user_as_member?(user)
   end
 
-  def create_contacts_from_xls(spreadsheet, current_user)
-    spreadsheet.default_sheet = spreadsheet.sheets.first
-    2.upto(spreadsheet.last_row) do |line|
-      contact = contacts.build
-      Contact::CSV_ATTRS.each_with_index do |field, index|
-        if field == "region"
-          contact.region = Region.find_by_name(spreadsheet.cell(line, index+1))
-        elsif field == "country"
-          contact.country = Country.find_by_name(spreadsheet.cell(line, index+1))
-        else
-          contact.send("#{field}=".to_sym, spreadsheet.cell(line, index+1) ? spreadsheet.cell(line, index+1) : "")
-        end
-      end
-      contact.creator_id = current_user.id
-      contact.creator_type = "User"
-      contact.category_id = category_id
-      contact.creator_name = current_user
-      contact.save
-    end
-  end
-
   def contacts_for_auto_completer
-    contacts.map{|c| "{text:'#{c.company_name}', url:'/callers/campaigns/#{id}/agent_work_screen/contacts/#{c.id}'}"}
+    contacts.map { |c| "{text:'#{c.company_name}', url:'/callers/campaigns/#{id}/agent_work_screen/contacts/#{c.id}'}" }
   end
 
   def default_materials_set
     materials.where(:is_default => true)
   end
+
+  def to_s
+    name
+  end
+
+########################################################################################################################
+#
+#   IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT
+#
+########################################################################################################################
+
+  include AdvancedImport
+
+  def create_contacts_from_xls(spreadsheet, current_user)
+    spreadsheet.default_sheet = spreadsheet.sheets.first
+    2.upto(spreadsheet.last_row) do |line|
+      contact = contacts.build
+      import_fields.each_with_index { |field, index| contact = assign_field(contact, field, spreadsheet.cell(line, index+1), spreadsheet.celltype(line, index+1)) }
+      contact = assign_current_user(contact, current_user)
+      contact.save
+    end
+  end
+
+  class << self
+
+    def advanced_import_contacts_from_xls(spreadsheet, contact_fields, spreadsheet_fields, current_user, object_id)
+      return false unless advanced_import_field_blank_validation(contact_fields, spreadsheet_fields)
+      contact_fields, spreadsheet_fields = contact_fields.split(","), spreadsheet_fields.split(",")
+      return false unless advanced_import_field_size_validation(contact_fields, spreadsheet_fields)
+
+      campaign = Campaign.find(object_id)
+
+      contacts_from_last_import_ids = campaign.contacts.from_last_import.map(&:id)
+      headers, spreadsheet = advanced_import_headers(spreadsheet)
+      merged_fields = advanced_import_merged_fields(headers, contact_fields, spreadsheet_fields)
+      counter, errors = 0, []
+
+
+      2.upto(spreadsheet.last_row) do |line|
+        contact = campaign.contacts.build
+        import_fields.each { |field| contact = assign_field(contact, field, spreadsheet.cell(line, merged_fields[field]), spreadsheet.celltype(line, merged_fields[field])) }
+        contact = assign_current_user(contact, current_user, campaign)
+        contact.last_import = true
+        contact.save ? counter += 1 : errors << contact.errors.map { |k, v| "#{k} #{v}" }.*(", ")
+      end
+
+      contacts_from_last_import = Contact.find_all_by_id(contacts_from_last_import_ids)
+      contacts_from_last_import.each { |c| c.update_attribute(:last_import, false) } if counter > 0 and !contacts_from_last_import.blank?
+
+      {:counter => "#{counter} / #{spreadsheet.last_row-1}", :errors => errors.*("<br/>")}
+    end
+
+    def import_fields
+      Contact::CSV_ATTRS
+    end
+
+    def required_import_fields
+      Contact::REQUIRED_FIELDS
+    end
+
+    private
+
+    def assign_current_user(contact, current_user, campaign)
+      contact.creator_id = current_user.id
+      contact.creator_type = "User"
+      contact.category_id = campaign.category_id
+      contact.creator_name = current_user
+      contact
+    end
+
+  end
+
+########################################################################################################################
 
   def no_cost?
     cost_type == NO_COST
