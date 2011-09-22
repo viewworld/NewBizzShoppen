@@ -1,6 +1,8 @@
 class Contact < AbstractLead
 
   CSV_ATTRS = %w(company_name company_phone_number company_website address_line_1 address_line_2 address_line_3 zip_code country region company_vat_no company_ean_number contact_name direct_phone_number phone_number email_address linkedin_url facebook_url note)
+  REQUIRED_FIELDS = %w(company_name company_phone_number country)
+  NUMERIC_FIELDS = []
 
   attr_accessor :strict_validate, :formatted_rows
 

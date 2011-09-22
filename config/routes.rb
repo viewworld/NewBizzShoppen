@@ -255,7 +255,28 @@ Nbs::Application.routes.draw do
   match 'categories/:slag' => "leads#index"
   match 'categories/deals/:slag' => "deals#index"
 
-  resources :lead_advanced_import, :only => [:create, :destroy] do
+  resource :contacts_advanced_import, :only => [:create, :destroy, :show] do
+    collection do
+      post 'choose'
+      post 'preview'
+    end
+  end
+
+  resource :leads_advanced_import, :only => [:create, :show] do
+    collection do
+      post 'choose'
+      post 'preview'
+    end
+  end
+
+  resource :procurements_advanced_import, :only => [:create, :show] do
+    collection do
+      post 'choose'
+      post 'preview'
+    end
+  end
+
+  resource :buyers_advanced_import, :only => [:create, :show] do
     collection do
       post 'choose'
       post 'preview'

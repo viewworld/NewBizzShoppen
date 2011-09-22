@@ -148,6 +148,11 @@ en:
         sold_out: "Sold out"
         browse_deals: "Browse deals"
         deal_maker_users: "Users"
+        import: "Import"
+        import_contacts: "Contacts"
+        import_leads: "Leads"
+        import_buyers: "Buyers"
+        import_procurements: "Procurements"
       purchase_manager:
         leads: My leads
         tenders: My tenders
@@ -370,8 +375,6 @@ en:
       button_import_contacts: Import CSV contacts
       button_assign_selected_contacts: Assign selected contacts
       button_remove_assignment_for_selected: "Remove assignments for selected"
-      button_remove_last_import: "Remove last import"
-      button_remove_last_import_confirm: "Are you sure? This action can not be undone."
       button_bulk_download_csv_link: "Export CSV contacts"
       button_remove_selected: Remove selected
       agent_assignment_button: Agent assignment
@@ -441,12 +444,10 @@ en:
     new:
       title_new_contact: New contact
       title_import_from_excel: Create new from spreadsheet
-      title_advanced_import_from_excel: Advanced import - create new from spreadsheet
       title_import: Import contacts
       create_button: Create
       import_button: Import
       import_from_excel_button: Import from spreadsheet
-      advanced_import_from_excel_button: Import from spreadsheet
       cancel_button: Back to campaign
       button_show_import_contacts: import contacts
       button_show_new_contact: create new contact
@@ -3366,56 +3367,20 @@ en:
         inactive: "Inactive"
         all: "All"
 
-  callers:
-    advanced_import:
-      choose:
-        flash:
-          error_wrong_title: "Sorry. We have found unsafe character in headers. Only underscore, space, number and letters are allowed."
-          error_wrong_file: "Sorry. You can upload only ODC, XLS and XLSX file."
-        view:
-          title: "Advanced Import"
-          contact_fields_label: "Contact fields"
-          contact_selected_fields_label: "use this fields"
-          contact_not_selected_fields_label: "removed fields"
-          spreadsheet_fields_label: "Spreadsheet fields"
-          spreadsheet_selected_fields_label: "use this fields"
-          spreadsheet_not_selected_fields_label: "removed fields"
-          cancel_button: Cancel
-          next_button: Next
-          warning_list_not_equal: "Sorry, you can not proceed. The number of elements in lists are different"
-      preview:
-        flash:
-          error_wrong_fields: "Sorry. There is problem with chosen fields."
-          error_wrong_file: "Sorry. There is problem with your uploaded file."
-        view:
-          title: "Advanced Import - contacts preview"
-          first_contact_button: "<< first"
-          prev_contact_button: "< prev"
-          next_contact_button: "next >"
-          last_contact_button: "last >>"
-          cancel_button: Cancel
-          import_button: Import
-      create:
-        flash:
-          success: "Import completed. %{counter} contacts have been successfully imported"
-          error_wrong_fields: "Sorry. There is problem with chosen fields."
-          error_wrong_file: "Sorry. There is problem with your uploaded file."
-        view:
-      destroy:
-        flash:
-          success: "Last import has been successfully canceled."
-
-  lead_advanced_import:
-    form:
+  advanced_import:
+    show:
       view:
-        title: "Advanced import - create new leads from spreadsheet."
         button: "Import from spreadsheet"
+        remove_last_import_button: "Remove last import"
+        remove_last_import_button_confirm: "Are you sure? This action can not be undone."
     choose:
+      flash:
+        error_wrong_title: "Sorry. We have found unsafe character in headers. Only underscore, space, number and letters are allowed."
+        error_wrong_file: "Sorry. You can upload only ODC, XLS and XLSX file."
       view:
-        title: "Lead advanced import for %{category} category - choose fields"
-        contact_fields_label: "Lead fields"
-        contact_selected_fields_label: "use this fields"
-        contact_not_selected_fields_label: "removed fields"
+        title: "Advanced Import"
+        object_selected_fields_label: "use this fields"
+        object_not_selected_fields_label: "removed fields"
         spreadsheet_fields_label: "Spreadsheet fields"
         spreadsheet_selected_fields_label: "use this fields"
         spreadsheet_not_selected_fields_label: "removed fields"
@@ -3423,14 +3388,86 @@ en:
         next_button: Next
         warning_list_not_equal: "Sorry, you can not proceed. The number of elements in lists are different"
     preview:
+      flash:
+        error_wrong_fields: "Sorry. There is problem with chosen fields."
+        error_wrong_file: "Sorry. There is problem with your uploaded file."
       view:
-        title: "Lead advanced import for %{category} category - contacts preview"
-        first_contact_button: "<< first"
-        prev_contact_button: "< prev"
-        next_contact_button: "next >"
-        last_contact_button: "last >>"
+        title: "Advanced Import - contacts preview"
+        first_object_button: "<< first"
+        prev_object_button: "< prev"
+        next_object_button: "next >"
+        last_object_button: "last >>"
         cancel_button: Cancel
         import_button: Import
+    create:
+      flash:
+        error_wrong_fields: "Sorry. There is problem with chosen fields."
+        error_wrong_file: "Sorry. There is problem with your uploaded file."
+      view:
+    destroy:
+      flash:
+        success: "Last import has been successfully canceled."
+
+  contacts_advanced_import:
+    show:
+      view:
+        header: "Contacts import"
+        title: "Advanced import - create new contacts from spreadsheet."
+    choose:
+      view:
+        header: "Contacts import - fields selection"
+        object_fields_label: "Contact fields"
+    preview:
+      view:
+        header: "Contacts import - preview"
+    create:
+      flash:
+        success: "Import completed. %{counter} contacts have been successfully imported"
+
+  buyers_advanced_import:
+    show:
+      view:
+        header: "Buyers import"
+        title: "Advanced import - create new buyers from spreadsheet."
+    choose:
+      view:
+        header: "Buyers import - fields selection"
+        object_fields_label: "Buyer fields"
+    preview:
+      view:
+        header: "Buyers import - preview"
+    create:
+      flash:
+        success: "Import completed. %{counter} buyers have been successfully imported"
+
+  procurements_advanced_import:
+    show:
+      view:
+        header: "Procurement managers import"
+        title: "Advanced import - create new procurement managers from spreadsheet."
+    choose:
+      view:
+        header: "Procurement managers import - fields selection"
+        object_fields_label: "Procurement manager fields"
+    preview:
+      view:
+        header: "Procurement managers import - preview"
+    create:
+      flash:
+        success: "Import completed. %{counter} procurement managers have been successfully imported"
+
+  leads_advanced_import:
+    show:
+      view:
+        header: "Leads import"
+        title: "Advanced import - create new leads from spreadsheet."
+    choose:
+      view:
+        header: "Leads import - fields selection"
+        object_fields_label: "Lead fields"
+    preview:
+      view:
+        header: "Leads import - preview"
     create:
       flash:
         success: "Import completed. %{counter} leads have been successfully imported"

@@ -1,9 +1,10 @@
 module AdvancedImport
   def self.included(base)
-    base.send(:include, InstanceMethods)
+    base.send(:include, ClassMethods)
+    base.send(:extend, ClassMethods)
   end
 
-  module InstanceMethods
+  module ClassMethods
 
     def advanced_import_from_xls_headers(spreadsheet)
       headers = advanced_import_headers(spreadsheet)[0].uniq.compact()
@@ -56,8 +57,12 @@ module AdvancedImport
     private
 
     def assign_field(object, field, value, cell_type)
-      if ["region", "country", "currency"].include?(field)
+      if ["region", "country", "currency"].include?(field) and !object.class.to_s.include?("User::")
         object.send("#{field}=".to_sym, import_relation_value(field, value))
+      elsif ["region", "country", "currency"].include?(field) and object.class.to_s.include?("User::")
+        object.address.send("#{field}=".to_sym, import_relation_value(field, value))
+      elsif ["address_line_1", "address_line_2", "address_line_3", "zip_code"].include?(field) and object.class.to_s.include?("User::")
+        object.address.send("#{field}=".to_sym, import_not_numeric_value(value))
       elsif ["is_international", "published"].include?(field)
         object.send("#{field}=".to_sym, import_boolean_value(value))
       elsif field == "purchase_decision_date"

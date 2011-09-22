@@ -26,48 +26,6 @@ Feature: Lead Advanced Import
     And I should see "Mleko company"
     And I should not see "888 422 633"
 
-  @_done @_tested @selenium
+  @_done @_tested_elsewhere
   Scenario: I can import contact from spreadsheet (ods, xls, xlsx) with advanced import
-    #wrong imports
-    And I press translated "contacts.new.advanced_import_from_excel_button" within "#contact_advanced_import_form"
-    And I should see translated "callers.advanced_import.choose.flash.error_wrong_file"
-    And attach the file "wcai spreadsheet" to "attachment" within "#contact_advanced_import_form"
-    And I press translated "contacts.new.advanced_import_from_excel_button" within "#contact_advanced_import_form"
-    And I should see translated "callers.advanced_import.choose.flash.error_wrong_title"
-    And attach the file "sample image" to "attachment" within "#contact_advanced_import_form"
-    And I press translated "contacts.new.advanced_import_from_excel_button" within "#contact_advanced_import_form"
-    And I should see translated "callers.advanced_import.choose.flash.error_wrong_file"
-    #first correct import
-    And attach the file "contact advanced import spreadsheet" to "attachment" within "#contact_advanced_import_form"
-    And I press translated "contacts.new.advanced_import_from_excel_button" within "#contact_advanced_import_form"
-    And I should see translated "callers.advanced_import.choose.view.contact_fields_label"
-    And I follow translated "callers.advanced_import.choose.view.cancel_button"
-    And attach the file "contact advanced import spreadsheet" to "attachment" within "#contact_advanced_import_form"
-    And I press translated "contacts.new.advanced_import_from_excel_button" within "#contact_advanced_import_form"
-    And I should see "Company name *"
-    And I press translated "callers.advanced_import.choose.view.next_button"
-    And I should see "1/4"
-    And I follow translated "callers.advanced_import.preview.view.cancel_button"
-    And I press translated "callers.advanced_import.choose.view.next_button"
-    And I follow translated "callers.advanced_import.preview.view.next_contact_button"
-    And I should see "2/4"
-    And I follow translated "callers.advanced_import.preview.view.last_contact_button"
-    And I should see "4/4"
-    And I press translated "callers.advanced_import.preview.view.import_button"
-    And I should see translated "callers.advanced_import.create.flash.success" with options "counter:2 / 4"
-    And I should see translated "campaigns.edit.button_remove_last_import"
-    And campaign "Testing Two" should have "2" contacts
-    #second correct import
-    And I follow translated "campaigns.edit.button_import_contacts"
-    And attach the file "contact advanced import spreadsheet" to "attachment" within "#contact_advanced_import_form"
-    And I press translated "contacts.new.advanced_import_from_excel_button" within "#contact_advanced_import_form"
-    And I press translated "callers.advanced_import.choose.view.next_button"
-    And I press translated "callers.advanced_import.preview.view.import_button"
-    And I should see translated "callers.advanced_import.create.flash.success" with options "counter:2 / 4"
-    And campaign "Testing Two" should have "4" contacts
-    #remoce last import
-    And I confirm a js popup on the next step
-    And I follow translated "campaigns.edit.button_remove_last_import"
-    And I should see translated "callers.advanced_import.destroy.flash.success"
-    And I should not see translated "campaigns.edit.button_remove_last_import"
-    And campaign "Testing Two" should have "2" contacts
+

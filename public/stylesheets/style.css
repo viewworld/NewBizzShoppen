@@ -1837,7 +1837,7 @@ span.cke_skin_kama
 /* --- advanced import
 -------------------------------------------------------------------------------- */
 
-.sortable_contact_fields_class, .sortable_lead_fields_class, .sortable_spreadsheet_fields_class {
+.sortable_object_fields_class, .sortable_spreadsheet_fields_class {
           text-align: center;
           list-style-type: none;
           margin: 0;
@@ -1849,7 +1849,7 @@ span.cke_skin_kama
           display: block;
       }
 
-      .sortable_contact_fields_class li, .sortable_lead_fields_class li, .sortable_spreadsheet_fields_class li {
+      .sortable_object_fields_class li, .sortable_spreadsheet_fields_class li {
           margin: 0 5px 5px 5px;
           padding: 0;
           font-size: 1.2em;
@@ -1861,7 +1861,7 @@ span.cke_skin_kama
           color: red;
       }
 
-      .sortable_contact_fields_class p, .sortable_lead_fields_class p, .sortable_spreadsheet_fields_class p {
+      .sortable_object_fields_class p, .sortable_spreadsheet_fields_class p {
           padding: 5px;
       }
 

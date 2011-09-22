@@ -61,6 +61,7 @@ class Category < ActiveRecord::Base
   scope :with_lead_templates_created_by, lambda { |creator| select("DISTINCT(categories.name), categories.*").where("lead_templates.creator_id = ?", creator.id).joins(:lead_templates) }
   scope :without_unique, where("is_customer_unique = ? and is_agent_unique = ?", false, false)
   scope :with_all_customer_unique, where("is_customer_unique = ?", true)
+  scope :without_customer_unique, where("is_customer_unique = ?", false)
   scope :with_all_agent_unique, where("is_agent_unique = ?", true)
   scope :with_customer_unique, lambda { |customer| where("(is_customer_unique = ? and category_customers.user_id is NULL) or (is_customer_unique = ? and category_customers.user_id = ?)", false, true, customer.id).joins("LEFT JOIN category_customers ON categories.id=category_customers.category_id") }
   scope :with_agent_unique, lambda { |agent| select("DISTINCT(categories.id), categories.*").where("(is_agent_unique = ? and category_agents.user_id is NULL) or (is_agent_unique = ? and category_agents.user_id = ?)#{' or (is_agent_unique = \'t\' and category_agents.user_id = ' + agent.parent_id.to_s + ')' if agent.has_role?(:call_centre_agent)}", false, true, agent.id).joins("LEFT JOIN category_agents ON categories.id=category_agents.category_id") }
@@ -209,7 +210,7 @@ class Category < ActiveRecord::Base
       User.where(:deal_category_id => id).first.present?
     end
   end
-  
+
 ########################################################################################################################
 #
 #   IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT
@@ -218,46 +219,44 @@ class Category < ActiveRecord::Base
 
   include AdvancedImport
 
-  def advanced_import_leads_from_xls(spreadsheet, lead_fields, spreadsheet_fields, current_user)
-    return false unless advanced_import_field_blank_validation(lead_fields, spreadsheet_fields)
-    lead_fields, spreadsheet_fields = lead_fields.split(","), spreadsheet_fields.split(",")
-    return false unless advanced_import_field_size_validation(lead_fields, spreadsheet_fields)
+    def advanced_import_leads_from_xls(spreadsheet, lead_fields, spreadsheet_fields, current_user)
+      return false unless advanced_import_field_blank_validation(lead_fields, spreadsheet_fields)
+      lead_fields, spreadsheet_fields = lead_fields.split(","), spreadsheet_fields.split(",")
+      return false unless advanced_import_field_size_validation(lead_fields, spreadsheet_fields)
 
-      #leads_from_last_import_ids = leads.from_last_import.map(&:id) (cos nie tak)
-    headers, spreadsheet = advanced_import_headers(spreadsheet)
-    merged_fields = advanced_import_merged_fields(headers, lead_fields, spreadsheet_fields)
-    counter, errors = 0, []
+      headers, spreadsheet = advanced_import_headers(spreadsheet)
+      merged_fields = advanced_import_merged_fields(headers, lead_fields, spreadsheet_fields)
+      counter, errors = 0, []
 
-    2.upto(spreadsheet.last_row) do |line|
-      lead = leads.build
-      import_fields.each { |field| lead = assign_field(lead, field, spreadsheet.cell(line, merged_fields[field]), spreadsheet.celltype(line, merged_fields[field])) }
-      lead = assign_current_user(lead, current_user)
-        #lead.last_import = true
-      lead.save ? counter += 1 : errors << lead.errors.map { |k, v| "#{k} #{v}" }.*(", ")
+      2.upto(spreadsheet.last_row) do |line|
+        lead = Lead.new
+        import_fields.each { |field| lead = assign_field(lead, field, spreadsheet.cell(line, merged_fields[field]), spreadsheet.celltype(line, merged_fields[field])) }
+        lead = assign_current_user(lead, current_user)
+
+        lead.save ? counter += 1 : errors << lead.errors.map { |k, v| "#{k} #{v}" }.*(", ")
+      end
+
+      {:counter => "#{counter} / #{spreadsheet.last_row-1}", :errors => errors.*("<br/>")}
     end
 
-      #leads_from_last_import = lead.find_all_by_id(leads_from_last_import_ids)
-      #leads_from_last_import.each { |c| c.update_attribute(:last_import, false) } if counter > 0 and !leads_from_last_import.blank?
+    def import_fields
+      Lead::CSV_ATTRS + import_lead_templates_fields
+    end
 
-    {:counter => "#{counter} / #{spreadsheet.last_row-1}", :errors => errors.*("<br/>")}
-  end
+    def required_import_fields
+      Lead::REQUIRED_FIELDS + import_lead_templates_fields.map { |field| field if field.split("|").last == "true" }.compact
+    end
 
-  def import_fields
-    Lead::CSV_ATTRS + import_lead_templates_fields
-  end
+    private
 
-  def required_import_fields
-    Lead::REQUIRED_FIELDS + import_lead_templates_fields.map { |field| field if field.split("|").last == "true" }.compact
-  end
+    def assign_current_user(lead, current_user)
+      lead.creator_id = current_user.id
+      lead.creator_type = current_user.with_role.class.to_s
+      lead.category_id = id
+      lead.creator_name = current_user
+      lead
+    end
 
-  private
-
-  def assign_current_user(lead, current_user)
-    lead.creator_id = current_user.id
-    lead.creator_type = current_user.with_role.class.to_s
-    lead.category_id = id
-    lead.creator_name = current_user
-    lead
-  end
-
+########################################################################################################################
+  
 end

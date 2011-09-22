@@ -311,17 +311,17 @@ function deserialize_material_repository_array(serialized_array) {
     }
 }
 
-function advanced_import_next_button(error_message, model) {
-    if ($('#sortable_' + model + '_fields li').length == $('#sortable_spreadsheet_fields li').length) {
+function advanced_import_next_button(error_message) {
+    if ($('#sortable_object_fields li').length == $('#sortable_spreadsheet_fields li').length) {
         cf_array = new Array;
         sf_array = new Array;
-        $('#sortable_' + model + '_fields li span').each(function(index) {
+        $('#sortable_object_fields li span').each(function(index) {
             cf_array.push($(this).text());
         });
         $('#sortable_spreadsheet_fields li').each(function(index) {
             sf_array.push($(this).text());
         });
-        $('#' + model + '_field').val(cf_array);
+        $('#object_field').val(cf_array);
         $('#spreadsheet_field').val(sf_array);
         $('#go_to_browse_page_form').submit();
     } else {
@@ -329,10 +329,10 @@ function advanced_import_next_button(error_message, model) {
     }
 }
 
-function advanced_import_load_sortable_lists(model) {
-    $("#sortable_" + model + "_fields, #sortable_" + model + "_fields_removed").sortable({
+function advanced_import_load_sortable_lists(){
+    $("#sortable_object_fields, #sortable_object_fields_removed").sortable({
         items: "li:not(.disabled)",
-        connectWith: ".sortable_" + model + "_fields_class"
+        connectWith: ".sortable_object_fields_class"
     }).disableSelection();
 
     $("#sortable_spreadsheet_fields, #sortable_spreadsheet_fields_removed").sortable({

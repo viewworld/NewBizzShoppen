@@ -1,0 +1,32 @@
+<column-mc:>
+
+  <header><%= t("contacts_advanced_import.show.view.header") %></header>
+  <% objects = Campaign.available_for_user(current_user).map { |c| [c.name, c.id] } %>
+
+  <% form_tag choose_contacts_advanced_import_path, :method => :post, :multipart => true, :id => "advanced_import_form" do %>
+      <frm title="#{t('contacts_advanced_import.show.view.title')}">
+        <param:content>
+          <div class="pdd_10 no_pdd_t">
+            <fieldset class="inputs labels_ta_r labels_180">
+              <ol class="align_inputs">
+                <%= file_field_tag 'attachment', :accept => 'spreadsheet/ods,spreadsheet/doc,spreadsheet/xdoc', :class => "fltl" %>
+                <%= select_tag :object_id, options_for_select(objects) %>
+                <% if current_user.admin? %>
+                    <%= select_tag :creator_id, options_for_select(User.with_agents.map { |user| [user.to_s, user.id] }) %>
+                <% end %>
+              </ol>
+            </fieldset>
+          </div>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= submit_tag t("advanced_import.show.view.button"), :name => "commit_create" %>
+          </ibt>
+          remove last import is done for campaign right now...
+            <%= bt_link_to(:remove, t("advanced_import.show.view.remove_last_import_button"), contacts_advanced_import_path, :method => :delete, :confirm => t("advanced_import.show.view.remove_last_import_button_confirm"), :class => "fltr") %>
+            <!--unless @campaign.contacts.from_last_import.blank? -->
+        </param:actions>
+      </frm>
+  <% end %>
+
+</column-mc:>
