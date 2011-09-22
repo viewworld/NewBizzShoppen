@@ -1,6 +1,6 @@
 <column-mc:>
 
-  <header back="true"><%= t("#{model_name}s_advanced_import.preview.view.header") %></header>
+  <header><%= t("#{model_name}s_advanced_import.preview.view.header") %></header>
 
   <frm>
     <param:content>
@@ -41,6 +41,7 @@
       <ibt c="fltri">
         <%= button_to_function t("advanced_import.preview.view.import_button"), "$('#import_objects_form').submit();", :class => "fltr" %>
       </ibt>
+      <%= bt_link_to nil, t("advanced_import.preview.view.cancel_button"), "javascript:history.back()", :class => "bt_grey fltr" %>
     </param:actions>
   </frm>
 </column-mc:>
