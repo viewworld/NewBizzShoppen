@@ -30,7 +30,7 @@ jQuery(document).ready(function()
 function loadScripts() {
     /* --- subcategories > show/hide ---*/
 
-    $(".categories_tree > li > ul.category_children_tree").hide();
+    $("table td > ul.category_children_tree").hide();
 
     $(".hide_subcategory").bind("click", function()
     {
