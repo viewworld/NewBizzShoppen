@@ -1,6 +1,6 @@
 Given /^I follow translated "([^"]*)" within "([^"]*)" category$/ do |key, category_name|
   I18n.locale = :en
-  Then %{I follow "#{I18n.t(key)}" within "li##{ActionController::RecordIdentifier.dom_id(Category.where(:name => category_name).last)}"}
+  Then %{I follow "#{I18n.t(key)}" within "##{ActionController::RecordIdentifier.dom_id(Category.where(:name => category_name).last)}"}
 end
 
 Given /^Category named "([^"]*)" already exists(?: within category named "([^"]*)")?$/ do |name, parent_category_name|
@@ -19,7 +19,7 @@ Given /^Lead named "([^"]*)" exists within "([^"]*)" category$/ do |name, catego
 end
 
 Then /^I should see category named "([^"]*)" within category named "([^"]*)"$/ do |child_category_name, parent_category_name|
-  Then %{I should see "#{child_category_name}" within "li##{ActionController::RecordIdentifier.dom_id(Category.where(:name => parent_category_name).last)}"}
+  Then %{I should see "#{child_category_name}" within "##{ActionController::RecordIdentifier.dom_id(Category.where(:name => parent_category_name).last)}"}
 end
 
 

@@ -4,7 +4,7 @@
    cols += 1 if not block_bottom.nil?
 -%>
 
-<table class="generic leads_table">
+<table id="categories_table" class="generic leads_table">
   <thead>
   <tr>
     <th class="hl"></th>
@@ -38,7 +38,9 @@
         <td>
           <h4>
             <%= link_to "#{category.name}", "/categories#{category.is_a?(LeadCategory) ? '' : '/deals'}/#{category.cached_slug}?search[with_category]=#{category.id}" %>
+            <%= "(#{(category.is_a?(LeadCategory) ? category.leads_count_for_user(current_user) : category.deals_count_for_user(current_user)) == 0 ? t("layout.main_menu.shared.sold_out") : category.is_a?(LeadCategory) ? category.leads_count_for_user(current_user) : category.deals_count_for_user(current_user)})" %>
           </h4>
+          <%= (category.is_a?(LeadCategory) ? link_to_view_lead_templates(category) : link_to_view_deal_templates(category)) %>
 
           <% unless category.description.blank? %>
           <p class="element_description i expandable"><%= category.description %></p>
@@ -48,7 +50,7 @@
             <%= category_tree_for_subcategories(category, {:category_label => lambda { |c| link_to "#{c.name}", "/categories#{category.is_a?(LeadCategory) ? '' : '/deals'}/#{c.cached_slug}?search[with_category]=#{c.id}" },
                               :ul_css_class => "vertical",
                               :after_category => lambda { |c|
-                                  "<span class='total_leads'>(#{c.deals_count_for_user(current_user) == 0 ? t("layout.main_menu.shared.sold_out") : category.is_a?(LeadCategory) ? c.leads_count_for_user(current_user) : c.deals_count_for_user(current_user)})</span> #{category.is_a?(LeadCategory) ? link_to_view_lead_templates(c) : link_to_view_deal_templates(c)}" +
+                                  "<span class='total_leads'>(#{(c.is_a?(LeadCategory) ? c.leads_count_for_user(current_user) : c.deals_count_for_user(current_user)) == 0 ? t("layout.main_menu.shared.sold_out") : c.is_a?(LeadCategory) ? c.leads_count_for_user(current_user) : c.deals_count_for_user(current_user)})</span> #{category.is_a?(LeadCategory) ? link_to_view_lead_templates(c) : link_to_view_deal_templates(c)}" +
                                     [].tap do |links|
                                       if user_signed_in? and current_user.has_role?(:admin)
                                         links << link_to(t("administration.categories.index.view.edit_link"), edit_administration_category_path(c))
