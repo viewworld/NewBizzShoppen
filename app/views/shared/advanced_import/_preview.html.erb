@@ -2,34 +2,46 @@
 
   <header><%= t("#{model_name}s_advanced_import.preview.view.header") %></header>
 
-  <% size = @objects_to_preview.size %>
-  <% @objects_to_preview.each_with_index do |object, index| %>
-      <div id='object_container_<%= index %>' class='object_preview' style="<%= "display:none" if index != 0 %> ">
-        <%= index+1 %>/<%= size %>
-        <br/>
-        <% @model.import_fields.each do |field| %>
-            <span style="font-weight:bold"><%= field.include?("custom|") ? field.split("|")[1..2].join(" => ") : field.humanize %>
-              <%= ":" %></span> <%= object[field] %>
-            <br/>
+  <frm>
+    <param:content>
+      <div class="pdd_10">
+        <% size = @objects_to_preview.size %>
+        <% @objects_to_preview.each_with_index do |object, index| %>
+            <div id='object_container_<%= index %>' class='object_preview' style="<%= "display:none" if index != 0 %> ">
+              <h2><%= index+1 %>/<%= size %></h2>
+              <hl pdd="10"/>
+              <% @model.import_fields.each do |field| %>
+                  <p>
+                    <strong><%= field.include?("custom|") ? field.split("|")[1..2].join(" => ") : field.humanize %><%= ":" %></strong> <%= object[field] %>
+                  </p>
+              <% end %>
+              <hl/>
+              <div class="pdd_10 ta_c">
+                  <%= index != 0 ? link_to_function(t("advanced_import.preview.view.first_object_button"), "$('#object_container_#{index}').hide();$('#object_container_0').show();") : t("advanced_import.preview.view.first_object_button") %>
+                  <%= index != 0 ? link_to_function(t("advanced_import.preview.view.prev_object_button"), "$('#object_container_#{index}').hide();$('#object_container_#{index-1}').show();") : t("advanced_import.preview.view.prev_object_button") %>
+                  <%= size-1 != index ? link_to_function(t("advanced_import.preview.view.next_object_button"), "$('#object_container_#{index}').hide();$('#object_container_#{index+1}').show();") : t("advanced_import.preview.view.next_object_button") %>
+                  <%= size-1 != index ? link_to_function(t("advanced_import.preview.view.last_object_button"), "$('#object_container_#{index}').hide();$('#object_container_#{size-1}').show();") : t("advanced_import.preview.view.last_object_button") %>
+              </div>
+            </div>
         <% end %>
-        <%= index != 0 ? link_to_function(t("advanced_import.preview.view.first_object_button"), "$('#object_container_#{index}').hide();$('#object_container_0').show();") : t("advanced_import.preview.view.first_object_button") %>
-        <%= index != 0 ? link_to_function(t("advanced_import.preview.view.prev_object_button"), "$('#object_container_#{index}').hide();$('#object_container_#{index-1}').show();") : t("advanced_import.preview.view.prev_object_button") %>
-        <%= size-1 != index ? link_to_function(t("advanced_import.preview.view.next_object_button"), "$('#object_container_#{index}').hide();$('#object_container_#{index+1}').show();") : t("advanced_import.preview.view.next_object_button") %>
-        <%= size-1 != index ? link_to_function(t("advanced_import.preview.view.last_object_button"), "$('#object_container_#{index}').hide();$('#object_container_#{size-1}').show();") : t("advanced_import.preview.view.last_object_button") %>
+
+        <% form_tag self.send("#{model_name}s_advanced_import_path"), :id => "import_objects_form", :method => :post, :multipart => true do %>
+            <%= hidden_field_tag :object_field, @object_field %>
+            <%= hidden_field_tag :spreadsheet_field, @spreadsheet_field %>
+            <%= hidden_field_tag :attachment, @attachment_file %>
+            <% if ["contact", "buyer", "lead"].include?(model_name) %>
+                <%= hidden_field_tag :object_id, @object_id %>
+            <% end %>
+            <%= hidden_field_tag :creator_id, @creator_id %>
+        <% end %>
+
       </div>
-  <% end %>
-
-  <% form_tag self.send("#{model_name}s_advanced_import_path"), :id => "import_objects_form", :method => :post, :multipart => true do %>
-      <%= hidden_field_tag :object_field, @object_field %>
-      <%= hidden_field_tag :spreadsheet_field, @spreadsheet_field %>
-      <%= hidden_field_tag :attachment, @attachment_file %>
-      <% if ["contact", "buyer", "lead"].include?(model_name) %>
-          <%= hidden_field_tag :object_id, @object_id %>
-      <% end %>
-      <%= hidden_field_tag :creator_id, @creator_id %>
-  <% end %>
-
-  <%= link_to_function t("advanced_import.preview.view.cancel_button"), "javascript:history.back()" %>
-  <%= button_to_function t("advanced_import.preview.view.import_button"), "$('#import_objects_form').submit();" %>
-
+    </param:content>
+    <param:actions>
+      <ibt c="fltri">
+        <%= button_to_function t("advanced_import.preview.view.import_button"), "$('#import_objects_form').submit();", :class => "fltr" %>
+      </ibt>
+      <%= bt_link_to nil, t("advanced_import.preview.view.cancel_button"), "javascript:history.back()", :class => "bt_grey fltr" %>
+    </param:actions>
+  </frm>
 </column-mc:>

@@ -27,5 +27,5 @@ Feature: Category buyers advanced import (buyer specific)
   @_done @_tested_elsewhere
   Scenario: I can import category buyers from spreadsheet (ods, xls, xlsx) with advanced import
 
-  @_done @_done @_tested_elsewhere
+  @_done @_tested_elsewhere
   Scenario: I can select categories for category buyer

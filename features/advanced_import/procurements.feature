@@ -9,7 +9,6 @@ Feature: Procurements managers advanced import
     And I sign in as admin@nbs.com with password secret
     Then I use advanced import for users "procurements"
 
-
   @added @selenium @_done @_tested
   Scenario: Call center can import procurements from spreadsheet (ods, xls, xlsx) with advanced import
     And I sign in as translator_call_centre@nbs.com with password secret

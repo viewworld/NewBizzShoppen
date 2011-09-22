@@ -5,8 +5,6 @@ Feature: Contacts specific advanced import
     Given I am on the homepage
     And campaign "Testing Two" should have "0" contacts
 
-  Scenario: I can choose campaign where contacts should be imported (with select)
-
   @added @selenium
   Scenario: Admin can import contacts from spreadsheet (ods, xls, xlsx) with advanced import
     And I sign in as admin@nbs.com with password secret
@@ -28,3 +26,6 @@ Feature: Contacts specific advanced import
     And I sign in as agent@nbs.com with password secret
     And I add user "agent@nbs.com" to campaign "Testing Two"
     Then I use advanced import for contacts
+
+  @_done @_tested_elsewhere
+  Scenario: I can choose campaign where contacts should be imported (with select)
