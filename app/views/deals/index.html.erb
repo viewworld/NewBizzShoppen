@@ -36,13 +36,14 @@
                 <p>
                   <%= bt_clear_filter_safe %>
                   <%= link_to_function t("common.advanced_search"), "$('#advanced_search_1_div').toggle();$('#advanced_search_2_div').slideToggle();" %>
-
-                  <%
-                      category = @nested_category.present? ? @nested_category : @category
-                      subcategories_for_select = [[' ', category.id]] + category.children.select{ |c| c.deals_count_for_user(current_user) > 0 }.map{|c| [c.name,c.id]}
-                  %>
-                  <% if subcategories_for_select.size > 1 %>
-                      <%= select_tag :category_selector, options_for_select(subcategories_for_select), {:include_blank => false, :onchange => "submit_category_filter_form('#deals_search_form')"} %>
+                  <% if @nested_category.present? or @category.present? %>
+                      <%
+                          category = @nested_category.present? ? @nested_category : @category
+                          subcategories_for_select = [[' ', category.id]] + category.children.select{ |c| c.deals_count_for_user(current_user) > 0 }.map{|c| [c.name,c.id]}
+                      %>
+                      <% if subcategories_for_select.size > 1 %>
+                          <%= select_tag :category_selector, options_for_select(subcategories_for_select), {:include_blank => false, :onchange => "submit_category_filter_form('#deals_search_form')"} %>
+                      <% end %>
                   <% end %>
                 </p>
               </li>
