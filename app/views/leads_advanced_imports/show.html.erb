@@ -42,6 +42,8 @@
         });
     }
 
-    load_user_categories();
+    <% if current_user.admin? %>
+        load_user_categories();
+    <% end %>
   </script>
 </js:>
