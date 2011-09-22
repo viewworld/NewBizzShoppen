@@ -56,14 +56,11 @@
                 <%= submit_tag "New" %>
               </div>
               <%= bt_link_to :plus, t("call_centre_agent.leads.index.view.new_lead"), "javascript:void", :onclick => "$('#form_new_lead').submit()" %>
-              <%= bt_link_to_function :plus, "Import", "$('#lead_advanced_import_form').toggle()" %>
             </li>
           </ul>
       <% end %>
     </param:actions>
   </header>
-
-  <%= render :partial => "lead_advanced_import/form", :locals => {:categories => Category.without_locked.with_agent_unique(current_user).all, :show => @show_import} %>
 
   <%= leads_table @leads, :show_checkboxes => false do |blocks| %>
       <% blocks.tools do |lead| %>
