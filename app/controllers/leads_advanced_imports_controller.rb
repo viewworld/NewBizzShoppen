@@ -12,6 +12,15 @@ class LeadsAdvancedImportsController < SecuredController
     end
   end
 
+  def show
+    @categories = LeadCategory.without_locked.with_agent_unique(params[:user_id] ? User.find_by_id(params[:user_id]) : current_user).without_customer_unique.all
+
+    respond_to do |format|
+      format.html { }
+      format.js {}
+    end
+  end
+
   private
 
   def redirection_path

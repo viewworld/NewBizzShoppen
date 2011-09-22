@@ -1,7 +1,6 @@
 <column-mc:>
 
   <header><%= t("leads_advanced_import.show.view.header") %></header>
-  <% objects = LeadCategory.without_locked.with_agent_unique(current_user).without_customer_unique.all %>
 
   <% form_tag choose_leads_advanced_import_path, :method => :post, :multipart => true, :id => "advanced_import_form" do %>
       <frm title="#{t('leads_advanced_import.show.view.title')}">
@@ -10,10 +9,14 @@
             <fieldset class="inputs labels_ta_r labels_180">
               <ol class="align_inputs">
                 <%= file_field_tag 'attachment', :accept => 'spreadsheet/ods,spreadsheet/doc,spreadsheet/xdoc', :class => "fltl" %>
-                <%= select_tag :object_id, options_for_select(nested_set_options(objects), :selected => default_category_for_select(objects), :disabled => objects.select { |c| !c.can_publish_leads? }.map(&:id)) %>
                 <% if current_user.admin? %>
-                    <%= select_tag :creator_id, options_for_select(User.with_agents.map { |user| [user.to_s, user.id] }), :onclick => "" %>
-                <% end %>
+                    <%= select_tag :creator_id, options_for_select(User.with_agents.map { |user| [user.to_s, user.id] }), :onchange => current_user.admin? ? "load_user_categories()" : "" %>
+              <% end %>
+              <% if current_user.admin? %>
+                <span id="categories_selection"></span>
+              <% else %>
+                    <%= render :partial => "categories_selection", :locals => { :objects => @categories } %>
+              <% end %>
               </ol>
             </fieldset>
           </div>
@@ -31,11 +34,14 @@
 <js:>
   <script type="text/javascript">
     function load_user_categories(){
+        $('#categories_selection').html("<%= t("advanced_import.show.view.loading_categories") -%>");
         $.ajax({
             type: "GET",
-            url: "<%= user_categories_path -%>",
-            data: "country_id=" + $('#creator_id').val()
+            url: "<%= leads_advanced_import_path -%>.js",
+            data: "user_id=" + $('#creator_id').val()
         });
     }
+
+    load_user_categories();
   </script>
 </js:>

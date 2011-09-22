@@ -3514,6 +3514,7 @@ en:
         button: "Import from spreadsheet"
         remove_last_import_button: "Remove last import"
         remove_last_import_button_confirm: "Are you sure? This action can not be undone."
+        loading_categories: "Loading categories..."
     choose:
       flash:
         error_wrong_title: "Sorry. We have found unsafe character in headers. Only underscore, space, number and letters are allowed."
