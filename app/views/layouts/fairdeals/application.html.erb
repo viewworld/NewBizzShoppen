@@ -77,7 +77,7 @@
   </div>
 
   <div id="modal_for_longer_session" style="display:none">
-    You will be log out after 20 seconds unless you click cancel...
+    <%= t("layout.logout_warning_message") %>
   </div>
 
   <div id="content">
@@ -196,7 +196,7 @@
 
     $('#modal_for_longer_session').dialog({
         autoOpen: false,
-        buttons: { "Cancel": function() {
+        buttons: { "<%= t("layout.cancel_logout_button") %>": function() {
             extend_session();
             $(this).dialog("close");
         }}

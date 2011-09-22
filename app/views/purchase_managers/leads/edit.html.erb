@@ -41,7 +41,7 @@
                   <li class="string">
                     <%= form.label t("purchase_manager.leads.edit.view.company_website_label") %>
                     <div class="txt">
-                      <%= @lead.deal.company_website.present? ? link_to(@lead.deal.company_website, @lead.deal.company_website) : "-" %>
+                      <%= @lead.deal.company_website.present? ? link_to(@lead.deal.company_website_with_protocol, @lead.deal.company_website_with_protocol) : "-" %>
                     </div>
                   </li>
                   <li class="string">
@@ -53,7 +53,7 @@
                   <li class="string">
                     <%= form.label t("purchase_manager.leads.edit.view.deal_description_label") %>
                     <div class="txt">
-                      <%= link_to t("purchase_manager.leads.edit.view.view_description_link"), deal_path(:slug => @lead.deal.slug) %>
+                      <%= link_to t("purchase_manager.leads.edit.view.view_description_link"), deal_path(:id => @lead.deal.slug) %>
                     </div>
                   </li>
 

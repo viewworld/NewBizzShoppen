@@ -179,21 +179,61 @@ Feature: Front page for procurment
   Scenario: As admin I can select three secondary featured deals to be displayed on procurement page
 
   #7450
-  @m19 @requested
+  @m19 @requested @_done @_tested @tgn
   Scenario: I should see box with contact info: Phone number, Email, Skype on the home page
+    Given I visit domain http://fairdeals.dk
+    Then I should see translated "fairdeals_home.show.view.contact_us"
+    And I should see "+44 0000000"
+    And I should see "admin@fairleads.com"
+    And I should see "fairleads_contact"
+
 
   #7449
-  @m19 @requested
+  @m19 @requested @selenium @_done @_tested @tgn @hanging_js
   Scenario: I should see box where I can request deal from default deal admin, I should be able to fill in name, phone number, email and details of my request
+    Given I am on the homepage
+    Given I visit domain http://fairdeals.dk
+    Given setting for "default_deal_admin_email" is set to "agent@nbs.com"
+    Then I should see translated "fairdeals_home.show.view.request_a_deal"
+    And I fill in "email_deal_request_preview_name" with "Ana Kasparian"
+    And I fill in "email_deal_request_preview_email_from" with "anakasparian@tyt.com"
+    And I fill in "email_deal_request_preview_phone_number" with "+44 4234254345"
+    And I fill in "email_deal_request_preview_deal_description" with "I would like to buy a deal that..."
+    And I press translated "fairdeals_home.show.view.deal_request.send_email_button"
+    And I should see translated "deal_requests.create.flash.email_sent"
+    And last email sent should have been sent to recipient "agent@nbs.com"
+    And last email sent should have content "Name: Ana Kasparian"
+    And last email sent should have content "Phone number: +44 4234254345"
+    And last email sent should have content "E-mail: anakasparian@tyt.com"
+    And last email sent should have content "Request: I would like to buy a deal that..."
+    Given I visit domain http://localhost
+
 
   #7630
-  @m19 @requested @group_deals
+  @m19 @requested @group_deals @_done @_tested @rb
   Scenario: Group deal should be marked by a splash saying "Group deal" on the main page in the featured deal box
+    Given a deal named "PrimaryGroupDeal" exists within category "Electronics deals"
+    And a deal named "PrimaryGroupDeal" exists with attributes "published:1,group_deal:1,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
+    And deal named "PrimaryGroupDeal" is a primary featured deal
+    Given I visit domain http://fairdeals.dk
+    And I should see "1" occurrences of css class "splash_red" for tag "div"
 
   #7630
-  @m19 @requested @group_deals
+  @m19 @requested @group_deals @_tested @_done @tgn
   Scenario: On the main page in the featured group deal I should see how many leads were generated and how many are missing to reach the minimum (5 leads / 2 missing)
+    Given a deal named "Abc group deal #1" exists within category "Electronics deals"
+    And a deal named "Abc group deal #1" exists with attributes "published:1,group_deal:1,price:123,deal_price:100,discounted_price:25,social_media_description:quo vadis,created_leads:5,min_created_leads:7"
+    And deal named "Abc group deal #1" is a primary featured deal
+    Given I visit domain http://fairdeals.dk
+    And I should see "5 leads / 2 missing"
 
   #7630
-  @m19 @requested @group_deals
+  @m19 @requested @group_deals @_tested @_done @tgn
   Scenario: As admin I can set per deal minimum number of leads that needs to be generated to give the displayed price
+    Given a deal named "Abc group deal #1" exists with attributes "published:1,group_deal:1,price:123,deal_price:100,discounted_price:25,social_media_description:quo vadis,created_leads:5,min_created_leads:7"
+    And I am on the homepage
+    And I sign in as blazejek@gmail.com with password secret
+    And I follow translated "layout.main_menu.admin.deals"
+    And I follow translated "administration.deals.index.view.edit"
+    And I fill in "deal_min_created_leads" with "22"
+    And I press translated "administration.deals.edit.view.update_button"

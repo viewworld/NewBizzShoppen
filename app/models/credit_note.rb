@@ -51,7 +51,7 @@ class Credit < CreditNote
   public
 
   def type_as_text
-    "credit"
+    I18n.t("models.credit_note.type.credit")
   end
 
 end
@@ -59,6 +59,6 @@ end
 class Refund < CreditNote
 
   def type_as_text
-    "refund"
+    I18n.t("models.credit_note.type.refund")
   end
 end

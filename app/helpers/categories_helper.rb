@@ -45,20 +45,8 @@ module CategoriesHelper
 
   def all_categories_tree(options={})
     category_model = (options[:category_type] == "deal" ? "DealCategory" : "LeadCategory").constantize
-    root_categories = if user_signed_in?
-      if current_user.has_role?(:admin)
-        category_model.roots
-      elsif current_user.has_role?(:category_buyer) and category_model == LeadCategory
-        current_user.parent_accessible_categories_without_auto_buy
-      else
-        current_user.has_accessible_categories? ? category_model.roots.within_accessible(current_user) : current_user.has_role?(:customer) ? category_model.roots.with_customer_unique(current_user) : category_model.roots.with_agent_unique(current_user)
-      end
-    else
-      category_model.roots.without_unique
-    end.includes(:parent)
-
-    root_categories = root_categories.without_locked_and_not_published unless user_signed_in? and current_user.has_role?(:admin)
-    content_tag(:ul, root_categories.map { |c| content_tag(:li, (options[:roots] ? category_label(c, options).html_safe : category_tree(c, options)), :class => "categories_node", :id => dom_id(c)) }.join.html_safe, :class => "categories_tree", :id => "categories_main_tree")
+    root_categories = category_model.roots_for(current_user)
+    content_tag(:ul, root_categories.map { |c| content_tag(:li, (options[:roots] ? category_label(c, options).html_safe : category_tree(c, options)), :class => "categories_node", :id => dom_id(c)) }.join.html_safe, :class => ["categories_tree", options[:ul_css_class]].compact.join(" "), :id => "categories_main_tree")
   end
 
   def category_tree(category, options={})
@@ -66,19 +54,14 @@ module CategoriesHelper
     [category_label(category, options), (all_children), category_toggler(all_children.blank? ? false : true)].compact.join.html_safe
   end
 
+  def category_tree_for_subcategories(category, options={})
+    all_children = category_children(category, options)
+    [all_children, category_toggler(all_children.blank? ? false : true)].compact.join.html_safe
+  end
+
 
   def category_children(category, options)
-    if user_signed_in?
-      if current_user.has_role?(:admin)
-        children_categories = category.children
-      else
-        children_categories = current_user.has_accessible_categories? ? category.children.within_accessible(current_user) : current_user.has_role?(:customer) ? category.children.with_customer_unique(current_user) : category.children.with_agent_unique(current_user)
-      end
-    else
-      children_categories = category.children.without_unique
-    end
-
-    children_categories =  children_categories.without_locked_and_not_published unless user_signed_in? and current_user.has_role?(:admin)
+    children_categories = category.children_for(current_user)
     unless children_categories.empty?
       content_tag(:ul, :class => "category_children_tree") do
         children_categories.map do |child|
@@ -140,4 +123,9 @@ module CategoriesHelper
     end
   end
 
+  def categories_listing(collection, options = {}, &block)
+    @hb = ApplicationHelper::HelperBlocks.new(:tools, :bottom)
+    block.call(@hb)
+    render(:partial => '/categories/listing', :locals => options.merge({:collection => collection}.merge(@hb.results)))
+  end
 end

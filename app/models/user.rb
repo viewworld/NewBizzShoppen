@@ -107,7 +107,7 @@ class User < ActiveRecord::Base
 
   attr_protected :payout, :locked, :can_edit_payout_information, :paypal_email, :bank_swift_number, :bank_iban_number, :skip_email_verification
 
-  attr_accessor :agreement_read, :locked, :skip_email_verification, :deal_maker_role_enabled_flag, :send_invitation
+  attr_accessor :agreement_read, :locked, :skip_email_verification, :deal_maker_role_enabled_flag, :send_invitation, :auto_generate_password
 
   before_save :handle_locking, :handle_team_buyers_flag, :refresh_certification_of_call_centre_agents, :set_euro_billing_rate, :handle_deal_maker_enabled
   before_create :set_rss_token, :set_role, :set_email_verification
@@ -115,9 +115,10 @@ class User < ActiveRecord::Base
   after_create :auto_activate
   after_update :send_invitation_if_enabled
   validate :check_billing_rate
+  before_validation :set_auto_generated_password_if_required
 
   liquid :email, :confirmation_instructions_url, :reset_password_instructions_url, :social_provider_name, :category_buyer_category_home_url,
-         :screen_name, :first_name, :last_name
+         :screen_name, :first_name, :last_name, :home_page_url
   require 'digest/sha1'
 
   private
@@ -244,6 +245,14 @@ class User < ActiveRecord::Base
 
   def send_invitation_if_enabled
     send_invitation_email if ActiveRecord::ConnectionAdapters::Column.value_to_boolean(send_invitation)
+  end
+
+  def set_auto_generated_password_if_required
+    if ActiveRecord::ConnectionAdapters::Column.value_to_boolean(auto_generate_password)
+      new_password = generate_token(12)
+      self.password = new_password
+      self.password_confirmation = new_password
+    end
   end
 
   public
@@ -540,7 +549,7 @@ class User < ActiveRecord::Base
     if rpx_identifier
       User.social_provider(rpx_identifier)
     else
-      "not linked"
+      I18n.t("models.user.not_linked_to_social_provider")
     end
   end
 
@@ -571,6 +580,18 @@ class User < ActiveRecord::Base
   def category_buyer_category_home_url
     if has_role?(:category_buyer)
       "https://#{mailer_host}/#{with_role.buying_categories.first.cached_slug}"
+    end
+  end
+
+  def home_page_url
+    if has_role?(:category_buyer)
+      category_buyer_category_home_url
+    elsif has_role?(:customer)
+      "https://#{mailer_host}/buyer_home"
+    elsif has_role?(:purchase_manager)
+      "https://#{mailer_host}"
+    else
+      "https://#{mailer_host}/"
     end
   end
 
@@ -610,5 +631,29 @@ class User < ActiveRecord::Base
     end
 
     Country.get_country_from_locale
+  end
+
+  def role_to_deal_namespace
+    if has_role?(:admin)
+      "administration"
+    elsif has_role?(:customer)
+      "buyers"
+    elsif has_any_role?(:agent, :call_centre, :call_centre_agent)
+      role.to_s.pluralize
+    end
+  end
+
+  def role_to_campaign_template_name
+    if has_role?(:category_buyer)
+      "category_buyer"
+    elsif has_role?(:customer)
+      "buyer"
+    elsif has_role?(:purchase_manager)
+      "member"
+    end
+  end
+
+  def deliver_welcome_email_for_upgraded_contact
+    TemplateMailer.delay.new(email, "upgraded_contact_to_#{role_to_campaign_template_name}_welcome".to_sym, with_role.address.country, {:user => self})
   end
 end

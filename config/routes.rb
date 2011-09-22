@@ -293,6 +293,7 @@ Nbs::Application.routes.draw do
   resources :phone_codes
   resources :regions
   resources :category_requests, :only => [:new, :create]
+  resources :deal_requests, :only => [:create]
   resources :category_interests, :only => [:create]
 
   resources :news
@@ -326,6 +327,8 @@ Nbs::Application.routes.draw do
   resource :share_deal_by_email, :controller => "share_deal_by_email", :only => [:new, :create]
 
   resources :deal_maker_users
+
+  resources :email_templates, :only => [:edit, :update]
 
   constraints(Fairdeals) do
     match '/(:id)' => "fairdeals_home#show"

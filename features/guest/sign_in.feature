@@ -151,5 +151,22 @@ Scenario: I can see Facebook/Linkedin/Google icons on bottom of signing in box
   Scenario: In header of the creation of new account page I can see who am I and what social account am I using right now
 
   #7554
-  @m19 @requested
+  @m19 @requested @_tested @_done @tgn
   Scenario: When user confirms his account he should be redirected to his home page
+    #buyer
+    Given setting for "email_verification_for_sales_managers" is set to "1"
+    Given I am not sign in
+    Given I have not confirmed user with email buyer_not_confirmed@nbs.com and role customer
+    Then confirmation link should confirm account for buyer_not_confirmed@nbs.com
+    And I should be on buyer home
+    #agent
+    Given I am not sign in
+    Given I have not confirmed user with email agent_not_confirmed@nbs.com and role agent
+    Then confirmation link should confirm account for agent_not_confirmed@nbs.com
+    And I should be on agent home
+    #purchase manager
+    Given setting for "email_verification_for_procurement_managers" is set to "1"
+    Given I am not sign in
+    Given I have not confirmed user with email purchase_manager_not_confirmed@nbs.com and role purchase_manager
+    Then confirmation link should confirm account for purchase_manager_not_confirmed@nbs.com
+    And I should be on purchase manager home

@@ -5,7 +5,7 @@
   </div>
 
   <%= semantic_form_for @lead, :method => :put do |form| %>
-      <frm title="Edit">
+      <frm title="#{@lead.header}">
         <param:content>
           <%= render :partial => '/leads/form', :locals => {:form => form} %>
           <%= hidden_field_tag "token", @lsr.token %>

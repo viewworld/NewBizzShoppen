@@ -2,7 +2,7 @@
   <header back="true"><%= t("purchase_manager.tenders.new.view.title") %><%= image_tag_for_locale %></header>
 
   <%= semantic_form_for [:purchase_manager, @lead], :url => purchase_managers_tenders_path,  :method => :post do |form| %>
-      <frm title="Create new">
+      <frm title="t('purchase_manager.tenders.new.view.form_title')">
         <param:content>
           <%= render :partial => '/shared/leads/form', :locals => {:form => form, :lead => @lead} %>
         </param:content>

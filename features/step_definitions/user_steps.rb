@@ -61,6 +61,10 @@ Given /^user "([^"]*)" with role "([^"]*)" is confirmed$/ do |email, role|
   "User::#{role.camelize}".constantize.where(:email => email).first.confirm!
 end
 
+Then /^I have not confirmed user with email (.+) and role (.+)$/ do |email, role|
+  "User::#{role.camelize}".constantize.make!(:email => email)
+end
+
 Then /^I have user with email (.+) and role (.+)$/ do |email, role|
   u = "User::#{role.camelize}".constantize.make!(:email => email)
   u.confirm!
@@ -237,6 +241,14 @@ When /^user "([^"]*)" with role "([^"]*)" has attributes "([^"]*)"$/ do |email, 
   user = "User::#{role_name.camelize}".constantize.first(:conditions => {:email => email})
   attrs = Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys
   user.update_attributes(attrs)
+end
+
+When /^user "([^"]*)" with role "([^"]*)" should have attributes "([^"]*)"$/ do |email, role_name, options|
+  user = "User::#{role_name.camelize}".constantize.first(:conditions => {:email => email})
+  attrs = Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys
+  attrs.each_pair do |method, value|
+    assert user.send(method) == eval(value)
+  end
 end
 
 When /^user "([^"]*)" with role "([^"]*)" added lead "([^"]*)" to cart$/ do |email, role_name, lead_name|

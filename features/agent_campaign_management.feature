@@ -676,7 +676,8 @@ Feature: Agent campaign - management
           And I choose "campaign_cost_type_3"
           And I press "campaign_submit"
           And I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
-          And I follow translated "campaigns.edit.send_material_email_template"
+          And I select "Additional materials" from "email_template_id"
+          And I follow translated "campaigns.edit.edit_template"
           Then I should see CSS path "#email_template_body_input"
           And the "Subject" field should contain "Additional materials"
 

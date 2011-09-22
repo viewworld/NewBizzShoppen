@@ -53,5 +53,17 @@ describe Lead do
     }.should change(@category3, :total_leads_count).by(1)
   end
 
+  it "should update published leads count properly when new lead has been published" do
+
+    lambda {
+      Lead.make!(:category_id => @category1.id, :published => true)
+      @category1.reload
+    }.should change(@category1, :published_leads_count).by(1)
+
+    lambda {
+      Lead.make!(:category_id => @category1.id, :published => false)
+      @category1.reload
+    }.should_not change(@category1, :published_leads_count).by(1)
+  end
 
 end

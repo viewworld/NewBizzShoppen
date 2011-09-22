@@ -124,7 +124,7 @@ Scenario: I can set default auto buy max for 4 weeks
 
 @m18 @settings @_done @_tested
 Scenario: I can enable/disable email verification for procurement managers
-  When I uncheck "settings[12]"
+  When I uncheck "settings[14]"
   And I press translated "administration.settings.edit.view.button_update_settings"
   And I sign out
   When I go to purchase manager sign up
@@ -147,7 +147,7 @@ Scenario: I can enable/disable email verification for procurement managers
   Then I should see translated "flash.accounts.create.no_verification"
   And I sign in as lead_user2@person.com with password supersecret
   Then I go to administration settings
-  When I check "settings[12]"
+  When I check "settings[14]"
   And I press translated "administration.settings.edit.view.button_update_settings"
   And I sign out
   When I go to purchase manager sign up
@@ -171,7 +171,7 @@ Scenario: I can enable/disable email verification for procurement managers
 
 @m18 @settings @_done @_tested
 Scenario: I can enable/disable email verification for sales managers
-  When I uncheck "settings[13]"
+  When I uncheck "settings[15]"
   And I press translated "administration.settings.edit.view.button_update_settings"
   And I sign out
   When I go to buyer sign up
@@ -194,7 +194,7 @@ Scenario: I can enable/disable email verification for sales managers
   Then I should see translated "flash.accounts.create.no_verification"
   And I sign in as lead_user2@person.com with password supersecret
   Then I go to administration settings
-  When I check "settings[13]"
+  When I check "settings[15]"
   And I press translated "administration.settings.edit.view.button_update_settings"
   And I sign out
   When I go to buyer sign up
@@ -217,5 +217,10 @@ Scenario: I can enable/disable email verification for sales managers
   Then I should see translated "flash.buyer_accounts.create.notice"
 
 #7450
-@m19 @requested @settings
+@m19 @requested @settings @_done @_tested @tgn
 Scenario: I can set contact info for home page like Phone number, Email, Skype
+  Given I should see translated "administration.settings.edit.view.contacts_settings_title"
+  Then I fill in "settings[6]" with "my_email@fairleads.com"
+  And I fill in "settings[7]" with "+44 8888888"
+  And I fill in "settings[8]" with "skype_fairleads"
+  And I press translated "administration.settings.edit.view.button_update_settings"

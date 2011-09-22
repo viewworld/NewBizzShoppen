@@ -14,6 +14,8 @@ class Nbs < Thor
     Settings.certification_level_2 = 20 if Settings.certification_level_2.nil?
     Settings.logout_time = 5 if Settings.logout_time.nil? #minutes 
     Settings.contact_us_email = (Rails.env.production? or Rails.env.test?) ? "admin@fairleads.com" : "contact@nbs.fake.com" if Settings.contact_us_email.nil?
+    Settings.contact_us_phone = Rails.env.production? ? "" : "+44 0000000" if Settings.contact_us_phone.nil?
+    Settings.contact_us_skype = Rails.env.production? ? "" : "fairleads_contact" if Settings.contact_us_skype.nil?
     # Invoicing
     Settings.invoicing_default_payment_deadline_date = 14 if Settings.invoicing_default_payment_deadline_date.nil?
     Settings.big_buyer_purchase_limit = 10000 if Settings.big_buyer_purchase_limit.nil?
@@ -25,6 +27,7 @@ class Nbs < Thor
     Settings.email_verification_for_procurement_managers = "0" if Settings.email_verification_for_procurement_managers.nil?
     Settings.email_verification_for_sales_managers = "0" if Settings.email_verification_for_sales_managers.nil?
     Settings.default_max_auto_buy_per_4_weeks = 5 if Settings.default_max_auto_buy_per_4_weeks.nil?
+    Settings.default_group_deal_min_leads_created = 5 if Settings.default_group_deal_min_leads_created.nil?
 
     Country.find_or_create_by_name("Denmark", :locale => "da", :detailed_locale => "da", :vat_rate => VatRate.new(:rate => 25), :email_template_signature => "some amazing signature that will keep everyone happy all day long")
     Country.find_or_create_by_name("United Kingdom", :locale => "en", :detailed_locale => "gb", :vat_rate => VatRate.new(:rate => 20), :email_template_signature => "some amazing signature that will keep everyone happy all day long")
@@ -214,12 +217,44 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
                     :body => "<p>Fairleads username: {{user.email}}</p><p>Fairleads password: {{password}}</p><p>Screen name: {{user.screen_name}}</p><p><a href=\"{{user.category_buyer_category_home_url}}\">{{user.category_buyer_category_home_url}}</a></p>"}
         },
         {
+            :name => "Upgrade contact to buyer",
+            :uniq_id => "upgrade_contact_to_buyer",
+            :en => {:subject => "You have been upgraded to buyer",
+                    :body => "<p>Fairleads username: {{user.email}}</p><p>Fairleads password: {{password}}</p><p>Screen name: {{user.screen_name}}</p><p><a href=\"{{user.home_page_url}}\">{{user.home_page_url}}</a></p>"},
+            :da => {:subject => "[DK] You have been upgraded to buyer",
+                    :body => "<p>Fairleads username: {{user.email}}</p><p>Fairleads password: {{password}}</p><p>Screen name: {{user.screen_name}}</p><p><a href=\"{{user.home_page_url}}\">{{user.home_page_url}}</a></p>"}
+        },
+        {
+            :name => "Upgrade contact to member",
+            :uniq_id => "upgrade_contact_to_member",
+            :en => {:subject => "You have been upgraded to member",
+                    :body => "<p>Fairdeals username: {{user.email}}</p><p>Fairdeals password: {{password}}</p><p>Screen name: {{user.screen_name}}</p><p><a href=\"{{user.home_page_url}}\">{{user.home_page_url}}</a></p>"},
+            :da => {:subject => "[DK] You have been upgraded to member",
+                    :body => "<p>Fairdeals username: {{user.email}}</p><p>Fairdeals password: {{password}}</p><p>Screen name: {{user.screen_name}}</p><p><a href=\"{{user.home_page_url}}\">{{user.home_page_url}}</a></p>"}
+        },
+        {
             :name => "Upgraded category buyer welcome",
             :uniq_id => "upgraded_contact_to_category_buyer_welcome",
             :en => {:subject => "Welcome to Fairleads.com!",
                     :body => "<p>Login: {{user.email}}</p><p>Linked with account: {{user.social_provider_name}}</p><p><a href=\"{{user.category_buyer_category_home_url}}\">{{user.category_buyer_category_home_url}}</a></p>"},
             :da => {:subject => "[DK] Welcome to Fairleads.com!",
                     :body => "<p>Login: {{user.email}}</p><p>Linked with account: {{user.social_provider_name}}</p><p><a href=\"{{user.category_buyer_category_home_url}}\">{{user.category_buyer_category_home_url}}</a></p>"}
+        },
+        {
+            :name => "Upgraded buyer welcome",
+            :uniq_id => "upgraded_contact_to_buyer_welcome",
+            :en => {:subject => "Welcome to Fairleads.com!",
+                    :body => "<p>Login: {{user.email}}</p><p>Linked with account: {{user.social_provider_name}}</p><p><a href=\"{{user.home_page_url}}\">{{user.home_page_url}}</a></p>"},
+            :da => {:subject => "[DK] Welcome to Fairleads.com!",
+                    :body => "<p>Login: {{user.email}}</p><p>Linked with account: {{user.social_provider_name}}</p><p><a href=\"{{user.home_page_url}}\">{{user.home_page_url}}</a></p>"}
+        },
+        {
+            :name => "Upgraded member welcome",
+            :uniq_id => "upgraded_contact_to_member_welcome",
+            :en => {:subject => "Welcome to Fairdeals.dk!",
+                    :body => "<p>Login: {{user.email}}</p><p>Linked with account: {{user.social_provider_name}}</p><p><a href=\"{{user.home_page_url}}\">{{user.home_page_url}}</a></p>"},
+            :da => {:subject => "[DK] Welcome to Fairdeals.dk!",
+                    :body => "<p>Login: {{user.email}}</p><p>Linked with account: {{user.social_provider_name}}</p><p><a href=\"{{user.home_page_url}}\">{{user.home_page_url}}</a></p>"}
         },
         {
             :name => "Deal certification request",
@@ -268,6 +303,21 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
                  :body => "<p>Username: {{user.email}}</p><p>Password: {{new_password}}</p><p><a href=\"http://fairleads.com\">Login at fairleads.com</a></p>"},
          :da => {:subject => "[DK] Welcome to fairleads.dk",
                  :body => "<p>Username: {{user.email}}</p><p>Password: {{new_password}}</p><p><a href=\"http://fairleads.com\">Login at fairleads.com</a></p>"}
+        },
+
+        {:name => "Deal request details",
+         :uniq_id => "deal_request_details",
+         :en => {:subject => "You have requested a deal",
+                 :body => "<p><b>Name:</b> {{deal.header}}</p><p><b>Short description:</b> {{deal.description}}</p><p><b>Detailed description:</b> {{deal.hidden_description}}</p><p><b>Fine print:</b> {{deal.fine_print}}</p><p><b>Company:</b> {{deal.company_name}}</p><p><b>Company description:</b> {{deal.company_description}}</p><p><b>Contact name:</b> {{deal.contact_name}}</p><p><b>Email:</b> {{deal.email_address}}</p><p><b>Phone number:</b> {{deal.phone_number}}</p><p><b>Address:</b> {{deal.address_line_1}} {{deal.address_line_2}}, {{deal.zip_code}} {{deal.address_line_3}}</p>"},
+         :da => {:subject => "[DK] You have requested a deal",
+                 :body => "<p><b>Name:</b> {{deal.header}}</p><p><b>Short description:</b> {{deal.description}}</p><p><b>Detailed description:</b> {{deal.hidden_description}}</p><p><b>Fine print:</b> {{deal.fine_print}}</p><p><b>Company:</b> {{deal.company_name}}</p><p><b>Company description:</b> {{deal.company_description}}</p><p><b>Contact name:</b> {{deal.contact_name}}</p><p><b>Email:</b> {{deal.email_address}}</p><p><b>Phone number:</b> {{deal.phone_number}}</p><p><b>Address:</b> {{deal.address_line_1}} {{deal.address_line_2}}, {{deal.zip_code}} {{deal.address_line_3}}</p>"}
+        },
+        {:name => "Deal request for deal admin",
+         :uniq_id => "deal_request_for_deal_admin",
+         :en => {:subject => "{{name}} has requested a deal",
+                 :body => "<p>Name: {{name}}</p><p>Phone number: {{phone_number}}</p><p>E-mail: {{email_from}}</p><p>Request: {{deal_description}}</p>"},
+         :da => {:subject => "[DK] {{name}} has requested a deal",
+                 :body => "<p>Name: {{name}}</p><p>Phone number: {{phone_number}}</p><p>E-mail: {{email_from}}</p><p>Request: {{deal_description}}</p>"}
         }
     ]
 
@@ -367,7 +417,9 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
      {:name => "Meeting booked", :final => true, :generic => true},
      {:name => "Custom result", :final => true, :generic => true},
      {:name => "Send material", :final => false, :generic => true},
-     {:name => "Upgrade to category buyer", :final => true, :generic => true}].each do |result|
+     {:name => "Upgrade to category buyer", :final => true, :generic => true},
+     {:name => "Upgrade to buyer", :final => true, :generic => true},
+     {:name => "Upgrade to member", :final => true, :generic => true}].each do |result|
       Result.create(result) unless Result.find_by_name(result[:name])
     end
 
@@ -377,7 +429,9 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
      {:name => "Result message", :field_type => "0", :is_mandatory => true, :result => Result.find_by_name("Custom result") },
      {:name => "Call back date", :field_type => "4", :is_mandatory => true, :result => Result.find_by_name("Send material") },
      {:name => "Material", :field_type => "5", :is_mandatory => true, :result => Result.find_by_name("Send material") },
-     {:name => "Material", :field_type => "5", :is_mandatory => false, :result => Result.find_by_name("Upgrade to category buyer") }
+     {:name => "Material", :field_type => "5", :is_mandatory => false, :result => Result.find_by_name("Upgrade to category buyer") },
+     {:name => "Material", :field_type => "5", :is_mandatory => false, :result => Result.find_by_name("Upgrade to buyer") },
+     {:name => "Material", :field_type => "5", :is_mandatory => false, :result => Result.find_by_name("Upgrade to member") }
     ].each do |result_field|
       ResultField.create(result_field) unless ResultField.find_by_name_and_result_id(result_field[:name], result_field[:result].id)
     end
@@ -496,9 +550,12 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
     [
         'blurb_sign_up',
         'blurb_buyer_home',
+        'blurb_buyer_home_logged_in',
         'blurb_agent_home',
+        'blurb_agent_home_logged_in',
         'blurb_call_centre_home',
         'blurb_purchase_manager_home',
+        'blurb_purchase_manager_home_logged_in',
         'blurb_start_page_role_selection',
         'blurb_currencies',
         'blurb_category_home',

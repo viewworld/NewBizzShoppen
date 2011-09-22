@@ -2,7 +2,7 @@
   <header back="true"><%= t("agent.leads.new.view.title") %></header>
 
   <%= semantic_form_for [:agents, @lead], :method => :post do |form| %>
-      <frm title="Create new">
+      <frm title="#{t('agent.leads.new.view.form_title')}">
         <param:content>
           <%= render :partial => '/shared/leads/form', :locals => {:form => form, :lead => @lead} %>
         </param:content>

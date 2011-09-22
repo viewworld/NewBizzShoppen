@@ -1,7 +1,7 @@
 module DealCreateActions
 
   def new
-    @deal = Deal.new(:start_date => Date.today, :end_date => Date.today)
+    @deal = Deal.new(:start_date => Date.today, :end_date => Date.today, :min_created_leads => Settings.default_group_deal_min_leads_created.to_i)
     respond_to do |content|
       content.html {}
       content.js {
@@ -13,6 +13,7 @@ module DealCreateActions
   def create
 
     @deal = current_user.has_any_role?(:admin, :call_centre, :call_centre_agent) ? Deal.new(params[:deal]) : current_user.deals.build(params[:deal])
+    @deal.min_created_leads = Settings.default_group_deal_min_leads_created.to_i unless current_user.admin?
     @deal.creator = current_user if current_user.has_any_role?(:admin, :call_centre, :call_centre_agent)
     @deal.creation_step = 1
     if @deal.save
