@@ -215,7 +215,7 @@ class Category < ActiveRecord::Base
     root_categories = if user
       if user.admin?
         roots
-      elsif user.has_role?(:category_buyer) and category_model == LeadCategory
+      elsif user.has_role?(:category_buyer)
         user.parent_accessible_categories_without_auto_buy
       else
         user.has_accessible_categories? ? roots.within_accessible(user) : user.has_role?(:customer) ? roots.with_customer_unique(user) : roots.with_agent_unique(user)
