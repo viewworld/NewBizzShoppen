@@ -8,7 +8,7 @@
   <thead>
   <tr>
     <th class="hl"></th>
-    <th></th>
+    <th style="width:100px;"></th>
     <th><%= t("categories.listing.category_details_label") %></th>
 
     <% if block_tools %>
@@ -33,7 +33,7 @@
 
         <td class="cl"></td>
 
-        <td><%= image_tag(category.image.url, :class => "thumb") if category.image %></td>
+        <td class="ta_c"><%= image_tag(category.image.url, :class => "thumb") if category.image %></td>
 
         <td>
           <h4>
