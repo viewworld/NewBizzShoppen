@@ -38,9 +38,8 @@
         </frm>
     <% end %>
 
-
-      <% form_tag import_xls_callers_campaign_contacts_path(@campaign), :method => :post, :multipart => true do %>
-        <frm title="Create new from spreadsheet">
+      <% form_tag import_xls_callers_campaign_contacts_path(@campaign), :method => :post, :multipart => true, :id => "contact_import_form" do %>
+        <frm title="#{t('contacts.new.title_import_from_excel')}">
           <param:content>
             <div class="pdd_10 no_pdd_t">
               <fieldset class="inputs labels_ta_r labels_180">
@@ -90,7 +89,6 @@
           </param:actions>
         </frm>
     <% end %>
-
   </div>
 
 </column-mc:>
