@@ -330,6 +330,8 @@ Nbs::Application.routes.draw do
 
   resources :email_templates, :only => [:edit, :update]
 
+  resource :user_categories, :controller => "user_categories", :only => [:show]
+
   constraints(Fairdeals) do
     match '/(:id)' => "fairdeals_home#show"
   end

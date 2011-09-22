@@ -12,7 +12,7 @@
                 <%= file_field_tag 'attachment', :accept => 'spreadsheet/ods,spreadsheet/doc,spreadsheet/xdoc', :class => "fltl" %>
                 <%= select_tag :object_id, options_for_select(nested_set_options(objects), :selected => default_category_for_select(objects), :disabled => objects.select { |c| !c.can_publish_leads? }.map(&:id)) %>
                 <% if current_user.admin? %>
-                    <%= select_tag :creator_id, options_for_select(User.with_agents.map { |user| [user.to_s, user.id] }) %>
+                    <%= select_tag :creator_id, options_for_select(User.with_agents.map { |user| [user.to_s, user.id] }), :onclick => "" %>
                 <% end %>
               </ol>
             </fieldset>
@@ -27,3 +27,15 @@
   <% end %>
 
 </column-mc:>
+
+<js:>
+  <script type="text/javascript">
+    function load_user_categories(){
+        $.ajax({
+            type: "GET",
+            url: "<%= user_categories_path -%>",
+            data: "country_id=" + $('#creator_id').val()
+        });
+    }
+  </script>
+</js:>
