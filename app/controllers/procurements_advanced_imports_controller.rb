@@ -1,5 +1,6 @@
 class ProcurementsAdvancedImportsController < SecuredController
   include AdvancedImportActions
+  before_filter :check_role
 
   def create
     @attachment_file = params["attachment"]
@@ -27,4 +28,9 @@ class ProcurementsAdvancedImportsController < SecuredController
     @model = ::User::PurchaseManager
   end
 
+  def check_role
+    unless (current_user.has_any_role?(:call_centre, :call_centre_agent, :agent) and current_user.has_role?(:deal_maker)) or current_user.admin?
+      raise CanCan::AccessDenied
+    end
+  end
 end
