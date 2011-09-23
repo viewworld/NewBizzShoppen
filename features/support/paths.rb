@@ -96,7 +96,7 @@ module NavigationHelpers
         "#{::Rails.root.to_s}/spec/fixtures/sample.jpg"
     when /lead advanced import spreadsheet/
         "#{::Rails.root.to_s}/spec/fixtures/leads_adv_import.ods"
-    when /bad lead advanced import spreadsheet/
+    when /bad leads advanced import spreadsheet/
         "#{::Rails.root.to_s}/spec/fixtures/bad_leads_adv_import.ods"
     when /contact advanced import spreadsheet/
         "#{::Rails.root.to_s}/spec/fixtures/con_adv_import.ods"

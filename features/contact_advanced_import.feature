@@ -26,6 +26,3 @@ Feature: Lead Advanced Import
     And I should see "Mleko company"
     And I should not see "888 422 633"
 
-  @_done @_tested_elsewhere
-  Scenario: I can import contact from spreadsheet (ods, xls, xlsx) with advanced import
-
