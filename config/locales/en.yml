@@ -3572,6 +3572,8 @@ en:
         header: "Buyers import"
         title: "Advanced import - create new buyers from spreadsheet."
         no_category_for_category_buyer_error: "You have to choose category if you want to create category buyers!"
+        category_buyers_confirmation_checkbox: "Do you want to create category buyers?"
+        select_category: "Select category:"
     choose:
       view:
         header: "Buyers import - fields selection"

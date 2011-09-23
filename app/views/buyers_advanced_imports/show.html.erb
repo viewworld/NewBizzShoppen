@@ -14,9 +14,9 @@
 
                 <clb/>
                 <%= check_box_tag "category_buyer_enabled", "1", false, :onclick => "show_hide_category_selection()" %>
-                Do you want to create category buyers? <br/>
+                <%= t("buyers_advanced_import.show.view.category_buyers_confirmation_checkbox") %><br/>
                 <span id="category_buyer_select_container" style="display: none">
-                Select category:
+                  <%= t("buyers_advanced_import.show.view.select_category") %>
                   <%= select_tag :object_id, options_for_select(nested_set_options(objects), :disabled => objects.select { |c| !c.can_publish_leads? }.map(&:id)), :include_blank => "No category" %>
                     </span>
               </ol>
@@ -34,7 +34,7 @@
   <script type="text/javascript">
 
       function show_hide_category_selection() {
-          $('#object_id').val("")
+          $('#object_id').val("");
           if ($('#category_buyer_enabled:checked').val() == 1) {
               $('#category_buyer_select_container').show();
           }
