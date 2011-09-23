@@ -366,3 +366,8 @@ end
 Given /^there is bounced email for "([^"]*)"$/ do |email|
   EmailBounce.make!(:email => email)
 end
+
+
+Given /^user should exist with email "([^"]*)" and role "([^"]*)"$/ do |email, role|
+  assert User.where(:email => email).first.has_role?(role.to_sym)
+end
