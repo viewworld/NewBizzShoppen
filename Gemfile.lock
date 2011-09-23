@@ -299,7 +299,6 @@ DEPENDENCIES
   faker (= 0.3.1)
   fastercsv
   formtastic (= 1.1.0)
-  gherkin (>= 2.2.4)
   globalize3 (= 0.0.10)
   google-spreadsheet-ruby
   hoptoad_notifier

@@ -11,21 +11,29 @@ Feature: Leads specific advanced import
   Scenario: Admin can import leads from spreadsheet (ods, xls, xlsx) with advanced import
     And I sign in as admin@nbs.com with password secret
     Then I use advanced import for leads as "admin"
+    And lead "yessss" should be created by user "translator_call_centre_agent@nbs.com"
+    And lead "nooooo" should be created by user "translator_call_centre_agent@nbs.com"
 
   @added @selenium @_done @_tested
   Scenario: Call center can import leads from spreadsheet (ods, xls, xlsx) with advanced import
     And I sign in as translator_call_centre@nbs.com with password secret
     Then I use advanced import for leads as "user"
+    And lead "yessss" should be created by user "translator_call_centre@nbs.com"
+    And lead "nooooo" should be created by user "translator_call_centre@nbs.com"
 
   @added @selenium @_done @_tested
   Scenario: Call center agent can import leads from spreadsheet (ods, xls, xlsx) with advanced import
     And I sign in as translator_call_centre_agent@nbs.com with password secret
     Then I use advanced import for leads as "user"
+    And lead "yessss" should be created by user "translator_call_centre_agent@nbs.com"
+    And lead "nooooo" should be created by user "translator_call_centre_agent@nbs.com"
 
   @added @selenium @_done @_tested
   Scenario: Agent can import leads from spreadsheet (ods, xls, xlsx) with advanced import
     And I sign in as agent@nbs.com with password secret
     Then I use advanced import for leads as "user"
+    And lead "yessss" should be created by user "agent@nbs.com"
+    And lead "nooooo" should be created by user "agent@nbs.com"
 
   @_done @_tested_elsewhere
   Scenario: Admin can specify the user agent who will be put as the creator of imported leads

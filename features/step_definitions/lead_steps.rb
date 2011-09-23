@@ -333,7 +333,7 @@ Given /^lead "([^"]*)" should be bought by user with email "([^"]*)"$/ do |heade
 end
 
 Given /^lead "([^"]*)" should be created by user "([^"]*)"$/ do |header, email|
-  lead = Lead.where(:header => header).first
+  lead = Lead.where(:header => header).order("created_at DESC").first
   user = User.where(:email => email).first.with_role
   assert lead.creator.with_role == user
 end
