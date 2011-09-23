@@ -12,15 +12,15 @@ Feature: Lead Advanced Import
     And I follow translated "campaigns.edit.button_import_contacts"
     And campaign "Testing Two" should have "0" contacts
 
-  @_done @_tested
+  @_done @_tested @wip
   Scenario: I can import contact from spreadsheet (ods, xls, xlsx) with regular import
-    And I press translated "contacts.new.advanced_import_from_excel_button" within "#contact_import_form"
+    And I press translated "contacts.new.import_from_excel_button" within "#contact_import_form"
     And I should see translated "contacts.import_xls.flash.unknown_format"
     And attach the file "sample image" to "attachment" within "#contact_import_form"
-    And I press translated "contacts.new.advanced_import_from_excel_button" within "#contact_import_form"
+    And I press translated "contacts.new.import_from_excel_button" within "#contact_import_form"
     And I should see translated "contacts.import_xls.flash.unknown_format"
     And attach the file "contact advanced import spreadsheet" to "attachment" within "#contact_import_form"
-    And I press translated "contacts.new.advanced_import_from_excel_button" within "#contact_import_form"
+    And I press translated "contacts.new.import_from_excel_button" within "#contact_import_form"
     And campaign "Testing Two" should have "2" contacts
     And I should see "Bon Jovi inc."
     And I should see "Mleko company"
