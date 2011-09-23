@@ -201,6 +201,7 @@ Scenario: I can see "Sold out" message when there are no leads in category
   And Category named "Sample category" already exists
   And Category named "Sample category#2" already exists
   And Lead named "Lead sample" exists within "Sample category#2" category
+  And I go to browse leads
   Then I should see translated "layout.main_menu.shared.sold_out" within "#categories_table tbody tr:nth-child(1) td:nth-child(3)"
   And I should not see translated "layout.main_menu.shared.sold_out" within "#categories_table tbody tr:nth-child(2) td:nth-child(3)"
 
