@@ -29,7 +29,6 @@ Then /^I use advanced import for contacts$/ do
   And %{I should see "4/4"}
   And %{I press translated "advanced_import.preview.view.import_button"}
   And %{I should see translated "contacts_advanced_import.create.flash.success" with options "counter:2 / 4"}
-  #And %{I should see translated "advanced_import.show.view.remove_last_import_button"}
   And %{campaign "Testing Two" should have "2" contacts}
 end
 
