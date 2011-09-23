@@ -25,7 +25,7 @@
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="save">
-            <%= submit_tag t("advanced_import.show.view.button"), :name => "commit_create" %>
+            <%= button_to_function t("advanced_import.show.view.button"), "import_buyers()", :name => "commit_create" %>
           </ibt>
         </param:actions>
       </frm>
@@ -40,6 +40,14 @@
           }
           else {
               $('#category_buyer_select_container').hide();
+          }
+      }
+
+      function import_buyers() {
+          if ($('#category_buyer_enabled:checked').val() == 1 && $('#object_id').val() == '') {
+              alert('<%= t("buyers_advanced_import.show.view.no_category_for_category_buyer_error") %>')
+          } else {
+              $('#advanced_import_form').submit();
           }
       }
 

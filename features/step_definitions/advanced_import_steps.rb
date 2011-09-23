@@ -14,6 +14,7 @@ Then /^I use advanced import for contacts$/ do
   And %{I press translated "advanced_import.show.view.button" within "#advanced_import_form"}
   And %{I should see translated "contacts_advanced_import.choose.view.header"}
   And %{I follow translated "advanced_import.choose.view.cancel_button"}
+  And %{I wait 2 second}
   And %{attach the file "contact advanced import spreadsheet" to "attachment" within "#advanced_import_form"}
   And %{I select "Testing Two" from "object_id"}
   And %{I press translated "advanced_import.show.view.button" within "#advanced_import_form"}
@@ -28,7 +29,7 @@ Then /^I use advanced import for contacts$/ do
   And %{I should see "4/4"}
   And %{I press translated "advanced_import.preview.view.import_button"}
   And %{I should see translated "contacts_advanced_import.create.flash.success" with options "counter:2 / 4"}
-  And %{I should see translated "advanced_import.show.view.remove_last_import_button"}
+  #And %{I should see translated "advanced_import.show.view.remove_last_import_button"}
   And %{campaign "Testing Two" should have "2" contacts}
 end
 
@@ -50,6 +51,7 @@ Then /^I use advanced import for users "(buyers|procurements)"$/ do |name|
   And %{I press translated "advanced_import.show.view.button" within "#advanced_import_form"}
   And %{I should see translated "#{name}_advanced_import.choose.view.header"}
   And %{I follow translated "advanced_import.choose.view.cancel_button"}
+  And %{I wait 2 second}
   And %{attach the file "users spreadsheet" to "attachment" within "#advanced_import_form"}
   And %{I press translated "advanced_import.show.view.button" within "#advanced_import_form"}
   And %{I should see "Company name *"}
@@ -97,6 +99,9 @@ Then /^I use advanced import for category buyers$/ do
   And %{I click hidden link by url regex "/buyers_advanced_import/"}
   #wrong imports
   And %{I check "category_buyer_enabled"}
+  And %{I confirm a js popup on the next step}
+  And %{I press translated "advanced_import.show.view.button" within "#advanced_import_form"}
+  And %{I check "category_buyer_enabled"}
   And %{I select "Leisure" from "object_id"}
   And %{I press translated "advanced_import.show.view.button" within "#advanced_import_form"}
   And %{I should see translated "advanced_import.choose.flash.error_wrong_file"}
@@ -117,6 +122,7 @@ Then /^I use advanced import for category buyers$/ do
   And %{I press translated "advanced_import.show.view.button" within "#advanced_import_form"}
   And %{I should see translated "buyers_advanced_import.choose.view.header"}
   And %{I follow translated "advanced_import.choose.view.cancel_button"}
+  And %{I wait 2 second}
   And %{attach the file "users spreadsheet" to "attachment" within "#advanced_import_form"}
   And %{I check "category_buyer_enabled"}
   And %{I select "Leisure" from "object_id"}
