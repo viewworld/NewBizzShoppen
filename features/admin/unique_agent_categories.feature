@@ -23,7 +23,7 @@ Scenario: I can assign one or more agents/call centers to category marked as age
   Given I have user with email agent93928biz@nbs.com and role agent
   And I have user with email call_centre_agent3483434biz@nbs.com and role call_centre_agent
   And I have user with email nbsagent3483434biz@nbs.com and role agent
-  When I follow translated "administration.categories.index.view.edit_link"
+  When I click hidden link by url regex "/administration\/categories\/\d+\/edit/"
   And I check "category_is_agent_unique"
   And I select "call_centre_agent3483434biz@nbs.com" from "all_agents"
   And I select "agent93928biz@nbs.com" from "all_agents"
@@ -31,7 +31,7 @@ Scenario: I can assign one or more agents/call centers to category marked as age
   And attach the file "sample image" to "category_image_attributes_asset"
   Then I press translated "administration.categories.edit.view.button_update"
   And I should see translated "flash.categories.update.notice"
-  Then I follow translated "administration.categories.index.view.edit_link"
+  When I click hidden link by url regex "/administration\/categories\/\d+\/edit/"
   And "selected_agents" should be selected for value "call_centre_agent3483434biz@nbs.com"
   And "selected_agents" should be selected for value "agent93928biz@nbs.com"
 
@@ -41,7 +41,7 @@ Scenario: I can search agents by first name, last name and email
   And I have user with email call_centre_agent3483434biz@nbs.com and role call_centre_agent
   And I have user with email nbsagent3483434biz@nbs.com and role agent
   And user "nbsagent3483434biz@nbs.com" with role "agent" has attributes "last_name:Aronofsky Jr"
-  When I follow translated "administration.categories.index.view.edit_link"
+  When I click hidden link by url regex "/administration\/categories\/\d+\/edit/"
   And I check "category_is_agent_unique"
   And I fill in "filer_agents" with "Aronofsky Jr" within "#users_selection_agents_div"
   And I follow translated "administration.categories.form.search" within "#users_selection_agents_div"
@@ -50,14 +50,14 @@ Scenario: I can search agents by first name, last name and email
   And attach the file "sample image" to "category_image_attributes_asset"
   Then I press translated "administration.categories.edit.view.button_update"
   And I should see translated "flash.categories.update.notice"
-  Then I follow translated "administration.categories.index.view.edit_link"
+  When I click hidden link by url regex "/administration\/categories\/\d+\/edit/"
   And "selected_agents" should be selected for value "nbsagent3483434biz@nbs.com"
   
 @_tested @selenium
 Scenario: I can assign a unique category to the whole call centre
   Given I have user with email call_centre93928biz@nbs.com and role call_centre
   And user "call_centre93928biz@nbs.com" with role "call_centre" has attributes "last_name:Aronofsky Jr"
-  When I follow translated "administration.categories.index.view.edit_link"
+  When I click hidden link by url regex "/administration\/categories\/\d+\/edit/"
   And I check "category_is_agent_unique"
   And I fill in "filer_agents" with "Aronofsky Jr" within "#users_selection_agents_div"
   And I follow translated "administration.categories.form.search" within "#users_selection_agents_div"
@@ -66,5 +66,5 @@ Scenario: I can assign a unique category to the whole call centre
   And attach the file "sample image" to "category_image_attributes_asset"
   Then I press translated "administration.categories.edit.view.button_update"
   And I should see translated "flash.categories.update.notice"
-  Then I follow translated "administration.categories.index.view.edit_link"
+  When I click hidden link by url regex "/administration\/categories\/\d+\/edit/"
   And "selected_agents" should be selected for value "call_centre93928biz@nbs.com"
