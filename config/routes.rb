@@ -303,7 +303,7 @@ Nbs::Application.routes.draw do
   match ':slug/account' => 'category_buyer_accounts#create', :as => :category_home_page_account
   match ':slug/leads' => 'category_buyers/leads#index', :as => :category_home_page_leads
 
-  root :to => "home#show"
+  root :to => "buyer_home#show"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
