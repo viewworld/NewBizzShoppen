@@ -1,0 +1,66 @@
+<column-mc:>
+
+  <script type="text/javascript">
+      $(function() {
+          advanced_import_load_sortable_lists();
+      });
+  </script>
+
+  <header><%= t("#{model_name}s_advanced_import.choose.view.header") %></header>
+
+  <frm>
+    <param:content>
+      <div class="pdd_10">
+        <div class="column_left">
+          <p class="sortable_div_header"><%= t("#{model_name}s_advanced_import.choose.view.object_fields_label") %></p>
+          
+          <ul id="sortable_object_fields_removed" class="sortable_object_fields_class">
+            <p class="disabled"><%= t("advanced_import.choose.view.object_not_selected_fields_label") %></p>
+          </ul>
+
+          <ul id="sortable_object_fields" class="sortable_object_fields_class">
+            <p class="disabled"><%= t("advanced_import.choose.view.object_selected_fields_label") %></p>
+            <% @model.import_fields.each do |name| %>
+                <% required = @model.required_import_fields.include?(name) %>
+                <li class="ui-state-highlight <%= "disabled" if required %>"><%= name.include?("custom|") ? name.split("|")[1..2].join(" => ") : name.humanize %><%= " *" if required %>
+                  <span style=display:none><%= name %></span></li>
+            <% end %>
+          </ul>
+        </div>
+
+        <div class="column_right">
+          <p class="sortable_div_header"><%= t("advanced_import.choose.view.spreadsheet_fields_label") %></p>
+          <clb/>
+          <ul id="sortable_spreadsheet_fields" class="sortable_spreadsheet_fields_class">
+            <p class="disabled"><%= t("advanced_import.choose.view.spreadsheet_selected_fields_label") %></p>
+            <% @spreadsheet_headers.each do |name| %>
+                <li class="ui-state-default"><%= name %></li>
+            <% end %>
+          </ul>
+
+          <ul id="sortable_spreadsheet_fields_removed" class="sortable_spreadsheet_fields_class">
+            <p class="disabled"><%= t("advanced_import.choose.view.spreadsheet_not_selected_fields_label") %></p>
+          </ul>
+        </div>
+      </div>
+      <clb/>
+    </param:content>
+    <param:actions>
+      <ibt c="fltri">
+        <%= button_to_function t("advanced_import.choose.view.next_button"), "advanced_import_next_button('#{t("advanced_import.choose.view.warning_list_not_equal")}');" %>
+      </ibt>
+      <%= bt_link_to nil, t("advanced_import.choose.view.cancel_button"), self.send("#{model_name}s_advanced_import_path"), :class => "bt_grey fltr" %>
+    </param:actions>
+  </frm>
+
+  <% form_tag self.send("preview_#{model_name}s_advanced_import_path"), :id => "go_to_browse_page_form", :method => :post, :multipart => true do %>
+      <%= hidden_field_tag :object_field, nil %>
+      <%= hidden_field_tag :spreadsheet_field, nil %>
+      <%= hidden_field_tag :attachment, @attachment_file %>
+      <% if ["contact", "buyer", "lead"].include?(model_name) %>
+          <%= hidden_field_tag :object_id, @object_id %>
+      <% end %>
+      <%= hidden_field_tag :creator_id, @creator_id %>
+  <% end %>
+
+</column-mc:>

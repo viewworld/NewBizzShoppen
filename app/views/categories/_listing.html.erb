@@ -1,0 +1,87 @@
+<%
+   cols = 2
+   cols += 1 if not block_tools.nil?
+   cols += 1 if not block_bottom.nil?
+-%>
+
+<table id="categories_table" class="generic leads_table">
+  <thead>
+  <tr>
+    <th class="hl"></th>
+    <th style="width:100px;"></th>
+    <th><%= t("categories.listing.category_details_label") %></th>
+
+    <% if block_tools %>
+        <th class="ta_r"><%= t("categories.listing.actions_label") %></th>
+    <% end %>
+
+    <th class="hr"></th>
+  </tr>
+  </thead>
+
+  <tfoot>
+  <tr>
+    <td class="fl"></td>
+    <td colspan="<%= cols %>"></td>
+    <td class="fr"></td>
+  </tr>
+  </tfoot>
+
+  <tbody>
+  <% collection.each do |category| %>
+      <tr class="lead <%= cycle("odd", "even") %>" id="<%= dom_id(category) %>">
+
+        <td class="cl"></td>
+
+        <td class="ta_c"><%= image_tag(category.image.url, :class => "thumb") if category.image %></td>
+
+        <td>
+          <h4>
+            <%= link_to "#{category.name}", "/categories#{category.is_a?(LeadCategory) ? '' : '/deals'}/#{category.cached_slug}?search[with_category]=#{category.id}" %>
+            <%= "(#{(category.is_a?(LeadCategory) ? category.leads_count_for_user(current_user) : category.deals_count_for_user(current_user)) == 0 ? t("layout.main_menu.shared.sold_out") : category.is_a?(LeadCategory) ? category.leads_count_for_user(current_user) : category.deals_count_for_user(current_user)})" %>
+          </h4>
+          <%= (category.is_a?(LeadCategory) ? link_to_view_lead_templates(category) : link_to_view_deal_templates(category)) %>
+
+          <% unless category.description.blank? %>
+          <p class="element_description i expandable"><%= category.description %></p>
+          <% end %>
+
+          <p>
+            <%= category_tree_for_subcategories(category, {:category_label => lambda { |c| link_to "#{c.name}", "/categories#{category.is_a?(LeadCategory) ? '' : '/deals'}/#{c.cached_slug}?search[with_category]=#{c.id}" },
+                              :ul_css_class => "vertical",
+                              :after_category => lambda { |c|
+                                  "<span class='total_leads'>(#{(c.is_a?(LeadCategory) ? c.leads_count_for_user(current_user) : c.deals_count_for_user(current_user)) == 0 ? t("layout.main_menu.shared.sold_out") : c.is_a?(LeadCategory) ? c.leads_count_for_user(current_user) : c.deals_count_for_user(current_user)})</span> #{category.is_a?(LeadCategory) ? link_to_view_lead_templates(c) : link_to_view_deal_templates(c)}" +
+                                    [].tap do |links|
+                                      if user_signed_in? and current_user.has_role?(:admin)
+                                        links << link_to(t("administration.categories.index.view.edit_link"), edit_administration_category_path(c))
+                                        links << link_to(t("administration.categories.index.view.destroy_link"), administration_category_path(c),
+                                                       :method  => :delete,
+                                                       :confirm => I18n.t("common.confirmation")) if c.is_empty?
+                                      end
+                                  end.join(" | ").html_safe
+                              }}) %>
+          </p>
+
+        </td>
+
+        <% if block_tools %>
+            <td class="tda ta_r">
+              <%= with_output_buffer { block_tools.call(category) } %>
+            </td>
+        <% end %>
+
+        <td class="cr"></td>
+      </tr>
+  <% end %>
+
+  <% if block_bottom %>
+      <tr class="main_actions">
+        <td class="cl"></td>
+        <td colspan="<%= cols %>" class="no_pdd_lr">
+          <%= with_output_buffer { block_bottom.call } %>
+        </td>
+        <td class="cr"></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

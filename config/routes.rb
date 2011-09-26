@@ -181,6 +181,12 @@ Nbs::Application.routes.draw do
           post 'import_xls'
         end
       end
+      resources :advanced_import, :only => [:create, :destroy] do
+        collection do
+          post 'choose'
+          post 'preview'
+        end
+      end
       resources :agent_work_screen, :only => :index
       namespace :agent_work_screen do
         resources :contacts, :only => [:show, :destroy, :update] do
@@ -249,6 +255,33 @@ Nbs::Application.routes.draw do
   match 'categories/:slag' => "leads#index"
   match 'categories/deals/:slag' => "deals#index"
 
+  resource :contacts_advanced_import, :only => [:create, :destroy, :show] do
+    collection do
+      post 'choose'
+      post 'preview'
+    end
+  end
+
+  resource :leads_advanced_import, :only => [:create, :show] do
+    collection do
+      post 'choose'
+      post 'preview'
+    end
+  end
+
+  resource :procurements_advanced_import, :only => [:create, :show] do
+    collection do
+      post 'choose'
+      post 'preview'
+    end
+  end
+
+  resource :buyers_advanced_import, :only => [:create, :show] do
+    collection do
+      post 'choose'
+      post 'preview'
+    end
+  end
 
   resources :agent_accounts, :only => [:new, :create]
   resources :buyer_accounts, :only => [:new, :create]
@@ -260,6 +293,7 @@ Nbs::Application.routes.draw do
   resources :phone_codes
   resources :regions
   resources :category_requests, :only => [:new, :create]
+  resources :deal_requests, :only => [:create]
   resources :category_interests, :only => [:create]
 
   resources :news
@@ -293,6 +327,8 @@ Nbs::Application.routes.draw do
   resource :share_deal_by_email, :controller => "share_deal_by_email", :only => [:new, :create]
 
   resources :deal_maker_users
+
+  resources :email_templates, :only => [:edit, :update]
 
   constraints(Fairdeals) do
     match '/(:id)' => "fairdeals_home#show"

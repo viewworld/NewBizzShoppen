@@ -3,6 +3,9 @@ class Lead < AbstractLead
   NOVELTY_LEVEL_RANGES = [(0..8), (9..30), (31..INFINITY)]
   HOTNESS_LEVEL_RANGES = [(29..INFINITY), (7..28), (-INFINITY..6)]
   BLACK_LISTED_ATTRIBUTES = [:published]
+  CSV_ATTRS = %w(company_name company_phone_number company_website address_line_1 address_line_2 address_line_3 zip_code country region company_vat_no company_ean_number contact_name direct_phone_number phone_number email_address linkedin_url facebook_url is_international header description hidden_description purchase_value price currency published sale_limit purchase_decision_date)
+  REQUIRED_FIELDS = %w(company_name address_line_1 address_line_3 zip_code country contact_name phone_number header description hidden_description price currency sale_limit purchase_decision_date)
+  NUMERIC_FIELDS = %w(price sale_limit)
 
   translates :header, :description, :hidden_description
   acts_as_commentable
@@ -42,7 +45,7 @@ class Lead < AbstractLead
   scope :with_creator_type, lambda { |creator_type| where(["leads.creator_type = ?", "User::#{creator_type}"]) }
   scope :within_accessible_categories, lambda { |accessible_categories_ids| where("leads.category_id IN (?)", accessible_categories_ids) }
   scope :with_call_centre, lambda { |call_centre_id| where(["users.parent_id = ?", call_centre_id]).joins("INNER JOIN users ON leads.creator_id=users.id") }
-    #====================
+  #====================
   scope :featured, where(:featured => true)
   scope :purchased, where("lead_purchases_counter > 0")
   scope :without_bought_and_requested_by, lambda { |u| select("DISTINCT leads.*").joins("LEFT JOIN lead_purchases lp ON lp.lead_id = leads.id").where(["(lp.owner_id <> ? OR lp.owner_id IS NULL) AND (lp.assignee_id <> ? OR lp.assignee_id IS NULL) AND (lp.requested_by <> ? OR lp.requested_by IS NULL)", u.id, u.id, u.id]) if u }
@@ -88,9 +91,10 @@ class Lead < AbstractLead
   before_validation :handle_dialling_codes
   validate :check_lead_templates, :unless => Proc.new { |l| l.requestee and l.requestee.has_role?(:purchase_manager) }
   before_save :check_if_category_can_publish_leads
-  after_create :certify_lead_if_created_from_deal
+  after_create :certify_lead_if_created_from_deal, :send_email_with_deal_details_and_files
   after_update :send_instant_notification_to_subscribers
   after_save :auto_buy
+  after_create :update_deal_created_leads_count
   attr_accessor :creation_step
   attr_protected :published
 
@@ -106,7 +110,7 @@ class Lead < AbstractLead
     !(requestee and requestee.has_role?(:purchase_manager))
   end
 
-    #prevent dialling codes from saving when no proper phone number follows them
+  #prevent dialling codes from saving when no proper phone number follows them
   def handle_dialling_codes
     fields = [:direct_phone_number, :phone_number, :company_phone_number].select { |pn| self.send(pn).to_s.strip.size <= 3 }
     unless fields.empty?
@@ -116,7 +120,7 @@ class Lead < AbstractLead
     end
   end
 
-    #Handling case when category is changed during edit/create to prevent auto save
+  #Handling case when category is changed during edit/create to prevent auto save
   def handle_category_change
     if ActiveRecord::ConnectionAdapters::Column.value_to_boolean(category_is_changed)
       self.errors.add(:category_id, I18n.t("shared.leads.form.category_was_changed"))
@@ -190,6 +194,19 @@ class Lead < AbstractLead
     if deal
       lcr = self.lead_certification_requests.create(:do_not_send_email => true)
       lcr.update_attribute(:state, LeadCertificationRequest::STATE_APPROVED)
+    end
+  end
+
+  def send_email_with_deal_details_and_files
+    if deal
+      TemplateMailer.delay.new(requestee.email, deal.deal_request_details_email_template || :deal_request_details, Country.get_country_from_locale, {:deal => deal},
+      (deal.images + deal.materials).map{ |material| Pathname.new(File.join([::Rails.root, 'public', material.url])) })
+    end
+  end
+
+  def update_deal_created_leads_count
+    if deal
+      deal.increment!(:created_leads)
     end
   end
 

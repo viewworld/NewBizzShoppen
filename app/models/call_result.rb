@@ -2,7 +2,8 @@ class CallResult < ActiveRecord::Base
   attr_accessor :contact_email_address, :contact_first_name, :contact_last_name, :contact_address_line_1, :contact_address_line_2,
                 :contact_address_line_3, :contact_zip_code, :contact_country_id, :contact_phone_number,
                 :contact_company_name, :buying_category_ids, :email_template_subject, :email_template_from, :email_template_bcc,
-                :email_template_cc, :email_template_body, :result_id_changed
+                :email_template_cc, :email_template_body, :result_id_changed, :user_big_buyer_purchase_limit, :user_big_buyer, :user_not_charge_vat,
+                :user_team_buyers, :user_deal_maker_role_enabled
 
   belongs_to :contact
   belongs_to :result
@@ -14,10 +15,11 @@ class CallResult < ActiveRecord::Base
   accepts_nested_attributes_for :contact
 
   validates_presence_of :result_id, :creator_id, :contact_id
-  validates_presence_of :contact_email_address, :if => Proc.new{|cr| cr.result.send_material? or cr.result.upgrades_to_category_buyer?}
-  validates_format_of :contact_email_address, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :if => Proc.new{|cr| cr.result.send_material? or cr.result.upgrades_to_category_buyer?}
-  validates_presence_of :contact_first_name, :contact_last_name, :contact_address_line_1, :contact_zip_code, :if => Proc.new { |cr| cr.result.upgrades_to_category_buyer? }
-  validate :validate_uniqueness_of_contact_email_address, :if => Proc.new { |cr| cr.result.upgrades_to_category_buyer? }
+  validates_presence_of :contact_email_address, :if => Proc.new{|cr| cr.result.send_material? or cr.result.upgrades_to_any_user?}
+  validates_format_of :contact_email_address, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :if => Proc.new{|cr| cr.result.send_material? or cr.result.upgrades_to_any_user?}
+  validates_presence_of :contact_first_name, :contact_last_name, :contact_address_line_1, :contact_zip_code, :if => Proc.new { |cr| cr.result.upgrades_to_any_user? }
+  validates_presence_of :contact_company_name, :contact_phone_number, :contact_address_line_3, :if => Proc.new { |cr| cr.result.upgrades_to_member? }
+  validate :validate_uniqueness_of_contact_email_address, :if => Proc.new { |cr| cr.result.upgrades_to_any_user? }
 
   after_create :process_side_effects, :update_contact_note, :set_last_call_result_in_contact, :update_contact_email, :update_contact_address
   after_update :process_side_effects, :update_contact_email, :update_contact_address
@@ -122,7 +124,7 @@ class CallResult < ActiveRecord::Base
   end
 
   def update_contact_address
-    if result.upgrades_to_category_buyer?
+    if result.upgrades_to_any_user?
       contact.update_attributes({:contact_name => "#{contact_first_name} #{contact_last_name}", :address_line_1 => contact_address_line_1,
                                  :zip_code => contact_zip_code, :email_address => contact_email_address})
     end
@@ -186,19 +188,36 @@ class CallResult < ActiveRecord::Base
   end
 
   def process_for_upgrade_to_category_buyer
-    upgrade_to_category_buyer
+    upgrade_to_user("category_buyer")
     process_for_final_result
   end
 
-  def upgrade_to_category_buyer
-    user = User::CategoryBuyer.new(:email => contact_email_address, :first_name => contact_first_name,
-                            :last_name => contact_last_name,
-                            :address_attributes => { :address_line_1 => contact_address_line_1, :zip_code => contact_zip_code,
-                                                     :country_id => contact_country_id,  :address_line_2 => contact_address_line_2,
-                                                     :address_line_3 => contact_address_line_3, :region_id => contact.region_id},
-                            :agreement_read => true, :company_name => contact.company_name, :phone => contact_phone_number,
-                            :contact => contact, :vat_number => contact.company_vat_no,
-                            :company_ean_number => contact.company_ean_number)
+  def process_for_upgrade_to_buyer
+    upgrade_to_user("customer")
+    process_for_final_result
+  end
+
+  def process_for_upgrade_to_member
+    upgrade_to_user("purchase_manager")
+    process_for_final_result
+  end
+
+  def upgrade_to_user(role)
+    user_params = {:email => contact_email_address, :first_name => contact_first_name,
+                   :last_name => contact_last_name,
+                   :address_attributes => { :address_line_1 => contact_address_line_1, :zip_code => contact_zip_code,
+                                             :country_id => contact_country_id,  :address_line_2 => contact_address_line_2,
+                                             :address_line_3 => contact_address_line_3, :region_id => contact.region_id},
+                   :agreement_read => true, :company_name => contact.company_name, :phone => contact_phone_number,
+                   :contact => contact, :vat_number => contact.company_vat_no,
+                   :company_ean_number => contact.company_ean_number}
+
+    if ["category_buyer", "customer"].include?(role)
+      user_params.merge!(:big_buyer => user_big_buyer, :not_charge_vat => user_not_charge_vat, :team_buyers => user_team_buyers,
+                         :deal_maker_role_enabled => user_deal_maker_role_enabled, :big_buyer_purchase_limit => user_big_buyer_purchase_limit.to_f)
+    end
+
+    user = "User::#{role.camelize}".constantize.new(user_params)
 
     users_count = User.where("last_name = ?", contact_last_name).count
     user.screen_name = "#{contact_last_name}#{' ' + users_count.to_s if users_count > 0}"
@@ -207,9 +226,11 @@ class CallResult < ActiveRecord::Base
     user.password_confirmation = new_password
     user.skip_email_verification = "1"
     user.save
-    user.buying_category_ids = buying_category_ids
-    user.save
-    deliver_email_for_category_buyer(user, new_password)
+    if role == "category_buyer"
+      user.buying_category_ids = buying_category_ids
+      user.save
+    end
+    deliver_email_for_upgraded_user(user, new_password)
   end
 
   def customize_email_template(template)
@@ -229,12 +250,13 @@ class CallResult < ActiveRecord::Base
                                         send_material_result_value.materials.map{ |material| Pathname.new(File.join([::Rails.root, 'public', material.url]))})
   end
 
-  def deliver_email_for_category_buyer(user, password)
-    template = contact.campaign.upgrade_contact_to_category_buyer_email_template || EmailTemplate.global.where(:uniq_id => 'upgrade_contact_to_category_buyer').first
+  def deliver_email_for_upgraded_user(user, password)
+    role = user.role_to_campaign_template_name
+    template = contact.campaign.send("upgrade_contact_to_#{role}_email_template".to_sym) || EmailTemplate.global.where(:uniq_id => "upgrade_contact_to_#{role}").first
     template = customize_email_template(template)
     attachments_arr = send_material_result_value.materials.empty? ? [] : send_material_result_value.materials.map{ |material| Pathname.new(File.join([::Rails.root, 'public', material.url])) }
 
-    ApplicationMailer.delay.email_template(contact_email_address, :blank_template, Country.get_country_from_locale,
+    TemplateMailer.delay.new(contact_email_address, :blank_template, Country.get_country_from_locale,
                                        {:subject_content => template.subject, :body_content => template.render({:user => user, :password => password}),
                                         :bcc_recipients => template.bcc, :cc_recipients => template.cc},
                                         attachments_arr)

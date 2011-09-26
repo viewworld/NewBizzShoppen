@@ -2,41 +2,16 @@
   <header><%= t("administration.settings.edit.view.title") %></header>
 
   <%= form_tag administration_setting_path, :method => :put do %>
-      <frm title="">
-        <param:content>          
-          <div class="pdd_10 no_pdd_t">
-            <% settings_left, settings_right = @settings.chunk(2) %>
-            <div class="column_left">
-            <fieldset class="inputs labels_260 labels_ta_r inputs_180">
-              <ol>
-                <% settings_left.each_with_index do |setting, i| %>
-                    <%= render :partial => "setting", :locals => {:setting => setting, :i => i} %>
-                <% end %>
-              </ol>
-            </fieldset>
-            </div>
-            <div class="column_right">
-            <fieldset class="inputs labels_260 labels_ta_r inputs_180">
-              <ol>
-                <% settings_right.each_with_index do |setting, i| %>
-                    <%= render :partial => "setting", :locals => {:setting => setting, :i => i} %>
-                <% end %>
-              </ol>
-            </fieldset>             
-            </div>
-            <clb/>
-          </div>
-        </param:content>
-        <param:actions>
-          <ibt c="fltri" icon="plus">
-            <%= submit_tag t("administration.settings.edit.view.button_update_settings"), :onclick => "if(confirm('#{t("administration.settings.edit.view.confirmation_update_message")}')){ this.form.submit(); } else {return false;}" %>
-          </ibt>
-          <ibt c="bt_grey fltri">
-            <%= button_to_function t("administration.settings.edit.view.button_cancel"), "history.go(-1)" %>
-          </ibt>
-        </param:actions>
-      </frm>
+      <%= render :partial => "settings_form", :locals => { :settings => @settings.select { |s| !s.var.include?("contact_us") } }  %>
   <% end %>
+
+  <br/>
+  <header><%= t("administration.settings.edit.view.contacts_settings_title") %></header>
+
+  <%= form_tag administration_setting_path, :method => :put do %>
+      <%= render :partial => "settings_form", :locals => { :settings => @settings.select { |s| s.var.include?("contact_us") } } %>
+  <% end %>
+
 
   <br/>
   <header><%= t("administration.bank_accounts.index.view.header") %></header>

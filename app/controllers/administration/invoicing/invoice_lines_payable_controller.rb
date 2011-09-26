@@ -2,7 +2,7 @@ class Administration::Invoicing::InvoiceLinesPayableController < Administration:
   respond_to :js, :only => :new
   
   def new
-    @invoice_lines = InvoiceLine.find(:all, :conditions => { :id => params[:invoice_lines_id]})
+    @invoice_lines = InvoiceLine.where(:id => params[:invoice_lines_id])
   end
 end
 

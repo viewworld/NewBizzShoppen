@@ -7,7 +7,7 @@ module WillPaginate
         page, per_page, total_entries = wp_parse_options(options)
 
         if options.delete(:show_all)
-          per_page = count
+          per_page = count >= 1 ? count : 1
         end
 
         WillPaginate::Collection.create(page, per_page, total_entries) do |pager|

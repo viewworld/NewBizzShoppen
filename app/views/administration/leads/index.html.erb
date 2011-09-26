@@ -25,7 +25,7 @@
               <li class="string range">
                 <%= f.hidden_field :price_from %>
                 <%= f.hidden_field :price_to %>
-                <%= f.label :price_from_to, "Price range" %>
+                <%= f.label :price_from_to, t("administration.leads.index.search.price_range_label") %>
                 <%= text_field_tag :price_from_to, '', {:readonly => "readonly", :id => "price_from_to", :style => "width: 75px"} %>
                 <div class="range_container">
                   <div id="price_range" class="slider-range"></div>
@@ -35,7 +35,7 @@
               <li class="string range">
                 <%= f.hidden_field :lead_purchases_counter_from %>
                 <%= f.hidden_field :lead_purchases_counter_to %>
-                <%= f.label :lead_purchases_counter_from, "Sold range" %>
+                <%= f.label :lead_purchases_counter_from, t("administration.leads.index.search.sold_range_label") %>
                 <%= text_field_tag :lead_purchases_counter_from_to, '', {:readonly => "readonly", :id => "lead_purchases_counter_from_to", :style => "width: 60px"} %>
                 <div class="range_container">
                   <div id="sold_range" class="slider-range"></div>
@@ -45,7 +45,7 @@
               <li class="string range">
                 <%= f.hidden_field :purchase_value_from %>
                 <%= f.hidden_field :purchase_value_to %>
-                <%= f.label :purchase_value_from, "Value range" %>
+                <%= f.label :purchase_value_from, t("administration.leads.index.search.value_range_label") %>
                 <%= text_field_tag :purchase_value_from_to, '', {:readonly => "readonly", :id => "purchase_value_from_to"} %>
                 <div class="range_container">
                   <div id="value_range" class="slider-range"></div>
@@ -74,7 +74,11 @@
 
 
 <column-mc:>
-  <header back="#{'true' if @search.with_created_by}"><%= t("administration.leads.index.view.title") %></header>
+  <header back="#{'true' if @search.with_created_by}">
+    <param:content>
+      <%= t("administration.leads.index.view.title") %>
+    </param:content>
+  </header>
 
   <% if @leads.blank? %>
     <%= blank_state_message %>

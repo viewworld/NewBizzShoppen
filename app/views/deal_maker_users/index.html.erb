@@ -24,6 +24,7 @@
     <th><%= t("deal_maker_users.index.view.type") %></th>
     <th><%= t("deal_maker_users.index.view.email") %></th>
     <th><%= t("deal_maker_users.index.view.name") %></th>
+    <th><%= t("deal_maker_users.index.view.company_name") %></th>
     <th class="ta_r"><%= t("deal_maker_users.index.view.actions") %></th>
     <th class="hr"></th>
   </tr>
@@ -31,7 +32,7 @@
   <tfoot>
   <tr>
     <td class="fl"></td>
-    <td colspan="4"></td>
+    <td colspan="5"></td>
     <td class="fr"></td>
   </tr>
   </tfoot>
@@ -42,6 +43,7 @@
         <td><%= user.has_role?(:purchase_manager) ? t("deal_maker_users.index.view.user_member") : t("deal_maker_users.index.view.user_supplier") %></td>
         <td><%= user.email %></td>
         <td><%= user.full_name %></td>
+        <td><%= user.company_name %></td>
         <td class="tda ta_r">
           <ul-actions>
             <li>
@@ -53,7 +55,7 @@
       </tr>
   <% end %>
   <tr class="pagination">
-    <td colspan="6" class="ta_c">
+    <td colspan="7" class="ta_c">
       <%= will_paginate @users %>
     </td>
   </tr>

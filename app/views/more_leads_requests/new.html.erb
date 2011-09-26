@@ -1,7 +1,7 @@
 <column-mc:>
   <header><%= t("more_leads_requests.new.view.header", :category => @category.name) %></header>
   <%= form_for :email_template_preview, :url => category_more_leads_requests_path(@category) do |f| %>
-    <frm title="Contact Form">
+    <frm title="#{t('more_leads_requests.new.view.form_title')}">
       <param:content>
       <div class="pdd_10 no_pdd_t">
 

@@ -1,4 +1,4 @@
-@advanced_import @m19
+@advanced_import @m19 @_done @_tested_elsewhere
 Feature: Advanced import general
 
   Scenario: Admin can see import tab (with subtabs)
@@ -9,13 +9,11 @@ Feature: Advanced import general
 
   Scenario: Agent can see import tab (with subtabs)
 
-
   Scenario: I can import objects from spreadsheet (ods, xls, xlsx) with advanced import
 
   Scenario: I can not import objects from files with extension different then ods, xls, xlsx
 
   Scenario: If headers in spreadseet have unsafe character then import will be aborted and information about it will be displayed to the user
-
 
   Scenario: I can choose which buyer and pms fileds I want to use in advanced import
 
@@ -27,7 +25,6 @@ Feature: Advanced import general
 
   Scenario: I can cancel advanced import from choose fields page
 
-
   Scenario: I can see preview of all objects that will be important before I can import data into database
 
   Scenario: I can browse through all objects that will be important thanks to first prev next and last buttons
@@ -36,12 +33,6 @@ Feature: Advanced import general
 
   Scenario: The counter of objects is displayed over each browsed buyer
 
-
   Scenario: After advanced import I can see message how many objects was created and how many rows have been in spreadsheet
 
   Scenario: After advanced import If some buyer and pms was not created then I can see the reason why
-
-
-  Scenario: I can remove last advanced import if there is any for current campaign
-
-  Scenario: I can not see remove last advanced import button if last import has been already removed

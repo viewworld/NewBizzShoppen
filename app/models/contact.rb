@@ -1,6 +1,8 @@
 class Contact < AbstractLead
 
   CSV_ATTRS = %w(company_name company_phone_number company_website address_line_1 address_line_2 address_line_3 zip_code country region company_vat_no company_ean_number contact_name direct_phone_number phone_number email_address linkedin_url facebook_url note)
+  REQUIRED_FIELDS = %w(company_name company_phone_number country)
+  NUMERIC_FIELDS = []
 
   attr_accessor :strict_validate, :formatted_rows
 
@@ -21,6 +23,7 @@ class Contact < AbstractLead
   scope :available_to_assign, where(:agent_id => nil).with_completed_status(false).with_pending_status(false)
   scope :with_results, joins(:call_results)
   scope :with_agents, lambda { |agent_ids| where("call_results.creator_id IN (:agent_ids)", {:agent_ids => agent_ids }) unless agent_ids.to_a.select{ |id| !id.blank? }.empty? }
+  scope :from_last_import, where(:last_import => true)
   scoped_order :company_name
 
   acts_as_list :scope => [:campaign_id, :agent_id, :pending]

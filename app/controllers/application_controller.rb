@@ -78,10 +78,10 @@ class ApplicationController < ActionController::Base
         session[:lead_id] = nil
         session[:buyout] = nil
         requested_path
+      elsif resource.contact.present? and resource.has_any_role?(:category_buyer, :customer, :purchase_manager) and resource.sign_in_count == 1
+        my_profile_path
       elsif resource.has_role? :purchase_manager and session[:site] == "fairdeals"
         root_path
-      elsif resource.has_role? :category_buyer and resource.sign_in_count == 1 and resource.contact.present?
-        my_profile_path
       elsif resource.has_role? :category_buyer
         if resource.with_role.parent_buying_categories.first
           category_home_page_path(resource.with_role.parent_buying_categories.first.cached_slug)
@@ -126,7 +126,7 @@ class ApplicationController < ActionController::Base
   def set_locale(locale_code=nil)
     @locales = Locale.enabled.all
     session[:locale_code] = locale_code || session[:locale_code] || I18n.locale.to_s
-    I18n.locale = session[:locale_code]
+    I18n.locale = @locales.map(&:code).include?(session[:locale_code]) ? session[:locale_code] : @locales.first.code
     Thread.current[:globalize_detailed_locale] = ((user_signed_in? and current_user) and current_user.with_role.address.present?) ? current_user.with_role.address.country.detailed_locale : browser_locale
   end
 

@@ -96,5 +96,32 @@ Feature: Agent dealmaker
     And I should see translated "agent_home.show.view.new_deal"
 
   ##7650
-  @m19 @requested
+  @m19 @requested @_done @_tested @tgn
   Scenario: I can check checkbox "Auto generate password" or uncheck it and provide password for supplier or member
+    #member
+    Then I follow translated "deal_maker_users.index.view.new_member"
+    And I fill in "user_first_name" with "Anna"
+    And I fill in "user_company_name" with "Anna Lee Inc."
+    And I fill in "user_last_name" with "Lee"
+    And I fill in "user_address_attributes_address_line_1" with "Vlodivostok"
+    And I fill in "user_address_attributes_address_line_2" with "Vlodivostok"
+    And I fill in "user_address_attributes_address_line_3" with "Vlodivostok"
+    And I fill in "user_address_attributes_zip_code" with "22-222"
+    And I fill in "user_screen_name" with "Anna Lee"
+    And I fill in "user_email" with "deannalee@nbs.com"
+    And I fill in "user_phone" with "+43 2312321313"
+    And I press translated "deal_maker_users.new.view.button_create"
+    And I should see translated "deal_maker_users.create.flash.user_creation_successful"
+  #supplier
+    Then I follow translated "deal_maker_users.index.view.new_supplier"
+    And I fill in "user_company_name" with "Anna Lee Inc.2"
+    And I fill in "user_first_name" with "Anna"
+    And I fill in "user_last_name" with "Lee"
+    And I fill in "user_address_attributes_address_line_1" with "Vlodivostok"
+    And I fill in "user_address_attributes_zip_code" with "22-222"
+    And I fill in "user_screen_name" with "Anna Lee2"
+    And I fill in "user_email" with "annalee@nbs.com"
+    And the "user_skip_email_verification" checkbox should be checked
+    And the "user_big_buyer" checkbox should be checked
+    And I press translated "deal_maker_users.new.view.button_create"
+    And I should see translated "deal_maker_users.create.flash.user_creation_successful"

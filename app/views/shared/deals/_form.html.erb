@@ -53,10 +53,15 @@
             <%= form.input :currency_id, :collection => currencies_for_select, :include_blank => false %>
         <% end %>
         <%= form.input :max_auto_buy, :as => :string, :label => t("shared.deals.form.max_auto_buy_label") %>
+        <% if user_signed_in? and current_user.admin? %>
+            <div id="group_deal_additional_fields">
+            <%= form.input :min_created_leads, :label => t("shared.deals.form.min_created_leads") %>
+            </div>
+        <% end %>
         <% unless user_signed_in? and current_user.buyer? %>
-        <span>
-            <%= form.input :group_deal, :wrapper_html => {:style => "margin-left:200px"}, :onclick => "enable_group_deal();" %>
-        </span>
+            <div>
+                <%= form.input :group_deal, :wrapper_html => {:style => "margin-left:200px"}, :onclick => "enable_group_deal();" %>
+            </div>
             <div id="group_deal_fields">
               <%= form.input :deal_price, :required => @deal.group_deal == true %>
               <%= form.input :discounted_price, :required => @deal.group_deal == true, :label => t("shared.deals.form.discounted_price_label") %> <%= "#{t("shared.deals.form.saving_percent_label")} (#{@deal.saving})" if @deal.discounted_price.to_i > 0 %>
@@ -64,7 +69,7 @@
             </div>
 
             <% unless @deal.new_record? %>
-                <li class="string"><%= form.label :url %>
+                <li class="string"><%= form.label :url, :label => t("shared.deals.form.url_label") %>
                   <%= link_to deal_url(:id => @deal.slug), deal_url(:id => @deal.slug) %>
                 </li>
             <% end %>
@@ -159,10 +164,10 @@
   <fieldset class="inputs labels_ta_r labels_200">
     <ol class="align_inputs">
       <li class="header">
-        <h3><%= t("shared.leads.form.additional_language") %></h3>
+        <h3><%= t("shared.deals.form.additional_language") %></h3>
       </li>
       <li class="select">
-        <%= form.label :locale, "New translation" %>
+        <%= form.label :locale, t("shared.deals.form.new_translation") %>
         <%= select_tag :locale, options_for_select(available_locales_list(deal.lead_translations)),
                        {:id => "locale_picker", :include_blank => true, :onchange => fields_for_deals_translations(form)} %>
       </li>
@@ -197,19 +202,33 @@
           }
       }
 
+      function enable_group_deal_additional_fields(is_enabled){
+          if(is_enabled){
+              $('#group_deal_additional_fields').show();
+          }
+          else
+          {
+              $('#group_deal_additional_fields').hide();
+          }
+      }
+
       function enable_group_deal(){
           if($('#deal_group_deal').is(':checked')){
               mark_as_required('#deal_deal_price_input', true);
               mark_as_required('#deal_discounted_price_input', true);
               mark_as_required('#deal_social_media_description_input', true);
+              enable_group_deal_additional_fields(true)
           }
           else
           {
               mark_as_required('#deal_deal_price_input', false);
               mark_as_required('#deal_discounted_price_input', false);
               mark_as_required('#deal_social_media_description_input', false);
+              enable_group_deal_additional_fields(false)
           }
       }
+
+      <%= "enable_group_deal_additional_fields(#{@deal.group_deal? ? 'true' : 'false'})" if user_signed_in? and current_user.admin? -%>
 
   </script>
   <%= javascript_include_tag 'lead_translation_functions.js' %>

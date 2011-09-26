@@ -15,7 +15,8 @@ class AbstractLead < ActiveRecord::Base
   has_many :lead_purchases, :foreign_key => :lead_id
   has_many :lead_template_values, :foreign_key => :lead_id
   
-  liquid_methods :show_lead_details_url, :category_name, :header, :description, :hidden_description, :company_name, :contact_name, :phone_number, :email_address, :address, :www_address, :direct_phone_number
+  liquid_methods :show_lead_details_url, :category_name, :header, :description, :hidden_description, :company_name, :contact_name, :phone_number, :email_address,
+                 :address, :www_address, :direct_phone_number,:fine_print, :company_description
 
   #TODO ???
   liquid :header
@@ -117,11 +118,18 @@ class AbstractLead < ActiveRecord::Base
     user.has_role?(:admin) ? comment_threads.roots.count : comment_threads.roots.without_blocked.count
   end
 
+  def company_website_with_protocol
+    if company_website
+      return "http://#{company_website.gsub('http://', '')}"
+    end
+    ""
+  end
+
   private
   def check_category
     self.creator = current_user if creator.nil?
     if category and category.is_agent_unique and !creator.has_role?(:admin) and !(creator.unique_categories.include?(category) or (creator.parent.present? and creator.parent.with_role.unique_categories.include?(category)))
-      self.errors.add(:category_id, "Incorrect category!")
+      self.errors.add(:category_id, I18n.t("models.lead.incorrect_category"))
     end
   end
 

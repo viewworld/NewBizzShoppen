@@ -45,7 +45,13 @@
 
 <column-mc:>
 
-  <header><%= t("call_centre.leads.index.view.header") %></header>
+  <header>
+    <param:content>
+      <%= t("call_centre.leads.index.view.header") %>
+    </param:content>
+    <param:actions>
+    </param:actions>
+  </header>
 
   <% if @leads.blank? %>
       <%= blank_state_message %>
@@ -149,19 +155,16 @@
 
   <script type=text/javascript>
 
-      function hideRowButtons()
-      {
+      function hideRowButtons() {
           $(".toggle_row.hide_comments:visible").hide().prev().show();
       }
 
-      jQuery(document).ready(function()
-      {
-          $(".toggle_row.show_comments").bind("click", function()
-          {
+      jQuery(document).ready(function() {
+          $(".toggle_row.show_comments").bind("click", function() {
               $(".row_tooltip").filter(":not(:eq(" + $(this).parents("tr:first").next().index(".row_tooltip") + "))")
                       .filter(":visible").find(".row_tooltip_content:visible").slideUp("normal", function() {
-                  $(this).parents("tr.row_tooltip").hide()
-              });
+                          $(this).parents("tr.row_tooltip").hide()
+                      });
 
               hideRowButtons();
 
@@ -171,15 +174,14 @@
                       .find(".row_tooltip_content").slideDown();
           });
 
-          $(".toggle_row.hide_comments").bind("click", function()
-          {
+          $(".toggle_row.hide_comments").bind("click", function() {
               hideRowButtons();
 
               $(this).hide().prev().show().parents("tr:first")
                       .next("tr.row_tooltip")
                       .find(".row_tooltip_content").slideUp('normal', function() {
-                  $(this).parents("tr.row_tooltip").hide();
-              });
+                          $(this).parents("tr.row_tooltip").hide();
+                      });
           });
       });
 

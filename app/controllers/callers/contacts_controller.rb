@@ -75,10 +75,11 @@ class Callers::ContactsController < Callers::CallerController
   def import_xls
     if Sheet.validate_attachment(params["attachment"], true)
       @campaign.create_contacts_from_xls(Sheet.new(params["attachment"]).roo_instance, current_user)
+      redirect_to edit_callers_campaign_path(@campaign)
     else
       flash[:notice] = t('contacts.import_xls.flash.unknown_format')
+      redirect_to new_callers_campaign_contact_path(@campaign, :type => "import")
     end
-    redirect_to edit_callers_campaign_path(@campaign)
   end
 
   protected

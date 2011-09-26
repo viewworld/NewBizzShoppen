@@ -49,7 +49,7 @@
       <% if current_user and current_user.has_any_role?(:call_centre, :call_centre_agent) %>
           <p><%= blurb("blurb_call_centre_home") %></p>
       <% else %>
-          <p><%= blurb("blurb_agent_home") %></p>
+          <p><%= blurb("blurb_agent_home#{'_logged_in' if user_signed_in?}") %></p>
       <% end %>
     </div>
 

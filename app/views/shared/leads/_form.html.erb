@@ -105,7 +105,7 @@
             <h3><%= t("shared.leads.form.additional_language") %></h3>
           </li>
           <li class="select">
-            <%= form.label :locale, "New translation" %>
+            <%= form.label :locale, t("shared.leads.form.new_translation") %>
             <%= select_tag :locale, options_for_select(available_locales_list(@lead.lead_translations)),
                            {:id => "locale_picker", :include_blank => true, :onchange => fields_for_leads_translations(form)} %>
           </li>

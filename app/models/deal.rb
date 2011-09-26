@@ -1,6 +1,7 @@
 class Deal < AbstractLead
   include ScopedSearch::Model
 
+  has_one :deal_request_details_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'deal_request_details'", :dependent => :destroy
   has_one :logo, :class_name => "Asset::DealLogo", :as => :resource, :conditions => "asset_type = 'Asset::DealLogo'", :dependent => :destroy
   has_many :images, :class_name => "Asset::DealImage", :as => :resource, :conditions => "asset_type = 'Asset::DealImage'", :dependent => :destroy
   has_many :materials, :class_name => "Asset::DealMaterial", :as => :resource, :conditions => "asset_type = 'Asset::DealMaterial'", :dependent => :destroy
@@ -31,7 +32,7 @@ class Deal < AbstractLead
 
   before_create :create_uniq_deal_category, :set_default_max_auto_buy
   after_create :certify_for_unknown_email, :assign_deal_admin
-  before_save :set_dates
+  before_save :set_dates, :check_deal_request_details_email_template
 
   attr_accessor :creation_step, :use_company_name_as_category
 
@@ -124,7 +125,17 @@ class Deal < AbstractLead
   end
 
   def saving
-    (!deal_price.blank? and deal_price > 0 and !discounted_price.blank? and discounted_price > 0 and deal_price > discounted_price) ? "#{(100 - discounted_price * 100 / deal_price).to_i}%" : "0%"
+    if (!deal_price.blank? and deal_price > 0 and !discounted_price.blank? and discounted_price > 0 and deal_price > discounted_price)
+      "#{(100 - discounted_price * 100 / deal_price).to_i}%"
+    elsif general_discount?
+      "#{discounted_price.to_i}%"
+    else
+      "0%"
+    end
+  end
+
+  def general_discount?
+    (deal_price.blank? or deal_price <= 0) and !discounted_price.blank? and discounted_price > 0 and discounted_price <= 100
   end
   
   def assign_lead_category_to_buyer!
@@ -169,9 +180,24 @@ class Deal < AbstractLead
     else
       self
     end
-  end  
+  end
+
+  def can_be_managed_by?(user)
+    user.has_role?(:admin) or creator == user or email_address == user.email or (user.has_role?(:call_centre) and user.with_role.subaccounts.map(&:id).include?(creator.id))
+  end
 
   private
+
+  def check_deal_request_details_email_template
+    unless deal_request_details_email_template
+      global_template = EmailTemplate.global.where(:uniq_id => 'deal_request_details').first
+      self.deal_request_details_email_template = global_template.clone
+      global_template.translations.each do |translation|
+        self.deal_request_details_email_template.translations << translation.clone
+      end
+      self.save
+    end
+  end
 
   def process_for_lead_information?
     true

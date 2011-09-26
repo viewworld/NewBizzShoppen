@@ -9,19 +9,19 @@
           </h3>
         </li>
         <li class="string">
-          <%= f.label :header %>
+          <%= f.label :header, t("shared.deals.form.header_label") %>
           <%= f.text_field :header %>
           <%= custom_error_for_field(f, :header) %>
         </li>
         <li class="text">
-          <%= f.label :description %>
+          <%= f.label :description, t("shared.deals.form.description_label") %>
           <%= f.text_area :description, :style => "height: 140px; width: 600px" %>
           <%= custom_error_for_field(f, :description) %>
         </li>
 
         <% unless user_signed_in? and current_user.has_role?(:purchase_manager) %>
         <li class="text">
-          <%= f.label :hidden_description %>
+          <%= f.label :hidden_description, t("shared.deals.form.hidden_description_label") %>
           <%= f.text_area :hidden_description, :style => "height: 140px; width: 600px" %>
           <br/>
           <%= custom_error_for_field(f, :hidden_description) %>
@@ -29,13 +29,13 @@
         <% end %>
 
         <li class="text">
-          <%= f.label :fine_print %>
+          <%= f.label :fine_print, t("shared.deals.form.fine_print_label") %>
           <%= f.text_area :fine_print, :style => "height: 140px; width: 600px" %>
           <%= custom_error_for_field(f, :fine_print) %>
         </li>
 
         <li class="text">
-          <%= f.label :company_description %>
+          <%= f.label :company_description, t("shared.deals.form.company_description_label") %>
           <%= f.text_area :company_description, :style => "height: 140px; width: 600px" %>
           <%= custom_error_for_field(f, :company_description) %>
         </li>

@@ -6,9 +6,9 @@ class Category < ActiveRecord::Base
   has_many :category_translations
   has_one :image,
           :class_name => "Asset::CategoryImage",
-          :as         => :resource,
+          :as => :resource,
           :conditions => "asset_type = 'Asset::CategoryImage'",
-          :dependent  => :destroy
+          :dependent => :destroy
   has_many :category_interests
   has_many :customer_subscribers, :through => :category_interests, :source => :user
   has_many :news, :as => :resource, :class_name => "Article::News::CategoryHome", :dependent => :destroy
@@ -61,6 +61,7 @@ class Category < ActiveRecord::Base
   scope :with_lead_templates_created_by, lambda { |creator| select("DISTINCT(categories.name), categories.*").where("lead_templates.creator_id = ?", creator.id).joins(:lead_templates) }
   scope :without_unique, where("is_customer_unique = ? and is_agent_unique = ?", false, false)
   scope :with_all_customer_unique, where("is_customer_unique = ?", true)
+  scope :without_customer_unique, where("is_customer_unique = ?", false)
   scope :with_all_agent_unique, where("is_agent_unique = ?", true)
   scope :with_customer_unique, lambda { |customer| where("(is_customer_unique = ? and category_customers.user_id is NULL) or (is_customer_unique = ? and category_customers.user_id = ?)", false, true, customer.id).joins("LEFT JOIN category_customers ON categories.id=category_customers.category_id") }
   scope :with_agent_unique, lambda { |agent| select("DISTINCT(categories.id), categories.*").where("(is_agent_unique = ? and category_agents.user_id is NULL) or (is_agent_unique = ? and category_agents.user_id = ?)#{' or (is_agent_unique = \'t\' and category_agents.user_id = ' + agent.parent_id.to_s + ')' if agent.has_role?(:call_centre_agent)}", false, true, agent.id).joins("LEFT JOIN category_agents ON categories.id=category_agents.category_id") }
@@ -70,7 +71,7 @@ class Category < ActiveRecord::Base
     LEFT JOIN categories_users ON categories.id = categories_users.category_id
     LEFT JOIN users ON users.id = categories_users.user_id
     LEFT JOIN category_customers ON categories.id = category_customers.category_id
-  ").where("(categories.is_customer_unique = 't' and category_customers.user_id = :user_id) OR (categories_users.user_id = :user_id)", {:user_id => user.id})}
+  ").where("(categories.is_customer_unique = 't' and category_customers.user_id = :user_id) OR (categories_users.user_id = :user_id)", {:user_id => user.id}) }
   scope :with_comment_threads, select("DISTINCT(categories.id), categories.*").joins("INNER JOIN leads ON leads.category_id=categories.id INNER JOIN comments ON comments.commentable_id=leads.id")
   scope :without_auto_buy, where(:auto_buy => false)
   before_destroy :check_if_category_is_empty
@@ -109,7 +110,7 @@ class Category < ActiveRecord::Base
 
   def mark_articles_to_destroy
     blurb.force_destroy=true if blurb
-    news.each{|n| n.force_destroy=true}
+    news.each { |n| n.force_destroy=true }
   end
 
   def refresh_leads_count_cache!
@@ -117,16 +118,15 @@ class Category < ActiveRecord::Base
       c.update_attribute(:total_leads_count, c.leads.including_subcategories.count)
     end
   end
-  
 
-  
+
   def handle_locking_for_descendants
     if is_locked_changed?
       (self_and_descendants - [self]).each do |category|
         category.update_attribute(:is_locked, is_locked)
       end
     end
-  end 
+  end
 
   def refresh_published_leads_count_cache!
     Category.find(self_and_ancestors.map(&:id)).each do |c|
@@ -198,7 +198,7 @@ class Category < ActiveRecord::Base
         leads_scope = leads_scope.with_agent_unique_categories(user.id)
       end
     else
-     leads_scope = leads_scope.without_unique_categories
+      leads_scope = leads_scope.without_unique_categories
     end
     leads_scope.count
   end
@@ -210,4 +210,85 @@ class Category < ActiveRecord::Base
       User.where(:deal_category_id => id).first.present?
     end
   end
+
+  def self.roots_for(user)
+    root_categories = if user
+      if user.admin?
+        roots
+      elsif user.has_role?(:category_buyer)
+        user.parent_accessible_categories_without_auto_buy
+      else
+        user.has_accessible_categories? ? roots.within_accessible(user) : user.has_role?(:customer) ? roots.with_customer_unique(user) : roots.with_agent_unique(user)
+      end
+    else
+      roots.without_unique
+    end
+
+    root_categories = root_categories.without_locked_and_not_published unless user and user.admin?
+    root_categories
+  end
+
+  def children_for(user)
+    if user
+      if user.admin?
+        children_categories = children
+      else
+        children_categories = user.has_accessible_categories? ? children.within_accessible(user) : user.has_role?(:customer) ? children.with_customer_unique(user) : children.with_agent_unique(user)
+      end
+    else
+      children_categories = children.without_unique
+    end
+
+    children_categories =  children_categories.without_locked_and_not_published unless user and user.admin?
+    children_categories
+  end
+  
+########################################################################################################################
+#
+#   IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT
+#
+########################################################################################################################
+
+  include AdvancedImport
+
+    def advanced_import_leads_from_xls(spreadsheet, lead_fields, spreadsheet_fields, current_user)
+      return false unless advanced_import_field_blank_validation(lead_fields, spreadsheet_fields)
+      lead_fields, spreadsheet_fields = lead_fields.split(","), spreadsheet_fields.split(",")
+      return false unless advanced_import_field_size_validation(lead_fields, spreadsheet_fields)
+
+      headers, spreadsheet = advanced_import_headers(spreadsheet)
+      merged_fields = advanced_import_merged_fields(headers, lead_fields, spreadsheet_fields)
+      counter, errors = 0, []
+
+      2.upto(spreadsheet.last_row) do |line|
+        lead = Lead.new
+        import_fields.each { |field| lead = assign_field(lead, field, spreadsheet.cell(line, merged_fields[field]), spreadsheet.celltype(line, merged_fields[field])) }
+        lead = assign_current_user(lead, current_user)
+
+        lead.save ? counter += 1 : errors << lead.errors.map { |k, v| "#{k} #{v}" }.*(", ")
+      end
+
+      {:counter => "#{counter} / #{spreadsheet.last_row-1}", :errors => errors.*("<br/>")}
+    end
+
+    def import_fields
+      Lead::CSV_ATTRS + import_lead_templates_fields
+    end
+
+    def required_import_fields
+      Lead::REQUIRED_FIELDS + import_lead_templates_fields.map { |field| field if field.split("|").last == "true" }.compact
+    end
+
+    private
+
+    def assign_current_user(lead, current_user)
+      lead.creator_id = current_user.id
+      lead.creator_type = current_user.with_role.class.to_s
+      lead.category_id = id
+      lead.creator_name = current_user
+      lead
+    end
+
+########################################################################################################################
+
 end

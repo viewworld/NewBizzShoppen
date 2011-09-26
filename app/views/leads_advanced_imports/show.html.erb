@@ -1,0 +1,49 @@
+<column-mc:>
+
+  <header><%= t("leads_advanced_import.show.view.header") %></header>
+
+  <% form_tag choose_leads_advanced_import_path, :method => :post, :multipart => true, :id => "advanced_import_form" do %>
+      <frm title="#{t('leads_advanced_import.show.view.title')}">
+        <param:content>
+          <div class="pdd_10 no_pdd_t">
+            <fieldset class="inputs labels_ta_r labels_180">
+              <ol class="align_inputs">
+                <%= file_field_tag 'attachment', :accept => 'spreadsheet/ods,spreadsheet/doc,spreadsheet/xdoc', :class => "fltl" %>
+                <% if current_user.admin? %>
+                    <%= select_tag :creator_id, options_for_select(User.with_agents.map { |user| [user.to_s, user.id] }), :onchange => current_user.admin? ? "load_user_categories()" : "" %>
+              <% end %>
+              <% if current_user.admin? %>
+                <span id="categories_selection"></span>
+              <% else %>
+                    <%= render :partial => "categories_selection", :locals => { :objects => @categories } %>
+              <% end %>
+              </ol>
+            </fieldset>
+          </div>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= submit_tag t("advanced_import.show.view.button"), :name => "commit_create" %>
+          </ibt>
+        </param:actions>
+      </frm>
+  <% end %>
+
+</column-mc:>
+
+<js:>
+  <script type="text/javascript">
+    function load_user_categories(){
+        $('#categories_selection').html("<%= t("advanced_import.show.view.loading_categories") -%>");
+        $.ajax({
+            type: "GET",
+            url: "<%= leads_advanced_import_path -%>.js",
+            data: "user_id=" + $('#creator_id').val()
+        });
+    }
+
+    <% if current_user.admin? %>
+        load_user_categories();
+    <% end %>
+  </script>
+</js:>

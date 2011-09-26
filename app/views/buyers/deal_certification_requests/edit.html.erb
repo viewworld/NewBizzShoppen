@@ -2,7 +2,7 @@
   <header back="true" backurl="#{buyers_deal_certification_requests_path}"><%= t("buyer.deal_certification_requests.edit.view.title") %></header>
 
   <%= semantic_form_for [:buyers, @deal], :method => :put, :url => buyers_deal_certification_request_path(@deal) do |form| %>
-      <frm title="Edit deal">
+      <frm title="#{@deal.header}">
         <param:content>
           <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal, :categories => []} %>
         </param:content>

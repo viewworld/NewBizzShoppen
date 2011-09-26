@@ -5,6 +5,11 @@
     </param:content>
     <param:actions>
       <ul class="header_actions">
+        <li>
+          <% if current_user.has_role?(:deal_maker) %>
+            <%= bt_link_to nil, t("buyer.deals.edit.view.edit_deal_request_details_email_template"), edit_email_template_path(@deal.deal_request_details_email_template, :deal_id => @deal.id) %>
+          <% end %>
+        </li>
         <li class="last">
           <%= bt_link_to nil, t("buyer.deals.edit.view.preview"), deal_path(@deal) %>
         </li>
@@ -13,7 +18,7 @@
   </header>
 
   <%= semantic_form_for [:buyers, @deal], :method => :put, :html => {:multipart => true} do |form| %>
-      <frm title="Edit deal">
+      <frm title="#{@deal.header}">
         <param:content>
           <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal} %>
           <%= render :partial => "shared/deals/assets_management", :locals => {:form => form, :path => "buyers_deal_assets_path",

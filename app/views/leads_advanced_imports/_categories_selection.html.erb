@@ -1,0 +1,2 @@
+<%= select_tag :object_id, options_for_select(nested_set_options(objects),
+               :selected => default_category_for_select(objects), :disabled => objects.select { |c| !c.can_publish_leads? }.map(&:id)) %>
