@@ -102,5 +102,5 @@ Feature: Fairdeals view deal
     But I should see "25%"
 
   #7831
-  @m20 @requested
+  @m20 @requested @is
   Scenario: The styles of text should be inverted for headings like company and company description under deals listing

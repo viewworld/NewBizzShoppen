@@ -140,13 +140,13 @@ Feature: General deals
     And category named "Xeper" is auto buy enabled
 
   #7530
-  @m20 @requested
+  @m20 @requested @tgn
   Scenario: I can enter the deal code when creating new deal
 
   #7448
-  @m20 @requested
+  @m20 @requested @tgn
   Scenario: Under deal view for any deal maker the leads generated should be listed below (newest on the top)
 
   #7847
-  @m20 @requested
+  @m20 @requested @tgn
   Scenario: When  deal price is NOT empty and deal discounted price is empty then display Saving 100% but do not display price

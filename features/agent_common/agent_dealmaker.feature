@@ -43,7 +43,7 @@ Feature: Agent dealmaker
     Then I should see translated "deal_maker_users.create.flash.user_creation_successful"
 
   #7851
-  @m20 @requested
+  @m20 @requested @tgn
   Scenario: I can customise the invitation emails for members/suppliers
 
   # but the options should be there & editable

@@ -208,5 +208,5 @@ Feature: Deals from procurement manager perspective
     And last email sent should have content "Customized email for software components"
 
   #7530
-  @m20 @requested
+  @m20 @requested @tgn
   Scenario: When deal is requested the deal code is included as the first info in lead's hidden description and it is visible when member wants to get the deal

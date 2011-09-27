@@ -38,5 +38,5 @@ Scenario: I can select which 2 languages to display when translating
   And "temp_lang_2" should be selected for value "Polish"
 
 #7850
-@m20
+@m20 @is
 Scenario: When empty translation is added it should not be saved

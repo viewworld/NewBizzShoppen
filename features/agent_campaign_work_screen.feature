@@ -627,5 +627,5 @@ Feature: Agent campaign - calling session
       And last email sent should have content "Linked with account: not linked"
 
     #7746
-    @m20 @requested
+    @m20 @requested @tgn
     Scenario:  I can add new contact from agent work screen and it is already assigned to me (even if my campaign max contacts count was reached)
