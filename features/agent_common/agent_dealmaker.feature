@@ -46,6 +46,14 @@ Feature: Agent dealmaker
   @m20 @requested @tgn
   Scenario: I can customise the invitation emails for members/suppliers
 
+  #7851
+  @m20 @requested
+  Scenario: I can upload files for emails and maange them globally
+
+  #7851
+  @m20 @requested
+  Scenario: I can choose the uploaded files or upload new during creation of member/supplier
+
   # but the options should be there & editable
   @_done @tested_elsewhere @tgn
   Scenario: New supplier account should have Big buyer (true) and Dont send confirmation (true)
