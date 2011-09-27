@@ -35,3 +35,7 @@ Scenario: All comments regarding deals should be public
   And I follow translated "layout.main_menu.shared.browse_deals"
   When I follow "Electronics deals"
   And I should see translated "deals.listing.no_comments"
+
+#7802
+@m20 @requested
+Scenario: I can see rating when I am not logged in or my role is not purchase manager

@@ -138,3 +138,15 @@ Feature: General deals
     And user "small_buyer@nbs.com" should be big buyer
     And category "Xeper" is in interests of user "small_buyer@nbs.com" "true"
     And category named "Xeper" is auto buy enabled
+
+  #7530
+  @m20 @requested
+  Scenario: I can enter the deal code when creating new deal
+
+  #7448
+  @m20 @requested
+  Scenario: Under deal view for any deal maker the leads generated should be listed below (newest on the top)
+
+  #7847
+  @m20 @requested
+  Scenario: When  deal price is NOT empty and deal discounted price is empty then display Saving 100% but do not display price

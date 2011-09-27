@@ -733,3 +733,7 @@ Scenario: I can send welcome email to member / supplier
   And I press translated "administration.users.index.view.search_button"
   And I follow translated "administration.users.send_invitation"
   And last email sent should have been sent to recipient "customer101@person.com"
+
+#7838
+@m20 @requested
+Scenario: When creating agent/call centre agent then city, country, region should be mandatory

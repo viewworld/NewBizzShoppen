@@ -42,6 +42,10 @@ Feature: Agent dealmaker
     And I press translated "deal_maker_users.new.view.button_create"
     Then I should see translated "deal_maker_users.create.flash.user_creation_successful"
 
+  #7851
+  @m20 @requested
+  Scenario: I can customise the invitation emails for members/suppliers
+
   # but the options should be there & editable
   @_done @tested_elsewhere @tgn
   Scenario: New supplier account should have Big buyer (true) and Dont send confirmation (true)
