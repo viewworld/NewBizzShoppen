@@ -47,11 +47,11 @@ Feature: Agent dealmaker
   Scenario: I can customise the invitation emails for members/suppliers
 
   #7851
-  @m20 @requested
+  @m20 @requested @tgn
   Scenario: I can upload files for emails and maange them globally
 
   #7851
-  @m20 @requested
+  @m20 @requested @tgn
   Scenario: I can choose the uploaded files or upload new during creation of member/supplier
 
   # but the options should be there & editable
