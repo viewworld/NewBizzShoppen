@@ -428,6 +428,8 @@ Given /^I visit domain (.+)$/ do |domain|
   Capybara.app_host = "#{domain}:#{current_url.split(":").last.to_s.split("/").first}" if Capybara.current_driver == :selenium
   if domain.include?("fairdeals")
     visit("/fairdeals")
+  elsif domain.include?("faircalls")
+    visit("/faircalls")
   else
     visit(Capybara.app_host)
   end
