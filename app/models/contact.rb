@@ -37,12 +37,16 @@ class Contact < AbstractLead
     end
 
     def batch_assign(ids, agent_id)
+      contact_ids = []
+      assigned_count = 0
       agent = agent_id ? User.find(agent_id).with_role : nil
-      find(ids.gsub(/^,/, "").split(",")).each do |c|
+      find(contact_ids = ids.gsub(/^,/, "").split(",")).each do |c|
         unless c.completed? or (agent and agent.has_max_contacts_in_campaign?(c.campaign))
           c.assign_agent(agent_id)
+          assigned_count += 1
         end
       end unless ids.blank?
+      [assigned_count, contact_ids.count]
     end
 
     def to_csv(*ids)

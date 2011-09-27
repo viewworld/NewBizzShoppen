@@ -52,8 +52,12 @@ class Callers::ContactsController < Callers::CallerController
     elsif @campaign.max_contact_number.to_i.eql?(0)
       flash[:notice] = t('contacts.batch_assign.flash.max_contact_number_is_zero')
     else
-      Contact.batch_assign(params[:contact_ids], params[:agent_id])
-      flash[:notice] = t('contacts.batch_assign.flash.assigned_successfully')
+      assigned, total = Contact.batch_assign(params[:contact_ids], params[:agent_id])
+      if assigned == total
+        flash[:notice] = t('contacts.batch_assign.flash.assigned_successfully')
+      else
+        flash[:notice] = t('contacts.batch_assign.flash.some_contacts_assigned_successfully', :assigned => assigned, :total => total)
+      end
     end
     redirect_to edit_callers_campaign_path(@campaign)
   end
