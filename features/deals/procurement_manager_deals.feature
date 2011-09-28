@@ -25,7 +25,7 @@ Feature: Deals from procurement manager perspective
     And a deal named "Some deal #3" exists within category "Electronics deals"
     And a deal named "Some deal #4" exists within category "Electronics deals"
     Then I follow translated "layout.main_menu.shared.browse_deals"
-    And I follow "Electronics deals"
+    And I follow category "Electronics deals"
     And I follow translated "common.show_all"
     And I should see "Some deal #1"
     And I should see "Some deal #2"
@@ -47,7 +47,7 @@ Feature: Deals from procurement manager perspective
     Then a deal named "Skeptical Guide To Universe" exists within category "Scientific"
     Then a deal named "Funny pod" exists within category "Comedy"
     Then I follow translated "layout.main_menu.shared.browse_deals"
-    And I follow "Sound files"
+    And I follow category "Sound files"
     And "category_selector" dropdown should have values "Podcasts,Music"
     And I select "Podcasts" from "category_selector"
     And "category_selector" dropdown should have values "Scientific,Comedy"
@@ -64,7 +64,7 @@ Feature: Deals from procurement manager perspective
   Scenario: I can browse deals in seelcted category
     Given a deal named "Some deal #1" exists within category "Electronics deals"
     Then I follow translated "layout.main_menu.shared.browse_deals"
-    And I follow "Electronics deals"
+    And I follow category "Electronics deals"
     Then I should see "Some deal #1"
 
   @_done @tested_elsewhere @tgn
@@ -87,7 +87,7 @@ Feature: Deals from procurement manager perspective
     #Given a deal named "Some deal #1" exists with attributes "contact_name:SE Cupps"
     Given a deal named "Some deal #1" exists with attributes "company_name:SE Cupps"
     Then I follow translated "layout.main_menu.shared.browse_deals"
-    And I follow "Electronics"
+    And I follow category "Electronics"
     #Then I should see translated "deals.listing.contact_label"
     #And I should see translated "deals.listing.contact_name_label"
     And I should see "SE Cupps"
@@ -96,7 +96,7 @@ Feature: Deals from procurement manager perspective
   Scenario: I can click "Contact me"
     Given a deal named "Some deal #1" exists within category "Electronics deals"
     Then I follow translated "layout.main_menu.shared.browse_deals"
-    And I follow "Electronics"
+    And I follow category "Electronics"
     Then I should see translated "deals.index.view.view_deal"
 
   #tested under sales manager deals
@@ -133,7 +133,7 @@ Feature: Deals from procurement manager perspective
     And user "buyer@nbs.com" has assigned role "deal_maker"
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper"
     Then I follow translated "layout.fairdeals.main_menu.deals"
-    And I follow "Business deals"
+    And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     And I follow translated "deals.index.view.contact_me"
     And I follow translated "buyer_home.show.view.create_new_membership_account"
@@ -164,7 +164,7 @@ Feature: Deals from procurement manager perspective
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role purchase_manager
     Then I sign in as purchase_manager101@nbs.com with password supersecret
     Then I follow translated "layout.fairdeals.main_menu.deals"
-    And I follow "Business deals"
+    And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     And I follow translated "deals.index.view.contact_me"
     And I fill in "lead_hidden_description" with "some hidden note"

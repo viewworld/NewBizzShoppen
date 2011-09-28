@@ -21,7 +21,7 @@ Background:
 @tgn @_tested
 Scenario: I cannot buy a lead skipping checkout
   Given I go to browse leads
-  And I follow "Computers"
+  And I follow category "Computers"
   Then I follow translated "leads.index.add_to_cart_link"
   When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
   Then I should see translated "common.nothing_to_display"
@@ -29,7 +29,7 @@ Scenario: I cannot buy a lead skipping checkout
 @tgn @_tested
 Scenario: I can buy lead through checkout
   And I go to browse leads
-  And I follow "Computers"
+  And I follow category "Computers"
   Then I follow translated "leads.index.add_to_cart_link"
   And I follow translated "layout.cart.show_cart"
   Then I press translated "buyer.cart.show.view.checkout_link"
@@ -39,7 +39,7 @@ Scenario: I can buy lead through checkout
 @tgn @_tested
 Scenario: Lead purchase is not marked with "has access" after creation
   Given I go to browse leads
-  And I follow "Computers"
+  And I follow category "Computers"
   Then I follow translated "leads.index.add_to_cart_link"
   When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
   Then I should see translated "common.nothing_to_display"
@@ -48,7 +48,7 @@ Scenario: Lead purchase is not marked with "has access" after creation
 @tgn @_tested
 Scenario: Invoice is auto-created if a new paypal transaction (payment for cart content has been confirmed) is created in the system
   And I go to browse leads
-  And I follow "Computers"
+  And I follow category "Computers"
   Then I follow translated "leads.index.add_to_cart_link"
   And I follow translated "layout.cart.show_cart"
   Then I press translated "buyer.cart.show.view.checkout_link"
@@ -59,7 +59,7 @@ Scenario: Invoice is auto-created if a new paypal transaction (payment for cart 
 @tgn @_tested @added
 Scenario: Invoice is NOT created when payment notification is duplicated
   And I go to browse leads
-  And I follow "Computers"
+  And I follow category "Computers"
   Then I follow translated "leads.index.add_to_cart_link"
   And I follow translated "layout.cart.show_cart"
   Then I press translated "buyer.cart.show.view.checkout_link"

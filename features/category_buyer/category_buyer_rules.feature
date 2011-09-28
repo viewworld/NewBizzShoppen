@@ -114,12 +114,9 @@ Feature: Category buyer rules
     And user "jon@lajoie.ca" is assigned to category "Worst Leads" as category buyer
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
-    And I am on the home page
-    And I follow "Basic Leads"
     And I follow translated "category_home.show.view.complete_list_link" within "#latest_leads"
     Then I should be on category leads page for Basic Leads
-    And I am on the home page
-    And I follow "Worst Leads"
+    And I am on the category home page for Worst Leads
     And I follow translated "category_home.show.view.complete_list_link" within "#latest_leads"
     Then I should be on category leads page for Worst Leads
 
@@ -156,8 +153,7 @@ Feature: Category buyer rules
     Then I should be on category home page for Best Leads
     When I follow translated "layout.main_menu.shared.browse_leads"
     Then I should be on category home leads page for Best Leads
-    When I am on the home page
-    And I follow "Worst Leads"
+    When I am on the category home page for Worst Leads
     And I follow translated "category_home.show.view.complete_list_link" within "#latest_leads"
     Then I should be on category leads page for Worst Leads
 

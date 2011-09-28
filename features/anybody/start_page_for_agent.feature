@@ -3,11 +3,10 @@
 Feature: Start page for agent
 
 Background: I am a guest and I am on the home page
-  Given I am on the home page
+  Given I am on the agent home page
 
 @ao @m3 @_done
 Scenario: I can see welcome text fetch from the database
-  When I follow translated "home.show.view.agent"
   Then I should see "Blurb agent home"
 
 @m3 @ao @_done
@@ -16,19 +15,18 @@ Scenario: I can see 3 latest agent news excerpts
   And published agent news exists with attributes "title:SecondNews"
   And published agent news exists with attributes "title:ThirdNews"
   And published agent news exists with attributes "title:FourthNews"
-  And I follow translated "home.show.view.agent"
+  When I am on the agent home page
   Then I should see "FourthNews"
   And I should see "SecondNews"
   And I should see "ThirdNews"
   And I should not see "FirstNews"
-
 
 @ao @_tested
 Scenario: I can see 10 top bestsellers
   Given lead AwesomeLead exists within category Test
   And AwesomeLead is a best seller
   And there are "11" existing leads
-  And I follow translated "home.show.view.agent"
+  When I am on the agent home page
   Then I should see "3" items on a list within "#best_sellers"
   And I should see "AwesomeLead" first on a list within "#best_sellers"
 
@@ -36,7 +34,7 @@ Scenario: I can see 10 top bestsellers
 Scenario: I can see 3 latest leads
   Given there are "4" existing leads
   And lead AwesomeLead exists within category Test
-  And I follow translated "home.show.view.agent"
+  When I am on the agent home page
   Then I should see "3" items on a list within "#latest_leads"
   And I should see "AwesomeLead" first on a list within "#latest_leads"
 
@@ -45,7 +43,7 @@ Scenario: I can't see inactive leads on latest leads
   When there are no leads
   And a lead InactiveLead exists within category Test and is bought by user kastomer@nbs.fake with role customer
   And lead "InactiveLead" has attributes "sale_limit:1"
-  And I follow translated "home.show.view.agent"
+  When I am on the agent home page
   Then I should see "1" items on a list within "#latest_leads"
   And I follow translated "agent_home.show.view.complete_list_link" within "#latest_leads"
   Then I should see translated "common.nothing_to_display"
@@ -53,7 +51,7 @@ Scenario: I can't see inactive leads on latest leads
 @m3 @ao @_done
 Scenario: I can go to details of agent news
   Given published agent news exists with attributes "title:FirstNews"                                                                                                      i
-  And I follow translated "home.show.view.agent"
+  When I am on the agent home page
   And I follow translated "agent_home.show.view.read_more_link" within "#news"
   Then I should be on FirstNews news page
 
@@ -61,34 +59,34 @@ Scenario: I can go to details of agent news
 Scenario: I can go to details of bestsellers
   Given lead AwesomeLead exists within category Test
   And AwesomeLead is a best seller
-  And I follow translated "home.show.view.agent"
+  When I am on the agent home page
   And I follow "AwesomeLead" within "#best_sellers"
   Then I should be on the AwesomeLead lead page
 
 @ao @_tested
 Scenario: I can go to details of latest leads
   Given lead AwesomeLead exists within category Test
-  And I follow translated "home.show.view.agent"
+  When I am on the agent home page
   And I follow "AwesomeLead" within "#latest_leads"
   Then I should be on the AwesomeLead lead page
 
 @m3 @ao @_done @_tested
 Scenario: I can go to agent news listing
   Given lead AwesomeLead exists within category Test
-  And I follow translated "home.show.view.agent"
+  When I am on the agent home page
   And I follow translated "agent_home.show.view.complete_list_link" within "#latest_leads"
   Then I should see "AwesomeLead" within ".leads_table"
 
 @ao @_tested
 Scenario: I can go to bestsellers listing
-  When I follow translated "home.show.view.agent"
+  When I am on the agent home page
   And I follow translated "agent_home.show.view.complete_list_link" within "#best_sellers"
   Then I should be on the leads page
   And I should see translated "leads.index.bestsellers_header"
 
 @ao @_tested
 Scenario: I can go to latest leads listing
-  When I follow translated "home.show.view.agent"
+  When I am on the agent home page
   And I follow translated "agent_home.show.view.complete_list_link" within "#latest_leads"
   Then I should be on the leads page
   And I should see translated "leads.index.latest_header"
@@ -103,7 +101,7 @@ Scenario: I can go to buyer page by clicking “CLICK HERE IF YOU ARE A BUYER”
 
 @ao  @_tested
 Scenario: I can go to creation of new agent account page
-  When I follow translated "home.show.view.agent"
+  When I am on the agent home page
   And I follow translated "agent_home.show.view.create_new_agent_account"
   Then I should be on agent sign up page
 
@@ -112,13 +110,12 @@ Scenario: In bestsellers and latest listings I should not see leads which I've a
   When I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
   And a lead BoughtLead exists within category Test and is bought by user jon@lajoie.ca with role customer
   And lead AwesomeLead exists within category Test
-  And I follow translated "home.show.view.agent"
+  When I am on the agent home page
   Then I should see "AwesomeLead"
   And I should see "BoughtLead"
   When I am on the home page
   And I sign in as jon@lajoie.ca with password secret
-  And I am on the home page
-  And I follow translated "home.show.view.agent"
+  When I am on the agent home page
   Then I should see "AwesomeLead"
   And I should not see "BoughtLead"
 
@@ -134,7 +131,7 @@ Scenario: When I am not logged in I should not see any leads from unique categor
   And lead UniqueLead2 exists within category Unique Category2
   And I have user with email other_customer@nbs.com and role customer
   And category "Unique Category2" is unique for user with email "other_customer@nbs.com" role "customer"
-  Then I follow translated "home.show.view.agent"
+  When I am on agent home page
   And I should see "CommonLead1" within "#best_sellers"
   And I should not see "UniqueLead1" within "#best_sellers"
   And I should see "CommonLead1" within "#latest_leads"
@@ -170,22 +167,22 @@ Scenario: When you are loged in as an agent and go to the role home pages, I sho
   And an user with role lead_user and email lidjuzer@nbs.com exists as subaccount for customer bigbajer@nbs.com
   And lead Super ultra lead #1 is bought by user bigbajer@nbs.com with role customer and is assigned to user lidjuzer@nbs.com with role lead_user
   When I sign in as ejdzent@nbs.com with password secret
-  And I go to the home page
-  And I follow translated "home.show.view.agent"
+  When I am on the agent home page
   Then I should see "Super ultra lead #1" within "#sold_leads"
   And I should see "1" items on a list within "#sold_leads"
 
   @m8 @requested @ao @_done @_tested @_deprecated
   Scenario: When you are loged in as an agent and go to the role home pages, I should see column with “My new leads” (deprecated in favour of "My new comments")
 
-@requested @m11 @is @call_center_comments @_done @_tested
+#hame page is not used anymnore
+@requested @m11 @is @call_center_comments @_done @_tested @_deprecated
 Scenario: Agent can see his latest comments on home page
-  And I have user with email customer2@nbs.com and role customer
-  And user "customer2@nbs.com" with role "customer" has attributes "screen_name: Adam Savage"
-  And a lead Lead#1 exists within category Business and is bought by user customer2@nbs.com with role customer
-  And comment thread for lead "Lead#1" was posted by users "agent@nbs.com"
-  And comment for lead "Lead#1" was posted by user "customer2@nbs.com" with attributes "title:First Lead1 comment, created_at: 2011-01-01, last_thread_created_at:2011-01-01"
-  Given I am on the homepage
-  And comments for lead "Lead#1" are read by by users "agent@nbs.com"
-  Then I sign in as agent@nbs.com with password secret
-  Given I am on agent home
+#  And I have user with email customer2@nbs.com and role customer
+#  And user "customer2@nbs.com" with role "customer" has attributes "screen_name: Adam Savage"
+#  And a lead Lead#1 exists within category Business and is bought by user customer2@nbs.com with role customer
+#  And comment thread for lead "Lead#1" was posted by users "agent@nbs.com"
+#  And comment for lead "Lead#1" was posted by user "customer2@nbs.com" with attributes "title:First Lead1 comment, created_at: 2011-01-01, last_thread_created_at:2011-01-01"
+#  Given I am on the homepage
+#  And comments for lead "Lead#1" are read by by users "agent@nbs.com"
+#  Then I sign in as agent@nbs.com with password secret
+#  Given I am on agent home

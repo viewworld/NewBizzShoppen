@@ -9,7 +9,7 @@ Background: Sign in user and set English locale
   And an user with role lead_user and email lead_user2@person.com exists as subaccount for customer customer@person.com
   Then I sign in as lead_user2@person.com with password secret
   When I go to browse leads
-  And I follow "Computers"
+  And I follow category "Computers"
 
 @_deprecated
 Scenario: I should see created by
@@ -21,7 +21,7 @@ Scenario: I should see rating % and certification level for each lead
   And a lead "Printers ultimate deal" has good rating
   Given All leads have refreshed average ratings
   Given I go to browse leads
-  And I follow "Computers"
+  And I follow category "Computers"
   Then I should see "100%"
   And I should see translated "models.lead.certification.lvl0"
 
@@ -46,7 +46,7 @@ Scenario: I can see lead template fields with public values for each lead
   And template named "Printers details" has following fields "printers protocol:true:false, vendor name:false:false, versions:false:false"
   And template named "Printers details" for lead "Printers ultimate deal" has values "printers protocol:xprinter3, vendor name:Havlett Packard, versions:3983c-39282f"
   And I go to browse leads
-  And I follow "Computers"
+  And I follow category "Computers"
   Then I should see "PRINTERS DETAILS"
   And I should see "printers protocol"
   And I should see "vendor name"

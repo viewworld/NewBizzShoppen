@@ -12,7 +12,7 @@ Background:
 
 @selenium @_tested @_done
 Scenario: I can rate a a deal as a procurement manager
-  When I follow "Electronics deals"
+  When I follow category "Electronics deals"
   And I should see translated "deals.listing.rating_label"
   Then a deal named "Electrical deal" has rating set to "0"
   Then I click xpath "(//ul[@class='ajaxful-rating']//li)[5]/a"
@@ -21,7 +21,7 @@ Scenario: I can rate a a deal as a procurement manager
 
 @selenium @_tested @_done
 Scenario: I can comment a deal
-  When I follow "Electronics deals"
+  When I follow category "Electronics deals"
   And I follow translated "deals.listing.create_comment"
   And I fill in "comment_title" with "New thread title" within ".lead_new_thread_container_div"
   And I fill in "comment_body" with "New thread body" within ".lead_new_thread_container_div"
@@ -33,7 +33,7 @@ Scenario: I can comment a deal
 Scenario: All comments regarding deals should be public
   Given I am not sign in
   And I follow translated "layout.main_menu.shared.browse_deals"
-  When I follow "Electronics deals"
+  When I follow category "Electronics deals"
   And I should see translated "deals.listing.no_comments"
 
 #7802

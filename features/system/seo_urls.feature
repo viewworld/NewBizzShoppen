@@ -12,7 +12,7 @@ Scenario: Article show
 Scenario: Lead listing - category name
   Given Category named "Computers" already exists
   Given I go to browse leads
-  And I follow "Computers"
+  And I follow category "Computers"
 
 @m0 @ao
 Scenario: Agent news show
