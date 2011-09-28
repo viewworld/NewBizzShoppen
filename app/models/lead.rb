@@ -344,6 +344,10 @@ class Lead < AbstractLead
     !lead_purchases.where("purchased_by = #{user.id} and accessible_from IS NOT NULL").blank?
   end
 
+  def lead_purchase_for(user)
+    lead_purchases.where("purchased_by = #{user.id} and accessible_from IS NOT NULL").first
+  end
+
   def copy_user_profile(user)
     [
         [:contact_name, :full_name], [:phone_number, :phone], [:email_address, :email],
