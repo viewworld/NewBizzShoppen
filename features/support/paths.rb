@@ -14,6 +14,8 @@ module NavigationHelpers
       '/agent_home'
     when /the buyer home page/
       '/buyer_home'
+    when /the purchase manager home page/
+      '/purchase_manager_home'
     when /contact us/
       '/contact_us'
     when /administration root/

@@ -10,8 +10,8 @@ Background:  Sign in user and set locale
 @_tested
 Scenario: I create account through signup
   Given I am not sign in
-  And I am on the homepage
-  Then I follow translated "home.show.view.sign_up_here" within "#buyer_sign_up"
+  And I am on the buyer home page
+  When I follow translated "buyer_home.show.view.create_new_buyer_account"
   And I fill in "user_customer_first_name" with "Bob"
   And I fill in "user_customer_last_name" with "Geldof"
   And I fill in "user_customer_phone" with "244224242424"
@@ -105,18 +105,19 @@ Scenario: I should have my interests fixed to the unique category I'm assigned t
   And I go to customer interests
   Then checkbox named "category_" should be checked
 
-@added @m6 @ao @_done @_tested  @requested
+#home page is not used anymore
+@added @m6 @ao @_done @_tested  @requested @_deprecated
 Scenario: If customer is category buyer he/she can see also unique categories
-  When I sign out
-  And Category named "Best Leads" already exists
-  And Category named "Unique Leads" already exists
-  And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Best Leads"
-  And category "Unique Leads" is unique for user with email "jon@lajoie.ca" role "customer"
-  And I am on the home page
-  And I sign in as jon@lajoie.ca with password secret
-  And I am on the home page
-  Then I should see "Best Leads"
-  And I should see "Unique Leads"
+#  When I sign out
+#  And Category named "Best Leads" already exists
+#  And Category named "Unique Leads" already exists
+#  And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Best Leads"
+#  And category "Unique Leads" is unique for user with email "jon@lajoie.ca" role "customer"
+#  And I am on the home page
+#  And I sign in as jon@lajoie.ca with password secret
+#  And I am on the home page
+#  Then I should see "Best Leads"
+#  And I should see "Unique Leads"
 
 @added @m6 @ao @_done @_tested  @requested
 Scenario: If customer is category buyer with assigned unique categories he can access them
