@@ -9,7 +9,7 @@ Feature: Ordered leads filter for big buyer
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
     And I go to leads
-    And I follow "Computers"
+    And I follow category "Computers"
     And I follow translated "leads.index.buy_lead"
     And I follow translated "layout.main_menu.customer.invoices"
     And I follow translated "customer.invoices.index.view.pending_leads"

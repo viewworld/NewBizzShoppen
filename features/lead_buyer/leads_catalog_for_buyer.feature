@@ -51,7 +51,7 @@ Scenario: I can see lead template fields with public values for each lead
   And template named "Printers details" has following fields "printers protocol:true:false, vendor name:false:false, versions:false:false"
   And template named "Printers details" for lead "Printers ultimate deal" has values "printers protocol:xprinter3, vendor name:Havlett Packard, versions:3983c-39282f"
   And I go to browse leads
-  And I follow "Computers"
+  And I follow category "Computers"
   Then I should see "PRINTERS DETAILS"
   And I should see "printers protocol"
   And I should see "vendor name"
@@ -77,7 +77,7 @@ Given Category This Customer Unique Category is created
   And category "This Customer Unique Category" is unique for user with email "john@doe.com" role "customer"
   And Lead named "Lead Unique 1" exists within "This Customer Unique Category" category
   When I go to browse leads
-  Then I follow "This Customer Unique Category"
+  Then I follow category "This Customer Unique Category"
   And I should see "Lead Unique 1"
 
 @m5 @added @unique_categories @tgn @_tested
@@ -99,7 +99,7 @@ Scenario: I can request more leads for category
   Given there are no leads
   And Category TestingMoreLeadsRequest is created
   And I go to browse leads
-  And I follow "TestingMoreLeadsRequest"
+  And I follow category "TestingMoreLeadsRequest"
   And I follow translated "leads.index.request_more_leads"
   And I fill in "email_template_preview_company_name" with "Selleo"
   And I fill in "email_template_preview_contact_name" with "Boss"

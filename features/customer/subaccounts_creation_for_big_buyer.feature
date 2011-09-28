@@ -86,5 +86,5 @@ Scenario: Give sales manager the option not to show lead price for team buyer
   And I go to the homepage
   And I sign in as lead_buyer2232@nbs.com with password secret
   And I go to browse leads
-  And I follow "Leisure"
+  And I follow category "Leisure"
   And I should not see "957.49"

@@ -2066,7 +2066,7 @@ en:
           cart_item_creation_successful: Lead has been added to cart
           cart_item_bought_successful: Lead has been bought
           cart_item_already_in_cart: Lead has already been added to cart
-          cart_item_currencies_mismatch: Lead"s currency is different from other items in the cart
+          cart_item_currencies_mismatch: "Lead's currency is different from other items in the cart"
           cart_item_buyout_successful: "Lead has been bought out!"
           cart_item_big_buyer_purchase_limit_reached: "Lead could not be bought because your limit for unpaid purchases has been reached!"
           cart_item_bought_by_other_user: "Lead has been bought by somebody else!"

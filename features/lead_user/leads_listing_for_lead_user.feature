@@ -12,12 +12,12 @@ Background: Sign in user and set English locale
 @_tested @noguess
 Scenario: Listings should not show leads that are already bought or requested within my ownership branch
   Given I go to browse leads
-  And I follow "Computers"
+  And I follow category "Computers"
   And I should see "Printers ultimate deal"
   And I should not see "Monitors LCD deal"
   And I follow translated "leads.index.request_lead"
   Then I go to browse leads
-  And I follow "Computers"
+  And I follow category "Computers"
   And I should not see "Printers ultimate deal"
   And I go to lead user lead requests
   And I should see "Printers ultimate deal"
@@ -25,7 +25,7 @@ Scenario: Listings should not show leads that are already bought or requested wi
 @_tested @noguess
 Scenario: I can click request lead and I will see a notification "You added lead to your requested leads list"
   Given I go to browse leads
-  And I follow "Computers"
+  And I follow category "Computers"
   And I follow translated "leads.index.request_lead"
   Then I should see translated "flash.lead_users.create.notice"
 
@@ -33,12 +33,12 @@ Scenario: I can click request lead and I will see a notification "You added lead
 Scenario: I can click bulk request leads and I will see a notification “You added leads to your requested leads list”
   And lead Another Printers ultimate deal exists within category Computers
   Given I go to browse leads
-  And I follow "Computers"
+  And I follow category "Computers"
   Then I check "mark_all"
   Then I press translated "leads.index.button_bulk_create_lead_request"
   And I should see translated "flash.bulk_lead_requests.create.notice"
   Then I go to browse leads
-  And I follow "Computers"
+  And I follow category "Computers"
   Then I should not see "Printers ultimate deal"
   And I should not see "Another Printers ultimate deal"
 

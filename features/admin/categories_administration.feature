@@ -160,13 +160,13 @@ Scenario: I can flag a category to not show prices to team members
   And an user with role lead_buyer and email lead_buyer888@nbs.com exists as subaccount for customer buyer888@nbs.com
   Then I sign in as lead_buyer888@nbs.com with password secret
   And I go to browse leads
-  And I follow "Computers"
+  And I follow category "Computers"
   Then I should not see "589.17"
   And I should not see "439.58"
   Then I am not sign in
   Then I sign in as buyer888@nbs.com with password secret
   And I go to browse leads
-  And I follow "Computers"
+  And I follow category "Computers"
   Then I should see "589.17"
   And I should see "439.58"
 
