@@ -1,4 +1,4 @@
-@m19 @advanced_import @irek
+@m19 @advanced_import
 Feature: Leads specific advanced import
 
     Background:
