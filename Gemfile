@@ -47,6 +47,7 @@ end
 
 group :staging do
   gem 'hoptoad_notifier'
+  gem "rails_metrics", :path => "vendor/gems/rails_metrics"
 end
 
 group :development do

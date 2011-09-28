@@ -1,0 +1,21 @@
+<% if @metrics.empty? %>
+  <h2>No requests so far, navigate on your app and come back.</h2>
+<% else %>
+  <% content_for(:rails_metrics_header) do %>
+    <%= pagination_and_scopes_info(:requests) %>
+  <% end %>
+
+  <table id="rails_metrics_table" class="requests">
+    <tr>
+      <th>When<br /><%= link_to_order_by_scopes(:earliest, :latest) %></th>
+      <th>Method</th>
+      <th>Path</th>
+      <th>Duration<br /><%= link_to_order_by_scopes(:slowest, :fastest) %></th>
+      <th></th>
+    </tr>
+
+    <%= render :partial => "request", :collection => @metrics, :as => :metric %>
+  </table>
+
+  <% paginate! %>
+<% end %>
