@@ -53,6 +53,7 @@
             <%= form.input :currency_id, :collection => currencies_for_select, :include_blank => false %>
         <% end %>
         <%= form.input :max_auto_buy, :as => :string, :label => t("shared.deals.form.max_auto_buy_label") %>
+        <%= form.input :deal_code %>
         <% if user_signed_in? and current_user.admin? %>
             <div id="group_deal_additional_fields">
             <%= form.input :min_created_leads, :label => t("shared.deals.form.min_created_leads") %>

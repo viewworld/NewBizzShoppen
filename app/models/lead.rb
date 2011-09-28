@@ -86,6 +86,7 @@ class Lead < AbstractLead
   before_destroy :can_be_removed?
   after_find :set_buyers_notification
   before_update :notify_buyers_about_changes
+  before_create :set_deal_code
 
   before_save :handle_category_change
   before_validation :handle_dialling_codes
@@ -208,6 +209,10 @@ class Lead < AbstractLead
     if deal
       deal.increment!(:created_leads)
     end
+  end
+
+  def set_deal_code
+    self.hidden_description = "#{I18n.t("models.lead.hidden_description_prefix_for_deal_code")} #{deal.deal_code}. #{hidden_description}"
   end
 
   public
