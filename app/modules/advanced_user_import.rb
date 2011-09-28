@@ -13,25 +13,36 @@ module AdvancedUserImport
 
       headers, spreadsheet = advanced_import_headers(spreadsheet)
       merged_fields = advanced_import_merged_fields(headers, object_fields, spreadsheet_fields)
-      counter, errors = 0, []
+      counter, errors, new_users = 0, [], []
 
-      2.upto(spreadsheet.last_row) do |line|
-        object = self.new
-        import_fields.each { |field| object = assign_field(object, field, spreadsheet.cell(line, merged_fields[field]), spreadsheet.celltype(line, merged_fields[field])) }
-        object.created_by = current_user.id
-        object.password = object.send(:generate_token, 10)
-        object.password_confirmation = object.password
-        object.agreement_read = true
-
-        if object.save
-          object.send_invitation_email(object.password)
-          counter += 1
-          unless category_id.blank?
-            object.buying_categories << LeadCategory.find(category_id)
-            object.save
+      ActiveRecord::Base.transaction do
+        2.upto(spreadsheet.last_row) do |line|
+          object = self.new
+          import_fields.each { |field| object = assign_field(object, field, spreadsheet.cell(line, merged_fields[field]), spreadsheet.celltype(line, merged_fields[field])) }
+          object.created_by = current_user.id
+          object.password = object.send(:generate_token, 10)
+          object.password_confirmation = object.password
+          object.agreement_read = true
+          if object.save
+            new_users << object
+            counter += 1
+          else
+            errors << ("[line: #{line}] " + object.errors.map { |k, v| "#{k} #{v}" }.*(", "))
+            counter = 0
+            raise ActiveRecord::Rollback
           end
-        else
-          errors << object.errors.map { |k, v| "#{k} #{v}" }.*(", ")
+        end
+      end
+
+      #sending emails and add categories if
+      if counter > 0
+        category = category_id.blank? ? nil : LeadCategory.find(category_id)
+        new_users.each do |new_user|
+          new_user.send_invitation_email
+          if category
+            new_user.buying_categories << category
+            new_user.save
+          end
         end
       end
 

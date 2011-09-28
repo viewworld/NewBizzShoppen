@@ -94,18 +94,24 @@ module NavigationHelpers
         "#{::Rails.root.to_s}/spec/fixtures/sample_document.odt"
     when /sample image/
         "#{::Rails.root.to_s}/spec/fixtures/sample.jpg"
-    when /lead advanced import spreadsheet/
+    when /lead1badheader_adv_import/
+        "#{::Rails.root.to_s}/spec/fixtures/bad_header_leads_adv_import.ods"
+    when /lead2badobject_adv_import/
+        "#{::Rails.root.to_s}/spec/fixtures/bad_object_leads_adv_import.ods"
+    when /lead3allgood_adv_import/
         "#{::Rails.root.to_s}/spec/fixtures/leads_adv_import.ods"
-    when /bad leads advanced import spreadsheet/
-        "#{::Rails.root.to_s}/spec/fixtures/bad_leads_adv_import.ods"
-    when /contact advanced import spreadsheet/
-        "#{::Rails.root.to_s}/spec/fixtures/con_adv_import.ods"
-    when /wcai spreadsheet/
-        "#{::Rails.root.to_s}/spec/fixtures/bad_con_adv_import.ods"
-    when /users spreadsheet/
+    when /contact1badheader_adv_import/
+        "#{::Rails.root.to_s}/spec/fixtures/bad_header_contacts_adv_import.ods"
+    when /contact2badobject_adv_import/
+        "#{::Rails.root.to_s}/spec/fixtures/bad_object_contacts_adv_import.ods"
+    when /contact3allgood_adv_import/
+        "#{::Rails.root.to_s}/spec/fixtures/contacts_adv_import.ods"
+    when /user1badheader_adv_import/
+        "#{::Rails.root.to_s}/spec/fixtures/bad_header_users_adv_import.ods"
+    when /user2badobject_adv_import/
+        "#{::Rails.root.to_s}/spec/fixtures/bad_object_users_adv_import.ods"
+    when /usert3allgood_adv_import/
         "#{::Rails.root.to_s}/spec/fixtures/users_adv_import.ods"
-    when /not good user spreadsheet/
-        "#{::Rails.root.to_s}/spec/fixtures/bad_users_adv_import.ods"
     when /resend confirmation instructions/
         '/users/confirmation/new'
     when /reset password/
