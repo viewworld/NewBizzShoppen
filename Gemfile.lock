@@ -13,11 +13,6 @@ PATH
       ruby-hmac
 
 PATH
-  remote: vendor/gems/rails_metrics
-  specs:
-    rails_metrics (0.1)
-
-PATH
   remote: vendor/gems/tolk
   specs:
     tolk (1.0)
@@ -325,7 +320,6 @@ DEPENDENCIES
   postmark-rails
   rails (= 3.0.3)
   rails-settings
-  rails_metrics!
   railties
   rake (~> 0.8.7)
   role_model
