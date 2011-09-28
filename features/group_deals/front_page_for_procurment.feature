@@ -237,3 +237,7 @@ Feature: Front page for procurment
     And I follow translated "administration.deals.index.view.edit"
     And I fill in "deal_min_created_leads" with "22"
     And I press translated "administration.deals.edit.view.update_button"
+
+  #7529
+  @m20 @requested
+  Scenario: Boxes with secondary featured deals should ber clickable

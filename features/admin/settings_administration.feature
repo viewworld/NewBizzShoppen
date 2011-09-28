@@ -224,3 +224,7 @@ Scenario: I can set contact info for home page like Phone number, Email, Skype
   And I fill in "settings[7]" with "+44 8888888"
   And I fill in "settings[8]" with "skype_fairleads"
   And I press translated "administration.settings.edit.view.button_update_settings"
+
+#7837
+@m20 @requested @is
+Scenario: Contact settings should be renamed to fairdeals contact settings

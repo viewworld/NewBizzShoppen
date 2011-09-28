@@ -140,7 +140,7 @@ class Campaign < ActiveRecord::Base
       end
 
       #assign new contacts to agent
-      contacts_list = contacts.available_to_assign
+      contacts_list = contacts.available_to_assign(agent)
       while (not agent.with_role.has_max_contacts_in_campaign? self) and contacts_list.present?
         contacts_list.shift.assign_agent(agent.id)
       end

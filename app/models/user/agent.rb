@@ -17,7 +17,7 @@ class User::Agent < ::User
   end
 
   def has_max_contacts_in_campaign?(campaign)
-    contacts.for_campaign(campaign).with_pending_status(false).count >= campaign.max_contact_number rescue false
+    contacts.for_campaign(campaign).with_pending_status(false).with_completed_status(false).count >= campaign.max_contact_number rescue false
   end
 
   private

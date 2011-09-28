@@ -42,6 +42,18 @@ Feature: Agent dealmaker
     And I press translated "deal_maker_users.new.view.button_create"
     Then I should see translated "deal_maker_users.create.flash.user_creation_successful"
 
+  #7851
+  @m20 @requested @tgn
+  Scenario: I can customise the invitation emails for members/suppliers
+
+  #7851
+  @m20 @requested @tgn
+  Scenario: I can upload files for emails and maange them globally
+
+  #7851
+  @m20 @requested @tgn
+  Scenario: I can choose the uploaded files or upload new during creation of member/supplier
+
   # but the options should be there & editable
   @_done @tested_elsewhere @tgn
   Scenario: New supplier account should have Big buyer (true) and Dont send confirmation (true)

@@ -36,3 +36,7 @@ Scenario: I can select which 2 languages to display when translating
   And I select "German" from "temp_lang_1"
   Then "temp_lang_1" should be selected for value "German"
   And "temp_lang_2" should be selected for value "Polish"
+
+#7850
+@m20 @is
+Scenario: When empty translation is added it should not be saved

@@ -52,3 +52,11 @@ Feature: Home page
   Scenario: Make year automatically change in footer
     Given I go to the homepage
     Then I should see "2011 Fairleads Ltd"
+
+  #7638
+  @m20 @requested @ao
+  Scenario: Frontpage for fairleads.com should be the buyer home page
+
+  #7747
+  @m20 @requested @ao
+  Scenario: Integration with User Voice

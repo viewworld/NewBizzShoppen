@@ -10,6 +10,8 @@ class Contact < AbstractLead
   has_many :call_results, :dependent => :destroy
   has_many :result_values, :through => :call_results
   belongs_to :lead
+  has_many :contact_past_user_assignments, :foreign_key => "contact_id"
+  has_many :past_user_assignments, :through => :contact_past_user_assignments, :source => :user
 
   belongs_to :agent, :class_name => "User"
   validates_presence_of :company_name, :company_phone_number, :creator_id, :category_id, :country_id, :campaign_id
@@ -20,7 +22,8 @@ class Contact < AbstractLead
   scope :for_campaigns, lambda { |campaign_ids| where("campaign_id in (?)", campaign_ids) unless campaign_ids.to_a.empty? }
   scope :with_completed_status, lambda { |completed| where(:completed => completed) }
   scope :with_pending_status, lambda { |pending| where(:pending => pending) }
-  scope :available_to_assign, where(:agent_id => nil).with_completed_status(false).with_pending_status(false)
+  scope :all_available_to_assign, where(:agent_id => nil).with_completed_status(false).with_pending_status(false)
+  scope :available_to_assign, lambda { |user| all_available_to_assign.joins("left join contact_past_user_assignments on leads.id=contact_past_user_assignments.contact_id AND contact_past_user_assignments.user_id = #{user.id}").where("contact_past_user_assignments.user_id is NULL") }
   scope :with_results, joins(:call_results)
   scope :with_agents, lambda { |agent_ids| where("call_results.creator_id IN (:agent_ids)", {:agent_ids => agent_ids }) unless agent_ids.to_a.select{ |id| !id.blank? }.empty? }
   scope :from_last_import, where(:last_import => true)
@@ -37,12 +40,16 @@ class Contact < AbstractLead
     end
 
     def batch_assign(ids, agent_id)
+      contact_ids = []
+      assigned_count = 0
       agent = agent_id ? User.find(agent_id).with_role : nil
-      find(ids.gsub(/^,/, "").split(",")).each do |c|
+      find(contact_ids = ids.gsub(/^,/, "").split(",")).each do |c|
         unless c.completed? or (agent and agent.has_max_contacts_in_campaign?(c.campaign))
           c.assign_agent(agent_id)
+          assigned_count += 1
         end
       end unless ids.blank?
+      [assigned_count, contact_ids.count]
     end
 
     def to_csv(*ids)
@@ -110,6 +117,9 @@ class Contact < AbstractLead
 
   def assign_agent(agent_id)
     self.reload
+    if agent_id.nil?
+      self.contact_past_user_assignments.create(:user_id => read_attribute(:agent_id))
+    end
     self.remove_from_list
     self.update_attributes(:agent_id => agent_id)
     self.insert_at

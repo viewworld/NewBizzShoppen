@@ -100,3 +100,7 @@ Feature: Fairdeals view deal
     Then I should not see translated "deals.listing.price"
     And I should not see translated "deals.listing.discounted_price"
     But I should see "25%"
+
+  #7831
+  @m20 @requested @is
+  Scenario: The styles of text should be inverted for headings like company and company description under deals listing

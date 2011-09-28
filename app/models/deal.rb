@@ -23,7 +23,8 @@ class Deal < AbstractLead
   validates_presence_of :start_date, :end_date, :email_address
   validates_presence_of :deal_admin_email, :unless => Proc.new{|d| d.new_record? }
 
-  validates_numericality_of :price, :discounted_price, :greater_than => 0, :if => Proc.new{|d| d.group_deal == true }
+  validates_numericality_of :price, :greater_than_or_equal_to => 0, :if => Proc.new{|d| d.group_deal == true }
+  validates_numericality_of :discounted_price, :greater_than_or_equal_to => 0, :if => Proc.new{|d| d.group_deal == true }
   validates_numericality_of :created_leads, :greater_than_or_equal_to => 0, :only_integer => true
 
   validates_presence_of :price, :discounted_price, :social_media_description, :if => Proc.new{|d| d.group_deal == true }
@@ -125,17 +126,17 @@ class Deal < AbstractLead
   end
 
   def saving
-    if (!deal_price.blank? and deal_price > 0 and !discounted_price.blank? and discounted_price > 0 and deal_price > discounted_price)
+    if (deal_price.to_f > 0 and discounted_price.to_f > 0 and deal_price > discounted_price)
       "#{(100 - discounted_price * 100 / deal_price).to_i}%"
     elsif general_discount?
-      "#{discounted_price.to_i}%"
+      "#{discounted_price.to_f <= 100 and discounted_price.to_f > 0 ? discounted_price.to_i : 100}%"
     else
       "0%"
     end
   end
 
   def general_discount?
-    (deal_price.blank? or deal_price <= 0) and !discounted_price.blank? and discounted_price > 0 and discounted_price <= 100
+    (deal_price.to_f == 0 and discounted_price.to_f > 0) or (deal_price.to_f > 0 and discounted_price.to_f == 0)
   end
   
   def assign_lead_category_to_buyer!

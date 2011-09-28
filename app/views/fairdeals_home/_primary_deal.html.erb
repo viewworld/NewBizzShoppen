@@ -14,13 +14,19 @@
               <%= image_tag primary_deal.logo.url if primary_deal.logo %>
             </p>
 
-            <p class="b">
-              <%= as_currency(primary_deal.deal_price, primary_deal.currency) %> - <%= t("deals.index.view.save") %> <%= primary_deal.saving %>
-            </p>
+            <% if primary_deal.general_discount? %>
+                 <p style="font-size:20px; padding: 4px 0 10px">
+                <%= t("deals.index.view.save") %> <span class="b red"><%= primary_deal.saving %></span>
+                 </p>
+            <% else %>
+                <p class="b">
+                  <%= as_currency(primary_deal.deal_price, primary_deal.currency) %> - <%= t("deals.index.view.save") %> <%= primary_deal.saving %>
+                </p>
 
-            <p class="new_price">
-              <%= as_currency(primary_deal.discounted_price, primary_deal.currency) %>
-            </p>        
+                <p class="new_price">
+                  <%= as_currency(primary_deal.discounted_price, primary_deal.currency) %>
+                </p>
+            <% end %>
 
             <p>
               <%= bt_link_to nil, t("deals.index.view.view_deal"), deal_path(primary_deal.slug) %>
