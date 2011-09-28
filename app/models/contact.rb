@@ -22,7 +22,8 @@ class Contact < AbstractLead
   scope :for_campaigns, lambda { |campaign_ids| where("campaign_id in (?)", campaign_ids) unless campaign_ids.to_a.empty? }
   scope :with_completed_status, lambda { |completed| where(:completed => completed) }
   scope :with_pending_status, lambda { |pending| where(:pending => pending) }
-  scope :available_to_assign, lambda { |user| where(:agent_id => nil).with_completed_status(false).with_pending_status(false).joins("left join contact_past_user_assignments on leads.id=contact_past_user_assignments.contact_id AND contact_past_user_assignments.user_id = #{user.id}").where("contact_past_user_assignments.user_id is NULL") }
+  scope :all_available_to_assign, where(:agent_id => nil).with_completed_status(false).with_pending_status(false)
+  scope :available_to_assign, lambda { |user| all_available_to_assign.joins("left join contact_past_user_assignments on leads.id=contact_past_user_assignments.contact_id AND contact_past_user_assignments.user_id = #{user.id}").where("contact_past_user_assignments.user_id is NULL") }
   scope :with_results, joins(:call_results)
   scope :with_agents, lambda { |agent_ids| where("call_results.creator_id IN (:agent_ids)", {:agent_ids => agent_ids }) unless agent_ids.to_a.select{ |id| !id.blank? }.empty? }
   scope :from_last_import, where(:last_import => true)
