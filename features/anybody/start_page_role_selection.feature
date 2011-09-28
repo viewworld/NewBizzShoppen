@@ -6,63 +6,57 @@ Background:
   And I make sure current locale is "en"
   And I am signed up and confirmed as user with email buyer43@person.com and password supersecret and role customer
 
-@m3 @ao @_done
+@m3 @ao @_done @_deprecated
 Scenario: I can see welcome text fetch from the database
-  Then I should see "Blurb start page role selection"
+#  Then I should see "Blurb start page role selection"
 
-@tgn @_done @_tested_elsewhere
+@tgn @_done @_tested_elsewhere @_deprecated
 Scenario: I can login to the system
 
-@tgn @_done @_tested
+@tgn @_done @_tested @_deprecated
 Scenario: I can go to buyer page
-  When I follow translated "home.show.view.buyer"
-  Then I am on buyer home
+#  When I follow translated "home.show.view.buyer"
+#  Then I am on buyer home
 
-@tgn @_done @_tested
+@tgn @_done @_tested @_deprecated
 Scenario: I can go to the agent page
-  When I follow translated "home.show.view.agent"
-  Then I am on agent home
+#  When I follow translated "home.show.view.agent"
+#  Then I am on agent home
 
-@tgn @_done @_tested
+@tgn @_done @_tested @_deprecated
 Scenario: I can set remember me option by selecting a checkbox and logging in
-  When I fill in "user_email" with "buyer43@person.com"
-  And I fill in "user_password" with "supersecret"
-  And I check "user_remember_me"
-  And I press translated "home.show.view.sign_in"
-  Then I should see translated "devise.sessions.signed_in"
+#  When I fill in "user_email" with "buyer43@person.com"
+#  And I fill in "user_password" with "supersecret"
+#  And I check "user_remember_me"
+#  And I press translated "home.show.view.sign_in"
+#  Then I should see translated "devise.sessions.signed_in"
 
 #7455
 @m19 @requested @_done @_tested
 Scenario: For each role homepage there should be two separate blurbs: for logged in and logged out user
   #buyer
   Given I am not sign in
-  And I am on the home page
-  And I follow translated "home.show.view.buyer"
+  And I am on the buyer home page
   And I should see "Blurb buyer home"
   And I should not see "Blurb buyer home logged in"
   And I sign in as buyer@nbs.com with password secret
-  And I am on the home page
-  And I follow translated "home.show.view.buyer"
+  And I am on the buyer home page
   And I should see "Blurb buyer home logged in"
   #agent
   Given I am not sign in
-  And I am on the home page
-  And I follow translated "home.show.view.agent"
+  And I am on the agent home page
   And I should see "Blurb agent home"
   And I should not see "Blurb agent home logged in"
   And I sign in as agent@nbs.com with password secret
-  And I am on the home page
-  And I follow translated "home.show.view.agent"
+  And I am on the agent home page
   And I should see "Blurb agent home logged in"
   #purchase manager
   Given I am not sign in
-  And I am on the home page
-  And I follow translated "home.show.view.purchase_manager"
+  And I am on the purchase manager home page
   And I should see "Blurb purchase manager home"
   And I should not see "Blurb agent home logged in"
   And I sign in as translator_purchase_manager@nbs.com with password secret
-  And I am on the home page
-  And I follow translated "home.show.view.purchase_manager"
+  And I am on the purchase manager home page
   And I should see "Blurb purchase manager home logged in"
 
 #7452
@@ -70,21 +64,21 @@ Scenario: For each role homepage there should be two separate blurbs: for logged
 Scenario: When user logs out then he lands on his specific role home page
   #buyer
   Given I am not sign in
-  And I am on the home page
+  And I am on the buyer home page
   And I sign in as buyer@nbs.com with password secret
   And I should be on buyer home
   Then I am not sign in
   And I should be on buyer home
   #agent
   Given I am not sign in
-  And I am on the home page
+  And I am on the agent home page
   And I sign in as agent@nbs.com with password secret
   And I should be on agent home
   Then I am not sign in
   And I should be on agent home
   #purchase manager
   Given I am not sign in
-  And I am on the home page
+  And I am on the purchase manager home page
   And I sign in as translator_purchase_manager@nbs.com with password secret
   And I should be on purchase manager home
   Then I am not sign in

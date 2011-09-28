@@ -16,7 +16,7 @@ Feature: Notifications
     Given I am on the homepage
     Then I sign in as buyer@nbs.com with password secret
     Then I follow translated "layout.main_menu.shared.browse_leads"
-    Then I follow "Business"
+    Then I follow category "Business"
     Then category "Business" is in interests of user "buyer@nbs.com" "false"
     Then I should see translated "leads.index.subscribe_to_category_cb"
     Then I check "subscribe_to_category"

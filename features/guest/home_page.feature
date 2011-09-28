@@ -1,22 +1,22 @@
 @m5 @ao @home_page
 Feature: Home page
 
-  @_done @_tested
+  @_done @_tested @_deprecated
   Scenario: I can see icons representing roles for signup
-    Given I am on the home page
-    Then I should see CSS path "#buyer_sign_up img"
-    And I should see CSS path "#purchase_manager_sign_up img"
-    And I should see CSS path "#agent_sign_up img"
+#    Given I am on the home page
+#    Then I should see CSS path "#buyer_sign_up img"
+#    And I should see CSS path "#purchase_manager_sign_up img"
+#    And I should see CSS path "#agent_sign_up img"
 
   @m8 @requested @ao @_done @_tested
   Scenario: When user from Denmark goes to www.fairleads.com her should automatically get danish as default language.
     When browser accepts "en" locale
     And I am on the home page
-    Then I should see "Home"
+    Then locale is set to "en" for translation "buyer_home.show.view.header"
     And I reset page
     When browser accepts "da" locale
     And I am on the home page
-    Then I should see "Hjem"
+    Then locale is set to "da" for translation "buyer_home.show.view.header"
 
   # set up on server side
   @m8 @requested @ao @_done @non_testable

@@ -92,6 +92,16 @@
             <% end %>
           </p>
       <% end %>
+
+      <% unless @deal.materials.blank? %>
+          <h3><%= t("deals.show.view.materials_label") %></h3>
+
+          <p>
+            <% @deal.materials.each do |material| %>
+                <%= link_to material.filename, material.url %><br />
+            <% end %>
+          </p>
+      <% end %>
     </div>
   </div>
 

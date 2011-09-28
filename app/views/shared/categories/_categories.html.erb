@@ -37,7 +37,7 @@
                 <% end %>
               </ul-actions>
           <% else %>
-               <%= bt_link_to nil, @category_type == "LeadCategory" ? t("categories.index.view.view_leads") : t("categories.index.view.view_deals"), "/categories#{category.is_a?(LeadCategory) ? '' : '/deals'}/#{category.cached_slug}?search[with_category]=#{category.id}" %>
+               <%= bt_link_to nil, @category_type == "LeadCategory" ? t("categories.index.view.view_leads") : t("categories.index.view.view_deals"), "/categories#{category.is_a?(LeadCategory) ? '' : '/deals'}/#{category.cached_slug}?search[with_category]=#{category.id}", :class => "default_action" %>
           <% end %>
       <% end %>
    <% end %>

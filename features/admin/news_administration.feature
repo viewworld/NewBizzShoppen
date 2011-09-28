@@ -186,8 +186,7 @@ Scenario: When you look at the news tab, the list of news should contain the fol
 Scenario: When you look at the news tab, the list of news should contain the following columns: Published # of times read
   When agent news exists with attributes "title:AAANews,published:1"
   And agent news exists with attributes "title:BBBNews,published:1"
-  And I am on the home page
-  When I follow translated "home.show.view.agent"
+  And I am on the agent home page
   And I follow translated "agent_home.show.view.complete_list_link" within "#news"
   And I follow translated "news.index.view.read_more_link"
   And I follow translated "layout.main_menu.admin.news"

@@ -140,7 +140,7 @@ Feature: Front page for procurment
     And I make sure current locale is "en"
     Then I sign in as purchase_manager@nbs.com with password secret
     And I follow translated "layout.main_menu.shared.browse_deals"
-    And I follow "Electronics deals"
+    And I follow category "Electronics deals"
     And I click hidden link by url regex "/\/deals\/\d+/"
     And I follow translated "deals.show.view.share_by_email"
     And I fill in "email_from" with "john_done@doe.com"
