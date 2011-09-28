@@ -35,13 +35,23 @@
             <%= hidden_field_tag :creator_id, @creator_id %>
         <% end %>
 
+        <% form_tag self.send("choose_#{model_name}s_advanced_import_path"), :id => "go_to_choose_objects_form", :method => :post, :multipart => true do %>
+            <%= hidden_field_tag :object_field, @object_field %>
+            <%= hidden_field_tag :spreadsheet_field, @spreadsheet_field %>
+            <%= hidden_field_tag :attachment, @attachment_file %>
+            <% if ["contact", "buyer", "lead"].include?(model_name) %>
+                <%= hidden_field_tag :object_id, @object_id %>
+            <% end %>
+            <%= hidden_field_tag :creator_id, @creator_id %>
+        <% end %>
+
       </div>
     </param:content>
     <param:actions>
       <ibt c="fltri">
         <%= button_to_function t("advanced_import.preview.view.import_button"), "$('#import_objects_form').submit();", :class => "fltr" %>
       </ibt>
-      <%= bt_link_to nil, t("advanced_import.preview.view.cancel_button"), "javascript:history.back()", :class => "bt_grey fltr" %>
+      <%= bt_link_to nil, t("advanced_import.preview.view.cancel_button"), "javascript:void(0)", :onclick => "$('#go_to_choose_objects_form').submit();", :class => "bt_grey fltr" %>
     </param:actions>
   </frm>
 </column-mc:>
