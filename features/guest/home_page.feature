@@ -54,7 +54,7 @@ Feature: Home page
     Then I should see "2011 Fairleads Ltd"
 
   #7638
-  @m20 @requested @ao @wip
+  @m20 @requested @ao @_done @_tested
   Scenario: Frontpage for fairleads.com should be the buyer home page
     When I am on the home page
     Then I should see translated "buyer_home.show.view.header"
