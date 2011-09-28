@@ -222,16 +222,16 @@ class Category < ActiveRecord::Base
 
   def self.roots_for(user)
     root_categories = if user
-      if user.admin?
-        roots
-      elsif user.has_role?(:category_buyer)
-        user.parent_accessible_categories_without_auto_buy
-      else
-        user.has_accessible_categories? ? roots.within_accessible(user) : user.has_role?(:customer) ? roots.with_customer_unique(user) : roots.with_agent_unique(user)
-      end
-    else
-      roots.without_unique
-    end
+                        if user.admin?
+                          roots
+                        elsif user.has_role?(:category_buyer)
+                          user.parent_accessible_categories_without_auto_buy
+                        else
+                          user.has_accessible_categories? ? roots.within_accessible(user) : user.has_role?(:customer) ? roots.with_customer_unique(user) : roots.with_agent_unique(user)
+                        end
+                      else
+                        roots.without_unique
+                      end
 
     root_categories = root_categories.without_locked_and_not_published unless user and user.admin?
     root_categories
@@ -248,10 +248,10 @@ class Category < ActiveRecord::Base
       children_categories = children.without_unique
     end
 
-    children_categories =  children_categories.without_locked_and_not_published unless user and user.admin?
+    children_categories = children_categories.without_locked_and_not_published unless user and user.admin?
     children_categories
   end
-  
+
 ########################################################################################################################
 #
 #   IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT
@@ -260,43 +260,57 @@ class Category < ActiveRecord::Base
 
   include AdvancedImport
 
-    def advanced_import_leads_from_xls(spreadsheet, lead_fields, spreadsheet_fields, current_user)
-      return false unless advanced_import_field_blank_validation(lead_fields, spreadsheet_fields)
-      lead_fields, spreadsheet_fields = lead_fields.split(","), spreadsheet_fields.split(",")
-      return false unless advanced_import_field_size_validation(lead_fields, spreadsheet_fields)
+  def advanced_import_leads_from_xls(spreadsheet, lead_fields, spreadsheet_fields, current_user)
+    return false unless advanced_import_field_blank_validation(lead_fields, spreadsheet_fields)
+    lead_fields, spreadsheet_fields = lead_fields.split(","), spreadsheet_fields.split(",")
+    return false unless advanced_import_field_size_validation(lead_fields, spreadsheet_fields)
 
-      headers, spreadsheet = advanced_import_headers(spreadsheet)
-      merged_fields = advanced_import_merged_fields(headers, lead_fields, spreadsheet_fields)
-      counter, errors = 0, []
+    headers, spreadsheet = advanced_import_headers(spreadsheet)
+    merged_fields = advanced_import_merged_fields(headers, lead_fields, spreadsheet_fields)
+    counter, errors, publish_hash = 0, [], {}
 
+    ActiveRecord::Base.transaction do
       2.upto(spreadsheet.last_row) do |line|
         lead = Lead.new
         import_fields.each { |field| lead = assign_field(lead, field, spreadsheet.cell(line, merged_fields[field]), spreadsheet.celltype(line, merged_fields[field])) }
         lead = assign_current_user(lead, current_user)
-
-        lead.save ? counter += 1 : errors << lead.errors.map { |k, v| "#{k} #{v}" }.*(", ")
+        temp_published = lead.published
+        lead.published = false
+        if lead.save
+          publish_hash[lead.id] = temp_published
+          counter += 1
+        else
+          errors << "[line: #{line}] #{lead.errors.map { |k, v| "#{k} #{v}" }.*(", ")}"
+          counter = 0
+          raise ActiveRecord::Rollback
+        end
       end
-
-      {:counter => "#{counter} / #{spreadsheet.last_row-1}", :errors => errors.*("<br/>")}
     end
 
-    def import_fields
-      Lead::CSV_ATTRS + import_lead_templates_fields
+    if counter > 0
+      Lead.find(publish_hash.keys).each { |lead| lead.update_attribute(:published, publish_hash[lead.id]) }
     end
 
-    def required_import_fields
-      Lead::REQUIRED_FIELDS + import_lead_templates_fields.map { |field| field if field.split("|").last == "true" }.compact
-    end
+    {:counter => "#{counter} / #{spreadsheet.last_row-1}", :errors => errors.*("<br/>")}
+  end
 
-    private
+  def import_fields
+    Lead::CSV_ATTRS + import_lead_templates_fields
+  end
 
-    def assign_current_user(lead, current_user)
-      lead.creator_id = current_user.id
-      lead.creator_type = current_user.with_role.class.to_s
-      lead.category_id = id
-      lead.creator_name = current_user
-      lead
-    end
+  def required_import_fields
+    Lead::REQUIRED_FIELDS + import_lead_templates_fields.map { |field| field if field.split("|").last == "true" }.compact
+  end
+
+  private
+
+  def assign_current_user(lead, current_user)
+    lead.creator_id = current_user.id
+    lead.creator_type = current_user.with_role.class.to_s
+    lead.category_id = id
+    lead.creator_name = current_user
+    lead
+  end
 
 ########################################################################################################################
 

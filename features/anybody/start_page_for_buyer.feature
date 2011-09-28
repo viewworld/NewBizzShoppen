@@ -191,5 +191,5 @@ Scenario: Buyer can see link to Interests on buyer home page if he don't have se
   Then I should see translated "customer.interests.edit.view.title"
 
 #7457
-@m20 @requested
+@m20 @requested @is
 Scenario: I should see Latest deals instead of bestsellers box when I am not logged in on the buyer home

@@ -484,6 +484,7 @@ en:
         no_contacts_selected: "You have selected no contact."
         max_contact_number_is_zero: "Maximum contact number for campaign must be greater then 0 to assign agents to contacts."
         assigned_successfully: "Assignment has been performed successfully"
+        some_contacts_assigned_successfully: "%{assigned} out of %{total} contacts have been assigned"
     batch_remove:
       flash:
         no_contacts_selected: "You have selected no contact."

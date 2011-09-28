@@ -92,7 +92,7 @@ class Campaign < ActiveRecord::Base
   public
 
   def cloned_email_templates
-    CLONED_TEMPLATES.keys.map { |template_method| send(template_method)}
+    CLONED_TEMPLATES.keys.map { |template_method| send(template_method) }
   end
 
   def return_contact_to_the_pool
@@ -140,7 +140,7 @@ class Campaign < ActiveRecord::Base
       end
 
       #assign new contacts to agent
-      contacts_list = contacts.available_to_assign
+      contacts_list = contacts.available_to_assign(agent)
       while (not agent.with_role.has_max_contacts_in_campaign? self) and contacts_list.present?
         contacts_list.shift.assign_agent(agent.id)
       end
@@ -198,22 +198,29 @@ class Campaign < ActiveRecord::Base
 
       campaign = Campaign.find(object_id)
 
-      contacts_from_last_import_ids = campaign.contacts.from_last_import.map(&:id)
+      #contacts_from_last_import_ids = campaign.contacts.from_last_import.map(&:id)
       headers, spreadsheet = advanced_import_headers(spreadsheet)
       merged_fields = advanced_import_merged_fields(headers, contact_fields, spreadsheet_fields)
       counter, errors = 0, []
 
-
-      2.upto(spreadsheet.last_row) do |line|
-        contact = campaign.contacts.build
-        import_fields.each { |field| contact = assign_field(contact, field, spreadsheet.cell(line, merged_fields[field]), spreadsheet.celltype(line, merged_fields[field])) }
-        contact = assign_current_user(contact, current_user, campaign)
-        contact.last_import = true
-        contact.save ? counter += 1 : errors << contact.errors.map { |k, v| "#{k} #{v}" }.*(", ")
+      ActiveRecord::Base.transaction do
+        2.upto(spreadsheet.last_row) do |line|
+          contact = campaign.contacts.build
+          import_fields.each { |field| contact = assign_field(contact, field, spreadsheet.cell(line, merged_fields[field]), spreadsheet.celltype(line, merged_fields[field])) }
+          contact = assign_current_user(contact, current_user, campaign)
+          #contact.last_import = true
+          if contact.save
+            counter += 1
+          else
+            errors << "[line: #{line}] #{contact.errors.map { |k, v| "#{k} #{v}" }.*(", ")}"
+            counter = 0
+            raise ActiveRecord::Rollback
+          end
+        end
       end
 
-      contacts_from_last_import = Contact.find_all_by_id(contacts_from_last_import_ids)
-      contacts_from_last_import.each { |c| c.update_attribute(:last_import, false) } if counter > 0 and !contacts_from_last_import.blank?
+      #contacts_from_last_import = Contact.find_all_by_id(contacts_from_last_import_ids)
+      #contacts_from_last_import.each { |c| c.update_attribute(:last_import, false) } if counter > 0 and !contacts_from_last_import.blank?
 
       {:counter => "#{counter} / #{spreadsheet.last_row-1}", :errors => errors.*("<br/>")}
     end

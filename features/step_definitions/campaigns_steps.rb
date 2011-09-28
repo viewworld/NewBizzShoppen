@@ -55,7 +55,7 @@ end
 Given /^contact "([^\"]*)" should be pending$/ do |company_name|
   contact = Contact.find_by_company_name(company_name)
   assert contact.pending?
-  assert (not Contact.available_to_assign.include?(contact))
+  assert (not Contact.all_available_to_assign.include?(contact))
 end
 
 Given /^contact "([^\"]*)" should be at bottom of the list$/ do |company_name|

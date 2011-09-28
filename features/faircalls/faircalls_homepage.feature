@@ -1,3 +1,4 @@
+@faircalls @ao
 Feature: Faircalls home page
 
 #7843

@@ -47,5 +47,5 @@ Scenario: I can see customised total number of leads on the browse categories pa
 Scenario: Categories should be in a form of a list
 
 #7839
-@m20 @requested
+@m20 @requested @ao
 Scenario: I should be able to click on the category row to browse leads

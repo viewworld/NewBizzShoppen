@@ -66,5 +66,5 @@ Scenario: I can filter leads based on keyword (description and title)
   And I should not see "Printers ultimate deal"
 
 #7803
-@m20 @requested
+@m20 @requested @is
 Scenario: Searching should be across all categories (remove the checkboxes in adv search) and should include fields like name, description, company name
