@@ -2710,6 +2710,7 @@ en:
         header: "A company is interested in"
         description: "A company is interested in"
       incorrect_category: "Incorrect category!"
+      hidden_description_prefix_for_deal_code: "Deal code:"
     lead_template_field:
       field_type:
         type0: Text
@@ -3095,6 +3096,7 @@ en:
         created_leads: "Created leads"
         group_deal: "Group deal"
         deal_admin_email: "Deal admin email"
+        deal_code: "Deal code"
       contact:
         company_name: "Name"
         company_phone_number: "Company phone number"
@@ -3766,6 +3768,7 @@ en:
         company_website_label: "Company website"
         time_left_label: "Time left"
         created_leads_label: "Created leads"
+        deal_code_label: "Deal code"
     common:
       assets:
         view:

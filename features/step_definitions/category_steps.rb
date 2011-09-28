@@ -74,3 +74,10 @@ end
 When /^there is a category named "([^"]*)"$/ do |name|
   assert !Category.where(:name => name).first.nil?
 end
+
+When /^I follow category "([^"]*)"$/ do |category_name|
+  category = Category.where(:name => category_name).first
+  dom_id = "##{category.type.to_s.tableize.singularize}_#{category.id}"
+  regex = "/categories#{category.is_a?(LeadCategory) ? '' : '\/deals'}\\/#{category.cached_slug}\\?search\\[with_category\\]=#{category.id}/"
+  Then %{I click hidden link by url regex "#{regex}" within "#{dom_id}"}
+end

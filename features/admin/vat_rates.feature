@@ -7,15 +7,17 @@ Feature: VAT rates
 
   @_done
   Scenario: I can fill in VAT number when creating new buyer account
-    When I follow translated "home.show.view.sign_up_here" within "#buyer_sign_up"
+    When I am on the buyer home page
+    When I follow translated "buyer_home.show.view.create_new_buyer_account"
     Then I should see translated "formtastic.labels.user/customer.vat_number"
 
   @_done
   Scenario: I can't fill in VAT number when creating new agent or purchase manager account
-    When I follow translated "home.show.view.sign_up_here" within "#agent_sign_up"
+    When I am on the agent home page
+    When I follow translated "agent_home.show.view.create_new_agent_account"
     Then I should not see "Vat number"
-    When I am on the home page
-    And I follow translated "home.show.view.sign_up_here" within "#purchase_manager_sign_up"
+    When I am on the purchase manager home page
+    When I follow translated "purchase_manager_home.show.view.create_new_purchase_manager_account"
     Then I should not see translated "formtastic.labels.user.vat_number"
 
   @_done

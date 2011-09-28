@@ -21,6 +21,6 @@ Background:
     And category "cb unique 01" is unique for user with email "jon@lajoie.ca" role "customer"
     Given category "cb unique 01" is unique for some customers users and is auto buy
     And I am on the home page
-    Then I should see translated "layout.main_menu.shared.browse_leads"
-    And I should see "Best Leads"
+    And I follow translated "layout.main_menu.shared.browse_leads"
+    Then I should see "Best Leads"
     And I should not see "cb unique 01"

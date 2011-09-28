@@ -10,8 +10,8 @@ Background:  Sign in user and set locale
 @_tested
 Scenario: I create account through signup
   Given I am not sign in
-  And I am on the homepage
-  Then I follow translated "home.show.view.sign_up_here" within "#buyer_sign_up"
+  And I am on the buyer home page
+  When I follow translated "buyer_home.show.view.create_new_buyer_account"
   And I fill in "user_customer_first_name" with "Bob"
   And I fill in "user_customer_last_name" with "Geldof"
   And I fill in "user_customer_phone" with "244224242424"
@@ -105,18 +105,19 @@ Scenario: I should have my interests fixed to the unique category I'm assigned t
   And I go to customer interests
   Then checkbox named "category_" should be checked
 
-@added @m6 @ao @_done @_tested  @requested
+#home page is not used anymore
+@added @m6 @ao @_done @_tested  @requested @_deprecated
 Scenario: If customer is category buyer he/she can see also unique categories
-  When I sign out
-  And Category named "Best Leads" already exists
-  And Category named "Unique Leads" already exists
-  And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Best Leads"
-  And category "Unique Leads" is unique for user with email "jon@lajoie.ca" role "customer"
-  And I am on the home page
-  And I sign in as jon@lajoie.ca with password secret
-  And I am on the home page
-  Then I should see "Best Leads"
-  And I should see "Unique Leads"
+#  When I sign out
+#  And Category named "Best Leads" already exists
+#  And Category named "Unique Leads" already exists
+#  And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Best Leads"
+#  And category "Unique Leads" is unique for user with email "jon@lajoie.ca" role "customer"
+#  And I am on the home page
+#  And I sign in as jon@lajoie.ca with password secret
+#  And I am on the home page
+#  Then I should see "Best Leads"
+#  And I should see "Unique Leads"
 
 @added @m6 @ao @_done @_tested  @requested
 Scenario: If customer is category buyer with assigned unique categories he can access them
@@ -165,7 +166,7 @@ Scenario: I can use "Advanced search" in Browse leads with following fields: Dea
   And lead Super printers #3 exists with attributes "hotness_counter:2, sale_limit:5, purchase_value:10200"
 
   And I go to browse leads
-  And I follow "Computers"
+  And I follow category "Computers"
   And I follow translated "common.advanced_search"
   And I wait 1 second
   Then I select "Xerox2 Agent02" from "search_with_created_by"
@@ -203,7 +204,7 @@ Scenario: I can use "Advanced search" in Browse leads with following fields: Dea
 Scenario: Advanced search in browse leads should be hidden by default
   Given Category Computers is created
   And I go to browse leads
-  And I follow "Computers"
+  And I follow category "Computers"
   And I follow translated "common.advanced_search"
   Then I should see translated "leads.index.search.deal_value_from_label"
 
@@ -218,7 +219,7 @@ Scenario: Advanced search in browse leads should contain regions and all fields 
   And a lead Super printers #2 exists within category Computers and is bought by user ultimate.buyer@nbs.com with role customer
   And lead "Super printers #2" is created for country "Denmark" with region "DK region #2"
   And I go to browse leads
-  And I follow "Computers"
+  And I follow category "Computers"
   And I follow translated "common.advanced_search"
   Then I select "Denmark" from "search_with_country"
   And I select "DK region #2" from "search_with_region"

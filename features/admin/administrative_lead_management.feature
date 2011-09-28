@@ -115,7 +115,7 @@ Scenario: I can clear the filter when browsing leads
   And lead Monitors ultimate deal exists within category Computers
   And lead Keyboards ultimate deal exists within category Computers
   And I go to browse leads
-  And I follow "Computers"
+  And I follow category "Computers"
   And I fill in "search_with_keyword" with "Monitors"
   And I press translated "administration.leads.index.view.search_button"
   Then I should see "Monitors"

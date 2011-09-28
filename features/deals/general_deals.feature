@@ -19,7 +19,7 @@ Feature: General deals
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role purchase_manager
     Then I sign in as purchase_manager101@nbs.com with password supersecret
     And I follow translated "layout.main_menu.shared.browse_deals"
-    And I follow "Business deals"
+    And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     Then I confirm a js popup on the next step
     And I follow translated "deals.index.view.contact_me"
@@ -55,7 +55,7 @@ Feature: General deals
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role purchase_manager
     Then I sign in as purchase_manager101@nbs.com with password supersecret
     And I follow translated "layout.main_menu.shared.browse_deals"
-    And I follow "Business deals"
+    And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     Then I confirm a js popup on the next step
     And I follow translated "deals.index.view.contact_me"
@@ -74,7 +74,7 @@ Feature: General deals
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role purchase_manager
     Then I sign in as purchase_manager101@nbs.com with password supersecret
     And I follow translated "layout.main_menu.shared.browse_deals"
-    And I follow "Business deals"
+    And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     Then I confirm a js popup on the next step
     And I follow translated "deals.index.view.contact_me"
@@ -93,7 +93,7 @@ Feature: General deals
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role purchase_manager
     Then I sign in as purchase_manager101@nbs.com with password supersecret
     And I follow translated "layout.main_menu.shared.browse_deals"
-    And I follow "Business deals"
+    And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     Then I confirm a js popup on the next step
     And I follow translated "deals.index.view.contact_me"
@@ -105,7 +105,7 @@ Feature: General deals
     And I am signed up and confirmed as user with email purchase_manager202@nbs.com and password supersecret and role purchase_manager
     Then I sign in as purchase_manager202@nbs.com with password supersecret
     And I follow translated "layout.main_menu.shared.browse_deals"
-    And I follow "Business deals"
+    And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     Then I confirm a js popup on the next step
     And I follow translated "deals.index.view.contact_me"
@@ -140,8 +140,18 @@ Feature: General deals
     And category named "Xeper" is auto buy enabled
 
   #7530
-  @m20 @requested @tgn
+  @m20 @requested @tgn @selenium @_tested @_done
   Scenario: I can enter the deal code when creating new deal
+    Given I am signed up and confirmed as user with email small_buyer@nbs.com and password secret and role customer
+    And user small_buyer@nbs.com with role customer exists with attributes "company_name:Xeper"
+    And I am on the homepage
+    And I make sure current locale is "en"
+    Then I sign in as small_buyer@nbs.com with password secret
+    Then I follow translated "layout.main_menu.lead_buyer.my_deals"
+    Then I follow translated "deals.common.listing.view.new_deal"
+    Then I fill deal creation form
+    And I fill in "deal_deal_code" with "XCDGF"
+    Then I press translated "buyer.deals.new.view.create_button"
 
   #7448
   @m20 @requested @tgn

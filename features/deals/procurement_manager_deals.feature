@@ -25,7 +25,7 @@ Feature: Deals from procurement manager perspective
     And a deal named "Some deal #3" exists within category "Electronics deals"
     And a deal named "Some deal #4" exists within category "Electronics deals"
     Then I follow translated "layout.main_menu.shared.browse_deals"
-    And I follow "Electronics deals"
+    And I follow category "Electronics deals"
     And I follow translated "common.show_all"
     And I should see "Some deal #1"
     And I should see "Some deal #2"
@@ -47,7 +47,7 @@ Feature: Deals from procurement manager perspective
     Then a deal named "Skeptical Guide To Universe" exists within category "Scientific"
     Then a deal named "Funny pod" exists within category "Comedy"
     Then I follow translated "layout.main_menu.shared.browse_deals"
-    And I follow "Sound files"
+    And I follow category "Sound files"
     And "category_selector" dropdown should have values "Podcasts,Music"
     And I select "Podcasts" from "category_selector"
     And "category_selector" dropdown should have values "Scientific,Comedy"
@@ -208,5 +208,20 @@ Feature: Deals from procurement manager perspective
     And last email sent should have content "Customized email for software components"
 
   #7530
-  @m20 @requested @tgn
+  @m20 @requested @tgn @_tested @_done
   Scenario: When deal is requested the deal code is included as the first info in lead's hidden description and it is visible when member wants to get the deal
+    Given I visit domain http://fairdeals.dk
+    Given user buyer@nbs.com with role customer exists with attributes "company_name:Xeper"
+    And user "buyer@nbs.com" has assigned role "deal_maker"
+    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper|deal_code:CODE4D3AL"
+    And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role purchase_manager
+    Then I sign in as purchase_manager101@nbs.com with password supersecret
+    Then I follow translated "layout.fairdeals.main_menu.deals"
+    And I follow category "Business deals"
+    And I follow translated "deals.index.view.view_deal"
+    And I follow translated "deals.index.view.contact_me"
+    And I should see "CODE4D3AL"
+    And I fill in "lead_hidden_description" with "some hidden note"
+    And I press translated "purchase_manager.leads.new.view.button_create"
+    And lead "A company is interested in software components" should have the following deal code "CODE4D3AL"
+    And I press translated "purchase_manager.leads.show.view.ok_confirmation"

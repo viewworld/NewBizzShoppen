@@ -56,7 +56,7 @@ Feature: Generating leads from deals
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role purchase_manager
     Then I sign in as purchase_manager101@nbs.com with password supersecret
     And I follow translated "layout.main_menu.shared.browse_deals"
-    And I follow "Electronics deals"
+    And I follow category "Electronics deals"
     And I follow translated "deals.index.view.view_deal"
     And I confirm a js popup on the next step
     And I follow translated "deals.index.view.contact_me"

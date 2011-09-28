@@ -337,3 +337,8 @@ Given /^lead "([^"]*)" should be created by user "([^"]*)"$/ do |header, email|
   user = User.where(:email => email).first.with_role
   assert lead.creator.with_role == user
 end
+
+Given /^lead "([^"]*)" should have the following deal code "([^"]*)"$/ do |header, deal_code|
+  lead = Lead.where(:header => header).order("created_at DESC").first
+  assert lead.hidden_description.to_s.include?(deal_code)
+end
