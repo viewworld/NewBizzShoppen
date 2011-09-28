@@ -1,6 +1,8 @@
 class Category < ActiveRecord::Base
   translates :name, :description
 
+  attr_accessor :remove_image
+
   acts_as_nested_set
   has_many :lead_templates
   has_many :category_translations
@@ -16,7 +18,7 @@ class Category < ActiveRecord::Base
   has_one :email_template, :as => :resource
 
   after_save :set_cached_slug
-  before_save :handle_locking_for_descendants, :handle_auto_buy
+  before_save :handle_locking_for_descendants, :handle_auto_buy, :handle_image_removal
   after_create :generate_blurb
 
   validates_presence_of :name
@@ -80,6 +82,13 @@ class Category < ActiveRecord::Base
   accepts_nested_attributes_for :image
 
   private
+
+  def handle_image_removal
+    if remove_image == "1"
+      self.image = nil
+    end
+    true
+  end
 
   def generate_blurb
     create_blurb(:title => "blurb_category_home_page_#{seo_name.underscore}".humanize,

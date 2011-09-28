@@ -50,6 +50,7 @@
           <label>&nbsp;</label>
           <%= image_tag(@category.image.url, :class => "thumb") unless @category.image.nil? %>
         </li>
+        <%= form.input :remove_image, :as => :boolean unless @category.image.nil? %>
 
       </ol>
     </fieldset>

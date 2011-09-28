@@ -203,3 +203,20 @@ Scenario: Buyout for all categories is disabled by default
   Given I go to browse leads
   And I follow translated "administration.categories.index.view.new_category"
   And the "category_buyout_enabled" checkbox should not be checked
+
+@m20 @ao @added @_done @_tested
+Scenario: I should be able to delete category image
+  When there are no categories
+  And Category Computers is created
+  And I go to administration categories
+  And I follow translated "administration.categories.index.view.edit_link"
+  And attach the file "sample image" to "category_image_attributes_asset"
+  And I press "Save"
+  And I follow translated "administration.categories.index.view.edit_link"
+  And I press "Save"
+  Then I should see CSS path "table#categories_table tr:nth-of-type(1) td:nth-of-type(2) img"
+  When I follow translated "administration.categories.index.view.edit_link"
+  And I check "category_remove_image"
+  And I press "Save"
+  Then I should not see CSS path "table#categories_table tr:nth-of-type(1) td:nth-of-type(2) img"
+
