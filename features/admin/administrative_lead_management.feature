@@ -102,7 +102,7 @@ Scenario: I can publish a lead that is not published
 Scenario: I can edit leads from any page where they are presented
   Given lead New lead exists within category Computers
   When I go to browse leads
-  And I follow "Computers"
+  And I follow category "Computers"
   Then I click hidden link by url regex "/administration\/leads\/\d+\/edit/"
   And I should see translated "agent.leads.edit.view.title" with options "name:New lead"
   When I go to agent home

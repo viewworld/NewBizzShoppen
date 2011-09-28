@@ -124,7 +124,7 @@ Scenario: When new translation to lead is added I can also write translation for
 @m5 @tgn @_tested
 Scenario: I can edit my leads from any page where it's presented
   When I go to browse leads
-  And I follow "Computers"
+  And I follow category "Computers"
   Then I follow translated "leads.listing.edit_label"
   And I should see translated "agent.leads.edit.view.title" with options "name:New lead"
   When I go to agent home

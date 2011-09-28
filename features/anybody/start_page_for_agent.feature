@@ -131,7 +131,7 @@ Scenario: When I am not logged in I should not see any leads from unique categor
   And lead UniqueLead2 exists within category Unique Category2
   And I have user with email other_customer@nbs.com and role customer
   And category "Unique Category2" is unique for user with email "other_customer@nbs.com" role "customer"
-  Then I follow translated "home.show.view.agent"
+  When I am on agent home page
   And I should see "CommonLead1" within "#best_sellers"
   And I should not see "UniqueLead1" within "#best_sellers"
   And I should see "CommonLead1" within "#latest_leads"
