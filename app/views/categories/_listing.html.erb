@@ -36,7 +36,7 @@
         <td class="ta_c"><%= image_tag(category.image.url, :class => "thumb") if category.image %></td>
 
         <td>
-          <%= link_to "#{category.name}", "/categories#{category.is_a?(LeadCategory) ? '' : '/deals'}/#{category.cached_slug}?search[with_category]=#{category.id}", :class => "default_action", :style => "display:none" %>
+          <%#= link_to "#{category.name}", "/categories#{category.is_a?(LeadCategory) ? '' : '/deals'}/#{category.cached_slug}?search[with_category]=#{category.id}", :class => "default_action", :style => "display:none" %>
           <h4>
             <%= category.name %>
             <%= "(#{(category.is_a?(LeadCategory) ? category.leads_count_for_user(current_user) : category.deals_count_for_user(current_user)) == 0 ? t("layout.main_menu.shared.sold_out") : category.is_a?(LeadCategory) ? category.leads_count_for_user(current_user) : category.deals_count_for_user(current_user)})" %>
