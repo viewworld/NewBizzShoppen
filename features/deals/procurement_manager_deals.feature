@@ -87,7 +87,7 @@ Feature: Deals from procurement manager perspective
     #Given a deal named "Some deal #1" exists with attributes "contact_name:SE Cupps"
     Given a deal named "Some deal #1" exists with attributes "company_name:SE Cupps"
     Then I follow translated "layout.main_menu.shared.browse_deals"
-    And I follow category "Electronics"
+    And I follow category "Electronics deals"
     #Then I should see translated "deals.listing.contact_label"
     #And I should see translated "deals.listing.contact_name_label"
     And I should see "SE Cupps"
@@ -96,7 +96,7 @@ Feature: Deals from procurement manager perspective
   Scenario: I can click "Contact me"
     Given a deal named "Some deal #1" exists within category "Electronics deals"
     Then I follow translated "layout.main_menu.shared.browse_deals"
-    And I follow category "Electronics"
+    And I follow category "Electronics deals"
     Then I should see translated "deals.index.view.view_deal"
 
   #tested under sales manager deals
@@ -175,7 +175,6 @@ Feature: Deals from procurement manager perspective
     And last email sent should have content "software components"
     And last email sent should have content "short desc about software"
 
-
   #7531
   @m19 @requested @_done @_tested @tgn
   Scenario: Email with deal information for procurment manager should be customizable per deal (with default template)
@@ -197,7 +196,7 @@ Feature: Deals from procurement manager perspective
     Then I sign in as purchase_manager101@nbs.com with password supersecret
     And User purchase_manager101@nbs.com with role purchase_manager is from country Denmark
     Then I follow translated "layout.fairdeals.main_menu.deals"
-    And I follow "Business deals"
+    And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     And I follow translated "deals.index.view.contact_me"
     And I fill in "lead_hidden_description" with "some hidden note"

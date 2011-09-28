@@ -41,7 +41,7 @@ Feature: Fairdeals view deal
     And I fill in "lead_lead_template_values_attributes_0_value" with "value1"
     And I press translated "purchase_manager.leads.new.view.button_create"
     Then I follow translated "layout.fairdeals.main_menu.deals"
-    And I follow "Business deals"
+    And I follow category "Business deals"
     And I follow "super"
     And I should see "Azazel"
     And I should see "Ed Yudkovsky"

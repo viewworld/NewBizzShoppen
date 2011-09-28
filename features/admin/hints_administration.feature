@@ -48,10 +48,6 @@ Scenario: I can login as any role and be able to edit content
   And I go to the homepage
   And I click hidden link by url regex "/administration\/articles\/\d+\/edit/"
   And I should see "Editing article"
-  Then I go to the homepage
-  And I follow translated "home.show.view.sign_up_here"
-  Then I click hidden link by url regex "/administration\/hints\/\d+\/edit\?add=1/"
-  And I should see "Edit hint"
 
 @m8 @translations @selenium @added @_tested
 Scenario: As translator I can edit blurb, change it, save it and then go back to previous page

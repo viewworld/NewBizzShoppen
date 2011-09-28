@@ -24,7 +24,7 @@ Scenario: I should see leads that belong to a user which is blocked
   Then I should see "Lead 1"
   When User agent@person.com with role agent is blocked
   And I go to browse leads
-  And I follow "Sample category"
+  And I follow category "Sample category"
   Then I should see "Lead 1"
 
 @_tested @bk

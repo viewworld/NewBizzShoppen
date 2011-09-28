@@ -93,10 +93,10 @@ Scenario: Item cannot be added to the cart if its currency does not match items'
   Given Lead named "Super keyboards" exists within "Awesome Computers" category
   And lead "Super keyboards" has currency "EUR"
   Then I go to browse leads
-  And I follow "Super Computers"
+  And I follow category "Super Computers"
   Then I follow translated "leads.index.add_to_cart_link"
   And I should see translated "buyer.cart_items.create.flash.cart_item_creation_successful"
   Then I go to browse leads
-  And I follow "Awesome Computers"
+  And I follow category "Awesome Computers"
   Then I follow translated "leads.index.add_to_cart_link"
   And I should see translated "buyer.cart_items.create.flash.cart_item_currencies_mismatch"
