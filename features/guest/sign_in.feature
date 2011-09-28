@@ -87,10 +87,10 @@ Feature: Sign in
     When I go to "the homepage"
     Then I should not see translated "layout.my_profile_link"
 
-@tgn @m1 @_tested
+@tgn @m1 @_tested @_deprecated
 Scenario: Add links present on sign in page to home login page as well (forgot password and confirmation instructions)
-  Then I should see translated "home.show.view.forgotten_password_link"
-  And I should see translated "home.show.view.resend_confirmation_instructions"
+#  Then I should see translated "home.show.view.forgotten_password_link"
+#  And I should see translated "home.show.view.resend_confirmation_instructions"
 
 @requested @m8b @tgn @_tested @_done
 Scenario: We need a forgot password function, where the user is e-maild his password, this should be available when you enter a wrong password
