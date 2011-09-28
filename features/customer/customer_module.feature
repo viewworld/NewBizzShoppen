@@ -165,7 +165,7 @@ Scenario: I can use "Advanced search" in Browse leads with following fields: Dea
   And lead Super printers #3 exists with attributes "hotness_counter:2, sale_limit:5, purchase_value:10200"
 
   And I go to browse leads
-  And I follow "Computers"
+  And I follow category "Computers"
   And I follow translated "common.advanced_search"
   And I wait 1 second
   Then I select "Xerox2 Agent02" from "search_with_created_by"
