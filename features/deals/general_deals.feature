@@ -148,5 +148,15 @@ Feature: General deals
   Scenario: Under deal view for any deal maker the leads generated should be listed below (newest on the top)
 
   #7847
-  @m20 @requested @tgn
+  @m20 @requested @tgn @_done @_tested
   Scenario: When  deal price is NOT empty and deal discounted price is empty then display Saving 100% but do not display price
+    Given a deal named "Abc group deal #1" exists within category "Electronics deals"
+    And a deal named "Abc group deal #1" exists with attributes "published:1,group_deal:1,price:123,deal_price:120,discounted_price:0,social_media_description:quo vadis"
+    Given I visit domain http://fairdeals.dk
+    Then I follow translated "layout.fairdeals.main_menu.deals"
+    And I follow "Electronics deals"
+    And I follow "Abc group deal #1"
+    Then I should not see translated "deals.listing.price"
+    And I should not see translated "deals.listing.discounted_price"
+    But I should see "100%"
+    And I should not see "120"
