@@ -164,7 +164,7 @@ Feature: General deals
     And a deal named "Abc group deal #1" exists with attributes "published:1,group_deal:1,price:123,deal_price:120,discounted_price:0,social_media_description:quo vadis"
     Given I visit domain http://fairdeals.dk
     Then I follow translated "layout.fairdeals.main_menu.deals"
-    And I follow "Electronics deals"
+    And I follow category "Electronics deals"
     And I follow "Abc group deal #1"
     Then I should not see translated "deals.listing.price"
     And I should not see translated "deals.listing.discounted_price"

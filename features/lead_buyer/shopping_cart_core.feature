@@ -15,7 +15,7 @@ Background:
   And lead Mouses deal exists with attributes "price:2000,currency_id:1"
   Then I sign in as customer@person.com with password supersecret
   And I go to browse leads
-  And I follow "Computers"
+  And I follow category "Computers"
 
 @tgn @_done @_tested @selenium
 Scenario: I can bulk add leads to basket
@@ -77,7 +77,7 @@ Scenario: I can't buy (see) a lead when sale_limit is reached
   And a lead Super printers #2 exists within category Computers and is bought by user ultimate.buyer@nbs.com with role customer
   And lead Super printers #2 exists with attributes "hotness_counter:0, sale_limit:2, purchase_value:5200"
   And I go to browse leads
-  And I follow "Computers"
+  And I follow category "Computers"
   Then I should see "Super printers #2"
   And I should not see "Super printers #1"
 
@@ -91,7 +91,7 @@ Scenario: When adding a lead to cart for the first time, there should be a small
   And I am not sign in
   Then I sign in as customer@person.com with password supersecret
   And I go to browse leads
-  And I follow "Computers"
+  And I follow category "Computers"
   Given I check "mark_all"
   And I press translated "leads.index.button_bulk_create_cart_item"
   Then I should see "Your lead has been added to cart."

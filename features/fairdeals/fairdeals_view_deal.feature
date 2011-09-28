@@ -19,7 +19,7 @@ Feature: Fairdeals view deal
     Given I visit domain http://fairdeals.dk
     Then I sign in as procurment@nbs.com with password secret
     Then I follow translated "layout.fairdeals.main_menu.deals"
-    And I follow "Business deals"
+    And I follow category "Business deals"
     And I follow "super"
     And I should see "super descr"
     And I should see "super detailed"
@@ -35,13 +35,13 @@ Feature: Fairdeals view deal
     Given I visit domain http://fairdeals.dk
     Then I sign in as procurment@nbs.com with password secret
     Then I follow translated "layout.fairdeals.main_menu.deals"
-    And I follow "Business deals"
+    And I follow category "Business deals"
     And I follow "super"
     And I follow translated "deals.index.view.contact_me"
     And I fill in "lead_lead_template_values_attributes_0_value" with "value1"
     And I press translated "purchase_manager.leads.new.view.button_create"
     Then I follow translated "layout.fairdeals.main_menu.deals"
-    And I follow "Business deals"
+    And I follow category "Business deals"
     And I follow "super"
     And I should see "Azazel"
     And I should see "Ed Yudkovsky"
@@ -57,7 +57,7 @@ Feature: Fairdeals view deal
     Given I visit domain http://fairdeals.dk
     Then I sign in as procurment@nbs.com with password secret
     Then I follow translated "layout.fairdeals.main_menu.deals"
-    And I follow "Business deals"
+    And I follow category "Business deals"
     And I follow "super"
     And I follow translated "deals.index.view.contact_me"
     And I fill in "lead_hidden_description" with "my specific needs are following etc"
@@ -84,7 +84,7 @@ Feature: Fairdeals view deal
     And a deal named "Abc group deal #1" exists with attributes "published:1,group_deal:1,price:123,deal_price:100,discounted_price:25,social_media_description:quo vadis"
     Given I visit domain http://fairdeals.dk
     Then I follow translated "layout.fairdeals.main_menu.deals"
-    And I follow "Electronics deals"
+    And I follow category "Electronics deals"
     And I follow "Abc group deal #1"
     And I should see "1" occurrences of css class "countdown" for tag "div"
 
@@ -95,7 +95,7 @@ Feature: Fairdeals view deal
     And a deal named "Abc group deal #1" exists with attributes "published:1,group_deal:1,price:123,deal_price:0,discounted_price:25,social_media_description:quo vadis"
     Given I visit domain http://fairdeals.dk
     Then I follow translated "layout.fairdeals.main_menu.deals"
-    And I follow "Electronics deals"
+    And I follow category "Electronics deals"
     And I follow "Abc group deal #1"
     Then I should not see translated "deals.listing.price"
     And I should not see translated "deals.listing.discounted_price"

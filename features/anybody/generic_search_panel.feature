@@ -17,7 +17,7 @@ Background:
   And lead Furniture for office deal exists within category Office
   And lead Furniture for office deal exists with attributes "purchase_value:6500"
   Then I go to browse leads
-  And I follow "Computers"
+  And I follow category "Computers"
 
 @tgn @_done @_tested
 Scenario: I can see search panel on leads listing page

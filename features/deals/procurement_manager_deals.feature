@@ -64,7 +64,7 @@ Feature: Deals from procurement manager perspective
   Scenario: I can browse deals in seelcted category
     Given a deal named "Some deal #1" exists within category "Electronics deals"
     Then I follow translated "layout.main_menu.shared.browse_deals"
-    And I follow "Electronics deals"
+    And I follow category "Electronics deals"
     Then I should see "Some deal #1"
 
   @_done @tested_elsewhere @tgn
@@ -87,7 +87,7 @@ Feature: Deals from procurement manager perspective
     #Given a deal named "Some deal #1" exists with attributes "contact_name:SE Cupps"
     Given a deal named "Some deal #1" exists with attributes "company_name:SE Cupps"
     Then I follow translated "layout.main_menu.shared.browse_deals"
-    And I follow "Electronics"
+    And I follow category "Electronics deals"
     #Then I should see translated "deals.listing.contact_label"
     #And I should see translated "deals.listing.contact_name_label"
     And I should see "SE Cupps"
@@ -96,7 +96,7 @@ Feature: Deals from procurement manager perspective
   Scenario: I can click "Contact me"
     Given a deal named "Some deal #1" exists within category "Electronics deals"
     Then I follow translated "layout.main_menu.shared.browse_deals"
-    And I follow "Electronics"
+    And I follow category "Electronics deals"
     Then I should see translated "deals.index.view.view_deal"
 
   #tested under sales manager deals
@@ -133,7 +133,7 @@ Feature: Deals from procurement manager perspective
     And user "buyer@nbs.com" has assigned role "deal_maker"
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper"
     Then I follow translated "layout.fairdeals.main_menu.deals"
-    And I follow "Business deals"
+    And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     And I follow translated "deals.index.view.contact_me"
     And I follow translated "buyer_home.show.view.create_new_membership_account"
@@ -164,7 +164,7 @@ Feature: Deals from procurement manager perspective
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role purchase_manager
     Then I sign in as purchase_manager101@nbs.com with password supersecret
     Then I follow translated "layout.fairdeals.main_menu.deals"
-    And I follow "Business deals"
+    And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     And I follow translated "deals.index.view.contact_me"
     And I fill in "lead_hidden_description" with "some hidden note"
@@ -174,7 +174,6 @@ Feature: Deals from procurement manager perspective
     And last email sent should have subject "You have requested a deal"
     And last email sent should have content "software components"
     And last email sent should have content "short desc about software"
-
 
   #7531
   @m19 @requested @_done @_tested @tgn
@@ -197,7 +196,7 @@ Feature: Deals from procurement manager perspective
     Then I sign in as purchase_manager101@nbs.com with password supersecret
     And User purchase_manager101@nbs.com with role purchase_manager is from country Denmark
     Then I follow translated "layout.fairdeals.main_menu.deals"
-    And I follow "Business deals"
+    And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     And I follow translated "deals.index.view.contact_me"
     And I fill in "lead_hidden_description" with "some hidden note"

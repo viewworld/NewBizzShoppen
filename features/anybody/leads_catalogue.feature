@@ -21,19 +21,19 @@ Scenario: I should see an image and a description for each category
 
 @_tested
 Scenario: I can click on a category name and see a list of leads in that category
-  Then I follow "Computers"
+  Then I follow category "Computers"
   And I should see "Printers ultimate deal"
 
 @_tested
 Scenario: I should be able to see leads that belong to a user which is blocked
-  Then I follow "Computers"
+  Then I follow category "Computers"
   And I should see "Printers ultimate deal"
   And I should see "Cheap mouses ultimate deal"
 
 @_tested
 Scenario: I can browse leads in a given category with pagination
   Given pagination page size for leads is set to 2
-  Then I follow "Computers"
+  Then I follow category "Computers"
   And I follow "2"
 
 @_deprecated
@@ -46,13 +46,13 @@ Scenario: I should see rating % and certification level for each lead
   And a lead "Printers ultimate deal" has good rating
   Given All leads have refreshed average ratings
   Given I go to browse leads
-  And I follow "Computers"
+  And I follow category "Computers"
   Then I should see "100%"
   And I should see translated "models.lead.certification.lvl1"
 
 @_tested
 Scenario: I should see lead header, lead price, purchase value and public description
-  Then I follow "Computers"
+  Then I follow category "Computers"
   And I should see "989.39"
   And I should see "7,843.99"
   And I should see "Printers ultimate deal"
@@ -60,7 +60,7 @@ Scenario: I should see lead header, lead price, purchase value and public descri
 
 @m4 @tgn @_tested
 Scenario: I should see hottness, novelty, exposure, clicks
-  When I follow "Computers"
+  When I follow category "Computers"
   Then I should see translated "models.lead.hotness.lvl1"
   And I should see translated "models.lead.novelty.lvl0"
   And I should see "887"
@@ -69,7 +69,7 @@ Scenario: I should see hottness, novelty, exposure, clicks
 @m3 @ao @_done
 Scenario: I should see currency in which lead is being sold
   When lead "Printers ultimate deal" has currency "EUR"
-  And I follow "Computers"
+  And I follow category "Computers"
   And I fill in "search_with_keyword" with "Printers"
   And I press translated "leads.index.search.search_button"
   And I should see "€989.39" within ".leads_table"
@@ -79,7 +79,7 @@ Scenario: When you click on a lead that you have not bought, and you are not sig
   Given Category named "Sample category" already exists
   And Lead named "Lead sample" exists within "Sample category" category
   And I go to browse leads
-  And I follow "Sample category"
+  And I follow category "Sample category"
   Then I click hidden translated link "leads.index.add_to_cart_link"
   And I should see "Sign in"
   Then I follow translated "buyer_home.show.view.create_new_buyer_account"
@@ -89,7 +89,7 @@ Scenario: Add blurb or info text to leads listing "To view lead details click bu
   Given Category named "Sample category" already exists
   And Lead named "Lead sample" exists within "Sample category" category
   And I go to browse leads
-  And I follow "Sample category"
+  And I follow category "Sample category"
   Then I should see "Blurb leads listing"
 
 @m0 @statistics
@@ -100,7 +100,7 @@ Scenario: I should see tree with category checkboxes beneath the search filter i
     When Category named "HP" already exists within category named "Computers"
     And lead Hapeki exists within category HP
     And I am on the browse leads page
-    And I follow "Computers"
+    And I follow category "Computers"
     And I should see "Computers" within "table.categories_table"
     And I should see "HP" within "table.categories_table"
     And I should see "Hapeki"
@@ -112,7 +112,7 @@ Scenario: I should be able to select categories from different levels of the tre
   And Category named "Japko" already exists within category named "Computers"
   And lead Makbuki exists within category Japko
   And I am on the browse leads page
-  And I follow "Computers"
+  And I follow category "Computers"
   And I should see "Hapeki"
   And I should see "Makbuki"
   When I uncheck "Japko"
@@ -140,7 +140,7 @@ Scenario: If a lead is certified then I see "Certified by procurement: (yes/no)"
   Given Category named "Sample category" already exists
   And Lead named "Lead sample" exists within "Sample category" category
   And I go to browse leads
-  And I follow "Sample category"
+  And I follow category "Sample category"
   Then I should see translated "leads.listing.certified_by_procurement_label"
 
 # 5766
@@ -150,7 +150,7 @@ Scenario: I should see "Agent's certification" instead of "Certification"
   Given Category named "Sample category" already exists
   And Lead named "Lead sample" exists within "Sample category" category
   And I go to browse leads
-  And I follow "Sample category"
+  And I follow category "Sample category"
   And I should see translated "leads.listing.agent_certification_label"
 
 # 5763
@@ -189,7 +189,7 @@ Scenario: I can request a category and more leads for category as a guest
   And I follow translated "layout.main_menu.shared.category_request"
   Then I should see translated "category_requests.new.view.header"
   When I go to browse leads
-  And I follow "Electronics"
+  And I follow category "Electronics"
   And I follow translated "leads.index.request_more_leads"
   Then I should see translated "more_leads_requests.new.view.header" with options "category:Electronics"
 
@@ -211,7 +211,7 @@ Scenario: I can provide additional information in Note field when requesting mor
   And I follow translated "layout.main_menu.shared.category_request"
   Then I should see translated "category_requests.new.view.header"
   When I go to browse leads
-  And I follow "Electronics"
+  And I follow category "Electronics"
   And I follow translated "leads.index.request_more_leads"
   And I fill in "email_template_preview_company_name" with "blah blah company name blah"
   And I fill in "email_template_preview_contact_name" with "blah contact name blah blah"

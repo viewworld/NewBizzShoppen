@@ -13,17 +13,31 @@
       <div class="pdd_10">
         <div class="column_left">
           <p class="sortable_div_header"><%= t("#{model_name}s_advanced_import.choose.view.object_fields_label") %></p>
-          
           <ul id="sortable_object_fields_removed" class="sortable_object_fields_class">
             <p class="disabled"><%= t("advanced_import.choose.view.object_not_selected_fields_label") %></p>
+            <% @model.import_fields.each do |name| %>
+                <% if !@object_field.blank? and !@object_field.split(",").include?(name) %>
+                    <% required = @model.required_import_fields.include?(name) %>
+                    <li class="ui-state-highlight <%= "disabled" if required %>"><%= name.include?("custom|") ? name.split("|")[1..2].join(" => ") : name.humanize %><%= " *" if required %>
+                      <span style=display:none><%= name %></span></li>
+                <% end %>
+            <% end %>
           </ul>
 
           <ul id="sortable_object_fields" class="sortable_object_fields_class">
             <p class="disabled"><%= t("advanced_import.choose.view.object_selected_fields_label") %></p>
             <% @model.import_fields.each do |name| %>
-                <% required = @model.required_import_fields.include?(name) %>
-                <li class="ui-state-highlight <%= "disabled" if required %>"><%= name.include?("custom|") ? name.split("|")[1..2].join(" => ") : name.humanize %><%= " *" if required %>
-                  <span style=display:none><%= name %></span></li>
+                <% if !@object_field.blank? %>
+                    <% if  @object_field.split(",").include?(name) %>
+                        <% required = @model.required_import_fields.include?(name) %>
+                        <li class="ui-state-highlight <%= "disabled" if required %>"><%= name.include?("custom|") ? name.split("|")[1..2].join(" => ") : name.humanize %><%= " *" if required %>
+                          <span style=display:none><%= name %></span></li>
+                    <% end %>
+                <% else %>
+                    <% required = @model.required_import_fields.include?(name) %>
+                    <li class="ui-state-highlight <%= "disabled" if required %>"><%= name.include?("custom|") ? name.split("|")[1..2].join(" => ") : name.humanize %><%= " *" if required %>
+                      <span style=display:none><%= name %></span></li>
+                <% end %>
             <% end %>
           </ul>
         </div>
@@ -34,12 +48,23 @@
           <ul id="sortable_spreadsheet_fields" class="sortable_spreadsheet_fields_class">
             <p class="disabled"><%= t("advanced_import.choose.view.spreadsheet_selected_fields_label") %></p>
             <% @spreadsheet_headers.each do |name| %>
-                <li class="ui-state-default"><%= name %></li>
+                <% if !@spreadsheet_field.blank? %>
+                    <% if @spreadsheet_field.split(",").include?(name) %>
+                        <li class="ui-state-default"><%= name %></li>
+                    <% end %>
+                <% else %>
+                    <li class="ui-state-default"><%= name %></li>
+                <% end %>
             <% end %>
           </ul>
 
           <ul id="sortable_spreadsheet_fields_removed" class="sortable_spreadsheet_fields_class">
             <p class="disabled"><%= t("advanced_import.choose.view.spreadsheet_not_selected_fields_label") %></p>
+            <% @spreadsheet_headers.each do |name| %>
+                <% if !@spreadsheet_field.blank? and !@spreadsheet_field.split(",").include?(name) %>
+                    <li class="ui-state-default"><%= name %></li>
+                <% end %>
+            <% end %>
           </ul>
         </div>
       </div>
