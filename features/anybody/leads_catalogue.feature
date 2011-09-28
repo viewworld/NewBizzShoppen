@@ -160,7 +160,7 @@ Scenario: I can see categories tree when I click advanced search
   And Category named "Sample category#2" already exists within category named "Sample category"
   And Lead named "Lead sample" exists within "Sample category#2" category
   And I go to browse leads
-  And I follow "Sample category"
+  And I follow category "Sample category"
   And I follow translated "common.advanced_search"
   And I should see "Sample category"
   And I should see "Sample category#2"
@@ -175,7 +175,7 @@ Scenario: I should see only tree for selected root category
   And Lead named "Lead sample" exists within "Sample category#2" category
   And Lead named "Lead sample" exists within "Sample category#3" category
   And I go to browse leads
-  And I follow "Sample category"
+  And I follow category "Sample category"
   And I follow translated "common.advanced_search"
   And I should see "Sample category"
   And I should see "Sample category#2"
@@ -238,7 +238,7 @@ Scenario: I can see the dropdown menu of subcategories on the particular categor
   Then Lead named "Skeptical Guide To Universe" exists within "Scientific" category
   Then Lead named "Funny pod" exists within "Comedy" category
   When I go to browse leads
-  And I follow "Sound files"
+  And I follow category "Sound files"
   And "category_selector" dropdown should have values "Podcasts,Music"
   And I select "Podcasts" from "category_selector"
   And "category_selector" dropdown should have values "Scientific,Comedy"
@@ -249,7 +249,7 @@ Scenario: I can see the dropdown menu of subcategories on the particular categor
 @m18 @selenium @_tested @_done @tgn
 Scenario: I should see "View all" by the pagination links under Browse leads
   Given pagination page size for leads is set to 2
-  And I follow "Computers"
+  And I follow category "Computers"
   And I follow translated "common.show_all"
   And I should see "Printers ultimate deal"
   And I should see "Faxes ultimate deal"

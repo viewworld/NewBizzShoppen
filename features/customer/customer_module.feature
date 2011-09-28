@@ -204,7 +204,7 @@ Scenario: I can use "Advanced search" in Browse leads with following fields: Dea
 Scenario: Advanced search in browse leads should be hidden by default
   Given Category Computers is created
   And I go to browse leads
-  And I follow "Computers"
+  And I follow category "Computers"
   And I follow translated "common.advanced_search"
   Then I should see translated "leads.index.search.deal_value_from_label"
 
@@ -219,7 +219,7 @@ Scenario: Advanced search in browse leads should contain regions and all fields 
   And a lead Super printers #2 exists within category Computers and is bought by user ultimate.buyer@nbs.com with role customer
   And lead "Super printers #2" is created for country "Denmark" with region "DK region #2"
   And I go to browse leads
-  And I follow "Computers"
+  And I follow category "Computers"
   And I follow translated "common.advanced_search"
   Then I select "Denmark" from "search_with_country"
   And I select "DK region #2" from "search_with_region"
