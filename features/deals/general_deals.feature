@@ -154,8 +154,29 @@ Feature: General deals
     Then I press translated "buyer.deals.new.view.create_button"
 
   #7448
-  @m20 @requested @tgn
+  @m20 @requested @selenium @tgn @_tested @_done
   Scenario: Under deal view for any deal maker the leads generated should be listed below (newest on the top)
+    When there are no deals
+    And user buyer@nbs.com with role customer exists with attributes "company_name:Asd"
+    And user "buyer@nbs.com" has assigned role "deal_maker"
+    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "max_auto_buy:1|header:super|description:super|hidden_description:super|start_date:2011-01-01|company_name:Asd|published:1|deal_admin_email:agent@nbs.com"
+    Then I am not sign in
+    And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role purchase_manager
+    Then I sign in as purchase_manager101@nbs.com with password supersecret
+    And I follow translated "layout.main_menu.shared.browse_deals"
+    And I follow category "Business deals"
+    And I follow translated "deals.index.view.view_deal"
+    Then I confirm a js popup on the next step
+    And I follow translated "deals.index.view.contact_me"
+    And I fill in "lead_hidden_description" with "some hidden note"
+    And I press translated "purchase_manager.leads.new.view.button_create"
+    And I press translated "purchase_manager.leads.show.view.ok_confirmation"
+    Then I am not sign in
+    And I am on the homepage
+    And I sign in as buyer@nbs.com with password secret
+    Then I follow translated "layout.main_menu.lead_buyer.my_deals"
+    And I click hidden link by url regex "/buyers\/deals\/\d+\/edit/"
+    And I should see "A company is interested in super"
 
   #7847
   @m20 @requested @tgn @_done @_tested

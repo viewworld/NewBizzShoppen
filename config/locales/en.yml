@@ -3793,6 +3793,16 @@ en:
       created_leads_count: "leads"
       missing_leads_count: "missing"
       leads_label: "leads"
+      leads_table:
+        header: "Header"
+        date: "Date"
+        phone_number: "Phone number"
+        requested_by: "Requested by"
+        actions:
+          view: "View"
+          edit: "Edit"
+        no_leads_created_yet_message: "No leads have been created yet."
+        title: "Leads created by deal"
     new:
       view:
         frame_header: "Get deal"
