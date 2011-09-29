@@ -189,7 +189,7 @@ Nbs::Application.routes.draw do
       end
       resources :agent_work_screen, :only => :index
       namespace :agent_work_screen do
-        resources :contacts, :only => [:show, :destroy, :update] do
+        resources :contacts, :only => [:create, :show, :destroy, :update] do
           resources :call_results, :only => [:new, :create, :edit, :update, :destroy]
         end
         resource :agent_information, :only => [:show]

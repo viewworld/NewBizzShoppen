@@ -439,6 +439,10 @@ en:
         from: "From"
         bcc: "Bcc"
         cc: "Cc"
+      new_contact: "New contact"
+      new_contact_title: "Create new contact"
+      create: "Create"
+      cancel: "Cancel"
   contacts:
     filter:
       title: Search
@@ -479,6 +483,8 @@ en:
     create:
       flash:
         successfully_imported: "%{count} contacts have been successfully imported."
+        contact_successfully_created: "Contact has been successfully created."
+        contact_not_be_created: "Contact could not be created."
     batch_assign:
       flash:
         no_contacts_selected: "You have selected no contact."

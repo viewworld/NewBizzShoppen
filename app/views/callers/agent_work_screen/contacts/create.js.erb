@@ -1,0 +1,7 @@
+<% if @contact.valid? %>
+    display_notice("<%= escape_javascript(t("contacts.create.flash.contact_successfully_created")) %>", true);
+<% else %>
+    display_notice("<%= escape_javascript(t("contacts.create.flash.contact_not_be_created")) %>", true);
+<% end %>
+
+$("#call_sheet").html("<%= escape_javascript(render(:partial => "callers/agent_work_screen/call_sheet", :locals => @locals)) %>");
