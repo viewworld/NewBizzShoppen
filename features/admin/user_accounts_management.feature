@@ -736,4 +736,4 @@ Scenario: I can send welcome email to member / supplier
 
 #7838
 @m20 @requested
-Scenario: When creating agent/call centre agent then city, country, region should be mandatory
+Scenario: When creating agent/call centre agent then city and country should be mandatory

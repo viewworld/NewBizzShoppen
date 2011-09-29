@@ -88,17 +88,17 @@ Scenario: I can upload custom jpeg image to be displayed on home page for video 
 #  Then I should see CSS path "img[src*='_original']"
 
 #5919
-@requested @$_all @m12 @ao @_done @_tested @selenium
+@requested @$_all @m12 @ao @_done @_tested @selenium @_deprecated
 Scenario: I can play youtube video in a modal box
-  When I follow translated "administration.introduction_video.view.add_video"
-  And I fill in "youtube_introduction_url" with "http://www.youtube.com/watch?v=SBjQ9tuuTJQ"
-  And I select "en" from "youtube_introduction_locale_code"
-  And I press translated "administration.introduction_video.new.view.button_create"
-  And I make sure current locale is "en"
-  And I am on the home page
-  And I follow "introduction_video_link"
-  And I wait 1 second
-  Then I should see CSS path "#cboxLoadedContent"
+#  When I follow translated "administration.introduction_video.view.add_video"
+#  And I fill in "youtube_introduction_url" with "http://www.youtube.com/watch?v=SBjQ9tuuTJQ"
+#  And I select "en" from "youtube_introduction_locale_code"
+#  And I press translated "administration.introduction_video.new.view.button_create"
+#  And I make sure current locale is "en"
+#  And I am on the home page
+#  And I follow "introduction_video_link"
+#  And I wait 1 second
+#  Then I should see CSS path "#cboxLoadedContent"
 
 #5919
 #home page is not used anymore
@@ -229,5 +229,6 @@ Scenario: I can set contact info for home page like Phone number, Email, Skype
   And I press translated "administration.settings.edit.view.button_update_settings"
 
 #7837
-@m20 @requested @is
+@m20 @requested @is @_done @_tested
 Scenario: Contact settings should be renamed to fairdeals contact settings
+  Then I should see "Fairdeals contact settings"

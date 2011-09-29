@@ -239,5 +239,5 @@ Feature: Front page for procurment
     And I press translated "administration.deals.edit.view.update_button"
 
   #7529
-  @m20 @requested
+  @m20 @requested @non_testable @_done
   Scenario: Boxes with secondary featured deals should ber clickable

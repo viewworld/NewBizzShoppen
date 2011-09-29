@@ -966,7 +966,7 @@ en:
           confirmation_update_message: "Are you sure?"
           title_stats: "Statistics recalculation"
           button_update_stats: "Update stats"
-          contacts_settings_title: "Contact settings"
+          contacts_settings_title: "Fairdeals contact settings"
       update:
         controller:
           successful_update_notice: "Settings were successfully updated."

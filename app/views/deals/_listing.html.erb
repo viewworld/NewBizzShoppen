@@ -123,17 +123,16 @@
               <!--<p class="element"><%= deal.address %></p>-->
               <!--<br />-->
 
-              <p class="element"><%= t("deals.listing.company_name_label") %>
-                <b> <%= deal.company_name %></b></p>
+              <p class="element"><b><%= t("deals.listing.company_name_label") %></b>
+                <%= deal.company_name %></p>
 
-              <p class="element"><%= t("deals.listing.company_description_label") %>
-                <b> <%= deal.company_description %></b></p>
+              <p class="element"><b><%= t("deals.listing.company_description_label") %></b>
+                <%= deal.company_description %></p>
 
-          <% if  user_signed_in? and current_user.has_any_role?(:purchase_manager) %>
-              <p class="element"><%= t("deals.listing.rating_label") %>
-                <%=ratings_for(deal) %></p>
-          <% end %>
-                <br/><br/>
+              <p class="element"><b><%= t("deals.listing.rating_label") %></b>
+                <%= ratings_for(deal, :force_static => !current_user_has_role?(:purchase_manager)) %></p>
+
+              <br/><br/>
         </td>
 
         <td>
