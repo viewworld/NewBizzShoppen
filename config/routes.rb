@@ -328,6 +328,8 @@ Nbs::Application.routes.draw do
 
   resources :deal_maker_users
 
+  resources :deal_maker_materials
+
   resources :email_templates, :only => [:edit, :update]
 
   constraints(Fairdeals) do
