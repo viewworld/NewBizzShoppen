@@ -4,12 +4,28 @@ class DealsController < ApplicationController
   set_tab "browse_deals"
 
   include ::DealCertificationRequestActions
+  before_filter :check_slug, :only => [:index]
   before_filter :set_deal, :only => [:edit, :update]
+
+  private
+
+  def check_slug
+    unless params[:search]
+      if deal_category = DealCategory.where(:cached_slug => params[:slag]).first
+        params[:search] = { :with_category => deal_category.id }
+      else
+        redirect_to root_path
+      end
+    end
+  end
+
+  public
 
   def collection
     @search = Deal.scoped_search(params[:search])
     @search.published_only = true
     @search.without_inactive = true
+    @search.with_category = nil unless @search.with_keyword.blank?
 
     @category = Category.find_by_id(@search.with_category)
     @countries = (current_user and current_user.has_accessible_categories?) ? Country.within_accessible_categories(current_user) : Country.all
@@ -23,17 +39,14 @@ class DealsController < ApplicationController
       @categories_scope = Category.without_locked.without_unique.scoped
     end
 
-    if @search.with_category.present?
+    if @search.with_category
       @category = @categories_scope.find(@search.with_category)
-      @nested_category = @category
       @category = @category.root unless @category.root?
-    elsif @search.with_selected_categories.present?
-      category = @categories_scope.where("categories.id in (?)", @search.with_selected_categories).first
-      @category = category ? category.root : nil
-      @nested_category = category ? category : nil
+      @categories = @categories_scope.where("categories.id in (?)", @category.self_and_descendants.map(&:id))
+    else
+      @categories = @categories_scope.all
     end
-    @categories = @category ? @categories_scope.where("categories.id in (?)", @category.self_and_descendants.map(&:id)) : []
-    @search.with_selected_categories = DealCategory.find_by_id(@search.with_category).self_and_descendants.map(&:id) if @search.with_category.present?
+    @search.with_selected_categories = @categories
   end
 
   def show
