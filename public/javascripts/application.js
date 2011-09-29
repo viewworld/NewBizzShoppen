@@ -103,6 +103,23 @@ function loadScripts() {
         });
     }
 
+    /*--- clickable featured deals --- */
+
+    if ($("div[id*='secondary_featured_deal_']").has("a.default_action").length != 0) {
+        $("div[id*='secondary_featured_deal_']")
+                .addClass("pointer")
+                .click(function() {
+            var link = $(this).find('a.default_action');
+            if (link.attr("data-method") || link.attr("data-remote")) {
+               link.trigger("click");
+            }
+            else {
+                window.location = link.attr("href");
+            }
+
+        });
+    }
+
 
     /* --- other --- */
 
