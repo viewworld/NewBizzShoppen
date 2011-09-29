@@ -33,7 +33,7 @@ Scenario: I can comment a deal
 Scenario: All comments regarding deals should be public
   Given I am not sign in
   And I follow translated "layout.main_menu.shared.browse_deals"
-  When I follow "Electronics deals"
+  When I follow category "Electronics deals"
   And I should see translated "deals.listing.no_comments"
 
 #7802

@@ -15,7 +15,7 @@ Scenario: Lead translations
   And lead "Printers ultimate deal" has translation for lang "da" with attributes "header:Printere ultimative aftale,description:Beskrivelse til printere behandle,hidden_description:Skjult beskrivelse til printere behandle"
   When I follow translated "locales.dk_locale"
   Then I go to browse leads
-  And I follow "Computers"
+  And I follow category "Computers"
   Then I should see "Printere ultimative aftale"
   Then I should see "Beskrivelse til printere behandle"
 

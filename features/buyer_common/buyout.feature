@@ -1,4 +1,4 @@
-@customer @ao @buyouts  @requested
+@customer @ao @buyouts @requested
 Feature: Buy out
 
   @m6 @_done @_tested
@@ -14,7 +14,7 @@ Feature: Buy out
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
     And I go to browse leads
-    And I follow "Computers"
+    And I follow category "Computers"
     And I fill in "search_with_keyword" with "Printers"
     And I press translated "leads.index.search.search_button"
     Then I should see translated "leads.index.add_to_cart_buyout_link" in the "1" row of table "table.leads_table tbody"
@@ -37,7 +37,7 @@ Feature: Buy out
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
     And I go to browse leads
-    And I follow "Computers"
+    And I follow category "Computers"
     Then I should not see translated "leads.index.add_to_cart_buyout_link" in the "2" row of table "table.leads_table tbody"
     And I should not see translated "leads.listing.buyout_price_label" in the "2" row of table "table.leads_table tbody"
     Then I should not see translated "leads.index.add_to_cart_buyout_link" in the "1" row of table "table.leads_table tbody"
@@ -54,7 +54,7 @@ Feature: Buy out
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
     And I go to browse leads
-    And I follow "Computers"
+    And I follow category "Computers"
     Then I should see "123.00" in the "1" row of table "table.leads_table tbody"
     And I should see "1,230.00" in the "1" row of table "table.leads_table tbody"
 
@@ -69,7 +69,7 @@ Feature: Buy out
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
     And I go to browse leads
-    And I follow "Computers"
+    And I follow category "Computers"
     And I follow translated "leads.index.add_to_cart_buyout_link"
     Then I should see "1,230.00" within "div.cart_content"
     And I should see "10 x" within "div.cart_content"
@@ -90,7 +90,7 @@ Feature: Buy out
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
     And I go to browse leads
-    And I follow "Computers"
+    And I follow category "Computers"
     And I follow translated "leads.index.add_to_cart_buyout_link"
     And I follow translated "layout.cart.show_cart"
     Then I press translated "buyer.cart.show.view.checkout_link"
@@ -109,7 +109,7 @@ Feature: Buy out
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
     And I go to browse leads
-    And I follow "Computers"
+    And I follow category "Computers"
     And I follow translated "leads.index.add_to_cart_buyout_link"
     And I follow translated "layout.cart.show_cart"
     And I press translated "buyer.cart.show.view.checkout_link"
@@ -133,7 +133,7 @@ Feature: Buy out
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
     And I go to browse leads
-    And I follow "Computers"
+    And I follow category "Computers"
     And I follow translated "leads.index.add_to_cart_buyout_link"
     And I follow translated "layout.main_menu.customer.invoices"
     And I follow translated "customer.invoices.index.view.pending_leads"
@@ -168,14 +168,14 @@ Feature: Buy out
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
     And I go to browse leads
-    And I follow "Computers"
+    And I follow category "Computers"
     And I follow translated "leads.index.add_to_cart_link"
     And I sign out
     And I am on the home page
     And I am signed up and confirmed as user with email jessica@lajoie.ca and password secret and role customer
     And I sign in as jessica@lajoie.ca with password secret
     And I go to browse leads
-    And I follow "Computers"
+    And I follow category "Computers"
     Then I should not see translated "leads.index.add_to_cart_buyout_link" in the "1" row of table "table.leads_table tbody"
     And I should not see translated "leads.listing.buyout_price_label" in the "1" row of table "table.leads_table tbody"
 
@@ -189,7 +189,7 @@ Feature: Buy out
     And lead "Printers" has attributes "sale_limit:10,price:123"
     And I am on the home page
     And I go to browse leads
-    And I follow "Computers"
+    And I follow category "Computers"
     And I follow translated "leads.index.add_to_cart_buyout_link"
     And I sign in as jon@lajoie.ca with password secret
     Then I should see "1,230.00" within "div.cart_content"
@@ -205,7 +205,7 @@ Feature: Buy out
     And lead "Printers" has attributes "sale_limit:10,price:123"
     And I am on the home page
     And I go to browse leads
-    And I follow "Computers"
+    And I follow category "Computers"
     Then I should not see translated "leads.index.add_to_cart_buyout_link" in the "1" row of table "table.leads_table tbody"
     And I should not see translated "leads.listing.buyout_price_label" in the "1" row of table "table.leads_table tbody"
 
@@ -221,7 +221,7 @@ Feature: Buy out
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
     And I go to browse leads
-    And I follow "Computers"
+    And I follow category "Computers"
     And I follow translated "leads.index.add_to_cart_buyout_link"
     And I sign out
     Given I am signed up and confirmed as user with email admin@lajoie.ca and password secret and role admin
@@ -241,7 +241,7 @@ Feature: Buy out
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
     And I go to browse leads
-    And I follow "Computers"
+    And I follow category "Computers"
     And I follow translated "leads.index.add_to_cart_buyout_link"
     And I sign out
     Given I am signed up and confirmed as user with email admin@lajoie.ca and password secret and role admin
@@ -266,10 +266,10 @@ Feature: Buy out
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
     And I go to browse leads
-    And I follow "Computers"
+    And I follow category "Computers"
     And I follow translated "leads.index.buy_lead"
     And I go to browse leads
-    And I follow "Computers"
+    And I follow category "Computers"
     Then I should not see "Printers"
     When I follow translated "layout.main_menu.customer.invoices"
     And I follow translated "customer.invoices.index.view.pending_leads"
@@ -296,7 +296,7 @@ Feature: Buy out
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
     And I go to browse leads
-    And I follow "Computers"
+    And I follow category "Computers"
     And I follow translated "leads.index.add_to_cart_link"
     And cart for user "jon@lajoie.ca" is paid by paypal
     And I am on the home page

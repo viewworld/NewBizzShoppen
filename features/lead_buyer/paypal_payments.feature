@@ -12,7 +12,7 @@ Background:
   And an user with role lead_buyer and email leadbuyer.jon@nbs.com exists as subaccount for customer buyer.jim.jones@nbs.com
   Then I sign in as buyer.jim.jones@nbs.com with password secret
   And I go to browse leads
-  And I follow "Computers"
+  And I follow category "Computers"
   Then I follow translated "leads.index.add_to_cart_link"
   And I follow translated "layout.cart.show_cart"
   Then I press translated "buyer.cart.show.view.checkout_link"

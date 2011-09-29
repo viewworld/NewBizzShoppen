@@ -16,7 +16,7 @@ Background:
 @_done
 Scenario: I can buy a lead skipping checkout
   When I go to leads
-  And I follow "Computers"
+  And I follow category "Computers"
   And I follow translated "leads.index.buy_lead"
   Then I should not see "Printers ultimate deal"
 
@@ -27,7 +27,7 @@ Scenario: I cannot buy lead through checkout
 @_done
 Scenario: Lead purchase is marked with "has access" after creation
   When I go to leads
-  And I follow "Computers"
+  And I follow category "Computers"
   And I follow translated "leads.index.buy_lead"
   Then I should not see "Printers ultimate deal"
   When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
@@ -39,7 +39,7 @@ Scenario: I can instant-buy lead requested by lead user that belongs to my accou
   And I sign out
   And I sign in as ann.lead_user2@person.com with password secret
   When I go to leads
-  And I follow "Computers"
+  And I follow category "Computers"
   And I follow translated "leads.index.request_lead"
   And I sign out
   And I sign in as customer@person.com with password supersecret
@@ -51,7 +51,7 @@ Scenario: I can instant-buy lead requested by lead user that belongs to my accou
 Scenario: I can bulk instant-buy leads and I will see a notification “You added {n} leads to your list”
   When lead Monitors ultimate deal exists within category Computers
   And I go to leads
-  And I follow "Computers"
+  And I follow category "Computers"
   And I check "mark_all"
   And I press translated "leads.index.button_bulk_buy_leads"
   Then I should see translated "buyer.bulk_cart_items.create.flash.n_leads_bought" with options "count:2"
@@ -64,7 +64,7 @@ Scenario: I can bulk instant-buy leads and I will see a notification “You adde
 @_done
 Scenario: I can instant-buy lead I will see a notification “You added lead to your list”
   And I go to leads
-  And I follow "Computers"
+  And I follow category "Computers"
   And I follow translated "leads.index.buy_lead"
   Then I should see translated "buyer.cart_items.create.flash.cart_item_bought_successful"
   And I should not see "Printers ultimate deal"
@@ -76,11 +76,11 @@ Scenario: I can see latest bought leads at the top of the list
   When there are no leads
   And lead Number 1 ultimate deal exists within category Computers
   And I go to leads
-  And I follow "Computers"
+  And I follow category "Computers"
   And I follow translated "leads.index.buy_lead"
   And lead Number 2 ultimate deal exists within category Computers
   And I go to leads
-  And I follow "Computers"
+  And I follow category "Computers"
   And I follow translated "leads.index.buy_lead"
   When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
   Then I should see "Number 2" before "Number 1"
@@ -92,7 +92,7 @@ Scenario: I can bulk instant-buy leads requested by lead user that belongs to my
   And I sign out
   And I sign in as ann.lead_user2@person.com with password secret
   When I go to leads
-  And I follow "Computers"
+  And I follow category "Computers"
   And I check "mark_all"
   And I press translated "leads.index.button_bulk_create_lead_request"
   And I sign out
@@ -105,7 +105,7 @@ Scenario: I can bulk instant-buy leads requested by lead user that belongs to my
 @_done
 Scenario: I can filter the list of my leads by "paid" column
   And I go to leads
-  And I follow "Computers"
+  And I follow category "Computers"
   And I follow translated "leads.index.buy_lead"
   When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
   Then I should see "Printers ultimate deal"
@@ -121,7 +121,7 @@ Scenario: I should not see the cart when I'm a big buyer
 Scenario: I can buy leads if total cost of my purchases don't exceed the global limit
   Given big buyer purchase limit is set to 1000
   When I go to leads
-  And I follow "Computers"
+  And I follow category "Computers"
   And I follow translated "leads.index.buy_lead"
   And I should see translated "buyer.cart_items.create.flash.cart_item_bought_successful"
   Then I should not see "Printers ultimate deal"
@@ -136,7 +136,7 @@ Scenario: I cannot buy leads if total cost of my purchases exceeds the global li
   And a lead Printers ultimate deal #2 exists within category Leisure and is bought by user customer@person.com with role customer
   And all prices are converted to euro
   When I go to leads
-  And I follow "Computers"
+  And I follow category "Computers"
   And I follow translated "leads.index.buy_lead"
   And I should see translated "buyer.cart_items.create.flash.cart_item_big_buyer_purchase_limit_reached"
   Then I should see "Printers ultimate deal"
@@ -152,7 +152,7 @@ Scenario: I cannot buy leads if total cost of my purchases exceeds my personal l
   And a lead Printers ultimate deal #2 exists within category Leisure and is bought by user customer@person.com with role customer
   And all prices are converted to euro
   When I go to leads
-  And I follow "Computers"
+  And I follow category "Computers"
   And I follow translated "leads.index.buy_lead"
   And I should see translated "buyer.cart_items.create.flash.cart_item_big_buyer_purchase_limit_reached"
   Then I should see "Printers ultimate deal"

@@ -31,7 +31,7 @@ Feature: Notifications
     Given I am on the homepage
     Then I sign in as agent@nbs.com with password secret
     Then I follow translated "layout.main_menu.shared.browse_leads"
-    Then I follow "Business"
+    Then I follow category "Business"
     Then I should see translated "leads.index.subscribe_to_rss"
 
   @m13 @requested @auto_buy @is @_done @_tested
@@ -40,7 +40,7 @@ Feature: Notifications
     Then I sign in as buyer@nbs.com with password secret
     Then User buyer@nbs.com with role customer is big buyer
     Then I follow translated "layout.main_menu.shared.browse_leads"
-    Then I follow "Business"
+    Then I follow category "Business"
     Then I follow translated "leads.index.buy_lead"
     Then I should see translated "buyer.cart_items.create.flash.cart_item_bought_successful"
     Then last email sent should have been sent to recipient "buyer@nbs.com"
@@ -62,7 +62,7 @@ Feature: Notifications
     Then I check "user_customer_disable_bought_notification"
     Then I press translated "password.edit.view.button_update_user"
     Then I follow translated "layout.main_menu.shared.browse_leads"
-    Then I follow "Business"
+    Then I follow category "Business"
     Then I follow translated "leads.index.buy_lead"
     Then I should see translated "buyer.cart_items.create.flash.cart_item_bought_successful"
     Then no email has been send

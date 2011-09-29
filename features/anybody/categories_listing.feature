@@ -38,7 +38,7 @@ Scenario: I can see customised total number of leads on the browse categories pa
   And I am on the homepage
   And I sign in as john@doe.com with password secret
   Then I follow translated "layout.main_menu.shared.browse_leads"
-  And I follow "Computers"
+  And I follow category "Computers"
   When I follow translated "leads.index.buy_lead"
   Then I follow translated "layout.main_menu.shared.browse_leads"
   And I should see "(2)"

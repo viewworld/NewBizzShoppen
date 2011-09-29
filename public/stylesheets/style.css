@@ -1828,8 +1828,9 @@ span.cke_skin_kama
 {
     margin: 0 5px 5px 5px;
     padding: 0;
-    font-size: 1.2em;
+    font-size: 14px;
     display: block;
+    line-height: 16px;
 }
 
 li.disabled

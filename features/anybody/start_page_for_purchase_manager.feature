@@ -246,7 +246,6 @@ Scenario: I should see "My contact requests" instead of "Latest leads"
 
 @m12 @$_guest @added @_done @_tested
 Scenario: I should see "Latest leads" when I'm not a procurement manager
-  When I am on the home page
   When I am on the purchase manager home page
   And I follow translated "purchase_manager_home.show.view.complete_list_link" within "#latest_leads"
   Then I should be on the leads page

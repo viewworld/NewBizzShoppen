@@ -18,8 +18,11 @@ module AdvancedImportActions
   end
 
   def choose
-    if Sheet.validate_attachment(params["attachment"], true)
-      @attachment_file = Sheet.new_temp_file(params["attachment"])
+    if !params[:object_field].blank? and !params[:spreadsheet_field].blank?
+      @object_field, @spreadsheet_field = params[:object_field], params[:spreadsheet_field]
+    end
+    if Sheet.validate_attachment(params["attachment"], params["attachment"].class != String)
+      @attachment_file = params["attachment"].class == String ? params["attachment"] : Sheet.new_temp_file(params["attachment"])
       @creator_id, @object_id = params[:creator_id], params[:object_id]
       @spreadsheet_headers = @model.advanced_import_from_xls_headers(Sheet.new(@attachment_file, true).roo_instance)
       something_went_wrong(t("advanced_import.choose.flash.error_wrong_title")) if @spreadsheet_headers == false
