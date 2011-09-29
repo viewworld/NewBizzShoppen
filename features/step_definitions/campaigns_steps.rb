@@ -73,6 +73,10 @@ Given /^contact "([^\"]*)" should be upgraded to lead$/ do |company_name|
   assert Lead.find_by_company_name(company_name).present?
 end
 
+Given /^contact "([^\"]*)" should be assigned to user "([^\"]*)"$/ do |company_name, email|
+  assert Contact.where(:company_name => company_name).first.agent_id == User.where(:email => email).first.id
+end
+
 Given /^I fill in "([^\"]*)" with import data for contacts$/ do |field_name|
   formatted_rows = "\"Company name\"\t\"Company phone number\"\t\"Company website\"\t\"Address line 1\"\t\"Address line 2\"\t\"Address line 3\"\t\"Zip code\"\t\"Country\"\t\"Region\"\t\"Company vat no\"\t\"Company ean number\"\t\"Contact name\"\t\"Direct phone number\"\t\"Phone number\"\t\"Email address\"\t\"Linkedin url\"\t\"Facebook url\"\t\"Note\"\r\n\"Greg and sons\"\t\"888 112 113\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"Denmark\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\r\n\"Little Franky\"\t\"510 333 333\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"Denmark\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\r\n\"Boiled fisher\"\t\"888 422 633\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"Denmark\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\r\n\"Novik company\"\t\"602 222 333\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"Denmark\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\"\t\"\""
   fill_in(field_name, :with => formatted_rows)

@@ -26,3 +26,10 @@ function custom_form_validator_for_field(form_id, field_id, validation_type){
 function custom_validation_error_for_field(form_id, field_id, message){
     $(form_id + " li[id='" + field_id + "_input']").append("<p class='inline-errors'>" + message + "</p>");
 }
+
+function custom_clear_form(form_id, fields){
+    $.map(fields, function (field) {
+        $(form_id + " li[id='" + field + "_input'] p").remove();
+        $(form_id + ' #'+ field).val('');
+    });
+}

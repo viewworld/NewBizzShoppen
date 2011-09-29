@@ -132,16 +132,26 @@
           },
               "<%= t("agent_work_screen.index.cancel") %>": function() {
                   $(this).dialog('close');
+                  custom_clear_form("#new_contact_form", window.fields_array)
               }
           }
       });
+
+    var fields_array = ["contact_company_name", "contact_company_phone_number", "contact_country_id", "contact_company_website", "contact_address_line_1",
+                        "contact_address_line_2", "contact_address_line_3", "contact_zip_code", "contact_country_id", "contact_company_vat_no", "contact_company_ean_number",
+                        "contact_contact_name", "contact_contact_title", "contact_direct_phone_number", "contact_phone_number", "contact_email_address", "contact_linkedin_url",
+                        "contact_facebook_url", "contact_note"];
 
     function validate_new_contact_form(){
         company_name_is_valid = custom_form_validator_for_field("#new_contact_form","contact_company_name", "not_empty");
         company_phone_is_valid = custom_form_validator_for_field("#new_contact_form","contact_company_phone_number", "not_empty");
         country_is_valid = custom_form_validator_for_field("#new_contact_form","contact_country_id", "selected");
 
-        if(company_name_is_valid && company_phone_is_valid && country_is_valid){ $('#new_contact_form').submit(); $('#modal_new_contact_form_div').dialog('close'); }
+        if(company_name_is_valid && company_phone_is_valid && country_is_valid){
+            $('#new_contact_form').submit();
+            $('#modal_new_contact_form_div').dialog('close');
+            custom_clear_form("#new_contact_form", window.fields_array)
+        }
     }
   </script>
 </js:>
