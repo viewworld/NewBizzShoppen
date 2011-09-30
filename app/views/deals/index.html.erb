@@ -3,7 +3,7 @@
     <h2><%= t("common.search") %></h2>
 
     <div class="search_content">
-      <%= form_for @search, :url => deals_path, :html => { :id => "deals_search_form" } do |f| %>
+      <%= form_for @search, :url => (params[:slag].present? ? deals_index_path : deals_path), :html => { :id => "deals_search_form" } do |f| %>
           <%= hidden_field_tag :show_all, params[:show_all] %>
           <fieldset class="inputs_vertical">
             <ol class="no_pdd">
@@ -49,7 +49,8 @@
               </li>
             </ol>
           </fieldset>
-          <%= f.hidden_field :with_category, :value => @search.with_category unless @search.with_category.blank? %>
+          <%= hidden_field_tag :slag, params[:slag] if params[:slag] %>
+          <%= f.hidden_field :with_category, :value => @search.with_category if params[:slag] %>
       <% end %>
     </div>
   </div>
