@@ -27,4 +27,22 @@ module MaterialActions
     end
   end
 
+  def update
+    @material = @resource.materials.find(params[:id])
+    @material.update_attributes(params[:material])
+    respond_to do |wants|
+      wants.js { render :nothing => true }
+    end
+  end
+
+  def destroy
+    @material = @resource.materials.find(params[:id])
+    unless @material.destroy
+      flash[:alert] = @material.errors.full_messages
+    else
+      flash[:notice] = I18n.t("materials.views.index.successfully_deleted")
+    end
+    redirect_to :back
+  end
+
 end

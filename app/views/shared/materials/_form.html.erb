@@ -2,7 +2,7 @@
     <div class="pdd_10">
     <h2><%= t("materials.views.index.upload_material") %></h2>
 
-    <%= semantic_form_for material, :url => send(upload_url), :html => {:multipart => true} do |f| %>
+    <%= semantic_form_for material, :url => @campaign ? send(upload_url, @campaign) : send(upload_url), :html => {:multipart => true} do |f| %>
         <% f.inputs do %>
             <%= f.input :asset,
                         :as => :file,
@@ -29,7 +29,7 @@
                 <%= check_box_tag :is_default, "1", material.is_default?, {:onclick => "$.post('/callers/campaigns/#{@campaign.id}/materials/#{material.id}.js', '_method=PUT&material[is_default]='+this.checked);"} %>
               <% end %>
               - <strong><%= link_to material.asset_file_name, material.url %> - </strong>
-              <%= link_to t("materials.views.index.delete_material"), send(delete_url, material), :method => :delete, :confirm => t("common.confirmation") %>
+              <%= link_to t("materials.views.index.delete_material"), @campaign ? send(delete_url, @campaign, material) : send(delete_url, material), :method => :delete, :confirm => t("common.confirmation") %>
             </li>
         <% end %>
     <% else %>

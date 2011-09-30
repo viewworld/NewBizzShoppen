@@ -42,8 +42,37 @@
             <%= form.input :skip_email_verification, :as => :boolean %>
             <%= form.input :send_invitation, :as => :boolean %>
         <% end %>
+        <%= hidden_field_tag :serialized_materials_array_field, params[:serialized_materials_array_field] %>
       </ol>
     </fieldset>
+    <% if @user.errors.empty? %>
+    <script type="text/javascript">
+      window.template_initialised = 0;
+      window.materials_repository_files = [];
+    </script>
+     <% else %>
+      <script type="text/javascript">
+      window.materials_repository_files = deserialize_material_repository_array($('#serialized_materials_array_field').val());
+      </script>
+    <% end %>
+
+    <% [:subject, :from, :bcc, :cc, :body].each do |field| %>
+        <%= form.input "email_template_#{field}", :as => :hidden %>
+    <% end %>
+
+    <%= bt_link_to_function nil, t("call_results.new.customize_email_template"), "javascript:set_email_template_editor_init_values_function_name('fill_editor_with_template_values()');$('#modal_for_email_template_edit').dialog('open');#{'reload_ck_editor();'}" %><br/>
+    <%= bt_link_to_function :cog, t("materials.views.index.material_repository"), "$('#materials_dialog').load('#{deal_maker_materials_path(:format => :js)}').dialog({title:'#{t('materials.views.index.select_or_upload')}', width:400, height:350, beforeClose: function(event, ui) { $('#materials_dialog').html('');return true; }})" %>
+
+    <p id="material_<%= current_user.id %>_name">
+      <% if @materials.empty? %>
+        <%= t("materials.views.index.no_file_selected")  %>
+      <% else %>
+        <% @materials.each do |material| %>
+              <%= check_box_tag "material_selected_#{material.id}", "1", params["material_selected_#{material.id}".to_sym].to_i == 1 %>
+              <%= material.filename %><br/>
+        <% end %>
+      <% end %>
+    </p>
   </div>
 </div>
 <hl/>
@@ -79,6 +108,20 @@
           $('#password_fields').show();
       }
   }
+
+    jQuery(document).ready(function() {
+        if ($('#materials_dialog').length == 0) {
+            $('body').append('<div id="materials_dialog"></div>');
+        }
+    });
+
+ function serialize_materials_array_onsubmit(){
+     $('#serialized_materials_array_field').val(serialize_material_repository_array());
+ }
+
+ <% @materials.each do |material| %>
+    <%= "select_file_from_repository('#{current_user.id}', #{material.id}, '#{material.asset_file_name}');" %>
+ <% end %>
 
   show_hide_password_fields();
 </script>

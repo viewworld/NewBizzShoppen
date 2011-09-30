@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
 
   self.abstract_class = true
   ajaxful_rater
+  include EmailTemplateEditor
 
   ROLES_PRIORITY = [:admin, :call_centre, :agent, :call_centre_agent, :purchase_manager, :category_buyer, :customer, :lead_buyer, :lead_user, :translator, :deal_maker]
   DEAL_VALUE_RANGE = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000]
@@ -107,7 +108,7 @@ class User < ActiveRecord::Base
 
   attr_protected :payout, :locked, :can_edit_payout_information, :paypal_email, :bank_swift_number, :bank_iban_number, :skip_email_verification
 
-  attr_accessor :agreement_read, :locked, :skip_email_verification, :deal_maker_role_enabled_flag, :send_invitation, :auto_generate_password
+  attr_accessor :agreement_read, :locked, :skip_email_verification, :deal_maker_role_enabled_flag, :send_invitation, :auto_generate_password, :email_materials
 
   before_save :handle_locking, :handle_team_buyers_flag, :refresh_certification_of_call_centre_agents, :set_euro_billing_rate, :handle_deal_maker_enabled
   before_create :set_rss_token, :set_role, :set_email_verification
@@ -612,15 +613,16 @@ class User < ActiveRecord::Base
 
   #for members and suppliers
   def send_invitation_email(new_password=nil)
-    uniq_id = has_role?(:purchase_manager) ? "member" : "supplier"
     unless new_password
       new_password = generate_token(12)
       self.password = new_password
       self.send_invitation = false
       self.save(:validate => false)
     end
-    TemplateMailer.delay.new(email, "#{uniq_id}_invitation".to_sym, with_role.address.present? ? with_role.address.country : Country.get_country_from_locale,
-                             {:user => self.with_role, :new_password => new_password})
+    template = EmailTemplate.find_by_uniq_id("#{has_role?(:purchase_manager) ? 'member' : 'supplier'}_invitation")
+    template = customize_email_template(template)
+    TemplateMailer.delay.new(email, template, with_role.address.present? ? with_role.address.country : Country.get_country_from_locale,
+                             {:user => self.with_role, :new_password => new_password}, assets_to_path_names(email_materials))
   end
 
   def country

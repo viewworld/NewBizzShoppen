@@ -297,7 +297,7 @@ function select_file_from_repository(field_id, material_id, material_file_name) 
 
     $('#material_' + field_id + '_name').html($.map(window.materials_repository_files,
             function (e) {
-                return "<input type=\"checkbox\"" + [' ' ,' checked=checked '][e[2]] + "value=\"1\" name=\"material_selected_12\" id=\"material_selected_" + material_id.toString() + "\" onclick=\"select_checkbox_for_file_from_repository(\'" + field_id + "\'," + e[0] + ")\">" + e[1]
+                return "<input type=\"checkbox\"" + [' ' ,' checked=checked '][e[2]] + "value=\"1\" name=\"material_selected_" + material_id.toString() + "\" id=\"material_selected_" + material_id.toString() + "\" onclick=\"select_checkbox_for_file_from_repository(\'" + field_id + "\'," + e[0] + ")\">" + e[1]
             }).join('<br />'));
     insert_material_ids_to_value(field_id);
 }

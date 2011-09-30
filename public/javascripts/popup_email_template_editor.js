@@ -5,7 +5,7 @@
       CKEDITOR.instances.body_editor.destroy();
       window.ckeditor_initialised = 0;
       init_ck_editor();
-      setTimeout("CKEDITOR.instances.body_editor.setData( $('#call_result_email_template_body').val())",200)
+      setTimeout("CKEDITOR.instances.body_editor.setData( $('#" + $('#modal_for_email_template_edit').dialog("option", "model_name_field_prefix") + "_email_template_body').val())",200)
       }
   }
 
@@ -38,10 +38,10 @@
   }
 
   function fill_email_template_editor_with_values(subject, from, bcc, cc, body, uniq_id){
-
+      model_field_prefix = $('#modal_for_email_template_edit').dialog("option", "model_name_field_prefix");
       $.each(['subject', 'from', 'bcc', 'cc', 'body'], function(index, value) {
-          if( jQuery.trim($('#call_result_email_template_' + value).val()) != ""){
-              eval(value + " = \'" + $('#call_result_email_template_' + value).val().split("\n").join("") + "\'");
+          if( jQuery.trim($('#' + model_field_prefix + '_email_template_' + value).val()) != ""){
+              eval(value + " = \'" + $('#' + model_field_prefix + '_email_template_' + value).val().split("\n").join("") + "\'");
           }
       });
       modal_box_id = "#modal_for_email_template_edit";
@@ -54,12 +54,13 @@
   }
 
   function copy_email_template_editor_values(){
+      model_field_prefix = $('#modal_for_email_template_edit').dialog("option", "model_name_field_prefix");
       modal_box_id = "#modal_for_email_template_edit";
-      $('#call_result_email_template_subject').val($(modal_box_id + ' #subject').val());
-      $('#call_result_email_template_from').val($(modal_box_id + ' #from').val());
-      $('#call_result_email_template_bcc').val($(modal_box_id + ' #bcc').val());
-      $('#call_result_email_template_cc').val($(modal_box_id + ' #cc').val());
-      $('#call_result_email_template_body').val(CKEDITOR.instances.body_editor.getData());
+      $('#' + model_field_prefix + '_email_template_subject').val($(modal_box_id + ' #subject').val());
+      $('#' + model_field_prefix + '_email_template_from').val($(modal_box_id + ' #from').val());
+      $('#' + model_field_prefix + '_email_template_bcc').val($(modal_box_id + ' #bcc').val());
+      $('#' + model_field_prefix + '_email_template_cc').val($(modal_box_id + ' #cc').val());
+      $('#' + model_field_prefix + '_email_template_body').val(CKEDITOR.instances.body_editor.getData());
   }
 
   function validate_email_field(field, modal_box_id, errors_count){
@@ -97,7 +98,7 @@
       return errors_count
   }
 
-  function setup_jquery_dialog(){
+  function setup_jquery_dialog(model_name_field_prefix){
       $('#modal_for_email_template_edit').dialog({
           autoOpen: false,
           width: 1120,
@@ -121,6 +122,7 @@
           }}
       });
       $('#modal_for_email_template_edit').dialog("option", "email_template_editor_init_values_function", "");
+      $('#modal_for_email_template_edit').dialog("option", "model_name_field_prefix", model_name_field_prefix);
   }
 
   function setup_jquery_vars_popup_dialog(){

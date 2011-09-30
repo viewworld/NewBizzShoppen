@@ -1,8 +1,7 @@
 class CallResult < ActiveRecord::Base
   attr_accessor :contact_email_address, :contact_first_name, :contact_last_name, :contact_address_line_1, :contact_address_line_2,
                 :contact_address_line_3, :contact_zip_code, :contact_country_id, :contact_phone_number,
-                :contact_company_name, :buying_category_ids, :email_template_subject, :email_template_from, :email_template_bcc,
-                :email_template_cc, :email_template_body, :result_id_changed, :user_big_buyer_purchase_limit, :user_big_buyer, :user_not_charge_vat,
+                :contact_company_name, :buying_category_ids, :result_id_changed, :user_big_buyer_purchase_limit, :user_big_buyer, :user_not_charge_vat,
                 :user_team_buyers, :user_deal_maker_role_enabled
 
   belongs_to :contact
@@ -13,6 +12,8 @@ class CallResult < ActiveRecord::Base
   has_one :send_material_result_value, :class_name => "ResultValue", :conditions => "result_values.field_type = '#{ResultField::MATERIAL}'"
   accepts_nested_attributes_for :result_values, :allow_destroy => true
   accepts_nested_attributes_for :contact
+
+  include EmailTemplateEditor
 
   validates_presence_of :result_id, :creator_id, :contact_id
   validates_presence_of :contact_email_address, :if => Proc.new{|cr| cr.result.send_material? or cr.result.upgrades_to_any_user?}
@@ -232,13 +233,6 @@ class CallResult < ActiveRecord::Base
     end
     deliver_email_for_upgraded_user(user, new_password)
   end
-
-  def customize_email_template(template)
-    [:subject, :from, :bcc, :cc, :body].each do |field|
-      template.send("#{field}=".to_sym, self.send("email_template_#{field}")) unless self.send("email_template_#{field}").blank?
-    end
-    template
-  end
   
   def deliver_material
     template = contact.campaign.send_material_email_template || EmailTemplate.global.where(:uniq_id => 'result_send_material').first
@@ -247,19 +241,18 @@ class CallResult < ActiveRecord::Base
     TemplateMailer.delay.new(contact_email_address, :blank_template, Country.get_country_from_locale,
                                        {:subject_content => template.subject, :body_content => template.body,
                                         :bcc_recipients => template.bcc, :cc_recipients => template.cc},
-                                        send_material_result_value.materials.map{ |material| Pathname.new(File.join([::Rails.root, 'public', material.url]))})
+                                        assets_to_path_names(send_material_result_value.materials))
   end
 
   def deliver_email_for_upgraded_user(user, password)
     role = user.role_to_campaign_template_name
     template = contact.campaign.send("upgrade_contact_to_#{role}_email_template".to_sym) || EmailTemplate.global.where(:uniq_id => "upgrade_contact_to_#{role}").first
     template = customize_email_template(template)
-    attachments_arr = send_material_result_value.materials.empty? ? [] : send_material_result_value.materials.map{ |material| Pathname.new(File.join([::Rails.root, 'public', material.url])) }
 
     TemplateMailer.delay.new(contact_email_address, :blank_template, Country.get_country_from_locale,
                                        {:subject_content => template.subject, :body_content => template.render({:user => user, :password => password}),
                                         :bcc_recipients => template.bcc, :cc_recipients => template.cc},
-                                        attachments_arr)
+                                        assets_to_path_names(send_material_result_value.materials))
   end
   
   def set_last_call_result_in_contact
