@@ -238,7 +238,7 @@ Scenario: Call centers is able to skip email confirmation when creating new agen
   Then I sign in as translator_call_centre@nbs.com with password secret
   Then I follow translated "layout.main_menu.call_centre.call_centre_agents"
   Then I follow translated "call_centre.call_centre_agents.new.view.button_create"
-  Then I should see "Skip email verification"
+  Then I should see "Don't verify email address"
   Then I fill in "user_call_centre_agent_first_name" with "Johnny"
   Then I fill in "user_call_centre_agent_last_name" with "Cage"
   Then I fill in "user_call_centre_agent_screen_name" with "Movie Star"

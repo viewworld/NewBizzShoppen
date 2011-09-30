@@ -79,28 +79,33 @@ function loadScripts() {
     /*--- clickable tr in leads browsing --- */
 
     if ($('table').has("a.default_action").length != 0) {
-//      old method
-//      $('td:not(.cl, .cr, .tda)', 'table tbody tr:not(.pagination, .main_actions)').filter(":not(:has(:checkbox, select, a))")
-        $('tr:has(.default_action) td,td h4').filter(":not(:has(:checkbox, select, a))")
+        //      old method
+        //      $('td:not(.cl, .cr, .tda)', 'table tbody tr:not(.pagination, .main_actions)').filter(":not(:has(:checkbox, select, a))")
+        $('tr:has(.default_action) td').filter(":not(:has(:checkbox, select)):not(.tda)")
                 .addClass("pointer")
-                .click(function() {
-            var link = $(this).parent().find('a.default_action');
-            var link_confirm_msg = $(this).parent().find('input.default_action_confirmation_msg');
-            if (link.attr("data-method") || link.attr("data-remote")) {
-                if (link_confirm_msg.val() == undefined) {
-                    link.trigger("click");
-                }
-                else {
-                    if (confirm(link_confirm_msg.val())) {
-                        link.trigger("click");
+                .click(function()
+                {
+                    var link = $(this).parent().find('a.default_action');
+                    var link_confirm_msg = $(this).parent().find('input.default_action_confirmation_msg');
+                    if (link.attr("data-method") || link.attr("data-remote"))
+                    {
+                        if (link_confirm_msg.val() == undefined)
+                        {
+                            link.trigger("click");
+                        }
+                        else
+                        {
+                            if (confirm(link_confirm_msg.val()))
+                            {
+                                link.trigger("click");
+                            }
+                        }
                     }
-                }
-            }
-            else {
-                window.location = link.attr("href");
-            }
-
-        });
+                    else
+                    {
+                        window.location = link.attr("href");
+                    }
+                }).find("a").bind("click", function(e) { e.stopPropagation();});
     }
 
 
@@ -329,7 +334,7 @@ function advanced_import_next_button(error_message) {
     }
 }
 
-function advanced_import_load_sortable_lists(){
+function advanced_import_load_sortable_lists() {
     $("#sortable_object_fields, #sortable_object_fields_removed").sortable({
         items: "li:not(.disabled)",
         connectWith: ".sortable_object_fields_class"
@@ -341,12 +346,12 @@ function advanced_import_load_sortable_lists(){
     }).disableSelection();
 }
 
-function show_all_pages(form_id, is_enabled){
+function show_all_pages(form_id, is_enabled) {
     $('#show_all').val(is_enabled);
     $(form_id).submit();
 }
 
-function submit_category_filter_form(form_id){
+function submit_category_filter_form(form_id) {
     $('input[type=checkbox][id^=category]').attr("checked", "");
     $('#category_' + $('#category_selector').val()).attr("checked", "checked");
     $(form_id).submit();
