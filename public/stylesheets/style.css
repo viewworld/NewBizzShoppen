@@ -1899,3 +1899,12 @@ li.disabled
 {
     display: inline;
 }
+
+
+/* --- new button --------------------- */
+
+.modal_new_contact_form_bt
+{
+    position: absolute !important;
+    left: 350px;
+}
