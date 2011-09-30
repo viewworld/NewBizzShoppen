@@ -439,6 +439,10 @@ en:
         from: "From"
         bcc: "Bcc"
         cc: "Cc"
+      new_contact: "New contact"
+      new_contact_title: "Create new contact"
+      create: "Create"
+      cancel: "Cancel"
   contacts:
     filter:
       title: Search
@@ -479,6 +483,8 @@ en:
     create:
       flash:
         successfully_imported: "%{count} contacts have been successfully imported."
+        contact_successfully_created: "Contact has been successfully created."
+        contact_not_be_created: "Contact could not be created."
     batch_assign:
       flash:
         no_contacts_selected: "You have selected no contact."
@@ -960,7 +966,7 @@ en:
           confirmation_update_message: "Are you sure?"
           title_stats: "Statistics recalculation"
           button_update_stats: "Update stats"
-          contacts_settings_title: "Contact settings"
+          contacts_settings_title: "Fairdeals contact settings"
       update:
         controller:
           successful_update_notice: "Settings were successfully updated."
@@ -2710,6 +2716,7 @@ en:
         header: "A company is interested in"
         description: "A company is interested in"
       incorrect_category: "Incorrect category!"
+      hidden_description_prefix_for_deal_code: "Deal code:"
     lead_template_field:
       field_type:
         type0: Text
@@ -3095,6 +3102,7 @@ en:
         created_leads: "Created leads"
         group_deal: "Group deal"
         deal_admin_email: "Deal admin email"
+        deal_code: "Deal code"
       contact:
         company_name: "Name"
         company_phone_number: "Company phone number"
@@ -3767,6 +3775,7 @@ en:
         company_website_label: "Company website"
         time_left_label: "Time left"
         created_leads_label: "Created leads"
+        deal_code_label: "Deal code"
     common:
       assets:
         view:
@@ -3791,6 +3800,16 @@ en:
       created_leads_count: "leads"
       missing_leads_count: "missing"
       leads_label: "leads"
+      leads_table:
+        header: "Header"
+        date: "Date"
+        phone_number: "Phone number"
+        requested_by: "Requested by"
+        actions:
+          view: "View"
+          edit: "Edit"
+        no_leads_created_yet_message: "No leads have been created yet."
+        title: "Leads created by deal"
     new:
       view:
         frame_header: "Get deal"

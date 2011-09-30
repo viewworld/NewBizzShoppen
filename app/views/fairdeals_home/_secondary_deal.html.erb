@@ -18,7 +18,7 @@
               <br/>
               <%= t("deals.index.view.save") %> <span class="b red"><%= featured.deal.saving %></span>
               <% end %>
-              <%= bt_link_to nil, t("deals.index.view.view_deal"), deal_path(featured.deal.slug) %>
+              <%= bt_link_to nil, t("deals.index.view.view_deal"), deal_path(featured.deal.slug), :class => 'default_action' %>
               <br />
               <%= group_deal_leads_created_and_missing(featured.deal) %>
               <clb/>

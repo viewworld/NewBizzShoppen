@@ -1,0 +1,12 @@
+<column-mc:>
+
+  <header back="true">
+    <param:content>
+      <%= t("materials.views.index.header", :campaign => @resource.full_name) %>
+    </param:content>
+  </header>
+
+  <%= render :partial => "shared/materials/form", :locals => { :material => @material, :materials => @materials, :is_default_enabled => false,
+                                                               :upload_url => :deal_maker_materials_path, :delete_url => :deal_maker_material_path } %>
+
+</column-mc:>

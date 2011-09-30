@@ -11,6 +11,7 @@
   <%= javascript_include_tag "jquery.lwtCountdown-1.0" %>
   <%= stylesheet_link_tag "countdown" %>
   <%= javascript_include_tag "global_template_editor" %>
+  <%= javascript_include_tag "global_field_validator" %>
 </head:>
 
 <column-mc:>
@@ -18,7 +19,7 @@
 
   <div class="column_2to3">
     <div class="element_description">
-      <h2><%= @deal.header %></h2>
+      <h2><%= @deal.header %> <%= ratings_for(@deal, :force_static => !current_user_has_role?(:purchase_manager) ) %></h2>
 
       <h3><%= t("deals.show.view.short_description_label") %></h3>
 

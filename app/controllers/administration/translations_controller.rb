@@ -23,8 +23,10 @@ class Administration::TranslationsController < Administration::AdministrationCon
   end
 
   def update
-    @translation = Translation.find_or_create_by_locale_and_key(params[:locale],params[:key])
-    @translation.update_attribute(:value, params[:value])
+    unless params[:value].blank?
+      @translation = Translation.find_or_create_by_locale_and_key(params[:locale],params[:key])
+      @translation.update_attribute(:value, params[:value])
+    end
     respond_to do |wants|
       wants.js {
         render :nothing => true

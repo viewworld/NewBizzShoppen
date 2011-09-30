@@ -1,7 +1,7 @@
 module DealCreateActions
 
   def new
-    @deal = Deal.new(:start_date => Date.today, :end_date => Date.today, :min_created_leads => Settings.default_group_deal_min_leads_created.to_i)
+    @deal = Deal.new(:start_date => Date.today, :end_date => Date.today, :min_created_leads => Settings.default_group_deal_min_leads_created.to_i, :use_company_name_as_category => true)
     respond_to do |content|
       content.html {}
       content.js {

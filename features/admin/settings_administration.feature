@@ -229,5 +229,6 @@ Scenario: I can set contact info for home page like Phone number, Email, Skype
   And I press translated "administration.settings.edit.view.button_update_settings"
 
 #7837
-@m20 @requested @is
+@m20 @requested @is @_done @_tested
 Scenario: Contact settings should be renamed to fairdeals contact settings
+  Then I should see "Fairdeals contact settings"
