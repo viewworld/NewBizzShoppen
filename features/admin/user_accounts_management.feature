@@ -735,5 +735,12 @@ Scenario: I can send welcome email to member / supplier
   And last email sent should have been sent to recipient "customer101@person.com"
 
 #7838
-@m20 @requested
+@m20 @requested @_tested @_done
 Scenario: When creating agent/call centre agent then city and country should be mandatory
+  When I go to administration users
+  Given I select "Agent" from "role"
+  And I press translated "administration.users.index.view.new_user"
+  And I select "" from "user_agent_address_attributes_country_id"
+  And I press translated "administration.users.edit.view.button_update_user"
+  And I should see "1" occurrences of css class "inline-errors" for tag "p" witihin "#user_agent_address_attributes_country_id_input"
+  And I should see "1" occurrences of css class "inline-errors" for tag "p" witihin "#user_agent_address_attributes_address_line_3_input"
