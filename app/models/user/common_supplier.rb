@@ -1,8 +1,8 @@
 module User::CommonSupplier
   def self.included(base)
     base.class_eval do
-      has_many :category_suppliers, :foreign_key => "user_id"
-      has_many :unique_categories, :through => :category_suppliers, :foreign_key => "user_id", :source => :category
+      has_many :category_customers, :foreign_key => "user_id"
+      has_many :unique_categories, :through => :category_customers, :foreign_key => "user_id", :source => :category
       after_save :handle_auto_buy
     end
     base.send(:include, InstanceMethods)

@@ -14,7 +14,7 @@
 
                 <clb/>
                 <%= check_box_tag "category_supplier_enabled", "1", false, :onclick => "show_hide_category_selection()" %>
-                <%= t("suppliers_advanced_import.show.view.category_suppliers_confirmation_checkbox") %><br/>
+                <%= t("suppliers_advanced_import.show.view.category_customers_confirmation_checkbox") %><br/>
                 <span id="category_supplier_select_container" style="display: none">
                   <%= t("suppliers_advanced_import.show.view.select_category") %>
                   <%= select_tag :object_id, options_for_select(nested_set_options(objects), :disabled => objects.select { |c| !c.can_publish_leads? }.map(&:id)), :include_blank => "No category" %>

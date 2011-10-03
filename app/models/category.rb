@@ -42,9 +42,9 @@ class Category < ActiveRecord::Base
     end
   end
 
-  has_many :category_suppliers
+  has_many :category_customers
   has_many :category_agents
-  has_many :suppliers, :through => :category_suppliers, :source => :user
+  has_many :suppliers, :through => :category_customers, :source => :user
   has_many :agents, :through => :category_agents, :source => :user
   has_many :categories_users
   has_many :buying_users, :through => :categories_users, :source => :user
@@ -65,7 +65,7 @@ class Category < ActiveRecord::Base
   scope :with_all_supplier_unique, where("is_customer_unique = ?", true)
   scope :without_supplier_unique, where("is_customer_unique = ?", false)
   scope :with_all_agent_unique, where("is_agent_unique = ?", true)
-  scope :with_supplier_unique, lambda { |supplier| where("(is_customer_unique = ? and category_suppliers.user_id is NULL) or (is_customer_unique = ? and category_suppliers.user_id = ?)", false, true, supplier.id).joins("LEFT JOIN category_customers ON categories.id=category_suppliers.category_id") }
+  scope :with_supplier_unique, lambda { |supplier| where("(is_customer_unique = ? and category_customers.user_id is NULL) or (is_customer_unique = ? and category_customers.user_id = ?)", false, true, supplier.id).joins("LEFT JOIN category_customers ON categories.id=category_customers.category_id") }
   scope :with_agent_unique, lambda { |agent| select("DISTINCT(categories.id), categories.*").where("(is_agent_unique = ? and category_agents.user_id is NULL) or (is_agent_unique = ? and category_agents.user_id = ?)#{' or (is_agent_unique = \'t\' and category_agents.user_id = ' + agent.parent_id.to_s + ')' if agent.has_role?(:call_centre_agent)}", false, true, agent.id).joins("LEFT JOIN category_agents ON categories.id=category_agents.category_id") }
   scope :with_buying, lambda { |user| joins(:buying_users).where(:users => {:id => user.id}) }
   scope :with_call_centre_unique, lambda { |call_centre| where("(is_agent_unique = ? and category_agents.user_id is NULL) or (is_agent_unique = ? and category_agents.user_id IN (?))", false, true, [call_centre]+call_centre.subaccounts.map(&:id)).joins("LEFT JOIN category_agents ON categories.id=category_agents.category_id") }
@@ -73,7 +73,7 @@ class Category < ActiveRecord::Base
     LEFT JOIN categories_users ON categories.id = categories_users.category_id
     LEFT JOIN users ON users.id = categories_users.user_id
     LEFT JOIN category_customers ON categories.id = category_customers.category_id
-  ").where("(categories.is_customer_unique = 't' and category_suppliers.user_id = :user_id) OR (categories_users.user_id = :user_id)", {:user_id => user.id}) }
+  ").where("(categories.is_customer_unique = 't' and category_customers.user_id = :user_id) OR (categories_users.user_id = :user_id)", {:user_id => user.id}) }
   scope :with_comment_threads, select("DISTINCT(categories.id), categories.*").joins("INNER JOIN leads ON leads.category_id=categories.id INNER JOIN comments ON comments.commentable_id=leads.id")
   scope :without_auto_buy, where(:auto_buy => false)
   before_destroy :check_if_category_is_empty

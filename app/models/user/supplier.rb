@@ -23,8 +23,8 @@ class ::User::Supplier < ::User
 
   validates_presence_of :company_name
 
-  has_many :category_suppliers, :foreign_key => "user_id"
-  has_many :unique_categories, :through => :category_suppliers, :source => :category
+  has_many :category_customers, :foreign_key => "user_id"
+  has_many :unique_categories, :through => :category_customers, :source => :category
 
   before_save :handle_interests
   after_create :set_interests
