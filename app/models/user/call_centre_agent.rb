@@ -9,7 +9,7 @@ class ::User::CallCentreAgent < ::User
   has_many :contacts, :foreign_key => :agent_id, :order => "leads.position ASC"
   has_many :deals, :as => :creator
 
-  before_validation :skip_address_validation
+  validate :check_address
 
   # TODO wtf?
   def can_publish_leads?
@@ -22,13 +22,5 @@ class ::User::CallCentreAgent < ::User
   
   def has_max_contacts_in_campaign?(campaign)
     contacts.for_campaign(campaign).with_pending_status(false).count >= campaign.max_contact_number rescue false
-  end  
-
-  private
-
-  def skip_address_validation
-    if address
-      address.disabled_validations = true
-    end
   end
 end
