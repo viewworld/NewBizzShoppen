@@ -253,7 +253,7 @@ Nbs::Application.routes.draw do
   resources :deal_categories, :only => [:index]
 
   match 'categories/:slag' => "leads#index"
-  match 'categories/deals/:slag' => "deals#index"
+  match 'categories/deals/:slag' => "deals#index", :as => :deals_index
 
   resource :contacts_advanced_import, :only => [:create, :destroy, :show] do
     collection do

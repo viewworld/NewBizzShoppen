@@ -22,14 +22,15 @@ Scenario: I can see 3 latest buyer news excerpts
   And I should see "ThirdNews"
   And I should not see "FirstNews"
 
-@ao @_done @_tested
+# bestsellers replaced by latest deals on home page
+@ao @_done @_tested @_deprecated
 Scenario: I can see 10 top bestsellers
-  Given lead AwesomeLead exists within category Test
-  And AwesomeLead is a best seller
-  And there are "11" existing leads
-  And I follow translated "home.show.view.buyer"
-  Then I should see "3" items on a list within "#best_sellers"
-  And I should see "AwesomeLead" first on a list within "#best_sellers"
+#  Given lead AwesomeLead exists within category Test
+#  And AwesomeLead is a best seller
+#  And there are "11" existing leads
+#  And I follow translated "home.show.view.buyer"
+#  Then I should see "3" items on a list within "#best_sellers"
+#  And I should see "AwesomeLead" first on a list within "#best_sellers"
 
 @ao @_done @_tested
 Scenario: I can see 3 latest leads
@@ -191,5 +192,12 @@ Scenario: Buyer can see link to Interests on buyer home page if he don't have se
   Then I should see translated "customer.interests.edit.view.title"
 
 #7457
-@m20 @requested @is
+@m20 @requested @is @_done @_tested
 Scenario: I should see Latest deals instead of bestsellers box when I am not logged in on the buyer home
+  Given there are no deals
+  Given there are "4" existing deals
+  And a deal named "AwesomeDeal" exists within category "Dilownia"
+  And I am on the buyer home page
+  Then I should see translated "buyer_home.show.view.header_latest_deals"
+  And I should see "3" items on a list within "#latest_deals"
+  And I should see "AwesomeDeal" first on a list within "#latest_deals"
