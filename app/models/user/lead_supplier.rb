@@ -1,4 +1,4 @@
-class ::User::LeadBuyer < ::User
+class ::User::LeadSupplier < ::User
   ROLES = [:lead_buyer, :lead_user]
 
   include User::Subaccounts
