@@ -3,10 +3,12 @@
     <fieldset class="inputs labels_ta_r">
       <ol class="align_inputs">
         <%= form.input :name %>
-        <li class="select">
-          <label></label>
-          <%= form.select :parent_id, nested_set_options(@category_type.constantize, @category), {:include_blank => t("administration.categories.form.no_parent_category")} %>
-        </li>
+        <% if @category_type == "LeadCategory" or @category.class == LeadCategory %>
+            <li class="select">
+              <label></label>
+              <%= form.select :parent_id, nested_set_options(@category_type.constantize, @category), {:include_blank => t("administration.categories.form.no_parent_category")} %>
+            </li>
+        <% end %>
         <%= form.input :description, :as => :text, :input_html => {:style => "width:350px;height:150px"} %>
         <%= form.input :additional_information, :as => :text, :input_html => {:style => "width:350px;height:150px"} %>
 
