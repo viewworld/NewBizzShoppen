@@ -184,6 +184,12 @@ module ApplicationHelper
     end
   end
 
+  def link_to_edit_deal(deal)
+    if current_user and (current_user == deal.creator or current_user.has_role?(:admin))
+      link_to(t("deals.listing.edit_label"), send("edit_#{current_user.has_role?(:admin) ? "administration" : current_user.role.to_s.pluralize}_deal_path".to_sym, deal.id), :class => "text_action")
+    end
+  end
+
   def blank_state_message(msg = t("common.nothing_to_display"))
     content_tag(:div, :class => "frm_tiny") do
       content_tag(:div, :class => "pdd_10") do

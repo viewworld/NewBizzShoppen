@@ -199,3 +199,7 @@ Then /^lead generated from deal in category "([^"]*)" by "([^"]*)" (is|is not) b
   lead = Lead.where(:category_id => category.id, :requested_by => user.id).first
   assert lead.lead_purchases.any? == (is_bought == "is")
 end
+
+Given /^there are "([^"]*)" existing deals$/ do |num|
+  num.to_i.times{Deal.make!}
+end

@@ -2183,6 +2183,7 @@ en:
         purchase_manager_link: "click here if you are a procurement manager"
         header_best_sellers: "Best sellers"
         header_latest_leads: "Latest leads"
+        header_latest_deals: "Latest deals"
         header_latest_leads_in_my_categories: "Latest leads in my categories"
         header_my_leads: "My leads"
         header_news: "News"
@@ -3733,6 +3734,7 @@ en:
       price_saving: "Save"
       discounted_price: "Discounted price"
       created_leads: "Created leads"
+      edit_label: "Edit"
     show:
       view:
         header: "Deal details"

@@ -66,15 +66,15 @@
         </param:content>
       </frm>
     </div>
-    <div class="column_1to3 fltl" style="padding: 0 15px" id="best_sellers">
-      <frm title="#{t('buyer_home.show.view.header_best_sellers')}" c="no_marg">
+    <div class="column_1to3 fltl" style="padding: 0 15px" id="latest_deals">
+      <frm title="#{t('buyer_home.show.view.header_latest_deals')}" c="no_marg">
         <param:header>
-          <%= bt_link_to nil, t("buyer_home.show.view.complete_list_link"), leads_path(:search => {:bestsellers => true}), :class => "fltr" %>
+          <%= bt_link_to nil, t("buyer_home.show.view.complete_list_link"), deals_path(:search => {:latest => true}), :class => "fltr" %>
         </param:header>
         <param:content>
           <ul class="solid_list">
-            <% if @best_sellers.any? %>
-                <%= render :partial => 'lead', :collection => @best_sellers, :as => :lead %>
+            <% if @latest_deals.any? %>
+                <%= render :partial => 'deal', :collection => @latest_deals, :as => :deal %>
             <% else %>
                 <%= render :partial => 'shared/blank_data_li' %>
             <% end %>
