@@ -403,7 +403,7 @@ Scenario: When editing call center agent I can navigate to list of leads created
 @requested @m8b @_done @_tested
 Scenario: I should have 'Don't verify email address' for every user I create
   When I go to administration users
-  Given I select "Buyer" from "role"
+  Given I select "Supplier" from "role"
   And I press translated "administration.users.index.view.new_user"
   Then I fill in "user_customer_first_name" with "Alex"
   And I fill in "user_customer_last_name" with "Nova"
@@ -424,7 +424,7 @@ Scenario: I should have 'Don't verify email address' for every user I create
 @added @m8b @_done @_tested
 Scenario: I can login without confirmation when 'Don't verify email address' is checked
   When I go to administration users
-  Given I select "Buyer" from "role"
+  Given I select "Supplier" from "role"
   And I press translated "administration.users.index.view.new_user"
   Then I fill in "user_customer_first_name" with "Alex"
   And I fill in "user_customer_last_name" with "Nova"
@@ -450,7 +450,7 @@ Scenario: I can login without confirmation when 'Don't verify email address' is 
 Scenario: I can login without confirmation when 'Don't verify email address' is checked
   Given setting for "email_verification_for_sales_managers" is set to "1"
   When I go to administration users
-  Given I select "Buyer" from "role"
+  Given I select "Supplier" from "role"
   And I press translated "administration.users.index.view.new_user"
   Then I fill in "user_customer_first_name" with "Alex"
   And I fill in "user_customer_last_name" with "Nova"
@@ -564,7 +564,7 @@ Scenario: When I change the certification of call centre then its agents certifi
 @m10 @requested @_done @_tested
 Scenario: I can see a role name of newly created user like "New buyer account”
   When I go to administration users
-  Given I select "Buyer" from "role"
+  Given I select "Supplier" from "role"
   And I press translated "administration.users.index.view.new_user"
   Then I should see "New Buyer account"
 
@@ -604,7 +604,7 @@ Scenario: When editing a user I should see the role of the user in header
   Then I fill in "search_with_keyword" with "customer101@person.com"
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/users\/\d+\/edit/"
-  Then I should see "Editing Buyer:"
+  Then I should see "Editing Supplier:"
 
 @_done @_tested @m11 @is
 Scenario: As Admin I can see Name (default Company Name, if empty then First Name + Last Name) in user listing

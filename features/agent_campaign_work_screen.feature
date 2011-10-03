@@ -235,7 +235,7 @@ Feature: Agent campaign - calling session
       And I select "Send material" from "selected_result_id"
       And I follow translated "call_results.edit.button_new_result"
       And I should see "sample.jpg"
-      And I uncheck "material_selected_12"
+      And I uncheck "material_selected_1"
 
     @requested @m13 @after_m12_presentation @tgn @$_call_centre_agent @_done @_tested
     Scenario: I can upload and add new files to the set for the result being created

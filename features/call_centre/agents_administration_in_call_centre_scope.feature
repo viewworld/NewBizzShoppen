@@ -245,6 +245,9 @@ Scenario: Call centers is able to skip email confirmation when creating new agen
   Then I fill in "user_call_centre_agent_password" with "secret"
   Then I fill in "user_call_centre_agent_password_confirmation" with "secret"
   Then I fill in "user_call_centre_agent_email" with "johnny_cage@mk.com"
+  Then I fill in "user_call_centre_agent_address_attributes_address_line_1" with "Fairadress"
+  Then I fill in "user_call_centre_agent_address_attributes_address_line_3" with "Fairtown"
+  Then I fill in "user_call_centre_agent_address_attributes_zip_code" with "23-039"
   Then I check "user_call_centre_agent_skip_email_verification"
   Then I press "Create"
   Then I go to the logout page
