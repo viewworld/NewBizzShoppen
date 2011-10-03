@@ -188,12 +188,12 @@ class CallResult < ActiveRecord::Base
     process_for_call_log_result
   end
 
-  def process_for_upgrade_to_category_buyer
+  def process_for_upgrade_to_category_supplier
     upgrade_to_user("category_buyer")
     process_for_final_result
   end
 
-  def process_for_upgrade_to_buyer
+  def process_for_upgrade_to_supplier
     upgrade_to_user("customer")
     process_for_final_result
   end
