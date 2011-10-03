@@ -87,7 +87,7 @@
   </div>
 
   <div id="modal_new_contact_form_div">
-    <% @new_contact = Contact.new %>
+    <% @lead = @new_contact = Contact.new %>
     <%= semantic_form_for @new_contact, :url => url_for(:controller => "/callers/agent_work_screen/contacts", :action => :create, :campaign_id => @campaign.id), :html => { :method => :post, :id => "new_contact_form" }, :remote => true do |form| %>
         <frm title="">
           <param:content>
