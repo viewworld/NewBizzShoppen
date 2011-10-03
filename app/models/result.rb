@@ -45,11 +45,11 @@ class Result < ActiveRecord::Base
   end
 
   def upgrades_to_category_buyer?
-    name == "Upgrade to category buyer"
+    name == "Upgrade to category supplier"
   end
 
   def upgrades_to_buyer?
-    name == "Upgrade to buyer"
+    name == "Upgrade to supplier"
   end
 
   def upgrades_to_member?

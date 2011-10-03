@@ -40,4 +40,27 @@ class IntegrationTasks < Thor
       end
     end
   end
+
+  desc "m20", ""
+
+  def m20
+    Translation.where("locale = 'en' and (lower(value) like ? or lower(value) like ? or lower(value) like ?)", "%buyer%", "%sales manager%", "customer").each do |t|
+
+    if t.value.downcase.include?("category buyer")
+      value = t.value.gsub(/(category buyer)/i) { |s| "#{ s.to_s[0..0] =~ /[A-Z]/ ? "Category supplier" : "category supplier" }" }
+    elsif t.value.downcase.include?("sales manager")
+      value = t.value.gsub(/(sales manager)/i) { |s| "#{ s.to_s[0..0] =~ /[A-Z]/ ? "Supplier" : "supplier" }" }
+    elsif t.value.downcase.include?("customer")
+      value = t.value.gsub(/(customer)/i) { |s| "#{ s.to_s[0..0] =~ /[A-Z]/ ? "Supplier" : "supplier" }" }
+    else
+      value = t.value.gsub(/(buyer)/i) { |s| "#{ s.to_s[0..0] =~ /[A-Z]/ ? "Supplier" : "supplier" }" }
+    end
+
+      t.update_attribute(:value, value)
+    end
+
+    Result.where("name like ?", "%buyer%").each do |result|
+      result.update_attribute(:name, result.name.gsub(/(buyer)/i) { |s| "#{ s.to_s[0..0] =~ /[A-Z]/ ? "Supplier" : "supplier" }" })
+    end
+  end
 end

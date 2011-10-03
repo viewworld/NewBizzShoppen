@@ -324,7 +324,7 @@ Feature: Agent campaign - calling session
     @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
     Scenario: I can upgrade contact to category buyer
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
-      And I select "Upgrade to category buyer" from "selected_result_id"
+      And I select "Upgrade to category supplier" from "selected_result_id"
       And I follow translated "call_results.edit.button_new_result"
       And I fill in "call_result_contact_company_name" with "Custom company"
       And I fill in "call_result_contact_first_name" with "John"
@@ -338,7 +338,7 @@ Feature: Agent campaign - calling session
     @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
     Scenario: Category buyer upgraded from lead should be subscribed to campaign's category by default
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
-      And I select "Upgrade to category buyer" from "selected_result_id"
+      And I select "Upgrade to category supplier" from "selected_result_id"
       And I follow translated "call_results.edit.button_new_result"
       And I fill in "call_result_contact_first_name" with "John"
       And I fill in "call_result_contact_last_name" with "Dohn"
@@ -352,7 +352,7 @@ Feature: Agent campaign - calling session
     @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
     Scenario: When upgrading contact to category buyer, agent can select more subscription categories for created category buyer
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
-      And I select "Upgrade to category buyer" from "selected_result_id"
+      And I select "Upgrade to category supplier" from "selected_result_id"
       And I follow translated "call_results.edit.button_new_result"
       And I fill in "call_result_contact_first_name" with "John"
       And I fill in "call_result_contact_last_name" with "Dohn"
@@ -369,7 +369,7 @@ Feature: Agent campaign - calling session
     @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
     Scenario: Contact should receive customized emails with material and signup link
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
-      And I select "Upgrade to category buyer" from "selected_result_id"
+      And I select "Upgrade to category supplier" from "selected_result_id"
       And I follow translated "call_results.edit.button_new_result"
       And I fill in "call_result_contact_first_name" with "John"
       And I fill in "call_result_contact_last_name" with "Dohn"
@@ -389,7 +389,7 @@ Feature: Agent campaign - calling session
     @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
     Scenario: Agent can assign materials when upgrading contact to category buyer
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
-      And I select "Upgrade to category buyer" from "selected_result_id"
+      And I select "Upgrade to category supplier" from "selected_result_id"
       And I follow translated "call_results.edit.button_new_result"
       And I fill in "call_result_contact_first_name" with "John"
       And I fill in "call_result_contact_last_name" with "Dohn"
@@ -410,7 +410,7 @@ Feature: Agent campaign - calling session
     @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
     Scenario: Contact can sign up by clicking on link in email and entering password or using Facebook/Google/Linkedin
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
-      And I select "Upgrade to category buyer" from "selected_result_id"
+      And I select "Upgrade to category supplier" from "selected_result_id"
       And I follow translated "call_results.edit.button_new_result"
       And I fill in "call_result_contact_first_name" with "John"
       And I fill in "call_result_contact_last_name" with "Dohn"
@@ -428,7 +428,7 @@ Feature: Agent campaign - calling session
     @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
     Scenario: After sign up contact can confirm his account information
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
-      And I select "Upgrade to category buyer" from "selected_result_id"
+      And I select "Upgrade to category supplier" from "selected_result_id"
       And I follow translated "call_results.edit.button_new_result"
       And I fill in "call_result_contact_first_name" with "John"
       And I fill in "call_result_contact_last_name" with "Dohn"
@@ -451,7 +451,7 @@ Feature: Agent campaign - calling session
     @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent  @_tested @_done @ff5
     Scenario: After confirming his account information, contact should be redirected to his account home page
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
-      And I select "Upgrade to category buyer" from "selected_result_id"
+      And I select "Upgrade to category supplier" from "selected_result_id"
       And I follow translated "call_results.edit.button_new_result"
       And I fill in "call_result_contact_first_name" with "John"
       And I fill in "call_result_contact_last_name" with "Dohn"
@@ -471,7 +471,7 @@ Feature: Agent campaign - calling session
     @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
     Scenario: After confirming his account information, contact should receive welcome mail link link to his home page and login information
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
-      And I select "Upgrade to category buyer" from "selected_result_id"
+      And I select "Upgrade to category supplier" from "selected_result_id"
       And I follow translated "call_results.edit.button_new_result"
       And I fill in "call_result_contact_first_name" with "John"
       And I fill in "call_result_contact_last_name" with "Dohn"
@@ -500,7 +500,7 @@ Feature: Agent campaign - calling session
     @m19 @requested @upgrade_to_category_buyer @$_call_centre_agent @_done @_tested @tgn
     Scenario: I should be able to set for category buyer following properties: Newsletter, Allow invoicing, Do not charge vat, Team buyer and Deal maker enabled
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
-      And I select "Upgrade to buyer" from "selected_result_id"
+      And I select "Upgrade to supplier" from "selected_result_id"
       And I follow translated "call_results.edit.button_new_result"
       And I fill in "call_result_contact_company_name" with "Custom company"
       And I fill in "call_result_contact_first_name" with "John"
@@ -559,7 +559,7 @@ Feature: Agent campaign - calling session
     And I follow translated "agent_work_screen.index.show_call_log_for_current_contact"
     When I follow action "Edit" within row containing "Call back"
     And I wait 2 second
-    And I select "Upgrade to category buyer" from "call_result_result_id"
+    And I select "Upgrade to category supplier" from "call_result_result_id"
     And I wait 2 second
     And I press translated "call_results.edit.save_button"
     And I am not sign in
@@ -569,7 +569,7 @@ Feature: Agent campaign - calling session
     @m19 @requested @upgrade_to_buyer @$_call_centre_agent @_done @_tested @tgn
     Scenario: I can upgrade contact to buyer
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
-      And I select "Upgrade to buyer" from "selected_result_id"
+      And I select "Upgrade to supplier" from "selected_result_id"
       And I follow translated "call_results.edit.button_new_result"
       And I fill in "call_result_contact_company_name" with "Custom company"
       And I fill in "call_result_contact_first_name" with "John"
