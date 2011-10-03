@@ -1,15 +1,15 @@
-class CategoryCustomer < ActiveRecord::Base
+class CategorySupplier < ActiveRecord::Base
   belongs_to :user
   belongs_to :category
 
-  after_create :assign_category_to_customer_interests
+  after_create :assign_category_to_supplier_interests
 
-  def customer
+  def supplier
     user.send(:casted_class).find(user_id)
   end
 
-  def assign_category_to_customer_interests
-    customer.categories << category unless customer.categories.include?(category)
-    customer.save
+  def assign_category_to_supplier_interests
+    supplier.categories << category unless supplier.categories.include?(category)
+    supplier.save
   end
 end

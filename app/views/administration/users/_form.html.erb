@@ -2,12 +2,12 @@
   <div class="pdd_10 no_pdd_t">
     <fieldset class="inputs labels_ta_r labels_200">
       <ol class="align_inputs">
-        <%= form.input :company_name if @user.has_any_role?(:customer, :category_buyer, :call_centre, :purchase_manager, :call_centre_agent, :agent) or ["customer", "category_buyer", "call_centre", "purchase_manager", "call_centre_agent", "agent"].include?((params[:role])) %>
+        <%= form.input :company_name if @user.has_any_role?(:supplier, :category_supplier, :call_centre, :purchase_manager, :call_centre_agent, :agent) or ["supplier", "category_supplier", "call_centre", "purchase_manager", "call_centre_agent", "agent"].include?((params[:role])) %>
         <% unless @user.has_role?(:call_centre) or ["call_centre"].include?((params[:role])) %>
             <%= form.input :first_name %>
             <%= form.input :last_name %>
         <% end %>
-        <% if @user.has_any_role?(:customer, :purchase_manager) or ["customer", "purchase_manager"].include?((params[:role])) %>
+        <% if @user.has_any_role?(:supplier, :purchase_manager) or ["supplier", "purchase_manager"].include?((params[:role])) %>
             <%= form.input :title %>
         <% end %>
         <% if defined? form.object.address and form.object.parent.blank? %>
@@ -21,7 +21,7 @@
             <% end %>
             <%= form.input :time_zone, :wrapper_html => { :class => "select"}, :input_html => {:style => "width: 240px"} %>
         <% end %>
-        <% if ['lead_buyer', 'customer'].include?(params[:role]) or @user.has_any_role?(:lead_buyer, :customer) %>
+        <% if ['lead_supplier', 'supplier'].include?(params[:role]) or @user.has_any_role?(:lead_supplier, :supplier) %>
             <%= form.input :vat_number %>
         <% end %>
         <% if ['agent', 'call_centre'].include?(params[:role]) or @user.has_any_role?(:agent, :call_centre) %>
@@ -40,7 +40,7 @@
                     <%= address_form.input :region_id, :as => :select, :collection => regions_collection_for(@user.bank_address.country) %>
                 <% end %>
             <% end %>
-        <% elsif !form.object.new_record? and (['lead_buyer', 'customer', 'category_buyer'].include?(params[:role]) or @user.has_any_role?(:lead_buyer, :customer, :category_buyer)) %>
+        <% elsif !form.object.new_record? and (['lead_supplier', 'supplier', 'category_supplier'].include?(params[:role]) or @user.has_any_role?(:lead_supplier, :supplier, :category_supplier)) %>
             <%= form.input :bank_account_id, :as => :select, :collection => BankAccount.all %>
         <% end %>
       </ol>
@@ -68,21 +68,21 @@
         <% if ['agent', 'call_centre'].include?(params[:role]) or @user.has_any_role?(:agent, :call_centre) %>
             <%= form.input :certification_level, :as => :select, :collection => User::CERTIFICATION_LEVELS.map { |c| [t("models.lead.certification.lvl#{c}"), c] }, :selected => @user.read_attribute(:certification_level) %>
         <% end %>
-        <% if ['lead_buyer', 'customer'].include?(params[:role]) or @user.has_any_role?(:lead_buyer, :customer) %>
+        <% if ['lead_supplier', 'supplier'].include?(params[:role]) or @user.has_any_role?(:lead_supplier, :supplier) %>
             <%= form.input :big_buyer, :as => :boolean %>
         <% end %>
-        <% if @user.vat_number.present? and (['lead_buyer', 'customer'].include?(params[:role]) or @user.has_any_role?(:lead_buyer, :customer)) %>
+        <% if @user.vat_number.present? and (['lead_supplier', 'supplier'].include?(params[:role]) or @user.has_any_role?(:lead_supplier, :supplier)) %>
             <%= form.input :not_charge_vat, :as => :boolean %>
         <% end %>
 
-        <%= form.input :team_buyers, :as => :boolean if @user.has_role?(:customer) or params[:role] == "customer" %>
+        <%= form.input :team_buyers, :as => :boolean if @user.has_role?(:supplier) or params[:role] == "supplier" %>
         <% if @user.new_record? %>
             <%= form.input :skip_email_verification, :as => :boolean %>
         <% end %>
-        <% if ['customer', 'agent', 'call_centre_agent', 'call_centre'].include?(params[:role]) or @user.has_any_role?(:customer, :agent, :call_centre_agent, :call_centre) %>
+        <% if ['supplier', 'agent', 'call_centre_agent', 'call_centre'].include?(params[:role]) or @user.has_any_role?(:supplier, :agent, :call_centre_agent, :call_centre) %>
             <%= form.input :deal_maker_role_enabled, :as => :boolean %>
         <% end %>
-        <% if ['category_buyer'].include?(params[:role]) or @user.has_any_role?(:category_buyer) %>
+        <% if ['category_supplier'].include?(params[:role]) or @user.has_any_role?(:category_supplier) %>
             <%= form.input :show_deals, :as => :boolean %>
         <% end %>
         <% if ['agent', 'call_centre_agent', 'call_centre'].include?(params[:role]) or @user.has_any_role?(:call_centre_agent, :call_centre, :agent) %>
@@ -112,9 +112,9 @@
 
 <clb/>
 
-<% if ['category_buyer'].include?(params[:role]) or @user.has_roles?(:category_buyer, :customer) %>
+<% if ['category_supplier'].include?(params[:role]) or @user.has_roles?(:category_supplier, :supplier) %>
     <hl/>
-    <div id="category_buyer_categories">
+    <div id="category_supplier_categories">
       <div class="pdd_10">
         <div class="grid_210 fltl">&nbsp;</div>
         <div class="grid_240 fltl">
@@ -123,39 +123,39 @@
         </div>
 
         <div class="grid_160 fltl" style="margin-right: 10px;margin-top:10px;">
-          <p class="ta_c pdd_5 no_pdd_lr"><%= bt_link_to nil, t("administration.categories.form.move_users_right"), "javascript:move_selected('all_categories','user_category_buyer_buying_category_ids_')", :id => "move_right" %></p>
+          <p class="ta_c pdd_5 no_pdd_lr"><%= bt_link_to nil, t("administration.categories.form.move_users_right"), "javascript:move_selected('all_categories','user_category_supplier_buying_category_ids_')", :id => "move_right" %></p>
 
-          <p class="ta_c"><%= bt_link_to nil, t("administration.categories.form.move_users_left"), "javascript:move_selected('user_category_buyer_buying_category_ids_','all_categories')", :id => "move_left" %></p>
+          <p class="ta_c"><%= bt_link_to nil, t("administration.categories.form.move_users_left"), "javascript:move_selected('user_category_supplier_buying_category_ids_','all_categories')", :id => "move_left" %></p>
         </div>
 
         <div class="grid_240 fltl">
           <h3><%= t("administration.users.edit.view.selected_categories") %></h3>
-          <%= select_tag "user_category_buyer[buying_category_ids][]", options_for_select(@user.buying_categories.map { |c| [c.name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+          <%= select_tag "user_category_supplier[buying_category_ids][]", options_for_select(@user.buying_categories.map { |c| [c.name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
         </div>
         <clb/>
       </div>
     </div>    
 <% end %>
 
-<% if (!['category_buyer'].include?(params[:role]) and !@user.has_role?(:category_buyer)) and (['customer'].include?(params[:role]) or @user.has_roles?(:customer)) %>
+<% if (!['category_supplier'].include?(params[:role]) and !@user.has_role?(:category_supplier)) and (['supplier'].include?(params[:role]) or @user.has_roles?(:supplier)) %>
     <hl/>
     <div id="unique_categories">
       <div class="pdd_10">
         <div class="grid_210 fltl">&nbsp;</div>
         <div class="grid_240 fltl">
           <h3><%= t("administration.users.edit.view.available_unique_categories") %></h3>
-          <%= select_tag "all_categories", options_for_select((LeadCategory.with_all_customer_unique.without_auto_buy-@user.unique_categories).map { |c| [c.name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+          <%= select_tag "all_categories", options_for_select((LeadCategory.with_all_supplier_unique.without_auto_buy-@user.unique_categories).map { |c| [c.name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
         </div>
 
         <div class="grid_160 fltl" style="margin-right: 10px;margin-top:10px;">
-          <p class="ta_c pdd_5 no_pdd_lr"><%= bt_link_to nil, t("administration.categories.form.move_users_right"), "javascript:move_selected('all_categories','user_customer_unique_category_ids_')", :id => "move_right" %></p>
+          <p class="ta_c pdd_5 no_pdd_lr"><%= bt_link_to nil, t("administration.categories.form.move_users_right"), "javascript:move_selected('all_categories','user_supplier_unique_category_ids_')", :id => "move_right" %></p>
 
-          <p class="ta_c"><%= bt_link_to nil, t("administration.categories.form.move_users_left"), "javascript:move_selected('user_customer_unique_category_ids_','all_categories')", :id => "move_left" %></p>
+          <p class="ta_c"><%= bt_link_to nil, t("administration.categories.form.move_users_left"), "javascript:move_selected('user_supplier_unique_category_ids_','all_categories')", :id => "move_left" %></p>
         </div>
 
         <div class="grid_240 fltl">
           <h3><%= t("administration.users.edit.view.selected_unique_categories") %></h3>
-          <%= select_tag "user_customer[unique_category_ids][]", options_for_select(@user.unique_categories.map { |c| [c.name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+          <%= select_tag "user_supplier[unique_category_ids][]", options_for_select(@user.unique_categories.map { |c| [c.name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
         </div>
         <clb/>
       </div>
@@ -171,14 +171,14 @@
         </div>
 
         <div class="grid_160 fltl" style="margin-right: 10px;margin-top:10px;">
-          <p class="ta_c pdd_5 no_pdd_lr"><%= bt_link_to nil, t("administration.categories.form.move_users_right"), "javascript:move_selected('all_categories_for_interests','user_customer_category_ids_')", :id => "move_right" %></p>
+          <p class="ta_c pdd_5 no_pdd_lr"><%= bt_link_to nil, t("administration.categories.form.move_users_right"), "javascript:move_selected('all_categories_for_interests','user_supplier_category_ids_')", :id => "move_right" %></p>
 
-          <p class="ta_c"><%= bt_link_to nil, t("administration.categories.form.move_users_left"), "javascript:move_selected('user_customer_category_ids_','all_categories_for_interests')", :id => "move_left" %></p>
+          <p class="ta_c"><%= bt_link_to nil, t("administration.categories.form.move_users_left"), "javascript:move_selected('user_supplier_category_ids_','all_categories_for_interests')", :id => "move_left" %></p>
         </div>
 
         <div class="grid_240 fltl">
           <h3><%= t("administration.users.edit.view.selected_interests_categories") %></h3>
-          <%= select_tag "user_customer[category_ids][]", options_for_select((@user.categories-@user.unique_categories).map { |c| [c.name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
+          <%= select_tag "user_supplier[category_ids][]", options_for_select((@user.categories-@user.unique_categories).map { |c| [c.name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
         </div>
         <clb/>
       </div>
@@ -212,9 +212,9 @@
 
 <script type="text/javascript">
     function add_unique_to_interests() {
-        $("#user_customer_unique_category_ids_ option").each(function()
+        $("#user_supplier_unique_category_ids_ option").each(function()
         {
-            $("#user_customer_category_ids_").
+            $("#user_supplier_category_ids_").
                     append($("<option></option>").
                     attr("value", $(this).val()).
                     text($(this).text()));

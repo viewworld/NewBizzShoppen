@@ -2,7 +2,7 @@
 
   <%= javascript_include_tag "jquery.field.min.js", "jquery.calculation.min.js", "invoice_calculations.js", "invoice_navigation.js" %>
 
-  <header back="true"><%= t("administration.invoices.edit.view.header", :name => @invoice.customer_name) %></header>
+  <header back="true"><%= t("administration.invoices.edit.view.header", :name => @invoice.supplier_name) %></header>
 
   <%= semantic_form_for [:administration, :invoicing, @invoice] do |form| %>
       <frm title="#{t('administration.invoices.edit.view.save_changes')}">
@@ -28,7 +28,7 @@
 
             <div class="grid_500 fltl">
 
-              <fieldset class="inputs labels_ta_r labels_220" id="customer_information">
+              <fieldset class="inputs labels_ta_r labels_220" id="supplier_information">
                 <ol class="align_inputs">
                   <li class="header">
                     <h3><%= t("administration.invoices.edit.view.form.seller_information") %></h3>
@@ -60,18 +60,18 @@
               <fieldset class="inputs labels_ta_r labels_220" id="seller_information">
                 <ol class="align_inputs">
                   <li class="header">
-                    <h3><%= t("administration.invoices.edit.view.form.customer_information") %></h3>
+                    <h3><%= t("administration.invoices.edit.view.form.supplier_information") %></h3>
                   </li>
-                  <%= form.input :customer_company_name %>
-                  <%= form.input :customer_name %>
-                  <%= form.input :customer_vat_no %>
-                  <%= form.fields_for :customer_address do |address_form| %>
+                  <%= form.input :supplier_company_name %>
+                  <%= form.input :supplier_name %>
+                  <%= form.input :supplier_vat_no %>
+                  <%= form.fields_for :supplier_address do |address_form| %>
                       <%= address_form.input :address_line_1 %>
                       <%= address_form.input :address_line_2 %>
                       <%= address_form.input :address_line_3 %>
                       <%= address_form.input :zip_code %>
-                      <%= address_form.input :country_id, :as => :select, :collection => Country.all, :include_blank => false, :input_html => { :onchange => "refresh_regions_list('invoice_customer_address_attributes');" } %>
-                      <%= address_form.input :region_id, :as => :select, :collection => regions_collection_for(@invoice.customer_address.country) %>
+                      <%= address_form.input :country_id, :as => :select, :collection => Country.all, :include_blank => false, :input_html => { :onchange => "refresh_regions_list('invoice_supplier_address_attributes');" } %>
+                      <%= address_form.input :region_id, :as => :select, :collection => regions_collection_for(@invoice.supplier_address.country) %>
                   <% end %>
                   <%= form.input :ean_number %>
                 </ol>
@@ -110,7 +110,7 @@
                 <%= form.input :currency_id,
                                :include_blank => false, :collection => Currency.all %>
                 <%= form.input :charge_vat %>
-                <%= form.input :vat_text_in_customer_country, :as => :string %>
+                <%= form.input :vat_text_in_supplier_country, :as => :string %>
               </ol>
             </fieldset>
 

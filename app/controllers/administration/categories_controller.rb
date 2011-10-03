@@ -10,11 +10,11 @@ class Administration::CategoriesController < Administration::AdministrationContr
 
   def create
     @category = @category_type.constantize.new(params[:category])
-    @category.customers = []
+    @category.suppliers = []
     @category.agents = []
     respond_to do |format|
       if @category.save
-        @category.customer_ids = params[:category][:customer_ids]
+        @category.supplier_ids = params[:category][:supplier_ids]
         @category.agent_ids = params[:category][:agent_ids]
         @category.save
         @category.move_leads_to_subcategory

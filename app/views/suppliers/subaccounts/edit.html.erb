@@ -1,0 +1,18 @@
+<column-mc:>
+  <header back="true"><%= t("supplier.subaccounts.edit.view.title", :name => @user.full_name) %> (<%= @user.role.to_s.humanize %>)</header>
+  <%= semantic_form_for [:suppliers, @user], :url => suppliers_subaccount_path(@user), :method => :put do |form| %>
+      <frm>
+        <param:content>
+          <%= render :partial => 'form', :locals => {:form => form} %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("supplier.subaccounts.edit.view.button_update") %>
+          </ibt>
+          <ibt c="bt_grey fltri">
+            <%= button_to_function t("administration.settings.edit.view.button_cancel"), "history.go(-1)" %>
+          </ibt>          
+        </param:actions>
+      </frm>
+  <% end %>
+</column-mc:>

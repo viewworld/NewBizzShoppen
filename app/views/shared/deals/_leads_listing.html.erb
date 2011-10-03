@@ -37,8 +37,8 @@
             <td class="tda ta_r">
               <% if current_user.admin? %>
                 <%= bt_link_to nil, t("deals.common.leads_table.actions.edit"), edit_administration_lead_path(lead), :class => "default_action" %>
-              <% elsif current_user.buyer? and lead.bought_by_user?(current_user) %>
-                <%= bt_link_to nil, t("deals.common.leads_table.actions.view"), buyers_lead_purchase_path(lead.lead_purchase_for(current_user)), :class => "default_action" %>
+              <% elsif current_user.supplier? and lead.bought_by_user?(current_user) %>
+                <%= bt_link_to nil, t("deals.common.leads_table.actions.view"), suppliers_lead_purchase_path(lead.lead_purchase_for(current_user)), :class => "default_action" %>
               <% else %>
                   <%= bt_link_to nil, t("deals.common.leads_table.actions.view"), lead_path(lead), :class => "default_action" %>
               <% end %>

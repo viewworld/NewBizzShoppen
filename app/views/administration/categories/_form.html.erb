@@ -20,9 +20,9 @@
             <% end %>
             <%= form.input :buyout_enabled %>
             <%= form.input :no_prices_for_team_members %>
-            <%= form.input :is_customer_unique, :onclick => "show_hide_users_selection('customer')" %>
+            <%= form.input :is_customer_unique, :onclick => "show_hide_users_selection('supplier')" %>
 
-            <%= render :partial => "users_selection", :locals => {:users_type => "customers", :form => form} %>
+            <%= render :partial => "users_selection", :locals => {:users_type => "suppliers", :form => form} %>
 
             <%= form.input :is_agent_unique, :onclick => "show_hide_users_selection('agent')" %>
 
@@ -95,11 +95,11 @@
 
     function select_options_onsubmit() {
         if ($('#category_is_customer_unique:checked').val() == "1") {
-            select_all_options("customers")
+            select_all_options("suppliers")
         }
         else {
-            clear_select("customers", "selected");
-            select_all_options("customers")
+            clear_select("suppliers", "selected");
+            select_all_options("suppliers")
         }
 
         if ($('#category_is_agent_unique:checked').val() == "1") {

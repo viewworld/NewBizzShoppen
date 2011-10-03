@@ -54,18 +54,18 @@
     <%= link_to image_tag("fairdeals/logo.png"), root_path, :class => "logo" %>
   </div>
 
-  <%= render('/layouts/cart') if current_user && current_user.has_role?(:lead_buyer) && !current_user.big_buyer %>
+  <%= render('/layouts/cart') if current_user && current_user.has_role?(:lead_supplier) && !current_user.big_buyer %>
 
   <div id="user_menu">
     <%= render main_menu %>
 
     <% if session[:show_cart_hint] == "1" %>
         <div class="hidden">
-          <div id="cart_hint_div"><%= t("layout.cart.lead_added_to_cart_hint", :link => link_to(t("layout.cart.here_link"), buyers_cart_path)).html_safe %> <%= link_to_function t("layout.cart.close_hint"), "$.post('#{buyers_cart_path(:show_cart_hint => 0)}', {'_method':'put'})" %></div>
+          <div id="cart_hint_div"><%= t("layout.cart.lead_added_to_cart_hint", :link => link_to(t("layout.cart.here_link"), suppliers_cart_path)).html_safe %> <%= link_to_function t("layout.cart.close_hint"), "$.post('#{suppliers_cart_path(:show_cart_hint => 0)}', {'_method':'put'})" %></div>
         </div>
     <% end %>
 
-    <% if current_user && current_user.has_role?(:lead_buyer) && !current_user.big_buyer %>
+    <% if current_user && current_user.has_role?(:lead_supplier) && !current_user.big_buyer %>
         <div id="cart">
           <ul class="nav">
             <li>
@@ -159,7 +159,7 @@
     });
 
     jQuery("#cart").qtip("show").bind("mouseover", function() {
-        $.post('<%= buyers_cart_path(:show_cart_hint => 0) %>', {'_method':'put'});
+        $.post('<%= suppliers_cart_path(:show_cart_hint => 0) %>', {'_method':'put'});
         $(this).qtip("destroy");
     });
     <% end %>

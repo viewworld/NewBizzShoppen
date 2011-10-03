@@ -1,19 +1,19 @@
 class PaymentNotification < ActiveRecord::Base
   serialize :params
 
-  belongs_to :buyer, :class_name => "User::LeadBuyer"
+  belongs_to :supplier, :class_name => "User::LeadSupplier"
   has_one :payment_transaction
 
   before_create :check_if_duplicated
   after_create :generate_invoice
 
-  validates_presence_of :buyer
+  validates_presence_of :supplier
 
   private
 
   def check_if_duplicated
     if status == "Completed"
-      unless PaymentNotification.first(:conditions => { :transaction_id => transaction_id, :buyer_id => buyer_id, :status => "Completed" }).nil?
+      unless PaymentNotification.first(:conditions => { :transaction_id => transaction_id, :supplier_id => supplier_id, :status => "Completed" }).nil?
         self.status = "Duplicated"
       end
     end
@@ -21,15 +21,15 @@ class PaymentNotification < ActiveRecord::Base
 
   def generate_invoice
     if status == "Completed" and params[:receiver_email] == APP_CONFIG[:paypal_email] and params[:secret] == APP_CONFIG[:paypal_secret] and
-       BigDecimal(params[:mc_gross].to_s) == BigDecimal(buyer.cart.total.to_s)
-      invoice = Invoice.create(:user_id => buyer.parent.present? ? buyer.parent_id : buyer.id, :paid_at => self.created_at, :seller => Seller.default, :currency => buyer.cart.currency)
-      PaypalTransaction.create(:invoice => invoice, :payment_notification => self, :amount => buyer.cart.total, :paid_at => self.created_at)
-      buyer.lead_purchases.in_cart.each do |lead_purchase|
+       BigDecimal(params[:mc_gross].to_s) == BigDecimal(supplier.cart.total.to_s)
+      invoice = Invoice.create(:user_id => supplier.parent.present? ? supplier.parent_id : supplier.id, :paid_at => self.created_at, :seller => Seller.default, :currency => supplier.cart.currency)
+      PaypalTransaction.create(:invoice => invoice, :payment_notification => self, :amount => supplier.cart.total, :paid_at => self.created_at)
+      supplier.lead_purchases.in_cart.each do |lead_purchase|
         InvoiceLine.create(:invoice => invoice,
                            :payable => lead_purchase,
                            :name => lead_purchase.lead.header,
                            :netto_price => lead_purchase.lead.price,
-                           :vat_rate => buyer.country_vat_rate,
+                           :vat_rate => supplier.country_vat_rate,
                            :quantity => lead_purchase.quantity)
       end
     end

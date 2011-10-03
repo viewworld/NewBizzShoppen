@@ -34,7 +34,7 @@
         <%= form.input :agreement_read, :as => :hidden %>
 
 
-        <% if @user.has_role?(:customer) or params[:user_type] == "supplier" %>
+        <% if @user.has_role?(:supplier) or params[:user_type] == "supplier" %>
             <%= form.input :big_buyer, :as => :boolean %>
         <% end %>
 

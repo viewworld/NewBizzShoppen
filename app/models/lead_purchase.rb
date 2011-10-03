@@ -8,7 +8,7 @@ class LeadPurchase < LeadPurchaseBase
   end
 
   belongs_to :assignee, :class_name => "User::LeadUser", :foreign_key => "assignee_id"
-  belongs_to :purchaser, :class_name => "User::LeadBuyer", :foreign_key => "purchased_by"
+  belongs_to :purchaser, :class_name => "User::LeadSupplier", :foreign_key => "purchased_by"
   belongs_to :lead, :counter_cache => :lead_purchases_counter
   has_one :invoice_line, :as => :payable
 
@@ -65,7 +65,7 @@ class LeadPurchase < LeadPurchaseBase
 
   def deliver_lead_rated_as_unsatisfactory_email
     if rating_level_changed? and !rating_level.nil? and rating_level >= RATING_MISSING_CONTACT_INFO
-      self.lead.update_attributes(:notify_buyers_after_update => false, :has_unsatisfactory_rating => true)
+      self.lead.update_attributes(:notify_suppliers_after_update => false, :has_unsatisfactory_rating => true)
       deliver_email_template("lead_rated_as_unsatisfactory", lead.creator.email)
     end
   end
@@ -163,7 +163,7 @@ class LeadPurchase < LeadPurchaseBase
   end
 
   def url
-    "https://#{Nbs::Application.config.action_mailer.default_url_options[:host]}/buyers/lead_purchases/#{id}"
+    "https://#{Nbs::Application.config.action_mailer.default_url_options[:host]}/suppliers/lead_purchases/#{id}"
   end
 
 end

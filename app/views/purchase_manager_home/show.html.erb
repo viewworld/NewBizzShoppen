@@ -9,7 +9,7 @@
       <ul class="header_actions">
         <li class="last">
           <% if user_signed_in? %>
-              <%= bt_link_to :key, t("buyer_home.show.view.sign_out"), '/logout' %>
+              <%= bt_link_to :key, t("supplier_home.show.view.sign_out"), '/logout' %>
           <% else %>
               <%= bt_link_to :user, t("purchase_manager_home.show.view.create_new_purchase_manager_account"), new_purchase_manager_account_path %>
           <% end %>

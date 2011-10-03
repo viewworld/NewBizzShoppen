@@ -1,7 +1,7 @@
 <fieldset class="inputs_vertical">
   <ol class="no_pdd">
     <li class="string">
-      <%= f.label :with_keyword, t("customer.lead_requests.index.view.search.keyword_label") %>
+      <%= f.label :with_keyword, t("supplier.lead_requests.index.view.search.keyword_label") %>
       <%= f.text_field :with_keyword %>
     </li>
   </ol>
@@ -44,7 +44,7 @@
     </li>
   </ol>
 
-  <% if user_signed_in? and current_user and current_user.has_role?(:category_buyer) %>
+  <% if user_signed_in? and current_user and current_user.has_role?(:category_supplier) %>
       <ol class="no_pdd">
         <li class="select" style="float:right">
           <%= label "category", t("leads.index.search.category_label") %>

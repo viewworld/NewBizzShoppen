@@ -54,7 +54,7 @@ module User::CommonAgent
     end
 
     def can_reply_to_comment?(comment)
-      blocked_conversations.where("lead_id = ? and buyer_id = ?", comment.commentable_id, comment.root.user_id).first.nil?
+      blocked_conversations.where("lead_id = ? and supplier_id = ?", comment.commentable_id, comment.root.user_id).first.nil?
     end
 
     def all_contacts_with_results

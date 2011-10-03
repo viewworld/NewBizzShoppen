@@ -3,7 +3,7 @@ class LeadsController < ApplicationController
   actions :index, :show
   set_tab "browse_leads"
 
-  before_filter :check_category_buyer, :only => :index
+  before_filter :check_category_supplier, :only => :index
   before_filter :check_search, :only => :index
   before_filter :check_token, :only => [:edit, :update]
 
@@ -75,10 +75,10 @@ class LeadsController < ApplicationController
     if cu_or_user_from_rss_token
       params[:search][:with_ids_not_in] = cu_or_user_from_rss_token.all_requested_lead_ids + cu_or_user_from_rss_token.all_purchased_lead_ids
       params[:search][:within_accessible_categories] = cu_or_user_from_rss_token.accessible_categories_ids if cu_or_user_from_rss_token.has_accessible_categories?
-      if !cu_or_user_from_rss_token.has_accessible_categories? and cu_or_user_from_rss_token.has_role?(:customer)
-        params[:search][:with_customer_unique_categories] = cu_or_user_from_rss_token.id
+      if !cu_or_user_from_rss_token.has_accessible_categories? and cu_or_user_from_rss_token.has_role?(:supplier)
+        params[:search][:with_supplier_unique_categories] = cu_or_user_from_rss_token.id
       else
-        params[:search][:with_customer_unique_categories] = nil
+        params[:search][:with_supplier_unique_categories] = nil
       end
       if cu_or_user_from_rss_token.has_any_role?(:agent, :call_centre_agent)
         params[:search][:with_agent_unique_categories] = cu_or_user_from_rss_token.id
@@ -98,7 +98,7 @@ class LeadsController < ApplicationController
     if cu_or_user_from_rss_token and cu_or_user_from_rss_token.has_role?(:admin)
       @categories_scope = LeadCategory.scoped
     elsif cu_or_user_from_rss_token
-      @categories_scope = cu_or_user_from_rss_token.has_accessible_categories? ? LeadCategory.within_accessible(cu_or_user_from_rss_token).without_locked_and_not_published : cu_or_user_from_rss_token.has_role?(:customer) ? LeadCategory.without_locked_and_not_published.with_customer_unique(cu_or_user_from_rss_token).scoped : LeadCategory.without_locked_and_not_published.with_agent_unique(cu_or_user_from_rss_token).scoped
+      @categories_scope = cu_or_user_from_rss_token.has_accessible_categories? ? LeadCategory.within_accessible(cu_or_user_from_rss_token).without_locked_and_not_published : cu_or_user_from_rss_token.has_role?(:supplier) ? LeadCategory.without_locked_and_not_published.with_supplier_unique(cu_or_user_from_rss_token).scoped : LeadCategory.without_locked_and_not_published.with_agent_unique(cu_or_user_from_rss_token).scoped
     else
       @categories_scope = LeadCategory.without_locked_and_not_published.without_unique.scoped
     end
@@ -128,8 +128,8 @@ class LeadsController < ApplicationController
     redirect_to categories_path unless params[:search]
   end
 
-  def check_category_buyer
-    if current_user and current_user.has_role?(:category_buyer)
+  def check_category_supplier
+    if current_user and current_user.has_role?(:category_supplier)
       redirect_to category_home_page_path(current_user.parent_buying_categories.first.cached_slug)
     end
   end

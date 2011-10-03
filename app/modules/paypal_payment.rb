@@ -30,10 +30,10 @@ module PaypalPayment
                         "quantity_#{index}"    => lp.quantity
                     })
     end
-    unless @buyer.not_charge_vat?
+    unless @supplier.not_charge_vat?
       values.merge!({
                         "amount_#{index+1}"      => total_vat_value,
-                        "item_name_#{index+1}"   => I18n.t("cart.vat_line_title", :percentage => "#{@buyer.country_vat_rate}%"),
+                        "item_name_#{index+1}"   => I18n.t("cart.vat_line_title", :percentage => "#{@supplier.country_vat_rate}%"),
                         "item_number_#{index+1}" => "",
                         "quantity_#{index+1}"    => 1
                     })

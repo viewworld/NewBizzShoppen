@@ -1,4 +1,4 @@
-class Administration::CustomerInterestsController < Administration::AdministrationController
+class Administration::SupplierInterestsController < Administration::AdministrationController
 
   before_filter :fetch_user
 
@@ -7,9 +7,9 @@ class Administration::CustomerInterestsController < Administration::Administrati
   end
 
   def update
-    if @user.update_attributes(params[:user_customer])
+    if @user.update_attributes(params[:user_supplier])
       @user.check_and_correct_interests!
-      flash[:notice] = I18n.t("flash.customer_interests.update.notice")
+      flash[:notice] = I18n.t("flash.supplier_interests.update.notice")
       redirect_to edit_administration_user_path(@user)
     else
       render :action => "edit"
@@ -20,7 +20,7 @@ class Administration::CustomerInterestsController < Administration::Administrati
 
   def fetch_user
     @user = User.find(params[:id]).with_role
-    unless @user.has_role?(:customer)
+    unless @user.has_role?(:supplier)
       redirect_to edit_administration_user_path(@user)
     end
   end

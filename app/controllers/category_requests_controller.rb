@@ -21,7 +21,7 @@ class CategoryRequestsController < ApplicationController
                                         :reply_to => @email_template_preview.email_from})
 
         if current_user
-          redirect_to current_user.has_any_role?(:agent, :call_centre_agent, :purchase_manager) ? agent_home_path : buyer_home_path
+          redirect_to current_user.has_any_role?(:agent, :call_centre_agent, :purchase_manager) ? agent_home_path : supplier_home_path
         else
           redirect_to root_path
         end
@@ -33,7 +33,7 @@ class CategoryRequestsController < ApplicationController
   protected
 
   def check_user_role
-    if (current_user and !current_user.has_any_role?(:agent, :call_centre_agent, :purchase_manager, :customer, :lead_buyer))
+    if (current_user and !current_user.has_any_role?(:agent, :call_centre_agent, :purchase_manager, :supplier, :lead_supplier))
       redirect_to root_path
     end
   end

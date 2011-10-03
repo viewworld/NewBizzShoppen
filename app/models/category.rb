@@ -12,7 +12,7 @@ class Category < ActiveRecord::Base
           :conditions => "asset_type = 'Asset::CategoryImage'",
           :dependent => :destroy
   has_many :category_interests
-  has_many :customer_subscribers, :through => :category_interests, :source => :user
+  has_many :supplier_subscribers, :through => :category_interests, :source => :user
   has_many :news, :as => :resource, :class_name => "Article::News::CategoryHome", :dependent => :destroy
   has_one :blurb, :as => :resource, :class_name => "Article::Cms::InterfaceContentText", :dependent => :destroy
   has_one :email_template, :as => :resource
@@ -42,9 +42,9 @@ class Category < ActiveRecord::Base
     end
   end
 
-  has_many :category_customers
+  has_many :category_suppliers
   has_many :category_agents
-  has_many :customers, :through => :category_customers, :source => :user
+  has_many :suppliers, :through => :category_suppliers, :source => :user
   has_many :agents, :through => :category_agents, :source => :user
   has_many :categories_users
   has_many :buying_users, :through => :categories_users, :source => :user
@@ -53,7 +53,7 @@ class Category < ActiveRecord::Base
   has_many :countries, :through => :category_countries, :source => :country
 
   scope :without_locked_and_not_published, where("is_locked = ? or (is_locked = ? and published_leads_count > 0)", false, true)
-  scope :within_accessible, lambda { |customer| where("categories.id IN (?)", customer.accessible_categories_ids) }
+  scope :within_accessible, lambda { |supplier| where("categories.id IN (?)", supplier.accessible_categories_ids) }
   scope :without_locked, where("is_locked = ?", false).order("name")
   scope :with_leads, where("total_leads_count > 0").order("name")
   scope :with_lead_request_owner, lambda { |owner| select("DISTINCT(name), categories.*").where("lead_purchases.requested_by IS NOT NULL and lead_purchases.owner_id = ?", owner.id).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
@@ -62,18 +62,18 @@ class Category < ActiveRecord::Base
   scope :with_lead_purchase_assignee, lambda { |assignee| select("DISTINCT(name), categories.*").where("lead_purchases.assignee_id = ? and accessible_from IS NOT NULL", assignee.id).joins("RIGHT JOIN leads on categories.id=leads.category_id").joins("RIGHT JOIN lead_purchases on lead_purchases.lead_id=leads.id") }
   scope :with_lead_templates_created_by, lambda { |creator| select("DISTINCT(categories.name), categories.*").where("lead_templates.creator_id = ?", creator.id).joins(:lead_templates) }
   scope :without_unique, where("is_customer_unique = ? and is_agent_unique = ?", false, false)
-  scope :with_all_customer_unique, where("is_customer_unique = ?", true)
-  scope :without_customer_unique, where("is_customer_unique = ?", false)
+  scope :with_all_supplier_unique, where("is_customer_unique = ?", true)
+  scope :without_supplier_unique, where("is_customer_unique = ?", false)
   scope :with_all_agent_unique, where("is_agent_unique = ?", true)
-  scope :with_customer_unique, lambda { |customer| where("(is_customer_unique = ? and category_customers.user_id is NULL) or (is_customer_unique = ? and category_customers.user_id = ?)", false, true, customer.id).joins("LEFT JOIN category_customers ON categories.id=category_customers.category_id") }
+  scope :with_supplier_unique, lambda { |supplier| where("(is_customer_unique = ? and category_suppliers.user_id is NULL) or (is_customer_unique = ? and category_suppliers.user_id = ?)", false, true, supplier.id).joins("LEFT JOIN category_customers ON categories.id=category_suppliers.category_id") }
   scope :with_agent_unique, lambda { |agent| select("DISTINCT(categories.id), categories.*").where("(is_agent_unique = ? and category_agents.user_id is NULL) or (is_agent_unique = ? and category_agents.user_id = ?)#{' or (is_agent_unique = \'t\' and category_agents.user_id = ' + agent.parent_id.to_s + ')' if agent.has_role?(:call_centre_agent)}", false, true, agent.id).joins("LEFT JOIN category_agents ON categories.id=category_agents.category_id") }
   scope :with_buying, lambda { |user| joins(:buying_users).where(:users => {:id => user.id}) }
   scope :with_call_centre_unique, lambda { |call_centre| where("(is_agent_unique = ? and category_agents.user_id is NULL) or (is_agent_unique = ? and category_agents.user_id IN (?))", false, true, [call_centre]+call_centre.subaccounts.map(&:id)).joins("LEFT JOIN category_agents ON categories.id=category_agents.category_id") }
-  scope :category_buyer_accessible_categories, lambda { |user| joins("
+  scope :category_supplier_accessible_categories, lambda { |user| joins("
     LEFT JOIN categories_users ON categories.id = categories_users.category_id
     LEFT JOIN users ON users.id = categories_users.user_id
     LEFT JOIN category_customers ON categories.id = category_customers.category_id
-  ").where("(categories.is_customer_unique = 't' and category_customers.user_id = :user_id) OR (categories_users.user_id = :user_id)", {:user_id => user.id}) }
+  ").where("(categories.is_customer_unique = 't' and category_suppliers.user_id = :user_id) OR (categories_users.user_id = :user_id)", {:user_id => user.id}) }
   scope :with_comment_threads, select("DISTINCT(categories.id), categories.*").joins("INNER JOIN leads ON leads.category_id=categories.id INNER JOIN comments ON comments.commentable_id=leads.id")
   scope :without_auto_buy, where(:auto_buy => false)
   before_destroy :check_if_category_is_empty
@@ -144,17 +144,17 @@ class Category < ActiveRecord::Base
   end
 
   def handle_auto_buy
-    if auto_buy_changed? and auto_buy? and !customers.first.nil?
-      user_category_interest = customers.first.with_role.category_interests.where(:category_id => self.id).first
-      if user_category_interest and customers.first.deal_category_id != self.id
+    if auto_buy_changed? and auto_buy? and !suppliers.first.nil?
+      user_category_interest = suppliers.first.with_role.category_interests.where(:category_id => self.id).first
+      if user_category_interest and suppliers.first.deal_category_id != self.id
         user_category_interest.destroy
-      elsif !user_category_interest and customers.first.deal_category_id == self.id
-        user = customers.first.with_role
+      elsif !user_category_interest and suppliers.first.deal_category_id == self.id
+        user = suppliers.first.with_role
         user.categories << self
         user.save
       end
-      Lead.without_bought_and_requested_by(customers.first).published_only.without_inactive.where(:category_id => self.id).each do |lead|
-        customers.first.cart.add_lead(lead)
+      Lead.without_bought_and_requested_by(suppliers.first).published_only.without_inactive.where(:category_id => self.id).each do |lead|
+        suppliers.first.cart.add_lead(lead)
       end
     end
   end
@@ -165,7 +165,7 @@ class Category < ActiveRecord::Base
   def move_leads_to_subcategory
     if parent and parent.root? and parent.descendants.size == 1 and parent.leads.present?
       parent.leads.each do |lead|
-        lead.update_attributes(:notify_buyers_after_update => false, :category => self)
+        lead.update_attributes(:notify_suppliers_after_update => false, :category => self)
       end
     end
   end
@@ -179,7 +179,7 @@ class Category < ActiveRecord::Base
   end
 
   def price_visible_for?(user)
-    if user and user.has_any_role?(:lead_buyer, :lead_user) and user.parent.present? and (no_prices_for_team_members? or user.hide_lead_prices?)
+    if user and user.has_any_role?(:lead_supplier, :lead_user) and user.parent.present? and (no_prices_for_team_members? or user.hide_lead_prices?)
       return false
     end
     true
@@ -196,13 +196,13 @@ class Category < ActiveRecord::Base
   def leads_count_for_user(user)
     leads_scope = leads.including_subcategories.published_only.without_inactive.scoped
     if user
-      if user.buyer? and (user.all_requested_lead_ids.any? or user.all_purchased_lead_ids.any?)
+      if user.supplier? and (user.all_requested_lead_ids.any? or user.all_purchased_lead_ids.any?)
         leads_scope = leads_scope.with_ids_not_in(user.all_requested_lead_ids + user.all_purchased_lead_ids)
       end
       if user.has_accessible_categories?
         leads_scope = leads_scope.within_accessible_categories(user.accessible_categories_ids)
-      elsif user.has_role?(:customer)
-        leads_scope = leads_scope.with_customer_unique_categories(user.id)
+      elsif user.has_role?(:supplier)
+        leads_scope = leads_scope.with_supplier_unique_categories(user.id)
       elsif user.agent?
         leads_scope = leads_scope.with_agent_unique_categories(user.id)
       end
@@ -224,10 +224,10 @@ class Category < ActiveRecord::Base
     root_categories = if user
                         if user.admin?
                           roots
-                        elsif user.has_role?(:category_buyer)
+                        elsif user.has_role?(:category_supplier)
                           user.parent_accessible_categories_without_auto_buy
                         else
-                          user.has_accessible_categories? ? roots.within_accessible(user) : user.has_role?(:customer) ? roots.with_customer_unique(user) : roots.with_agent_unique(user)
+                          user.has_accessible_categories? ? roots.within_accessible(user) : user.has_role?(:supplier) ? roots.with_supplier_unique(user) : roots.with_agent_unique(user)
                         end
                       else
                         roots.without_unique
@@ -242,7 +242,7 @@ class Category < ActiveRecord::Base
       if user.admin?
         children_categories = children
       else
-        children_categories = user.has_accessible_categories? ? children.within_accessible(user) : user.has_role?(:customer) ? children.with_customer_unique(user) : children.with_agent_unique(user)
+        children_categories = user.has_accessible_categories? ? children.within_accessible(user) : user.has_role?(:supplier) ? children.with_supplier_unique(user) : children.with_agent_unique(user)
       end
     else
       children_categories = children.without_unique

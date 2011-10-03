@@ -136,7 +136,7 @@ module ApplicationHelper
   end
 
   def main_menu_link_to_role_specific_home_page
-    if user_signed_in? and current_user.has_role?(:category_buyer) and @home_category
+    if user_signed_in? and current_user.has_role?(:category_supplier) and @home_category
       main_menu_link_to(t("layout.main_menu.shared.home"), category_home_page_path(@home_category.cached_slug), :tab => "home")
     elsif user_signed_in? and current_user.has_role?(:purchase_manager) and session[:site] == "fairdeals"
       main_menu_link_to(t("layout.main_menu.shared.home"), root_path, :tab => "home")
@@ -149,12 +149,12 @@ module ApplicationHelper
     if !user_signed_in?
       root_path
     else
-      if @home_category and current_user.has_role?(:category_buyer)
+      if @home_category and current_user.has_role?(:category_supplier)
         category_home_page_path(@home_category.cached_slug)
       elsif current_user.has_any_role?(:call_centre, :call_centre_agent)
         agent_home_path
-      elsif current_user.has_any_role?(:customer, :lead_buyer, :lead_user, :agent, :purchase_manager)
-        (current_user.has_any_role?(:customer, :lead_buyer, :lead_user)) ? buyer_home_path : self.send("#{current_user.role.to_s}_home_path")
+      elsif current_user.has_any_role?(:supplier, :lead_supplier, :lead_user, :agent, :purchase_manager)
+        (current_user.has_any_role?(:supplier, :lead_supplier, :lead_user)) ? supplier_home_path : self.send("#{current_user.role.to_s}_home_path")
       else
         root_path
       end
@@ -167,7 +167,7 @@ module ApplicationHelper
   end
 
   def link_to_view_deal_templates(category)
-    if user_signed_in? and current_user.can_create_lead_templates? and !current_user.has_role?(:admin) and (current_user.has_role?(:customer) and current_user.deal_category_id == category.id)
+    if user_signed_in? and current_user.can_create_lead_templates? and !current_user.has_role?(:admin) and (current_user.has_role?(:supplier) and current_user.deal_category_id == category.id)
       link_to_view_templates(category)
     end
   end

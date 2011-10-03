@@ -107,16 +107,16 @@ class Comment < ActiveRecord::Base
     (_user.has_role?(:admin) or (_user.has_role?(:call_centre) and _user.subaccounts.include?(user))) or !is_blocked?
   end
 
-  def thread_started_by_buyer?
-    root.user.buyer?
+  def thread_started_by_supplier?
+    root.user.supplier?
   end
 
   def can_user_be_blocked?
-    user.agent? and !user.call_centre? and thread_started_by_buyer?
+    user.agent? and !user.call_centre? and thread_started_by_supplier?
   end
 
   def blocked_conversation
-    user.with_role.blocked_conversations.where("lead_id = ? and buyer_id = ?", commentable_id, root.user_id).first
+    user.with_role.blocked_conversations.where("lead_id = ? and supplier_id = ?", commentable_id, root.user_id).first
   end
 
   def user_blocked_from_conversation?
@@ -125,7 +125,7 @@ class Comment < ActiveRecord::Base
 
   def block_user_from_conversation!
     if can_user_be_blocked? and !user_blocked_from_conversation?
-      user.with_role.blocked_conversations.create(:lead_id => commentable_id, :buyer_id => root.user_id)
+      user.with_role.blocked_conversations.create(:lead_id => commentable_id, :supplier_id => root.user_id)
     end
   end
 

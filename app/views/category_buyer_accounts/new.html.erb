@@ -1,5 +1,5 @@
 <column-mc:>
-  <%= render :partial => "shared/accounts/new_account_title", :locals => {:accounts_type => "category_buyer_accounts", :user => @user} %>
+  <%= render :partial => "shared/accounts/new_account_title", :locals => {:accounts_type => "category_supplier_accounts", :user => @user} %>
 
   <div class="pdd_5 no_pdd_b">
     <%= blurb('blurb_sign_up') %>
@@ -21,7 +21,7 @@
   </div>
 
   <%= semantic_form_for @user, :url => "/#{params[:slug]}/account" do |form| %>
-      <frm title="#{t('category_buyer_accounts.new.view.form_title')}" c="no_marg">
+      <frm title="#{t('category_supplier_accounts.new.view.form_title')}" c="no_marg">
         <param:content>
           <div class="column_left">
             <div class="pdd_10 no_pdd_t">
@@ -35,7 +35,7 @@
                       <%= address_form.input :address_line_2 %>
                       <%= address_form.input :address_line_3 %>
                       <%= address_form.input :zip_code %>
-                      <%= address_form.input :country_id, :as => :select, :collection => Country.all, :input_html => {:onchange => "refresh_regions_list('user_category_buyer_address_attributes');"} %>
+                      <%= address_form.input :country_id, :as => :select, :collection => Country.all, :input_html => {:onchange => "refresh_regions_list('user_category_supplier_address_attributes');"} %>
                       <%= address_form.input :region_id, :as => :select, :collection => regions_collection_for(form.object.address.country) %>
                   <% end %>
                   <%= form.input :vat_number %>
@@ -68,7 +68,7 @@
         <param:actions>
           <ibt c="fltri" icon="plus">
             <%= form.input :buying_category_ids, :as => :hidden %>
-            <%= form.submit t("category_buyer_accounts.new.view.button_create_account") %>
+            <%= form.submit t("category_supplier_accounts.new.view.button_create_account") %>
           </ibt>
           <%= bt_link_to nil, t("shared.accounts.new_account_form.button_cancel"), root_path, :class => "bt_grey fltr" %>
         </param:actions>

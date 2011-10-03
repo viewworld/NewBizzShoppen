@@ -9,7 +9,7 @@
           <li>
             <p><strong><%= link_to lp.lead.header, lead_path(lp.lead) %></strong></p>
 
-            <p class="price ta_r"><%= link_to t("layout.cart.remove_item_link"), buyers_cart_item_path(lp.lead_id), :method => :delete, :class => "fltl fs_11" %> <%= lp.quantity %> x <%= as_currency(lp.lead.price, lp.lead.currency) %></p>
+            <p class="price ta_r"><%= link_to t("layout.cart.remove_item_link"), suppliers_cart_item_path(lp.lead_id), :method => :delete, :class => "fltl fs_11" %> <%= lp.quantity %> x <%= as_currency(lp.lead.price, lp.lead.currency) %></p>
           </li>
       <% end %>
       <li>
@@ -21,8 +21,8 @@
   </div>
   <div class="cart_footer">
     <p class="ta_r">
-      <%= bt_link_to nil, t("layout.cart.empty_cart"), buyers_cart_path, :method => :delete, :confirm => t("common.confirmation"), :class => "bt_grey_small" %>
-      <%= bt_link_to nil, t("layout.cart.show_cart"), buyers_cart_path %>
+      <%= bt_link_to nil, t("layout.cart.empty_cart"), suppliers_cart_path, :method => :delete, :confirm => t("common.confirmation"), :class => "bt_grey_small" %>
+      <%= bt_link_to nil, t("layout.cart.show_cart"), suppliers_cart_path %>
     </p>
   </div>
 </div>

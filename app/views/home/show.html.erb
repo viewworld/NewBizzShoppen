@@ -19,13 +19,13 @@
 
   <hl pdd="15"/>
 
-  <div class="grid_250 fltl" style="margin-right: 10px" id="buyer_sign_up">
+  <div class="grid_250 fltl" style="margin-right: 10px" id="supplier_sign_up">
     <frm-reverse c="home_cells">
       <param:content>
-        <%= link_to image_tag("homepage/sales_manager.jpg"), buyer_home_path %>
+        <%= link_to image_tag("homepage/sales_manager.jpg"), supplier_home_path %>
       </param:content>
       <param:header>
-        <%= link_to t("home.show.view.buyer"), buyer_home_path %>
+        <%= link_to t("home.show.view.supplier"), supplier_home_path %>
       </param:header>
     </frm-reverse>
 
@@ -33,8 +33,8 @@
         <div class="frm_tiny frm_tip">
           <span class="tip"></span>
 
-          <p><%= t("home.show.view.buyer_sign_up_text") %>
-            , <%= link_to t("home.show.view.sign_up_here"), new_buyer_account_path %>.</p>
+          <p><%= t("home.show.view.supplier_sign_up_text") %>
+            , <%= link_to t("home.show.view.sign_up_here"), new_supplier_account_path %>.</p>
         </div>
     <% end %>
   </div>

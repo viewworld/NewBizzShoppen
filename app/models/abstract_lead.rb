@@ -24,7 +24,7 @@ class AbstractLead < ActiveRecord::Base
   attr_accessor :category_is_changed
   attr_accessor :tmp_creator_id
   attr_accessor :current_user
-  attr_accessor :notify_buyers_after_update
+  attr_accessor :notify_suppliers_after_update
   attr_accessor :validate_contact_email
 
   validates_presence_of :header, :description, :company_name, :contact_name, :phone_number, :country_id, :currency, :address_line_1, :address_line_3, :zip_code, :if => :process_for_lead_information?

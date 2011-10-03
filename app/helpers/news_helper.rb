@@ -8,7 +8,7 @@ module NewsHelper
   def news_scope_for_select
     [
       [I18n.t('administration.news.index.view.agents'),'Agent'],
-      [I18n.t('administration.news.index.view.buyers'),'SalesManager'],
+      [I18n.t('administration.news.index.view.suppliers'),'SalesManager'],
       [I18n.t('administration.news.index.view.purchase_managers'),'PurchaseManager'],
       [I18n.t('administration.news.index.view.category_homes'),'CategoryHome']
     ]

@@ -35,7 +35,7 @@
             <%= custom_error_for_object_and_field(call_result, :contact_country_id) %>
           </li>
 
-          <% if (call_result.result.upgrades_to_category_buyer? or call_result.result.upgrades_to_buyer?) and call_result.new_record? %>
+          <% if (call_result.result.upgrades_to_category_supplier? or call_result.result.upgrades_to_supplier?) and call_result.new_record? %>
               <span id="big_buyer_purchase_limit_span" style="display: none;">
               <%= form.input :user_big_buyer_purchase_limit, :label => t("call_results.new.user_big_buyer_purchase_limit") %>
               </span>
@@ -45,9 +45,9 @@
               <%= form.input :user_deal_maker_role_enabled, :as => :boolean, :label => t("call_results.new.user_deal_maker_role_enabled") %>
           <% end %>
 
-          <% if call_result.result.upgrades_to_category_buyer? %>
+          <% if call_result.result.upgrades_to_category_supplier? %>
           <li>
-            <div id="category_buyer_categories">
+            <div id="category_supplier_categories">
                 <div class="grid_210 fltl">&nbsp;</div>
                 <div class="grid_240 fltl">
                   <h3><%= t("administration.users.edit.view.available_categories") %></h3>
@@ -69,7 +69,7 @@
           </li>
           <% end %>
       <% end %>
-      <% if call_result.result.upgrades_to_category_buyer? or call_result.result.send_material? %>
+      <% if call_result.result.upgrades_to_category_supplier? or call_result.result.send_material? %>
           <% [:subject, :from, :bcc, :cc, :body].each do |field| %>
               <%= form.input "email_template_#{field}", :as => :hidden %>
           <% end %>

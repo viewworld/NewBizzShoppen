@@ -30,7 +30,7 @@ class Invoice < ActiveRecord::Base
                                                            SUM(invoice_lines.brutto_value) as brutto_value_sum",
            :group => "vat_rate", :class_name => "InvoiceLine"
 
-  has_one :customer_address, :class_name => '::Address::InvoiceCustomer', :as => :addressable
+  has_one :supplier_address, :class_name => '::Address::InvoiceSupplier', :as => :addressable
   has_one :seller_address, :class_name => '::Address::InvoiceSeller', :as => :addressable
   has_one :credit_note
 
@@ -40,9 +40,9 @@ class Invoice < ActiveRecord::Base
   scope :with_sale_date_after_and_including, lambda{ |date| where(["sale_date >= ?",date.to_postgresql_date])}
   scope :with_sale_date_before_and_including, lambda{ |date| where(["sale_date <= ?",date.to_postgresql_date])}
   scope :not_paid, where(:paid_at => nil)
-  scope :with_keyword, lambda{ |keyword| joins(:customer_address).where("lower(users.email) like :keyword OR lower(users.first_name) like :keyword OR lower(users.last_name) like :keyword OR lower(users.first_name||' '||users.last_name) LIKE :keyword OR lower(invoices.seller_name) like :keyword OR invoices.number::TEXT = :number_keyword OR lower(invoices.customer_name) LIKE :keyword OR lower(addresses.address_line_1) LIKE :keyword OR lower(addresses.address_line_2) LIKE :keyword OR lower(addresses.address_line_3) LIKE :keyword OR lower(addresses.zip_code) LIKE :keyword OR lower(leads.header) LIKE :keyword OR lower(leads.contact_name) LIKE :keyword OR lower(leads.company_name) LIKE :keyword OR lower(leads.email_address) LIKE :keyword", {:keyword => "%#{keyword.downcase}%", :number_keyword => "#{keyword.downcase}"}).joins("LEFT JOIN invoice_lines ON invoices.id=invoice_lines.invoice_id LEFT JOIN lead_purchases ON invoice_lines.payable_id=lead_purchases.id LEFT JOIN leads ON lead_purchases.lead_id=leads.id").joins(:user) }
-  scope :ascend_by_customer, joins(:user).order("users.first_name||' '||users.last_name ASC")
-  scope :descend_by_customer, joins(:user).order("users.first_name||' '||users.last_name DESC")
+  scope :with_keyword, lambda{ |keyword| joins(:supplier_address).where("lower(users.email) like :keyword OR lower(users.first_name) like :keyword OR lower(users.last_name) like :keyword OR lower(users.first_name||' '||users.last_name) LIKE :keyword OR lower(invoices.seller_name) like :keyword OR invoices.number::TEXT = :number_keyword OR lower(invoices.supplier_name) LIKE :keyword OR lower(addresses.address_line_1) LIKE :keyword OR lower(addresses.address_line_2) LIKE :keyword OR lower(addresses.address_line_3) LIKE :keyword OR lower(addresses.zip_code) LIKE :keyword OR lower(leads.header) LIKE :keyword OR lower(leads.contact_name) LIKE :keyword OR lower(leads.company_name) LIKE :keyword OR lower(leads.email_address) LIKE :keyword", {:keyword => "%#{keyword.downcase}%", :number_keyword => "#{keyword.downcase}"}).joins("LEFT JOIN invoice_lines ON invoices.id=invoice_lines.invoice_id LEFT JOIN lead_purchases ON invoice_lines.payable_id=lead_purchases.id LEFT JOIN leads ON lead_purchases.lead_id=leads.id").joins(:user) }
+  scope :ascend_by_supplier, joins(:user).order("users.first_name||' '||users.last_name ASC")
+  scope :descend_by_supplier, joins(:user).order("users.first_name||' '||users.last_name DESC")
   scope :ascend_by_total, joins("LEFT JOIN invoice_lines ON invoice_lines.invoice_id = invoices.id").group(column_names.map{|c| 'invoices.'+c}.join(',')).order("SUM(invoice_lines.brutto_value) ASC")
   scope :descend_by_total, joins("LEFT JOIN invoice_lines ON invoice_lines.invoice_id = invoices.id").group(column_names.map{|c| 'invoices.'+c}.join(',')).order("SUM(invoice_lines.brutto_value) DESC")
   scope :with_paid, lambda{|paid| paid.to_i==1 ? where("invoices.paid_at IS NOT NULL") : where("invoices.paid_at IS NULL")}
@@ -53,7 +53,7 @@ class Invoice < ActiveRecord::Base
   validates_presence_of :user, :seller
   validates_associated :invoice_lines, :seller
 
-  after_create :duplicate_company_and_customer_information, :set_year
+  after_create :duplicate_company_and_supplier_information, :set_year
   after_validation :set_default_currency, :if => Proc.new{ |i| i.new_record? }
   after_update :update_revenue_frozen
   after_create :generate_invoice_lines_for_big_buyer
@@ -64,7 +64,7 @@ class Invoice < ActiveRecord::Base
 
   #Uncomment reject_if, if not validating invoice lines
   accepts_nested_attributes_for :invoice_lines, :allow_destroy => true #,:reject_if => lambda { |a| a[:name].blank? }
-  accepts_nested_attributes_for :customer_address, :seller_address
+  accepts_nested_attributes_for :supplier_address, :seller_address
 
   scoped_order :revenue_frozen, :paid_at, :number, :sale_date, :seller_name
   multi_scoped_order :sale_date_and_number
@@ -86,12 +86,12 @@ class Invoice < ActiveRecord::Base
     self.currency = (!Currency.find_by_name("DKK").nil? ? Currency.find_by_name("DKK") : Currency.where(:active => true).order("name").limit(1).first) unless currency
   end
 
-  def duplicate_company_and_customer_information
+  def duplicate_company_and_supplier_information
     self.update_attributes({
-            :customer_company_name => user.company_name,
-            :customer_name => user.with_role.full_name,
-            :customer_address => ::Address::InvoiceCustomer.new(user.with_role.address.attributes),
-            :customer_vat_no => user.with_role.vat_number,
+            :supplier_company_name => user.company_name,
+            :supplier_name => user.with_role.full_name,
+            :supplier_address => ::Address::InvoiceSupplier.new(user.with_role.address.attributes),
+            :supplier_vat_no => user.with_role.vat_number,
             :seller_address => ::Address::InvoiceSeller.new(seller.address.attributes),
             :seller_name => seller.company_name,
             :seller_vat_no => seller.vat_no,
@@ -123,7 +123,7 @@ class Invoice < ActiveRecord::Base
 
   def generate_invoice_lines_for_big_buyer
     if user and user.big_buyer?
-      User::Customer.find(user_id).lead_purchases.select { |lp| lp.invoice_line.blank? and lp.lead.currency_id == currency_id }.each do |lead_purchase|
+      User::Supplier.find(user_id).lead_purchases.select { |lp| lp.invoice_line.blank? and lp.lead.currency_id == currency_id }.each do |lead_purchase|
         InvoiceLine.create(
             :invoice => self,
             :payable => lead_purchase,

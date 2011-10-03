@@ -1,11 +1,11 @@
-class BuyerAccountsController < SignInController
+class SupplierAccountsController < SignInController
 
   def new
-    super(User::Customer)
+    super(User::Supplier)
   end
 
   def create
-    super(User::Customer, :user_customer, I18n.t("flash.buyer_accounts.create.notice"))
+    super(User::Supplier, :user_supplier, I18n.t("flash.supplier_accounts.create.notice"))
   end
 
 end

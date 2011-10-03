@@ -11,8 +11,8 @@ class Campaign < ActiveRecord::Base
   has_many :contacts, :dependent => :destroy
   has_many :materials, :as => :resource, :class_name => "Material", :dependent => :destroy
   has_one :send_material_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'result_send_material'", :dependent => :destroy
-  has_one :upgrade_contact_to_category_buyer_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'upgrade_contact_to_category_buyer'", :dependent => :destroy
-  has_one :upgrade_contact_to_buyer_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'upgrade_contact_to_buyer'", :dependent => :destroy
+  has_one :upgrade_contact_to_category_supplier_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'upgrade_contact_to_category_supplier'", :dependent => :destroy
+  has_one :upgrade_contact_to_supplier_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'upgrade_contact_to_supplier'", :dependent => :destroy
   has_one :upgrade_contact_to_member_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'upgrade_contact_to_member'", :dependent => :destroy
   has_many :user_session_logs
 
@@ -50,8 +50,8 @@ class Campaign < ActiveRecord::Base
   NO_COST = 3.freeze
   COST_TYPES = [FIXED_COST, AGENT_BILLING_RATE_COST, FIXED_HOURLY_RATE_COST, NO_COST]
   CLONED_TEMPLATES = {
-      :send_material_email_template => 'result_send_material', :upgrade_contact_to_category_buyer_email_template => 'upgrade_contact_to_category_buyer',
-      :upgrade_contact_to_buyer_email_template => 'upgrade_contact_to_buyer', :upgrade_contact_to_member_email_template => 'upgrade_contact_to_member'
+      :send_material_email_template => 'result_send_material', :upgrade_contact_to_category_supplier_email_template => 'upgrade_contact_to_category_supplier',
+      :upgrade_contact_to_supplier_email_template => 'upgrade_contact_to_supplier', :upgrade_contact_to_member_email_template => 'upgrade_contact_to_member'
   }
 
   private

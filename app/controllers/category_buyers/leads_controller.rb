@@ -1,9 +1,9 @@
-class CategoryBuyers::LeadsController < ApplicationController
+class CategorySuppliers::LeadsController < ApplicationController
   inherit_resources
   actions :index, :show
   set_tab "browse_leads"
 
-  before_filter :redirect_if_not_category_buyer
+  before_filter :redirect_if_not_category_supplier
 
   def show
     show! do |format|
@@ -49,8 +49,8 @@ class CategoryBuyers::LeadsController < ApplicationController
     @leads = @search.paginate(:page => params[:page], :per_page => Settings.default_leads_per_page)
   end
 
-  def redirect_if_not_category_buyer
-    if current_user and !current_user.has_role?(:category_buyer)
+  def redirect_if_not_category_supplier
+    if current_user and !current_user.has_role?(:category_supplier)
       redirect_to categories_path
     end
   end

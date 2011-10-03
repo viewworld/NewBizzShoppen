@@ -1,5 +1,5 @@
 class ::User::LeadSupplier < ::User
-  ROLES = [:lead_buyer, :lead_user]
+  ROLES = [:lead_supplier, :lead_user]
 
   include User::Subaccounts
 

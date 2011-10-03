@@ -89,7 +89,7 @@ class PurchaseManagers::TendersController < PurchaseManagers::PurchaseManagerCon
 
   def categories_for_current_user
     if current_user
-      @categories = current_user.has_accessible_categories? ? LeadCategory.with_leads.within_accessible(current_user).without_locked_and_not_published : current_user.has_role?(:customer) ? LeadCategory.with_leads.without_locked_and_not_published.with_customer_unique(current_user) : LeadCategory.with_leads.without_locked_and_not_published.with_agent_unique(current_user)
+      @categories = current_user.has_accessible_categories? ? LeadCategory.with_leads.within_accessible(current_user).without_locked_and_not_published : current_user.has_role?(:supplier) ? LeadCategory.with_leads.without_locked_and_not_published.with_supplier_unique(current_user) : LeadCategory.with_leads.without_locked_and_not_published.with_agent_unique(current_user)
     else
       @categories = LeadCategory.with_leads.without_locked_and_not_published.without_unique
     end

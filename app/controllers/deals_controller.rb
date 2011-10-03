@@ -32,7 +32,7 @@ class DealsController < ApplicationController
     if user_signed_in? and current_user.has_role?(:admin)
       categories_scope = Category.scoped
     elsif user_signed_in?
-      categories_scope = current_user.has_accessible_categories? ? Category.within_accessible(current_user).without_locked : current_user.has_role?(:customer) ? Category.without_locked.with_customer_unique(current_user).scoped : Category.without_locked_and_not_published.with_agent_unique(current_user).scoped
+      categories_scope = current_user.has_accessible_categories? ? Category.within_accessible(current_user).without_locked : current_user.has_role?(:supplier) ? Category.without_locked.with_supplier_unique(current_user).scoped : Category.without_locked_and_not_published.with_agent_unique(current_user).scoped
     else
       categories_scope = Category.without_locked.without_unique.scoped
     end
