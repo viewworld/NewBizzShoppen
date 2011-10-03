@@ -3845,6 +3845,7 @@ en:
         name: "Name"
         send_invitation: "Send invitation"
         company_name: "Company name"
+        materials: "Materials"
     new:
       view:
         new_account: "New %{role} account"

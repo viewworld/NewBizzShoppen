@@ -43,15 +43,42 @@ Feature: Agent dealmaker
     Then I should see translated "deal_maker_users.create.flash.user_creation_successful"
 
   #7851
-  @m20 @requested @tgn
+  @m20 @requested @tgn @selenium @_tested @_done
   Scenario: I can customise the invitation emails for members/suppliers
+    Then I follow translated "deal_maker_users.index.view.new_member"
+    And I fill in "user_first_name" with "Anna"
+    And I fill in "user_last_name" with "Lee"
+    And I fill in "user_company_name" with "Lee Inc"
+    And I fill in "user_address_attributes_address_line_1" with "Vlodivostok"
+    And I fill in "user_address_attributes_address_line_2" with "Vlodivostok"
+    And I fill in "user_address_attributes_address_line_3" with "Vlodivostok"
+    And I fill in "user_address_attributes_zip_code" with "22-222"
+    And I fill in "user_screen_name" with "Anna Lee"
+    And I fill in "user_email" with "annalee@nbs.com"
+    And I fill in "user_phone" with "+43 2312321313"
+    And I check "user_send_invitation"
+    And I follow translated "materials.views.index.material_repository"
+    And I wait 2 second
+    And attach the file "sample image" to "material_asset"
+    And I follow "sample.jpg"
+    And I follow translated "call_results.new.customize_email_template"
+    And I wait 2 second
+    And I fill in "body_editor" ckeditor with "Customized body 0101"
+    And I press "Save"
+    And I press translated "deal_maker_users.new.view.button_create"
+    Then I should see translated "deal_maker_users.create.flash.user_creation_successful"
+    And last email sent should have been sent to recipient "annalee@nbs.com"
 
   #7851
-  @m20 @requested @tgn
+  @m20 @requested @tgn @_tested @_done
   Scenario: I can upload files for emails and maange them globally
+    Given I follow translated "deal_maker_users.index.view.materials"
+    When attach the file "sample image" to "material_asset"
+    And I press translated "materials.views.index.save_material"
+    Then I should see "sample.jpg"
 
   #7851
-  @m20 @requested @tgn
+  @m20 @requested @tgn @_done @tested_elsewhere
   Scenario: I can choose the uploaded files or upload new during creation of member/supplier
 
   # but the options should be there & editable
