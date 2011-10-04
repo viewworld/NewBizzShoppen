@@ -566,7 +566,7 @@ Scenario: I can see a role name of newly created user like "New buyer account”
   When I go to administration users
   Given I select "Supplier" from "role"
   And I press translated "administration.users.index.view.new_user"
-  Then I should see "New Buyer account"
+  Then I should see "New Supplier account"
 
 @m10 @requested @_done @_tested
 Scenario: I can see password fields above unique categories

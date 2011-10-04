@@ -373,3 +373,7 @@ function submit_category_filter_form(form_id) {
     $('#category_' + $('#category_selector').val()).attr("checked", "checked");
     $(form_id).submit();
 }
+
+function redirect_to_subcategory(){
+    document.location = "/categories/deals/" + $('#category_selector').val()
+}

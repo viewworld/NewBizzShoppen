@@ -39,10 +39,10 @@
                   <% if @nested_category.present? or @category.present? %>
                       <%
                           category = @nested_category.present? ? @nested_category : @category
-                          subcategories_for_select = [[' ', category.id]] + category.children.select{ |c| c.deals_count_for_user(current_user) > 0 }.map{|c| [c.name,c.id]}
+                          subcategories_for_select = [[' ', category.id]] + category.children.select{ |c| c.deals_count_for_user(current_user) > 0 }.map{|c| [c.name, c.cached_slug]}
                       %>
                       <% if subcategories_for_select.size > 1 %>
-                          <%= select_tag :category_selector, options_for_select(subcategories_for_select), {:include_blank => false, :onchange => "submit_category_filter_form('#deals_search_form')"} %>
+                          <%= select_tag :category_selector, options_for_select(subcategories_for_select), {:include_blank => false, :onchange => "redirect_to_subcategory()"} %>
                       <% end %>
                   <% end %>
                 </p>
