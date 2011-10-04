@@ -1,1 +1,0 @@
-* Allow to set the maximum number of requests to store

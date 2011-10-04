@@ -340,7 +340,6 @@ Nbs::Application.routes.draw do
     match '/(:id)' => "agent_home#show"
   end
 
-  #match 'rails_metrics' => 'rails_metrics#index'
   match ':slug' => 'category_home#show', :as => :category_home_page
   match ':slug/account/new' => 'category_buyer_accounts#new', :as => :new_category_home_page_account
   match ':slug/account' => 'category_buyer_accounts#create', :as => :category_home_page_account
