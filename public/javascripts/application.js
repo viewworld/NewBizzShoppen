@@ -81,7 +81,7 @@ function loadScripts() {
     if ($('table').has("a.default_action").length != 0) {
         //      old method
         //      $('td:not(.cl, .cr, .tda)', 'table tbody tr:not(.pagination, .main_actions)').filter(":not(:has(:checkbox, select, a))")
-        $('tr:has(.default_action) td').filter(":not(:has(:checkbox, select)):not(.tda)")
+        $('tr:has(.default_action) td, p.element').filter(":not(:has(:checkbox, select)):not(.tda):not(:has(div.ajaxful-rating-wrapper))")
                 .addClass("pointer")
                 .click(function()
                 {
