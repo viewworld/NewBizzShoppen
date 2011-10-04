@@ -1,0 +1,172 @@
+<search-box:>
+  <div class="search_box">
+    <h2><%= t("common.search") %></h2>
+
+    <div class="search_content">
+      <%= form_for @search, :url => members_tenders_path do |f| %>
+          <fieldset class="inputs_vertical">
+            <ol class="no_pdd">
+              <li class="string">
+                <%= f.label :with_keyword, t("member.tenders.index.view.search.keyword_label") %>
+                <%= f.text_field :with_keyword %>
+              </li>
+              <li class="select">
+                <%= f.label t("member.tenders.index.view.search.category_label") %>
+                <%= f.select :with_category, nested_set_options(@categories.all), :include_blank => true %>
+              </li>
+              <li class="boolean">
+                <%= f.check_box :without_inactive, {}, "true", "false" %>
+                <%= f.label :without_inactive, t("member.tenders.index.view.search.filter_with_inactive") %>
+              </li>
+              <li class="boolean">
+                <%= f.check_box :without_outdated, {}, "true", "false" %>
+                <%= f.label :without_outdated, t("member.tenders.index.view.search.filter_with_outdated") %>
+              </li>
+              <li class="commit">
+                <ibt c="bt_green" icon="magnify">
+                  <%= submit_tag t("member.tenders.index.view.search.search_button") %>
+                </ibt>
+                <p>
+                  <%= bt_clear_filter %>
+                </p>
+              </li>
+            </ol>
+          </fieldset>
+      <% end %>
+    </div>
+  </div>
+</search-box:>
+
+<column-mc:>
+
+  <header>
+    <param:content>
+      <%= t("member.tenders.index.view.title") %>
+    </param:content>
+
+    <param:actions>
+      <%= form_tag new_members_tender_path, :method => :get, :id => "form_new_lead" do %>
+          <span style="position:absolute;top: 5px; right: 110px;">
+            <%= select_tag :category_id, options_for_select(nested_set_options(@categories), :selected => default_category_for_select(@categories), :disabled => @categories.select { |c| !c.can_publish_leads? }.map(&:id)) %>
+          </span>
+          <ul class="header_actions">
+            <li class="last">
+              <div class="hidden">
+                <%= submit_tag "New" %>
+              </div>
+              <%= bt_link_to :plus, t("member.tenders.index.view.new_tender"), "javascript:void", :onclick => "$('#form_new_lead').submit()" %>
+            </li>
+          </ul>
+      <% end %>
+    </param:actions>
+  </header>
+  <% @tenders = @leads %>
+
+  <% if @leads.blank? %>
+      <%= blank_state_message %>
+  <% else %>
+
+    <table id="leads" class="generic">
+      <thead>
+      <tr>
+        <th class="hl"></th>
+        <th><%= link_to t("leads.table.header"), order_for_scoped_search(:header) %></th>
+        <th><%= t("leads.table.sale_limit") %></th>
+        <th><%= t("leads.table.date") %></th>
+        <th><%= t("leads.table.deadline") %></th>
+        <th><%= t("leads.table.number_of_suppliers") %></th>
+        <th><%= t("leads.table.status") %></th>
+        <th class="ta_r"><%= t("leads.table.actions") %></th>
+        <th class="hr"></th>
+      </tr>
+      </thead>
+      <tfoot>
+      <tr>
+        <td class="fl"></td>
+        <td colspan="7"></td>
+        <td class="fr"></td>
+      </tr>
+      </tfoot>
+      <tbody>
+      <% @leads.each do |lead| %>
+          <tr id="lead_<%= lead.id %>" class="<%= cycle("odd", "even") %>">
+            <td class="cl"></td>
+            <td>
+              <div class="rltv" style="padding-bottom: 20px;">
+              <%= lead.header %>
+              <% if lead.can_be_commented? %>
+               <div class="row_tooltip_actions">
+               <%= link_to t("comments.shared.show_comments")+" (#{lead.comments_count_for(current_user)})", "#", :class => "toggle_row show_comments#{' toggle_row_unread' if lead.has_unread_comments_for_user?(current_user)}", :onclick => "mark_comments_as_read(#{lead.id}); mark_row_as_read('lead_#{lead.id}')" %>
+               <%= link_to t("comments.shared.hide_comments"), "#", :class => "toggle_row hide_comments", :style => "display:none" %>
+               </div>
+              <% end %>
+              <% if lead.creator == current_user or lead.creator.parent == current_user %>
+                <% if lead.lead_certification_requests.last %>
+                  <br/>
+                  <%= t("leads.listing.certification_status") %>: <%= lead.lead_certification_requests.last.current_status %>
+                <% end %>
+              <% end %>
+                  </div>
+            </td>
+
+            <td><%= lead.sale_limit %></td>
+            <td><%= format_date lead.created_at %></td>
+            <td><%= format_date lead.purchase_decision_date %></td>
+            <td><%= lead.lead_purchases_counter.to_i %></td>
+            <td>
+              <% if current_user.can_publish_leads? %>
+                  <%= form_for [:member, lead], :method => :put do |f| %>
+                      <%= f.select :published, [[t("member.tenders.index.view.option_published"), 1], [t("member.tenders.index.view.option_not_published"), 0]], {:selected => lead.published ? 1 : 0}, {:onchange => "jQuery(this.form).callRemote()"} %>
+                  <% end %>
+              <% else %>
+                  <%= lead.published ? t("member.tenders.index.view.option_published") : t("member.tenders.index.view.option_not_published") %>
+              <% end %>
+            </td>
+
+            <td class="tda ta_r">
+              <ul-actions>
+                <li>
+                  <%= link_to t("member.tenders.index.view.edit"), edit_members_tender_path(lead), :class => "default_action" %>
+                </li>
+                <% if lead.can_be_certified? %>
+                    <li>
+                      <%= link_to t("member.tenders.index.view.certify"), members_tender_certifications_path(lead), :method => :post %>
+                    </li>
+                  <% elsif lead.can_be_recertified? %>
+                    <li>
+                        <%= link_to t("member.tenders.index.view.recertify"), members_tender_certifications_path(lead), :method => :post %>
+                    </li>
+                  <% end %>
+                  <li>
+                    <%= link_to t("member.tenders.index.view.destroy"), members_tender_path(lead), :confirm => t("member.tenders.index.view.destroy_confirmation"), :method => :delete %>
+                  </li>
+                </ul-actions>
+            </td>
+            <td class="cr"></td>
+          </tr>
+
+
+
+          <tr class="row_tooltip">
+            <td class="cl no_pdd"></td>
+            <td colspan="6" class="no_pdd">
+              <div class="row_tooltip_content pdd_10">
+                <p><%= render :partial => "/shared/comments/lead_threads", :locals => {:lead => lead, :threads => lead.comment_threads.roots.order("created_at DESC")} %></p>
+              </div>
+            </td>
+            <td class="cr no_pdd"></td>
+          </tr>
+      <% end %>
+
+      <% if will_paginate %>
+          <tr class="pagination">
+            <td colspan="9" class="ta_c">
+              <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+            </td>
+          </tr>
+      <% end %>
+
+      </tbody>
+    </table>
+  <% end %>
+</column-mc:>

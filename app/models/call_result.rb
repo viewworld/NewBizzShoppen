@@ -199,7 +199,7 @@ class CallResult < ActiveRecord::Base
   end
 
   def process_for_upgrade_to_member
-    upgrade_to_user("purchase_manager")
+    upgrade_to_user("member")
     process_for_final_result
   end
 

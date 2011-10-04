@@ -2,7 +2,7 @@
   <%= render :partial => "shared/accounts/new_account_title", :locals => {:accounts_type => "certification_accounts", :user => @user } %>
 
   <div class="pdd_5 no_pdd_b" style="width:800px">
-    <p><%= blurb("blurb_certification_purchase_manager_signup") %></p>
+    <p><%= blurb("blurb_certification_member_signup") %></p>
   </div>
 
   <hl pdd="15"/>
@@ -10,7 +10,7 @@
   <%= link_to t("certification_accounts.new.view.i_already_have_account"), root_path %>
 
   <%= semantic_form_for @user, :url => certification_accounts_path do |form| %>
-      <frm title="#{t('purchase_manager_accounts.new.view.header')}" c="no_marg">
+      <frm title="#{t('member_accounts.new.view.header')}" c="no_marg">
         <param:content>
           <div class="column_left">
             <div class="pdd_10 no_pdd_t">
@@ -72,7 +72,7 @@
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="plus">
-            <%= form.submit t("purchase_manager_accounts.new.view.button_create_account") %>
+            <%= form.submit t("member_accounts.new.view.button_create_account") %>
           </ibt>
           <%= bt_link_to nil, t("shared.accounts.new_account_form.button_cancel"), root_path, :class => "bt_grey fltr" %>
         </param:actions>

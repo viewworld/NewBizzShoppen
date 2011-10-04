@@ -9,7 +9,7 @@
 
   <div class="frm_tiny" style="margin-bottom:10px;">
     <div class="pdd_10">
-      <p><%= t("purchase_manager_accounts.new.view.janrain_sign_up_label") %>
+      <p><%= t("member_accounts.new.view.janrain_sign_up_label") %>
         <% unless Rails.env.test? %>
             <%= link_to_rpx image_tag("icons/social_login.png"), "http#{"s" if RAILS_ENV == "production"}://#{Nbs::Application.config.action_mailer.default_url_options[:host]}/#{params[:slug]}/account" %>
             <%= javascript_include_rpx "http#{"s" if RAILS_ENV == "production"}://#{Nbs::Application.config.action_mailer.default_url_options[:host]}/#{params[:slug]}/account" %>

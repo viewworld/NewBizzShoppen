@@ -12,6 +12,6 @@
     <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.shared.import_leads")), leads_advanced_import_path, :tab => "import_leads" %>
     <% if current_user.has_role?(:deal_maker) %>
         <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.shared.import_suppliers")), suppliers_advanced_import_path, :tab => "import_suppliers" %>
-        <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.shared.import_procurements")), procurements_advanced_import_path, :tab => "import_procurements" %>
+        <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.shared.import_members")), members_advanced_import_path, :tab => "import_members" %>
     <% end %>
 <% end %>

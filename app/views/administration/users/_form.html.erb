@@ -2,12 +2,12 @@
   <div class="pdd_10 no_pdd_t">
     <fieldset class="inputs labels_ta_r labels_200">
       <ol class="align_inputs">
-        <%= form.input :company_name if @user.has_any_role?(:supplier, :category_supplier, :call_centre, :purchase_manager, :call_centre_agent, :agent) or ["supplier", "category_supplier", "call_centre", "purchase_manager", "call_centre_agent", "agent"].include?((params[:role])) %>
+        <%= form.input :company_name if @user.has_any_role?(:supplier, :category_supplier, :call_centre, :member, :call_centre_agent, :agent) or ["supplier", "category_supplier", "call_centre", "member", "call_centre_agent", "agent"].include?((params[:role])) %>
         <% unless @user.has_role?(:call_centre) or ["call_centre"].include?((params[:role])) %>
             <%= form.input :first_name %>
             <%= form.input :last_name %>
         <% end %>
-        <% if @user.has_any_role?(:supplier, :purchase_manager) or ["supplier", "purchase_manager"].include?((params[:role])) %>
+        <% if @user.has_any_role?(:supplier, :member) or ["supplier", "member"].include?((params[:role])) %>
             <%= form.input :title %>
         <% end %>
         <% if defined? form.object.address and form.object.parent.blank? %>

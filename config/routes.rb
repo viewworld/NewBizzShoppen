@@ -149,7 +149,7 @@ Nbs::Application.routes.draw do
     end
   end
 
-  namespace :purchase_managers do
+  namespace :members do
     root :to => "leads#index"
     resources :leads, :path => :requests
     resources :tenders, :path => :leads do
@@ -231,7 +231,7 @@ Nbs::Application.routes.draw do
 
   match 'supplier_home' => 'supplier_home#show', :as => "supplier_home"
   match 'agent_home' => 'agent_home#show', :as => "agent_home"
-  match 'purchase_manager_home' => 'purchase_manager_home#show', :as => "purchase_manager_home"
+  match 'member_home' => 'member_home#show', :as => "member_home"
 
   resources :leads, :except => [:new, :create, :destroy] do
     collection do
@@ -269,7 +269,7 @@ Nbs::Application.routes.draw do
     end
   end
 
-  resource :procurements_advanced_import, :only => [:create, :show] do
+  resource :members_advanced_import, :only => [:create, :show] do
     collection do
       post 'choose'
       post 'preview'
@@ -285,7 +285,7 @@ Nbs::Application.routes.draw do
 
   resources :agent_accounts, :only => [:new, :create]
   resources :supplier_accounts, :only => [:new, :create]
-  resources :purchase_manager_accounts, :only => [:new, :create]
+  resources :member_accounts, :only => [:new, :create]
   resources :category_supplier_accounts, :only => [:new, :create]
   resources :certification_accounts, :only => [:new, :create]
   resources :deal_supplier_accounts, :only => [:new, :create]

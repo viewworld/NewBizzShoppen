@@ -44,26 +44,48 @@ class IntegrationTasks < Thor
   desc "m20", ""
 
   def m20
-    Translation.where("locale = 'en' and (lower(value) like ? or lower(value) like ? or lower(value) like ?)", "%buyer%", "%sales manager%", "customer").each do |t|
+    #setup
 
-    if t.value.downcase.include?("category buyer")
-      value = t.value.gsub(/(category buyer)/i) { |s| "#{ s.to_s[0..0] =~ /[A-Z]/ ? "Category supplier" : "category supplier" }" }
-    elsif t.value.downcase.include?("sales manager")
-      value = t.value.gsub(/(sales manager)/i) { |s| "#{ s.to_s[0..0] =~ /[A-Z]/ ? "Supplier" : "supplier" }" }
-    elsif t.value.downcase.include?("customer")
-      value = t.value.gsub(/(customer)/i) { |s| "#{ s.to_s[0..0] =~ /[A-Z]/ ? "Supplier" : "supplier" }" }
-    else
-      value = t.value.gsub(/(buyer)/i) { |s| "#{ s.to_s[0..0] =~ /[A-Z]/ ? "Supplier" : "supplier" }" }
+    Settings.where(:var => "email_verification_for_procurement_managers").first.update_attribute(:var, "email_verification_for_members")
+
+    dictionary = {"category buyer" => "category supplier", "sales manager" => "supplier", "customer" => "supplier", "buyer" => "supplier", "procurement manager" => "member", "procurement" => "member"}
+    dictionary_keys = {"category_buyer" => "category_supplier", "sales_manager" => "supplier", "customer" => "supplier", "buyer" => "supplier", "purchase_manager" => "member", "procurement" => "member", "member_manager" => "member"}
+    dictionary_klasses = { "User::PurchaseManager" => "User::Member", "User::LeadBuyer" => "User::LeadSupplier", "User::CategoryBuyer" => "User::CategorySupplier",
+                           "User::Customer" => "User::Supplier"}
+
+    puts "Translations values..."
+    Translation.where("locale = 'en' and (lower(value) like ? or lower(value) like ? or lower(value) like ? or lower(value) like ? or lower(value) like ?)",
+                      "%buyer%", "%sales manager%", "%customer%", "%procurement manager%", "%procurement%").each do |t|
+      dictionary.each_pair do |old_val, new_val|
+        if t.value.downcase.include?(old_val)
+          t.value = StringUtils.replace(t.value, old_val, new_val)
+        end
+      end
+
+      t.save
     end
 
-      t.update_attribute(:value, value)
+    puts "Translations keys..."
+    Translation.where("(lower(key) like ? or lower(key) like ? or lower(key) like ? or lower(key) like ? or lower(key) like ?)",
+                      "%buyer%", "%sales manager%", "%customer%", "%purchase_manager%", "%procurement%").each do |t|
+      dictionary_keys.each_pair do |old_val, new_val|
+        if t.key.downcase.include?(old_val)
+          t.key = t.key.gsub(old_val, new_val)
+        end
+      end
+
+      t.save
     end
 
-    Result.where("name like ?", "%buyer%").each do |result|
-      result.update_attribute(:name, result.name.gsub(/(buyer)/i) { |s| "#{ s.to_s[0..0] =~ /[A-Z]/ ? "Supplier" : "supplier" }" })
+    puts "Results..."
+    Result.where("lower(name) like ?", "%buyer%").each do |result|
+      result.update_attribute(:name, StringUtils.replace(result.name, "buyer", "supplier"))
     end
 
-    ActiveRecord::Migration.execute("UPDATE leads SET creator_type = 'User::Member' WHERE creator_type = 'User::PurchaseManager'")
-    ActiveRecord::Migration.execute("UPDATE leads SET creator_type = 'User::LeadSupplier' WHERE creator_type = 'User::LeadBuyer'")
+    dictionary_klasses.each_pair do |old_val, new_val|
+      ActiveRecord::Migration.execute("UPDATE leads SET creator_type = '#{new_val}' WHERE creator_type = '#{old_val}'")
+      ActiveRecord::Migration.execute("UPDATE addresses SET addressable_type = '#{new_val}' WHERE addressable_type = '#{old_val}'")
+      ActiveRecord::Migration.execute("UPDATE lead_templates SET creator_type = '#{new_val}' WHERE creator_type = '#{old_val}'")
+    end
   end
 end

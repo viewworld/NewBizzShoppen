@@ -75,7 +75,7 @@ en:
       main_menu:
         deals: "Deals"
         tenders: "Tenders"
-        purchase_manager:
+        member:
           my_requests: "My requests"
     main_menu:
       admin:
@@ -152,8 +152,8 @@ en:
         import_contacts: "Contacts"
         import_leads: "Leads"
         import_suppliers: "Suppliers"
-        import_procurements: "Procurements"
-      purchase_manager:
+        import_members: "Members"
+      member:
         leads: My leads
         tenders: My tenders
         lead_templates: "Lead templates"
@@ -210,8 +210,8 @@ en:
           modal_intro_label_2: "Please chose account type:"
           modal_sales_manager_link: "Sales manager"
           modal_sales_manager_label: "(If you want to buy new leads to your business)"
-          modal_procurement_manager_link: "Procurement manager"
-          modal_procurement_manager_label: "(If you want to a bid on you business)"
+          modal_member_link: "Member"
+          modal_member_label: "(If you want to a bid on you business)"
           modal_agent_link: "Agent"
           modal_agent_label: "(If you are really good at creating new leads)"
 
@@ -627,7 +627,7 @@ en:
       reject: "Do not confirm"
       invalid_token: "Your token is invalid or state of your requested has changed and it is not available any more"
       header: "Certify information"
-      procurement_information: "Procurement information"
+      member_information: "Member information"
     listing:
       purchase_value_label: "Purchase value:"
       lead_price_label: "Lead price:"
@@ -645,7 +645,7 @@ en:
       sale_limit_label: "Uniqueness:"
       novelty_label: "Novelty:"
       hotness_label: "Hotness:"
-      certified_by_procurement_label: "Certified by procurement:"
+      certified_by_member_label: "Certified by member:"
       agent_certification_label: "Agent's certification:"
       average_rating_label: "Lead rating:"
       average_rating_none_label: "None"
@@ -732,7 +732,7 @@ en:
       view:
         agents_header: "Agents news"
         sales_managers_header: "Sales manager news"
-        purchase_managers_header: "Procurement manager news"
+        members_header: "Member manager news"
         category_homes_header: "Category news"
         read_more_link: "read more"
         newer_link: "Newer"
@@ -764,20 +764,20 @@ en:
         header: "Home"
         supplier: "Sales manager"
         agent: "Agent"
-        purchase_manager: "Procurement manager"
+        member: "Member manager"
         remember_me: "Remember me"
         sign_in: "Sign in"
         sign_in_form_title: "I have an account"
         signup_message: "Don't have an account yet"
         agent_signup: "Freelance agent signup"
         supplier_signup: "Sales manager signup"
-        purchase_manager_signup: "Procurement manager signup"
+        member_signup: "Member manager signup"
         _signup: "Sales manager signup"
         forgotten_password_link: "Forgot password?"
         resend_confirmation_instructions: "Didn't receive confirmation instructions?"
         sign_up_here: "sign up here"
         supplier_sign_up_text: "If you want to buy hot leads for your business"
-        purchase_manager_sign_up_text: "If you want a quote on your business"
+        member_sign_up_text: "If you want a quote on your business"
         agent_sign_up_text: "If you can create new leads"
         call_centre_header: "Welcome %{name}"
         sign_in_with_external_accounts: "Sign in using:"
@@ -952,7 +952,7 @@ en:
             resend_certification_notification_after_days: "Resend certification notification after days"
             youtube_introduction: "YouTube introduction video URL"
             default_deal_admin_email: "Default deal admin email"
-            email_verification_for_procurement_managers: "Email verification for procurement managers"
+            email_verification_for_members: "Email verification for member managers"
             email_verification_for_sales_managers: "Email verification for sales managers"
             default_max_auto_buy_per_4_weeks: "Default max auto buy per 4 weeks"
             contact_us_phone: "Contact us phone number"
@@ -1122,7 +1122,7 @@ en:
           header: "News"
           suppliers: "sales managers"
           agents: "call centres and agents"
-          purchase_managers: "procurement managers"
+          members: "Member managers"
           category_homes: "category homes"
           new_news: "New news"
           search_button: "Search"
@@ -1923,7 +1923,7 @@ en:
           update_button: "Save"
           edit_deal_request_details_email_template: "Edit email template"
           preview: "Preview"
-  purchase_manager:
+  member:
     leads:
       index:
         view:
@@ -2052,15 +2052,15 @@ en:
   certification_accounts:
     new:
       view:
-        title: "Procurement Manager signup"
-        rpx_title: "You are creating Procurement Manager account as %{full_name} using %{account_type} account"
+        title: "Member Manager signup"
+        rpx_title: "You are creating member Manager account as %{full_name} using %{account_type} account"
         janrain_sign_up_label: "Or use Facebook, LinedIn or Google to sing in in the future:"
         i_already_have_account: "I already have an account!"
-  purchase_manager_accounts:
+  member_accounts:
     new:
       view:
-        title: "Procurement Manager signup"
-        rpx_title: "You are creating Procurement Manager account as %{full_name} using %{account_type} account"
+        title: "Member Manager signup"
+        rpx_title: "You are creating member Manager account as %{full_name} using %{account_type} account"
         header: "Create new account"
         janrain_sign_up_label: "Sign up using:"
         button_create_account: "Create my account"
@@ -2180,7 +2180,7 @@ en:
       view:
         header: "Welcome sales manager"
         agent_link: "click here if you are an agent"
-        purchase_manager_link: "click here if you are a procurement manager"
+        member_link: "click here if you are a member manager"
         header_best_sellers: "Best sellers"
         header_latest_leads: "Latest leads"
         header_latest_deals: "Latest deals"
@@ -2204,7 +2204,7 @@ en:
       view:
         header: "Welcome agent"
         supplier_link: "click here if you are a sales manager"
-        purchase_manager_link: "click here if you are a procurement manager"
+        member_link: "click here if you are a member manager"
         header_best_sellers: "Best sellers"
         header_latest_leads: "Latest leads"
         header_news: "News"
@@ -2221,10 +2221,10 @@ en:
 
         new_lead: "New lead"
         new_deal: "New deal"
-  purchase_manager_home:
+  member_home:
     show:
       view:
-        header: "Welcome procurement manager"
+        header: "Welcome member manager"
         agent_link: "click here if you are an agent"
         supplier_link: "click here if you are a sales manager"
         header_best_sellers: "Best sellers"
@@ -2237,7 +2237,7 @@ en:
         description_label: "Description:"
         read_more_link: "read more"
         complete_list_link: "complete list"
-        create_new_purchase_manager_account: "Create new procurement manager account"
+        create_new_member_account: "Create new member manager account"
         i_have_an_account: "I have an account"
 
   category_home:
@@ -2655,7 +2655,7 @@ en:
         category_was_changed: Category has been changed
         category_no_leads_can_be_published: "No leads can be published in that category"
         category_cannot_be_changed: "Category cannot be changed due to filled out templates!"
-        purchase_manager:
+        member:
           lead_information: "What product or service are you looking for?"
           sales_information: "Tender information"
           header_label: "Header"
@@ -2781,7 +2781,7 @@ en:
         news:
           agent: "Agent news"
           sales_manager: "Sales manager news"
-          purchase_manager: "Procurement manager news"
+          member: "Member manager news"
           category_home: "Category home news"
           call_centre: "Call centre news"
         cms:
@@ -2874,7 +2874,7 @@ en:
                 blank: "is blank"
                 confirmation: "doesn't match confirmation"
                 too_short: "too short"
-          purchase_manager:
+          member:
             attributes:
               password:
                 blank: "is blank"
@@ -2915,7 +2915,7 @@ en:
     category_supplier_accounts:
       create:
         notice: "Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account."
-    purchase_manager_accounts:
+    member_accounts:
       create:
         notice: "Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account."
     categories:
@@ -3325,7 +3325,7 @@ en:
         lead_supplier_role_enabled: "Lead supplier role enabled"
         hide_profile_page: "Hide profile page"
         hide_lead_prices: "Hide lead prices"
-      user/purchase_manager:
+      user/member:
         company_name: "Company name"
         first_name: "First name"
         last_name: "Last name"
@@ -3391,7 +3391,7 @@ en:
         sales_manager:
           title: "Title"
           published: "Published"
-        purchase_manager:
+        member:
           title: "Title"
           published: "Published"
         category_home:
@@ -3667,21 +3667,21 @@ en:
       flash:
         success: "Import completed. %{counter} suppliers have been successfully imported"
 
-  procurements_advanced_import:
+  members_advanced_import:
     show:
       view:
-        header: "Procurement managers import"
-        title: "Advanced import - create new procurement managers from spreadsheet."
+        header: "Member managers import"
+        title: "Advanced import - create new member managers from spreadsheet."
     choose:
       view:
-        header: "Procurement managers import - fields selection"
-        object_fields_label: "Procurement manager fields"
+        header: "Member managers import - fields selection"
+        object_fields_label: "Member manager fields"
     preview:
       view:
-        header: "Procurement managers import - preview"
+        header: "Member managers import - preview"
     create:
       flash:
-        success: "Import completed. %{counter} procurement managers have been successfully imported"
+        success: "Import completed. %{counter} member managers have been successfully imported"
 
   leads_advanced_import:
     show:

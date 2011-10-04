@@ -75,7 +75,7 @@ class Lead < AbstractLead
   scope :with_hotness, lambda { |hotness| where("hotness_counter = ?", hotness) }
   scope :for_notification, lambda { |categories, notification_type| where("category_id in (?) and DATE(published_at) between ? and ?", categories.map(&:id), notification_type == User::LEAD_NOTIFICATION_ONCE_PER_DAY ? Date.today : Date.today-7, Date.today).published_only.without_inactive.without_outdated.order("category_id") }
 
-  scope :requested_by_purchase_manager, lambda { |user| where("leads.creator_id = ? or leads.requested_by = ?", user.id, user.id) }
+  scope :requested_by_member, lambda { |user| where("leads.creator_id = ? or leads.requested_by = ?", user.id, user.id) }
 
   scope :descend_by_leads_id, order("leads.id DESC")
 
@@ -90,7 +90,7 @@ class Lead < AbstractLead
 
   before_save :handle_category_change
   before_validation :handle_dialling_codes
-  validate :check_lead_templates, :unless => Proc.new { |l| l.requestee and l.requestee.has_role?(:purchase_manager) }
+  validate :check_lead_templates, :unless => Proc.new { |l| l.requestee and l.requestee.has_role?(:member) }
   before_save :check_if_category_can_publish_leads
   after_create :certify_lead_if_created_from_deal, :send_email_with_deal_details_and_files
   after_update :send_instant_notification_to_subscribers
@@ -108,7 +108,7 @@ class Lead < AbstractLead
   end
 
   def process_for_lead_information?
-    !(requestee and requestee.has_role?(:purchase_manager))
+    !(requestee and requestee.has_role?(:member))
   end
 
   #prevent dialling codes from saving when no proper phone number follows them

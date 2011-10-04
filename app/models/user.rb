@@ -127,7 +127,7 @@ class User < ActiveRecord::Base
   def set_email_verification
     if new_record?
       if (has_role?(:supplier) and Settings.email_verification_for_sales_managers == "0") or
-         (has_role?(:purchase_manager) and Settings.email_verification_for_procurement_managers == "0")
+         (has_role?(:member) and Settings.email_verification_for_members == "0")
         self.skip_email_verification = "1"
       end
     end
@@ -210,7 +210,7 @@ class User < ActiveRecord::Base
   end
 
   def mailer_host
-    if has_role?(:purchase_manager)
+    if has_role?(:member)
       mailer_fairdeals_host
     else
       Nbs::Application.config.action_mailer.default_url_options[:host]
@@ -483,8 +483,8 @@ class User < ActiveRecord::Base
     has_role?(:admin)
   end
 
-  def purchase_manager?
-    has_role?(:purchase_manager)
+  def member?
+    has_role?(:member)
   end
 
   def category_supplier?
@@ -593,7 +593,7 @@ class User < ActiveRecord::Base
       category_supplier_category_home_url
     elsif has_role?(:supplier)
       "https://#{mailer_host}/supplier_home"
-    elsif has_role?(:purchase_manager)
+    elsif has_role?(:member)
       "https://#{mailer_host}"
     else
       "https://#{mailer_host}/"
@@ -623,7 +623,7 @@ class User < ActiveRecord::Base
       self.send_invitation = false
       self.save(:validate => false)
     end
-    template = EmailTemplate.find_by_uniq_id("#{has_role?(:purchase_manager) ? 'member' : 'supplier'}_invitation")
+    template = EmailTemplate.find_by_uniq_id("#{has_role?(:member) ? 'member' : 'supplier'}_invitation")
     template = customize_email_template(template)
     TemplateMailer.delay.new(email, template, with_role.address.present? ? with_role.address.country : Country.get_country_from_locale,
                              {:user => self.with_role, :new_password => new_password}, assets_to_path_names(email_materials))
@@ -654,7 +654,7 @@ class User < ActiveRecord::Base
       "category_supplier"
     elsif has_role?(:supplier)
       "supplier"
-    elsif has_role?(:purchase_manager)
+    elsif has_role?(:member)
       "member"
     end
   end

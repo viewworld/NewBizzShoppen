@@ -13,7 +13,7 @@ class CategoryRequestTemplatePreview < EmailTemplatePreview
     self.can_be_contacted = params[:can_be_contacted].to_i == 1
     self.body = @email_template.render(options.merge({:category_name => category_name, :lead_description => lead_description, :phone_number => phone_number,
                                                       :leads_count_per_month => leads_count_per_month, :can_be_contacted => can_be_contacted ? I18n.t("models.category_request_template.yes") : I18n.t("models.category_request_template.no"),
-                                                      :request_type => (user.nil? ? I18n.t("models.category_request_template.guest") : user.has_any_role?(:agent, :call_centre_agent, :purchase_manager) ? I18n.t("models.category_request_template.agent") : I18n.t("models.category_request_template.supplier")),
+                                                      :request_type => (user.nil? ? I18n.t("models.category_request_template.guest") : user.has_any_role?(:agent, :call_centre_agent, :member) ? I18n.t("models.category_request_template.agent") : I18n.t("models.category_request_template.supplier")),
                                                      :country => country}))
     self.subject = @email_template.render_subject(options)
     self.cc = @email_template.cc
