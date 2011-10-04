@@ -40,6 +40,9 @@ en:
     cache_cleared: "Cache has been cleared"
     show_all: "Show all"
     show_paginated: "Show paginated"
+  datetime:
+    distance_in_words:
+      x_minutes: "%{count} minutes"
   ckeditor:
     upload_new_files: "Upload new files"
     file_manager: "File Manager"

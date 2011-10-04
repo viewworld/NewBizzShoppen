@@ -47,6 +47,7 @@ end
 
 group :staging do
   gem 'hoptoad_notifier'
+  gem 'system-metrics'
 end
 
 group :development do
@@ -54,6 +55,7 @@ group :development do
   gem 'tolk', :path => "vendor/gems/tolk"
   gem "nifty-generators"
   gem "bullet"
+  gem 'system-metrics'
 end
 
 group :test do

@@ -250,6 +250,8 @@ GEM
     spork (0.8.5)
     spreadsheet (0.6.5.5)
       ruby-ole (>= 1.0)
+    system-metrics (0.2.3)
+      rails (~> 3.0.0)
     term-ansicolor (1.0.5)
     test-unit (2.3.0)
     thor (0.14.6)
@@ -330,6 +332,7 @@ DEPENDENCIES
   scoped-search (= 0.7.1)
   spork
   spreadsheet
+  system-metrics
   test-unit
   thor
   tolk!
