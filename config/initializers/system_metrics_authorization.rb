@@ -9,4 +9,6 @@ module SystemMetricsAuthorization
   end
 end
 
-SystemMetrics::MetricsController.send(:include, ::SystemMetricsAuthorization)
+if Rails.env == "staging"
+  SystemMetrics::MetricsController.send(:include, ::SystemMetricsAuthorization)
+end
