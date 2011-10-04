@@ -1,4 +1,4 @@
-class Suppliers::LeadEmailsController < Suppliers::SupplierController
+class Suppliers::LeadEmailsController < Suppliers::BasicSupplierController
 
   def new
     lead_purchase           = current_user.lead_purchases.where(:id => params[:lead_purchase_id]).first

@@ -1,4 +1,4 @@
-class Suppliers::InvoicesController < Suppliers::SupplierController
+class Suppliers::InvoicesController < Suppliers::AdvancedSupplierController
   inherit_resources
 
   def show

@@ -163,6 +163,7 @@ module ApplicationHelper
 
   def link_to_view_templates(category)
     role = current_user.role.to_s.pluralize
+    role = "suppliers" if current_user.category_supplier?
     link_to(t("categories.index.view.view_lead_templates"), self.send("#{role}_lead_templates_path", :search => { :with_category => category.id }), :class => "text_action")
   end
 

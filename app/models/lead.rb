@@ -17,7 +17,7 @@ class Lead < AbstractLead
   belongs_to :country
   belongs_to :currency
   belongs_to :region
-  belongs_to :requestee, :class_name => "User::PurchaseManager", :foreign_key => :requested_by
+  belongs_to :requestee, :class_name => "User::Member", :foreign_key => :requested_by
   belongs_to :deal, :class_name => "Deal", :foreign_key => "deal_id"
   has_many :lead_certification_requests, :dependent => :destroy
   has_many :lead_translations, :dependent => :destroy
@@ -295,7 +295,7 @@ class Lead < AbstractLead
   end
 
   def can_be_commented?
-    !creator.has_role?(:purchase_manager)
+    !creator.has_role?(:member)
   end
 
   def has_unread_comments_for_user?(user)

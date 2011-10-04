@@ -1,4 +1,4 @@
-class Suppliers::CartController < Suppliers::SupplierController
+class Suppliers::CartController < Suppliers::BasicSupplierController
   before_filter :get_cart
 
   def show

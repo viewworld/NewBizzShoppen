@@ -1,5 +1,5 @@
 #TODO try to refactor to skip the Update part in naming
-class Suppliers::BulkLeadPurchaseUpdateController < Suppliers::SupplierController
+class Suppliers::BulkLeadPurchaseUpdateController < Suppliers::BasicSupplierController
 
   def create
     if params[:lead_purchase_ids]

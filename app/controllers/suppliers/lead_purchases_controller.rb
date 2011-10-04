@@ -1,4 +1,4 @@
-class Suppliers::LeadPurchasesController < Suppliers::SupplierController
+class Suppliers::LeadPurchasesController < Suppliers::BasicSupplierController
   inherit_resources
   respond_to :html
   respond_to :csv, :only => :show

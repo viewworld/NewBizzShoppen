@@ -62,5 +62,8 @@ class IntegrationTasks < Thor
     Result.where("name like ?", "%buyer%").each do |result|
       result.update_attribute(:name, result.name.gsub(/(buyer)/i) { |s| "#{ s.to_s[0..0] =~ /[A-Z]/ ? "Supplier" : "supplier" }" })
     end
+
+    ActiveRecord::Migration.execute("UPDATE leads SET creator_type = 'User::Member' WHERE creator_type = 'User::PurchaseManager'")
+    ActiveRecord::Migration.execute("UPDATE leads SET creator_type = 'User::LeadSupplier' WHERE creator_type = 'User::LeadBuyer'")
   end
 end

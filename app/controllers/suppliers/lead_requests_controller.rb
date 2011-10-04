@@ -1,4 +1,4 @@
-class Suppliers::LeadRequestsController < Suppliers::SupplierController
+class Suppliers::LeadRequestsController < Suppliers::AdvancedSupplierController
   inherit_resources
 
   set_tab "requested_leads"

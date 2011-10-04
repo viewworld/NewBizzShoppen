@@ -1,4 +1,4 @@
-class Suppliers::CartItemsController < Suppliers::SupplierController
+class Suppliers::CartItemsController < Suppliers::BasicSupplierController
 
   def create
     status = if params[:buyout] == "true"

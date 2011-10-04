@@ -1,4 +1,4 @@
-class Suppliers::BulkLeadRequestsController < Suppliers::SupplierController
+class Suppliers::BulkLeadRequestsController < Suppliers::AdvancedSupplierController
 
   def update
     current_user.lead_requests.where("id in (?)", params[:lead_ids]).each do |lead_request|

@@ -1,4 +1,4 @@
-class Suppliers::DealCertificationRequestsController < Suppliers::SupplierController
+class Suppliers::DealCertificationRequestsController < Suppliers::BasicSupplierController
 
   before_filter :set_deal, :only => [:edit, :update]
 

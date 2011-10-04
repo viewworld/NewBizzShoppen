@@ -52,6 +52,7 @@
           <% unless current_user.hide_profile_page? %>
               <%= link_to t("layout.my_profile_link"), my_profile_path, :class => "sl" %>
           <% end %>
+          <span style="color:white"><%= current_user.class.to_s rescue "Error" %></span>
           <%= link_to t("layout.logout_link", :user_email => current_user.email), '/logout', :class => "sl" %>
       <% else %>
           <%= link_to t("layout.login_link"), url_to_role_specific_home_page, :class => "sl" %>

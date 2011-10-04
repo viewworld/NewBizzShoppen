@@ -1,4 +1,4 @@
-class Suppliers::BulkCartItemsController < Suppliers::SupplierController
+class Suppliers::BulkCartItemsController < Suppliers::BasicSupplierController
 
   def create
     flash[:notice] = if params[:lead_ids]

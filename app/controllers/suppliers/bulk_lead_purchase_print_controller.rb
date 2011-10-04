@@ -1,3 +1,3 @@
-class Suppliers::BulkLeadPurchasePrintController < Suppliers::SupplierController
+class Suppliers::BulkLeadPurchasePrintController < Suppliers::BasicSupplierController
   include ::PrintActions
 end

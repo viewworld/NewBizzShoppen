@@ -1,4 +1,4 @@
-class Suppliers::BulkSubaccountsUpdateController < Suppliers::SupplierController
+class Suppliers::BulkSubaccountsUpdateController < Suppliers::AdvancedSupplierController
   def update
     User::Abstract.where({:parent_id => current_user.id}).where("id in (?)", params[:user_ids]).each do |user|
       user.locked = params[:bulk_action_type]

@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
 
   ROLES_PRIORITY = [:admin, :call_centre, :agent, :call_centre_agent, :member, :category_supplier, :supplier, :lead_supplier, :lead_user, :translator, :deal_maker]
   DEAL_VALUE_RANGE = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000]
-  BASIC_USER_ROLES_WITH_LABELS = [['Administrator', 'admin'], ['Agent', 'agent'], ['Supplier', 'supplier'], ['Call centre', 'call_centre'], ['Member', 'purchase_manager'], ['Category supplier', 'category_supplier']]
+  BASIC_USER_ROLES_WITH_LABELS = [['Administrator', 'admin'], ['Agent', 'agent'], ['Supplier', 'supplier'], ['Call centre', 'call_centre'], ['Member', 'member'], ['Category supplier', 'category_supplier']]
   ADDITIONAL_USER_ROLES_WITH_LABELS = [['Lead user', "lead_user"], ['Lead supplier', "lead_supplier"], ["Call centre agent", "call_centre_agent"]]
 
   NOT_CERTIFIED = 0
@@ -485,6 +485,10 @@ class User < ActiveRecord::Base
 
   def purchase_manager?
     has_role?(:purchase_manager)
+  end
+
+  def category_supplier?
+    has_role?(:category_supplier)
   end
 
   def purchase_limit_reached?(lead, buyout=false)

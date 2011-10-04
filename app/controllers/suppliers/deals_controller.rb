@@ -1,4 +1,4 @@
-class Suppliers::DealsController < Suppliers::SupplierController
+class Suppliers::DealsController < Suppliers::BasicSupplierController
   before_filter :set_deal, :only => [:edit, :update, :destroy]
   before_filter :prepare_assets, :only => [:edit, :update]
 

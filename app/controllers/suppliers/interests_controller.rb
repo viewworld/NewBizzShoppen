@@ -1,4 +1,4 @@
-class Suppliers::InterestsController <  Suppliers::SupplierController
+class Suppliers::InterestsController < Suppliers::AdvancedSupplierController
   set_tab "interests_tab"
 
   before_filter :authorize_for_interests

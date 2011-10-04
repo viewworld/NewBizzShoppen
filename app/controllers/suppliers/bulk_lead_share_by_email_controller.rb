@@ -1,4 +1,4 @@
-class Suppliers::BulkLeadShareByEmailController < Suppliers::SupplierController
+class Suppliers::BulkLeadShareByEmailController < Suppliers::BasicSupplierController
   def new
     leads                   = current_user.lead_purchases.where(:id => params[:lead_purchase_ids]).includes(:lead).map(&:lead)
     @email_template_preview = EmailTemplatePreview.new(:share_leads_by_email_message, {:leads => leads, :country => Country.get_country_from_locale})

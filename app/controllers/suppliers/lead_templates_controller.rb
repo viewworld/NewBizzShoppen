@@ -1,4 +1,4 @@
-class Suppliers::LeadTemplatesController < Suppliers::SupplierController
+class Suppliers::LeadTemplatesController < Suppliers::AdvancedSupplierController
   inherit_resources
 
   set_tab "browse_leads"

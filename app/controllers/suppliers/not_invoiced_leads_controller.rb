@@ -1,4 +1,4 @@
-class Suppliers::NotInvoicedLeadsController < Suppliers::SupplierController
+class Suppliers::NotInvoicedLeadsController < Suppliers::AdvancedSupplierController
   inherit_resources
 
   set_tab "not_invoiced_leads"
