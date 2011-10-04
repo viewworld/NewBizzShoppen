@@ -183,10 +183,10 @@ class User < ActiveRecord::Base
   def handle_team_buyers_flag
     if team_buyers_changed? and !team_buyers # unchecking / turning off
       if owned_lead_requests.any?
-        errors.add(:team_buyers, I18n.t("errors.messages.user.team_buyers.has_lead_requests"))
+        errors.add(:team_buyers, I18n.t("errors.messages.user.team_suppliers.has_lead_requests"))
         return false
       elsif subaccounts.any?
-        errors.add(:team_buyers, I18n.t("errors.messages.user.team_buyers.has_subaccounts"))
+        errors.add(:team_buyers, I18n.t("errors.messages.user.team_suppliers.has_subaccounts"))
         return false
       end
     end
