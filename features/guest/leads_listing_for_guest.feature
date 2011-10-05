@@ -108,7 +108,7 @@ Scenario: If I successfully login after requesting a lead being added to a cart,
   And I follow category "Sample category"
   Then I click hidden translated link "leads.index.add_to_cart_link"
   And I sign in as johnbigbuyer343888@person.com with password secret
-  Then I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  Then I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   And I should see "Lead sample"
 
 

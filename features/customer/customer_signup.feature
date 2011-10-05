@@ -17,7 +17,7 @@ Feature: Customer signup
       | user_supplier_password_confirmation |              |
     And I press translated "buyer_accounts.new.view.button_create_account"
     Then I should see translated "activerecord.errors.messages.invalid"
-    And I should see translated "activerecord.errors.models.user.customer.attributes.password.confirmation"
+    And I should see translated "activerecord.errors.models.user.supplier.attributes.password.confirmation"
 
 @_tested
   Scenario: User signs up with valid data as a buyer

@@ -631,7 +631,6 @@ Feature: Agent campaign - calling session
     Scenario:  I can add new contact from agent work screen and it is already assigned to me (even if my campaign max contacts count was reached)
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       Then I follow translated "agent_work_screen.index.new_contact"
-      And I open page in browser
       And I fill in "contact_company_name" with "ABC Ltd" within "#modal_new_contact_form_div"
       And I fill in "contact_company_phone_number" with "+45 3403248932" within "#modal_new_contact_form_div"
       And I select "Denmark" from "contact_country_id" within "#modal_new_contact_form_div"

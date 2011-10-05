@@ -9,7 +9,7 @@ Feature: Deals from procurement manager perspective
 
   @_tested @_done @tgn
   Scenario: I should see "My deals" tab instead of "My leads"
-    Then I should see translated "layout.main_menu.purchase_manager.my_requests"
+    Then I should see translated "layout.main_menu.member.my_requests"
     And I should not see "My leads"
 
   @_tested @_done @tgn
@@ -72,7 +72,7 @@ Feature: Deals from procurement manager perspective
 
   @_done @_tested @tgn
   Scenario: I can't create new lead
-    When I follow translated "layout.main_menu.purchase_manager.my_requests"
+    When I follow translated "layout.main_menu.member.my_requests"
     And I should not see "New lead"
 
   @_done @_tested @tgn
@@ -185,7 +185,7 @@ Feature: Deals from procurement manager perspective
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper"
     And I am on the homepage
     And I sign in as buyer@nbs.com with password secret
-    And I follow translated "layout.main_menu.lead_buyer.my_deals"
+    And I follow translated "layout.main_menu.lead_supplier.my_deals"
     And I follow translated "buyer.deals.index.view.edit"
     And I follow translated "buyer.deals.edit.view.edit_deal_request_details_email_template"
     And I fill in "email_template_subject" with "Customized You got the deal"

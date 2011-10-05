@@ -8,7 +8,7 @@ Background:
   Given I am on the homepage
   And I make sure current locale is "en"
   And I sign in as leadbuyer.jon@nbs.com with password secret
-  And I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  And I follow translated "layout.main_menu.lead_supplier.lead_purchases"
 
 @requested @tgn @_tested
 Scenario: I can view details of leads assigned to me

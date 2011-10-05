@@ -16,7 +16,7 @@ Feature: My requests listing
     And I press translated "purchase_manager.leads.new.view.button_create"
     And I should see translated "purchase_manager.leads.show.view.confirmation_message"
     And I press translated "purchase_manager.leads.show.view.ok_confirmation"
-    And I follow translated "layout.main_menu.purchase_manager.my_requests"
+    And I follow translated "layout.main_menu.member.my_requests"
 
   @_done @non_testable @tgn
   Scenario: I should not see statistics, price for leads

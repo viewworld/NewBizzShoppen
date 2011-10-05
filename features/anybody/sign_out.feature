@@ -10,7 +10,7 @@ Background:
   # Before logout, store in session the logout page (which will become login page after logout)
 @_tested
 Scenario: If session is still there, just redirect to stored page when site is accessed
-  Given I follow translated "layout.main_menu.customer.invoices"
+  Given I follow translated "layout.main_menu.supplier.invoices"
   When I follow "Logout bob@person.com"
   And I sign in as bob@person.com with password supersecret
   Then I should see translated "customer.invoices.index.view.header"

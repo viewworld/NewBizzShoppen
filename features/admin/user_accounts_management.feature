@@ -344,14 +344,14 @@ Scenario: I can change buyer to category buyer only if he has interests categori
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/users\/\d+\/edit/"
   And I follow translated "administration.users.edit.view.change_to_category_buyer"
-  Then I should see translated "activerecord.attributes.user.customer.base.must_have_interests"
+  Then I should see translated "activerecord.attributes.user.supplier.base.must_have_interests"
   And I follow translated "administration.users.edit.view.change_customer_interests_link"
   And I select "CategoryBuyerCategory" from "all_categories_for_interests"
   And I follow "move_right" within "#category_interests"
   And I press translated "administration.users.edit.view.button_update_user"
   And I press translated "administration.users.edit.view.button_update_user"
   Then I should be on administration users page
-  And I should not see translated "activerecord.attributes.user.customer.base.must_have_interests"
+  And I should not see translated "activerecord.attributes.user.supplier.base.must_have_interests"
 
 @requested @m7 @_tested @tgn
 Scenario: I can filter users by Call center agents

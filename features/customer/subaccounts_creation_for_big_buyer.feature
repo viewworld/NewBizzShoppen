@@ -62,7 +62,7 @@ Scenario: The big buyer property of a customer should be inherited by all his su
 @requested @m8b @tgn @_tested
 Scenario: I should have option to hide the profile page for my team members
   Given an user with role lead_supplier and email lead_buyer2232@nbs.com exists as subaccount for customer customer@person.com
-  And I follow translated "layout.main_menu.customer.subaccounts"
+  And I follow translated "layout.main_menu.supplier.subaccounts"
   Then I should see translated "layout.my_profile_link"
   And I follow translated "customer.subaccounts.index.view.edit"
   And I check "user_lead_supplier_hide_profile_page"
@@ -74,7 +74,7 @@ Scenario: I should have option to hide the profile page for my team members
 @requested @m8b @tgn @_tested
 Scenario: Give sales manager the option not to show lead price for team buyer
   Given an user with role lead_supplier and email lead_buyer2232@nbs.com exists as subaccount for customer customer@person.com
-  And I follow translated "layout.main_menu.customer.subaccounts"
+  And I follow translated "layout.main_menu.supplier.subaccounts"
   Then I should see translated "layout.my_profile_link"
   And I follow translated "customer.subaccounts.index.view.edit"
   And I check "user_lead_supplier_hide_lead_prices"

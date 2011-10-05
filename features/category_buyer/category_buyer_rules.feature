@@ -26,7 +26,7 @@ Feature: Category buyer rules
     And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads" with attributes "team_buyers:1"
     And I am on category home page for Best Leads
     And I sign in as jon@lajoie.ca with password secret
-    And I follow translated "layout.main_menu.customer.subaccounts"
+    And I follow translated "layout.main_menu.supplier.subaccounts"
     Then I follow translated "customer.subaccounts.index.view.new_lead_user"
     And I fill in "user_lead_user_first_name" with "Mark"
     And I fill in "user_lead_user_last_name" with "Driscoll"
@@ -44,7 +44,7 @@ Feature: Category buyer rules
     And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads" with attributes "team_buyers:1"
     And I am on category home page for Best Leads
     And I sign in as jon@lajoie.ca with password secret
-    And I follow translated "layout.main_menu.customer.subaccounts"
+    And I follow translated "layout.main_menu.supplier.subaccounts"
     Then I follow translated "customer.subaccounts.index.view.new_lead_buyer"
     And I fill in "user_lead_supplier_first_name" with "Mark"
     And I fill in "user_lead_supplier_last_name" with "Driscoll"
@@ -62,7 +62,7 @@ Feature: Category buyer rules
     And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads" with attributes "team_buyers:1"
     And I am on category home page for Best Leads
     And I sign in as jon@lajoie.ca with password secret
-    And I follow translated "layout.main_menu.customer.subaccounts"
+    And I follow translated "layout.main_menu.supplier.subaccounts"
     Then I follow translated "customer.subaccounts.index.view.new_lead_buyer"
     And I fill in "user_lead_supplier_first_name" with "Mark"
     And I fill in "user_lead_supplier_last_name" with "Driscoll"
@@ -138,7 +138,7 @@ Feature: Category buyer rules
     And user "jon@lajoie.ca" is assigned to category "Worst Leads" as category buyer
     And I am on category home page for Best Leads
     And I sign in as jon@lajoie.ca with password secret
-    And I follow translated "layout.main_menu.customer.subaccounts"
+    And I follow translated "layout.main_menu.supplier.subaccounts"
     Then I follow translated "customer.subaccounts.index.view.new_lead_buyer"
     And I fill in "user_lead_supplier_first_name" with "Mark"
     And I fill in "user_lead_supplier_last_name" with "Driscoll"

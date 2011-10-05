@@ -8,7 +8,7 @@ Background: I am a guest and I am on the home page
 @ao @m3 @_done
 Scenario: I can see welcome text fetch from the database
   When I follow translated "home.show.view.buyer"
-  Then I should see "Blurb buyer home"
+  Then I should see "Blurb supplier home"
 
 @m3 @ao @_done
 Scenario: I can see 3 latest buyer news excerpts

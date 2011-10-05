@@ -43,7 +43,7 @@ Feature: Generating leads from deals
     Given template named "Computer details2" for category "Xeper" is created by user "buyer@nbs.com" with role "supplier"
     And template named "Computer details2" is mandatory
     And template named "Computer details2" has following fields "field #1:true:true,field #2:true:false,field #3:false:false"
-    Then I follow translated "layout.main_menu.lead_buyer.my_deals"
+    Then I follow translated "layout.main_menu.lead_supplier.my_deals"
     Then I follow translated "deals.common.listing.view.new_deal"
     Then I fill deal creation form
     And I fill in "deal_header" with "Templates deal test"

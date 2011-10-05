@@ -16,7 +16,7 @@ Feature: Accessing deals
   Then a deal is created by "admin@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
   # buyer OK
     And I sign in as buyer@nbs.com with password secret
-    Then I follow translated "layout.main_menu.lead_buyer.my_deals"
+    Then I follow translated "layout.main_menu.lead_supplier.my_deals"
     Then I should see "super"
     Then I follow translated "buyer.deals.index.view.edit"
     Then I fill in "deal_header" with "nice"
@@ -56,7 +56,7 @@ Feature: Accessing deals
     Then a deal is created by "translator_call_centre@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
   # buyer OK
     And I sign in as buyer@nbs.com with password secret
-    Then I follow translated "layout.main_menu.lead_buyer.my_deals"
+    Then I follow translated "layout.main_menu.lead_supplier.my_deals"
     Then I should see "super"
     Then I follow translated "buyer.deals.index.view.edit"
     Then I fill in "deal_header" with "nice"
@@ -96,7 +96,7 @@ Feature: Accessing deals
     Then a deal is created by "translator_call_centre_agent@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
   # buyer OK
     And I sign in as buyer@nbs.com with password secret
-    Then I follow translated "layout.main_menu.lead_buyer.my_deals"
+    Then I follow translated "layout.main_menu.lead_supplier.my_deals"
     Then I should see "super"
     Then I follow translated "buyer.deals.index.view.edit"
     Then I fill in "deal_header" with "nice"
@@ -138,7 +138,7 @@ Feature: Accessing deals
     Then a deal is created by "agent@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
   # buyer OK
     And I sign in as buyer@nbs.com with password secret
-    Then I follow translated "layout.main_menu.lead_buyer.my_deals"
+    Then I follow translated "layout.main_menu.lead_supplier.my_deals"
     Then I should see "super"
     Then I follow translated "buyer.deals.index.view.edit"
     Then I fill in "deal_header" with "nice"
@@ -178,7 +178,7 @@ Feature: Accessing deals
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
   # buyer OK
     And I sign in as buyer@nbs.com with password secret
-    Then I follow translated "layout.main_menu.lead_buyer.my_deals"
+    Then I follow translated "layout.main_menu.lead_supplier.my_deals"
     Then I should see "super"
     Then I follow translated "buyer.deals.index.view.edit"
     Then I fill in "deal_header" with "nice"

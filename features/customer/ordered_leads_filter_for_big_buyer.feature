@@ -11,7 +11,7 @@ Feature: Ordered leads filter for big buyer
     And I go to leads
     And I follow category "Computers"
     And I follow translated "leads.index.buy_lead"
-    And I follow translated "layout.main_menu.customer.invoices"
+    And I follow translated "layout.main_menu.supplier.invoices"
     And I follow translated "customer.invoices.index.view.pending_leads"
     Then I should see "1" rows in a table with headers within "#not_invoiced_leads"
 
@@ -22,8 +22,8 @@ Feature: Ordered leads filter for big buyer
     And a lead Monitors ultimate deal exists within category Computers and is bought by user jon@lajoie.ca with role supplier
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
-    Then I should not see translated "layout.main_menu.customer.not_invoiced"
-    When I follow translated "layout.main_menu.customer.invoices"
+    Then I should not see translated "layout.main_menu.supplier.not_invoiced"
+    When I follow translated "layout.main_menu.supplier.invoices"
     And I follow translated "customer.invoices.index.view.pending_leads"
     Then I should see "Monitors ultimate deal"
     When I follow translated "customer.invoices.index.view.due_invoices"

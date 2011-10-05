@@ -35,7 +35,7 @@ Feature: General deals
     And user "buyer@nbs.com" has assigned role "deal_maker"
     And I am on the homepage
     And I sign in as buyer@nbs.com with password secret
-    Then I follow translated "layout.main_menu.lead_buyer.my_deals"
+    Then I follow translated "layout.main_menu.lead_supplier.my_deals"
     Then I follow translated "deals.common.listing.view.new_deal"
     Then I fill deal creation form
     And the "1" field with id like "deal_max_auto_buy" should contain "7"
@@ -131,7 +131,7 @@ Feature: General deals
     And I am on the homepage
     And I make sure current locale is "en"
     Then I sign in as small_buyer@nbs.com with password secret
-    Then I follow translated "layout.main_menu.lead_buyer.my_deals"
+    Then I follow translated "layout.main_menu.lead_supplier.my_deals"
     Then I follow translated "deals.common.listing.view.new_deal"
     Then I fill deal creation form
     Then I press translated "buyer.deals.new.view.create_button"
@@ -147,7 +147,7 @@ Feature: General deals
     And I am on the homepage
     And I make sure current locale is "en"
     Then I sign in as small_buyer@nbs.com with password secret
-    Then I follow translated "layout.main_menu.lead_buyer.my_deals"
+    Then I follow translated "layout.main_menu.lead_supplier.my_deals"
     Then I follow translated "deals.common.listing.view.new_deal"
     Then I fill deal creation form
     And I fill in "deal_deal_code" with "XCDGF"
@@ -174,7 +174,7 @@ Feature: General deals
     Then I am not sign in
     And I am on the homepage
     And I sign in as buyer@nbs.com with password secret
-    Then I follow translated "layout.main_menu.lead_buyer.my_deals"
+    Then I follow translated "layout.main_menu.lead_supplier.my_deals"
     And I click hidden link by url regex "/buyers\/deals\/\d+\/edit/"
     And I should see "A company is interested in super"
 

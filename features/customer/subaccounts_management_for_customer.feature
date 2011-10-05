@@ -15,7 +15,7 @@ Scenario: I do not and cannot belong to other customer
 @_tested
 Scenario: I can see accounts managament tab
   When I go to customers lead requests
-  Then I should see translated "layout.main_menu.customer.subaccounts"
+  Then I should see translated "layout.main_menu.supplier.subaccounts"
 
 @_tested  @noguess
 Scenario: I can add new lead buyer that belongs to my account (checkbox selected - can buy leads -- req deprecated)

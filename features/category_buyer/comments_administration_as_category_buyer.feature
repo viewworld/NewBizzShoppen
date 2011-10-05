@@ -18,7 +18,7 @@ Background:
 
 @noguess @_tested @selenium
 Scenario: I can create a comment for lead that I have access for
-  When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   And I fill in "search_with_keyword" with "Lead#4"
   And I press translated "lead_buyer.lead_purchases.index.view.search.search_button"
   And I follow translated "lead_purchases.listing.show_comments"
@@ -33,7 +33,7 @@ Scenario: I can bulk create comments
 
 @_tested @selenium
 Scenario: I can reply to comment
-  When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   And I fill in "search_with_keyword" with "Lead#4"
   And I press translated "lead_buyer.lead_purchases.index.view.search.search_button"
   And I follow translated "lead_purchases.listing.show_comments"

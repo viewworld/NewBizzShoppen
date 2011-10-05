@@ -8,7 +8,7 @@ Feature: Invoices administration as customer
     Then I sign in as jon@lajoie.ca with password secret
     When invoice exists for user "jon@lajoie.ca" with role "supplier"
     And invoice line for first invoice exists for user "jon@lajoie.ca" with role "supplier" with attributes "netto_price:100,quantity:1,vat_rate:23,netto_value:100,brutto_value:123"
-    And I follow translated "layout.main_menu.customer.invoices"
+    And I follow translated "layout.main_menu.supplier.invoices"
 
   @_done
   Scenario: I can see a list of my invoices

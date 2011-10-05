@@ -7,4 +7,4 @@ Feature: Buyer common
     And I am on the home page
     And I sign in as kastomer@nbs.com with password secret
     And I follow translated "layout.contact_us"
-    Then I should see "Blurb buyer contact us"
+    Then I should see "Blurb supplier contact us"

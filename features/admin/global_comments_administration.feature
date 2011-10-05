@@ -139,7 +139,7 @@ Scenario:  When comment is blocked I should not see it's children
   Given I am not sign in
   Then I go to the homepage
   And I sign in as customer99@nbs.com with password secret
-  And I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  And I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   And I follow translated "lead_purchases.listing.show_comments"
   Then I should see "Comment title #1"
   And I should see "Comment title #2"
@@ -156,7 +156,7 @@ Scenario:  When comment is blocked I should not see it's children
   Given I am not sign in
   Then I go to the homepage
   And I sign in as customer99@nbs.com with password secret
-  And I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  And I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   And I follow translated "lead_purchases.listing.show_comments"
   And I should not see "Comment title #1"
   And I should not see "Comment title #2"

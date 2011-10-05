@@ -158,7 +158,7 @@ Scenario: I can email the lead if email information were provided
   And I am on the home page
   And I sign in as customer@nbs.com with password secret
   And a lead AwesomeLead exists within category Test and is bought by user customer@nbs.com with role supplier
-  And I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  And I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   And I follow translated "lead_buyer.lead_purchases.index.view.email_lead" within ".lead"
   And I press translated "lead_buyer.contact_lead_by_email.new.view.send_email_button"
   Then I should see translated "flash.contact_lead_by_email.create.notice"
@@ -192,15 +192,15 @@ Scenario: I can bulk rate leads that I have access for (good, bad, fake)
 
 @ao @_tested @selenium
 Scenario: I can set status of lead
-  And I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  And I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   # And I select translated "lead_purchases.statuses.contacted" from "state" [within ".lead tr:first-of-type"]
   And I select translated "lead_purchases.statuses.contacted" from "state"
-  And I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  And I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   Then "state" should be selected for value translated "lead_purchases.statuses.contacted"
 
 @ao @_tested @selenium
 Scenario: I can bulk set status of leads
-  And I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  And I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   And I select translated "lead_purchases.statuses.contacted" from "bulk_state" within "#bulk_actions_form"
   And I check "mark_all"
   And I follow translated "lead_buyer.lead_purchases.index.view.bulk_update_button"

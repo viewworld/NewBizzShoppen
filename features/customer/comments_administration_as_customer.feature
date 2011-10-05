@@ -22,7 +22,7 @@ Background:  Sign in user and set locale
 
 @noguess @_tested @selenium
 Scenario: I can create a comment for lead that I have access to
-  When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   And I fill in "search_with_keyword" with "Lead#4"
   And I press translated "lead_buyer.lead_purchases.index.view.search.search_button"
   And I follow translated "lead_purchases.listing.show_comments"
@@ -34,7 +34,7 @@ Scenario: I can create a comment for lead that I have access to
 
 @_tested @selenium
 Scenario: I can reply to comment
-  When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   And I fill in "search_with_keyword" with "Lead#4"
   And I press translated "lead_buyer.lead_purchases.index.view.search.search_button"
   And I follow translated "lead_purchases.listing.show_comments"
@@ -47,7 +47,7 @@ Scenario: I can reply to comment
 
 @_tested @selenium
 Scenario: I can see all comments created by members of my ownership branch
-  When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   And I fill in "search_with_keyword" with "Lead#3"
   And I press translated "lead_buyer.lead_purchases.index.view.search.search_button"
   And I follow translated "lead_purchases.listing.show_comments"
@@ -78,7 +78,7 @@ Scenario: I can't comment leads created by purchase manager
   Given I have user with email purchase_manager7@nbs.com and role member
   And lead Lead#7 is created by user purchase_manager7@nbs.com with role member
   And a lead Lead#7 exists within category Computers and is bought by user customer1@nbs.com with role supplier
-  When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   And I fill in "search_with_keyword" with "Lead#7"
   And I press translated "lead_buyer.lead_purchases.index.view.search.search_button"
   Then I should not see translated "lead_purchases.listing.show_comments"

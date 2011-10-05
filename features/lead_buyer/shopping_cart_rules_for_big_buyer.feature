@@ -30,7 +30,7 @@ Scenario: Lead purchase is marked with "has access" after creation
   And I follow category "Computers"
   And I follow translated "leads.index.buy_lead"
   Then I should not see "Printers ultimate deal"
-  When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   Then I should see "Printers ultimate deal"
 
 @_done  @noguess
@@ -43,7 +43,7 @@ Scenario: I can instant-buy lead requested by lead user that belongs to my accou
   And I follow translated "leads.index.request_lead"
   And I sign out
   And I sign in as customer@person.com with password supersecret
-  And I follow translated "layout.main_menu.customer.lead_requests"
+  And I follow translated "layout.main_menu.supplier.lead_requests"
   And I follow translated "customer.lead_requests.index.view.accept_lead_request_link"
   Then I should see translated "customer.lead_requests.index.flash.lead_request_accepted_successfully"
 
@@ -57,7 +57,7 @@ Scenario: I can bulk instant-buy leads and I will see a notification “You adde
   Then I should see translated "buyer.bulk_cart_items.create.flash.n_leads_bought" with options "count:2"
   And I should not see "Printers ultimate deal"
   And I should not see "Monitors ultimate deal"
-  When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   Then I should see "Printers ultimate deal"
   And I should see "Monitors ultimate deal"
 
@@ -68,7 +68,7 @@ Scenario: I can instant-buy lead I will see a notification “You added lead to 
   And I follow translated "leads.index.buy_lead"
   Then I should see translated "buyer.cart_items.create.flash.cart_item_bought_successful"
   And I should not see "Printers ultimate deal"
-  When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   Then I should see "Printers ultimate deal"
 
 @added @m8 @ao @_done @_tested
@@ -82,7 +82,7 @@ Scenario: I can see latest bought leads at the top of the list
   And I go to leads
   And I follow category "Computers"
   And I follow translated "leads.index.buy_lead"
-  When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   Then I should see "Number 2" before "Number 1"
 
 @selenium @_done  @noguess
@@ -97,7 +97,7 @@ Scenario: I can bulk instant-buy leads requested by lead user that belongs to my
   And I press translated "leads.index.button_bulk_create_lead_request"
   And I sign out
   And I sign in as customer@person.com with password supersecret
-  And I follow translated "layout.main_menu.customer.lead_requests"
+  And I follow translated "layout.main_menu.supplier.lead_requests"
   And I check "mark_all"
   And I follow translated "customer.lead_requests.index.view.button_bulk_create_lead_request"
   Then I should see translated "flash.bulk_lead_requests.update.notice"
@@ -107,7 +107,7 @@ Scenario: I can filter the list of my leads by "paid" column
   And I go to leads
   And I follow category "Computers"
   And I follow translated "leads.index.buy_lead"
-  When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   Then I should see "Printers ultimate deal"
   When I select translated "common.yes_label" from "search_with_paid"
   And I press translated "lead_buyer.lead_purchases.index.view.search.search_button"

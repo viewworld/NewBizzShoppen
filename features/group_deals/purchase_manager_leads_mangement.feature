@@ -8,13 +8,13 @@ Feature: Purchase manager leads management
     Given I am signed up and confirmed as user with email procurment@nbs.com and password secret and role member
     Then I sign in as procurment@nbs.com with password secret
     Then category "Business" has attributes "default_price:44.44"
-    Then I follow translated "layout.main_menu.purchase_manager.tenders"
+    Then I follow translated "layout.main_menu.member.tenders"
     Then I follow translated "purchase_manager.tenders.index.view.new_tender"
-    Then I should see translated "shared.leads.form.purchase_manager.lead_information"
-    Then I should see translated "shared.leads.form.purchase_manager.header_label"
-    Then I should see translated "shared.leads.form.purchase_manager.description_label"
-    Then I should see translated "shared.leads.form.purchase_manager.sales_information"
-    Then I should see translated "shared.leads.form.purchase_manager.sale_limit_label"
+    Then I should see translated "shared.leads.form.member.lead_information"
+    Then I should see translated "shared.leads.form.member.header_label"
+    Then I should see translated "shared.leads.form.member.description_label"
+    Then I should see translated "shared.leads.form.member.sales_information"
+    Then I should see translated "shared.leads.form.member.sale_limit_label"
     Then I select "Business" from "lead_category_id"
     Then I fill in "lead_company_name" with "super"
     Then I fill in "lead_company_phone_number" with "super"
@@ -87,7 +87,7 @@ Feature: Purchase manager leads management
     Given I am signed up and confirmed as user with email procurment@nbs.com and password secret and role member
     Then I sign in as procurment@nbs.com with password secret
     Then category "Business" has attributes "default_price:44.44"
-    Then I follow translated "layout.main_menu.purchase_manager.tenders"
+    Then I follow translated "layout.main_menu.member.tenders"
     Then I follow translated "purchase_manager.tenders.index.view.new_tender"
     Then I select "Business" from "lead_category_id"
     Then I fill in "lead_header" with "Tender for project outsourcing"

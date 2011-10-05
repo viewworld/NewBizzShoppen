@@ -23,7 +23,7 @@ Scenario: I cannot buy a lead skipping checkout
   Given I go to browse leads
   And I follow category "Computers"
   Then I follow translated "leads.index.add_to_cart_link"
-  When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   Then I should see translated "common.nothing_to_display"
 
 @tgn @_tested
@@ -41,7 +41,7 @@ Scenario: Lead purchase is not marked with "has access" after creation
   Given I go to browse leads
   And I follow category "Computers"
   Then I follow translated "leads.index.add_to_cart_link"
-  When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   Then I should see translated "common.nothing_to_display"
 
 #after AO finishes invoicing subsystem
@@ -74,7 +74,7 @@ Scenario: Invoice is NOT created when payment notification is duplicated
 Scenario: I can add to cart lead requested by lead user that belongs to my account
   When I go to customers lead requests
   Then I follow translated "customer.lead_requests.index.view.accept_lead_request_link"
-  When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   And I should see translated "common.nothing_to_display"
 
 @tgn @_tested @selenium

@@ -124,7 +124,7 @@ Feature: Deals from Call Centre/Agent perspective
     Then I have user with email ned@stark.com and role supplier
     Then user "ned@stark.com" is confirmed
     Then I sign in as ned@stark.com with password secret
-    Then I follow translated "layout.main_menu.lead_buyer.deals_to_certify"
+    Then I follow translated "layout.main_menu.lead_supplier.deals_to_certify"
     Then I follow translated "buyer.deal_certification_requests.index.view.certify"
     Then I press translated "buyer.deal_certification_requests.edit.view.certify"
     Then I should see translated "buyer.deal_certification_requests.update.flash.certify_success"
@@ -137,7 +137,7 @@ Feature: Deals from Call Centre/Agent perspective
     Then I follow translated "buyer.deal_certification_requests.index.view.certify"
     Then I press translated "buyer.deal_certification_requests.edit.view.reject"
     Then I should see translated "buyer.deal_certification_requests.update.flash.reject_success"
-    Then I should not see translated "layout.main_menu.lead_buyer.deals_to_certify"
+    Then I should not see translated "layout.main_menu.lead_supplier.deals_to_certify"
 
   @added @tgn @_done @_tested @selenium @m17
   Scenario: When certification request is created for non-existing user than I can access that link from the email
