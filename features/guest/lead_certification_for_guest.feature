@@ -63,9 +63,9 @@ Scenario: After signup I can login instantly and do not have to confirm it by em
   When lead "BestLead" certification request is sent
   And I visit certification url for lead "BestLead"
   And I press translated "leads.certification.confirm"
-  And I fill in "user_purchase_manager_password" with "secret"
-  And I fill in "user_purchase_manager_password_confirmation" with "secret"
-  And I check "user_purchase_manager_agreement_read"
+  And I fill in "user_member_password" with "secret"
+  And I fill in "user_member_password_confirmation" with "secret"
+  And I check "user_member_agreement_read"
   And I press translated "purchase_manager_accounts.new.view.button_create_account"
   And I am on the home page
   And I sign in as james@bond.co.uk with password secret
@@ -153,9 +153,9 @@ Scenario: All my account information should be populated from lead
   When lead "BestLead" certification request is sent
   And I visit certification url for lead "BestLead"
   And I press translated "leads.certification.confirm"
-  And I fill in "user_purchase_manager_password" with "secret"
-  And I fill in "user_purchase_manager_password_confirmation" with "secret"
-  And I check "user_purchase_manager_agreement_read"
+  And I fill in "user_member_password" with "secret"
+  And I fill in "user_member_password_confirmation" with "secret"
+  And I check "user_member_agreement_read"
   And I press translated "purchase_manager_accounts.new.view.button_create_account"
   Then user "james@bond.co.uk" has profile copied from lead "BestLead"
 
