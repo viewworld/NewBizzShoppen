@@ -166,7 +166,7 @@ class Lead < AbstractLead
   end
 
   def deliver_notify_suppliers_about_changes(email)
-    deliver_email_template(email, "notify_suppliers_about_lead_update")
+    deliver_email_template(email, "notify_buyers_about_lead_update")
   end
 
   def deliver_email_template(email, uniq_id)
