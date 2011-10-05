@@ -36,7 +36,7 @@
     <tbody>
     <tr>
       <td><strong><%= invoice.seller_name %></strong></td>
-      <td><strong><%= invoice.supplier_company_name.blank? ? invoice.supplier_name : invoice.supplier_company_name %></strong></td>
+      <td><strong><%= invoice.customer_company_name.blank? ? invoice.customer_name : invoice.customer_company_name %></strong></td>
     </tr>
     <tr>
       <td>
@@ -47,8 +47,8 @@
           <%= t("administration.invoices.show.view.bank_country") %>: <%= invoice.seller_address.country.name %><br/>
       </td>
       <td>
-          <% unless invoice.supplier_company_name.blank? %>
-            <%= invoice.supplier_name %><br/>
+          <% unless invoice.customer_company_name.blank? %>
+            <%= invoice.customer_name %><br/>
           <% end %>
           <%= invoice.supplier_address.address_line_1 %><br/>
           <%= invoice.supplier_address.address_line_2 %><br/>
@@ -64,8 +64,8 @@
         <% end %>
       </td>
       <td>
-        <% if invoice.supplier_vat_no.present? %>
-            <%= t("administration.invoices.show.view.vat_no") %>: <%= invoice.supplier_vat_no %>
+        <% if invoice.customer_vat_no.present? %>
+            <%= t("administration.invoices.show.view.vat_no") %>: <%= invoice.customer_vat_no %>
         <% end %>
       </td>
     </tr>

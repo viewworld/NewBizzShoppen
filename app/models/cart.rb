@@ -114,7 +114,7 @@ class Cart
             :receiver_email => APP_CONFIG[:paypal_email],
             :secret => APP_CONFIG[:paypal_secret]
           },
-        :supplier_id => supplier.id,
+        :buyer_id => supplier.id,
         :status => "Completed",
         :transaction_id => rand(99999999).to_s)
     payment_notification.supplier.cart.paid!

@@ -60,7 +60,7 @@ class Members::LeadsController < Members::MemberController
     @lead.creation_step = 3
     create! do |success, failure|
       success.html {
-        redirect_to purchase_managers_lead_path(@lead)
+        redirect_to members_lead_path(@lead)
       }
     end
   end
@@ -77,9 +77,9 @@ class Members::LeadsController < Members::MemberController
     @lead = Lead.requested_by_member(current_user).find(params[:id])
 
     update! do |success, failure|
-      success.html { redirect_to params[:get_deal] == "1" ? purchase_managers_lead_path(@lead) : purchase_managers_leads_path }
+      success.html { redirect_to params[:get_deal] == "1" ? members_lead_path(@lead) : members_leads_path }
       success.js { render :nothing => true }
-      failure.html { redirect_to purchase_managers_leads_path }
+      failure.html { redirect_to members_leads_path }
       failure.js { render :nothing => true }
     end
   end
@@ -92,6 +92,6 @@ class Members::LeadsController < Members::MemberController
     else
       flash[:notice] = I18n.t("member.leads.destroy.flash.lead_deletion_failure")
     end
-    redirect_to purchase_managers_leads_path
+    redirect_to members_leads_path
   end
 end

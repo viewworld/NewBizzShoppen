@@ -88,10 +88,10 @@ class Invoice < ActiveRecord::Base
 
   def duplicate_company_and_supplier_information
     self.update_attributes({
-            :supplier_company_name => user.company_name,
-            :supplier_name => user.with_role.full_name,
+            :customer_company_name => user.company_name,
+            :customer_name => user.with_role.full_name,
             :supplier_address => ::Address::InvoiceSupplier.new(user.with_role.address.attributes),
-            :supplier_vat_no => user.with_role.vat_number,
+            :customer_vat_no => user.with_role.vat_number,
             :seller_address => ::Address::InvoiceSeller.new(seller.address.attributes),
             :seller_name => seller.company_name,
             :seller_vat_no => seller.vat_no,

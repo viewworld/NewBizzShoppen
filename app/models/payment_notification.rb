@@ -1,7 +1,7 @@
 class PaymentNotification < ActiveRecord::Base
   serialize :params
 
-  belongs_to :supplier, :class_name => "User::LeadSupplier"
+  belongs_to :supplier, :foreign_key => "buyer_id", :class_name => "User::LeadSupplier"
   has_one :payment_transaction
 
   before_create :check_if_duplicated
@@ -13,7 +13,7 @@ class PaymentNotification < ActiveRecord::Base
 
   def check_if_duplicated
     if status == "Completed"
-      unless PaymentNotification.first(:conditions => { :transaction_id => transaction_id, :supplier_id => supplier_id, :status => "Completed" }).nil?
+      unless PaymentNotification.first(:conditions => { :transaction_id => transaction_id, :buyer_id => buyer_id, :status => "Completed" }).nil?
         self.status = "Duplicated"
       end
     end

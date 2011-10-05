@@ -15,7 +15,7 @@ module User::CommonSupplier
     def handle_auto_buy
       if unique_categories.any? and big_buyer?
         unique_categories.select{ |c| !c.auto_buy }.each do |category|
-          category.update_attribute(:auto_buy, true) if category.suppliers.size == 1
+          category.update_attribute(:auto_buy, true) if category.customers.size == 1
         end
       elsif unique_categories.any? and !big_buyer?
         unique_categories.select{ |c| c.auto_buy }.each do |category|

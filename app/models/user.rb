@@ -651,9 +651,9 @@ class User < ActiveRecord::Base
 
   def role_to_campaign_template_name
     if has_role?(:category_supplier)
-      "category_supplier"
+      "category_buyer"
     elsif has_role?(:supplier)
-      "supplier"
+      "buyer"
     elsif has_role?(:member)
       "member"
     end

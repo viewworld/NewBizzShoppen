@@ -64,9 +64,9 @@ class Result < ActiveRecord::Base
     if upgrades_to_member?
       "upgrade_contact_to_member"
     elsif upgrades_to_supplier?
-      "upgrade_contact_to_supplier"
+      "upgrade_contact_to_buyer"
     elsif upgrades_to_category_supplier?
-      "upgrade_contact_to_category_supplier"
+      "upgrade_contact_to_category_buyer"
     elsif send_material?
       "result_send_material"
     end

@@ -219,8 +219,8 @@ class Deal < AbstractLead
       supplier.update_attribute(:deal_category_id, lead_category.id) if supplier and supplier.deal_category_id.blank?
       supplier.update_attribute(:big_buyer, true) if supplier and !supplier.big_buyer?
       lead_category.update_attribute(:is_customer_unique, true) unless lead_category.is_customer_unique
-      if supplier and !lead_category.suppliers.include?(supplier)
-        lead_category.suppliers << supplier
+      if supplier and !lead_category.customers.include?(supplier)
+        lead_category.customers << supplier
         lead_category.save
       end
       lead_category.update_attribute(:auto_buy, true) unless lead_category.auto_buy?

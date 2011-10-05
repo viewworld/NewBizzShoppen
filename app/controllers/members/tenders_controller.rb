@@ -35,11 +35,11 @@ class Members::TendersController < Members::MemberController
           @lead.lead_certification_requests.create
         end
         if !params[:commit_duplicate].blank?
-          redirect_to new_purchase_managers_tender_path(:lead_id => @lead.id, :category_id => @lead.category_id)
+          redirect_to new_members_tender_path(:lead_id => @lead.id, :category_id => @lead.category_id)
         elsif !params[:commit_continue].blank?
-          redirect_to new_purchase_managers_tender_path(:category_id => @lead.category_id)
+          redirect_to new_members_tender_path(:category_id => @lead.category_id)
         else
-          redirect_to purchase_managers_tenders_path
+          redirect_to members_tenders_path
         end
       }
       end
@@ -61,7 +61,7 @@ class Members::TendersController < Members::MemberController
     params[:tender] = params[:lead]
 
     update! do |success, failure|
-      success.html { redirect_to purchase_managers_tenders_path }
+      success.html { redirect_to members_tenders_path }
       success.js { render :nothing => true }
     end
   end
@@ -73,7 +73,7 @@ class Members::TendersController < Members::MemberController
     else
       flash[:notice] = I18n.t("member.tenders.destroy.flash.tender_deletion_failure")
     end
-    redirect_to purchase_managers_tenders_path
+    redirect_to members_tenders_path
   end
 
   protected
