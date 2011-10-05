@@ -2,7 +2,7 @@
 
   <%= javascript_include_tag "jquery.field.min.js", "jquery.calculation.min.js", "invoice_calculations.js", "invoice_navigation.js" %>
 
-  <header back="true"><%= t("administration.invoices.edit.view.header", :name => @invoice.supplier_name) %></header>
+  <header back="true"><%= t("administration.invoices.edit.view.header", :name => @invoice.customer_name) %></header>
 
   <%= semantic_form_for [:administration, :invoicing, @invoice] do |form| %>
       <frm title="#{t('administration.invoices.edit.view.save_changes')}">
@@ -62,9 +62,9 @@
                   <li class="header">
                     <h3><%= t("administration.invoices.edit.view.form.supplier_information") %></h3>
                   </li>
-                  <%= form.input :supplier_company_name %>
-                  <%= form.input :supplier_name %>
-                  <%= form.input :supplier_vat_no %>
+                  <%= form.input :customer_company_name %>
+                  <%= form.input :customer_name %>
+                  <%= form.input :customer_vat_no %>
                   <%= form.fields_for :supplier_address do |address_form| %>
                       <%= address_form.input :address_line_1 %>
                       <%= address_form.input :address_line_2 %>
@@ -110,7 +110,7 @@
                 <%= form.input :currency_id,
                                :include_blank => false, :collection => Currency.all %>
                 <%= form.input :charge_vat %>
-                <%= form.input :vat_text_in_supplier_country, :as => :string %>
+                <%= form.input :vat_text_in_customer_country, :as => :string %>
               </ol>
             </fieldset>
 

@@ -66,7 +66,7 @@
               <td class="cl"></td>
               <td><%= payment_transaction.class.to_s == "PaypalTransaction" ? t("administration.payment_transactions.index.view.transaction_type_paypal") : t("administration.payment_transactions.index.view.transaction_type_manual") %></td>
               <td><%= payment_transaction.invoice.full_number %></td>
-              <td><%= payment_transaction.invoice.supplier_name %></td>
+              <td><%= payment_transaction.invoice.customer_name %></td>
               <td><%= payment_transaction.invoice.user.company_name %></td>
               <td><%= payment_transaction.invoice.supplier_address %></td>
               <td class="ta_r"><%= as_currency(payment_transaction.amount, payment_transaction.invoice.currency)  %></td>

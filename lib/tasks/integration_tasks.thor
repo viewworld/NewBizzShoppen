@@ -87,5 +87,6 @@ class IntegrationTasks < Thor
       ActiveRecord::Migration.execute("UPDATE addresses SET addressable_type = '#{new_val}' WHERE addressable_type = '#{old_val}'")
       ActiveRecord::Migration.execute("UPDATE lead_templates SET creator_type = '#{new_val}' WHERE creator_type = '#{old_val}'")
     end
+    ActiveRecord::Migration.execute("UPDATE addresses SET type = 'Address::InvoiceSupplier' WHERE type = 'Address::InvoiceCustomer'")
   end
 end
