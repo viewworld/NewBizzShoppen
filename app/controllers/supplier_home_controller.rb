@@ -20,7 +20,7 @@ class SupplierHomeController < ApplicationController
   public
 
   def show
-    @news = Article::News::SalesManager.published.latest.limit(3)
+    @news = Article::News::Supplier.published.latest.limit(3)
 
     if user_signed_in? and current_user.has_role? :lead_supplier
       sales_manager

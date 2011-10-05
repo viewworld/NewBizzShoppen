@@ -16,7 +16,7 @@ end
 
 When /^there are (\d+) buyer news/ do |num|
   num.to_i.times do
-    Article::News::SalesManager.make!.publish!
+    Article::News::Supplier.make!.publish!
   end
 end
 
@@ -25,11 +25,11 @@ Given /^published agent news exists with attributes "([^"]*)"$/ do |options|
 end
 
 Given /^published buyer news exists with attributes "([^"]*)"$/ do |options|
-  Article::News::SalesManager.make!(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys).publish!
+  Article::News::Supplier.make!(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys).publish!
 end
 
 Given /^published purchase manager news exists with attributes "([^"]*)"$/ do |options|
-  Article::News::PurchaseManager.make!(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys).publish!
+  Article::News::Member.make!(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys).publish!
 end
 
 Given /^pagination page size for news is set to (\d+)$/ do |n|

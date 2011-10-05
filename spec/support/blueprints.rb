@@ -296,12 +296,12 @@ end
   content { Faker::Lorem.sentences(2).to_s }
 end
 
-::Article::News::SalesManager.blueprint do
+::Article::News::Supplier.blueprint do
   title { Faker::Lorem.words(4).to_s.capitalize }
   content { Faker::Lorem.sentences(2).to_s }
 end
 
-::Article::News::PurchaseManager.blueprint do
+::Article::News::Member.blueprint do
   title { Faker::Lorem.words(4).to_s.capitalize }
   content { Faker::Lorem.sentences(2).to_s }
 end

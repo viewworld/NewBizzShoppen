@@ -68,7 +68,7 @@ class IntegrationTasks < Thor
 
     puts "Translations keys..."
     Translation.where("(lower(key) like ? or lower(key) like ? or lower(key) like ? or lower(key) like ? or lower(key) like ?)",
-                      "%buyer%", "%sales manager%", "%customer%", "%purchase_manager%", "%procurement%").each do |t|
+                      "%buyer%", "%sales_manager%", "%customer%", "%purchase_manager%", "%procurement%").each do |t|
       dictionary_keys.each_pair do |old_val, new_val|
         if t.key.downcase.include?(old_val)
           t.key = t.key.gsub(old_val, new_val)
@@ -89,5 +89,7 @@ class IntegrationTasks < Thor
       ActiveRecord::Migration.execute("UPDATE lead_templates SET creator_type = '#{new_val}' WHERE creator_type = '#{old_val}'")
     end
     ActiveRecord::Migration.execute("UPDATE addresses SET type = 'Address::InvoiceSupplier' WHERE type = 'Address::InvoiceCustomer'")
+    ActiveRecord::Migration.execute("UPDATE articles SET type = 'Article::News::Supplier' WHERE type = 'Article::News::SalesManager'")
+    ActiveRecord::Migration.execute("UPDATE articles SET type = 'Article::News::Member' WHERE type = 'Article::News::PurchaseManager'")
   end
 end

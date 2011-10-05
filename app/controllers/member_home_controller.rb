@@ -25,7 +25,7 @@ class MemberHomeController < ApplicationController
       @latest_leads = Lead.published_only.without_bought_and_requested_by(current_user).without_unique_categories.latest.limit(3)
     end
 
-    @news         = Article::News::PurchaseManager.published.latest.limit(3)
+    @news         = Article::News::Member.published.latest.limit(3)
   end
 
 end
