@@ -24,7 +24,7 @@ class Nbs < Thor
     Settings.expire_certification_notification_after_days = 15 if Settings.expire_certification_notification_after_days.nil?
     Settings.default_deal_admin_email = Rails.env.production? ? "" : "agent@nbs.com" if Settings.default_deal_admin_email.nil?
     # email verification settings
-    Settings.email_verification_for_procurement_managers = "0" if Settings.email_verification_for_procurement_managers.nil?
+    Settings.email_verification_for_members = "0" if Settings.email_verification_for_members.nil?
     Settings.email_verification_for_sales_managers = "0" if Settings.email_verification_for_sales_managers.nil?
     Settings.default_max_auto_buy_per_4_weeks = 5 if Settings.default_max_auto_buy_per_4_weeks.nil?
     Settings.default_group_deal_min_leads_created = 5 if Settings.default_group_deal_min_leads_created.nil?
@@ -417,8 +417,8 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
      {:name => "Meeting booked", :final => true, :generic => true},
      {:name => "Custom result", :final => true, :generic => true},
      {:name => "Send material", :final => false, :generic => true},
-     {:name => "Upgrade to category buyer", :final => true, :generic => true},
-     {:name => "Upgrade to buyer", :final => true, :generic => true},
+     {:name => "Upgrade to category supplier", :final => true, :generic => true},
+     {:name => "Upgrade to supplier", :final => true, :generic => true},
      {:name => "Upgrade to member", :final => true, :generic => true}].each do |result|
       Result.create(result) unless Result.find_by_name(result[:name])
     end
@@ -429,8 +429,8 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
      {:name => "Result message", :field_type => "0", :is_mandatory => true, :result => Result.find_by_name("Custom result") },
      {:name => "Call back date", :field_type => "4", :is_mandatory => true, :result => Result.find_by_name("Send material") },
      {:name => "Material", :field_type => "5", :is_mandatory => true, :result => Result.find_by_name("Send material") },
-     {:name => "Material", :field_type => "5", :is_mandatory => false, :result => Result.find_by_name("Upgrade to category buyer") },
-     {:name => "Material", :field_type => "5", :is_mandatory => false, :result => Result.find_by_name("Upgrade to buyer") },
+     {:name => "Material", :field_type => "5", :is_mandatory => false, :result => Result.find_by_name("Upgrade to category supplier") },
+     {:name => "Material", :field_type => "5", :is_mandatory => false, :result => Result.find_by_name("Upgrade to supplier") },
      {:name => "Material", :field_type => "5", :is_mandatory => false, :result => Result.find_by_name("Upgrade to member") }
     ].each do |result_field|
       ResultField.create(result_field) unless ResultField.find_by_name_and_result_id(result_field[:name], result_field[:result].id)
@@ -480,18 +480,18 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
       end
 
 
-      unless User::Customer.find_by_email("buyer@nbs.com")
-        u = User::Customer.make!(:email => "buyer@nbs.com", :password => "secret", :password_confirmation => "secret", :big_buyer => true)
+      unless User::Supplier.find_by_email("buyer@nbs.com")
+        u = User::Supplier.make!(:email => "buyer@nbs.com", :password => "secret", :password_confirmation => "secret", :big_buyer => true)
         u.confirm!
         u.save
       end
 
-      buyer = User::Customer.find_by_email("buyer@nbs.com")
+      buyer = User::Supplier.find_by_email("buyer@nbs.com")
       unless User::LeadUser.find_by_email("leaduser@nbs.com")
         u = User::LeadUser.make!(:email => "leaduser@nbs.com", :password => "secret", :password_confirmation => "secret", :parent_id => buyer.id)
         u.confirm!
         u.save
-        u = User::LeadBuyer.make!(:email => "leadbuyer@nbs.com", :password => "secret", :password_confirmation => "secret", :parent_id => buyer.id)
+        u = User::LeadSupplier.make!(:email => "leadbuyer@nbs.com", :password => "secret", :password_confirmation => "secret", :parent_id => buyer.id)
         u.confirm!
         u.save
       end
@@ -504,15 +504,15 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
     end
 
     #Translators
-    [:agent, :call_centre, :customer, :purchase_manager, :category_buyer].each do |role|
+    {:agent => :agent, :call_centre => :call_centre, :customer => :supplier, :purchase_manager => :member, :category_buyer => :category_supplier}.each_pair do |name, role|
       klass = "User::#{role.to_s.camelize}".constantize
-      unless klass.find_by_email("translator_#{role}@nbs.com")
-        if role == :category_buyer
-          user = klass.make!(:email => "translator_#{role}@nbs.com", :password => "secret", :password_confirmation => "secret", :buying_categories => [LeadCategory.first])
-        elsif role == :call_centre
-          user = klass.make!(:email => "translator_#{role}@nbs.com", :password => "secret", :password_confirmation => "secret", :first_name => "Johnny", :last_name => "Mnemonic")
+      unless klass.find_by_email("translator_#{name}@nbs.com")
+        if name == :category_buyer
+          user = klass.make!(:email => "translator_#{name}@nbs.com", :password => "secret", :password_confirmation => "secret", :buying_categories => [LeadCategory.first])
+        elsif name == :call_centre
+          user = klass.make!(:email => "translator_#{name}@nbs.com", :password => "secret", :password_confirmation => "secret", :first_name => "Johnny", :last_name => "Mnemonic")
         else
-          user = klass.make!(:email => "translator_#{role}@nbs.com", :password => "secret", :password_confirmation => "secret")
+          user = klass.make!(:email => "translator_#{name}@nbs.com", :password => "secret", :password_confirmation => "secret")
         end
         user.confirm!
         user.roles << :translator

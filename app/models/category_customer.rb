@@ -1,4 +1,4 @@
-class CategorySupplier < ActiveRecord::Base
+class CategoryCustomer < ActiveRecord::Base
   belongs_to :user
   belongs_to :category
 

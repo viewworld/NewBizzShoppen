@@ -44,7 +44,7 @@ class Category < ActiveRecord::Base
 
   has_many :category_customers
   has_many :category_agents
-  has_many :suppliers, :through => :category_customers, :source => :user
+  has_many :customers, :through => :category_customers, :source => :user
   has_many :agents, :through => :category_agents, :source => :user
   has_many :categories_users
   has_many :buying_users, :through => :categories_users, :source => :user
