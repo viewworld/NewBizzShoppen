@@ -7,8 +7,8 @@ Feature: Leads filtering by lead user
 Background:
   Given I am on the homepage
   And I make sure current locale is "en"
-  Given I am signed up and confirmed as user with email customer@person.com and password supersecret and role customer
-  And user customer@person.com with role customer exists with attributes "team_buyers:true"
+  Given I am signed up and confirmed as user with email customer@person.com and password supersecret and role supplier
+  And user customer@person.com with role supplier exists with attributes "team_buyers:true"
   And an user with role lead_user and email lead_user2@person.com exists as subaccount for customer customer@person.com
   And an user with role lead_user and email lead_user44@person.com exists as subaccount for customer customer@person.com
   And user lead_user2@person.com with role lead_user exists with attributes "screen_name:John McCoy,first_name:John,last_name:McCoy"
@@ -19,10 +19,10 @@ Background:
   And lead Mouses deal exists within category Office
   And lead Keyboards deal exists with attributes "purchase_value:3001.99,zip_code:123"
   And lead Mouses deal exists with attributes "purchase_value:4400.99,zip_code:456"
-  And lead Printers ultimate deal is bought by user customer@person.com with role customer and is assigned to user lead_user2@person.com with role lead_user
-  And lead Monitors LCD deal is bought by user customer@person.com with role customer and is assigned to user lead_user44@person.com with role lead_user
-  And lead Keyboards deal is bought by user customer@person.com with role customer and is assigned to user lead_user2@person.com with role lead_user
-  And lead Mouses deal is bought by user customer@person.com with role customer and is assigned to user lead_user44@person.com with role lead_user
+  And lead Printers ultimate deal is bought by user customer@person.com with role supplier and is assigned to user lead_user2@person.com with role lead_user
+  And lead Monitors LCD deal is bought by user customer@person.com with role supplier and is assigned to user lead_user44@person.com with role lead_user
+  And lead Keyboards deal is bought by user customer@person.com with role supplier and is assigned to user lead_user2@person.com with role lead_user
+  And lead Mouses deal is bought by user customer@person.com with role supplier and is assigned to user lead_user44@person.com with role lead_user
   And purchase for lead "Mouses deal" and user "customer@person.com" exists with attributes "state:1"
   Then I sign in as customer@person.com with password supersecret
   Then I go to buyer lead purchases

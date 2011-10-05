@@ -8,8 +8,8 @@ Background:
   Given Category named "Another sample category" already exists within category named "Sample category"
   And Lead named "Super printers" exists within "Another sample category" category
   And Lead named "Ultra printers" exists within "Another sample category" category
-  Given I am signed up and confirmed as user with email john@doe.com and password secret and role customer
-  And User john@doe.com with role customer is big buyer
+  Given I am signed up and confirmed as user with email john@doe.com and password secret and role supplier
+  And User john@doe.com with role supplier is big buyer
   And I sign in as john@doe.com with password secret
   And I go to browse leads
 

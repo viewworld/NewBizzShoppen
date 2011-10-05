@@ -44,7 +44,7 @@ Given /^lead (.+) exists with currency "([^"]*)"$/ do |header, currency_name|
 end
 
 Given /^purchase for lead "([^"]*)" and user "([^"]*)" exists with attributes "([^"]*)"$/ do |header, email, options|
-  user = User::Customer.find_by_email(email)
+  user = User::Supplier.find_by_email(email)
   lead = Lead.where(:header => header).first
   lead_purchase = lead.lead_purchases.detect { |lp| lp.owner == user }
   lead_purchase.update_attributes(Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys)
@@ -62,7 +62,7 @@ Given /^bought lead (.+) exists within category (.+)$/ do |header, category_name
   category = LeadCategory.make!(:name => category_name) if category.nil?
 
   lead = Lead.make!(:header => header, :category => category)
-  LeadSinglePurchase.make!(:lead_id => lead.id, :owner => User::Customer.make!, :paid => true, :accessible_from => Time.now)
+  LeadSinglePurchase.make!(:lead_id => lead.id, :owner => User::Supplier.make!, :paid => true, :accessible_from => Time.now)
 end
 
 Given /^a lead (.+) exists within category (.+) and is bought by user (.+) with role (.+)$/ do |header, category_name, email, role|
@@ -71,11 +71,11 @@ Given /^a lead (.+) exists within category (.+) and is bought by user (.+) with 
 
   customer = "User::#{role.camelize}".constantize.find_by_email(email)
   customer = "User::#{role.camelize}".constantize.make!(:email => email) if customer.nil?
-  purchaser = customer.role == "customer" ? customer : User::LeadBuyer.find(customer.id)
+  purchaser = customer.role == "customer" ? customer : User::LeadSupplier.find(customer.id)
   if role == "lead_buyer"
     customer = customer.parent.send(:casted_class).find(customer.parent_id)
   elsif role == "category_buyer"
-    customer = User::Customer.find(customer.id)
+    customer = User::Supplier.find(customer.id)
   end
   lead = Lead.where(:header => header).first
   if lead.nil?
@@ -127,7 +127,7 @@ Given /^lead "([^"]*)" was requested by user "([^"]*)" with role "([^"]*)"(?: an
   end
   u = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
   lead = Lead.where(:header => header).first
-  owner = User::Customer.first(:conditions => { :email => owner_email })
+  owner = User::Supplier.first(:conditions => { :email => owner_email })
   LeadRequest.make!(:requested_by => u.id, :lead => lead, :owner => owner)
 end
 
@@ -141,7 +141,7 @@ Given /^there are "([^"]*)" existing leads$/ do |num|
 end
 
 Given /^there are "([^"]*)" sold leads$/ do |num|
-  num.to_i.times{LeadSinglePurchase.make!(:lead => Lead.make!, :owner => User::Customer.make!, :paid => true, :accessible_from => Time.now)}
+  num.to_i.times{LeadSinglePurchase.make!(:lead => Lead.make!, :owner => User::Supplier.make!, :paid => true, :accessible_from => Time.now)}
 end
 
 Given /^there are "([^"]*)" leads in category "([^"]*)"$/ do |num,category_name|
@@ -154,7 +154,7 @@ end
 Given /^(.+) is a best seller$/ do |header|
   lead = Lead.where(:header => header).first
   (Lead.maximum(:lead_purchases_counter)+1).times do
-    LeadSinglePurchase.make!(:lead_id => lead.id, :owner => User::Customer.make!, :paid => true, :accessible_from => Time.now)
+    LeadSinglePurchase.make!(:lead_id => lead.id, :owner => User::Supplier.make!, :paid => true, :accessible_from => Time.now)
   end
 end
 

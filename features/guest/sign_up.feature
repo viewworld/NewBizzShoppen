@@ -8,7 +8,7 @@ Feature: Sign up feature
     Then "user_agent_address_attributes_country_id" should be selected for value "United Kingdom"
     When I make sure current locale is "da"
     And I am on buyer sign up page
-    Then "user_customer_address_attributes_country_id" should be selected for value "Denmark"
+    Then "user_supplier_address_attributes_country_id" should be selected for value "Denmark"
 
   # 5779
   @m12 @$_guest @requested @tgn @_done @_tested @selenium

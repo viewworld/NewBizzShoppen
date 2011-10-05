@@ -23,7 +23,7 @@ Feature: VAT rates
   @_done
   Scenario: Administrator can edit vat number for customer
     When I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
-    And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role customer
+    And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier
     And I sign in as jon@lajoie.ca with password secret
     And I am on administration edit user kastomer@nbs.fake
     Then I should see translated "formtastic.labels.user/customer.vat_number"
@@ -32,7 +32,7 @@ Feature: VAT rates
   Scenario: Administrator can't edit vat number for agents/pms
     When I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
     And someone is signed up and confirmed as user with email ejdzent@nbs.fake and password secret and role agent
-    And someone is signed up and confirmed as user with email piem@nbs.fake and password secret and role purchase_manager
+    And someone is signed up and confirmed as user with email piem@nbs.fake and password secret and role member
     And I sign in as jon@lajoie.ca with password secret
     And I am on administration edit user ejdzent@nbs.fake
     Then I should not see translated "formtastic.labels.user.vat_number"
@@ -41,7 +41,7 @@ Feature: VAT rates
 
   @_done
   Scenario: Buyers can edit vat number in profile
-    When I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
+    When I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier
     And I sign in as jon@lajoie.ca with password secret
     And I follow translated "layout.my_profile_link"
     Then I should see translated "formtastic.labels.user/customer.vat_number"
@@ -49,7 +49,7 @@ Feature: VAT rates
   @_done
   Scenario: Agents/PurchaseManagers can edit vat number in profile
     When I am signed up and confirmed as user with email ejdzent@lajoie.ca and password secret and role agent
-    And I am signed up and confirmed as user with email piem@lajoie.ca and password secret and role purchase_manager
+    And I am signed up and confirmed as user with email piem@lajoie.ca and password secret and role member
     And I sign in as ejdzent@lajoie.ca with password secret
     And I follow translated "layout.my_profile_link"
     Then I should not see translated "formtastic.labels.user.vat_number"
@@ -61,7 +61,7 @@ Feature: VAT rates
   @_done
   Scenario: Administrator can set the no charge vat flag when vat number is specified
     When I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
-    And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role customer with attributes "vat_number:666"
+    And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "vat_number:666"
     And I sign in as jon@lajoie.ca with password secret
     And I am on administration edit user kastomer@nbs.fake
     Then I should see translated "formtastic.labels.user.not_charge_vat"
@@ -69,7 +69,7 @@ Feature: VAT rates
   @_done
   Scenario: Administrator can't set the no charge vat flag when vat number is not specified
     When I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
-    And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role customer
+    And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier
     And I sign in as jon@lajoie.ca with password secret
     And I follow translated "layout.main_menu.admin.users"
     And I am on administration edit user kastomer@nbs.fake
@@ -96,10 +96,10 @@ Feature: VAT rates
     When VAT rate for "Denmark" is set to "27"
     And lead Awesome Lead exists within category Computers
     And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
-    And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role customer
-    And User kastomer@nbs.fake with role customer is big buyer
-    And User kastomer@nbs.fake with role customer is from country Denmark
-    And user "kastomer@nbs.fake" with role "lead_buyer" added lead "Awesome Lead" to cart
+    And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier
+    And User kastomer@nbs.fake with role supplier is big buyer
+    And User kastomer@nbs.fake with role supplier is from country Denmark
+    And user "kastomer@nbs.fake" with role "lead_supplier" added lead "Awesome Lead" to cart
     And I run ruby "puts User.where(:email => 'kastomer@nbs.fake').first.with_role.country.name"
     And I sign in as jon@lajoie.ca with password secret
     And I follow translated "layout.main_menu.admin.upcoming_invoices"
@@ -113,10 +113,10 @@ Feature: VAT rates
     When VAT rate for "Denmark" is set to "27"
     And lead Awesome Lead exists within category Computers
     And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
-    And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role customer with attributes "not_charge_vat:1"
-    And User kastomer@nbs.fake with role customer is big buyer
-    And User kastomer@nbs.fake with role customer is from country Denmark
-    And user "kastomer@nbs.fake" with role "lead_buyer" added lead "Awesome Lead" to cart
+    And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "not_charge_vat:1"
+    And User kastomer@nbs.fake with role supplier is big buyer
+    And User kastomer@nbs.fake with role supplier is from country Denmark
+    And user "kastomer@nbs.fake" with role "lead_supplier" added lead "Awesome Lead" to cart
     And I sign in as jon@lajoie.ca with password secret
     And I follow translated "layout.main_menu.admin.upcoming_invoices"
     And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
@@ -128,8 +128,8 @@ Feature: VAT rates
    Scenario: When creating invoice manually by admin, VAT field should be prepopulated if country has vat rate set and user doesnt pay vat in his country
      When VAT rate for "Denmark" is set to "27"
      And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
-     And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role customer with attributes "first_name:Wielki,last_name:Szu,company_name:WielkiSzuLtd"
-     And User kastomer@nbs.fake with role customer is from country Denmark
+     And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Wielki,last_name:Szu,company_name:WielkiSzuLtd"
+     And User kastomer@nbs.fake with role supplier is from country Denmark
      And I sign in as jon@lajoie.ca with password secret
      And I click hidden link by url regex "/administration\/invoicing\/invoices/"
      And I select "WielkiSzuLtd, kastomer@nbs.fake" from "invoice_user_id"
@@ -142,7 +142,7 @@ Feature: VAT rates
   Scenario: When creating invoice manually by admin, VAT field should be zero and disabled if country has vat rate set but user pays vat in his country
     When VAT rate for "Denmark" is set to "27"
     And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
-    And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role customer with attributes "first_name:Wielki,last_name:Szu,company_name:WielkiSzuLtd,not_charge_vat:1"
+    And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Wielki,last_name:Szu,company_name:WielkiSzuLtd,not_charge_vat:1"
     And I sign in as jon@lajoie.ca with password secret
     And I click hidden link by url regex "/administration\/invoicing\/invoices/"
     And I select "WielkiSzuLtd, kastomer@nbs.fake" from "invoice_user_id"

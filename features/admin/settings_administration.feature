@@ -132,20 +132,20 @@ Scenario: I can enable/disable email verification for procurement managers
   And I sign out
   When I go to purchase manager sign up
   And I fill in the following:
-    | user_purchase_manager_first_name            | Jon             |
-    | user_purchase_manager_last_name             | Lajoie          |
-    | user_purchase_manager_company_name          | Lajoie Inc      |
-    | user_purchase_manager_phone                 | 48928217272     |
-    | user_purchase_manager_screen_name           | Normal Guy Verified      |
-    | user_purchase_manager_email                 | jon@lajoie.ca   |
-    | user_purchase_manager_password              | secret          |
-    | user_purchase_manager_password_confirmation | secret          |
-    | user_purchase_manager_address_attributes_address_line_1        | Sunset Blv 32   |
-    | user_purchase_manager_address_attributes_address_line_2        | Montreal        |
-    | user_purchase_manager_address_attributes_zip_code              | 43-270          |
-    | user_purchase_manager_address_attributes_address_line_3        | Quebec          |
-  And I select "Denmark" from "user_purchase_manager_address_attributes_country_id"
-  And I check "user_purchase_manager_agreement_read"
+    | user_member_first_name            | Jon             |
+    | user_member_last_name             | Lajoie          |
+    | user_member_company_name          | Lajoie Inc      |
+    | user_member_phone                 | 48928217272     |
+    | user_member_screen_name           | Normal Guy Verified      |
+    | user_member_email                 | jon@lajoie.ca   |
+    | user_member_password              | secret          |
+    | user_member_password_confirmation | secret          |
+    | user_member_address_attributes_address_line_1        | Sunset Blv 32   |
+    | user_member_address_attributes_address_line_2        | Montreal        |
+    | user_member_address_attributes_zip_code              | 43-270          |
+    | user_member_address_attributes_address_line_3        | Quebec          |
+  And I select "Denmark" from "user_member_address_attributes_country_id"
+  And I check "user_member_agreement_read"
   And I press translated "purchase_manager_accounts.new.view.button_create_account"
   Then I should see translated "flash.accounts.create.no_verification"
   And I sign in as lead_user2@person.com with password supersecret
@@ -155,20 +155,20 @@ Scenario: I can enable/disable email verification for procurement managers
   And I sign out
   When I go to purchase manager sign up
   And I fill in the following:
-    | user_purchase_manager_first_name            | Jon             |
-    | user_purchase_manager_last_name             | Lajoie          |
-    | user_purchase_manager_company_name          | Lajoie Inc      |
-    | user_purchase_manager_phone                 | 48928217272     |
-    | user_purchase_manager_screen_name           | Normal Guy Non Verified      |
-    | user_purchase_manager_email                 | jon2@lajoie.ca   |
-    | user_purchase_manager_password              | secret          |
-    | user_purchase_manager_password_confirmation | secret          |
-    | user_purchase_manager_address_attributes_address_line_1        | Sunset Blv 32   |
-    | user_purchase_manager_address_attributes_address_line_2        | Montreal        |
-    | user_purchase_manager_address_attributes_zip_code              | 43-270          |
-    | user_purchase_manager_address_attributes_address_line_3        | Quebec          |
-  And I select "Denmark" from "user_purchase_manager_address_attributes_country_id"
-  And I check "user_purchase_manager_agreement_read"
+    | user_member_first_name            | Jon             |
+    | user_member_last_name             | Lajoie          |
+    | user_member_company_name          | Lajoie Inc      |
+    | user_member_phone                 | 48928217272     |
+    | user_member_screen_name           | Normal Guy Non Verified      |
+    | user_member_email                 | jon2@lajoie.ca   |
+    | user_member_password              | secret          |
+    | user_member_password_confirmation | secret          |
+    | user_member_address_attributes_address_line_1        | Sunset Blv 32   |
+    | user_member_address_attributes_address_line_2        | Montreal        |
+    | user_member_address_attributes_zip_code              | 43-270          |
+    | user_member_address_attributes_address_line_3        | Quebec          |
+  And I select "Denmark" from "user_member_address_attributes_country_id"
+  And I check "user_member_agreement_read"
   And I press translated "purchase_manager_accounts.new.view.button_create_account"
   Then I should see translated "flash.purchase_manager_accounts.create.notice"
 
@@ -179,20 +179,20 @@ Scenario: I can enable/disable email verification for sales managers
   And I sign out
   When I go to buyer sign up
   And I fill in the following:
-      | user_customer_first_name            | Bob             |
-      | user_customer_last_name             | Taker           |
-      | user_customer_company_name          | LeadsInt Ltd    |
-      | user_customer_phone                 | 48928217272     |
-      | user_customer_screen_name           | Bob T Verified          |
-      | user_customer_email                 | user@domain.dom |
-      | user_customer_password              | secret          |
-      | user_customer_password_confirmation | secret          |
-      | user_customer_address_attributes_address_line_1        | Sunset Blv 32   |
-      | user_customer_address_attributes_address_line_2        | London          |
-      | user_customer_address_attributes_zip_code              | 43-270          |
-      | user_customer_address_attributes_address_line_3        | Wesley             |
-  And I select "Denmark" from "user_customer_address_attributes_country_id"
-  And I check "user_customer_agreement_read"
+      | user_supplier_first_name            | Bob             |
+      | user_supplier_last_name             | Taker           |
+      | user_supplier_company_name          | LeadsInt Ltd    |
+      | user_supplier_phone                 | 48928217272     |
+      | user_supplier_screen_name           | Bob T Verified          |
+      | user_supplier_email                 | user@domain.dom |
+      | user_supplier_password              | secret          |
+      | user_supplier_password_confirmation | secret          |
+      | user_supplier_address_attributes_address_line_1        | Sunset Blv 32   |
+      | user_supplier_address_attributes_address_line_2        | London          |
+      | user_supplier_address_attributes_zip_code              | 43-270          |
+      | user_supplier_address_attributes_address_line_3        | Wesley             |
+  And I select "Denmark" from "user_supplier_address_attributes_country_id"
+  And I check "user_supplier_agreement_read"
   And I press translated "buyer_accounts.new.view.button_create_account"
   Then I should see translated "flash.accounts.create.no_verification"
   And I sign in as lead_user2@person.com with password supersecret
@@ -202,20 +202,20 @@ Scenario: I can enable/disable email verification for sales managers
   And I sign out
   When I go to buyer sign up
   And I fill in the following:
-      | user_customer_first_name            | Bob             |
-      | user_customer_last_name             | Taker           |
-      | user_customer_company_name          | LeadsInt Ltd    |
-      | user_customer_phone                 | 48928217272     |
-      | user_customer_screen_name           | Bob T Not Verified          |
-      | user_customer_email                 | user2@domain.dom |
-      | user_customer_password              | secret          |
-      | user_customer_password_confirmation | secret          |
-      | user_customer_address_attributes_address_line_1        | Sunset Blv 32   |
-      | user_customer_address_attributes_address_line_2        | London          |
-      | user_customer_address_attributes_zip_code              | 43-270          |
-      | user_customer_address_attributes_address_line_3        | Wesley             |
-  And I select "Denmark" from "user_customer_address_attributes_country_id"
-  And I check "user_customer_agreement_read"
+      | user_supplier_first_name            | Bob             |
+      | user_supplier_last_name             | Taker           |
+      | user_supplier_company_name          | LeadsInt Ltd    |
+      | user_supplier_phone                 | 48928217272     |
+      | user_supplier_screen_name           | Bob T Not Verified          |
+      | user_supplier_email                 | user2@domain.dom |
+      | user_supplier_password              | secret          |
+      | user_supplier_password_confirmation | secret          |
+      | user_supplier_address_attributes_address_line_1        | Sunset Blv 32   |
+      | user_supplier_address_attributes_address_line_2        | London          |
+      | user_supplier_address_attributes_zip_code              | 43-270          |
+      | user_supplier_address_attributes_address_line_3        | Wesley             |
+  And I select "Denmark" from "user_supplier_address_attributes_country_id"
+  And I check "user_supplier_agreement_read"
   And I press translated "buyer_accounts.new.view.button_create_account"
   Then I should see translated "flash.buyer_accounts.create.notice"
 

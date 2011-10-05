@@ -121,7 +121,7 @@ Feature: Deals from Call Centre/Agent perspective
     Then I certify deal with translation "agent.deals.new.view.create_button"
     Then I follow translated logout link for agent@nbs.com
     # certification by buyer
-    Then I have user with email ned@stark.com and role customer
+    Then I have user with email ned@stark.com and role supplier
     Then user "ned@stark.com" is confirmed
     Then I sign in as ned@stark.com with password secret
     Then I follow translated "layout.main_menu.lead_buyer.deals_to_certify"
@@ -152,8 +152,8 @@ Feature: Deals from Call Centre/Agent perspective
     And I press translated "buyer.deal_certification_requests.edit.view.certify"
     Then the last deal should not be certified
     Then I should see translated "deal_buyer_accounts.new.view.header"
-    And I fill in "user_customer_password" with "s3cr3t"
-    And I fill in "user_customer_password_confirmation" with "s3cr3t"
+    And I fill in "user_supplier_password" with "s3cr3t"
+    And I fill in "user_supplier_password_confirmation" with "s3cr3t"
     And I press translated "deal_buyer_accounts.new.view.button_create_account"
     Then the last deal should be certified
     Then last email sent should have content "Password: s3cr3t"

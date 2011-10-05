@@ -4,7 +4,7 @@ Feature: Customer module
 Background:  Sign in user and set locale
   Given I am on the homepage
   And I make sure current locale is "en"
-  And I am signed up and confirmed as user with email bob@person.com and password supersecret and role customer
+  And I am signed up and confirmed as user with email bob@person.com and password supersecret and role supplier
   Then I sign in as bob@person.com with password supersecret
 
 @_tested
@@ -12,19 +12,19 @@ Scenario: I create account through signup
   Given I am not sign in
   And I am on the buyer home page
   When I follow translated "buyer_home.show.view.create_new_buyer_account"
-  And I fill in "user_customer_first_name" with "Bob"
-  And I fill in "user_customer_last_name" with "Geldof"
-  And I fill in "user_customer_phone" with "244224242424"
-  And I fill in "user_customer_email" with "bob1@person.com"
-  And I fill in "user_customer_screen_name" with "Bob Geldof"
-  And I fill in "user_customer_password" with "secret"
-  And I fill in "user_customer_password_confirmation" with "secret"
-  And I fill in "user_customer_address_attributes_address_line_1" with "Street 333"
-  And I fill in "user_customer_address_attributes_address_line_2" with "London"
-  And I fill in "user_customer_address_attributes_zip_code" with "390333"
-  And I fill in "user_customer_address_attributes_address_line_3" with "Geldow"
-  And I select "Denmark" from "user_customer_address_attributes_country_id"
-  And I check "user_customer_agreement_read"
+  And I fill in "user_supplier_first_name" with "Bob"
+  And I fill in "user_supplier_last_name" with "Geldof"
+  And I fill in "user_supplier_phone" with "244224242424"
+  And I fill in "user_supplier_email" with "bob1@person.com"
+  And I fill in "user_supplier_screen_name" with "Bob Geldof"
+  And I fill in "user_supplier_password" with "secret"
+  And I fill in "user_supplier_password_confirmation" with "secret"
+  And I fill in "user_supplier_address_attributes_address_line_1" with "Street 333"
+  And I fill in "user_supplier_address_attributes_address_line_2" with "London"
+  And I fill in "user_supplier_address_attributes_zip_code" with "390333"
+  And I fill in "user_supplier_address_attributes_address_line_3" with "Geldow"
+  And I select "Denmark" from "user_supplier_address_attributes_country_id"
+  And I check "user_supplier_agreement_read"
   Then I press translated "buyer_accounts.new.view.button_create_account"
 
 Scenario: I can follow "What do you want to do today?" links and they take me to appropriate places
@@ -76,7 +76,7 @@ Scenario: I can select "all" as a Deal value
 @m5 @unique_categories @added @_tested @tgn  @requested
 Scenario: I should not see unique categories I'm not assigned to on my interests page
   Given Category Computers is created
-  And category "Computers" is unique for user with email "bob@person.com" role "customer"
+  And category "Computers" is unique for user with email "bob@person.com" role "supplier"
   And I go to customer interests
   And I should see "Electronics"
   And I should see "Business"
@@ -85,11 +85,11 @@ Scenario: I should not see unique categories I'm not assigned to on my interests
 
 @m5 @unique_categories @added @_tested @tgn  @requested
 Scenario: I should not see categories on my interests page when I'm assigned to unique category
-  Given I have user with email other_buyer34525biz@nbs.com and role customer
+  Given I have user with email other_buyer34525biz@nbs.com and role supplier
   And Category OthersBuyerCategory is created
-  And category "OthersBuyerCategory" is unique for user with email "other_buyer34525biz@nbs.com" role "customer"
+  And category "OthersBuyerCategory" is unique for user with email "other_buyer34525biz@nbs.com" role "supplier"
   Given Category Computers is created
-  And category "Computers" is unique for user with email "bob@person.com" role "customer"
+  And category "Computers" is unique for user with email "bob@person.com" role "supplier"
   And I go to customer interests
   And I should see "Electronics"
   And I should see "Business"
@@ -101,7 +101,7 @@ Scenario: I should not see categories on my interests page when I'm assigned to 
 Scenario: I should have my interests fixed to the unique category I'm assigned to
   Given there are no categories
   Given Category Computers is created
-  And category "Computers" is unique for user with email "bob@person.com" role "customer"
+  And category "Computers" is unique for user with email "bob@person.com" role "supplier"
   And I go to customer interests
   Then checkbox named "category_" should be checked
 
@@ -111,8 +111,8 @@ Scenario: If customer is category buyer he/she can see also unique categories
 #  When I sign out
 #  And Category named "Best Leads" already exists
 #  And Category named "Unique Leads" already exists
-#  And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Best Leads"
-#  And category "Unique Leads" is unique for user with email "jon@lajoie.ca" role "customer"
+#  And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads"
+#  And category "Unique Leads" is unique for user with email "jon@lajoie.ca" role "supplier"
 #  And I am on the home page
 #  And I sign in as jon@lajoie.ca with password secret
 #  And I am on the home page
@@ -124,8 +124,8 @@ Scenario: If customer is category buyer with assigned unique categories he can a
   When I sign out
   And Category named "Best Leads" already exists
   And Category named "Unique Leads" already exists
-  And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Best Leads"
-  And category "Unique Leads" is unique for user with email "jon@lajoie.ca" role "customer"
+  And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads"
+  And category "Unique Leads" is unique for user with email "jon@lajoie.ca" role "supplier"
   And lead Uniqlead exists within category Unique Leads
   And I am on the home page
   And I sign in as jon@lajoie.ca with password secret
@@ -150,19 +150,19 @@ Scenario: I can use "Advanced search" in Browse leads with following fields: Dea
   And user "agent02@nbs.com" with role "agent" has attributes "certification_level:12, company_name:Xerox2"
   And I have user with email agent03@nbs.com and role agent
   And user "agent03@nbs.com" with role "agent" has attributes "certification_level:13, company_name:Xerox3"
-  And I have user with email ultimate.buyer@nbs.com and role customer
+  And I have user with email ultimate.buyer@nbs.com and role supplier
 
   Given lead Super printers #1 is created by user agent01@nbs.com with role agent
-  And a lead Super printers #1 exists within category Computers and is bought by user ultimate.buyer@nbs.com with role customer
+  And a lead Super printers #1 exists within category Computers and is bought by user ultimate.buyer@nbs.com with role supplier
   And lead Super printers #1 exists with attributes "hotness_counter:0, sale_limit:9, purchase_value:5200"
 
   Given lead Super printers #2 is created by user agent02@nbs.com with role agent
   And user "agent02@nbs.com" with role "agent" has attributes "screen_name:Xerox2 Agent02"
-  And a lead Super printers #2 exists within category Computers and is bought by user ultimate.buyer@nbs.com with role customer
+  And a lead Super printers #2 exists within category Computers and is bought by user ultimate.buyer@nbs.com with role supplier
   And lead Super printers #2 exists with attributes "hotness_counter:1, sale_limit:2, purchase_value:5900"
 
   Given lead Super printers #3 is created by user agent03@nbs.com with role agent
-  And a lead Super printers #3 exists within category Computers and is bought by user ultimate.buyer@nbs.com with role customer
+  And a lead Super printers #3 exists within category Computers and is bought by user ultimate.buyer@nbs.com with role supplier
   And lead Super printers #3 exists with attributes "hotness_counter:2, sale_limit:5, purchase_value:10200"
 
   And I go to browse leads
@@ -213,10 +213,10 @@ Scenario: Advanced search in browse leads should contain regions and all fields 
   Given country "Denmark" has regions "DK region #1, DK region #2"
   And I have user with email agent01@nbs.com and role agent
   And lead Super printers #1 is created by user agent01@nbs.com with role agent
-  And a lead Super printers #1 exists within category Computers and is bought by user ultimate.buyer@nbs.com with role customer
+  And a lead Super printers #1 exists within category Computers and is bought by user ultimate.buyer@nbs.com with role supplier
   And lead "Super printers #1" is created for country "Denmark" with region "DK region #1"
   And lead Super printers #2 is created by user agent01@nbs.com with role agent
-  And a lead Super printers #2 exists within category Computers and is bought by user ultimate.buyer@nbs.com with role customer
+  And a lead Super printers #2 exists within category Computers and is bought by user ultimate.buyer@nbs.com with role supplier
   And lead "Super printers #2" is created for country "Denmark" with region "DK region #2"
   And I go to browse leads
   And I follow category "Computers"

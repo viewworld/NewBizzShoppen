@@ -6,22 +6,22 @@ Background:
   And I make sure current locale is "en"
   Given Category named "Sample category" already exists
   Given Category named "Another sample category" already exists within category named "Sample category"
-  Given I am signed up and confirmed as user with email john@doe.com and password secret and role customer
+  Given I am signed up and confirmed as user with email john@doe.com and password secret and role supplier
   And user "john@doe.com" has team buyers enabled
-  And an user with role lead_buyer and email lead_buyer1@person.com exists as subaccount for customer john@doe.com
-  And user "lead_buyer1@person.com" with role "lead_buyer" has attributes "first_name:Daniel,last_name:Revrend"
+  And an user with role lead_supplier and email lead_buyer1@person.com exists as subaccount for customer john@doe.com
+  And user "lead_buyer1@person.com" with role "lead_supplier" has attributes "first_name:Daniel,last_name:Revrend"
   And Lead named "Super printers" exists within "Another sample category" category
   And lead Super printers exists with attributes "description:Desc for super printers,price:391.72,purchase_value:193.27,exposures_count:8877,clicks_count:34987,zip_code:55-783"
   And Lead named "Ultra printers" exists within "Sample category" category
-  And lead "Super printers" was requested by user "lead_buyer1@person.com" with role "lead_buyer" and is owned by user "john@doe.com"
-  And lead "Ultra printers" was requested by user "lead_buyer1@person.com" with role "lead_buyer" and is owned by user "john@doe.com"
+  And lead "Super printers" was requested by user "lead_buyer1@person.com" with role "lead_supplier" and is owned by user "john@doe.com"
+  And lead "Ultra printers" was requested by user "lead_buyer1@person.com" with role "lead_supplier" and is owned by user "john@doe.com"
   And I sign in as john@doe.com with password secret
   And I go to customers lead requests
 
 @_tested
 Scenario: I should see rating % and certification level for each lead
-  Given I have user with email bob@person.com and role customer
-  And a lead Super printers exists within category Computers and is bought by user bob@person.com with role customer
+  Given I have user with email bob@person.com and role supplier
+  And a lead Super printers exists within category Computers and is bought by user bob@person.com with role supplier
   And a lead "Super printers" has good rating
   Given All leads have refreshed average ratings
   And I go to customers lead requests

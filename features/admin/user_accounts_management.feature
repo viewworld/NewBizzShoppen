@@ -79,10 +79,10 @@ Feature: User accounts management
 
 @m5 @tgn @_tested
 Scenario: I can invoice an account
-  Given I have user with email bigbuyer1@person.com and role customer
+  Given I have user with email bigbuyer1@person.com and role supplier
   And there is a seller with attributes "company_name:DannyTheSeller,first_name:Danny,last_name:DeVito,address:USA,vat_no:123" for country "Denmark"
-  And User bigbuyer1@person.com with role customer is big buyer
-  And a lead Monitors ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role customer
+  And User bigbuyer1@person.com with role supplier is big buyer
+  And a lead Monitors ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role supplier
   Given I go to administration users
   And I click hidden translated link "administration.users.index.view.create_invoice"
   Then I press translated "administration.invoices.new.view.button_create"
@@ -101,10 +101,10 @@ Scenario: I can perform a bulk block action
 
 @m5 @noguess @tgn @_tested @selenium
 Scenario: I can perform a bulk invoice action
-  Given I have user with email bigbuyer1@person.com and role customer
-  And User bigbuyer1@person.com with role customer is big buyer
-  And user bigbuyer1@person.com with role customer exists with attributes "screen_name:John von Buyer"
-  And a lead Monitors ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role customer
+  Given I have user with email bigbuyer1@person.com and role supplier
+  And User bigbuyer1@person.com with role supplier is big buyer
+  And user bigbuyer1@person.com with role supplier exists with attributes "screen_name:John von Buyer"
+  And a lead Monitors ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role supplier
   When I go to administration users
   Then I fill in "search_with_keyword" with "bigbuyer1@person.com"
   And I press translated "administration.users.index.view.search_button"
@@ -132,9 +132,9 @@ Scenario: I can override the certification level of any agent or call centre
 
 @m6 @tgn @_tested
 Scenario: In users listing I can see unpaid leads count
-  Given I have user with email big_buyer.biz@nbs.com and role customer
-  And User big_buyer.biz@nbs.com with role customer is big buyer
-  And a lead Super computers #1 exists within category Computers and is bought by user big_buyer.biz@nbs.com with role customer
+  Given I have user with email big_buyer.biz@nbs.com and role supplier
+  And User big_buyer.biz@nbs.com with role supplier is big buyer
+  And a lead Super computers #1 exists within category Computers and is bought by user big_buyer.biz@nbs.com with role supplier
   And all users have refreshed cache counters
   Then I fill in "search_with_keyword" with "big_buyer.biz@nbs.com"
   And I press translated "administration.users.index.view.search_button"
@@ -144,7 +144,7 @@ Scenario: In users listing I can see unpaid leads count
 Scenario: I can change category buyer to regular buyer
   When I follow translated "layout.main_menu.admin.users"
   And Category CategoryBuyerCategory is created
-  And I am signed up and confirmed as user with email "kategory_bajer@nbs.com" and password "secret" and role "category_buyer" for category "CategoryBuyerCategory"
+  And I am signed up and confirmed as user with email "kategory_bajer@nbs.com" and password "secret" and role "category_supplier" for category "CategoryBuyerCategory"
   And I fill in "search_with_keyword" with "kategory_bajer"
   And I press translated "administration.users.index.view.search_button"
   And I follow translated "administration.users.index.view.edit"
@@ -161,7 +161,7 @@ Scenario: User can login after changing his account to regular buyer
   When I follow translated "layout.main_menu.admin.users"
   And Category CategoryBuyerCategory is created
   And Category AnotherCategory is created
-  And I am signed up and confirmed as user with email "kategory_bajer@nbs.com" and password "secret" and role "category_buyer" for category "CategoryBuyerCategory"
+  And I am signed up and confirmed as user with email "kategory_bajer@nbs.com" and password "secret" and role "category_supplier" for category "CategoryBuyerCategory"
   And I fill in "search_with_keyword" with "kategory_bajer"
   And I press translated "administration.users.index.view.search_button"
   And I follow translated "administration.users.index.view.edit"
@@ -177,8 +177,8 @@ Scenario: Subaccounts can login after changing parent to regular buyer
   When I follow translated "layout.main_menu.admin.users"
   And Category CategoryBuyerCategory is created
   And Category AnotherCategory is created
-  And I am signed up and confirmed as user with email "kategory_bajer@nbs.com" and password "secret" and role "category_buyer" for category "CategoryBuyerCategory"
-  And an user with role lead_buyer and email sub@nbs.com exists as subaccount for customer kategory_bajer@nbs.com
+  And I am signed up and confirmed as user with email "kategory_bajer@nbs.com" and password "secret" and role "category_supplier" for category "CategoryBuyerCategory"
+  And an user with role lead_supplier and email sub@nbs.com exists as subaccount for customer kategory_bajer@nbs.com
   And I fill in "search_with_keyword" with "kategory_bajer"
   And I press translated "administration.users.index.view.search_button"
   And I follow translated "administration.users.index.view.edit"
@@ -194,7 +194,7 @@ Scenario: User can login after changing his account to category buyer
   When I follow translated "layout.main_menu.admin.users"
   And Category CategoryBuyerCategory is created
   And Category AnotherCategory is created
-  And I am signed up and confirmed as user with email kastomer@nbs.com and password secret and role customer
+  And I am signed up and confirmed as user with email kastomer@nbs.com and password secret and role supplier
   And I fill in "search_with_keyword" with "kastomer"
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/users\/\d+\/edit/"
@@ -219,8 +219,8 @@ Scenario: Subaccounts can login after changing his account to category buyer
   When I follow translated "layout.main_menu.admin.users"
   And Category CategoryBuyerCategory is created
   And Category AnotherCategory is created
-  And I am signed up and confirmed as user with email kastomer@nbs.com and password secret and role customer
-  And an user with role lead_buyer and email sub@nbs.com exists as subaccount for customer kastomer@nbs.com
+  And I am signed up and confirmed as user with email kastomer@nbs.com and password secret and role supplier
+  And an user with role lead_supplier and email sub@nbs.com exists as subaccount for customer kastomer@nbs.com
   And I fill in "search_with_keyword" with "kastomer"
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/users\/\d+\/edit/"
@@ -244,8 +244,8 @@ Scenario: Subaccounts can login after changing his account to category buyer
 Scenario: I can change regular buyer to category buyer
   When I follow translated "layout.main_menu.admin.users"
   And Category CategoryBuyerCategory is created
-  And I am signed up and confirmed as user with email "kategory_bajer@nbs.com" and password "secret" and role "category_buyer" for category "CategoryBuyerCategory"
-  And I am signed up and confirmed as user with email kastomer@nbs.com and password secret and role customer
+  And I am signed up and confirmed as user with email "kategory_bajer@nbs.com" and password "secret" and role "category_supplier" for category "CategoryBuyerCategory"
+  And I am signed up and confirmed as user with email kastomer@nbs.com and password secret and role supplier
   And I fill in "search_with_keyword" with "kastomer"
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/users\/\d+\/edit/"
@@ -265,28 +265,28 @@ Scenario: I can specify one or many categories for category buyer
   When Category named "Best Leads" already exists
   And Category named "Basic Leads" already exists
   And Category named "Worst Leads" already exists
-  And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Basic Leads"
+  And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Basic Leads"
   And I am on administration edit user jon@lajoie.ca
-  Then "user_category_buyer_buying_category_ids_" dropdown should have values "Basic Leads"
+  Then "user_category_supplier_buying_category_ids_" dropdown should have values "Basic Leads"
   When I select "Best Leads" from "all_categories"
   And I follow "move_right"
   And I select "Worst Leads" from "all_categories"
   And I follow "move_right"
   And I press translated "administration.users.edit.view.button_update_user"
   And I am on administration edit user jon@lajoie.ca
-  Then "user_category_buyer_buying_category_ids_" dropdown should have values "Basic Leads,Best Leads,Worst Leads"
+  Then "user_category_supplier_buying_category_ids_" dropdown should have values "Basic Leads,Best Leads,Worst Leads"
 
 @m6 @added @selenium @_done @_tested  @requested
 Scenario: I can't specify categories for category buyer's subaccounts
   When Category named "Basic Leads" already exists
-  And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Basic Leads"
-  And an user with role lead_buyer and email stiw@lajoie.ca exists as subaccount for customer jon@lajoie.ca
+  And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Basic Leads"
+  And an user with role lead_supplier and email stiw@lajoie.ca exists as subaccount for customer jon@lajoie.ca
   And I am on administration edit user stiw@lajoie.ca
   Then I should not see CSS path "#all_categories"
 
 @m6 @tgn @selenium @_tested
 Scenario: I can configure buyer category interests when editing it
-  Given I have user with email buyer2222@nbs.com and role customer
+  Given I have user with email buyer2222@nbs.com and role supplier
   And Category Computers is created
   And Category Laptops is created
   Then I fill in "search_with_keyword" with "buyer2222@nbs.com"
@@ -298,13 +298,13 @@ Scenario: I can configure buyer category interests when editing it
   And I follow translated "administration.categories.form.move_users_right" within "#category_interests"
   And I press translated "administration.users.edit.view.button_update_user"
   And I follow translated "administration.users.edit.view.change_customer_interests_link"
-  And "user_customer_category_ids_" dropdown should have values "Computers,Laptops"
+  And "user_supplier_category_ids_" dropdown should have values "Computers,Laptops"
 
 @m6 @tgn @selenium @_tested @requested
 Scenario: I can manage user's access to unique categories as well
-  Given I have user with email buyer2222@nbs.com and role customer
-  And category "Computers" is unique for user with email "buyer29382.biz@nbs.com" role "customer"
-  And category "Laptops" is unique for user with email "buyer29383.biz@nbs.com" role "customer"
+  Given I have user with email buyer2222@nbs.com and role supplier
+  And category "Computers" is unique for user with email "buyer29382.biz@nbs.com" role "supplier"
+  And category "Laptops" is unique for user with email "buyer29383.biz@nbs.com" role "supplier"
   Then I fill in "search_with_keyword" with "buyer2222@nbs.com"
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/administration\/users\/\d+\/edit/"
@@ -315,15 +315,15 @@ Scenario: I can manage user's access to unique categories as well
   Then I fill in "search_with_keyword" with "buyer2222@nbs.com"
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/administration\/users\/\d+\/edit/"
-  And "user_customer_unique_category_ids_" dropdown should have values "Computers,Laptops"
+  And "user_supplier_unique_category_ids_" dropdown should have values "Computers,Laptops"
 
 # When editing a call centre as admin, display a list of agents that belong to that particular call centre below the form. Allow going to their edit screen.*
 # Same goes for buyer/big buyer - there should be a list of team-buyers displayed*
 # remove first name and last name fields in favour of company name*
 @requested @m7 @_tested @tgn
 Scenario: I can see a list of subaccounts and edit them when editing parent account
-  Given I have user with email buyer2932biz@nbs.com and role customer
-  And an user with role lead_buyer and email lead_buyer29321biz@nbs.com exists as subaccount for customer buyer2932biz@nbs.com
+  Given I have user with email buyer2932biz@nbs.com and role supplier
+  And an user with role lead_supplier and email lead_buyer29321biz@nbs.com exists as subaccount for customer buyer2932biz@nbs.com
   And an user with role lead_user and email lead_user29322biz@nbs.com exists as subaccount for customer buyer2932biz@nbs.com
   And I go to administration users
   And I fill in "search_with_keyword" with "buyer2932biz"
@@ -339,7 +339,7 @@ Scenario: I can change buyer to category buyer only if he has interests categori
   When I follow translated "layout.main_menu.admin.users"
   And Category CategoryBuyerCategory is created
   And Category AnotherCategory is created
-  And I am signed up and confirmed as user with email kastomer@nbs.com and password secret and role customer
+  And I am signed up and confirmed as user with email kastomer@nbs.com and password secret and role supplier
   And I fill in "search_with_keyword" with "kastomer"
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/users\/\d+\/edit/"
@@ -405,19 +405,19 @@ Scenario: I should have 'Don't verify email address' for every user I create
   When I go to administration users
   Given I select "Supplier" from "role"
   And I press translated "administration.users.index.view.new_user"
-  Then I fill in "user_customer_first_name" with "Alex"
-  And I fill in "user_customer_last_name" with "Nova"
-  And I fill in "user_customer_company_name" with "Selleo"
-  And I fill in "user_customer_phone" with "0297272341235"
-  And I fill in "user_customer_email" with "alex.nova@person.com"
-  And I fill in "user_customer_screen_name" with "Alex N"
-  And I fill in "user_customer_address_attributes_address_line_1" with "Typical 23"
-  And I fill in "user_customer_address_attributes_address_line_2" with "Paris"
-  And I fill in "user_customer_address_attributes_zip_code" with "22-232"
-  And I fill in "user_customer_address_attributes_address_line_3" with "Orange"
-  And I check "user_customer_skip_email_verification"
-  And I fill in "user_customer_password" with "secret"
-  And I fill in "user_customer_password_confirmation" with "secret"
+  Then I fill in "user_supplier_first_name" with "Alex"
+  And I fill in "user_supplier_last_name" with "Nova"
+  And I fill in "user_supplier_company_name" with "Selleo"
+  And I fill in "user_supplier_phone" with "0297272341235"
+  And I fill in "user_supplier_email" with "alex.nova@person.com"
+  And I fill in "user_supplier_screen_name" with "Alex N"
+  And I fill in "user_supplier_address_attributes_address_line_1" with "Typical 23"
+  And I fill in "user_supplier_address_attributes_address_line_2" with "Paris"
+  And I fill in "user_supplier_address_attributes_zip_code" with "22-232"
+  And I fill in "user_supplier_address_attributes_address_line_3" with "Orange"
+  And I check "user_supplier_skip_email_verification"
+  And I fill in "user_supplier_password" with "secret"
+  And I fill in "user_supplier_password_confirmation" with "secret"
   Then I press translated "administration.users.edit.view.button_update_user"
   And I should see translated "administration.users.create.flash.user_creation_successful"
 
@@ -426,19 +426,19 @@ Scenario: I can login without confirmation when 'Don't verify email address' is 
   When I go to administration users
   Given I select "Supplier" from "role"
   And I press translated "administration.users.index.view.new_user"
-  Then I fill in "user_customer_first_name" with "Alex"
-  And I fill in "user_customer_last_name" with "Nova"
-  And I fill in "user_customer_company_name" with "Selleo"
-  And I fill in "user_customer_phone" with "0297272341235"
-  And I fill in "user_customer_email" with "alex.nova@person.com"
-  And I fill in "user_customer_screen_name" with "Alex N"
-  And I fill in "user_customer_address_attributes_address_line_1" with "Typical 23"
-  And I fill in "user_customer_address_attributes_address_line_2" with "Paris"
-  And I fill in "user_customer_address_attributes_zip_code" with "22-232"
-  And I fill in "user_customer_address_attributes_address_line_3" with "Orange"
-  And I check "user_customer_skip_email_verification"
-  And I fill in "user_customer_password" with "secret"
-  And I fill in "user_customer_password_confirmation" with "secret"
+  Then I fill in "user_supplier_first_name" with "Alex"
+  And I fill in "user_supplier_last_name" with "Nova"
+  And I fill in "user_supplier_company_name" with "Selleo"
+  And I fill in "user_supplier_phone" with "0297272341235"
+  And I fill in "user_supplier_email" with "alex.nova@person.com"
+  And I fill in "user_supplier_screen_name" with "Alex N"
+  And I fill in "user_supplier_address_attributes_address_line_1" with "Typical 23"
+  And I fill in "user_supplier_address_attributes_address_line_2" with "Paris"
+  And I fill in "user_supplier_address_attributes_zip_code" with "22-232"
+  And I fill in "user_supplier_address_attributes_address_line_3" with "Orange"
+  And I check "user_supplier_skip_email_verification"
+  And I fill in "user_supplier_password" with "secret"
+  And I fill in "user_supplier_password_confirmation" with "secret"
   Then I press translated "administration.users.edit.view.button_update_user"
   And I should see translated "administration.users.create.flash.user_creation_successful"
   When I sign out
@@ -452,18 +452,18 @@ Scenario: I can login without confirmation when 'Don't verify email address' is 
   When I go to administration users
   Given I select "Supplier" from "role"
   And I press translated "administration.users.index.view.new_user"
-  Then I fill in "user_customer_first_name" with "Alex"
-  And I fill in "user_customer_last_name" with "Nova"
-  And I fill in "user_customer_company_name" with "Selleo"
-  And I fill in "user_customer_phone" with "0297272341235"
-  And I fill in "user_customer_email" with "alex.nova@person.com"
-  And I fill in "user_customer_screen_name" with "Alex N"
-  And I fill in "user_customer_address_attributes_address_line_1" with "Typical 23"
-  And I fill in "user_customer_address_attributes_address_line_2" with "Paris"
-  And I fill in "user_customer_address_attributes_zip_code" with "22-232"
-  And I fill in "user_customer_address_attributes_address_line_3" with "Orange"
-  And I fill in "user_customer_password" with "secret"
-  And I fill in "user_customer_password_confirmation" with "secret"
+  Then I fill in "user_supplier_first_name" with "Alex"
+  And I fill in "user_supplier_last_name" with "Nova"
+  And I fill in "user_supplier_company_name" with "Selleo"
+  And I fill in "user_supplier_phone" with "0297272341235"
+  And I fill in "user_supplier_email" with "alex.nova@person.com"
+  And I fill in "user_supplier_screen_name" with "Alex N"
+  And I fill in "user_supplier_address_attributes_address_line_1" with "Typical 23"
+  And I fill in "user_supplier_address_attributes_address_line_2" with "Paris"
+  And I fill in "user_supplier_address_attributes_zip_code" with "22-232"
+  And I fill in "user_supplier_address_attributes_address_line_3" with "Orange"
+  And I fill in "user_supplier_password" with "secret"
+  And I fill in "user_supplier_password_confirmation" with "secret"
   Then I press translated "administration.users.edit.view.button_update_user"
   And I should see translated "administration.users.create.flash.user_creation_successful"
   When I sign out
@@ -522,8 +522,8 @@ Scenario: I can see company name on the users listing (in favour of dynamically 
 Scenario: I can sort users by company name
 #  Given someone is signed up and confirmed as user with email ejdzent@nbs.com and password secret and role agent
 #  And user "ejdzent@nbs.com" with role "agent" has attributes "company_name:Abc"
-#  And someone is signed up and confirmed as user with email kastomer@nbs.com and password secret and role customer
-#  And user "kastomer@nbs.com" with role "customer" has attributes "company_name:Xyz"
+#  And someone is signed up and confirmed as user with email kastomer@nbs.com and password secret and role supplier
+#  And user "kastomer@nbs.com" with role "supplier" has attributes "company_name:Xyz"
 #  And I am on administration users page
 #  And I follow translated "administration.users.index.view.company_name" within "table#users_table thead"
 #  Then I should see "Abc" before "Xyz"
@@ -534,8 +534,8 @@ Scenario: I can sort users by company name
 Scenario: I can search users on company name
   Given someone is signed up and confirmed as user with email ejdzent@nbs.com and password secret and role agent
   And user "ejdzent@nbs.com" with role "agent" has attributes "company_name:Abc"
-  And someone is signed up and confirmed as user with email kastomer@nbs.com and password secret and role customer
-  And user "kastomer@nbs.com" with role "customer" has attributes "company_name:Xyz"
+  And someone is signed up and confirmed as user with email kastomer@nbs.com and password secret and role supplier
+  And user "kastomer@nbs.com" with role "supplier" has attributes "company_name:Xyz"
   And I am on administration users page
   And I fill in "search_with_keyword" with "Abc"
   And I press translated "administration.users.index.view.search_button"
@@ -580,7 +580,7 @@ Scenario: I can see "Refresh statistics" button on users listing instead of sett
 
 @m10 @requested @selenium @tgn @_tested
 Scenario: I can see "Set interests" button next to "Change password"
-  Given I have user with email customer101@person.com and role customer
+  Given I have user with email customer101@person.com and role supplier
   Then I fill in "search_with_keyword" with "customer101@person.com"
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/users\/\d+\/edit/"
@@ -589,7 +589,7 @@ Scenario: I can see "Set interests" button next to "Change password"
 
 @m10 @requested @tgn @_tested
 Scenario: I should be redirected to edit user page after saving interests
-  Given I have user with email customer101@person.com and role customer
+  Given I have user with email customer101@person.com and role supplier
   Then I fill in "search_with_keyword" with "customer101@person.com"
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/users\/\d+\/edit/"
@@ -600,7 +600,7 @@ Scenario: I should be redirected to edit user page after saving interests
 
 @requested @m11 @_done @_tested
 Scenario: When editing a user I should see the role of the user in header
-  Given I have user with email customer101@person.com and role customer
+  Given I have user with email customer101@person.com and role supplier
   Then I fill in "search_with_keyword" with "customer101@person.com"
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/users\/\d+\/edit/"
@@ -626,19 +626,19 @@ Scenario: As Admin I can see Name (default Company Name, if empty then First Nam
 Scenario: Category buyer created by admin should have buying categories assigned
   When Category named "TestingCategoryBuyer" already exists
   And I am on administration new category buyer page
-  Then I fill in "user_category_buyer_first_name" with "Category"
-  And I fill in "user_category_buyer_last_name" with "Buyer"
-  And I fill in "user_category_buyer_company_name" with "Selleo"
-  And I fill in "user_category_buyer_phone" with "0297272341235"
-  And I fill in "user_category_buyer_email" with "category@buyer.fake"
-  And I fill in "user_category_buyer_screen_name" with "Category Buyer"
-  And I fill in "user_category_buyer_address_attributes_address_line_1" with "Typical 23"
-  And I fill in "user_category_buyer_address_attributes_address_line_2" with "Paris"
-  And I fill in "user_category_buyer_address_attributes_zip_code" with "22-232"
-  And I fill in "user_category_buyer_address_attributes_address_line_3" with "Orange"
-  And I fill in "user_category_buyer_password" with "secret"
-  And I fill in "user_category_buyer_password_confirmation" with "secret"
-  And I check "user_category_buyer_skip_email_verification"
+  Then I fill in "user_category_supplier_first_name" with "Category"
+  And I fill in "user_category_supplier_last_name" with "Buyer"
+  And I fill in "user_category_supplier_company_name" with "Selleo"
+  And I fill in "user_category_supplier_phone" with "0297272341235"
+  And I fill in "user_category_supplier_email" with "category@buyer.fake"
+  And I fill in "user_category_supplier_screen_name" with "Category Buyer"
+  And I fill in "user_category_supplier_address_attributes_address_line_1" with "Typical 23"
+  And I fill in "user_category_supplier_address_attributes_address_line_2" with "Paris"
+  And I fill in "user_category_supplier_address_attributes_zip_code" with "22-232"
+  And I fill in "user_category_supplier_address_attributes_address_line_3" with "Orange"
+  And I fill in "user_category_supplier_password" with "secret"
+  And I fill in "user_category_supplier_password_confirmation" with "secret"
+  And I check "user_category_supplier_skip_email_verification"
   And I select "TestingCategoryBuyer" from "all_categories"
   And I follow "move_right"
   Then I press translated "administration.users.edit.view.button_update_user"
@@ -652,8 +652,8 @@ Scenario: Category buyer created by admin should have buying categories assigned
 @m14 @requested @$_admin @auto_buy @tgn @_tested @_done
 Scenario: When I assign unique categories to buyer I should see only categories which does not have auto-buy enabled
   Given there are no categories
-  Then I have user with email nbsbuyer3483434biz@nbs.com and role customer
-  Then User nbsbuyer3483434biz@nbs.com with role customer is big buyer
+  Then I have user with email nbsbuyer3483434biz@nbs.com and role supplier
+  Then User nbsbuyer3483434biz@nbs.com with role supplier is big buyer
   Then Category Computers is created
   And category "Computers" is unique for some customers users and is not auto buy
   Then Category Phones is created
@@ -667,15 +667,15 @@ Scenario: When I assign unique categories to buyer I should see only categories 
 @m14 @requested @$_admin @auto_buy @tgn @selenium @_tested @_done
 Scenario: When I assign unique category to buyer the auto-buy option should be automatically enabled for that category
   Given there are no categories
-  Then I have user with email new_nbsbuyer3483434biz@nbs.com and role customer
-  Then User new_nbsbuyer3483434biz@nbs.com with role customer is big buyer
-  Then I have user with email nbsbuyer3483434biz@nbs.com and role customer
-  Then User nbsbuyer3483434biz@nbs.com with role customer is big buyer
-  Then I have user with email phonesnbsbuyer3483434biz@nbs.com and role customer
+  Then I have user with email new_nbsbuyer3483434biz@nbs.com and role supplier
+  Then User new_nbsbuyer3483434biz@nbs.com with role supplier is big buyer
+  Then I have user with email nbsbuyer3483434biz@nbs.com and role supplier
+  Then User nbsbuyer3483434biz@nbs.com with role supplier is big buyer
+  Then I have user with email phonesnbsbuyer3483434biz@nbs.com and role supplier
   Then Category Computers is created
   And category "Computers" is unique for some customers users and is not auto buy
   Then Category Phones is created
-  And category "Phones" is unique for user with email "phonesnbsbuyer3483434biz@nbs.com" role "customer"
+  And category "Phones" is unique for user with email "phonesnbsbuyer3483434biz@nbs.com" role "supplier"
   Then I fill in "search_with_keyword" with "new_nbsbuyer3483434biz@nbs.com"
    And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/administration\/users\/\d+\/edit/"
@@ -690,8 +690,8 @@ Scenario: When I assign unique category to buyer the auto-buy option should be a
 @m14 @requested @$_admin @auto_buy @tgn @selenium @_tested @_done
 Scenario: When user has unique category with auto-buy he should not be subscribed by email to that category any more
   Given there are no categories
-  Then I have user with email nbsbuyer3483434biz@nbs.com and role customer
-  Then User nbsbuyer3483434biz@nbs.com with role customer is big buyer
+  Then I have user with email nbsbuyer3483434biz@nbs.com and role supplier
+  Then User nbsbuyer3483434biz@nbs.com with role supplier is big buyer
   Then Category Computers is created
   When I go to administration categories
   Then I follow translated "administration.categories.index.view.edit_link"
@@ -714,11 +714,11 @@ Scenario: I can log in as selected user
 Scenario: I can enable deals for each category buyer
   When I follow translated "layout.main_menu.admin.users"
   And Category CategoryBuyerCategory is created
-  And I am signed up and confirmed as user with email "kategory_bajer@nbs.com" and password "secret" and role "category_buyer" for category "CategoryBuyerCategory"
+  And I am signed up and confirmed as user with email "kategory_bajer@nbs.com" and password "secret" and role "category_supplier" for category "CategoryBuyerCategory"
   And I fill in "search_with_keyword" with "kategory_bajer"
   And I press translated "administration.users.index.view.search_button"
   And I follow translated "administration.users.index.view.edit"
-  And I check "user_category_buyer_show_deals"
+  And I check "user_category_supplier_show_deals"
   Then I press "Save"
   And I sign out
   And I am on the home page
@@ -728,7 +728,7 @@ Scenario: I can enable deals for each category buyer
 
 @m18 @create_buttons @_done @_tested @tgn
 Scenario: I can send welcome email to member / supplier
-   Given I have user with email customer101@person.com and role customer
+   Given I have user with email customer101@person.com and role supplier
   Then I fill in "search_with_keyword" with "customer101@person.com"
   And I press translated "administration.users.index.view.search_button"
   And I follow translated "administration.users.send_invitation"

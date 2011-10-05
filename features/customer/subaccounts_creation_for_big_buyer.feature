@@ -3,9 +3,9 @@ Feature: Subaccounts creation for big buyer
 Background:
   Given I am on the homepage
   And I make sure current locale is "en"
-  Given I am signed up and confirmed as user with email customer@person.com and password supersecret and role customer
+  Given I am signed up and confirmed as user with email customer@person.com and password supersecret and role supplier
   And user "customer@person.com" has team buyers enabled
-  And User customer@person.com with role customer is big buyer
+  And User customer@person.com with role supplier is big buyer
   Then I sign in as customer@person.com with password supersecret
   Then I go to customers subaccounts
 
@@ -39,8 +39,8 @@ Scenario: Account have to be activated through activation email
 
 @added @_done
 Scenario: I should not have access to subaccounts without team buyers flag
-  Given I am signed up and confirmed as user with email no_flag@nbs.com and password secret and role customer
-  And User no_flag@nbs.com with role customer is big buyer
+  Given I am signed up and confirmed as user with email no_flag@nbs.com and password secret and role supplier
+  And User no_flag@nbs.com with role supplier is big buyer
   And I sign out
   And I sign in as no_flag@nbs.com with password secret
   And I go to customers subaccounts
@@ -49,23 +49,23 @@ Scenario: I should not have access to subaccounts without team buyers flag
 @requested @m8b @tgn @_tested
 Scenario: The big buyer property of a customer should be inherited by all his subaccounts
   Then I follow translated "customer.subaccounts.index.view.new_lead_buyer"
-  And I fill in "user_lead_buyer_first_name" with "Mark"
-  And I fill in "user_lead_buyer_last_name" with "Driscoll"
-  And I fill in "user_lead_buyer_email" with "driscoll@person.noserver.com"
-  And I fill in "user_lead_buyer_screen_name" with "ML Driscoll"
-  And I fill in "user_lead_buyer_password" with "secret"
-  And I fill in "user_lead_buyer_password_confirmation" with "secret"
+  And I fill in "user_lead_supplier_first_name" with "Mark"
+  And I fill in "user_lead_supplier_last_name" with "Driscoll"
+  And I fill in "user_lead_supplier_email" with "driscoll@person.noserver.com"
+  And I fill in "user_lead_supplier_screen_name" with "ML Driscoll"
+  And I fill in "user_lead_supplier_password" with "secret"
+  And I fill in "user_lead_supplier_password_confirmation" with "secret"
   And I press translated "customer.subaccounts.new.view.button_create"
   Then I should see translated "customer.subaccounts.create.flash.subaccount_creation_successful"
   And user "driscoll@person.noserver.com" should be big buyer
 
 @requested @m8b @tgn @_tested
 Scenario: I should have option to hide the profile page for my team members
-  Given an user with role lead_buyer and email lead_buyer2232@nbs.com exists as subaccount for customer customer@person.com
+  Given an user with role lead_supplier and email lead_buyer2232@nbs.com exists as subaccount for customer customer@person.com
   And I follow translated "layout.main_menu.customer.subaccounts"
   Then I should see translated "layout.my_profile_link"
   And I follow translated "customer.subaccounts.index.view.edit"
-  And I check "user_lead_buyer_hide_profile_page"
+  And I check "user_lead_supplier_hide_profile_page"
   And I press translated "customer.subaccounts.edit.view.button_update"
   Given I am not sign in
   And I sign in as lead_buyer2232@nbs.com with password secret
@@ -73,11 +73,11 @@ Scenario: I should have option to hide the profile page for my team members
 
 @requested @m8b @tgn @_tested
 Scenario: Give sales manager the option not to show lead price for team buyer
-  Given an user with role lead_buyer and email lead_buyer2232@nbs.com exists as subaccount for customer customer@person.com
+  Given an user with role lead_supplier and email lead_buyer2232@nbs.com exists as subaccount for customer customer@person.com
   And I follow translated "layout.main_menu.customer.subaccounts"
   Then I should see translated "layout.my_profile_link"
   And I follow translated "customer.subaccounts.index.view.edit"
-  And I check "user_lead_buyer_hide_lead_prices"
+  And I check "user_lead_supplier_hide_lead_prices"
   And I press translated "customer.subaccounts.edit.view.button_update"
   Given I am not sign in
   And lead Monitors deal exists within category Leisure

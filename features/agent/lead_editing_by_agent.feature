@@ -6,7 +6,7 @@ Background:
     And I make sure current locale is "en"
     Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role agent
     And lead New lead is created by user bob@person.com with role agent
-    And a lead New lead exists within category Computers and is bought by user john.buyer@person.com with role customer
+    And a lead New lead exists within category Computers and is bought by user john.buyer@person.com with role supplier
     Then I sign in as bob@person.com with password supersecret
     And I go to agents leads
 

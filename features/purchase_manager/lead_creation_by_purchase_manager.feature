@@ -6,7 +6,7 @@ As a Purchase Manager
 I can use my purchase manager panel
 
 #Background:
-#    Given I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role purchase_manager
+#    Given I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role member
 #    And I am on the homepage
 #    And I make sure current locale is "en"
 #    Then I sign in as jon@lajoie.ca with password secret
@@ -134,7 +134,7 @@ Scenario: Created leads should not be published (not listed)
 # since m16 purchase manager cant create leads - will change in m17
 @m5 @added @lead_templates @tgn @selenium @_tested @_deprecated
 Scenario: I have to fill out the templates which are mandatory
-#  Given template named "Computers details" for category "Computers" is created by user "jon@lajoie.ca" with role "purchase_manager"
+#  Given template named "Computers details" for category "Computers" is created by user "jon@lajoie.ca" with role "member"
 #  And template named "Computers details" is mandatory
 #  And template named "Computers details" has following fields "computers count:false:false, operating systems:false:false"
 #  And I go to purchase managers leads
@@ -163,10 +163,10 @@ Scenario: I have to fill out the templates which are mandatory
 
 @m5 @added @lead_templates @tgn @selenium @_tested @_deprecated
 Scenario: I can select additional templates that are optional
-#  Given template named "Computers details" for category "Computers" is created by user "jon@lajoie.ca" with role "purchase_manager"
+#  Given template named "Computers details" for category "Computers" is created by user "jon@lajoie.ca" with role "member"
 #  And template named "Computers details" is mandatory
 #  And template named "Computers details" has following fields "computers count:false:false, operating systems:false:false"
-#  Given template named "Fax details" for category "Computers" is created by user "jon@lajoie.ca" with role "purchase_manager"
+#  Given template named "Fax details" for category "Computers" is created by user "jon@lajoie.ca" with role "member"
 #  And template named "Fax details" is not mandatory
 #  And template named "Fax details" has following fields "fax software version:false:false, date of purchase:false:false"
 #  And I go to purchase managers leads
@@ -200,7 +200,7 @@ Scenario: I can select additional templates that are optional
 
 @m5 @added @lead_templates @selenium @tgn @_tested @_deprecated
 Scenario: Lead templates for given category consist of my templates, admin's and global
-#  Given template named "Computers details" for category "Computers" is created by user "jon@lajoie.ca" with role "purchase_manager"
+#  Given template named "Computers details" for category "Computers" is created by user "jon@lajoie.ca" with role "member"
 #  And template named "Computers details" is mandatory
 #  Given template named "Modems details" for category "Computers" is created by user "other_agent@person.com" with role "agent"
 #  And template named "Modems details" is mandatory
@@ -224,9 +224,9 @@ Scenario: Lead templates for given category consist of my templates, admin's and
 Scenario: Lead templates for given category consists of templates from that category parents
 #  Given Category Computers is created
 #  And Category named "Modems" already exists within category named "Computers"
-#  Given template named "Computers details" for category "Computers" is created by user "jon@lajoie.ca" with role "purchase_manager"
+#  Given template named "Computers details" for category "Computers" is created by user "jon@lajoie.ca" with role "member"
 #  And template named "Computers details" is mandatory
-#  Given template named "Modems details" for category "Modems" is created by user "jon@lajoie.ca" with role "purchase_manager"
+#  Given template named "Modems details" for category "Modems" is created by user "jon@lajoie.ca" with role "member"
 #  And template named "Modems details" is mandatory
 #  And I go to purchase managers leads
 #  And I select "Modems" from "category_id"
@@ -236,7 +236,7 @@ Scenario: Lead templates for given category consists of templates from that cate
 
 @m5 @added @lead_templates @tgn @selenium @_tested @_deprecated
 Scenario: When new translation to lead is added I can also write translation for the templates
-#  Given template named "Computers details" for category "Computers" is created by user "jon@lajoie.ca" with role "purchase_manager"
+#  Given template named "Computers details" for category "Computers" is created by user "jon@lajoie.ca" with role "member"
 #  And template named "Computers details" is mandatory
 #  And template named "Computers details" has following fields "computers count:false:false, operating systems:false:false"
 #  And I go to purchase managers leads
@@ -272,7 +272,7 @@ Scenario: When new translation to lead is added I can also write translation for
 
 @m5 @added @lead_templates @tgn @selenium @_tested @_deprecated
 Scenario: I have to fill out the fields that are mandatory in mandatory or optional template
-#  Given template named "Computers details" for category "Computers" is created by user "jon@lajoie.ca" with role "purchase_manager"
+#  Given template named "Computers details" for category "Computers" is created by user "jon@lajoie.ca" with role "member"
 #  And template named "Computers details" is mandatory
 #  And template named "Computers details" has following fields "computers count:false:true, operating systems:false:true, purchase date:false:false"
 #  And I go to purchase managers leads
@@ -301,7 +301,7 @@ Scenario: I have to fill out the fields that are mandatory in mandatory or optio
 
 @m5 @added @lead_templates @tgn @selenium @_tested @_deprecated
 Scenario: When there is only one template present for a lead and it is optional then it should be displayed by default
-#  Given template named "Computers details" for category "Computers" is created by user "jon@lajoie.ca" with role "purchase_manager"
+#  Given template named "Computers details" for category "Computers" is created by user "jon@lajoie.ca" with role "member"
 #  And template named "Computers details" has following fields "computers count:false:true, operating systems:false:true, purchase date:false:false"
 #  And template named "Computers details" is not mandatory
 #  And I go to purchase managers leads

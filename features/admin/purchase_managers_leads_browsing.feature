@@ -3,10 +3,10 @@ Feature: Purchase Managers leads browsing
 
 Background:
   Given I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
-  And someone is signed up and confirmed as user with email pm@nbs.com and password secret and role purchase_manager
+  And someone is signed up and confirmed as user with email pm@nbs.com and password secret and role member
   And I am on the home page
   And I sign in as jon@lajoie.ca with password secret
-  And lead PMLeadOne is created by user pm@nbs.com with role purchase_manager
+  And lead PMLeadOne is created by user pm@nbs.com with role member
   And I follow translated "layout.main_menu.admin.leads"
 
 @added @_done

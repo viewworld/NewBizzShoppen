@@ -5,7 +5,7 @@ Feature: Bank Accounts
     Given I am on the homepage
     And I make sure current locale is "en"
     And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
-    And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role customer with attributes "first_name:Janko,last_name:Muzykant"
+    And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Janko,last_name:Muzykant"
     Then I sign in as jon@lajoie.ca with password secret
 
   @added @m4b @_done
@@ -54,8 +54,8 @@ Feature: Bank Accounts
   @added @m4b @_done
   Scenario: Default bank for user's country should be used if available
     Given there is a bank account for country "United Kingdom" with attributes "country_default:1"
-    And someone is signed up and confirmed as user with email kastomer2@nbs.fake and password secret and role customer with attributes "first_name:John,last_name:Rambo,country:2"
-    And invoice exists for user "kastomer2@nbs.fake" with role "customer"
+    And someone is signed up and confirmed as user with email kastomer2@nbs.fake and password secret and role supplier with attributes "first_name:John,last_name:Rambo,country:2"
+    And invoice exists for user "kastomer2@nbs.fake" with role "supplier"
     And I follow translated "layout.main_menu.admin.invoices"
     And I follow translated "administration.invoices.index.view.edit_invoice"
     Then "invoice_bank_account_id" should be selected for value "United Kingdom"
@@ -65,8 +65,8 @@ Feature: Bank Accounts
     Given there is a bank account for country "United Kingdom" with attributes "bank_name:First"
     Given there is a bank account for country "United Kingdom" with attributes "country_default:1,bank_name:Second"
     Given there is a bank account for country "United Kingdom" with attributes "bank_name:Third"
-    And someone is signed up and confirmed as user with email kastomer2@nbs.fake and password secret and role customer with attributes "first_name:John,last_name:Rambo,country:2"
-    And invoice exists for user "kastomer2@nbs.fake" with role "customer"
+    And someone is signed up and confirmed as user with email kastomer2@nbs.fake and password secret and role supplier with attributes "first_name:John,last_name:Rambo,country:2"
+    And invoice exists for user "kastomer2@nbs.fake" with role "supplier"
     And I follow translated "layout.main_menu.admin.invoices"
     And I follow translated "administration.invoices.index.view.edit_invoice"
     Then "invoice_bank_account_id" should be selected for value "United Kingdom"
@@ -77,8 +77,8 @@ Feature: Bank Accounts
     Given there is a bank account for country "United Kingdom" with attributes "bank_name:First"
     And there is a bank account for country "Denmark" with attributes "global_default:1,bank_name:GlobalDefault"
     And there is a bank account for country "Denmark" with attributes "country_default:1,bank_name:CountryDefault"
-    And someone is signed up and confirmed as user with email kastomer2@nbs.fake and password secret and role customer with attributes "first_name:John,last_name:Rambo,country:2"
-    And invoice exists for user "kastomer2@nbs.fake" with role "customer"
+    And someone is signed up and confirmed as user with email kastomer2@nbs.fake and password secret and role supplier with attributes "first_name:John,last_name:Rambo,country:2"
+    And invoice exists for user "kastomer2@nbs.fake" with role "supplier"
     And I follow translated "layout.main_menu.admin.invoices"
     And I follow translated "administration.invoices.index.view.edit_invoice"
     Then "invoice_bank_account_id" should be selected for value "Denmark"
@@ -87,8 +87,8 @@ Feature: Bank Accounts
   @added @m4b @_done
   Scenario: I should see bank details on invoice
     Given there is a bank account for country "United Kingdom" with attributes "country_default:1,bank_name:First UK Bank,iban_no:UK123123123,swift:UKBNK"
-    And someone is signed up and confirmed as user with email kastomer2@nbs.fake and password secret and role customer with attributes "first_name:John,last_name:Rambo,country:2"
-    And invoice exists for user "kastomer2@nbs.fake" with role "customer"
+    And someone is signed up and confirmed as user with email kastomer2@nbs.fake and password secret and role supplier with attributes "first_name:John,last_name:Rambo,country:2"
+    And invoice exists for user "kastomer2@nbs.fake" with role "supplier"
     And I follow translated "layout.main_menu.admin.invoices"
     And I follow translated "administration.invoices.index.view.show_invoice"
     Then I should see "First UK Bank"
@@ -100,12 +100,12 @@ Feature: Bank Accounts
     Given there is a bank account for country "United Kingdom" with attributes "bank_name:First,country_default:1"
     And there is a bank account for country "Denmark" with attributes "global_default:1,bank_name:GlobalDefault"
     And there is a bank account for country "Denmark" with attributes "country_default:1,bank_name:CountryDefault"
-    And someone is signed up and confirmed as user with email kastomer2@nbs.fake and password secret and role customer with attributes "first_name:John,last_name:Rambo,country:2"
+    And someone is signed up and confirmed as user with email kastomer2@nbs.fake and password secret and role supplier with attributes "first_name:John,last_name:Rambo,country:2"
     And I am on administration edit user kastomer2@nbs.fake
-    Then "user_customer_bank_account_id" should be selected for value "United Kingdom"
-    When I select "Denmark / CountryDefault" from "user_customer_bank_account_id"
+    Then "user_supplier_bank_account_id" should be selected for value "United Kingdom"
+    When I select "Denmark / CountryDefault" from "user_supplier_bank_account_id"
     And I press translated "administration.users.edit.view.button_update_user"
-    And invoice exists for user "kastomer2@nbs.fake" with role "customer"
+    And invoice exists for user "kastomer2@nbs.fake" with role "supplier"
     And I follow translated "layout.main_menu.admin.invoices"
     And I follow translated "administration.invoices.index.view.edit_invoice"
     Then "invoice_bank_account_id" should be selected for value "Denmark"
@@ -114,8 +114,8 @@ Feature: Bank Accounts
   @selenium @added @m4b @_done
   Scenario: I can change invoice's bank account
     Given there is a bank account for country "United Kingdom" with attributes "country_default:1,bank_name:First UK Bank,iban_no:UK123123123,swift:UKBNK"
-    And someone is signed up and confirmed as user with email kastomer2@nbs.fake and password secret and role customer with attributes "first_name:John,last_name:Rambo,country:2"
-    And invoice exists for user "kastomer2@nbs.fake" with role "customer"
+    And someone is signed up and confirmed as user with email kastomer2@nbs.fake and password secret and role supplier with attributes "first_name:John,last_name:Rambo,country:2"
+    And invoice exists for user "kastomer2@nbs.fake" with role "supplier"
     And I click hidden link by url regex "/administration\/invoicing\/invoices/"
     And I click hidden link by url regex "/administration\/invoicing\/invoices\/\d{1,}/"
     Then I should see "First UK Bank"

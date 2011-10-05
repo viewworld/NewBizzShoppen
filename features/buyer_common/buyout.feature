@@ -6,10 +6,10 @@ Feature: Buy out
     Given there are no leads
     And Category named "Computers" already exists
     And category "Computers" has attributes "buyout_enabled:1"
-    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier
     And lead Printers exists within category Computers
     And lead "Printers" has attributes "sale_limit:10,price:123"
-    And a lead Monitors exists within category Computers and is bought by user monitor.buyer@nbs.com with role customer
+    And a lead Monitors exists within category Computers and is bought by user monitor.buyer@nbs.com with role supplier
     And lead "Monitors" has attributes "sale_limit:10,price:234"
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
@@ -29,10 +29,10 @@ Feature: Buy out
     Given there are no leads
     And Category named "Computers" already exists
     And category "Computers" has attributes "buyout_enabled:0"
-    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier
     And lead Printers exists within category Computers
     And lead "Printers" has attributes "sale_limit:10,price:123"
-    And a lead Monitors exists within category Computers and is bought by user monitor.buyer@nbs.com with role customer
+    And a lead Monitors exists within category Computers and is bought by user monitor.buyer@nbs.com with role supplier
     And lead "Monitors" has attributes "sale_limit:10,price:234"
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
@@ -48,7 +48,7 @@ Feature: Buy out
     Given there are no leads
     And Category named "Computers" already exists
     And category "Computers" has attributes "buyout_enabled:1"
-    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier
     And lead Printers exists within category Computers
     And lead "Printers" has attributes "sale_limit:10,price:123"
     And I am on the home page
@@ -63,7 +63,7 @@ Feature: Buy out
     Given there are no leads
     And Category named "Computers" already exists
     And category "Computers" has attributes "buyout_enabled:1"
-    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier
     And lead Printers exists within category Computers
     And lead "Printers" has attributes "sale_limit:10,price:123"
     And I am on the home page
@@ -84,7 +84,7 @@ Feature: Buy out
     Given there are no leads
     And Category named "Computers" already exists
     And category "Computers" has attributes "buyout_enabled:1"
-    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier
     And lead Printers exists within category Computers
     And lead "Printers" has attributes "sale_limit:10,price:123"
     And I am on the home page
@@ -95,15 +95,15 @@ Feature: Buy out
     And I follow translated "layout.cart.show_cart"
     Then I press translated "buyer.cart.show.view.checkout_link"
     Then I should be redirected to paypal page
-    Then paypal payment for user with email "jon@lajoie.ca" and role "customer"
-    And lead named "Printers" is paid and accessible for user with email "jon@lajoie.ca" and role "customer"
+    Then paypal payment for user with email "jon@lajoie.ca" and role "supplier"
+    And lead named "Printers" is paid and accessible for user with email "jon@lajoie.ca" and role "supplier"
 
   @added @m6 @_done @_tested
   Scenario: I can see correct price for buyout on invoice
     Given there are no leads
     And Category named "Computers" already exists
     And category "Computers" has attributes "buyout_enabled:1"
-    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer with attributes "vat_number:123,not_charge_vat:1"
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier with attributes "vat_number:123,not_charge_vat:1"
     And lead Printers exists within category Computers
     And lead "Printers" has attributes "sale_limit:10,price:123"
     And I am on the home page
@@ -113,7 +113,7 @@ Feature: Buy out
     And I follow translated "leads.index.add_to_cart_buyout_link"
     And I follow translated "layout.cart.show_cart"
     And I press translated "buyer.cart.show.view.checkout_link"
-    And paypal payment for user with email "jon@lajoie.ca" and role "customer"
+    And paypal payment for user with email "jon@lajoie.ca" and role "supplier"
     And I am on the home page
     And I follow translated "layout.main_menu.customer.invoices"
     And I follow translated "customer.invoices.index.view.show_invoice"
@@ -126,8 +126,8 @@ Feature: Buy out
     Given there are no leads
     And Category named "Computers" already exists
     And category "Computers" has attributes "buyout_enabled:1"
-    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
-    And User jon@lajoie.ca with role customer is big buyer
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier
+    And User jon@lajoie.ca with role supplier is big buyer
     And lead Printers exists within category Computers
     And lead "Printers" has attributes "sale_limit:10,price:123"
     And I am on the home page
@@ -144,7 +144,7 @@ Feature: Buy out
     Given there are no leads
     And Category named "Computers" already exists
     And category "Computers" has attributes "buyout_enabled:1"
-    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Computers"
+    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Computers"
     And User jon@lajoie.ca with role category_buyer is big buyer
     And lead Printers exists within category Computers
     And lead "Printers" has attributes "sale_limit:10,price:123"
@@ -162,7 +162,7 @@ Feature: Buy out
     Given there are no leads
     And Category named "Computers" already exists
     And category "Computers" has attributes "buyout_enabled:1"
-    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier
     And lead Printers exists within category Computers
     And lead "Printers" has attributes "sale_limit:10,price:123"
     And I am on the home page
@@ -172,7 +172,7 @@ Feature: Buy out
     And I follow translated "leads.index.add_to_cart_link"
     And I sign out
     And I am on the home page
-    And I am signed up and confirmed as user with email jessica@lajoie.ca and password secret and role customer
+    And I am signed up and confirmed as user with email jessica@lajoie.ca and password secret and role supplier
     And I sign in as jessica@lajoie.ca with password secret
     And I go to browse leads
     And I follow category "Computers"
@@ -184,7 +184,7 @@ Feature: Buy out
     Given there are no leads
     And Category named "Computers" already exists
     And category "Computers" has attributes "buyout_enabled:1"
-    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier
     And lead Printers exists within category Computers
     And lead "Printers" has attributes "sale_limit:10,price:123"
     And I am on the home page
@@ -200,8 +200,8 @@ Feature: Buy out
     Given there are no leads
     And Category named "Computers" already exists
     And category "Computers" has attributes "buyout_enabled:1"
-    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
-    And a lead Printers exists within category Computers and is bought by user jessica@lajoie.ca with role customer
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier
+    And a lead Printers exists within category Computers and is bought by user jessica@lajoie.ca with role supplier
     And lead "Printers" has attributes "sale_limit:10,price:123"
     And I am on the home page
     And I go to browse leads
@@ -214,8 +214,8 @@ Feature: Buy out
     Given there are no leads
     And Category named "Computers" already exists
     And category "Computers" has attributes "buyout_enabled:1"
-    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
-    And User jon@lajoie.ca with role customer is big buyer
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier
+    And User jon@lajoie.ca with role supplier is big buyer
     And lead Printers exists within category Computers
     And lead "Printers" has attributes "sale_limit:10,price:123"
     And I am on the home page
@@ -234,8 +234,8 @@ Feature: Buy out
     Given there are no leads
     And Category named "Computers" already exists
     And category "Computers" has attributes "buyout_enabled:1"
-    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer with attributes "not_charge_vat:1"
-    And User jon@lajoie.ca with role customer is big buyer
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier with attributes "not_charge_vat:1"
+    And User jon@lajoie.ca with role supplier is big buyer
     And lead Printers exists within category Computers
     And lead "Printers" has attributes "sale_limit:10,price:123"
     And I am on the home page
@@ -259,8 +259,8 @@ Feature: Buy out
     Given there are no leads
     And Category named "Computers" already exists
     And category "Computers" has attributes "buyout_enabled:1"
-    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer with attributes "not_charge_vat:1"
-    And User jon@lajoie.ca with role customer is big buyer
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier with attributes "not_charge_vat:1"
+    And User jon@lajoie.ca with role supplier is big buyer
     And lead Printers exists within category Computers
     And lead "Printers" has attributes "sale_limit:10,price:123"
     And I am on the home page
@@ -290,7 +290,7 @@ Feature: Buy out
     Given there are no leads
     And Category named "Computers" already exists
     And category "Computers" has attributes "buyout_enabled:1"
-    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer with attributes "not_charge_vat:1"
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier with attributes "not_charge_vat:1"
     And lead Printers exists within category Computers
     And lead "Printers" has attributes "sale_limit:10,price:123"
     And I am on the home page

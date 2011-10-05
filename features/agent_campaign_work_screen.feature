@@ -441,12 +441,12 @@ Feature: Agent campaign - calling session
       And I am on the homepage
       And I sign in as newcategory_buyer888@nbs.com with password testin
       Then I should see translated "my_profile.edit.view.header_contact_confirmation"
-      And the "user_category_buyer_company_name" field should contain "Bon Jovi inc."
-      And the "user_category_buyer_first_name" field should contain "John"
-      And the "user_category_buyer_last_name" field should contain "Dohn"
-      And the "user_category_buyer_email" field should contain "newcategory_buyer888@nbs.com"
-      And the "user_category_buyer_address_attributes_address_line_1" field should contain "LongRoad 2"
-      And the "user_category_buyer_address_attributes_zip_code" field should contain "21-221"
+      And the "user_category_supplier_company_name" field should contain "Bon Jovi inc."
+      And the "user_category_supplier_first_name" field should contain "John"
+      And the "user_category_supplier_last_name" field should contain "Dohn"
+      And the "user_category_supplier_email" field should contain "newcategory_buyer888@nbs.com"
+      And the "user_category_supplier_address_attributes_address_line_1" field should contain "LongRoad 2"
+      And the "user_category_supplier_address_attributes_zip_code" field should contain "21-221"
 
     @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent  @_tested @_done @ff5
     Scenario: After confirming his account information, contact should be redirected to his account home page
@@ -516,7 +516,7 @@ Feature: Agent campaign - calling session
       And I follow translated "call_results.new.save_button"
       Then I should see translated "call_results.create.flash.successfully_added"
       And last email sent should have been sent to recipient "new_buyer888@nbs.com"
-      And user "new_buyer888@nbs.com" with role "customer" should have attributes "big_buyer:true, not_charge_vat:true, team_buyers:true, big_buyer_purchase_limit:2398.0"
+      And user "new_buyer888@nbs.com" with role "supplier" should have attributes "big_buyer:true, not_charge_vat:true, team_buyers:true, big_buyer_purchase_limit:2398.0"
       And user "new_buyer888@nbs.com" has deal maker role enabled
   
     @m14 @requested @my_results @$_call_centre_agent @tgn @_done @tested_elsewhere

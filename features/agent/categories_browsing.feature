@@ -26,7 +26,7 @@ Feature: I can browse categories
 
   @m8b @requested @tgn @_tested
   Scenario: When you are loged in as a buyer, you should be able to request a category, this should be done via a form mail. to admin@fairleads.com the form should contain the following fields
-    Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role customer
+    Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role supplier
     Then I sign in as bob@person.com with password supersecret
     And I go to browse leads
     And I follow translated "layout.main_menu.shared.category_request"

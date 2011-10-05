@@ -12,7 +12,7 @@ Background:
   And Lead named "Ultra printers" exists within "Another sample category" category
   And lead Ultra printers exists with attributes "currency_id:1"
 
-  Given I am signed up and confirmed as user with email john@doe.com and password secret and role customer
+  Given I am signed up and confirmed as user with email john@doe.com and password secret and role supplier
 
   And I sign in as john@doe.com with password secret
   And I follow translated "layout.main_menu.shared.browse_leads"
@@ -67,14 +67,14 @@ Scenario: I can see only lead template fields' names (not values) for hidden fie
 @m5 @added @unique_categories @tgn @_tested
 Scenario: I can see unique categories assigned to me in Browse leads
   Given Category This Customer Unique Category is created
-  And category "This Customer Unique Category" is unique for user with email "john@doe.com" role "customer"
+  And category "This Customer Unique Category" is unique for user with email "john@doe.com" role "supplier"
   When I go to browse leads
   Then I should see "This Customer Unique Category"
 
 @m5 @added @unique_categories @tgn @_tested
 Scenario: I should be able to browse leads in unique category assigned to me
 Given Category This Customer Unique Category is created
-  And category "This Customer Unique Category" is unique for user with email "john@doe.com" role "customer"
+  And category "This Customer Unique Category" is unique for user with email "john@doe.com" role "supplier"
   And Lead named "Lead Unique 1" exists within "This Customer Unique Category" category
   When I go to browse leads
   Then I follow category "This Customer Unique Category"
@@ -83,8 +83,8 @@ Given Category This Customer Unique Category is created
 @m5 @added @unique_categories @tgn @_tested
 Scenario: I cannot see unique categories not assigned to me in Browse leads
   Given Category This Customer Unique Category is created
-  And I have user with email other_john@doe.com and role customer
-  And category "This Customer Unique Category" is unique for user with email "other_john@doe.com" role "customer"
+  And I have user with email other_john@doe.com and role supplier
+  And category "This Customer Unique Category" is unique for user with email "other_john@doe.com" role "supplier"
   When I go to browse leads
   Then I should not see "This Customer Unique Category"
 

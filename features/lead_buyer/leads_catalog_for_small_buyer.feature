@@ -15,7 +15,7 @@ Background:
   And I have user with email jim.jones@person.com and role agent
   And lead Cheap mouses ultimate deal is created by user jim.jones@person.com with role agent
   And User jim.jones@person.com with role agent is blocked
-  Given I am signed up and confirmed as user with email john@doe.com and password secret and role customer
+  Given I am signed up and confirmed as user with email john@doe.com and password secret and role supplier
   And I sign in as john@doe.com with password secret
   And I go to browse leads
 
@@ -45,8 +45,8 @@ Scenario: I should see created by
 
 @m4 @tgn @_tested @added
 Scenario: I should see rating % and certification level for each lead
-  Given I have user with email bob@person.com and role customer
-  And a lead Printers ultimate deal exists within category Computers and is bought by user bob@person.com with role customer
+  Given I have user with email bob@person.com and role supplier
+  And a lead Printers ultimate deal exists within category Computers and is bought by user bob@person.com with role supplier
   And a lead "Printers ultimate deal" has good rating
   Given All leads have refreshed average ratings
   Given I go to browse leads

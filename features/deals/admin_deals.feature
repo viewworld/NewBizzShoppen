@@ -54,7 +54,7 @@ Feature: Deals from admin perspective
     Then I fill in "search_with_keyword" with "buyer@nbs.com"
     Then I press translated "administration.users.index.view.search_button"
     Then I follow translated "administration.users.index.view.edit"
-    Then I check "user_customer_deal_maker_role_enabled"
+    Then I check "user_supplier_deal_maker_role_enabled"
 
   @_done @_tested
   Scenario: I can make an agent or call centre a Deal Maker

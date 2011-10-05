@@ -2,15 +2,15 @@
 Feature: Fairdeals view deal
   Background:
     When there are no deals
-    Given I am signed up and confirmed as user with email procurment@nbs.com and password secret and role purchase_manager
-    And user buyer@nbs.com with role customer exists with attributes "company_name:Azazel"
+    Given I am signed up and confirmed as user with email procurment@nbs.com and password secret and role member
+    And user buyer@nbs.com with role supplier exists with attributes "company_name:Azazel"
     And user "buyer@nbs.com" has assigned role "deal_maker"
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super descr|fine_print:super fine print|hidden_description:super detailed|company_description:super company desc|start_date:2011-01-01|company_name:Azazel|published:1|deal_admin_email:agent@nbs.com|contact_name:Ed Yudkovsky|phone_number:+49887755|company_website:www.azazelinc.com"
     Given template named "Computer details1" for category "Azazel" is created by user "agent@person.com" with role "agent"
     And template named "Computer details1" is mandatory
     And template named "Computer details1" is global
     And template named "Computer details1" has following fields "field #1:true:true,field #2:true:false,field #3:false:false"
-    Given template named "Computer details2" for category "Azazel" is created by user "buyer@nbs.com" with role "customer"
+    Given template named "Computer details2" for category "Azazel" is created by user "buyer@nbs.com" with role "supplier"
     And template named "Computer details2" is mandatory
     And template named "Computer details2" has following fields "field #1:true:true,field #2:true:false,field #3:false:false"
 

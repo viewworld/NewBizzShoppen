@@ -2,7 +2,7 @@ Given /^a deal named "([^"]*)" exists within category "([^"]*)"$/ do |name, cate
   category = DealCategory.where(:name => category_name).first
   category = DealCategory.make!(:name => category_name) unless category
   deal = Deal.where(:header => name).first
-  Deal.make!(:category => category, :header => name, :email_address => User::Customer.first.email) unless deal
+  Deal.make!(:category => category, :header => name, :email_address => User::Supplier.first.email) unless deal
 end
 
 When /^a deal named "([^"]*)" exists with attributes "([^"]*)"$/ do |name, options|

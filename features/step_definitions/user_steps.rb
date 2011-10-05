@@ -48,7 +48,7 @@ Given /^(?:|I am |someone is )signed up and confirmed as user with email ([^"]*)
 end
 
 Given /^user "([^"]*)" has team buyers enabled$/ do |email|
-  User::Customer.where(:email => email).first.update_attribute(:team_buyers, true)
+  User::Supplier.where(:email => email).first.update_attribute(:team_buyers, true)
 end
 
 Given /^user "([^"]*)" has deal maker role enabled$/ do |email|
@@ -76,7 +76,7 @@ Then /^I have user with email (.+) role (.+) first_name (.+) last_name (.+) and 
 end
 
 Then /User with email (.+) don't have interests/ do |email|
-  user = User::Customer.find_by_email(email)
+  user = User::Supplier.find_by_email(email)
   user.categories = []
   user.save
 end
@@ -144,9 +144,9 @@ Given /^User (.+) with role (.+) has leads$/ do |email, role|
 end
 
 And /^an user with role (.+) and email (.+) exists as subaccount for customer (.+)$/ do |role, sub_email, customer_email|
-  customer = User::Customer.first(:conditions => {:email => customer_email})
+  customer = User::Supplier.first(:conditions => {:email => customer_email})
   if customer.nil?
-    customer = User::Customer.make!(:email => customer_email, :password => 'secret', :password_confirmation => 'secret')
+    customer = User::Supplier.make!(:email => customer_email, :password => 'secret', :password_confirmation => 'secret')
   end
 
   sub_user = "User::#{role.camelize}".constantize.first(:conditions => {:email => sub_email})
@@ -287,12 +287,12 @@ And /^user "([^"]*)" is confirmed/ do |email|
 end
 
 When /^user "([^"]*)" is assigned to category "([^"]*)" as category buyer$/ do |email, category_name|
-  u = User::CategoryBuyer.where(:email => email).first
+  u = User::CategorySupplier.where(:email => email).first
   u.buying_categories << Category.where(:name => category_name)
 end
 
 Given /^customer "([^"]*)" has no subaccounts$/ do |email|
-  customer = User::Customer.find_by_email(email)
+  customer = User::Supplier.find_by_email(email)
   customer.subaccounts.each do |sa|
     sa.update_attribute(:parent_id, nil)
     sa.destroy
@@ -300,7 +300,7 @@ Given /^customer "([^"]*)" has no subaccounts$/ do |email|
 end
 
 When /^user "([^"]*)" has no buying categories$/ do |email|
-  u = User::CategoryBuyer.where(:email => email).first
+  u = User::CategorySupplier.where(:email => email).first
   u.buying_categories = []
   u.save!
 end

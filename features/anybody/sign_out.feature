@@ -4,7 +4,7 @@ Feature: Sign out
 Background:
   Given I am on the homepage
   And I make sure current locale is "en"
-  And I am signed up and confirmed as user with email bob@person.com and password supersecret and role customer
+  And I am signed up and confirmed as user with email bob@person.com and password supersecret and role supplier
   Then I sign in as bob@person.com with password supersecret
 
   # Before logout, store in session the logout page (which will become login page after logout)

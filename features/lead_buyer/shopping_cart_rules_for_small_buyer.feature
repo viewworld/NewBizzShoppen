@@ -12,7 +12,7 @@ Background:
   And Lead named "Ultra printers" exists within "Another sample category" category
   And Lead named "Keyboards deal" exists within "Another sample category" category
   And Lead named "Ultra new printers" exists within "Computers" category
-  Given I am signed up and confirmed as user with email john@doe.com and password secret and role customer
+  Given I am signed up and confirmed as user with email john@doe.com and password secret and role supplier
   And user "john@doe.com" has team buyers enabled
   And an user with role lead_user and email lead_user2@person.com exists as subaccount for customer customer@person.com
   And lead "Keyboards deal" was requested by user "lead_user2@person.com" with role "lead_user" and is owned by user "john@doe.com"
@@ -33,8 +33,8 @@ Scenario: I can buy lead through checkout
   Then I follow translated "leads.index.add_to_cart_link"
   And I follow translated "layout.cart.show_cart"
   Then I press translated "buyer.cart.show.view.checkout_link"
-  And paypal payment for user with email "john@doe.com" and role "customer"
-  And lead named "Ultra new printers" is owned by user "john@doe.com" with role "customer"
+  And paypal payment for user with email "john@doe.com" and role "supplier"
+  And lead named "Ultra new printers" is owned by user "john@doe.com" with role "supplier"
 
 @tgn @_tested
 Scenario: Lead purchase is not marked with "has access" after creation
@@ -52,9 +52,9 @@ Scenario: Invoice is auto-created if a new paypal transaction (payment for cart 
   Then I follow translated "leads.index.add_to_cart_link"
   And I follow translated "layout.cart.show_cart"
   Then I press translated "buyer.cart.show.view.checkout_link"
-  And paypal payment for user with email "john@doe.com" and role "customer"
-  Then invoice is created for user with email "john@doe.com" and role "customer"
-  And invoice line is created for lead "Ultra new printers" and user with email "john@doe.com" and role "customer"
+  And paypal payment for user with email "john@doe.com" and role "supplier"
+  Then invoice is created for user with email "john@doe.com" and role "supplier"
+  And invoice line is created for lead "Ultra new printers" and user with email "john@doe.com" and role "supplier"
 
 @tgn @_tested @added
 Scenario: Invoice is NOT created when payment notification is duplicated
@@ -63,12 +63,12 @@ Scenario: Invoice is NOT created when payment notification is duplicated
   Then I follow translated "leads.index.add_to_cart_link"
   And I follow translated "layout.cart.show_cart"
   Then I press translated "buyer.cart.show.view.checkout_link"
-  And paypal payment for user with email "john@doe.com" and role "customer"
-  Then invoice is created for user with email "john@doe.com" and role "customer"
-  And invoice line is created for lead "Ultra new printers" and user with email "john@doe.com" and role "customer"
-  When paypal payment for user with email "john@doe.com" and role "customer"
+  And paypal payment for user with email "john@doe.com" and role "supplier"
+  Then invoice is created for user with email "john@doe.com" and role "supplier"
+  And invoice line is created for lead "Ultra new printers" and user with email "john@doe.com" and role "supplier"
+  When paypal payment for user with email "john@doe.com" and role "supplier"
   Then last payment notification is marked as "Duplicated"
-  And invoices count for user with email "john@doe.com" and role "customer" is 1
+  And invoices count for user with email "john@doe.com" and role "supplier" is 1
 
 @tgn @_tested
 Scenario: I can add to cart lead requested by lead user that belongs to my account

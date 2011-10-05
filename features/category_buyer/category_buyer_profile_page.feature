@@ -1,8 +1,8 @@
 @m13 @category_buyer_to_normal_buyer @is @$_category_buyer
 Feature: Category buyer profile page
   Background:
-    And I am signed up and confirmed as user with email "scorpion@mk2.com" and password "secret" and role "category_buyer" for category "Business"
-    And an user with role lead_buyer and email kitana@mk2.com exists as subaccount for customer scorpion@mk2.com
+    And I am signed up and confirmed as user with email "scorpion@mk2.com" and password "secret" and role "category_supplier" for category "Business"
+    And an user with role lead_supplier and email kitana@mk2.com exists as subaccount for customer scorpion@mk2.com
     And I am on the home page
 
   @$_category_buyer @_done @_tested

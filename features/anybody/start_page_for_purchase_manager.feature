@@ -41,7 +41,7 @@ Scenario: I can see 10 latest leads
 @added @m6 @ao @_tested @_done
 Scenario: I can't see inactive leads on latest leads
   When there are no leads
-  And a lead InactiveLead exists within category Test and is bought by user kastomer@nbs.fake with role customer
+  And a lead InactiveLead exists within category Test and is bought by user kastomer@nbs.fake with role supplier
   And lead "InactiveLead" has attributes "sale_limit:1"
   When I am on the purchase manager home page
   Then I should see "1" items on a list within "#latest_leads"
@@ -111,8 +111,8 @@ Scenario: I can go to creation of new purchase manager account page
 
 @added @_done
 Scenario: In bestsellers and latest listings I should not see leads which I've already bought
-  When I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
-  And a lead BoughtLead exists within category Test and is bought by user jon@lajoie.ca with role customer
+  When I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier
+  And a lead BoughtLead exists within category Test and is bought by user jon@lajoie.ca with role supplier
   And lead AwesomeLead exists within category Test
   When I am on the purchase manager home page
   Then I should see "AwesomeLead"
@@ -134,8 +134,8 @@ Scenario: When I am not logged in I should not see any leads from unique categor
   And I have user with email other_agent@nbs.com and role agent
   And category "Unique Category1" is unique for user with email "other_agent@nbs.com" role "agent"
   And lead UniqueLead2 exists within category Unique Category2
-  And I have user with email other_customer@nbs.com and role customer
-  And category "Unique Category2" is unique for user with email "other_customer@nbs.com" role "customer"
+  And I have user with email other_customer@nbs.com and role supplier
+  And category "Unique Category2" is unique for user with email "other_customer@nbs.com" role "supplier"
   When I am on the purchase manager home page
   And I should see "CommonLead1" within "#best_sellers"
   And I should not see "UniqueLead1" within "#best_sellers"
@@ -153,9 +153,9 @@ Scenario: I should not see leads from agent unique categories I'm not assigned t
 #  And I have user with email other_agent@nbs.com and role agent
 #  And category "Unique Category1" is unique for user with email "other_agent@nbs.com" role "agent"
 #  And lead UniqueLead2 exists within category Unique Category2
-#  And I have user with email other_customer@nbs.com and role customer
-#  And category "Unique Category2" is unique for user with email "other_customer@nbs.com" role "customer"
-#  When I am signed up and confirmed as user with email agent34234234@nbs.com and password secret and role purchase_manager
+#  And I have user with email other_customer@nbs.com and role supplier
+#  And category "Unique Category2" is unique for user with email "other_customer@nbs.com" role "supplier"
+#  When I am signed up and confirmed as user with email agent34234234@nbs.com and password secret and role member
 #  Then I sign in as agent34234234@nbs.com with password secret
 #  And I go to the home page
 #  And I follow translated "home.show.view.purchase_manager"
@@ -177,9 +177,9 @@ Scenario: I should not see leads from agent unique categories I'm not assigned t
 #  And category "Unique Category1" is unique for user with email "other_agent@nbs.com" role "agent"
 #  And lead UniqueLead2 exists within category Unique Category2
 #  And UniqueLead2 is a best seller
-#  And I have user with email other_customer@nbs.com and role customer
-#  And category "Unique Category2" is unique for user with email "other_customer@nbs.com" role "customer"
-#  When I am signed up and confirmed as user with email agent34234234@nbs.com and password secret and role purchase_manager
+#  And I have user with email other_customer@nbs.com and role supplier
+#  And category "Unique Category2" is unique for user with email "other_customer@nbs.com" role "supplier"
+#  When I am signed up and confirmed as user with email agent34234234@nbs.com and password secret and role member
 #  Then I sign in as agent34234234@nbs.com with password secret
 #  And I go to the home page
 #  And I follow translated "home.show.view.purchase_manager"
@@ -194,15 +194,15 @@ Scenario: I should see leads from customer unique categories on Latest leads lis
 # deprecated in favour to 'my contact requests'
 @m5 @unique_categories @tgn @added @_tested @_done @requested @_deprecated
 Scenario: I should see leads from agent unique categories I'm assigned to on Latest leads listing
-#  Given I am signed up and confirmed as user with email agent34234234@nbs.com and password secret and role purchase_manager
+#  Given I am signed up and confirmed as user with email agent34234234@nbs.com and password secret and role member
 #  Given lead CommonLead1 exists within category Common Category1
 #  And lead CommonLead2 exists within category Common Category2
 #  And lead UniqueLead1 exists within category Unique Category1
 #  And I have user with email other_agent@nbs.com and role agent
 #  And category "Unique Category1" is unique for user with email "other_agent@nbs.com" role "agent"
 #  And lead UniqueLead2 exists within category Unique Category2
-#  And I have user with email other_customer@nbs.com and role customer
-#  And category "Unique Category2" is unique for user with email "agent34234234@nbs.com" role "purchase_manager"
+#  And I have user with email other_customer@nbs.com and role supplier
+#  And category "Unique Category2" is unique for user with email "agent34234234@nbs.com" role "member"
 #  Then I sign in as agent34234234@nbs.com with password secret
 #  And I go to the home page
 #  And I follow translated "home.show.view.purchase_manager"
@@ -214,7 +214,7 @@ Scenario: I should see leads from agent unique categories I'm assigned to on Lat
 # best sellers removed in m16
 @m5 @unique_categories @tgn @added @_tested  @requested @_deprecated
 Scenario: I should see leads from agent unique categories I'm assigned to on Bestsellers listing
-#  Given I am signed up and confirmed as user with email agent34234234@nbs.com and password secret and role purchase_manager
+#  Given I am signed up and confirmed as user with email agent34234234@nbs.com and password secret and role member
 #  Given lead CommonLead1 exists within category Common Category1
 #  And CommonLead1 is a best seller
 #  And lead CommonLead2 exists within category Common Category2
@@ -225,8 +225,8 @@ Scenario: I should see leads from agent unique categories I'm assigned to on Bes
 #  And category "Unique Category1" is unique for user with email "other_agent@nbs.com" role "agent"
 #  And lead UniqueLead2 exists within category Unique Category2
 #  And UniqueLead2 is a best seller
-#  And I have user with email other_customer@nbs.com and role customer
-#  And category "Unique Category2" is unique for user with email "agent34234234@nbs.com" role "purchase_manager"
+#  And I have user with email other_customer@nbs.com and role supplier
+#  And category "Unique Category2" is unique for user with email "agent34234234@nbs.com" role "member"
 #  Then I sign in as agent34234234@nbs.com with password secret
 #  And I go to the home page
 #  And I follow translated "home.show.view.purchase_manager"
@@ -237,7 +237,7 @@ Scenario: I should see leads from agent unique categories I'm assigned to on Bes
 
 @m12 @$_purchase_manager @requested @_done @_tested
 Scenario: I should see "My contact requests" instead of "Latest leads"
-  When I am signed up and confirmed as user with email pm@nbs.com and password secret and role purchase_manager
+  When I am signed up and confirmed as user with email pm@nbs.com and password secret and role member
   And I am on the home page
   And I sign in as pm@nbs.com with password secret
   And I follow translated "purchase_manager_home.show.view.complete_list_link" within "#my_contact_requests"
@@ -256,8 +256,8 @@ Scenario: I should see "Latest leads" when I'm not a procurement manager
 @m12 @$_purchase_manager @requested @_done @_tested
 Scenario: In "My contact requests" I should see leads created by me and leads created by other agents where I am specified as a contact
   When there are no leads
-  And I am signed up and confirmed as user with email pm@nbs.com and password secret and role purchase_manager
-  And lead Lead#1 is created by user pm@nbs.com with role purchase_manager
+  And I am signed up and confirmed as user with email pm@nbs.com and password secret and role member
+  And lead Lead#1 is created by user pm@nbs.com with role member
   And lead "Lead#1" is published
   And lead Lead#2 is created by user agent@nbs.com with role agent
   And lead "Lead#2" has attributes "email_address:pm@nbs.com"

@@ -3,7 +3,7 @@ Feature: Home pages
 
   @_done @_deprecated
   Scenario: On the role homepage we could change the name for the "Home" tab to front page and give the users a simpler way to get to the front page
-#    Given I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
+#    Given I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier
 #    And I am on the home page
 #    And I sign in as jon@lajoie.ca with password secret
 #    And I follow translated "layout.main_menu.shared.home"
@@ -14,7 +14,7 @@ Feature: Home pages
   @added @_done
   Scenario: On the category homepage we could change the name for the "Home" tab to front page and give the users a simpler way to get to the front page
     Given Category named "Best Leads" already exists
-    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Best Leads"
+    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads"
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
     Then I should be on category home page for Best Leads
@@ -38,7 +38,7 @@ Feature: Home pages
   @_done
   Scenario: On category home page it should be possible to logout
     Given Category named "Best Leads" already exists
-    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Best Leads"
+    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads"
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
     And I am on category home page for Best Leads
@@ -76,13 +76,13 @@ Feature: Home pages
     And I am on agent home page
     Then I should see translated "category_home.show.view.sign_out"
     When I sign out
-    Given I am signed up and confirmed as user with email mysterious_customer@nbs.com and password secret and role customer
+    Given I am signed up and confirmed as user with email mysterious_customer@nbs.com and password secret and role supplier
     And I am on the home page
     And I sign in as mysterious_customer@nbs.com with password secret
     And I am on buyer home page
     Then I should see translated "category_home.show.view.sign_out"
     When I sign out
-    Given I am signed up and confirmed as user with email pm@nbs.com and password secret and role purchase_manager
+    Given I am signed up and confirmed as user with email pm@nbs.com and password secret and role member
     And I am on the home page
     And I sign in as pm@nbs.com with password secret
     And I am on purchase manager home page
@@ -115,9 +115,9 @@ Feature: Home pages
 
   @m5 @unique_categories @tgn @_tested
   Scenario: I should not see links to Category home pages for categories which are customer unique
-    Given I have user with email other_customer@nbs.com and role customer
+    Given I have user with email other_customer@nbs.com and role supplier
     And Category Other Customer Unique Category is created
-    And category "Other Customer Unique Category" is unique for user with email "other_customer@nbs.com" role "customer"
+    And category "Other Customer Unique Category" is unique for user with email "other_customer@nbs.com" role "supplier"
     When I go to the home page
     Then I should not see "Other Customer Unique Category"
 

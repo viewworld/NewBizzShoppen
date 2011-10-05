@@ -23,7 +23,7 @@ Scenario: I can browse leads with pagination
 Scenario: I can search leads with filtering by: show active (default), show all, show outdated
   Given lead Monitors ultimate deal exists with attributes "purchase_decision_date:2009-09-01"
   Given lead Wires ultimate deal exists with attributes "sale_limit:1"
-  And a lead Wires ultimate deal exists within category Computers and is bought by user jim.doe.buyer@person.com with role customer
+  And a lead Wires ultimate deal exists within category Computers and is bought by user jim.doe.buyer@person.com with role supplier
   And I follow translated "layout.main_menu.call_centre_agent.leads"
   Then I should see "Routers ultimate deal"
   And I should see "Touchpads ultimate deal"
@@ -50,7 +50,7 @@ Scenario: I can change lead status from lead list
 
 @_tested
 Scenario: I can delete lead if the lead is not sold yet
-  Given a lead Wires ultimate deal exists within category Computers and is bought by user jim.doe.buyer@person.com with role customer
+  Given a lead Wires ultimate deal exists within category Computers and is bought by user jim.doe.buyer@person.com with role supplier
   And I follow translated "layout.main_menu.call_centre_agent.leads"
   Given I fill in "search_with_keyword" with "monitors ultimate deal"
   And I press translated "call_centre_agent.leads.index.view.search_button"

@@ -3,8 +3,8 @@ Feature: Ordered leads filter for big buyer
 
   @_done
   Scenario: I can browse not paginated list of lead ordered and not invoiced
-    Given I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
-    And User jon@lajoie.ca with role customer is big buyer
+    Given I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier
+    And User jon@lajoie.ca with role supplier is big buyer
     And lead Printers ultimate deal exists within category Computers
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
@@ -17,9 +17,9 @@ Feature: Ordered leads filter for big buyer
 
   @m8b @requested @_done @_tested
   Scenario: Big buyer should have Invoices tab with options: 'Pending leads' - current Not invoiced leads, 'Due invoices' - unpaid invoices, 'Paid' paid invoices
-    Given I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
-    And User jon@lajoie.ca with role customer is big buyer
-    And a lead Monitors ultimate deal exists within category Computers and is bought by user jon@lajoie.ca with role customer
+    Given I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier
+    And User jon@lajoie.ca with role supplier is big buyer
+    And a lead Monitors ultimate deal exists within category Computers and is bought by user jon@lajoie.ca with role supplier
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
     Then I should not see translated "layout.main_menu.customer.not_invoiced"
@@ -28,7 +28,7 @@ Feature: Ordered leads filter for big buyer
     Then I should see "Monitors ultimate deal"
     When I follow translated "customer.invoices.index.view.due_invoices"
     Then I should not see "Monitors ultimate deal"
-    When user with email "jon@lajoie.ca" and role "customer" has invoice generated for all unpaid leads
+    When user with email "jon@lajoie.ca" and role "supplier" has invoice generated for all unpaid leads
     And I follow translated "customer.invoices.index.view.paid_invoices"
     And I follow translated "customer.invoices.index.view.show_invoice"
     Then I should see "Monitors ultimate deal"

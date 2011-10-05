@@ -54,18 +54,18 @@ Scenario: I should see certification level for each lead
 @m3 @tgn @_tested @_done
 Scenario: I should see rating % for each lead
   Given Lead named "Lead 392S2" exists within "Sample category" category
-  And I have user with email customer.john.doe1@person.com and role customer
-  And I have user with email customer.john.doe2@person.com and role customer
-  And I have user with email customer.john.doe3@person.com and role customer
-  And I have user with email customer.john.doe4@person.com and role customer
-  And a lead Lead 392S2 exists within category Sample category and is bought by user customer.john.doe1@person.com with role customer
-  And a lead Lead 392S2 exists within category Sample category and is bought by user customer.john.doe2@person.com with role customer
-  And a lead Lead 392S2 exists within category Sample category and is bought by user customer.john.doe3@person.com with role customer
-  And a lead Lead 392S2 exists within category Sample category and is bought by user customer.john.doe4@person.com with role customer
-  And a lead purchase for lead "Lead 392S2" by user "customer.john.doe1@person.com" with role "customer" exists with attributes "rating_level:0,rating_reason:Abcd efgh"
-  And a lead purchase for lead "Lead 392S2" by user "customer.john.doe2@person.com" with role "customer" exists with attributes "rating_level:2,rating_reason:Abcd efgh"
-  And a lead purchase for lead "Lead 392S2" by user "customer.john.doe3@person.com" with role "customer" exists with attributes "rating_level:1,rating_reason:Abcd efgh"
-  And a lead purchase for lead "Lead 392S2" by user "customer.john.doe4@person.com" with role "customer" exists with attributes ""
+  And I have user with email customer.john.doe1@person.com and role supplier
+  And I have user with email customer.john.doe2@person.com and role supplier
+  And I have user with email customer.john.doe3@person.com and role supplier
+  And I have user with email customer.john.doe4@person.com and role supplier
+  And a lead Lead 392S2 exists within category Sample category and is bought by user customer.john.doe1@person.com with role supplier
+  And a lead Lead 392S2 exists within category Sample category and is bought by user customer.john.doe2@person.com with role supplier
+  And a lead Lead 392S2 exists within category Sample category and is bought by user customer.john.doe3@person.com with role supplier
+  And a lead Lead 392S2 exists within category Sample category and is bought by user customer.john.doe4@person.com with role supplier
+  And a lead purchase for lead "Lead 392S2" by user "customer.john.doe1@person.com" with role "supplier" exists with attributes "rating_level:0,rating_reason:Abcd efgh"
+  And a lead purchase for lead "Lead 392S2" by user "customer.john.doe2@person.com" with role "supplier" exists with attributes "rating_level:2,rating_reason:Abcd efgh"
+  And a lead purchase for lead "Lead 392S2" by user "customer.john.doe3@person.com" with role "supplier" exists with attributes "rating_level:1,rating_reason:Abcd efgh"
+  And a lead purchase for lead "Lead 392S2" by user "customer.john.doe4@person.com" with role "supplier" exists with attributes ""
   Given All leads have refreshed average ratings
   And I follow category "Sample category"
   Then I should see "58%"
@@ -82,7 +82,7 @@ Scenario: I should see hottness, novelty, exposure, clicks
 
 @m3 @tgn @_tested @_done
 Scenario: I should be able to click "Add to cart button" that will redirect me to login page
-  Given I am signed up and confirmed as user with email johnbuyer3434@person.com and password secret and role customer
+  Given I am signed up and confirmed as user with email johnbuyer3434@person.com and password secret and role supplier
   Given Lead named "Lead 392S2" exists within "Sample category" category
   And I follow category "Sample category"
   Then I click hidden translated link "leads.index.add_to_cart_link"
@@ -94,7 +94,7 @@ Scenario: I should be able to click "Add to cart button" that will redirect me t
 
 @m5 @tgn @_tested
 Scenario: If I successfully login after requesting a lead being added to a cart, that lead should be added to cart (or bought if I am big buyer)
-  Given I am signed up and confirmed as user with email johnbuyer3434@person.com and password secret and role customer
+  Given I am signed up and confirmed as user with email johnbuyer3434@person.com and password secret and role supplier
   Given Lead named "Lead sample" exists within "Sample category" category
   And I follow category "Sample category"
   Then I click hidden translated link "leads.index.add_to_cart_link"
@@ -102,8 +102,8 @@ Scenario: If I successfully login after requesting a lead being added to a cart,
   And I click hidden translated link "layout.cart.show_cart"
   Then I should see "Lead sample"
   Given I am not sign in
-  Given I am signed up and confirmed as user with email johnbigbuyer343888@person.com and password secret and role customer
-  And User johnbigbuyer343888@person.com with role customer is big buyer
+  Given I am signed up and confirmed as user with email johnbigbuyer343888@person.com and password secret and role supplier
+  And User johnbigbuyer343888@person.com with role supplier is big buyer
   And I follow translated "layout.main_menu.shared.browse_leads"
   And I follow category "Sample category"
   Then I click hidden translated link "leads.index.add_to_cart_link"
@@ -124,28 +124,28 @@ Scenario: I should be able to click "Add to cart button" that will redirect me t
   And I follow category "VariousLeads"
   Then I click hidden translated link "leads.index.add_to_cart_link"
   And I follow translated "buyer_home.show.view.create_new_buyer_account"
-  Then I fill in "user_customer_first_name" with "John"
-  And I fill in "user_customer_last_name" with "Doe"
-  And I fill in "user_customer_company_name" with "Doe Ltd"
-  And I fill in "user_customer_phone" with "31242342424234"
-  And I fill in "user_customer_email" with "johndoecustomer@person.com"
-  And I fill in "user_customer_screen_name" with "John D."
-  And I fill in "user_customer_password" with "secret"
-  And I fill in "user_customer_password_confirmation" with "secret"
-  And I fill in "user_customer_address_attributes_address_line_1" with "Ferterds"
-  And I fill in "user_customer_address_attributes_address_line_2" with "Boston"
-  And I fill in "user_customer_address_attributes_zip_code" with "12421S"
-  And I select "Denmark" from "user_customer_address_attributes_country_id"
-  And I check "user_customer_agreement_read"
+  Then I fill in "user_supplier_first_name" with "John"
+  And I fill in "user_supplier_last_name" with "Doe"
+  And I fill in "user_supplier_company_name" with "Doe Ltd"
+  And I fill in "user_supplier_phone" with "31242342424234"
+  And I fill in "user_supplier_email" with "johndoecustomer@person.com"
+  And I fill in "user_supplier_screen_name" with "John D."
+  And I fill in "user_supplier_password" with "secret"
+  And I fill in "user_supplier_password_confirmation" with "secret"
+  And I fill in "user_supplier_address_attributes_address_line_1" with "Ferterds"
+  And I fill in "user_supplier_address_attributes_address_line_2" with "Boston"
+  And I fill in "user_supplier_address_attributes_zip_code" with "12421S"
+  And I select "Denmark" from "user_supplier_address_attributes_country_id"
+  And I check "user_supplier_agreement_read"
   And I press translated "buyer_accounts.new.view.button_create_account"
-  And user "johndoecustomer@person.com" with role "customer" is confirmed
+  And user "johndoecustomer@person.com" with role "supplier" is confirmed
   And I sign in as johndoecustomer@person.com with password secret
   And I click hidden translated link "layout.cart.show_cart"
   Then I should see "Great marketing deal"
 
 @m5 @tgn @_tested
 Scenario: If I successfully login after requesting a lead being added to a cart, that lead should be added to cart (or bought if I am big buyer)
-  Given I am signed up and confirmed as user with email buyer21@person.com and password supersecret and role customer
+  Given I am signed up and confirmed as user with email buyer21@person.com and password supersecret and role supplier
   Given lead Great marketing deal exists within category VariousLeads
   And I go to browse leads
   And I follow category "VariousLeads"
@@ -176,9 +176,9 @@ Scenario: I can see only lead template fields' names (not values) for hidden fie
 
 @m5 @unique_categories @added @_tested @tgn
 Scenario: I should not see customer unique categories on 'Browse leads' categories listing
-  Given I have user with email other_customer@nbs.com and role customer
+  Given I have user with email other_customer@nbs.com and role supplier
   And Category Other Customer Unique Category is created
-  And category "Other Customer Unique Category" is unique for user with email "other_customer@nbs.com" role "customer"
+  And category "Other Customer Unique Category" is unique for user with email "other_customer@nbs.com" role "supplier"
   When I go to browse leads
   Then I should not see "Other Customer Unique Category"
 
@@ -198,9 +198,9 @@ Scenario: I should not see leads from agent unique categories
 
 @m5 @unique_categories @added @_tested @tgn
 Scenario: I should not see customer unique categories in a search filter
-  Given I have user with email other_customer@nbs.com and role customer
+  Given I have user with email other_customer@nbs.com and role supplier
   And Category Other Customer Unique Category is created
-  And category "Other Customer Unique Category" is unique for user with email "other_customer@nbs.com" role "customer"
+  And category "Other Customer Unique Category" is unique for user with email "other_customer@nbs.com" role "supplier"
   When I go to browse leads
   And I follow category "Electronics"
   Then "search_with_category" dropdown should not have values "Other Customer Unique Category"

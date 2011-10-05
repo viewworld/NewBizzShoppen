@@ -135,7 +135,7 @@ Feature: Front page for procurment
   Scenario: It should be possible to share by email the featured group deal
     Given a deal named "GroupDealA" exists within category "Electronics deals"
     And a deal named "GroupDealA" exists with attributes "published:1,group_deal:1,price:99,deal_price:100,discounted_price:25,social_media_description:super ultra deal social medias,start_date:01-01-2011,end_date:01-01-2013"
-    Given I am signed up and confirmed as user with email purchase_manager@nbs.com and password secret and role purchase_manager
+    Given I am signed up and confirmed as user with email purchase_manager@nbs.com and password secret and role member
     And I am on the homepage
     And I make sure current locale is "en"
     Then I sign in as purchase_manager@nbs.com with password secret

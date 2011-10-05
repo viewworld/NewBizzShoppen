@@ -26,7 +26,7 @@ Scenario: I have to fill in my email address
 
 @_tested
 Scenario: If I am logged in, my email address is alredy filled in
-  Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role customer
+  Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role supplier
   Then I sign in as bob@person.com with password supersecret
   Given I go to contact us
   Then the "email_template_preview_email_from" field should contain "bob@person.com"

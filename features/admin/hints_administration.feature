@@ -42,7 +42,7 @@ Scenario: I can edit a hint directly from the place where it is displayed
 #it will allow an admin to become a user with a specific role (only one at a time) - therefore he will be able to access all interfaces within fairleads and perform article/blurb/hint editing.
 @requested @m8 @_tested @translations
 Scenario: I can login as any role and be able to edit content
-  Given I am a translator for role "customer" with email "translator_1@nbs.com" and password "secret"
+  Given I am a translator for role "supplier" with email "translator_1@nbs.com" and password "secret"
   And I am not sign in
   Then I sign in as translator_1@nbs.com with password secret
   And I go to the homepage
@@ -51,7 +51,7 @@ Scenario: I can login as any role and be able to edit content
 
 @m8 @translations @selenium @added @_tested
 Scenario: As translator I can edit blurb, change it, save it and then go back to previous page
-  Given I am a translator for role "customer" with email "translator_1@nbs.com" and password "secret"
+  Given I am a translator for role "supplier" with email "translator_1@nbs.com" and password "secret"
   And I am not sign in
   Then I sign in as translator_1@nbs.com with password secret
   And I go to the homepage

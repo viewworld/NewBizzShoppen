@@ -8,9 +8,9 @@ Background:
   And lead "Printers ultimate deal" has currency "DKK"
   And I am on the homepage
   And I make sure current locale is "en"
-  And I am signed up and confirmed as user with email customer@person.com and password supersecret and role customer
+  And I am signed up and confirmed as user with email customer@person.com and password supersecret and role supplier
   And user "customer@person.com" has team buyers enabled
-  And User customer@person.com with role customer is big buyer
+  And User customer@person.com with role supplier is big buyer
   And I sign in as customer@person.com with password supersecret
 
 @_done
@@ -133,7 +133,7 @@ Scenario: I cannot buy leads if total cost of my purchases exceeds the global li
   And lead "Printers ultimate deal #2" has currency "DKK"
   And lead Printers ultimate deal #2 has price 200
   And lead Printers ultimate deal has price 200
-  And a lead Printers ultimate deal #2 exists within category Leisure and is bought by user customer@person.com with role customer
+  And a lead Printers ultimate deal #2 exists within category Leisure and is bought by user customer@person.com with role supplier
   And all prices are converted to euro
   When I go to leads
   And I follow category "Computers"
@@ -149,7 +149,7 @@ Scenario: I cannot buy leads if total cost of my purchases exceeds my personal l
   And lead "Printers ultimate deal #2" has currency "DKK"
   And lead Printers ultimate deal #2 has price 200
   And lead Printers ultimate deal has price 200
-  And a lead Printers ultimate deal #2 exists within category Leisure and is bought by user customer@person.com with role customer
+  And a lead Printers ultimate deal #2 exists within category Leisure and is bought by user customer@person.com with role supplier
   And all prices are converted to euro
   When I go to leads
   And I follow category "Computers"

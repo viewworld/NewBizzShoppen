@@ -4,16 +4,16 @@ Feature: Owned leads management for customer
 Background:
   Given I am on the homepage
   And I make sure current locale is "en"
-  Given I am signed up and confirmed as user with email customer@person.com and password supersecret and role customer
+  Given I am signed up and confirmed as user with email customer@person.com and password supersecret and role supplier
   And user "customer@person.com" has team buyers enabled
-  And user customer@person.com with role customer exists with attributes "screen_name:Liane Young,first_name:Liane,last_name:Young"
+  And user customer@person.com with role supplier exists with attributes "screen_name:Liane Young,first_name:Liane,last_name:Young"
   And an user with role lead_user and email lead_user2@person.com exists as subaccount for customer customer@person.com
   And an user with role lead_user and email lead_user3@person.com exists as subaccount for customer customer@person.com
   And user lead_user2@person.com with role lead_user exists with attributes "screen_name:John McCoy,first_name:John,last_name:McCoy"
   And user lead_user3@person.com with role lead_user exists with attributes "screen_name:Martin Gleesse,first_name:Martin,last_name:Gleesse"
   And someone is signed up and confirmed as user with email someagent@nbs.com and password secret and role agent with attributes "screen_name:SomeAgent Joe"
   And lead Printers ultimate deal is created by user someagent@nbs.com with role agent
-  And a lead Printers ultimate deal exists within category Computers and is bought by user customer@person.com with role customer
+  And a lead Printers ultimate deal exists within category Computers and is bought by user customer@person.com with role supplier
   And lead "Printers ultimate deal" has attributes "purchase_value:89.93,hidden_description:Lorem ipsum dolor sit amet consectetur adipiscing elit Suspendisse posuere turpis eget lorem sollicitudin ac volutpat Suspendisse posuere turpis eget lorem sollicitudin ac volutpat desc_end"
   And lead Keyboards deal exists within category Computers
   And lead Mouses ultimate deal exists within category Computers
@@ -55,7 +55,7 @@ Scenario: I can unassing any of my leads from lead user that belong to my accoun
 @tgn @_done @_tested
 Scenario: Assignment should not be possible/visible if I have not lead users associated with me
   Given I am not sign in
-  Given user customer@person.com with role customer has no subaccounts
+  Given user customer@person.com with role supplier has no subaccounts
   Then I sign in as customer@person.com with password supersecret
   And I go to buyer lead purchases
   Then I should not see field "assignee_id"
@@ -153,11 +153,11 @@ Scenario: I am notified by email when dealine expires and status of lead has not
 #Have a look at bulk_lead_share_by_email_controller.rb for sume hints regarding prerendering email template
 @ao @_tested
 Scenario: I can email the lead if email information were provided
-  Given I am signed up and confirmed as user with email customer@nbs.com and password secret and role customer
+  Given I am signed up and confirmed as user with email customer@nbs.com and password secret and role supplier
   And I sign out
   And I am on the home page
   And I sign in as customer@nbs.com with password secret
-  And a lead AwesomeLead exists within category Test and is bought by user customer@nbs.com with role customer
+  And a lead AwesomeLead exists within category Test and is bought by user customer@nbs.com with role supplier
   And I follow translated "layout.main_menu.lead_buyer.lead_purchases"
   And I follow translated "lead_buyer.lead_purchases.index.view.email_lead" within ".lead"
   And I press translated "lead_buyer.contact_lead_by_email.new.view.send_email_button"

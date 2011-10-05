@@ -5,7 +5,7 @@ Feature: Purchase manager leads management
 
   @selenium @_done @_tested
   Scenario: I should be able to create new lead as purchase manager
-    Given I am signed up and confirmed as user with email procurment@nbs.com and password secret and role purchase_manager
+    Given I am signed up and confirmed as user with email procurment@nbs.com and password secret and role member
     Then I sign in as procurment@nbs.com with password secret
     Then category "Business" has attributes "default_price:44.44"
     Then I follow translated "layout.main_menu.purchase_manager.tenders"
@@ -84,7 +84,7 @@ Feature: Purchase manager leads management
   #7553
   @m19 @requested @selenium @tgn @_done @_tested
   Scenario: On the My tenders view I should see only the following columns: Title, Creation date, deadline, number of suppliers
-    Given I am signed up and confirmed as user with email procurment@nbs.com and password secret and role purchase_manager
+    Given I am signed up and confirmed as user with email procurment@nbs.com and password secret and role member
     Then I sign in as procurment@nbs.com with password secret
     Then category "Business" has attributes "default_price:44.44"
     Then I follow translated "layout.main_menu.purchase_manager.tenders"

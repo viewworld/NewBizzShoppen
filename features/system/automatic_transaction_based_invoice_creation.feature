@@ -4,16 +4,16 @@ Feature: Automatic transaction based invoice creation
 Background:
   Given I am on the homepage
   And I make sure current locale is "en"
-  And I have user with email gerard.jones@paerson22.com and role customer
-  And user gerard.jones@paerson22.com with role customer exists with attributes "first_name:John,last_name:Kohen,company_name:Xerox"
-  And User gerard.jones@paerson22.com with role customer is big buyer
+  And I have user with email gerard.jones@paerson22.com and role supplier
+  And user gerard.jones@paerson22.com with role supplier exists with attributes "first_name:John,last_name:Kohen,company_name:Xerox"
+  And User gerard.jones@paerson22.com with role supplier is big buyer
   And an user with role lead_user and email lead_user.jones@paerson22.com exists as subaccount for customer gerard.jones@paerson22.com
   And lead Monitors deal exists within category Computers
   And lead Printers deal exists within category Computers
   And lead Monitors deal exists with attributes "price:321.23,currency_id:1"
   And lead Printers deal exists with attributes "currency_id:1"
-  And lead Monitors deal is bought by user gerard.jones@paerson22.com with role customer and is assigned to user lead_user.jones@paerson22.com with role lead_user
-  And lead Printers deal is bought by user gerard.jones@paerson22.com with role customer and is assigned to user lead_user.jones@paerson22.com with role lead_user
+  And lead Monitors deal is bought by user gerard.jones@paerson22.com with role supplier and is assigned to user lead_user.jones@paerson22.com with role lead_user
+  And lead Printers deal is bought by user gerard.jones@paerson22.com with role supplier and is assigned to user lead_user.jones@paerson22.com with role lead_user
   And I am signed up and confirmed as user with email bob@person.com and password supersecret and role admin
   Then I sign in as bob@person.com with password supersecret
   And there is a seller with attributes "company_name:DannyTheSeller,first_name:Danny,last_name:DeVito,address:USA,vat_no:123" for country "Denmark"
@@ -36,7 +36,7 @@ Scenario: Invoice lines for manually created invoice should be automatically gen
 Scenario: Invoice should be created per currency
   When lead Keyboards deal exists within category Computers
   And lead Keyboards deal exists with attributes "price:868.68,currency_id:2"
-  And lead Keyboards deal is bought by user gerard.jones@paerson22.com with role customer and is assigned to user lead_user.jones@paerson22.com with role lead_user
+  And lead Keyboards deal is bought by user gerard.jones@paerson22.com with role supplier and is assigned to user lead_user.jones@paerson22.com with role lead_user
   When I go to administration upcoming invoices
   Then I should see "2" rows in a table with headers within "table.generic"
   When I follow translated "administration.upcoming_invoices.index.view.create_invoice" within "tbody#invoices_list tr:nth-of-type(1)"

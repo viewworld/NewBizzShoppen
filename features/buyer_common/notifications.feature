@@ -38,7 +38,7 @@ Feature: Notifications
   Scenario: I should receive email with direct link when I buy a lead
     Given I am on the homepage
     Then I sign in as buyer@nbs.com with password secret
-    Then User buyer@nbs.com with role customer is big buyer
+    Then User buyer@nbs.com with role supplier is big buyer
     Then I follow translated "layout.main_menu.shared.browse_leads"
     Then I follow category "Business"
     Then I follow translated "leads.index.buy_lead"
@@ -57,9 +57,9 @@ Feature: Notifications
     Scenario: I should not receive email with direct link when I buy a lead if I check Don't send me e-mails when i buy a lead in my profile
     Given I am on the homepage
     Then I sign in as buyer@nbs.com with password secret
-    Then User buyer@nbs.com with role customer is big buyer
+    Then User buyer@nbs.com with role supplier is big buyer
     Then I follow translated "layout.my_profile_link"
-    Then I check "user_customer_disable_bought_notification"
+    Then I check "user_supplier_disable_bought_notification"
     Then I press translated "password.edit.view.button_update_user"
     Then I follow translated "layout.main_menu.shared.browse_leads"
     Then I follow category "Business"

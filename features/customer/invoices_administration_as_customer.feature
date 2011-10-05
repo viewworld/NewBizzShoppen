@@ -4,10 +4,10 @@ Feature: Invoices administration as customer
   Background:
     Given I am on the homepage
     And I make sure current locale is "en"
-    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier
     Then I sign in as jon@lajoie.ca with password secret
-    When invoice exists for user "jon@lajoie.ca" with role "customer"
-    And invoice line for first invoice exists for user "jon@lajoie.ca" with role "customer" with attributes "netto_price:100,quantity:1,vat_rate:23,netto_value:100,brutto_value:123"
+    When invoice exists for user "jon@lajoie.ca" with role "supplier"
+    And invoice line for first invoice exists for user "jon@lajoie.ca" with role "supplier" with attributes "netto_price:100,quantity:1,vat_rate:23,netto_value:100,brutto_value:123"
     And I follow translated "layout.main_menu.customer.invoices"
 
   @_done

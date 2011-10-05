@@ -4,10 +4,10 @@ Feature: Lead Rating
 Background:
   Given I am on the homepage
   And I make sure current locale is "en"
-  And I am signed up and confirmed as user with email bob@person.com and password supersecret and role customer
+  And I am signed up and confirmed as user with email bob@person.com and password supersecret and role supplier
   And an user with role lead_user and email lead_user2@person.com exists as subaccount for customer bob@person.com
   And lead Printers ultimate deal exists within category Computers
-  And lead Printers ultimate deal is bought by user bob@person.com with role customer and is assigned to user lead_user2@person.com with role lead_user
+  And lead Printers ultimate deal is bought by user bob@person.com with role supplier and is assigned to user lead_user2@person.com with role lead_user
   Then I sign in as bob@person.com with password supersecret
   And I go to buyer lead purchases
 
@@ -22,7 +22,7 @@ Scenario: I can rate a lead
 @_tested @selenium
 Scenario: I can bulk rate a lead
   Given lead Monitors ultimate deal exists within category Computers
-  And lead Monitors ultimate deal is bought by user bob@person.com with role customer and is assigned to user lead_user2@person.com with role lead_user
+  And lead Monitors ultimate deal is bought by user bob@person.com with role supplier and is assigned to user lead_user2@person.com with role lead_user
   Given I check "mark_all"
   And I select translated "activerecord.attributes.lead_purchase.rating_levels.rating_level1" from "bulk_rating_level"
   And I follow translated "lead_buyer.lead_purchases.index.view.bulk_update_button"
@@ -66,7 +66,7 @@ Scenario: I must enter additional explaination for selected reason
 Scenario: Agent is informed when his lead is rated as 'unsatisfactory'
   And I have user with email agent@person.com and role agent
   Given lead Ultimate mouses deal is created by user agent@person.com with role agent
-  And a lead Ultimate mouses deal exists within category Computers and is bought by user bob@person.com with role customer
+  And a lead Ultimate mouses deal exists within category Computers and is bought by user bob@person.com with role supplier
   And a lead "Ultimate mouses deal" has bad rating
   Then last email sent should have been sent to recipient "agent@person.com"
   And last email sent should have content "has been rated as"
@@ -78,10 +78,10 @@ Scenario: As agent I can view 'unsatisfactory' ratings regarding my leads
   Given I am on the homepage
   And I am signed up and confirmed as user with email agent@person.com and password supersecret and role agent
   Given lead Ultimate monitors deal is created by user agent@person.com with role agent
-  And a lead Ultimate monitors deal exists within category Computers and is bought by user bob@person.com with role customer
+  And a lead Ultimate monitors deal exists within category Computers and is bought by user bob@person.com with role supplier
   And a lead "Ultimate monitors deal" has good rating
   Given lead Ultimate mouses deal is created by user agent@person.com with role agent
-  And a lead Ultimate mouses deal exists within category Computers and is bought by user bob@person.com with role customer
+  And a lead Ultimate mouses deal exists within category Computers and is bought by user bob@person.com with role supplier
   And a lead "Ultimate mouses deal" has bad rating
   Then I sign in as agent@person.com with password supersecret
   And I go to agents leads
@@ -100,7 +100,7 @@ Scenario: As admin I can view all 'unsatisfactory' ratings
   And I am signed up and confirmed as user with email admin@person.com and password supersecret and role admin
   And I have user with email agent@person.com and role agent
   Given lead Ultimate mouses deal is created by user agent@person.com with role agent
-  And a lead Ultimate mouses deal exists within category Computers and is bought by user bob@person.com with role customer
+  And a lead Ultimate mouses deal exists within category Computers and is bought by user bob@person.com with role supplier
   And a lead "Ultimate mouses deal" has bad rating
   Then I sign in as admin@person.com with password supersecret
   And I go to administration leads

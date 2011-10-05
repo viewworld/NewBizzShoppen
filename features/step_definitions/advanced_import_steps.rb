@@ -85,15 +85,15 @@ Then /^I use advanced import for users "(buyers|procurements)"$/ do |name|
 end
 
 When /^there should be (\d+) buyers$/ do |num|
-  User::Customer.count.should == num.to_i
+  User::Supplier.count.should == num.to_i
 end
 
 When /^there should be (\d+) category buyers$/ do |num|
-  User::CategoryBuyer.count.should == num.to_i
+  User::CategorySupplier.count.should == num.to_i
 end
 
 When /^there should be (\d+) procurements$/ do |num|
-  User::PurchaseManager.count.should == num.to_i
+  User::Member.count.should == num.to_i
 end
 
 When /^lead category "([^"]*)" has "(\d+)" buyers$/ do |name, num|
@@ -164,8 +164,8 @@ Then /^I use advanced import for category buyers$/ do
   And %{I should see translated "buyers_advanced_import.create.flash.success" with options "counter:2 / 2"}
   And %{there should be 3 category buyers}
   And %{lead category "Leisure" has "2" buyers}
-  And %{user should exist with email "liu@mk.com" and role "category_buyer"}
-  And %{user should exist with email "kung@mk.com" and role "category_buyer"}
+  And %{user should exist with email "liu@mk.com" and role "category_supplier"}
+  And %{user should exist with email "kung@mk.com" and role "category_supplier"}
 end
 
 Then /^I use advanced import for leads as "(admin|user)"$/ do |role|

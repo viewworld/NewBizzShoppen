@@ -156,7 +156,7 @@ Scenario: I can see Facebook/Linkedin/Google icons on bottom of signing in box
     #buyer
     Given setting for "email_verification_for_sales_managers" is set to "1"
     Given I am not sign in
-    Given I have not confirmed user with email buyer_not_confirmed@nbs.com and role customer
+    Given I have not confirmed user with email buyer_not_confirmed@nbs.com and role supplier
     Then confirmation link should confirm account for buyer_not_confirmed@nbs.com
     And I should be on buyer home
     #agent
@@ -167,6 +167,6 @@ Scenario: I can see Facebook/Linkedin/Google icons on bottom of signing in box
     #purchase manager
     Given setting for "email_verification_for_procurement_managers" is set to "1"
     Given I am not sign in
-    Given I have not confirmed user with email purchase_manager_not_confirmed@nbs.com and role purchase_manager
+    Given I have not confirmed user with email purchase_manager_not_confirmed@nbs.com and role member
     Then confirmation link should confirm account for purchase_manager_not_confirmed@nbs.com
     And I should be on purchase manager home

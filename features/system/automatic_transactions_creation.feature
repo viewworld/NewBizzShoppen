@@ -11,7 +11,7 @@ Scenario: Every lead purchase's price is converted to Euro according to current 
   And lead Monitors deal has price 20.0
   And currency "DKK" exists with attributes "exchange_rate: 2.5"
   And lead "Monitors deal" has currency "DKK"
-  And a lead Monitors deal exists within category Computers and is bought by user customer12@nbs.com with role customer
+  And a lead Monitors deal exists within category Computers and is bought by user customer12@nbs.com with role supplier
   Then last purchase for lead "Monitors deal" has attributes "euro_price:8.0"
 
 @m8 @requested @_done @non_testable

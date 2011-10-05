@@ -41,7 +41,7 @@ Scenario: I can see 3 latest leads
 @added @m6 @ao @_tested @_done
 Scenario: I can't see inactive leads on latest leads
   When there are no leads
-  And a lead InactiveLead exists within category Test and is bought by user kastomer@nbs.fake with role customer
+  And a lead InactiveLead exists within category Test and is bought by user kastomer@nbs.fake with role supplier
   And lead "InactiveLead" has attributes "sale_limit:1"
   When I am on the agent home page
   Then I should see "1" items on a list within "#latest_leads"
@@ -107,8 +107,8 @@ Scenario: I can go to creation of new agent account page
 
 @ao @m3 @_done
 Scenario: In bestsellers and latest listings I should not see leads which I've already bought
-  When I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
-  And a lead BoughtLead exists within category Test and is bought by user jon@lajoie.ca with role customer
+  When I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier
+  And a lead BoughtLead exists within category Test and is bought by user jon@lajoie.ca with role supplier
   And lead AwesomeLead exists within category Test
   When I am on the agent home page
   Then I should see "AwesomeLead"
@@ -129,8 +129,8 @@ Scenario: When I am not logged in I should not see any leads from unique categor
   And I have user with email other_agent@nbs.com and role agent
   And category "Unique Category1" is unique for user with email "other_agent@nbs.com" role "agent"
   And lead UniqueLead2 exists within category Unique Category2
-  And I have user with email other_customer@nbs.com and role customer
-  And category "Unique Category2" is unique for user with email "other_customer@nbs.com" role "customer"
+  And I have user with email other_customer@nbs.com and role supplier
+  And category "Unique Category2" is unique for user with email "other_customer@nbs.com" role "supplier"
   When I am on agent home page
   And I should see "CommonLead1" within "#best_sellers"
   And I should not see "UniqueLead1" within "#best_sellers"
@@ -163,9 +163,9 @@ Scenario: When you are loged in as an agent and go to the role home pages, I sho
   Given there are no leads
   And I am signed up and confirmed as user with email ejdzent@nbs.com and password secret and role agent
   And lead Super ultra lead #1 is created by user ejdzent@nbs.com with role agent
-  And someone is signed up and confirmed as user with email bigbajer@nbs.com and password secret and role customer with attributes "big_buyer:1"
+  And someone is signed up and confirmed as user with email bigbajer@nbs.com and password secret and role supplier with attributes "big_buyer:1"
   And an user with role lead_user and email lidjuzer@nbs.com exists as subaccount for customer bigbajer@nbs.com
-  And lead Super ultra lead #1 is bought by user bigbajer@nbs.com with role customer and is assigned to user lidjuzer@nbs.com with role lead_user
+  And lead Super ultra lead #1 is bought by user bigbajer@nbs.com with role supplier and is assigned to user lidjuzer@nbs.com with role lead_user
   When I sign in as ejdzent@nbs.com with password secret
   When I am on the agent home page
   Then I should see "Super ultra lead #1" within "#sold_leads"
@@ -177,9 +177,9 @@ Scenario: When you are loged in as an agent and go to the role home pages, I sho
 #hame page is not used anymnore
 @requested @m11 @is @call_center_comments @_done @_tested @_deprecated
 Scenario: Agent can see his latest comments on home page
-#  And I have user with email customer2@nbs.com and role customer
-#  And user "customer2@nbs.com" with role "customer" has attributes "screen_name: Adam Savage"
-#  And a lead Lead#1 exists within category Business and is bought by user customer2@nbs.com with role customer
+#  And I have user with email customer2@nbs.com and role supplier
+#  And user "customer2@nbs.com" with role "supplier" has attributes "screen_name: Adam Savage"
+#  And a lead Lead#1 exists within category Business and is bought by user customer2@nbs.com with role supplier
 #  And comment thread for lead "Lead#1" was posted by users "agent@nbs.com"
 #  And comment for lead "Lead#1" was posted by user "customer2@nbs.com" with attributes "title:First Lead1 comment, created_at: 2011-01-01, last_thread_created_at:2011-01-01"
 #  Given I am on the homepage

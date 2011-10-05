@@ -125,7 +125,7 @@ Feature: Deals from Sales Manager perspective
   # "Additional information"
   @_done @_tested @selenium
   Scenario: I can create a new template for this Deal
-    And user buyer@nbs.com with role customer exists with attributes "company_name:Xeper"
+    And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
     Then I follow translated "layout.main_menu.shared.browse_leads"
     And I follow translated "categories.index.view.view_lead_templates"
@@ -143,14 +143,14 @@ Feature: Deals from Sales Manager perspective
 
   @_done @_tested @selenium
   Scenario: I can use existing templates for this category
-    And user buyer@nbs.com with role customer exists with attributes "company_name:Xeper"
+    And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
     And user "buyer@nbs.com" has assigned role "deal_maker"
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
     Given template named "Computer details1" for category "Xeper" is created by user "agent@person.com" with role "agent"
     And template named "Computer details1" is mandatory
     And template named "Computer details1" is global
     And template named "Computer details1" has following fields "field #1:true:true,field #2:true:false,field #3:false:false"
-    Given template named "Computer details2" for category "Xeper" is created by user "buyer@nbs.com" with role "customer"
+    Given template named "Computer details2" for category "Xeper" is created by user "buyer@nbs.com" with role "supplier"
     And template named "Computer details2" is mandatory
     And template named "Computer details2" has following fields "field #1:true:true,field #2:true:false,field #3:false:false"
     Then I follow translated "layout.main_menu.lead_buyer.my_deals"
@@ -167,7 +167,7 @@ Feature: Deals from Sales Manager perspective
     And I click hidden link by url regex "/buyers\/deals\/\d+\/edit/"
     And "deal_deal_template_ids_" dropdown should have values "Computer details2"
     Then I am not sign in
-    And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role purchase_manager
+    And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
     Then I sign in as purchase_manager101@nbs.com with password supersecret
     And I follow translated "layout.main_menu.shared.browse_deals"
     And I follow category "Electronics deals"
@@ -187,7 +187,7 @@ Feature: Deals from Sales Manager perspective
   @_done @_tested
   Scenario: When a deal is created a new lead category should be created named the same as sales manager's company name
     And there is no category named "Xeper"
-    And user buyer@nbs.com with role customer exists with attributes "company_name:Xeper"
+    And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
     And user "buyer@nbs.com" has assigned role "deal_maker"
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
     And there is a category named "Xeper"
@@ -201,7 +201,7 @@ Feature: Deals from Sales Manager perspective
 
   @m18 @tgn @_tested @_done @tgn
   Scenario: I can see Create new template button under new/edit deal
-    And user buyer@nbs.com with role customer exists with attributes "company_name:Xeper"
+    And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
     Then I follow translated "layout.main_menu.lead_buyer.my_deals"
     And I click hidden link by url regex "/buyers\/deals\/\d+\/edit/"
