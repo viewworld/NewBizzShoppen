@@ -44,23 +44,29 @@ class IntegrationTasks < Thor
   desc "m20", ""
 
   def m20
-    Translation.where("locale = 'en' and (lower(value) like ? or lower(value) like ? or lower(value) like ?)", "%buyer%", "%sales manager%", "customer").each do |t|
+    Translation.where("locale = 'en' and (lower(value) like ? or lower(value) like ? or lower(value) like ? or lower(value) like ? or lower(value) like ?)", "%buyer%", "%sales manager%", "%customer%", "%purchase manager%", "%procurement%").each do |t|
 
     if t.value.downcase.include?("category buyer")
-      value = t.value.gsub(/(category buyer)/i) { |s| "#{ s.to_s[0..0] =~ /[A-Z]/ ? "Category supplier" : "category supplier" }" }
+      value = StringUtils.replace(t.value, "category buyer", "category supplier")
     elsif t.value.downcase.include?("sales manager")
-      value = t.value.gsub(/(sales manager)/i) { |s| "#{ s.to_s[0..0] =~ /[A-Z]/ ? "Supplier" : "supplier" }" }
+      value = StringUtils.replace(t.value, "sales manager", "supplier")
     elsif t.value.downcase.include?("customer")
-      value = t.value.gsub(/(customer)/i) { |s| "#{ s.to_s[0..0] =~ /[A-Z]/ ? "Supplier" : "supplier" }" }
+      value = StringUtils.replace(t.value, "customer", "supplier")
+    elsif t.value.downcase.include?("purchase manager")
+      value = StringUtils.replace(t.value, "purchase manager", "member")
+    elsif t.value.downcase.include?("procurement manager")
+      value = StringUtils.replace(t.value, "procurement manager", "member")
+    elsif t.value.downcase.include?("procurement")
+      value = StringUtils.replace(t.value, "procurement", "member")
     else
-      value = t.value.gsub(/(buyer)/i) { |s| "#{ s.to_s[0..0] =~ /[A-Z]/ ? "Supplier" : "supplier" }" }
+      value = StringUtils.replace(t.value, "buyer", "supplier")
     end
 
       t.update_attribute(:value, value)
     end
 
-    Result.where("name like ?", "%buyer%").each do |result|
-      result.update_attribute(:name, result.name.gsub(/(buyer)/i) { |s| "#{ s.to_s[0..0] =~ /[A-Z]/ ? "Supplier" : "supplier" }" })
+    Result.where("lower(name) like ?", "%buyer%").each do |result|
+      result.update_attribute(:name, StringUtils.replace(result.name, "buyer", "supplier"))
     end
   end
 end
