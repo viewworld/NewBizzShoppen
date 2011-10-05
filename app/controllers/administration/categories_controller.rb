@@ -10,17 +10,19 @@ class Administration::CategoriesController < Administration::AdministrationContr
 
   def create
     @category = @category_type.constantize.new(params[:category])
-    @category.suppliers = []
+    @category.customers = []
     @category.agents = []
     respond_to do |format|
       if @category.save
-        @category.supplier_ids = params[:category][:supplier_ids]
+        @category.customer_ids = params[:category][:customer_ids]
         @category.agent_ids = params[:category][:agent_ids]
         @category.save
         @category.move_leads_to_subcategory
         flash[:notice] = I18n.t("flash.categories.create.notice")
         format.html { redirect_to @category_type == "LeadCategory" ? categories_path : deal_categories_path }
       else
+        @category.customer_ids = params[:category][:customer_ids]
+        @category.agent_ids = params[:category][:agent_ids]
         format.html { render 'new' }
       end
     end
