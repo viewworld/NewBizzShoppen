@@ -78,9 +78,9 @@ class ApplicationController < ActionController::Base
         session[:lead_id] = nil
         session[:buyout] = nil
         requested_path
-      elsif resource.contact.present? and resource.has_any_role?(:category_supplier, :supplier, :purchase_manager) and resource.sign_in_count == 1
+      elsif resource.contact.present? and resource.has_any_role?(:category_supplier, :supplier, :member) and resource.sign_in_count == 1
         my_profile_path
-      elsif resource.has_role? :purchase_manager and session[:site] == "fairdeals"
+      elsif resource.has_role? :member and session[:site] == "fairdeals"
         root_path
       elsif resource.has_role? :category_supplier
         if resource.with_role.parent_buying_categories.first
@@ -90,7 +90,7 @@ class ApplicationController < ActionController::Base
           sign_out(resource_name)
           root_path
         end
-      elsif session[:last_url_before_logout].present? and !current_user.has_any_role?(:agent, :call_centre, :call_centre_agent, :purchase_manager, :supplier, :lead_supplier)
+      elsif session[:last_url_before_logout].present? and !current_user.has_any_role?(:agent, :call_centre, :call_centre_agent, :member, :supplier, :lead_supplier)
         last_url = session[:last_url_before_logout]
         session[:last_url_before_logout] = nil
         last_url
@@ -100,8 +100,8 @@ class ApplicationController < ActionController::Base
         supplier_home_path
       elsif [:agent, :call_centre, :call_centre_agent].include?(resource.role)
         agent_home_path
-      elsif resource.has_role? :purchase_manager
-        purchase_manager_home_path
+      elsif resource.has_role? :member
+        member_home_path
       else
         self.send "#{resource.role.to_s.pluralize}_root_path"
       end

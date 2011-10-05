@@ -25,7 +25,7 @@ class MembersAdvancedImportsController < SecuredController
   end
 
   def set_object
-    @model = ::User::PurchaseManager
+    @model = ::User::Member
   end
 
   def check_role

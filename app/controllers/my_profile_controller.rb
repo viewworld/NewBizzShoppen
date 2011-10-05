@@ -11,7 +11,7 @@ class MyProfileController < SecuredController
     @user = current_user
     if @user.update_attributes(params["user_#{@user.role.to_s}".to_sym])
       flash[:notice] = I18n.t("my_profile.update.controller.successful_update_notice")
-      if @user.contact.present? and @user.has_any_role?(:category_supplier, :supplier, :purchase_manager) and @user.sign_in_count == 1
+      if @user.contact.present? and @user.has_any_role?(:category_supplier, :supplier, :member) and @user.sign_in_count == 1
         unless session[:user_confirmed_account_info] == "1"
           @user.deliver_welcome_email_for_upgraded_contact
           session[:user_confirmed_account_info] = "1"

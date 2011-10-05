@@ -494,7 +494,7 @@ class User < ActiveRecord::Base
   def purchase_limit_reached?(lead, buyout=false)
     return false unless big_buyer?
     not_invoiced_cost = LeadPurchase.with_not_invoiced.where("owner_id = ?", id).map { |lp| lp.not_invoiced_euro_sum.to_f }.sum
-    (not_invoiced_cost + (buyout ? lead.buyout_quantity : 1) * lead.currency.to_euro(lead.price)) >= (big_buyer_purchase_limit.to_f > 0 ? big_buyer_purchase_limit.to_f : Settings.big_buyer_purchase_limit.to_f)
+    (not_invoiced_cost + (buyout ? lead.buyout_quantity : 1) * lead.currency.to_euro(lead.price)) >= (big_buyer_purchase_limit.to_f > 0 ? big_buyer_purchase_limit.to_f : Settings.big_supplier_purchase_limit.to_f)
   end
 
   def generate_login_key

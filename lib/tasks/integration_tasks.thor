@@ -47,6 +47,7 @@ class IntegrationTasks < Thor
     #setup
 
     Settings.where(:var => "email_verification_for_procurement_managers").first.update_attribute(:var, "email_verification_for_members")
+    Settings.where(:var => "big_buyer_purchase_limit").first.update_attribute(:var, "big_supplier_purchase_limit")
 
     dictionary = {"category buyer" => "category supplier", "sales manager" => "supplier", "customer" => "supplier", "buyer" => "supplier", "procurement manager" => "member", "procurement" => "member"}
     dictionary_keys = {"category_buyer" => "category_supplier", "sales_manager" => "supplier", "customer" => "supplier", "buyer" => "supplier", "purchase_manager" => "member", "procurement" => "member", "member_manager" => "member"}

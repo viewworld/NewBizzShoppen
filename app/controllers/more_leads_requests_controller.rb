@@ -27,7 +27,7 @@ class MoreLeadsRequestsController < ApplicationController
                                         :bcc_recipients => @email_template_preview.bcc, :cc_recipients => @email_template_preview.cc, :reply_to => @email_template_preview.contact_email})
 
         if current_user
-          redirect_to current_user.has_any_role?(:agent, :call_centre_agent, :purchase_manager) ? agent_home_path : supplier_home_path
+          redirect_to current_user.has_any_role?(:agent, :call_centre_agent, :member) ? agent_home_path : supplier_home_path
         else
           redirect_to root_path
         end

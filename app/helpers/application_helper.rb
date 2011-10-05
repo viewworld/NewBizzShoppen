@@ -138,7 +138,7 @@ module ApplicationHelper
   def main_menu_link_to_role_specific_home_page
     if user_signed_in? and current_user.has_role?(:category_supplier) and @home_category
       main_menu_link_to(t("layout.main_menu.shared.home"), category_home_page_path(@home_category.cached_slug), :tab => "home")
-    elsif user_signed_in? and current_user.has_role?(:purchase_manager) and session[:site] == "fairdeals"
+    elsif user_signed_in? and current_user.has_role?(:member) and session[:site] == "fairdeals"
       main_menu_link_to(t("layout.main_menu.shared.home"), root_path, :tab => "home")
     else
       main_menu_link_to(t("layout.main_menu.shared.home"), url_to_role_specific_home_page, :tab => "home")
@@ -153,7 +153,7 @@ module ApplicationHelper
         category_home_page_path(@home_category.cached_slug)
       elsif current_user.has_any_role?(:call_centre, :call_centre_agent)
         agent_home_path
-      elsif current_user.has_any_role?(:supplier, :lead_supplier, :lead_user, :agent, :purchase_manager)
+      elsif current_user.has_any_role?(:supplier, :lead_supplier, :lead_user, :agent, :member)
         (current_user.has_any_role?(:supplier, :lead_supplier, :lead_user)) ? supplier_home_path : self.send("#{current_user.role.to_s}_home_path")
       else
         root_path

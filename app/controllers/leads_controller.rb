@@ -90,7 +90,7 @@ class LeadsController < ApplicationController
       params[:search][:without_unique_categories] = "1"
     end
 
-    if !user_signed_in? or (user_signed_in? and !current_user.has_role?(:purchase_manager))
+    if !user_signed_in? or (user_signed_in? and !current_user.has_role?(:member))
       params[:search][:published_only] = "1"
       params[:search][:without_inactive] = true
     end

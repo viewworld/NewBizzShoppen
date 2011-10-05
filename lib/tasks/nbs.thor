@@ -18,7 +18,7 @@ class Nbs < Thor
     Settings.contact_us_skype = Rails.env.production? ? "" : "fairleads_contact" if Settings.contact_us_skype.nil?
     # Invoicing
     Settings.invoicing_default_payment_deadline_date = 14 if Settings.invoicing_default_payment_deadline_date.nil?
-    Settings.big_buyer_purchase_limit = 10000 if Settings.big_buyer_purchase_limit.nil?
+    Settings.big_supplier_purchase_limit = 10000 if Settings.big_supplier_purchase_limit.nil?
     #Certification
     Settings.resend_certification_notification_after_days = 15 if Settings.resend_certification_notification_after_days.nil?
     Settings.expire_certification_notification_after_days = 15 if Settings.expire_certification_notification_after_days.nil?

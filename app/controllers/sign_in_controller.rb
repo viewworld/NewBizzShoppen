@@ -29,7 +29,7 @@ class SignInController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        if session[:site] == "fairdeals" and @user.has_role?(:purchase_manager) and @user.confirmed? and @user.rpx_identifier.blank?
+        if session[:site] == "fairdeals" and @user.has_role?(:member) and @user.confirmed? and @user.rpx_identifier.blank?
           @user.send_invitation_email(params[param_key][:password])
           path = session[:user_return_to] if session[:user_return_to]
           sign_in(@user)
