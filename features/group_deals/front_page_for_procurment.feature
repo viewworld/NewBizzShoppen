@@ -72,6 +72,15 @@ Feature: Front page for procurment
     Given I visit domain http://fairdeals.dk
     Then I should see "PrimaryGroupDeal" within "div#primary_group_deal"
 
+  @added @_done @_tested
+  Scenario: I should not see one primary group deal when it has been disabled or expired
+    Given a deal named "PrimaryGroupDeal" exists within category "Electronics deals"
+    And a deal named "PrimaryGroupDeal" exists with attributes "published:1,group_deal:1,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
+    And deal named "PrimaryGroupDeal" is a primary featured deal
+    And deal named "PrimaryGroupDeal" has been unpublished
+    Given I visit domain http://fairdeals.dk
+    Then I should not see CSS path "div#primary_group_deal"
+
   @_done @_tested
   Scenario: I can select a primary deal to display by accessing the page with deal number in the URL like www.fairdeals.dk/1223
     Given a deal named "PrimaryGroupDeal" exists within category "Electronics deals"
@@ -102,8 +111,29 @@ Feature: Front page for procurment
     And I visit domain http://fairdeals.dk
     Then I should see "PrimaryGroupDeal" within "div#primary_group_deal"
     Then I should see "SecondaryGroupDealOne" within "div#secondary_featured_deal_1"
-    Then I should see "SecondaryGroupDeal" within "div#secondary_featured_deal_2"
-    Then I should see "SecondaryGroupDeal" within "div#secondary_featured_deal_3"
+    Then I should see "SecondaryGroupDealTwo" within "div#secondary_featured_deal_2"
+    Then I should see "SecondaryGroupDealThree" within "div#secondary_featured_deal_3"
+
+  @_done @_tested
+  Scenario: I should not see three minor deals when they have been disabled or expired
+    Given a deal named "PrimaryGroupDeal" exists within category "Electronics deals"
+    And a deal named "PrimaryGroupDeal" exists with attributes "published:1,group_deal:1,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
+    And deal named "PrimaryGroupDeal" is a primary featured deal
+    And a deal named "SecondaryGroupDealOne" exists within category "Electronics deals"
+    And a deal named "SecondaryGroupDealOne" exists with attributes "published:1,group_deal:1,price:99,deal_price:200,discounted_price:50,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
+    And deal named "SecondaryGroupDealOne" is "1" secondary featured deal
+    And a deal named "SecondaryGroupDealTwo" exists within category "Electronics deals"
+    And a deal named "SecondaryGroupDealTwo" exists with attributes "published:1,group_deal:1,price:99,deal_price:200,discounted_price:50,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
+    And deal named "SecondaryGroupDealTwo" is "2" secondary featured deal
+    And a deal named "SecondaryGroupDealThree" exists within category "Electronics deals"
+    And a deal named "SecondaryGroupDealThree" exists with attributes "published:1,group_deal:1,price:99,deal_price:200,discounted_price:50,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
+    And deal named "SecondaryGroupDealThree" is "3" secondary featured deal
+    And deal named "SecondaryGroupDealTwo" has been unpublished
+    And I visit domain http://fairdeals.dk
+    Then I should see "PrimaryGroupDeal" within "div#primary_group_deal"
+    Then I should see "SecondaryGroupDealOne" within "div#secondary_featured_deal_1"
+    Then I should not see "SecondaryGroupDealTwo" within "div#secondary_featured_deal_2"
+    Then I should see "SecondaryGroupDealThree" within "div#secondary_featured_deal_3"
 
   #Compare with: huddlebuy.co.uk
   @_done @_tested

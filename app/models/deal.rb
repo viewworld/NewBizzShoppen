@@ -8,6 +8,7 @@ class Deal < AbstractLead
   has_many :leads, :class_name => "Lead", :foreign_key => "deal_id"
   has_many :comment_threads, :class_name => "Comment", :foreign_key => :commentable_id, :conditions => {:commentable_type => 'AbstractLead'}
   has_many :deal_certification_requests, :dependent => :destroy
+  has_many :featured_deals
   has_and_belongs_to_many :deal_templates, :class_name => "LeadTemplate", :join_table => "leads_lead_templates", :foreign_key => "lead_id", :association_foreign_key => "lead_template_id"
   belongs_to :lead_category, :class_name => "Category", :foreign_key => "lead_category_id"
   belongs_to :deal_admin, :class_name => "User", :foreign_key => "deal_admin_email", :primary_key => "email"
@@ -34,6 +35,7 @@ class Deal < AbstractLead
   before_create :create_uniq_deal_category, :set_default_max_auto_buy
   after_create :certify_for_unknown_email, :assign_deal_admin
   before_save :set_dates, :check_deal_request_details_email_template
+  after_save :handle_disabled_deal
 
   attr_accessor :creation_step, :use_company_name_as_category
 
@@ -43,6 +45,17 @@ class Deal < AbstractLead
 
   ajaxful_rateable :stars => 5, :allow_update => false, :cache_column => :deal_average_rating
   acts_as_commentable
+
+  def active?
+    published? and start_date <= Date.today and end_date >= Date.today
+  end
+
+  def handle_disabled_deal
+    if !active? and !featured_deals.empty?
+      self.featured_deals = []
+      self.save
+    end
+  end
 
   def deal_admin_presence
     self.errors.add(:deal_admin_email, :invalid) if !deal_admin or !deal_admin.has_any_role?(:agent, :call_centre, :call_centre_agent)

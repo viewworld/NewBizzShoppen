@@ -203,3 +203,9 @@ end
 Given /^there are "([^"]*)" existing deals$/ do |num|
   num.to_i.times{Deal.make!}
 end
+
+Given /^deal named "([^"]*)" has been unpublished$/ do |deal_header|
+  deal = Deal.where(:header => deal_header).first
+  deal.published = false
+  deal.save
+end
