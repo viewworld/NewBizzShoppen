@@ -64,9 +64,9 @@ Feature: Generating leads from deals
     And I fill in "lead_lead_template_values_attributes_0_value" with "lorem ipsum 1"
     And I fill in "lead_lead_template_values_attributes_1_value" with "lorem ipsum 2"
     And I fill in "lead_lead_template_values_attributes_2_value" with "lorem ipsum 3"
-    And I press translated "purchase_manager.leads.new.view.button_create"
-    And I should see translated "purchase_manager.leads.show.view.confirmation_message"
-    And I press translated "purchase_manager.leads.show.view.ok_confirmation"
+    And I press translated "member.leads.new.view.button_create"
+    And I should see translated "member.leads.show.view.confirmation_message"
+    And I press translated "member.leads.show.view.ok_confirmation"
     And I should be on the homepage
 
   # If there is any template information associated with the deal the procurement manager is prompted for the information. And the procurement manager can enter some note information (will go into hidden description)

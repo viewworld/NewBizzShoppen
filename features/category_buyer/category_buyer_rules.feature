@@ -27,15 +27,15 @@ Feature: Category buyer rules
     And I am on category home page for Best Leads
     And I sign in as jon@lajoie.ca with password secret
     And I follow translated "layout.main_menu.supplier.subaccounts"
-    Then I follow translated "customer.subaccounts.index.view.new_lead_user"
+    Then I follow translated "supplier.subaccounts.index.view.new_lead_user"
     And I fill in "user_lead_user_first_name" with "Mark"
     And I fill in "user_lead_user_last_name" with "Driscoll"
     And I fill in "user_lead_user_email" with "driscoll@person.noserver.com"
     And I fill in "user_lead_user_screen_name" with "ML Driscoll"
     And I fill in "user_lead_user_password" with "secret"
     And I fill in "user_lead_user_password_confirmation" with "secret"
-    And I press translated "customer.subaccounts.new.view.button_create"
-    Then I should see translated "customer.subaccounts.create.flash.subaccount_creation_successful"
+    And I press translated "supplier.subaccounts.new.view.button_create"
+    Then I should see translated "supplier.subaccounts.create.flash.subaccount_creation_successful"
     And user "driscoll@person.noserver.com" should have role "category_supplier"
 
   @_done
@@ -45,15 +45,15 @@ Feature: Category buyer rules
     And I am on category home page for Best Leads
     And I sign in as jon@lajoie.ca with password secret
     And I follow translated "layout.main_menu.supplier.subaccounts"
-    Then I follow translated "customer.subaccounts.index.view.new_lead_buyer"
+    Then I follow translated "supplier.subaccounts.index.view.new_lead_buyer"
     And I fill in "user_lead_supplier_first_name" with "Mark"
     And I fill in "user_lead_supplier_last_name" with "Driscoll"
     And I fill in "user_lead_supplier_email" with "driscoll@person.noserver.com"
     And I fill in "user_lead_supplier_screen_name" with "ML Driscoll"
     And I fill in "user_lead_supplier_password" with "secret"
     And I fill in "user_lead_supplier_password_confirmation" with "secret"
-    And I press translated "customer.subaccounts.new.view.button_create"
-    Then I should see translated "customer.subaccounts.create.flash.subaccount_creation_successful"
+    And I press translated "supplier.subaccounts.new.view.button_create"
+    Then I should see translated "supplier.subaccounts.create.flash.subaccount_creation_successful"
     And user "driscoll@person.noserver.com" should have role "category_supplier"
 
   @_done
@@ -63,14 +63,14 @@ Feature: Category buyer rules
     And I am on category home page for Best Leads
     And I sign in as jon@lajoie.ca with password secret
     And I follow translated "layout.main_menu.supplier.subaccounts"
-    Then I follow translated "customer.subaccounts.index.view.new_lead_buyer"
+    Then I follow translated "supplier.subaccounts.index.view.new_lead_buyer"
     And I fill in "user_lead_supplier_first_name" with "Mark"
     And I fill in "user_lead_supplier_last_name" with "Driscoll"
     And I fill in "user_lead_supplier_email" with "driscoll@person.noserver.com"
     And I fill in "user_lead_supplier_screen_name" with "ML Driscoll"
     And I fill in "user_lead_supplier_password" with "secret"
     And I fill in "user_lead_supplier_password_confirmation" with "secret"
-    And I press translated "customer.subaccounts.new.view.button_create"
+    And I press translated "supplier.subaccounts.new.view.button_create"
     And I sign out
     And user "driscoll@person.noserver.com" is confirmed
     And I sign in as driscoll@person.noserver.com with password secret
@@ -139,14 +139,14 @@ Feature: Category buyer rules
     And I am on category home page for Best Leads
     And I sign in as jon@lajoie.ca with password secret
     And I follow translated "layout.main_menu.supplier.subaccounts"
-    Then I follow translated "customer.subaccounts.index.view.new_lead_buyer"
+    Then I follow translated "supplier.subaccounts.index.view.new_lead_buyer"
     And I fill in "user_lead_supplier_first_name" with "Mark"
     And I fill in "user_lead_supplier_last_name" with "Driscoll"
     And I fill in "user_lead_supplier_email" with "driscoll@person.noserver.com"
     And I fill in "user_lead_supplier_screen_name" with "ML Driscoll"
     And I fill in "user_lead_supplier_password" with "secret"
     And I fill in "user_lead_supplier_password_confirmation" with "secret"
-    And I press translated "customer.subaccounts.new.view.button_create"
+    And I press translated "supplier.subaccounts.new.view.button_create"
     And I sign out
     And user "driscoll@person.noserver.com" is confirmed
     When I sign in as driscoll@person.noserver.com with password secret
@@ -186,11 +186,11 @@ Feature: Category buyer rules
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
     And go to customers subaccounts
-    Then I follow translated "customer.subaccounts.index.view.edit"
+    Then I follow translated "supplier.subaccounts.index.view.edit"
     And I fill in "user_category_supplier_first_name" with "Justin"
     And I fill in "user_category_supplier_last_name" with "Bieber"
-    And I press translated "customer.subaccounts.edit.view.button_update"
-    Then I should see translated "customer.subaccounts.update.flash.subaccount_update_successful"
+    And I press translated "supplier.subaccounts.edit.view.button_update"
+    Then I should see translated "supplier.subaccounts.update.flash.subaccount_update_successful"
     And I should see "Justin"
     And I should see "Bieber"
 
@@ -203,11 +203,11 @@ Feature: Category buyer rules
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
     And go to customers subaccounts
-    Then I follow translated "customer.subaccounts.index.view.edit"
+    Then I follow translated "supplier.subaccounts.index.view.edit"
     And I fill in "user_category_supplier_first_name" with "Justin"
     And I fill in "user_category_supplier_last_name" with "Bieber"
-    And I press translated "customer.subaccounts.edit.view.button_update"
-    Then I should see translated "customer.subaccounts.update.flash.subaccount_update_successful"
+    And I press translated "supplier.subaccounts.edit.view.button_update"
+    Then I should see translated "supplier.subaccounts.update.flash.subaccount_update_successful"
     And I should see "Justin"
     And I should see "Bieber"
 

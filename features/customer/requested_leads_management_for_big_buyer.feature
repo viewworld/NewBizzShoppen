@@ -19,13 +19,13 @@ Background:
 
 @_tested
 Scenario: I can add a given lead to my lead list
-  Given I follow translated "customer.lead_requests.index.view.accept_lead_request_link"
-  Then I should see translated "customer.lead_requests.index.flash.lead_request_accepted_successfully"
+  Given I follow translated "supplier.lead_requests.index.view.accept_lead_request_link"
+  Then I should see translated "supplier.lead_requests.index.flash.lead_request_accepted_successfully"
 
 @_tested @selenium
 Scenario: I can bulk add selected leads to my lead list
   Given I check "mark_all"
-  Then I follow translated "customer.lead_requests.index.view.button_bulk_create_lead_request"
+  Then I follow translated "supplier.lead_requests.index.view.button_bulk_create_lead_request"
   And I should see translated "flash.bulk_lead_requests.update.notice"
 
 @added @_done

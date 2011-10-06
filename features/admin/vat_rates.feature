@@ -9,7 +9,7 @@ Feature: VAT rates
   Scenario: I can fill in VAT number when creating new buyer account
     When I am on the buyer home page
     When I follow translated "buyer_home.show.view.create_new_buyer_account"
-    Then I should see translated "formtastic.labels.user/customer.vat_number"
+    Then I should see translated "formtastic.labels.user/supplier.vat_number"
 
   @_done
   Scenario: I can't fill in VAT number when creating new agent or purchase manager account
@@ -26,7 +26,7 @@ Feature: VAT rates
     And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier
     And I sign in as jon@lajoie.ca with password secret
     And I am on administration edit user kastomer@nbs.fake
-    Then I should see translated "formtastic.labels.user/customer.vat_number"
+    Then I should see translated "formtastic.labels.user/supplier.vat_number"
 
   @_done
   Scenario: Administrator can't edit vat number for agents/pms
@@ -44,7 +44,7 @@ Feature: VAT rates
     When I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier
     And I sign in as jon@lajoie.ca with password secret
     And I follow translated "layout.my_profile_link"
-    Then I should see translated "formtastic.labels.user/customer.vat_number"
+    Then I should see translated "formtastic.labels.user/supplier.vat_number"
 
   @_done
   Scenario: Agents/PurchaseManagers can edit vat number in profile

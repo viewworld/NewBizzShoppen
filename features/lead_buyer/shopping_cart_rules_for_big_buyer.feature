@@ -44,8 +44,8 @@ Scenario: I can instant-buy lead requested by lead user that belongs to my accou
   And I sign out
   And I sign in as customer@person.com with password supersecret
   And I follow translated "layout.main_menu.supplier.lead_requests"
-  And I follow translated "customer.lead_requests.index.view.accept_lead_request_link"
-  Then I should see translated "customer.lead_requests.index.flash.lead_request_accepted_successfully"
+  And I follow translated "supplier.lead_requests.index.view.accept_lead_request_link"
+  Then I should see translated "supplier.lead_requests.index.flash.lead_request_accepted_successfully"
 
 @selenium @_done
 Scenario: I can bulk instant-buy leads and I will see a notification “You added {n} leads to your list”
@@ -99,7 +99,7 @@ Scenario: I can bulk instant-buy leads requested by lead user that belongs to my
   And I sign in as customer@person.com with password supersecret
   And I follow translated "layout.main_menu.supplier.lead_requests"
   And I check "mark_all"
-  And I follow translated "customer.lead_requests.index.view.button_bulk_create_lead_request"
+  And I follow translated "supplier.lead_requests.index.view.button_bulk_create_lead_request"
   Then I should see translated "flash.bulk_lead_requests.update.notice"
 
 @_done
@@ -110,7 +110,7 @@ Scenario: I can filter the list of my leads by "paid" column
   When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   Then I should see "Printers ultimate deal"
   When I select translated "common.yes_label" from "search_with_paid"
-  And I press translated "lead_buyer.lead_purchases.index.view.search.search_button"
+  And I press translated "supplier.lead_purchases.index.view.search.search_button"
   Then I should not see "Printers ultimate deal"
 
 @m5 @tgn @_tested

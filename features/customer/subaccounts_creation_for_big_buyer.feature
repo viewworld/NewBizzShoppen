@@ -11,26 +11,26 @@ Background:
 
 @tgn @_done @_tested
 Scenario: I can create a lead user account
-  Then I follow translated "customer.subaccounts.index.view.new_lead_user"
+  Then I follow translated "supplier.subaccounts.index.view.new_lead_user"
   And I fill in "user_lead_user_first_name" with "Mark"
   And I fill in "user_lead_user_last_name" with "Driscoll"
   And I fill in "user_lead_user_email" with "driscoll@person.noserver.com"
   And I fill in "user_lead_user_screen_name" with "ML Driscoll"
   And I fill in "user_lead_user_password" with "secret"
   And I fill in "user_lead_user_password_confirmation" with "secret"
-  And I press translated "customer.subaccounts.new.view.button_create"
-  Then I should see translated "customer.subaccounts.create.flash.subaccount_creation_successful"
+  And I press translated "supplier.subaccounts.new.view.button_create"
+  Then I should see translated "supplier.subaccounts.create.flash.subaccount_creation_successful"
 
 @tgn @_done @_tested
 Scenario: Account have to be activated through activation email
-  Then I follow translated "customer.subaccounts.index.view.new_lead_user"
+  Then I follow translated "supplier.subaccounts.index.view.new_lead_user"
   And I fill in "user_lead_user_first_name" with "Mark"
   And I fill in "user_lead_user_last_name" with "Driscoll"
   And I fill in "user_lead_user_email" with "driscoll@person.noserver.com"
   And I fill in "user_lead_user_screen_name" with "ML Driscoll"
   And I fill in "user_lead_user_password" with "secret"
   And I fill in "user_lead_user_password_confirmation" with "secret"
-  And I press translated "customer.subaccounts.new.view.button_create"
+  And I press translated "supplier.subaccounts.new.view.button_create"
   Then user driscoll@person.noserver.com with role lead_user should not be confirmed
   And a confirmation message should be sent to driscoll@person.noserver.com
   And a confirmation message to driscoll@person.noserver.com should include confirmation link
@@ -48,15 +48,15 @@ Scenario: I should not have access to subaccounts without team buyers flag
 
 @requested @m8b @tgn @_tested
 Scenario: The big buyer property of a customer should be inherited by all his subaccounts
-  Then I follow translated "customer.subaccounts.index.view.new_lead_buyer"
+  Then I follow translated "supplier.subaccounts.index.view.new_lead_buyer"
   And I fill in "user_lead_supplier_first_name" with "Mark"
   And I fill in "user_lead_supplier_last_name" with "Driscoll"
   And I fill in "user_lead_supplier_email" with "driscoll@person.noserver.com"
   And I fill in "user_lead_supplier_screen_name" with "ML Driscoll"
   And I fill in "user_lead_supplier_password" with "secret"
   And I fill in "user_lead_supplier_password_confirmation" with "secret"
-  And I press translated "customer.subaccounts.new.view.button_create"
-  Then I should see translated "customer.subaccounts.create.flash.subaccount_creation_successful"
+  And I press translated "supplier.subaccounts.new.view.button_create"
+  Then I should see translated "supplier.subaccounts.create.flash.subaccount_creation_successful"
   And user "driscoll@person.noserver.com" should be big buyer
 
 @requested @m8b @tgn @_tested
@@ -64,9 +64,9 @@ Scenario: I should have option to hide the profile page for my team members
   Given an user with role lead_supplier and email lead_buyer2232@nbs.com exists as subaccount for customer customer@person.com
   And I follow translated "layout.main_menu.supplier.subaccounts"
   Then I should see translated "layout.my_profile_link"
-  And I follow translated "customer.subaccounts.index.view.edit"
+  And I follow translated "supplier.subaccounts.index.view.edit"
   And I check "user_lead_supplier_hide_profile_page"
-  And I press translated "customer.subaccounts.edit.view.button_update"
+  And I press translated "supplier.subaccounts.edit.view.button_update"
   Given I am not sign in
   And I sign in as lead_buyer2232@nbs.com with password secret
   Then I should not see translated "layout.my_profile_link"
@@ -76,9 +76,9 @@ Scenario: Give sales manager the option not to show lead price for team buyer
   Given an user with role lead_supplier and email lead_buyer2232@nbs.com exists as subaccount for customer customer@person.com
   And I follow translated "layout.main_menu.supplier.subaccounts"
   Then I should see translated "layout.my_profile_link"
-  And I follow translated "customer.subaccounts.index.view.edit"
+  And I follow translated "supplier.subaccounts.index.view.edit"
   And I check "user_lead_supplier_hide_lead_prices"
-  And I press translated "customer.subaccounts.edit.view.button_update"
+  And I press translated "supplier.subaccounts.edit.view.button_update"
   Given I am not sign in
   And lead Monitors deal exists within category Leisure
   And lead Monitors deal exists with currency "DKK"

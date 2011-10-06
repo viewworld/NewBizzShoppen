@@ -23,7 +23,7 @@ Scenario: I can list all lead templates that were created by me
 Scenario: I can create new lead template for given category
 #  Given I go to browse leads
 #  Then I follow translated "categories.index.view.view_lead_templates"
-#  And I follow translated "purchase_manager.lead_templates.index.view.new_template"
+#  And I follow translated "member.lead_templates.index.view.new_template"
 #  Then I fill in "lead_template_name" with "Computer details"
 #  And I check "lead_template_is_mandatory"
 #  And I follow translated "shared.lead_templates.form.new_lead_template_field"
@@ -64,13 +64,13 @@ Scenario: I can edit lead template that was created by me
 Scenario: I can delete lead template that was created by me and was not filled out by anyone
 #  Given template named "Printers details" for category "Computers" is created by user "purchase_manager@person.com" with role "member"
 #  Then I go to members lead templates
-#  And I follow translated "purchase_manager.lead_templates.index.view.destroy"
-#  Then I should see translated "purchase_manager.lead_templates.destroy.flash.deletion_successful"
+#  And I follow translated "member.lead_templates.index.view.destroy"
+#  Then I should see translated "member.lead_templates.destroy.flash.deletion_successful"
 #  Given template named "Computers details" for category "Computers" is created by user "purchase_manager@person.com" with role "member"
 #  And template named "Computers details" is filled out by someone
 #  Then I go to members lead templates
-#  And I follow translated "purchase_manager.lead_templates.index.view.destroy"
-#  Then I should see translated "purchase_manager.lead_templates.destroy.flash.deletion_failure"
+#  And I follow translated "member.lead_templates.index.view.destroy"
+#  Then I should see translated "member.lead_templates.destroy.flash.deletion_failure"
 
 # since m16 purchase manager cant create leads - will change in m17
 @added @_tested @selenium @_deprecated
@@ -78,14 +78,14 @@ Scenario: I can add translation for the lead template name and its fields
 #  Given I click hidden link by url regex "/locales\/dk/"
 #  Given I go to browse leads
 #  And I follow translated "categories.index.view.view_lead_templates"
-#  And I follow translated "purchase_manager.lead_templates.index.view.new_template"
+#  And I follow translated "member.lead_templates.index.view.new_template"
 #  Then I fill in "lead_template_name" with "Computer details"
 #  And I follow translated "shared.lead_templates.form.new_lead_template_field"
 #  And I fill in "lead_template_lead_template_fields_attributes_0_name" with "example attr 1"
 #  And I follow translated "shared.lead_templates.form.new_lead_template_field"
 #  And I fill in "lead_template_lead_template_fields_attributes_1_name" with "example attr 2"
 #  And I check "lead_template_lead_template_fields_attributes_1_is_hidden"
-#  Then I press translated "purchase_manager.lead_templates.new.view.button_create"
+#  Then I press translated "member.lead_templates.new.view.button_create"
 #  And I click hidden link by url regex "/purchase_managers\/lead_templates\/\d+\/edit/"
 #  Then the "lead_template_lead_template_fields_attributes_0_name" field should contain "example attr 1"
 #  And the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 2"
@@ -99,7 +99,7 @@ Scenario: It should be possible to duplicate lead template (from lead templates 
 #  And template named "Computer details" has following fields "field #1:true:true,field #2:true:false,field #3:false:false"
 #  And I go to browse leads
 #  And I follow translated "categories.index.view.view_lead_templates"
-#  And I follow translated "purchase_manager.lead_templates.index.view.duplicate"
+#  And I follow translated "member.lead_templates.index.view.duplicate"
 #  Then the "lead_template_name" field should contain "Computer details"
 #  And checkbox named "lead_template_is_mandatory" should be checked
 #  And the "lead_template_lead_template_fields_attributes_0_name" field should contain "field #1"

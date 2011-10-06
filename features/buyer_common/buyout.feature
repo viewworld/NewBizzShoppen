@@ -116,7 +116,7 @@ Feature: Buy out
     And paypal payment for user with email "jon@lajoie.ca" and role "supplier"
     And I am on the home page
     And I follow translated "layout.main_menu.supplier.invoices"
-    And I follow translated "customer.invoices.index.view.show_invoice"
+    And I follow translated "supplier.invoices.index.view.show_invoice"
     Then I should see "10" within ".invoice_data tr:nth-child(1) td:nth-child(3)"
     And I should see "1,230.00" within "td:nth-child(6) strong"
     And I should see "1230.0" within "#invoices_table td:nth-child(4)"
@@ -136,7 +136,7 @@ Feature: Buy out
     And I follow category "Computers"
     And I follow translated "leads.index.add_to_cart_buyout_link"
     And I follow translated "layout.main_menu.supplier.invoices"
-    And I follow translated "customer.invoices.index.view.pending_leads"
+    And I follow translated "supplier.invoices.index.view.pending_leads"
     Then I should see "1,230.00" within "#invoices_list .ta_r"
 
   @added @m6 @_done @tgn
@@ -154,7 +154,7 @@ Feature: Buy out
     And I follow translated "layout.main_menu.shared.browse_leads"
     And I follow translated "leads.index.add_to_cart_buyout_link"
     And I follow translated "layout.main_menu.supplier.invoices"
-    And I follow translated "customer.invoices.index.view.pending_leads"
+    And I follow translated "supplier.invoices.index.view.pending_leads"
     Then I should see "1,230.00" within "#invoices_list .ta_r"
 
   @added @m6 @_done @_tested
@@ -272,7 +272,7 @@ Feature: Buy out
     And I follow category "Computers"
     Then I should not see "Printers"
     When I follow translated "layout.main_menu.supplier.invoices"
-    And I follow translated "customer.invoices.index.view.pending_leads"
+    And I follow translated "supplier.invoices.index.view.pending_leads"
     Then I should see "123.00" within "#invoices_list .ta_r"
     When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
     Then I should see "Printers"
@@ -280,7 +280,7 @@ Feature: Buy out
     And I follow translated "layout.main_menu.lead_supplier.lead_purchases"
     Then I should see "2" rows in a table with headers within ".leads_table tbody"
     When I follow translated "layout.main_menu.supplier.invoices"
-    And I follow translated "customer.invoices.index.view.pending_leads"
+    And I follow translated "supplier.invoices.index.view.pending_leads"
     Then I should see "2" rows in a table with headers within "#not_invoiced_leads"
     And I should see "123.00"
     And I should see "1,107.00"
@@ -301,7 +301,7 @@ Feature: Buy out
     And cart for user "jon@lajoie.ca" is paid by paypal
     And I am on the home page
     When I follow translated "layout.main_menu.supplier.invoices"
-    And I follow translated "customer.invoices.index.view.paid_invoices"
+    And I follow translated "supplier.invoices.index.view.paid_invoices"
     Then I should see "123.00"
     When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
     Then I should see "Printers"
@@ -309,7 +309,7 @@ Feature: Buy out
     And cart for user "jon@lajoie.ca" is paid by paypal
     And I am on the home page
     When I follow translated "layout.main_menu.supplier.invoices"
-    And I follow translated "customer.invoices.index.view.paid_invoices"
+    And I follow translated "supplier.invoices.index.view.paid_invoices"
     Then I should see "123.00"
     And I should see "1,107.00"
     When I follow translated "layout.main_menu.lead_supplier.lead_purchases"

@@ -39,7 +39,7 @@ Feature: Fairdeals view deal
     And I follow "super"
     And I follow translated "deals.index.view.contact_me"
     And I fill in "lead_lead_template_values_attributes_0_value" with "value1"
-    And I press translated "purchase_manager.leads.new.view.button_create"
+    And I press translated "member.leads.new.view.button_create"
     Then I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Business deals"
     And I follow "super"
@@ -64,8 +64,8 @@ Feature: Fairdeals view deal
     And I fill in "lead_lead_template_values_attributes_0_value" with "some value1"
     And I fill in "lead_lead_template_values_attributes_1_value" with "some value2"
     And I fill in "lead_lead_template_values_attributes_2_value" with "some value3"
-    And I press translated "purchase_manager.leads.new.view.button_create"
-    And I press translated "purchase_manager.leads.show.view.ok_confirmation"
+    And I press translated "member.leads.new.view.button_create"
+    And I press translated "member.leads.show.view.ok_confirmation"
 
   @_done @tested_elsewhere @tgn
   Scenario: I can fill in template fields

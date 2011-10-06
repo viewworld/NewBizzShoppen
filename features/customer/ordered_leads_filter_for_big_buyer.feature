@@ -12,7 +12,7 @@ Feature: Ordered leads filter for big buyer
     And I follow category "Computers"
     And I follow translated "leads.index.buy_lead"
     And I follow translated "layout.main_menu.supplier.invoices"
-    And I follow translated "customer.invoices.index.view.pending_leads"
+    And I follow translated "supplier.invoices.index.view.pending_leads"
     Then I should see "1" rows in a table with headers within "#not_invoiced_leads"
 
   @m8b @requested @_done @_tested
@@ -24,11 +24,11 @@ Feature: Ordered leads filter for big buyer
     And I sign in as jon@lajoie.ca with password secret
     Then I should not see translated "layout.main_menu.supplier.not_invoiced"
     When I follow translated "layout.main_menu.supplier.invoices"
-    And I follow translated "customer.invoices.index.view.pending_leads"
+    And I follow translated "supplier.invoices.index.view.pending_leads"
     Then I should see "Monitors ultimate deal"
-    When I follow translated "customer.invoices.index.view.due_invoices"
+    When I follow translated "supplier.invoices.index.view.due_invoices"
     Then I should not see "Monitors ultimate deal"
     When user with email "jon@lajoie.ca" and role "supplier" has invoice generated for all unpaid leads
-    And I follow translated "customer.invoices.index.view.paid_invoices"
-    And I follow translated "customer.invoices.index.view.show_invoice"
+    And I follow translated "supplier.invoices.index.view.paid_invoices"
+    And I follow translated "supplier.invoices.index.view.show_invoice"
     Then I should see "Monitors ultimate deal"

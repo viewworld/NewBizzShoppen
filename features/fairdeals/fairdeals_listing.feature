@@ -13,9 +13,9 @@ Feature: My requests listing
     And I follow translated "deals.index.view.view_deal"
     And I follow translated "deals.index.view.contact_me"
     And I fill in "lead_hidden_description" with "some hidden note"
-    And I press translated "purchase_manager.leads.new.view.button_create"
-    And I should see translated "purchase_manager.leads.show.view.confirmation_message"
-    And I press translated "purchase_manager.leads.show.view.ok_confirmation"
+    And I press translated "member.leads.new.view.button_create"
+    And I should see translated "member.leads.show.view.confirmation_message"
+    And I press translated "member.leads.show.view.ok_confirmation"
     And I follow translated "layout.main_menu.member.my_requests"
 
   @_done @non_testable @tgn
@@ -23,7 +23,7 @@ Feature: My requests listing
 
   @_done @_tested @tgn
   Scenario: I should see date, company name, contact information of the company and company logo
-    Then I follow translated "purchase_manager.leads.index.view.edit"
+    Then I follow translated "member.leads.index.view.edit"
     And I should see "Xeper"
     And I should see "adr1"
     And I should see "adr2"

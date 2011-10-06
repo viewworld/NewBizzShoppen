@@ -24,8 +24,8 @@ Feature: General deals
     Then I confirm a js popup on the next step
     And I follow translated "deals.index.view.contact_me"
     And I fill in "lead_hidden_description" with "some hidden note"
-    And I press translated "purchase_manager.leads.new.view.button_create"
-    And I press translated "purchase_manager.leads.show.view.ok_confirmation"
+    And I press translated "member.leads.new.view.button_create"
+    And I press translated "member.leads.show.view.ok_confirmation"
     And lead "A company is interested in super" certification status should be "3"
 
   @_done @_tested @selenium @tgn
@@ -60,8 +60,8 @@ Feature: General deals
     Then I confirm a js popup on the next step
     And I follow translated "deals.index.view.contact_me"
     And I fill in "lead_hidden_description" with "some hidden note"
-    And I press translated "purchase_manager.leads.new.view.button_create"
-    And I press translated "purchase_manager.leads.show.view.ok_confirmation"
+    And I press translated "member.leads.new.view.button_create"
+    And I press translated "member.leads.show.view.ok_confirmation"
     Then lead generated from deal in category "Asd" by "purchase_manager101@nbs.com" is not bought
 
    @_done @_tested @selenium @tgn
@@ -79,8 +79,8 @@ Feature: General deals
     Then I confirm a js popup on the next step
     And I follow translated "deals.index.view.contact_me"
     And I fill in "lead_hidden_description" with "some hidden note"
-    And I press translated "purchase_manager.leads.new.view.button_create"
-    And I press translated "purchase_manager.leads.show.view.ok_confirmation"
+    And I press translated "member.leads.new.view.button_create"
+    And I press translated "member.leads.show.view.ok_confirmation"
     Then lead generated from deal in category "Asd" by "purchase_manager101@nbs.com" is bought
 
   @_done @_tested @selenium @tgn
@@ -98,8 +98,8 @@ Feature: General deals
     Then I confirm a js popup on the next step
     And I follow translated "deals.index.view.contact_me"
     And I fill in "lead_hidden_description" with "some hidden note"
-    And I press translated "purchase_manager.leads.new.view.button_create"
-    And I press translated "purchase_manager.leads.show.view.ok_confirmation"
+    And I press translated "member.leads.new.view.button_create"
+    And I press translated "member.leads.show.view.ok_confirmation"
     Then lead generated from deal in category "Asd" by "purchase_manager101@nbs.com" is bought
     Then I am not sign in
     And I am signed up and confirmed as user with email purchase_manager202@nbs.com and password supersecret and role member
@@ -110,8 +110,8 @@ Feature: General deals
     Then I confirm a js popup on the next step
     And I follow translated "deals.index.view.contact_me"
     And I fill in "lead_hidden_description" with "some hidden note"
-    And I press translated "purchase_manager.leads.new.view.button_create"
-    And I press translated "purchase_manager.leads.show.view.ok_confirmation"
+    And I press translated "member.leads.new.view.button_create"
+    And I press translated "member.leads.show.view.ok_confirmation"
     Then lead generated from deal in category "Asd" by "purchase_manager202@nbs.com" is not bought
 
   @_done @_tested @tgn
@@ -169,8 +169,8 @@ Feature: General deals
     Then I confirm a js popup on the next step
     And I follow translated "deals.index.view.contact_me"
     And I fill in "lead_hidden_description" with "some hidden note"
-    And I press translated "purchase_manager.leads.new.view.button_create"
-    And I press translated "purchase_manager.leads.show.view.ok_confirmation"
+    And I press translated "member.leads.new.view.button_create"
+    And I press translated "member.leads.show.view.ok_confirmation"
     Then I am not sign in
     And I am on the homepage
     And I sign in as buyer@nbs.com with password secret

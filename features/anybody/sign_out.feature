@@ -13,4 +13,4 @@ Scenario: If session is still there, just redirect to stored page when site is a
   Given I follow translated "layout.main_menu.supplier.invoices"
   When I follow "Logout bob@person.com"
   And I sign in as bob@person.com with password supersecret
-  Then I should see translated "customer.invoices.index.view.header"
+  Then I should see translated "supplier.invoices.index.view.header"

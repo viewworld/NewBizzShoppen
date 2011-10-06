@@ -25,7 +25,7 @@ Scenario: I can bulk rate a lead
   And lead Monitors ultimate deal is bought by user bob@person.com with role supplier and is assigned to user lead_user2@person.com with role lead_user
   Given I check "mark_all"
   And I select translated "activerecord.attributes.lead_purchase.rating_levels.rating_level1" from "bulk_rating_level"
-  And I follow translated "lead_buyer.lead_purchases.index.view.bulk_update_button"
+  And I follow translated "supplier.lead_purchases.index.view.bulk_update_button"
   Then I should see translated "buyer.bulk_lead_purchase_update.create.flash.lead_purchases_updated_successfully"
 
 @_tested @selenium
@@ -45,7 +45,7 @@ Scenario: I can select a reason when I rate lead as 'unsatisfactory'
   Given I show accordion details for row "#lead_single_purchase_1"
   And I select translated "activerecord.attributes.lead_purchase.rating_levels.rating_level12" from "rating_level"
   Then I fill in "rating_reason" with "The reason for unsatisfactory rating"
-  And I follow translated "lead_buyer.lead_purchases.index.view.update_rating_button"
+  And I follow translated "supplier.lead_purchases.index.view.update_rating_button"
   And I go to supplier lead purchases
   And I show accordion details for row "#lead_single_purchase_1"
   Then "rating_level_1" should be selected for value translated "activerecord.attributes.lead_purchase.rating_levels.rating_level12"
@@ -55,7 +55,7 @@ Scenario: I must enter additional explaination for selected reason
   Given I show accordion details for row "#lead_single_purchase_1"
   And I select translated "activerecord.attributes.lead_purchase.rating_levels.rating_level12" from "rating_level"
   Then I fill in "rating_reason" with "The reason for unsatisfactory rating"
-  And I follow translated "lead_buyer.lead_purchases.index.view.update_rating_button"
+  And I follow translated "supplier.lead_purchases.index.view.update_rating_button"
   And I go to supplier lead purchases
   And I show accordion details for row "#lead_single_purchase_1"
   Then "rating_level_1" should be selected for value translated "activerecord.attributes.lead_purchase.rating_levels.rating_level12"

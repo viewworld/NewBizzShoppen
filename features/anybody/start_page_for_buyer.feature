@@ -189,7 +189,7 @@ Scenario: Buyer can see link to Interests on buyer home page if he don't have se
   Given I am on buyer home
   Then I should see translated "buyer_home.show.view.configure_interests_link"
   Then I follow translated "buyer_home.show.view.configure_interests_link"
-  Then I should see translated "customer.interests.edit.view.title"
+  Then I should see translated "supplier.interests.edit.view.title"
 
 #7457
 @m20 @requested @is @_done @_tested

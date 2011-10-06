@@ -53,18 +53,18 @@ Scenario: I should see requested by
 Scenario: I can toggle select leads
   Then I check "mark_all"
 
-@_tested @selenium
+@_tested @selenium @wip
 Scenario: I can bulk remove leads from requested leads list
   Then I check "mark_all"
-  And I follow translated "customer.lead_requests.index.view.button_bulk_destroy_lead_request"
+  And I follow translated "supplier.lead_requests.index.view.button_bulk_destroy_lead_request"
   Then I should see translated "flash.bulk_lead_requests.destroy.notice"
   And I should not see "Super printers"
   And I should not see "Ultra printers"
 
 @_tested
 Scenario: I can remove a given leads from requested leads list
-  When I follow translated "customer.lead_requests.index.view.reject_lead_request_link"
-  Then I should see translated "customer.lead_requests.index.flash.lead_request_rejected_successfully"
+  When I follow translated "supplier.lead_requests.index.view.reject_lead_request_link"
+  Then I should see translated "supplier.lead_requests.index.flash.lead_request_rejected_successfully"
 
 @_tested
 Scenario: Requested list should be without pagination
@@ -95,12 +95,12 @@ Scenario: I can narrow down the results by filters and search box
 @_tested @selenium
 Scenario: I can bulk add selected leads to my basket
   Then I check "mark_all"
-  And I follow translated "customer.lead_requests.index.view.button_bulk_create_lead_request"
+  And I follow translated "supplier.lead_requests.index.view.button_bulk_create_lead_request"
   Then I click hidden link by url regex "/\/buyers\/cart$/"
   And I should see "Super printers"
   And I should see "Ultra printers"
 
 @_tested
 Scenario: I can add a given lead to my basket
-  When I follow translated "customer.lead_requests.index.view.accept_lead_request_link"
-  Then I should see translated "customer.lead_requests.index.flash.lead_request_accepted_successfully"
+  When I follow translated "supplier.lead_requests.index.view.accept_lead_request_link"
+  Then I should see translated "supplier.lead_requests.index.flash.lead_request_accepted_successfully"

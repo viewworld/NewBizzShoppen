@@ -130,7 +130,7 @@ Feature: Deals from Sales Manager perspective
     Then I follow translated "layout.main_menu.shared.browse_leads"
     And I follow translated "categories.index.view.view_lead_templates"
 
-    And I follow translated "customer.lead_templates.index.view.new_template"
+    And I follow translated "supplier.lead_templates.index.view.new_template"
     Then I fill in "lead_template_name" with "Computer details"
     And I check "lead_template_is_mandatory"
     And I follow translated "shared.lead_templates.form.new_lead_template_field"
@@ -179,7 +179,7 @@ Feature: Deals from Sales Manager perspective
     And I fill in "lead_lead_template_values_attributes_3_value" with "some val2"
     Then I should see "Computer details1"
     Then I should see "Computer details2"
-    And I press translated "purchase_manager.leads.new.view.button_create"
+    And I press translated "member.leads.new.view.button_create"
 
   @_done @tested_elsewhere
   Scenario: Mandatory templates for category should be automatically included
@@ -207,4 +207,4 @@ Feature: Deals from Sales Manager perspective
     And I click hidden link by url regex "/buyers\/deals\/\d+\/edit/"
     Then I should see translated "buyer.deals.edit.view.new_template"
     And I follow translated "buyer.deals.edit.view.new_template"
-    And I should see translated "customer.lead_templates.new.view.header"
+    And I should see translated "supplier.lead_templates.new.view.header"
