@@ -15,7 +15,7 @@ Feature: Customer signup
       | user_supplier_email                 | invalidemail |
       | user_supplier_password              | secret       |
       | user_supplier_password_confirmation |              |
-    And I press translated "buyer_accounts.new.view.button_create_account"
+    And I press translated "supplier_accounts.new.view.button_create_account"
     Then I should see translated "activerecord.errors.messages.invalid"
     And I should see translated "activerecord.errors.models.user.supplier.attributes.password.confirmation"
 
@@ -38,7 +38,7 @@ Feature: Customer signup
       | user_supplier_address_attributes_address_line_3        | Wesley          |
     And I select "Denmark" from "user_supplier_address_attributes_country_id"
     And I check "user_supplier_agreement_read"
-    And I press translated "buyer_accounts.new.view.button_create_account"
+    And I press translated "supplier_accounts.new.view.button_create_account"
     Then I should see translated "flash.buyer_accounts.create.notice"
     And a confirmation message should be sent to user@domain.dom
 
@@ -93,5 +93,5 @@ Feature: Customer signup
       | user_supplier_address_attributes_address_line_3        | Wesley          |
     And I select "Denmark" from "user_supplier_address_attributes_country_id"
     And I check "user_supplier_agreement_read"
-    And I press translated "buyer_accounts.new.view.button_create_account"
+    And I press translated "supplier_accounts.new.view.button_create_account"
     Then I should see translated "activerecord.errors.messages.taken"

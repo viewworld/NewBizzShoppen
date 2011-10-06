@@ -37,7 +37,7 @@ Feature: Front page for procurment
   Scenario: I can create procurement manager account
     Given I visit domain http://thefairdeals.com
     And I follow translated "fairdeals_home.show.view.get_free_account"
-    And I should see translated "purchase_manager_accounts.new.view.header"
+    And I should see translated "member_accounts.new.view.header"
 
   # Find a vender - make a tender: (as is ” Create a lead as procurement manager) Some field labels should be renamed in the create lead page:
   @is @_done @tested_elsewhere

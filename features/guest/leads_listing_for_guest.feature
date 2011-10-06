@@ -137,7 +137,7 @@ Scenario: I should be able to click "Add to cart button" that will redirect me t
   And I fill in "user_supplier_address_attributes_zip_code" with "12421S"
   And I select "Denmark" from "user_supplier_address_attributes_country_id"
   And I check "user_supplier_agreement_read"
-  And I press translated "buyer_accounts.new.view.button_create_account"
+  And I press translated "supplier_accounts.new.view.button_create_account"
   And user "johndoecustomer@person.com" with role "supplier" is confirmed
   And I sign in as johndoecustomer@person.com with password secret
   And I click hidden translated link "layout.cart.show_cart"
