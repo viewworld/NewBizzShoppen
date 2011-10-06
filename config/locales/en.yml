@@ -2101,6 +2101,9 @@ en:
         flash:
           lead_purchases_updated_successfully: "Leads have been updated successfully!"
     lead_purchases:
+      index:
+        view:
+          header: "Lead purchases"
       show:
         view:
           header: "Lead details"
@@ -2202,10 +2205,6 @@ en:
         flash:
           subaccount_deletion_successful: "Subaccount has been successfully deleted"
           subaccount_deletion_failure: "Subaccount could not be deleted"
-    lead_purchases:
-      index:
-        view:
-          header: "Lead purchases"
     lead_requests:
       index:
         view:
