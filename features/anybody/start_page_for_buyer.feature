@@ -103,7 +103,7 @@ Scenario: I can go to agent page by clicking â€œCLICK HERE IF YOU ARE AN AGENTâ€
 Scenario: I can go to new buyer creation page
   When I follow translated "home.show.view.buyer"
   And I follow translated "supplier_home.show.view.create_new_supplier_account"
-  Then I should be on buyer sign up page
+  Then I should be on supplier sign up page
 
 @ao @m3 @_done
 Scenario: In bestsellers and latest listings I should not see leads which I've already bought

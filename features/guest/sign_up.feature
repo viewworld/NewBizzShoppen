@@ -7,7 +7,7 @@ Feature: Sign up feature
     And I am on agent sign up page
     Then "user_agent_address_attributes_country_id" should be selected for value "United Kingdom"
     When I make sure current locale is "da"
-    And I am on buyer sign up page
+    And I am on supplier sign up page
     Then "user_supplier_address_attributes_country_id" should be selected for value "Denmark"
 
   # 5779
