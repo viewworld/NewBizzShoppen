@@ -94,19 +94,19 @@ Scenario: I can go to latest leads listing
 @added @_done @_deprecated
 Scenario: I can go to buyer page by clicking “CLICK HERE IF YOU ARE A BUYER”
 #  When I follow translated "home.show.view.purchase_manager"
-#  And I follow translated "purchase_manager_home.show.view.buyer_link"
+#  And I follow translated "member_home.show.view.buyer_link"
 #  Then I should be on the supplier home page
 
 @added @_done @_deprecated
 Scenario: I can go to agent page by clicking “CLICK HERE IF YOU ARE AN AGENT”
 #  When I follow translated "home.show.view.purchase_manager"
-#  And I follow translated "purchase_manager_home.show.view.agent_link"
+#  And I follow translated "member_home.show.view.agent_link"
 #  Then I should be on the agent home page
 
 @added @_done
 Scenario: I can go to creation of new purchase manager account page
   When I am on the member home page
-  And I follow translated "purchase_manager_home.show.view.create_new_purchase_manager_account"
+  And I follow translated "member_home.show.view.create_new_purchase_manager_account"
   Then I should be on purchase manager sign up page
 
 @added @_done
