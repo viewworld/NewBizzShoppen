@@ -48,7 +48,7 @@ Feature: User Account - Profile edit
   Scenario: A logged in user shouldn't be able to create a new account
    When I go to agent sign up
    Then I am on agents root
-   When I go to buyer sign up
+   When I go to supplier sign up
    Then I am on agents root
 
   @m5 @tgn @_tested @added

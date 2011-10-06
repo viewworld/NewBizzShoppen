@@ -7,7 +7,7 @@ Background:
   And user "customer@person.com" has team buyers enabled
   And User customer@person.com with role supplier is big buyer
   Then I sign in as customer@person.com with password supersecret
-  Then I go to customers subaccounts
+  Then I go to suppliers subaccounts
 
 @tgn @_done @_tested
 Scenario: I can create a lead user account
@@ -43,7 +43,7 @@ Scenario: I should not have access to subaccounts without team buyers flag
   And User no_flag@nbs.com with role supplier is big buyer
   And I sign out
   And I sign in as no_flag@nbs.com with password secret
-  And I go to customers subaccounts
+  And I go to suppliers subaccounts
   Then I should see "You are not authorized"
 
 @requested @m8b @tgn @_tested

@@ -72,14 +72,14 @@ Scenario: Invoice is NOT created when payment notification is duplicated
 
 @tgn @_tested
 Scenario: I can add to cart lead requested by lead user that belongs to my account
-  When I go to customers lead requests
+  When I go to suppliers lead requests
   Then I follow translated "customer.lead_requests.index.view.accept_lead_request_link"
   When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   And I should see translated "common.nothing_to_display"
 
 @tgn @_tested @selenium
 Scenario: I can bulk add to cart leads requested by lead user that belongs to my account
-  When I go to customers lead requests
+  When I go to suppliers lead requests
   Then I check "mark_all"
   And I follow translated "customer.lead_requests.index.view.button_bulk_create_lead_request"
   And I should see translated "flash.bulk_lead_requests.update.notice"

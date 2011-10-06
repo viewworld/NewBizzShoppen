@@ -7,14 +7,14 @@ Background:  Sign in user and set locale
   And I am signed up and confirmed as user with email bob@person.com and password supersecret and role supplier
   And user "bob@person.com" has team buyers enabled
   Then I sign in as bob@person.com with password supersecret
-  And I go to customers subaccounts
+  And I go to suppliers subaccounts
 
 @_done @not_testable
 Scenario: I do not and cannot belong to other customer
 
 @_tested
 Scenario: I can see accounts managament tab
-  When I go to customers lead requests
+  When I go to suppliers lead requests
   Then I should see translated "layout.main_menu.supplier.subaccounts"
 
 @_tested  @noguess
@@ -73,7 +73,7 @@ Scenario: Lead user have to be activated through activation email
 @_tested  @noguess
 Scenario: I can remove lead buyer role from lead buyer (leaving him lead user role)
   Given an user with role lead_supplier and email lead_buyer@person.com exists as subaccount for customer bob@person.com
-  And I go to customers subaccounts
+  And I go to suppliers subaccounts
   Then I follow translated "customer.subaccounts.index.view.edit"
   And I uncheck "user_lead_supplier_lead_buyer_role_enabled"
   And I press translated "customer.subaccounts.edit.view.button_update"
@@ -82,14 +82,14 @@ Scenario: I can remove lead buyer role from lead buyer (leaving him lead user ro
 @_tested  @noguess
 Scenario: I can remove lead buyer that belongs to my account
   Given an user with role lead_supplier and email lead_buyer@person.com exists as subaccount for customer bob@person.com
-  And I go to customers subaccounts
+  And I go to suppliers subaccounts
   Then I follow translated "customer.subaccounts.index.view.delete"
   And I should see translated "customer.subaccounts.destroy.flash.subaccount_deletion_successful"
 
 @_tested
 Scenario: I can remove lead user that belongs to my account (What happens here - exceptions?)
   Given an user with role lead_user and email lead_user@person.com exists as subaccount for customer bob@person.com
-  And I go to customers subaccounts
+  And I go to suppliers subaccounts
   Then I follow translated "customer.subaccounts.index.view.delete"
   And I should see translated "customer.subaccounts.destroy.flash.subaccount_deletion_successful"
 
@@ -126,14 +126,14 @@ Scenario: I can see all lead buyers/lead users that belong to my account
 @_tested
 Scenario: I can lock lead buyer/lead user account
   Given an user with role lead_supplier and email lead_buyer@person.com exists as subaccount for customer bob@person.com
-  And I go to customers subaccounts
+  And I go to suppliers subaccounts
   Then I follow translated "customer.subaccounts.index.view.lock"
   Then I should see translated "customer.subaccounts.update.flash.subaccount_update_successful"
 
 @_tested
 Scenario: I can unlock lead buyer/lead user account
   Given an user with role lead_supplier and email lead_buyer@person.com exists as subaccount for customer bob@person.com
-  And I go to customers subaccounts
+  And I go to suppliers subaccounts
   Then I follow translated "customer.subaccounts.index.view.lock"
   And I follow translated "customer.subaccounts.index.view.unlock"
   Then I should see translated "customer.subaccounts.update.flash.subaccount_update_successful"
@@ -142,7 +142,7 @@ Scenario: I can unlock lead buyer/lead user account
 Scenario: I can bulk lock/unlock lead buyer/lead user accounts
   Given an user with role lead_supplier and email lead_buyer@person.com exists as subaccount for customer bob@person.com
   And an user with role lead_user and email lead_user@person.com exists as subaccount for customer bob@person.com
-  And I go to customers subaccounts
+  And I go to suppliers subaccounts
   Then I check "mark_all"
   And I follow "lock_selected"
   And I should see translated "flash.bulk_subaccounts_update.update.notice"
@@ -158,7 +158,7 @@ Scenario: I can sort by name, last name, department
   And user lead_buyer2@person.com with role lead_supplier exists with attributes "first_name:Adam,last_name:McDowell,department:QA"
   And an user with role lead_user and email lead_user3@person.com exists as subaccount for customer bob@person.com
   And user lead_user3@person.com with role lead_user exists with attributes "first_name:John,last_name:Lennox,department:Development"
-  And I go to customers subaccounts
+  And I go to suppliers subaccounts
   When I follow translated "customer.subaccounts.index.view.first_name_column"
   And I follow translated "customer.subaccounts.index.view.first_name_column"
   Then I should have value "William" in the css path "tr:nth-child(1) td:nth-child(3)"
@@ -196,7 +196,7 @@ Scenario: I can sort by completed leads, new leads requested, num. of leads assi
   And a lead purchase for lead "Ultimate monitors 4" by user "bob@person.com" with role "supplier" exists with attributes "state:3"
   And a lead purchase for lead "Ultimate monitors 5" by user "bob@person.com" with role "supplier" exists with attributes "state:1,assigned_at:Date.today-60"
   Given all users have refreshed cache counters
-  And I go to customers subaccounts
+  And I go to suppliers subaccounts
   And I follow translated "customer.subaccounts.index.view.completed_leads_column"
   And I follow translated "customer.subaccounts.index.view.completed_leads_column"
   Then I should have value "3" in the xpath path "//tr[(((count(preceding-sibling::*) + 1) = 1) and parent::*)]//td[(((count(preceding-sibling::*) + 1) = 6) and parent::*)]"
@@ -229,7 +229,7 @@ Scenario: I can select pagination level from following list: 10, 25, 50, None
   Given an user with role lead_user and email lead_user4@person.com exists as subaccount for customer bob@person.com
   Given an user with role lead_user and email lead_user5@person.com exists as subaccount for customer bob@person.com
   Given an user with role lead_user and email lead_user6@person.com exists as subaccount for customer bob@person.com
-  And I go to customers subaccounts
+  And I go to suppliers subaccounts
   And I follow "10"
   Then I follow "2"
 
@@ -237,7 +237,7 @@ Scenario: I can select pagination level from following list: 10, 25, 50, None
 Scenario: I can browse leads assigned to one of my lead users with pagination
   Given an user with role lead_supplier and email lead_buyer@person.com exists as subaccount for customer bob@person.com
   And lead Ultimate printers deal is bought by user bob@person.com with role supplier and is assigned to user lead_buyer@person.com with role lead_user
-  And I go to customers subaccounts
+  And I go to suppliers subaccounts
   Then I follow translated "customer.subaccounts.index.view.assigned_leads"
   And I should see "Ultimate printers deal"
 
@@ -246,7 +246,7 @@ Scenario: I should not have access to subaccounts without team buyers flag
   Given I am signed up and confirmed as user with email no_flag@nbs.com and password secret and role supplier
   And I sign out
   And I sign in as no_flag@nbs.com with password secret
-  And I go to customers subaccounts
+  And I go to suppliers subaccounts
   Then I should see "You are not authorized"
 
 @m8b @requested @_done @non_testable

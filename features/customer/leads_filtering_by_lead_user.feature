@@ -25,7 +25,7 @@ Background:
   And lead Mouses deal is bought by user customer@person.com with role supplier and is assigned to user lead_user44@person.com with role lead_user
   And purchase for lead "Mouses deal" and user "customer@person.com" exists with attributes "state:1"
   Then I sign in as customer@person.com with password supersecret
-  Then I go to buyer lead purchases
+  Then I go to supplier lead purchases
 
 @tgn @_tested
 Scenario: I can browse leads assigned to one of my lead users with pagination

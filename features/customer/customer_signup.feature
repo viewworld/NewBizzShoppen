@@ -10,7 +10,7 @@ Feature: Customer signup
     And I make sure current locale is "en"
 @_tested
   Scenario: User signs up with invalid data
-    When I go to buyer sign up
+    When I go to supplier sign up
     And I fill in the following:
       | user_supplier_email                 | invalidemail |
       | user_supplier_password              | secret       |
@@ -22,7 +22,7 @@ Feature: Customer signup
 @_tested
   Scenario: User signs up with valid data as a buyer
     Given setting for "email_verification_for_sales_managers" is set to "1"
-    When I go to buyer sign up
+    When I go to supplier sign up
     And I fill in the following:
       | user_supplier_first_name            | Bob             |
       | user_supplier_last_name             | Taker           |
@@ -70,14 +70,14 @@ Feature: Customer signup
 
   @tgn @m1 @_tested @added
   Scenario: Newsletter checkbox should be selected by default
-    When I go to buyer sign up
+    When I go to supplier sign up
     Then the "user_supplier_newsletter_on" checkbox should be checked
 
   @tgn @m1 @_tested
   Scenario: Screen name has to be unique
     Given I have user with email buyer2jimconnor@person.com and role supplier
     Then user buyer2jimconnor@person.com with role supplier exists with attributes "screen_name:Jim Connor"
-    When I go to buyer sign up
+    When I go to supplier sign up
     And I fill in the following:
       | user_supplier_first_name            | Bob             |
       | user_supplier_last_name             | Taker           |

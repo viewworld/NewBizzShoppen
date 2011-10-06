@@ -77,7 +77,7 @@ Scenario: I can select "all" as a Deal value
 Scenario: I should not see unique categories I'm not assigned to on my interests page
   Given Category Computers is created
   And category "Computers" is unique for user with email "bob@person.com" role "supplier"
-  And I go to customer interests
+  And I go to supplier interests
   And I should see "Electronics"
   And I should see "Business"
   And I should see "Leisure"
@@ -90,7 +90,7 @@ Scenario: I should not see categories on my interests page when I'm assigned to 
   And category "OthersBuyerCategory" is unique for user with email "other_buyer34525biz@nbs.com" role "supplier"
   Given Category Computers is created
   And category "Computers" is unique for user with email "bob@person.com" role "supplier"
-  And I go to customer interests
+  And I go to supplier interests
   And I should see "Electronics"
   And I should see "Business"
   And I should see "Leisure"
@@ -102,7 +102,7 @@ Scenario: I should have my interests fixed to the unique category I'm assigned t
   Given there are no categories
   Given Category Computers is created
   And category "Computers" is unique for user with email "bob@person.com" role "supplier"
-  And I go to customer interests
+  And I go to supplier interests
   Then checkbox named "category_" should be checked
 
 #home page is not used anymore

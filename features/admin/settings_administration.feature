@@ -177,7 +177,7 @@ Scenario: I can enable/disable email verification for sales managers
   When I uncheck "settings[15]"
   And I press translated "administration.settings.edit.view.button_update_settings"
   And I sign out
-  When I go to buyer sign up
+  When I go to supplier sign up
   And I fill in the following:
       | user_supplier_first_name            | Bob             |
       | user_supplier_last_name             | Taker           |
@@ -200,7 +200,7 @@ Scenario: I can enable/disable email verification for sales managers
   When I check "settings[15]"
   And I press translated "administration.settings.edit.view.button_update_settings"
   And I sign out
-  When I go to buyer sign up
+  When I go to supplier sign up
   And I fill in the following:
       | user_supplier_first_name            | Bob             |
       | user_supplier_last_name             | Taker           |

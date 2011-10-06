@@ -15,7 +15,7 @@ Background:
   And lead "Ultra printers" was requested by user "lead_buyer1@person.com" with role "lead_supplier" and is owned by user "john@doe.com"
   And User john@doe.com with role supplier is big buyer
   And I sign in as john@doe.com with password secret
-  And I go to customers lead requests
+  And I go to suppliers lead requests
 
 @_tested
 Scenario: I can add a given lead to my lead list
@@ -34,7 +34,7 @@ Scenario: I should not have access to subaccounts without team buyers flag
   And User no_flag@nbs.com with role supplier is big buyer
   And I sign out
   And I sign in as no_flag@nbs.com with password secret
-  And I go to customers lead requests
+  And I go to suppliers lead requests
   Then I should see "You are not authorized"
 
 @m4 @added @_done @_deprecated

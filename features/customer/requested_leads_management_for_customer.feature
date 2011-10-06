@@ -16,7 +16,7 @@ Background:
   And lead "Super printers" was requested by user "lead_buyer1@person.com" with role "lead_supplier" and is owned by user "john@doe.com"
   And lead "Ultra printers" was requested by user "lead_buyer1@person.com" with role "lead_supplier" and is owned by user "john@doe.com"
   And I sign in as john@doe.com with password secret
-  And I go to customers lead requests
+  And I go to suppliers lead requests
 
 @_tested
 Scenario: I should see rating % and certification level for each lead
@@ -24,7 +24,7 @@ Scenario: I should see rating % and certification level for each lead
   And a lead Super printers exists within category Computers and is bought by user bob@person.com with role supplier
   And a lead "Super printers" has good rating
   Given All leads have refreshed average ratings
-  And I go to customers lead requests
+  And I go to suppliers lead requests
   Then I should see "100%"
   And I should see translated "models.lead.certification.lvl1"
 
@@ -69,7 +69,7 @@ Scenario: I can remove a given leads from requested leads list
 @_tested
 Scenario: Requested list should be without pagination
   Given pagination per page size in model LeadRequest is set to 1
-  And I go to customers lead requests
+  And I go to suppliers lead requests
   Then I should see "Super printers"
   And I should see "Ultra printers"
 
@@ -81,12 +81,12 @@ Scenario: I can narrow down the results by filters and search box
   And I press translated "lead_user.lead_requests.index.view.search.search_button"
   Then I should see "Ultra printers"
   And I should not see "Super printers"
-  And I go to customers lead requests
+  And I go to suppliers lead requests
   Then I select "Sample category" from "search_with_category"
   And I press translated "lead_user.lead_requests.index.view.search.search_button"
   Then I should see "Ultra printers"
   And I should not see "Super printers"
-  And I go to customers lead requests
+  And I go to suppliers lead requests
   And I fill in "search_with_zip_code" with "55-783"
   And I press translated "lead_user.lead_requests.index.view.search.search_button"
   Then I should see "Super printers"

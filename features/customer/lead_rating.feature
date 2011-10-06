@@ -9,13 +9,13 @@ Background:
   And lead Printers ultimate deal exists within category Computers
   And lead Printers ultimate deal is bought by user bob@person.com with role supplier and is assigned to user lead_user2@person.com with role lead_user
   Then I sign in as bob@person.com with password supersecret
-  And I go to buyer lead purchases
+  And I go to supplier lead purchases
 
 @_tested @selenium
 Scenario: I can rate a lead
   Given I show accordion details for row "#lead_single_purchase_1"
   And I select translated "activerecord.attributes.lead_purchase.rating_levels.rating_level1" from "rating_level"
-  And I go to buyer lead purchases
+  And I go to supplier lead purchases
   And I show accordion details for row "#lead_single_purchase_1"
   Then "rating_level_1" should be selected for value translated "activerecord.attributes.lead_purchase.rating_levels.rating_level1"
 
@@ -32,7 +32,7 @@ Scenario: I can bulk rate a lead
 Scenario: I can select from 4 different rating levels: Very good, good, satisfactory, unsatisfactory
   Given I show accordion details for row "#lead_single_purchase_1"
   And I select translated "activerecord.attributes.lead_purchase.rating_levels.rating_level2" from "rating_level"
-  And I go to buyer lead purchases
+  And I go to supplier lead purchases
   And I show accordion details for row "#lead_single_purchase_1"
   Then "rating_level_1" should be selected for value translated "activerecord.attributes.lead_purchase.rating_levels.rating_level2"
 
@@ -46,7 +46,7 @@ Scenario: I can select a reason when I rate lead as 'unsatisfactory'
   And I select translated "activerecord.attributes.lead_purchase.rating_levels.rating_level12" from "rating_level"
   Then I fill in "rating_reason" with "The reason for unsatisfactory rating"
   And I follow translated "lead_buyer.lead_purchases.index.view.update_rating_button"
-  And I go to buyer lead purchases
+  And I go to supplier lead purchases
   And I show accordion details for row "#lead_single_purchase_1"
   Then "rating_level_1" should be selected for value translated "activerecord.attributes.lead_purchase.rating_levels.rating_level12"
 
@@ -56,7 +56,7 @@ Scenario: I must enter additional explaination for selected reason
   And I select translated "activerecord.attributes.lead_purchase.rating_levels.rating_level12" from "rating_level"
   Then I fill in "rating_reason" with "The reason for unsatisfactory rating"
   And I follow translated "lead_buyer.lead_purchases.index.view.update_rating_button"
-  And I go to buyer lead purchases
+  And I go to supplier lead purchases
   And I show accordion details for row "#lead_single_purchase_1"
   Then "rating_level_1" should be selected for value translated "activerecord.attributes.lead_purchase.rating_levels.rating_level12"
 

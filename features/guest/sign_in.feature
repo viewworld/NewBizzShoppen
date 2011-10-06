@@ -132,7 +132,7 @@ Scenario: I can see Facebook/Linkedin/Google icons on bottom of signing in box
     Given I am not sign in
     Then I go to agent sign up
     Then I should see "Agree to Terms & Conditions*"
-    Then I go to buyer sign up
+    Then I go to supplier sign up
     Then I should see "Agree to Terms & Conditions*"
     Then I go to purchase manager sign up
     Then I should see "Agree to Terms & Conditions*"
@@ -142,7 +142,7 @@ Scenario: I can see Facebook/Linkedin/Google icons on bottom of signing in box
     Given I am not sign in
     Then I go to agent sign up
     Then I should see translated "shared.accounts.new_account_form.button_cancel"
-    Then I go to buyer sign up
+    Then I go to supplier sign up
     Then I should see translated "shared.accounts.new_account_form.button_cancel"
     Then I go to purchase manager sign up
     Then I should see translated "shared.accounts.new_account_form.button_cancel"
