@@ -3,7 +3,7 @@
 Feature: Start page for purchase manager
 
 Background: I am a guest and I am on the home page
-  Given I am on the purchase manager home page
+  Given I am on the member home page
 
 @added @_done
 Scenario: I can see welcome text fetch from the database
@@ -15,7 +15,7 @@ Scenario: I can see 3 latest purchase manager news excerpts
   And published purchase manager news exists with attributes "title:SecondNews"
   And published purchase manager news exists with attributes "title:ThirdNews"
   And published purchase manager news exists with attributes "title:FourthNews"
-  When I am on the purchase manager home page
+  When I am on the member home page
   Then I should see "FourthNews"
   And I should see "SecondNews"
   And I should see "ThirdNews"
@@ -26,7 +26,7 @@ Scenario: I can see 10 top bestsellers
   Given lead AwesomeLead exists within category Test
   And AwesomeLead is a best seller
   And there are "11" existing leads
-  When I am on the purchase manager home page
+  When I am on the member home page
   Then I should see "3" items on a list within "#best_sellers"
   And I should see "AwesomeLead" first on a list within "#best_sellers"
 
@@ -34,7 +34,7 @@ Scenario: I can see 10 top bestsellers
 Scenario: I can see 10 latest leads
   Given there are "4" existing leads
   And lead AwesomeLead exists within category Test
-  When I am on the purchase manager home page
+  When I am on the member home page
   Then I should see "3" items on a list within "#latest_leads"
   And I should see "AwesomeLead" first on a list within "#latest_leads"
 
@@ -43,7 +43,7 @@ Scenario: I can't see inactive leads on latest leads
   When there are no leads
   And a lead InactiveLead exists within category Test and is bought by user kastomer@nbs.fake with role supplier
   And lead "InactiveLead" has attributes "sale_limit:1"
-  When I am on the purchase manager home page
+  When I am on the member home page
   Then I should see "1" items on a list within "#latest_leads"
   And I follow translated "purchase_manager_home.show.view.complete_list_link" within "#latest_leads"
   Then I should see translated "common.nothing_to_display"
@@ -51,7 +51,7 @@ Scenario: I can't see inactive leads on latest leads
 @added @_done
 Scenario: I can go to details of purchase manager news
   Given published purchase manager news exists with attributes "title:FirstNews"
-  When I am on the purchase manager home page
+  When I am on the member home page
   And I follow translated "purchase_manager_home.show.view.read_more_link" within "#news"
   Then I should be on FirstNews news page
 
@@ -59,34 +59,34 @@ Scenario: I can go to details of purchase manager news
 Scenario: I can go to details of bestsellers
   Given lead AwesomeLead exists within category Test
   And AwesomeLead is a best seller
-  When I am on the purchase manager home page
+  When I am on the member home page
   And I follow "AwesomeLead" within "#best_sellers"
   Then I should be on the AwesomeLead lead page
 
 @added @_done
 Scenario: I can go to details of latest leads
   Given lead AwesomeLead exists within category Test
-  When I am on the purchase manager home page
+  When I am on the member home page
   And I follow "AwesomeLead" within "#latest_leads"
   Then I should be on the AwesomeLead lead page
 
 @added @_done @_tested
 Scenario: I can go to purchase manager news listing
   Given lead AwesomeLead exists within category Test
-  When I am on the purchase manager home page
+  When I am on the member home page
   And I follow translated "purchase_manager_home.show.view.complete_list_link" within "#latest_leads"
   Then I should see "AwesomeLead" within ".leads_table"
 
 @added @_done
 Scenario: I can go to bestsellers listing
-  When I am on the purchase manager home page
+  When I am on the member home page
   And I follow translated "purchase_manager_home.show.view.complete_list_link" within "#best_sellers"
   Then I should be on the leads page
   And I should see translated "leads.index.bestsellers_header"
 
 @added @_done
 Scenario: I can go to latest leads listing
-  When I am on the purchase manager home page
+  When I am on the member home page
   And I follow translated "purchase_manager_home.show.view.complete_list_link" within "#latest_leads"
   Then I should be on the leads page
   And I should see translated "leads.index.latest_header"
@@ -105,7 +105,7 @@ Scenario: I can go to agent page by clicking â€œCLICK HERE IF YOU ARE AN AGENTâ€
 
 @added @_done
 Scenario: I can go to creation of new purchase manager account page
-  When I am on the purchase manager home page
+  When I am on the member home page
   And I follow translated "purchase_manager_home.show.view.create_new_purchase_manager_account"
   Then I should be on purchase manager sign up page
 
@@ -114,13 +114,13 @@ Scenario: In bestsellers and latest listings I should not see leads which I've a
   When I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier
   And a lead BoughtLead exists within category Test and is bought by user jon@lajoie.ca with role supplier
   And lead AwesomeLead exists within category Test
-  When I am on the purchase manager home page
+  When I am on the member home page
   Then I should see "AwesomeLead"
   And I should see "BoughtLead"
   When I am on the home page
   And I sign in as jon@lajoie.ca with password secret
   And I am on the home page
-  When I am on the purchase manager home page
+  When I am on the member home page
   Then I should see "AwesomeLead"
   And I should not see "BoughtLead"
 
@@ -136,7 +136,7 @@ Scenario: When I am not logged in I should not see any leads from unique categor
   And lead UniqueLead2 exists within category Unique Category2
   And I have user with email other_customer@nbs.com and role supplier
   And category "Unique Category2" is unique for user with email "other_customer@nbs.com" role "supplier"
-  When I am on the purchase manager home page
+  When I am on the member home page
   And I should see "CommonLead1" within "#best_sellers"
   And I should not see "UniqueLead1" within "#best_sellers"
   And I should see "CommonLead1" within "#latest_leads"
@@ -246,7 +246,7 @@ Scenario: I should see "My contact requests" instead of "Latest leads"
 
 @m12 @$_guest @added @_done @_tested
 Scenario: I should see "Latest leads" when I'm not a procurement manager
-  When I am on the purchase manager home page
+  When I am on the member home page
   And I follow translated "purchase_manager_home.show.view.complete_list_link" within "#latest_leads"
   Then I should be on the leads page
   And I should see translated "leads.index.latest_header"

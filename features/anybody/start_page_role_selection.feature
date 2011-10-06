@@ -52,11 +52,11 @@ Scenario: For each role homepage there should be two separate blurbs: for logged
   And I should see "Blurb agent home logged in"
   #purchase manager
   Given I am not sign in
-  And I am on the purchase manager home page
+  And I am on the member home page
   And I should see "Blurb member home"
   And I should not see "Blurb agent home logged in"
   And I sign in as translator_purchase_manager@nbs.com with password secret
-  And I am on the purchase manager home page
+  And I am on the member home page
   And I should see "Blurb member home logged in"
 
 #7452
@@ -78,7 +78,7 @@ Scenario: When user logs out then he lands on his specific role home page
   And I should be on agent home
   #purchase manager
   Given I am not sign in
-  And I am on the purchase manager home page
+  And I am on the member home page
   And I sign in as translator_purchase_manager@nbs.com with password secret
   And I should be on purchase manager home
   Then I am not sign in
