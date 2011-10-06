@@ -45,7 +45,7 @@ Feature: Category buyer rules
     And I am on category home page for Best Leads
     And I sign in as jon@lajoie.ca with password secret
     And I follow translated "layout.main_menu.supplier.subaccounts"
-    Then I follow translated "supplier.subaccounts.index.view.new_lead_buyer"
+    Then I follow translated "supplier.subaccounts.index.view.new_lead_supplier"
     And I fill in "user_lead_supplier_first_name" with "Mark"
     And I fill in "user_lead_supplier_last_name" with "Driscoll"
     And I fill in "user_lead_supplier_email" with "driscoll@person.noserver.com"
@@ -63,7 +63,7 @@ Feature: Category buyer rules
     And I am on category home page for Best Leads
     And I sign in as jon@lajoie.ca with password secret
     And I follow translated "layout.main_menu.supplier.subaccounts"
-    Then I follow translated "supplier.subaccounts.index.view.new_lead_buyer"
+    Then I follow translated "supplier.subaccounts.index.view.new_lead_supplier"
     And I fill in "user_lead_supplier_first_name" with "Mark"
     And I fill in "user_lead_supplier_last_name" with "Driscoll"
     And I fill in "user_lead_supplier_email" with "driscoll@person.noserver.com"
@@ -90,7 +90,7 @@ Feature: Category buyer rules
     And I sign in as jon@lajoie.ca with password secret
     And I follow translated "layout.my_profile_link"
     Then I should not see translated "my_profile.edit.view.interests_settings"
-    When I am on customer interests
+    When I am on supplier interests
     Then I should see "You are not authorized"
 
   @m6 @selenium @_done @_tested  @requested
@@ -139,7 +139,7 @@ Feature: Category buyer rules
     And I am on category home page for Best Leads
     And I sign in as jon@lajoie.ca with password secret
     And I follow translated "layout.main_menu.supplier.subaccounts"
-    Then I follow translated "supplier.subaccounts.index.view.new_lead_buyer"
+    Then I follow translated "supplier.subaccounts.index.view.new_lead_supplier"
     And I fill in "user_lead_supplier_first_name" with "Mark"
     And I fill in "user_lead_supplier_last_name" with "Driscoll"
     And I fill in "user_lead_supplier_email" with "driscoll@person.noserver.com"
@@ -175,7 +175,7 @@ Feature: Category buyer rules
     And user "jon@lajoie.ca" has no buying categories
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
-    Then I should see translated "common.no_categories_for_category_buyer"
+    Then I should see translated "common.no_categories_for_category_supplier"
 
   @m6 @added @ao @_done @_tested
   Scenario: I can edit lead buyer that belongs to my account
@@ -185,7 +185,7 @@ Feature: Category buyer rules
     And an user with role lead_supplier and email lead_buyer@nbs.com exists as subaccount for customer jon@lajoie.ca
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
-    And go to customers subaccounts
+    And go to suppliers subaccounts
     Then I follow translated "supplier.subaccounts.index.view.edit"
     And I fill in "user_category_supplier_first_name" with "Justin"
     And I fill in "user_category_supplier_last_name" with "Bieber"
@@ -202,7 +202,7 @@ Feature: Category buyer rules
     And an user with role lead_user and email lead_user@nbs.com exists as subaccount for customer jon@lajoie.ca
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
-    And go to customers subaccounts
+    And go to suppliers subaccounts
     Then I follow translated "supplier.subaccounts.index.view.edit"
     And I fill in "user_category_supplier_first_name" with "Justin"
     And I fill in "user_category_supplier_last_name" with "Bieber"
