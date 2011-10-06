@@ -44,13 +44,13 @@ Feature: Notifications
     Then I follow translated "leads.index.buy_lead"
     Then I should see translated "supplier.cart_items.create.flash.cart_item_bought_successful"
     Then last email sent should have been sent to recipient "buyer@nbs.com"
-    Then last email sent should have content "/buyers/lead_purchases/"
+    Then last email sent should have content "/suppliers/lead_purchases/"
     Then last email sent should have subject "Bought lead notification"
     Then category "Business" has email template with subject "super hard rock metal core"
     Then I follow translated "leads.index.buy_lead"
     Then I should see translated "supplier.cart_items.create.flash.cart_item_bought_successful"
     Then last email sent should have been sent to recipient "buyer@nbs.com"
-    Then last email sent should have content "/buyers/lead_purchases/"
+    Then last email sent should have content "/suppliers/lead_purchases/"
     Then last email sent should have subject "super hard rock metal core"
 
   @m13 @added @auto_buy @is @_done @_tested

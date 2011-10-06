@@ -8,7 +8,7 @@ class PaymentTransaction < ActiveRecord::Base
 
   scope :with_invoices, :include => [:invoice]
   scope :with_keyword, lambda { |q|
-    where("invoices.number::TEXT = :number_keyword OR lower(leads.header) LIKE :keyword OR lower(leads.contact_name) LIKE :keyword OR lower(leads.company_name) LIKE :keyword OR lower(invoices.supplier_name) like :keyword OR lower(addresses.address_line_1) like :keyword OR lower(addresses.address_line_2) like :keyword OR lower(addresses.address_line_3) like :keyword OR lower(addresses.zip_code) like :keyword",  {:number_keyword => "#{q.downcase}", :keyword => "%#{q.downcase}%"}).
+    where("invoices.number::TEXT = :number_keyword OR lower(leads.header) LIKE :keyword OR lower(leads.contact_name) LIKE :keyword OR lower(leads.company_name) LIKE :keyword OR lower(invoices.customer_name) like :keyword OR lower(addresses.address_line_1) like :keyword OR lower(addresses.address_line_2) like :keyword OR lower(addresses.address_line_3) like :keyword OR lower(addresses.zip_code) like :keyword",  {:number_keyword => "#{q.downcase}", :keyword => "%#{q.downcase}%"}).
     joins(:invoice => [{:invoice_lines => {:lead_purchase => [:lead]}}, :supplier_address] ) }
   scope :with_sale_date_after_and_including, lambda{ |date| where(["invoices.sale_date >= ?",date.to_postgresql_date]) }
   scope :with_sale_date_before_and_including, lambda{ |date| where(["invoices.sale_date <= ?",date.to_postgresql_date]) }

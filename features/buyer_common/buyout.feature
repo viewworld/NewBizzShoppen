@@ -145,7 +145,7 @@ Feature: Buy out
     And Category named "Computers" already exists
     And category "Computers" has attributes "buyout_enabled:1"
     And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Computers"
-    And User jon@lajoie.ca with role category_buyer is big buyer
+    And User jon@lajoie.ca with role category_supplier is big buyer
     And lead Printers exists within category Computers
     And lead "Printers" has attributes "sale_limit:10,price:123"
     And I am on the home page

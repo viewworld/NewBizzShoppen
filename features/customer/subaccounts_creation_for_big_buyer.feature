@@ -48,7 +48,7 @@ Scenario: I should not have access to subaccounts without team buyers flag
 
 @requested @m8b @tgn @_tested
 Scenario: The big buyer property of a customer should be inherited by all his subaccounts
-  Then I follow translated "supplier.subaccounts.index.view.new_lead_buyer"
+  Then I follow translated "supplier.subaccounts.index.view.new_lead_supplier"
   And I fill in "user_lead_supplier_first_name" with "Mark"
   And I fill in "user_lead_supplier_last_name" with "Driscoll"
   And I fill in "user_lead_supplier_email" with "driscoll@person.noserver.com"

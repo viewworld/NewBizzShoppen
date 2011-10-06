@@ -82,7 +82,7 @@ Scenario: When you click on a lead that you have not bought, and you are not sig
   And I follow category "Sample category"
   Then I click hidden translated link "leads.index.add_to_cart_link"
   And I should see "Sign in"
-  Then I follow translated "buyer_home.show.view.create_new_buyer_account"
+  Then I follow translated "supplier_home.show.view.create_new_supplier_account"
 
 @m5 @tgn @_tested
 Scenario: Add blurb or info text to leads listing "To view lead details click buy lead"

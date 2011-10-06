@@ -95,7 +95,7 @@ Scenario: I can go to latest leads listing
 Scenario: I can go to buyer page by clicking “CLICK HERE IF YOU ARE A BUYER”
 #  When I follow translated "home.show.view.purchase_manager"
 #  And I follow translated "purchase_manager_home.show.view.buyer_link"
-#  Then I should be on the buyer home page
+#  Then I should be on the supplier home page
 
 @added @_done @_deprecated
 Scenario: I can go to agent page by clicking “CLICK HERE IF YOU ARE AN AGENT”

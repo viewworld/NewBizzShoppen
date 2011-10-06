@@ -12,7 +12,7 @@ Background:
 @added @_done
 Scenario: I can filter leads by owner type (Purchase Manager) and Status (not published)
   When I select translated "administration.leads.index.view.option_not_published" from "search_with_status"
-  And I select "PurchaseManager" from "search_with_creator_type"
+  And I select "Member" from "search_with_creator_type"
   And I press translated "administration.leads.index.view.search_button"
   Then I should see "PMLeadOne"
   And I should see "1" rows with id like "lead_" in a table within "#leads"

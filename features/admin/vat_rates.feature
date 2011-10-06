@@ -7,8 +7,8 @@ Feature: VAT rates
 
   @_done
   Scenario: I can fill in VAT number when creating new buyer account
-    When I am on the buyer home page
-    When I follow translated "buyer_home.show.view.create_new_buyer_account"
+    When I am on the supplier home page
+    When I follow translated "supplier_home.show.view.create_new_supplier_account"
     Then I should see translated "formtastic.labels.user/supplier.vat_number"
 
   @_done
@@ -16,8 +16,8 @@ Feature: VAT rates
     When I am on the agent home page
     When I follow translated "agent_home.show.view.create_new_agent_account"
     Then I should not see "Vat number"
-    When I am on the purchase manager home page
-    When I follow translated "purchase_manager_home.show.view.create_new_purchase_manager_account"
+    When I am on the member home page
+    When I follow translated "member_home.show.view.create_new_member_account"
     Then I should not see translated "formtastic.labels.user.vat_number"
 
   @_done

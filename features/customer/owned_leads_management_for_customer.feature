@@ -159,8 +159,8 @@ Scenario: I can email the lead if email information were provided
   And I sign in as customer@nbs.com with password secret
   And a lead AwesomeLead exists within category Test and is bought by user customer@nbs.com with role supplier
   And I follow translated "layout.main_menu.lead_supplier.lead_purchases"
-  And I follow translated "supplier.lead_purchases.index.view.email_lead" within ".lead"
-  And I press translated "supplier.contact_lead_by_email.new.view.send_email_button"
+  And I follow translated "lead_supplier.lead_purchases.index.view.email_lead" within ".lead"
+  And I press translated "lead_supplier.contact_lead_by_email.new.view.send_email_button"
   Then I should see translated "flash.contact_lead_by_email.create.notice"
 
 @tgn @_tested @selenium

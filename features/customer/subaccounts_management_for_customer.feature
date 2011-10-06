@@ -19,7 +19,7 @@ Scenario: I can see accounts managament tab
 
 @_tested  @noguess
 Scenario: I can add new lead buyer that belongs to my account (checkbox selected - can buy leads -- req deprecated)
-  Then I follow translated "supplier.subaccounts.index.view.new_lead_buyer"
+  Then I follow translated "supplier.subaccounts.index.view.new_lead_supplier"
   And I fill in "user_lead_supplier_first_name" with "Mark"
   And I fill in "user_lead_supplier_last_name" with "Driscoll"
   And I fill in "user_lead_supplier_email" with "driscoll@person.noserver.com"
@@ -48,7 +48,7 @@ Scenario: I can add new lead user that belongs to my account
 
 @_tested  @noguess
 Scenario: Lead buyer have to be activated through activation email
-  When I follow translated "supplier.subaccounts.index.view.new_lead_buyer"
+  When I follow translated "supplier.subaccounts.index.view.new_lead_supplier"
   And I fill in "user_lead_supplier_first_name" with "Mark"
   And I fill in "user_lead_supplier_last_name" with "Driscoll"
   And I fill in "user_lead_supplier_email" with "driscoll@person.noserver.com"
@@ -75,7 +75,7 @@ Scenario: I can remove lead buyer role from lead buyer (leaving him lead user ro
   Given an user with role lead_supplier and email lead_buyer@person.com exists as subaccount for customer bob@person.com
   And I go to suppliers subaccounts
   Then I follow translated "supplier.subaccounts.index.view.edit"
-  And I uncheck "user_lead_supplier_lead_buyer_role_enabled"
+  And I uncheck "user_lead_supplier_lead_supplier_role_enabled"
   And I press translated "supplier.subaccounts.edit.view.button_update"
   Then user "lead_buyer@person.com" with role "lead_user" should not have role "lead_supplier"
 
@@ -96,7 +96,7 @@ Scenario: I can remove lead user that belongs to my account (What happens here -
 @_tested  @noguess
 Scenario: I can edit lead buyer that belongs to my account
   Given an user with role lead_supplier and email lead_buyer@person.com exists as subaccount for customer bob@person.com
-  And go to customers subaccounts
+  And go to suppliers subaccounts
   Then I follow translated "supplier.subaccounts.index.view.edit"
   And I fill in "user_lead_supplier_first_name" with "Bob"
   And I fill in "user_lead_supplier_last_name" with "Spark"
@@ -106,7 +106,7 @@ Scenario: I can edit lead buyer that belongs to my account
 @_tested
 Scenario: I can edit lead user that belongs to my account
   Given an user with role lead_user and email lead_user@person.com exists as subaccount for customer bob@person.com
-  And go to customers subaccounts
+  And go to suppliers subaccounts
   Then I follow translated "supplier.subaccounts.index.view.edit"
   And I fill in "user_lead_user_first_name" with "Bob"
   And I fill in "user_lead_user_last_name" with "Spark"
@@ -119,7 +119,7 @@ Scenario: I can see all lead buyers/lead users that belong to my account
   And user lead_buyer@person.com with role lead_supplier exists with attributes "last_name:Clark"
   Given an user with role lead_user and email lead_user@person.com exists as subaccount for customer bob@person.com
   And user lead_user@person.com with role lead_user exists with attributes "last_name:Rovecky"
-  And go to customers subaccounts
+  And go to suppliers subaccounts
   Then I should see "Clark"
   And I should see "Rovecky"
 

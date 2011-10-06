@@ -10,8 +10,8 @@ Background:  Sign in user and set locale
 @_tested
 Scenario: I create account through signup
   Given I am not sign in
-  And I am on the buyer home page
-  When I follow translated "buyer_home.show.view.create_new_buyer_account"
+  And I am on the supplier home page
+  When I follow translated "supplier_home.show.view.create_new_supplier_account"
   And I fill in "user_supplier_first_name" with "Bob"
   And I fill in "user_supplier_last_name" with "Geldof"
   And I fill in "user_supplier_phone" with "244224242424"
@@ -25,7 +25,7 @@ Scenario: I create account through signup
   And I fill in "user_supplier_address_attributes_address_line_3" with "Geldow"
   And I select "Denmark" from "user_supplier_address_attributes_country_id"
   And I check "user_supplier_agreement_read"
-  Then I press translated "buyer_accounts.new.view.button_create_account"
+  Then I press translated "supplier_accounts.new.view.button_create_account"
 
 Scenario: I can follow "What do you want to do today?" links and they take me to appropriate places
 
@@ -238,11 +238,11 @@ Scenario: I can see a back button when on configure interests page
 
 @m10 @requested @_done @_tested
 Scenario: After first login I should be redirected to my home page instead of interests config
-  Then I should be on buyer home
+  Then I should be on supplier home
 
 @m10 @requested @_done @_tested
 Scenario: Interests are automatically configured after account is created - all countries and categories should be selected with disabled notifications
-  When I am on customer interests page
+  When I am on supplier interests page
   Then checkbox named "country_1" should be checked
   And checkbox named "country_2" should be checked
   And checkbox named "category_1" should not be checked

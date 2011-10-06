@@ -39,7 +39,7 @@ Scenario: I can filter listing of all news by scope (buyers, agents, both) and b
   And I press translated "administration.news.index.view.search_button"
   Then I should see "AgentNews"
   And I should not see "BuyerNews"
-  When I select translated "administration.news.index.view.buyers" from "search_with_subclass"
+  When I select translated "administration.news.index.view.suppliers" from "search_with_subclass"
   And I press translated "administration.news.index.view.search_button"
   Then I should see "BuyerNews"
   And I should not see "AgentNews"

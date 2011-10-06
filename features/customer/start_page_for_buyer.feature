@@ -30,18 +30,18 @@ Scenario: I can see my leads
 Scenario: I can add team members with team members enabled
   When user "jon@lajoie.ca" with role "supplier" has attributes "team_buyers:1"
   And I follow translated "layout.main_menu.shared.home"
-  Then I should see translated "buyer_home.show.view.add_team_member"
-  When I follow translated "buyer_home.show.view.add_team_member"
-  Then I should be on customers new subaccount
+  Then I should see translated "supplier_home.show.view.add_team_member"
+  When I follow translated "supplier_home.show.view.add_team_member"
+  Then I should be on suppliers new subaccount
 
 @added @m5 @ao @_done
 Scenario: I can't add team members with team members disabled
   When user "jon@lajoie.ca" with role "supplier" has attributes "team_buyers:0"
   And I follow translated "layout.main_menu.shared.home"
-  Then I should not see translated "buyer_home.show.view.add_team_member"
+  Then I should not see translated "supplier_home.show.view.add_team_member"
 
 @m5 @ao @_done
 Scenario: I can sign out
   When I follow translated "layout.main_menu.shared.home"
-  And I follow translated "buyer_home.show.view.sign_out"
+  And I follow translated "supplier_home.show.view.sign_out"
   Then I should see translated "devise.sessions.signed_out"

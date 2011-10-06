@@ -36,11 +36,11 @@ Scenario: I can set remember me option by selecting a checkbox and logging in
 Scenario: For each role homepage there should be two separate blurbs: for logged in and logged out user
   #buyer
   Given I am not sign in
-  And I am on the buyer home page
+  And I am on the supplier home page
   And I should see "Blurb supplier home"
   And I should not see "Blurb supplier home logged in"
   And I sign in as buyer@nbs.com with password secret
-  And I am on the buyer home page
+  And I am on the supplier home page
   And I should see "Blurb supplier home logged in"
   #agent
   Given I am not sign in
@@ -64,7 +64,7 @@ Scenario: For each role homepage there should be two separate blurbs: for logged
 Scenario: When user logs out then he lands on his specific role home page
   #buyer
   Given I am not sign in
-  And I am on the buyer home page
+  And I am on the supplier home page
   And I sign in as buyer@nbs.com with password secret
   And I should be on buyer home
   Then I am not sign in

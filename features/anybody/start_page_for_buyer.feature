@@ -47,14 +47,14 @@ Scenario: I can't see inactive leads on latest leads
   And lead "InactiveLead" has attributes "sale_limit:1"
   And I follow translated "home.show.view.buyer"
   Then I should see "1" items on a list within "#latest_leads"
-  And I follow translated "buyer_home.show.view.complete_list_link" within "#latest_leads"
+  And I follow translated "supplier_home.show.view.complete_list_link" within "#latest_leads"
   Then I should see translated "common.nothing_to_display"
 
 @m3 @ao @_done
 Scenario: I can go to details of buyer news
   Given published buyer news exists with attributes "title:FirstNews"
   And I follow translated "home.show.view.buyer"
-  And I follow translated "buyer_home.show.view.read_more_link" within "#news"
+  And I follow translated "supplier_home.show.view.read_more_link" within "#news"
   Then I should be on FirstNews news page
 
 @ao @_done @_tested
@@ -76,33 +76,33 @@ Scenario: I can go to details of latest leads
 Scenario: I can go to buyer news listing
   Given lead AwesomeLead exists within category Test
   And I follow translated "home.show.view.agent"
-  And I follow translated "buyer_home.show.view.complete_list_link" within "#latest_leads"
+  And I follow translated "supplier_home.show.view.complete_list_link" within "#latest_leads"
   Then I should see "AwesomeLead" within ".leads_table"
 
 @ao @_done @_tested
 Scenario: I can go to bestsellers listing
   When I follow translated "home.show.view.buyer"
-  And I follow translated "buyer_home.show.view.complete_list_link" within "#best_sellers"
+  And I follow translated "supplier_home.show.view.complete_list_link" within "#best_sellers"
   Then I should be on the leads page
   And I should see translated "leads.index.bestsellers_header"
 
 @ao @_done @_tested
 Scenario: I can go to latest leads listing
   When I follow translated "home.show.view.buyer"
-  And I follow translated "buyer_home.show.view.complete_list_link" within "#latest_leads"
+  And I follow translated "supplier_home.show.view.complete_list_link" within "#latest_leads"
   Then I should be on the leads page
   And I should see translated "leads.index.latest_header"
 
 @ao @_done @_tested @_deprecated
 Scenario: I can go to agent page by clicking “CLICK HERE IF YOU ARE AN AGENT”
 #  When I follow translated "home.show.view.buyer"
-#  And I follow translated "buyer_home.show.view.agent_link"
+#  And I follow translated "supplier_home.show.view.agent_link"
 #  Then I should be on the agent home page
 
 @ao @_done @_tested
 Scenario: I can go to new buyer creation page
   When I follow translated "home.show.view.buyer"
-  And I follow translated "buyer_home.show.view.create_new_buyer_account"
+  And I follow translated "supplier_home.show.view.create_new_supplier_account"
   Then I should be on buyer sign up page
 
 @ao @m3 @_done
@@ -184,11 +184,11 @@ Scenario: I should see leads from customer unique categories I'm assigned to on 
 Scenario: Buyer can see link to Interests on buyer home page if he don't have set any interests yet
   Given I am on the homepage
   Then I sign in as buyer@nbs.com with password secret
-  Then I should not see translated "buyer_home.show.view.configure_interests_link"
+  Then I should not see translated "supplier_home.show.view.configure_interests_link"
   Then User with email buyer@nbs.com don't have interests
   Given I am on buyer home
-  Then I should see translated "buyer_home.show.view.configure_interests_link"
-  Then I follow translated "buyer_home.show.view.configure_interests_link"
+  Then I should see translated "supplier_home.show.view.configure_interests_link"
+  Then I follow translated "supplier_home.show.view.configure_interests_link"
   Then I should see translated "supplier.interests.edit.view.title"
 
 #7457
@@ -197,7 +197,7 @@ Scenario: I should see Latest deals instead of bestsellers box when I am not log
   Given there are no deals
   Given there are "4" existing deals
   And a deal named "AwesomeDeal" exists within category "Dilownia"
-  And I am on the buyer home page
-  Then I should see translated "buyer_home.show.view.header_latest_deals"
+  And I am on the supplier home page
+  Then I should see translated "supplier_home.show.view.header_latest_deals"
   And I should see "3" items on a list within "#latest_deals"
   And I should see "AwesomeDeal" first on a list within "#latest_deals"

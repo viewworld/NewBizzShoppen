@@ -211,7 +211,7 @@ Then /^user "([^"]*)" with role "([^"]*)" should not have role "([^"]*)"$/ do |e
 end
 
 Given /^all users have refreshed cache counters$/ do
-  [:refresh_subaccounts_counters, :refresh_agent_counters, :refresh_buyer_counters].each do |method|
+  [:refresh_subaccounts_counters, :refresh_agent_counters, :refresh_supplier_counters].each do |method|
     CommonStats.send(method)
   end
 end
@@ -326,7 +326,7 @@ Given /^user with email "([^"]*)" has logged before$/ do |email|
 end
 
 Given /^big buyer purchase limit is set to (\d+)$/ do |limit|
-  Settings.stubs(:big_buyer_purchase_limit).returns(limit.to_f)
+  Settings.stubs(:big_supplier_purchase_limit).returns(limit.to_f)
 end
 
 Given /^user "([^"]*)" should (be|not be) big buyer$/ do |email, is_big_buyer|

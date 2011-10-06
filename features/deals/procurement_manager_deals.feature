@@ -136,7 +136,7 @@ Feature: Deals from procurement manager perspective
     And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     And I follow translated "deals.index.view.contact_me"
-    And I follow translated "buyer_home.show.view.create_new_membership_account"
+    And I follow translated "supplier_home.show.view.create_new_membership_account"
     And I fill in "user_member_company_name" with "The Young Turks"
     And I fill in "user_member_first_name" with "Ana"
     And I fill in "user_member_last_name" with "Kasparian"

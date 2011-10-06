@@ -55,7 +55,7 @@ Feature: Sign up feature
 
   @m14 @requested @sign_up @$_customer @tgn @_done @_tested
   Scenario: I can't enable Team Buyers option when signing up
-    When I am on the buyer home page
-    And I follow translated "buyer_home.show.view.create_new_buyer_account"
+    When I am on the supplier home page
+    And I follow translated "supplier_home.show.view.create_new_supplier_account"
     Then I should not see "Team buyers"
 

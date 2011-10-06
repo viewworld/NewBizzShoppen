@@ -146,7 +146,7 @@ Scenario: I can enable/disable email verification for procurement managers
     | user_member_address_attributes_address_line_3        | Quebec          |
   And I select "Denmark" from "user_member_address_attributes_country_id"
   And I check "user_member_agreement_read"
-  And I press translated "purchase_manager_accounts.new.view.button_create_account"
+  And I press translated "member_accounts.new.view.button_create_account"
   Then I should see translated "flash.accounts.create.no_verification"
   And I sign in as lead_user2@person.com with password supersecret
   Then I go to administration settings
@@ -169,8 +169,8 @@ Scenario: I can enable/disable email verification for procurement managers
     | user_member_address_attributes_address_line_3        | Quebec          |
   And I select "Denmark" from "user_member_address_attributes_country_id"
   And I check "user_member_agreement_read"
-  And I press translated "purchase_manager_accounts.new.view.button_create_account"
-  Then I should see translated "flash.purchase_manager_accounts.create.notice"
+  And I press translated "member_accounts.new.view.button_create_account"
+  Then I should see translated "flash.member_accounts.create.notice"
 
 @m18 @settings @_done @_tested
 Scenario: I can enable/disable email verification for sales managers
@@ -193,7 +193,7 @@ Scenario: I can enable/disable email verification for sales managers
       | user_supplier_address_attributes_address_line_3        | Wesley             |
   And I select "Denmark" from "user_supplier_address_attributes_country_id"
   And I check "user_supplier_agreement_read"
-  And I press translated "buyer_accounts.new.view.button_create_account"
+  And I press translated "supplier_accounts.new.view.button_create_account"
   Then I should see translated "flash.accounts.create.no_verification"
   And I sign in as lead_user2@person.com with password supersecret
   Then I go to administration settings
@@ -216,8 +216,8 @@ Scenario: I can enable/disable email verification for sales managers
       | user_supplier_address_attributes_address_line_3        | Wesley             |
   And I select "Denmark" from "user_supplier_address_attributes_country_id"
   And I check "user_supplier_agreement_read"
-  And I press translated "buyer_accounts.new.view.button_create_account"
-  Then I should see translated "flash.buyer_accounts.create.notice"
+  And I press translated "supplier_accounts.new.view.button_create_account"
+  Then I should see translated "flash.supplier_accounts.create.notice"
 
 #7450
 @m19 @requested @settings @_done @_tested @tgn

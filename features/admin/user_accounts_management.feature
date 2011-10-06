@@ -148,13 +148,13 @@ Scenario: I can change category buyer to regular buyer
   And I fill in "search_with_keyword" with "kategory_bajer"
   And I press translated "administration.users.index.view.search_button"
   And I follow translated "administration.users.index.view.edit"
-  Then I should see CSS path "#category_buyer_categories"
+  Then I should see CSS path "#category_supplier_categories"
   And I should not see CSS path "#unique_categories"
   And I should not see CSS path "#category_interests"
-  When I follow translated "administration.users.edit.view.change_to_regular_buyer"
+  When I follow translated "administration.users.edit.view.change_to_regular_supplier"
   Then I should see CSS path "#unique_categories"
   And I should see CSS path "#category_interests"
-  And I should not see CSS path "#category_buyer_categories"
+  And I should not see CSS path "#category_supplier_categories"
 
 @m6 @added @_done @_tested  @requested
 Scenario: User can login after changing his account to regular buyer
@@ -165,7 +165,7 @@ Scenario: User can login after changing his account to regular buyer
   And I fill in "search_with_keyword" with "kategory_bajer"
   And I press translated "administration.users.index.view.search_button"
   And I follow translated "administration.users.index.view.edit"
-  And I follow translated "administration.users.edit.view.change_to_regular_buyer"
+  And I follow translated "administration.users.edit.view.change_to_regular_supplier"
   And I sign out
   And I sign in as kategory_bajer@nbs.com with password secret
   And I follow translated "layout.main_menu.shared.browse_leads"
@@ -182,7 +182,7 @@ Scenario: Subaccounts can login after changing parent to regular buyer
   And I fill in "search_with_keyword" with "kategory_bajer"
   And I press translated "administration.users.index.view.search_button"
   And I follow translated "administration.users.index.view.edit"
-  And I follow translated "administration.users.edit.view.change_to_regular_buyer"
+  And I follow translated "administration.users.edit.view.change_to_regular_supplier"
   And I sign out
   And I sign in as sub@nbs.com with password secret
   And I follow translated "layout.main_menu.shared.browse_leads"
@@ -611,7 +611,7 @@ Scenario: As Admin I can see Name (default Company Name, if empty then First Nam
   Given I am on the homepage
   And I am not sign in
   Then I sign in as blazejek@gmail.com with password secret
-  And I have user with email super@person.com role CategoryBuyer first_name Irek last_name Skrobis and company_name Selleo
+  And I have user with email super@person.com role CategorySupplier first_name Irek last_name Skrobis and company_name Selleo
   And I go to administration users
   Then I should see "Selleo"
   Then I should not see "Irek"

@@ -288,7 +288,7 @@ Scenario: I can list all invoices an see following columns -  number, customer, 
   And I follow translated "layout.main_menu.admin.invoices"
   Then I should see translated "administration.invoices.index.view.sale_date"
   And I should see translated "administration.invoices.index.view.invoice_number"
-  And I should see translated "administration.invoices.index.view.customer"
+  And I should see translated "administration.invoices.index.view.supplier"
   And I should see translated "administration.invoices.index.view.total"
   And I should see translated "administration.invoices.index.view.status"
 
@@ -309,9 +309,9 @@ Scenario: I can sort invoices listing by following columns -  number, customer, 
   Then I should see "Janko Muzykant" before "Ferdek Kiepski"
   When I follow translated "administration.invoices.index.view.total"
   Then I should see "Ferdek Kiepski" before "Janko Muzykant"
-  When I follow translated "administration.invoices.index.view.customer"
+  When I follow translated "administration.invoices.index.view.supplier"
   Then I should see "Ferdek Kiepski" before "Janko Muzykant"
-  When I follow translated "administration.invoices.index.view.customer"
+  When I follow translated "administration.invoices.index.view.supplier"
   Then I should see "Janko Muzykant" before "Ferdek Kiepski"
 
 @ao @_done @_tested

@@ -731,7 +731,7 @@ en:
     index:
       view:
         agents_header: "Agents news"
-        sales_managers_header: "Sales manager news"
+        suppliers_header: "Suppliers news"
         members_header: "Member manager news"
         category_homes_header: "Category news"
         read_more_link: "read more"

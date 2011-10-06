@@ -123,7 +123,7 @@ Scenario: I should be able to click "Add to cart button" that will redirect me t
   And I go to browse leads
   And I follow category "VariousLeads"
   Then I click hidden translated link "leads.index.add_to_cart_link"
-  And I follow translated "buyer_home.show.view.create_new_buyer_account"
+  And I follow translated "supplier_home.show.view.create_new_supplier_account"
   Then I fill in "user_supplier_first_name" with "John"
   And I fill in "user_supplier_last_name" with "Doe"
   And I fill in "user_supplier_company_name" with "Doe Ltd"
