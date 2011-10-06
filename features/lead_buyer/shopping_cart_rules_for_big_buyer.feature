@@ -154,7 +154,7 @@ Scenario: I cannot buy leads if total cost of my purchases exceeds my personal l
   When I go to leads
   And I follow category "Computers"
   And I follow translated "leads.index.buy_lead"
-  And I should see translated "supplier.cart_items.create.flash.cart_item_big_buyer_purchase_limit_reached"
+  And I should see translated "supplier.cart_items.create.flash.cart_item_big_supplier_purchase_limit_reached"
   Then I should see "Printers ultimate deal"
 
 @m13 @requested @auto_buy @is @_done @_tested_elsewhere

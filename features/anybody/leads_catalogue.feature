@@ -141,7 +141,7 @@ Scenario: If a lead is certified then I see "Certified by procurement: (yes/no)"
   And Lead named "Lead sample" exists within "Sample category" category
   And I go to browse leads
   And I follow category "Sample category"
-  Then I should see translated "leads.listing.certified_by_procurement_label"
+  Then I should see translated "leads.listing.certified_by_member_label"
 
 # 5766
 # the "certification" we have now is about agent's so it should be removed

@@ -181,19 +181,19 @@ Scenario: I should see leads from customer unique categories I'm assigned to on 
   And I should see "UniqueLead2" within "#latest_leads"
 
 @requested @m11 @is @interests @_done @_tested
-Scenario: Buyer can see link to Interests on buyer home page if he don't have set any interests yet
+Scenario: Buyer can see link to Interests on supplier home page if he don't have set any interests yet
   Given I am on the homepage
   Then I sign in as buyer@nbs.com with password secret
   Then I should not see translated "supplier_home.show.view.configure_interests_link"
   Then User with email buyer@nbs.com don't have interests
-  Given I am on buyer home
+  Given I am on supplier home
   Then I should see translated "supplier_home.show.view.configure_interests_link"
   Then I follow translated "supplier_home.show.view.configure_interests_link"
   Then I should see translated "supplier.interests.edit.view.title"
 
 #7457
 @m20 @requested @is @_done @_tested
-Scenario: I should see Latest deals instead of bestsellers box when I am not logged in on the buyer home
+Scenario: I should see Latest deals instead of bestsellers box when I am not logged in on the supplier home
   Given there are no deals
   Given there are "4" existing deals
   And a deal named "AwesomeDeal" exists within category "Dilownia"
