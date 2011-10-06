@@ -40,7 +40,7 @@ Feature: Purchase Manager signup
     And I select "Denmark" from "user_member_address_attributes_country_id"
     And I check "user_member_agreement_read"
     And I press translated "supplier_accounts.new.view.button_create_account"
-    Then I should see translated "flash.purchase_manager_accounts.create.notice"
+    Then I should see translated "flash.member_accounts.create.notice"
     And a confirmation message should be sent to jon@lajoie.ca
 
   @added @_done

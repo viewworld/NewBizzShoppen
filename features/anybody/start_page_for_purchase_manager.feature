@@ -106,7 +106,7 @@ Scenario: I can go to agent page by clicking â€œCLICK HERE IF YOU ARE AN AGENTâ€
 @added @_done
 Scenario: I can go to creation of new purchase manager account page
   When I am on the member home page
-  And I follow translated "member_home.show.view.create_new_purchase_manager_account"
+  And I follow translated "member_home.show.view.create_new_member_account"
   Then I should be on purchase manager sign up page
 
 @added @_done
