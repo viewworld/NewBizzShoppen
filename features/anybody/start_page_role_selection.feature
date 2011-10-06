@@ -80,6 +80,6 @@ Scenario: When user logs out then he lands on his specific role home page
   Given I am not sign in
   And I am on the member home page
   And I sign in as translator_purchase_manager@nbs.com with password secret
-  And I should be on purchase manager home
+  And I should be on member home
   Then I am not sign in
   And I should be on the homepage

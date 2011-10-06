@@ -54,7 +54,7 @@ Feature: Home pages
     Then I should see CSS path "#user_email"
     And I should see CSS path "#user_password"
     And I should see CSS path "#user_submit"
-    When I am on purchase manager home page
+    When I am on member home page
     Then I should see CSS path "#user_email"
     And I should see CSS path "#user_password"
     And I should see CSS path "#user_submit"
@@ -65,7 +65,7 @@ Feature: Home pages
     Then I should see translated "category_home.show.view.forgotten_password_link"
     When I am on supplier home page
     Then I should see translated "category_home.show.view.forgotten_password_link"
-    When I am on purchase manager home page
+    When I am on member home page
     Then I should see translated "category_home.show.view.forgotten_password_link"
 
   @_done
@@ -85,7 +85,7 @@ Feature: Home pages
     Given I am signed up and confirmed as user with email pm@nbs.com and password secret and role member
     And I am on the home page
     And I sign in as pm@nbs.com with password secret
-    And I am on purchase manager home page
+    And I am on member home page
     Then I should see translated "category_home.show.view.sign_out"
 
   @category_home_pages @_done @_deprecated
