@@ -59,6 +59,6 @@ Scenario: The vat amount should be visible as additional product line in paypal
 
 @m10 @requested @_done @_tested
 Scenario: Total value of a cart should not include VAT rates
-  When I am on buyer cart page
+  When I am on supplier cart page
   Then I should see "2" rows in a table within "table.cart_table tbody"
   And I should see "100.00" within "table.cart_table tbody tr.total_row"

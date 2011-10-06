@@ -111,7 +111,7 @@ Feature: Category home pages
   Scenario: I can see registration panel on category home page when I'm a guest
     When Category named "Best Leads" already exists
     And I am on category home page for Best Leads
-    Then I should see translated "category_home.show.view.category_buyer_signup"
+    Then I should see translated "category_home.show.view.category_supplier_signup"
 
   @_done
   Scenario: I can see log in panel on category home page when I'm a guest

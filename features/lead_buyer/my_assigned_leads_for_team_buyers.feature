@@ -13,5 +13,6 @@ Background:
 @requested @tgn @_tested
 Scenario: I can view details of leads assigned to me
   Then I follow "Lead #1111"
+  And I open page in browser
   And I should see translated "supplier.lead_purchases.show.view.header"
   

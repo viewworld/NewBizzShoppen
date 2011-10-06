@@ -6,8 +6,8 @@ Feature: Category buyer sign up
     Given setting for "email_verification_for_sales_managers" is set to "1"
     When Category named "Best Leads" already exists
     And I am on category home page for Best Leads
-    And I follow translated "category_home.show.view.category_buyer_signup"
-    Then I should see translated "category_buyer_accounts.new.view.title"
+    And I follow translated "category_home.show.view.category_supplier_signup"
+    Then I should see translated "category_supplier_accounts.new.view.title"
     When I fill in "user_category_supplier_first_name" with "Jon"
     And I fill in "user_category_supplier_last_name" with "Lajoie"
     And I fill in "user_category_supplier_phone" with "123123123"
@@ -21,8 +21,8 @@ Feature: Category buyer sign up
     And I fill in "user_category_supplier_address_attributes_zip_code" with "43-300"
     And I select "United Kingdom" from "user_category_supplier_address_attributes_country_id"
     And I check "user_category_supplier_agreement_read"
-    And I press translated "category_buyer_accounts.new.view.button_create_account"
-    Then I should see translated "flash.category_buyer_accounts.create.notice"
+    And I press translated "category_supplier_accounts.new.view.button_create_account"
+    Then I should see translated "flash.category_supplier_accounts.create.notice"
 
   @_done
   Scenario: Account created from category home page has interests fixed to this category
