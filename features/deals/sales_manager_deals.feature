@@ -52,7 +52,7 @@ Feature: Deals from Sales Manager perspective
     Then I press translated "supplier.deals.new.view.create_button"
     Then I should see translated "deals.common.listing.view.header"
     Then I should see "very important deal"
-    Then I click hidden link by url regex "/buyers\/deals\/\d+\/edit/"
+    Then I click hidden link by url regex "/suppliers\/deals\/\d+\/edit/"
     Then I fill deal edit form and submit with translated button "supplier.deals.edit.view.update_button"
 
   # "Deal description"
@@ -164,7 +164,7 @@ Feature: Deals from Sales Manager perspective
     Then I press translated "supplier.deals.new.view.create_button"
     And I fill in "search_with_keyword" with "Templates deal test"
     And I press translated "leads.index.search.search_button"
-    And I click hidden link by url regex "/buyers\/deals\/\d+\/edit/"
+    And I click hidden link by url regex "/suppliers\/deals\/\d+\/edit/"
     And "deal_deal_template_ids_" dropdown should have values "Computer details2"
     Then I am not sign in
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
@@ -204,7 +204,7 @@ Feature: Deals from Sales Manager perspective
     And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
     Then I follow translated "layout.main_menu.lead_supplier.my_deals"
-    And I click hidden link by url regex "/buyers\/deals\/\d+\/edit/"
+    And I click hidden link by url regex "/suppliers\/deals\/\d+\/edit/"
     Then I should see translated "supplier.deals.edit.view.new_template"
     And I follow translated "supplier.deals.edit.view.new_template"
     And I should see translated "supplier.lead_templates.new.view.header"

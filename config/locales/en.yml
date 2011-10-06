@@ -2143,125 +2143,6 @@ en:
           certify_success: "Deal has been successfully certified"
           reject_success: "Deal has been successfully rejected."
           not_authorized: "You are not authorized to perform this action!"
-  categories:
-    index:
-      view:
-        header: Categories
-        view_lead_templates: View templates
-
-        view_leads: "View leads"
-        view_deals: "View deals"
-    listing:
-      category_details_label: "Category description"
-      actions_label: "Actions"
-  supplier_accounts:
-    new:
-      view:
-        title: "Sales manager signup"
-        rpx_title: "You are creating Sales Manager account as %{full_name} using %{account_type} account"
-        button_create_account: "Create"
-        enable_team_suppliers: "Enable team suppliers"
-        company_name: "Company"
-        janrain_sign_up_label: "Sign up using:"
-
-  category_supplier_accounts:
-    new:
-      view:
-        title: "Category supplier signup"
-        form_title: "Create new account"
-        rpx_title: "You are creating Category Supplier account as %{full_name} using %{account_type} account"
-        button_create_account: "Create"
-        enable_team_suppliers: "Enable team suppliers"
-        company_name: "Company"
-        janrain_sign_up_label: "Sign up using:"
-
-  supplier_home:
-    show:
-      view:
-        header: "Welcome sales manager"
-        agent_link: "click here if you are an agent"
-        member_link: "click here if you are a member manager"
-        header_best_sellers: "Best sellers"
-        header_latest_leads: "Latest leads"
-        header_latest_deals: "Latest deals"
-        header_latest_leads_in_my_categories: "Latest leads in my categories"
-        header_my_leads: "My leads"
-        header_news: "News"
-        purchase_value_label: "Purchase value:"
-        lead_price_label: "Lead price:"
-        description_label: "Description:"
-        read_more_link: "read more"
-        complete_list_link: "complete list"
-        configure_interests_link: "interests"
-        create_new_supplier_account: "Create new sales manager account"
-        sign_out: "Sign out"
-        add_team_member: "Add team member"
-        i_have_an_account: "I have an account"
-
-        create_new_membership_account: "Create a new membership account"
-  agent_home:
-    show:
-      view:
-        header: "Welcome agent"
-        supplier_link: "click here if you are a sales manager"
-        member_link: "click here if you are a member manager"
-        header_best_sellers: "Best sellers"
-        header_latest_leads: "Latest leads"
-        header_news: "News"
-        header_my_new_leads: "My new leads"
-        header_my_new_comments: "My new comments"
-        header_my_sold_leads: "My sold leads"
-        purchase_value_label: "Purchase value:"
-        lead_price_label: "Lead price:"
-        description_label: "Description:"
-        read_more_link: "read more"
-        complete_list_link: "complete list"
-        create_new_agent_account: "Create new agent account"
-        i_have_an_account: "I have an account"
-
-        new_lead: "New lead"
-        new_deal: "New deal"
-  member_home:
-    show:
-      view:
-        header: "Welcome member manager"
-        agent_link: "click here if you are an agent"
-        supplier_link: "click here if you are a sales manager"
-        header_best_sellers: "Best sellers"
-        header_latest_leads: "Latest leads"
-        header_latest_deals: "Latest deals"
-        header_my_contact_requests: "My contact requests"
-        header_news: "News"
-        purchase_value_label: "Purchase value:"
-        lead_price_label: "Lead price:"
-        description_label: "Description:"
-        read_more_link: "read more"
-        complete_list_link: "complete list"
-        create_new_member_account: "Create new member manager account"
-        i_have_an_account: "I have an account"
-
-  category_home:
-    show:
-      view:
-        header: "Welcome to category:"
-        sign_out: "Sign out"
-        header_news: "News"
-        complete_list_link: "complete list"
-        sign_up_sign_in: "Sign up or sign in"
-        latest_leads: "Latest leads"
-        header_latest_leads: "Latest leads"
-        header_additional_information_label: "Description"
-        i_have_an_account: "I have an account"
-        sign_in: "Sign in"
-        remember_me: "Remember me"
-        forgotten_password_link: "Forgot password?"
-        i_want_to_register: "I want to register a new account"
-        category_supplier_signup: "Category supplier signup"
-        header_my_leads: "My leads"
-        read_more_link: "read more"
-        create_new_account: Create new account
-
-  supplier:
     interests:
       edit:
         view:
@@ -2457,6 +2338,125 @@ en:
           created_by: "Created by"
           button_update: "Save"
           button_cancel: "Cancel"
+  categories:
+    index:
+      view:
+        header: Categories
+        view_lead_templates: View templates
+
+        view_leads: "View leads"
+        view_deals: "View deals"
+    listing:
+      category_details_label: "Category description"
+      actions_label: "Actions"
+  supplier_accounts:
+    new:
+      view:
+        title: "Sales manager signup"
+        rpx_title: "You are creating Sales Manager account as %{full_name} using %{account_type} account"
+        button_create_account: "Create"
+        enable_team_suppliers: "Enable team suppliers"
+        company_name: "Company"
+        janrain_sign_up_label: "Sign up using:"
+
+  category_supplier_accounts:
+    new:
+      view:
+        title: "Category supplier signup"
+        form_title: "Create new account"
+        rpx_title: "You are creating Category Supplier account as %{full_name} using %{account_type} account"
+        button_create_account: "Create"
+        enable_team_suppliers: "Enable team suppliers"
+        company_name: "Company"
+        janrain_sign_up_label: "Sign up using:"
+
+  supplier_home:
+    show:
+      view:
+        header: "Welcome sales manager"
+        agent_link: "click here if you are an agent"
+        member_link: "click here if you are a member manager"
+        header_best_sellers: "Best sellers"
+        header_latest_leads: "Latest leads"
+        header_latest_deals: "Latest deals"
+        header_latest_leads_in_my_categories: "Latest leads in my categories"
+        header_my_leads: "My leads"
+        header_news: "News"
+        purchase_value_label: "Purchase value:"
+        lead_price_label: "Lead price:"
+        description_label: "Description:"
+        read_more_link: "read more"
+        complete_list_link: "complete list"
+        configure_interests_link: "interests"
+        create_new_supplier_account: "Create new sales manager account"
+        sign_out: "Sign out"
+        add_team_member: "Add team member"
+        i_have_an_account: "I have an account"
+
+        create_new_membership_account: "Create a new membership account"
+  agent_home:
+    show:
+      view:
+        header: "Welcome agent"
+        supplier_link: "click here if you are a sales manager"
+        member_link: "click here if you are a member manager"
+        header_best_sellers: "Best sellers"
+        header_latest_leads: "Latest leads"
+        header_news: "News"
+        header_my_new_leads: "My new leads"
+        header_my_new_comments: "My new comments"
+        header_my_sold_leads: "My sold leads"
+        purchase_value_label: "Purchase value:"
+        lead_price_label: "Lead price:"
+        description_label: "Description:"
+        read_more_link: "read more"
+        complete_list_link: "complete list"
+        create_new_agent_account: "Create new agent account"
+        i_have_an_account: "I have an account"
+
+        new_lead: "New lead"
+        new_deal: "New deal"
+  member_home:
+    show:
+      view:
+        header: "Welcome member manager"
+        agent_link: "click here if you are an agent"
+        supplier_link: "click here if you are a sales manager"
+        header_best_sellers: "Best sellers"
+        header_latest_leads: "Latest leads"
+        header_latest_deals: "Latest deals"
+        header_my_contact_requests: "My contact requests"
+        header_news: "News"
+        purchase_value_label: "Purchase value:"
+        lead_price_label: "Lead price:"
+        description_label: "Description:"
+        read_more_link: "read more"
+        complete_list_link: "complete list"
+        create_new_member_account: "Create new member manager account"
+        i_have_an_account: "I have an account"
+
+  category_home:
+    show:
+      view:
+        header: "Welcome to category:"
+        sign_out: "Sign out"
+        header_news: "News"
+        complete_list_link: "complete list"
+        sign_up_sign_in: "Sign up or sign in"
+        latest_leads: "Latest leads"
+        header_latest_leads: "Latest leads"
+        header_additional_information_label: "Description"
+        i_have_an_account: "I have an account"
+        sign_in: "Sign in"
+        remember_me: "Remember me"
+        forgotten_password_link: "Forgot password?"
+        i_want_to_register: "I want to register a new account"
+        category_supplier_signup: "Category supplier signup"
+        header_my_leads: "My leads"
+        read_more_link: "read more"
+        create_new_account: Create new account
+
+
   lead_user:
     lead_purchases:
       index:

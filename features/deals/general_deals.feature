@@ -175,7 +175,7 @@ Feature: General deals
     And I am on the homepage
     And I sign in as buyer@nbs.com with password secret
     Then I follow translated "layout.main_menu.lead_supplier.my_deals"
-    And I click hidden link by url regex "/buyers\/deals\/\d+\/edit/"
+    And I click hidden link by url regex "/suppliers\/deals\/\d+\/edit/"
     And I should see "A company is interested in super"
 
   #7847

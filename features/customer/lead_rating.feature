@@ -50,7 +50,7 @@ Scenario: I can select a reason when I rate lead as 'unsatisfactory'
   And I show accordion details for row "#lead_single_purchase_1"
   Then "rating_level_1" should be selected for value translated "activerecord.attributes.lead_purchase.rating_levels.rating_level12"
 
-@_tested @selenium @wip
+@_tested @selenium
 Scenario: I must enter additional explaination for selected reason
   Given I show accordion details for row "#lead_single_purchase_1"
   And I select translated "activerecord.attributes.lead_purchase.rating_levels.rating_level12" from "rating_level"

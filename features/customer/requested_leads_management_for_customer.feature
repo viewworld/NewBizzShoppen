@@ -96,7 +96,7 @@ Scenario: I can narrow down the results by filters and search box
 Scenario: I can bulk add selected leads to my basket
   Then I check "mark_all"
   And I follow translated "supplier.lead_requests.index.view.button_bulk_create_lead_request"
-  Then I click hidden link by url regex "/\/buyers\/cart$/"
+  Then I click hidden link by url regex "/\/suppliers\/cart$/"
   And I should see "Super printers"
   And I should see "Ultra printers"
 

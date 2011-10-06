@@ -38,7 +38,7 @@ Feature: Purchase manager leads management
     Then I fill in "lead_email_address" with "super@super.com"
     Then I press translated "member.tenders.new.view.button_create"
     Then price for lead "super_super" is set to "44.44"
-    Then I click hidden link by url regex "/purchase_managers\/leads\/\d+\/edit/"
+    Then I click hidden link by url regex "/members\/leads\/\d+\/edit/"
     Then I press translated "member.tenders.edit.view.button_update"
     Then I execute js for display action block for "leads"
     Then I follow translated "member.tenders.index.view.certify"
