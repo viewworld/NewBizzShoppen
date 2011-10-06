@@ -78,7 +78,7 @@ Feature: Deals from procurement manager perspective
   @_done @_tested @tgn
   Scenario: I should see "Latest Deals" instead of "Best Sellers"
     When I follow translated "layout.main_menu.shared.home"
-    Then I should see translated "purchase_manager_home.show.view.header_latest_deals"
+    Then I should see translated "supplier_home.show.view.header_latest_deals"
     And I should not see "Best sellers"
 
   @_done @_tested @tgn @_deprecated
