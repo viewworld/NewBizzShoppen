@@ -7,14 +7,14 @@ Background:
   And I have user with email other_purchase_manager@nbs.com and role member
   And I am signed up and confirmed as user with email purchase_manager@person.com and password supersecret and role member
   Then I sign in as purchase_manager@person.com with password supersecret
-  And I go to purchase managers lead templates
+  And I go to members lead templates
 
 @added @_tested
 Scenario: I can list all lead templates that were created by me
   Given template named "Computer details" for category "Computers" is created by user "other_purchase_manager@nbs.com" with role "member"
   Given template named "Printers details" for category "Computers" is created by user "purchase_manager@person.com" with role "member"
   Given template named "Modems details" for category "Computers" is created by user "purchase_manager@person.com" with role "member"
-  And I go to purchase managers lead templates
+  And I go to members lead templates
   Then I should see "Printers details"
   Then I should see "Modems details"
   Then I should not see "Computer details"
@@ -46,7 +46,7 @@ Scenario: During template creation/editon I can mark fields as mandatory or opti
 @added @selenium @_tested @_deprecated
 Scenario: I can edit lead template that was created by me
 #  Given template named "Printers details" for category "Computers" is created by user "purchase_manager@person.com" with role "member"
-#  Then I go to purchase managers lead templates
+#  Then I go to members lead templates
 #  And I click hidden link by url regex "/purchase_managers\/lead_templates\/\d+\/edit/"
 #  And I should see translated "shared.lead_templates.form.new_lead_template_field"
 #  And I follow translated "shared.lead_templates.form.new_lead_template_field"
@@ -63,12 +63,12 @@ Scenario: I can edit lead template that was created by me
 @added @_tested
 Scenario: I can delete lead template that was created by me and was not filled out by anyone
 #  Given template named "Printers details" for category "Computers" is created by user "purchase_manager@person.com" with role "member"
-#  Then I go to purchase managers lead templates
+#  Then I go to members lead templates
 #  And I follow translated "purchase_manager.lead_templates.index.view.destroy"
 #  Then I should see translated "purchase_manager.lead_templates.destroy.flash.deletion_successful"
 #  Given template named "Computers details" for category "Computers" is created by user "purchase_manager@person.com" with role "member"
 #  And template named "Computers details" is filled out by someone
-#  Then I go to purchase managers lead templates
+#  Then I go to members lead templates
 #  And I follow translated "purchase_manager.lead_templates.index.view.destroy"
 #  Then I should see translated "purchase_manager.lead_templates.destroy.flash.deletion_failure"
 

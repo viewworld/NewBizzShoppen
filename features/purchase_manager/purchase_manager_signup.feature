@@ -11,7 +11,7 @@ Feature: Purchase Manager signup
 
   @added @_done
   Scenario: User signs up with invalid data as a Purchase Manager
-    When I go to purchase manager sign up
+    When I go to member sign up
     And I fill in the following:
       | user_member_email                 | invalidemail |
       | user_member_password              | secret       |
@@ -23,7 +23,7 @@ Feature: Purchase Manager signup
   @added @_done
   Scenario: User signs up with valid data as a Purchase Manager
     Given setting for "email_verification_for_procurement_managers" is set to "1"
-    When I go to purchase manager sign up
+    When I go to member sign up
     And I fill in the following:
       | user_member_first_name            | Jon             |
       | user_member_last_name             | Lajoie          |
@@ -55,7 +55,7 @@ Feature: Purchase Manager signup
   #7549
   @m19 @requested @_done @_done @tgn
   Scenario: All fields for procurment sign up must be mandatory
-    When I go to purchase manager sign up
+    When I go to member sign up
     And I select "" from "user_member_address_attributes_country_id"
     And I press translated "purchase_manager_accounts.new.view.button_create_account"
     And I should see "12" occurrences of css class "inline-errors" for tag "p"

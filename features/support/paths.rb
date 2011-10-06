@@ -14,8 +14,8 @@ module NavigationHelpers
       '/agent_home'
     when /the supplier home page/
       '/supplier_home'
-    when /the purchase manager home page/
-      '/purchase_manager_home'
+    when /the member home page/
+      '/member_home'
     when /contact us/
       '/contact_us'
     when /administration root/
@@ -94,8 +94,8 @@ module NavigationHelpers
         '/agent_accounts/new'
     when /supplier sign up/
         '/supplier_accounts/new'
-    when /purchase manager sign up/
-        '/purchase_manager_accounts/new'
+    when /member sign up/
+        '/member_accounts/new'
     when /document/
         "#{::Rails.root.to_s}/spec/fixtures/sample_document.odt"
     when /sample image/
@@ -126,10 +126,10 @@ module NavigationHelpers
         '/lead_users/lead_requests'
     when /the (.*) lead/
         lead_path(Lead.find_by_header($1))
-    when /purchase managers leads/
-        purchase_managers_leads_path
-    when /purchase managers lead templates/
-        purchase_managers_lead_templates_path
+    when /members leads/
+        members_leads_path
+    when /members lead templates/
+        members_lead_templates_path
     when /leads/
         leads_path
     when /lead edit page for (.*)/
@@ -139,8 +139,8 @@ module NavigationHelpers
         agent_home_path
     when /supplier home/
         supplier_home_path
-    when /purchase manager home/
-        purchase_manager_home_path
+    when /member home/
+        member_home_path
     when /administration articles page/
         administration_articles_path
     when /administration news page/

@@ -10,13 +10,13 @@ I can use my purchase manager panel
 #    And I am on the homepage
 #    And I make sure current locale is "en"
 #    Then I sign in as jon@lajoie.ca with password secret
-#    And I go to purchase managers leads
+#    And I go to members leads
 
 # since m16 purchase manager cant create leads - will change in m17
 @added @_done @selenium @selenium @_deprecated
 Scenario: I can create a new lead and close
 #  Given Category PMCategory is created
-#  And I go to purchase managers leads
+#  And I go to members leads
 #  And I select "PMCategory" from "category_id"
 #  And I follow translated "purchase_manager.leads.index.view.new_lead"
 #  And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
@@ -36,7 +36,7 @@ Scenario: I can create a new lead and close
 @added @_done @selenium @_deprecated
 Scenario: I can create a new lead and continue (create another one)
 #  Given Category PMCategory is created
-#  And I go to purchase managers leads
+#  And I go to members leads
 #  And I select "PMCategory" from "category_id"
 #  And I follow translated "purchase_manager.leads.index.view.new_lead"
 #  And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
@@ -57,7 +57,7 @@ Scenario: I can create a new lead and continue (create another one)
 Scenario: I can add an extra language while creating lead. This will include lead title, purchase desc but no hidden desc
 #  Given Category PMCategory is created
 #  And Country Denmark is created
-#  And I go to purchase managers leads
+#  And I go to members leads
 #  And I select "PMCategory" from "category_id"
 #  Given I follow translated "purchase_manager.leads.index.view.new_lead"
 #  And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
@@ -82,7 +82,7 @@ Scenario: I can add an extra language while creating lead. This will include lea
 @added @_done @selenium @_deprecated
 Scenario: Contact information should be prepopulated
 #  Given Category PMCategory is created
-#  And I go to purchase managers leads
+#  And I go to members leads
 #  And I select "PMCategory" from "category_id"
 #  Given I follow translated "purchase_manager.leads.index.view.new_lead"
 #  Then the "lead_email_address" field should contain "jon@lajoie.ca"
@@ -96,7 +96,7 @@ Scenario: Contact information should be prepopulated
 @added @_done @selenium @_deprecated
 Scenario: Published checkbox should not be visible
 #  Given Category PMCategory is created
-#  And I go to purchase managers leads
+#  And I go to members leads
 #  And I select "PMCategory" from "category_id"
 #  Given I follow translated "purchase_manager.leads.index.view.new_lead"
 #  Then I should not see field "lead_published"
@@ -105,7 +105,7 @@ Scenario: Published checkbox should not be visible
 @added @_done @selenium @_deprecated
 Scenario: Hidden description should not be visible
 #  Given Category PMCategory is created
-#  And I go to purchase managers leads
+#  And I go to members leads
 #  And I select "PMCategory" from "category_id"
 #  Given I follow translated "purchase_manager.leads.index.view.new_lead"
 #  Then I should not see field "lead_hidden_description"
@@ -115,7 +115,7 @@ Scenario: Hidden description should not be visible
 Scenario: Created leads should not be published (not listed)
 #  Given Category PMCategory is created
 #  And Country Denmark is created
-#  And I go to purchase managers leads
+#  And I go to members leads
 #  And I select "PMCategory" from "category_id"
 #  Given I follow translated "purchase_manager.leads.index.view.new_lead"
 #  And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
@@ -137,7 +137,7 @@ Scenario: I have to fill out the templates which are mandatory
 #  Given template named "Computers details" for category "Computers" is created by user "jon@lajoie.ca" with role "member"
 #  And template named "Computers details" is mandatory
 #  And template named "Computers details" has following fields "computers count:false:false, operating systems:false:false"
-#  And I go to purchase managers leads
+#  And I go to members leads
 #  And I select "Computers" from "category_id"
 #  And I follow translated "purchase_manager.leads.index.view.new_lead"
 #  And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
@@ -169,7 +169,7 @@ Scenario: I can select additional templates that are optional
 #  Given template named "Fax details" for category "Computers" is created by user "jon@lajoie.ca" with role "member"
 #  And template named "Fax details" is not mandatory
 #  And template named "Fax details" has following fields "fax software version:false:false, date of purchase:false:false"
-#  And I go to purchase managers leads
+#  And I go to members leads
 #  And I select "Computers" from "category_id"
 #  And I follow translated "purchase_manager.leads.index.view.new_lead"
 #  And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
@@ -211,7 +211,7 @@ Scenario: Lead templates for given category consist of my templates, admin's and
 #  And template named "Monitors details" is mandatory
 #  Given template named "Phones details" for category "Computers" is created by user "admin111@person.com" with role "admin"
 #  And template named "Phones details" is mandatory
-#  And I go to purchase managers leads
+#  And I go to members leads
 #  And I select "Computers" from "category_id"
 #  And I follow translated "purchase_manager.leads.index.view.new_lead"
 #  Then I should see "Computers details"
@@ -228,7 +228,7 @@ Scenario: Lead templates for given category consists of templates from that cate
 #  And template named "Computers details" is mandatory
 #  Given template named "Modems details" for category "Modems" is created by user "jon@lajoie.ca" with role "member"
 #  And template named "Modems details" is mandatory
-#  And I go to purchase managers leads
+#  And I go to members leads
 #  And I select "Modems" from "category_id"
 #  And I follow translated "purchase_manager.leads.index.view.new_lead"
 #  Then I should see "Computers details"
@@ -239,7 +239,7 @@ Scenario: When new translation to lead is added I can also write translation for
 #  Given template named "Computers details" for category "Computers" is created by user "jon@lajoie.ca" with role "member"
 #  And template named "Computers details" is mandatory
 #  And template named "Computers details" has following fields "computers count:false:false, operating systems:false:false"
-#  And I go to purchase managers leads
+#  And I go to members leads
 #  And I select "Computers" from "category_id"
 #  And I follow translated "purchase_manager.leads.index.view.new_lead"
 #  And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
@@ -275,7 +275,7 @@ Scenario: I have to fill out the fields that are mandatory in mandatory or optio
 #  Given template named "Computers details" for category "Computers" is created by user "jon@lajoie.ca" with role "member"
 #  And template named "Computers details" is mandatory
 #  And template named "Computers details" has following fields "computers count:false:true, operating systems:false:true, purchase date:false:false"
-#  And I go to purchase managers leads
+#  And I go to members leads
 #  And I select "Computers" from "category_id"
 #  And I follow translated "purchase_manager.leads.index.view.new_lead"
 #  And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
@@ -304,7 +304,7 @@ Scenario: When there is only one template present for a lead and it is optional 
 #  Given template named "Computers details" for category "Computers" is created by user "jon@lajoie.ca" with role "member"
 #  And template named "Computers details" has following fields "computers count:false:true, operating systems:false:true, purchase date:false:false"
 #  And template named "Computers details" is not mandatory
-#  And I go to purchase managers leads
+#  And I go to members leads
 #  And I select "Computers" from "category_id"
 #  And I follow translated "purchase_manager.leads.index.view.new_lead"
 #  And I fill in "lead_header" with "This lead wants to buy 100 printers this month"
@@ -329,7 +329,7 @@ Scenario: When there is only one template present for a lead and it is optional 
 Scenario: I should see hint for every field when creating a lead
 #  Given Category Test category 1 is created
 #  And article hint for model "Lead" and method "company_name" has attributes "published:true, content:Tooltip for company name"
-#  And I go to purchase managers leads
+#  And I go to members leads
 #  And I select "Test category 1" from "category_id"
 #  And I follow translated "agent.leads.index.view.new_lead"
 #  And I should see CSS path "p[class*='inline-hints']"

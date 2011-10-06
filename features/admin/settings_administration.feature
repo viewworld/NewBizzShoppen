@@ -130,7 +130,7 @@ Scenario: I can enable/disable email verification for procurement managers
   When I uncheck "settings[14]"
   And I press translated "administration.settings.edit.view.button_update_settings"
   And I sign out
-  When I go to purchase manager sign up
+  When I go to member sign up
   And I fill in the following:
     | user_member_first_name            | Jon             |
     | user_member_last_name             | Lajoie          |
@@ -153,7 +153,7 @@ Scenario: I can enable/disable email verification for procurement managers
   When I check "settings[14]"
   And I press translated "administration.settings.edit.view.button_update_settings"
   And I sign out
-  When I go to purchase manager sign up
+  When I go to member sign up
   And I fill in the following:
     | user_member_first_name            | Jon             |
     | user_member_last_name             | Lajoie          |
