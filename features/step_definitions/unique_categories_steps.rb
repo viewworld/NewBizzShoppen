@@ -32,7 +32,7 @@ Given /^category named "([^"]*)" should be unique for "([^"]*)"$/ do |name, emai
   category = Category.where(:name => name).first
   user = User.where(:email => email).first
 
-  if user.buyer?
+  if user.supplier
     assert category.is_customer_unique?
   else
     assert category.is_agent_unique?
