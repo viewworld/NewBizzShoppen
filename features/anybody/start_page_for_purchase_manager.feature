@@ -52,7 +52,7 @@ Scenario: I can't see inactive leads on latest leads
 Scenario: I can go to details of purchase manager news
   Given published purchase manager news exists with attributes "title:FirstNews"
   When I am on the member home page
-  And I follow translated "purchase_manager_home.show.view.read_more_link" within "#news"
+  And I follow translated "member_home.show.view.read_more_link" within "#news"
   Then I should be on FirstNews news page
 
 @added @_done
