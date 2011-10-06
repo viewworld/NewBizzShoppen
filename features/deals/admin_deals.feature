@@ -26,8 +26,8 @@ Feature: Deals from admin perspective
   Scenario: I can create a Deal
     Then I follow translated "layout.main_menu.admin.deals"
     Then I follow translated "deals.common.listing.view.new_deal"
-    Then I fill in "buyer_email" with "buyer@nbs.com"
-    Then I follow translated "administration.deals.new.view.check_buyer_email"
+    Then I fill in "supplier_email" with "buyer@nbs.com"
+    Then I follow translated "administration.deals.new.view.check_supplier_email"
     And I wait 1 second
     And I follow translated "call_centre_agent.deals.new.view.confirm"
     Then I fill deal creation form

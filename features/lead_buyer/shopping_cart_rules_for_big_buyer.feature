@@ -110,7 +110,7 @@ Scenario: I can filter the list of my leads by "paid" column
   When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   Then I should see "Printers ultimate deal"
   When I select translated "common.yes_label" from "search_with_paid"
-  And I press translated "supplier.lead_purchases.index.view.search.search_button"
+  And I press translated "lead_supplier.lead_purchases.index.view.search.search_button"
   Then I should not see "Printers ultimate deal"
 
 @m5 @tgn @_tested

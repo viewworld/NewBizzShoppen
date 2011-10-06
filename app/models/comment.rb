@@ -116,7 +116,7 @@ class Comment < ActiveRecord::Base
   end
 
   def blocked_conversation
-    user.with_role.blocked_conversations.where("lead_id = ? and supplier_id = ?", commentable_id, root.user_id).first
+    user.with_role.blocked_conversations.where("lead_id = ? and buyer_id = ?", commentable_id, root.user_id).first
   end
 
   def user_blocked_from_conversation?
@@ -125,7 +125,7 @@ class Comment < ActiveRecord::Base
 
   def block_user_from_conversation!
     if can_user_be_blocked? and !user_blocked_from_conversation?
-      user.with_role.blocked_conversations.create(:lead_id => commentable_id, :supplier_id => root.user_id)
+      user.with_role.blocked_conversations.create(:lead_id => commentable_id, :buyer_id => root.user_id)
     end
   end
 

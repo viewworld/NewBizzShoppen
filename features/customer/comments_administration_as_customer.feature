@@ -24,7 +24,7 @@ Background:  Sign in user and set locale
 Scenario: I can create a comment for lead that I have access to
   When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   And I fill in "search_with_keyword" with "Lead#4"
-  And I press translated "supplier.lead_purchases.index.view.search.search_button"
+  And I press translated "lead_supplier.lead_purchases.index.view.search.search_button"
   And I follow translated "lead_purchases.listing.show_comments"
   And I fill in "comment_title" with "New thread title" within ".lead_new_thread_container_div"
   And I fill in "comment_body" with "New thread body" within ".lead_new_thread_container_div"
@@ -80,6 +80,6 @@ Scenario: I can't comment leads created by purchase manager
   And a lead Lead#7 exists within category Computers and is bought by user customer1@nbs.com with role supplier
   When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   And I fill in "search_with_keyword" with "Lead#7"
-  And I press translated "supplier.lead_purchases.index.view.search.search_button"
+  And I press translated "lead_supplier.lead_purchases.index.view.search.search_button"
   Then I should not see translated "lead_purchases.listing.show_comments"
   And I should not see translated "lead_purchases.listing.create_comments"

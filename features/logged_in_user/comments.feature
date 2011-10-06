@@ -42,12 +42,12 @@ Scenario: The tab below lead information is red if it contains a comment that wa
   And I sign in as customer99@nbs.com with password supersecret
   When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   And I fill in "search_with_keyword" with "lead#4"
-  And I press translated "supplier.lead_purchases.index.view.search.search_button"
+  And I press translated "lead_supplier.lead_purchases.index.view.search.search_button"
   Then I should see "1" occurrences of css class "toggle_row_unread" for tag "a"
   And I follow translated "lead_purchases.listing.show_comments"
   When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   And I fill in "search_with_keyword" with "lead#4"
-  And I press translated "supplier.lead_purchases.index.view.search.search_button"
+  And I press translated "lead_supplier.lead_purchases.index.view.search.search_button"
   Then I should see "0" occurrences of css class "toggle_row_unread" for tag "a"
 
 @selenium @_tested @_done

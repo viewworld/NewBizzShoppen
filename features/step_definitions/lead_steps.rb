@@ -71,10 +71,10 @@ Given /^a lead (.+) exists within category (.+) and is bought by user (.+) with 
 
   customer = "User::#{role.camelize}".constantize.find_by_email(email)
   customer = "User::#{role.camelize}".constantize.make!(:email => email) if customer.nil?
-  purchaser = customer.role == "customer" ? customer : User::LeadSupplier.find(customer.id)
-  if role == "lead_buyer"
+  purchaser = customer.role == "supplier" ? customer : User::LeadSupplier.find(customer.id)
+  if role == "lead_supplier"
     customer = customer.parent.send(:casted_class).find(customer.parent_id)
-  elsif role == "category_buyer"
+  elsif role == "category_supplier"
     customer = User::Supplier.find(customer.id)
   end
   lead = Lead.where(:header => header).first
@@ -90,7 +90,7 @@ Given /^lead (.+) is bought by user (.+) with role (.+) and is assigned to user 
   lead = Lead.where(:header => header).first
   lead = Lead.make!(:header => header) if lead.nil?
 
-  if assignee_role == "lead_buyer"
+  if assignee_role == "lead_supplier"
     assignee_role = "lead_user"
   end
 
@@ -104,7 +104,7 @@ Given /^lead (.+).is created by user (.+) with role (.+)$/ do |name, email, role
   u = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
   lead = Lead.where(:header => name).first
   lead.update_attributes({ :creator_id => u.id, :published => true}) unless lead.nil?
-  published = (role != "purchase_manager")
+  published = (role != "member")
   lead = Lead.make!(:header => name, :creator_id => u.id, :creator_type => "User::#{role.camelize}", :published => published) if lead.nil?
   lead.lead_translations.each { |lt| lt.destroy if lt.locale != "en" }
 end
@@ -112,7 +112,7 @@ end
 Given /^lead "([^"]*)".is created in category "([^"]*)" by user "([^"]*)" with role "([^"]*)"$/ do |name, category_name, email, role|
   u = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
   category = Category.where(:name => category_name).first
-  published = (role != "purchase_manager")
+  published = (role != "member")
   lead = Lead.make!(:header => name, :creator_id => u.id, :creator_type => "User::#{role.camelize}", :published => published, :category => category)
   lead.lead_translations.each { |lt| lt.destroy if lt.locale != "en" }
 end
@@ -122,7 +122,7 @@ Given /^I can see following () f for lead Printers ultimate deal$/ do |fields, l
 end
 
 Given /^lead "([^"]*)" was requested by user "([^"]*)" with role "([^"]*)"(?: and is owned by user "([^"]*)")?$/ do |header, email, role, owner_email|
-  if role == "lead_buyer"
+  if role == "lead_supplier"
     role = "lead_user"
   end
   u = "User::#{role.camelize}".constantize.first(:conditions => { :email => email })
@@ -133,7 +133,7 @@ end
 
 Given /^I make ajax call to save lead purchase for lead (.+)$/ do |header|
   lead = Lead.where(:header => header).first
-  Then %{I run javascript update_lead_response_deadline('/buyers/lead_purchases/#{lead.lead_purchases.last.id}', $('#response_deadline_datepicker_#{lead.lead_purchases.last.id}').val())}
+  Then %{I run javascript update_lead_response_deadline('/suppliers/lead_purchases/#{lead.lead_purchases.last.id}', $('#response_deadline_datepicker_#{lead.lead_purchases.last.id}').val())}
 end
 
 Given /^there are "([^"]*)" existing leads$/ do |num|

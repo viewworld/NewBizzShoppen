@@ -20,7 +20,7 @@ Scenario: I can filter leads by owner type (Purchase Manager) and Status (not pu
 @added @selenium @_done
 Scenario: I can publish leads created by Purchase Managers
   When I select translated "administration.leads.index.view.option_not_published" from "search_with_status"
-  And I select "PurchaseManager" from "search_with_creator_type"
+  And I select "Member" from "search_with_creator_type"
   And I press translated "administration.leads.index.view.search_button"
   And I select translated "administration.leads.index.view.option_published" from "published"
   When I select translated "administration.leads.index.view.option_published" from "search_with_status"

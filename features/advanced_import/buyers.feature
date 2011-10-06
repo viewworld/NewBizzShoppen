@@ -4,7 +4,7 @@ Feature: Buyers advanced import (buyer specific)
   Background:
     Given I am on the homepage
 
-  @added @selenium @_done @_tested
+  @added @selenium @_done @_tested @wip
   Scenario: Admin can import buyers from spreadsheet (ods, xls, xlsx) with advanced import
     And I sign in as admin@nbs.com with password secret
     Then I use advanced import for users "buyers"

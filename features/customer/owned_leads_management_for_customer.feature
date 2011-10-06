@@ -142,7 +142,7 @@ Scenario: I can bulk set response deadlines for lead
   Given I go to supplier lead purchases
   And I check "mark_all"
   And I fill in "bulk_response_deadline" with "2011-01-11"
-  And I follow translated "supplier.lead_purchases.index.view.bulk_update_button"
+  And I follow translated "lead_supplier.lead_purchases.index.view.bulk_update_button"
   Then I should see translated "supplier.bulk_lead_purchase_update.create.flash.lead_purchases_updated_successfully"
 
 @ao @nontestable  @noguess
@@ -167,8 +167,8 @@ Scenario: I can email the lead if email information were provided
 Scenario: I can send selected lead by email
   When I go to supplier lead purchases
   Then I execute js for display action block for "lead_purchases_table"
-  And I click hidden translated link "supplier.lead_purchases.index.view.share_email_link"
-  And I press translated "supplier.bulk_lead_share_by_email.new.view.send_email_button"
+  And I click hidden translated link "lead_supplier.lead_purchases.index.view.share_email_link"
+  And I press translated "lead_supplier.bulk_lead_share_by_email.new.view.send_email_button"
   Then I should see translated "flash.bulk_lead_share_by_email.create.notice"
 
 @m8b @requested @tgn @_done @non_testable
@@ -178,8 +178,8 @@ Scenario: I can use ckeditor with limited toolbar for writting message in share 
 Scenario: I can bulk send selected leads by email
   When I go to supplier lead purchases
   And I check "mark_all"
-  And I follow translated "supplier.lead_purchases.index.view.bulk_share_by_email_link" within ".bulk_links"
-  And I press translated "supplier.bulk_lead_share_by_email.new.view.send_email_button"
+  And I follow translated "lead_supplier.lead_purchases.index.view.bulk_share_by_email_link" within ".bulk_links"
+  And I press translated "lead_supplier.bulk_lead_share_by_email.new.view.send_email_button"
   Then I should see translated "flash.bulk_lead_share_by_email.create.notice"
 
 #Adjust to current requirements first
@@ -203,7 +203,7 @@ Scenario: I can bulk set status of leads
   And I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   And I select translated "lead_purchases.statuses.contacted" from "bulk_state" within "#bulk_actions_form"
   And I check "mark_all"
-  And I follow translated "supplier.lead_purchases.index.view.bulk_update_button"
+  And I follow translated "lead_supplier.lead_purchases.index.view.bulk_update_button"
   Then "state" should be selected for value translated "lead_purchases.statuses.contacted"
 
 @m5 @added @lead_templates @tgn @_tested  @requested
@@ -234,7 +234,7 @@ Scenario: I can add note to owned lead
   When I go to supplier lead purchases
   And I show accordion details for row "#lead_single_purchase_1"
   And I fill in "owner_note_1" with "My custom note"
-  Then I follow translated "supplier.lead_purchases.index.view.update_owner_note"
+  Then I follow translated "lead_supplier.lead_purchases.index.view.update_owner_note"
   When I go to supplier lead purchases
   And I show accordion details for row "#lead_single_purchase_1"
   And the "owner_note_1" field should contain "My custom note"

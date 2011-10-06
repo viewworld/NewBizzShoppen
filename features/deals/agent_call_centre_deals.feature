@@ -23,8 +23,8 @@ Feature: Deals from Call Centre/Agent perspective
     And I sign in as translator_call_centre@nbs.com with password secret
     Then I follow translated "layout.main_menu.call_centre.deals"
     Then I follow translated "deals.common.listing.view.new_deal"
-    Then I fill in "buyer_email" with "buyer@nbs.com"
-    Then I follow translated "call_centre.deals.new.view.check_buyer_email"
+    Then I fill in "supplier_email" with "buyer@nbs.com"
+    Then I follow translated "call_centre.deals.new.view.check_supplier_email"
     And I wait 1 second
     And I follow translated "call_centre_agent.deals.new.view.confirm"
     Then I fill deal creation form
@@ -47,8 +47,8 @@ Feature: Deals from Call Centre/Agent perspective
     And I sign in as translator_call_centre_agent@nbs.com with password secret
     Then I follow translated "layout.main_menu.call_centre_agent.deals"
     Then I follow translated "deals.common.listing.view.new_deal"
-    Then I fill in "buyer_email" with "buyer@nbs.com"
-    Then I follow translated "call_centre_agent.deals.new.view.check_buyer_email"
+    Then I fill in "supplier_email" with "buyer@nbs.com"
+    Then I follow translated "call_centre_agent.deals.new.view.check_supplier_email"
     And I wait 1 second
     And I follow translated "call_centre_agent.deals.new.view.confirm"
     Then I fill deal creation form
@@ -72,8 +72,8 @@ Feature: Deals from Call Centre/Agent perspective
     And I sign in as agent@nbs.com with password secret
     Then I follow translated "layout.main_menu.agent.deals"
     Then I follow translated "deals.common.listing.view.new_deal"
-    Then I fill in "buyer_email" with "buyer@nbs.com"
-    Then I follow translated "agent.deals.new.view.check_buyer_email"
+    Then I fill in "supplier_email" with "buyer@nbs.com"
+    Then I follow translated "agent.deals.new.view.check_supplier_email"
     And I wait 1 second
     And I follow translated "agent.deals.new.view.confirm"
     Then I fill deal creation form

@@ -198,7 +198,7 @@ Scenario: User can login after changing his account to category buyer
   And I fill in "search_with_keyword" with "kastomer"
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/users\/\d+\/edit/"
-  And I follow translated "administration.users.edit.view.change_customer_interests_link"
+  And I follow translated "administration.users.edit.view.change_supplier_interests_link"
   And I select "AnotherCategory" from "all_categories_for_interests"
   And I follow "move_right" within "#category_interests"
   And I select "Electronics" from "all_categories_for_interests"
@@ -208,7 +208,7 @@ Scenario: User can login after changing his account to category buyer
   And I select "Business" from "all_categories_for_interests"
   And I follow "move_right" within "#category_interests"
   Then I press translated "administration.categories.edit.view.button_update"
-  And I follow translated "administration.users.edit.view.change_to_category_buyer"
+  And I follow translated "administration.users.edit.view.change_to_category_supplier"
   And I sign out
   And I sign in as kastomer@nbs.com with password secret
   And I follow translated "layout.main_menu.shared.browse_leads"
@@ -224,7 +224,7 @@ Scenario: Subaccounts can login after changing his account to category buyer
   And I fill in "search_with_keyword" with "kastomer"
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/users\/\d+\/edit/"
-  And I follow translated "administration.users.edit.view.change_customer_interests_link"
+  And I follow translated "administration.users.edit.view.change_supplier_interests_link"
   And I select "AnotherCategory" from "all_categories_for_interests"
   And I follow "move_right" within "#category_interests"
   And I select "Electronics" from "all_categories_for_interests"
@@ -234,7 +234,7 @@ Scenario: Subaccounts can login after changing his account to category buyer
   And I select "Business" from "all_categories_for_interests"
   And I follow "move_right" within "#category_interests"
   Then I press translated "administration.categories.edit.view.button_update"
-  And I follow translated "administration.users.edit.view.change_to_category_buyer"
+  And I follow translated "administration.users.edit.view.change_to_category_supplier"
   And I sign out
   And I sign in as sub@nbs.com with password secret
   And I follow translated "layout.main_menu.shared.browse_leads"
@@ -250,12 +250,12 @@ Scenario: I can change regular buyer to category buyer
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/users\/\d+\/edit/"
   Then I should see CSS path "#unique_categories"
-  And I follow translated "administration.users.edit.view.change_customer_interests_link"
+  And I follow translated "administration.users.edit.view.change_supplier_interests_link"
   And I should see CSS path "#category_interests"
   And I select "CategoryBuyerCategory" from "all_categories_for_interests"
   And I follow "move_right" within "#category_interests"
   And I press translated "administration.users.edit.view.button_update_user"
-  When I follow translated "administration.users.edit.view.change_to_category_buyer"
+  When I follow translated "administration.users.edit.view.change_to_category_supplier"
   Then I should not see CSS path "#unique_categories"
   And I should not see CSS path "#category_interests"
   And I should see CSS path "#category_buyer_categories"
@@ -292,12 +292,12 @@ Scenario: I can configure buyer category interests when editing it
   Then I fill in "search_with_keyword" with "buyer2222@nbs.com"
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/administration\/users\/\d+\/edit/"
-  And I follow translated "administration.users.edit.view.change_customer_interests_link"
+  And I follow translated "administration.users.edit.view.change_supplier_interests_link"
   And I select "Laptops" from "all_categories_for_interests"
   And I select "Computers" from "all_categories_for_interests"
   And I follow translated "administration.categories.form.move_users_right" within "#category_interests"
   And I press translated "administration.users.edit.view.button_update_user"
-  And I follow translated "administration.users.edit.view.change_customer_interests_link"
+  And I follow translated "administration.users.edit.view.change_supplier_interests_link"
   And "user_supplier_category_ids_" dropdown should have values "Computers,Laptops"
 
 @m6 @tgn @selenium @_tested @requested
@@ -343,9 +343,9 @@ Scenario: I can change buyer to category buyer only if he has interests categori
   And I fill in "search_with_keyword" with "kastomer"
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/users\/\d+\/edit/"
-  And I follow translated "administration.users.edit.view.change_to_category_buyer"
+  And I follow translated "administration.users.edit.view.change_to_category_supplier"
   Then I should see translated "activerecord.attributes.user.supplier.base.must_have_interests"
-  And I follow translated "administration.users.edit.view.change_customer_interests_link"
+  And I follow translated "administration.users.edit.view.change_supplier_interests_link"
   And I select "CategoryBuyerCategory" from "all_categories_for_interests"
   And I follow "move_right" within "#category_interests"
   And I press translated "administration.users.edit.view.button_update_user"
@@ -584,8 +584,8 @@ Scenario: I can see "Set interests" button next to "Change password"
   Then I fill in "search_with_keyword" with "customer101@person.com"
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/users\/\d+\/edit/"
-  Then I should see translated "administration.users.edit.view.change_customer_interests_link"
-  And I follow translated "administration.users.edit.view.change_customer_interests_link"
+  Then I should see translated "administration.users.edit.view.change_supplier_interests_link"
+  And I follow translated "administration.users.edit.view.change_supplier_interests_link"
 
 @m10 @requested @tgn @_tested
 Scenario: I should be redirected to edit user page after saving interests
@@ -593,8 +593,8 @@ Scenario: I should be redirected to edit user page after saving interests
   Then I fill in "search_with_keyword" with "customer101@person.com"
   And I press translated "administration.users.index.view.search_button"
   And I click hidden link by url regex "/users\/\d+\/edit/"
-  Then I should see translated "administration.users.edit.view.change_customer_interests_link"
-  And I follow translated "administration.users.edit.view.change_customer_interests_link"
+  Then I should see translated "administration.users.edit.view.change_supplier_interests_link"
+  And I follow translated "administration.users.edit.view.change_supplier_interests_link"
   And I press translated "administration.users.edit.view.button_update_user"
   And I should be on administration edit user for customer101@person.com
 
@@ -625,7 +625,7 @@ Scenario: As Admin I can see Name (default Company Name, if empty then First Nam
 @_bug @added @m13 @selenium @_done @_tested
 Scenario: Category buyer created by admin should have buying categories assigned
   When Category named "TestingCategoryBuyer" already exists
-  And I am on administration new category buyer page
+  And I am on administration new category supplier page
   Then I fill in "user_category_supplier_first_name" with "Category"
   And I fill in "user_category_supplier_last_name" with "Buyer"
   And I fill in "user_category_supplier_company_name" with "Selleo"
@@ -696,10 +696,12 @@ Scenario: When user has unique category with auto-buy he should not be subscribe
   When I go to administration categories
   Then I follow translated "administration.categories.index.view.edit_link"
   Then I check "category_is_customer_unique"
+  And I open page in browser
   Then I select "nbsbuyer3483434biz@nbs.com" from "all_customers"
   Then I follow "move_right" within "#users_selection_customers_div"
   Then I check "category_auto_buy"
   Then I press "Save"
+  And I open page in browser
   Then category named "Computers" is auto buy enabled
   And category "Computers" is in interests of user "nbsbuyer3483434biz@nbs.com" "false"
 
