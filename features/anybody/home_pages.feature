@@ -7,9 +7,9 @@ Feature: Home pages
 #    And I am on the home page
 #    And I sign in as jon@lajoie.ca with password secret
 #    And I follow translated "layout.main_menu.shared.home"
-#    Then I should be on buyer home page
+#    Then I should be on supplier home page
 #    When I follow translated "layout.main_menu.shared.home"
-#    Then I should be on buyer home page
+#    Then I should be on supplier home page
 
   @added @_done
   Scenario: On the category homepage we could change the name for the "Home" tab to front page and give the users a simpler way to get to the front page
@@ -50,7 +50,7 @@ Feature: Home pages
     Then I should see CSS path "#user_email"
     And I should see CSS path "#user_password"
     And I should see CSS path "#user_submit"
-    When I am on buyer home page
+    When I am on supplier home page
     Then I should see CSS path "#user_email"
     And I should see CSS path "#user_password"
     And I should see CSS path "#user_submit"
@@ -63,7 +63,7 @@ Feature: Home pages
   Scenario: On role home page it should be possible to recover password
     Given I am on agent home page
     Then I should see translated "category_home.show.view.forgotten_password_link"
-    When I am on buyer home page
+    When I am on supplier home page
     Then I should see translated "category_home.show.view.forgotten_password_link"
     When I am on purchase manager home page
     Then I should see translated "category_home.show.view.forgotten_password_link"
@@ -79,7 +79,7 @@ Feature: Home pages
     Given I am signed up and confirmed as user with email mysterious_customer@nbs.com and password secret and role supplier
     And I am on the home page
     And I sign in as mysterious_customer@nbs.com with password secret
-    And I am on buyer home page
+    And I am on supplier home page
     Then I should see translated "category_home.show.view.sign_out"
     When I sign out
     Given I am signed up and confirmed as user with email pm@nbs.com and password secret and role member

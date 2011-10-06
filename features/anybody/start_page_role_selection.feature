@@ -66,9 +66,9 @@ Scenario: When user logs out then he lands on his specific role home page
   Given I am not sign in
   And I am on the supplier home page
   And I sign in as buyer@nbs.com with password secret
-  And I should be on buyer home
+  And I should be on supplier home
   Then I am not sign in
-  And I should be on buyer home
+  And I should be on supplier home
   #agent
   Given I am not sign in
   And I am on the agent home page

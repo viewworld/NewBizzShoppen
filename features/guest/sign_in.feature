@@ -52,9 +52,9 @@ Feature: Sign in
     | bob@person.com  | supersecret | call_centre       | agent home            | | |
     | bob@person.com  | supersecret | call_centre_agent | agent home            | call_centre2121@nbs.com | call_centre |
     | bob@person.com  | supersecret | purchase_manager  | purchase manager home | | |
-    | bob@person.com  | supersecret | customer          | buyer home            | ||
-    | leadbuyer@nbs.com  | secret | lead_buyer        | buyer home            |  | |
-    | leaduser@nbs.com  | secret | lead_user         | buyer home            |  | |
+    | bob@person.com  | supersecret | customer          | supplier home            | ||
+    | leadbuyer@nbs.com  | secret | lead_buyer        | supplier home            |  | |
+    | leaduser@nbs.com  | secret | lead_user         | supplier home            |  | |
 
   @_tested
   Scenario: A logged in user on the login page should just redirect to their home page
@@ -158,7 +158,7 @@ Scenario: I can see Facebook/Linkedin/Google icons on bottom of signing in box
     Given I am not sign in
     Given I have not confirmed user with email buyer_not_confirmed@nbs.com and role supplier
     Then confirmation link should confirm account for buyer_not_confirmed@nbs.com
-    And I should be on buyer home
+    And I should be on supplier home
     #agent
     Given I am not sign in
     Given I have not confirmed user with email agent_not_confirmed@nbs.com and role agent
