@@ -7,7 +7,7 @@ class CertificationAccountsController < SignInController
   end
 
   def create
-    super(User::Member, :user_purchase_manager, I18n.t("flash.member_accounts.create.notice"))
+    super(User::Member, :user_member, I18n.t("flash.member_accounts.create.notice"))
   end
 
 end

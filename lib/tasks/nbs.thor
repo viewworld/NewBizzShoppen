@@ -563,7 +563,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
         'blurb_agent_contact_us',
         'blurb_supplier_contact_us',
         'blurb_resend_confirmation',
-        'blurb_certification_purchase_manager_signup',
+        'blurb_certification_member_signup',
         'blurb_certify_information',
         'blurb_start_page_fairdeals'
     ].each do |key|

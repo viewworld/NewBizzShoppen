@@ -51,9 +51,9 @@ Feature: Sign in
     | bob@person.com  | supersecret | agent             | agent home            | | |
     | bob@person.com  | supersecret | call_centre       | agent home            | | |
     | bob@person.com  | supersecret | call_centre_agent | agent home            | call_centre2121@nbs.com | call_centre |
-    | bob@person.com  | supersecret | purchase_manager  | purchase manager home | | |
-    | bob@person.com  | supersecret | customer          | supplier home            | ||
-    | leadbuyer@nbs.com  | secret | lead_buyer        | supplier home            |  | |
+    | bob@person.com  | supersecret | member  | member home | | |
+    | bob@person.com  | supersecret | supplier          | supplier home            | ||
+    | leadbuyer@nbs.com  | secret | lead_supplier        | supplier home            |  | |
     | leaduser@nbs.com  | secret | lead_user         | supplier home            |  | |
 
   @_tested
@@ -76,9 +76,9 @@ Feature: Sign in
     | administration email templates |
     | administration settings        |
     | agents leads                   |
-    | customer interests             |
+    | supplier interests             |
     | lead user lead purchases       |
-    | customers subaccounts          |
+    | suppliers subaccounts          |
     | my profile                     |
 
   @_tested

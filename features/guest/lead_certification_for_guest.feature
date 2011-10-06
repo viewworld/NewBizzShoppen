@@ -188,4 +188,4 @@ Scenario: I can see a blurb on the top of the page
   When lead "BestLead" certification request is sent
   And I visit certification url for lead "BestLead"
   And I press translated "leads.certification.confirm"
-  Then I should see "Blurb certification purchase manager signup"
+  Then I should see "Blurb certification member signup"

@@ -94,7 +94,8 @@ class IntegrationTasks < Thor
 
     dictionary_blurbs = {"blurb_buyer_contact_us" => "blurb_supplier_contact_us", "blurb_buyer_home" => "blurb_supplier_home",
                          "blurb_buyer_home_logged_in" => "blurb_supplier_home_logged_in", "blurb_purchase_manager_home" => "blurb_member_home",
-                         "blurb_purchase_manager_home_logged_in" => "blurb_member_home_logged_in"}
+                         "blurb_purchase_manager_home_logged_in" => "blurb_member_home_logged_in",
+                          "blurb_certification_purchase_manager_signup" => "blurb_certification_member_signup"}
     dictionary_blurbs.each_pair do |old_val, new_val|
       ActiveRecord::Migration.execute("UPDATE articles SET key = '#{new_val}' WHERE key = '#{old_val}'")
     end
