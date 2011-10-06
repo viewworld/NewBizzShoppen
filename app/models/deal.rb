@@ -148,7 +148,7 @@ class Deal < AbstractLead
   end
 
   def send_supplier_welcome_email(password)
-    template = EmailTemplate.find_by_uniq_id("deal_certification_supplier_welcome")
+    template = EmailTemplate.find_by_uniq_id("deal_certification_buyer_welcome")
     TemplateMailer.delay.new(supplier.email, :blank_template, Country.get_country_from_locale,
                                        {:subject_content => template.subject, :body_content => template.render({:user => supplier, :password => password}),
                                         :bcc_recipients => template.bcc, :cc_recipients => template.cc})

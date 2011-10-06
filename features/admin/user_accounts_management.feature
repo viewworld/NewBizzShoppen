@@ -258,7 +258,7 @@ Scenario: I can change regular buyer to category buyer
   When I follow translated "administration.users.edit.view.change_to_category_supplier"
   Then I should not see CSS path "#unique_categories"
   And I should not see CSS path "#category_interests"
-  And I should see CSS path "#category_buyer_categories"
+  And I should see CSS path "#category_supplier_categories"
 
 @m6 @selenium @_done @_tested  @requested
 Scenario: I can specify one or many categories for category buyer

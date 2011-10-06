@@ -39,8 +39,8 @@ Then /^I use advanced import for contacts$/ do
   And %{campaign "Testing Two" should have "2" contacts}
 end
 
-Then /^I use advanced import for users "(buyers|procurements)"$/ do |name|
-  number = name == 'buyers' ? 3 : 1
+Then /^I use advanced import for users "(suppliers|members)"$/ do |name|
+  number = name == 'suppliers' ? 3 : 1
   And %{there should be #{number} #{name}}
   And %{I click hidden link by url regex "/#{name}_advanced_import/"}
   #wrong imports
@@ -79,24 +79,24 @@ Then /^I use advanced import for users "(buyers|procurements)"$/ do |name|
   And %{I press translated "advanced_import.preview.view.import_button"}
   And %{I should see translated "#{name}_advanced_import.create.flash.success" with options "counter:2 / 2"}
   And %{there should be #{number+2} #{name}}
-  And %{user should exist with email "liu@mk.com" and role "#{name == "buyers" ? "customer" : "purchase_manager"}"}
-  And %{user should exist with email "kung@mk.com" and role "#{name == "buyers" ? "customer" : "purchase_manager"}"}
+  And %{user should exist with email "liu@mk.com" and role "#{name == "suppliers" ? "supplier" : "member"}"}
+  And %{user should exist with email "kung@mk.com" and role "#{name == "suppliers" ? "supplier" : "member"}"}
 
 end
 
-When /^there should be (\d+) buyers$/ do |num|
+When /^there should be (\d+) suppliers$/ do |num|
   User::Supplier.count.should == num.to_i
 end
 
-When /^there should be (\d+) category buyers$/ do |num|
+When /^there should be (\d+) category suppliers$/ do |num|
   User::CategorySupplier.count.should == num.to_i
 end
 
-When /^there should be (\d+) procurements$/ do |num|
+When /^there should be (\d+) members$/ do |num|
   User::Member.count.should == num.to_i
 end
 
-When /^lead category "([^"]*)" has "(\d+)" buyers$/ do |name, num|
+When /^lead category "([^"]*)" has "(\d+)" suppliers$/ do |name, num|
   LeadCategory.find_by_name(name).first.buying_users.size.should == num.to_i
 end
 
@@ -108,46 +108,46 @@ Then /^campaign "([^"]*)" should have "([^"]*)" contacts$/ do |name, number|
   Campaign.find_by_name(name).contacts.size.should == number.to_i
 end
 
-Then /^I use advanced import for category buyers$/ do
-  And %{there should be 1 category buyers}
-  And %{lead category "Leisure" has "0" buyers}
-  And %{I click hidden link by url regex "/buyers_advanced_import/"}
+Then /^I use advanced import for category suppliers$/ do
+  And %{there should be 1 category suppliers}
+  And %{lead category "Leisure" has "0" suppliers}
+  And %{I click hidden link by url regex "/suppliers_advanced_import/"}
   #wrong imports
-  And %{I check "category_buyer_enabled"}
+  And %{I check "category_supplier_enabled"}
   And %{I confirm a js popup on the next step}
   And %{I press translated "advanced_import.show.view.button" within "#advanced_import_form"}
-  And %{I check "category_buyer_enabled"}
+  And %{I check "category_supplier_enabled"}
   And %{I select "Leisure" from "object_id"}
   And %{I press translated "advanced_import.show.view.button" within "#advanced_import_form"}
   And %{I should see translated "advanced_import.choose.flash.error_wrong_file"}
   And %{attach the file "user1badheader_adv_import" to "attachment" within "#advanced_import_form"}
-  And %{I check "category_buyer_enabled"}
+  And %{I check "category_supplier_enabled"}
   And %{I select "Leisure" from "object_id"}
   And %{I press translated "advanced_import.show.view.button" within "#advanced_import_form"}
   And %{I should see translated "advanced_import.choose.flash.error_wrong_title"}
   And %{attach the file "sample image" to "attachment" within "#advanced_import_form"}
-  And %{I check "category_buyer_enabled"}
+  And %{I check "category_supplier_enabled"}
   And %{I select "Leisure" from "object_id"}
   And %{I press translated "advanced_import.show.view.button" within "#advanced_import_form"}
   And %{I should see translated "advanced_import.choose.flash.error_wrong_file"}
   #first correct import
   And %{attach the file "usert3allgood_adv_import" to "attachment" within "#advanced_import_form"}
-  And %{I check "category_buyer_enabled"}
+  And %{I check "category_supplier_enabled"}
   And %{I select "Leisure" from "object_id"}
   And %{I press translated "advanced_import.show.view.button" within "#advanced_import_form"}
-  And %{I should see translated "buyers_advanced_import.choose.view.header"}
+  And %{I should see translated "suppliers_advanced_import.choose.view.header"}
   And %{I follow translated "advanced_import.choose.view.cancel_button"}
   And %{I wait 2 second}
   And %{attach the file "user2badobject_adv_import" to "attachment" within "#advanced_import_form"}
-  And %{I check "category_buyer_enabled"}
+  And %{I check "category_supplier_enabled"}
   And %{I select "Leisure" from "object_id"}
   And %{I press translated "advanced_import.show.view.button" within "#advanced_import_form"}
   And %{I press translated "advanced_import.choose.view.next_button"}
   And %{I press translated "advanced_import.preview.view.import_button"}
-  And %{I should see translated "buyers_advanced_import.create.flash.success" with options "counter:0 / 4"}
-  And %{there should be 1 category buyers}
+  And %{I should see translated "suppliers_advanced_import.create.flash.success" with options "counter:0 / 4"}
+  And %{there should be 1 category suppliers}
   And %{attach the file "usert3allgood_adv_import" to "attachment" within "#advanced_import_form"}
-  And %{I check "category_buyer_enabled"}
+  And %{I check "category_supplier_enabled"}
   And %{I select "Leisure" from "object_id"}
   And %{I press translated "advanced_import.show.view.button" within "#advanced_import_form"}
   And %{I should see "Company name *"}
@@ -161,9 +161,9 @@ Then /^I use advanced import for category buyers$/ do
   And %{I follow translated "advanced_import.preview.view.first_object_button"}
   And %{I should see "1/2"}
   And %{I press translated "advanced_import.preview.view.import_button"}
-  And %{I should see translated "buyers_advanced_import.create.flash.success" with options "counter:2 / 2"}
-  And %{there should be 3 category buyers}
-  And %{lead category "Leisure" has "2" buyers}
+  And %{I should see translated "suppliers_advanced_import.create.flash.success" with options "counter:2 / 2"}
+  And %{there should be 3 category suppliers}
+  And %{lead category "Leisure" has "2" suppliers}
   And %{user should exist with email "liu@mk.com" and role "category_supplier"}
   And %{user should exist with email "kung@mk.com" and role "category_supplier"}
 end
