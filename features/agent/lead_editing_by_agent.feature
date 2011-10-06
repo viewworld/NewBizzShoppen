@@ -49,7 +49,7 @@ Scenario: I can delete a language
 Scenario: When the lead is bought and I want to edit it then "Notify the lead buyers" checkbox is present
   Given I go to agents leads
   And I follow translated "agent.leads.index.view.edit"
-  Then I should see translated "activerecord.attributes.lead.notify_buyers_after_update"
+  Then I should see translated "activerecord.attributes.lead.notify_suppliers_after_update"
 
 
 @m3 @tgn @_tested @noguess
