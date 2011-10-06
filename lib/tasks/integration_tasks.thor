@@ -98,5 +98,18 @@ class IntegrationTasks < Thor
     dictionary_blurbs.each_pair do |old_val, new_val|
       ActiveRecord::Migration.execute("UPDATE articles SET key = '#{new_val}' WHERE key = '#{old_val}'")
     end
+
+    [:en, :da].each do |locale|
+      ::I18n.locale = locale
+      EmailTemplate.where(:uniq_id => "upgrade_contact_to_category_buyer").each do |et|
+        et.body = et.body.gsub("category_buyer_category_home_url", "category_supplier_category_home_url")
+        et.save
+      end
+
+      EmailTemplate.where(:uniq_id => "upgraded_contact_to_category_buyer_welcome").each do |et|
+        et.body = et.body.gsub("category_buyer_category_home_url", "category_supplier_category_home_url")
+        et.save
+      end
+    end
   end
 end
