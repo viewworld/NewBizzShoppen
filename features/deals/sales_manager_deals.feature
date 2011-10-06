@@ -49,11 +49,11 @@ Feature: Deals from Sales Manager perspective
     Then I follow translated "deals.common.listing.view.new_deal"
     Then I fill deal creation form
     Then I should not see "Lead category"
-    Then I press translated "buyer.deals.new.view.create_button"
+    Then I press translated "supplier.deals.new.view.create_button"
     Then I should see translated "deals.common.listing.view.header"
     Then I should see "very important deal"
     Then I click hidden link by url regex "/buyers\/deals\/\d+\/edit/"
-    Then I fill deal edit form and submit with translated button "buyer.deals.edit.view.update_button"
+    Then I fill deal edit form and submit with translated button "supplier.deals.edit.view.update_button"
 
   # "Deal description"
   @_done @_tested_elsewhere
@@ -102,8 +102,8 @@ Feature: Deals from Sales Manager perspective
   Scenario: I can click a link to see public deal description (shows the deal as presented to procurement manager)
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
     Then I follow translated "layout.main_menu.lead_supplier.my_deals"
-    Then I follow translated "buyer.deals.index.view.edit"
-    Then I follow translated "buyer.deals.edit.view.preview"
+    Then I follow translated "supplier.deals.index.view.edit"
+    Then I follow translated "supplier.deals.edit.view.preview"
     Then I should see "super"
 
   # "Contact"
@@ -161,7 +161,7 @@ Feature: Deals from Sales Manager perspective
     And I select "Computer details2" from "all_templates"
     And I select "Electronics deals" from "deal_category_id"
     And I follow translated "administration.categories.form.move_users_right"
-    Then I press translated "buyer.deals.new.view.create_button"
+    Then I press translated "supplier.deals.new.view.create_button"
     And I fill in "search_with_keyword" with "Templates deal test"
     And I press translated "leads.index.search.search_button"
     And I click hidden link by url regex "/buyers\/deals\/\d+\/edit/"
@@ -205,6 +205,6 @@ Feature: Deals from Sales Manager perspective
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
     Then I follow translated "layout.main_menu.lead_supplier.my_deals"
     And I click hidden link by url regex "/buyers\/deals\/\d+\/edit/"
-    Then I should see translated "buyer.deals.edit.view.new_template"
-    And I follow translated "buyer.deals.edit.view.new_template"
+    Then I should see translated "supplier.deals.edit.view.new_template"
+    And I follow translated "supplier.deals.edit.view.new_template"
     And I should see translated "supplier.lead_templates.new.view.header"

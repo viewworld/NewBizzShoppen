@@ -15,7 +15,7 @@ Background:
   And I follow category "Computers"
   Then I follow translated "leads.index.add_to_cart_link"
   And I follow translated "layout.cart.show_cart"
-  Then I press translated "buyer.cart.show.view.checkout_link"
+  Then I press translated "supplier.cart.show.view.checkout_link"
 
 @_tested
 Scenario: I am redirected to paypal from cart view on checkout

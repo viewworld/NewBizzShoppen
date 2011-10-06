@@ -18,7 +18,7 @@ Feature: Accessing deals
     And I sign in as buyer@nbs.com with password secret
     Then I follow translated "layout.main_menu.lead_supplier.my_deals"
     Then I should see "super"
-    Then I follow translated "buyer.deals.index.view.edit"
+    Then I follow translated "supplier.deals.index.view.edit"
     Then I fill in "deal_header" with "nice"
     Then I follow translated logout link for buyer@nbs.com
   # call centre good OK -
@@ -58,7 +58,7 @@ Feature: Accessing deals
     And I sign in as buyer@nbs.com with password secret
     Then I follow translated "layout.main_menu.lead_supplier.my_deals"
     Then I should see "super"
-    Then I follow translated "buyer.deals.index.view.edit"
+    Then I follow translated "supplier.deals.index.view.edit"
     Then I fill in "deal_header" with "nice"
     Then I follow translated logout link for buyer@nbs.com
   # call centre good OK
@@ -98,7 +98,7 @@ Feature: Accessing deals
     And I sign in as buyer@nbs.com with password secret
     Then I follow translated "layout.main_menu.lead_supplier.my_deals"
     Then I should see "super"
-    Then I follow translated "buyer.deals.index.view.edit"
+    Then I follow translated "supplier.deals.index.view.edit"
     Then I fill in "deal_header" with "nice"
     Then I follow translated logout link for buyer@nbs.com
   # call centre good OK
@@ -140,7 +140,7 @@ Feature: Accessing deals
     And I sign in as buyer@nbs.com with password secret
     Then I follow translated "layout.main_menu.lead_supplier.my_deals"
     Then I should see "super"
-    Then I follow translated "buyer.deals.index.view.edit"
+    Then I follow translated "supplier.deals.index.view.edit"
     Then I fill in "deal_header" with "nice"
     Then I follow translated logout link for buyer@nbs.com
   # call centre good -
@@ -180,7 +180,7 @@ Feature: Accessing deals
     And I sign in as buyer@nbs.com with password secret
     Then I follow translated "layout.main_menu.lead_supplier.my_deals"
     Then I should see "super"
-    Then I follow translated "buyer.deals.index.view.edit"
+    Then I follow translated "supplier.deals.index.view.edit"
     Then I fill in "deal_header" with "nice"
     Then I follow translated logout link for buyer@nbs.com
   # call centre good OK -

@@ -32,7 +32,7 @@ Scenario: I can buy lead through checkout
   And I follow category "Computers"
   Then I follow translated "leads.index.add_to_cart_link"
   And I follow translated "layout.cart.show_cart"
-  Then I press translated "buyer.cart.show.view.checkout_link"
+  Then I press translated "supplier.cart.show.view.checkout_link"
   And paypal payment for user with email "john@doe.com" and role "supplier"
   And lead named "Ultra new printers" is owned by user "john@doe.com" with role "supplier"
 
@@ -51,7 +51,7 @@ Scenario: Invoice is auto-created if a new paypal transaction (payment for cart 
   And I follow category "Computers"
   Then I follow translated "leads.index.add_to_cart_link"
   And I follow translated "layout.cart.show_cart"
-  Then I press translated "buyer.cart.show.view.checkout_link"
+  Then I press translated "supplier.cart.show.view.checkout_link"
   And paypal payment for user with email "john@doe.com" and role "supplier"
   Then invoice is created for user with email "john@doe.com" and role "supplier"
   And invoice line is created for lead "Ultra new printers" and user with email "john@doe.com" and role "supplier"
@@ -62,7 +62,7 @@ Scenario: Invoice is NOT created when payment notification is duplicated
   And I follow category "Computers"
   Then I follow translated "leads.index.add_to_cart_link"
   And I follow translated "layout.cart.show_cart"
-  Then I press translated "buyer.cart.show.view.checkout_link"
+  Then I press translated "supplier.cart.show.view.checkout_link"
   And paypal payment for user with email "john@doe.com" and role "supplier"
   Then invoice is created for user with email "john@doe.com" and role "supplier"
   And invoice line is created for lead "Ultra new printers" and user with email "john@doe.com" and role "supplier"
@@ -95,8 +95,8 @@ Scenario: Item cannot be added to the cart if its currency does not match items'
   Then I go to browse leads
   And I follow category "Super Computers"
   Then I follow translated "leads.index.add_to_cart_link"
-  And I should see translated "buyer.cart_items.create.flash.cart_item_creation_successful"
+  And I should see translated "supplier.cart_items.create.flash.cart_item_creation_successful"
   Then I go to browse leads
   And I follow category "Awesome Computers"
   Then I follow translated "leads.index.add_to_cart_link"
-  And I should see translated "buyer.cart_items.create.flash.cart_item_currencies_mismatch"
+  And I should see translated "supplier.cart_items.create.flash.cart_item_currencies_mismatch"

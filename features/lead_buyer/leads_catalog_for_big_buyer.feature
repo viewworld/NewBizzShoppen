@@ -17,7 +17,7 @@ Background:
 Scenario: I can click add lead and I will see a notification “You added lead to your list”
   Given I follow "Another sample category"
   When I follow translated "leads.index.buy_lead"
-  Then I should see translated "buyer.cart_items.create.flash.cart_item_bought_successful"
+  Then I should see translated "supplier.cart_items.create.flash.cart_item_bought_successful"
 
 @_tested @selenium
 Scenario: I can click bulk add leads and I will see a notification “You added leads to your list”
@@ -25,7 +25,7 @@ Scenario: I can click bulk add leads and I will see a notification “You added 
   Given I follow "Another sample category"
   When I check "mark_all"
   And I press translated "leads.index.button_bulk_buy_leads"
-  Then I should see translated "buyer.bulk_cart_items.create.flash.n_leads_bought" with options "count:2"
+  Then I should see translated "supplier.bulk_cart_items.create.flash.n_leads_bought" with options "count:2"
 
 @ao @m5 @added @_done @_tested
 Scenario: I should not see leads that I've bought

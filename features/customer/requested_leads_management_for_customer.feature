@@ -53,7 +53,7 @@ Scenario: I should see requested by
 Scenario: I can toggle select leads
   Then I check "mark_all"
 
-@_tested @selenium @wip
+@_tested @selenium
 Scenario: I can bulk remove leads from requested leads list
   Then I check "mark_all"
   And I follow translated "supplier.lead_requests.index.view.button_bulk_destroy_lead_request"

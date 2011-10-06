@@ -51,7 +51,7 @@ Feature: Generating leads from deals
     And I select "Computer details2" from "all_templates"
     And I select "Electronics deals" from "deal_category_id"
     And I follow translated "administration.categories.form.move_users_right"
-    Then I press translated "buyer.deals.new.view.create_button"
+    Then I press translated "supplier.deals.new.view.create_button"
     Then I am not sign in
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
     Then I sign in as purchase_manager101@nbs.com with password supersecret

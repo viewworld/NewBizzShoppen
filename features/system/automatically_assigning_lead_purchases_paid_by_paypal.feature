@@ -16,7 +16,7 @@ Scenario: When I buy a lead it is automatically assigned to me
   And I follow category "Computers"
   Then I follow translated "leads.index.add_to_cart_link"
   And I follow translated "layout.cart.show_cart"
-  Then I press translated "buyer.cart.show.view.checkout_link"
+  Then I press translated "supplier.cart.show.view.checkout_link"
   And paypal payment for user with email "buyer.jim.jones@nbs.com" and role "supplier"
   And lead named "Super printers" is owned by user "buyer.jim.jones@nbs.com" with role "supplier"
 
@@ -29,7 +29,7 @@ Scenario: Lead purchases are owned by topmost owner (to customer, if exists, oth
   And I follow category "Computers"
   Then I follow translated "leads.index.add_to_cart_link"
   And I follow translated "layout.cart.show_cart"
-  Then I press translated "buyer.cart.show.view.checkout_link"
+  Then I press translated "supplier.cart.show.view.checkout_link"
   And paypal payment for user with email "leadbuyer.jon@nbs.com" and role "lead_supplier"
   And lead named "Super printers" is owned by user "buyer.jim.jones@nbs.com" with role "supplier"
 
@@ -42,6 +42,6 @@ Scenario: When team buyer with buying permissions buys a leads, then it should b
   And I follow category "Computers"
   Then I follow translated "leads.index.add_to_cart_link"
   And I follow translated "layout.cart.show_cart"
-  Then I press translated "buyer.cart.show.view.checkout_link"
+  Then I press translated "supplier.cart.show.view.checkout_link"
   And paypal payment for user with email "leadbuyer.jon@nbs.com" and role "lead_supplier"
   And lead named "Super printers" is assigned to user "leadbuyer.jon@nbs.com" with role "lead_supplier"

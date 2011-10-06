@@ -40,7 +40,7 @@ Feature: General deals
     Then I fill deal creation form
     And the "1" field with id like "deal_max_auto_buy" should contain "7"
     And I fill in "deal_max_auto_buy" with "5"
-    Then I press translated "buyer.deals.new.view.create_button"
+    Then I press translated "supplier.deals.new.view.create_button"
 
   @_done @tested_elsewhere @tgn
   Scenario: Default auto buy max should be taken from settings
@@ -134,7 +134,7 @@ Feature: General deals
     Then I follow translated "layout.main_menu.lead_supplier.my_deals"
     Then I follow translated "deals.common.listing.view.new_deal"
     Then I fill deal creation form
-    Then I press translated "buyer.deals.new.view.create_button"
+    Then I press translated "supplier.deals.new.view.create_button"
     And user "small_buyer@nbs.com" should be big buyer
     And category "Xeper" is in interests of user "small_buyer@nbs.com" "true"
     And category named "Xeper" is auto buy enabled
@@ -151,7 +151,7 @@ Feature: General deals
     Then I follow translated "deals.common.listing.view.new_deal"
     Then I fill deal creation form
     And I fill in "deal_deal_code" with "XCDGF"
-    Then I press translated "buyer.deals.new.view.create_button"
+    Then I press translated "supplier.deals.new.view.create_button"
 
   #7448
   @m20 @requested @selenium @tgn @_tested @_done

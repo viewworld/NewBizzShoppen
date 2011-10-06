@@ -36,7 +36,7 @@ Scenario: I can create a comment for lead that I have access to
 Scenario: I can reply to comment
   When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   And I fill in "search_with_keyword" with "Lead#4"
-  And I press translated "supplier.lead_purchases.index.view.search.search_button"
+  And I press translated "lead_supplier.lead_purchases.index.view.search.search_button"
   And I follow translated "lead_purchases.listing.show_comments"
   And I follow translated "comments.threads.show.view.reply" within ".lead_threads_container_div"
   And I fill in "comment_title" with "Reply to First Lead1 comment" within ".lead_threads_container_div"
@@ -49,7 +49,7 @@ Scenario: I can reply to comment
 Scenario: I can see all comments created by members of my ownership branch
   When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   And I fill in "search_with_keyword" with "Lead#3"
-  And I press translated "supplier.lead_purchases.index.view.search.search_button"
+  And I press translated "lead_supplier.lead_purchases.index.view.search.search_button"
   And I follow translated "lead_purchases.listing.show_comments"
   Then I should see "Leadusers comment 1"
 

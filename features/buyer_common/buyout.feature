@@ -93,7 +93,7 @@ Feature: Buy out
     And I follow category "Computers"
     And I follow translated "leads.index.add_to_cart_buyout_link"
     And I follow translated "layout.cart.show_cart"
-    Then I press translated "buyer.cart.show.view.checkout_link"
+    Then I press translated "supplier.cart.show.view.checkout_link"
     Then I should be redirected to paypal page
     Then paypal payment for user with email "jon@lajoie.ca" and role "supplier"
     And lead named "Printers" is paid and accessible for user with email "jon@lajoie.ca" and role "supplier"
@@ -112,7 +112,7 @@ Feature: Buy out
     And I follow category "Computers"
     And I follow translated "leads.index.add_to_cart_buyout_link"
     And I follow translated "layout.cart.show_cart"
-    And I press translated "buyer.cart.show.view.checkout_link"
+    And I press translated "supplier.cart.show.view.checkout_link"
     And paypal payment for user with email "jon@lajoie.ca" and role "supplier"
     And I am on the home page
     And I follow translated "layout.main_menu.supplier.invoices"

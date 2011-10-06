@@ -186,8 +186,8 @@ Feature: Deals from procurement manager perspective
     And I am on the homepage
     And I sign in as buyer@nbs.com with password secret
     And I follow translated "layout.main_menu.lead_supplier.my_deals"
-    And I follow translated "buyer.deals.index.view.edit"
-    And I follow translated "buyer.deals.edit.view.edit_deal_request_details_email_template"
+    And I follow translated "supplier.deals.index.view.edit"
+    And I follow translated "supplier.deals.edit.view.edit_deal_request_details_email_template"
     And I fill in "email_template_subject" with "Customized You got the deal"
     And I fill in "email_template_body_editor" with "Customized email for {{deal.header}}"
     And I press translated "campaigns.email_templates.edit.view.button_update"

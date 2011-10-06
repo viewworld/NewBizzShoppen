@@ -54,7 +54,7 @@ Scenario: I can bulk instant-buy leads and I will see a notification “You adde
   And I follow category "Computers"
   And I check "mark_all"
   And I press translated "leads.index.button_bulk_buy_leads"
-  Then I should see translated "buyer.bulk_cart_items.create.flash.n_leads_bought" with options "count:2"
+  Then I should see translated "supplier.bulk_cart_items.create.flash.n_leads_bought" with options "count:2"
   And I should not see "Printers ultimate deal"
   And I should not see "Monitors ultimate deal"
   When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
@@ -66,7 +66,7 @@ Scenario: I can instant-buy lead I will see a notification “You added lead to 
   And I go to leads
   And I follow category "Computers"
   And I follow translated "leads.index.buy_lead"
-  Then I should see translated "buyer.cart_items.create.flash.cart_item_bought_successful"
+  Then I should see translated "supplier.cart_items.create.flash.cart_item_bought_successful"
   And I should not see "Printers ultimate deal"
   When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   Then I should see "Printers ultimate deal"
@@ -123,7 +123,7 @@ Scenario: I can buy leads if total cost of my purchases don't exceed the global 
   When I go to leads
   And I follow category "Computers"
   And I follow translated "leads.index.buy_lead"
-  And I should see translated "buyer.cart_items.create.flash.cart_item_bought_successful"
+  And I should see translated "supplier.cart_items.create.flash.cart_item_bought_successful"
   Then I should not see "Printers ultimate deal"
 
 @m8 @added @tgn @_tested
@@ -138,7 +138,7 @@ Scenario: I cannot buy leads if total cost of my purchases exceeds the global li
   When I go to leads
   And I follow category "Computers"
   And I follow translated "leads.index.buy_lead"
-  And I should see translated "buyer.cart_items.create.flash.cart_item_big_buyer_purchase_limit_reached"
+  And I should see translated "supplier.cart_items.create.flash.cart_item_big_buyer_purchase_limit_reached"
   Then I should see "Printers ultimate deal"
 
 @m8 @added @tgn @_tested
@@ -154,7 +154,7 @@ Scenario: I cannot buy leads if total cost of my purchases exceeds my personal l
   When I go to leads
   And I follow category "Computers"
   And I follow translated "leads.index.buy_lead"
-  And I should see translated "buyer.cart_items.create.flash.cart_item_big_buyer_purchase_limit_reached"
+  And I should see translated "supplier.cart_items.create.flash.cart_item_big_buyer_purchase_limit_reached"
   Then I should see "Printers ultimate deal"
 
 @m13 @requested @auto_buy @is @_done @_tested_elsewhere

@@ -143,7 +143,7 @@ Scenario: I can bulk set response deadlines for lead
   And I check "mark_all"
   And I fill in "bulk_response_deadline" with "2011-01-11"
   And I follow translated "supplier.lead_purchases.index.view.bulk_update_button"
-  Then I should see translated "buyer.bulk_lead_purchase_update.create.flash.lead_purchases_updated_successfully"
+  Then I should see translated "supplier.bulk_lead_purchase_update.create.flash.lead_purchases_updated_successfully"
 
 @ao @nontestable  @noguess
 Scenario: I am notified by email when dealine expires and status of lead has not changed

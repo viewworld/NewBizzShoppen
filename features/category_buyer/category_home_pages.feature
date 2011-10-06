@@ -105,7 +105,7 @@ Feature: Category home pages
     And I sign in as jon@lajoie.ca with password secret
     And I follow translated "category_home.show.view.complete_list_link" within "#latest_leads"
     And I follow translated "leads.index.add_to_cart_link"
-    Then I should see translated "buyer.cart_items.create.flash.cart_item_creation_successful"
+    Then I should see translated "supplier.cart_items.create.flash.cart_item_creation_successful"
 
   @_done
   Scenario: I can see registration panel on category home page when I'm a guest

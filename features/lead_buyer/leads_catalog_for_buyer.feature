@@ -23,7 +23,7 @@ Scenario: I can click add lead to my basket and I will get a notification “Lea
   And I fill in "search_with_keyword" with "Super printers"
   And I press translated "leads.index.search.search_button"
   And I follow translated "leads.index.add_to_cart_link"
-  Then I should see translated "buyer.cart_items.create.flash.cart_item_creation_successful"
+  Then I should see translated "supplier.cart_items.create.flash.cart_item_creation_successful"
   And I fill in "search_with_keyword" with "Super printers"
   And I press translated "leads.index.search.search_button"
   Then I should not see translated "leads.index.add_to_cart_link"
@@ -42,7 +42,7 @@ Scenario: I can bulk add leads to my basket and I will get a notification “Lea
   And I follow "Another sample category"
   Then I check "mark_all"
   And I press translated "leads.index.button_bulk_create_cart_item"
-  Then I should see translated "buyer.bulk_cart_items.create.flash.n_cart_items_added" with options "count:2"
+  Then I should see translated "supplier.bulk_cart_items.create.flash.n_cart_items_added" with options "count:2"
 
 @m5 @added @lead_templates @tgn @_tested
 Scenario: I can see lead template fields with public values for each lead

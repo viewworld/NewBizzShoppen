@@ -11,7 +11,7 @@ Feature: Category buyer profile page
     Then I follow translated "layout.my_profile_link"
     Then I should see translated "my_profile.edit.view.remove_category_buyer"
     Then I follow translated "my_profile.edit.view.remove_category_buyer"
-    Then I should see translated "my_profile.change_to_buyer.controller.success"
+    Then I should see translated "my_profile.change_to_supplier.controller.success"
     Then I should not see translated "my_profile.edit.view.remove_category_buyer"
     Then user "scorpion@mk2.com" is no longer category buyer as all his subaccounts
 
