@@ -580,7 +580,7 @@ Feature: Agent campaign - calling session
       And I follow translated "call_results.new.save_button"
       Then I should see translated "call_results.create.flash.successfully_added"
       And last email sent should have been sent to recipient "new_buyer888@nbs.com"
-      And last email sent should have content "/buyer_home"
+      And last email sent should have content "/supplier_home"
       And last email sent should have content "Fairleads password: testin"
       And last email sent should have content "Screen name: Dohn"
       And last email sent should have content "Fairleads username: new_buyer888@nbs.com"
@@ -590,7 +590,7 @@ Feature: Agent campaign - calling session
       Then I should see translated "my_profile.edit.view.header_contact_confirmation"
       And I press translated "password.edit.view.button_update_user"
       And last email sent should have been sent to recipient "new_buyer888@nbs.com"
-      And last email sent should have content "/buyer_home"
+      And last email sent should have content "/supplier_home"
       And last email sent should have content "Login: new_buyer888@nbs.com"
       And last email sent should have content "Linked with account: not linked"
 

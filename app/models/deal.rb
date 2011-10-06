@@ -142,7 +142,7 @@ class Deal < AbstractLead
   def assign_lead_category_to_supplier!
     if supplier and lead_category.is_customer_unique?
       supplier.update_attribute(:deal_category_id, lead_category.id)
-      lead_category.suppliers << supplier
+      lead_category.customers << supplier
       lead_category.save
     end
   end
