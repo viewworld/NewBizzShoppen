@@ -16,7 +16,7 @@ Feature: Purchase Manager signup
       | user_member_email                 | invalidemail |
       | user_member_password              | secret       |
       | user_member_password_confirmation |              |
-    And I press translated "purchase_manager_accounts.new.view.button_create_account"
+    And I press translated "supplier_accounts.new.view.button_create_account"
     Then I should see translated "activerecord.errors.messages.invalid"
     And I should see translated "activerecord.errors.models.user.member.attributes.password.confirmation"
 
@@ -39,7 +39,7 @@ Feature: Purchase Manager signup
       | user_member_address_attributes_address_line_3        | Quebec          |
     And I select "Denmark" from "user_member_address_attributes_country_id"
     And I check "user_member_agreement_read"
-    And I press translated "purchase_manager_accounts.new.view.button_create_account"
+    And I press translated "supplier_accounts.new.view.button_create_account"
     Then I should see translated "flash.purchase_manager_accounts.create.notice"
     And a confirmation message should be sent to jon@lajoie.ca
 
@@ -57,5 +57,5 @@ Feature: Purchase Manager signup
   Scenario: All fields for procurment sign up must be mandatory
     When I go to member sign up
     And I select "" from "user_member_address_attributes_country_id"
-    And I press translated "purchase_manager_accounts.new.view.button_create_account"
+    And I press translated "supplier_accounts.new.view.button_create_account"
     And I should see "12" occurrences of css class "inline-errors" for tag "p"

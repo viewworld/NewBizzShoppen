@@ -66,7 +66,7 @@ Scenario: After signup I can login instantly and do not have to confirm it by em
   And I fill in "user_member_password" with "secret"
   And I fill in "user_member_password_confirmation" with "secret"
   And I check "user_member_agreement_read"
-  And I press translated "purchase_manager_accounts.new.view.button_create_account"
+  And I press translated "supplier_accounts.new.view.button_create_account"
   And I am on the home page
   And I sign in as james@bond.co.uk with password secret
   Then I should be signed in
@@ -156,7 +156,7 @@ Scenario: All my account information should be populated from lead
   And I fill in "user_member_password" with "secret"
   And I fill in "user_member_password_confirmation" with "secret"
   And I check "user_member_agreement_read"
-  And I press translated "purchase_manager_accounts.new.view.button_create_account"
+  And I press translated "supplier_accounts.new.view.button_create_account"
   Then user "james@bond.co.uk" has profile copied from lead "BestLead"
 
 #5771

@@ -78,7 +78,7 @@ Feature: Deals from procurement manager perspective
   @_done @_tested @tgn
   Scenario: I should see "Latest Deals" instead of "Best Sellers"
     When I follow translated "layout.main_menu.shared.home"
-    Then I should see translated "purchase_manager_home.show.view.header_latest_deals"
+    Then I should see translated "supplier_home.show.view.header_latest_deals"
     And I should not see "Best sellers"
 
   @_done @_tested @tgn @_deprecated
@@ -121,7 +121,7 @@ Feature: Deals from procurement manager perspective
   And I fill in "user_member_password_confirmation" with "secret"
   And I fill in "user_member_email" with "anakasparian@tyt.com"
   And I check "user_member_agreement_read"
-  And I press translated "purchase_manager_accounts.new.view.button_create_account"
+  And I press translated "supplier_accounts.new.view.button_create_account"
   And I should be signed in
   And last email sent should have been sent to recipient "anakasparian@tyt.com"
 
@@ -150,7 +150,7 @@ Feature: Deals from procurement manager perspective
     And I fill in "user_member_password_confirmation" with "secret"
     And I fill in "user_member_email" with "anakasparian@tyt.com"
     And I check "user_member_agreement_read"
-    And I press translated "purchase_manager_accounts.new.view.button_create_account"
+    And I press translated "supplier_accounts.new.view.button_create_account"
     And I should see translated "deals.new.view.frame_header"
 
 
