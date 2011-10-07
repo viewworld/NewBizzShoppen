@@ -28,14 +28,9 @@ namespace :deploy do
 end
 
 after "deploy:finalize_update", "prepare_database"
-after "deploy:finalize_update", "deploy_static_content"
 after "deploy:finalize_update", "deploy:cleanup"
 
 task :prepare_database, :roles => :app do
   db_config = "#{app_path}/etc/database.yml"
   run "cp #{db_config} #{release_path}/config/database.yml"
-end
-
-task :deploy_static_content, :roles => :app do
-  run "cd #{release_path}; RAILS_ENV=#{stage} bundle exec thor i18n:js; bundle exec vendor/gems/jammit-s3/bin/jammit-s3 --base-url static-fairleads.s3.amazonaws.com"
 end
