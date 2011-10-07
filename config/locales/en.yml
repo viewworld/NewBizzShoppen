@@ -3815,6 +3815,7 @@ en:
           edit: "Edit"
         no_leads_created_yet_message: "No leads have been created yet."
         title: "Leads created by deal"
+        sold: "Sold?"
     new:
       view:
         frame_header: "Get deal"

@@ -12,6 +12,7 @@
       <th class="ta_l"><%= t("deals.common.leads_table.date") %></th>
       <th class="ta_l"><%= t("deals.common.leads_table.requested_by") %></th>
       <th class="ta_l"><%= t("deals.common.leads_table.phone_number") %></th>
+      <th class="ta_l"><%= t("deals.common.leads_table.sold") %></th>
         <th class="ta_r">
           <%= t("lead_templates.table.actions") %>
         </th>
@@ -21,7 +22,7 @@
     <tfoot>
     <tr>
     <td class="fl"></td>
-    <td colspan="5"></td>
+    <td colspan="6"></td>
     <td class="fr"></td>
     </tr>
     </tfoot>
@@ -33,6 +34,7 @@
           <td><%= format_date lead.created_at %></td>
           <td><%= lead.requestee.screen_name %></td>
           <td><%= lead.phone_number %></td>
+          <td><%= lead.lead_purchases.any? ? t("common.yes_label") : t("common.no_label") %></td>
 
             <td class="tda ta_r">
               <% if current_user.admin? %>
