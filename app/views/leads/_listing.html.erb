@@ -144,8 +144,8 @@
               </div>
           <% end %>
 
-          <%= link_to_show_all_without_pagination "#leads_search_form" %>
           <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+          <%= link_to_show_all_without_pagination "#leads_search_form" %>          
         </td>
       </tr>
   <% end %>
