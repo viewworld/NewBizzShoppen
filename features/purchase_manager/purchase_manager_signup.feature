@@ -22,7 +22,7 @@ Feature: Purchase Manager signup
 
   @added @_done
   Scenario: User signs up with valid data as a Purchase Manager
-    Given setting for "email_verification_for_procurement_managers" is set to "1"
+    Given setting for "email_verification_for_members" is set to "1"
     When I go to member sign up
     And I fill in the following:
       | user_member_first_name            | Jon             |
@@ -45,7 +45,7 @@ Feature: Purchase Manager signup
 
   @added @_done
   Scenario: Purchase Manager confirms his email account
-    Given setting for "email_verification_for_procurement_managers" is set to "1"
+    Given setting for "email_verification_for_members" is set to "1"
     Given I am signed up with email jon@lajoie.ca and password secret and role member
     When I follow the confirmation link sent to jon@lajoie.ca with role member
     Then I should see translated "devise.confirmations.confirmed"
