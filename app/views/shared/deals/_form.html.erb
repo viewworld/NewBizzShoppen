@@ -1,7 +1,7 @@
 <div class="column_left">
   <div class="pdd_10 no_pdd_t">
     <fieldset class="inputs labels_ta_r labels_200">
-      <ol>
+      <ol class="align_inputs">
         <% if deal.current_dcr and deal.current_dcr.active? %>
             <%= hidden_field_tag "accept", "false" %>
         <% end %>

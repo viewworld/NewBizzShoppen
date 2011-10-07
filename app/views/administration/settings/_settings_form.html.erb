@@ -7,8 +7,8 @@
         <% settings_left, settings_right = [settings, []] %>
     <% end %>
     <div class="column_left">
-    <fieldset class="inputs labels_260 labels_ta_r inputs_180">
-      <ol>
+    <fieldset class="inputs labels_240 labels_ta_r inputs_180">
+      <ol class="align_inputs">
         <% settings_left.each_with_index do |setting, i| %>
             <%= render :partial => "setting", :locals => {:setting => setting, :i => i} %>
         <% end %>
@@ -16,8 +16,8 @@
     </fieldset>
     </div>
     <div class="column_right">
-    <fieldset class="inputs labels_260 labels_ta_r inputs_180">
-      <ol>
+    <fieldset class="inputs labels_240 labels_ta_r inputs_180">
+      <ol class="align_inputs">
         <% settings_right.each_with_index do |setting, i| %>
             <%= render :partial => "setting", :locals => {:setting => setting, :i => i} %>
         <% end %>
