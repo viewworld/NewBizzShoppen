@@ -21,7 +21,7 @@ Feature: Customer signup
 
 @_tested
   Scenario: User signs up with valid data as a buyer
-    Given setting for "email_verification_for_sales_managers" is set to "1"
+    Given setting for "email_verification_for_suppliers" is set to "1"
     When I go to supplier sign up
     And I fill in the following:
       | user_supplier_first_name            | Bob             |
@@ -44,7 +44,7 @@ Feature: Customer signup
 
   @_tested
   Scenario: User confirms his email account
-    Given setting for "email_verification_for_sales_managers" is set to "1"
+    Given setting for "email_verification_for_suppliers" is set to "1"
     Given I am signed up with email email@person.com and password secret and role supplier
     When I follow the confirmation link sent to email@person.com with role supplier
     Then I should see translated "devise.confirmations.confirmed"
@@ -53,7 +53,7 @@ Feature: Customer signup
 
   @_tested
   Scenario: Signed in user clicks confirmation link again
-    Given setting for "email_verification_for_sales_managers" is set to "1"
+    Given setting for "email_verification_for_suppliers" is set to "1"
     Given I am signed up and confirmed as user with email email@person.com and password secret and role supplier
     And I sign in as email@person.com with password secret
     And I should be signed in
@@ -62,7 +62,7 @@ Feature: Customer signup
 
   @_tested
   Scenario: Signed out user clicks confirmation link again
-    Given setting for "email_verification_for_sales_managers" is set to "1"
+    Given setting for "email_verification_for_suppliers" is set to "1"
     Given I am signed up and confirmed as user with email email@person.com and password secret and role supplier
     When I am not sign in
     And I follow the confirmation link sent to email@person.com with role supplier

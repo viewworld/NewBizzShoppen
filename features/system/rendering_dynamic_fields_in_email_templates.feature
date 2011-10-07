@@ -7,6 +7,6 @@ Background:
 
 @tgn @_done @_tested
 Scenario: Email template should properly render dynamic fields
-  Given setting for "email_verification_for_sales_managers" is set to "1"
+  Given setting for "email_verification_for_suppliers" is set to "1"
   Given I have user with email new_buyer@person.com and role supplier
   Then last email sent should have content "new_buyer@person.com"

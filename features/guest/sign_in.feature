@@ -154,7 +154,7 @@ Scenario: I can see Facebook/Linkedin/Google icons on bottom of signing in box
   @m19 @requested @_tested @_done @tgn
   Scenario: When user confirms his account he should be redirected to his home page
     #buyer
-    Given setting for "email_verification_for_sales_managers" is set to "1"
+    Given setting for "email_verification_for_suppliers" is set to "1"
     Given I am not sign in
     Given I have not confirmed user with email buyer_not_confirmed@nbs.com and role supplier
     Then confirmation link should confirm account for buyer_not_confirmed@nbs.com

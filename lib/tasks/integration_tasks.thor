@@ -46,6 +46,7 @@ class IntegrationTasks < Thor
   def m20
     #setup
 
+    Settings.where(:var => "email_verification_for_sales_managers").first.update_attribute(:var, "email_verification_for_suppliers")
     Settings.where(:var => "email_verification_for_procurement_managers").first.update_attribute(:var, "email_verification_for_members")
     Settings.where(:var => "big_buyer_purchase_limit").first.update_attribute(:var, "big_supplier_purchase_limit")
 

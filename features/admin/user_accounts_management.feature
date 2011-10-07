@@ -448,7 +448,7 @@ Scenario: I can login without confirmation when 'Don't verify email address' is 
 
 @added @m8b @_done @_tested
 Scenario: I can login without confirmation when 'Don't verify email address' is checked
-  Given setting for "email_verification_for_sales_managers" is set to "1"
+  Given setting for "email_verification_for_suppliers" is set to "1"
   When I go to administration users
   Given I select "Supplier" from "role"
   And I press translated "administration.users.index.view.new_user"

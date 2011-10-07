@@ -7,7 +7,7 @@ Background:  Sign up user and set English locale
 
 @_tested
 Scenario: I can resend activation email to my email address
-  Given setting for "email_verification_for_sales_managers" is set to "1"
+  Given setting for "email_verification_for_suppliers" is set to "1"
   Given I am signed up with email email@person.com and password secret and role supplier
   Then I go to resend confirmation instructions
   And I fill in "user_email" with "email@person.com"

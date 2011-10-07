@@ -126,7 +126,7 @@ class User < ActiveRecord::Base
 
   def set_email_verification
     if new_record?
-      if (has_role?(:supplier) and Settings.email_verification_for_sales_managers == "0") or
+      if (has_role?(:supplier) and Settings.email_verification_for_suppliers == "0") or
          (has_role?(:member) and Settings.email_verification_for_members == "0")
         self.skip_email_verification = "1"
       end

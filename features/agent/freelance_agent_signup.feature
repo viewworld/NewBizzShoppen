@@ -43,7 +43,7 @@ Feature: Freelance agent signup
 
   @_tested
   Scenario: User signs up with valid data as a buyer
-    Given setting for "email_verification_for_sales_managers" is set to "1"
+    Given setting for "email_verification_for_suppliers" is set to "1"
     When I go to supplier sign up
     And I fill in the following:
       | user_supplier_first_name                               | Bob             |

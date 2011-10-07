@@ -211,8 +211,8 @@ en:
           create_new_account: "Create new account"
           modal_intro_label: "Thank you for linking, now lets set up your account"
           modal_intro_label_2: "Please chose account type:"
-          modal_sales_manager_link: "Sales manager"
-          modal_sales_manager_label: "(If you want to buy new leads to your business)"
+          modal_supplier_link: "Supplier"
+          modal_supplier_label: "(If you want to buy new leads to your business)"
           modal_member_link: "Member"
           modal_member_label: "(If you want to a bid on you business)"
           modal_agent_link: "Agent"
@@ -765,7 +765,7 @@ en:
     show:
       view:
         header: "Home"
-        supplier: "Sales manager"
+        supplier: "Supplier"
         agent: "Agent"
         member: "Member manager"
         remember_me: "Remember me"
@@ -773,9 +773,9 @@ en:
         sign_in_form_title: "I have an account"
         signup_message: "Don't have an account yet"
         agent_signup: "Freelance agent signup"
-        supplier_signup: "Sales manager signup"
+        supplier_signup: "Supplier signup"
         member_signup: "Member manager signup"
-        _signup: "Sales manager signup"
+        _signup: "Supplier signup"
         forgotten_password_link: "Forgot password?"
         resend_confirmation_instructions: "Didn't receive confirmation instructions?"
         sign_up_here: "sign up here"
@@ -956,7 +956,7 @@ en:
             youtube_introduction: "YouTube introduction video URL"
             default_deal_admin_email: "Default deal admin email"
             email_verification_for_members: "Email verification for member managers"
-            email_verification_for_sales_managers: "Email verification for sales managers"
+            email_verification_for_suppliers: "Email verification for suppliers"
             default_max_auto_buy_per_4_weeks: "Default max auto buy per 4 weeks"
             contact_us_phone: "Contact us phone number"
             contact_us_skype: "Contact us Skype username"
@@ -1046,7 +1046,7 @@ en:
           title: "New deal"
           form_title: "Create new"
           create_button: "Create"
-          check_supplier_email: "Check sales manager email"
+          check_supplier_email: "Check supplier email"
           certify: "Certify"
           no_user_found_message: "No user with email %{email} was found!"
           or: "or"
@@ -1123,7 +1123,7 @@ en:
       index:
         view:
           header: "News"
-          suppliers: "sales managers"
+          suppliers: "suppliers"
           agents: "call centres and agents"
           members: "Member managers"
           category_homes: "category homes"
@@ -1700,7 +1700,7 @@ en:
           title: "New deal"
           form_title: "Create new"
           create_button: "Create"
-          check_supplier_email: "Check sales manager email"
+          check_supplier_email: "Check supplier email"
           no_user_found_message: "No user with email %{email} was found!"
           certify: "Certify"
           email: "Email address"
@@ -1833,7 +1833,7 @@ en:
         view:
           title: "New deal"
           form_title: "Create new"
-          check_supplier_email: "Check sales manager email"
+          check_supplier_email: "Check supplier email"
           certify: "Certify"
           create_button: "Create"
           email: "Email"
@@ -1914,7 +1914,7 @@ en:
           title: "New deal"
           form_title: "Create new"
           create_button: "Create"
-          check_supplier_email: "Check sales manager email"
+          check_supplier_email: "Check supplier email"
           no_user_found_message: "No user with email %{email} was found!"
           certify: "Certify"
           email: "Email address"
@@ -2354,8 +2354,8 @@ en:
   supplier_accounts:
     new:
       view:
-        title: "Sales manager signup"
-        rpx_title: "You are creating Sales Manager account as %{full_name} using %{account_type} account"
+        title: "Supplier signup"
+        rpx_title: "You are creating Supplier account as %{full_name} using %{account_type} account"
         button_create_account: "Create"
         enable_team_suppliers: "Enable team suppliers"
         company_name: "Company"
@@ -2375,7 +2375,7 @@ en:
   supplier_home:
     show:
       view:
-        header: "Welcome sales manager"
+        header: "Welcome supplier"
         agent_link: "click here if you are an agent"
         member_link: "click here if you are a member manager"
         header_best_sellers: "Best sellers"
@@ -2390,7 +2390,7 @@ en:
         read_more_link: "read more"
         complete_list_link: "complete list"
         configure_interests_link: "interests"
-        create_new_supplier_account: "Create new sales manager account"
+        create_new_supplier_account: "Create new supplier account"
         sign_out: "Sign out"
         add_team_member: "Add team member"
         i_have_an_account: "I have an account"
@@ -2400,7 +2400,7 @@ en:
     show:
       view:
         header: "Welcome agent"
-        supplier_link: "click here if you are a sales manager"
+        supplier_link: "click here if you are a supplier"
         member_link: "click here if you are a member manager"
         header_best_sellers: "Best sellers"
         header_latest_leads: "Latest leads"
@@ -2423,7 +2423,7 @@ en:
       view:
         header: "Welcome member manager"
         agent_link: "click here if you are an agent"
-        supplier_link: "click here if you are a sales manager"
+        supplier_link: "click here if you are a supplier"
         header_best_sellers: "Best sellers"
         header_latest_leads: "Latest leads"
         header_latest_deals: "Latest deals"
@@ -2613,7 +2613,7 @@ en:
         send_email_button: "Send"
         email_subjects:
           agent_inquiry: "Agent inquiry"
-          supplier_inquiry: "Sales manager inquiry"
+          supplier_inquiry: "Supplier inquiry"
     create:
       flash:
         email_sent_successfully: "Your email has been sent"
@@ -2782,7 +2782,7 @@ en:
       article:
         news:
           agent: "Agent news"
-          sales_manager: "Sales manager news"
+          supplier: "Supplier news"
           member: "Member manager news"
           category_home: "Category home news"
           call_centre: "Call centre news"
@@ -2826,7 +2826,7 @@ en:
             must_have_interests: "User must have at least one interests category"
       lead:
         purchase_decision_date: "Purchase decision date"
-        notify_suppliers_after_update: "Notify sales managers about changes"
+        notify_suppliers_after_update: "Notify supliers about changes"
     errors:
       messages:
         blank: "can't be blank"
@@ -3390,7 +3390,7 @@ en:
         agent:
           title: "Title"
           published: "Published"
-        sales_manager:
+        supplier:
           title: "Title"
           published: "Published"
         member:
