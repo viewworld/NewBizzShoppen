@@ -417,8 +417,8 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
      {:name => "Meeting booked", :final => true, :generic => true},
      {:name => "Custom result", :final => true, :generic => true},
      {:name => "Send material", :final => false, :generic => true},
-     {:name => "Upgrade to category buyer", :final => true, :generic => true},
-     {:name => "Upgrade to buyer", :final => true, :generic => true},
+     {:name => "Upgrade to category supplier", :final => true, :generic => true},
+     {:name => "Upgrade to supplier", :final => true, :generic => true},
      {:name => "Upgrade to member", :final => true, :generic => true}].each do |result|
       Result.create(result) unless Result.find_by_name(result[:name])
     end
