@@ -1,5 +1,5 @@
 <div class="col <%= (defined? middle) ? middle : '' %>" id="secondary_featured_deal_<%= position %>">
-  <% if featured = FeaturedDeal.where(:position => position).first and featured.deal %>
+  <% if featured = FeaturedDeal.where(:position => position).first and featured.deal.present? %>
       <frm c="no_marg" title="#{link_to featured.deal.header, deal_path(featured.deal.slug)}">
         <param:content>
           <div class="pdd_10">
@@ -26,5 +26,7 @@
           </div>
         </param:content>
       </frm>
+  <% else %>
+      <frm c="no_marg"></frm>
   <% end %>
 </div>

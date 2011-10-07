@@ -53,7 +53,6 @@ Scenario: I can filter leads based on country
   And I should see "Printers ultimate deal"
   And I should see "Mouses deal"
 
-
 @tgn @_done @_tested
 Scenario: I can filter leads based on keyword (description and title)
   When I fill in "search_with_keyword" with "printers"
@@ -64,7 +63,3 @@ Scenario: I can filter leads based on keyword (description and title)
   And I press translated "leads.index.search.search_button"
   Then I should see "Mouses deal"
   And I should not see "Printers ultimate deal"
-
-#7803
-@m20 @requested @is
-Scenario: Searching should be across all categories (remove the checkboxes in adv search) and should include fields like name, description, company name
