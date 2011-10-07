@@ -43,7 +43,7 @@
   <% @users.each do |user| %>
       <tr class="<%= cycle("odd", "even") %>">
         <td class="cl"></td>
-        <td><%= user.has_role?(:purchase_manager) ? t("deal_maker_users.index.view.user_member") : t("deal_maker_users.index.view.user_supplier") %></td>
+        <td><%= user.has_role?(:member) ? t("deal_maker_users.index.view.user_member") : t("deal_maker_users.index.view.user_supplier") %></td>
         <td><%= user.email %></td>
         <td><%= user.full_name %></td>
         <td><%= user.company_name %></td>

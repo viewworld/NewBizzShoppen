@@ -1,0 +1,19 @@
+<column-mc:>
+  <header back="true"><%= t("member.tenders.new.view.title") %><%= image_tag_for_locale %></header>
+
+  <%= semantic_form_for [:member, @lead], :url => members_tenders_path,  :method => :post do |form| %>
+      <frm title="#{t('member.tenders.new.view.form_title')}">
+        <param:content>
+          <%= render :partial => '/shared/leads/form', :locals => {:form => form, :lead => @lead} %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("member.tenders.new.view.button_create"), :name => "commit_create" %>
+          </ibt>
+          <ibt c="bt_grey fltri">
+            <%= button_to_function t("member.tenders.new.view.button_cancel"), "history.go(-1)" %>
+          </ibt>
+        </param:actions>
+      </frm>
+  <% end %>
+</column-mc:>

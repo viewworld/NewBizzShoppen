@@ -1,0 +1,19 @@
+<column-mc:>
+  <header back="true" backurl="#{suppliers_deals_path}"><%= t("supplier.deals.new.view.title") %></header>
+
+  <%= semantic_form_for [:suppliers, @deal], :method => :post do |form| %>
+      <frm title="#{t('supplier.deals.new.view.form_title')}">
+        <param:content>
+          <%= render :partial => 'shared/deals/form', :locals => {:form => form, :deal => @deal} %>
+        </param:content>
+        <param:actions>
+          <ibt c="fltri" icon="save">
+            <%= form.submit t("supplier.deals.new.view.create_button"), :name => "commit_create", :onclick => "select_options_to_submit('deal_deal_template_ids_')" %>
+          </ibt>
+          <ibt c="fltri bt_grey">
+            <%= button_to_function t("common.cancel_link"), "history.go(-1)" %>
+          </ibt>
+        </param:actions>
+      </frm>
+  <% end %>
+</column-mc:>

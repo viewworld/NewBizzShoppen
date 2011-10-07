@@ -4,6 +4,6 @@
       <%= link_to comment.title, comments_lead_thread_path(comment.commentable_id, comment.id) %>
     </h4>
     <%= st(comment.body) %>
-    <%= link_to t("buyer_home.show.view.read_more_link"), comments_lead_thread_path(comment.commentable_id, comment.id), :class => "read_more" %>
+    <%= link_to t("supplier_home.show.view.read_more_link"), comments_lead_thread_path(comment.commentable_id, comment.id), :class => "read_more" %>
   </div>
 </li>

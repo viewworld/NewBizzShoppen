@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   before_filter :redirect_to_fairleads
-  before_filter :authorize_with_http_basic_for_staging, :check_category_buyer, :update_log_entries, :set_user_time_zone
+  before_filter :authorize_with_http_basic_for_staging, :check_category_supplier, :update_log_entries, :set_user_time_zone
   after_filter :do_something
 
   layout proc { session[:layout] }
@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
   helper_method :locale
 
   def redirect_to_fairleads
-    if user_signed_in? and current_user and !current_user.has_role? :purchase_manager and session[:site] == "fairdeals"
+    if user_signed_in? and current_user and !current_user.has_role? :member and session[:site] == "fairdeals"
       key = current_user.generate_login_key!
       sign_out(current_user)
       redirect_to "http://#{Rails.env == 'staging' ? 'beta.fairleads.com' : 'fairleads.com'}/login_keys/?key=#{key}"
@@ -62,14 +62,14 @@ class ApplicationController < ActionController::Base
       usl = UserSessionLog.create(:user_id => resource.id, :start_time => Time.now, :end_time => (Time.now + Settings.logout_time.to_i.minutes), :log_type => UserSessionLog::TYPE_REGULAR, :euro_billing_rate => current_user.euro_billing_rate)
       session[:current_usl_global] = usl.id
       if session[:user_requested_url].present?
-        if session[:lead_id].to_i > 0 and resource.has_any_role?(:customer, :lead_buyer)
+        if session[:lead_id].to_i > 0 and resource.has_any_role?(:supplier, :lead_supplier)
           lead = Lead.find_by_id(session[:lead_id])
-          buyer = User::LeadBuyer.find(resource.id)
-          if lead and !Lead.owned_by(buyer).include?(lead)
+          supplier = User::LeadSupplier.find(resource.id)
+          if lead and !Lead.owned_by(supplier).include?(lead)
             if session[:buyout] == "true"
-              buyer.cart.buyout_lead(lead)
+              supplier.cart.buyout_lead(lead)
             else
-              buyer.cart.add_lead(lead)
+              supplier.cart.add_lead(lead)
             end
           end
         end
@@ -78,30 +78,30 @@ class ApplicationController < ActionController::Base
         session[:lead_id] = nil
         session[:buyout] = nil
         requested_path
-      elsif resource.contact.present? and resource.has_any_role?(:category_buyer, :customer, :purchase_manager) and resource.sign_in_count == 1
+      elsif resource.contact.present? and resource.has_any_role?(:category_supplier, :supplier, :member) and resource.sign_in_count == 1
         my_profile_path
-      elsif resource.has_role? :purchase_manager and session[:site] == "fairdeals"
+      elsif resource.has_role? :member and session[:site] == "fairdeals"
         root_path
-      elsif resource.has_role? :category_buyer
+      elsif resource.has_role? :category_supplier
         if resource.with_role.parent_buying_categories.first
           category_home_page_path(resource.with_role.parent_buying_categories.first.cached_slug)
         else
-          flash[:notice] = t("common.no_categories_for_category_buyer")
+          flash[:notice] = t("common.no_categories_for_category_supplier")
           sign_out(resource_name)
           root_path
         end
-      elsif session[:last_url_before_logout].present? and !current_user.has_any_role?(:agent, :call_centre, :call_centre_agent, :purchase_manager, :customer, :lead_buyer)
+      elsif session[:last_url_before_logout].present? and !current_user.has_any_role?(:agent, :call_centre, :call_centre_agent, :member, :supplier, :lead_supplier)
         last_url = session[:last_url_before_logout]
         session[:last_url_before_logout] = nil
         last_url
       elsif resource.has_role? :admin
         administration_root_path
-      elsif [:customer, :lead_buyer, :lead_user].include?(resource.role)
-        buyer_home_path
+      elsif [:supplier, :lead_supplier, :lead_user].include?(resource.role)
+        supplier_home_path
       elsif [:agent, :call_centre, :call_centre_agent].include?(resource.role)
         agent_home_path
-      elsif resource.has_role? :purchase_manager
-        purchase_manager_home_path
+      elsif resource.has_role? :member
+        member_home_path
       else
         self.send "#{resource.role.to_s.pluralize}_root_path"
       end
@@ -114,8 +114,8 @@ class ApplicationController < ActionController::Base
     role = session[:logout_user_role].to_s
     session[:logout_user_role] = nil
 
-    if ["customer", "lead_buyer", "category_buyer", "lead_user"].include?(role)
-      buyer_home_path
+    if ["supplier", "lead_supplier", "category_supplier", "lead_user"].include?(role)
+      supplier_home_path
     elsif ["agent", "call_centre", "call_centre_agent"].include?(role)
       agent_home_path
     else
@@ -159,14 +159,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def check_category_buyer
+  def check_category_supplier
     requested_category = category_from_slug
-    @home_category = if user_signed_in? and current_user and current_user.has_role?(:category_buyer)
+    @home_category = if user_signed_in? and current_user and current_user.has_role?(:category_supplier)
                        if requested_category and current_user.with_role.parent_accessible_categories.include?(requested_category)
                          requested_category
                        elsif requested_category
                          redirect_to category_home_page_path(current_user.with_role.parent_buying_categories.first.cached_slug)
-                       elsif current_user.has_role?(:category_buyer)
+                       elsif current_user.has_role?(:category_supplier)
                          current_user.with_role.parent_accessible_categories_without_auto_buy.first
                        end
                      elsif requested_category

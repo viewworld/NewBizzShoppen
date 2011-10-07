@@ -14,7 +14,7 @@ describe Lead do
 
   context "Creation and scoping" do
     it "should properly assign itself to creator" do
-      customer = User::Customer.make!
+      customer = User::Supplier.make!
       lead_user = User::LeadUser.make!(:parent_id => customer.id)
       lead = Lead.make!
       lead_user.lead_requests.create!(:lead_id => lead.id)
@@ -23,7 +23,7 @@ describe Lead do
     end
 
     it "should properly be visible by owner" do
-      customer = User::Customer.make!
+      customer = User::Supplier.make!
       lead_user = User::LeadUser.make!(:parent_id => customer.id)
       lead = Lead.make!
       lead_request = lead_user.lead_requests.create!(:lead_id => lead.id)
@@ -33,7 +33,7 @@ describe Lead do
 
   context "Processing" do
     it "should be accepted properly for regular buyer" do
-      customer = User::Customer.make!
+      customer = User::Supplier.make!
       lead_user = User::LeadUser.make!(:parent_id => customer.id)
       lead = Lead.make!
       lead_request = lead_user.lead_requests.create!(:lead_id => lead.id)
@@ -50,7 +50,7 @@ describe Lead do
     end
 
     it "should be accepted properly by big buyer" do
-      customer = User::Customer.make!(:big_buyer => true)
+      customer = User::Supplier.make!(:big_buyer => true)
       lead_user = User::LeadUser.make!(:parent_id => customer.id)
       lead = Lead.make!
       lead_request = lead_user.lead_requests.create!(:lead_id => lead.id)
@@ -62,7 +62,7 @@ describe Lead do
     end
 
     it "should be rejected properly" do
-      customer = User::Customer.make!
+      customer = User::Supplier.make!
       lead_user = User::LeadUser.make!(:parent_id => customer.id)
       lead = Lead.make!
       lead_request = lead_user.lead_requests.create!(:lead_id => lead.id)

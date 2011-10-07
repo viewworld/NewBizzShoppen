@@ -24,7 +24,7 @@ Scenario: I can browse leads with pagination
 
 @_tested
 Scenario: I can search leads with filtering by: show active (default), show all, show outdated
-  Given a lead Ultimate doors deal exists within category Computers and is bought by user jim.doe.buyer@person.com with role customer
+  Given a lead Ultimate doors deal exists within category Computers and is bought by user jim.doe.buyer@person.com with role supplier
   Given lead Ultimate desks deal exists with attributes "purchase_decision_date:2009-09-01"
   Given lead Ultimate doors deal exists with attributes "sale_limit:1"
   And I go to call centre leads
@@ -56,7 +56,7 @@ Scenario: I can delete lead if the lead is not sold yet
   And I press translated "call_centre.leads.index.view.search_button"
   And I follow translated "call_centre.leads.index.view.destroy"
   Then I should see translated "call_centre.leads.destroy.flash.lead_deletion_successful"
-  Given a lead Ultimate doors deal exists within category Computers and is bought by user jim.doe.buyer@person.com with role customer
+  Given a lead Ultimate doors deal exists within category Computers and is bought by user jim.doe.buyer@person.com with role supplier
   And I go to call centre leads
   Given I fill in "search_with_keyword" with "Ultimate doors deal"
   And I uncheck "search_without_inactive"

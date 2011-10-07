@@ -4,18 +4,18 @@
   <%= semantic_form_for @user, :url => administration_user_path, :method => :put do |form| %>
       <frm title="">
         <param:header>
-          <% if @user.has_role?(:customer) and !@user.has_role?(:category_buyer) %>
-            <%= bt_link_to nil, t("administration.users.edit.view.change_customer_interests_link"), edit_administration_customer_interest_path(@user), :class => "fltr" %>
+          <% if @user.has_role?(:supplier) and !@user.has_role?(:category_supplier) %>
+            <%= bt_link_to nil, t("administration.users.edit.view.change_supplier_interests_link"), edit_administration_supplier_interest_path(@user), :class => "fltr" %>
           <% end %>
           <%= bt_link_to nil, t("administration.users.edit.view.change_password_link"), new_administration_user_password_path(@user), :class => "fltr" %>
           <%= bt_link_to nil, t("administration.users.edit.view.reset_password_link"), administration_user_password_path(@user) , :method => :delete, :class => "fltr" %>
           <% if @user.has_role?(:call_centre_agent) %>
             <%= bt_link_to nil, t("administration.users.edit.view.view_created_leads"), administration_leads_path(:search => {:with_created_by => @user}), :class => "fltr" %>
           <% end %>
-          <% if @user.has_role?(:category_buyer) %>
-            <%= bt_link_to nil, t("administration.users.edit.view.change_to_regular_buyer"), administration_user_path(@user, "user_#{@user.role}" => {:roles_to_remove => [:category_buyer]}) , :method => :put, :class => "fltr" %>
-          <% elsif @user.has_role?(:customer) %>
-            <%= bt_link_to nil, t("administration.users.edit.view.change_to_category_buyer"), administration_user_path(@user, "user_#{@user.role}" => {:roles_to_add => [:category_buyer]}) , :method => :put, :class => "fltr" %>
+          <% if @user.has_role?(:category_supplier) %>
+            <%= bt_link_to nil, t("administration.users.edit.view.change_to_regular_supplier"), administration_user_path(@user, "user_#{@user.role}" => {:roles_to_remove => [:category_supplier]}) , :method => :put, :class => "fltr" %>
+          <% elsif @user.has_role?(:supplier) %>
+            <%= bt_link_to nil, t("administration.users.edit.view.change_to_category_supplier"), administration_user_path(@user, "user_#{@user.role}" => {:roles_to_add => [:category_supplier]}) , :method => :put, :class => "fltr" %>
           <% end %>
           <% unless @user.id == current_user.id %>
             <%= bt_link_to nil, @user.locked_at.blank? ? t("administration.users.index.view.lock") : t("administration.users.index.view.unlock"), administration_user_path(@user, {"user_#{@user.role.to_s}".to_sym  => {:locked =>  @user.locked_at.blank? ? "lock" : "unlock"}}), {:method => :put, :class => "fltr" } %>
@@ -26,7 +26,7 @@
         </param:content>
         <param:actions>
           <ibt c="fltri" icon="save">
-            <%= form.submit t("administration.users.edit.view.button_update_user"), :onclick => "add_unique_to_interests();select_options_to_submit('user_customer_category_ids_');select_options_to_submit('user_#{@user.role}_unique_category_ids_');select_options_to_submit('user_category_buyer_buying_category_ids_'); " %>
+            <%= form.submit t("administration.users.edit.view.button_update_user"), :onclick => "add_unique_to_interests();select_options_to_submit('user_supplier_category_ids_');select_options_to_submit('user_#{@user.role}_unique_category_ids_');select_options_to_submit('user_category_supplier_buying_category_ids_'); " %>
           </ibt>
           <ibt c="bt_grey fltri">
             <%= button_to_function t("administration.users.edit.view.button_cancel"), "history.go(-1)" %>

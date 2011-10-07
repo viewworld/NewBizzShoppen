@@ -28,8 +28,8 @@ Scenario: I should see certification level for each lead
 
 @m4 @tgn @_tested @added
 Scenario: I should see rating %
-  Given I have user with email bob@person.com and role customer
-  And a lead Printers ultimate deal exists within category Computers and is bought by user bob@person.com with role customer
+  Given I have user with email bob@person.com and role supplier
+  And a lead Printers ultimate deal exists within category Computers and is bought by user bob@person.com with role supplier
   And a lead "Printers ultimate deal" has good rating
   Given All leads have refreshed average ratings
   And I go to lead user lead requests

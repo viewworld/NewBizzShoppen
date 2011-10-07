@@ -23,8 +23,8 @@ Feature: Deals from Call Centre/Agent perspective
     And I sign in as translator_call_centre@nbs.com with password secret
     Then I follow translated "layout.main_menu.call_centre.deals"
     Then I follow translated "deals.common.listing.view.new_deal"
-    Then I fill in "buyer_email" with "buyer@nbs.com"
-    Then I follow translated "call_centre.deals.new.view.check_buyer_email"
+    Then I fill in "supplier_email" with "buyer@nbs.com"
+    Then I follow translated "call_centre.deals.new.view.check_supplier_email"
     And I wait 1 second
     And I follow translated "call_centre_agent.deals.new.view.confirm"
     Then I fill deal creation form
@@ -47,8 +47,8 @@ Feature: Deals from Call Centre/Agent perspective
     And I sign in as translator_call_centre_agent@nbs.com with password secret
     Then I follow translated "layout.main_menu.call_centre_agent.deals"
     Then I follow translated "deals.common.listing.view.new_deal"
-    Then I fill in "buyer_email" with "buyer@nbs.com"
-    Then I follow translated "call_centre_agent.deals.new.view.check_buyer_email"
+    Then I fill in "supplier_email" with "buyer@nbs.com"
+    Then I follow translated "call_centre_agent.deals.new.view.check_supplier_email"
     And I wait 1 second
     And I follow translated "call_centre_agent.deals.new.view.confirm"
     Then I fill deal creation form
@@ -72,8 +72,8 @@ Feature: Deals from Call Centre/Agent perspective
     And I sign in as agent@nbs.com with password secret
     Then I follow translated "layout.main_menu.agent.deals"
     Then I follow translated "deals.common.listing.view.new_deal"
-    Then I fill in "buyer_email" with "buyer@nbs.com"
-    Then I follow translated "agent.deals.new.view.check_buyer_email"
+    Then I fill in "supplier_email" with "buyer@nbs.com"
+    Then I follow translated "agent.deals.new.view.check_supplier_email"
     And I wait 1 second
     And I follow translated "agent.deals.new.view.confirm"
     Then I fill deal creation form
@@ -121,23 +121,23 @@ Feature: Deals from Call Centre/Agent perspective
     Then I certify deal with translation "agent.deals.new.view.create_button"
     Then I follow translated logout link for agent@nbs.com
     # certification by buyer
-    Then I have user with email ned@stark.com and role customer
+    Then I have user with email ned@stark.com and role supplier
     Then user "ned@stark.com" is confirmed
     Then I sign in as ned@stark.com with password secret
-    Then I follow translated "layout.main_menu.lead_buyer.deals_to_certify"
-    Then I follow translated "buyer.deal_certification_requests.index.view.certify"
-    Then I press translated "buyer.deal_certification_requests.edit.view.certify"
-    Then I should see translated "buyer.deal_certification_requests.update.flash.certify_success"
-    Then I follow translated "buyer.deal_certification_requests.index.view.certify"
-    Then I press translated "buyer.deal_certification_requests.edit.view.certify"
-    Then I should see translated "buyer.deal_certification_requests.update.flash.certify_success"
-    Then I follow translated "buyer.deal_certification_requests.index.view.certify"
-    Then I press translated "buyer.deal_certification_requests.edit.view.reject"
-    Then I should see translated "buyer.deal_certification_requests.update.flash.reject_success"
-    Then I follow translated "buyer.deal_certification_requests.index.view.certify"
-    Then I press translated "buyer.deal_certification_requests.edit.view.reject"
-    Then I should see translated "buyer.deal_certification_requests.update.flash.reject_success"
-    Then I should not see translated "layout.main_menu.lead_buyer.deals_to_certify"
+    Then I follow translated "layout.main_menu.lead_supplier.deals_to_certify"
+    Then I follow translated "supplier.deal_certification_requests.index.view.certify"
+    Then I press translated "supplier.deal_certification_requests.edit.view.certify"
+    Then I should see translated "supplier.deal_certification_requests.update.flash.certify_success"
+    Then I follow translated "supplier.deal_certification_requests.index.view.certify"
+    Then I press translated "supplier.deal_certification_requests.edit.view.certify"
+    Then I should see translated "supplier.deal_certification_requests.update.flash.certify_success"
+    Then I follow translated "supplier.deal_certification_requests.index.view.certify"
+    Then I press translated "supplier.deal_certification_requests.edit.view.reject"
+    Then I should see translated "supplier.deal_certification_requests.update.flash.reject_success"
+    Then I follow translated "supplier.deal_certification_requests.index.view.certify"
+    Then I press translated "supplier.deal_certification_requests.edit.view.reject"
+    Then I should see translated "supplier.deal_certification_requests.update.flash.reject_success"
+    Then I should not see translated "layout.main_menu.lead_supplier.deals_to_certify"
 
   @added @tgn @_done @_tested @selenium @m17
   Scenario: When certification request is created for non-existing user than I can access that link from the email
@@ -148,13 +148,13 @@ Feature: Deals from Call Centre/Agent perspective
     Then I certify deal with translation "call_centre.deals.new.view.create_button"
     Then I follow translated logout link for translator_call_centre@nbs.com
     And I visit certification url for last deal
-    And I should see translated "buyer.deal_certification_requests.edit.view.title"
-    And I press translated "buyer.deal_certification_requests.edit.view.certify"
+    And I should see translated "supplier.deal_certification_requests.edit.view.title"
+    And I press translated "supplier.deal_certification_requests.edit.view.certify"
     Then the last deal should not be certified
-    Then I should see translated "deal_buyer_accounts.new.view.header"
-    And I fill in "user_customer_password" with "s3cr3t"
-    And I fill in "user_customer_password_confirmation" with "s3cr3t"
-    And I press translated "deal_buyer_accounts.new.view.button_create_account"
+    Then I should see translated "deal_supplier_accounts.new.view.header"
+    And I fill in "user_supplier_password" with "s3cr3t"
+    And I fill in "user_supplier_password_confirmation" with "s3cr3t"
+    And I press translated "deal_supplier_accounts.new.view.button_create_account"
     Then the last deal should be certified
     Then last email sent should have content "Password: s3cr3t"
 

@@ -6,7 +6,7 @@ describe PaymentNotificationsController do
   fixtures :all
 
   before(:each) do
-    @customer = User::Customer.make!
+    @customer = User::Supplier.make!
     controller.stubs(:current_user).returns(@customer)
     cart  = @customer.cart
     lead1 = Lead.make!

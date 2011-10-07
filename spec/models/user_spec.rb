@@ -7,12 +7,12 @@ describe User do
   context "Bought / Requested leads related methods" do
 
     before(:each) do
-      @customer = User::Customer.make!
-      @other_customer = User::Customer.make!
-      @lead_buyer1 = User::LeadBuyer.make!(:parent_id => @customer.id)
-      @lead_buyer2 = User::LeadBuyer.make!(:parent_id => @customer.id)
-      @lead_buyer3 = User::Customer.make!
-      @lead_buyer3 = User::LeadBuyer.find(@lead_buyer3.id)
+      @customer = User::Supplier.make!
+      @other_customer = User::Supplier.make!
+      @lead_buyer1 = User::LeadSupplier.make!(:parent_id => @customer.id)
+      @lead_buyer2 = User::LeadSupplier.make!(:parent_id => @customer.id)
+      @lead_buyer3 = User::Supplier.make!
+      @lead_buyer3 = User::LeadSupplier.find(@lead_buyer3.id)
 
       @lead_user1 = User::LeadUser.make!(:parent_id => @customer.id)
       @lead_user2 = User::LeadUser.make!(:parent_id => @customer.id)

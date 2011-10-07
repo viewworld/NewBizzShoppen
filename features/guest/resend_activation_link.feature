@@ -8,7 +8,7 @@ Background:  Sign up user and set English locale
 @_tested
 Scenario: I can resend activation email to my email address
   Given setting for "email_verification_for_sales_managers" is set to "1"
-  Given I am signed up with email email@person.com and password secret and role customer
+  Given I am signed up with email email@person.com and password secret and role supplier
   Then I go to resend confirmation instructions
   And I fill in "user_email" with "email@person.com"
   Then I press translated "devise.confirmations.resend_confirmation_link"
@@ -16,7 +16,7 @@ Scenario: I can resend activation email to my email address
 
 @_tested
 Scenario: I can't resend activation email to my email address once the account was activated
-  Given I am signed up and confirmed as user with email email@person.com and password secret and role customer
+  Given I am signed up and confirmed as user with email email@person.com and password secret and role supplier
   Then I go to resend confirmation instructions
   And I fill in "user_email" with "email@person.com"
   Then I press translated "devise.confirmations.resend_confirmation_link"

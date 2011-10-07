@@ -41,8 +41,8 @@ Scenario: I should see created by
 
 @m4 @tgn @_tested  @added
 Scenario: I should see rating % and certification level for each lead
-  Given I have user with email bob@person.com and role customer
-  And a lead Printers ultimate deal exists within category Computers and is bought by user bob@person.com with role customer
+  Given I have user with email bob@person.com and role supplier
+  And a lead Printers ultimate deal exists within category Computers and is bought by user bob@person.com with role supplier
   And a lead "Printers ultimate deal" has good rating
   Given All leads have refreshed average ratings
   Given I go to browse leads
@@ -82,7 +82,7 @@ Scenario: When you click on a lead that you have not bought, and you are not sig
   And I follow category "Sample category"
   Then I click hidden translated link "leads.index.add_to_cart_link"
   And I should see "Sign in"
-  Then I follow translated "buyer_home.show.view.create_new_buyer_account"
+  Then I follow translated "supplier_home.show.view.create_new_supplier_account"
 
 @m5 @tgn @_tested
 Scenario: Add blurb or info text to leads listing "To view lead details click buy lead"
@@ -141,7 +141,7 @@ Scenario: If a lead is certified then I see "Certified by procurement: (yes/no)"
   And Lead named "Lead sample" exists within "Sample category" category
   And I go to browse leads
   And I follow category "Sample category"
-  Then I should see translated "leads.listing.certified_by_procurement_label"
+  Then I should see translated "leads.listing.certified_by_member_label"
 
 # 5766
 # the "certification" we have now is about agent's so it should be removed

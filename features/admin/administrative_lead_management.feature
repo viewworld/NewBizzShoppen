@@ -31,9 +31,9 @@ Scenario: I can edit lead information if lead has not been sold yet
 @added @_done
 Scenario: I can edit lead information if lead has been sold
   When there are no leads
-  And I have user with email bigbuyer1@person.com and role customer
-  And User bigbuyer1@person.com with role customer is big buyer
-  And a lead Monitors ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role customer
+  And I have user with email bigbuyer1@person.com and role supplier
+  And User bigbuyer1@person.com with role supplier is big buyer
+  And a lead Monitors ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role supplier
   And I follow translated "layout.main_menu.admin.leads"
   And I follow translated "administration.leads.index.view.edit"
   And I fill in "lead_price" with "666"
@@ -46,9 +46,9 @@ Scenario: I can edit lead information if lead has been sold
 @selenium @_done
 Scenario: I can add a language
   When there are no leads
-  And I have user with email bigbuyer1@person.com and role customer
-  And User bigbuyer1@person.com with role customer is big buyer
-  And a lead Monitors ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role customer
+  And I have user with email bigbuyer1@person.com and role supplier
+  And User bigbuyer1@person.com with role supplier is big buyer
+  And a lead Monitors ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role supplier
   And I follow translated "layout.main_menu.admin.leads"
   And I follow translated "administration.leads.index.view.edit"
   And I select translated "models.locale.da" from "locale_picker"
@@ -65,9 +65,9 @@ Scenario: I can add a language
 @selenium @_done
 Scenario: I can delete a language
   When there are no leads
-  And I have user with email bigbuyer1@person.com and role customer
-  And User bigbuyer1@person.com with role customer is big buyer
-  And a lead Monitors ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role customer
+  And I have user with email bigbuyer1@person.com and role supplier
+  And User bigbuyer1@person.com with role supplier is big buyer
+  And a lead Monitors ultimate deal exists within category Computers and is bought by user bigbuyer1@person.com with role supplier
   And I follow translated "layout.main_menu.admin.leads"
   And I follow translated "administration.leads.index.view.edit"
   And I select translated "models.locale.da" from "locale_picker"
@@ -127,7 +127,7 @@ Scenario: I can clear the filter when browsing leads
 @m6 @selenium @_tested @tgn
 Scenario: When I change the category then I am not redirected back to the listing view
 #  Given there are no leads
-#  And a lead Super ultra lead #1 exists within category Computers and is bought by user tim@nbs.com with role customer
+#  And a lead Super ultra lead #1 exists within category Computers and is bought by user tim@nbs.com with role supplier
 #  When I follow translated "layout.main_menu.admin.leads"
 #  And I follow translated "leads.listing.edit_label"
 #  Then I select "Electronics" from "lead_category_id"

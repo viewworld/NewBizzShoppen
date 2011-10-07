@@ -56,25 +56,25 @@
       <fieldset class="inputs labels_ta_r labels_180">
         <ol class="align_inputs">
           <li class="header">
-            <h3><%= current_user.has_role?(:purchase_manager) ? t("shared.leads.form.purchase_manager.lead_information") : t("shared.leads.form.lead_information") %></h3>
+            <h3><%= current_user.has_role?(:member) ? t("shared.leads.form.member.lead_information") : t("shared.leads.form.lead_information") %></h3>
           </li>
           <% categories = current_user.has_role?(:admin) ? LeadCategory.without_locked.all : current_user.has_role?(:call_centre) ? LeadCategory.without_locked.with_call_centre_unique(current_user).all : LeadCategory.without_locked.with_agent_unique(current_user).all %>
           <%= form.input :category_id, :disabled => categories.select { |c| !c.can_publish_leads? }.map(&:id), :collection => nested_set_options(categories), :include_blank => false, :input_html => {:onchange => (@contact ? "" : "check_templates_compatibility(#{@lead.new_record? ? 0 : @lead.id}, $('#lead_category_id').val());")}, :hint => hint_for(@lead, :category_id) %>
           <%= form.input :category_is_changed, :as => :hidden, :value => "0" %>
-          <% if current_user.has_role?(:purchase_manager) %>
+          <% if current_user.has_role?(:member) %>
               <%= form.input :is_international, :as => :hidden, :value => 0 %>
           <% else %>
               <%= form.input :is_international, :as => :select, :collection => [[t("shared.leads.form.country_local_label"), 0], [t("shared.leads.form.country_international"), 1]], :include_blank => false, :hint => hint_for(@lead, :is_international) %>
           <% end %>
-          <%= form.input :header, :hint => hint_for(@lead, :header), :label => current_user.has_role?(:purchase_manager) ? t("shared.leads.form.purchase_manager.header_label") : true %>
-          <%= form.input :description, :input_html => {:style => "height: 140px; width: 600px"}, :hint => hint_for(@lead, :description), :label => current_user.has_role?(:purchase_manager) ? t("shared.leads.form.purchase_manager.description_label") : true %>
-          <% unless current_user.has_role?(:purchase_manager) %>
+          <%= form.input :header, :hint => hint_for(@lead, :header), :label => current_user.has_role?(:member) ? t("shared.leads.form.member.header_label") : true %>
+          <%= form.input :description, :input_html => {:style => "height: 140px; width: 600px"}, :hint => hint_for(@lead, :description), :label => current_user.has_role?(:member) ? t("shared.leads.form.member.description_label") : true %>
+          <% unless current_user.has_role?(:member) %>
               <%= form.input :hidden_description, :input_html => {:style => "height: 140px; width: 600px"}, :hint => hint_for(@lead, :hidden_description) %>
               <%= form.input :purchase_value, :hint => hint_for(@lead, :purchase_value) %>
               <%= form.input :price, :hint => hint_for(@lead, :price) %>
               <%= form.input :currency_id, :collection => currencies_for_select, :include_blank => false, :hint => hint_for(@lead, :currency_id) %>
           <% end %>
-          <% unless current_user.has_role?(:purchase_manager) %>
+          <% unless current_user.has_role?(:member) %>
               <% if current_user.can_publish_leads? %>
                   <%= form.input :published, :hint => hint_for(@lead, :published) %>
               <% else %>
@@ -97,7 +97,7 @@
 
     <div class="nested_locale_container"></div>
 
-    <% unless current_user and current_user.has_role?(:purchase_manager) %>
+    <% unless current_user and current_user.has_role?(:member) %>
     <div class="pdd_10 no_pdd_t" id="locale_picker_div">
       <fieldset class="inputs labels_ta_r labels_180">
         <ol class="align_inputs">
@@ -119,11 +119,11 @@
       <fieldset class="inputs labels_ta_r labels_180">
         <ol class="align_inputs">
           <li class="header">
-            <h3><%= current_user.has_role?(:purchase_manager) ? t("shared.leads.form.purchase_manager.sales_information") : t("shared.leads.form.sales_information") %></h3>
+            <h3><%= current_user.has_role?(:member) ? t("shared.leads.form.member.sales_information") : t("shared.leads.form.sales_information") %></h3>
           </li>
-          <%= form.input :notify_buyers_after_update, :as => :boolean, :hint => hint_for(@lead, :notify_buyers_after_update) unless @lead.lead_purchases.empty? %>
-          <%= form.input :sale_limit, :as => :select, :collection => (1..10), :include_blank => false, :hint => hint_for(@lead, :sale_limit), :label => current_user.has_role?(:purchase_manager) ? t("shared.leads.form.purchase_manager.sale_limit_label") : true %>
-          <%= form.input :purchase_decision_date, :as => (user_signed_in? and current_user.has_role?(:purchase_manager)) ? :string : :datepicker, :wrapper_html => {:class => "date"}, :hint => hint_for(@lead, :purchase_decision_date) %>
+          <%= form.input :notify_suppliers_after_update, :as => :boolean, :hint => hint_for(@lead, :notify_suppliers_after_update) unless @lead.lead_purchases.empty? %>
+          <%= form.input :sale_limit, :as => :select, :collection => (1..10), :include_blank => false, :hint => hint_for(@lead, :sale_limit), :label => current_user.has_role?(:member) ? t("shared.leads.form.member.sale_limit_label") : true %>
+          <%= form.input :purchase_decision_date, :as => (user_signed_in? and current_user.has_role?(:member)) ? :string : :datepicker, :wrapper_html => {:class => "date"}, :hint => hint_for(@lead, :purchase_decision_date) %>
         </ol>
       </fieldset>
     </div>
@@ -131,7 +131,7 @@
     <script>
         var nestedFormsCount = <%= @lead.lead_translations.reject{ |lt| lt.locale == I18n.locale.to_s }.size %>;
         $(function() {
-            <% if current_user.has_role?(:purchase_manager) %>
+            <% if current_user.has_role?(:member) %>
             $("#lead_purchase_decision_date").datepicker({ dateFormat: 'yy-mm-dd', minDate: "+5D" });
             <% else %>
             $("#lead_purchase_decision_date").datepicker({ dateFormat: 'yy-mm-dd'});

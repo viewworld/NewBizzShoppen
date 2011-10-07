@@ -5,7 +5,7 @@ module DealCreateActions
     respond_to do |content|
       content.html {}
       content.js {
-        @user = User::Customer.where(:email => params[:email]).first
+        @user = User::Supplier.where(:email => params[:email]).first
       }
     end
   end

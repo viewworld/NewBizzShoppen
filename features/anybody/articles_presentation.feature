@@ -15,7 +15,7 @@ Scenario: I can see blurb text on the sign up page
   And I am on the home page
   When I go to agent sign up
   Then I should see "Blurb sign up"
-  When I go to buyer sign up
+  When I go to supplier sign up
   Then I should see "Blurb sign up"
 
 @m8 @ao @selenium @_done @_tested @added @ff5

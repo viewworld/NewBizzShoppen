@@ -31,7 +31,7 @@ en:
       confrimation_message: "Are you sure? All subsequent replies will be deleted as well."
       field_cant_be_blank: "can't be blank"
       field_incorrect_format: "incorrect value"
-    no_categories_for_category_buyer: "Your Category Buyer account has no associated categories. You can't sign in."
+    no_categories_for_category_supplier: "Your Category Supplier account has no associated categories. You can't sign in."
     edit_hint: "Edit hint"
     agree_to: "Agree to"
     add_hint: "Add hint"
@@ -78,7 +78,7 @@ en:
       main_menu:
         deals: "Deals"
         tenders: "Tenders"
-        purchase_manager:
+        member:
           my_requests: "My requests"
     main_menu:
       admin:
@@ -128,13 +128,13 @@ en:
         news: News
         reports: "Reports"
         deals: "My deals"
-      customer:
+      supplier:
         subaccounts: Team
         lead_requests: Requested leads
         invoices: "Invoices"
         interests: "Interests settings"
         not_invoiced: "Not Invoiced Leads"
-      lead_buyer:
+      lead_supplier:
         lead_purchases: My leads
         my_deals: My deals
         deals_to_certify: "Deals to certify"
@@ -154,9 +154,9 @@ en:
         import: "Import"
         import_contacts: "Contacts"
         import_leads: "Leads"
-        import_buyers: "Buyers"
-        import_procurements: "Procurements"
-      purchase_manager:
+        import_suppliers: "Suppliers"
+        import_members: "Members"
+      member:
         leads: My leads
         tenders: My tenders
         lead_templates: "Lead templates"
@@ -184,9 +184,9 @@ en:
       already_confirmed: "was already confirmed"
       not_locked: "was not locked"
       user:
-        team_buyers:
-          has_subaccounts: "Team buyers can't be disabled as you have already created some subaccounts"
-          has_lead_requests: "Team buyers can't be disabled because there are some Requested Leads"
+        team_suppliers:
+          has_subaccounts: "Team suppliers can't be disabled as you have already created some subaccounts"
+          has_lead_requests: "Team suppliers can't be disabled because there are some Requested Leads"
 
   locales:
     en_locale: "EN"
@@ -213,8 +213,8 @@ en:
           modal_intro_label_2: "Please chose account type:"
           modal_sales_manager_link: "Sales manager"
           modal_sales_manager_label: "(If you want to buy new leads to your business)"
-          modal_procurement_manager_link: "Procurement manager"
-          modal_procurement_manager_label: "(If you want to a bid on you business)"
+          modal_member_link: "Member"
+          modal_member_label: "(If you want to a bid on you business)"
           modal_agent_link: "Agent"
           modal_agent_label: "(If you are really good at creating new leads)"
 
@@ -392,7 +392,7 @@ en:
       results: "Results"
       description_and_briefing: "Description & briefing"
       send_material_email_template: "Edit 'Send material' email template"
-      upgrade_to_category_buyer_email_template: "Edit 'Upgrade to category buyer' email"
+      upgrade_to_category_supplier_email_template: "Edit 'Upgrade to category supplier' email"
       materials_repository: "Materials repository"
       edit_template: "Edit template"
     index:
@@ -537,10 +537,10 @@ en:
       contact_zip_code: "Zip code"
       customize_email_template: "Customize email"
       contact_country: "Country"
-      user_big_buyer_purchase_limit: "Big buyer purchase limit (in Euro)"
-      user_big_buyer: "Big buyer"
+      user_big_supplier_purchase_limit: "Big supplier purchase limit (in Euro)"
+      user_big_supplier: "Big supplier"
       user_not_charge_vat: "Not charge vat"
-      user_team_buyers: "Team buyer"
+      user_team_suppliers: "Team supplier"
       user_deal_maker_role_enabled: "Deal maker role enabled"
     edit:
       title: Edit result
@@ -630,7 +630,7 @@ en:
       reject: "Do not confirm"
       invalid_token: "Your token is invalid or state of your requested has changed and it is not available any more"
       header: "Certify information"
-      procurement_information: "Procurement information"
+      member_information: "Member information"
     listing:
       purchase_value_label: "Purchase value:"
       lead_price_label: "Lead price:"
@@ -648,7 +648,7 @@ en:
       sale_limit_label: "Uniqueness:"
       novelty_label: "Novelty:"
       hotness_label: "Hotness:"
-      certified_by_procurement_label: "Certified by procurement:"
+      certified_by_member_label: "Certified by member:"
       agent_certification_label: "Agent's certification:"
       average_rating_label: "Lead rating:"
       average_rating_none_label: "None"
@@ -734,8 +734,8 @@ en:
     index:
       view:
         agents_header: "Agents news"
-        sales_managers_header: "Sales manager news"
-        purchase_managers_header: "Procurement manager news"
+        suppliers_header: "Suppliers news"
+        members_header: "Member manager news"
         category_homes_header: "Category news"
         read_more_link: "read more"
         newer_link: "Newer"
@@ -765,22 +765,22 @@ en:
     show:
       view:
         header: "Home"
-        buyer: "Sales manager"
+        supplier: "Sales manager"
         agent: "Agent"
-        purchase_manager: "Procurement manager"
+        member: "Member manager"
         remember_me: "Remember me"
         sign_in: "Sign in"
         sign_in_form_title: "I have an account"
         signup_message: "Don't have an account yet"
         agent_signup: "Freelance agent signup"
-        buyer_signup: "Sales manager signup"
-        purchase_manager_signup: "Procurement manager signup"
+        supplier_signup: "Sales manager signup"
+        member_signup: "Member manager signup"
         _signup: "Sales manager signup"
         forgotten_password_link: "Forgot password?"
         resend_confirmation_instructions: "Didn't receive confirmation instructions?"
         sign_up_here: "sign up here"
-        buyer_sign_up_text: "If you want to buy hot leads for your business"
-        purchase_manager_sign_up_text: "If you want a quote on your business"
+        supplier_sign_up_text: "If you want to buy hot leads for your business"
+        member_sign_up_text: "If you want a quote on your business"
         agent_sign_up_text: "If you can create new leads"
         call_centre_header: "Welcome %{name}"
         sign_in_with_external_accounts: "Sign in using:"
@@ -865,8 +865,8 @@ en:
           button_cancel: Cancel
           reset_password_link: Reset password
           change_password_link: 'Change password'
-          change_to_category_buyer: "Change to category buyer"
-          change_to_regular_buyer: "Change to regular buyer"
+          change_to_category_supplier: "Change to category supplier"
+          change_to_regular_supplier: "Change to regular supplier"
           view_created_leads: "View created leads"
           not_charge_vat: "Do not charge VAT"
           available_categories: "Available public categories"
@@ -875,7 +875,7 @@ en:
           selected_unique_categories: "Selected unique categories"
           selected_interests_categories: "Selected category interests"
           subaccounts_list: "Subaccounts"
-          change_customer_interests_link: "Set interests"
+          change_supplier_interests_link: "Set interests"
       create:
         flash:
           user_creation_successful: User has been created successfuly
@@ -909,11 +909,11 @@ en:
         move_users_right: "Grant Access >"
         move_users_left: "< Remove Access"
         search: Search
-        customers_header: "Buyer access management"
+        suppliers_header: "Supplier access management"
         agents_header: "Agent access management"
-        customers_without_access: "Buyers without access"
+        suppliers_without_access: "Suppliers without access"
         agents_without_access: "Agents without access"
-        customers_with_access: "Buyers with access"
+        suppliers_with_access: "Suppliers with access"
         agents_with_access: "Agent with access"
       index:
         view:
@@ -949,13 +949,13 @@ en:
             contact_us_email: "Contact us email"
             certification_level_2: "Certification level 2"
             invoicing_default_payment_deadline_date: "Invoicing payment deadline date"
-            big_buyer_purchase_limit: "Big buyer purchase limit (EUR)"
+            big_supplier_purchase_limit: "Big supplier purchase limit (EUR)"
             expire_certification_notification_after_days: "Expire certification notification after days"
             logout_time: "Logout after (min)"
             resend_certification_notification_after_days: "Resend certification notification after days"
             youtube_introduction: "YouTube introduction video URL"
             default_deal_admin_email: "Default deal admin email"
-            email_verification_for_procurement_managers: "Email verification for procurement managers"
+            email_verification_for_members: "Email verification for member managers"
             email_verification_for_sales_managers: "Email verification for sales managers"
             default_max_auto_buy_per_4_weeks: "Default max auto buy per 4 weeks"
             contact_us_phone: "Contact us phone number"
@@ -1046,7 +1046,7 @@ en:
           title: "New deal"
           form_title: "Create new"
           create_button: "Create"
-          check_buyer_email: "Check sales manager email"
+          check_supplier_email: "Check sales manager email"
           certify: "Certify"
           no_user_found_message: "No user with email %{email} was found!"
           or: "or"
@@ -1123,9 +1123,9 @@ en:
       index:
         view:
           header: "News"
-          buyers: "sales managers"
+          suppliers: "sales managers"
           agents: "call centres and agents"
-          purchase_managers: "procurement managers"
+          members: "Member managers"
           category_homes: "category homes"
           new_news: "New news"
           search_button: "Search"
@@ -1290,7 +1290,7 @@ en:
           payment_method: "Payment method"
           payment_account: "Payment account"
           seller: "Seller"
-          customer: "Customer"
+          supplier: "Supplier"
           status: "Status"
           creation_place: "Creation place"
           emailed_at: "Emailed at"
@@ -1338,7 +1338,7 @@ en:
           remove_line: "REMOVE LINE"
           form:
             general_information: "General information"
-            customer_information: "Customer information"
+            supplier_information: "Supplier information"
             seller_information: "Seller information"
             payment_information: "Payment information"
           is_refunded: "Refunded?"
@@ -1351,7 +1351,7 @@ en:
           search_button: "Search"
           sale_date: "Sale date"
           invoice_number: "Invoice number"
-          customer: "Customer"
+          supplier: "Supplier"
           seller: "Seller"
           revenue_frozen: "Revenue frozen"
           status: "Status"
@@ -1440,8 +1440,8 @@ en:
           transaction_type: "Type"
           transaction_type_paypal: "Paypal"
           transaction_type_manual: "Manual"
-          customer_name: "Customer name"
-          customer_address: "Customer address"
+          supplier_name: "Supplier name"
+          supplier_address: "Supplier address"
           amount: "Amount"
           actions: "Actions"
           manually_register_transaction: "Manually register a transaction"
@@ -1450,7 +1450,7 @@ en:
             with_keyword: "Keyword:"
             with_sale_date_after_and_including: Sale after
             with_sale_date_before_and_including: Sale before
-          customer_company_name: "Company name"
+          supplier_company_name: "Company name"
       new:
         view:
           header: "New transaction"
@@ -1465,9 +1465,9 @@ en:
         view:
           header: Debtors
           total: Total
-          customer_first_name: First name
-          customer_last_name: Last name
-          customer_screen_name: "Screen name"
+          supplier_first_name: First name
+          supplier_last_name: Last name
+          supplier_screen_name: "Screen name"
           not_invoiced_count: Leads
           not_invoiced_sum: Total
           create_invoice: Create invoice
@@ -1557,9 +1557,9 @@ en:
           header: "Creditors"
           total: "Total"
           number: "Number"
-          customer_first_name: "First name"
-          customer_last_name: "Last name"
-          customer_screen_name: "Screen name"
+          supplier_first_name: "First name"
+          supplier_last_name: "Last name"
+          supplier_screen_name: "Screen name"
           total_value: "Total"
           type: "Type"
           type_credit: Credit
@@ -1575,9 +1575,9 @@ en:
           header: "Refunds"
           total: "Total"
           number: "Number"
-          customer_first_name: "First name"
-          customer_last_name: "Last name"
-          customer_screen_name: "Screen name"
+          supplier_first_name: "First name"
+          supplier_last_name: "Last name"
+          supplier_screen_name: "Screen name"
           total_value: "Total"
           type: "Type"
           type_credit: Credit
@@ -1591,7 +1591,7 @@ en:
           search:
             with_keyword: "Keyword"
             search_button: "Search"
-    customer_interests:
+    supplier_interests:
       edit:
         view:
           title: "Editing interests for user: %{name}"
@@ -1700,7 +1700,7 @@ en:
           title: "New deal"
           form_title: "Create new"
           create_button: "Create"
-          check_buyer_email: "Check sales manager email"
+          check_supplier_email: "Check sales manager email"
           no_user_found_message: "No user with email %{email} was found!"
           certify: "Certify"
           email: "Email address"
@@ -1833,7 +1833,7 @@ en:
         view:
           title: "New deal"
           form_title: "Create new"
-          check_buyer_email: "Check sales manager email"
+          check_supplier_email: "Check sales manager email"
           certify: "Certify"
           create_button: "Create"
           email: "Email"
@@ -1914,7 +1914,7 @@ en:
           title: "New deal"
           form_title: "Create new"
           create_button: "Create"
-          check_buyer_email: "Check sales manager email"
+          check_supplier_email: "Check sales manager email"
           no_user_found_message: "No user with email %{email} was found!"
           certify: "Certify"
           email: "Email address"
@@ -1926,7 +1926,7 @@ en:
           update_button: "Save"
           edit_deal_request_details_email_template: "Edit email template"
           preview: "Preview"
-  purchase_manager:
+  member:
     leads:
       index:
         view:
@@ -2055,20 +2055,20 @@ en:
   certification_accounts:
     new:
       view:
-        title: "Procurement Manager signup"
-        rpx_title: "You are creating Procurement Manager account as %{full_name} using %{account_type} account"
+        title: "Member Manager signup"
+        rpx_title: "You are creating member Manager account as %{full_name} using %{account_type} account"
         janrain_sign_up_label: "Or use Facebook, LinedIn or Google to sing in in the future:"
         i_already_have_account: "I already have an account!"
-  purchase_manager_accounts:
+  member_accounts:
     new:
       view:
-        title: "Procurement Manager signup"
-        rpx_title: "You are creating Procurement Manager account as %{full_name} using %{account_type} account"
+        title: "Member Manager signup"
+        rpx_title: "You are creating member Manager account as %{full_name} using %{account_type} account"
         header: "Create new account"
         janrain_sign_up_label: "Sign up using:"
         button_create_account: "Create my account"
 
-  buyer:
+  supplier:
     cart_items:
       create:
         flash:
@@ -2077,7 +2077,7 @@ en:
           cart_item_already_in_cart: Lead has already been added to cart
           cart_item_currencies_mismatch: "Lead's currency is different from other items in the cart"
           cart_item_buyout_successful: "Lead has been bought out!"
-          cart_item_big_buyer_purchase_limit_reached: "Lead could not be bought because your limit for unpaid purchases has been reached!"
+          cart_item_big_supplier_purchase_limit_reached: "Lead could not be bought because your limit for unpaid purchases has been reached!"
           cart_item_bought_by_other_user: "Lead has been bought by somebody else!"
           cart_item_cannot_be_bought: "Lead can not be bought!"
       destroy:
@@ -2104,6 +2104,9 @@ en:
         flash:
           lead_purchases_updated_successfully: "Leads have been updated successfully!"
     lead_purchases:
+      index:
+        view:
+          header: "Lead purchases"
       show:
         view:
           header: "Lead details"
@@ -2146,125 +2149,6 @@ en:
           certify_success: "Deal has been successfully certified"
           reject_success: "Deal has been successfully rejected."
           not_authorized: "You are not authorized to perform this action!"
-  categories:
-    index:
-      view:
-        header: Categories
-        view_lead_templates: View templates
-
-        view_leads: "View leads"
-        view_deals: "View deals"
-    listing:
-      category_details_label: "Category description"
-      actions_label: "Actions"
-  buyer_accounts:
-    new:
-      view:
-        title: "Sales manager signup"
-        rpx_title: "You are creating Sales Manager account as %{full_name} using %{account_type} account"
-        button_create_account: "Create"
-        enable_team_buyers: "Enable team buyers"
-        company_name: "Company"
-        janrain_sign_up_label: "Sign up using:"
-
-  category_buyer_accounts:
-    new:
-      view:
-        title: "Category buyer signup"
-        form_title: "Create new account"
-        rpx_title: "You are creating Category Buyer account as %{full_name} using %{account_type} account"
-        button_create_account: "Create"
-        enable_team_buyers: "Enable team buyers"
-        company_name: "Company"
-        janrain_sign_up_label: "Sign up using:"
-
-  buyer_home:
-    show:
-      view:
-        header: "Welcome sales manager"
-        agent_link: "click here if you are an agent"
-        purchase_manager_link: "click here if you are a procurement manager"
-        header_best_sellers: "Best sellers"
-        header_latest_leads: "Latest leads"
-        header_latest_deals: "Latest deals"
-        header_latest_leads_in_my_categories: "Latest leads in my categories"
-        header_my_leads: "My leads"
-        header_news: "News"
-        purchase_value_label: "Purchase value:"
-        lead_price_label: "Lead price:"
-        description_label: "Description:"
-        read_more_link: "read more"
-        complete_list_link: "complete list"
-        configure_interests_link: "interests"
-        create_new_buyer_account: "Create new sales manager account"
-        sign_out: "Sign out"
-        add_team_member: "Add team member"
-        i_have_an_account: "I have an account"
-
-        create_new_membership_account: "Create a new membership account"
-  agent_home:
-    show:
-      view:
-        header: "Welcome agent"
-        buyer_link: "click here if you are a sales manager"
-        purchase_manager_link: "click here if you are a procurement manager"
-        header_best_sellers: "Best sellers"
-        header_latest_leads: "Latest leads"
-        header_news: "News"
-        header_my_new_leads: "My new leads"
-        header_my_new_comments: "My new comments"
-        header_my_sold_leads: "My sold leads"
-        purchase_value_label: "Purchase value:"
-        lead_price_label: "Lead price:"
-        description_label: "Description:"
-        read_more_link: "read more"
-        complete_list_link: "complete list"
-        create_new_agent_account: "Create new agent account"
-        i_have_an_account: "I have an account"
-
-        new_lead: "New lead"
-        new_deal: "New deal"
-  purchase_manager_home:
-    show:
-      view:
-        header: "Welcome procurement manager"
-        agent_link: "click here if you are an agent"
-        buyer_link: "click here if you are a sales manager"
-        header_best_sellers: "Best sellers"
-        header_latest_leads: "Latest leads"
-        header_latest_deals: "Latest deals"
-        header_my_contact_requests: "My contact requests"
-        header_news: "News"
-        purchase_value_label: "Purchase value:"
-        lead_price_label: "Lead price:"
-        description_label: "Description:"
-        read_more_link: "read more"
-        complete_list_link: "complete list"
-        create_new_purchase_manager_account: "Create new procurement manager account"
-        i_have_an_account: "I have an account"
-
-  category_home:
-    show:
-      view:
-        header: "Welcome to category:"
-        sign_out: "Sign out"
-        header_news: "News"
-        complete_list_link: "complete list"
-        sign_up_sign_in: "Sign up or sign in"
-        latest_leads: "Latest leads"
-        header_latest_leads: "Latest leads"
-        header_additional_information_label: "Description"
-        i_have_an_account: "I have an account"
-        sign_in: "Sign in"
-        remember_me: "Remember me"
-        forgotten_password_link: "Forgot password?"
-        i_want_to_register: "I want to register a new account"
-        category_buyer_signup: "Category buyer signup"
-        header_my_leads: "My leads"
-        read_more_link: "read more"
-        create_new_account: Create new account
-
-  customer:
     interests:
       edit:
         view:
@@ -2285,7 +2169,7 @@ en:
       index:
         view:
           title: "Manage subaccounts"
-          new_lead_buyer: "Create lead user with buying permission"
+          new_lead_supplier: "Create lead user with buying permission"
           new_lead_user: "Create lead user"
           edit: "Edit"
           delete: "Delete"
@@ -2324,10 +2208,6 @@ en:
         flash:
           subaccount_deletion_successful: "Subaccount has been successfully deleted"
           subaccount_deletion_failure: "Subaccount could not be deleted"
-    lead_purchases:
-      index:
-        view:
-          header: "Lead purchases"
     lead_requests:
       index:
         view:
@@ -2362,7 +2242,7 @@ en:
           search_button: "Search"
           sale_date: "Sale date"
           invoice_number: "Invoice number"
-          customer: "Customer"
+          supplier: "Supplier"
           status: "Status"
           search_label: "Search"
           create_invoice: "Create invoice"
@@ -2408,7 +2288,7 @@ en:
           payment_method: "Payment method"
           payment_account: "Payment account"
           seller: "Seller"
-          customer: "Customer"
+          supplier: "Supplier"
           status: "Status"
           creation_place: "Creation place"
           emailed_at: "Emailed at"
@@ -2460,6 +2340,125 @@ en:
           created_by: "Created by"
           button_update: "Save"
           button_cancel: "Cancel"
+  categories:
+    index:
+      view:
+        header: Categories
+        view_lead_templates: View templates
+
+        view_leads: "View leads"
+        view_deals: "View deals"
+    listing:
+      category_details_label: "Category description"
+      actions_label: "Actions"
+  supplier_accounts:
+    new:
+      view:
+        title: "Sales manager signup"
+        rpx_title: "You are creating Sales Manager account as %{full_name} using %{account_type} account"
+        button_create_account: "Create"
+        enable_team_suppliers: "Enable team suppliers"
+        company_name: "Company"
+        janrain_sign_up_label: "Sign up using:"
+
+  category_supplier_accounts:
+    new:
+      view:
+        title: "Category supplier signup"
+        form_title: "Create new account"
+        rpx_title: "You are creating Category Supplier account as %{full_name} using %{account_type} account"
+        button_create_account: "Create"
+        enable_team_suppliers: "Enable team suppliers"
+        company_name: "Company"
+        janrain_sign_up_label: "Sign up using:"
+
+  supplier_home:
+    show:
+      view:
+        header: "Welcome sales manager"
+        agent_link: "click here if you are an agent"
+        member_link: "click here if you are a member manager"
+        header_best_sellers: "Best sellers"
+        header_latest_leads: "Latest leads"
+        header_latest_deals: "Latest deals"
+        header_latest_leads_in_my_categories: "Latest leads in my categories"
+        header_my_leads: "My leads"
+        header_news: "News"
+        purchase_value_label: "Purchase value:"
+        lead_price_label: "Lead price:"
+        description_label: "Description:"
+        read_more_link: "read more"
+        complete_list_link: "complete list"
+        configure_interests_link: "interests"
+        create_new_supplier_account: "Create new sales manager account"
+        sign_out: "Sign out"
+        add_team_member: "Add team member"
+        i_have_an_account: "I have an account"
+
+        create_new_membership_account: "Create a new membership account"
+  agent_home:
+    show:
+      view:
+        header: "Welcome agent"
+        supplier_link: "click here if you are a sales manager"
+        member_link: "click here if you are a member manager"
+        header_best_sellers: "Best sellers"
+        header_latest_leads: "Latest leads"
+        header_news: "News"
+        header_my_new_leads: "My new leads"
+        header_my_new_comments: "My new comments"
+        header_my_sold_leads: "My sold leads"
+        purchase_value_label: "Purchase value:"
+        lead_price_label: "Lead price:"
+        description_label: "Description:"
+        read_more_link: "read more"
+        complete_list_link: "complete list"
+        create_new_agent_account: "Create new agent account"
+        i_have_an_account: "I have an account"
+
+        new_lead: "New lead"
+        new_deal: "New deal"
+  member_home:
+    show:
+      view:
+        header: "Welcome member manager"
+        agent_link: "click here if you are an agent"
+        supplier_link: "click here if you are a sales manager"
+        header_best_sellers: "Best sellers"
+        header_latest_leads: "Latest leads"
+        header_latest_deals: "Latest deals"
+        header_my_contact_requests: "My contact requests"
+        header_news: "News"
+        purchase_value_label: "Purchase value:"
+        lead_price_label: "Lead price:"
+        description_label: "Description:"
+        read_more_link: "read more"
+        complete_list_link: "complete list"
+        create_new_member_account: "Create new member manager account"
+        i_have_an_account: "I have an account"
+
+  category_home:
+    show:
+      view:
+        header: "Welcome to category:"
+        sign_out: "Sign out"
+        header_news: "News"
+        complete_list_link: "complete list"
+        sign_up_sign_in: "Sign up or sign in"
+        latest_leads: "Latest leads"
+        header_latest_leads: "Latest leads"
+        header_additional_information_label: "Description"
+        i_have_an_account: "I have an account"
+        sign_in: "Sign in"
+        remember_me: "Remember me"
+        forgotten_password_link: "Forgot password?"
+        i_want_to_register: "I want to register a new account"
+        category_supplier_signup: "Category supplier signup"
+        header_my_leads: "My leads"
+        read_more_link: "read more"
+        create_new_account: Create new account
+
+
   lead_user:
     lead_purchases:
       index:
@@ -2517,7 +2516,7 @@ en:
           body_label: Body
           send_email_button: Send
 
-  lead_buyer:
+  lead_supplier:
     lead_purchases:
       index:
         view:
@@ -2577,8 +2576,8 @@ en:
         header: "My profile"
         header_contact_confirmation: "Confirm account information"
         change_password: "Change password"
-        remove_category_buyer: "Change account to normal buyer"
-        enable_team_buyers: "Enable team buyers"
+        remove_category_supplier: "Change account to normal supplier"
+        enable_team_suppliers: "Enable team suppliers"
         company_name: "Company"
         interests_settings: Interests settings
         edit_account: "Edit account"
@@ -2595,9 +2594,9 @@ en:
     social_unlink:
       controller:
         successful_unlink_notice: "Your account is no longer connected to %{account_type}"
-    change_to_buyer:
+    change_to_supplier:
       controller:
-        success: "You are not category buyer any more"
+        success: "You are not category supplier any more"
         failure: "You are not authorized to perform this action"
 
     unlink:
@@ -2614,7 +2613,7 @@ en:
         send_email_button: "Send"
         email_subjects:
           agent_inquiry: "Agent inquiry"
-          buyer_inquiry: "Sales manager inquiry"
+          supplier_inquiry: "Sales manager inquiry"
     create:
       flash:
         email_sent_successfully: "Your email has been sent"
@@ -2658,7 +2657,7 @@ en:
         category_was_changed: Category has been changed
         category_no_leads_can_be_published: "No leads can be published in that category"
         category_cannot_be_changed: "Category cannot be changed due to filled out templates!"
-        purchase_manager:
+        member:
           lead_information: "What product or service are you looking for?"
           sales_information: "Tender information"
           header_label: "Header"
@@ -2773,7 +2772,7 @@ en:
       no: "No"
       guest: "Guest"
       agent: "Agent"
-      buyer: "Buyer"
+      supplier: "Supplier"
     credit_note:
       type:
         credit: "credit"
@@ -2784,7 +2783,7 @@ en:
         news:
           agent: "Agent news"
           sales_manager: "Sales manager news"
-          purchase_manager: "Procurement manager news"
+          member: "Member manager news"
           category_home: "Category home news"
           call_centre: "Call centre news"
         cms:
@@ -2822,12 +2821,12 @@ en:
         agreement_read: "I have read and agree to Associated Content's Terms of Use and Privacy Policy"
         newsletter_on: "I want to receive the newsletter"
         skip_email_verification: "Don't verify email address"
-        customer:
+        supplier:
           base:
             must_have_interests: "User must have at least one interests category"
       lead:
         purchase_decision_date: "Purchase decision date"
-        notify_buyers_after_update: "Notify sales managers about changes"
+        notify_suppliers_after_update: "Notify sales managers about changes"
     errors:
       messages:
         blank: "can't be blank"
@@ -2865,19 +2864,19 @@ en:
                 blank: "is blank"
                 confirmation: "doesn't match confirmation"
                 too_short: "too short"
-          customer:
+          supplier:
             attributes:
               password:
                 blank: "is blank"
                 confirmation: "doesn't match confirmation"
                 too_short: "too short"
-          category_buyer:
+          category_supplier:
             attributes:
               password:
                 blank: "is blank"
                 confirmation: "doesn't match confirmation"
                 too_short: "too short"
-          purchase_manager:
+          member:
             attributes:
               password:
                 blank: "is blank"
@@ -2912,13 +2911,13 @@ en:
     agent_accounts:
       create:
         notice: "Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account."
-    buyer_accounts:
+    supplier_accounts:
       create:
         notice: "Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account."
-    category_buyer_accounts:
+    category_supplier_accounts:
       create:
         notice: "Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account."
-    purchase_manager_accounts:
+    member_accounts:
       create:
         notice: "Your account has been successfully created! In order to confirm your account, an email has been sent. Please confirm your account by clicking the link in your email, and login to your new Fairleads account."
     categories:
@@ -2991,9 +2990,9 @@ en:
     stats_recalculation:
       update:
         notice: "Stats update has been queued. It may take few minutes to finish."
-    customer_interests:
+    supplier_interests:
       update:
-        notice: "Customer interest have been successfully saved!"
+        notice: "Supplier interest have been successfully saved!"
     deals:
       create:
         notice: "Deal has been successfully created."
@@ -3148,8 +3147,8 @@ en:
         seller_vat_no: "Seller vat no"
         seller_first_name: "Seller first name"
         seller_last_name: "Seller last name"
-        customer_name: "Customer name"
-        customer_vat_no: "Customer vat no"
+        supplier_name: "Supplier name"
+        supplier_vat_no: "Supplier vat no"
         ean_number: "Ean number"
         bank_account_id: "Bank account"
         creation_place: "Creation place"
@@ -3158,7 +3157,7 @@ en:
         payment_deadline_date: "Payment deadline date"
         payment_method: "Payment method"
         currency_id: "Currency"
-        vat_text_in_customer_country: "Vat text in customer country"
+        vat_text_in_supplier_country: "Vat text in supplier country"
         user_id: "User"
         seller_id: "Seller"
         cash_flow: "Amount paid"
@@ -3170,7 +3169,7 @@ en:
         address_line_3: "City"
         zip_code: "Zip code"
         country: "Country"
-      address/invoice_customer:
+      address/invoice_supplier:
         address_line_1: "Address line 1"
         address_line_2: "Address line 2"
         address_line_3: "City"
@@ -3197,7 +3196,7 @@ en:
         password_confirmation: "Password confirmation"
         remember_me: "Remember me"
         company_name: "Company"
-        team_buyers: "Enable team buyers"
+        team_suppliers: "Enable team suppliers"
         not_charge_vat: "Do not charge VAT"
         agreement_read: "Agreement read"
         skip_email_verification: "Don't verify email address"
@@ -3270,7 +3269,7 @@ en:
         agreement_read: "Agreement read"
         skip_email_verification: "Don't verify email address"
         time_zone: "Time zone"
-      user/customer:
+      user/supplier:
         first_name: "First name"
         last_name: "Last name"
         vat_number: "Company REG/VAT"
@@ -3282,15 +3281,15 @@ en:
         newsletter_on: "Newsletter on"
         agreement_read: "Agreement read"
         not_charge_vat: "Do not charge VAT"
-        team_buyers: "Team buyers"
+        team_suppliers: "Team suppliers"
         skip_email_verification: "Don't verify email address"
-        big_buyer_purchase_limit: "Big buyer purchase limit (in Euro)"
+        big_supplier_purchase_limit: "Big supplier purchase limit (in Euro)"
         lead_notification_type: "Lead notifications"
         company_name: "Company name"
         title: "Title"
         time_zone: "Time zone"
         deal_maker_role_enabled: "Deal maker role enabled"
-        big_buyer: "Big buyer"
+        big_supplier: "Big supplier"
       user/call_centre_agent:
         first_name: "First name"
         last_name: "Last name"
@@ -3302,7 +3301,7 @@ en:
         password: "Password"
         password_confirmation: "Password confirmation"
         skip_email_verification: "Don't verify email address"
-      user/lead_buyer:
+      user/lead_supplier:
         first_name: "First name"
         last_name: "Last name"
         screen_name: "Screen name"
@@ -3312,7 +3311,7 @@ en:
         email: "E-mail"
         password: "Password"
         password_confirmation: "Password confirmation"
-        lead_buyer_role_enabled: "Lead buyer role enabled"
+        lead_supplier_role_enabled: "Lead supplier role enabled"
         hide_profile_page: "Hide profile page"
         hide_lead_prices: "Hide lead prices"
       user/lead_user:
@@ -3325,10 +3324,10 @@ en:
         email: "E-mail"
         password: "Password"
         password_confirmation: "Password confirmation"
-        lead_buyer_role_enabled: "Lead buyer role enabled"
+        lead_supplier_role_enabled: "Lead supplier role enabled"
         hide_profile_page: "Hide profile page"
         hide_lead_prices: "Hide lead prices"
-      user/purchase_manager:
+      user/member:
         company_name: "Company name"
         first_name: "First name"
         last_name: "Last name"
@@ -3343,7 +3342,7 @@ en:
         skip_email_verification: "Don't verify email address"
         title: "Title"
         time_zone: "Time zone"
-      user/category_buyer:
+      user/category_supplier:
         first_name: "First name"
         last_name: "Last name"
         vat_number: "Company REG/VAT"
@@ -3355,14 +3354,14 @@ en:
         newsletter_on: "Newsletter on"
         not_charge_vat: "Do not charge VAT"
         agreement_read: "Agreement read"
-        big_buyer: "Big buyer"
+        big_supplier: "Big supplier"
         skip_email_verification: "Don't verify email address"
-        big_buyer_purchase_limit: "Big buyer purchase limit (in Euro)"
+        big_supplier_purchase_limit: "Big supplier purchase limit (in Euro)"
         company_name: "Company name"
         title: "Title"
         time_zone: "Time zone"
         show_deals: "Show deals"
-        big_buyer: "Big buyer"
+        big_supplier: "Big supplier"
       country:
         name: "Country name"
       lead_template:
@@ -3372,7 +3371,7 @@ en:
         description: "Description"
         is_locked: "Is locked"
         buyout_enabled: "Buyout enabled"
-        is_customer_unique: "Is customer unique"
+        is_supplier_unique: "Is supplier unique"
         is_agent_unique: "Is agent unique"
         countries: "Countries"
         no_prices_for_team_members: "Do not show prices for team members"
@@ -3394,7 +3393,7 @@ en:
         sales_manager:
           title: "Title"
           published: "Published"
-        purchase_manager:
+        member:
           title: "Title"
           published: "Published"
         category_home:
@@ -3427,7 +3426,7 @@ en:
       edit:
         view:
           header: "Change your password"
-          contact_upgraded_to_category_buyer_info: "In order to start using Fairleads please set your new password below"
+          contact_upgraded_to_category_supplier_info: "In order to start using Fairleads please set your new password below"
       new:
         view:
           header: "Forgot your password?"
@@ -3442,7 +3441,7 @@ en:
         header: "Category request"
         email_from: "Email from"
         category_name: "Category name"
-        leads_count_per_month_buyer: "How many leads approximately would you need a month?"
+        leads_count_per_month_supplier: "How many leads approximately would you need a month?"
         leads_count_per_month_agent: "How many leads approximately would you produce a month?"
         leads_count_per_month_guest: "How many leads approximately would you need or produce a month?"
         lead_description: "Describe what would be a good lead"
@@ -3651,40 +3650,40 @@ en:
       flash:
         success: "Import completed. %{counter} contacts have been successfully imported"
 
-  buyers_advanced_import:
+  suppliers_advanced_import:
     show:
       view:
-        header: "Buyers import"
-        title: "Advanced import - create new buyers from spreadsheet."
-        no_category_for_category_buyer_error: "You have to choose category if you want to create category buyers!"
-        category_buyers_confirmation_checkbox: "Do you want to create category buyers?"
+        header: "Suppliers import"
+        title: "Advanced import - create new suppliers from spreadsheet."
+        no_category_for_category_supplier_error: "You have to choose category if you want to create category suppliers!"
+        category_suppliers_confirmation_checkbox: "Do you want to create category suppliers?"
         select_category: "Select category:"
     choose:
       view:
-        header: "Buyers import - fields selection"
-        object_fields_label: "Buyer fields"
+        header: "Suppliers import - fields selection"
+        object_fields_label: "Supplier fields"
     preview:
       view:
-        header: "Buyers import - preview"
+        header: "Suppliers import - preview"
     create:
       flash:
-        success: "Import completed. %{counter} buyers have been successfully imported"
+        success: "Import completed. %{counter} suppliers have been successfully imported"
 
-  procurements_advanced_import:
+  members_advanced_import:
     show:
       view:
-        header: "Procurement managers import"
-        title: "Advanced import - create new procurement managers from spreadsheet."
+        header: "Member managers import"
+        title: "Advanced import - create new member managers from spreadsheet."
     choose:
       view:
-        header: "Procurement managers import - fields selection"
-        object_fields_label: "Procurement manager fields"
+        header: "Member managers import - fields selection"
+        object_fields_label: "Member manager fields"
     preview:
       view:
-        header: "Procurement managers import - preview"
+        header: "Member managers import - preview"
     create:
       flash:
-        success: "Import completed. %{counter} procurement managers have been successfully imported"
+        success: "Import completed. %{counter} member managers have been successfully imported"
 
   leads_advanced_import:
     show:
@@ -3823,10 +3822,10 @@ en:
     index:
       view:
         header: "Deal categories"
-  deal_buyer_accounts:
+  deal_supplier_accounts:
     new:
       view:
-        header: "New buyer account"
+        header: "New supplier account"
         button_create_account: "Create account"
   share_deal_by_email:
     new:

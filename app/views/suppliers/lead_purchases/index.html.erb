@@ -1,0 +1,260 @@
+<search-box:>
+  <div class="search_box">
+    <h2><%= t("common.search") %></h2>
+
+    <div class="search_content">
+
+      <%= form_for @search, :url => suppliers_lead_purchases_path do |f| %>
+          <fieldset class="inputs_vertical">
+            <ol class="no_pdd">
+              <li class="string">
+                <%= f.label :with_keyword, t("lead_supplier.lead_purchases.index.view.search.keyword_label") %>
+                <%= f.text_field :with_keyword %>
+              </li>
+              <li class="select">
+                <%= f.label :with_category, t("lead_supplier.lead_purchases.index.view.search.category_label") %>
+                <%= f.select :with_category, @categories, {:include_blank => true} %>
+              </li>
+              <li class="string">
+                <%= f.label :with_zip_code, t("lead_supplier.lead_purchases.index.view.search.zip_code") %>
+                <%= f.text_field :with_zip_code, :style => "width:100px" %>
+              </li>
+              <li class="select">
+                <%= f.label :with_country, t("lead_supplier.lead_purchases.index.view.search.country_label") %>
+                <%= f.select :with_country, @countries, {:include_blank => true} %>
+              </li>
+              <% if current_user.team_buyers and current_user.subaccounts.present? %>
+                  <li class="select select_max">
+                    <%= f.label :with_assignee, t("lead_supplier.lead_purchases.index.view.search.assignee_label") %>
+                    <%= f.select :with_assignee, @assignees, {:include_blank => true} %>
+                  </li>
+              <% end %>
+              <li class="select">
+                <%= f.label :with_paid, t("lead_supplier.lead_purchases.index.view.search.paid_label") %>
+                <%= f.select :with_paid, paid_values, {:include_blank => false} %>
+              </li>
+              <li class="commit">
+                <ibt c="bt_green" icon="magnify">
+                  <%= submit_tag t("lead_supplier.lead_purchases.index.view.search.search_button") %>
+                </ibt>
+                <p>
+                  <%= bt_clear_filter %>
+                </p>
+              </li>
+            </ol>
+          </fieldset>
+      <% end %>
+    </div>
+  </div>
+</search-box:>
+
+<column-mc:>
+<header><%= t("lead_supplier.lead_purchases.index.view.header") %></header>
+
+
+<% if @lead_purchases.blank? %>
+    <%= blank_state_message %>
+<% else %>
+
+    <%= bulk_form do %>
+        <fieldset class="inputs_vertical">
+          <ol class="no_pdd">
+            <li class="select">
+              <%= label_tag :bulk_state, t("lead_supplier.lead_purchases.index.view.bulk_state_field") %>
+              <%= select_tag :bulk_state, options_for_select([[nil, nil]]+LeadPurchaseBase.statuses_for_select) %>
+            </li>
+            <% if current_user.team_buyers and @subaccounts.present? %>
+                <li class="select">
+                  <% opts = @subaccounts.insert(0, current_user).map { |sa| [sa.screen_name, sa.id] } %>
+                  <%= label_tag :bulk_assignee_id, t("lead_supplier.lead_purchases.index.view.bulk_assigned_field") %>
+                  <%= select_tag :bulk_assignee_id, options_for_select(opts), :include_blank => true, :style => "width: 140px" %>
+                </li>
+            <% end %>
+            <li class="select">
+              <%= label_tag :bulk_rating_level, t("lead_supplier.lead_purchases.index.view.bulk_rating") %>
+              <%= select_tag :bulk_rating_level, options_for_select(LeadPurchase::RATING_LEVELS.map { |l| [t("activerecord.attributes.lead_purchase.rating_levels.rating_level#{l}"), l] }, nil), :include_blank => true, :onchange => "set_rating_level(this.value, 'bulk')", :id => "rating_level_bulk", :style => "width: 160px" %>
+            </li>
+            <li class="text" id="rating_reson_div_bulk" style="display:none;">
+              <%= label_tag :bulk_rating_reason, t("lead_supplier.lead_purchases.index.view.rating_reason") %>
+              <%= text_area_tag :bulk_rating_reason, "", :id => "rating_reason_bulk" %>
+            </li>
+            <% if current_user.subaccounts.present? %>
+                <li class="date">
+                  <%= label_tag :bulk_response_deadline, t("lead_supplier.lead_purchases.index.view.lead_response_date") %>
+                  <%= text_field_tag :bulk_response_deadline, "", :id => "response_deadline_datepicker_bulk", :class => "formtastic-ui-datepicker" %>
+                </li>
+                <li class="boolean">
+                  <%= check_box_tag :bulk_clear_response_dates, "1", false, :class => "non_selectable" %>
+                  <%= label_tag :bulk_clear_response_dates, t("lead_supplier.lead_purchases.index.view.bulk_clear_response_dates") %>
+                </li>
+            <% end %>
+            <li class="commit">
+              <%= bt_link_to nil, t("lead_supplier.lead_purchases.index.view.bulk_update_button"), "javascript:void(0)", :onclick => "copy_checkboxes_to_bulk_form();submitBulkForm('#{bulk_lead_purchase_update_path}');" %>
+            </li>
+          </ol>
+        </fieldset>
+
+        <%= hidden_field_tag :route_to %>
+        <span id="bulk_form_inputs"></span>
+    <% end %>
+
+        <%= lead_purchases_listing @lead_purchases, :show_checkboxes => true do |blocks| %>
+            <% blocks.assigned_to do |lead_purchase| %>
+                <% if @subaccounts.present? %>
+                    <% opts = @subaccounts.insert(0, current_user).map { |sa| [sa.screen_name, sa.id] } %>
+                    <%= select_tag :assignee_id,
+                                   options_for_select(opts, lead_purchase.assignee_id),
+                                   :include_blank => true,
+                                   :onchange => "$.post('#{suppliers_lead_purchase_path(lead_purchase)}', {'_method':'put', 'lead_purchase[assignee_id]':this.value} );" %>
+                <% end %>
+            <% end %>
+
+            <% blocks.assigned_to do |lead_purchase| %>
+                <% if @subaccounts.present? %>
+                    <p>
+                      <%# opts = @subaccounts.insert(0, current_user).map { |sa| [sa.screen_name, sa.id] } unless @subaccounts.include?(current_user) %>
+                      <%= label_tag :assignee_id, t("lead_supplier.lead_purchases.index.view.bulk_assigned_field") %>
+                      <br/>
+                      <%= select_tag :assignee_id,
+                                     options_for_select((@subaccounts.include?(current_user) ? @subaccounts : @subaccounts.insert(0, current_user)).map { |sa| [sa.screen_name, sa.id] }, lead_purchase.assignee_id),
+                                     :include_blank => true,
+                                     :onchange => "$.post('#{suppliers_lead_purchase_path(lead_purchase)}', {'_method':'put', 'lead_purchase[assignee_id]':this.value} );",
+                                     :style => "width: 140px" %>
+                    </p>
+                <% end %>
+            <% end %>
+
+            <% blocks.other_actions do |lead_purchase| %>
+                <p>
+                  <%= label_tag :state, t("lead_user.lead_purchases.index.view.state") %>
+                  <br/>
+                  <%= select_tag :state,
+                                 options_for_select(LeadPurchaseBase.statuses_for_select, lead_purchase.state),
+                                 :onchange => "$.post('#{suppliers_lead_purchase_path(lead_purchase)}', {'_method':'put', 'lead_purchase[state]':this.value} );" %>
+                </p>
+                <% if current_user.subaccounts.present? %>
+                    <p>
+                      <%= label_tag :response_deadline, t("lead_supplier.lead_purchases.index.view.lead_response_date") %>
+                      <br/>
+                      <%= text_field_tag :response_deadline, lead_purchase.response_deadline.blank? ? nil : lead_purchase.response_deadline.strftime(I18n.t("date.format.standard")), :id => "response_deadline_datepicker_#{lead_purchase.id}", :class => "date" %>
+                    </p>
+                <% end %>
+            <% end %>
+
+            <% blocks.hidden_area do |lead_purchase| %>
+                <p>
+                  <%= t("lead_supplier.lead_purchases.index.view.rating_level") %>
+                  <br/>
+                  <%= select_tag :rating_level, options_for_select(LeadPurchase::RATING_LEVELS.map { |l| [t("activerecord.attributes.lead_purchase.rating_levels.rating_level#{l}"), l] }, lead_purchase.rating_level), :include_blank => true, :onchange => "set_rating_level(this.value, #{lead_purchase.id})", :id => "rating_level_#{lead_purchase.id}", :style => "width: 140px" %>
+                </p>
+
+                <div id="rating_reson_div_<%= lead_purchase.id %>" style="<%= 'display:none;' unless lead_purchase.is_rated_as_unsatisfactory? %>">
+                  <%= t("lead_supplier.lead_purchases.index.view.rating_reason") %>
+                  <br/>
+                  <%= text_area_tag :rating_reason, lead_purchase.rating_reason, :id => "rating_reason_#{lead_purchase.id}", :style => "width:200px;height: 35px" %>
+                  <br/>
+                  <%= bt_link_to :save, t("lead_supplier.lead_purchases.index.view.update_rating_button"), "javascript:save_rating(#{lead_purchase.id})", :style => "margin-top: 4px;" %>
+                </div>
+            <% end %>
+
+            <% blocks.tools do |lead_purchase| %>
+                <% if lead_purchase.lead.buyout_possible_for?(current_user) %>
+                    <div class="pdd_5 no_pdd_r">
+                      <%= bt_link_to :price, t("leads.index.add_to_cart_buyout_link"), suppliers_cart_items_path(:id => lead_purchase.lead.id, :requested_url =>  request.fullpath, :buyout => true), :method => :post, :class => "default_action" %>
+                    </div>
+                    <%= hidden_field_tag :confirmation_message, t("leads.index.add_to_cart_buyout_lead_confirm_msg"), :class => "default_action_confirmation_msg" %>
+                <% end %>
+
+                <ul-actions>
+                  <li>
+                    <%= link_to t("lead_supplier.lead_purchases.index.view.download_csv_link"), suppliers_lead_purchase_path(lead_purchase, :format => :csv) %>
+                  </li>
+                  <li>
+                    <%= link_to t("lead_supplier.lead_purchases.index.view.print_link"), suppliers_lead_purchase_path(lead_purchase, :format => :print), :target => "_blank" %>
+                  </li>
+                  <li>
+                    <%= link_to_function t("lead_supplier.lead_purchases.index.view.share_email_link"), "share_lead_by_email(#{lead_purchase.id})" %>
+                  </li>
+                  <% if lead_purchase_has_email_address?(lead_purchase) %>
+                      <li>
+                        <%= link_to t("lead_supplier.lead_purchases.index.view.email_lead"), new_suppliers_lead_purchase_lead_email_path(lead_purchase) %>
+                      </li>
+                  <% end %>
+                </ul-actions>
+            <% end %>
+
+
+            <% blocks.bottom do %>
+               <span class="bulk_links">
+                <%= bt_link_to :download, t("lead_supplier.lead_purchases.index.view.bulk_download_csv_short"), "javascript:void(0)", :onclick => "copy_checkboxes_to_bulk_form();submitBulkForm('#{bulk_lead_purchase_csv_path}');" %>
+                <%= bt_link_to :printer, t("lead_supplier.lead_purchases.index.view.bulk_print_link_short"), "javascript:void(0)", :onclick => "copy_checkboxes_to_bulk_form();submitBulkForm('#{bulk_lead_purchase_print_path}', '_blank');" %>
+                <%= bt_link_to :mail, t("lead_supplier.lead_purchases.index.view.bulk_share_by_email_link"), "javascript:void(0)", :onclick => "copy_checkboxes_to_bulk_form();submitBulkForm('#{bulk_lead_share_by_email_path}#GET');" %>
+               </span>
+            <% end %>
+        <% end %>
+    <% end %>
+
+
+
+
+<script>
+    $(document).ready(function() {
+    <% @lead_purchases.each do |lead_purchase| %>
+        $("#response_deadline_datepicker_<%= lead_purchase.id %>").datepicker({ dateFormat: '<%= I18n.t("date.formats.datepicker") %>',
+            onSelect: function(dateText, inst) {
+                update_lead_response_deadline('<%= suppliers_lead_purchase_path(lead_purchase) %>', this.value)
+            }
+        });
+    <% end %>
+    });
+
+    function update_lead_response_deadline(url, field_value)
+    {
+
+        $.post(url, {'_method':'put', 'lead_purchase[response_deadline]':field_value});
+    }
+
+    function share_lead_by_email(lead_purchase_id) {
+        $('input:checkbox').each(function() {
+            $(this).attr('checked', false);
+        });
+        $("#lead_purchase_checkbox_" + lead_purchase_id.toString()).attr('checked', true);
+        copy_checkboxes_to_bulk_form();
+        submitBulkForm('<%= bulk_lead_share_by_email_path %>#GET');
+    }
+
+    function set_rating_level(rating_level, lead_purchase_id)
+    {
+        if (rating_level <= 2)
+        {
+            if (lead_purchase_id.toString() != "bulk")
+            {
+                $.post('/suppliers/lead_purchases/' + lead_purchase_id.toString(), {'_method':'put', 'lead_purchase[rating_level]':rating_level});
+            }
+            $('#rating_reson_div_' + lead_purchase_id.toString()).hide();
+        }
+        else
+        {
+            $('#rating_reson_div_' + lead_purchase_id.toString()).show();
+        }
+    }
+
+    function save_rating(lead_purchase_id)
+    {
+        if (jQuery.trim($('#rating_reason_' + lead_purchase_id.toString()).val().toString()) == "")
+        {
+            alert('<%= t("lead_supplier.lead_purchases.index.view.rating_reason_empty") -%>');
+        }
+        else
+        {
+            $.post('/suppliers/lead_purchases/' + lead_purchase_id.toString(), {'_method':'put', 'lead_purchase[rating_reason]':$('#rating_reason_' + lead_purchase_id.toString()).val(), 'lead_purchase[rating_level]':$('#rating_level_' + lead_purchase_id.toString()).val()});
+        }
+    }
+
+    function save_owner_note(lead_purchase_id) {
+        $.post('/suppliers/lead_purchases/' + lead_purchase_id.toString(), {'_method':'put', 'lead_purchase[owner_note]':$('#owner_note_' + lead_purchase_id.toString()).val(), 'owner_note_changed':1, 'format':'js'});
+        $('#owner_note_form_' + lead_purchase_id.toString()).parents(".row_tooltip").effect("highlight", {color: "#d8ff9a"}, 500);
+    }
+
+</script>
+</column-mc:>

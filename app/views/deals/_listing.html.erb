@@ -130,7 +130,7 @@
                 <%= deal.company_description %></p>
 
               <p class="element"><b><%= t("deals.listing.rating_label") %></b>
-                <%= ratings_for(deal, :force_static => !current_user_has_role?(:purchase_manager)) %></p>
+                <%= ratings_for(deal, :force_static => !current_user_has_role?(:member)) %></p>
 
               <br/><br/>
         </td>

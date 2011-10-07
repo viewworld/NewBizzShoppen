@@ -6,10 +6,10 @@ Feature: Buy out
     Given there are no leads
     And Category named "Computers" already exists
     And category "Computers" has attributes "buyout_enabled:1"
-    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier
     And lead Printers exists within category Computers
     And lead "Printers" has attributes "sale_limit:10,price:123"
-    And a lead Monitors exists within category Computers and is bought by user monitor.buyer@nbs.com with role customer
+    And a lead Monitors exists within category Computers and is bought by user monitor.buyer@nbs.com with role supplier
     And lead "Monitors" has attributes "sale_limit:10,price:234"
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
@@ -29,10 +29,10 @@ Feature: Buy out
     Given there are no leads
     And Category named "Computers" already exists
     And category "Computers" has attributes "buyout_enabled:0"
-    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier
     And lead Printers exists within category Computers
     And lead "Printers" has attributes "sale_limit:10,price:123"
-    And a lead Monitors exists within category Computers and is bought by user monitor.buyer@nbs.com with role customer
+    And a lead Monitors exists within category Computers and is bought by user monitor.buyer@nbs.com with role supplier
     And lead "Monitors" has attributes "sale_limit:10,price:234"
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
@@ -48,7 +48,7 @@ Feature: Buy out
     Given there are no leads
     And Category named "Computers" already exists
     And category "Computers" has attributes "buyout_enabled:1"
-    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier
     And lead Printers exists within category Computers
     And lead "Printers" has attributes "sale_limit:10,price:123"
     And I am on the home page
@@ -63,7 +63,7 @@ Feature: Buy out
     Given there are no leads
     And Category named "Computers" already exists
     And category "Computers" has attributes "buyout_enabled:1"
-    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier
     And lead Printers exists within category Computers
     And lead "Printers" has attributes "sale_limit:10,price:123"
     And I am on the home page
@@ -84,7 +84,7 @@ Feature: Buy out
     Given there are no leads
     And Category named "Computers" already exists
     And category "Computers" has attributes "buyout_enabled:1"
-    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier
     And lead Printers exists within category Computers
     And lead "Printers" has attributes "sale_limit:10,price:123"
     And I am on the home page
@@ -93,17 +93,17 @@ Feature: Buy out
     And I follow category "Computers"
     And I follow translated "leads.index.add_to_cart_buyout_link"
     And I follow translated "layout.cart.show_cart"
-    Then I press translated "buyer.cart.show.view.checkout_link"
+    Then I press translated "supplier.cart.show.view.checkout_link"
     Then I should be redirected to paypal page
-    Then paypal payment for user with email "jon@lajoie.ca" and role "customer"
-    And lead named "Printers" is paid and accessible for user with email "jon@lajoie.ca" and role "customer"
+    Then paypal payment for user with email "jon@lajoie.ca" and role "supplier"
+    And lead named "Printers" is paid and accessible for user with email "jon@lajoie.ca" and role "supplier"
 
   @added @m6 @_done @_tested
   Scenario: I can see correct price for buyout on invoice
     Given there are no leads
     And Category named "Computers" already exists
     And category "Computers" has attributes "buyout_enabled:1"
-    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer with attributes "vat_number:123,not_charge_vat:1"
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier with attributes "vat_number:123,not_charge_vat:1"
     And lead Printers exists within category Computers
     And lead "Printers" has attributes "sale_limit:10,price:123"
     And I am on the home page
@@ -112,11 +112,11 @@ Feature: Buy out
     And I follow category "Computers"
     And I follow translated "leads.index.add_to_cart_buyout_link"
     And I follow translated "layout.cart.show_cart"
-    And I press translated "buyer.cart.show.view.checkout_link"
-    And paypal payment for user with email "jon@lajoie.ca" and role "customer"
+    And I press translated "supplier.cart.show.view.checkout_link"
+    And paypal payment for user with email "jon@lajoie.ca" and role "supplier"
     And I am on the home page
-    And I follow translated "layout.main_menu.customer.invoices"
-    And I follow translated "customer.invoices.index.view.show_invoice"
+    And I follow translated "layout.main_menu.supplier.invoices"
+    And I follow translated "supplier.invoices.index.view.show_invoice"
     Then I should see "10" within ".invoice_data tr:nth-child(1) td:nth-child(3)"
     And I should see "1,230.00" within "td:nth-child(6) strong"
     And I should see "1230.0" within "#invoices_table td:nth-child(4)"
@@ -126,8 +126,8 @@ Feature: Buy out
     Given there are no leads
     And Category named "Computers" already exists
     And category "Computers" has attributes "buyout_enabled:1"
-    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
-    And User jon@lajoie.ca with role customer is big buyer
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier
+    And User jon@lajoie.ca with role supplier is big buyer
     And lead Printers exists within category Computers
     And lead "Printers" has attributes "sale_limit:10,price:123"
     And I am on the home page
@@ -135,8 +135,8 @@ Feature: Buy out
     And I go to browse leads
     And I follow category "Computers"
     And I follow translated "leads.index.add_to_cart_buyout_link"
-    And I follow translated "layout.main_menu.customer.invoices"
-    And I follow translated "customer.invoices.index.view.pending_leads"
+    And I follow translated "layout.main_menu.supplier.invoices"
+    And I follow translated "supplier.invoices.index.view.pending_leads"
     Then I should see "1,230.00" within "#invoices_list .ta_r"
 
   @added @m6 @_done @tgn
@@ -144,8 +144,8 @@ Feature: Buy out
     Given there are no leads
     And Category named "Computers" already exists
     And category "Computers" has attributes "buyout_enabled:1"
-    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Computers"
-    And User jon@lajoie.ca with role category_buyer is big buyer
+    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Computers"
+    And User jon@lajoie.ca with role category_supplier is big buyer
     And lead Printers exists within category Computers
     And lead "Printers" has attributes "sale_limit:10,price:123"
     And I am on the home page
@@ -153,8 +153,8 @@ Feature: Buy out
     And I go to browse leads
     And I follow translated "layout.main_menu.shared.browse_leads"
     And I follow translated "leads.index.add_to_cart_buyout_link"
-    And I follow translated "layout.main_menu.customer.invoices"
-    And I follow translated "customer.invoices.index.view.pending_leads"
+    And I follow translated "layout.main_menu.supplier.invoices"
+    And I follow translated "supplier.invoices.index.view.pending_leads"
     Then I should see "1,230.00" within "#invoices_list .ta_r"
 
   @added @m6 @_done @_tested
@@ -162,7 +162,7 @@ Feature: Buy out
     Given there are no leads
     And Category named "Computers" already exists
     And category "Computers" has attributes "buyout_enabled:1"
-    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier
     And lead Printers exists within category Computers
     And lead "Printers" has attributes "sale_limit:10,price:123"
     And I am on the home page
@@ -172,7 +172,7 @@ Feature: Buy out
     And I follow translated "leads.index.add_to_cart_link"
     And I sign out
     And I am on the home page
-    And I am signed up and confirmed as user with email jessica@lajoie.ca and password secret and role customer
+    And I am signed up and confirmed as user with email jessica@lajoie.ca and password secret and role supplier
     And I sign in as jessica@lajoie.ca with password secret
     And I go to browse leads
     And I follow category "Computers"
@@ -184,7 +184,7 @@ Feature: Buy out
     Given there are no leads
     And Category named "Computers" already exists
     And category "Computers" has attributes "buyout_enabled:1"
-    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier
     And lead Printers exists within category Computers
     And lead "Printers" has attributes "sale_limit:10,price:123"
     And I am on the home page
@@ -200,8 +200,8 @@ Feature: Buy out
     Given there are no leads
     And Category named "Computers" already exists
     And category "Computers" has attributes "buyout_enabled:1"
-    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
-    And a lead Printers exists within category Computers and is bought by user jessica@lajoie.ca with role customer
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier
+    And a lead Printers exists within category Computers and is bought by user jessica@lajoie.ca with role supplier
     And lead "Printers" has attributes "sale_limit:10,price:123"
     And I am on the home page
     And I go to browse leads
@@ -214,8 +214,8 @@ Feature: Buy out
     Given there are no leads
     And Category named "Computers" already exists
     And category "Computers" has attributes "buyout_enabled:1"
-    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
-    And User jon@lajoie.ca with role customer is big buyer
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier
+    And User jon@lajoie.ca with role supplier is big buyer
     And lead Printers exists within category Computers
     And lead "Printers" has attributes "sale_limit:10,price:123"
     And I am on the home page
@@ -234,8 +234,8 @@ Feature: Buy out
     Given there are no leads
     And Category named "Computers" already exists
     And category "Computers" has attributes "buyout_enabled:1"
-    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer with attributes "not_charge_vat:1"
-    And User jon@lajoie.ca with role customer is big buyer
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier with attributes "not_charge_vat:1"
+    And User jon@lajoie.ca with role supplier is big buyer
     And lead Printers exists within category Computers
     And lead "Printers" has attributes "sale_limit:10,price:123"
     And I am on the home page
@@ -259,8 +259,8 @@ Feature: Buy out
     Given there are no leads
     And Category named "Computers" already exists
     And category "Computers" has attributes "buyout_enabled:1"
-    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer with attributes "not_charge_vat:1"
-    And User jon@lajoie.ca with role customer is big buyer
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier with attributes "not_charge_vat:1"
+    And User jon@lajoie.ca with role supplier is big buyer
     And lead Printers exists within category Computers
     And lead "Printers" has attributes "sale_limit:10,price:123"
     And I am on the home page
@@ -271,16 +271,16 @@ Feature: Buy out
     And I go to browse leads
     And I follow category "Computers"
     Then I should not see "Printers"
-    When I follow translated "layout.main_menu.customer.invoices"
-    And I follow translated "customer.invoices.index.view.pending_leads"
+    When I follow translated "layout.main_menu.supplier.invoices"
+    And I follow translated "supplier.invoices.index.view.pending_leads"
     Then I should see "123.00" within "#invoices_list .ta_r"
-    When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+    When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
     Then I should see "Printers"
     When I follow translated "leads.index.add_to_cart_buyout_link"
-    And I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+    And I follow translated "layout.main_menu.lead_supplier.lead_purchases"
     Then I should see "2" rows in a table with headers within ".leads_table tbody"
-    When I follow translated "layout.main_menu.customer.invoices"
-    And I follow translated "customer.invoices.index.view.pending_leads"
+    When I follow translated "layout.main_menu.supplier.invoices"
+    And I follow translated "supplier.invoices.index.view.pending_leads"
     Then I should see "2" rows in a table with headers within "#not_invoiced_leads"
     And I should see "123.00"
     And I should see "1,107.00"
@@ -290,7 +290,7 @@ Feature: Buy out
     Given there are no leads
     And Category named "Computers" already exists
     And category "Computers" has attributes "buyout_enabled:1"
-    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer with attributes "not_charge_vat:1"
+    And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier with attributes "not_charge_vat:1"
     And lead Printers exists within category Computers
     And lead "Printers" has attributes "sale_limit:10,price:123"
     And I am on the home page
@@ -300,17 +300,17 @@ Feature: Buy out
     And I follow translated "leads.index.add_to_cart_link"
     And cart for user "jon@lajoie.ca" is paid by paypal
     And I am on the home page
-    When I follow translated "layout.main_menu.customer.invoices"
-    And I follow translated "customer.invoices.index.view.paid_invoices"
+    When I follow translated "layout.main_menu.supplier.invoices"
+    And I follow translated "supplier.invoices.index.view.paid_invoices"
     Then I should see "123.00"
-    When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+    When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
     Then I should see "Printers"
     When I follow translated "leads.index.add_to_cart_buyout_link"
     And cart for user "jon@lajoie.ca" is paid by paypal
     And I am on the home page
-    When I follow translated "layout.main_menu.customer.invoices"
-    And I follow translated "customer.invoices.index.view.paid_invoices"
+    When I follow translated "layout.main_menu.supplier.invoices"
+    And I follow translated "supplier.invoices.index.view.paid_invoices"
     Then I should see "123.00"
     And I should see "1,107.00"
-    When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+    When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
     Then I should see "2" rows in a table with headers within ".leads_table tbody"

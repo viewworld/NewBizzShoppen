@@ -6,10 +6,10 @@ class User < ActiveRecord::Base
   ajaxful_rater
   include EmailTemplateEditor
 
-  ROLES_PRIORITY = [:admin, :call_centre, :agent, :call_centre_agent, :purchase_manager, :category_buyer, :customer, :lead_buyer, :lead_user, :translator, :deal_maker]
+  ROLES_PRIORITY = [:admin, :call_centre, :agent, :call_centre_agent, :member, :category_supplier, :supplier, :lead_supplier, :lead_user, :translator, :deal_maker]
   DEAL_VALUE_RANGE = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000]
-  BASIC_USER_ROLES_WITH_LABELS = [['Administrator', 'admin'], ['Agent', 'agent'], ['Supplier', 'customer'], ['Call centre', 'call_centre'], ['Member', 'purchase_manager'], ['Category supplier', 'category_buyer']]
-  ADDITIONAL_USER_ROLES_WITH_LABELS = [['Lead user', "lead_user"], ['Lead buyer', "lead_buyer"], ["Call centre agent", "call_centre_agent"]]
+  BASIC_USER_ROLES_WITH_LABELS = [['Administrator', 'admin'], ['Agent', 'agent'], ['Supplier', 'supplier'], ['Call centre', 'call_centre'], ['Member', 'member'], ['Category supplier', 'category_supplier']]
+  ADDITIONAL_USER_ROLES_WITH_LABELS = [['Lead user', "lead_user"], ['Lead supplier', "lead_supplier"], ["Call centre agent", "call_centre_agent"]]
 
   NOT_CERTIFIED = 0
   BRONZE_CERTIFICATION = 1
@@ -37,7 +37,7 @@ class User < ActiveRecord::Base
 
   # declare the valid roles -- do not change the order if you add more
   # roles later, always append them at the end!
-  roles :admin, :agent, :call_centre, :call_centre_agent, :customer, :lead_buyer, :lead_user, :purchase_manager, :category_buyer, :translator, :deal_maker
+  roles :admin, :agent, :call_centre, :call_centre_agent, :supplier, :lead_supplier, :lead_user, :member, :category_supplier, :translator, :deal_maker
 
   validates_presence_of :email, :screen_name
   validates_presence_of :first_name, :last_name, :if => :validate_first_and_last_name?
@@ -67,10 +67,10 @@ class User < ActiveRecord::Base
 
   alias_method :parent, :user
 
-  scope :with_customers, where("roles_mask & #{2**User.valid_roles.index(:customer)} > 0 ")
-  scope :with_agents, where("(roles_mask & #{2**User.valid_roles.index(:agent)} > 0) or (roles_mask & #{2**User.valid_roles.index(:call_centre_agent) } > 0) or (roles_mask & #{2**User.valid_roles.index(:purchase_manager)} > 0) or (roles_mask & #{2**User.valid_roles.index(:call_centre) } > 0)")
+  scope :with_suppliers, where("roles_mask & #{2**User.valid_roles.index(:supplier)} > 0 ")
+  scope :with_agents, where("(roles_mask & #{2**User.valid_roles.index(:agent)} > 0) or (roles_mask & #{2**User.valid_roles.index(:call_centre_agent) } > 0) or (roles_mask & #{2**User.valid_roles.index(:member)} > 0) or (roles_mask & #{2**User.valid_roles.index(:call_centre) } > 0)")
   scope :with_possible_deal_admins, where("(roles_mask & #{2**User.valid_roles.index(:agent)} > 0) or (roles_mask & #{2**User.valid_roles.index(:call_centre_agent) } > 0) or (roles_mask & #{2**User.valid_roles.index(:call_centre) } > 0)").order("email ASC")
-  scope :with_agents_without_call_centres, where("(roles_mask & #{2**User.valid_roles.index(:agent)} > 0) or (roles_mask & #{2**User.valid_roles.index(:call_centre_agent) } > 0) or (roles_mask & #{2**User.valid_roles.index(:purchase_manager)} > 0)")
+  scope :with_agents_without_call_centres, where("(roles_mask & #{2**User.valid_roles.index(:agent)} > 0) or (roles_mask & #{2**User.valid_roles.index(:call_centre_agent) } > 0) or (roles_mask & #{2**User.valid_roles.index(:member)} > 0)")
   scope :with_call_centre_agents, lambda { |call_centre| where("(roles_mask & #{2**User.valid_roles.index(:call_centre_agent)} > 0) and parent_id = ?", call_centre.id) }
   scope :with_call_centres, where("roles_mask & #{2**User.valid_roles.index(:call_centre)} > 0")
   scope :with_role, lambda { |role| where("roles_mask & #{2**User.valid_roles.index(role.to_sym)} > 0 ") }
@@ -90,7 +90,7 @@ class User < ActiveRecord::Base
   scope :with_lead_creators_for, lambda { |parent| select("DISTINCT(users.id), users.*").where("users.parent_id = ?", parent.id).joins("INNER JOIN leads ON leads.creator_id=users.id") }
   scope :assignees_for_lead_purchase_owner, lambda { |owner| select("DISTINCT(users.id), users.*").where("lead_purchases.requested_by IS NULL and lead_purchases.owner_id = ? and accessible_from IS NOT NULL and users.parent_id = ?", owner.id, owner.id).joins("RIGHT JOIN lead_purchases on lead_purchases.assignee_id=users.id") }
   scope :with_leads, select("DISTINCT(email), users.*").joins("RIGHT JOIN leads on users.id=leads.creator_id")
-  scope :within_accessible_categories, lambda { |customer| where("leads.category_id NOT IN (?)", customer.accessible_categories_ids) }
+  scope :within_accessible_categories, lambda { |supplier| where("leads.category_id NOT IN (?)", supplier.accessible_categories_ids) }
   scope :right_join_leads, joins("RIGHT JOIN leads on users.id=leads.creator_id")
   scope :screen_name_and_id_with_leads, right_join_leads.select("DISTINCT(users.screen_name),users.id")
   scope :with_leads_within_categories, lambda { |category_ids| right_join_leads.where("leads.category_id IN (?)", category_ids.to_a) }
@@ -118,7 +118,7 @@ class User < ActiveRecord::Base
   validate :check_billing_rate
   before_validation :set_auto_generated_password_if_required
 
-  liquid :email, :confirmation_instructions_url, :reset_password_instructions_url, :social_provider_name, :category_buyer_category_home_url,
+  liquid :email, :confirmation_instructions_url, :reset_password_instructions_url, :social_provider_name, :category_supplier_category_home_url,
          :screen_name, :first_name, :last_name, :home_page_url
   require 'digest/sha1'
 
@@ -126,8 +126,8 @@ class User < ActiveRecord::Base
 
   def set_email_verification
     if new_record?
-      if (has_role?(:customer) and Settings.email_verification_for_sales_managers == "0") or
-         (has_role?(:purchase_manager) and Settings.email_verification_for_procurement_managers == "0")
+      if (has_role?(:supplier) and Settings.email_verification_for_sales_managers == "0") or
+         (has_role?(:member) and Settings.email_verification_for_members == "0")
         self.skip_email_verification = "1"
       end
     end
@@ -183,10 +183,10 @@ class User < ActiveRecord::Base
   def handle_team_buyers_flag
     if team_buyers_changed? and !team_buyers # unchecking / turning off
       if owned_lead_requests.any?
-        errors.add(:team_buyers, I18n.t("errors.messages.user.team_buyers.has_lead_requests"))
+        errors.add(:team_buyers, I18n.t("errors.messages.user.team_suppliers.has_lead_requests"))
         return false
       elsif subaccounts.any?
-        errors.add(:team_buyers, I18n.t("errors.messages.user.team_buyers.has_subaccounts"))
+        errors.add(:team_buyers, I18n.t("errors.messages.user.team_suppliers.has_subaccounts"))
         return false
       end
     end
@@ -210,7 +210,7 @@ class User < ActiveRecord::Base
   end
 
   def mailer_host
-    if has_role?(:purchase_manager)
+    if has_role?(:member)
       mailer_fairdeals_host
     else
       Nbs::Application.config.action_mailer.default_url_options[:host]
@@ -264,7 +264,7 @@ class User < ActiveRecord::Base
 
   def all_purchased_lead_purchases
     user = parent || self
-    user.has_role?(:customer) ? LeadPurchase.where("owner_id = ? and accessible_from IS NOT NULL", user.id) : []
+    user.has_role?(:supplier) ? LeadPurchase.where("owner_id = ? and accessible_from IS NOT NULL", user.id) : []
   end
 
   def all_requested_lead_ids
@@ -275,9 +275,9 @@ class User < ActiveRecord::Base
     all_purchased_lead_purchases.map(&:lead_id)
   end
 
-#TODO Manage to move to buyer :) ... if possible
+#TODO Manage to move to supplier :) ... if possible
   def cart
-    @cart ||= Cart.new(User::LeadBuyer.find(self.id))
+    @cart ||= Cart.new(User::LeadSupplier.find(self.id))
   end
 
   def self.inherited(subclass)
@@ -326,7 +326,7 @@ class User < ActiveRecord::Base
     selected_role.blank? ? "" : selected_role.first
   end
 
-  def refresh_buyer_counters!
+  def refresh_supplier_counters!
     self.leads_purchased_counter = LeadPurchase.with_purchased_by(self).size
     if big_buyer?
       self.unpaid_leads_counter = LeadPurchase.with_not_invoiced.where("owner_id = ?", id).map(&:currency_id).size
@@ -407,15 +407,15 @@ class User < ActiveRecord::Base
   end
 
   def has_accessible_categories?
-    parent.present? and has_any_role?(:lead_buyer, :lead_user) and User::Customer.find(parent_id).category_interests.present?
+    parent.present? and has_any_role?(:lead_supplier, :lead_user) and User::Supplier.find(parent_id).category_interests.present?
   end
 
   def can_save_category_interests?
-    has_any_role?(:customer)
+    has_any_role?(:supplier)
   end
 
   def accessible_categories_ids
-    User::Customer.find(parent_id.blank? ? id : parent_id).category_interests.map(&:category_id)
+    User::Supplier.find(parent_id.blank? ? id : parent_id).category_interests.map(&:category_id)
   end
 
   def has_role?(r)
@@ -431,7 +431,7 @@ class User < ActiveRecord::Base
   end
 
   def can_create_lead_templates?
-    has_any_role?(:admin, :call_centre, :agent, :call_centre_agent, :customer)
+    has_any_role?(:admin, :call_centre, :agent, :call_centre_agent, :supplier)
   end
 
   def country_vat_rate
@@ -456,8 +456,8 @@ class User < ActiveRecord::Base
 
   #to handle menu chronology correctly
   def roles_sorted
-    if has_role?(:lead_buyer)
-      [:lead_buyer] + roles.select { |r| r != :lead_buyer }
+    if has_role?(:lead_supplier)
+      [:lead_supplier] + roles.select { |r| r != :lead_supplier }
     else
       roles
     end
@@ -475,22 +475,26 @@ class User < ActiveRecord::Base
     has_any_role?([:agent, :call_centre, :call_centre_agent])
   end
 
-  def buyer?
-    has_any_role?([:customer, :category_buyer, :lead_buyer])
+  def supplier?
+    has_any_role?([:supplier, :category_supplier, :lead_supplier])
   end
 
   def admin?
     has_role?(:admin)
   end
 
-  def purchase_manager?
-    has_role?(:purchase_manager)
+  def member?
+    has_role?(:member)
+  end
+
+  def category_supplier?
+    has_role?(:category_supplier)
   end
 
   def purchase_limit_reached?(lead, buyout=false)
     return false unless big_buyer?
     not_invoiced_cost = LeadPurchase.with_not_invoiced.where("owner_id = ?", id).map { |lp| lp.not_invoiced_euro_sum.to_f }.sum
-    (not_invoiced_cost + (buyout ? lead.buyout_quantity : 1) * lead.currency.to_euro(lead.price)) >= (big_buyer_purchase_limit.to_f > 0 ? big_buyer_purchase_limit.to_f : Settings.big_buyer_purchase_limit.to_f)
+    (not_invoiced_cost + (buyout ? lead.buyout_quantity : 1) * lead.currency.to_euro(lead.price)) >= (big_buyer_purchase_limit.to_f > 0 ? big_buyer_purchase_limit.to_f : Settings.big_supplier_purchase_limit.to_f)
   end
 
   def generate_login_key
@@ -569,7 +573,7 @@ class User < ActiveRecord::Base
 
   def deliver_lead_notification
     unless lead_notification_type == LEAD_NOTIFICATION_INSTANT
-      subscribed_categories = has_role?(:customer) ? with_role.categories : has_any_role?(:lead_buyer, :lead_user) and parent.present? ? parent.with_role.categories : []
+      subscribed_categories = has_role?(:supplier) ? with_role.categories : has_any_role?(:lead_supplier, :lead_user) and parent.present? ? parent.with_role.categories : []
       unless subscribed_categories.empty?
         uniq_id = "lead_notification_#{lead_notification_type == LEAD_NOTIFICATION_ONCE_PER_DAY ? 'daily' : 'weekly'}"
         leads = Lead.for_notification(subscribed_categories, lead_notification_type)
@@ -578,18 +582,18 @@ class User < ActiveRecord::Base
     end
   end
 
-  def category_buyer_category_home_url
-    if has_role?(:category_buyer)
+  def category_supplier_category_home_url
+    if has_role?(:category_supplier)
       "https://#{mailer_host}/#{with_role.buying_categories.first.cached_slug}"
     end
   end
 
   def home_page_url
-    if has_role?(:category_buyer)
-      category_buyer_category_home_url
-    elsif has_role?(:customer)
-      "https://#{mailer_host}/buyer_home"
-    elsif has_role?(:purchase_manager)
+    if has_role?(:category_supplier)
+      category_supplier_category_home_url
+    elsif has_role?(:supplier)
+      "https://#{mailer_host}/supplier_home"
+    elsif has_role?(:member)
       "https://#{mailer_host}"
     else
       "https://#{mailer_host}/"
@@ -619,7 +623,7 @@ class User < ActiveRecord::Base
       self.send_invitation = false
       self.save(:validate => false)
     end
-    template = EmailTemplate.find_by_uniq_id("#{has_role?(:purchase_manager) ? 'member' : 'supplier'}_invitation")
+    template = EmailTemplate.find_by_uniq_id("#{has_role?(:member) ? 'member' : 'supplier'}_invitation")
     template = customize_email_template(template)
     TemplateMailer.delay.new(email, template, with_role.address.present? ? with_role.address.country : Country.get_country_from_locale,
                              {:user => self.with_role, :new_password => new_password}, assets_to_path_names(email_materials))
@@ -638,19 +642,19 @@ class User < ActiveRecord::Base
   def role_to_deal_namespace
     if has_role?(:admin)
       "administration"
-    elsif has_role?(:customer)
-      "buyers"
+    elsif has_role?(:supplier)
+      "suppliers"
     elsif has_any_role?(:agent, :call_centre, :call_centre_agent)
       role.to_s.pluralize
     end
   end
 
   def role_to_campaign_template_name
-    if has_role?(:category_buyer)
+    if has_role?(:category_supplier)
       "category_buyer"
-    elsif has_role?(:customer)
+    elsif has_role?(:supplier)
       "buyer"
-    elsif has_role?(:purchase_manager)
+    elsif has_role?(:member)
       "member"
     end
   end

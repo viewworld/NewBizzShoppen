@@ -108,14 +108,14 @@ LeadPurchase.blueprint do
   paid { false }
   accessible_from { nil }
   lead_id { Lead.make! }
-  owner_id { User::Customer.make!.id }
+  owner_id { User::Supplier.make!.id }
 end
 
 LeadSinglePurchase.blueprint do
   paid { false }
   accessible_from { nil }
   lead_id { Lead.make! }
-  owner_id { User::Customer.make!.id }
+  owner_id { User::Supplier.make!.id }
 end
 
 LeadRequest.blueprint do
@@ -164,7 +164,7 @@ end
   address { Address.make! }
 end
 
-::User::Customer.blueprint do
+::User::Supplier.blueprint do
   email { Faker::Internet.email }
   password { "secret" }
   password_confirmation { "secret" }
@@ -179,7 +179,7 @@ end
   address { Address.make! }
 end
 
-::User::PurchaseManager.blueprint do
+::User::Member.blueprint do
   company_name { Faker::Company.name }
   email { Faker::Internet.email }
   password { "secret" }
@@ -203,10 +203,10 @@ end
   last_name { Faker::Name.last_name }
   agreement_read { true }
   roles_mask { 64 }
-  parent_id { User::Customer.make!.id }
+  parent_id { User::Supplier.make!.id }
 end
 
-::User::LeadBuyer.blueprint do
+::User::LeadSupplier.blueprint do
   email { Faker::Internet.email }
   password { "secret" }
   password_confirmation { "secret" }
@@ -216,7 +216,7 @@ end
   last_name { Faker::Name.last_name }
   agreement_read { true }
   roles_mask { 96 }
-  parent_id { User::Customer.make!.id }
+  parent_id { User::Supplier.make!.id }
 end
 
 ::User::Agent.blueprint do
@@ -261,7 +261,7 @@ end
   billing_rate { 10 }
 end
 
-::User::CategoryBuyer.blueprint do
+::User::CategorySupplier.blueprint do
   email { Faker::Internet.email }
   password { "secret" }
   password_confirmation { "secret" }
@@ -296,12 +296,12 @@ end
   content { Faker::Lorem.sentences(2).to_s }
 end
 
-::Article::News::SalesManager.blueprint do
+::Article::News::Supplier.blueprint do
   title { Faker::Lorem.words(4).to_s.capitalize }
   content { Faker::Lorem.sentences(2).to_s }
 end
 
-::Article::News::PurchaseManager.blueprint do
+::Article::News::Member.blueprint do
   title { Faker::Lorem.words(4).to_s.capitalize }
   content { Faker::Lorem.sentences(2).to_s }
 end
@@ -318,7 +318,7 @@ end
 end
 
 Invoice.blueprint do
-  user { User::Customer.make! }
+  user { User::Supplier.make! }
   seller { Seller.make! }
 end
 

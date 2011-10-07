@@ -22,7 +22,7 @@ class CreditNote < ActiveRecord::Base
     invoice.invoice_lines.where("is_credited = ?", true)
   end
 
-  def customer
+  def supplier
     invoice.user
   end
 
