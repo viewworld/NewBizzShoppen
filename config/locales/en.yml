@@ -955,7 +955,7 @@ en:
             resend_certification_notification_after_days: "Resend certification notification after days"
             youtube_introduction: "YouTube introduction video URL"
             default_deal_admin_email: "Default deal admin email"
-            email_verification_for_members: "Email verification for member managers"
+            email_verification_for_members: "Email verification for members"
             email_verification_for_suppliers: "Email verification for suppliers"
             default_max_auto_buy_per_4_weeks: "Default max auto buy per 4 weeks"
             contact_us_phone: "Contact us phone number"

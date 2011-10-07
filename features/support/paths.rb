@@ -64,10 +64,13 @@ module NavigationHelpers
         '/agents/lead_templates'
     when /browse leads/
         '/categories'
+    when /browse deals/
+        '/deal_categories'
     when /browse (.*) deals/
         dc = DealCategory.where(:name => $1).first
         deals_index_path(:slag => dc.cached_slug)
-    when /browse deals/        
+    when /deals/
+        '/deals'
     when /supplier cart/
         '/suppliers/cart'
     when /supplier cart items/

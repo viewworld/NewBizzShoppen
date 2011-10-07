@@ -25,7 +25,7 @@ class Nbs < Thor
     Settings.default_deal_admin_email = Rails.env.production? ? "" : "agent@nbs.com" if Settings.default_deal_admin_email.nil?
     # email verification settings
     Settings.email_verification_for_members = "0" if Settings.email_verification_for_members.nil?
-    Settings.email_verification_for_sales_managers = "0" if Settings.email_verification_for_sales_managers.nil?
+    Settings.email_verification_for_suppliers = "0" if Settings.email_verification_for_suppliers.nil?
     Settings.default_max_auto_buy_per_4_weeks = 5 if Settings.default_max_auto_buy_per_4_weeks.nil?
     Settings.default_group_deal_min_leads_created = 5 if Settings.default_group_deal_min_leads_created.nil?
 
