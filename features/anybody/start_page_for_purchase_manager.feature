@@ -45,14 +45,14 @@ Scenario: I can't see inactive leads on latest leads
   And lead "InactiveLead" has attributes "sale_limit:1"
   When I am on the member home page
   Then I should see "1" items on a list within "#latest_leads"
-  And I follow translated "purchase_manager_home.show.view.complete_list_link" within "#latest_leads"
+  And I follow translated "member_home.show.view.complete_list_link" within "#latest_leads"
   Then I should see translated "common.nothing_to_display"
 
 @added @_done
 Scenario: I can go to details of purchase manager news
   Given published purchase manager news exists with attributes "title:FirstNews"
   When I am on the member home page
-  And I follow translated "purchase_manager_home.show.view.read_more_link" within "#news"
+  And I follow translated "member_home.show.view.read_more_link" within "#news"
   Then I should be on FirstNews news page
 
 @added @_done
@@ -74,40 +74,40 @@ Scenario: I can go to details of latest leads
 Scenario: I can go to purchase manager news listing
   Given lead AwesomeLead exists within category Test
   When I am on the member home page
-  And I follow translated "purchase_manager_home.show.view.complete_list_link" within "#latest_leads"
+  And I follow translated "member_home.show.view.complete_list_link" within "#latest_leads"
   Then I should see "AwesomeLead" within ".leads_table"
 
 @added @_done
 Scenario: I can go to bestsellers listing
   When I am on the member home page
-  And I follow translated "purchase_manager_home.show.view.complete_list_link" within "#best_sellers"
+  And I follow translated "member_home.show.view.complete_list_link" within "#best_sellers"
   Then I should be on the leads page
   And I should see translated "leads.index.bestsellers_header"
 
 @added @_done
 Scenario: I can go to latest leads listing
   When I am on the member home page
-  And I follow translated "purchase_manager_home.show.view.complete_list_link" within "#latest_leads"
+  And I follow translated "member_home.show.view.complete_list_link" within "#latest_leads"
   Then I should be on the leads page
   And I should see translated "leads.index.latest_header"
 
 @added @_done @_deprecated
 Scenario: I can go to buyer page by clicking “CLICK HERE IF YOU ARE A BUYER”
 #  When I follow translated "home.show.view.purchase_manager"
-#  And I follow translated "purchase_manager_home.show.view.buyer_link"
+#  And I follow translated "member_home.show.view.buyer_link"
 #  Then I should be on the supplier home page
 
 @added @_done @_deprecated
 Scenario: I can go to agent page by clicking “CLICK HERE IF YOU ARE AN AGENT”
 #  When I follow translated "home.show.view.purchase_manager"
-#  And I follow translated "purchase_manager_home.show.view.agent_link"
+#  And I follow translated "member_home.show.view.agent_link"
 #  Then I should be on the agent home page
 
 @added @_done
 Scenario: I can go to creation of new purchase manager account page
   When I am on the member home page
-  And I follow translated "purchase_manager_home.show.view.create_new_purchase_manager_account"
-  Then I should be on purchase manager sign up page
+  And I follow translated "member_home.show.view.create_new_member_account"
+  Then I should be on member sign up page
 
 @added @_done
 Scenario: In bestsellers and latest listings I should not see leads which I've already bought
@@ -240,14 +240,14 @@ Scenario: I should see "My contact requests" instead of "Latest leads"
   When I am signed up and confirmed as user with email pm@nbs.com and password secret and role member
   And I am on the home page
   And I sign in as pm@nbs.com with password secret
-  And I follow translated "purchase_manager_home.show.view.complete_list_link" within "#my_contact_requests"
+  And I follow translated "member_home.show.view.complete_list_link" within "#my_contact_requests"
   Then I should be on the leads page
   And I should see translated "leads.index.contact_requests_for_header"
 
 @m12 @$_guest @added @_done @_tested
 Scenario: I should see "Latest leads" when I'm not a procurement manager
   When I am on the member home page
-  And I follow translated "purchase_manager_home.show.view.complete_list_link" within "#latest_leads"
+  And I follow translated "member_home.show.view.complete_list_link" within "#latest_leads"
   Then I should be on the leads page
   And I should see translated "leads.index.latest_header"
 
