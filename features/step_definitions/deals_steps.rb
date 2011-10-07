@@ -119,7 +119,7 @@ Then /^I fill group deal edit form and submit with translated button "([^"]*)"$/
 end
 
 Then /I add and remove logo for deal as "([^"]*)"/ do |role|
-  Then %{I follow translated "layout.main_menu.#{role == "administration" ? "admin" : role == "buyer" ? "lead_buyer" : role}.#{"my_" if role == "buyer"}deals"}
+  Then %{I follow translated "layout.main_menu.#{role == "administration" ? "admin" : role == "supplier" ? "lead_supplier" : role}.#{"my_" if role == "supplier"}deals"}
   Then %{I follow translated "#{role}.deals.index.view.edit"}
   Then %{attach the file "sample image" to "deal_logo_attributes_asset"}
   Then %{I press translated "#{role}.deals.edit.view.update_button"}
@@ -131,7 +131,7 @@ Then /I add and remove logo for deal as "([^"]*)"/ do |role|
 end
 
 Then /I add and remove document for deal as "([^"]*)"/ do |role|
-  Then %{I follow translated "layout.main_menu.#{role == "administration" ? "admin" : role == "buyer" ? "lead_buyer" : role}.#{"my_" if role == "buyer"}deals"}
+  Then %{I follow translated "layout.main_menu.#{role == "administration" ? "admin" : role == "supplier" ? "lead_supplier" : role}.#{"my_" if role == "supplier"}deals"}
   Then %{I follow translated "#{role}.deals.index.view.edit"}
   Then %{attach the file "document" to "deal_materials_attributes_0_asset"}
   Then %{I press translated "#{role}.deals.edit.view.update_button"}
@@ -146,7 +146,7 @@ Then /I add and remove document for deal as "([^"]*)"/ do |role|
 end
 
 Then /I add and remove image for deal as "([^"]*)"/ do |role|
-  Then %{I follow translated "layout.main_menu.#{role == "administration" ? "admin" : role == "buyer" ? "lead_buyer" : role}.#{"my_" if role == "buyer"}deals"}
+  Then %{I follow translated "layout.main_menu.#{role == "administration" ? "admin" : role == "supplier" ? "lead_supplier" : role}.#{"my_" if role == "supplier"}deals"}
   Then %{I follow translated "#{role}.deals.index.view.edit"}
   Then %{attach the file "sample image" to "deal_images_attributes_0_asset"}
   Then %{I press translated "#{role}.deals.edit.view.update_button"}

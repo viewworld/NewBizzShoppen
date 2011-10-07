@@ -7,7 +7,7 @@ Background: I am a guest and I am on the home page
 
 @added @_done
 Scenario: I can see welcome text fetch from the database
-  Then I should see "Blurb purchase manager home"
+  Then I should see "Blurb member home"
 
 @added @_done
 Scenario: I can see 3 latest purchase manager news excerpts
