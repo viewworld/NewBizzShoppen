@@ -417,8 +417,8 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
      {:name => "Meeting booked", :final => true, :generic => true},
      {:name => "Custom result", :final => true, :generic => true},
      {:name => "Send material", :final => false, :generic => true},
-     {:name => "Upgrade to category buyer", :final => true, :generic => true},
-     {:name => "Upgrade to buyer", :final => true, :generic => true},
+     {:name => "Upgrade to category supplier", :final => true, :generic => true},
+     {:name => "Upgrade to supplier", :final => true, :generic => true},
      {:name => "Upgrade to member", :final => true, :generic => true}].each do |result|
       Result.create(result) unless Result.find_by_name(result[:name])
     end
@@ -429,8 +429,8 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
      {:name => "Result message", :field_type => "0", :is_mandatory => true, :result => Result.find_by_name("Custom result") },
      {:name => "Call back date", :field_type => "4", :is_mandatory => true, :result => Result.find_by_name("Send material") },
      {:name => "Material", :field_type => "5", :is_mandatory => true, :result => Result.find_by_name("Send material") },
-     {:name => "Material", :field_type => "5", :is_mandatory => false, :result => Result.find_by_name("Upgrade to category buyer") },
-     {:name => "Material", :field_type => "5", :is_mandatory => false, :result => Result.find_by_name("Upgrade to buyer") },
+     {:name => "Material", :field_type => "5", :is_mandatory => false, :result => Result.find_by_name("Upgrade to category supplier") },
+     {:name => "Material", :field_type => "5", :is_mandatory => false, :result => Result.find_by_name("Upgrade to supplier") },
      {:name => "Material", :field_type => "5", :is_mandatory => false, :result => Result.find_by_name("Upgrade to member") }
     ].each do |result_field|
       ResultField.create(result_field) unless ResultField.find_by_name_and_result_id(result_field[:name], result_field[:result].id)
