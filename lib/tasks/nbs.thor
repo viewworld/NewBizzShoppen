@@ -633,7 +633,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
 
     Contact.where("last_call_result_at IS NULL").each do |contact|
       last_call_result = contact.call_results.order("created_at DESC").first
-      contact.update_attribute(:last_call_result_at, last_call_result.nil? ? nil : last_call_result.created_at)
+      contact.update_attribute(:last_call_result_at, last_call_result.created_at) if last_call_result
     end
 
     puts "Importing languages..."
