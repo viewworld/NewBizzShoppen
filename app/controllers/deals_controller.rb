@@ -38,9 +38,13 @@ class DealsController < ApplicationController
     end
 
     @category = categories_scope.where(:id => @search.with_category).first
-    @categories = params[:slag].present? ? categories_scope.where("categories.id in (?)", @category.self_and_descendants.map(&:id)) : categories_scope.all
 
-    @search.with_selected_categories = @categories
+    if params[:slag].present? and !@category
+      redirect_to root_path
+    else
+      @categories = params[:slag].present? ? categories_scope.where("categories.id in (?)", @category.self_and_descendants.map(&:id)) : categories_scope.all
+      @search.with_selected_categories = @categories
+    end
   end
 
   def show
