@@ -12,7 +12,7 @@ Background:
   And Lead named "Ultra printers" exists within "Another sample category" category
   And Lead named "Keyboards deal" exists within "Another sample category" category
   And Lead named "Ultra new printers" exists within "Computers" category
-  Given I am signed up and confirmed as user with email john@doe.com and password secret and role customer
+  Given I am signed up and confirmed as user with email john@doe.com and password secret and role supplier
   And user "john@doe.com" has team buyers enabled
   And an user with role lead_user and email lead_user2@person.com exists as subaccount for customer customer@person.com
   And lead "Keyboards deal" was requested by user "lead_user2@person.com" with role "lead_user" and is owned by user "john@doe.com"
@@ -23,7 +23,7 @@ Scenario: I cannot buy a lead skipping checkout
   Given I go to browse leads
   And I follow category "Computers"
   Then I follow translated "leads.index.add_to_cart_link"
-  When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   Then I should see translated "common.nothing_to_display"
 
 @tgn @_tested
@@ -32,16 +32,16 @@ Scenario: I can buy lead through checkout
   And I follow category "Computers"
   Then I follow translated "leads.index.add_to_cart_link"
   And I follow translated "layout.cart.show_cart"
-  Then I press translated "buyer.cart.show.view.checkout_link"
-  And paypal payment for user with email "john@doe.com" and role "customer"
-  And lead named "Ultra new printers" is owned by user "john@doe.com" with role "customer"
+  Then I press translated "supplier.cart.show.view.checkout_link"
+  And paypal payment for user with email "john@doe.com" and role "supplier"
+  And lead named "Ultra new printers" is owned by user "john@doe.com" with role "supplier"
 
 @tgn @_tested
 Scenario: Lead purchase is not marked with "has access" after creation
   Given I go to browse leads
   And I follow category "Computers"
   Then I follow translated "leads.index.add_to_cart_link"
-  When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   Then I should see translated "common.nothing_to_display"
 
 #after AO finishes invoicing subsystem
@@ -51,10 +51,10 @@ Scenario: Invoice is auto-created if a new paypal transaction (payment for cart 
   And I follow category "Computers"
   Then I follow translated "leads.index.add_to_cart_link"
   And I follow translated "layout.cart.show_cart"
-  Then I press translated "buyer.cart.show.view.checkout_link"
-  And paypal payment for user with email "john@doe.com" and role "customer"
-  Then invoice is created for user with email "john@doe.com" and role "customer"
-  And invoice line is created for lead "Ultra new printers" and user with email "john@doe.com" and role "customer"
+  Then I press translated "supplier.cart.show.view.checkout_link"
+  And paypal payment for user with email "john@doe.com" and role "supplier"
+  Then invoice is created for user with email "john@doe.com" and role "supplier"
+  And invoice line is created for lead "Ultra new printers" and user with email "john@doe.com" and role "supplier"
 
 @tgn @_tested @added
 Scenario: Invoice is NOT created when payment notification is duplicated
@@ -62,26 +62,26 @@ Scenario: Invoice is NOT created when payment notification is duplicated
   And I follow category "Computers"
   Then I follow translated "leads.index.add_to_cart_link"
   And I follow translated "layout.cart.show_cart"
-  Then I press translated "buyer.cart.show.view.checkout_link"
-  And paypal payment for user with email "john@doe.com" and role "customer"
-  Then invoice is created for user with email "john@doe.com" and role "customer"
-  And invoice line is created for lead "Ultra new printers" and user with email "john@doe.com" and role "customer"
-  When paypal payment for user with email "john@doe.com" and role "customer"
+  Then I press translated "supplier.cart.show.view.checkout_link"
+  And paypal payment for user with email "john@doe.com" and role "supplier"
+  Then invoice is created for user with email "john@doe.com" and role "supplier"
+  And invoice line is created for lead "Ultra new printers" and user with email "john@doe.com" and role "supplier"
+  When paypal payment for user with email "john@doe.com" and role "supplier"
   Then last payment notification is marked as "Duplicated"
-  And invoices count for user with email "john@doe.com" and role "customer" is 1
+  And invoices count for user with email "john@doe.com" and role "supplier" is 1
 
 @tgn @_tested
 Scenario: I can add to cart lead requested by lead user that belongs to my account
-  When I go to customers lead requests
-  Then I follow translated "customer.lead_requests.index.view.accept_lead_request_link"
-  When I follow translated "layout.main_menu.lead_buyer.lead_purchases"
+  When I go to suppliers lead requests
+  Then I follow translated "supplier.lead_requests.index.view.accept_lead_request_link"
+  When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   And I should see translated "common.nothing_to_display"
 
 @tgn @_tested @selenium
 Scenario: I can bulk add to cart leads requested by lead user that belongs to my account
-  When I go to customers lead requests
+  When I go to suppliers lead requests
   Then I check "mark_all"
-  And I follow translated "customer.lead_requests.index.view.button_bulk_create_lead_request"
+  And I follow translated "supplier.lead_requests.index.view.button_bulk_create_lead_request"
   And I should see translated "flash.bulk_lead_requests.update.notice"
 
 @tgn @m5 @added @_tested
@@ -95,8 +95,8 @@ Scenario: Item cannot be added to the cart if its currency does not match items'
   Then I go to browse leads
   And I follow category "Super Computers"
   Then I follow translated "leads.index.add_to_cart_link"
-  And I should see translated "buyer.cart_items.create.flash.cart_item_creation_successful"
+  And I should see translated "supplier.cart_items.create.flash.cart_item_creation_successful"
   Then I go to browse leads
   And I follow category "Awesome Computers"
   Then I follow translated "leads.index.add_to_cart_link"
-  And I should see translated "buyer.cart_items.create.flash.cart_item_currencies_mismatch"
+  And I should see translated "supplier.cart_items.create.flash.cart_item_currencies_mismatch"

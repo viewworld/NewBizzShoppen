@@ -15,7 +15,7 @@ Background:
   And I have user with email jim.jones@person.com and role agent
   And lead Cheap mouses ultimate deal is created by user jim.jones@person.com with role agent
   And User jim.jones@person.com with role agent is blocked
-  Given I am signed up and confirmed as user with email john@doe.com and password secret and role customer
+  Given I am signed up and confirmed as user with email john@doe.com and password secret and role supplier
   And I sign in as john@doe.com with password secret
   And I go to browse leads
 
@@ -45,8 +45,8 @@ Scenario: I should see created by
 
 @m4 @tgn @_tested @added
 Scenario: I should see rating % and certification level for each lead
-  Given I have user with email bob@person.com and role customer
-  And a lead Printers ultimate deal exists within category Computers and is bought by user bob@person.com with role customer
+  Given I have user with email bob@person.com and role supplier
+  And a lead Printers ultimate deal exists within category Computers and is bought by user bob@person.com with role supplier
   And a lead "Printers ultimate deal" has good rating
   Given All leads have refreshed average ratings
   Given I go to browse leads
@@ -74,7 +74,7 @@ Scenario: I should see hottness, novelty, exposure, clicks
 Scenario: I can click add lead to my basket and I will get a notification “Lead was added to your basket”
   Then I follow category "Computers"
   And I follow translated "leads.index.add_to_cart_link" for lead "Printers ultimate deal"
-  Then I should see translated "buyer.cart_items.create.flash.cart_item_creation_successful"
+  Then I should see translated "supplier.cart_items.create.flash.cart_item_creation_successful"
 
 @_tested @selenium
 Scenario: I can toggle select leads on a displayed page
@@ -88,7 +88,7 @@ Scenario: I can bulk add leads to my basket and I will get a notification “Lea
   And I follow category "Computers"
   Then I check "mark_all"
   And I press translated "leads.index.button_bulk_create_cart_item"
-  Then I should see translated "buyer.bulk_cart_items.create.flash.n_cart_items_added" with options "count:4"
+  Then I should see translated "supplier.bulk_cart_items.create.flash.n_cart_items_added" with options "count:4"
 
 @ao @m5 @added @_done @_tested
 Scenario: I should not see leads that I've added to cart

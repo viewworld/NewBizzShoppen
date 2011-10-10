@@ -26,29 +26,29 @@ module RoleChange
       errors.empty?
     end
 
-    def remove_role_category_buyer
+    def remove_role_category_supplier
       self.buying_categories = []
-      self.roles.delete(:category_buyer)
+      self.roles.delete(:category_supplier)
       User::LeadUser.find(subaccounts.map(&:id)).each do |sa|
-        sa.roles.delete(:category_buyer)
+        sa.roles.delete(:category_supplier)
         sa.save
       end
     end
 
-    def add_role_category_buyer
+    def add_role_category_supplier
       if categories.empty?
-        self.errors.add(:base, I18n.t("activerecord.attributes.user.customer.base.must_have_interests"))
+        self.errors.add(:base, I18n.t("activerecord.attributes.user.supplier.base.must_have_interests"))
       else
-        self.roles << :category_buyer
+        self.roles << :category_supplier
         subaccounts.map(&:with_role).each do |sa|
-          sa.roles << :category_buyer
+          sa.roles << :category_supplier
           sa.save
         end
       end
     end
 
     def assign_buying_categories
-      if roles_mask_changed? and has_role? :category_buyer and !parent
+      if roles_mask_changed? and has_role? :category_supplier and !parent
         self.with_role.buying_categories = categories
       end
     end

@@ -38,8 +38,8 @@ describe Lead do
   context "Generation of lead from sales manager's deal" do
     before(:each) do
       @deal_admin = User.find_by_email(Settings.default_deal_admin_email)
-      @buyer = User::Customer.make!(:email => "buyer_deal_maker@nbs.com", :deal_maker_role_enabled => true)
-      @purchase_manager = User::PurchaseManager.make!(:email => "purchase_manager101@nbs.com")
+      @buyer = User::Supplier.make!(:email => "buyer_deal_maker@nbs.com", :deal_maker_role_enabled => true)
+      @purchase_manager = User::Member.make!(:email => "purchase_manager101@nbs.com")
       @deal = Deal.make!(:email_address => "buyer_deal_maker@nbs.com", :published => true, :header => "Printers deal", :description => "Some desc of this", :price => 0)
       @deal.creator = @buyer
       @deal.save
@@ -83,8 +83,8 @@ describe Lead do
     before(:each) do
       @deal_admin = User.find_by_email(Settings.default_deal_admin_email)
       @agent = User::CallCentreAgent.make!(:email => "agent_deal_maker@nbs.com", :deal_maker_role_enabled => true)
-      @purchase_manager = User::PurchaseManager.make!(:email => "purchase_manager101@nbs.com")
-      @buyer = User::Customer.make!(:email => "buyer_deal_maker@nbs.com", :company_name => "Xansara")
+      @purchase_manager = User::Member.make!(:email => "purchase_manager101@nbs.com")
+      @buyer = User::Supplier.make!(:email => "buyer_deal_maker@nbs.com", :company_name => "Xansara")
       @deal = Deal.make!(:email_address => "buyer_deal_maker@nbs.com", :published => true, :header => "Printers deal", :description => "Some desc of this", :use_company_name_as_category => true)
       @deal.creator = @agent
       @deal.save

@@ -55,7 +55,7 @@ Given /^category "([^"]*)" has attributes "([^"]*)"$/ do |category_name, options
 end
 
 Then /^category "([^"]*)" is in interests of user "([^"]*)" "([^"]*)"$/ do |category, email, is_true|
-  ::User::Customer.find_by_email(email).categories.include?(Category.where(:name => category).first).should == (eval(is_true) == true)
+  ::User::Supplier.find_by_email(email).categories.include?(Category.where(:name => category).first).should == (eval(is_true) == true)
 end
 
 Then /^category "([^"]*)" has email template - "([^"]*)"$/ do |name, yes_or_no|

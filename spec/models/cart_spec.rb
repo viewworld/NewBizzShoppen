@@ -4,9 +4,9 @@ describe Cart do
   fixtures :all
 
   before(:each) do
-    @buyer = User::Customer.make!
+    @buyer = User::Supplier.make!
     @buyer.address.country.vat_rate.update_attribute(:rate, 50.0)
-    @buyer = User::LeadBuyer.find(@buyer.id)
+    @buyer = User::LeadSupplier.find(@buyer.id)
   end
 
   context "Initialization" do
@@ -24,11 +24,11 @@ describe Cart do
 
     it "should not contain requested leads" do
       @lead      = Lead.make!
-      @customer  = User::Customer.make!
+      @customer  = User::Supplier.make!
       @lead_user = User::LeadUser.make!(:parent_id => @customer.id)
       @lead_user.lead_requests.create!(:lead_id => @lead.id)
 
-      cart = Cart.new(User::LeadBuyer.find(@customer.id))
+      cart = Cart.new(User::LeadSupplier.find(@customer.id))
 
       cart.empty?.should be true
     end

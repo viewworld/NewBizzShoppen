@@ -441,12 +441,12 @@ Feature: Agent campaign - calling session
       And I am on the homepage
       And I sign in as newcategory_buyer888@nbs.com with password testin
       Then I should see translated "my_profile.edit.view.header_contact_confirmation"
-      And the "user_category_buyer_company_name" field should contain "Bon Jovi inc."
-      And the "user_category_buyer_first_name" field should contain "John"
-      And the "user_category_buyer_last_name" field should contain "Dohn"
-      And the "user_category_buyer_email" field should contain "newcategory_buyer888@nbs.com"
-      And the "user_category_buyer_address_attributes_address_line_1" field should contain "LongRoad 2"
-      And the "user_category_buyer_address_attributes_zip_code" field should contain "21-221"
+      And the "user_category_supplier_company_name" field should contain "Bon Jovi inc."
+      And the "user_category_supplier_first_name" field should contain "John"
+      And the "user_category_supplier_last_name" field should contain "Dohn"
+      And the "user_category_supplier_email" field should contain "newcategory_buyer888@nbs.com"
+      And the "user_category_supplier_address_attributes_address_line_1" field should contain "LongRoad 2"
+      And the "user_category_supplier_address_attributes_zip_code" field should contain "21-221"
 
     @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent  @_tested @_done @ff5
     Scenario: After confirming his account information, contact should be redirected to his account home page
@@ -516,7 +516,7 @@ Feature: Agent campaign - calling session
       And I follow translated "call_results.new.save_button"
       Then I should see translated "call_results.create.flash.successfully_added"
       And last email sent should have been sent to recipient "new_buyer888@nbs.com"
-      And user "new_buyer888@nbs.com" with role "customer" should have attributes "big_buyer:true, not_charge_vat:true, team_buyers:true, big_buyer_purchase_limit:2398.0"
+      And user "new_buyer888@nbs.com" with role "supplier" should have attributes "big_buyer:true, not_charge_vat:true, team_buyers:true, big_buyer_purchase_limit:2398.0"
       And user "new_buyer888@nbs.com" has deal maker role enabled
   
     @m14 @requested @my_results @$_call_centre_agent @tgn @_done @tested_elsewhere
@@ -580,7 +580,7 @@ Feature: Agent campaign - calling session
       And I follow translated "call_results.new.save_button"
       Then I should see translated "call_results.create.flash.successfully_added"
       And last email sent should have been sent to recipient "new_buyer888@nbs.com"
-      And last email sent should have content "/buyer_home"
+      And last email sent should have content "/supplier_home"
       And last email sent should have content "Fairleads password: testin"
       And last email sent should have content "Screen name: Dohn"
       And last email sent should have content "Fairleads username: new_buyer888@nbs.com"
@@ -590,7 +590,7 @@ Feature: Agent campaign - calling session
       Then I should see translated "my_profile.edit.view.header_contact_confirmation"
       And I press translated "password.edit.view.button_update_user"
       And last email sent should have been sent to recipient "new_buyer888@nbs.com"
-      And last email sent should have content "/buyer_home"
+      And last email sent should have content "/supplier_home"
       And last email sent should have content "Login: new_buyer888@nbs.com"
       And last email sent should have content "Linked with account: not linked"
 
@@ -631,7 +631,6 @@ Feature: Agent campaign - calling session
     Scenario:  I can add new contact from agent work screen and it is already assigned to me (even if my campaign max contacts count was reached)
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       Then I follow translated "agent_work_screen.index.new_contact"
-      And I open page in browser
       And I fill in "contact_company_name" with "ABC Ltd" within "#modal_new_contact_form_div"
       And I fill in "contact_company_phone_number" with "+45 3403248932" within "#modal_new_contact_form_div"
       And I select "Denmark" from "contact_country_id" within "#modal_new_contact_form_div"

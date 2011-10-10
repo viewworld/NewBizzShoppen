@@ -14,7 +14,7 @@ class Address < ActiveRecord::Base
 
 end
 
-class Address::InvoiceCustomer < Address
+class Address::InvoiceSupplier < Address
 end
 
 class Address::InvoiceSeller < Address

@@ -156,8 +156,8 @@ Scenario: I can flag a category to not show prices to team members
   And lead "Monitors deal #1" has attributes "price:589.17"
   And lead Monitors deal #2 exists within category Computers
   And lead "Monitors deal #2" has attributes "price:439.58"
-  And someone is signed up and confirmed as user with email buyer888@nbs.com and password secret and role customer
-  And an user with role lead_buyer and email lead_buyer888@nbs.com exists as subaccount for customer buyer888@nbs.com
+  And someone is signed up and confirmed as user with email buyer888@nbs.com and password secret and role supplier
+  And an user with role lead_supplier and email lead_buyer888@nbs.com exists as subaccount for customer buyer888@nbs.com
   Then I sign in as lead_buyer888@nbs.com with password secret
   And I go to browse leads
   And I follow category "Computers"
@@ -173,8 +173,8 @@ Scenario: I can flag a category to not show prices to team members
 @m13 @added @auto_buy @is @_done @_tested @selenium
 Scenario: I can enable auto-buy option for big buyer for categories which are unique to him
   Given there are no categories
-  Then I have user with email nbsbuyer3483434biz@nbs.com and role customer
-  Then User nbsbuyer3483434biz@nbs.com with role customer is big buyer
+  Then I have user with email nbsbuyer3483434biz@nbs.com and role supplier
+  Then User nbsbuyer3483434biz@nbs.com with role supplier is big buyer
   Then Category Computers is created
   When I go to administration categories
   Then I follow translated "administration.categories.index.view.edit_link"

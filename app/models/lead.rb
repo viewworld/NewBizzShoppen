@@ -17,7 +17,7 @@ class Lead < AbstractLead
   belongs_to :country
   belongs_to :currency
   belongs_to :region
-  belongs_to :requestee, :class_name => "User::PurchaseManager", :foreign_key => :requested_by
+  belongs_to :requestee, :class_name => "User::Member", :foreign_key => :requested_by
   belongs_to :deal, :class_name => "Deal", :foreign_key => "deal_id"
   has_many :lead_certification_requests, :dependent => :destroy
   has_many :lead_translations, :dependent => :destroy
@@ -65,7 +65,7 @@ class Lead < AbstractLead
 
   scope :owned_by, lambda { |user| where("lead_purchases.accessible_from IS NOT NULL and lead_purchases.owner_id = ?", user.id).joins(:lead_purchases) }
   scope :without_unique_categories, where("categories.is_agent_unique = ? and categories.is_customer_unique = ?", false, false).joins(:category)
-  scope :with_customer_unique_categories, lambda { |customer_id| where("(is_customer_unique = ? and category_customers.user_id is NULL) or (is_customer_unique = ? and category_customers.user_id = ?)", false, true, customer_id).joins("INNER JOIN categories on categories.id=leads.category_id LEFT JOIN category_customers ON categories.id=category_customers.category_id") }
+  scope :with_supplier_unique_categories, lambda { |supplier_id| where("(is_customer_unique = ? and category_customers.user_id is NULL) or (is_customer_unique = ? and category_customers.user_id = ?)", false, true, supplier_id).joins("INNER JOIN categories on categories.id=leads.category_id LEFT JOIN category_customers ON categories.id=category_customers.category_id") }
   scope :with_agent_unique_categories, lambda { |agent_id| where("(is_agent_unique = ? and category_agents.user_id is NULL) or (is_agent_unique = ? and category_agents.user_id = ?)#{' or (is_agent_unique = \'t\' and category_agents.user_id = ' + User::CallCentreAgent.find_by_id(agent_id).parent_id.to_s + ')' if User::CallCentreAgent.find_by_id(agent_id)}", false, true, agent_id).joins("INNER JOIN categories on categories.id=leads.category_id LEFT JOIN category_agents ON categories.id=category_agents.category_id") }
 
   scope :with_deal_value_from, lambda { |from| where("purchase_value >= ?", from) }
@@ -75,7 +75,7 @@ class Lead < AbstractLead
   scope :with_hotness, lambda { |hotness| where("hotness_counter = ?", hotness) }
   scope :for_notification, lambda { |categories, notification_type| where("category_id in (?) and DATE(published_at) between ? and ?", categories.map(&:id), notification_type == User::LEAD_NOTIFICATION_ONCE_PER_DAY ? Date.today : Date.today-7, Date.today).published_only.without_inactive.without_outdated.order("category_id") }
 
-  scope :requested_by_purchase_manager, lambda { |user| where("leads.creator_id = ? or leads.requested_by = ?", user.id, user.id) }
+  scope :requested_by_member, lambda { |user| where("leads.creator_id = ? or leads.requested_by = ?", user.id, user.id) }
 
   scope :descend_by_leads_id, order("leads.id DESC")
 
@@ -84,13 +84,13 @@ class Lead < AbstractLead
   scoped_order :id, :header, :sale_limit, :price, :lead_purchases_counter, :published, :has_unsatisfactory_rating, :purchase_value, :created_at
 
   before_destroy :can_be_removed?
-  after_find :set_buyers_notification
-  before_update :notify_buyers_about_changes
+  after_find :set_suppliers_notification
+  before_update :notify_suppliers_about_changes
   before_create :set_deal_code
 
   before_save :handle_category_change
   before_validation :handle_dialling_codes
-  validate :check_lead_templates, :unless => Proc.new { |l| l.requestee and l.requestee.has_role?(:purchase_manager) }
+  validate :check_lead_templates, :unless => Proc.new { |l| l.requestee and l.requestee.has_role?(:member) }
   before_save :check_if_category_can_publish_leads
   after_create :certify_lead_if_created_from_deal, :send_email_with_deal_details_and_files
   after_update :send_instant_notification_to_subscribers
@@ -108,7 +108,7 @@ class Lead < AbstractLead
   end
 
   def process_for_lead_information?
-    !(requestee and requestee.has_role?(:purchase_manager))
+    !(requestee and requestee.has_role?(:member))
   end
 
   #prevent dialling codes from saving when no proper phone number follows them
@@ -155,17 +155,17 @@ class Lead < AbstractLead
     lead_purchases.empty?
   end
 
-  def set_buyers_notification
-    self.notify_buyers_after_update = true
+  def set_suppliers_notification
+    self.notify_suppliers_after_update = true
   end
 
-  def notify_buyers_about_changes
-    if ActiveRecord::ConnectionAdapters::Column.value_to_boolean(notify_buyers_after_update) and lead_purchases.present?
-      lead_purchases.map(&:owner).uniq.each { |buyer| deliver_notify_buyers_about_changes(buyer.email) }
+  def notify_suppliers_about_changes
+    if ActiveRecord::ConnectionAdapters::Column.value_to_boolean(notify_suppliers_after_update) and lead_purchases.present?
+      lead_purchases.map(&:owner).uniq.each { |supplier| deliver_notify_suppliers_about_changes(supplier.email) }
     end
   end
 
-  def deliver_notify_buyers_about_changes(email)
+  def deliver_notify_suppliers_about_changes(email)
     deliver_email_template(email, "notify_buyers_about_lead_update")
   end
 
@@ -276,26 +276,26 @@ class Lead < AbstractLead
   end
 
   def buyout_possible_for?(user)
-    category.buyout_enabled? and !bought_by_users_other_than(user) and buyable? and (user.nil? or (user and user.has_any_role?(:customer, :lead_buyer)))
+    category.buyout_enabled? and !bought_by_users_other_than(user) and buyable? and (user.nil? or (user and user.has_any_role?(:supplier, :lead_supplier)))
   end
 
-  def buyout!(buyer)
-    if (buyer.lead_single_purchases.with_lead(id).any? ? buyer.lead_additional_buyouts : buyer.lead_buyouts).create(
+  def buyout!(supplier)
+    if (supplier.lead_single_purchases.with_lead(id).any? ? supplier.lead_additional_buyouts : supplier.lead_buyouts).create(
         :lead_id => self.id,
         :paid => false,
-        :accessible_from => (buyer.big_buyer ? Time.now : nil),
+        :accessible_from => (supplier.big_buyer ? Time.now : nil),
         :quantity => buyout_quantity)
       :buyout_successful
     end
   end
 
   def update_stats!(field)
-    self.notify_buyers_after_update = false
+    self.notify_suppliers_after_update = false
     self.increment!(field)
   end
 
   def can_be_commented?
-    !creator.has_role?(:purchase_manager)
+    !creator.has_role?(:member)
   end
 
   def has_unread_comments_for_user?(user)
@@ -326,7 +326,7 @@ class Lead < AbstractLead
 
   def deliver_instant_notification_to_subscribers
     unless category.auto_buy?
-      category.customer_subscribers.where("lead_notification_type = ?", User::LEAD_NOTIFICATION_INSTANT).each do |user|
+      category.supplier_subscribers.where("lead_notification_type = ?", User::LEAD_NOTIFICATION_INSTANT).each do |user|
         deliver_email_template(user.email, "lead_notification_instant")
       end
     end

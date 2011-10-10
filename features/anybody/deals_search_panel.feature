@@ -16,6 +16,7 @@ Feature: Deals search panel
     And I press "Search"
     Then I should see "DealInPrimo"
     And I should see "DealInSecundo"
+    And I open page in browser
     And I should be on deals
 
 

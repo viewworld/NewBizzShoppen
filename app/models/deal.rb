@@ -89,14 +89,14 @@ class Deal < AbstractLead
         :max_auto_buy => Settings.default_max_auto_buy_per_4_weeks.to_i)
   end
   
-  def build_buyer(params={})
-    if buyer
-      buyer
+  def build_supplier(params={})
+    if supplier
+      supplier
     else
-      existing_users_count = User::Customer.where(:screen_name => contact_name).count
+      existing_users_count = User::Supplier.where(:screen_name => contact_name).count
       contact_name_arr = contact_name.strip.split(" ")
       contact_name_arr = contact_name_arr.size == 1 ? contact_name_arr : [contact_name_arr.first, contact_name_arr[1..-1].join(' ')]
-      user = User::Customer.new({:email => email_address, :company_name => company_name, :phone => phone_number,
+      user = User::Supplier.new({:email => email_address, :company_name => company_name, :phone => phone_number,
                                  :screen_name => "#{contact_name}#{existing_users_count.zero? ? '' : existing_users_count+1}",
                                  :agreement_read => true, :first_name => contact_name_arr.first, :last_name => contact_name_arr.last}.merge(params))
       user.skip_email_verification = "1"
@@ -118,8 +118,8 @@ class Deal < AbstractLead
     "#{header} (#{start_date.strftime("%d.%m.%Y")}-#{end_date.strftime("%d.%m.%Y")})"
   end
 
-  def buyer
-    creator.buyer? ? creator : User::Customer.where(:email => email_address).first
+  def supplier
+    creator.supplier? ? creator : User::Supplier.where(:email => email_address).first
   end
 
   def has_unread_comments_for_user?(user)
@@ -152,18 +152,18 @@ class Deal < AbstractLead
     (deal_price.to_f == 0 and discounted_price.to_f > 0) or (deal_price.to_f > 0 and discounted_price.to_f == 0)
   end
   
-  def assign_lead_category_to_buyer!
-    if buyer and lead_category.is_customer_unique?
-      buyer.update_attribute(:deal_category_id, lead_category.id)
-      lead_category.customers << buyer
+  def assign_lead_category_to_supplier!
+    if supplier and lead_category.is_customer_unique?
+      supplier.update_attribute(:deal_category_id, lead_category.id)
+      lead_category.customers << supplier
       lead_category.save
     end
   end
 
-  def send_buyer_welcome_email(password)
+  def send_supplier_welcome_email(password)
     template = EmailTemplate.find_by_uniq_id("deal_certification_buyer_welcome")
-    TemplateMailer.delay.new(buyer.email, :blank_template, Country.get_country_from_locale,
-                                       {:subject_content => template.subject, :body_content => template.render({:user => buyer, :password => password}),
+    TemplateMailer.delay.new(supplier.email, :blank_template, Country.get_country_from_locale,
+                                       {:subject_content => template.subject, :body_content => template.render({:user => supplier, :password => password}),
                                         :bcc_recipients => template.bcc, :cc_recipients => template.cc})
   end
 
@@ -222,18 +222,18 @@ class Deal < AbstractLead
   end
 
   def create_uniq_deal_category
-    if (buyer and creator.buyer?) or ActiveRecord::ConnectionAdapters::Column.value_to_boolean(use_company_name_as_category)
-      if buyer
-        lead_category = buyer.deal_category_id ? LeadCategory.find(buyer.deal_category_id) : LeadCategory.create(:name => buyer.company_name, :currency => Currency.default_currency)
+    if (supplier and creator.supplier?) or ActiveRecord::ConnectionAdapters::Column.value_to_boolean(use_company_name_as_category)
+      if supplier
+        lead_category = supplier.deal_category_id ? LeadCategory.find(supplier.deal_category_id) : LeadCategory.create(:name => supplier.company_name, :currency => Currency.default_currency)
       else
         lead_category = LeadCategory.create(:name => company_name)
       end
 
-      buyer.update_attribute(:deal_category_id, lead_category.id) if buyer and buyer.deal_category_id.blank?
-      buyer.update_attribute(:big_buyer, true) if buyer and !buyer.big_buyer?
+      supplier.update_attribute(:deal_category_id, lead_category.id) if supplier and supplier.deal_category_id.blank?
+      supplier.update_attribute(:big_buyer, true) if supplier and !supplier.big_buyer?
       lead_category.update_attribute(:is_customer_unique, true) unless lead_category.is_customer_unique
-      if buyer and !lead_category.customers.include?(buyer)
-        lead_category.customers << buyer
+      if supplier and !lead_category.customers.include?(supplier)
+        lead_category.customers << supplier
         lead_category.save
       end
       lead_category.update_attribute(:auto_buy, true) unless lead_category.auto_buy?
@@ -242,7 +242,7 @@ class Deal < AbstractLead
   end
 
   def certify_for_unknown_email
-    if creator.agent? or creator.admin? and buyer.nil?
+    if creator.agent? or creator.admin? and supplier.nil?
       deal_certification_requests.create
     end
   end

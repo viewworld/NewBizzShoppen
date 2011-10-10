@@ -2,7 +2,7 @@
 Feature: General users
   Background:
     Given I am on the homepage
-    And I have user with email buyer101@nbs.com and role customer
+    And I have user with email buyer101@nbs.com and role supplier
     And I sign in as blazejek@gmail.com with password secret
     And I follow translated "layout.main_menu.admin.users"
 
@@ -12,7 +12,7 @@ Feature: General users
     And I fill in "search_with_keyword" with "buyer101@nbs.com"
     And I press translated "administration.users.index.view.search_button"
     And I follow translated "administration.users.index.view.edit"
-    And I fill in "user_customer_title" with "CEO Manager"
+    And I fill in "user_supplier_title" with "CEO Manager"
     And I press translated "administration.users.edit.view.button_update_user"
 
   @_tested @_done @tgn

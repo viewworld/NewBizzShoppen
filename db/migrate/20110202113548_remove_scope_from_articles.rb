@@ -3,7 +3,7 @@ class RemoveScopeFromArticles < ActiveRecord::Migration
     [[0,"Article::Cms::MainPageArticle"],[1,"Article::Cms::InterfaceContentText"],[2,"Article::Cms::HelpPopup"]].each do |arr|
       Article::Cms.where(:scope => arr[0]).each{|a| a.type=arr[1];a.save}
     end
-    [[0,"Article::News::Agent"],[1,"Article::News::SalesManager"],[2,"Article::News::PurchaseManager"]].each do |arr|
+    [[0,"Article::News::Agent"],[1,"Article::News::Supplier"],[2,"Article::News::Member"]].each do |arr|
       Article::News.where(:scope => arr[0]).each{|a| a.type=arr[1];a.save}
     end
     remove_column :articles, :scope

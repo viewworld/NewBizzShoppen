@@ -11,7 +11,7 @@ Background:
   And lead Lead 3 is created by user john@doe.com with role agent
   And lead Lead 4 is created by user john@doe.com with role agent
   And user "john@doe.com" with role "agent" has certification level set to 11
-  And a lead Lead 4 exists within category Computers and is bought by user jim.doe.buyer@person.com with role customer
+  And a lead Lead 4 exists within category Computers and is bought by user jim.doe.buyer@person.com with role supplier
   Then I sign in as john@doe.com with password secret
   And I go to agents leads
 

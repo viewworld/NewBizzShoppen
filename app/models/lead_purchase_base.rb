@@ -4,7 +4,7 @@ class LeadPurchaseBase < ActiveRecord::Base
   STATUSES = %w(not_contacted contacted meeting signed).freeze
 
   belongs_to :lead
-  belongs_to :owner, :class_name => "User::Customer", :foreign_key => "owner_id"
+  belongs_to :owner, :class_name => "User::Supplier", :foreign_key => "owner_id"
 
   include ScopedSearch::Model
 
@@ -53,7 +53,7 @@ class LeadPurchaseBase < ActiveRecord::Base
   scope :with_not_invoiced_keyword, lambda { |keyword| where("lower(leads.header) LIKE :keyword OR lower(leads.contact_name) LIKE :keyword OR lower(leads.company_name) LIKE :keyword", { :keyword => "%#{keyword.downcase}%" }) }
   scope :with_assigned_at_date_after_and_including, lambda{ |date| where(["assigned_at::DATE >= ?",date.to_postgresql_date])}
   scope :with_assigned_at_date_before_and_including, lambda{ |date| where(["assigned_at::DATE <= ?",date.to_postgresql_date])}
-  scope :with_purchased_by, lambda { |buyer| where("lead_purchases.requested_by IS NULL and (lead_purchases.owner_id = ? or lead_purchases.purchased_by = ?)", buyer.id, buyer.id) }
+  scope :with_purchased_by, lambda { |supplier| where("lead_purchases.requested_by IS NULL and (lead_purchases.owner_id = ? or lead_purchases.purchased_by = ?)", supplier.id, supplier.id) }
   scope :with_not_invoiced_for_user, lambda { |user| joins("LEFT JOIN invoice_lines ON invoice_lines.payable_id = lead_purchases.id LEFT JOIN users ON users.id = lead_purchases.owner_id").where(["invoice_lines.payable_id IS NULL AND users.big_buyer IS TRUE AND users.id = ?", user.to_i]) }
   scope :with_lead, lambda {|lead_id| where(:lead_id => lead_id)}
 

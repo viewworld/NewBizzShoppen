@@ -7,7 +7,7 @@ Feature: Deals from Sales Manager perspective
 
   @_done @_tested
   Scenario: I can see new tab "My deals" right to the "My leads"
-    Then I should see translated "layout.main_menu.lead_buyer.my_deals"
+    Then I should see translated "layout.main_menu.lead_supplier.my_deals"
 
   @_done @_tested
   Scenario: I can see a list of my created deals sorted by creation date when I click "My deals"
@@ -15,10 +15,10 @@ Feature: Deals from Sales Manager perspective
     Then I wait 1 second
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
     Then a deal is created by "translator_customer@nbs.com" for user "translator_customer@nbs.com" and category "Business deals" with attributes "header:hidden|description:hidden|hidden_description:hidden|start_date:2011-01-01|end_date:2011-01-01|company_name:starks"
-    Then I follow translated "layout.main_menu.lead_buyer.my_deals"
+    Then I follow translated "layout.main_menu.lead_supplier.my_deals"
     Then I should not see "hidden"
     Then I should see "super" before "awesome"
-    Then I filter and sort deals with my deals translation "layout.main_menu.lead_buyer.my_deals"
+    Then I filter and sort deals with my deals translation "layout.main_menu.lead_supplier.my_deals"
 
   @_done @_tested_elsewhere
   Scenario: I can filter the list by "active" and "inactive" deals
@@ -26,7 +26,7 @@ Feature: Deals from Sales Manager perspective
   @_done @_tested
   Scenario: I can see creation date, deal name, expire time, likes, publish/awaiting approval on deal list
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
-    Then I follow translated "layout.main_menu.lead_buyer.my_deals"
+    Then I follow translated "layout.main_menu.lead_supplier.my_deals"
     Then I should see translated "shared.deals.table.creation_date"
     Then I should see translated "shared.deals.table.name"
     Then I should see translated "shared.deals.table.expires"
@@ -45,15 +45,15 @@ Feature: Deals from Sales Manager perspective
   # There is an orange arrow on the top right “create new deal”
   @selenium @_done @_tested
   Scenario: I can create a new deal
-    Then I follow translated "layout.main_menu.lead_buyer.my_deals"
+    Then I follow translated "layout.main_menu.lead_supplier.my_deals"
     Then I follow translated "deals.common.listing.view.new_deal"
     Then I fill deal creation form
     Then I should not see "Lead category"
-    Then I press translated "buyer.deals.new.view.create_button"
+    Then I press translated "supplier.deals.new.view.create_button"
     Then I should see translated "deals.common.listing.view.header"
     Then I should see "very important deal"
-    Then I click hidden link by url regex "/buyers\/deals\/\d+\/edit/"
-    Then I fill deal edit form and submit with translated button "buyer.deals.edit.view.update_button"
+    Then I click hidden link by url regex "/suppliers\/deals\/\d+\/edit/"
+    Then I fill deal edit form and submit with translated button "supplier.deals.edit.view.update_button"
 
   # "Deal description"
   @_done @_tested_elsewhere
@@ -77,17 +77,17 @@ Feature: Deals from Sales Manager perspective
   @_done @_tested
   Scenario: I can edit Company logo
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
-    Then I add and remove logo for deal as "buyer"
+    Then I add and remove logo for deal as "supplier"
 
   @_done @_tested
   Scenario: I can upload material to download
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
-    Then I add and remove document for deal as "buyer"
+    Then I add and remove document for deal as "supplier"
 
   @_done @_tested
   Scenario: I can attach multiple pictures
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
-    Then I add and remove image for deal as "buyer"
+    Then I add and remove image for deal as "supplier"
 
   @_done @_not_testable
   Scenario: I can see thumbnails when I attach pictures
@@ -101,9 +101,9 @@ Feature: Deals from Sales Manager perspective
   @_done @_tested
   Scenario: I can click a link to see public deal description (shows the deal as presented to procurement manager)
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
-    Then I follow translated "layout.main_menu.lead_buyer.my_deals"
-    Then I follow translated "buyer.deals.index.view.edit"
-    Then I follow translated "buyer.deals.edit.view.preview"
+    Then I follow translated "layout.main_menu.lead_supplier.my_deals"
+    Then I follow translated "supplier.deals.index.view.edit"
+    Then I follow translated "supplier.deals.edit.view.preview"
     Then I should see "super"
 
   # "Contact"
@@ -125,12 +125,12 @@ Feature: Deals from Sales Manager perspective
   # "Additional information"
   @_done @_tested @selenium
   Scenario: I can create a new template for this Deal
-    And user buyer@nbs.com with role customer exists with attributes "company_name:Xeper"
+    And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
     Then I follow translated "layout.main_menu.shared.browse_leads"
     And I follow translated "categories.index.view.view_lead_templates"
 
-    And I follow translated "customer.lead_templates.index.view.new_template"
+    And I follow translated "supplier.lead_templates.index.view.new_template"
     Then I fill in "lead_template_name" with "Computer details"
     And I check "lead_template_is_mandatory"
     And I follow translated "shared.lead_templates.form.new_lead_template_field"
@@ -143,17 +143,17 @@ Feature: Deals from Sales Manager perspective
 
   @_done @_tested @selenium
   Scenario: I can use existing templates for this category
-    And user buyer@nbs.com with role customer exists with attributes "company_name:Xeper"
+    And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
     And user "buyer@nbs.com" has assigned role "deal_maker"
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
     Given template named "Computer details1" for category "Xeper" is created by user "agent@person.com" with role "agent"
     And template named "Computer details1" is mandatory
     And template named "Computer details1" is global
     And template named "Computer details1" has following fields "field #1:true:true,field #2:true:false,field #3:false:false"
-    Given template named "Computer details2" for category "Xeper" is created by user "buyer@nbs.com" with role "customer"
+    Given template named "Computer details2" for category "Xeper" is created by user "buyer@nbs.com" with role "supplier"
     And template named "Computer details2" is mandatory
     And template named "Computer details2" has following fields "field #1:true:true,field #2:true:false,field #3:false:false"
-    Then I follow translated "layout.main_menu.lead_buyer.my_deals"
+    Then I follow translated "layout.main_menu.lead_supplier.my_deals"
     Then I follow translated "deals.common.listing.view.new_deal"
     Then I fill deal creation form
     And I fill in "deal_header" with "Templates deal test"
@@ -161,13 +161,13 @@ Feature: Deals from Sales Manager perspective
     And I select "Computer details2" from "all_templates"
     And I select "Electronics deals" from "deal_category_id"
     And I follow translated "administration.categories.form.move_users_right"
-    Then I press translated "buyer.deals.new.view.create_button"
+    Then I press translated "supplier.deals.new.view.create_button"
     And I fill in "search_with_keyword" with "Templates deal test"
     And I press translated "leads.index.search.search_button"
-    And I click hidden link by url regex "/buyers\/deals\/\d+\/edit/"
+    And I click hidden link by url regex "/suppliers\/deals\/\d+\/edit/"
     And "deal_deal_template_ids_" dropdown should have values "Computer details2"
     Then I am not sign in
-    And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role purchase_manager
+    And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
     Then I sign in as purchase_manager101@nbs.com with password supersecret
     And I follow translated "layout.main_menu.shared.browse_deals"
     And I follow category "Electronics deals"
@@ -179,7 +179,7 @@ Feature: Deals from Sales Manager perspective
     And I fill in "lead_lead_template_values_attributes_3_value" with "some val2"
     Then I should see "Computer details1"
     Then I should see "Computer details2"
-    And I press translated "purchase_manager.leads.new.view.button_create"
+    And I press translated "member.leads.new.view.button_create"
 
   @_done @tested_elsewhere
   Scenario: Mandatory templates for category should be automatically included
@@ -187,7 +187,7 @@ Feature: Deals from Sales Manager perspective
   @_done @_tested
   Scenario: When a deal is created a new lead category should be created named the same as sales manager's company name
     And there is no category named "Xeper"
-    And user buyer@nbs.com with role customer exists with attributes "company_name:Xeper"
+    And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
     And user "buyer@nbs.com" has assigned role "deal_maker"
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
     And there is a category named "Xeper"
@@ -201,10 +201,10 @@ Feature: Deals from Sales Manager perspective
 
   @m18 @tgn @_tested @_done @tgn
   Scenario: I can see Create new template button under new/edit deal
-    And user buyer@nbs.com with role customer exists with attributes "company_name:Xeper"
+    And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
-    Then I follow translated "layout.main_menu.lead_buyer.my_deals"
-    And I click hidden link by url regex "/buyers\/deals\/\d+\/edit/"
-    Then I should see translated "buyer.deals.edit.view.new_template"
-    And I follow translated "buyer.deals.edit.view.new_template"
-    And I should see translated "customer.lead_templates.new.view.header"
+    Then I follow translated "layout.main_menu.lead_supplier.my_deals"
+    And I click hidden link by url regex "/suppliers\/deals\/\d+\/edit/"
+    Then I should see translated "supplier.deals.edit.view.new_template"
+    And I follow translated "supplier.deals.edit.view.new_template"
+    And I should see translated "supplier.lead_templates.new.view.header"

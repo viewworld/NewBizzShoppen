@@ -5,16 +5,16 @@ Feature: Purchase manager leads management
 
   @selenium @_done @_tested
   Scenario: I should be able to create new lead as purchase manager
-    Given I am signed up and confirmed as user with email procurment@nbs.com and password secret and role purchase_manager
+    Given I am signed up and confirmed as user with email procurment@nbs.com and password secret and role member
     Then I sign in as procurment@nbs.com with password secret
     Then category "Business" has attributes "default_price:44.44"
-    Then I follow translated "layout.main_menu.purchase_manager.tenders"
-    Then I follow translated "purchase_manager.tenders.index.view.new_tender"
-    Then I should see translated "shared.leads.form.purchase_manager.lead_information"
-    Then I should see translated "shared.leads.form.purchase_manager.header_label"
-    Then I should see translated "shared.leads.form.purchase_manager.description_label"
-    Then I should see translated "shared.leads.form.purchase_manager.sales_information"
-    Then I should see translated "shared.leads.form.purchase_manager.sale_limit_label"
+    Then I follow translated "layout.main_menu.member.tenders"
+    Then I follow translated "member.tenders.index.view.new_tender"
+    Then I should see translated "shared.leads.form.member.lead_information"
+    Then I should see translated "shared.leads.form.member.header_label"
+    Then I should see translated "shared.leads.form.member.description_label"
+    Then I should see translated "shared.leads.form.member.sales_information"
+    Then I should see translated "shared.leads.form.member.sale_limit_label"
     Then I select "Business" from "lead_category_id"
     Then I fill in "lead_company_name" with "super"
     Then I fill in "lead_company_phone_number" with "super"
@@ -34,19 +34,19 @@ Feature: Purchase manager leads management
     Then I fill in "lead_header" with "super_super"
     Then I fill in "lead_description" with "super"
     Then I fill in "lead_purchase_decision_date" with "2016-12-12"
-    Then I press translated "purchase_manager.tenders.new.view.button_create"
+    Then I press translated "member.tenders.new.view.button_create"
     Then I fill in "lead_email_address" with "super@super.com"
-    Then I press translated "purchase_manager.tenders.new.view.button_create"
+    Then I press translated "member.tenders.new.view.button_create"
     Then price for lead "super_super" is set to "44.44"
-    Then I click hidden link by url regex "/purchase_managers\/leads\/\d+\/edit/"
-    Then I press translated "purchase_manager.tenders.edit.view.button_update"
+    Then I click hidden link by url regex "/members\/leads\/\d+\/edit/"
+    Then I press translated "member.tenders.edit.view.button_update"
     Then I execute js for display action block for "leads"
-    Then I follow translated "purchase_manager.tenders.index.view.certify"
+    Then I follow translated "member.tenders.index.view.certify"
     Then I should see translated "agent.lead_certifications.index.view.sent_successfully"
     Then I execute js for display action block for "leads"
     Then I confirm a js popup on the next step
-    Then I follow translated "purchase_manager.tenders.index.view.destroy"
-    Then I should see translated "purchase_manager.tenders.destroy.flash.tender_deletion_successful"
+    Then I follow translated "member.tenders.index.view.destroy"
+    Then I should see translated "member.tenders.destroy.flash.tender_deletion_successful"
 
 
   #lead info, category, header, description, tender information, sales limit, purchase decision date (min 5 business days)
@@ -84,16 +84,16 @@ Feature: Purchase manager leads management
   #7553
   @m19 @requested @selenium @tgn @_done @_tested
   Scenario: On the My tenders view I should see only the following columns: Title, Creation date, deadline, number of suppliers
-    Given I am signed up and confirmed as user with email procurment@nbs.com and password secret and role purchase_manager
+    Given I am signed up and confirmed as user with email procurment@nbs.com and password secret and role member
     Then I sign in as procurment@nbs.com with password secret
     Then category "Business" has attributes "default_price:44.44"
-    Then I follow translated "layout.main_menu.purchase_manager.tenders"
-    Then I follow translated "purchase_manager.tenders.index.view.new_tender"
+    Then I follow translated "layout.main_menu.member.tenders"
+    Then I follow translated "member.tenders.index.view.new_tender"
     Then I select "Business" from "lead_category_id"
     Then I fill in "lead_header" with "Tender for project outsourcing"
     Then I fill in "lead_description" with "project outsourcing ultra description"
     Then I fill in "lead_purchase_decision_date" with "2016-12-12"
-    Then I press translated "purchase_manager.tenders.new.view.button_create"
+    Then I press translated "member.tenders.new.view.button_create"
     And I should see translated "leads.table.header"
     And I should see translated "leads.table.sale_limit"
     And I should see translated "leads.table.date"
@@ -102,4 +102,4 @@ Feature: Purchase manager leads management
     And I should see translated "leads.table.status"
     And I should see translated "leads.table.actions"
     Then I should see "Tender for project outsourcing"
-    And I should see translated "purchase_manager.tenders.index.view.option_not_published"
+    And I should see translated "member.tenders.index.view.option_not_published"

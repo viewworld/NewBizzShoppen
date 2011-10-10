@@ -119,7 +119,7 @@
           <p class="element"><%= t("leads.listing.agent_certification_label") %>
             <b> <%= t("models.lead.certification.lvl#{lead.certification_level}") %></b></p>
             <p class="element">
-              <%= t("leads.listing.certified_by_procurement_label") %> <b><%= lead.certified? ? t('common.yes_label') : t('common.no_label') %></b>
+              <%= t("leads.listing.certified_by_member_label") %> <b><%= lead.certified? ? t('common.yes_label') : t('common.no_label') %></b>
           </p>
           <% end %>
         </td>

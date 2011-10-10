@@ -37,13 +37,13 @@ Feature: Generating leads from deals
   # Step one: Please make sure your information is correct. (Validate company and contact information) Including linking to face book and LinkedIn.
   @_done @_tested @selenium
   Scenario: In first step I can confirm the lead information
-    And user buyer@nbs.com with role customer exists with attributes "company_name:Xeper"
+    And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
     And user "buyer@nbs.com" has assigned role "deal_maker"
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
-    Given template named "Computer details2" for category "Xeper" is created by user "buyer@nbs.com" with role "customer"
+    Given template named "Computer details2" for category "Xeper" is created by user "buyer@nbs.com" with role "supplier"
     And template named "Computer details2" is mandatory
     And template named "Computer details2" has following fields "field #1:true:true,field #2:true:false,field #3:false:false"
-    Then I follow translated "layout.main_menu.lead_buyer.my_deals"
+    Then I follow translated "layout.main_menu.lead_supplier.my_deals"
     Then I follow translated "deals.common.listing.view.new_deal"
     Then I fill deal creation form
     And I fill in "deal_header" with "Templates deal test"
@@ -51,9 +51,9 @@ Feature: Generating leads from deals
     And I select "Computer details2" from "all_templates"
     And I select "Electronics deals" from "deal_category_id"
     And I follow translated "administration.categories.form.move_users_right"
-    Then I press translated "buyer.deals.new.view.create_button"
+    Then I press translated "supplier.deals.new.view.create_button"
     Then I am not sign in
-    And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role purchase_manager
+    And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
     Then I sign in as purchase_manager101@nbs.com with password supersecret
     And I follow translated "layout.main_menu.shared.browse_deals"
     And I follow category "Electronics deals"
@@ -64,9 +64,9 @@ Feature: Generating leads from deals
     And I fill in "lead_lead_template_values_attributes_0_value" with "lorem ipsum 1"
     And I fill in "lead_lead_template_values_attributes_1_value" with "lorem ipsum 2"
     And I fill in "lead_lead_template_values_attributes_2_value" with "lorem ipsum 3"
-    And I press translated "purchase_manager.leads.new.view.button_create"
-    And I should see translated "purchase_manager.leads.show.view.confirmation_message"
-    And I press translated "purchase_manager.leads.show.view.ok_confirmation"
+    And I press translated "member.leads.new.view.button_create"
+    And I should see translated "member.leads.show.view.confirmation_message"
+    And I press translated "member.leads.show.view.ok_confirmation"
     And I should be on the homepage
 
   # If there is any template information associated with the deal the procurement manager is prompted for the information. And the procurement manager can enter some note information (will go into hidden description)

@@ -6,10 +6,10 @@ Background:  Sign in user and set locale
   And I make sure current locale is "en"
   And an user with role lead_user and email lead_user.customer1@nbs.com exists as subaccount for customer customer1@nbs.com
   And user "lead_user.customer1@nbs.com" with role "lead_user" has attributes "screen_name: John Doe"
-  And user "customer1@nbs.com" with role "customer" has attributes "screen_name: Customer1@Nbs"
-  And lead Lead#1 is bought by user customer1@nbs.com with role customer and is assigned to user lead_user.customer1@nbs.com with role lead_user
-  And lead Lead#2 is bought by user customer1@nbs.com with role customer and is assigned to user lead_user.customer1@nbs.com with role lead_user
-  And lead Lead#3 is bought by user customer1@nbs.com with role customer and is assigned to user lead_user.customer1@nbs.com with role lead_user
+  And user "customer1@nbs.com" with role "supplier" has attributes "screen_name: Customer1@Nbs"
+  And lead Lead#1 is bought by user customer1@nbs.com with role supplier and is assigned to user lead_user.customer1@nbs.com with role lead_user
+  And lead Lead#2 is bought by user customer1@nbs.com with role supplier and is assigned to user lead_user.customer1@nbs.com with role lead_user
+  And lead Lead#3 is bought by user customer1@nbs.com with role supplier and is assigned to user lead_user.customer1@nbs.com with role lead_user
   And comment for lead "Lead#1" was posted by user "lead_user.customer1@nbs.com" with attributes "created_at: 2011-01-01, last_thread_created_at:2011-01-01"
   And comment for lead "Lead#2" was posted by user "lead_user.customer1@nbs.com" with attributes "last_thread_created_at:2011-01-02"
   And comment for lead "Lead#3" was posted by user "customer1@nbs.com" with attributes "title: Customers comment for lead3, body: body for customers comment for lead3, created_at: 2010-01-01, last_thread_created_at:2011-01-30"
@@ -79,9 +79,9 @@ Scenario: I can see tab with comments on my assigned leads page besides show det
 
 @_tested
 Scenario: I can't comment leads created by purchase manager
-  Given I have user with email purchase_manager7@nbs.com and role purchase_manager
-  And lead Lead#7 is created by user purchase_manager7@nbs.com with role purchase_manager
-  And lead Lead#7 is bought by user customer1@nbs.com with role customer and is assigned to user lead_user.customer1@nbs.com with role lead_user
+  Given I have user with email purchase_manager7@nbs.com and role member
+  And lead Lead#7 is created by user purchase_manager7@nbs.com with role member
+  And lead Lead#7 is bought by user customer1@nbs.com with role supplier and is assigned to user lead_user.customer1@nbs.com with role lead_user
   When I follow translated "layout.main_menu.lead_user.lead_purchases"
   And I fill in "search_with_keyword" with "Lead#7"
   And I press translated "lead_user.lead_purchases.index.view.search.search_button"

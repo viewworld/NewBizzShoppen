@@ -26,7 +26,7 @@ Feature: I can browse categories
 
   @m8b @requested @tgn @_tested
   Scenario: When you are loged in as a buyer, you should be able to request a category, this should be done via a form mail. to admin@fairleads.com the form should contain the following fields
-    Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role customer
+    Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role supplier
     Then I sign in as bob@person.com with password supersecret
     And I go to browse leads
     And I follow translated "layout.main_menu.shared.category_request"
@@ -39,7 +39,7 @@ Feature: I can browse categories
     And I check "email_template_preview_can_be_contacted"
     And I press translated "contact_us.new.view.send_email_button"
     And last email sent should have been sent to recipient "admin@fairleads.com"
-    And I should be on buyer home
+    And I should be on supplier home
 
   @m10 @requested @_done @_tested @tested_elsewhere
   Scenario: I will return to agent/buyer home page after category request is sent

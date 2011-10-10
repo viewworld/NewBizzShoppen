@@ -107,12 +107,12 @@ class Comment < ActiveRecord::Base
     (_user.has_role?(:admin) or (_user.has_role?(:call_centre) and _user.subaccounts.include?(user))) or !is_blocked?
   end
 
-  def thread_started_by_buyer?
-    root.user.buyer?
+  def thread_started_by_supplier?
+    root.user.supplier?
   end
 
   def can_user_be_blocked?
-    user.agent? and !user.call_centre? and thread_started_by_buyer?
+    user.agent? and !user.call_centre? and thread_started_by_supplier?
   end
 
   def blocked_conversation

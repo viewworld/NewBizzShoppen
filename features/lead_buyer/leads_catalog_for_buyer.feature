@@ -12,7 +12,7 @@ Background:
   And Lead named "Ultra printers" exists within "Another sample category" category
   And lead Ultra printers exists with attributes "currency_id:1"
 
-  Given I am signed up and confirmed as user with email john@doe.com and password secret and role customer
+  Given I am signed up and confirmed as user with email john@doe.com and password secret and role supplier
 
   And I sign in as john@doe.com with password secret
   And I follow translated "layout.main_menu.shared.browse_leads"
@@ -23,7 +23,7 @@ Scenario: I can click add lead to my basket and I will get a notification “Lea
   And I fill in "search_with_keyword" with "Super printers"
   And I press translated "leads.index.search.search_button"
   And I follow translated "leads.index.add_to_cart_link"
-  Then I should see translated "buyer.cart_items.create.flash.cart_item_creation_successful"
+  Then I should see translated "supplier.cart_items.create.flash.cart_item_creation_successful"
   And I fill in "search_with_keyword" with "Super printers"
   And I press translated "leads.index.search.search_button"
   Then I should not see translated "leads.index.add_to_cart_link"
@@ -42,7 +42,7 @@ Scenario: I can bulk add leads to my basket and I will get a notification “Lea
   And I follow "Another sample category"
   Then I check "mark_all"
   And I press translated "leads.index.button_bulk_create_cart_item"
-  Then I should see translated "buyer.bulk_cart_items.create.flash.n_cart_items_added" with options "count:2"
+  Then I should see translated "supplier.bulk_cart_items.create.flash.n_cart_items_added" with options "count:2"
 
 @m5 @added @lead_templates @tgn @_tested
 Scenario: I can see lead template fields with public values for each lead
@@ -67,14 +67,14 @@ Scenario: I can see only lead template fields' names (not values) for hidden fie
 @m5 @added @unique_categories @tgn @_tested
 Scenario: I can see unique categories assigned to me in Browse leads
   Given Category This Customer Unique Category is created
-  And category "This Customer Unique Category" is unique for user with email "john@doe.com" role "customer"
+  And category "This Customer Unique Category" is unique for user with email "john@doe.com" role "supplier"
   When I go to browse leads
   Then I should see "This Customer Unique Category"
 
 @m5 @added @unique_categories @tgn @_tested
 Scenario: I should be able to browse leads in unique category assigned to me
 Given Category This Customer Unique Category is created
-  And category "This Customer Unique Category" is unique for user with email "john@doe.com" role "customer"
+  And category "This Customer Unique Category" is unique for user with email "john@doe.com" role "supplier"
   And Lead named "Lead Unique 1" exists within "This Customer Unique Category" category
   When I go to browse leads
   Then I follow category "This Customer Unique Category"
@@ -83,8 +83,8 @@ Given Category This Customer Unique Category is created
 @m5 @added @unique_categories @tgn @_tested
 Scenario: I cannot see unique categories not assigned to me in Browse leads
   Given Category This Customer Unique Category is created
-  And I have user with email other_john@doe.com and role customer
-  And category "This Customer Unique Category" is unique for user with email "other_john@doe.com" role "customer"
+  And I have user with email other_john@doe.com and role supplier
+  And category "This Customer Unique Category" is unique for user with email "other_john@doe.com" role "supplier"
   When I go to browse leads
   Then I should not see "This Customer Unique Category"
 

@@ -19,7 +19,7 @@
           <%= custom_error_for_field(f, :description) %>
         </li>
 
-        <% unless current_user.has_role?(:purchase_manager) %>
+        <% unless current_user.has_role?(:member) %>
         <li class="text">
           <%= f.label :hidden_description %>
           <%= f.text_area :hidden_description, :style => "height: 140px; width: 600px" %>
@@ -30,7 +30,7 @@
 
         <li class="hidden">
           <%= f.hidden_field :locale, :class => "locale_hidden_field" %>
-          <% if current_user.has_role?(:purchase_manager) %>
+          <% if current_user.has_role?(:member) %>
             <%= f.hidden_field :skip_hidden_field_validation, :value => true %>
           <% end %>
           <% unless f.object.new_record? %>

@@ -33,8 +33,8 @@ Scenario: I can see customised total number of leads on the browse categories pa
   And lead "lead3" is created in category "Computers" by user "agent1@nbs.com" with role "agent"
   Then I follow translated "layout.main_menu.shared.browse_leads"
   And I should see "(3)"
-  Given I am signed up and confirmed as user with email john@doe.com and password secret and role customer
-  And User john@doe.com with role customer is big buyer
+  Given I am signed up and confirmed as user with email john@doe.com and password secret and role supplier
+  And User john@doe.com with role supplier is big buyer
   And I am on the homepage
   And I sign in as john@doe.com with password secret
   Then I follow translated "layout.main_menu.shared.browse_leads"

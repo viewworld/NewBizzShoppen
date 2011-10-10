@@ -6,7 +6,7 @@ Background:
     And I make sure current locale is "en"
     Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role agent
     And lead New lead is created by user bob@person.com with role agent
-    And a lead New lead exists within category Computers and is bought by user john.buyer@person.com with role customer
+    And a lead New lead exists within category Computers and is bought by user john.buyer@person.com with role supplier
     Then I sign in as bob@person.com with password supersecret
     And I go to agents leads
 
@@ -49,7 +49,7 @@ Scenario: I can delete a language
 Scenario: When the lead is bought and I want to edit it then "Notify the lead buyers" checkbox is present
   Given I go to agents leads
   And I follow translated "agent.leads.index.view.edit"
-  Then I should see translated "activerecord.attributes.lead.notify_buyers_after_update"
+  Then I should see translated "activerecord.attributes.lead.notify_suppliers_after_update"
 
 
 @m3 @tgn @_tested @noguess

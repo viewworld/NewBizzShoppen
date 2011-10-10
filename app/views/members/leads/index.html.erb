@@ -1,0 +1,170 @@
+<search-box:>
+  <div class="search_box">
+    <h2><%= t("common.search") %></h2>
+
+    <div class="search_content">
+      <%= form_for @search, :url => members_leads_path do |f| %>
+          <fieldset class="inputs_vertical">
+            <ol class="no_pdd">
+              <li class="string">
+                <%= f.label :with_keyword, t("lead_supplier.lead_purchases.index.view.search.keyword_label") %>
+                <%= f.text_field :with_keyword %>
+              </li>
+              <li class="select">
+                <%= f.label t("leads.index.search.category_label") %>
+                <%= f.select :with_category, nested_set_options(@categories.all), :include_blank => true %>
+              </li>
+              <li class="commit">
+                <ibt c="bt_green" icon="magnify">
+                  <%= submit_tag t("member.leads.index.view.search_button") %>
+                </ibt>
+                <p>
+                  <%= bt_clear_filter %>
+                </p>
+              </li>
+            </ol>
+          </fieldset>
+      <% end %>
+    </div>
+  </div>
+</search-box:>
+
+<column-mc:>
+
+  <header>
+    <param:content>
+      <%= t("member.leads.index.view.header") %>
+    </param:content>
+  </header>
+
+  <% if @leads.blank? %>
+      <%= blank_state_message %>
+  <% else %>
+
+    <table id="leads" class="generic">
+      <thead>
+      <tr>
+        <th class="hl"></th>
+        <th><%= link_to t("leads.table.id"), order_for_scoped_search(:id) %></th>
+        <th><%= link_to t("leads.table.header"), order_for_scoped_search(:header) %></th>
+        <th><%= t("leads.table.company_logo") %></th>
+        <th><%= t("leads.table.company_name") %></th>
+        <th><%= t("leads.table.date") %></th>
+        <th class="ta_r"><%= t("leads.table.actions") %></th>
+        <th class="hr"></th>
+      </tr>
+      </thead>
+      <tfoot>
+      <tr>
+        <td class="fl"></td>
+        <td colspan="6"></td>
+        <td class="fr"></td>
+      </tr>
+      </tfoot>
+      <tbody>
+      <% @leads.each do |lead| %>
+          <tr id="lead_<%= lead.id %>" class="<%= cycle("odd", "even") %>">
+            <td class="cl"></td>
+            <td><%= lead.id %></td>
+            <td>
+              <div class="rltv" style="padding-bottom: 20px;">
+              <%= lead.header %>
+              <% if lead.can_be_commented? %>
+               <div class="row_tooltip_actions">
+               <%= link_to t("comments.shared.show_comments")+" (#{lead.comments_count_for(current_user)})", "#", :class => "toggle_row show_comments#{' toggle_row_unread' if lead.has_unread_comments_for_user?(current_user)}", :onclick => "mark_comments_as_read(#{lead.id}); mark_row_as_read('lead_#{lead.id}')" %>
+               <%= link_to t("comments.shared.hide_comments"), "#", :class => "toggle_row hide_comments", :style => "display:none" %>
+               </div>
+              <% end %>
+              <% if lead.creator == current_user or lead.creator.parent == current_user %>
+                <% if lead.lead_certification_requests.last %>
+                  <br/>
+                  <%= t("leads.listing.certification_status") %>: <%= lead.lead_certification_requests.last.current_status %>
+                <% end %>
+              <% end %>
+                  </div>
+            </td>
+            <td><%= image_tag lead.deal.logo.url(:thumb), :class => "thumb" if lead.deal and lead.deal.logo %></td>
+            <td><%= lead.deal ? lead.deal.company_name : lead.company_name %></td>
+            <td><%= format_date lead.created_at %></td>
+
+            <td class="tda ta_r">
+              <ul-actions>
+                <li>
+                  <%= link_to t("member.leads.index.view.edit"), edit_members_lead_path(lead), :class => "default_action" %>
+                </li>
+                <li>
+                  <%= link_to t("member.leads.index.view.destroy"), members_lead_path(lead), :confirm => t("member.leads.index.view.destroy_confirmation"), :method => :delete %>
+                </li>
+              </ul-actions>
+            </td>
+            <td class="cr"></td>
+          </tr>
+
+
+
+          <tr class="row_tooltip">
+            <td class="cl no_pdd"></td>
+            <td colspan="6" class="no_pdd">
+              <div class="row_tooltip_content pdd_10">
+                <p><%= render :partial => "/shared/comments/lead_threads", :locals => {:lead => lead, :threads => lead.comment_threads.roots.order("created_at DESC")} %></p>
+              </div>
+            </td>
+            <td class="cr no_pdd"></td>
+          </tr>
+
+
+
+      <% end %>
+
+      <% if will_paginate %>
+          <tr class="pagination">
+            <td colspan="9" class="ta_c">
+              <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+            </td>
+          </tr>
+      <% end %>
+
+      </tbody>
+    </table>
+  <% end %>
+</column-mc:>
+
+<js:>
+<script type=text/javascript>
+
+    function hideRowButtons()
+    {
+        $(".toggle_row.hide_comments:visible").hide().prev().show();
+    }
+
+    jQuery(document).ready(function()
+    {
+        $(".toggle_row.show_comments").bind("click", function()
+        {
+            $(".row_tooltip").filter(":not(:eq(" + $(this).parents("tr:first").next().index(".row_tooltip") + "))")
+                    .filter(":visible").find(".row_tooltip_content:visible").slideUp("normal", function() {
+                $(this).parents("tr.row_tooltip").hide()
+            });
+
+            hideRowButtons();
+
+
+            $(this).hide().next().show().parents("tr:first")
+                    .next("tr.row_tooltip").show()
+                    .find(".row_tooltip_content").slideDown();
+        });
+
+        $(".toggle_row.hide_comments").bind("click", function()
+        {
+            hideRowButtons();
+
+            $(this).hide().prev().show().parents("tr:first")
+                    .next("tr.row_tooltip")
+                    .find(".row_tooltip_content").slideUp('normal', function() {
+                $(this).parents("tr.row_tooltip").hide();
+            });
+        });
+    });
+
+</script>
+</js:>

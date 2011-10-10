@@ -61,10 +61,10 @@
                   <%= link_to t("administration.users.index.view.subaccounts"), administration_users_path({:search => {:with_subaccounts => user.id}}) %>
                 </li>
             <% end %>
-            <% if user.has_role?(:customer) %>
+            <% if user.has_role?(:supplier) %>
                 <li><%= link_to t("administration.users.index.view.create_invoice"), new_administration_invoicing_invoice_path(:invoice => {:user_id => user.id}) %></li>
             <% end %>
-            <% if user.has_any_role?(:customer, :purchase_manager) %>
+            <% if user.has_any_role?(:supplier, :member) %>
                 <li><%= link_to t("administration.users.send_invitation"), administration_user_path(user, { "user_#{user.role.to_s}".to_sym  => { :send_invitation => true }}), {:method => :put } %></li>
             <% end %>
           </ul-actions>

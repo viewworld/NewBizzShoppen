@@ -2,7 +2,7 @@
 Feature: Rating and comments
 
 Background:
-  Given I am signed up and confirmed as user with email purchase_manager88@nbs.com and password secret and role purchase_manager
+  Given I am signed up and confirmed as user with email purchase_manager88@nbs.com and password secret and role member
   And a deal named "Electrical deal" exists within category "Electronics deals"
   And a deal named "Electrical deal" exists with attributes "published:1"
   And I am on the homepage

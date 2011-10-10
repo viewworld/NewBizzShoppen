@@ -1,7 +1,0 @@
-<li>
-  <div class="lead_content">
-    <h4><%= link_to  lead.header, lead.class.to_s == "Lead" ? lead_path(lead) : deal_path(lead) %></h4>
-    <%= st(lead.description) %>
-    <%= link_to t("purchase_manager_home.show.view.read_more_link"), lead.class.to_s == "Lead" ? lead_path(lead) : deal_path(lead), :class => "read_more" %>
-  </div>
-</li>
