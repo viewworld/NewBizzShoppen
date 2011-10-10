@@ -51,10 +51,11 @@ Feature: Deals from admin perspective
   @_done @_tested
   Scenario: I can make Sales Manager a Deal Maker (can publish deals)
     Then I follow translated "layout.main_menu.admin.users"
-    Then I fill in "search_with_keyword" with "buyer@nbs.com"
+    Given I have user with email buyer1234567@nbs.com and role supplier
+    Then I fill in "search_with_keyword" with "buyer1234567@nbs.com"
     Then I press translated "administration.users.index.view.search_button"
     Then I follow translated "administration.users.index.view.edit"
-    Then I check "user_category_supplier_deal_maker_role_enabled"
+    Then I check "user_supplier_deal_maker_role_enabled"
 
   @_done @_tested
   Scenario: I can make an agent or call centre a Deal Maker

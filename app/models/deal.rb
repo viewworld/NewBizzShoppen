@@ -226,14 +226,14 @@ class Deal < AbstractLead
       if supplier
         lead_category = supplier.deal_category_id ? LeadCategory.find(supplier.deal_category_id) : LeadCategory.create(:name => supplier.company_name, :currency => Currency.default_currency)
       else
-        lead_category = LeadCategory.create(:name => company_name)
+        lead_category = LeadCategory.create(:name => company_name, :currency => Currency.default_currency)
       end
 
       supplier.update_attribute(:deal_category_id, lead_category.id) if supplier and supplier.deal_category_id.blank?
       supplier.update_attribute(:big_buyer, true) if supplier and !supplier.big_buyer?
       lead_category.update_attribute(:is_customer_unique, true) unless lead_category.is_customer_unique
-      if supplier and !lead_category.customers.include?(supplier)
-        lead_category.customers << supplier
+      if supplier and !lead_category.customers.map(&:id).include?(supplier.id)
+        lead_category.customers << User.find(supplier.id)
         lead_category.save
       end
       lead_category.update_attribute(:auto_buy, true) unless lead_category.auto_buy?
