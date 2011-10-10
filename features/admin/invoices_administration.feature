@@ -616,3 +616,15 @@ Scenario: I can see VAT spec section when Carge VAT is set to false
   And I go to administration invoices
   And I follow translated "administration.invoices.index.view.show_invoice"
   Then I should see translated "administration.invoices.show.view.vat_spec"
+
+@m21 @requested @tgn
+Scenario: I can see invoices generated from debtors tab
+
+@m21 @requested @tgn
+Scenario: I can resend invoice to selected user from invoices table menu
+
+@m21 @requested @tgn
+Scenario: I can bulk send invoices to selected users
+
+@m21 @requested @tgn
+Scenario: I can see warning in a popup when trying to send invoice which has been already sent or is paid
