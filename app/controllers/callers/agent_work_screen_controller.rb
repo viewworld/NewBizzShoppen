@@ -35,6 +35,7 @@ class Callers::AgentWorkScreenController < Callers::CallerController
     @pending_contacts = @agent.contacts.for_campaign(@campaign).with_pending_status(true)
   end
 
+  # TODO REFACTOR! it takes over 1s
   def set_completed_contacts
     @completed_contacts = @campaign.contacts.with_completed_status(true).select{ |contact| contact.current_call_result.creator == current_user.with_role }
   end
