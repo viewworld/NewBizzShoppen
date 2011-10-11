@@ -14,6 +14,7 @@ class Administration::Invoicing::MailingsController < Administration::Administra
                                        {:subject_content => email_params[:subject], :body_content => email_params[:body],
                                         :bcc_recipients => @email_template_preview.bcc, :cc_recipients => @email_template_preview.cc}, Array(invoice_path))
     end
+    @invoice.update_attribute(:emailed_at, Time.now)
     flash[:notice] = I18n.t("flash.bulk_lead_share_by_email.create.notice")
     redirect_to administration_invoicing_invoice_path(@invoice)
   end

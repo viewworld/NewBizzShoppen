@@ -1377,6 +1377,8 @@ en:
             payment_status: "Payment status"
           credit_invoice: "Credit invoice"
           send_invoice_to_selected: "Send invoice to selected"
+          send_invoice: "Send invoice"
+          resend_invoice: "Resend invoice"
       cash_flow:
         view:
           header: "New payment"
@@ -1390,6 +1392,8 @@ en:
             subject: "Subject"
             body: "Body"
             title: "Send invoice"
+            invoice_already_sent_or_paid: "Warning: invoice has been already sent or paid."
+            button_cancel: "Cancel"
       bulk_mailings:
         new:
           view:

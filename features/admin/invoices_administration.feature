@@ -617,11 +617,27 @@ Scenario: I can see VAT spec section when Carge VAT is set to false
   And I follow translated "administration.invoices.index.view.show_invoice"
   Then I should see translated "administration.invoices.show.view.vat_spec"
 
-@m21 @requested @tgn
+@m21 @requested @tgn @_tested @_done
 Scenario: I can see invoices generated from debtors tab
+  And User kastomer@nbs.fake with role supplier is big buyer
+  And a lead TestLead1 exists within category Computers and is bought by user kastomer@nbs.fake with role supplier
+  When I click hidden link by url regex "/administration\/invoicing\/invoices$/"
+  Then I should not see "Janko Muzykant"
+  When I follow translated "layout.main_menu.admin.upcoming_invoices"
+  Then I follow translated "administration.upcoming_invoices.index.view.create_invoice"
+  And I press translated "administration.invoices.new.view.button_create"
+  When I click hidden link by url regex "/administration\/invoicing\/invoices$/"
+  Then I should see "Janko Muzykant"
 
-@m21 @requested @tgn
+@m21 @requested @tgn @selenium @_done @_tested
 Scenario: I can resend invoice to selected user from invoices table menu
+  Given invoice exists for user "kastomer@nbs.fake" with role "supplier"
+  When invoice line for first invoice exists for user "kastomer@nbs.fake" with role "supplier" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
+  And invoice is paid
+  Given I click hidden link by url regex "/administration\/invoicing\/invoices$/"
+  And I confirm a js popup on the next step
+  And I click hidden link by url regex "/administration\/invoicing\/invoices\/\d+\/mailings\/new/"
+  Then I press translated "administration.invoices.mailing.new.view.send"
 
 @m21 @requested @tgn @selenium @_tested @_done
 Scenario: I can bulk send invoices to selected users
@@ -639,12 +655,12 @@ Scenario: I can bulk send invoices to selected users
   Then last "2" emails should be sent to recipients "kastomer@nbs.fake,kastomer2@nbs.fake"
   And I should see translated "flash.bulk_mailings.invoices_sent"
 
-
-@m21 @requested @tgn
+@m21 @requested @tgn @_done @_tested @selenium
 Scenario: I can see warning in a popup when trying to send invoice which has been already sent or is paid
   Given invoice exists for user "kastomer@nbs.fake" with role "supplier"
   When invoice line for first invoice exists for user "kastomer@nbs.fake" with role "supplier" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
-  And I follow translated "layout.main_menu.admin.invoices"
-  And I follow translated "administration.invoices.index.view.show_invoice"
+  And invoice is paid
+  Given I click hidden link by url regex "/administration\/invoicing\/invoices$/"
+  And I click hidden link by url regex "/administration\/invoicing\/invoices\/\d+/"
   Then I confirm a js popup on the next step
   And I follow translated "administration.invoices.show.view.send"

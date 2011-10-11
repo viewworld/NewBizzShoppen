@@ -3,7 +3,7 @@ class Administration::Invoicing::BulkMailingsController < Administration::Admini
   before_filter :get_invoices
 
   def edit
-    @sent_invoices = @invoices.select { |i| !i.last_sent_at.nil? }
+    @sent_invoices = @invoices.select { |invoice| invoice.sent? }
   end
 
   def update
@@ -13,7 +13,7 @@ class Administration::Invoicing::BulkMailingsController < Administration::Admini
       invoice_path = Pathname.new(File.join(::Rails.root.to_s,'public/html2pdf/invoice_cache', invoice_filename))
       TemplateMailer.delay.new(invoice.user.email, @email_template, invoice.user.country,
                                        {:invoice => invoice}, Array(invoice_path))
-      invoice.update_attribute(:last_sent_at, Time.now)
+      invoice.update_attribute(:emailed_at, Time.now)
     end
     flash[:notice] = I18n.t("flash.bulk_mailings.invoices_sent")
     redirect_to administration_invoicing_invoices_path

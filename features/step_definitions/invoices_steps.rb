@@ -8,7 +8,11 @@ end
 When /^invoice exists for user "([^"]*)" with role "([^"]*)"(?: with attributes "([^"]*)")?$/ do |email,role_name,options|
   user = "User::#{role_name.classify}".constantize.where(:email => email).first
   attrs = options ? Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys.merge(:user => user) : {:user => user}
-  Invoice.make!(attrs)
+  @invoice = Invoice.make!(attrs)
+end
+
+When /^invoice is paid$/ do
+  @invoice.update_attribute(:paid_at, Time.now)
 end
 
 When /^invoice line for first invoice exists for user "([^"]*)" with role "([^"]*)"(?: with attributes "([^"]*)")?$/ do |email,role_name,options|
