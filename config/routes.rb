@@ -44,6 +44,7 @@ Nbs::Application.routes.draw do
         resources :mailings, :only => [:new, :create]
         resource :seller, :only => [:update]
       end
+      resource :bulk_mailings, :controller => "bulk_mailings", :only => [:edit, :update]
       resource :bulk_invoice_update, :controller => "bulk_invoice_update", :only => [:update]
       resources :upcoming_invoices, :only => [:index]
       resources :payment_transactions

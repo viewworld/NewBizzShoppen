@@ -122,6 +122,7 @@
                 <%= hidden_field_tag :route_to %>
 
                 <%= bt_link_to :chbox_selected, t("administration.invoices.index.view.bulk_set_as_paid"), "javascript:void(0)", :onclick => "submitBulkForm('#{administration_invoicing_bulk_invoice_update_path}#PUT');" %>
+                <%= bt_link_to :mail, t("administration.invoices.index.view.send_invoice_to_selected"), "javascript:void(0)", :onclick => "submitBulkForm('#{edit_administration_invoicing_bulk_mailings_path}#GET');" %>
               </td>
               <td class="cr"></td>
             </tr>

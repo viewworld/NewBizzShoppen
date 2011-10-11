@@ -50,7 +50,6 @@ Then /^last email sent should have subject "([^"]*)"$/ do |content|
 end
 
 Then /^last email sent should have content "([^"]*)"$/ do |content|
-  puts ActionMailer::Base.deliveries.last.body.raw_source
   assert ActionMailer::Base.deliveries.last.body.raw_source.include?(content)
 end
 
@@ -60,6 +59,13 @@ end
 
 Then /^last email sent should have been sent to cc "([^"]*)"$/ do |email|
   assert ActionMailer::Base.deliveries.last.cc.include?(email)
+end
+
+Then /^last "([^"]*)" emails should be sent to recipients "([^"]*)"$/ do |count, recipients|
+  emails = ActionMailer::Base.deliveries.last(count.to_i)
+  recipients.split(",").each do |recipient|
+    assert emails.map(&:to).flatten.include?(recipient)
+  end
 end
 
 Then /^no email has been send$/ do

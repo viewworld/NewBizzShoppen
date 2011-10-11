@@ -623,8 +623,28 @@ Scenario: I can see invoices generated from debtors tab
 @m21 @requested @tgn
 Scenario: I can resend invoice to selected user from invoices table menu
 
-@m21 @requested @tgn
+@m21 @requested @tgn @selenium @_tested @_done
 Scenario: I can bulk send invoices to selected users
+  Given someone is signed up and confirmed as user with email kastomer2@nbs.fake and password secret and role supplier with attributes "first_name:Janko,last_name:Muzykant,company_name:Cello2 Ltd"
+  Given invoice exists for user "kastomer@nbs.fake" with role "supplier" with attributes "charge_vat:0"
+  Given invoice exists for user "kastomer2@nbs.fake" with role "supplier" with attributes "charge_vat:0"
+  Given I click hidden link by url regex "/administration\/invoicing\/invoices$/"
+  When I check "mark_all"
+  Then I follow translated "administration.invoices.bulk_mailings.new.view.button_send"
+  And I should see "0 out of 2"
+  And I should see "kastomer@nbs.fake"
+  And I should see "kastomer2@nbs.fake"
+  When I fill in "email_template_body_editor" ckeditor with "Some body content"
+  And I press translated "administration.invoices.bulk_mailings.new.view.button_send"
+  Then last "2" emails should be sent to recipients "kastomer@nbs.fake,kastomer2@nbs.fake"
+  And I should see translated "flash.bulk_mailings.invoices_sent"
+
 
 @m21 @requested @tgn
 Scenario: I can see warning in a popup when trying to send invoice which has been already sent or is paid
+  Given invoice exists for user "kastomer@nbs.fake" with role "supplier"
+  When invoice line for first invoice exists for user "kastomer@nbs.fake" with role "supplier" with attributes "quantity:1,netto_price:100,vat_rate:22,netto_value:100,brutto_value:122"
+  And I follow translated "layout.main_menu.admin.invoices"
+  And I follow translated "administration.invoices.index.view.show_invoice"
+  Then I confirm a js popup on the next step
+  And I follow translated "administration.invoices.show.view.send"

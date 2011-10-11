@@ -1376,6 +1376,7 @@ en:
             not_paid: "Not paid only"
             payment_status: "Payment status"
           credit_invoice: "Credit invoice"
+          send_invoice_to_selected: "Send invoice to selected"
       cash_flow:
         view:
           header: "New payment"
@@ -1389,6 +1390,13 @@ en:
             subject: "Subject"
             body: "Body"
             title: "Send invoice"
+      bulk_mailings:
+        new:
+          view:
+            title: "Send invoice to selected users"
+            button_send: "Send"
+            button_cancel: "Cancel"
+            out_of: "out of"
     sellers:
       index:
         view:
@@ -3010,6 +3018,9 @@ en:
     featured_deals:
       create:
         notice: "Featured deals have been updated."
+    bulk_mailings:
+      no_invoices_selected: "No invoices have been selected to send email to."
+      invoices_sent: "Invoices have been succesfully sent."
   formtastic:
     date:
       formats:
