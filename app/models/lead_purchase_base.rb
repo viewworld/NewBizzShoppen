@@ -51,6 +51,7 @@ class LeadPurchaseBase < ActiveRecord::Base
 
   scope :with_not_invoiced, select("lead_purchases.owner_id, leads.currency_id, count(lead_purchases.id) as not_invoiced_count, sum(leads.price*lead_purchases.quantity) as not_invoiced_sum, sum(lead_purchases.euro_price*lead_purchases.quantity) as not_invoiced_euro_sum").joins("inner join leads on leads.id=lead_purchases.lead_id inner join users on users.id=lead_purchases.owner_id left outer join invoice_lines on lead_purchases.id=invoice_lines.payable_id").where("invoice_lines.payable_id is NULL and users.big_buyer = ?", true).group("owner_id,leads.currency_id")
   scope :with_not_invoiced_keyword, lambda { |keyword| where("lower(leads.header) LIKE :keyword OR lower(leads.contact_name) LIKE :keyword OR lower(leads.company_name) LIKE :keyword", { :keyword => "%#{keyword.downcase}%" }) }
+  scope :with_role, lambda { |role| where("users.roles_mask & #{2**User.valid_roles.index(role.to_sym)} > 0 ")}
   scope :with_assigned_at_date_after_and_including, lambda{ |date| where(["assigned_at::DATE >= ?",date.to_postgresql_date])}
   scope :with_assigned_at_date_before_and_including, lambda{ |date| where(["assigned_at::DATE <= ?",date.to_postgresql_date])}
   scope :with_purchased_by, lambda { |supplier| where("lead_purchases.requested_by IS NULL and (lead_purchases.owner_id = ? or lead_purchases.purchased_by = ?)", supplier.id, supplier.id) }

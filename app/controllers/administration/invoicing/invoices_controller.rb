@@ -6,6 +6,7 @@ class Administration::Invoicing::InvoicesController < Administration::Administra
   set_subtab "invoices"
 
   def create
+    throw params
     @invoice = Invoice.new(params[:invoice])
     create! do |success, failure|
       success.html { redirect_to edit_administration_invoicing_invoice_path(@invoice) }
