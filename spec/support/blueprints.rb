@@ -121,7 +121,7 @@ end
 LeadRequest.blueprint do
   paid { false }
   accessible_from { nil }
-  requested_by { User::LeadBuyer.make!.id }
+  requested_by { User::LeadSupplier.make!.id }
   lead_id { Lead.make! }
 end
 
