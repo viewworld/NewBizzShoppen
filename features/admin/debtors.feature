@@ -66,3 +66,6 @@ Feature: Debtors
 
   @m21 @requested @tgn @non_testable @_done
   Scenario: Debtors list should NOT be paginated
+  
+  @m21 @requested
+  Scenario: I can see members in the debtors list and invoice them as suppliers  
