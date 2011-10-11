@@ -44,10 +44,12 @@ class DealsController < ApplicationController
   end
 
   def index
-    if params[:slag].present? and !@category
-      redirect_to deal_categories_path
-    else
-      index!
+    index! do |format|
+      if params[:slag].present? and !@category
+        format.html { redirect_to deal_categories_path }
+      else
+        format.html { render :action => :index }
+      end
     end
   end
 
