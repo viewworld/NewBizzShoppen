@@ -51,7 +51,7 @@
     function add_subscription_plan_line(link, content) {
         var new_id = new Date().getTime();
         content = content.replace(/subscription_plan_subscription_plan_lines_attributes_\d+/g, "subscription_plan_subscription_plan_lines_attributes_" + nestedFormsCount.toString());
-        content = content.replace(/subscription_plan\[subscription_plan_lines\]\[\d+\]/g, "subscription_plan[subscription_plan_lines][" + new_id.toString() + "]");
+        content = content.replace(/subscription_plan\[subscription_plan_lines_attributes\]\[\d+\]/g, "subscription_plan[subscription_plan_lines_attributes][" + new_id.toString() + "]");
         $('.nested_subscription_plan_lines_fields_container:last').append(content);
         nestedFormsCount = nestedFormsCount + 1;
     }

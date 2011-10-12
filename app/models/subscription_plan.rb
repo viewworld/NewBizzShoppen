@@ -7,9 +7,12 @@ class SubscriptionPlan < ActiveRecord::Base
 
   roles ROLES
 
-  validates_presence_of :name, :billing_cycle, :billing_period, :roles
+  validates_presence_of :name, :billing_cycle, :billing_period, :roles, :currency_id, :currency
+  validates_numericality_of :billing_cycle, :billing_period
+  validates_numericality_of :lockup_period, :free_period, :allow_nil => true
 
-  has_many :subscription_plan_lines
+  has_many :subscription_plan_lines, :dependent => :destroy
+  belongs_to :currency
 
   accepts_nested_attributes_for :subscription_plan_lines, :allow_destroy => true
 
