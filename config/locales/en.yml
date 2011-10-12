@@ -108,6 +108,7 @@ en:
         refunds: "Refunds"
         campaigns: Campaigns
         reports: "Reports"
+        subscription_plans: "Subscriptions"
       agent:
         leads: My leads
         deals: My deals
@@ -1633,6 +1634,39 @@ en:
         view:
           header: "Editing introduction video"
           button_save: "Save"
+    subscription_plans:
+      index:
+        view:
+          search_label: "Search"
+          search:
+            with_keyword: "Keyword"
+          search_button: "Search"
+          header: "Subscription plans"
+          name: "Name"
+          roles: "Roles"
+          total_amount: "Total amount"
+          is_active: "Active?"
+          actions: "Actions"
+          new_subscription_plan: "New subscription plan"
+          edit: "Edit"
+          destroy: "Destroy"
+          confirmation_msg: "Are you sure?"
+      new:
+        view:
+          header: "New subscription plan"
+          button_create: "Create"
+          button_cancel: "Cancel"
+      edit:
+        view:
+          button_update: "Save"
+          button_cancel: "Cancel"
+          header: "Edit subscription plan: %{name}"
+
+      form:
+        new_line: "New line"
+        line_name: "Name"
+        line_price: "Price"
+        delete_line: "Delete"
   agent:
     leads:
       index:
@@ -3444,7 +3478,21 @@ en:
         name: "Region name"
       call_result:
         note: "Internal note"
-
+      subscription_plan:
+        name: "Name"
+        billing_cycle: "Billing cycle (weeks)"
+        lockup_period: "Lockup period (weeks)"
+        billing_period: "Billing period (weeks)"
+        free_period: "Free period (weeks)"
+        currency_id: "Currency"
+        is_active: "Active?"
+        can_be_upgraded: "Can be upgraded?"
+        can_be_downgraded: "Can be downgraded?"
+        team_buyer: "Team buyer enabled?"
+        big_buyer: "Big buyer enabled?"
+        deal_maker: "Deal maker role enabled?"
+        auto_prolong: "Auto prolonged?"
+        roles: "Roles"
   users:
     passwords:
       edit:

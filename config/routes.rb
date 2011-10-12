@@ -67,6 +67,7 @@ Nbs::Application.routes.draw do
     resources :youtube_introductions
     resources :email_bounces
     resources :languages
+    resources :subscription_plans
   end
 
   namespace :suppliers do

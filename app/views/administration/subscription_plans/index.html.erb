@@ -1,0 +1,94 @@
+<search-box:>
+  <div class="search_box">
+    <h2><%= t("administration.subscription_plans.index.view.search_label") %></h2>
+
+    <div class="search_content">
+      <%= form_for @search, :url => administration_subscription_plans_path do |f| %>
+          <fieldset class="inputs_vertical">
+            <ol class="no_pdd">
+              <li class="string">
+                <%= f.label :with_keyword, t("administration.subscription_plans.index.view.search.with_keyword") %>
+                <%= f.text_field :with_keyword %>
+              </li>
+              <li class="commit">
+                <ibt c="bt_green" icon="magnify">
+                  <%= submit_tag t("administration.subscription_plans.index.view.search_button") %>
+                </ibt>
+                <p>
+                  <%= bt_clear_filter %>
+                </p>
+              </li>
+            </ol>
+          </fieldset>
+      <% end %>
+    </div>
+  </div>
+</search-box:>
+
+<column-mc:>
+  <header>
+     <param:content>
+       <%= t("administration.subscription_plans.index.view.header") %>
+     </param:content>
+
+     <param:actions>
+       sdfsdfdsf
+       <ul class="header_actions">
+         <li class="last"><%= bt_link_to :plus, t("administration.subscription_plans.index.view.new_subscription_plan"), new_administration_subscription_plan_path %></li>
+       </ul>
+
+     </param:actions>
+  </header>
+
+  <% if @subscription_plans.empty?  %>
+      <%= blank_state_message %>
+  <% else %>
+      <table class="generic" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+          <th class="hl"></th>
+          <th><%= t("administration.subscription_plans.index.view.name") %></th>
+          <th><%= t("administration.subscription_plans.index.view.roles") %>
+          <th><%= t("administration.subscription_plans.index.view.total_amount") %></th>
+          <th><%= t("administration.subscription_plans.index.view.is_active") %></th>
+          <th class="ta_r"><%= t("administration.subscription_plans.index.view.actions") %></th>
+          <th class="hr"></th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+          <td class="fl"></td>
+          <td colspan="5"></td>
+          <td class="fr"></td>
+        </tr>
+        </tfoot>
+        <tbody id="invoices_list">
+        <% @subscription_plans.each do |subscription_plan| %>
+            <tr class="<%= cycle("odd", "even") %>">
+              <td class="cl"></td>
+
+              <td><%= subscription_plan.name %></td>
+              <td><%= subscription_plan.roles_as_text %></td>
+              <td>total<%#= as_currency(subscription_plan.amount, payment_transaction.invoice.currency)  %></td>
+              <td><%= subscription_plan.is_active? ? t("common.yes_label") : t("common.no_label") %></td>
+
+              <td class="tda ta_r">
+                <ul-actions>
+                  <li><%= link_to t("administration.subscription_plans.index.view.edit"), edit_administration_subscription_plan_path(subscription_plan), :class => "default_action" %></li>
+                  <li><%= link_to t("administration.subscription_plans.index.view.destroy"), administration_subscription_plan_path(subscription_plan), :method => :delete, :confirm => t("administration.subscription_plans.index.view.confirmation_msg") %></li>
+                </ul-actions>
+              </td>
+              <td class="cr"></td>
+            </tr>
+        <% end %>
+        <% if will_paginate %>
+            <tr class="pagination">
+              <td colspan="7" class="ta_c">
+                <%= will_paginate @subscription_plans, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+              </td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+  <% end %>
+</column-mc:>

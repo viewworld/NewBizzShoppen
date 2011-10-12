@@ -1,0 +1,71 @@
+<div class="column_left">
+  <div class="pdd_10 no_pdd_t">
+    <fieldset class="inputs labels_ta_r labels_200">
+      <ol class="align_inputs">
+        <%= form.input :name %>
+        <%= form.input :billing_cycle %>
+        <%= form.input :lockup_period %>
+        <%= form.input :billing_period %>
+        <%= form.input :free_period %>
+        <%= form.input :currency_id, :collection => currencies_for_select %>
+        <%= form.input :roles, :collection => SubscriptionPlan::ROLES.map { |r| [r.to_s.humanize, r] }, :selected => @subscription_plan.roles.to_a, :include_blank => false, :input_html => { :style => "height:100px", :size => 5, :multiple => true } %>
+      </ol>
+    </fieldset>
+  </div>
+</div>
+
+<div class="column_right">
+  <div class="pdd_10 no_pdd_t">
+    <fieldset class="inputs labels_ta_r labels_200">
+      <ol class="align_inputs">
+        <%= form.input :is_active, :as => :boolean %>
+        <%= form.input :can_be_upgraded, :as => :boolean %>
+        <%= form.input :can_be_downgraded, :as => :boolean %>
+        <%= form.input :team_buyer, :as => :boolean %>
+        <%= form.input :big_buyer, :as => :boolean %>
+        <%= form.input :deal_maker, :as => :boolean %>
+        <%= form.input :auto_prolong, :as => :boolean %>
+      </ol>
+    </fieldset>
+  </div>
+</div>
+
+<clb/>
+
+<%= form.fields_for :subscription_plan_lines, @subscription_plan.subscription_plan_lines do |builder| %>
+    <%= render :partial => "subscription_plan_line_fields", :locals => {:f => builder} %>
+<% end %>
+
+<div class="nested_subscription_plan_lines_fields_container"></div>
+
+<hl/>
+<div class="pdd_20" style="padding-top:10px">
+  <%= bt_link_to :plus, t("administration.subscription_plans.form.new_line"), "javascript:void(0)", :onclick => "#{fields_for_subscription_plan_line_fields(form)}" %>
+</div>
+
+<clb/>
+
+<script>
+    var nestedFormsCount = <%= @subscription_plan.subscription_plan_lines.size %>;
+
+    function add_subscription_plan_line(link, content) {
+        var new_id = new Date().getTime();
+        content = content.replace(/subscription_plan_subscription_plan_lines_attributes_\d+/g, "subscription_plan_subscription_plan_lines_attributes_" + nestedFormsCount.toString());
+        content = content.replace(/subscription_plan\[subscription_plan_lines\]\[\d+\]/g, "subscription_plan[subscription_plan_lines][" + new_id.toString() + "]");
+        $('.nested_subscription_plan_lines_fields_container:last').append(content);
+        nestedFormsCount = nestedFormsCount + 1;
+    }
+
+    function remove_subscription_plan_line(id, record_id) {
+        nestedFormsCount = nestedFormsCount - 1;
+
+        if (record_id == null) {
+            $('#subscription_plan_line_field_form_' + id).remove();
+        }
+        else {
+            $('#subscription_plan_line_field_form_' + id).hide();
+            $('#destroy_hidden_field_' + record_id.toString()).val('true')
+        }
+
+    }
+</script>

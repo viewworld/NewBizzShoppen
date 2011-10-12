@@ -59,6 +59,14 @@ module ApplicationHelper
     "add_region(this, \"#{escape_javascript(fields)}\")"
   end
 
+  def fields_for_subscription_plan_line_fields(f)
+    region = SubscriptionPlanLine.new
+    fields = f.fields_for :subscription_plan_lines, region do |builder|
+      render("subscription_plan_line_fields", :f => builder)
+    end
+    "add_subscription_plan_line(this, \"#{escape_javascript(fields)}\")"
+  end
+
   def available_templates_list(lead)
     lead.lead_templates(false).reject { |lt| lt.is_filled_out_for(lead) }
   end
