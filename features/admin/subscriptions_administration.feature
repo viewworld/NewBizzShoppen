@@ -8,7 +8,7 @@ Feature: Subscriptions administration
 
 Scenario: I can view list of existing subscription types
 
-@selenium @wip
+@selenium @_done @_tested @tgn
 Scenario: I can create new subscription type
   When I follow translated "administration.subscription_plans.index.view.new_subscription_plan"
   And I fill in "subscription_plan_name" with "Test subscription 1"
@@ -37,6 +37,7 @@ Scenario: I can create new subscription type
   And the "subscription_plan_subscription_plan_lines_attributes_1_name" field should contain "Invoice line item 2"
   And the "subscription_plan_subscription_plan_lines_attributes_0_price" field should contain "124.00"
   And the "subscription_plan_subscription_plan_lines_attributes_1_price" field should contain "237.00"
+  Then I should see "361.00"
   When I follow translated "administration.subscription_plans.form.delete_line"
   And I press translated "administration.subscription_plans.edit.view.button_update"
   Then I click hidden link by url regex "/administration\/subscription_plans\/\d+\/edit$/"
