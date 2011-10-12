@@ -71,7 +71,7 @@
 
             <% unless @deal.new_record? %>
                 <li class="string"><%= form.label :url, :label => t("shared.deals.form.url_label") %>
-                  <%= link_to deal_url(:id => @deal.slug), deal_url(:id => @deal.slug) %>
+                  <%= link_to deal_url(:protocol => "http://", :host => "www.fairdeals.dk", :id => @deal.slug), deal_url(:protocol => "http://", :host => "www.fairdeals.dk", :id => @deal.slug) %>
                 </li>
             <% end %>
         <% end %>
