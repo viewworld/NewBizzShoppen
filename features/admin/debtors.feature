@@ -5,8 +5,7 @@ Feature: Debtors
     Given I am on the homepage
     And I make sure current locale is "en"
     And I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role admin
-    And there is a seller with attributes "company_name:DannyTheSeller,first_name:Danny,last_name:DeVito,vat_no:123" for country "Denmark"
-    And there is a seller with attributes "company_name:UKDannyTheSeller,first_name:Danny,last_name:DeVito,vat_no:456" for country "United Kingdom"
+
     And someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Janko,last_name:Muzykant,company_name:Cello Ltd"
     And User kastomer@nbs.fake with role supplier is from country Denmark
     And User kastomer@nbs.fake with role supplier is big buyer
@@ -53,6 +52,8 @@ Feature: Debtors
 
   @m21 @requested @selenium @tgn @_tested @_done
   Scenario: When multiple debtors are selected for invoicing then seller company is assigned to each of them based on their country
+    Given there is a seller with attributes "company_name:DannyTheSeller,first_name:Danny,last_name:DeVito,vat_no:123" for country "Denmark"
+    And there is a seller with attributes "company_name:UKDannyTheSeller,first_name:Danny,last_name:DeVito,vat_no:456" for country "United Kingdom"
     When I click hidden link by url regex "/administration\/invoicing\/upcoming_invoices/"
     And I check "mark_all"
     And I follow translated "administration.upcoming_invoices.index.view.invoice_selected"
@@ -61,11 +62,22 @@ Feature: Debtors
 
   @m21 @requested @tgn @_done @_tested
   Scenario: I should see total amount of money that should be paid by debtors in the bottom of the table
-  When I click hidden link by url regex "/administration\/invoicing\/upcoming_invoices/"
-  Then I should see "240"
+    When I click hidden link by url regex "/administration\/invoicing\/upcoming_invoices/"
+    Then I should see "240"
 
   @m21 @requested @tgn @non_testable @_done
   Scenario: Debtors list should NOT be paginated
   
   @m21 @requested
-  Scenario: I can see members in the debtors list and invoice them as suppliers  
+  Scenario: I can see members in the debtors list and invoice them as suppliers
+
+ @m21 @requested @selenium @_done @_tested @tgn
+  Scenario: When multiple debtors are selected for invoicing then if there is no seller than default one is applied
+    Given Country Sweden is created
+    Given there is a seller with attributes "company_name:DannyTheSeller,first_name:Danny,last_name:DeVito,vat_no:123" for country "Denmark"
+    Given there is a seller with attributes "company_name:DannyTheSeller,first_name:Danny,last_name:DeVito,vat_no:123,default:1" for country "Sweden"
+    When I click hidden link by url regex "/administration\/invoicing\/upcoming_invoices/"
+    And I check "mark_all"
+    And I follow translated "administration.upcoming_invoices.index.view.invoice_selected"
+    Then first invoice for user "kastomer@nbs.fake" with role "supplier" has seller for country "Denmark"
+    And first invoice for user "kastomer2@nbs.fake" with role "supplier" has seller for country "Sweden"

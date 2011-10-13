@@ -121,5 +121,5 @@ end
 
 When /^first invoice for user "([^"]*)" with role "([^"]*)" has seller for country "([^"]*)"$/ do |email,role_name, country_name|
   invoice = "User::#{role_name.classify}".constantize.where(:email => email).first.invoices.first
-  assert invoice.seller == Seller.default_for_country(Country.where(:name => country_name).first.id)
+  assert invoice.seller == Seller.for_country(Country.where(:name => country_name).first.id).first
 end
