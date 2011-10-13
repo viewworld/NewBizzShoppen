@@ -305,10 +305,16 @@ td.tda a.bt
 
 .generic tbody tr.pagination td
 {
-    background: url(/images/table/table.png) repeat-x 0 -99px;
+    background: url(/images/table/table.png) repeat-x 0 -99px #e3e3e3;
     border-bottom: 1px solid #d4d4d4;
-    height: 32px;
-    padding: 0 10px;
+    min-height: 32px;
+    padding: 0 10px 3px;                                                 
+}
+
+.generic tbody tr.pagination td .show_all_link
+{
+    font-size:10px;
+    margin-top: -2px;
 }
 
 .generic tbody tr td div.td_select_all

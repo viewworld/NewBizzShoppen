@@ -47,10 +47,10 @@
   <div class="grid_280 fltr">
     <div class="homepage_actions frm_dark pdd_10">
       <% unless user_signed_in? %>
-          <%= bt_link_to nil, t("fairdeals_home.show.view.get_free_account"), new_purchase_manager_account_path, :class => "bt_max" %>
+          <%= bt_link_to nil, t("fairdeals_home.show.view.get_free_account"), new_member_account_path, :class => "bt_max" %>
       <% end %>
       <%= bt_link_to nil, t("fairdeals_home.show.view.browse_our_deals"), deal_categories_path, :class => "bt_grey bt_max" %>
-      <%= bt_link_to nil, t("fairdeals_home.show.view.find_a_vendor"), new_purchase_managers_tender_path, :class => "bt_grey bt_max" %>
+      <%= bt_link_to nil, t("fairdeals_home.show.view.find_a_vendor"), new_members_tender_path, :class => "bt_grey bt_max" %>
     </div>
 
 
@@ -137,7 +137,7 @@
 
     <div class="news">
       <!--
-    <h2><%= t('purchase_manager_home.show.view.header_news') %><%= link_to t("purchase_manager_home.show.view.complete_list_link"), news_index_path(:search => {:with_subclass => 'PurchaseManager'}) %></h2>
+    <h2><%= t('member_home.show.view.header_news') %><%= link_to t("member_home.show.view.complete_list_link"), news_index_path(:search => {:with_subclass => 'Member'}) %></h2>
     -->
       <ul>
         <% if @news.any? %>

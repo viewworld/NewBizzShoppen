@@ -50,6 +50,7 @@ Then /^last email sent should have subject "([^"]*)"$/ do |content|
 end
 
 Then /^last email sent should have content "([^"]*)"$/ do |content|
+  puts ActionMailer::Base.deliveries.last.body.raw_source
   assert ActionMailer::Base.deliveries.last.body.raw_source.include?(content)
 end
 

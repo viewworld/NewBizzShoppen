@@ -23,7 +23,7 @@
     </tbody>
   </table>
 
-  <div class="invoice_header"><%= t("customer.invoices.show.view.header") %></div>
+  <div class="invoice_header"><%= t("supplier.invoices.show.view.header") %></div>
 
 
   <table cellpadding="0" cellspacing="0" class="from_to_table">
@@ -50,11 +50,11 @@
           <% unless invoice.customer_company_name.blank? %>
             <%= invoice.customer_name %><br/>
           <% end %>
-          <%= invoice.customer_address.address_line_1 %><br/>
-          <%= invoice.customer_address.address_line_2 %><br/>
-          <%= invoice.customer_address.address_line_3 %><br/>
-          <%= t("administration.invoices.show.view.bank_zip_code") %>: <%= invoice.customer_address.zip_code %><br/>
-          <%= t("administration.invoices.show.view.bank_country") %>: <%= invoice.customer_address.country.name %><br/>
+          <%= invoice.supplier_address.address_line_1 %><br/>
+          <%= invoice.supplier_address.address_line_2 %><br/>
+          <%= invoice.supplier_address.address_line_3 %><br/>
+          <%= t("administration.invoices.show.view.bank_zip_code") %>: <%= invoice.supplier_address.zip_code %><br/>
+          <%= t("administration.invoices.show.view.bank_country") %>: <%= invoice.supplier_address.country.name %><br/>
       </td>
     </tr>
     <tr>

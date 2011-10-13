@@ -1,0 +1,60 @@
+<column-mc:>
+  <header back="true"><%= t("supplier.cart.show.view.header") %></header>
+
+  <table class="cart_table">
+    <cols>
+      <col style="width: 50px"/>
+      <col style="width: auto"/>
+      <col style="width: 100px"/>
+      <col style="width: 15px"/>
+      <col style="width: 100px"/>
+      <col style="width: 15px"/>
+      <col style="width: 100px"/>
+      <col style="width: 120px"/>
+    </cols>
+    <thead>
+    <tr>
+      <th>#</th>
+      <th class="ta_l"><%= t("supplier.cart.show.view.lead_name_header") %></th>
+      <th><%= t("supplier.cart.show.view.lead_price_header") %></th>
+      <th></th>
+      <th><%= t("supplier.cart.show.view.quantity_label") %></th>
+      <th></th>
+      <th><%= t("supplier.cart.show.view.total_label") %></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @cart.lead_purchases.each_with_index do |lp, i| %>
+        <tr class="<%= cycle("odd", "even") %>">
+          <td class="ta_c"><%= i+1 %></td>
+          <td><%= lp.lead.header %></td>
+          <td class="ta_c"><%= as_currency(lp.lead.price, lp.lead.currency) %></td>
+          <td class="ta_c sign">x</td>
+          <td class="ta_c"><%= lp.quantity %></td>
+          <td class="ta_c sign">=</td>
+          <td class="ta_c"><%= as_currency(lp.total, lp.lead.currency) %></td>
+          <td class="ta_r"><%= bt_link_to nil, t("supplier.cart.show.view.remove_item_link"), suppliers_cart_item_path(lp.lead.id), :method => :delete, :class => "bt_grey_small" %></td>
+        </tr>
+    <% end %>
+
+    <tr class="total_row">
+      <td colspan="4"></td>
+      <td class="ta_c"><%= t("supplier.cart.show.view.total_label") %></td>
+      <td class="sign">=</td>
+      <td class="ta_c">
+        <span class="green"><%= as_currency(@cart.total_netto, @cart.currency) %></span></td>
+      <td class="ta_r">
+        <%= form_tag APP_CONFIG[:paypal_url] do %>
+            <%= hidden_field_tag :cmd, "_s-xclick" %>
+            <%= hidden_field_tag :encrypted, @cart.paypal_encrypted(suppliers_lead_purchases_url, payment_notifications_url(:secret => APP_CONFIG[:paypal_secret])) %>
+            <ibt c="fltri">
+              <%= submit_tag t("supplier.cart.show.view.checkout_link") %>
+            </ibt>
+        <% end %>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+</column-mc:>

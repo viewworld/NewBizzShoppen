@@ -1,0 +1,31 @@
+<%= form_for :email_template_preview, :url => contact_us_path do |f| %>
+  <frm title="#{t('contact_us.new.view.form_title')}">
+    <param:content>
+    <div class="pdd_10 no_pdd_t">
+
+      <%= blurb('blurb_supplier_contact_us') %>
+
+      <fieldset class="inputs labels_ta_r">
+        <ol class="align_inputs">
+          <%= f.hidden_field :subject, :value =>  t("contact_us.new.view.email_subjects.agent_inquiry") %>
+
+          <li class="string">
+            <%= f.label :email_from %>
+            <%= f.text_field :email_from %> <%= custom_error_for_object_and_field(@email_template_preview, :email_from) %>
+          </li>
+
+          <li class="text">
+            <%= f.label :body %>
+            <%= f.text_area :body, :size => "100x15" %><%= custom_error_for_object_and_field(@email_template_preview, :body) %>
+          </li>
+        </ol>
+      </fieldset>
+    </div>
+    </param:content>
+    <param:actions>
+      <ibt c="fltri">
+        <%= submit_tag t("contact_us.new.view.send_email_button") %>
+      </ibt>
+    </param:actions>
+  </frm>
+<% end %>

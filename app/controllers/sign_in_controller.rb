@@ -15,7 +15,7 @@ class SignInController < ApplicationController
       user.update_attribute(:rpx_identifier, data['identifier'])
       flash[:notice] = t("devise.sessions.new.controller.successfully_connect_to_social", :first_name => user.first_name, :account_type => User.social_provider(user.rpx_identifier), :email => user.email)
       sign_in(user)
-      if user.has_role? :category_buyer and user.sign_in_count == 1
+      if user.has_role? :category_supplier and user.sign_in_count == 1
         return redirect_to my_profile_path
       else
         return redirect_to root_path
@@ -29,7 +29,7 @@ class SignInController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        if session[:site] == "fairdeals" and @user.has_role?(:purchase_manager) and @user.confirmed? and @user.rpx_identifier.blank?
+        if session[:site] == "fairdeals" and @user.has_role?(:member) and @user.confirmed? and @user.rpx_identifier.blank?
           @user.send_invitation_email(params[param_key][:password])
           path = session[:user_return_to] if session[:user_return_to]
           sign_in(@user)

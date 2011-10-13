@@ -42,7 +42,7 @@
         <% end %>
 
         <td>
-          <h4><%= link_to lead_purchase.header, current_user.has_role?(:customer) ? buyers_lead_purchase_path(lead_purchase) : lead_users_lead_purchase_path(lead_purchase), :class => "default_action" %>
+          <h4><%= link_to lead_purchase.header, current_user.has_role?(:supplier) ? suppliers_lead_purchase_path(lead_purchase) : lead_users_lead_purchase_path(lead_purchase), :class => "default_action" %>
           <% if lead_purchase.lead.linkedin_url_present? %>
                 <%= link_to image_tag("icons/in_icon.png"), lead_purchase.lead.linkedin_url %>
           <% end %>

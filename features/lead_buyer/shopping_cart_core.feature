@@ -4,7 +4,7 @@ Feature: Shopping cart core
 Background:
   Given I am on the homepage
   And I make sure current locale is "en"
-  Given I am signed up and confirmed as user with email customer@person.com and password supersecret and role customer
+  Given I am signed up and confirmed as user with email customer@person.com and password supersecret and role supplier
   And lead Printers ultimate deal exists within category Computers
   And lead Printers ultimate deal exists with attributes "price:1000,currency_id:1"
   And lead Monitors LCD deal exists within category Computers
@@ -21,14 +21,14 @@ Background:
 Scenario: I can bulk add leads to basket
   Given I check "mark_all"
   And I press translated "leads.index.button_bulk_create_cart_item"
-  Then I should see translated "buyer.bulk_cart_items.create.flash.n_cart_items_added" with options "count:4"
+  Then I should see translated "supplier.bulk_cart_items.create.flash.n_cart_items_added" with options "count:4"
 
 @tgn @_done @_tested
 Scenario: I can add lead to basket
   Given I fill in "search_with_keyword" with "printers"
   And I press translated "leads.index.search.search_button"
   Then I follow translated "leads.index.add_to_cart_link"
-  And I should see translated "buyer.cart_items.create.flash.cart_item_creation_successful"
+  And I should see translated "supplier.cart_items.create.flash.cart_item_creation_successful"
 
 @tgn @_tested @added @sprint_5_corrections
 Scenario: I can view details of leads added to the basket
@@ -43,8 +43,8 @@ Scenario: I can view details of leads added to the basket
 Scenario: I can see basket summary before I go to checkout and I can see a total for all leads to be bought
   Given I check "mark_all"
   And I press translated "leads.index.button_bulk_create_cart_item"
-  Then I should see translated "buyer.bulk_cart_items.create.flash.n_cart_items_added" with options "count:4"
-  And I click hidden link by url regex "/buyers\/cart$/"
+  Then I should see translated "supplier.bulk_cart_items.create.flash.n_cart_items_added" with options "count:4"
+  And I click hidden link by url regex "/suppliers\/cart$/"
   Then I should see "Printers ultimate deal"
   And  I should see "Monitors LCD deal"
   And  I should see "Keyboards deal"
@@ -71,10 +71,10 @@ Scenario: I can't buy (see) a lead when sale_limit is reached
   And user "agent02@nbs.com" with role "agent" has attributes "certification_level:12, company_name:Xerox2"
   And I have user with email agent03@nbs.com and role agent
   Given lead Super printers #1 is created by user agent01@nbs.com with role agent
-  And a lead Super printers #1 exists within category Computers and is bought by user ultimate.buyer@nbs.com with role customer
+  And a lead Super printers #1 exists within category Computers and is bought by user ultimate.buyer@nbs.com with role supplier
   And lead Super printers #1 exists with attributes "hotness_counter:0, sale_limit:1, purchase_value:5200"
   Given lead Super printers #2 is created by user agent02@nbs.com with role agent
-  And a lead Super printers #2 exists within category Computers and is bought by user ultimate.buyer@nbs.com with role customer
+  And a lead Super printers #2 exists within category Computers and is bought by user ultimate.buyer@nbs.com with role supplier
   And lead Super printers #2 exists with attributes "hotness_counter:0, sale_limit:2, purchase_value:5200"
   And I go to browse leads
   And I follow category "Computers"

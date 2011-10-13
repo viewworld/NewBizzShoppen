@@ -51,10 +51,10 @@ Feature: Sign in
     | bob@person.com  | supersecret | agent             | agent home            | | |
     | bob@person.com  | supersecret | call_centre       | agent home            | | |
     | bob@person.com  | supersecret | call_centre_agent | agent home            | call_centre2121@nbs.com | call_centre |
-    | bob@person.com  | supersecret | purchase_manager  | purchase manager home | | |
-    | bob@person.com  | supersecret | customer          | buyer home            | ||
-    | leadbuyer@nbs.com  | secret | lead_buyer        | buyer home            |  | |
-    | leaduser@nbs.com  | secret | lead_user         | buyer home            |  | |
+    | bob@person.com  | supersecret | member  | member home | | |
+    | bob@person.com  | supersecret | supplier          | supplier home            | ||
+    | leadbuyer@nbs.com  | secret | lead_supplier        | supplier home            |  | |
+    | leaduser@nbs.com  | secret | lead_user         | supplier home            |  | |
 
   @_tested
   Scenario: A logged in user on the login page should just redirect to their home page
@@ -76,9 +76,9 @@ Feature: Sign in
     | administration email templates |
     | administration settings        |
     | agents leads                   |
-    | customer interests             |
+    | supplier interests             |
     | lead user lead purchases       |
-    | customers subaccounts          |
+    | suppliers subaccounts          |
     | my profile                     |
 
   @_tested
@@ -132,9 +132,9 @@ Scenario: I can see Facebook/Linkedin/Google icons on bottom of signing in box
     Given I am not sign in
     Then I go to agent sign up
     Then I should see "Agree to Terms & Conditions*"
-    Then I go to buyer sign up
+    Then I go to supplier sign up
     Then I should see "Agree to Terms & Conditions*"
-    Then I go to purchase manager sign up
+    Then I go to member sign up
     Then I should see "Agree to Terms & Conditions*"
 
   @m13 @$_guest @janrain @requested @is @$_signed_in_user @_done @_tested
@@ -142,9 +142,9 @@ Scenario: I can see Facebook/Linkedin/Google icons on bottom of signing in box
     Given I am not sign in
     Then I go to agent sign up
     Then I should see translated "shared.accounts.new_account_form.button_cancel"
-    Then I go to buyer sign up
+    Then I go to supplier sign up
     Then I should see translated "shared.accounts.new_account_form.button_cancel"
-    Then I go to purchase manager sign up
+    Then I go to member sign up
     Then I should see translated "shared.accounts.new_account_form.button_cancel"
 
   @m13 @$_guest @janrain @requested @is @$_signed_in_user @_done @_not_testable
@@ -154,19 +154,19 @@ Scenario: I can see Facebook/Linkedin/Google icons on bottom of signing in box
   @m19 @requested @_tested @_done @tgn
   Scenario: When user confirms his account he should be redirected to his home page
     #buyer
-    Given setting for "email_verification_for_sales_managers" is set to "1"
+    Given setting for "email_verification_for_suppliers" is set to "1"
     Given I am not sign in
-    Given I have not confirmed user with email buyer_not_confirmed@nbs.com and role customer
+    Given I have not confirmed user with email buyer_not_confirmed@nbs.com and role supplier
     Then confirmation link should confirm account for buyer_not_confirmed@nbs.com
-    And I should be on buyer home
+    And I should be on supplier home
     #agent
     Given I am not sign in
     Given I have not confirmed user with email agent_not_confirmed@nbs.com and role agent
     Then confirmation link should confirm account for agent_not_confirmed@nbs.com
     And I should be on agent home
     #purchase manager
-    Given setting for "email_verification_for_procurement_managers" is set to "1"
+    Given setting for "email_verification_for_members" is set to "1"
     Given I am not sign in
-    Given I have not confirmed user with email purchase_manager_not_confirmed@nbs.com and role purchase_manager
+    Given I have not confirmed user with email purchase_manager_not_confirmed@nbs.com and role member
     Then confirmation link should confirm account for purchase_manager_not_confirmed@nbs.com
-    And I should be on purchase manager home
+    And I should be on member home

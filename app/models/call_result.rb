@@ -189,17 +189,17 @@ class CallResult < ActiveRecord::Base
   end
 
   def process_for_upgrade_to_category_supplier
-    upgrade_to_user("category_buyer")
+    upgrade_to_user("category_supplier")
     process_for_final_result
   end
 
   def process_for_upgrade_to_supplier
-    upgrade_to_user("customer")
+    upgrade_to_user("supplier")
     process_for_final_result
   end
 
   def process_for_upgrade_to_member
-    upgrade_to_user("purchase_manager")
+    upgrade_to_user("member")
     process_for_final_result
   end
 
@@ -213,7 +213,7 @@ class CallResult < ActiveRecord::Base
                    :contact => contact, :vat_number => contact.company_vat_no,
                    :company_ean_number => contact.company_ean_number}
 
-    if ["category_buyer", "customer"].include?(role)
+    if ["category_supplier", "supplier"].include?(role)
       user_params.merge!(:big_buyer => user_big_buyer, :not_charge_vat => user_not_charge_vat, :team_buyers => user_team_buyers,
                          :deal_maker_role_enabled => user_deal_maker_role_enabled, :big_buyer_purchase_limit => user_big_buyer_purchase_limit.to_f)
     end
@@ -227,7 +227,7 @@ class CallResult < ActiveRecord::Base
     user.password_confirmation = new_password
     user.skip_email_verification = "1"
     user.save
-    if role == "category_buyer"
+    if role == "category_supplier"
       user.buying_category_ids = buying_category_ids
       user.save
     end

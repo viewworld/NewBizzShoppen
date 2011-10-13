@@ -1,30 +1,30 @@
 class Cart
   include PaypalPayment
 
-  attr_accessor :buyer
+  attr_accessor :supplier
 
-  def initialize(buyer)
-    raise "Invalid buyer object: #{buyer.to_yaml}" unless buyer.kind_of?(User::LeadBuyer)
-    @buyer=buyer
+  def initialize(supplier)
+    raise "Invalid supplier object: #{supplier.to_yaml}" unless supplier.kind_of?(User::LeadSupplier)
+    @supplier=supplier
   end
 
   def items
-    @buyer.leads_in_cart
+    @supplier.leads_in_cart
   end
 
   def lead_purchases
-    @buyer.lead_purchases_in_cart
+    @supplier.lead_purchases_in_cart
   end
 
   def add_lead(lead)
     unless items.include?(lead)
       if currency_matches?(lead)
         if lead.buyable?
-          if @buyer.purchase_limit_reached?(lead)
-            return :big_buyer_purchase_limit_reached
+          if @supplier.purchase_limit_reached?(lead)
+            return :big_supplier_purchase_limit_reached
           end
-          purchase = @buyer.lead_single_purchases.create(:lead_id => lead.id, :paid => false, :purchased_by => @buyer.id)
-          if @buyer.big_buyer?
+          purchase = @supplier.lead_single_purchases.create(:lead_id => lead.id, :paid => false, :purchased_by => @supplier.id)
+          if @supplier.big_buyer?
             purchase.update_attribute(:accessible_from, Time.now)
             return :bought_successful
           else
@@ -43,11 +43,11 @@ class Cart
 
   def buyout_lead(lead)
     if currency_matches?(lead)
-      if @buyer.purchase_limit_reached?(lead, true)
-        return :big_buyer_purchase_limit_reached
+      if @supplier.purchase_limit_reached?(lead, true)
+        return :big_supplier_purchase_limit_reached
       end
-      if lead.buyout_possible_for?(@buyer)
-        lead.buyout!(@buyer)
+      if lead.buyout_possible_for?(@supplier)
+        lead.buyout!(@supplier)
       else
         :bought_by_other_user
       end
@@ -57,11 +57,11 @@ class Cart
   end
 
   def add_leads(*ids)
-    Lead.where(:id => ids.flatten).map { |lead| add_lead(lead) }.select { |r| r != :already_in_cart and r != :currencies_mismatch and r != :big_buyer_purchase_limit_reached }
+    Lead.where(:id => ids.flatten).map { |lead| add_lead(lead) }.select { |r| r != :already_in_cart and r != :currencies_mismatch and r != :big_supplier_purchase_limit_reached }
   end
 
   def remove_leads(*ids)
-    @buyer.lead_purchases.in_cart.where(:lead_id => ids).destroy_all
+    @supplier.lead_purchases.in_cart.where(:lead_id => ids).destroy_all
   end
 
   def empty?
@@ -81,15 +81,15 @@ class Cart
   end
 
   def empty!
-    @buyer.lead_purchases.in_cart.destroy_all
+    @supplier.lead_purchases.in_cart.destroy_all
   end
 
   def paid!
-    buyer.lead_purchases.in_cart.each { |lp| lp.send(:paid!) }
+    supplier.lead_purchases.in_cart.each { |lp| lp.send(:paid!) }
   end
 
   def id
-    Time.now.strftime("%y%m%d%S") + @buyer.id.to_s
+    Time.now.strftime("%y%m%d%S") + @supplier.id.to_s
   end
 
   def currency
@@ -114,16 +114,16 @@ class Cart
             :receiver_email => APP_CONFIG[:paypal_email],
             :secret => APP_CONFIG[:paypal_secret]
           },
-        :buyer_id => buyer.id,
+        :buyer_id => supplier.id,
         :status => "Completed",
         :transaction_id => rand(99999999).to_s)
-    payment_notification.buyer.cart.paid!
+    payment_notification.supplier.cart.paid!
   end
 
   def total_vat_value
     vat_value = BigDecimal.new("0.0")
-    unless @buyer.not_charge_vat?
-      vat_rate = @buyer.country_vat_rate
+    unless @supplier.not_charge_vat?
+      vat_rate = @supplier.country_vat_rate
       items.each do |item|
         vat_value += (item.price * BigDecimal(vat_rate.to_s).div(100,4)).round(2)
       end

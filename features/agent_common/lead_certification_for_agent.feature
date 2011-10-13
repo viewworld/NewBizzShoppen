@@ -191,7 +191,7 @@ Scenario: I can see blurb, "Procurement information", "Certify information" and 
   When lead "BestLead" certification request is sent
   And I visit certification url for lead "BestLead"
   Then I should see translated "leads.certification.header"
-  And I should see translated "leads.certification.procurement_information"
+  And I should see translated "leads.certification.member_information"
   And I should see "Blurb certify information"
   Given I am not sign in
   When there are no leads

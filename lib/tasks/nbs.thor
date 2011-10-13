@@ -18,14 +18,14 @@ class Nbs < Thor
     Settings.contact_us_skype = Rails.env.production? ? "" : "fairleads_contact" if Settings.contact_us_skype.nil?
     # Invoicing
     Settings.invoicing_default_payment_deadline_date = 14 if Settings.invoicing_default_payment_deadline_date.nil?
-    Settings.big_buyer_purchase_limit = 10000 if Settings.big_buyer_purchase_limit.nil?
+    Settings.big_supplier_purchase_limit = 10000 if Settings.big_supplier_purchase_limit.nil?
     #Certification
     Settings.resend_certification_notification_after_days = 15 if Settings.resend_certification_notification_after_days.nil?
     Settings.expire_certification_notification_after_days = 15 if Settings.expire_certification_notification_after_days.nil?
     Settings.default_deal_admin_email = Rails.env.production? ? "" : "agent@nbs.com" if Settings.default_deal_admin_email.nil?
     # email verification settings
-    Settings.email_verification_for_procurement_managers = "0" if Settings.email_verification_for_procurement_managers.nil?
-    Settings.email_verification_for_sales_managers = "0" if Settings.email_verification_for_sales_managers.nil?
+    Settings.email_verification_for_members = "0" if Settings.email_verification_for_members.nil?
+    Settings.email_verification_for_suppliers = "0" if Settings.email_verification_for_suppliers.nil?
     Settings.default_max_auto_buy_per_4_weeks = 5 if Settings.default_max_auto_buy_per_4_weeks.nil?
     Settings.default_group_deal_min_leads_created = 5 if Settings.default_group_deal_min_leads_created.nil?
 
@@ -212,9 +212,9 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
             :name => "Upgrade contact to category buyer",
             :uniq_id => "upgrade_contact_to_category_buyer",
             :en => {:subject => "You have been upgraded to category buyer",
-                    :body => "<p>Fairleads username: {{user.email}}</p><p>Fairleads password: {{password}}</p><p>Screen name: {{user.screen_name}}</p><p><a href=\"{{user.category_buyer_category_home_url}}\">{{user.category_buyer_category_home_url}}</a></p>"},
+                    :body => "<p>Fairleads username: {{user.email}}</p><p>Fairleads password: {{password}}</p><p>Screen name: {{user.screen_name}}</p><p><a href=\"{{user.category_supplier_category_home_url}}\">{{user.category_supplier_category_home_url}}</a></p>"},
             :da => {:subject => "[DK] You have been upgraded to category buyer",
-                    :body => "<p>Fairleads username: {{user.email}}</p><p>Fairleads password: {{password}}</p><p>Screen name: {{user.screen_name}}</p><p><a href=\"{{user.category_buyer_category_home_url}}\">{{user.category_buyer_category_home_url}}</a></p>"}
+                    :body => "<p>Fairleads username: {{user.email}}</p><p>Fairleads password: {{password}}</p><p>Screen name: {{user.screen_name}}</p><p><a href=\"{{user.category_supplier_category_home_url}}\">{{user.category_supplier_category_home_url}}</a></p>"}
         },
         {
             :name => "Upgrade contact to buyer",
@@ -236,9 +236,9 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
             :name => "Upgraded category buyer welcome",
             :uniq_id => "upgraded_contact_to_category_buyer_welcome",
             :en => {:subject => "Welcome to Fairleads.com!",
-                    :body => "<p>Login: {{user.email}}</p><p>Linked with account: {{user.social_provider_name}}</p><p><a href=\"{{user.category_buyer_category_home_url}}\">{{user.category_buyer_category_home_url}}</a></p>"},
+                    :body => "<p>Login: {{user.email}}</p><p>Linked with account: {{user.social_provider_name}}</p><p><a href=\"{{user.category_supplier_category_home_url}}\">{{user.category_supplier_category_home_url}}</a></p>"},
             :da => {:subject => "[DK] Welcome to Fairleads.com!",
-                    :body => "<p>Login: {{user.email}}</p><p>Linked with account: {{user.social_provider_name}}</p><p><a href=\"{{user.category_buyer_category_home_url}}\">{{user.category_buyer_category_home_url}}</a></p>"}
+                    :body => "<p>Login: {{user.email}}</p><p>Linked with account: {{user.social_provider_name}}</p><p><a href=\"{{user.category_supplier_category_home_url}}\">{{user.category_supplier_category_home_url}}</a></p>"}
         },
         {
             :name => "Upgraded buyer welcome",
@@ -417,8 +417,8 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
      {:name => "Meeting booked", :final => true, :generic => true},
      {:name => "Custom result", :final => true, :generic => true},
      {:name => "Send material", :final => false, :generic => true},
-     {:name => "Upgrade to category buyer", :final => true, :generic => true},
-     {:name => "Upgrade to buyer", :final => true, :generic => true},
+     {:name => "Upgrade to category supplier", :final => true, :generic => true},
+     {:name => "Upgrade to supplier", :final => true, :generic => true},
      {:name => "Upgrade to member", :final => true, :generic => true}].each do |result|
       Result.create(result) unless Result.find_by_name(result[:name])
     end
@@ -429,8 +429,8 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
      {:name => "Result message", :field_type => "0", :is_mandatory => true, :result => Result.find_by_name("Custom result") },
      {:name => "Call back date", :field_type => "4", :is_mandatory => true, :result => Result.find_by_name("Send material") },
      {:name => "Material", :field_type => "5", :is_mandatory => true, :result => Result.find_by_name("Send material") },
-     {:name => "Material", :field_type => "5", :is_mandatory => false, :result => Result.find_by_name("Upgrade to category buyer") },
-     {:name => "Material", :field_type => "5", :is_mandatory => false, :result => Result.find_by_name("Upgrade to buyer") },
+     {:name => "Material", :field_type => "5", :is_mandatory => false, :result => Result.find_by_name("Upgrade to category supplier") },
+     {:name => "Material", :field_type => "5", :is_mandatory => false, :result => Result.find_by_name("Upgrade to supplier") },
      {:name => "Material", :field_type => "5", :is_mandatory => false, :result => Result.find_by_name("Upgrade to member") }
     ].each do |result_field|
       ResultField.create(result_field) unless ResultField.find_by_name_and_result_id(result_field[:name], result_field[:result].id)
@@ -480,18 +480,18 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
       end
 
 
-      unless User::Customer.find_by_email("buyer@nbs.com")
-        u = User::Customer.make!(:email => "buyer@nbs.com", :password => "secret", :password_confirmation => "secret", :big_buyer => true)
+      unless User::Supplier.find_by_email("buyer@nbs.com")
+        u = User::Supplier.make!(:email => "buyer@nbs.com", :password => "secret", :password_confirmation => "secret", :big_buyer => true)
         u.confirm!
         u.save
       end
 
-      buyer = User::Customer.find_by_email("buyer@nbs.com")
+      buyer = User::Supplier.find_by_email("buyer@nbs.com")
       unless User::LeadUser.find_by_email("leaduser@nbs.com")
         u = User::LeadUser.make!(:email => "leaduser@nbs.com", :password => "secret", :password_confirmation => "secret", :parent_id => buyer.id)
         u.confirm!
         u.save
-        u = User::LeadBuyer.make!(:email => "leadbuyer@nbs.com", :password => "secret", :password_confirmation => "secret", :parent_id => buyer.id)
+        u = User::LeadSupplier.make!(:email => "leadbuyer@nbs.com", :password => "secret", :password_confirmation => "secret", :parent_id => buyer.id)
         u.confirm!
         u.save
       end
@@ -504,15 +504,15 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
     end
 
     #Translators
-    [:agent, :call_centre, :customer, :purchase_manager, :category_buyer].each do |role|
+    {:agent => :agent, :call_centre => :call_centre, :customer => :supplier, :purchase_manager => :member, :category_buyer => :category_supplier}.each_pair do |name, role|
       klass = "User::#{role.to_s.camelize}".constantize
-      unless klass.find_by_email("translator_#{role}@nbs.com")
-        if role == :category_buyer
-          user = klass.make!(:email => "translator_#{role}@nbs.com", :password => "secret", :password_confirmation => "secret", :buying_categories => [LeadCategory.first])
-        elsif role == :call_centre
-          user = klass.make!(:email => "translator_#{role}@nbs.com", :password => "secret", :password_confirmation => "secret", :first_name => "Johnny", :last_name => "Mnemonic")
+      unless klass.find_by_email("translator_#{name}@nbs.com")
+        if name == :category_buyer
+          user = klass.make!(:email => "translator_#{name}@nbs.com", :password => "secret", :password_confirmation => "secret", :buying_categories => [LeadCategory.first])
+        elsif name == :call_centre
+          user = klass.make!(:email => "translator_#{name}@nbs.com", :password => "secret", :password_confirmation => "secret", :first_name => "Johnny", :last_name => "Mnemonic")
         else
-          user = klass.make!(:email => "translator_#{role}@nbs.com", :password => "secret", :password_confirmation => "secret")
+          user = klass.make!(:email => "translator_#{name}@nbs.com", :password => "secret", :password_confirmation => "secret")
         end
         user.confirm!
         user.roles << :translator
@@ -549,21 +549,21 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
     puts "Creating default interface content texts (blurbs)..."
     [
         'blurb_sign_up',
-        'blurb_buyer_home',
-        'blurb_buyer_home_logged_in',
+        'blurb_supplier_home',
+        'blurb_supplier_home_logged_in',
         'blurb_agent_home',
         'blurb_agent_home_logged_in',
         'blurb_call_centre_home',
-        'blurb_purchase_manager_home',
-        'blurb_purchase_manager_home_logged_in',
+        'blurb_member_home',
+        'blurb_member_home_logged_in',
         'blurb_start_page_role_selection',
         'blurb_currencies',
         'blurb_category_home',
         'blurb_leads_listing',
         'blurb_agent_contact_us',
-        'blurb_buyer_contact_us',
+        'blurb_supplier_contact_us',
         'blurb_resend_confirmation',
-        'blurb_certification_purchase_manager_signup',
+        'blurb_certification_member_signup',
         'blurb_certify_information',
         'blurb_start_page_fairdeals'
     ].each do |key|
@@ -633,7 +633,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
 
     Contact.where("last_call_result_at IS NULL").each do |contact|
       last_call_result = contact.call_results.order("created_at DESC").first
-      contact.update_attribute(:last_call_result_at, last_call_result.nil? ? nil : last_call_result.created_at)
+      contact.update_attribute(:last_call_result_at, last_call_result.created_at) if last_call_result
     end
 
     puts "Importing languages..."

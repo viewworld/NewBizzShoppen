@@ -19,7 +19,7 @@
 
   <div class="column_2to3">
     <div class="element_description">
-      <h2><%= @deal.header %> <%= ratings_for(@deal, :force_static => !current_user_has_role?(:purchase_manager) ) %></h2>
+      <h2><%= @deal.header %> <%= ratings_for(@deal, :force_static => !current_user_has_role?(:member) ) %></h2>
 
       <h3><%= t("deals.show.view.short_description_label") %></h3>
 
@@ -136,7 +136,7 @@
               </li>
           <% end %>
 
-          <% if user_signed_in? and current_user.has_role?(:purchase_manager) and @deal.requested_by?(current_user) %>
+          <% if user_signed_in? and current_user.has_role?(:member) and @deal.requested_by?(current_user) %>
               <%= deal_show_li(@deal.contact_name, t("deals.show.view.contact_name_label")) %>
               <%= deal_show_li(@deal.email_address, t("deals.show.view.email_address_label")) %>
               <%= deal_show_li(link_to(@deal.company_website_with_protocol, @deal.company_website_with_protocol), t("deals.show.view.company_website_label")) unless @deal.company_website.blank? %>
@@ -147,6 +147,7 @@
               <%= deal_show_li(@deal.zip_code, t("deals.show.view.zip_code_label")) %>
               <%= deal_show_li(@deal.country, t("deals.show.view.country_label")) %>
               <%= deal_show_li(@deal.region, t("deals.show.view.region_label")) %>
+              <%= deal_show_li(@deal.deal_code, t("deals.show.view.deal_code_label")) %>
           <% end %>
         </ul>
       </div>
@@ -154,8 +155,8 @@
 
     <br/>
 
-        <% if !user_signed_in? or (user_signed_in? and current_user.has_role?(:purchase_manager) and !@deal.requested_by?(current_user)) %>
-            <%= bt_link_to nil, t("deals.index.view.contact_me"), new_purchase_managers_lead_path(:deal_id => @deal.id), :confirm => t("deals.show.view.get_deal_confirmation_msg"), :class => "bt_max bt_big" %>
+        <% if !user_signed_in? or (user_signed_in? and current_user.has_role?(:member) and !@deal.requested_by?(current_user)) %>
+            <%= bt_link_to nil, t("deals.index.view.contact_me"), new_members_lead_path(:deal_id => @deal.id), :confirm => t("deals.show.view.get_deal_confirmation_msg"), :class => "bt_max bt_big" %>
         <% end %>    
   </div>
   <clb/>

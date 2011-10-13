@@ -13,7 +13,7 @@
 
     <div class="search_content">
       <%= form_for @search, :url => leads_path, :html => {:id => "leads_search_form"} do |f| %>
-          <%= render :partial => "/shared/leads/search_customer_form", :locals => {:f => f} %>
+          <%= render :partial => "/shared/leads/search_supplier_form", :locals => {:f => f} %>
       <% end %>
     </div>
   </div>
@@ -29,7 +29,7 @@
 
     <param:actions>
       <ul class="header_actions">
-        <% if @category and @leads.empty? and (!user_signed_in? or (user_signed_in? and current_user.has_any_role?(:customer, :lead_buyer))) %>
+        <% if @category and @leads.empty? and (!user_signed_in? or (user_signed_in? and current_user.has_any_role?(:supplier, :lead_supplier))) %>
           <li class="last"><%= bt_link_to :plus, t("leads.index.request_more_leads"), new_category_more_leads_request_path(@category) %></li>
         <% end %>
       </ul>
@@ -45,16 +45,16 @@
       <%= blank_state_message %>
   <% else %>
       <%= form_tag bulk_action_path do %>
-          <%= leads_listing @leads, :show_checkboxes => (user_signed_in? and current_user.has_any_role?(:customer, :lead_buyer, :lead_user)) do |blocks| %>
+          <%= leads_listing @leads, :show_checkboxes => (user_signed_in? and current_user.has_any_role?(:supplier, :lead_supplier, :lead_user)) do |blocks| %>
 
               <% blocks.tools do |lead| %>
                   <%= render :partial => "purchase_buttons", :locals => {:lead => lead} %>
               <% end %>
 
-              <% if user_signed_in? && (current_user.has_role?(:customer) || current_user.has_role?(:lead_user)) %>
+              <% if user_signed_in? && (current_user.has_role?(:supplier) || current_user.has_role?(:lead_user)) %>
                   <% blocks.bottom do %>
-                      <% if current_user.has_role?(:customer) or current_user.has_role?(:lead_buyer) %>
-                          <%= hidden_field_tag :route_to, "/buyers/bulk_cart_items" %>
+                      <% if current_user.has_role?(:supplier) or current_user.has_role?(:lead_supplier) %>
+                          <%= hidden_field_tag :route_to, "/suppliers/bulk_cart_items" %>
                           <ibt>
                             <%= submit_tag current_user.big_buyer? ? t("leads.index.button_bulk_buy_leads") : t("leads.index.button_bulk_create_cart_item") %>
                           </ibt>

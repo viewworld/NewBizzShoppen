@@ -21,6 +21,8 @@ class Administration::CategoriesController < Administration::AdministrationContr
         flash[:notice] = I18n.t("flash.categories.create.notice")
         format.html { redirect_to @category_type == "LeadCategory" ? categories_path : deal_categories_path }
       else
+        @category.customer_ids = params[:category][:customer_ids]
+        @category.agent_ids = params[:category][:agent_ids]
         format.html { render 'new' }
       end
     end

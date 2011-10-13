@@ -7,7 +7,7 @@ Given I am on the homepage
   Given I am signed up and confirmed as user with email admin_user@person.com and password supersecret and role admin
   And an user with role lead_user and email ann.lead_user2@person.com exists as subaccount for customer customer@person.com
   And an user with role lead_user and email kirk.lead_user4@person.com exists as subaccount for customer customer@person.com
-  And user customer@person.com with role customer exists with attributes "first_name:Steven,last_name:Colbert"
+  And user customer@person.com with role supplier exists with attributes "first_name:Steven,last_name:Colbert"
   And user ann.lead_user2@person.com with role lead_user exists with attributes "first_name:Ann,last_name:Stevenson,age:30"
   And user kirk.lead_user4@person.com with role lead_user exists with attributes "first_name:Kirk,last_name:Cameron,age:28"
   Then I sign in as admin_user@person.com with password supersecret
@@ -43,7 +43,7 @@ Scenario: I can display a list of subaccounts of small-buyer account
 
 @tgn @_done @_tested
 Scenario: I can display a list of subaccounts of big-buyer account
-  Given User customer@person.com with role customer is big buyer
+  Given User customer@person.com with role supplier is big buyer
   Then I go to administration users
   Given I fill in "search_with_keyword" with "customer@person.com"
   And I press translated "administration.users.index.view.search_button"
@@ -62,14 +62,14 @@ Scenario: I can sort by coulmns type, email (name, last name, age are deprecated
 @m6 @added @tgn @_tested
 Scenario: I can sort by bought, created, volume sold, revenue, payout %
   Given customer "customer@person.com" has no subaccounts
-  And an user with role lead_buyer and email ann.lead_buyer@person.com exists as subaccount for customer customer@person.com
-  And an user with role lead_buyer and email kirk.lead_buyer@person.com exists as subaccount for customer customer@person.com
+  And an user with role lead_supplier and email ann.lead_buyer@person.com exists as subaccount for customer customer@person.com
+  And an user with role lead_supplier and email kirk.lead_buyer@person.com exists as subaccount for customer customer@person.com
   And currency "DKK" exists with attributes "exchange_rate: 2.5"
-  Given a lead Super printers #1 exists within category Computers and is bought by user ann.lead_buyer@person.com with role lead_buyer
+  Given a lead Super printers #1 exists within category Computers and is bought by user ann.lead_buyer@person.com with role lead_supplier
   And lead "Super printers #1" has currency "DKK"
-  And a lead Super printers #2 exists within category Computers and is bought by user kirk.lead_buyer@person.com with role lead_buyer
+  And a lead Super printers #2 exists within category Computers and is bought by user kirk.lead_buyer@person.com with role lead_supplier
   And lead "Super printers #2" has currency "DKK"
-  And a lead Super printers #3 exists within category Computers and is bought by user kirk.lead_buyer@person.com with role lead_buyer
+  And a lead Super printers #3 exists within category Computers and is bought by user kirk.lead_buyer@person.com with role lead_supplier
   And lead "Super printers #3" has currency "DKK"
   And all prices are converted to euro
   And all users have refreshed cache counters
@@ -95,9 +95,9 @@ Scenario: I can sort by bought, created, volume sold, revenue, payout %
   And lead "Super monitors #1" has attributes "price:102"
   And lead "Super monitors #2" has attributes "price:100"
   And lead "Super monitors #3" has attributes "price:104.99"
-  And a lead Super monitors #1 exists within category Computers and is bought by user customer@person.com with role customer
-  And a lead Super monitors #2 exists within category Computers and is bought by user customer@person.com with role customer
-  And a lead Super monitors #3 exists within category Computers and is bought by user customer@person.com with role customer
+  And a lead Super monitors #1 exists within category Computers and is bought by user customer@person.com with role supplier
+  And a lead Super monitors #2 exists within category Computers and is bought by user customer@person.com with role supplier
+  And a lead Super monitors #3 exists within category Computers and is bought by user customer@person.com with role supplier
   And all prices are converted to euro
   And all users have refreshed cache counters
   Then I go to administration users

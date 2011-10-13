@@ -48,7 +48,7 @@ Feature: User Account - Profile edit
   Scenario: A logged in user shouldn't be able to create a new account
    When I go to agent sign up
    Then I am on agents root
-   When I go to buyer sign up
+   When I go to supplier sign up
    Then I am on agents root
 
   @m5 @tgn @_tested @added
@@ -66,10 +66,10 @@ Feature: User Account - Profile edit
   Scenario: I can select to be notified instantly, once a day or once a week on new leads
     Given I am not sign in
     And I am on the homepage
-    Given I am signed up and confirmed as user with email bobcustomer@person.com and password supersecret and role customer
+    Given I am signed up and confirmed as user with email bobcustomer@person.com and password supersecret and role supplier
     Then I sign in as bobcustomer@person.com with password supersecret
     When I go to my profile page
-    Then I choose "user_customer_lead_notification_type_0"
+    Then I choose "user_supplier_lead_notification_type_0"
     And I press translated "password.edit.view.button_update_user"
     Then I should see translated "my_profile.update.controller.successful_update_notice"
 

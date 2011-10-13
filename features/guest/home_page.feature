@@ -12,11 +12,11 @@ Feature: Home page
   Scenario: When user from Denmark goes to www.fairleads.com her should automatically get danish as default language.
     When browser accepts "en" locale
     And I am on the home page
-    Then locale is set to "en" for translation "buyer_home.show.view.header"
+    Then locale is set to "en" for translation "supplier_home.show.view.header"
     And I reset page
     When browser accepts "da" locale
     And I am on the home page
-    Then locale is set to "da" for translation "buyer_home.show.view.header"
+    Then locale is set to "da" for translation "supplier_home.show.view.header"
 
   # set up on server side
   @m8 @requested @ao @_done @non_testable
@@ -55,9 +55,9 @@ Feature: Home page
 
   #7638
   @m20 @requested @ao @_done @_tested
-  Scenario: Frontpage for fairleads.com should be the buyer home page
+  Scenario: Frontpage for fairleads.com should be the supplier home page
     When I am on the home page
-    Then I should see translated "buyer_home.show.view.header"
+    Then I should see translated "supplier_home.show.view.header"
 
   #7747
   @m20 @requested @ao @non_testable @_done

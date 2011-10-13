@@ -5,7 +5,7 @@
         <div class="pdd_10 no_pdd_t">
           <fieldset class="inputs labels_ta_r">
             <ol class="align_inputs">
-              <% [t("contact_us.new.view.email_subjects.agent_inquiry"), t("contact_us.new.view.email_subjects.buyer_inquiry")].each do |subject| %>
+              <% [t("contact_us.new.view.email_subjects.agent_inquiry"), t("contact_us.new.view.email_subjects.supplier_inquiry")].each do |subject| %>
                   <li class="radio">
                     <%= f.radio_button :subject, subject %><%= subject %><br />
                     <%= custom_error_for_object_and_field(@email_template_preview, :subject) %>

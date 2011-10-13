@@ -2,14 +2,14 @@
 Feature: Deals from procurement manager perspective
 
   Background:
-    Given I am signed up and confirmed as user with email procurment@nbs.com and password secret and role purchase_manager
+    Given I am signed up and confirmed as user with email procurment@nbs.com and password secret and role member
     And I am on the homepage
     And I make sure current locale is "en"
     Then I sign in as procurment@nbs.com with password secret
 
   @_tested @_done @tgn
   Scenario: I should see "My deals" tab instead of "My leads"
-    Then I should see translated "layout.main_menu.purchase_manager.my_requests"
+    Then I should see translated "layout.main_menu.member.my_requests"
     And I should not see "My leads"
 
   @_tested @_done @tgn
@@ -72,13 +72,13 @@ Feature: Deals from procurement manager perspective
 
   @_done @_tested @tgn
   Scenario: I can't create new lead
-    When I follow translated "layout.main_menu.purchase_manager.my_requests"
+    When I follow translated "layout.main_menu.member.my_requests"
     And I should not see "New lead"
 
   @_done @_tested @tgn
   Scenario: I should see "Latest Deals" instead of "Best Sellers"
     When I follow translated "layout.main_menu.shared.home"
-    Then I should see translated "purchase_manager_home.show.view.header_latest_deals"
+    Then I should see translated "supplier_home.show.view.header_latest_deals"
     And I should not see "Best sellers"
 
   @_done @_tested @tgn @_deprecated
@@ -108,20 +108,20 @@ Feature: Deals from procurement manager perspective
   Given setting for "email_verification_for_procurement_managers" is set to "0"
   Given I visit domain http://fairdeals.dk
   And I follow translated "fairdeals_home.show.view.get_free_account"
-  And I fill in "user_purchase_manager_company_name" with "The Young Tturks"
-  And I fill in "user_purchase_manager_first_name" with "Ana"
-  And I fill in "user_purchase_manager_last_name" with "Kasparian"
-  And I fill in "user_purchase_manager_address_attributes_address_line_1" with "2222"
-  And I fill in "user_purchase_manager_address_attributes_address_line_2" with "2222"
-  And I fill in "user_purchase_manager_address_attributes_address_line_3" with "2222"
-  And I fill in "user_purchase_manager_address_attributes_zip_code" with "2222"
-  And I fill in "user_purchase_manager_screen_name" with "Ana Kasparian"
-  And I fill in "user_purchase_manager_phone" with "+44 325423454"
-  And I fill in "user_purchase_manager_password" with "secret"
-  And I fill in "user_purchase_manager_password_confirmation" with "secret"
-  And I fill in "user_purchase_manager_email" with "anakasparian@tyt.com"
-  And I check "user_purchase_manager_agreement_read"
-  And I press translated "purchase_manager_accounts.new.view.button_create_account"
+  And I fill in "user_member_company_name" with "The Young Tturks"
+  And I fill in "user_member_first_name" with "Ana"
+  And I fill in "user_member_last_name" with "Kasparian"
+  And I fill in "user_member_address_attributes_address_line_1" with "2222"
+  And I fill in "user_member_address_attributes_address_line_2" with "2222"
+  And I fill in "user_member_address_attributes_address_line_3" with "2222"
+  And I fill in "user_member_address_attributes_zip_code" with "2222"
+  And I fill in "user_member_screen_name" with "Ana Kasparian"
+  And I fill in "user_member_phone" with "+44 325423454"
+  And I fill in "user_member_password" with "secret"
+  And I fill in "user_member_password_confirmation" with "secret"
+  And I fill in "user_member_email" with "anakasparian@tyt.com"
+  And I check "user_member_agreement_read"
+  And I press translated "supplier_accounts.new.view.button_create_account"
   And I should be signed in
   And last email sent should have been sent to recipient "anakasparian@tyt.com"
 
@@ -129,28 +129,28 @@ Feature: Deals from procurement manager perspective
   @m19 @requested @_done @_tested @tgn
   Scenario: When I am not logged in I should still see Get deal button and when click I should be prompted to log in or create new account and return to the get deal
     Given I visit domain http://fairdeals.dk
-    Given user buyer@nbs.com with role customer exists with attributes "company_name:Xeper"
+    Given user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
     And user "buyer@nbs.com" has assigned role "deal_maker"
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper"
     Then I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     And I follow translated "deals.index.view.contact_me"
-    And I follow translated "buyer_home.show.view.create_new_membership_account"
-    And I fill in "user_purchase_manager_company_name" with "The Young Turks"
-    And I fill in "user_purchase_manager_first_name" with "Ana"
-    And I fill in "user_purchase_manager_last_name" with "Kasparian"
-    And I fill in "user_purchase_manager_address_attributes_address_line_1" with "2222"
-    And I fill in "user_purchase_manager_address_attributes_address_line_2" with "2222"
-    And I fill in "user_purchase_manager_address_attributes_address_line_3" with "2222"
-    And I fill in "user_purchase_manager_address_attributes_zip_code" with "2222"
-    And I fill in "user_purchase_manager_screen_name" with "Ana Kasparian"
-    And I fill in "user_purchase_manager_phone" with "+44 325423454"
-    And I fill in "user_purchase_manager_password" with "secret"
-    And I fill in "user_purchase_manager_password_confirmation" with "secret"
-    And I fill in "user_purchase_manager_email" with "anakasparian@tyt.com"
-    And I check "user_purchase_manager_agreement_read"
-    And I press translated "purchase_manager_accounts.new.view.button_create_account"
+    And I follow translated "supplier_home.show.view.create_new_membership_account"
+    And I fill in "user_member_company_name" with "The Young Turks"
+    And I fill in "user_member_first_name" with "Ana"
+    And I fill in "user_member_last_name" with "Kasparian"
+    And I fill in "user_member_address_attributes_address_line_1" with "2222"
+    And I fill in "user_member_address_attributes_address_line_2" with "2222"
+    And I fill in "user_member_address_attributes_address_line_3" with "2222"
+    And I fill in "user_member_address_attributes_zip_code" with "2222"
+    And I fill in "user_member_screen_name" with "Ana Kasparian"
+    And I fill in "user_member_phone" with "+44 325423454"
+    And I fill in "user_member_password" with "secret"
+    And I fill in "user_member_password_confirmation" with "secret"
+    And I fill in "user_member_email" with "anakasparian@tyt.com"
+    And I check "user_member_agreement_read"
+    And I press translated "supplier_accounts.new.view.button_create_account"
     And I should see translated "deals.new.view.frame_header"
 
 
@@ -158,18 +158,18 @@ Feature: Deals from procurement manager perspective
   @m19 @requested @_done @_tested @tgn
   Scenario: When I get deal then I should get the email with all deal information and all materials included as attachments
     Given I visit domain http://fairdeals.dk
-    Given user buyer@nbs.com with role customer exists with attributes "company_name:Xeper"
+    Given user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
     And user "buyer@nbs.com" has assigned role "deal_maker"
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper"
-    And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role purchase_manager
+    And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
     Then I sign in as purchase_manager101@nbs.com with password supersecret
     Then I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     And I follow translated "deals.index.view.contact_me"
     And I fill in "lead_hidden_description" with "some hidden note"
-    And I press translated "purchase_manager.leads.new.view.button_create"
-    And I press translated "purchase_manager.leads.show.view.ok_confirmation"
+    And I press translated "member.leads.new.view.button_create"
+    And I press translated "member.leads.show.view.ok_confirmation"
     And last email sent should have been sent to recipient "purchase_manager101@nbs.com"
     And last email sent should have subject "You have requested a deal"
     And last email sent should have content "software components"
@@ -180,47 +180,49 @@ Feature: Deals from procurement manager perspective
   Scenario: Email with deal information for procurment manager should be customizable per deal (with default template)
     Given I am not sign in
     And I make sure current locale is "da"
-    Given user buyer@nbs.com with role customer exists with attributes "company_name:Xeper"
+    Given user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
     And user "buyer@nbs.com" has assigned role "deal_maker"
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper"
     And I am on the homepage
     And I sign in as buyer@nbs.com with password secret
-    And I follow translated "layout.main_menu.lead_buyer.my_deals"
-    And I follow translated "buyer.deals.index.view.edit"
-    And I follow translated "buyer.deals.edit.view.edit_deal_request_details_email_template"
+    And I follow translated "layout.main_menu.lead_supplier.my_deals"
+    And I follow translated "supplier.deals.index.view.edit"
+    And I follow translated "supplier.deals.edit.view.edit_deal_request_details_email_template"
     And I fill in "email_template_subject" with "Customized You got the deal"
     And I fill in "email_template_body_editor" with "Customized email for {{deal.header}}"
     And I press translated "campaigns.email_templates.edit.view.button_update"
     Given I visit domain http://fairdeals.dk
-    And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role purchase_manager
+    And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
     Then I sign in as purchase_manager101@nbs.com with password supersecret
-    And User purchase_manager101@nbs.com with role purchase_manager is from country Denmark
+    And User purchase_manager101@nbs.com with role member is from country Denmark
     Then I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     And I follow translated "deals.index.view.contact_me"
     And I fill in "lead_hidden_description" with "some hidden note"
-    And I press translated "purchase_manager.leads.new.view.button_create"
-    And I press translated "purchase_manager.leads.show.view.ok_confirmation"
+    And I press translated "member.leads.new.view.button_create"
+    And I press translated "member.leads.show.view.ok_confirmation"
     And last email sent should have been sent to recipient "purchase_manager101@nbs.com"
     And last email sent should have subject "Customized You got the deal"
     And last email sent should have content "Customized email for software components"
 
-  #7530
   @m20 @requested @tgn @_tested @_done
   Scenario: When deal is requested the deal code is included as the first info in lead's hidden description and it is visible when member wants to get the deal
     Given I visit domain http://fairdeals.dk
-    Given user buyer@nbs.com with role customer exists with attributes "company_name:Xeper"
+    Given user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
     And user "buyer@nbs.com" has assigned role "deal_maker"
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper|deal_code:CODE4D3AL"
-    And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role purchase_manager
+    And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
     Then I sign in as purchase_manager101@nbs.com with password supersecret
     Then I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     And I follow translated "deals.index.view.contact_me"
-    And I should see "CODE4D3AL"
     And I fill in "lead_hidden_description" with "some hidden note"
-    And I press translated "purchase_manager.leads.new.view.button_create"
+    And I press translated "member.leads.new.view.button_create"
     And lead "A company is interested in software components" should have the following deal code "CODE4D3AL"
-    And I press translated "purchase_manager.leads.show.view.ok_confirmation"
+    And I press translated "member.leads.show.view.ok_confirmation"
+    Then I follow translated "layout.fairdeals.main_menu.deals"
+    And I follow category "Business deals"
+    And I follow translated "deals.index.view.view_deal"
+    And I should see "CODE4D3AL"

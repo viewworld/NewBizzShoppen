@@ -5,7 +5,7 @@
       <% if current_user.has_role?(:admin) %>
           <%= form.input :category_id, :as => :hidden %>
           <%= form.input :is_global %>
-      <% elsif current_user.has_role?(:customer) %>
+      <% elsif current_user.has_role?(:supplier) %>
           <%= form.input :category_id, :as => :hidden %>
       <% else %>
           <% if current_user.has_role?(:call_centre) %>

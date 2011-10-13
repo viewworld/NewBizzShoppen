@@ -26,8 +26,8 @@ Feature: Deals from admin perspective
   Scenario: I can create a Deal
     Then I follow translated "layout.main_menu.admin.deals"
     Then I follow translated "deals.common.listing.view.new_deal"
-    Then I fill in "buyer_email" with "buyer@nbs.com"
-    Then I follow translated "administration.deals.new.view.check_buyer_email"
+    Then I fill in "supplier_email" with "buyer@nbs.com"
+    Then I follow translated "administration.deals.new.view.check_supplier_email"
     And I wait 1 second
     And I follow translated "call_centre_agent.deals.new.view.confirm"
     Then I fill deal creation form
@@ -51,10 +51,11 @@ Feature: Deals from admin perspective
   @_done @_tested
   Scenario: I can make Sales Manager a Deal Maker (can publish deals)
     Then I follow translated "layout.main_menu.admin.users"
-    Then I fill in "search_with_keyword" with "buyer@nbs.com"
+    Given I have user with email buyer1234567@nbs.com and role supplier
+    Then I fill in "search_with_keyword" with "buyer1234567@nbs.com"
     Then I press translated "administration.users.index.view.search_button"
     Then I follow translated "administration.users.index.view.edit"
-    Then I check "user_customer_deal_maker_role_enabled"
+    Then I check "user_supplier_deal_maker_role_enabled"
 
   @_done @_tested
   Scenario: I can make an agent or call centre a Deal Maker

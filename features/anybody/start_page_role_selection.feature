@@ -4,7 +4,7 @@ Feature: Start page role selection
 Background:
   Given I am on the homepage
   And I make sure current locale is "en"
-  And I am signed up and confirmed as user with email buyer43@person.com and password supersecret and role customer
+  And I am signed up and confirmed as user with email buyer43@person.com and password supersecret and role supplier
 
 @m3 @ao @_done @_deprecated
 Scenario: I can see welcome text fetch from the database
@@ -36,12 +36,12 @@ Scenario: I can set remember me option by selecting a checkbox and logging in
 Scenario: For each role homepage there should be two separate blurbs: for logged in and logged out user
   #buyer
   Given I am not sign in
-  And I am on the buyer home page
-  And I should see "Blurb buyer home"
-  And I should not see "Blurb buyer home logged in"
+  And I am on the supplier home page
+  And I should see "Blurb supplier home"
+  And I should not see "Blurb supplier home logged in"
   And I sign in as buyer@nbs.com with password secret
-  And I am on the buyer home page
-  And I should see "Blurb buyer home logged in"
+  And I am on the supplier home page
+  And I should see "Blurb supplier home logged in"
   #agent
   Given I am not sign in
   And I am on the agent home page
@@ -52,23 +52,23 @@ Scenario: For each role homepage there should be two separate blurbs: for logged
   And I should see "Blurb agent home logged in"
   #purchase manager
   Given I am not sign in
-  And I am on the purchase manager home page
-  And I should see "Blurb purchase manager home"
+  And I am on the member home page
+  And I should see "Blurb member home"
   And I should not see "Blurb agent home logged in"
   And I sign in as translator_purchase_manager@nbs.com with password secret
-  And I am on the purchase manager home page
-  And I should see "Blurb purchase manager home logged in"
+  And I am on the member home page
+  And I should see "Blurb member home logged in"
 
 #7452
 @m19 @requested @_done @_tested
 Scenario: When user logs out then he lands on his specific role home page
   #buyer
   Given I am not sign in
-  And I am on the buyer home page
+  And I am on the supplier home page
   And I sign in as buyer@nbs.com with password secret
-  And I should be on buyer home
+  And I should be on supplier home
   Then I am not sign in
-  And I should be on buyer home
+  And I should be on supplier home
   #agent
   Given I am not sign in
   And I am on the agent home page
@@ -78,8 +78,8 @@ Scenario: When user logs out then he lands on his specific role home page
   And I should be on agent home
   #purchase manager
   Given I am not sign in
-  And I am on the purchase manager home page
+  And I am on the member home page
   And I sign in as translator_purchase_manager@nbs.com with password secret
-  And I should be on purchase manager home
+  And I should be on member home
   Then I am not sign in
   And I should be on the homepage

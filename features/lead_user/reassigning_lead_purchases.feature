@@ -11,9 +11,9 @@ Feature: Reassigning lead purchases
     And lead Printers ultimate deal exists within category Computers
     And lead Monitors LCD deal exists within category Computers
     And lead Keyboards deal exists within category Office
-    And lead Printers ultimate deal is bought by user customer@person.com with role customer and is assigned to user lead_user2@person.com with role lead_user
-    And lead Monitors LCD deal is bought by user customer@person.com with role customer and is assigned to user lead_user2@person.com with role lead_user
-    And lead Keyboards deal is bought by user customer@person.com with role customer and is assigned to user lead_user2@person.com with role lead_user
+    And lead Printers ultimate deal is bought by user customer@person.com with role supplier and is assigned to user lead_user2@person.com with role lead_user
+    And lead Monitors LCD deal is bought by user customer@person.com with role supplier and is assigned to user lead_user2@person.com with role lead_user
+    And lead Keyboards deal is bought by user customer@person.com with role supplier and is assigned to user lead_user2@person.com with role lead_user
     Then I sign in as lead_user2@person.com with password secret
 
   @tgn @_done @_tested @selenium

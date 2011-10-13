@@ -5,15 +5,15 @@ Background:
   Given I am on the homepage
   And I make sure current locale is "en"
   And I am signed up and confirmed as user with email admin1@nbs.com and password supersecret and role admin
-  And I have user with email customer1@nbs.com and role customer
-  And user "customer1@nbs.com" with role "customer" has attributes "screen_name: Mark Driscoll"
-  And I have user with email customer2@nbs.com and role customer
-  And user "customer2@nbs.com" with role "customer" has attributes "screen_name: Adam Savage"
+  And I have user with email customer1@nbs.com and role supplier
+  And user "customer1@nbs.com" with role "supplier" has attributes "screen_name: Mark Driscoll"
+  And I have user with email customer2@nbs.com and role supplier
+  And user "customer2@nbs.com" with role "supplier" has attributes "screen_name: Adam Savage"
 
-  And a lead Lead#1 exists within category Computers and is bought by user customer2@nbs.com with role customer
-  And a lead Lead#2 exists within category Computers and is bought by user customer1@nbs.com with role customer
-  And a lead Lead#3 exists within category Computers and is bought by user customer2@nbs.com with role customer
-  And a lead Lead#4 exists within category Computers and is bought by user customer1@nbs.com with role customer
+  And a lead Lead#1 exists within category Computers and is bought by user customer2@nbs.com with role supplier
+  And a lead Lead#2 exists within category Computers and is bought by user customer1@nbs.com with role supplier
+  And a lead Lead#3 exists within category Computers and is bought by user customer2@nbs.com with role supplier
+  And a lead Lead#4 exists within category Computers and is bought by user customer1@nbs.com with role supplier
   And comment for lead "Lead#1" was posted by user "customer2@nbs.com" with attributes "title:First Lead1 comment, created_at: 2011-01-01, last_thread_created_at:2011-01-01"
   And comment for lead "Lead#1" was posted by user "customer1@nbs.com" with attributes "last_thread_created_at:2011-01-02"
   And comment for lead "Lead#2" was posted by user "customer2@nbs.com" with attributes "created_at: 2010-01-01, last_thread_created_at:2011-01-30"

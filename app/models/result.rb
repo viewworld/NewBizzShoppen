@@ -44,11 +44,11 @@ class Result < ActiveRecord::Base
     result_fields.map(&:field_type).include?(ResultField::MATERIAL.to_s)
   end
 
-  def upgrades_to_category_buyer?
+  def upgrades_to_category_supplier?
     name == "Upgrade to category supplier"
   end
 
-  def upgrades_to_buyer?
+  def upgrades_to_supplier?
     name == "Upgrade to supplier"
   end
 
@@ -57,15 +57,15 @@ class Result < ActiveRecord::Base
   end
 
   def upgrades_to_any_user?
-    upgrades_to_category_buyer? or upgrades_to_buyer? or upgrades_to_member?
+    upgrades_to_category_supplier? or upgrades_to_supplier? or upgrades_to_member?
   end
 
   def email_template_name_for_type
     if upgrades_to_member?
       "upgrade_contact_to_member"
-    elsif upgrades_to_buyer?
+    elsif upgrades_to_supplier?
       "upgrade_contact_to_buyer"
-    elsif upgrades_to_category_buyer?
+    elsif upgrades_to_category_supplier?
       "upgrade_contact_to_category_buyer"
     elsif send_material?
       "result_send_material"

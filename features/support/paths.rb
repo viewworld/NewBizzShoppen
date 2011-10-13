@@ -12,10 +12,10 @@ module NavigationHelpers
       '/'
     when /the agent home page/
       '/agent_home'
-    when /the buyer home page/
-      '/buyer_home'
-    when /the purchase manager home page/
-      '/purchase_manager_home'
+    when /the supplier home page/
+      '/supplier_home'
+    when /the member home page/
+      '/member_home'
     when /contact us/
       '/contact_us'
     when /administration root/
@@ -50,8 +50,8 @@ module NavigationHelpers
         administration_sellers_path
     when /administration hints/
         administration_hints_path
-    when /administration new category buyer/
-        new_administration_user_path(:role => :category_buyer)
+    when /administration new category supplier/
+        new_administration_user_path(:role => :category_supplier)
     when /category home leads page for (.*)/
         "/#{$1.to_url}/leads"
     when /category home page for (.*)/
@@ -64,17 +64,17 @@ module NavigationHelpers
         '/agents/lead_templates'
     when /browse leads/
         '/categories'
-    when /browse (.*) deals/
-        dc = DealCategory.where(:header => $1).first
-        deals_index_path(:slag => dc.cached_slug)
     when /browse deals/
         '/deal_categories'
+    when /browse (.*) deals/
+        dc = DealCategory.where(:name => $1).first
+        deals_index_path(:slag => dc.cached_slug)
     when /deals/
         '/deals'
-    when /buyer cart/
-        '/buyers/cart'
-    when /buyer cart items/
-        '/buyers/cart_items'
+    when /supplier cart/
+        '/suppliers/cart'
+    when /supplier cart items/
+        '/suppliers/cart_items'
     when /call centre agents/
         '/call_centres/call_centre_agents'
     when /call centre agents leads/
@@ -83,26 +83,26 @@ module NavigationHelpers
         '/call_centres/leads'
     when /call centre lead templates/
         '/call_centres/lead_templates'
-    when /customer interests/
-        '/customers/interests/edit'
+    when /supplier interests/
+        '/suppliers/interests/edit'
     when /lead user lead purchases/
         '/lead_users/lead_purchases'
-    when /customers subaccounts/
-        '/customers/subaccounts'
-    when /customers new subaccount/
-        '/customers/subaccounts/new'
-    when /customers lead requests/
-        '/customers/lead_requests'
-    when /buyer lead purchases/
-        '/buyers/lead_purchases'
+    when /suppliers subaccounts/
+        '/suppliers/subaccounts'
+    when /suppliers new subaccount/
+        '/suppliers/subaccounts/new'
+    when /suppliers lead requests/
+        '/suppliers/lead_requests'
+    when /supplier lead purchases/
+        '/suppliers/lead_purchases'
     when /my profile/
         '/my_profile'
     when /agent sign up/
         '/agent_accounts/new'
-    when /buyer sign up/
-        '/buyer_accounts/new'
-    when /purchase manager sign up/
-        '/purchase_manager_accounts/new'
+    when /supplier sign up/
+        '/supplier_accounts/new'
+    when /member sign up/
+        '/member_accounts/new'
     when /document/
         "#{::Rails.root.to_s}/spec/fixtures/sample_document.odt"
     when /sample image/
@@ -133,10 +133,10 @@ module NavigationHelpers
         '/lead_users/lead_requests'
     when /the (.*) lead/
         lead_path(Lead.find_by_header($1))
-    when /purchase managers leads/
-        purchase_managers_leads_path
-    when /purchase managers lead templates/
-        purchase_managers_lead_templates_path
+    when /members leads/
+        members_leads_path
+    when /members lead templates/
+        members_lead_templates_path
     when /leads/
         leads_path
     when /lead edit page for (.*)/
@@ -144,10 +144,10 @@ module NavigationHelpers
         edit_lead_path(lead)
     when /agent home/
         agent_home_path
-    when /buyer home/
-        buyer_home_path
-    when /purchase manager home/
-        purchase_manager_home_path
+    when /supplier home/
+        supplier_home_path
+    when /member home/
+        member_home_path
     when /administration articles page/
         administration_articles_path
     when /administration news page/

@@ -3,7 +3,7 @@ Nbs::Application.routes.draw do
   resources :payment_notifications
 
   get "agent_home/show"
-  get "buyer_home/show"
+  get "supplier_home/show"
 
   devise_for :users, :controllers => {:passwords => "users/passwords"}
 
@@ -61,13 +61,13 @@ Nbs::Application.routes.draw do
       resource :cache
     end
     resource :stats_recalculation, :controller => "stats_recalculation", :only => [:update]
-    resources :customer_interests, :only => [:edit, :update]
+    resources :supplier_interests, :only => [:edit, :update]
     resources :youtube_introductions
     resources :email_bounces
     resources :languages
   end
 
-  namespace :buyers do
+  namespace :suppliers do
     root :to => "lead_purchases#index"
     resources :cart_items
     resources :deal_certification_requests, :only => [:index, :edit, :update]
@@ -83,11 +83,11 @@ Nbs::Application.routes.draw do
     end
     resource :bulk_cart_items, :controller => "bulk_cart_items", :only => [:create]
   end
-  match 'buyers/bulk_lead_purchase_csv' => 'buyers/bulk_lead_purchase_csv#create', :as => "bulk_lead_purchase_csv"
-  match 'buyers/bulk_lead_purchase_print' => 'buyers/bulk_lead_purchase_print#create', :as => "bulk_lead_purchase_print"
-  match 'buyers/bulk_lead_purchase_update' => 'buyers/bulk_lead_purchase_update#create', :as => "bulk_lead_purchase_update"
-  match 'buyers/bulk_lead_share_by_email' => 'buyers/bulk_lead_share_by_email#new', :as => "bulk_lead_share_by_email"
-  match 'buyers/create_bulk_lead_share_by_email' => 'buyers/bulk_lead_share_by_email#create', :as => "create_bulk_lead_share_by_email"
+  match 'suppliers/bulk_lead_purchase_csv' => 'suppliers/bulk_lead_purchase_csv#create', :as => "bulk_lead_purchase_csv"
+  match 'suppliers/bulk_lead_purchase_print' => 'suppliers/bulk_lead_purchase_print#create', :as => "bulk_lead_purchase_print"
+  match 'suppliers/bulk_lead_purchase_update' => 'suppliers/bulk_lead_purchase_update#create', :as => "bulk_lead_purchase_update"
+  match 'suppliers/bulk_lead_share_by_email' => 'suppliers/bulk_lead_share_by_email#new', :as => "bulk_lead_share_by_email"
+  match 'suppliers/create_bulk_lead_share_by_email' => 'suppliers/bulk_lead_share_by_email#create', :as => "create_bulk_lead_share_by_email"
 
   namespace :call_centres do
     root :to => "call_centre_agents#index"
@@ -126,8 +126,8 @@ Nbs::Application.routes.draw do
     resource :bulk_lead_purchase_print, :controller => "bulk_lead_purchase_print", :only => [:create]
   end
 
-  namespace :customers do
-    root :to => redirect("/buyers/lead_purchases")
+  namespace :suppliers do
+    root :to => redirect("/suppliers/lead_purchases")
     resource :interests, :only => [:edit, :update]
     resources :subaccounts
     resources :lead_requests, :only => [:index, :update, :destroy]
@@ -149,7 +149,7 @@ Nbs::Application.routes.draw do
     end
   end
 
-  namespace :purchase_managers do
+  namespace :members do
     root :to => "leads#index"
     resources :leads, :path => :requests
     resources :tenders, :path => :leads do
@@ -229,9 +229,9 @@ Nbs::Application.routes.draw do
     resources :comment_readers, :only => [:create]
   end
 
-  match 'buyer_home' => 'buyer_home#show', :as => "buyer_home"
+  match 'supplier_home' => 'supplier_home#show', :as => "supplier_home"
   match 'agent_home' => 'agent_home#show', :as => "agent_home"
-  match 'purchase_manager_home' => 'purchase_manager_home#show', :as => "purchase_manager_home"
+  match 'member_home' => 'member_home#show', :as => "member_home"
 
   resources :leads, :except => [:new, :create, :destroy] do
     collection do
@@ -269,14 +269,14 @@ Nbs::Application.routes.draw do
     end
   end
 
-  resource :procurements_advanced_import, :only => [:create, :show] do
+  resource :members_advanced_import, :only => [:create, :show] do
     collection do
       post 'choose'
       post 'preview'
     end
   end
 
-  resource :buyers_advanced_import, :only => [:create, :show] do
+  resource :suppliers_advanced_import, :only => [:create, :show] do
     collection do
       post 'choose'
       post 'preview'
@@ -284,11 +284,11 @@ Nbs::Application.routes.draw do
   end
 
   resources :agent_accounts, :only => [:new, :create]
-  resources :buyer_accounts, :only => [:new, :create]
-  resources :purchase_manager_accounts, :only => [:new, :create]
-  resources :category_buyer_accounts, :only => [:new, :create]
+  resources :supplier_accounts, :only => [:new, :create]
+  resources :member_accounts, :only => [:new, :create]
+  resources :category_supplier_accounts, :only => [:new, :create]
   resources :certification_accounts, :only => [:new, :create]
-  resources :deal_buyer_accounts, :only => [:new, :create]
+  resources :deal_supplier_accounts, :only => [:new, :create]
   resources :locales
   resources :phone_codes
   resources :regions
@@ -306,7 +306,7 @@ Nbs::Application.routes.draw do
       post 'social_link'
       put 'social_unlink'
       get 'unlink'
-      put 'remove_category_buyer'
+      put 'remove_category_supplier'
     end
   end
 
@@ -341,11 +341,11 @@ Nbs::Application.routes.draw do
   end
 
   match ':slug' => 'category_home#show', :as => :category_home_page
-  match ':slug/account/new' => 'category_buyer_accounts#new', :as => :new_category_home_page_account
-  match ':slug/account' => 'category_buyer_accounts#create', :as => :category_home_page_account
-  match ':slug/leads' => 'category_buyers/leads#index', :as => :category_home_page_leads
+  match ':slug/account/new' => 'category_supplier_accounts#new', :as => :new_category_home_page_account
+  match ':slug/account' => 'category_supplier_accounts#create', :as => :category_home_page_account
+  match ':slug/leads' => 'category_suppliers/leads#index', :as => :category_home_page_leads
 
-  root :to => "buyer_home#show"
+  root :to => "supplier_home#show"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

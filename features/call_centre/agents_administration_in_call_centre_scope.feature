@@ -22,7 +22,7 @@ Scenario: I can sort by Name, Last Name, created, volume sold, revenue, mobile n
   Given user "call_centre@person.com" with role "call_centre" has attributes "certification_level:11"
   Given an user with role call_centre_agent and email ccagent01@person.com belongs to call centre call_centre@person.com
   And an user with role call_centre_agent and email ccagent02@person.com belongs to call centre call_centre@person.com
-  And I have user with email bob@person.com and role customer
+  And I have user with email bob@person.com and role supplier
   And currency "DKK" exists with attributes "exchange_rate: 2.5"
 
   And lead Ultimate monitors 1 is created by user ccagent01@person.com with role call_centre_agent
@@ -48,17 +48,17 @@ Scenario: I can sort by Name, Last Name, created, volume sold, revenue, mobile n
   And lead Ultimate monitors 5 exists with attributes "price:5.0"
   And lead Ultimate monitors 5a exists with attributes "price:5.0"
 
-  And lead Ultimate monitors 1 is bought by user bob@person.com with role customer and is assigned to user bob1@person.com with role lead_buyer
-  And lead Ultimate monitors 2 is bought by user bob@person.com with role customer and is assigned to user bob1@person.com with role lead_buyer
-  And lead Ultimate monitors 3 is bought by user bob@person.com with role customer and is assigned to user bob1@person.com with role lead_buyer
-  And lead Ultimate monitors 4 is bought by user bob@person.com with role customer and is assigned to user bob1@person.com with role lead_buyer
-  And lead Ultimate monitors 5 is bought by user bob@person.com with role customer and is assigned to user bob1@person.com with role lead_buyer
+  And lead Ultimate monitors 1 is bought by user bob@person.com with role supplier and is assigned to user bob1@person.com with role lead_supplier
+  And lead Ultimate monitors 2 is bought by user bob@person.com with role supplier and is assigned to user bob1@person.com with role lead_supplier
+  And lead Ultimate monitors 3 is bought by user bob@person.com with role supplier and is assigned to user bob1@person.com with role lead_supplier
+  And lead Ultimate monitors 4 is bought by user bob@person.com with role supplier and is assigned to user bob1@person.com with role lead_supplier
+  And lead Ultimate monitors 5 is bought by user bob@person.com with role supplier and is assigned to user bob1@person.com with role lead_supplier
 
-  And a lead purchase for lead "Ultimate monitors 1" by user "bob@person.com" with role "customer" exists with attributes "accessible_from:Date.today-20"
-  And a lead purchase for lead "Ultimate monitors 2" by user "bob@person.com" with role "customer" exists with attributes "accessible_from:Date.today-360"
-  And a lead purchase for lead "Ultimate monitors 3" by user "bob@person.com" with role "customer" exists with attributes "accessible_from:Date.today"
-  And a lead purchase for lead "Ultimate monitors 4" by user "bob@person.com" with role "customer" exists with attributes "accessible_from:Date.today"
-  And a lead purchase for lead "Ultimate monitors 5" by user "bob@person.com" with role "customer" exists with attributes "accessible_from:Date.today"
+  And a lead purchase for lead "Ultimate monitors 1" by user "bob@person.com" with role "supplier" exists with attributes "accessible_from:Date.today-20"
+  And a lead purchase for lead "Ultimate monitors 2" by user "bob@person.com" with role "supplier" exists with attributes "accessible_from:Date.today-360"
+  And a lead purchase for lead "Ultimate monitors 3" by user "bob@person.com" with role "supplier" exists with attributes "accessible_from:Date.today"
+  And a lead purchase for lead "Ultimate monitors 4" by user "bob@person.com" with role "supplier" exists with attributes "accessible_from:Date.today"
+  And a lead purchase for lead "Ultimate monitors 5" by user "bob@person.com" with role "supplier" exists with attributes "accessible_from:Date.today"
 
   And a lead "Ultimate monitors 1" has good rating
   And a lead "Ultimate monitors 2" has good rating

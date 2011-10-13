@@ -44,7 +44,7 @@ Feature: Category home pages
   Scenario: I can see a list of most recent category leads on category home page
     When Category named "Best Leads" already exists
     And lead LeadOne exists within category Best Leads
-    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Best Leads"
+    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads"
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
     Then I should see "1" items on a list within "#latest_leads"
@@ -53,7 +53,7 @@ Feature: Category home pages
   @added @m6 @ao @_tested @_done
   Scenario: I can't see inactive leads on latest leads
     When there are no leads
-    And a lead InactiveLead exists within category Best Leads and is bought by user kastomer@nbs.fake with role customer
+    And a lead InactiveLead exists within category Best Leads and is bought by user kastomer@nbs.fake with role supplier
     And lead "InactiveLead" has attributes "sale_limit:1"
     And I am on category home page for Best Leads
     Then I should see "1" items on a list within "#latest_leads"
@@ -66,7 +66,7 @@ Feature: Category home pages
     And lead BestLead exists within category Best Leads
     And Category named "Worst Leads" already exists
     And lead WorstLead exists within category Worst Leads
-    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Best Leads"
+    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads"
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
     Then I should see "1" items on a list within "#latest_leads"
@@ -77,7 +77,7 @@ Feature: Category home pages
   Scenario: I can see complete list of category leads
     When Category named "Best Leads" already exists
     And there are "11" leads in category "Best Leads"
-    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Best Leads"
+    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads"
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
     Then I should see "3" items on a list within "#latest_leads"
@@ -100,18 +100,18 @@ Feature: Category home pages
   Scenario: I can buy selected leads from this category
     When Category named "Best Leads" already exists
     And there are "11" leads in category "Best Leads"
-    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Best Leads"
+    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads"
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
     And I follow translated "category_home.show.view.complete_list_link" within "#latest_leads"
     And I follow translated "leads.index.add_to_cart_link"
-    Then I should see translated "buyer.cart_items.create.flash.cart_item_creation_successful"
+    Then I should see translated "supplier.cart_items.create.flash.cart_item_creation_successful"
 
   @_done
   Scenario: I can see registration panel on category home page when I'm a guest
     When Category named "Best Leads" already exists
     And I am on category home page for Best Leads
-    Then I should see translated "category_home.show.view.category_buyer_signup"
+    Then I should see translated "category_home.show.view.category_supplier_signup"
 
   @_done
   Scenario: I can see log in panel on category home page when I'm a guest
@@ -123,8 +123,8 @@ Feature: Category home pages
   @added
   Scenario: I can see my purchased leads in panel on category home page when I'm logged in
     When Category named "Best Leads" already exists
-    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Best Leads"
-    And a lead Best Lead exists within category Best Leads and is bought by user jon@lajoie.ca with role customer
+    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads"
+    And a lead Best Lead exists within category Best Leads and is bought by user jon@lajoie.ca with role supplier
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
     And I follow translated "layout.main_menu.shared.home"
@@ -135,7 +135,7 @@ Feature: Category home pages
   @added
   Scenario: I can access details of latest leads on category home page
     When Category named "Best Leads" already exists
-    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Best Leads"
+    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads"
     And lead Best Lead exists within category Best Leads
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
@@ -168,10 +168,10 @@ Feature: Category home pages
   Scenario: I should not have access to "Browse leads" when I have auto-buy enabled
     When Category named "Best Leads" already exists
     And I am on the home page
-    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_buyer" for category "Best Leads"
+    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads"
     And I sign in as jon@lajoie.ca with password secret
     Then I should see "Best Leads"
-    And category "Best Leads" is unique for user with email "jon@lajoie.ca" role "category_buyer"
+    And category "Best Leads" is unique for user with email "jon@lajoie.ca" role "category_supplier"
     And I should see translated "layout.main_menu.shared.browse_leads"
     And I should not see translated "category_home.show.view.header_additional_information_label"
     And I follow translated logout link for jon@lajoie.ca

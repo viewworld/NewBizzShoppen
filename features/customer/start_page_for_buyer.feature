@@ -3,8 +3,8 @@
 Feature: Start page for buyer
 
 Background: I am a guest and I am on the home page
-  Given I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role customer
-  And User jon@lajoie.ca with role customer is big buyer
+  Given I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier
+  And User jon@lajoie.ca with role supplier is big buyer
   And I am on the home page
   And I sign in as jon@lajoie.ca with password secret
 
@@ -12,7 +12,7 @@ Background: I am a guest and I am on the home page
 Scenario: I can see latest leads in my categories (interests)
   When lead VisibleLead exists within category Computers
   And lead InvisibleLead exists within category Cars
-  And user "jon@lajoie.ca" with role "customer" has interest in following categories "Computers"
+  And user "jon@lajoie.ca" with role "supplier" has interest in following categories "Computers"
   And I follow translated "layout.main_menu.shared.home"
   Then I should see "VisibleLead" within "#latest_leads"
   And I should not see "InvisibleLead" within "#latest_leads"
@@ -20,7 +20,7 @@ Scenario: I can see latest leads in my categories (interests)
 # including hidden descriptions
 @m5 @ao @_done
 Scenario: I can see my leads
-  When a lead MyLead exists within category Computers and is bought by user jon@lajoie.ca with role customer
+  When a lead MyLead exists within category Computers and is bought by user jon@lajoie.ca with role supplier
   And I follow translated "layout.main_menu.shared.home"
   Then I should see "MyLead" within "#my_leads"
   And I should see translated "lead_purchases.listing.hidden_description_label"
@@ -28,20 +28,20 @@ Scenario: I can see my leads
 
 @m5 @ao @_done
 Scenario: I can add team members with team members enabled
-  When user "jon@lajoie.ca" with role "customer" has attributes "team_buyers:1"
+  When user "jon@lajoie.ca" with role "supplier" has attributes "team_buyers:1"
   And I follow translated "layout.main_menu.shared.home"
-  Then I should see translated "buyer_home.show.view.add_team_member"
-  When I follow translated "buyer_home.show.view.add_team_member"
-  Then I should be on customers new subaccount
+  Then I should see translated "supplier_home.show.view.add_team_member"
+  When I follow translated "supplier_home.show.view.add_team_member"
+  Then I should be on suppliers new subaccount
 
 @added @m5 @ao @_done
 Scenario: I can't add team members with team members disabled
-  When user "jon@lajoie.ca" with role "customer" has attributes "team_buyers:0"
+  When user "jon@lajoie.ca" with role "supplier" has attributes "team_buyers:0"
   And I follow translated "layout.main_menu.shared.home"
-  Then I should not see translated "buyer_home.show.view.add_team_member"
+  Then I should not see translated "supplier_home.show.view.add_team_member"
 
 @m5 @ao @_done
 Scenario: I can sign out
   When I follow translated "layout.main_menu.shared.home"
-  And I follow translated "buyer_home.show.view.sign_out"
+  And I follow translated "supplier_home.show.view.sign_out"
   Then I should see translated "devise.sessions.signed_out"

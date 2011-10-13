@@ -16,8 +16,8 @@ Scenario: I should see created by
 
 @m4 @tgn @_tested @added
 Scenario: I should see rating % and certification level for each lead
-  Given I have user with email bob@person.com and role customer
-  And a lead Printers ultimate deal exists within category Computers and is bought by user bob@person.com with role customer
+  Given I have user with email bob@person.com and role supplier
+  And a lead Printers ultimate deal exists within category Computers and is bought by user bob@person.com with role supplier
   And a lead "Printers ultimate deal" has good rating
   Given All leads have refreshed average ratings
   Given I go to browse leads

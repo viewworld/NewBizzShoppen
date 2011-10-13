@@ -1,0 +1,119 @@
+<fieldset class="inputs_vertical">
+  <ol class="no_pdd">
+    <li class="string">
+      <%= f.label :with_keyword, t("supplier.lead_requests.index.view.search.keyword_label") %>
+      <%= f.text_field :with_keyword %>
+    </li>
+  </ol>
+
+  <div id="advanced_search_1_div" style="<%= 'display: none;' unless advanced_search_active?(params[:search]) -%>;">
+    <ol class="no_pdd">
+      <li class="string">
+        <%= f.label t("leads.index.search.zip_code") %>
+        <%= f.text_field :with_zip_code, :style => "width: 90px" %>
+      </li>
+      <li class="select">
+        <%= f.label t("leads.index.search.country_label") %>
+        <%= f.select :with_country, @countries.map { |c| [c.name, c.id] }, {:include_blank => true}, :onchange => "refresh_regions_list_custom('search_with_country', 'search_with_region');" %>
+      </li>
+      <li class="select">
+        <%= f.label t("leads.index.search.region_label") %>
+        <%= f.select :with_region, regions_collection_for(Country.find_by_id(@search.with_country)).map { |r| [r.name, r.id] }, :include_blank => true %>
+      </li>
+    </ol>
+  </div>
+
+  <ol>
+    <li class="commit">
+      <ibt c="bt_green" icon="magnify">
+        <%= submit_tag t("leads.index.search.search_button"), :id => "search_new" %>
+      </ibt>
+      <p>
+        <%= bt_clear_filter_safe %>
+        <%= link_to_function t("common.advanced_search"), "$('#advanced_search_1_div').toggle();$('#advanced_search_2_div').slideToggle();" %>
+        <% if @nested_category.present? or @category.present? %>
+            <%
+               category = @nested_category.present? ? @nested_category : @category
+               subcategories_for_select = [[' ', category.id]] + category.children.select{ |c| c.leads_count_for_user(current_user) > 0 }.map{|c| [c.name,c.id]}
+            %>
+            <% if subcategories_for_select.size > 1 %>
+                <%= select_tag :category_selector, options_for_select(subcategories_for_select), {:include_blank => false, :onchange => "submit_category_filter_form('#leads_search_form')"} %>
+            <% end %>
+        <% end %>
+      </p>
+    </li>
+  </ol>
+
+  <% if user_signed_in? and current_user and current_user.has_role?(:category_supplier) %>
+      <ol class="no_pdd">
+        <li class="select" style="float:right">
+          <%= label "category", t("leads.index.search.category_label") %>
+          <%= select_tag "category", options_for_select(current_user.parent_accessible_categories_without_auto_buy.map { |c| [c.name, c.cached_slug] }, @home_category.cached_slug),
+                         :include_blank => false,
+                         :onchange => "uncheck_category_checkboxes();this.form.action='/'+this.value+'/leads';this.form.submit();"
+          %>
+        </li>
+      </ol>
+  <% end %>
+</fieldset>
+
+<div id="advanced_search_2_div" style="<%= 'display: none;' unless advanced_search_active?(params[:search]) -%>;">
+  <fieldset class="inputs_vertical">
+    <ol class="no_pdd">
+      <li class="select">
+        <%= f.label :with_deal_value_from, t("leads.index.search.deal_value_from_label") %>
+        <%= f.select :with_deal_value_from, User::DEAL_VALUE_RANGE, {:include_blank => true} %>
+      </li>
+      <li class="select">
+        <%= f.label :with_deal_value_to, t("leads.index.search.deal_value_to_label") %>
+        <%= f.select :with_deal_value_to, User::DEAL_VALUE_RANGE, {:include_blank => true} %>
+      </li>
+      <li class="select">
+        <%= f.label :with_created_by, t("leads.index.search.created_by") %>
+        <%= f.select :with_created_by, [], {:include_blank => true} %>
+      </li>
+      <script>
+        $.post('/leads/creators', {
+            with_created_by: <%= @search.with_created_by.to_i %>,
+            <% if @search.with_category %>
+            with_selected_categories: [<%= Category.find_by_id(@search.with_category).self_and_descendants.map(&:id).join(',') %>]
+            <% elsif @search.with_selected_categories %>
+            with_selected_categories: [<%= @search.with_selected_categories.to_a.join(',') %>]
+            <% end %>
+        });
+      </script>
+      <li class="select">
+        <%= f.label :with_certification_level, t("leads.index.search.certification") %>
+        <%= f.select :with_certification_level, User::CERTIFICATION_LEVELS.first(4).map { |cl| [t("models.lead.certification.lvl#{cl}"), cl] }, {:include_blank => true} %>
+      </li>
+      <li class="select">
+        <%= f.label :with_sale_limit, t("leads.index.search.sale_limit") %>
+        <%= f.select :with_sale_limit, (1..10).to_a, {:include_blank => true} %>
+      </li>
+      <li class="select">
+        <%= f.label :with_hotness, t("leads.index.search.hotness") %>
+        <%= f.select :with_hotness, (0..2).to_a.map { |hl| [t("models.lead.hotness.lvl#{hl}"), hl] }, {:include_blank => true} %>
+      </li>
+    </ol>
+  </fieldset>
+<div class="pdd_10">
+  <table class="categories_table">
+    <tbody>
+    <% @categories.select { |c| c.parent_id.blank? }.in_groups_of(5).each do |categories| %>
+        <tr>
+          <% categories.each do |category| %>
+              <td style="width: 20%">
+                <% unless category.nil? %>
+                    <%= categories_structure_root(category, @categories, :leads_catalog) %>
+                <% end %>
+              </td>
+          <% end %>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<%= hidden_field_tag :show_all, params[:show_all] %>
+

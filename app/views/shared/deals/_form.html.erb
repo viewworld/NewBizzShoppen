@@ -1,14 +1,14 @@
 <div class="column_left">
   <div class="pdd_10 no_pdd_t">
     <fieldset class="inputs labels_ta_r labels_200">
-      <ol>
+      <ol class="align_inputs">
         <% if deal.current_dcr and deal.current_dcr.active? %>
             <%= hidden_field_tag "accept", "false" %>
         <% end %>
         <% if user_signed_in? %>
             <%
-               deal_categories = if current_user.buyer?
-                                     DealCategory.without_locked.with_customer_unique(current_user).all
+               deal_categories = if current_user.supplier?
+                                     DealCategory.without_locked.with_supplier_unique(current_user).all
                                  elsif current_user.agent?
                                      DealCategory.without_locked.with_agent_unique(current_user).all
                                  elsif current_user.admin?
@@ -45,7 +45,7 @@
                        :wrapper_html => {:class => "date"},
                        :input_html => {:class => "datepicker", :value => deal.end_date.to_date},
                        :hint => t('models.result_field.date_format') %>
-        <% if user_signed_in? and current_user.buyer? %>
+        <% if user_signed_in? and current_user.supplier? %>
             <%= form.input :price, :as => :hidden %>
             <%= form.input :currency_id, :value => Currency.default_currency.id, :as => :hidden %>
         <% else %>
@@ -59,7 +59,7 @@
             <%= form.input :min_created_leads, :label => t("shared.deals.form.min_created_leads") %>
             </div>
         <% end %>
-        <% unless user_signed_in? and current_user.buyer? %>
+        <% unless user_signed_in? and current_user.supplier? %>
             <div>
                 <%= form.input :group_deal, :wrapper_html => {:style => "margin-left:200px"}, :onclick => "enable_group_deal();" %>
             </div>
@@ -72,7 +72,7 @@
 
             <% unless @deal.new_record? %>
                 <li class="string"><%= form.label :url, :label => t("shared.deals.form.url_label") %>
-                  <%= link_to deal_url(:id => @deal.slug), deal_url(:id => @deal.slug) %>
+                  <%= link_to deal_url(:protocol => "http://", :host => "www.fairdeals.dk", :id => @deal.slug), deal_url(:protocol => "http://", :host => "www.fairdeals.dk", :id => @deal.slug) %>
                 </li>
             <% end %>
         <% end %>
@@ -116,7 +116,7 @@
   </div>
 </div>
 
-<% if user_signed_in? and current_user.buyer? %>
+<% if user_signed_in? and current_user.supplier? %>
     <% unless (deal.current_dcr and deal.current_dcr.active?) %>
         <clb/>
 
@@ -125,7 +125,7 @@
           <div class="pdd_10">
             <div class="grid_210 fltl">&nbsp;</div>
             <div class="grid_240 fltl">
-              <h3><%= t("buyer.deals.form.all_templates") %></h3>
+              <h3><%= t("supplier.deals.form.all_templates") %></h3>
               <%= select_tag "all_templates", options_for_select((LeadTemplate.with_category(current_user.deal_category_id).with_creator(current_user.id)-(@deal.deal_templates + [@template]).compact.uniq).map { |c| [c.name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
             </div>
 
@@ -135,14 +135,14 @@
               <p class="ta_c pdd_5"><%= bt_link_to nil, t("administration.categories.form.move_users_left"), "javascript:move_selected('deal_deal_template_ids_','all_templates')", :id => "move_left" %></p>
 
               <p class="ta_c pdd_5 no_pdd_lr">
-                <% if current_user.buyer? and current_user.deal_category_id.present? %>
-                    <%= bt_link_to nil, t("buyer.deals.edit.view.new_template"), new_customers_lead_template_path(:deal_id => @deal.id) %>
+                <% if current_user.supplier? and current_user.deal_category_id.present? %>
+                    <%= bt_link_to nil, t("supplier.deals.edit.view.new_template"), new_suppliers_lead_template_path(:deal_id => @deal.id) %>
                 <% end %>
               </p>
             </div>
 
             <div class="grid_240 fltl">
-              <h3><%= t("buyer.deals.form.selected_templates") %></h3>
+              <h3><%= t("supplier.deals.form.selected_templates") %></h3>
               <%= select_tag "deal[deal_template_ids][]", options_for_select(([@template]+@deal.deal_templates).compact.uniq.map { |c| [c.name, c.id] }), {:multiple => true, :size => 10, :style => "height:200px; width:250px;"} %>
             </div>
             <clb/>

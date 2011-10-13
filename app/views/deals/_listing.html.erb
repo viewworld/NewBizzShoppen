@@ -130,7 +130,7 @@
                 <%= deal.company_description %></p>
 
               <p class="element"><b><%= t("deals.listing.rating_label") %></b>
-                <%= ratings_for(deal, :force_static => !current_user_has_role?(:purchase_manager)) %></p>
+                <%= ratings_for(deal, :force_static => !current_user_has_role?(:member)) %></p>
 
               <br/><br/>
         </td>
@@ -173,8 +173,9 @@
                 <%= label_tag "td_mark_all", "select all" %>
               </div>
           <% end %>
-          <%= link_to_show_all_without_pagination "#deals_search_form" %>
+
           <%= will_paginate collection, :previous_label => '&laquo;', :next_label => '&raquo;' %>
+          <%= link_to_show_all_without_pagination "#deals_search_form" %>
         </td>
       </tr>
   <% end %>
