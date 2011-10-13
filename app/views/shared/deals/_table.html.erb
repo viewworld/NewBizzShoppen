@@ -14,6 +14,7 @@
     <% end %>
     <th><%= link_to t("shared.deals.table.creation_date"), order_for_scoped_search(:created_at) %></th>
     <th><%= link_to t("shared.deals.table.name"), order_for_scoped_search(:header) %></th>
+    <th><%= link_to t("shared.deals.table.company_name"), order_for_scoped_search(:company_name) %></th>
     <th><%= link_to t("shared.deals.table.expires"), order_for_scoped_search(:end_date) %></th>
     <% unless current_user.admin? %>
         <th><%= t("shared.deals.table.likes") %></th>
@@ -44,6 +45,9 @@
         <td><%= deal.created_at %></td>
         <td>
           <%= deal.header %>
+        </td>
+        <td>
+          <%= deal.company_name %>
         </td>
         <td><%= deal.end_date %></td>
         <% unless current_user.admin? %>

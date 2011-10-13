@@ -19,7 +19,7 @@ class Deal < AbstractLead
   scope :for_user, lambda { |q| where("creator_id = ?", q.id) }
   scope :group_deals, where(:group_deal => true)
 
-  scoped_order :header, :end_date, :published, :created_at
+  scoped_order :header, :end_date, :published, :created_at, :company_name
 
   validates_presence_of :start_date, :end_date, :email_address
   validates_presence_of :deal_admin_email, :unless => Proc.new{|d| d.new_record? }

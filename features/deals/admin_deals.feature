@@ -90,3 +90,11 @@ Feature: Deals from admin perspective
 
   @_done @_tested_elsewhere
   Scenario: I can specify lead price
+
+  @m21 @requested @_done @_tested
+  Scenario: I can see company name on deals list
+    Then a deal is created by "admin@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:awesome|description:awesome|hidden_description:awesome|start_date:2011-01-01|end_date:2011-01-01|company_name:starks"
+    Then I wait 1 second
+    Then a deal is created by "admin@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
+    And I follow "Deals"
+    Then I should see translated "shared.deals.table.company_name" within "table#deals"
