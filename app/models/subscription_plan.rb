@@ -12,7 +12,8 @@ class SubscriptionPlan < ActiveRecord::Base
   validates_numericality_of :lockup_period, :free_period, :allow_nil => true
   validate :check_roles
 
-  has_many :subscription_plan_lines, :dependent => :destroy
+  has_many :subscription_plan_lines, :as => :resource, :dependent => :destroy
+  has_many :subscriptions
   has_one :invoice_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'invoice'", :dependent => :destroy
   belongs_to :currency
 

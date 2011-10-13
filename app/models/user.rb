@@ -64,6 +64,7 @@ class User < ActiveRecord::Base
   belongs_to :contact
   has_many :deal_comment_threads, :class_name => "Comment", :foreign_key => "user_id"
   has_many :email_bounces, :foreign_key => :email, :primary_key => :email
+  has_many :subscriptions
 
   alias_method :parent, :user
 
@@ -661,5 +662,15 @@ class User < ActiveRecord::Base
 
   def deliver_welcome_email_for_upgraded_contact
     TemplateMailer.delay.new(email, "upgraded_contact_to_#{role_to_campaign_template_name}_welcome".to_sym, with_role.address.country, {:user => self})
+  end
+
+  def subscription_can_be_changed?
+    subscriptions.active.empty? or subscriptions.active.first.can_be_downgraded?
+  end
+
+  def apply_subscription!(subscription_plan)
+    if subscription_can_be_changed?
+      self.subscriptions.clone_from_subscription_plan!(subscription_plan, self)
+    end
   end
 end
