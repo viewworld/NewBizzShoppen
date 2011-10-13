@@ -6,6 +6,7 @@ Feature: Subscriptions administration
     And I sign in as blazejek@gmail.com with password secret
     And I click hidden link by url regex "/administration\/subscription_plans$/"
 
+@_done @tested_elsewhere @tgn
 Scenario: I can view list of existing subscription types
 
 @selenium @_done @_tested @tgn
@@ -102,3 +103,14 @@ Scenario: I can customize invoice email for this subscription
 
 @_done @tested_elsewhere @tgn
 Scenario: I can enable and disable selected subscriptions
+
+@_done @_tested @tgn
+Scenario: When I choose member role than I cannot choose supplier and vice versa
+  When I follow translated "administration.subscription_plans.index.view.new_subscription_plan"
+  And I select "Supplier" from "subscription_plan_assigned_roles"
+  And I select "Member" from "subscription_plan_assigned_roles"
+  And I press translated "administration.subscription_plans.new.view.button_create"
+  Then I should see translated "models.subscription_plan_incorrect_roles_set"
+
+@_done @non_testable @tgn
+Scenario: When I choose member than additional features like big buyer and others are not available

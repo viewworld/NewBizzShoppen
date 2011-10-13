@@ -2830,6 +2830,7 @@ en:
       type:
         credit: "credit"
         refund: "refund"
+    subscription_plan_incorrect_roles_set: "Role member cannot be selected with other roles."
   activerecord:
     models:
       article:

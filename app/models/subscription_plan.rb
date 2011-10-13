@@ -3,19 +3,21 @@ class SubscriptionPlan < ActiveRecord::Base
   include ScopedSearch::Model
   include RoleModel
 
-  ROLES = [:supplier, :lead_supplier, :lead_user, :member, :category_supplier, :deal_maker]
+  ROLES = [:supplier, :category_supplier, :member]
 
   roles ROLES
 
   validates_presence_of :name, :billing_cycle, :billing_period, :assigned_roles, :currency_id, :currency
   validates_numericality_of :billing_cycle, :billing_period
   validates_numericality_of :lockup_period, :free_period, :allow_nil => true
+  validate :check_roles
 
   has_many :subscription_plan_lines, :dependent => :destroy
   has_one :invoice_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'invoice'", :dependent => :destroy
   belongs_to :currency
 
   after_save :check_email_templates
+  before_save :clear_additional_features_for_member
 
   accepts_nested_attributes_for :subscription_plan_lines, :allow_destroy => true
 
@@ -31,6 +33,22 @@ class SubscriptionPlan < ActiveRecord::Base
         self.invoice_email_template.translations << translation.clone
       end
       self.save
+    end
+  end
+
+  def check_roles
+    if has_role?(:member) and (has_role?(:supplier) or has_role?(:category_supplier))
+      errors.add(:assigned_roles, I18n.t("models.subscription_plan_incorrect_roles_set"))
+      return false
+    end
+    true
+  end
+
+  def clear_additional_features_for_member
+    if has_role?(:member)
+      self.team_buyer = false
+      self.big_buyer = false
+      self.deal_maker = false
     end
   end
 

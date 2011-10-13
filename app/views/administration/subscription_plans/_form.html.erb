@@ -8,7 +8,7 @@
         <%= form.input :billing_period %>
         <%= form.input :free_period %>
         <%= form.input :currency_id, :collection => currencies_for_select %>
-        <%= form.input :assigned_roles, :collection => SubscriptionPlan::ROLES.map { |r| [r.to_s.humanize, r] }, :include_blank => false, :input_html => { :style => "height:100px", :size => 5, :multiple => true } %>
+        <%= form.input :assigned_roles, :collection => SubscriptionPlan::ROLES.map { |r| [r.to_s.humanize, r] }, :include_blank => false, :onselect => "switch_roles()", :input_html => { :onchange => "switch_roles()", :style => "height:100px", :size => 5, :multiple => true } %>
         <% if @subscription_plan.persisted? %>
             <li class="string">
               <%= label_tag :total_billing %>
@@ -27,9 +27,11 @@
         <%= form.input :is_active, :as => :boolean %>
         <%= form.input :can_be_upgraded, :as => :boolean %>
         <%= form.input :can_be_downgraded, :as => :boolean %>
+        <span id="additional_features">
         <%= form.input :team_buyer, :as => :boolean %>
         <%= form.input :big_buyer, :as => :boolean %>
         <%= form.input :deal_maker, :as => :boolean %>
+        </span>
         <%= form.input :auto_prolong, :as => :boolean %>
       </ol>
     </fieldset>
@@ -74,4 +76,17 @@
         }
 
     }
+
+    function switch_roles(){
+        if($('#subscription_plan_assigned_roles').val() != null){
+            if($.inArray("member", $('#subscription_plan_assigned_roles').val()) >= 0){
+                $('#additional_features').hide();
+            }
+            else  {
+                $('#additional_features').show();
+            }
+        }
+    }
+
+    switch_roles();
 </script>
