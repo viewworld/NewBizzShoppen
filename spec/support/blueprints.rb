@@ -452,3 +452,20 @@ EmailBounce.blueprint do
   type_code { "HardBounce" }
   dump_available { true }
 end
+
+SubscriptionPlan.blueprint do
+  name { Faker::Lorem.words(3).to_s }
+  roles_mask { 112 }
+  billing_cycle { 8 }
+  lockup_period { 2 }
+  billing_period { 1 }
+  free_period { 0 }
+  currency_id { Currency.make! }
+  is_active { true }
+  can_be_upgraded { true }
+  can_be_downgraded { true }
+  team_buyer { false }
+  big_buyer { false }
+  deal_maker { false }
+  auto_prolong { false }
+end

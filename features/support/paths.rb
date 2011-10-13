@@ -174,7 +174,8 @@ module NavigationHelpers
       administration_seller_path(Seller.where(:company_name => $1).first)
     when /comments threads/
       comments_threads_path
-
+    when /administration edit subscription plan named (.*)/
+      edit_administration_subscription_plan_path(SubscriptionPlan.where(:name => $1).first)
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

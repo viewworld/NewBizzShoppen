@@ -17,7 +17,7 @@ Scenario: I can create new subscription type
   And I fill in "subscription_plan_billing_period" with "1"
   And I fill in "subscription_plan_free_period" with "2"
   And I select "EUR" from "subscription_plan_currency_id"
-  And I select "Supplier" from "subscription_plan_roles"
+  And I select "Supplier" from "subscription_plan_assigned_roles"
   And I check "subscription_plan_is_active"
   And I check "subscription_plan_can_be_upgraded"
   And I check "subscription_plan_can_be_downgraded"
@@ -90,6 +90,15 @@ Scenario: I can specify whether subscription will be automatically prolonging (c
 @_done @tested_elsewhere @tgn
 Scenario: I can specify billing date (+/- number of weeks from subscription end date)
 
+@_done @_tested @tgn
 Scenario: I can customize invoice email for this subscription
+  Given subscription plan exists with attributes "name: SubscrTest"
+  When I click hidden link by url regex "/administration\/subscription_plans$/"
+  And I click hidden link by url regex "/administration\/subscription_plans\/\d+\/edit$/"
+  Then I follow translated "administration.subscription_plans.edit.view.edit_email_template"
+  And I fill in "email_template_subject" with "Invoice customised"
+  And I press translated "administration.email_templates.edit.view.button_update"
+  And I should be on administration edit subscription plan named SubscrTest
 
+@_done @tested_elsewhere @tgn
 Scenario: I can enable and disable selected subscriptions
