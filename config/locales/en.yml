@@ -78,6 +78,7 @@ en:
       main_menu:
         deals: "Deals"
         tenders: "Tenders"
+        search: "Search"
         member:
           my_requests: "My requests"
     main_menu:
