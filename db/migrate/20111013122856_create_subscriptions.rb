@@ -6,6 +6,8 @@ class CreateSubscriptions < ActiveRecord::Migration
       t.string :name
       t.date :start_date
       t.date :end_date
+      t.datetime :cancelled_at
+      t.integer :cancelled_by
       t.integer :billing_cycle
       t.integer :lockup_period
       t.integer :billing_period
@@ -19,7 +21,6 @@ class CreateSubscriptions < ActiveRecord::Migration
       t.boolean :deal_maker, :default => false
       t.boolean :auto_prolong, :default => false
       t.integer :position, :default => 0
-
       t.timestamps
     end
   end
