@@ -107,11 +107,11 @@ class Deal < AbstractLead
   end
 
   def self.group_deals_for_select
-      group_deals.without_inactive.map{|gd| [gd.to_s_for_group_deals_for_select, gd.id]}
+      [[]]+group_deals.without_inactive.map{|gd| [gd.to_s_for_group_deals_for_select, gd.id]}
   end
 
   def self.all_deals_for_select
-      without_inactive.map{|gd| [gd.to_s_for_group_deals_for_select, gd.id]}
+      [[]]+without_inactive.map{|gd| [gd.to_s_for_group_deals_for_select, gd.id]}
   end
 
   def to_s_for_group_deals_for_select
@@ -142,9 +142,19 @@ class Deal < AbstractLead
     if (deal_price.to_f > 0 and discounted_price.to_f > 0 and deal_price > discounted_price)
       "#{(100 - discounted_price * 100 / deal_price).to_i}%"
     elsif general_discount?
-      "#{discounted_price.to_f <= 100 and discounted_price.to_f > 0 ? discounted_price.to_i : 100}%"
+      "#{(discounted_price.to_f <= 100 and discounted_price.to_f > 0) ? discounted_price.to_i : 100}%"
     else
       "0%"
+    end
+  end
+
+  def saving_in_money
+    if (deal_price.to_f > 0 and discounted_price.to_f > 0 and deal_price > discounted_price)
+      (deal_price - discounted_price).to_f
+    elsif general_discount?
+      discounted_price.to_f
+    else
+      0
     end
   end
 

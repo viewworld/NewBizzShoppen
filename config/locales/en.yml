@@ -813,6 +813,8 @@ en:
           title: "Select featured deals to be displayed on Faideals home page"
           main_position: "Main position"
           position: "Position %{position}"
+          backup_position: "Backup position %{position}"
+          backup_positions: "Backup positions"
           set_featured_deals: "Set featured deals"
           cancel: "Cancel"
     password:
