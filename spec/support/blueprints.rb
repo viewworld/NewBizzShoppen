@@ -455,7 +455,7 @@ end
 
 SubscriptionPlan.blueprint do
   name { Faker::Lorem.words(3).to_s }
-  roles_mask { 112 }
+  assigned_roles { "supplier" }
   billing_cycle { 8 }
   lockup_period { 2 }
   billing_period { 1 }

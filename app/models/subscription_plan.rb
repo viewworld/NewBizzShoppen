@@ -52,6 +52,7 @@ class SubscriptionPlan < ActiveRecord::Base
       self.big_buyer = false
       self.deal_maker = false
     end
+    true
   end
 
   public

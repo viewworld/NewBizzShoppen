@@ -1,6 +1,7 @@
 @m21 @requested @subscriptions
 Feature: Subscription backend
 
+@non_testable @_done @tgn
 Scenario: Existing accounts should have subscription assigned free one (each role should have free subscription)
 
 Scenario: The billing cycle on paid subscription starts after the free period

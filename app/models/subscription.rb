@@ -4,11 +4,25 @@ class Subscription < ActiveRecord::Base
   belongs_to :user
   belongs_to :subscription_plan
 
-  before_save :apply_time_constraints
+  before_create :apply_time_constraints
 
   acts_as_list :scope => :user_id
 
-  scope :active, where("is_active = ? and end_date >= ?", true, Date.today)
+  scope :active, where("is_active = ? and ((end_date IS NULL and billing_cycle = 0) or end_date >= ?)", true, Date.today)
+
+  private
+
+  def apply_time_constraints
+    if start_date.blank? and end_date.blank?
+      self.start_date = Date.today
+      if billing_cycle > 0
+        self.end_date = Date.today + billing_cycle.weeks + free_period.weeks
+        self.billing_date = end_date + billing_period.weeks
+      end
+    end
+  end
+
+  public
 
   def self.clone_from_subscription_plan!(subscription_plan, user)
     subscription = Subscription.new(:user => user)
@@ -23,11 +37,11 @@ class Subscription < ActiveRecord::Base
     subscription
   end
 
-  def apply_time_constraints
-    if start_date.blank? and end_date.blank?
-      self.start_date = Date.today
-      self.end_date = Date.today + billing_cycle.weeks + free_period.weeks
-      self.billing_date = end_date + billing_period.weeks
-    end
+
+  def cancel!(_canceled_by=nil)
+    self.is_active = false
+    self.cancelled_at = Time.now
+    self.cancelled_by = _canceled_by.id if _canceled_by
+    self.save
   end
 end

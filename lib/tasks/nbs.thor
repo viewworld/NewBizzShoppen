@@ -671,6 +671,18 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
         Locale.create!(:code => attrs[:code], :language => lang, :enabled => attrs[:enabled], :symbol => attrs[:symbol])
       end
     end
+
+    puts "Creating basic free subscriptions"
+
+    ["category_supplier", "supplier", "member"].each do |role|
+      subscription_name = "Free #{role.humanize.downcase} subscription"
+      unless SubscriptionPlan.where(:name => subscription_name).first.present?
+        sub = SubscriptionPlan.make!(:name => subscription_name, :billing_cycle => 0, :billing_period => 0, :assigned_roles => [role.to_sym], :seller => Seller.default, :currency => Currency.default_currency)
+        "User::#{role.camelize}".constantize.all.each do |user|
+          user.apply_subscription!(sub)
+        end
+      end
+    end
   end
 
   desc "recalculate_leads_average_ratings", ""

@@ -664,12 +664,20 @@ class User < ActiveRecord::Base
     TemplateMailer.delay.new(email, "upgraded_contact_to_#{role_to_campaign_template_name}_welcome".to_sym, with_role.address.country, {:user => self})
   end
 
+  def active_subscription
+    subscriptions.active.first
+  end
+
   def subscription_can_be_changed?
-    subscriptions.active.empty? or subscriptions.active.first.can_be_downgraded?
+    !active_subscription or active_subscription.can_be_downgraded?
+  end
+
+  def subscription_can_be_applied?(subscription_plan)
+    subscription_plan and subscription_plan.is_active and subscription_plan.has_role?(self.role.to_sym)
   end
 
   def apply_subscription!(subscription_plan)
-    if subscription_can_be_changed?
+    if subscription_can_be_changed? and subscription_can_be_applied?(subscription_plan)
       self.subscriptions.clone_from_subscription_plan!(subscription_plan, self)
     end
   end
