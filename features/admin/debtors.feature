@@ -21,7 +21,7 @@ Feature: Debtors
   @m6 @ao @_done @nontestable
   Scenario: When I click on row on debtors listing then an invoice should be created
 
-  @m21 @requested
+  @m21 @requested @subscriptions
   Scenario: I can filter debtors by type (ad hoc / subscribers)
 
   @m21 @requested @tgn @_done @_tested
@@ -35,13 +35,13 @@ Feature: Debtors
     And I press translated "administration.upcoming_invoices.index.view.search_button"
     And I should not see "Janko Muzykant"
 
-  @m21 @requested
+  @m21 @requested @subscriptions
   Scenario: When lead is bought the user is added ad-hoc flag
 
-  @m21 @requested
+  @m21 @requested @subscriptions
   Scenario: At subscription billing date user is added a subscriber flag
 
-  @m21 @requested
+  @m21 @requested @subscriptions
   Scenario: If user has ad-hoc flag then at subscription date items are added to subscription invoice and flag is changed to subscriber
 
   @m21 @requested @tgn @_done @tested_elsewhere
@@ -68,7 +68,7 @@ Feature: Debtors
   @m21 @requested @tgn @non_testable @_done
   Scenario: Debtors list should NOT be paginated
   
-  @m21 @requested
+  @m21 @requested @subscriptions
   Scenario: I can see members in the debtors list and invoice them as suppliers
 
  @m21 @requested @selenium @_done @_tested @tgn
@@ -81,3 +81,6 @@ Feature: Debtors
     And I follow translated "administration.upcoming_invoices.index.view.invoice_selected"
     Then first invoice for user "kastomer@nbs.fake" with role "supplier" has seller for country "Denmark"
     And first invoice for user "kastomer2@nbs.fake" with role "supplier" has seller for country "Sweden"
+    
+  @m21 @requested @subscriptions
+  Scenario: Not invoiced items should be added to the subscription invoice at billing time

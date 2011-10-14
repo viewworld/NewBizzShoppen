@@ -59,3 +59,6 @@ Feature: Purchase Manager signup
     And I select "" from "user_member_address_attributes_country_id"
     And I press translated "supplier_accounts.new.view.button_create_account"
     And I should see "12" occurrences of css class "inline-errors" for tag "p"
+
+  @m21 @requested @subscriptions
+  Scenario: Free subscription doesn't allow to get the deal but user can create tenders
