@@ -98,3 +98,10 @@ Feature: Deals from admin perspective
     Then a deal is created by "admin@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks"
     And I follow "Deals"
     Then I should see translated "shared.deals.table.company_name" within "table#deals"
+
+  @m21 @_done @_tested
+  Scenario: I can click a link to see public deal description (shows the deal as presented to procurement manager)
+    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:starks|group_deal:true|published:1|group_deal:1|price:123|deal_price:100|discounted_price:25|social_media_description:quo vadis"
+    Then I should see translated "layout.main_menu.admin.deals"
+    And I am on the administration deal edit page for super
+    Then I should see "Saving: 75.00 (75%)"
