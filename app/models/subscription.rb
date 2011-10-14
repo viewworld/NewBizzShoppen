@@ -26,7 +26,8 @@ class Subscription < ActiveRecord::Base
   def apply_time_constraints
     if start_date.blank? and end_date.blank?
       self.start_date = Date.today
-      self.end_date = Date.today + billing_cycle.weeks
+      self.end_date = Date.today + billing_cycle.weeks + free_period.weeks
+      self.billing_date = end_date + billing_period.weeks
     end
   end
 end

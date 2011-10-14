@@ -6,6 +6,8 @@ class CreateSubscriptions < ActiveRecord::Migration
       t.string :name
       t.date :start_date
       t.date :end_date
+      t.date :billing_date
+      t.datetime :invoiced_at
       t.datetime :cancelled_at
       t.integer :cancelled_by
       t.integer :billing_cycle
