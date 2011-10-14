@@ -1,7 +1,7 @@
 <ul class="nav<%= (user_signed_in? and current_user.has_role?(:admin)) ? " admin_nav" : "" %>">
   <%= main_menu_link_to_role_specific_home_page %>
   <% if current_user %>
-    <%= main_menu_link_to t("layout.fairdeals.main_menu.member.my_requests"), members_leads_path, :tab => "created_leads" %>
+      <%= main_menu_link_to t("layout.fairdeals.main_menu.member.my_requests"), members_leads_path, :tab => "created_leads" %>
   <% end %>
   <%= main_menu_link_to(t("layout.fairdeals.main_menu.deals"), deal_categories_path, :tab => "browse_deals") %>
   <% if current_user %>
@@ -9,18 +9,12 @@
   <% end %>
 </ul>
 
-<%= form_for @search, :url => deals_path, :html => { :id => "deals_search_form" } do |f| %>
-  <%= hidden_field_tag :show_all, params[:show_all] %>
-  <fieldset class="inputs_vertical">
-    <ol class="no_pdd">
-      <li class="string">
-        <%= f.text_field :with_keyword %>
-      </li>
-      <li class="commit">
-        <ibt c="bt_green" icon="magnify">
-          <%= submit_tag t("layout.fairdeals.main_menu.search"), :id => "search_new" %>
-        </ibt>
-      </li>
-    </ol>
-  </fieldset>
-<% end %>
+<div class="nav_search">
+  <%= form_for @search, :url => deals_path, :html => {:id => "deals_search_form"} do |f| %>
+    <%= hidden_field_tag :show_all, params[:show_all] %>
+    <%= f.text_field :with_keyword, :placeholder => "Enter keywords here..." %>
+    <ibt c="bt_green" icon="magnify">
+      <%= submit_tag t("layout.fairdeals.main_menu.search"), :id => "search_new" %>
+    </ibt>
+  <% end %>
+</div>
