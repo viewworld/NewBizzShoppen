@@ -8,6 +8,7 @@ class CreateSubscriptionPlans < ActiveRecord::Migration
       t.integer :billing_period
       t.integer :free_period
       t.integer :currency_id
+      t.integer :seller_id
       t.boolean :is_active, :default => true
       t.boolean :can_be_upgraded, :default => true
       t.boolean :can_be_downgraded, :default => true
@@ -15,7 +16,6 @@ class CreateSubscriptionPlans < ActiveRecord::Migration
       t.boolean :big_buyer, :default => false
       t.boolean :deal_maker, :default => false
       t.boolean :auto_prolong, :default => false
-
       t.timestamps
     end
   end

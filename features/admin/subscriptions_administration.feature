@@ -53,6 +53,7 @@ Scenario: I can select which roles can select this subscription type
 @_done @tested_elsewhere @tgn
 Scenario: I can specify billing cycle in weeks
 
+@_done @tested_elsewhere @tgn
 Scenario: I can see billing (total cost for billing cycle -is calculated by the invoice items)
 
 @_done @tested_elsewhere @tgn
@@ -114,5 +115,5 @@ Scenario: When I choose member role than I cannot choose supplier and vice versa
 
 @_done @non_testable @tgn
 Scenario: When I choose member than additional features like big buyer and others are not available
-  
+
 Scenario: I can set seller for the subscription plan

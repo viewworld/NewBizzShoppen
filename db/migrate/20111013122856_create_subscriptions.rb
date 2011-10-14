@@ -15,6 +15,7 @@ class CreateSubscriptions < ActiveRecord::Migration
       t.integer :billing_period
       t.integer :free_period
       t.integer :currency_id
+      t.integer :seller_id
       t.boolean :is_active, :default => true
       t.boolean :can_be_upgraded, :default => true
       t.boolean :can_be_downgraded, :default => true
