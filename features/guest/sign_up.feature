@@ -59,3 +59,11 @@ Feature: Sign up feature
     And I follow translated "supplier_home.show.view.create_new_supplier_account"
     Then I should not see "Team buyers"
 
+  @m21 @requested @subscriptions
+  Scenario: I can view popup with a blurb describing different subscription types
+
+  @m21 @requested @subscriptions
+  Scenario: I can select a subscription type (will there be free on the list?)
+
+  @m21 @requested @subscriptions
+  Scenario: I can select only subscription types which are active and match my role

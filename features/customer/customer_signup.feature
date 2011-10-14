@@ -95,3 +95,9 @@ Feature: Customer signup
     And I check "user_supplier_agreement_read"
     And I press translated "supplier_accounts.new.view.button_create_account"
     Then I should see translated "activerecord.errors.messages.taken"
+
+  @m21 @requested @subscriptions
+  Scenario: Free subscription doesn't allow to create deals but user can buy leads
+
+  @m21 @requested @subscriptions
+  Scenario: When supplier has free subscription and tries to creates the deal then he/she needs to confirm by checkbox upgrade to more exp subscription with big buyer feature

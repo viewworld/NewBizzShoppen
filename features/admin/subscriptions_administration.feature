@@ -29,14 +29,20 @@ Scenario: I can select whether this subscription can be upgraded or not (checkbo
 
 Scenario: I can select whether this subscription can be downgraded or not (checkbox)
 
-Scenario: I can specify lockup period in weeks ( # of weeks before the billing cycle ends before the subscription can't be downgraded)
+Scenario: I can specify lockup period in weeks (number of weeks before the billing cycle ends before the subscription can't be downgraded)
 
 Scenario: I can select which features will be enabled in this subscription (Team Buyer, Big Buyer, Deal Maker)
 
-Scenario: I can specify whether subscription will be automatically prolonging (checkbox)
+Scenario: Subscriptions will automatically prolong for the next billing cycle
 
 Scenario: I can specify billing date (+/- number of weeks from subscription end date)
 
 Scenario: I can customize invoice email for this subscription
 
 Scenario: I can enable and disable selected subscriptions
+
+Scenario: When I choose member role than I cannot choose supplier and vice versa
+
+Scenario: When I choose member than additional features like big buyer and others are not available
+
+Scenario: I can set seller for the subscription plan

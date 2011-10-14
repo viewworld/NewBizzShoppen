@@ -746,3 +746,12 @@ Scenario: When creating agent/call centre agent then city and country should be 
   And I press translated "administration.users.edit.view.button_update_user"
   And I should see "1" occurrences of css class "inline-errors" for tag "p" witihin "#user_agent_address_attributes_country_id_input"
   And I should see "1" occurrences of css class "inline-errors" for tag "p" witihin "#user_agent_address_attributes_address_line_3_input"
+
+@m21 @requested @subscriptions
+Scenario: I can cancel user's subscription
+
+@m21 @requested @subscriptions
+Scenario: When I lock user his/hers subscription is canceled
+
+@m21 @requested @subscriptions
+Scenario: User with unpaid subscription cannot be deleted
