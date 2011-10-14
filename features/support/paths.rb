@@ -172,6 +172,9 @@ module NavigationHelpers
       edit_administration_seller_path(Seller.where(:company_name => $1).first)
     when /administration (.*) seller/
       administration_seller_path(Seller.where(:company_name => $1).first)
+    when /administration deal edit page for (.*)/
+        deal = Deal.where(:header => $1).first
+        edit_administration_deal_path(deal)
     when /comments threads/
       comments_threads_path
 

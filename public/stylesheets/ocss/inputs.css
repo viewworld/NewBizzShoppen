@@ -1135,3 +1135,10 @@ input.date.hasDatepicker
     margin-bottom: 10px;
     clear: both;
 }
+
+.form_comment
+{
+    padding-left: 210px;
+    margin-bottom: 10px;
+    clear: both;
+}
