@@ -747,11 +747,38 @@ Scenario: When creating agent/call centre agent then city and country should be 
   And I should see "1" occurrences of css class "inline-errors" for tag "p" witihin "#user_agent_address_attributes_country_id_input"
   And I should see "1" occurrences of css class "inline-errors" for tag "p" witihin "#user_agent_address_attributes_address_line_3_input"
 
-@m21 @requested @subscriptions
+@m21 @requested @subscriptions @_tested @_done @tgn
 Scenario: I can cancel user's subscription
+  Given I have user with email xena@xena.pl and role supplier
+  And user with email "xena@xena.pl" has subscription named "Free supplier subscription"
+  When I go to administration users
+  Then I fill in "search_with_keyword" with "xena@xena.pl"
+  And I press translated "administration.users.index.view.search_button"
+  And I follow translated "administration.users.stop_subscription"
+  Then user with email "xena@xena.pl" should have subscription named "Free supplier subscription" cancelled
 
-@m21 @requested @subscriptions
+@m21 @requested @subscriptions @_tested @_done
 Scenario: When I lock user his/hers subscription is canceled
+  Given I have user with email xena@xena.pl and role supplier
+  And user with email "xena@xena.pl" has subscription named "Free supplier subscription"
+  When I go to administration users
+  Then I fill in "search_with_keyword" with "xena@xena.pl"
+  And I press translated "administration.users.index.view.search_button"
+  And I follow translated "administration.users.index.view.lock"
+  Then user with email "xena@xena.pl" should have subscription named "Free supplier subscription" cancelled
 
-@m21 @requested @subscriptions
+@m21 @requested @subscriptions @_tested @_done @tgn
 Scenario: User with unpaid subscription cannot be deleted
+  Given I have user with email xena@xena.pl and role supplier
+  Given subscription plan exists with attributes "name:Paid supplier subscription"
+  Given subscription plan has following lines
+  | name | price |
+  | Abb  | 12    |
+  | Vxv  | 32    |
+  And user with email "xena@xena.pl" has subscription named "Paid supplier subscription"
+  When I go to administration users
+  Then I fill in "search_with_keyword" with "xena@xena.pl"
+  And I press translated "administration.users.index.view.search_button"
+  And I follow translated "administration.users.index.view.delete"
+  Then I should see translated "administration.users.destroy.flash.user_deletion_failure"
+

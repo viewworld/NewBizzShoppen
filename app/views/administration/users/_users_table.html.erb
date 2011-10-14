@@ -66,6 +66,9 @@
             <% end %>
             <% if user.has_any_role?(:supplier, :member) %>
                 <li><%= link_to t("administration.users.send_invitation"), administration_user_path(user, { "user_#{user.role.to_s}".to_sym  => { :send_invitation => true }}), {:method => :put } %></li>
+                <% if user.active_subscription.present? %>
+                    <li><%= link_to t("administration.users.stop_subscription"), administration_user_path(user, { "user_#{user.role.to_s}".to_sym  => { :cancel_subscription => true }}), {:method => :put, :confirm => t("administration.users.index.view.delete_confirmation_message") } %></li>
+                <% end %>
             <% end %>
           </ul-actions>
         </td>

@@ -1,6 +1,8 @@
 class Subscription < ActiveRecord::Base
-  has_many :subscription_plan_lines, :as => :resource, :dependent => :destroy
 
+  include CommonSubscriptions
+
+  has_many :subscription_plan_lines, :as => :resource, :dependent => :destroy
   belongs_to :user
   belongs_to :subscription_plan
 
@@ -16,7 +18,7 @@ class Subscription < ActiveRecord::Base
     if start_date.blank? and end_date.blank?
       self.start_date = Date.today
       if billing_cycle > 0
-        self.end_date = Date.today + billing_cycle.weeks + free_period.weeks
+        self.end_date = Date.today + billing_cycle.weeks + free_period.to_i.weeks
         self.billing_date = end_date + billing_period.weeks
       end
     end
@@ -37,11 +39,13 @@ class Subscription < ActiveRecord::Base
     subscription
   end
 
-
-  def cancel!(_canceled_by=nil)
+  def cancel!
     self.is_active = false
     self.cancelled_at = Time.now
-    self.cancelled_by = _canceled_by.id if _canceled_by
     self.save
+  end
+
+  def invoiced?
+    !invoiced_at.blank?
   end
 end

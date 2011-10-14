@@ -2,6 +2,7 @@ class SubscriptionPlan < ActiveRecord::Base
 
   include ScopedSearch::Model
   include RoleModel
+  include CommonSubscriptions
 
   ROLES = [:supplier, :category_supplier, :member]
 
@@ -59,10 +60,6 @@ class SubscriptionPlan < ActiveRecord::Base
 
   def roles_as_text
     roles.to_a.map { |r| r.to_s.humanize }.join(', ')
-  end
-
-  def total_billing
-    subscription_plan_lines.inject(0.0){ |result, line| line.price.to_f + result}
   end
 
   def assigned_roles

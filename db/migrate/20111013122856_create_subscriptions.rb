@@ -9,7 +9,6 @@ class CreateSubscriptions < ActiveRecord::Migration
       t.date :billing_date
       t.datetime :invoiced_at
       t.datetime :cancelled_at
-      t.integer :cancelled_by
       t.integer :billing_cycle
       t.integer :lockup_period
       t.integer :billing_period

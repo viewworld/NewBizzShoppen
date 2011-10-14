@@ -107,11 +107,11 @@ class User < ActiveRecord::Base
                :leads_rated_good_counter, :leads_rated_bad_counter, :leads_not_rated_counter, :leads_rating_avg, :certification, :payout,
                :revenue_counter, :leads_purchased_counter, :leads_volume_sold_counter, :leads_revenue_counter, :unpaid_leads_counter, :company_name
 
-  attr_protected :payout, :locked, :can_edit_payout_information, :paypal_email, :bank_swift_number, :bank_iban_number, :skip_email_verification
+  attr_protected :payout, :locked, :can_edit_payout_information, :paypal_email, :bank_swift_number, :bank_iban_number, :skip_email_verification, :cancel_subscription
 
-  attr_accessor :agreement_read, :locked, :skip_email_verification, :deal_maker_role_enabled_flag, :send_invitation, :auto_generate_password, :email_materials
+  attr_accessor :agreement_read, :locked, :skip_email_verification, :deal_maker_role_enabled_flag, :send_invitation, :auto_generate_password, :email_materials, :cancel_subscription
 
-  before_save :handle_locking, :handle_team_buyers_flag, :refresh_certification_of_call_centre_agents, :set_euro_billing_rate, :handle_deal_maker_enabled
+  before_save :handle_locking, :handle_team_buyers_flag, :refresh_certification_of_call_centre_agents, :set_euro_billing_rate, :handle_deal_maker_enabled, :handle_cancel_subscription
   before_create :set_rss_token, :set_role, :set_email_verification
   before_destroy :can_be_removed
   after_create :auto_activate
@@ -172,12 +172,13 @@ class User < ActiveRecord::Base
     casted_obj = self.send(:casted_class).find(id)
     [:leads, :lead_purchases, :lead_requests, :leads_in_cart].detect do |method|
       casted_obj.respond_to?(method) and !casted_obj.send(method).empty?
-    end.nil?
+    end.nil? and (!active_subscription or (active_subscription.payable? and active_subscription.invoiced?))
   end
 
   def handle_locking
     if locked
       self.locked_at = locked == "unlock" ? nil : Time.now
+      self.cancel_subscription = true if locked_at and active_subscription
     end
   end
 
@@ -254,6 +255,12 @@ class User < ActiveRecord::Base
       new_password = generate_token(12)
       self.password = new_password
       self.password_confirmation = new_password
+    end
+  end
+
+  def handle_cancel_subscription
+    if ActiveRecord::ConnectionAdapters::Column.value_to_boolean(cancel_subscription) and active_subscription
+      active_subscription.cancel!
     end
   end
 
