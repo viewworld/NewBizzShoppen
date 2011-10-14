@@ -7,7 +7,7 @@ class SubscriptionPlan < ActiveRecord::Base
 
   roles ROLES
 
-  validates_presence_of :name, :billing_cycle, :billing_period, :assigned_roles, :currency_id, :currency
+  validates_presence_of :name, :billing_cycle, :billing_period, :assigned_roles, :currency_id, :currency, :seller, :seller_id
   validates_numericality_of :billing_cycle, :billing_period
   validates_numericality_of :lockup_period, :free_period, :allow_nil => true
   validate :check_roles
@@ -16,6 +16,7 @@ class SubscriptionPlan < ActiveRecord::Base
   has_many :subscriptions
   has_one :invoice_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'invoice'", :dependent => :destroy
   belongs_to :currency
+  belongs_to :seller
 
   after_save :check_email_templates
   before_save :clear_additional_features_for_member

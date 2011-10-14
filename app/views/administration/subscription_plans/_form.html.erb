@@ -8,6 +8,7 @@
         <%= form.input :billing_period %>
         <%= form.input :free_period %>
         <%= form.input :currency_id, :collection => currencies_for_select %>
+        <%= form.input :seller_id, :collection => Seller.all, :include_blank => false %>
         <%= form.input :assigned_roles, :collection => SubscriptionPlan::ROLES.map { |r| [r.to_s.humanize, r] }, :include_blank => false, :onselect => "switch_roles()", :input_html => { :onchange => "switch_roles()", :style => "height:100px", :size => 5, :multiple => true } %>
         <% if @subscription_plan.persisted? %>
             <li class="string">

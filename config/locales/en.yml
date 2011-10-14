@@ -3484,7 +3484,7 @@ en:
         name: "Name"
         billing_cycle: "Billing cycle (weeks)"
         lockup_period: "Lockup period (weeks)"
-        billing_period: "Billing period (weeks)"
+        billing_period: "Billing period (+/- weeks)"
         free_period: "Free period (weeks)"
         currency_id: "Currency"
         is_active: "Active?"
@@ -3493,7 +3493,7 @@ en:
         team_buyer: "Team buyer enabled?"
         big_buyer: "Big buyer enabled?"
         deal_maker: "Deal maker role enabled?"
-        auto_prolong: "Auto prolonged?"
+        seller_id: "Seller"
         assigned_roles: "Roles"
   users:
     passwords:

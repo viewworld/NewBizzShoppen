@@ -15,7 +15,6 @@ class CreateSubscriptionPlans < ActiveRecord::Migration
       t.boolean :team_buyer, :default => false
       t.boolean :big_buyer, :default => false
       t.boolean :deal_maker, :default => false
-      t.boolean :auto_prolong, :default => false
       t.timestamps
     end
   end

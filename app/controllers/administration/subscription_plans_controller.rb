@@ -3,6 +3,10 @@ class Administration::SubscriptionPlansController < Administration::Administrati
   set_tab "financial"
   set_subtab "subscription_plans"
 
+  def new
+    @subscription_plan = SubscriptionPlan.new(:seller => Seller.default)
+  end
+
   def create
     create! do |success, failure|
       success.html { redirect_to administration_subscription_plans_path }

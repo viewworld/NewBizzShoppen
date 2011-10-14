@@ -467,5 +467,5 @@ SubscriptionPlan.blueprint do
   team_buyer { false }
   big_buyer { false }
   deal_maker { false }
-  auto_prolong { false }
+  seller { Seller.make! }
 end
