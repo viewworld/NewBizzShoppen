@@ -191,3 +191,6 @@ Feature: General deals
     And I should not see translated "deals.listing.discounted_price"
     But I should see "100%"
     And I should not see "120"
+
+  @m21 @requested
+  Scenario: I can use rich text editor for Fine Print and Company description when editing deal
