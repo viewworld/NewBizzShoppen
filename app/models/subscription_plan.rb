@@ -20,14 +20,15 @@ class SubscriptionPlan < ActiveRecord::Base
   belongs_to :seller
 
   after_save :check_email_templates
-  before_save :clear_additional_features_for_member
+  before_save :clear_additional_features_for_member, :cache_total_billing
 
   accepts_nested_attributes_for :subscription_plan_lines, :allow_destroy => true
 
-  scope :with_keyword, lambda { |q| where("lower(name) like ?", "%#{q}%") }
+  scope :with_keyword, lambda { |q| where("lower(name) like ?", "%#{q.downcase}%") }
   scope :active, where(:is_active => true)
   scope :free, where(:billing_cycle => 0)
   scope :for_role, lambda { |role| where("roles_mask & #{2**SubscriptionPlan.valid_roles.index(role.to_sym)} > 0 ") }
+  scope :ascend_by_billing_price, order("billing_price")
 
   private
 
@@ -52,11 +53,15 @@ class SubscriptionPlan < ActiveRecord::Base
 
   def clear_additional_features_for_member
     if has_role?(:member)
-      self.team_buyer = false
+      self.team_buyers = false
       self.big_buyer = false
       self.deal_maker = false
     end
     true
+  end
+
+  def cache_total_billing
+    self.billing_price = total_billing
   end
 
   public

@@ -68,18 +68,13 @@
         <% if ['agent', 'call_centre'].include?(params[:role]) or @user.has_any_role?(:agent, :call_centre) %>
             <%= form.input :certification_level, :as => :select, :collection => User::CERTIFICATION_LEVELS.map { |c| [t("models.lead.certification.lvl#{c}"), c] }, :selected => @user.read_attribute(:certification_level) %>
         <% end %>
-        <% if ['lead_supplier', 'supplier'].include?(params[:role]) or @user.has_any_role?(:lead_supplier, :supplier) %>
-            <%= form.input :big_buyer, :as => :boolean %>
-        <% end %>
         <% if @user.vat_number.present? and (['lead_supplier', 'supplier'].include?(params[:role]) or @user.has_any_role?(:lead_supplier, :supplier)) %>
             <%= form.input :not_charge_vat, :as => :boolean %>
         <% end %>
-
-        <%= form.input :team_buyers, :as => :boolean if @user.has_role?(:supplier) or params[:role] == "supplier" %>
         <% if @user.new_record? %>
             <%= form.input :skip_email_verification, :as => :boolean %>
         <% end %>
-        <% if ['supplier', 'agent', 'call_centre_agent', 'call_centre'].include?(params[:role]) or @user.has_any_role?(:supplier, :agent, :call_centre_agent, :call_centre) %>
+        <% if ['agent', 'call_centre_agent', 'call_centre'].include?(params[:role]) or @user.has_any_role?(:agent, :call_centre_agent, :call_centre) %>
             <%= form.input :deal_maker_role_enabled, :as => :boolean %>
         <% end %>
         <% if ['category_supplier'].include?(params[:role]) or @user.has_any_role?(:category_supplier) %>

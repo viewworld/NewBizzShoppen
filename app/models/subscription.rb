@@ -26,7 +26,7 @@ class Subscription < ActiveRecord::Base
 
   def self.clone_from_subscription_plan!(subscription_plan, user)
     subscription = Subscription.new(:user => user)
-    subscription_plan.attributes.keys.except(["id", "roles_mask", "created_at", "updated_at"]).each do |method|
+    subscription_plan.attributes.keys.except(["id", "roles_mask", "created_at", "updated_at", "billing_price"]).each do |method|
       subscription.send("#{method}=".to_sym, subscription_plan.send(method.to_sym))
     end
     subscription.subscription_plan = subscription_plan
@@ -45,5 +45,13 @@ class Subscription < ActiveRecord::Base
 
   def invoiced?
     !invoiced_at.blank?
+  end
+
+  def apply_restrictions!
+    u = user.with_role
+    u.big_buyer = big_buyer?
+    u.team_buyers = team_buyers?
+    u.deal_maker_role_enabled = deal_maker?
+    u.save
   end
 end

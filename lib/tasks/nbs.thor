@@ -56,6 +56,37 @@ class Nbs < Thor
       )
     end
 
+    puts "Creating default PayPal currencies..."
+    [
+        {:name => 'AUD', :symbol => 'A &#36;', :format => '%u%n', :active => false},
+        {:name => 'CAD', :symbol => 'C &#36;', :format => '%u%n', :active => false},
+        {:name => 'EUR', :symbol => '&euro;', :format => '%u%n', :active => true},
+        {:name => 'GBP', :symbol => '&pound;', :format => '%u%n', :active => false},
+        {:name => 'JPY', :symbol => '&yen;', :format => '%u%n', :active => false},
+        {:name => 'USD', :symbol => '&#36;', :format => '%u%n', :active => false},
+        {:name => 'NZD', :symbol => '&#36;', :format => '%u%n', :active => false},
+        {:name => 'CHF', :symbol => 'CHF', :format => '%u %n', :active => false},
+        {:name => 'HKD', :symbol => '&#36;', :format => '%u%n', :active => false},
+        {:name => 'SGD', :symbol => '&#36;', :format => '%u%n', :active => false},
+        {:name => 'SEK', :symbol => 'SEK', :format => '%u %n', :active => false},
+        {:name => 'DKK', :symbol => 'DKK', :format => '%u %n', :active => true},
+        {:name => 'PLN', :symbol => 'PLN', :format => '%u %n', :active => ENV["RAILS_ENV"] == 'test' ? true : false},
+        {:name => 'NOK', :symbol => 'NOK', :format => '%u %n', :active => false},
+        {:name => 'HUF', :symbol => 'HUF', :format => '%u %n', :active => false},
+        {:name => 'CZK', :symbol => 'CZK', :format => '%u %n', :active => false},
+        {:name => 'ILS', :symbol => 'ILS', :format => '%u %n', :active => false},
+        {:name => 'MXN', :symbol => 'MXN', :format => '%u %n', :active => false},
+        {:name => 'PHP', :symbol => 'PHP', :format => '%u %n', :active => false},
+        {:name => 'TWD', :symbol => 'TWD', :format => '%u %n', :active => false},
+        {:name => 'THB', :symbol => 'THB', :format => '%u %n', :active => false}
+    ].each do |params|
+      Currency.create(params)
+    end
+
+    if Currency.default_currency.blank?
+      Currency.where(:name => "DKK").first.update_attribute(:global_default, true)
+    end
+
     email_templates_array = [
         {:name => "confirmation instructions",
          :uniq_id => "confirmation_instructions",
@@ -321,6 +352,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
         }
     ]
 
+
     #Hints
     {"lead" => %w{ company_name company_phone_number company_website address_line_1 address_line_2 address_line_3 zip_code country_id
               region_id country_id company_vat_no company_ean_number contact_name direct_phone_number phone_number email_address linkedin_url
@@ -371,42 +403,21 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
       end
     end
 
+    puts "Creating basic free subscriptions"
+    ["category_supplier", "supplier", "member"].each do |role|
+      subscription_name = "Free #{role.humanize.downcase} subscription"
+      unless SubscriptionPlan.where(:name => subscription_name).first.present?
+        sub = SubscriptionPlan.make!(:name => subscription_name, :billing_cycle => 0, :billing_period => 0, :assigned_roles => [role.to_sym], :seller => Seller.default, :currency => Currency.default_currency)
+        "User::#{role.camelize}".constantize.all.each do |user|
+          user.apply_subscription!(sub)
+        end
+      end
+    end
+
     unless User::Admin.find_by_email("blazejek@gmail.com")
       u = User::Admin.make!(:email => "blazejek@gmail.com", :password => "secret", :password_confirmation => "secret", :screen_name => "root")
       u.confirm!
       u.save
-    end
-
-
-    puts "Creating default PayPal currencies..."
-    [
-        {:name => 'AUD', :symbol => 'A &#36;', :format => '%u%n', :active => false},
-        {:name => 'CAD', :symbol => 'C &#36;', :format => '%u%n', :active => false},
-        {:name => 'EUR', :symbol => '&euro;', :format => '%u%n', :active => true},
-        {:name => 'GBP', :symbol => '&pound;', :format => '%u%n', :active => false},
-        {:name => 'JPY', :symbol => '&yen;', :format => '%u%n', :active => false},
-        {:name => 'USD', :symbol => '&#36;', :format => '%u%n', :active => false},
-        {:name => 'NZD', :symbol => '&#36;', :format => '%u%n', :active => false},
-        {:name => 'CHF', :symbol => 'CHF', :format => '%u %n', :active => false},
-        {:name => 'HKD', :symbol => '&#36;', :format => '%u%n', :active => false},
-        {:name => 'SGD', :symbol => '&#36;', :format => '%u%n', :active => false},
-        {:name => 'SEK', :symbol => 'SEK', :format => '%u %n', :active => false},
-        {:name => 'DKK', :symbol => 'DKK', :format => '%u %n', :active => true},
-        {:name => 'PLN', :symbol => 'PLN', :format => '%u %n', :active => ENV["RAILS_ENV"] == 'test' ? true : false},
-        {:name => 'NOK', :symbol => 'NOK', :format => '%u %n', :active => false},
-        {:name => 'HUF', :symbol => 'HUF', :format => '%u %n', :active => false},
-        {:name => 'CZK', :symbol => 'CZK', :format => '%u %n', :active => false},
-        {:name => 'ILS', :symbol => 'ILS', :format => '%u %n', :active => false},
-        {:name => 'MXN', :symbol => 'MXN', :format => '%u %n', :active => false},
-        {:name => 'PHP', :symbol => 'PHP', :format => '%u %n', :active => false},
-        {:name => 'TWD', :symbol => 'TWD', :format => '%u %n', :active => false},
-        {:name => 'THB', :symbol => 'THB', :format => '%u %n', :active => false}
-    ].each do |params|
-      Currency.create(params)
-    end
-
-    if Currency.default_currency.blank?
-      Currency.where(:name => "DKK").first.update_attribute(:global_default, true)
     end
 
     [{:name => "Call back", :final => false, :generic => true},
@@ -672,18 +683,6 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
     languages.each do |lang,attrs|
       unless Locale.where(:code => attrs[:code]).present?
         Locale.create!(:code => attrs[:code], :language => lang, :enabled => attrs[:enabled], :symbol => attrs[:symbol])
-      end
-    end
-
-    puts "Creating basic free subscriptions"
-
-    ["category_supplier", "supplier", "member"].each do |role|
-      subscription_name = "Free #{role.humanize.downcase} subscription"
-      unless SubscriptionPlan.where(:name => subscription_name).first.present?
-        sub = SubscriptionPlan.make!(:name => subscription_name, :billing_cycle => 0, :billing_period => 0, :assigned_roles => [role.to_sym], :seller => Seller.default, :currency => Currency.default_currency)
-        "User::#{role.camelize}".constantize.all.each do |user|
-          user.apply_subscription!(sub)
-        end
       end
     end
   end

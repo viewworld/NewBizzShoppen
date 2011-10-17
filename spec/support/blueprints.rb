@@ -177,6 +177,7 @@ end
   team_buyers { false }
   company_name { Faker::Company.name }
   address { Address.make! }
+  assign_free_subscription_plan { true }
 end
 
 ::User::Member.blueprint do
@@ -191,6 +192,7 @@ end
   agreement_read { true }
   roles_mask { 128 }
   address { Address.make! }
+  assign_free_subscription_plan { true }
 end
 
 ::User::LeadUser.blueprint do
@@ -274,6 +276,7 @@ end
   roles_mask { 304 }
   company_name { Faker::Company.name }
   address { Address.make! }
+  assign_free_subscription_plan { true }
 end
 
 ::Article::Cms::InterfaceContentText.blueprint do
@@ -464,7 +467,7 @@ SubscriptionPlan.blueprint do
   is_active { true }
   can_be_upgraded { true }
   can_be_downgraded { true }
-  team_buyer { false }
+  team_buyers { false }
   big_buyer { false }
   deal_maker { false }
   seller { Seller.make! }

@@ -276,7 +276,7 @@ class User < ActiveRecord::Base
   end
 
   def check_subscription_plan
-    if subscription_required? and !active_subscription #and select_subscription_plan.nil?
+    if subscription_required? and !active_subscription and select_subscription_plan.nil?
       errors.add(:subscription_plan_id, I18n.t("models.user.subscription_plan_not_specified"))
       return false
     end
@@ -709,6 +709,7 @@ class User < ActiveRecord::Base
   def apply_subscription!(subscription_plan)
     if subscription_can_be_changed? and subscription_can_be_applied?(subscription_plan)
       self.subscriptions.clone_from_subscription_plan!(subscription_plan, self)
+      active_subscription.apply_restrictions!
     end
   end
 
