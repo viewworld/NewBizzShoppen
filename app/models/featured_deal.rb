@@ -23,7 +23,7 @@ class FeaturedDeal < ActiveRecord::Base
     def set_all(params)
       POSITIONS.each do |number|
         if params and params[number.to_s]
-          deal = FeaturedDeal.find_by_position(number)
+          deal = FeaturedDeal.find_or_create_by_position(number)
           deal.update_attribute(:deal_id, params[number.to_s])
         end
       end

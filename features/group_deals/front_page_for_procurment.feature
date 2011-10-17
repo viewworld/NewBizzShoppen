@@ -271,3 +271,9 @@ Feature: Front page for procurment
   #7529
   @m20 @requested @non_testable @_done
   Scenario: Boxes with secondary featured deals should ber clickable
+
+  @m21 @requested
+  Scenario: I can select 9 backup featured deals
+
+  @m21 @requested
+  Scenario: When featured deal is unpublished then available backup deal should appear on the front page

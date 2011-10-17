@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   before_filter :redirect_to_fairleads
   before_filter :authorize_with_http_basic_for_staging, :check_category_supplier, :update_log_entries, :set_user_time_zone
   after_filter :do_something
+  before_filter :prepare_search, :if => proc{session[:site]=="fairdeals"}
 
   layout proc { session[:layout] }
 
@@ -19,6 +20,10 @@ class ApplicationController < ActionController::Base
   before_filter :set_locale
 
   helper_method :locale
+
+  def prepare_search
+    @search ||= Deal.scoped_search
+  end
 
   def redirect_to_fairleads
     if user_signed_in? and current_user and !current_user.has_role? :member and session[:site] == "fairdeals"

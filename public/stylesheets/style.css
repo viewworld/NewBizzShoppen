@@ -5,53 +5,23 @@
 
 /* iPads (portrait and landscape) ----------- */
 
-@media only screen and
-
-(
-min-device-width :
-
-768
-px
-
-)
-and
-
-(
-max-device-width :
-
-1024
-px
-
-)
+@media only screen and (min-device-width:768px) and (max-device-width:1024px)
 {
-#head #head_bg
-{
-    width: 1200px !important;
-}
-
+    #head #head_bg
+    {
+        width: 1200px !important;
+    }
 }
 
 /* iPhone 4 and high pixel ratio devices ----------- */
-@media only screen and
 
-(
--webkit-min-device-pixel-ratio :
-
-1.5
-)
-,
-only screen and
-
-(
-min-device-pixel-ratio :
-
-1.5
-)
+@media only screen and(-webkit-min-device-pixel-ratio:1.5),
+@media only screen and (min-device-pixel-ratio: 1.5)
 {
-#head #head_bg
-{
-    width: 1200px !important;
-}
+    #head #head_bg
+    {
+        width: 1200px !important;
+    }
 
 }
 
@@ -159,6 +129,40 @@ body
     -webkit-border-radius: 5px;
     border-radius: 5px;
 
+}
+
+/* --- search ---
+--------------------------------------------------------------------------------- */
+
+.nav_search
+{
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    width: 243px;
+}
+
+.nav_search input[type="text"]
+{
+    width: 140px;
+    float: left;
+    padding: 7px 6px;
+    border-color: #69ac00;
+    border-bottom-color: #609d00;
+
+    -moz-box-shadow: 0 1px 0 rgba(255,255,255,.4);
+    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.4);
+    box-shadow: 0 1px 0 rgba(255,255,255,.4);
+}
+
+.nav_search .bt
+{
+    float: right;
+}
+
+.nav_search .bt span
+{
+    width: 85px;
 }
 
 /* --- global ---

@@ -38,6 +38,7 @@ class Callers::AgentWorkScreenController < Callers::CallerController
   # TODO REFACTOR! it takes over 1s
   def set_completed_contacts
     @completed_contacts = @campaign.contacts.with_completed_status(true).select{ |contact| contact.current_call_result.creator == current_user.with_role }
+    #@completed_contacts = @campaign.contacts.with_completed_status(true).joins("RIGHT JOIN (SELECT contact_id, MAX(created_at) FROM call_results 	WHERE creator_type = '#{current_user.with_role.class.to_s}' and creator_id = #{current_user.id} GROUP BY contact_id) cs ON cs.contact_id = leads.id")
   end
 
   def set_contact

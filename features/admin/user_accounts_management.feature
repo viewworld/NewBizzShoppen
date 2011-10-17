@@ -696,12 +696,10 @@ Scenario: When user has unique category with auto-buy he should not be subscribe
   When I go to administration categories
   Then I follow translated "administration.categories.index.view.edit_link"
   Then I check "category_is_customer_unique"
-  And I open page in browser
   Then I select "nbsbuyer3483434biz@nbs.com" from "all_customers"
   Then I follow "move_right" within "#users_selection_customers_div"
   Then I check "category_auto_buy"
   Then I press "Save"
-  And I open page in browser
   Then category named "Computers" is auto buy enabled
   And category "Computers" is in interests of user "nbsbuyer3483434biz@nbs.com" "false"
 
