@@ -532,7 +532,10 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
     [
         'About us',
         'Privacy',
-        'Terms & Conditions'
+        'Terms & Conditions',
+        'Subscriptions for supplier',
+        'Subscriptions for category supplier',
+        'Subscriptions for member'
     ].each do |title|
       unless Article::Cms::MainPageArticle.includes(:translations).where(:article_translations => {:title => title}).first
         article = Article::Cms::MainPageArticle.make!(:title => title, :content => title, :key => title.parameterize('_'))

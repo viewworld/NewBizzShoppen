@@ -3948,3 +3948,6 @@ en:
     create:
       flash:
         email_sent: "Deal request has been sent"
+  subscriptions:
+    listing:
+      free: "Free"

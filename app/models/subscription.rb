@@ -9,9 +9,7 @@ class Subscription < ActiveRecord::Base
   before_create :apply_time_constraints
 
   acts_as_list :scope => :user_id
-
-  scope :active, where("is_active = ? and ((end_date IS NULL and billing_cycle = 0) or end_date >= ?)", true, Date.today)
-
+  scope :active, lambda { where("is_active = ? and ((end_date IS NULL and billing_cycle = 0) or end_date >= ?)", true, Date.today) }
   private
 
   def apply_time_constraints

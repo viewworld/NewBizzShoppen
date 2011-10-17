@@ -276,7 +276,7 @@ class User < ActiveRecord::Base
   end
 
   def check_subscription_plan
-    if subscription_required? and !active_subscription and select_subscription_plan.nil?
+    if subscription_required? and !active_subscription #and select_subscription_plan.nil?
       errors.add(:subscription_plan_id, I18n.t("models.user.subscription_plan_not_specified"))
       return false
     end
@@ -695,7 +695,7 @@ class User < ActiveRecord::Base
   end
 
   def active_subscription
-    subscriptions.active.first
+    subscriptions.where("is_active = ? and ((end_date IS NULL and billing_cycle = 0) or end_date >= ?)", true, Date.today).first
   end
 
   def subscription_can_be_changed?
