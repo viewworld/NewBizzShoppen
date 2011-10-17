@@ -104,6 +104,7 @@
           <fieldset class="inputs labels_ta_r labels_200">
             <ol class="align_inputs">
               <%= form.inputs :password, :password_confirmation %>
+              <%= form.input :assign_free_subscription_plan, :as => :hidden, :value => "1" %>
             </ol>
           </fieldset>
         </div>

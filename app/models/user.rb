@@ -109,15 +109,15 @@ class User < ActiveRecord::Base
 
   attr_protected :payout, :locked, :can_edit_payout_information, :paypal_email, :bank_swift_number, :bank_iban_number, :skip_email_verification, :cancel_subscription
 
-  attr_accessor :agreement_read, :locked, :skip_email_verification, :deal_maker_role_enabled_flag, :send_invitation, :auto_generate_password, :email_materials, :cancel_subscription
+  attr_accessor :agreement_read, :locked, :skip_email_verification, :deal_maker_role_enabled_flag, :send_invitation, :auto_generate_password, :email_materials, :cancel_subscription, :subscription_plan_id, :assign_free_subscription_plan
 
   before_save :handle_locking, :handle_team_buyers_flag, :refresh_certification_of_call_centre_agents, :set_euro_billing_rate, :handle_deal_maker_enabled, :handle_cancel_subscription
-  before_create :set_rss_token, :set_role, :set_email_verification
+  before_create :set_rss_token, :set_email_verification
   before_destroy :can_be_removed
-  after_create :auto_activate
+  after_create :auto_activate, :apply_subscription_plan
   after_update :send_invitation_if_enabled
-  validate :check_billing_rate
-  before_validation :set_auto_generated_password_if_required
+  validate :check_billing_rate, :check_subscription_plan
+  before_validation :set_auto_generated_password_if_required, :set_role
 
   liquid :email, :confirmation_instructions_url, :reset_password_instructions_url, :social_provider_name, :category_supplier_category_home_url,
          :screen_name, :first_name, :last_name, :home_page_url
@@ -262,6 +262,29 @@ class User < ActiveRecord::Base
     if ActiveRecord::ConnectionAdapters::Column.value_to_boolean(cancel_subscription) and active_subscription
       active_subscription.cancel!
     end
+  end
+
+  def select_subscription_plan
+    chosen_subscription = nil
+    if subscription_plan_id and subscription_plan = SubscriptionPlan.find_by_id(subscription_plan_id) and subscription_can_be_applied?(subscription_plan)
+      chosen_subscription = subscription_plan
+    elsif ActiveRecord::ConnectionAdapters::Column.value_to_boolean(assign_free_subscription_plan)
+      chosen_subscription = SubscriptionPlan.active.free.for_role(role).first
+    end
+
+    chosen_subscription
+  end
+
+  def check_subscription_plan
+    if subscription_required? and !active_subscription and select_subscription_plan.nil?
+      errors.add(:subscription_plan_id, I18n.t("models.user.subscription_plan_not_specified"))
+      return false
+    end
+    true
+  end
+
+  def apply_subscription_plan
+    apply_subscription!(select_subscription_plan)
   end
 
   public
@@ -687,5 +710,9 @@ class User < ActiveRecord::Base
     if subscription_can_be_changed? and subscription_can_be_applied?(subscription_plan)
       self.subscriptions.clone_from_subscription_plan!(subscription_plan, self)
     end
+  end
+
+  def subscription_required?
+    has_any_role?(:supplier, :member)
   end
 end

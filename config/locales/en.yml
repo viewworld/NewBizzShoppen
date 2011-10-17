@@ -2751,6 +2751,7 @@ en:
       payout_validation_message: "can only be between 0 and 100"
       agreement_read_validation_message: "You have to accept the agreement"
       not_linked_to_social_provider: "not linked"
+      subscription_plan_not_specified: "Subscripion plan has not been chosen."
     lead:
       hotness:
         lvl0: Upcoming

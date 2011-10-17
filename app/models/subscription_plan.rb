@@ -25,6 +25,9 @@ class SubscriptionPlan < ActiveRecord::Base
   accepts_nested_attributes_for :subscription_plan_lines, :allow_destroy => true
 
   scope :with_keyword, lambda { |q| where("lower(name) like ?", "%#{q}%") }
+  scope :active, where(:is_active => true)
+  scope :free, where(:billing_cycle => 0)
+  scope :for_role, lambda { |role| where("roles_mask & #{2**SubscriptionPlan.valid_roles.index(role.to_sym)} > 0 ") }
 
   private
 
