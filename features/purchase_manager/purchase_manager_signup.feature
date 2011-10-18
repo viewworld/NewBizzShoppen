@@ -60,5 +60,20 @@ Feature: Purchase Manager signup
     And I press translated "supplier_accounts.new.view.button_create_account"
     And I should see "12" occurrences of css class "inline-errors" for tag "p"
 
-  @m21 @requested @subscriptions
+  @m21 @requested @subscriptions @wip
   Scenario: Free subscription doesn't allow to get the deal but user can create tenders
+    Given I visit domain http://fairdeals.dk
+    Given user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
+    #subscription instead of adding deal maker role
+    And subscription plan exists with attributes "name:Premium supplier,deal_maker:1,big_buyer:1"
+    And user with email "buyer@nbs.com" has subscription named "Premium supplier"
+    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper"
+    And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
+    Then I sign in as purchase_manager101@nbs.com with password supersecret
+    Then I follow translated "layout.fairdeals.main_menu.deals"
+    And I follow category "Business deals"
+    And I follow translated "deals.index.view.view_deal"
+    And I follow translated "deals.index.view.contact_me"
+    And I fill in "lead_hidden_description" with "some hidden note"
+    And I press translated "member.leads.new.view.button_create"
+    And I press translated "member.leads.show.view.ok_confirmation"

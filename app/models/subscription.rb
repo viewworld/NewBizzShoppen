@@ -25,6 +25,7 @@ class Subscription < ActiveRecord::Base
   public
 
   def self.clone_from_subscription_plan!(subscription_plan, user)
+    user.active_subscription.cancel! if user.active_subscription
     subscription = Subscription.new(:user => user)
     subscription_plan.attributes.keys.except(["id", "roles_mask", "created_at", "updated_at", "billing_price"]).each do |method|
       subscription.send("#{method}=".to_sym, subscription_plan.send(method.to_sym))

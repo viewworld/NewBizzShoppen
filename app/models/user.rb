@@ -114,7 +114,8 @@ class User < ActiveRecord::Base
   before_save :handle_locking, :handle_team_buyers_flag, :refresh_certification_of_call_centre_agents, :set_euro_billing_rate, :handle_deal_maker_enabled, :handle_cancel_subscription
   before_create :set_rss_token, :set_email_verification
   before_destroy :can_be_removed
-  after_create :auto_activate, :apply_subscription_plan
+  after_create :auto_activate
+  after_save :apply_subscription_plan
   after_update :send_invitation_if_enabled
   validate :check_billing_rate, :check_subscription_plan
   before_validation :set_auto_generated_password_if_required, :set_role
@@ -284,7 +285,12 @@ class User < ActiveRecord::Base
   end
 
   def apply_subscription_plan
-    apply_subscription!(select_subscription_plan)
+    if subscription_plan_id or assign_free_subscription_plan
+      apply_subscription!(select_subscription_plan)
+      self.subscription_plan_id = nil
+      self.assign_free_subscription_plan = nil
+      true
+    end
   end
 
   public
