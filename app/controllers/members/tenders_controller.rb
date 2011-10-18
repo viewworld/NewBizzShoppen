@@ -15,6 +15,7 @@ class Members::TendersController < Members::MemberController
     else
       redirect_to :back
     end
+    @lead.correct_category_if_cannot_publish_leads
     @lead.duplicate_fields(current_user.leads.find_by_id(params[:lead_id]))
     @lead.published = current_user.can_publish_leads?
   end

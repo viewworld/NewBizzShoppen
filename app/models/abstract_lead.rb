@@ -125,6 +125,12 @@ class AbstractLead < ActiveRecord::Base
     ""
   end
 
+  def correct_category_if_cannot_publish_leads
+    if category and !category.can_publish_leads?
+      self.category = category.children.first
+    end
+  end
+
   private
   def check_category
     self.creator = current_user if creator.nil?
