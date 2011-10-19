@@ -84,7 +84,6 @@ CKEDITOR.editorConfig = function( config )
 
     config.toolbar_Lite =
     [
-        ['Source'],
         ['Styles','Format'],
         ['Bold','Italic','Underline'],
         ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
