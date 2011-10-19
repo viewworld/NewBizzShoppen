@@ -28,6 +28,8 @@ GEM
     Platform (0.4.0)
     ZenTest (4.5.0)
     aaronh-chronic (0.3.9)
+    aasm (2.3.1)
+      activerecord
     abstract (1.0.0)
     actionmailer (3.0.3)
       actionpack (= 3.0.3)
@@ -255,7 +257,6 @@ GEM
     term-ansicolor (1.0.5)
     test-unit (2.3.0)
     thor (0.14.6)
-    transitions (0.0.9)
     treetop (1.4.9)
       polyglot (>= 0.3.1)
     tzinfo (0.3.29)
@@ -277,6 +278,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  aasm
   acts_as_commentable_with_threading
   ajaxful_rating!
   autotest
@@ -336,6 +338,5 @@ DEPENDENCIES
   test-unit
   thor
   tolk!
-  transitions
   whenever
   will_paginate (= 3.0.pre2)

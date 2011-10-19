@@ -115,7 +115,8 @@ class User < ActiveRecord::Base
   before_create :set_rss_token, :set_email_verification
   before_destroy :can_be_removed
   after_create :auto_activate
-  after_save :apply_subscription_plan, :handle_cancel_subscription
+  after_save :handle_cancel_subscription
+  after_create :apply_subscription_plan
   after_update :send_invitation_if_enabled
   validate :check_billing_rate, :check_subscription_plan
   before_validation :set_auto_generated_password_if_required, :set_role
@@ -702,15 +703,19 @@ class User < ActiveRecord::Base
   end
 
   def active_subscription
-    subscriptions.where("start_date =< ?", Date.today).order("position DESC").first
+    subscriptions.where("start_date <= ?", Date.today).order("position DESC").first
   end
 
-  def subscription_can_be_changed_to?(subscription_plan)
-    !active_subscription or active_subscription.can_be_downgraded_to?(subscription_plan) or active_subscription.can_be_upgraded_to?(subscription_plan)
+  def subscription_plan_is_valid?(subscription_plan)
+    subscription_plan and subscription_plan.is_active and subscription_plan.has_role?(self.role.to_sym)
   end
 
   def subscription_can_be_applied?(subscription_plan)
-    subscription_plan and subscription_plan.is_active and subscription_can_be_changed_to?(subscription_plan) and subscription_plan.has_role?(self.role.to_sym)
+     !active_subscription and subscription_can_be_changed_to?(subscription_plan) and subscription_plan_is_valid?(subscription_plan)
+  end
+
+  def subscription_can_be_changed_to?(subscription_plan)
+    subscription_plan_is_valid?(subscription_plan)
   end
 
   def apply_subscription!(subscription_plan)
@@ -720,7 +725,41 @@ class User < ActiveRecord::Base
     end
   end
 
+  def change_subscription!(subscription_plan)
+    if subscription_can_be_changed_to?(subscription_plan)
+      if active_subscription.can_be_downgraded_to?(subscription_plan)
+
+      elsif active_subscription.can_be_upgraded_to?(subscription_plan)
+
+      end
+    end
+  end
+
   def subscription_required?
     has_any_role?(:supplier, :member)
+  end
+
+  def has_active_subscription?
+    !active_subscription.nil?
+  end
+
+  def can_downgrade_subscription?
+    active_subscription.can_be_downgraded?
+  end
+
+  def can_upgrade_subscription?
+    active_subscription.can_be_upgraded?
+  end
+
+  def is_lockup_period?
+    active_subscription.lockup?
+  end
+
+  def is_penalty_period?
+    active_subscription.penalty?
+  end
+
+  def is_extendable?
+    active_subscription.normal? or active_subscription.lockup?
   end
 end
