@@ -96,8 +96,18 @@ Feature: Customer signup
     And I press translated "supplier_accounts.new.view.button_create_account"
     Then I should see translated "activerecord.errors.messages.taken"
 
-  @m21 @requested @subscriptions
+  @m21 @requested @subscriptions @selenium @_done @_tested
   Scenario: Free subscription doesn't allow to create deals but user can buy leads
+    And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
+    And I sign in as buyer@nbs.com with password secret
+    Then I follow translated "layout.main_menu.lead_supplier.my_deals"
+    And I should not see translated "deals.common.listing.view.new_deal"
+    When subscription plan exists with attributes "name:Premium supplier,deal_maker:1,big_buyer:1,assigned_roles:supplier"
+    And user with email "buyer@nbs.com" has subscription named "Premium supplier"
+    Then I follow translated "layout.main_menu.lead_supplier.my_deals"
+    And I follow translated "deals.common.listing.view.new_deal"
+    And I fill in "deal_header" with "Templates deal test"
+
 
   @m21 @requested @subscriptions
   Scenario: When supplier has free subscription and tries to creates the deal then he/she needs to confirm by checkbox upgrade to more exp subscription with big buyer feature

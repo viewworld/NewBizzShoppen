@@ -3,6 +3,15 @@ require 'spec_helper'
 describe Subscription do
   fixtures :all
 
+  context "subscription should yield correct billing price" do
+
+
+    context "free period" do
+
+    end
+  end
+
+
   context "user should have to be able to apply payable subscription when created or updated" do
     before(:each) do
       @subscription_plan = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12)
@@ -44,16 +53,56 @@ describe Subscription do
   end
 
   context "user should not be able to assign incorrect subscription" do
-    before(:each) do
+    it "should not be able to apply member's subscription to supplier" do
       @member_subscription = SubscriptionPlan.make!(:assigned_roles => [:member], :billing_cycle => 12)
       @supplier_subscription = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12)
-    end
-
-    it "should not be able to apply member's subscription to supplier" do
       @customer = User::Supplier.make(:subscription_plan_id => @member_subscription.id, :assign_free_subscription_plan => false)
       @customer.save
       @customer.should_not be_valid
       @customer.should have(1).error_on(:subscription_plan_id)
+    end
+
+    context "downgrade & upgrade limitations" do
+      before(:each) do
+        @payable_subscription1 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12, :can_be_upgraded => false)
+        @payable_subscription1.subscription_plan_lines.make!(:price => 25)
+        @payable_subscription2 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12, :can_be_downgraded => false)
+        @payable_subscription2.subscription_plan_lines.make!(:price => 120)
+      end
+
+      it "should not be possible to downgrade if current subscription doesn't allow that" do
+        @customer = User::Supplier.make!(:subscription_plan_id => @payable_subscription2.id)
+        @customer.update_attributes(:subscription_plan_id => @payable_subscription1.id)
+        @customer.should have(1).error_on(:subscription_plan_id)
+      end
+
+      it "should not be possible to upgrade if current subscription doesn't allow that" do
+        @customer = User::Supplier.make!(:subscription_plan_id => @payable_subscription1.id)
+        @customer.update_attributes(:subscription_plan_id => @payable_subscription2.id)
+        @customer.should have(1).error_on(:subscription_plan_id)
+      end
+    end
+  end
+
+  context "user should be able to cancel the subscription" do
+    it "should be possible to cancel payable subscription and then switch to free one before lockup period" do
+      @subscription = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12)
+      @customer = User::Supplier.make!(:subscription_plan_id => @subscription.id)
+      @customer.active_subscription.should be_payable
+      @customer.active_subscription.cancel!
+      @customer.active_subscription.should be_present
+      @customer.active_subscription.should_not be_payable
+    end
+
+    it "should be possible to cancel payable subscription and then switch to free one within lockup period" do
+      #adds another subscr with the same length
+    end
+
+    it "should not be possible to cancel free subscription" do
+      @customer = User::Supplier.make!
+      @customer.active_subscription.should_not be_payable
+      @customer.active_subscription.cancel!
+      @customer.active_subscription.should_not be_payable
     end
   end
 end

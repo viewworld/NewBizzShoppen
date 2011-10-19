@@ -155,7 +155,7 @@
 
     <br/>
 
-        <% if !user_signed_in? or (user_signed_in? and current_user.has_role?(:member) and !@deal.requested_by?(current_user)) %>
+        <% if !user_signed_in? or (user_signed_in? and current_user.has_role?(:member) and !@deal.requested_by?(current_user) and current_user.active_subscription.payable?) %>
             <%= bt_link_to nil, t("deals.index.view.contact_me"), new_members_lead_path(:deal_id => @deal.id), :confirm => t("deals.show.view.get_deal_confirmation_msg"), :class => "bt_max bt_big" %>
         <% end %>    
   </div>

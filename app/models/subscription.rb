@@ -25,7 +25,7 @@ class Subscription < ActiveRecord::Base
   public
 
   def self.clone_from_subscription_plan!(subscription_plan, user)
-    user.active_subscription.cancel! if user.active_subscription
+    user.active_subscription.cancel!(true) if user.active_subscription
     subscription = Subscription.new(:user => user)
     subscription_plan.attributes.keys.except(["id", "roles_mask", "created_at", "updated_at", "billing_price"]).each do |method|
       subscription.send("#{method}=".to_sym, subscription_plan.send(method.to_sym))
@@ -38,10 +38,14 @@ class Subscription < ActiveRecord::Base
     subscription
   end
 
-  def cancel!
-    self.is_active = false
-    self.cancelled_at = Time.now
-    self.save
+  def cancel!(force_cancel=false)
+    if payable? or force_cancel
+      self.is_active = false
+      self.cancelled_at = Time.now
+      self.save
+      user.update_attribute(:assign_free_subscription_plan, true) unless force_cancel
+    end
+    true
   end
 
   def invoiced?
@@ -54,5 +58,13 @@ class Subscription < ActiveRecord::Base
     u.team_buyers = team_buyers?
     u.deal_maker_role_enabled = deal_maker?
     u.save
+  end
+
+  def can_be_downgraded_to?(subscription_plan)
+    can_be_downgraded? and subscription_plan.total_billing < total_billing
+  end
+
+  def can_be_upgraded_to?(subscription_plan)
+    can_be_upgraded? and subscription_plan.total_billing >= total_billing
   end
 end

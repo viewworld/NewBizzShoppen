@@ -1,7 +1,7 @@
 class Suppliers::DealsController < Suppliers::BasicSupplierController
   before_filter :set_deal, :only => [:edit, :update, :destroy]
   before_filter :prepare_assets, :only => [:edit, :update]
-
+  before_filter :check_users_subscription, :only => [:new, :create]
   include ::DealActions
 
   def new
@@ -29,4 +29,9 @@ class Suppliers::DealsController < Suppliers::BasicSupplierController
     redirect_to suppliers_deals_path
   end
 
+  def check_users_subscription
+    unless current_user.active_subscription.payable?
+      redirect_to :back
+    end
+  end
 end

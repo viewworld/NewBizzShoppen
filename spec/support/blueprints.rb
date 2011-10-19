@@ -472,3 +472,8 @@ SubscriptionPlan.blueprint do
   deal_maker { false }
   seller { Seller.make! }
 end
+
+SubscriptionPlanLine.blueprint do
+  name { Faker::Lorem.words(3).to_s }
+  price { rand(40).to_f }
+end

@@ -111,11 +111,11 @@ class User < ActiveRecord::Base
 
   attr_accessor :agreement_read, :locked, :skip_email_verification, :deal_maker_role_enabled_flag, :send_invitation, :auto_generate_password, :email_materials, :cancel_subscription, :subscription_plan_id, :assign_free_subscription_plan
 
-  before_save :handle_locking, :handle_team_buyers_flag, :refresh_certification_of_call_centre_agents, :set_euro_billing_rate, :handle_deal_maker_enabled, :handle_cancel_subscription
+  before_save :handle_locking, :handle_team_buyers_flag, :refresh_certification_of_call_centre_agents, :set_euro_billing_rate, :handle_deal_maker_enabled
   before_create :set_rss_token, :set_email_verification
   before_destroy :can_be_removed
   after_create :auto_activate
-  after_save :apply_subscription_plan
+  after_save :apply_subscription_plan, :handle_cancel_subscription
   after_update :send_invitation_if_enabled
   validate :check_billing_rate, :check_subscription_plan
   before_validation :set_auto_generated_password_if_required, :set_role
@@ -261,7 +261,8 @@ class User < ActiveRecord::Base
 
   def handle_cancel_subscription
     if ActiveRecord::ConnectionAdapters::Column.value_to_boolean(cancel_subscription) and active_subscription
-      active_subscription.cancel!
+      active_subscription.cancel!()
+      self.cancel_subscription = nil
     end
   end
 
@@ -277,7 +278,7 @@ class User < ActiveRecord::Base
   end
 
   def check_subscription_plan
-    if subscription_required? and !active_subscription and select_subscription_plan.nil?
+    if subscription_required? and ((!active_subscription or subscription_plan_id) and select_subscription_plan.nil?)
       errors.add(:subscription_plan_id, I18n.t("models.user.subscription_plan_not_specified"))
       return false
     end
@@ -701,19 +702,19 @@ class User < ActiveRecord::Base
   end
 
   def active_subscription
-    subscriptions.where("is_active = ? and ((end_date IS NULL and billing_cycle = 0) or end_date >= ?)", true, Date.today).first
+    subscriptions.where("start_date =< ?", Date.today).order("position DESC").first
   end
 
-  def subscription_can_be_changed?
-    !active_subscription or active_subscription.can_be_downgraded?
+  def subscription_can_be_changed_to?(subscription_plan)
+    !active_subscription or active_subscription.can_be_downgraded_to?(subscription_plan) or active_subscription.can_be_upgraded_to?(subscription_plan)
   end
 
   def subscription_can_be_applied?(subscription_plan)
-    subscription_plan and subscription_plan.is_active and subscription_plan.has_role?(self.role.to_sym)
+    subscription_plan and subscription_plan.is_active and subscription_can_be_changed_to?(subscription_plan) and subscription_plan.has_role?(self.role.to_sym)
   end
 
   def apply_subscription!(subscription_plan)
-    if subscription_can_be_changed? and subscription_can_be_applied?(subscription_plan)
+    if subscription_can_be_applied?(subscription_plan)
       self.subscriptions.clone_from_subscription_plan!(subscription_plan, self)
       active_subscription.apply_restrictions!
     end
