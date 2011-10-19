@@ -2680,6 +2680,7 @@ en:
         name_label: "Name"
         short_description_label: "Short description"
         detailed_description_label: "Detailed description"
+        company_description_label: "Company description"
         deal_category_label: "Deal category"
         price_label: "Lead price"
         discounted_price_label: "Discounted deal price"
