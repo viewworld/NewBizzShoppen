@@ -1,4 +1,4 @@
-  <% if primary_deal %>
+<% unless primary_deal.blank? %>
     <% email_form_id = ActiveSupport::SecureRandom.hex(16) %>
       <div class="frm_plain primary_deal">
         <%= link_to "previous", group_deal_path(primary_deal, :previous => true), :class => "arrow_left", :remote => true %>
