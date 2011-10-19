@@ -4,8 +4,7 @@ class Administration::FeaturedDealsController < Administration::AdministrationCo
   set_subtab "featured_deals"
 
   def index
-    @group_deals_for_select = Deal.group_deals_for_select
-    @all_deals_for_select = Deal.all_deals_for_select
+    @deals_for_select = Deal.all_deals_for_select
     @featured_deals = FeaturedDeal.display_all
   end
 
