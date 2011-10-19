@@ -283,6 +283,13 @@
     padding: 8px;
 }
 
+.inputs ol li.ckeditor.text .cke_skin_kama
+{
+    float: left;
+    margin-left: 0;
+    margin-bottom: 10px;    
+}
+
 
 /* --- date ---
 --------------------------------------------------------------------------------- */
