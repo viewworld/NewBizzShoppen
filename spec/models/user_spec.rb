@@ -128,6 +128,20 @@ describe User do
 
   end
 
+  context "update" do
 
+    context "vat number changes" do
+      it "should update vat number in CompanyVat when van number changed" do
+        @payable_subscription1 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12, :can_be_upgraded => false, :free_period => 2)
+        @payable_subscription1.subscription_plan_lines.make!(:price => 25)
+
+        @customer = User::Supplier.make!(:subscription_plan_id => @payable_subscription1.id, :vat_number => "VAT111111111111")
+        @customer.has_free_period_available?.should be_false
+
+        @customer.update_attributes(:vat_number => "VAT22222222222")
+        @customer.has_free_period_available?.should be_false
+      end
+    end
+  end
 end
 
