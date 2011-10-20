@@ -77,4 +77,8 @@ class SubscriptionPlan < ActiveRecord::Base
   def assigned_roles=(_roles)
     self.roles = _roles
   end
+
+  def is_free?
+    billing_price.to_f == 0.0
+  end
 end
