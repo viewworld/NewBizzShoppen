@@ -3950,5 +3950,7 @@ en:
         email_sent: "Deal request has been sent"
   subscriptions:
     current_subscription: "Your current subscription"
+    available_subscriptions: "All available subscriptions"
     listing:
+      no_available_subscriptions: "Sorry, there are no available subscriptions you can switch to"
       free: "Free"

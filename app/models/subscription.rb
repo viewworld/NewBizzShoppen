@@ -133,7 +133,4 @@ class Subscription < ActiveRecord::Base
     can_be_upgraded? and subscription_plan.total_billing >= total_billing and (may_upgrade? or may_upgrade_from_penalty?)
   end
 
-  def is_free?
-    subscription_plan.total_billing == 0 and end_date.nil?
-  end
 end

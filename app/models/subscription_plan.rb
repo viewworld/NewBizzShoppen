@@ -26,6 +26,7 @@ class SubscriptionPlan < ActiveRecord::Base
 
   scope :with_keyword, lambda { |q| where("lower(name) like ?", "%#{q.downcase}%") }
   scope :active, where(:is_active => true)
+  scope :exclude_free, lambda{ |exclude| exclude ? where("billing_price > 0") : where() }
   scope :free, where(:billing_cycle => 0)
   scope :for_role, lambda { |role| where("roles_mask & #{2**SubscriptionPlan.valid_roles.index(role.to_sym)} > 0 ") }
   scope :ascend_by_billing_price, order("billing_price")

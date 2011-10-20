@@ -7,14 +7,23 @@
 
 <hr/>
 
-<% SubscriptionPlan.active.for_role(role).ascend_by_billing_price.each do |subscription_plan| %>
-    <% unless current_user and current_user.has_free_subscription? and subscription_plan.is_free? %>
-        <%= render :partial => 'shared/subscriptions/subscription', :locals => {:subscription_plan => subscription_plan, :role => role, :form => form} %>
+<div id="available_subscriptions">
+    <h2><%= t("subscriptions.available_subscriptions") %></h2>
+    <p>
+        <%= blurb(:blurb_subscription_select) %>
+    </p>
+    <% @subscriptions = SubscriptionPlan.active.exclude_free((current_user and current_user.has_free_subscription?)).for_role(role).ascend_by_billing_price %>
+    <% if @subscriptions.any? %>
+        <% SubscriptionPlan.active.exclude_free((current_user and current_user.has_free_subscription?)).for_role(role).ascend_by_billing_price.each do |subscription_plan| %>
+            <%= render :partial => 'shared/subscriptions/subscription', :locals => {:subscription_plan => subscription_plan, :role => role, :form => form} %>
+        <% end %>
+    <% else %>
+        <%= t("subscriptions.listing.no_available_subscriptions") %>
     <% end %>
-<% end %>
+</div>
 
 <%= custom_error_for_field(form, "subscription_plan_id") %>
 
-<%= link_to_main_page_article("subscriptions_for_#{role}", {:popup => true}, {:id => 'subscriptions_modal_box'}) %>
+<%#= link_to_main_page_article("subscriptions_for_#{role}", {:popup => true}, {:id => 'subscriptions_modal_box'}) %>
 
 <hr/>
