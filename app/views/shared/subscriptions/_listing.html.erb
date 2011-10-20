@@ -12,7 +12,7 @@
     <p>
         <%= blurb(:blurb_subscription_select) %>
     </p>
-    <% @subscriptions = SubscriptionPlan.active.exclude_free((current_user and current_user.has_free_subscription?)).for_role(role).ascend_by_billing_price %>
+    <% @subscriptions = SubscriptionPlan.active.exclude_free((current_user and current_user.has_free_subscription?)).ascend_by_billing_price %>
     <% if @subscriptions.any? %>
         <% SubscriptionPlan.active.exclude_free((current_user and current_user.has_free_subscription?)).for_role(role).ascend_by_billing_price.each do |subscription_plan| %>
             <%= render :partial => 'shared/subscriptions/subscription', :locals => {:subscription_plan => subscription_plan, :role => role, :form => form} %>
@@ -22,8 +22,6 @@
     <% end %>
 </div>
 
-<%= custom_error_for_field(form, "subscription_plan_id") %>
+<%#= custom_error_for_field(form, "subscription_plan_id") %>
 
 <%#= link_to_main_page_article("subscriptions_for_#{role}", {:popup => true}, {:id => 'subscriptions_modal_box'}) %>
-
-<hr/>
