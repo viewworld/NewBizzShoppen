@@ -262,7 +262,7 @@ class User < ActiveRecord::Base
 
   def handle_cancel_subscription
     if ActiveRecord::ConnectionAdapters::Column.value_to_boolean(cancel_subscription) and active_subscription
-      active_subscription.cancel!()
+      cancel_subscription!
       self.cancel_subscription = nil
     end
   end
@@ -721,17 +721,30 @@ class User < ActiveRecord::Base
   def apply_subscription!(subscription_plan)
     if subscription_can_be_applied?(subscription_plan)
       self.subscriptions.clone_from_subscription_plan!(subscription_plan, self)
-      active_subscription.apply_restrictions!
     end
   end
 
   def change_subscription!(subscription_plan)
     if subscription_can_be_changed_to?(subscription_plan)
+      as = active_subscription
+      as.next_subscription_plan = subscription_plan
       if active_subscription.can_be_downgraded_to?(subscription_plan)
-
+        active_subscription.downgrade!
       elsif active_subscription.can_be_upgraded_to?(subscription_plan)
-
+        if active_subscription.may_upgrade?
+          as.upgrade!
+        elsif active_subscription.may_upgrade_from_penalty?
+          active_subscription.upgrade_from_penalty!
+        end
       end
+    end
+  end
+
+  def cancel_subscription!
+    if active_subscription.may_cancel?
+      active_subscription.cancel!
+    elsif active_subscription.may_cancel_during_lockup?
+      active_subscription.cancel_during_lockup!
     end
   end
 

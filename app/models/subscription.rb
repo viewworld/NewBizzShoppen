@@ -10,7 +10,7 @@ class Subscription < ActiveRecord::Base
 
   acts_as_list :scope => :user_id
   scope :active, lambda { where("is_active = ? and ((end_date IS NULL and billing_cycle = 0) or end_date >= ?)", true, Date.today) }
-
+  attr_accessor :next_subscription_plan
   include AASM
 
   aasm_initial_state Proc.new { |subscription| subscription.initial_state }
@@ -56,9 +56,9 @@ class Subscription < ActiveRecord::Base
 
   def initial_state
     last_subscription = user.subscriptions.last
-    if last_subscription.aasm_state == :canceled_during_lockup
+    if last_subscription and last_subscription.aasm_state == :canceled_during_lockup
       :penalty
-    elsif last_subscription.aasm_state == :upgraded_from_penalty
+    elsif last_subscription and last_subscription.aasm_state == :upgraded_from_penalty
       :non_cancelable
     else
       :normal
@@ -80,7 +80,6 @@ class Subscription < ActiveRecord::Base
   public
 
   def self.clone_from_subscription_plan!(subscription_plan, user)
-    user.active_subscription.cancel!(true) if user.active_subscription
     subscription = Subscription.new(:user => user)
     subscription_plan.attributes.keys.except(["id", "roles_mask", "created_at", "updated_at", "billing_price", "is_active"]).each do |method|
       subscription.send("#{method}=".to_sym, subscription_plan.send(method.to_sym))
@@ -93,13 +92,22 @@ class Subscription < ActiveRecord::Base
     subscription
   end
 
-  def cancel!(force_cancel=false)
-    if payable? or force_cancel
+  def perform_cancelled
+    if payable?
       self.cancelled_at = Time.now
       self.save
-      user.update_attribute(:assign_free_subscription_plan, true) unless force_cancel
+      #user.update_attribute(:assign_free_subscription_plan, true) unless force_cancel
     end
     true
+  end
+
+  def perform_upgrade
+    self.end_date = Date.today-1
+    self.class.clone_from_subscription_plan!(next_subscription_plan, user)
+  end
+
+  def perform_downgrade
+
   end
 
   def invoiced?
@@ -115,10 +123,10 @@ class Subscription < ActiveRecord::Base
   end
 
   def can_be_downgraded_to?(subscription_plan)
-    can_be_downgraded? and subscription_plan.total_billing < total_billing
+    can_be_downgraded? and subscription_plan.total_billing < total_billing and may_downgrade?
   end
 
   def can_be_upgraded_to?(subscription_plan)
-    can_be_upgraded? and subscription_plan.total_billing >= total_billing
+    can_be_upgraded? and subscription_plan.total_billing >= total_billing and (may_upgrade? or may_upgrade_from_penalty?)
   end
 end
