@@ -23,7 +23,7 @@ class Subscription < ActiveRecord::Base
   aasm_state :cancelled_during_lockup, :enter => :perform_cancelled_during_lockup
   aasm_state :penalty, :enter => :perform_penalty
   aasm_state :non_cancelable
-  aasm_state :extended, :enter => :perform_extend
+  aasm_state :prolonged, :enter => :perform_prolong
   aasm_state :upgraded_from_penalty, :enter => :perform_upgrade_from_penalty
 
   aasm_event :enter_lockup do
@@ -46,8 +46,8 @@ class Subscription < ActiveRecord::Base
     transitions :from => :lockup, :to => :cancelled_during_lockup
   end
 
-  aasm_event :extend do
-    transitions :from => [:normal, :lockup, :penalty, :non_cancelable], :to => :extended
+  aasm_event :prolong do
+    transitions :from => [:normal, :lockup, :penalty, :non_cancelable], :to => :prolonged
   end
 
   aasm_event :upgrade_from_penalty do
@@ -128,5 +128,9 @@ class Subscription < ActiveRecord::Base
 
   def can_be_upgraded_to?(subscription_plan)
     can_be_upgraded? and subscription_plan.total_billing >= total_billing and (may_upgrade? or may_upgrade_from_penalty?)
+  end
+
+  def is_free?
+    subscription_plan.total_billing == 0 and end_date.nil?
   end
 end

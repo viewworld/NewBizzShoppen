@@ -706,6 +706,10 @@ class User < ActiveRecord::Base
     subscriptions.where("start_date <= ?", Date.today).order("position DESC").first
   end
 
+  def active_subscription_plan
+    active_subscription ? active_subscription.subscription_plan : nil
+  end
+
   def subscription_plan_is_valid?(subscription_plan)
     subscription_plan and subscription_plan.is_active and subscription_plan.has_role?(self.role.to_sym)
   end
@@ -754,6 +758,10 @@ class User < ActiveRecord::Base
 
   def has_active_subscription?
     !active_subscription.nil?
+  end
+
+  def has_free_subscription?
+    has_active_subscription? and active_subscription.is_free?
   end
 
   def can_downgrade_subscription?

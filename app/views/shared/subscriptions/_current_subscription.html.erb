@@ -1,0 +1,9 @@
+<div id="subscription_plan_<%= subscription_plan.id %>">
+    <h3><%= subscription_plan.name %></h3>
+
+    <% if subscription_plan.payable? %>
+        <p><%= as_currency(subscription_plan.total_billing, subscription_plan.currency) %></p>
+    <% else %>
+        <p><%= t("subscriptions.listing.free") %></p>
+    <% end %>
+</div>

@@ -3949,5 +3949,6 @@ en:
       flash:
         email_sent: "Deal request has been sent"
   subscriptions:
+    current_subscription: "Your current subscription"
     listing:
       free: "Free"
