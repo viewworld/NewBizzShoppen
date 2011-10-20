@@ -2,6 +2,13 @@
     <div id="current_subscription">
         <h2><%= t("subscriptions.current_subscription")%></h2>
         <%= render :partial => 'shared/subscriptions/current_subscription', :locals => {:subscription_plan => current_user.active_subscription_plan} %>
+        <% if !current_user.can_upgrade_or_downgrade_subscription? %>
+            <h3><%= t("subscriptions.cant_be_upgraded_nor_downgraded")%></h3>
+        <% elsif !current_user.can_upgrade_subscription? %>
+          <h3><%= t("subscriptions.cant_be_upgraded")%></h3>
+        <% elsif !current_user.can_upgrade_subscription? %>
+          <h3><%= t("subscriptions.cant_be_downgraded")%></h3>
+        <% end %>
     </div>
 <% end %>
 

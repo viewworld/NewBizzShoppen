@@ -312,8 +312,10 @@ Nbs::Application.routes.draw do
       put 'remove_category_supplier'
     end
     resources :subscription_plans, :only => [] do
-      member do
+      collection do
         get 'cancel'
+      end
+      member do
         get 'upgrade'
         get 'downgrade'
       end

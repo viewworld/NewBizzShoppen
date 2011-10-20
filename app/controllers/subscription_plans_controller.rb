@@ -1,6 +1,7 @@
 class SubscriptionPlansController < SecuredController
 
-  before_filter :fetch_user, :fetch_subscription_plan
+  before_filter :fetch_user
+  before_filter :fetch_subscription_plan, :except => [:cancel]
 
   private
 
@@ -15,17 +16,24 @@ class SubscriptionPlansController < SecuredController
   public
 
   def upgrade
-    @user.upgrade_subscription!(@subscription_plan)
+    if @user.upgrade_subscription!(@subscription_plan)
+      flash[:notice] = t("subscriptions.flash.subscription_upgraded")
+    end
     redirect_to my_profile_path
   end
 
   def downgrade
-    @user.downgrade_subscription!(@subscription_plan)
+    if @user.downgrade_subscription!(@subscription_plan)
+      flash[:notice] = t("subscriptions.flash.subscription_downgraded")
+    end
     redirect_to my_profile_path
   end
 
   def cancel
-    @user.cancel_subscription!
+    if @user.cancel_subscription!
+      flash[:notice] = t("subscriptions.flash.subscription_cancelled")
+    end
+    redirect_to my_profile_path
   end
 
 end
