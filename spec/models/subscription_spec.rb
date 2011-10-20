@@ -58,7 +58,14 @@ describe Subscription do
     end
   end
 
-  context "subscription changes: upgrade, downgrade and cancellation" do
+  context "subscription transitions" do
+
+    before(:each) do
+      @payable_subscription1 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12)
+      @payable_subscription1.subscription_plan_lines.make!(:price => 25)
+      @payable_subscription2 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12)
+      @payable_subscription2.subscription_plan_lines.make!(:price => 100)
+    end
 
     def setup_customer(subscription_plan)
       @customer = User::Supplier.make!(:subscription_plan_id => subscription_plan.id)
@@ -66,24 +73,24 @@ describe Subscription do
       @prev_subscription = @customer.active_subscription
     end
 
-    context "upgrade" do
-      before(:each) do
-        @payable_subscription1 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12)
-        @payable_subscription1.subscription_plan_lines.make!(:price => 25)
-        @payable_subscription2 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12)
-        @payable_subscription2.subscription_plan_lines.make!(:price => 100)
-      end
+    def set_date_today_to(date)
+      Date.stubs(:today).returns(date)
+    end
 
+    context "upgrade" do
       it "should be upgraded if new one is more expensive" do
         setup_customer(@payable_subscription1)
         @customer.active_subscription.should be_normal
         @customer.change_subscription!(@payable_subscription2)
         @prev_subscription.reload
         @prev_subscription.should be_upgraded
+        @prev_subscription.end_date.should == Date.today-1
+        @customer.active_subscription.start_date.should == Date.today
+        @customer.active_subscription.end_date.should == Date.today + 12.weeks
         @customer.active_subscription.subscription_plan.should == @payable_subscription2
       end
 
-      it "should NOT be upgraded if new one is invalid" do
+      it "should NOT be upgraded if new one is for different role" do
         @payable_subscription2.update_attribute(:assigned_roles, [:member])
         setup_customer(@payable_subscription1)
         @customer.active_subscription.should be_normal
@@ -93,17 +100,30 @@ describe Subscription do
         @customer.active_subscription.subscription_plan.should == @payable_subscription1
       end
 
+      it "should NOT be upgraded if active subscription doesn't allow upgrade" do
+        @payable_subscription1.update_attribute(:can_be_upgraded, false)
+        setup_customer(@payable_subscription1)
+        @customer.change_subscription!(@payable_subscription2)
+        @prev_subscription.reload
+        @prev_subscription.should be_normal
+      end
+    end
+
+    context "downgrade" do
       it "should be downgraded if new one is less expensive" do
         setup_customer(@payable_subscription2)
         @customer.active_subscription.should be_normal
         @customer.change_subscription!(@payable_subscription1)
         @prev_subscription.reload
         @prev_subscription.should be_downgraded
+        @prev_subscription.end_date.should == Date.today + 12.weeks
         @customer.active_subscription.subscription_plan.should == @payable_subscription2
-        @customer.subscriptions.last.should == @payable_subscription1
+        @customer.subscriptions.last.subscription_plan.should == @payable_subscription1
+        @customer.subscriptions.last.start_date.should == @prev_subscription.end_date + 1
+        @customer.subscriptions.last.end_date.should == (@prev_subscription.end_date + 1) + 12.weeks
       end
 
-      it "should NOT be downgraded if new one is invalid" do
+      it "should NOT be downgraded if new one is for different role" do
         @payable_subscription1.update_attribute(:assigned_roles, [:member])
         setup_customer(@payable_subscription2)
         @customer.active_subscription.should be_normal
@@ -112,53 +132,59 @@ describe Subscription do
         @prev_subscription.should be_normal
         @customer.active_subscription.subscription_plan.should == @payable_subscription2
       end
-    end
-  end
 
-  #----------------------------------------------------------------------------------------------------------
-
-  context "user should not be able to assign incorrect subscription" do
-    context "downgrade & upgrade limitations" do
-      before(:each) do
-        @payable_subscription1 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12, :can_be_upgraded => false)
-        @payable_subscription1.subscription_plan_lines.make!(:price => 25)
-        @payable_subscription2 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12, :can_be_downgraded => false)
-        @payable_subscription2.subscription_plan_lines.make!(:price => 120)
-      end
-
-      it "should not be possible to downgrade if current subscription doesn't allow that" do
-        @customer = User::Supplier.make!(:subscription_plan_id => @payable_subscription2.id)
-        @customer.update_attributes(:subscription_plan_id => @payable_subscription1.id)
-        @customer.should have(1).error_on(:subscription_plan_id)
-      end
-
-      it "should not be possible to upgrade if current subscription doesn't allow that" do
-        @customer = User::Supplier.make!(:subscription_plan_id => @payable_subscription1.id)
-        @customer.update_attributes(:subscription_plan_id => @payable_subscription2.id)
-        @customer.should have(1).error_on(:subscription_plan_id)
+      it "should NOT be downgraded if active subscription doesn't allow downgrade" do
+        @payable_subscription2.update_attribute(:can_be_downgraded, false)
+        setup_customer(@payable_subscription2)
+        @customer.change_subscription!(@payable_subscription1)
+        @prev_subscription.reload
+        @prev_subscription.should be_normal
       end
     end
-  end
 
-  context "user should be able to cancel the subscription" do
-    it "should be possible to cancel payable subscription and then switch to free one before lockup period" do
-      @subscription = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12)
-      @customer = User::Supplier.make!(:subscription_plan_id => @subscription.id)
-      @customer.active_subscription.should be_payable
-      @customer.active_subscription.cancel!
-      @customer.active_subscription.should be_present
-      @customer.active_subscription.should_not be_payable
+    context "lockup" do
+      it "should enter lockup state if lockup period is defined and today's date is greater or equal to it" do
+        @payable_subscription1.update_attribute(:lockup_period, 2)
+        setup_customer(@payable_subscription1)
+        set_date_today_to(@customer.active_subscription.lockup_start_date)
+
+        @customer.active_subscription.enter_lockup!
+        @customer.active_subscription.should be_lockup
+      end
+
+      it "should NOT enter lockup when none is defined" do
+        setup_customer(@payable_subscription1)
+        @customer.active_subscription.enter_lockup!
+        @customer.active_subscription.should_not be_lockup
+      end
+
+      it "should NOT enter lockup when today's date is less than it" do
+        @payable_subscription1.update_attribute(:lockup_period, 2)
+        setup_customer(@payable_subscription1)
+        @customer.active_subscription.enter_lockup!
+        @customer.active_subscription.should_not be_lockup
+      end
     end
 
-    it "should be possible to cancel payable subscription and then switch to free one within lockup period" do
-      #adds another subscr with the same length
-    end
+    context "cancel" do
+      it "should be cancelled when in normal state" do
+        setup_customer(@payable_subscription1)
+        @customer.cancel_subscription!
+        @prev_subscription.reload
+        @prev_subscription.should be_cancelled
+        @customer.active_subscription.should_not be_payable
+      end
 
-    it "should not be possible to cancel free subscription" do
-      @customer = User::Supplier.make!
-      @customer.active_subscription.should_not be_payable
-      @customer.active_subscription.cancel!
-      @customer.active_subscription.should_not be_payable
+      it "should be cancelled when in lockup state" do
+        @payable_subscription1.update_attribute(:lockup_period, 2)
+        setup_customer(@payable_subscription1)
+        set_date_today_to(@customer.active_subscription.lockup_start_date)
+        @customer.active_subscription.enter_lockup!
+        @customer.active_subscription.should be_lockup
+        @customer.cancel_subscription!
+        @customer.active_subscription.should be_cancelled_during_lockup
+        @customer.subscriptions.last.start_date.should == @customer.active_subscription.end_date + 1
+      end
     end
   end
 end

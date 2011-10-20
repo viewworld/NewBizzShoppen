@@ -6,8 +6,6 @@ class Subscription < ActiveRecord::Base
   belongs_to :user
   belongs_to :subscription_plan
 
-  before_create :apply_time_constraints
-
   acts_as_list :scope => :user_id
   scope :active, lambda { where("is_active = ? and ((end_date IS NULL and billing_cycle = 0) or end_date >= ?)", true, Date.today) }
   attr_accessor :next_subscription_plan
@@ -19,7 +17,7 @@ class Subscription < ActiveRecord::Base
   aasm_state :lockup
   aasm_state :upgraded, :enter => :perform_upgrade
   aasm_state :downgraded, :enter => :perform_downgrade
-  aasm_state :cancelled, :enter => :perform_cancelled
+  aasm_state :cancelled, :enter => :perform_cancel
   aasm_state :cancelled_during_lockup, :enter => :perform_cancelled_during_lockup
   aasm_state :penalty, :enter => :perform_penalty
   aasm_state :non_cancelable
@@ -27,7 +25,7 @@ class Subscription < ActiveRecord::Base
   aasm_state :upgraded_from_penalty, :enter => :perform_upgrade_from_penalty
 
   aasm_event :enter_lockup do
-    transitions :from => [:normal, :penalty, :non_cancelable], :to => :lockup
+    transitions :from => [:normal, :penalty, :non_cancelable], :to => :lockup, :guard => :lockup_period_started?
   end
 
   aasm_event :upgrade do
@@ -39,7 +37,7 @@ class Subscription < ActiveRecord::Base
   end
 
   aasm_event :cancel do
-    transitions :from => :normal, :to => :cancelled
+    transitions :from => :normal, :to => :cancelled, :guard => :payable?
   end
 
   aasm_event :cancel_during_lockup do
@@ -65,21 +63,23 @@ class Subscription < ActiveRecord::Base
     end
   end
 
-  private
+  def lockup_period_started?
+    lockup_period.to_i > 0 and Date.today >= lockup_start_date
+  end
 
-  def apply_time_constraints
-    if start_date.blank? and end_date.blank?
-      self.start_date = Date.today
-      if billing_cycle > 0
-        self.end_date = Date.today + billing_cycle.weeks + free_period.to_i.weeks
-        self.billing_date = end_date + billing_period.weeks
-      end
+  def lockup_start_date
+    end_date - lockup_period.to_i.weeks
+  end
+
+  def apply_time_constraints(_start_date)
+    self.start_date = _start_date
+    if billing_cycle > 0
+      self.end_date = start_date + billing_cycle.weeks + free_period.to_i.weeks
+      self.billing_date = end_date + billing_period.weeks
     end
   end
 
-  public
-
-  def self.clone_from_subscription_plan!(subscription_plan, user)
+  def self.clone_from_subscription_plan!(subscription_plan, user, start_date=nil)
     subscription = Subscription.new(:user => user)
     subscription_plan.attributes.keys.except(["id", "roles_mask", "created_at", "updated_at", "billing_price", "is_active"]).each do |method|
       subscription.send("#{method}=".to_sym, subscription_plan.send(method.to_sym))
@@ -88,17 +88,20 @@ class Subscription < ActiveRecord::Base
     subscription_plan.subscription_plan_lines.each do |line|
       subscription.subscription_plan_lines << line.clone
     end
+    subscription.apply_time_constraints(start_date ? start_date : Date.today)
     subscription.save
     subscription
   end
 
-  def perform_cancelled
-    if payable?
-      self.cancelled_at = Time.now
-      self.save
-      #user.update_attribute(:assign_free_subscription_plan, true) unless force_cancel
-    end
-    true
+  def perform_cancel
+    self.end_date = Date.today-1
+    self.cancelled_at = Time.now
+    self.class.clone_from_subscription_plan!(SubscriptionPlan.active.free.for_role(user.role).first, user)
+  end
+
+  def perform_cancelled_during_lockup
+    self.cancelled_at = Time.now
+    self.class.clone_from_subscription_plan!(self.subscription_plan, user, end_date+1)
   end
 
   def perform_upgrade
@@ -107,7 +110,7 @@ class Subscription < ActiveRecord::Base
   end
 
   def perform_downgrade
-
+    self.class.clone_from_subscription_plan!(next_subscription_plan, user, end_date+1)
   end
 
   def invoiced?

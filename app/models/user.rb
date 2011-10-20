@@ -64,7 +64,7 @@ class User < ActiveRecord::Base
   belongs_to :contact
   has_many :deal_comment_threads, :class_name => "Comment", :foreign_key => "user_id"
   has_many :email_bounces, :foreign_key => :email, :primary_key => :email
-  has_many :subscriptions
+  has_many :subscriptions, :order => "position"
 
   alias_method :parent, :user
 
@@ -728,13 +728,13 @@ class User < ActiveRecord::Base
     if subscription_can_be_changed_to?(subscription_plan)
       as = active_subscription
       as.next_subscription_plan = subscription_plan
-      if active_subscription.can_be_downgraded_to?(subscription_plan)
-        active_subscription.downgrade!
-      elsif active_subscription.can_be_upgraded_to?(subscription_plan)
-        if active_subscription.may_upgrade?
+      if as.can_be_downgraded_to?(subscription_plan)
+        as.downgrade!
+      elsif as.can_be_upgraded_to?(subscription_plan)
+        if as.may_upgrade?
           as.upgrade!
-        elsif active_subscription.may_upgrade_from_penalty?
-          active_subscription.upgrade_from_penalty!
+        elsif as.may_upgrade_from_penalty?
+          as.upgrade_from_penalty!
         end
       end
     end
