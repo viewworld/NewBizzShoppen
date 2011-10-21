@@ -3952,10 +3952,12 @@ en:
   subscriptions:
     current_subscription: "Your current subscription"
     available_subscriptions: "All available subscriptions"
-    cant_be_upgraded_nor_downgraded: "Your current subscription plan can't be upgraded nor downgraded"
-    cant_be_upgraded: "Your current subscription plan can't be upgraded"
-    cant_be_downgraded: "Your current subscription plan can't be downgraded"
-    cant_be_canceled: "Your current subscription plan can't be canceled"
+    cant_be_upgraded_nor_downgraded: "Your current subscription plan can't be upgraded nor downgraded."
+    cant_be_upgraded: "Your current subscription plan can't be upgraded."
+    cant_be_downgraded: "Your current subscription plan can't be downgraded."
+    cant_be_canceled: "Your current subscription plan can't be canceled."
+    can_be_canceled_at: "Your current subscription plan can be canceled at %{cancel_date}"
+    free_period_notification: "You subscription is in free period until %{free_period_date}. If you upgrade, downgrade or cancel your subscription plan before that date, the remaining free period will be lost."
     flash:
       subscription_upgraded: "Your subscription plan has been upgraded!"
       subscription_downgraded: "Your subscription plan has been downgraded. The new plan will become active on next billing cycle."

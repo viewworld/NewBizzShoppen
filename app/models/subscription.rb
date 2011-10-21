@@ -162,7 +162,27 @@ class Subscription < ActiveRecord::Base
     payable? and start_date != Date.today
   end
 
+  def can_cancel_at
+    payable? ? start_date + 1.day : nil
+  end
+
   def free_period_can_be_applied?
     free_period.to_i > 0 and user.has_free_period_available?
+  end
+
+  def free_period_used?
+    CompanyVat.where(:vat_number => user.vat_number.strip).first
+  end
+
+  def is_free_period_applied?
+    ((end_date - start_date)/7).to_i == billing_cycle.to_i
+  end
+
+  def is_today_in_free_period?
+    is_free_period_applied? and Date.today <= (start_date + free_period.weeks) and Date.today >= start_date
+  end
+
+  def free_subscription_end_date
+    is_free_period_applied? ? start_date + free_period.weeks : nil
   end
 end

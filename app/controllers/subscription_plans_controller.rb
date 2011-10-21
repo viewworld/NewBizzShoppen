@@ -18,6 +18,8 @@ class SubscriptionPlansController < SecuredController
   def upgrade
     if @user.upgrade_subscription!(@subscription_plan)
       flash[:notice] = t("subscriptions.flash.subscription_upgraded")
+    else
+      flash[:alert] = @user.errors.full_messages
     end
     redirect_to my_profile_path
   end
@@ -25,6 +27,8 @@ class SubscriptionPlansController < SecuredController
   def downgrade
     if @user.downgrade_subscription!(@subscription_plan)
       flash[:notice] = t("subscriptions.flash.subscription_downgraded")
+    else
+      flash[:alert] = @user.errors.full_messages
     end
     redirect_to my_profile_path
   end
@@ -32,6 +36,8 @@ class SubscriptionPlansController < SecuredController
   def cancel
     if @user.cancel_subscription!
       flash[:notice] = t("subscriptions.flash.subscription_cancelled")
+    else
+      flash[:alert] = @user.errors.full_messages
     end
     redirect_to my_profile_path
   end

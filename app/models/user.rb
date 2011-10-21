@@ -740,6 +740,9 @@ class User < ActiveRecord::Base
       as = active_subscription
       as.next_subscription_plan = subscription_plan
       as.downgrade!
+    else
+      self.errors.add(:base, I18n.t("subscriptions.cant_be_downgraded"))
+      false
     end
   end
 
@@ -752,6 +755,9 @@ class User < ActiveRecord::Base
       elsif as.may_upgrade_from_penalty?
         as.upgrade_from_penalty!
       end
+    else
+      self.errors.add(:base, I18n.t("subscriptions.cant_be_upgraded"))
+      false
     end
   end
 
@@ -760,6 +766,9 @@ class User < ActiveRecord::Base
       active_subscription.cancel!
     elsif active_subscription.may_cancel_during_lockup?
       active_subscription.cancel_during_lockup!
+    else
+      self.errors.add(:base, I18n.t("subscriptions.cant_be_canceled"))
+      false
     end
   end
 
@@ -793,6 +802,10 @@ class User < ActiveRecord::Base
 
   def can_cancel_subscription?
     active_subscription.may_cancel? or active_subscription.may_cancel_during_lockup?
+  end
+
+  def can_cancel_subscription_at
+    active_subscription.can_cancel_at
   end
 
   def is_lockup_period?
