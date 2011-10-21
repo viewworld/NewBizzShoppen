@@ -728,18 +728,38 @@ class User < ActiveRecord::Base
     end
   end
 
-  def change_subscription!(subscription_plan)
-    if subscription_can_be_changed_to?(subscription_plan)
+  #def change_subscription!(subscription_plan)
+  #  if subscription_can_be_changed_to?(subscription_plan)
+  #    as = active_subscription
+  #    as.next_subscription_plan = subscription_plan
+  #    if as.can_be_downgraded_to?(subscription_plan)
+  #      as.downgrade!
+  #    elsif as.can_be_upgraded_to?(subscription_plan)
+  #      if as.may_upgrade?
+  #        as.upgrade!
+  #      elsif as.may_upgrade_from_penalty?
+  #        as.upgrade_from_penalty!
+  #      end
+  #    end
+  #  end
+  #end
+
+  def downgrade_subscription!(subscription_plan)
+    if subscription_can_be_changed_to?(subscription_plan) and active_subscription.can_be_downgraded_to?(subscription_plan)
       as = active_subscription
       as.next_subscription_plan = subscription_plan
-      if as.can_be_downgraded_to?(subscription_plan)
-        as.downgrade!
-      elsif as.can_be_upgraded_to?(subscription_plan)
-        if as.may_upgrade?
-          as.upgrade!
-        elsif as.may_upgrade_from_penalty?
-          as.upgrade_from_penalty!
-        end
+      as.downgrade!
+    end
+  end
+
+  def upgrade_subscription!(subscription_plan)
+    if subscription_can_be_changed_to?(subscription_plan) and active_subscription.can_be_upgraded_to?(subscription_plan)
+      as = active_subscription
+      as.next_subscription_plan = subscription_plan
+      if as.may_upgrade?
+        as.upgrade!
+      elsif as.may_upgrade_from_penalty?
+        as.upgrade_from_penalty!
       end
     end
   end

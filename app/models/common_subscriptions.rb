@@ -17,5 +17,10 @@ module CommonSubscriptions
     def total_billing
       subscription_plan_lines.inject(0.0){ |result, line| line.price.to_f + result}
     end
+
+    def is_free?
+      !payable?
+    end
+
   end
 end

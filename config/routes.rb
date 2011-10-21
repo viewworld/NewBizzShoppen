@@ -311,6 +311,13 @@ Nbs::Application.routes.draw do
       get 'unlink'
       put 'remove_category_supplier'
     end
+    resources :subscription_plans, :only => [] do
+      member do
+        get 'cancel'
+        get 'upgrade'
+        get 'downgrade'
+      end
+    end
   end
 
   match 'my_profile' => 'my_profile#edit', :as => "my_profile"

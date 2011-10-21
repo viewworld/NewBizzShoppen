@@ -81,7 +81,7 @@ describe Subscription do
       it "should be upgraded if new one is more expensive" do
         setup_customer(@payable_subscription1)
         @customer.active_subscription.should be_normal
-        @customer.change_subscription!(@payable_subscription2)
+        @customer.upgrade_subscription!(@payable_subscription2)
         @prev_subscription.reload
         @prev_subscription.should be_upgraded
         @prev_subscription.end_date.should == Date.today-1
@@ -96,7 +96,7 @@ describe Subscription do
         set_date_today_to(@customer.active_subscription.lockup_start_date)
         @customer.active_subscription.enter_lockup!
         @customer.active_subscription.should be_lockup
-        @customer.change_subscription!(@payable_subscription2)
+        @customer.upgrade_subscription!(@payable_subscription2)
         @prev_subscription.reload
         @prev_subscription.should be_upgraded
         @customer.active_subscription.should be_normal
@@ -116,11 +116,11 @@ describe Subscription do
         @penalty_subscription = @customer.subscriptions.order("position").last
         @penalty_subscription.should be_penalty
         set_date_today_to(@penalty_subscription.start_date)
-        @customer.change_subscription!(@payable_subscription3)
+        @customer.upgrade_subscription!(@payable_subscription3)
         @customer.active_subscription.should be_non_cancelable
         @penalty_subscription.reload
         @penalty_subscription.should be_upgraded_from_penalty
-        @customer.change_subscription!(@payable_subscription4)
+        @customer.upgrade_subscription!(@payable_subscription4)
         @customer.active_subscription.subscription_plan.should == @payable_subscription4
         @customer.active_subscription.should be_non_cancelable
       end
@@ -129,7 +129,7 @@ describe Subscription do
         @payable_subscription2.update_attribute(:assigned_roles, [:member])
         setup_customer(@payable_subscription1)
         @customer.active_subscription.should be_normal
-        @customer.change_subscription!(@payable_subscription2)
+        @customer.upgrade_subscription!(@payable_subscription2)
         @prev_subscription.reload
         @prev_subscription.should be_normal
         @customer.active_subscription.subscription_plan.should == @payable_subscription1
@@ -138,7 +138,7 @@ describe Subscription do
       it "should NOT be upgraded if active subscription doesn't allow upgrade" do
         @payable_subscription1.update_attribute(:can_be_upgraded, false)
         setup_customer(@payable_subscription1)
-        @customer.change_subscription!(@payable_subscription2)
+        @customer.upgrade_subscription!(@payable_subscription2)
         @prev_subscription.reload
         @prev_subscription.should be_normal
       end
@@ -148,7 +148,7 @@ describe Subscription do
       it "should be downgraded if new one is less expensive" do
         setup_customer(@payable_subscription2)
         @customer.active_subscription.should be_normal
-        @customer.change_subscription!(@payable_subscription1)
+        @customer.downgrade_subscription!(@payable_subscription1)
         @prev_subscription.reload
         @prev_subscription.should be_downgraded
         @prev_subscription.end_date.should == Date.today + 12.weeks
@@ -162,7 +162,7 @@ describe Subscription do
         @payable_subscription1.update_attribute(:assigned_roles, [:member])
         setup_customer(@payable_subscription2)
         @customer.active_subscription.should be_normal
-        @customer.change_subscription!(@payable_subscription1)
+        @customer.downgrade_subscription!(@payable_subscription1)
         @prev_subscription.reload
         @prev_subscription.should be_normal
         @customer.active_subscription.subscription_plan.should == @payable_subscription2
@@ -171,7 +171,7 @@ describe Subscription do
       it "should NOT be downgraded if active subscription doesn't allow downgrade" do
         @payable_subscription2.update_attribute(:can_be_downgraded, false)
         setup_customer(@payable_subscription2)
-        @customer.change_subscription!(@payable_subscription1)
+        @customer.downgrade_subscription!(@payable_subscription1)
         @prev_subscription.reload
         @prev_subscription.should be_normal
       end
