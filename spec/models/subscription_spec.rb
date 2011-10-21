@@ -90,6 +90,41 @@ describe Subscription do
         @customer.active_subscription.subscription_plan.should == @payable_subscription2
       end
 
+      it "should be upgraded when in lockup" do
+        @payable_subscription1.update_attribute(:lockup_period, 2)
+        setup_customer(@payable_subscription1)
+        set_date_today_to(@customer.active_subscription.lockup_start_date)
+        @customer.active_subscription.enter_lockup!
+        @customer.active_subscription.should be_lockup
+        @customer.change_subscription!(@payable_subscription2)
+        @prev_subscription.reload
+        @prev_subscription.should be_upgraded
+        @customer.active_subscription.should be_normal
+      end
+
+      it "should be upgraded when in penalty to noncancelable and from that to another noncancelable" do
+        @payable_subscription3 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12)
+        @payable_subscription3.subscription_plan_lines.make!(:price => 200)
+        @payable_subscription4 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12)
+        @payable_subscription4.subscription_plan_lines.make!(:price => 300)
+        @payable_subscription1.update_attribute(:lockup_period, 2)
+        setup_customer(@payable_subscription1)
+        set_date_today_to(@customer.active_subscription.lockup_start_date)
+        @customer.active_subscription.enter_lockup!
+        @customer.cancel_subscription!
+        @customer.active_subscription.should be_cancelled_during_lockup
+        @penalty_subscription = @customer.subscriptions.order("position").last
+        @penalty_subscription.should be_penalty
+        set_date_today_to(@penalty_subscription.start_date)
+        @customer.change_subscription!(@payable_subscription3)
+        @customer.active_subscription.should be_non_cancelable
+        @penalty_subscription.reload
+        @penalty_subscription.should be_upgraded_from_penalty
+        @customer.change_subscription!(@payable_subscription4)
+        @customer.active_subscription.subscription_plan.should == @payable_subscription4
+        @customer.active_subscription.should be_non_cancelable
+      end
+
       it "should NOT be upgraded if new one is for different role" do
         @payable_subscription2.update_attribute(:assigned_roles, [:member])
         setup_customer(@payable_subscription1)
@@ -175,7 +210,7 @@ describe Subscription do
         @customer.active_subscription.should_not be_payable
       end
 
-      it "should be cancelled when in lockup state" do
+      it "should be cancelled when in lockup state and generate penalty" do
         @payable_subscription1.update_attribute(:lockup_period, 2)
         setup_customer(@payable_subscription1)
         set_date_today_to(@customer.active_subscription.lockup_start_date)
@@ -183,7 +218,43 @@ describe Subscription do
         @customer.active_subscription.should be_lockup
         @customer.cancel_subscription!
         @customer.active_subscription.should be_cancelled_during_lockup
-        @customer.subscriptions.last.start_date.should == @customer.active_subscription.end_date + 1
+        @penalty_subscription = @customer.subscriptions.order("position").last
+        @penalty_subscription.start_date.should == @customer.active_subscription.end_date + 1
+        @penalty_subscription.end_date.should == @penalty_subscription.start_date + 12.weeks
+        @penalty_subscription.should be_penalty
+        @penalty_subscription.prolongs_as_free.should be_true
+      end
+    end
+
+    context "prolong" do
+      it "should be prolonged to the same subscription when payable subscription" do
+        setup_customer(@payable_subscription1)
+        set_date_today_to(@customer.active_subscription.end_date+1)
+        @customer.prolong_subscription!
+        @prev_subscription.reload
+        @prev_subscription.should be_prolonged
+        @customer.active_subscription.should be_normal
+        @customer.active_subscription.subscription_plan.should == @payable_subscription1
+      end
+
+      it "should be prolonged to free subscription when payable penalty" do
+        @payable_subscription1.update_attribute(:lockup_period, 2)
+        setup_customer(@payable_subscription1)
+        set_date_today_to(@customer.active_subscription.lockup_start_date)
+        @customer.active_subscription.enter_lockup!
+        @customer.active_subscription.should be_lockup
+        @customer.cancel_subscription!
+        @customer.active_subscription.should be_cancelled_during_lockup
+        set_date_today_to(@customer.subscriptions.order("position").last.end_date+1)
+        @customer.prolong_subscription!
+        @customer.active_subscription.should_not be_payable
+      end
+
+      it "should NOT prolong when free subscription" do
+        setup_customer(SubscriptionPlan.active.free.for_role("supplier").first)
+        @customer.prolong_subscription!
+        @customer.active_subscription.should_not be_payable
+        @customer.subscriptions.size.should == 1
       end
     end
   end

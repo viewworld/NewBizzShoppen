@@ -79,6 +79,6 @@ class SubscriptionPlan < ActiveRecord::Base
   end
 
   def is_free?
-    billing_price.to_f == 0.0
+    !payable?
   end
 end

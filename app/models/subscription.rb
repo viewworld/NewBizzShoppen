@@ -18,11 +18,11 @@ class Subscription < ActiveRecord::Base
   aasm_state :upgraded, :enter => :perform_upgrade
   aasm_state :downgraded, :enter => :perform_downgrade
   aasm_state :cancelled, :enter => :perform_cancel
-  aasm_state :cancelled_during_lockup, :enter => :perform_cancelled_during_lockup
+  aasm_state :cancelled_during_lockup
   aasm_state :penalty, :enter => :perform_penalty
   aasm_state :non_cancelable
   aasm_state :prolonged, :enter => :perform_prolong
-  aasm_state :upgraded_from_penalty, :enter => :perform_upgrade_from_penalty
+  aasm_state :upgraded_from_penalty
 
   aasm_event :enter_lockup do
     transitions :from => [:normal, :penalty, :non_cancelable], :to => :lockup, :guard => :lockup_period_started?
@@ -40,23 +40,23 @@ class Subscription < ActiveRecord::Base
     transitions :from => :normal, :to => :cancelled, :guard => :payable?
   end
 
-  aasm_event :cancel_during_lockup do
+  aasm_event :cancel_during_lockup, :after => :perform_cancelled_during_lockup do
     transitions :from => :lockup, :to => :cancelled_during_lockup
   end
 
   aasm_event :prolong do
-    transitions :from => [:normal, :lockup, :penalty, :non_cancelable], :to => :prolonged
+    transitions :from => [:normal, :lockup, :penalty, :non_cancelable], :to => :prolonged, :guard => :can_be_prolonged?
   end
 
-  aasm_event :upgrade_from_penalty do
+  aasm_event :upgrade_from_penalty, :after => :perform_upgrade_from_penalty do
     transitions :from => [:penalty, :non_cancelable], :to =>  :upgraded_from_penalty
   end
 
   def initial_state
     last_subscription = user.subscriptions.last
-    if last_subscription and last_subscription.aasm_state == :canceled_during_lockup
+    if last_subscription and last_subscription.cancelled_during_lockup?
       :penalty
-    elsif last_subscription and last_subscription.aasm_state == :upgraded_from_penalty
+    elsif last_subscription and last_subscription.upgraded_from_penalty?
       :non_cancelable
     else
       :normal
@@ -113,6 +113,19 @@ class Subscription < ActiveRecord::Base
     self.class.clone_from_subscription_plan!(next_subscription_plan, user, end_date+1)
   end
 
+  def perform_penalty
+    self.prolongs_as_free = true
+  end
+
+  def perform_prolong
+    self.class.clone_from_subscription_plan!(prolongs_as_free ? SubscriptionPlan.active.free.for_role(user.role).first : self.subscription_plan, user, end_date+1)
+  end
+
+  def perform_upgrade_from_penalty
+    self.end_date = Date.today-1
+    self.class.clone_from_subscription_plan!(next_subscription_plan, user)
+  end
+
   def invoiced?
     !invoiced_at.blank?
   end
@@ -134,6 +147,10 @@ class Subscription < ActiveRecord::Base
   end
 
   def is_free?
-    subscription_plan.total_billing == 0 and end_date.nil?
+    !payable?
+  end
+
+  def can_be_prolonged?
+    payable? and end_date < Date.today
   end
 end

@@ -64,7 +64,7 @@ class User < ActiveRecord::Base
   belongs_to :contact
   has_many :deal_comment_threads, :class_name => "Comment", :foreign_key => "user_id"
   has_many :email_bounces, :foreign_key => :email, :primary_key => :email
-  has_many :subscriptions, :order => "position"
+  has_many :subscriptions
 
   alias_method :parent, :user
 
@@ -750,6 +750,10 @@ class User < ActiveRecord::Base
     elsif active_subscription.may_cancel_during_lockup?
       active_subscription.cancel_during_lockup!
     end
+  end
+
+  def prolong_subscription!
+    subscriptions.order("position").last.prolong!
   end
 
   def subscription_required?
