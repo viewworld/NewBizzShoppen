@@ -3958,6 +3958,7 @@ en:
     cant_be_canceled: "Your current subscription plan can't be canceled."
     can_be_canceled_at: "Your current subscription plan can be canceled at %{cancel_date}"
     free_period_notification: "You subscription is in free period until %{free_period_date}. If you upgrade, downgrade or cancel your subscription plan before that date, the remaining free period will be lost."
+    current_subscription_billing_cycle: "The billing cycle for your current subscription is from %{from} to %{to}"
     flash:
       subscription_upgraded: "Your subscription plan has been upgraded!"
       subscription_downgraded: "Your subscription plan has been downgraded. The new plan will become active on next billing cycle."

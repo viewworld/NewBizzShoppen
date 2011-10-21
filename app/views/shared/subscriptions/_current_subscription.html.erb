@@ -3,7 +3,7 @@
 
     <% if subscription_plan.payable? %>
         <p><%= as_currency(subscription_plan.total_billing, subscription_plan.currency) %></p>
-        <p></p>
+        <p><%= t("subscriptions.current_subscription_billing_cycle", :from => current_user.active_subscription.start_date , :to => current_user.active_subscription.end_date) %></p>
     <% else %>
         <p><%= t("subscriptions.listing.free") %></p>
     <% end %>
