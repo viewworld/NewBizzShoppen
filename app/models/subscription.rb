@@ -37,7 +37,7 @@ class Subscription < ActiveRecord::Base
   end
 
   aasm_event :cancel do
-    transitions :from => :normal, :to => :cancelled, :guard => :payable?
+    transitions :from => :normal, :to => :cancelled, :guard => :can_be_cancelled?
   end
 
   aasm_event :cancel_during_lockup, :after => :perform_cancelled_during_lockup do
@@ -152,5 +152,9 @@ class Subscription < ActiveRecord::Base
 
   def can_be_prolonged?
     payable? and end_date < Date.today
+  end
+
+  def can_be_cancelled?
+    payable? and start_date != Date.today
   end
 end

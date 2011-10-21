@@ -202,12 +202,21 @@ describe Subscription do
     end
 
     context "cancel" do
-      it "should be cancelled when in normal state" do
+      it "should be cancelled when in normal state and at least one day passed" do
         setup_customer(@payable_subscription1)
+        set_date_today_to(@customer.active_subscription.start_date+1)
         @customer.cancel_subscription!
         @prev_subscription.reload
         @prev_subscription.should be_cancelled
         @customer.active_subscription.should_not be_payable
+      end
+
+      it "should NOT be cancelled on the same day as applied/upgraded" do
+        setup_customer(@payable_subscription1)
+        @customer.cancel_subscription!
+        @prev_subscription.reload
+        @prev_subscription.should_not be_cancelled
+        @customer.active_subscription.should be_payable
       end
 
       it "should be cancelled when in lockup state and generate penalty" do
