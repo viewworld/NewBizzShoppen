@@ -118,6 +118,7 @@ class User < ActiveRecord::Base
   after_save :handle_cancel_subscription
   after_create :apply_subscription_plan
   after_update :send_invitation_if_enabled
+  before_update :check_vat_number
   validate :check_billing_rate, :check_subscription_plan
   before_validation :set_auto_generated_password_if_required, :set_role
 
@@ -292,6 +293,12 @@ class User < ActiveRecord::Base
       self.subscription_plan_id = nil
       self.assign_free_subscription_plan = nil
       true
+    end
+  end
+
+  def check_vat_number
+    if vat_number_changed? and vat_number.to_s.strip.present? and company_vat = CompanyVat.where("lower(vat_number) like ?", vat_number_was.to_s.strip.downcase).first
+      company_vat.update_attribute(:vat_number, vat_number)
     end
   end
 
@@ -806,5 +813,9 @@ class User < ActiveRecord::Base
 
   def is_extendable?
     active_subscription.normal? or active_subscription.lockup?
+  end
+
+  def has_free_period_available?
+    vat_number.to_s.strip.present? and CompanyVat.where("lower(vat_number) like ?", vat_number.strip.downcase).first.nil?
   end
 end

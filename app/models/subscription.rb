@@ -74,7 +74,11 @@ class Subscription < ActiveRecord::Base
   def apply_time_constraints(_start_date)
     self.start_date = _start_date
     if billing_cycle > 0
-      self.end_date = start_date + billing_cycle.weeks + free_period.to_i.weeks
+      self.end_date = start_date + billing_cycle.weeks
+      if free_period_can_be_applied?
+        self.end_date =  end_date + free_period.weeks
+        CompanyVat.create(:vat_number => user.vat_number.strip)
+      end
       self.billing_date = end_date + billing_period.weeks
     end
   end
@@ -156,5 +160,9 @@ class Subscription < ActiveRecord::Base
 
   def can_be_cancelled?
     payable? and start_date != Date.today
+  end
+
+  def free_period_can_be_applied?
+    free_period.to_i > 0 and user.has_free_period_available?
   end
 end

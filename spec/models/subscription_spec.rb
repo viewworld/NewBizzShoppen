@@ -3,7 +3,18 @@ require 'spec_helper'
 describe Subscription do
   fixtures :all
 
-  context "pricing" do
+  def setup_customer(subscription_plan, attributes={})
+    attrs_hash = { :subscription_plan_id => subscription_plan.id }.merge!(attributes)
+    @customer = User::Supplier.make!(attrs_hash)
+    @customer.active_subscription.subscription_plan.should == subscription_plan
+    @prev_subscription = @customer.active_subscription
+  end
+
+  def set_date_today_to(date)
+    Date.stubs(:today).returns(date)
+  end
+
+  context "calculations" do
     it "should yield correct billing price" do
       @payable_subscription1 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12, :can_be_upgraded => false)
       @payable_subscription1.subscription_plan_lines.make!(:price => 25)
@@ -14,8 +25,30 @@ describe Subscription do
       @customer.active_subscription.total_billing.should.eql?(30)
     end
 
-    context "free period" do
+    context "dates" do
+      before(:each) do
+        @payable_subscription1 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12)
+        @payable_subscription1.subscription_plan_lines.make!(:price => 25)
+        @payable_subscription2 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12)
+        @payable_subscription2.subscription_plan_lines.make!(:price => 100)
+      end
 
+      it "should assign correct dates without free period" do
+        setup_customer(@payable_subscription1)
+        @customer.active_subscription.start_date.should == Date.today
+        @customer.active_subscription.end_date.should == Date.today + 12.weeks
+      end
+
+      it "should assign correct dates with free period only once per VAT number" do
+        @payable_subscription1.update_attribute(:free_period, 2)
+        @payable_subscription2.update_attribute(:free_period, 3)
+        setup_customer(@payable_subscription1, { :vat_number => "VAT39438928282" })
+        @customer.active_subscription.start_date.should == Date.today
+        @customer.active_subscription.end_date.should == Date.today + 14.weeks
+        @customer.has_free_period_available?.should be_false
+        @customer.upgrade_subscription!(@payable_subscription2)
+        @customer.active_subscription.end_date.should == Date.today + 12.weeks
+      end
     end
   end
 
@@ -65,16 +98,6 @@ describe Subscription do
       @payable_subscription1.subscription_plan_lines.make!(:price => 25)
       @payable_subscription2 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12)
       @payable_subscription2.subscription_plan_lines.make!(:price => 100)
-    end
-
-    def setup_customer(subscription_plan)
-      @customer = User::Supplier.make!(:subscription_plan_id => subscription_plan.id)
-      @customer.active_subscription.subscription_plan.should == subscription_plan
-      @prev_subscription = @customer.active_subscription
-    end
-
-    def set_date_today_to(date)
-      Date.stubs(:today).returns(date)
     end
 
     context "upgrade" do
