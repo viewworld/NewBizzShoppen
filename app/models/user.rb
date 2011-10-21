@@ -713,8 +713,16 @@ class User < ActiveRecord::Base
     subscriptions.where("start_date <= ?", Date.today).order("position DESC").first
   end
 
+  def next_subscription
+    subscriptions.where("start_date > ?", active_subscription.end_date).order("position ASC").first
+  end
+
   def active_subscription_plan
     active_subscription ? active_subscription.subscription_plan : nil
+  end
+
+  def next_subscription_plan
+    next_subscription ? next_subscription.subscription_plan : nil
   end
 
   def subscription_plan_is_valid?(subscription_plan)

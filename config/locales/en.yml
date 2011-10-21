@@ -3958,7 +3958,13 @@ en:
     cant_be_canceled: "Your current subscription plan can't be canceled."
     can_be_canceled_at: "Your current subscription plan can be canceled at %{cancel_date}"
     free_period_notification: "You subscription is in free period until %{free_period_date}. If you upgrade, downgrade or cancel your subscription plan before that date, the remaining free period will be lost."
-    current_subscription_billing_cycle: "The billing cycle for your current subscription is from %{from} to %{to}"
+    current_subscription_billing_cycle: "The billing cycle for your current subscription plan is from %{from} to %{to}"
+    will_prolong_on: "Your current subscription plan will automatically prolong on %{prolong_date}"
+    next_subscription_plan: "Next subscription plan is '%{next_plan_name}' and it will be active from %{next_plan_active_from}"
+    confirmation:
+      cancel: "Are you sure you want to cancel your current subscription plan?"
+      downgrade: "Are you sure you want to downgrade your current subscription plan?"
+      upgrade: "Are you sure you want to upgrade your current subscription plan?"
     flash:
       subscription_upgraded: "Your subscription plan has been upgraded!"
       subscription_downgraded: "Your subscription plan has been downgraded. The new plan will become active on next billing cycle."

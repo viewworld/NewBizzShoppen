@@ -175,7 +175,7 @@ class Subscription < ActiveRecord::Base
   end
 
   def is_free_period_applied?
-    ((end_date - start_date)/7).to_i == billing_cycle.to_i
+    end_date and ((end_date - start_date)/7).to_i == billing_cycle.to_i
   end
 
   def is_today_in_free_period?
@@ -184,5 +184,9 @@ class Subscription < ActiveRecord::Base
 
   def free_subscription_end_date
     is_free_period_applied? ? start_date + free_period.weeks : nil
+  end
+
+  def will_prolong?
+    payable?
   end
 end

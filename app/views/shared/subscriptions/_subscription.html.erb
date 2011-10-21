@@ -8,9 +8,9 @@
     <% end %>
 
     <% if subscription_upgrade_or_downgrade?(current_user.active_subscription_plan, subscription_plan) == :upgrade %>
-      <%= bt_link_to nil, t("subscriptions.listing.upgrade"), upgrade_my_profile_subscription_plan_path(subscription_plan.id), :class => "fltl" %>
+      <%= bt_link_to nil, t("subscriptions.listing.upgrade"), upgrade_my_profile_subscription_plan_path(subscription_plan.id), :class => "fltl", :confirm => t("subscriptions.confirmation.upgrade") %>
     <% else %>
-      <%= bt_link_to nil, t("subscriptions.listing.downgrade"), downgrade_my_profile_subscription_plan_path(subscription_plan.id), :class => "fltl" %>
+      <%= bt_link_to nil, t("subscriptions.listing.downgrade"), downgrade_my_profile_subscription_plan_path(subscription_plan.id), :class => "fltl", :confirm => t("subscriptions.confirmation.downgrade") %>
     <% end %>
 
     <clb/>
