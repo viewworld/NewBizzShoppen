@@ -163,7 +163,13 @@ class Subscription < ActiveRecord::Base
   end
 
   def can_cancel_at
-    payable? ? start_date + 1.day : nil
+    if payable? and normal?
+      start_date + 1.day
+    elsif downgraded?
+      end_date + 1.day
+    else
+      nil
+    end
   end
 
   def free_period_can_be_applied?

@@ -17,16 +17,16 @@
     </div>
 <% end %>
 
-<% if current_user.can_upgrade_or_downgrade_subscription? %>
+<% if current_user and current_user.can_upgrade_or_downgrade_subscription? %>
     <hr/>
     <div id="available_subscriptions">
         <h2><%= t("subscriptions.available_subscriptions") %></h2>
         <p>
             <%= blurb(:blurb_subscription_select) %>
         </p>
-        <% @subscriptions = SubscriptionPlan.active.exclude_free((current_user and current_user.has_free_subscription?)).ascend_by_billing_price %>
+        <% @subscriptions = SubscriptionPlan.active.exclude_free(true).exclude_current_plan(current_user.active_subscription_plan).for_role(role).ascend_by_billing_price.select{|sp| current_user.subscription_can_be_changed_to?(sp) } %>
         <% if @subscriptions.any? %>
-            <% SubscriptionPlan.active.exclude_free((current_user and current_user.has_free_subscription?)).for_role(role).ascend_by_billing_price.each do |subscription_plan| %>
+            <% @subscriptions.each do |subscription_plan| %>
                 <%= render :partial => 'shared/subscriptions/subscription', :locals => {:subscription_plan => subscription_plan, :role => role, :form => form} %>
             <% end %>
         <% else %>
