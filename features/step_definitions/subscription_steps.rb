@@ -9,9 +9,23 @@ Given /^subscription plan has following lines$/ do |table|
   end
 end
 
+Given /^subscription plan has currency named "([^"]*)"$/ do |name|
+    @subscription_plan.update_attribute(:currency, Currency.where(:name => name).first)
+end
+
 When /^user with email "([^"]*)" has subscription named "([^"]*)"$/ do |email, name|
   user = User.where(:email => email).first.with_role
   user.apply_subscription!(SubscriptionPlan.where(:name => name).first)
+end
+
+When /^user with email "([^"]*)" upgrades to subscription named "([^"]*)"$/ do |email, name|
+  user = User.where(:email => email).first.with_role
+  user.upgrade_subscription!(SubscriptionPlan.where(:name => name).first)
+end
+
+When /^user with email "([^"]*)" has billing date today for active subscription$/ do |email|
+  user = User.where(:email => email).first.with_role
+  user.active_subscription.update_attribute(:billing_date, Date.today)
 end
 
 Then /^user with email "([^"]*)" should have subscription named "([^"]*)" cancelled$/ do |email, name|

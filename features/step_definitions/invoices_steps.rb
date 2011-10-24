@@ -123,3 +123,14 @@ When /^first invoice for user "([^"]*)" with role "([^"]*)" has seller for count
   invoice = "User::#{role_name.classify}".constantize.where(:email => email).first.invoices.first
   assert invoice.seller == Seller.for_country(Country.where(:name => country_name).first.id).first
 end
+
+Given /^first invoice exists for user "([^"]*)" with the following invoice lines$/ do |email, table|
+  user = User.where(:email => email).first.with_role
+  invoice = user.invoices.first
+
+  assert invoice.invoice_lines.size == table.hashes.size
+
+  table.hashes.each do |hash|
+    assert invoice.invoice_lines.detect { |i| i.name == hash["name"] }.netto_price.to_i == hash["netto_price"].to_i
+  end
+end
