@@ -5,6 +5,7 @@ class Subscription < ActiveRecord::Base
   has_many :subscription_plan_lines, :as => :resource, :dependent => :destroy
   belongs_to :user
   belongs_to :subscription_plan
+  belongs_to :currency
 
   acts_as_list :scope => :user_id
   scope :active, lambda { where("is_active = ? and ((end_date IS NULL and billing_cycle = 0) or end_date >= ?)", true, Date.today) }
@@ -83,6 +84,11 @@ class Subscription < ActiveRecord::Base
     end
   end
 
+  def cache_prices
+    self.billing_price = total_billing
+    self.euro_billing_price = currency.to_euro(billing_price)
+  end
+
   def self.clone_from_subscription_plan!(subscription_plan, user, start_date=nil)
     subscription = Subscription.new(:user => user)
     subscription_plan.attributes.keys.except(["id", "roles_mask", "created_at", "updated_at", "billing_price", "is_active"]).each do |method|
@@ -93,6 +99,7 @@ class Subscription < ActiveRecord::Base
       subscription.subscription_plan_lines << line.clone
     end
     subscription.apply_time_constraints(start_date ? start_date : Date.today)
+    subscription.cache_prices
     subscription.save
     subscription
   end

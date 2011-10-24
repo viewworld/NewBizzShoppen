@@ -1482,7 +1482,7 @@ en:
           supplier_first_name: First name
           supplier_last_name: Last name
           supplier_screen_name: "Screen name"
-          not_invoiced_count: Leads
+          not_invoiced_count: Items
           not_invoiced_sum: Total
           create_invoice: Create invoice
           search_label: Search
@@ -1495,6 +1495,7 @@ en:
             role_member: "Member"
             role_supplier: "Supplier"
             with_role: "Role"
+            with_subscriber_type: "Type"
           supplier_type: "Type"
           supplier_role: "Role"
           invoice_selected: "Invoice selected"

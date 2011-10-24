@@ -28,6 +28,8 @@ class User < ActiveRecord::Base
 
   BLACK_LISTED_ATTRIBUTES = [:paypal_email, :bank_swift_number, :bank_iban_number]
 
+  SUBSCRIBER_TYPES = [['Ad-hoc', 'ad-hoc'], ['Subscriber', 'subscriber']]
+
   include RoleModel
   include ScopedSearch::Model
   include RoleChange
@@ -370,6 +372,11 @@ class User < ActiveRecord::Base
   def self.role_as_text(_role)
     selected_role = BASIC_USER_ROLES_WITH_LABELS.detect { |r| r.last == _role.to_s }
     selected_role.blank? ? "" : selected_role.first
+  end
+
+  def subscriber_type_as_text
+    selected = SUBSCRIBER_TYPES.detect { |t| t.last == subscriber_type }
+    selected ? selected.first : ""
   end
 
   def refresh_supplier_counters!

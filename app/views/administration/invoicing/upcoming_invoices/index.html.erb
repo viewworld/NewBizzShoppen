@@ -7,8 +7,8 @@
           <fieldset class="inputs_vertical">
             <ol class="no_pdd">
               <li class="string">
-                <%= f.label :with_not_invoiced_keyword, t("administration.upcoming_invoices.index.view.search.with_keyword") %>
-                <%= f.text_field :with_not_invoiced_keyword %>
+                <%= f.label :with_keyword, t("administration.upcoming_invoices.index.view.search.with_keyword") %>
+                <%= f.text_field :with_keyword %>
               </li>
               <li class="date">
                 <%= f.label :with_assigned_at_date_after_and_including, t("administration.upcoming_invoices.index.view.search.with_assigned_at_date_after_and_including") %>
@@ -17,6 +17,10 @@
               <li class="date">
                 <%= f.label :with_assigned_at_date_before_and_including, t("administration.upcoming_invoices.index.view.search.with_assigned_at_date_before_and_including") %>
                 <%= f.text_field :with_assigned_at_date_before_and_including, :class => "formtastic-ui-datepicker" %>
+              </li>
+              <li class="select">
+                <%= f.label :with_subscriber_type, t("administration.upcoming_invoices.index.view.search.with_subscriber_type") %>
+                <%= f.select :with_subscriber_type, User::SUBSCRIBER_TYPES, :include_blank => true %>
               </li>
               <li class="select">
                 <%= f.label :with_role, t("administration.upcoming_invoices.index.view.search.with_role") %>
@@ -85,7 +89,7 @@
               <td class="no_pdd_lr"><%= check_box_tag "debtors_ids[]", "#{lead_purchase.owner_id}:#{lead_purchase.currency_id}", false, {:id => "debtors_id_checkbox_#{lead_purchase.owner_id}"} %></td>
               <td><%= lead_purchase.owner.first_name %></td>
               <td><%= lead_purchase.owner.last_name %></td>
-              <td><% lead_purchase.owner %></td>
+              <td><%= lead_purchase.owner.subscriber_type_as_text %></td>
               <td><%= lead_purchase.owner.has_role?(:supplier) ? t("administration.upcoming_invoices.index.view.search.role_supplier") : t("administration.upcoming_invoices.index.view.search.role_member") %></td>
               <td class="ta_r"><%= lead_purchase.not_invoiced_count %></td>
               <td class="ta_r"><%= as_currency(lead_purchase.not_invoiced_sum, Currency.where(:id => lead_purchase.currency_id).first) %></td>
