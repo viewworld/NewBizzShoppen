@@ -2,25 +2,38 @@
     <div id="current_subscription">
         <h2><%= t("subscriptions.current_subscription")%></h2>
         <%= render :partial => 'shared/subscriptions/current_subscription', :locals => {:subscription_plan => current_user.active_subscription_plan} %>
+
+        <% if current_user.active_subscription.is_today_in_free_period? %>
+            <h3><%= t("subscriptions.free_period_notification", :free_period_date => current_user.active_subscription.free_subscription_end_date) %></h3>
+        <% end %>
+
+        <% if !current_user.can_upgrade_or_downgrade_subscription? %>
+            <h3><%= t("subscriptions.cant_be_upgraded_nor_downgraded")%></h3>
+        <% elsif !current_user.can_upgrade_subscription? %>
+          <h3><%= t("subscriptions.cant_be_upgraded")%></h3>
+        <% elsif !current_user.can_upgrade_subscription? %>
+          <h3><%= t("subscriptions.cant_be_downgraded")%></h3>
+        <% end %>
     </div>
 <% end %>
 
-<hr/>
-
-<div id="available_subscriptions">
-    <h2><%= t("subscriptions.available_subscriptions") %></h2>
-    <p>
-        <%= blurb(:blurb_subscription_select) %>
-    </p>
-    <% @subscriptions = SubscriptionPlan.active.exclude_free((current_user and current_user.has_free_subscription?)).ascend_by_billing_price %>
-    <% if @subscriptions.any? %>
-        <% SubscriptionPlan.active.exclude_free((current_user and current_user.has_free_subscription?)).for_role(role).ascend_by_billing_price.each do |subscription_plan| %>
-            <%= render :partial => 'shared/subscriptions/subscription', :locals => {:subscription_plan => subscription_plan, :role => role, :form => form} %>
+<% if current_user and current_user.can_upgrade_or_downgrade_subscription? %>
+    <hr/>
+    <div id="available_subscriptions">
+        <h2><%= t("subscriptions.available_subscriptions") %></h2>
+        <p>
+            <%= blurb(:blurb_subscription_select) %>
+        </p>
+        <% @subscriptions = SubscriptionPlan.active.exclude_free(true).exclude_current_plan(current_user.active_subscription_plan).for_role(role).ascend_by_billing_price.select{|sp| current_user.subscription_can_be_changed_to?(sp) } %>
+        <% if @subscriptions.any? %>
+            <% @subscriptions.each do |subscription_plan| %>
+                <%= render :partial => 'shared/subscriptions/subscription', :locals => {:subscription_plan => subscription_plan, :role => role, :form => form} %>
+            <% end %>
+        <% else %>
+            <%= t("subscriptions.listing.no_available_subscriptions") %>
         <% end %>
-    <% else %>
-        <%= t("subscriptions.listing.no_available_subscriptions") %>
-    <% end %>
-</div>
+    </div>
+<% end %>
 
 <%#= custom_error_for_field(form, "subscription_plan_id") %>
 

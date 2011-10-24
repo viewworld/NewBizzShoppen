@@ -720,8 +720,16 @@ class User < ActiveRecord::Base
     subscriptions.where("start_date <= ?", Date.today).order("position DESC").first
   end
 
+  def next_subscription
+    subscriptions.where("start_date > ?", active_subscription.end_date).order("position ASC").first
+  end
+
   def active_subscription_plan
     active_subscription ? active_subscription.subscription_plan : nil
+  end
+
+  def next_subscription_plan
+    next_subscription ? next_subscription.subscription_plan : nil
   end
 
   def subscription_plan_is_valid?(subscription_plan)
@@ -742,27 +750,14 @@ class User < ActiveRecord::Base
     end
   end
 
-  #def change_subscription!(subscription_plan)
-  #  if subscription_can_be_changed_to?(subscription_plan)
-  #    as = active_subscription
-  #    as.next_subscription_plan = subscription_plan
-  #    if as.can_be_downgraded_to?(subscription_plan)
-  #      as.downgrade!
-  #    elsif as.can_be_upgraded_to?(subscription_plan)
-  #      if as.may_upgrade?
-  #        as.upgrade!
-  #      elsif as.may_upgrade_from_penalty?
-  #        as.upgrade_from_penalty!
-  #      end
-  #    end
-  #  end
-  #end
-
   def downgrade_subscription!(subscription_plan)
     if subscription_can_be_changed_to?(subscription_plan) and active_subscription.can_be_downgraded_to?(subscription_plan)
       as = active_subscription
       as.next_subscription_plan = subscription_plan
       as.downgrade!
+    else
+      self.errors.add(:base, I18n.t("subscriptions.cant_be_downgraded"))
+      false
     end
   end
 
@@ -775,6 +770,9 @@ class User < ActiveRecord::Base
       elsif as.may_upgrade_from_penalty?
         as.upgrade_from_penalty!
       end
+    else
+      self.errors.add(:base, I18n.t("subscriptions.cant_be_upgraded"))
+      false
     end
   end
 
@@ -783,6 +781,9 @@ class User < ActiveRecord::Base
       active_subscription.cancel!
     elsif active_subscription.may_cancel_during_lockup?
       active_subscription.cancel_during_lockup!
+    else
+      self.errors.add(:base, I18n.t("subscriptions.cant_be_canceled"))
+      false
     end
   end
 
@@ -808,6 +809,18 @@ class User < ActiveRecord::Base
 
   def can_upgrade_subscription?
     active_subscription.can_be_upgraded?
+  end
+
+  def can_upgrade_or_downgrade_subscription?
+    can_upgrade_subscription? or can_downgrade_subscription?
+  end
+
+  def can_cancel_subscription?
+    active_subscription.may_cancel? or active_subscription.may_cancel_during_lockup?
+  end
+
+  def can_cancel_subscription_at
+    active_subscription.can_cancel_at
   end
 
   def is_lockup_period?
