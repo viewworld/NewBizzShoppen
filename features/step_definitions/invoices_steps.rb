@@ -119,6 +119,11 @@ When /^last invoice for user "([^"]*)" with role "([^"]*)" is refunded for lines
   end
 end
 
+When /^first invoice for user "([^"]*)" with role "([^"]*)" has seller with company name "([^"]*)"$/ do |email, role_name, company_name|
+  invoice = "User::#{role_name.classify}".constantize.where(:email => email).first.invoices.first
+  assert invoice.seller == Seller.where(:company_name => company_name).first
+end
+
 When /^first invoice for user "([^"]*)" with role "([^"]*)" has seller for country "([^"]*)"$/ do |email,role_name, country_name|
   invoice = "User::#{role_name.classify}".constantize.where(:email => email).first.invoices.first
   assert invoice.seller == Seller.for_country(Country.where(:name => country_name).first.id).first

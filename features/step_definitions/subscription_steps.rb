@@ -3,6 +3,10 @@ Given /^subscription plan exists with attributes "([^"]*)"$/ do |options|
   @subscription_plan = SubscriptionPlan.make!(options_hash)
 end
 
+Given /^subscription plan has seller "([^"]*)"$/ do |seller_company_name|
+  @subscription_plan.update_attribute(:seller, Seller.where(:company_name => seller_company_name).first)
+end
+
 Given /^subscription plan has following lines$/ do |table|
   table.hashes.each do |hash|
     @subscription_plan.subscription_plan_lines.create(hash)
