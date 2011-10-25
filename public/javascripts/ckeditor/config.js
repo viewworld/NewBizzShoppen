@@ -81,5 +81,13 @@ CKEDITOR.editorConfig = function( config )
         ['Link','Unlink','Anchor'],
         ['Table','HorizontalRule','Smiley','SpecialChar','PageBreak', 'insertEmailTemplVars']
     ];
+
+    config.toolbar_Lite =
+    [
+        ['Styles','Format'],
+        ['Bold','Italic','Underline'],
+        ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
+        ['Link','Unlink']
+    ];
 };
 

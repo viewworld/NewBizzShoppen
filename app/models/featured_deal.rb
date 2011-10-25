@@ -2,8 +2,10 @@ class FeaturedDeal < ActiveRecord::Base
   belongs_to :deal
 
   validates_presence_of :position
+  scope :with_active_deals, lambda { |date| joins("LEFT JOIN leads ON featured_deals.deal_id = leads.id").order("featured_deals.position ASC").
+      where("leads.published IS true AND leads.start_date <= :date AND leads.end_date >= :date ", :date => date).select("leads.*") }
 
-  POSITIONS = [0, 1, 2, 3, 4, 5 , 6, 7, 8, 9]
+  POSITIONS = (0..15).to_a
 
   class << self
 
