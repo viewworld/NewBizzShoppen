@@ -743,4 +743,10 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
   def send_weekly_lead_notifications
     CommonNotifications.send_weekly_lead_notifications!
   end
+
+  desc "prolong_subscriptions_daily", ""
+
+  def prolong_subscriptions_daily
+    Subscription.auto_prolong
+  end
 end

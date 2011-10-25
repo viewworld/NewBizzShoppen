@@ -115,6 +115,7 @@ class IntegrationTasks < Thor
     end
   end
 
+  desc "m21", ""
   def m21
     puts "Updating translations"
     Translation.where(:key => "administration.upcoming_invoices.index.view.not_invoiced_count", :locale => "en").first.update_attribute(:value, "Items")
