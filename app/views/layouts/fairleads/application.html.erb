@@ -61,7 +61,7 @@
     <%= link_to image_tag("logo_fairleads.png"), root_path, :class => "logo" %>
   </div>
 
-  <%= render('/layouts/cart') if current_user && current_user.has_role?(:lead_supplier) && !current_user.big_buyer %>
+  <%= render('/layouts/cart') if current_user && current_user.has_role?(:lead_supplier) && !current_user.big_buyer? %>
 
   <div id="user_menu">
     <%= render "layouts/fairleads/main_menu" %>
@@ -72,7 +72,7 @@
         </div>
     <% end %>
 
-    <% if current_user && current_user.has_role?(:lead_supplier) && !current_user.big_buyer %>
+    <% if current_user && current_user.has_role?(:lead_supplier) && !current_user.big_buyer? %>
         <div id="cart">
           <ul class="nav">
             <li>

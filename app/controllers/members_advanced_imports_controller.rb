@@ -29,7 +29,7 @@ class MembersAdvancedImportsController < SecuredController
   end
 
   def check_role
-    unless (current_user.has_any_role?(:call_centre, :call_centre_agent, :agent) and current_user.has_role?(:deal_maker)) or current_user.admin?
+    unless (current_user.has_any_role?(:call_centre, :call_centre_agent, :agent) and current_user.deal_maker?) or current_user.admin?
       raise CanCan::AccessDenied
     end
   end

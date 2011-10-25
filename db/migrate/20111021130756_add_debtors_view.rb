@@ -15,7 +15,7 @@ class AddDebtorsView < ActiveRecord::Migration
               left outer join invoice_lines on lead_purchases.id=invoice_lines.payable_id
               WHERE ((((("lead_purchases"."type" = 'LeadPurchase' OR "lead_purchases"."type" = 'LeadPrimaryPurchase')
               OR "lead_purchases"."type" = 'LeadSinglePurchase') OR "lead_purchases"."type" = 'LeadBuyout')
-              OR "lead_purchases"."type" = 'LeadAdditionalBuyout')) AND (invoice_lines.payable_id is NULL and users.big_buyer = 't')
+              OR "lead_purchases"."type" = 'LeadAdditionalBuyout')) AND (invoice_lines.payable_id is NULL)
 
 
               UNION

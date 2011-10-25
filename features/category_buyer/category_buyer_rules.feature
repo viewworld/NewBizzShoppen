@@ -23,7 +23,8 @@ Feature: Category buyer rules
   @_done
   Scenario: I can add lead users when registered from category home page
     When Category named "Best Leads" already exists
-    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads" with attributes "team_buyers:1"
+    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads" with attributes ""
+    And user "jon@lajoie.ca" has team buyers enabled
     And I am on category home page for Best Leads
     And I sign in as jon@lajoie.ca with password secret
     And I follow translated "layout.main_menu.supplier.subaccounts"
@@ -41,7 +42,8 @@ Feature: Category buyer rules
   @_done
   Scenario: I can add lead buyers when registered from category home page
     When Category named "Best Leads" already exists
-    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads" with attributes "team_buyers:1"
+    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads" with attributes ""
+    And user "jon@lajoie.ca" has team buyers enabled
     And I am on category home page for Best Leads
     And I sign in as jon@lajoie.ca with password secret
     And I follow translated "layout.main_menu.supplier.subaccounts"
@@ -59,7 +61,8 @@ Feature: Category buyer rules
   @_done
   Scenario: Subaccounts should have access only to parents category
     When Category named "Best Leads" already exists
-    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads" with attributes "team_buyers:1"
+    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads" with attributes ""
+    And user "jon@lajoie.ca" has team buyers enabled
     And I am on category home page for Best Leads
     And I sign in as jon@lajoie.ca with password secret
     And I follow translated "layout.main_menu.supplier.subaccounts"
@@ -85,7 +88,8 @@ Feature: Category buyer rules
   @m6 @_done @_tested  @requested
   Scenario: Category buyers should not have to configure their interest page, but have country selected to the country from which the category was design for.
     When Category named "Best Leads" already exists
-    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads" with attributes "team_buyers:1"
+    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads" with attributes ""
+    And user "jon@lajoie.ca" has team buyers enabled
     And I am on category home page for Best Leads
     And I sign in as jon@lajoie.ca with password secret
     And I follow translated "layout.my_profile_link"
@@ -97,7 +101,8 @@ Feature: Category buyer rules
   Scenario: If category buyer has more than one category assigned, when browsing leads he should see "Category dropdown" which will redirect him to correct category scope when filtering
     When Category named "Best Leads" already exists
     And Category named "Worst Leads" already exists
-    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads" with attributes "team_buyers:1"
+    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads" with attributes ""
+    And user "jon@lajoie.ca" has team buyers enabled
     And user "jon@lajoie.ca" is assigned to category "Worst Leads" as category buyer
     And I am on category home page for Best Leads
     And I sign in as jon@lajoie.ca with password secret
@@ -110,7 +115,8 @@ Feature: Category buyer rules
   Scenario: If category buyer has more than one category he can access all of them
     When Category named "Basic Leads" already exists
     And Category named "Worst Leads" already exists
-    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Basic Leads" with attributes "team_buyers:1"
+    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Basic Leads" with attributes ""
+    And user "jon@lajoie.ca" has team buyers enabled
     And user "jon@lajoie.ca" is assigned to category "Worst Leads" as category buyer
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
@@ -124,7 +130,8 @@ Feature: Category buyer rules
   Scenario: Category buyer can't access categories he's not assigned to
     When Category named "Basic Leads" already exists
     And Category named "Worst Leads" already exists
-    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Basic Leads" with attributes "team_buyers:1"
+    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Basic Leads" with attributes ""
+    And user "jon@lajoie.ca" has team buyers enabled
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
     And I am on category home page for Worst Leads
@@ -134,7 +141,8 @@ Feature: Category buyer rules
   Scenario: Subaccounts should have access to all parents category
     When Category named "Best Leads" already exists
     And Category named "Worst Leads" already exists
-    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads" with attributes "team_buyers:1"
+    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads" with attributes ""
+    And user "jon@lajoie.ca" has team buyers enabled
     And user "jon@lajoie.ca" is assigned to category "Worst Leads" as category buyer
     And I am on category home page for Best Leads
     And I sign in as jon@lajoie.ca with password secret
@@ -161,7 +169,8 @@ Feature: Category buyer rules
   Scenario: Subaccounts for Category buyer can't access categories parent is not assigned to
     When Category named "Basic Leads" already exists
     And Category named "Worst Leads" already exists
-    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Basic Leads" with attributes "team_buyers:1"
+    And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Basic Leads" with attributes ""
+    And user "jon@lajoie.ca" has team buyers enabled
     And an user with role lead_supplier and email stiw@lajoie.ca exists as subaccount for customer jon@lajoie.ca
     And I am on the home page
     And I sign in as stiw@lajoie.ca with password secret
@@ -181,7 +190,8 @@ Feature: Category buyer rules
   Scenario: I can edit lead buyer that belongs to my account
     When Category named "Best Leads" already exists
     And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads"
-    And user "jon@lajoie.ca" with role "category_supplier" has attributes "team_buyers:1"
+    And user "jon@lajoie.ca" with role "category_supplier" has attributes ""
+    And user "jon@lajoie.ca" has team buyers enabled
     And an user with role lead_supplier and email lead_buyer@nbs.com exists as subaccount for customer jon@lajoie.ca
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret
@@ -198,7 +208,8 @@ Feature: Category buyer rules
   Scenario: I can edit lead user that belongs to my account
     When Category named "Best Leads" already exists
     And I am signed up and confirmed as user with email "jon@lajoie.ca" and password "secret" and role "category_supplier" for category "Best Leads"
-    And user "jon@lajoie.ca" with role "category_supplier" has attributes "team_buyers:1"
+    And user "jon@lajoie.ca" with role "category_supplier" has attributes ""
+    And user "jon@lajoie.ca" has team buyers enabled
     And an user with role lead_user and email lead_user@nbs.com exists as subaccount for customer jon@lajoie.ca
     And I am on the home page
     And I sign in as jon@lajoie.ca with password secret

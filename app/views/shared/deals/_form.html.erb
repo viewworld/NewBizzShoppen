@@ -99,7 +99,7 @@
         <% if user_signed_in? and current_user.admin? %>
             <%= form.input :created_leads %>
         <% end %>
-        <% if user_signed_in? and (current_user.admin? or current_user.has_role?(:deal_maker)) %>
+        <% if user_signed_in? and (current_user.admin? or current_user.deal_maker?) %>
             <span id="deal_published">
                 <%= form.input :published %>
             </span>

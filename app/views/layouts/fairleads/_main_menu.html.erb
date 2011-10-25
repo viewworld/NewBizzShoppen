@@ -16,7 +16,7 @@
       <% current_user.roles_sorted.each do |role| %>
           <%= render "/layouts/fairleads/menu_sections/#{role.to_s}" %>
       <% end %>
-      <% if current_user.has_role?(:deal_maker) and current_user.has_any_role?(:call_centre, :call_centre_agent, :agent) %>
+      <% if current_user.deal_maker? and current_user.has_any_role?(:call_centre, :call_centre_agent, :agent) %>
         <%= main_menu_link_to(t("layout.main_menu.shared.deal_maker_users"), deal_maker_users_path, :tab => "deal_maker_users") %>
       <% end %>
   <% end %>

@@ -50,7 +50,7 @@ describe Lead do
     end
 
     it "should be accepted properly by big buyer" do
-      customer = User::Supplier.make!(:big_buyer => true)
+      customer = User::Supplier.make!(:subscription_plan_id => SubscriptionPlan.make!(:assigned_roles => [:supplier], :big_buyer => true))
       lead_user = User::LeadUser.make!(:parent_id => customer.id)
       lead = Lead.make!
       lead_request = lead_user.lead_requests.create!(:lead_id => lead.id)

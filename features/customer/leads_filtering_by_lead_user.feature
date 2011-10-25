@@ -8,7 +8,8 @@ Background:
   Given I am on the homepage
   And I make sure current locale is "en"
   Given I am signed up and confirmed as user with email customer@person.com and password supersecret and role supplier
-  And user customer@person.com with role supplier exists with attributes "team_buyers:true"
+  And user customer@person.com with role supplier exists with attributes ""
+  And user "customer@person.com" has team buyers enabled
   And an user with role lead_user and email lead_user2@person.com exists as subaccount for customer customer@person.com
   And an user with role lead_user and email lead_user44@person.com exists as subaccount for customer customer@person.com
   And user lead_user2@person.com with role lead_user exists with attributes "screen_name:John McCoy,first_name:John,last_name:McCoy"

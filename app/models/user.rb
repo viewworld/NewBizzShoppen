@@ -115,7 +115,7 @@ class User < ActiveRecord::Base
 
   attr_accessor :agreement_read, :locked, :skip_email_verification, :deal_maker_role_enabled_flag, :send_invitation, :auto_generate_password, :email_materials, :cancel_subscription, :subscription_plan_id, :assign_free_subscription_plan
 
-  before_save :handle_locking, :handle_team_buyers_flag, :refresh_certification_of_call_centre_agents, :set_euro_billing_rate, :handle_deal_maker_enabled
+  before_save :handle_locking, :refresh_certification_of_call_centre_agents, :set_euro_billing_rate, :handle_deal_maker_enabled
   before_create :set_rss_token, :set_email_verification
   before_destroy :can_be_removed
   after_create :auto_activate
@@ -186,18 +186,6 @@ class User < ActiveRecord::Base
     if locked
       self.locked_at = locked == "unlock" ? nil : Time.now
       self.cancel_subscription = true if locked_at and active_subscription
-    end
-  end
-
-  def handle_team_buyers_flag
-    if team_buyers_changed? and !team_buyers # unchecking / turning off
-      if owned_lead_requests.any?
-        errors.add(:team_buyers, I18n.t("errors.messages.user.team_suppliers.has_lead_requests"))
-        return false
-      elsif subaccounts.any?
-        errors.add(:team_buyers, I18n.t("errors.messages.user.team_suppliers.has_subaccounts"))
-        return false
-      end
     end
   end
 
@@ -835,6 +823,7 @@ class User < ActiveRecord::Base
     active_subscription.penalty?
   end
 
+
   def is_extendable?
     active_subscription.normal? or active_subscription.lockup?
   end
@@ -845,5 +834,17 @@ class User < ActiveRecord::Base
 
   def ad_hoc?
     subscriber_type == SUBSCRIBER_TYPE_AD_HOC
+  end
+
+  def big_buyer?
+    active_subscription ? active_subscription.big_buyer? : parent ? parent.big_buyer? : false
+  end
+
+  def team_buyers?
+    active_subscription ? active_subscription.team_buyers? : false
+  end
+
+  def deal_maker?
+    active_subscription ? active_subscription.deal_maker? : admin? ? true : has_role?(:deal_maker)
   end
 end

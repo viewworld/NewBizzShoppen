@@ -5,6 +5,7 @@ class EmailTemplatesController < SecuredController
 
   before_filter :fetch_objects
   before_filter :authorize_for_controller!
+  before_filter :authorize_for_deal_maker!
 
   private
 
@@ -14,8 +15,12 @@ class EmailTemplatesController < SecuredController
   end
 
   def authorize_for_controller!
-    authorize_role(:admin, :deal_maker)
+    authorize_role(:admin, :agent, :call_centre, :call_centre_agent, :supplier)
     authorize_manage_rights(@deal)
+  end
+
+  def authorize_for_deal_maker!
+    raise CanCan::AccessDenied unless current_user.deal_maker?
   end
 
   public

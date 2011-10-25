@@ -508,15 +508,11 @@ Feature: Agent campaign - calling session
       And I fill in "call_result_contact_address_line_1" with "LongRoad 2"
       And I fill in "call_result_contact_zip_code" with "21-221"
       And I fill in "call_result_contact_email_address" with "new_buyer888@nbs.com"
-      And I check "call_result_user_big_buyer"
       And I check "call_result_user_not_charge_vat"
-      And I check "call_result_user_team_buyers"
-      And I check "call_result_user_deal_maker_role_enabled"
-      And I fill in "call_result_user_big_buyer_purchase_limit" with "2398"
       And I follow translated "call_results.new.save_button"
       Then I should see translated "call_results.create.flash.successfully_added"
       And last email sent should have been sent to recipient "new_buyer888@nbs.com"
-      And user "new_buyer888@nbs.com" with role "supplier" should have attributes "big_buyer:true, not_charge_vat:true, team_buyers:true, big_buyer_purchase_limit:2398.0"
+      And user "new_buyer888@nbs.com" with role "supplier" should have attributes "not_charge_vat:true"
       And user "new_buyer888@nbs.com" has deal maker role enabled
   
     @m14 @requested @my_results @$_call_centre_agent @tgn @_done @tested_elsewhere

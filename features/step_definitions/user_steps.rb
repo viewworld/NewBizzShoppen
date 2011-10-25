@@ -48,13 +48,22 @@ Given /^(?:|I am |someone is )signed up and confirmed as user with email ([^"]*)
 end
 
 Given /^user "([^"]*)" has team buyers enabled$/ do |email|
-  User::Supplier.where(:email => email).first.update_attribute(:team_buyers, true)
+  subscription_plan = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12, :team_buyers => true)
+  subscription_plan.subscription_plan_lines.make!
+  user = User.where(:email => email).first.with_role
+  user.upgrade_subscription!(subscription_plan)
 end
 
 Given /^user "([^"]*)" has deal maker role enabled$/ do |email|
   user = User.where(:email => email).first.with_role
-  user.roles << :deal_maker
-  user.save
+  if user.has_any_role?(:agent, :call_centre, :call_centre_agent)
+    user.deal_maker_role_enabled = true
+    user.save
+  else
+    subscription_plan = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12, :team_buyers => true, :big_buyer => true)
+    subscription_plan.subscription_plan_lines.make!
+    user.upgrade_subscription!(subscription_plan)
+  end
 end
 
 Given /^user "([^"]*)" with role "([^"]*)" is confirmed$/ do |email, role|
@@ -165,8 +174,10 @@ Then /^User (.+) with role (.+) is blocked$/ do |email, role|
 end
 
 Then /^User (.+) with role (.+) is big buyer$/ do |email, role|
+  subscription_plan = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12, :big_buyer => true)
+  subscription_plan.subscription_plan_lines.make!
   user = "User::#{role.camelize}".constantize.first(:conditions => {:email => email})
-  user.update_attribute(:big_buyer, true)
+  user.upgrade_subscription!(subscription_plan)
 end
 
 Then /^User (.+) with role (.+) is from country (.+)$/ do |email, role, country_name|

@@ -3,6 +3,8 @@ Feature: Deals from procurement manager perspective
 
   Background:
     Given I am signed up and confirmed as user with email procurment@nbs.com and password secret and role member
+    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
+    And user with email "procurment@nbs.com" upgrades to subscription named "Premium member"
     And I am on the homepage
     And I make sure current locale is "en"
     Then I sign in as procurment@nbs.com with password secret
@@ -105,7 +107,7 @@ Feature: Deals from procurement manager perspective
 
   @_done @_tested @tgn @added @m18
   Scenario: When I sign up on fairdeals.dk/eu and confirmation is turned off I should still get email and be signed in afterword
-  Given setting for "email_verification_for_procurement_managers" is set to "0"
+  Given setting for "email_verification_for_members" is set to "0"
   Given I visit domain http://fairdeals.dk
   And I follow translated "fairdeals_home.show.view.get_free_account"
   And I fill in "user_member_company_name" with "The Young Tturks"
@@ -121,6 +123,7 @@ Feature: Deals from procurement manager perspective
   And I fill in "user_member_password_confirmation" with "secret"
   And I fill in "user_member_email" with "anakasparian@tyt.com"
   And I check "user_member_agreement_read"
+    And I open page in browser
   And I press translated "supplier_accounts.new.view.button_create_account"
   And I should be signed in
   And last email sent should have been sent to recipient "anakasparian@tyt.com"

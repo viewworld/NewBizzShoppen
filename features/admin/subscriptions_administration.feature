@@ -92,7 +92,7 @@ Scenario: I can specify lockup period in weeks ( number of weeks before the bill
 @_done @tested_elsewhere @tgn
 Scenario: I can select which features will be enabled in this subscription (Team Buyer, Big Buyer, Deal Maker)
 
-
+@_done @tested_elsewhere @tgn
 Scenario: Subscriptions will automatically prolong for the next billing cycle
 
 @_done @tested_elsewhere @tgn

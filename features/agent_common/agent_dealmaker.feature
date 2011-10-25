@@ -38,7 +38,6 @@ Feature: Agent dealmaker
     And I fill in "user_password" with "secret"
     And I fill in "user_password_confirmation" with "secret"
     And the "user_skip_email_verification" checkbox should be checked
-    And the "user_big_buyer" checkbox should be checked
     And I press translated "deal_maker_users.new.view.button_create"
     Then I should see translated "deal_maker_users.create.flash.user_creation_successful"
 
@@ -118,7 +117,6 @@ Feature: Agent dealmaker
     And I fill in "user_password" with "secret"
     And I fill in "user_password_confirmation" with "secret"
     And the "user_skip_email_verification" checkbox should be checked
-    And the "user_big_buyer" checkbox should be checked
     And I press translated "deal_maker_users.new.view.button_create"
     Then I follow translated "deal_maker_users.index.view.send_invitation"
     And last email sent should have been sent to recipient "annalee@nbs.com"
@@ -161,6 +159,5 @@ Feature: Agent dealmaker
     And I fill in "user_screen_name" with "Anna Lee2"
     And I fill in "user_email" with "annalee@nbs.com"
     And the "user_skip_email_verification" checkbox should be checked
-    And the "user_big_buyer" checkbox should be checked
     And I press translated "deal_maker_users.new.view.button_create"
     And I should see translated "deal_maker_users.create.flash.user_creation_successful"

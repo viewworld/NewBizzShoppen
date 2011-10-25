@@ -1,8 +1,7 @@
 class CallResult < ActiveRecord::Base
   attr_accessor :contact_email_address, :contact_first_name, :contact_last_name, :contact_address_line_1, :contact_address_line_2,
                 :contact_address_line_3, :contact_zip_code, :contact_country_id, :contact_phone_number,
-                :contact_company_name, :buying_category_ids, :result_id_changed, :user_big_buyer_purchase_limit, :user_big_buyer, :user_not_charge_vat,
-                :user_team_buyers, :user_deal_maker_role_enabled
+                :contact_company_name, :buying_category_ids, :result_id_changed, :user_not_charge_vat
 
   belongs_to :contact
   belongs_to :result
@@ -214,8 +213,7 @@ class CallResult < ActiveRecord::Base
                    :company_ean_number => contact.company_ean_number}
 
     if ["category_supplier", "supplier"].include?(role)
-      user_params.merge!(:big_buyer => user_big_buyer, :not_charge_vat => user_not_charge_vat, :team_buyers => user_team_buyers,
-                         :deal_maker_role_enabled => user_deal_maker_role_enabled, :big_buyer_purchase_limit => user_big_buyer_purchase_limit.to_f)
+      user_params.merge!(:not_charge_vat => user_not_charge_vat)
     end
 
     user = "User::#{role.camelize}".constantize.new(user_params)

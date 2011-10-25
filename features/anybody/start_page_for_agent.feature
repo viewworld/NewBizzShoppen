@@ -163,7 +163,8 @@ Scenario: When you are loged in as an agent and go to the role home pages, I sho
   Given there are no leads
   And I am signed up and confirmed as user with email ejdzent@nbs.com and password secret and role agent
   And lead Super ultra lead #1 is created by user ejdzent@nbs.com with role agent
-  And someone is signed up and confirmed as user with email bigbajer@nbs.com and password secret and role supplier with attributes "big_buyer:1"
+  And someone is signed up and confirmed as user with email bigbajer@nbs.com and password secret and role supplier with attributes ""
+  And User bigbajer@nbs.com with role supplier is big buyer
   And an user with role lead_user and email lidjuzer@nbs.com exists as subaccount for customer bigbajer@nbs.com
   And lead Super ultra lead #1 is bought by user bigbajer@nbs.com with role supplier and is assigned to user lidjuzer@nbs.com with role lead_user
   When I sign in as ejdzent@nbs.com with password secret

@@ -174,7 +174,6 @@ end
   last_name { Faker::Name.last_name }
   agreement_read { true }
   roles_mask { 112 }
-  team_buyers { false }
   company_name { Faker::Company.name }
   address { Address.make! }
   assign_free_subscription_plan { true }
@@ -475,5 +474,5 @@ end
 
 SubscriptionPlanLine.blueprint do
   name { Faker::Lorem.words(3).to_s }
-  price { rand(40).to_f }
+  price { rand(40).to_f+1 }
 end

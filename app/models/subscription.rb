@@ -144,14 +144,6 @@ class Subscription < ActiveRecord::Base
     !invoiced_at.blank?
   end
 
-  def apply_restrictions!
-    u = user.with_role
-    u.big_buyer = big_buyer?
-    u.team_buyers = team_buyers?
-    u.deal_maker_role_enabled = deal_maker?
-    u.save
-  end
-
   def can_be_downgraded_to?(subscription_plan)
     can_be_downgraded? and subscription_plan.total_billing < total_billing and may_downgrade?
   end

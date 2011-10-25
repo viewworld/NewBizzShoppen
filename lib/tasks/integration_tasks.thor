@@ -118,5 +118,12 @@ class IntegrationTasks < Thor
   def m21
     puts "Updating translations"
     Translation.where(:key => "administration.upcoming_invoices.index.view.not_invoiced_count", :locale => "en").first.update_attribute(:value, "Items")
+
+    users = User.with_role(:deal_maker)
+    users.each do |u|
+      if u.has_role?(:supplier)
+        u.with_role.update_attribute(:deal_maker_role_enabled, false)
+      end
+    end
   end
 end

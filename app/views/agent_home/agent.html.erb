@@ -26,7 +26,7 @@
               <%= bt_link_to :plus, t("agent_home.show.view.new_lead"), "javascript:void", :onclick => "$('#form_new_lead').submit()" %>
             </li>
             <% end %>
-            <% if current_user.has_role?(:deal_maker) %>
+            <% if current_user.deal_maker? %>
             <li>
                 <%= bt_link_to :plus, t("agent_home.show.view.new_deal"), self.send("new_#{current_user.role.to_s.pluralize}_deal_path") %>
             </li>

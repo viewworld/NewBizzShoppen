@@ -33,11 +33,6 @@
 
         <%= form.input :agreement_read, :as => :hidden %>
 
-
-        <% if @user.has_role?(:supplier) or params[:user_type] == "supplier" %>
-            <%= form.input :big_buyer, :as => :boolean %>
-        <% end %>
-
         <% if @user.new_record? %>
             <%= form.input :skip_email_verification, :as => :boolean %>
             <%= form.input :send_invitation, :as => :boolean %>

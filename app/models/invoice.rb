@@ -122,7 +122,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def generate_invoice_lines_for_big_buyer
-    if user and user.big_buyer?
+    if user
       User::Supplier.find(user_id).lead_purchases.select { |lp| lp.invoice_line.blank? and lp.lead.currency_id == currency_id }.each do |lead_purchase|
         InvoiceLine.create(
             :invoice => self,

@@ -28,7 +28,7 @@ Scenario: I can see my leads
 
 @m5 @ao @_done
 Scenario: I can add team members with team members enabled
-  When user "jon@lajoie.ca" with role "supplier" has attributes "team_buyers:1"
+  When user "jon@lajoie.ca" has team buyers enabled
   And I follow translated "layout.main_menu.shared.home"
   Then I should see translated "supplier_home.show.view.add_team_member"
   When I follow translated "supplier_home.show.view.add_team_member"
@@ -36,7 +36,6 @@ Scenario: I can add team members with team members enabled
 
 @added @m5 @ao @_done
 Scenario: I can't add team members with team members disabled
-  When user "jon@lajoie.ca" with role "supplier" has attributes "team_buyers:0"
   And I follow translated "layout.main_menu.shared.home"
   Then I should not see translated "supplier_home.show.view.add_team_member"
 

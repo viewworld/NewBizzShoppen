@@ -109,5 +109,5 @@ Feature: Customer signup
     And I fill in "deal_header" with "Templates deal test"
 
 
-  @m21 @requested @subscriptions
-  Scenario: When supplier has free subscription and tries to creates the deal then he/she needs to confirm by checkbox upgrade to more exp subscription with big buyer feature
+  @m21 @requested @subscriptions @tested_elsewhere @_done
+  Scenario: When supplier is not big buyer and tries to creates the deal then the created company category will not be autobuy

@@ -492,7 +492,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
 
 
       unless User::Supplier.find_by_email("buyer@nbs.com")
-        u = User::Supplier.make!(:email => "buyer@nbs.com", :password => "secret", :password_confirmation => "secret", :big_buyer => true)
+        u = User::Supplier.make!(:email => "buyer@nbs.com", :password => "secret", :password_confirmation => "secret")
         u.confirm!
         u.save
       end

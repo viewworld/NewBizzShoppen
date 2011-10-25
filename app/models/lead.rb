@@ -61,7 +61,7 @@ class Lead < AbstractLead
   scope :with_rated_bad_by, lambda { |agent| where("creator_id = ? and lead_purchases.rating_level > ? and lead_purchases.requested_by IS NULL", agent.id, LeadPurchase::RATING_SATISFACTORY).joins_on_lead_purchases }
   scope :with_not_rated_by, lambda { |agent| where("creator_id = ? and (lead_purchases.rating_level = -1 or lead_purchases.rating_level is NULL) and lead_purchases.requested_by IS NULL", agent.id).joins_on_lead_purchases }
 
-  scope :with_not_invoiced_for_user, lambda { |user| joins("RIGHT JOIN lead_purchases ON lead_purchases.lead_id = leads.id LEFT JOIN invoice_lines ON invoice_lines.payable_id = lead_purchases.id LEFT JOIN users ON users.id = lead_purchases.owner_id").where(["invoice_lines.payable_id IS NULL AND users.big_buyer IS TRUE AND users.id = ?", user.to_i]) }
+  scope :with_not_invoiced_for_user, lambda { |user| joins("RIGHT JOIN lead_purchases ON lead_purchases.lead_id = leads.id LEFT JOIN invoice_lines ON invoice_lines.payable_id = lead_purchases.id LEFT JOIN users ON users.id = lead_purchases.owner_id").where(["invoice_lines.payable_id IS NULL AND users.id = ?", user.to_i]) }
 
   scope :owned_by, lambda { |user| where("lead_purchases.accessible_from IS NOT NULL and lead_purchases.owner_id = ?", user.id).joins(:lead_purchases) }
   scope :without_unique_categories, where("categories.is_agent_unique = ? and categories.is_customer_unique = ?", false, false).joins(:category)
