@@ -3962,6 +3962,7 @@ en:
     current_subscription_billing_cycle: "The billing cycle for your current subscription plan is from %{from} to %{to}"
     will_prolong_on: "Your current subscription plan will automatically prolong on %{prolong_date}"
     next_subscription_plan: "Next subscription plan is '%{next_plan_name}' and it will be active from %{next_plan_active_from}"
+    lockup_period_notification: "You have entered a lockup period for your subscription. The subscription plan cannot be downgraded."
     confirmation:
       cancel: "Are you sure you want to cancel your current subscription plan?"
       downgrade: "Are you sure you want to downgrade your current subscription plan?"

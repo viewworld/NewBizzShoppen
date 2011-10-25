@@ -731,7 +731,7 @@ class User < ActiveRecord::Base
   end
 
   def subscription_can_be_changed_to?(subscription_plan)
-    subscription_plan_is_valid?(subscription_plan)
+    subscription_plan_is_valid?(subscription_plan) and (!active_subscription or (active_subscription.can_be_downgraded_to?(subscription_plan) or active_subscription.can_be_upgraded_to?(subscription_plan)))
   end
 
   def apply_subscription!(subscription_plan)
@@ -796,11 +796,11 @@ class User < ActiveRecord::Base
   end
 
   def can_downgrade_subscription?
-    active_subscription.can_be_downgraded?
+    active_subscription.can_be_downgraded? and active_subscription.may_downgrade?
   end
 
   def can_upgrade_subscription?
-    active_subscription.can_be_upgraded?
+    active_subscription.can_be_upgraded? and active_subscription.may_upgrade?
   end
 
   def can_upgrade_or_downgrade_subscription?

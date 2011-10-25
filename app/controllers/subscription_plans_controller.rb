@@ -35,7 +35,7 @@ class SubscriptionPlansController < SecuredController
 
   def cancel
     if @user.cancel_subscription!
-      flash[:notice] = t("subscriptions.flash.subscription_cancelled")
+      flash[:notice] = t("subscriptions.flash.subscription_canceled")
     else
       flash[:alert] = @user.errors.full_messages
     end

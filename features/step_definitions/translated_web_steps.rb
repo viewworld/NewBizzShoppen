@@ -3,6 +3,7 @@ Then /^I should see translated "([^"]*)"(?: with options "([^"]*)")?$/ do |key, 
   I18n.locale = :en
   if options.present?
     options = Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys
+    options.each{ |k,v| options[k] = eval(v[/\{(.*?)\}/,1]) if v[/\{(.*?)\}/,1] }
   Then %{I should see "#{I18n.t(key, options)}"}
     else
   Then %{I should see "#{I18n.t(key)}"}

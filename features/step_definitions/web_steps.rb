@@ -434,3 +434,8 @@ Given /^I visit domain (.+)$/ do |domain|
     visit(Capybara.app_host)
   end
 end
+
+When /^the date is "([^"]*)" days from now$/ do |num|
+  date = Date.today
+  Date.stubs(:today).returns(date+num.to_i.days)
+end
