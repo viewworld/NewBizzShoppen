@@ -3,6 +3,7 @@ Feature: Subscription management for user
 
   Background:
     When I am signed up and confirmed as user with email supp@nbs.com and password secret and role supplier
+    And user "supp@nbs.com" with role "supplier" has attributes "vat_number:12345"
     And I am on the home page
     And I sign in as supp@nbs.com with password secret
 
@@ -84,21 +85,99 @@ Feature: Subscription management for user
     When I follow translated "layout.main_menu.supplier.subaccounts"
     Then I should see translated "supplier.subaccounts.index.view.title"
 
-  @selenium @wip
+  @selenium @_done @_tested
   Scenario: I become small buyer if my subscription has big buyer disabled
     When there is subscription plan named "Medium for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0,big_buyer:1" and price "200"
     When I follow translated "layout.my_profile_link"
     And I confirm a js popup on the next step
     And I follow translated "subscriptions.listing.upgrade"
+    And I follow translated "layout.my_profile_link"
+    Then user "supp@nbs.com" should be big buyer
+    When the date is "1" days from now
+    And I follow translated "layout.my_profile_link"
+    And I confirm a js popup on the next step
+    And I follow translated "subscriptions.listing.cancel"
+    When I follow translated "layout.my_profile_link"
+    Then user "supp@nbs.com" should not be big buyer
 
+  @selenium @_done @_tested
   Scenario: I loose deal maker role if my subscription has deal maker disabled
+    When there is subscription plan named "Medium for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0,deal_maker:1" and price "200"
+    When I follow translated "layout.my_profile_link"
+    And I confirm a js popup on the next step
+    And I follow translated "subscriptions.listing.upgrade"
+    And I follow translated "layout.my_profile_link"
+    Then user "supp@nbs.com" should be deal maker
+    When the date is "1" days from now
+    And I follow translated "layout.my_profile_link"
+    And I confirm a js popup on the next step
+    And I follow translated "subscriptions.listing.cancel"
+    When I follow translated "layout.my_profile_link"
+    Then user "supp@nbs.com" should not be deal maker
 
+  @selenium @_done @_tested
   Scenario: I can manage team buyers if my subscription has team buyers enabled
+    When there is subscription plan named "Medium for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0,team_buyers:1" and price "200"
+    Then I should not see translated "layout.main_menu.supplier.subaccounts" within "#user_menu"
 
+  @selenium @_done @_tested
   Scenario: I become big buyer if my subscription has big buyer enabled
+    When there is subscription plan named "Medium for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0,big_buyer:1" and price "200"
+    When I follow translated "layout.my_profile_link"
+    And I confirm a js popup on the next step
+    And I follow translated "subscriptions.listing.upgrade"
+    And I follow translated "layout.my_profile_link"
+    Then user "supp@nbs.com" should be big buyer
 
+  @selenium @_done @_tested
   Scenario: I become deal maker if my subscription has deal maker enabled
+    When there is subscription plan named "Medium for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0,deal_maker:1" and price "200"
+    When I follow translated "layout.my_profile_link"
+    And I confirm a js popup on the next step
+    And I follow translated "subscriptions.listing.upgrade"
+    And I follow translated "layout.my_profile_link"
+    Then user "supp@nbs.com" should be deal maker
 
-  Scenario: When I login and my subscription is expired and not auto prolonged then I am switched to free subscription
+  @selenium @_done @_tested
+  Scenario: When I login and my subscription is expired it will automatically prolong
+    When there is subscription plan named "Basic for supplier" for role "supplier" with attributes "billing_cycle:2,lockup_period:1,billing_period:0,free_period:0" and price "100"
+    And I follow translated "layout.my_profile_link"
+    And I confirm a js popup on the next step
+    And I follow translated "subscriptions.listing.upgrade"
+    Then I should see "Basic for supplier" within "#current_subscription"
+    And I should see translated "subscriptions.will_prolong_on" with options "prolong_date:{Date.today+15.days}"
+    When the date is "15" days from now
+    And I follow translated "layout.my_profile_link"
+    Then I should see "Basic for supplier" within "#current_subscription"
+    And I should see translated "subscriptions.will_prolong_on" with options "prolong_date:{Date.today+15.days}"
 
+  @added @selenium @_done @_tested
+  Scenario: When I cancel my subscription during lockup period then the current subscirption should prolong one more time and then become free
+    When there is subscription plan named "Basic for supplier" for role "supplier" with attributes "billing_cycle:2,lockup_period:1,billing_period:0,free_period:0" and price "100"
+    And I follow translated "layout.my_profile_link"
+    And I confirm a js popup on the next step
+    And I follow translated "subscriptions.listing.upgrade"
+    And I follow translated "layout.my_profile_link"
+    And the date is "8" days from now
+    And active subscription for user "supp@nbs.com" is in lockup period
+    And I follow translated "layout.my_profile_link"
+    Then I should see translated "subscriptions.lockup_period_notification"
+    When I confirm a js popup on the next step
+    And I follow translated "subscriptions.listing.cancel"
+    Then I should see translated "subscriptions.next_subscription_plan" with options "next_plan_name:Basic for supplier,next_plan_active_from:{Date.today+7}"
+
+  @selenium @_done @_tested
   Scenario: I can use free period only once, when registered with other email but the same CVR number then I should not be able to use free period with warning: 'Sorry you company has already used its free subscription period'
+    When there is subscription plan named "Basic for supplier" for role "supplier" with attributes "billing_cycle:2,lockup_period:1,billing_period:0,free_period:1" and price "100"
+    And I follow translated "layout.my_profile_link"
+    And I confirm a js popup on the next step
+    And I follow translated "subscriptions.listing.upgrade"
+    And I follow translated "layout.my_profile_link"
+    Then I should see translated "subscriptions.free_period_notification" with options "free_period_date:{Date.today+7.days}"
+    When there is subscription plan named "Medium for supplier" for role "supplier" with attributes "billing_cycle:2,lockup_period:1,billing_period:0,free_period:1" and price "200"
+    And I follow translated "layout.my_profile_link"
+    And I confirm a js popup on the next step
+    And I follow translated "subscriptions.listing.upgrade"
+    And I follow translated "layout.my_profile_link"
+    Then I should not see translated "subscriptions.free_period_notification" with options "free_period_date:{Date.today+7.days}"
+

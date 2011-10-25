@@ -344,6 +344,10 @@ Given /^user "([^"]*)" should (be|not be) big buyer$/ do |email, is_big_buyer|
   assert User.find_by_email(email).big_buyer? == (is_big_buyer == "be")
 end
 
+Given /^user "([^"]*)" should (be|not be) deal maker$/ do |email, is_deal_maker|
+  assert User.find_by_email(email).deal_maker? == (is_deal_maker == "be")
+end
+
 When /^big buyer purchase limit for user "([^"]*)" is set to (\d+)$/ do |email, limit|
   User.find_by_email(email).update_attribute(:big_buyer_purchase_limit, limit)
 end
