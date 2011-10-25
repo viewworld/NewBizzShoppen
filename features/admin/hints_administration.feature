@@ -46,6 +46,7 @@ Scenario: I can login as any role and be able to edit content
   And I am not sign in
   Then I sign in as translator_1@nbs.com with password secret
   And I go to the homepage
+  And I open page in browser
   And I click hidden link by url regex "/administration\/articles\/\d+\/edit/"
   And I should see "Editing article"
 

@@ -173,7 +173,7 @@ end
   first_name { Faker::Name.first_name }
   last_name { Faker::Name.last_name }
   agreement_read { true }
-  roles_mask { 112 }
+  roles_mask { 48 }
   company_name { Faker::Company.name }
   address { Address.make! }
   assign_free_subscription_plan { true }

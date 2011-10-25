@@ -283,7 +283,7 @@ class Lead < AbstractLead
     if (supplier.lead_single_purchases.with_lead(id).any? ? supplier.lead_additional_buyouts : supplier.lead_buyouts).create(
         :lead_id => self.id,
         :paid => false,
-        :accessible_from => (supplier.big_buyer ? Time.now : nil),
+        :accessible_from => (supplier.big_buyer? ? Time.now : nil),
         :quantity => buyout_quantity)
       :buyout_successful
     end
