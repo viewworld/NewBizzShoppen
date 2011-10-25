@@ -19,7 +19,7 @@ class Deal < AbstractLead
   scope :for_user, lambda { |q| where("creator_id = ?", q.id) }
   scope :group_deals, where(:group_deal => true)
 
-  scoped_order :header, :end_date, :published, :created_at
+  scoped_order :header, :end_date, :published, :created_at, :company_name
 
   validates_presence_of :start_date, :end_date, :email_address
   validates_presence_of :deal_admin_email, :unless => Proc.new{|d| d.new_record? }
@@ -142,9 +142,19 @@ class Deal < AbstractLead
     if (deal_price.to_f > 0 and discounted_price.to_f > 0 and deal_price > discounted_price)
       "#{(100 - discounted_price * 100 / deal_price).to_i}%"
     elsif general_discount?
-      "#{discounted_price.to_f <= 100 and discounted_price.to_f > 0 ? discounted_price.to_i : 100}%"
+      "#{(discounted_price.to_f <= 100 and discounted_price.to_f > 0) ? discounted_price.to_i : 100}%"
     else
       "0%"
+    end
+  end
+
+  def saving_in_money
+    if (deal_price.to_f > 0 and discounted_price.to_f > 0 and deal_price > discounted_price)
+      (deal_price - discounted_price).to_f
+    elsif general_discount?
+      discounted_price.to_f
+    else
+      0
     end
   end
 

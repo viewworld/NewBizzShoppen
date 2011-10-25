@@ -698,7 +698,6 @@ Feature: Agent campaign - management
           And I choose "campaign_cost_type_3"
           And I press translated "campaigns.new.button_create"
           And I follow translated "campaigns.edit.agent_assignment_button"
-          And I open page in browser
           And I check "campaign_user_ids[]"
           And I follow translated "campaigns_users.index.button_assign"
           And I am not sign in

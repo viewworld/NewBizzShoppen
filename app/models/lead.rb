@@ -353,7 +353,7 @@ class Lead < AbstractLead
         [:contact_name, :full_name], [:phone_number, :phone], [:email_address, :email],
         [:company_name], [:address_line_1, nil, :address], [:address_line_2, nil, :address],
         [:address_line_3, nil, :address], [:zip_code, nil, :address], [:country_id, nil, :address],
-        [:region_id, nil, :address]
+        [:region_id, nil, :address], [:direct_phone_number, :direct_phone_number]
     ].each do |field1, field2, field3|
       field2 = field1 if field2.nil?
       if field3
@@ -361,6 +361,14 @@ class Lead < AbstractLead
       else
         self.send("#{field1}=".to_sym, user.send(field2.to_sym)) if self.send(field1.to_sym).blank?
       end
+    end
+  end
+
+  def fill_social_media_link(user)
+    if user.rpx_identifier.to_s[/facebook/]
+      self.facebook_url = user.rpx_identifier
+    elsif user.rpx_identifier.to_s[/linkedin/]
+      self.linkedin_url = user.rpx_identifier
     end
   end
 
@@ -372,6 +380,8 @@ class Lead < AbstractLead
     end
 
     copy_user_profile(user)
+
+    fill_social_media_link(user)
 
     current_locale = I18n.locale
     (deal.lead_translations.count > 1 ? ::Locale.enabled.map(&:code) : [current_locale]).each do |locale_code|
