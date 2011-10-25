@@ -543,10 +543,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
     [
         'About us',
         'Privacy',
-        'Terms & Conditions',
-        'Subscriptions for supplier',
-        'Subscriptions for category supplier',
-        'Subscriptions for member'
+        'Terms & Conditions'
     ].each do |title|
       unless Article::Cms::MainPageArticle.includes(:translations).where(:article_translations => {:title => title}).first
         article = Article::Cms::MainPageArticle.make!(:title => title, :content => title, :key => title.parameterize('_'))
@@ -580,7 +577,10 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
         'blurb_certification_member_signup',
         'blurb_certify_information',
         'blurb_start_page_fairdeals',
-        'blurb_subscription_select'
+        'blurb_subscription_select',
+        'blurb_subscriptions_for_supplier',
+        'blurb_subscriptions_for_category supplier',
+        'blurb_subscriptions_for_member'
     ].each do |key|
       unless Article::Cms::InterfaceContentText.where(:key => key).first
         article = Article::Cms::InterfaceContentText.make!(:title => key.humanize, :content => key.humanize, :key => key)

@@ -84,7 +84,7 @@ Feature: Subscription management for user
     When I follow translated "layout.main_menu.supplier.subaccounts"
     Then I should see translated "supplier.subaccounts.index.view.title"
 
-  @selenium @wip
+  @selenium
   Scenario: I become small buyer if my subscription has big buyer disabled
     When there is subscription plan named "Medium for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0,big_buyer:1" and price "200"
     When I follow translated "layout.my_profile_link"

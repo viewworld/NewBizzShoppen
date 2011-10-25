@@ -91,8 +91,12 @@ Scenario: I can view the article
 Scenario: I can destroy main page article
   When main page article exists with attributes "title:MainPageArticle"
   And I follow translated "layout.main_menu.admin.articles"
+  And I fill in "search_with_keyword" with "MainPageArticle"
+  And I press translated "administration.articles.index.view.search_button"
   Then I should see "MainPageArticle"
   And I follow translated "administration.articles.index.view.delete_link"
+  And I fill in "search_with_keyword" with "MainPageArticle"
+  And I press translated "administration.articles.index.view.search_button"
   Then I should not see "MainPageArticle"
 
 @added @_done
@@ -101,6 +105,8 @@ Scenario: I can not destroy interface content text
   And help popup exists with attributes "title:HelpPopup,key:help_popup"
   And I follow translated "layout.main_menu.admin.articles"
   Then I should see "Blurb"
+  And I fill in "search_with_keyword" with "HelpPopup"
+  And I press translated "administration.articles.index.view.search_button"
   And I should see "HelpPopup"
   And I should not see translated "administration.articles.index.view.delete_link"
 

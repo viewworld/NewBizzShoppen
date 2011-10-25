@@ -11,6 +11,7 @@ class CommonStats
 
   def self.refresh_subaccounts_counters
     User::Abstract.where("parent_id is not null").each do |user|
+      user = user.with_role
       user.refresh_subaccounts_counters!
     end
   end
@@ -21,12 +22,14 @@ class CommonStats
     end
 
     (User::Agent.all + User::CallCentreAgent.all).each do |user|
+      user = user.with_role
       user.refresh_agent_counters!
     end
   end
 
   def self.refresh_supplier_counters
     User::LeadSupplier.all.each do |user|
+      user = user.with_role
       user.refresh_supplier_counters!
     end
   end

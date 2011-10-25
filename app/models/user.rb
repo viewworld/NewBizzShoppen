@@ -200,7 +200,10 @@ class User < ActiveRecord::Base
   end
 
   def set_role
-    self.roles = [self.class.const_get("ROLES")]
+    unless ([self.class.const_get("ROLES")] - self.roles.to_a).empty?
+      self.roles = self.roles.to_a | [self.class.const_get("ROLES")]
+    end
+    true
   end
 
   def casted_class
