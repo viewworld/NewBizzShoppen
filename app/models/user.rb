@@ -104,6 +104,7 @@ class User < ActiveRecord::Base
   scope :with_results, joins("inner join call_results on users.id=call_results.creator_id")
   scope :for_campaigns, lambda { |campaign_ids| where("campaigns_users.campaign_id in (?)", campaign_ids) unless campaign_ids.empty? }
   scope :created_by, lambda { |user_id| where(:created_by => user_id) }
+  scope :all_subscribers, where("roles_mask & #{2**User.valid_roles.index(:lead_supplier)} > 0 OR roles_mask & #{2**User.valid_roles.index(:member)} > 0")
 
   scoped_order :id, :roles_mask, :first_name, :last_name, :email, :age, :department, :mobile_phone, :completed_leads_counter, :leads_requested_counter,
                :leads_assigned_month_ago_counter, :leads_assigned_year_ago_counter, :total_leads_assigned_counter, :leads_created_counter,
@@ -707,11 +708,20 @@ class User < ActiveRecord::Base
   end
 
   def active_subscription
-    subscriptions.where("start_date <= ?", Date.today).order("position DESC").first
+    active_sub = subscriptions.where("start_date <= ? and (end_date >= ? OR end_date IS NULL)", Date.today, Date.today).order("position DESC").first
+    if !active_sub and last_subscription
+      last_subscription.prolong!
+      active_sub = last_subscription
+    end
+    active_sub
   end
 
   def next_subscription
     subscriptions.where("start_date > ?", active_subscription.end_date).order("position ASC").first
+  end
+
+  def last_subscription
+    subscriptions.order("position DESC").first
   end
 
   def active_subscription_plan
@@ -777,10 +787,6 @@ class User < ActiveRecord::Base
       self.errors.add(:base, I18n.t("subscriptions.cant_be_canceled"))
       false
     end
-  end
-
-  def prolong_subscription!
-    subscriptions.order("position").last.prolong!
   end
 
   def subscription_required?

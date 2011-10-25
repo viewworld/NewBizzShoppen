@@ -197,4 +197,8 @@ class Subscription < ActiveRecord::Base
   def will_prolong?
     payable?
   end
+
+  def self.auto_prolong
+    User.all_subscribers.each(&:active_subscription)
+  end
 end

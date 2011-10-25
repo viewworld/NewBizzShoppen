@@ -262,7 +262,8 @@ describe Subscription do
       it "should be prolonged to the same subscription when payable subscription" do
         setup_customer(@payable_subscription1)
         set_date_today_to(@customer.active_subscription.end_date+1)
-        @customer.prolong_subscription!
+        #active_subscription auto prolongs when necessary
+        @customer.active_subscription
         @prev_subscription.reload
         @prev_subscription.should be_prolonged
         @customer.active_subscription.should be_normal
@@ -278,15 +279,28 @@ describe Subscription do
         @customer.cancel_subscription!
         @customer.active_subscription.should be_cancelled_during_lockup
         set_date_today_to(@customer.subscriptions.order("position").last.end_date+1)
-        @customer.prolong_subscription!
+        #active_subscription auto prolongs when necessary
+        @customer.active_subscription
         @customer.active_subscription.should_not be_payable
       end
 
       it "should NOT prolong when free subscription" do
         setup_customer(SubscriptionPlan.active.free.for_role("supplier").first)
-        @customer.prolong_subscription!
+        Subscription.auto_prolong
         @customer.active_subscription.should_not be_payable
         @customer.subscriptions.size.should == 1
+      end
+
+      it "should auto prolong subscriptions of all subscribers by rake task method" do
+        @customer1 = User::Supplier.make!(:subscription_plan_id => @payable_subscription1.id)
+        @customer2 = User::Supplier.make!(:subscription_plan_id => @payable_subscription1.id)
+
+        set_date_today_to(Date.today+12.weeks+1)
+
+        Subscription.auto_prolong
+
+        @customer1.active_subscription.start_date.should == Date.today
+        @customer2.active_subscription.start_date.should == Date.today
       end
     end
   end

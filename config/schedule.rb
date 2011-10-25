@@ -23,3 +23,7 @@ end
 every :sunday, :at => "8:00 pm" do
   command File.join(Dir.pwd, "RAILS_ENV=production thor nbs:send_daily_lead_notifications")
 end
+
+every 1.day, :at => "0:00" do
+  command File.join(Dir.pwd, "RAILS_ENV=production thor nbs:prolong_subscriptions_daily")
+end
