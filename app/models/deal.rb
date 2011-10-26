@@ -90,7 +90,8 @@ class Deal < AbstractLead
       contact_name_arr = contact_name_arr.size == 1 ? contact_name_arr : [contact_name_arr.first, contact_name_arr[1..-1].join(' ')]
       user = User::Supplier.new({:email => email_address, :company_name => company_name, :phone => phone_number,
                                  :screen_name => "#{contact_name}#{existing_users_count.zero? ? '' : existing_users_count+1}",
-                                 :agreement_read => true, :first_name => contact_name_arr.first, :last_name => contact_name_arr.last}.merge(params))
+                                 :agreement_read => true, :first_name => contact_name_arr.first, :last_name => contact_name_arr.last,
+                                 :assign_free_subscription_plan => true}.merge(params))
       user.skip_email_verification = "1"
       user.address = Address.new(:address_line_1 => address_line_1, :address_line_2 => address_line_2, :address_line_3 => address_line_3,
                                  :zip_code => zip_code, :country_id => country_id, :region_id => region_id)
@@ -237,7 +238,7 @@ class Deal < AbstractLead
         lead_category.customers << User.find(supplier.id)
         lead_category.save
       end
-      lead_category.update_attribute(:auto_buy, true) if !lead_category.auto_buy? and supplier.big_buyer?
+      lead_category.update_attribute(:auto_buy, true) if !lead_category.auto_buy? and supplier and supplier.big_buyer?
       self.lead_category_id = lead_category.id
     end
   end

@@ -11,7 +11,7 @@ class DealMakerUsersController < SecuredController
 
   def new
     @materials = []
-    @user = "User::#{params[:user_type] == "member" ? "Member" : "Supplier"}".constantize.new(:auto_generate_password => true)
+    @user = "User::#{params[:user_type] == "member" ? "Member" : "Supplier"}".constantize.new(:auto_generate_password => true, :assign_free_subscription_plan => true)
     @user.skip_email_verification = true
   end
 

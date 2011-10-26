@@ -102,19 +102,19 @@ Scenario: I can search for invoices pending creation by a combination of keyword
   Given I am not sign in
   Then I sign in as jon@lajoie.ca with password secret
   And I go to administration upcoming invoices
-  When I fill in "search_with_not_invoiced_keyword" with "jill johanssen"
+  When I fill in "search_with_keyword" with "jill johanssen"
   And I press translated "administration.upcoming_invoices.index.view.search_button"
   Then I should see "77.99"
   Then I should not see "88.32"
-  When I fill in "search_with_not_invoiced_keyword" with "xerox"
+  When I fill in "search_with_keyword" with "xerox"
   And I press translated "administration.upcoming_invoices.index.view.search_button"
   Then I should not see "77.99"
   Then I should see "88.32"
-  When I fill in "search_with_not_invoiced_keyword" with "monitors ultimate"
+  When I fill in "search_with_keyword" with "monitors ultimate"
   And I press translated "administration.upcoming_invoices.index.view.search_button"
   Then I should see "77.99"
   Then I should not see "88.32"
-  When I fill in "search_with_not_invoiced_keyword" with ""
+  When I fill in "search_with_keyword" with ""
   And I fill in "search_with_assigned_at_date_after_and_including" with "2011-01-05"
   And I fill in "search_with_assigned_at_date_before_and_including" with "2011-01-11"
   And I press translated "administration.upcoming_invoices.index.view.search_button"
