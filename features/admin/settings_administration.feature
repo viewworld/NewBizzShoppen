@@ -146,6 +146,7 @@ Scenario: I can enable/disable email verification for procurement managers
     | user_member_address_attributes_address_line_3        | Quebec          |
   And I select "Denmark" from "user_member_address_attributes_country_id"
   And I check "user_member_agreement_read"
+  And I choose "user_member_subscription_plan_id"
   And I press translated "member_accounts.new.view.button_create_account"
   Then I should see translated "flash.accounts.create.no_verification"
   And I sign in as lead_user2@person.com with password supersecret
@@ -169,6 +170,7 @@ Scenario: I can enable/disable email verification for procurement managers
     | user_member_address_attributes_address_line_3        | Quebec          |
   And I select "Denmark" from "user_member_address_attributes_country_id"
   And I check "user_member_agreement_read"
+  And I choose "user_member_subscription_plan_id"
   And I press translated "member_accounts.new.view.button_create_account"
   Then I should see translated "flash.member_accounts.create.notice"
 
@@ -193,6 +195,7 @@ Scenario: I can enable/disable email verification for sales managers
       | user_supplier_address_attributes_address_line_3        | Wesley             |
   And I select "Denmark" from "user_supplier_address_attributes_country_id"
   And I check "user_supplier_agreement_read"
+  And I choose "user_supplier_subscription_plan_id"
   And I press translated "supplier_accounts.new.view.button_create_account"
   Then I should see translated "flash.accounts.create.no_verification"
   And I sign in as lead_user2@person.com with password supersecret
@@ -216,6 +219,7 @@ Scenario: I can enable/disable email verification for sales managers
       | user_supplier_address_attributes_address_line_3        | Wesley             |
   And I select "Denmark" from "user_supplier_address_attributes_country_id"
   And I check "user_supplier_agreement_read"
+  And I choose "user_supplier_subscription_plan_id"
   And I press translated "supplier_accounts.new.view.button_create_account"
   Then I should see translated "flash.supplier_accounts.create.notice"
 
