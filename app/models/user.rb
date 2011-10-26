@@ -28,7 +28,9 @@ class User < ActiveRecord::Base
 
   BLACK_LISTED_ATTRIBUTES = [:paypal_email, :bank_swift_number, :bank_iban_number]
 
-  SUBSCRIBER_TYPES = [['Ad-hoc', 'ad-hoc'], ['Subscriber', 'subscriber']]
+  SUBSCRIBER_TYPE_AD_HOC = "ad-hoc"
+  SUBSCRIBER_TYPE_SUBSCRIBER = "subscriber"
+  SUBSCRIBER_TYPES = [['Ad-hoc', SUBSCRIBER_TYPE_AD_HOC], ['Subscriber', SUBSCRIBER_TYPE_SUBSCRIBER]]
 
   include RoleModel
   include ScopedSearch::Model
@@ -779,8 +781,10 @@ class User < ActiveRecord::Base
   def cancel_subscription!
     if active_subscription.may_cancel?
       active_subscription.cancel!
+      update_attribute(:subscriber_type, SUBSCRIBER_TYPE_AD_HOC)
     elsif active_subscription.may_cancel_during_lockup?
       active_subscription.cancel_during_lockup!
+      update_attribute(:subscriber_type, SUBSCRIBER_TYPE_AD_HOC)
     else
       self.errors.add(:base, I18n.t("subscriptions.cant_be_canceled"))
       false
@@ -837,5 +841,9 @@ class User < ActiveRecord::Base
 
   def has_free_period_available?
     vat_number.to_s.strip.present? and CompanyVat.where("lower(vat_number) like ?", vat_number.strip.downcase).first.nil?
+  end
+
+  def ad_hoc?
+    subscriber_type == SUBSCRIBER_TYPE_AD_HOC
   end
 end

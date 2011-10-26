@@ -56,7 +56,7 @@ class Invoice < ActiveRecord::Base
   after_create :duplicate_company_and_supplier_information, :set_year
   after_validation :set_default_currency, :if => Proc.new{ |i| i.new_record? }
   after_update :update_revenue_frozen
-  after_create :generate_invoice_lines_for_big_buyer
+  after_create :generate_invoice_lines_for_big_buyer, :generate_invoice_lines_for_subscriber
   before_update :generate_manual_transaction_for_big_buyer
   before_save :mark_all_invoice_lines_as_paid
   after_save :recalculate_invoice_items
@@ -131,6 +131,25 @@ class Invoice < ActiveRecord::Base
             :netto_price => lead_purchase.lead.price,
             :vat_rate => user.country_vat_rate,
             :quantity => lead_purchase.quantity)
+      end
+    end
+  end
+
+  def generate_invoice_lines_for_subscriber
+    if user and user.subscriptions.billable.any?
+      user = self.user.with_role
+      user.update_attribute(:subscriber_type, User::SUBSCRIBER_TYPE_SUBSCRIBER) if user.ad_hoc?
+      user.with_role.subscriptions.billable.each do |subscription|
+        subscription.update_attribute(:invoiced_at, Time.now)
+        subscription.subscription_plan_lines.each do |subscription_plan_line|
+          InvoiceLine.create(
+            :invoice => self,
+            :payable => subscription_plan_line,
+            :name => subscription_plan_line.name,
+            :netto_price => subscription_plan_line.price,
+            :vat_rate => user.country_vat_rate,
+            :quantity => 1)
+        end
       end
     end
   end
