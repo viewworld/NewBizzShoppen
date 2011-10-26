@@ -6,7 +6,7 @@
 
         <%= form.input :first_name %>
         <%= form.input :last_name %>
-
+        <%= form.input :assign_free_subscription_plan, :as => :hidden %>
         <% if defined? form.object.address and form.object.parent.blank? %>
             <%= form.fields_for :address do |address_form| %>
                 <%= address_form.input :address_line_1 %>
