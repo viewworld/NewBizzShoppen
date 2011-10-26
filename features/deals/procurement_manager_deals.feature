@@ -238,7 +238,7 @@ Feature: Deals from procurement manager perspective
     And I follow translated "deals.index.view.view_deal"
     And I should see "CODE4D3AL"
 
-  @m21 @requested @_done @_tested
+  @m21 @requested @_done @_tested @ao
   Scenario: When I get deal the direct phone number should be populated from my profile
     Given I visit domain http://fairdeals.dk
     And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
@@ -255,7 +255,7 @@ Feature: Deals from procurement manager perspective
     And I follow translated "deals.index.view.contact_me"
     Then the "lead_direct_phone_number" field should contain "48601101101"
 
-  @m21 @requested @_done @_tested
+  @m21 @requested @_done @_tested @ao
   Scenario: When I get deal the facebook url should contain profile link if my account is linked to facebook
     Given I visit domain http://fairdeals.dk
     And I am not sign in
@@ -273,7 +273,7 @@ Feature: Deals from procurement manager perspective
     And I follow translated "deals.index.view.contact_me"
     Then the "lead_facebook_url" field should contain "www.facebook.com/profile/123"
 
-  @m21 @requested @_done @_tested
+  @m21 @requested @_done @_tested @ao
   Scenario: When I get deal the linkedin url should contain profile link if my account is linked to linkedin
     Given I visit domain http://fairdeals.dk
     And I am not sign in
