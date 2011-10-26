@@ -63,7 +63,7 @@ Feature: Sign up feature
   Scenario: I can view popup with a blurb describing different subscription types
     When I am on the supplier home page
     And I follow translated "supplier_home.show.view.create_new_supplier_account"
-    Then I should see "Subscriptions for supplier"
+    Then I should see "Blurb subscription select"
 
   @m21 @requested @subscriptions @tgn @_done @_tested
   Scenario: I can select a subscription type (will there be free on the list?)

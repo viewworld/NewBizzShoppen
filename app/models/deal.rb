@@ -35,7 +35,6 @@ class Deal < AbstractLead
   before_create :create_uniq_deal_category, :set_default_max_auto_buy
   after_create :certify_for_unknown_email, :assign_deal_admin
   before_save :set_dates, :check_deal_request_details_email_template
-  after_save :handle_disabled_deal
 
   attr_accessor :creation_step, :use_company_name_as_category
 
@@ -48,13 +47,6 @@ class Deal < AbstractLead
 
   def active?
     published? and start_date <= Date.today and end_date >= Date.today
-  end
-
-  def handle_disabled_deal
-    if !active? and !featured_deals.empty?
-      self.featured_deals = []
-      self.save
-    end
   end
 
   def deal_admin_presence

@@ -9,38 +9,22 @@
         </div>
     <% end %>
 
-    <% if @primary_deal %>
+    <% unless @primary_deal.blank? %>
         <div id="primary_group_deal">
           <%= render :partial => 'primary_deal', :locals => {:primary_deal => @primary_deal} %>
         </div>
     <% end %>
 
     <!--- other deals --->
-
-    <div class="other_deals">
-      <%= render :partial => 'secondary_deal', :locals => {:position => 1} %>
-      <%= render :partial => 'secondary_deal', :locals => {:position => 2, :middle => "col_middle"} %>
-      <%= render :partial => 'secondary_deal', :locals => {:position => 3} %>
-    </div>
-
-    <clb/>
-    <br/>
-
-    <div class="other_deals">
-      <%= render :partial => 'secondary_deal', :locals => {:position => 4} %>
-      <%= render :partial => 'secondary_deal', :locals => {:position => 5, :middle => "col_middle"} %>
-      <%= render :partial => 'secondary_deal', :locals => {:position => 6} %>
-    </div>
-
-    <clb/>
-    <br/>
-
-    <div class="other_deals">
-      <%= render :partial => 'secondary_deal', :locals => {:position => 7} %>
-      <%= render :partial => 'secondary_deal', :locals => {:position => 8, :middle => "col_middle"} %>
-      <%= render :partial => 'secondary_deal', :locals => {:position => 9} %>
-    </div>
-
+    <% [(1..3).to_a, (4..6).to_a, (7..9).to_a].each do |array| %>
+        <div class="other_deals">
+          <% array.each do |position| %>
+              <%= render :partial => 'secondary_deal', :locals => {:position => position, :featured => @featured_deals[position], :middle => [2,5,8].include?(position) ? "col_middle" : nil} %>
+          <% end %>
+        </div>
+        <clb/>
+        <br/>
+    <% end %>
     <!--- end / other deals --->
   </div>
 
@@ -91,10 +75,12 @@
               <p><%= image_tag("fairdeals/icons/phone.png") %><strong><%= Settings.contact_us_phone %></strong></p>
           <% end %>
           <% if Settings.contact_us_email.present? %>
-              <p><%= image_tag("fairdeals/icons/mail.png") %><strong><%= link_to Settings.contact_us_email, "mailto:#{Settings.contact_us_email}" %></strong></p>
+              <p><%= image_tag("fairdeals/icons/mail.png") %>
+                <strong><%= link_to Settings.contact_us_email, "mailto:#{Settings.contact_us_email}" %></strong></p>
           <% end %>
           <% if Settings.contact_us_skype.present? %>
-              <p><%= image_tag("fairdeals/icons/skype.png") %><strong><%= link_to Settings.contact_us_skype, "skype:#{Settings.contact_us_skype}" %></strong></p>
+              <p><%= image_tag("fairdeals/icons/skype.png") %>
+                <strong><%= link_to Settings.contact_us_skype, "skype:#{Settings.contact_us_skype}" %></strong></p>
           <% end %>
         </div>
     <% end %>
@@ -102,7 +88,7 @@
     <div class="frm_dark pdd_10">
       <h2><%= t("fairdeals_home.show.view.request_a_deal") %></h2>
 
-      <%= form_for :email_deal_request_preview, :url => deal_requests_path, :html => { :id => "request_deal_form" } do |f| %>
+      <%= form_for :email_deal_request_preview, :url => deal_requests_path, :html => {:id => "request_deal_form"} do |f| %>
 
 
           <fieldset class="inputs labels_70 inputs_160 no_pdd">
@@ -162,13 +148,15 @@
 
 <js:>
   <script type="text/javascript">
-    function validate_request_deal_form(){
-        name_is_valid = custom_form_validator_for_field("#request_deal_form","email_deal_request_preview_name", "not_empty");
-        phone_is_valid = custom_form_validator_for_field("#request_deal_form","email_deal_request_preview_phone_number", "not_empty");
-        email_is_valid = custom_form_validator_for_field("#request_deal_form","email_deal_request_preview_email_from", "valid_email");
-        deal_description_is_valid = custom_form_validator_for_field("#request_deal_form","email_deal_request_preview_deal_description", "not_empty");
+      function validate_request_deal_form() {
+          name_is_valid = custom_form_validator_for_field("#request_deal_form", "email_deal_request_preview_name", "not_empty");
+          phone_is_valid = custom_form_validator_for_field("#request_deal_form", "email_deal_request_preview_phone_number", "not_empty");
+          email_is_valid = custom_form_validator_for_field("#request_deal_form", "email_deal_request_preview_email_from", "valid_email");
+          deal_description_is_valid = custom_form_validator_for_field("#request_deal_form", "email_deal_request_preview_deal_description", "not_empty");
 
-        if(name_is_valid && phone_is_valid && email_is_valid && deal_description_is_valid){ $('#request_deal_form').submit(); }
-    }
+          if (name_is_valid && phone_is_valid && email_is_valid && deal_description_is_valid) {
+              $('#request_deal_form').submit();
+          }
+      }
   </script>
 </js:>
