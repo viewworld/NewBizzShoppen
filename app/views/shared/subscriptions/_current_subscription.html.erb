@@ -21,6 +21,10 @@
         <% else %>
           <%= bt_link_to nil, t("subscriptions.listing.cancel"), cancel_my_profile_subscription_plans_path, :class => "fltl", :confirm => t("subscriptions.confirmation.cancel") %>
         <% end %>
+
+        <% if current_user.active_subscription.lockup? %>
+            <h3><%= t("subscriptions.lockup_period_notification") %></h3>
+        <% end %>
     <% end %>
 
     <clb/>
