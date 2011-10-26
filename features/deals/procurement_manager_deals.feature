@@ -123,7 +123,6 @@ Feature: Deals from procurement manager perspective
   And I fill in "user_member_password_confirmation" with "secret"
   And I fill in "user_member_email" with "anakasparian@tyt.com"
   And I check "user_member_agreement_read"
-    And I open page in browser
   And I press translated "supplier_accounts.new.view.button_create_account"
   And I should be signed in
   And last email sent should have been sent to recipient "anakasparian@tyt.com"
@@ -162,9 +161,11 @@ Feature: Deals from procurement manager perspective
   Scenario: When I get deal then I should get the email with all deal information and all materials included as attachments
     Given I visit domain http://fairdeals.dk
     Given user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
-    And user "buyer@nbs.com" has assigned role "deal_maker"
+    And user "buyer@nbs.com" has deal maker role enabled
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper"
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
+    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
+    And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
     Then I sign in as purchase_manager101@nbs.com with password supersecret
     Then I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Business deals"
@@ -184,7 +185,7 @@ Feature: Deals from procurement manager perspective
     Given I am not sign in
     And I make sure current locale is "da"
     Given user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
-    And user "buyer@nbs.com" has assigned role "deal_maker"
+    And user "buyer@nbs.com" has deal maker role enabled
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper"
     And I am on the homepage
     And I sign in as buyer@nbs.com with password secret
@@ -196,6 +197,8 @@ Feature: Deals from procurement manager perspective
     And I press translated "campaigns.email_templates.edit.view.button_update"
     Given I visit domain http://fairdeals.dk
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
+    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
+    And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
     Then I sign in as purchase_manager101@nbs.com with password supersecret
     And User purchase_manager101@nbs.com with role member is from country Denmark
     Then I follow translated "layout.fairdeals.main_menu.deals"
@@ -213,9 +216,11 @@ Feature: Deals from procurement manager perspective
   Scenario: When deal is requested the deal code is included as the first info in lead's hidden description and it is visible when member wants to get the deal
     Given I visit domain http://fairdeals.dk
     Given user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
-    And user "buyer@nbs.com" has assigned role "deal_maker"
+    And user "buyer@nbs.com" has deal maker role enabled
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper|deal_code:CODE4D3AL"
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
+    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
+    And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
     Then I sign in as purchase_manager101@nbs.com with password supersecret
     Then I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Business deals"
@@ -234,10 +239,12 @@ Feature: Deals from procurement manager perspective
   Scenario: When I get deal the direct phone number should be populated from my profile
     Given I visit domain http://fairdeals.dk
     And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
-    And user "buyer@nbs.com" has assigned role "deal_maker"
+    And user "buyer@nbs.com" has deal maker role enabled
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper|deal_code:CODE4D3AL"
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
     And user "purchase_manager101@nbs.com" with role "member" has attributes "direct_phone_number:48601101101"
+    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
+    And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
     Then I sign in as purchase_manager101@nbs.com with password supersecret
     Then I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Business deals"
@@ -250,9 +257,11 @@ Feature: Deals from procurement manager perspective
     Given I visit domain http://fairdeals.dk
     And I am not sign in
     And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
-    And user "buyer@nbs.com" has assigned role "deal_maker"
+    And user "buyer@nbs.com" has deal maker role enabled
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper|deal_code:CODE4D3AL"
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
+    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
+    And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
     And user "purchase_manager101@nbs.com" with role "member" has attributes "rpx_identifier:www.facebook.com/profile/123"
     Then I sign in as purchase_manager101@nbs.com with password supersecret
     Then I follow translated "layout.fairdeals.main_menu.deals"
@@ -266,9 +275,11 @@ Feature: Deals from procurement manager perspective
     Given I visit domain http://fairdeals.dk
     And I am not sign in
     And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
-    And user "buyer@nbs.com" has assigned role "deal_maker"
+    And user "buyer@nbs.com" has deal maker role enabled
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper|deal_code:CODE4D3AL"
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
+    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
+    And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
     And user "purchase_manager101@nbs.com" with role "member" has attributes "rpx_identifier:www.linkedin.com/profile/123"
     Then I sign in as purchase_manager101@nbs.com with password supersecret
     Then I follow translated "layout.fairdeals.main_menu.deals"

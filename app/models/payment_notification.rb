@@ -24,14 +24,6 @@ class PaymentNotification < ActiveRecord::Base
        BigDecimal(params[:mc_gross].to_s) == BigDecimal(supplier.cart.total.to_s)
       invoice = Invoice.create(:user_id => supplier.parent.present? ? supplier.parent_id : supplier.id, :paid_at => self.created_at, :seller => Seller.default, :currency => supplier.cart.currency)
       PaypalTransaction.create(:invoice => invoice, :payment_notification => self, :amount => supplier.cart.total, :paid_at => self.created_at)
-      supplier.lead_purchases.in_cart.each do |lead_purchase|
-        InvoiceLine.create(:invoice => invoice,
-                           :payable => lead_purchase,
-                           :name => lead_purchase.lead.header,
-                           :netto_price => lead_purchase.lead.price,
-                           :vat_rate => supplier.country_vat_rate,
-                           :quantity => lead_purchase.quantity)
-      end
     end
   end
 end

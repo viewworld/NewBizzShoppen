@@ -227,7 +227,7 @@ Feature: Buy out
     Given I am signed up and confirmed as user with email admin@lajoie.ca and password secret and role admin
     And I sign in as admin@lajoie.ca with password secret
     And I follow translated "layout.main_menu.admin.upcoming_invoices"
-    Then I should see "1,230.00" within "#invoices_list :nth-child(6)"
+    Then I should see "1,230.00" within "#invoices_list :nth-child(8)"
 
   @added @m6 @_done @_tested
   Scenario: Admin should see correct values on invoice generated for big buyer from buyouts

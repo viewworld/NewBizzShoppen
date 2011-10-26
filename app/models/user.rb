@@ -284,7 +284,7 @@ class User < ActiveRecord::Base
   end
 
   def apply_subscription_plan
-    if subscription_plan_id or assign_free_subscription_plan
+    if (subscription_plan_id or assign_free_subscription_plan) and subscription_required?
       apply_subscription!(select_subscription_plan)
       self.subscription_plan_id = nil
       self.assign_free_subscription_plan = nil
@@ -329,7 +329,7 @@ class User < ActiveRecord::Base
 
   # TODO find out which roles are invoiceable
   def self.invoiceable
-    all.reject { |u| !defined? u.with_role.address }
+    self.all_subscribers
   end
 
   def role
@@ -793,7 +793,7 @@ class User < ActiveRecord::Base
   end
 
   def subscription_required?
-    has_any_role?(:supplier, :member)
+    has_any_role?(:supplier, :member) and parent.nil?
   end
 
   def has_active_subscription?

@@ -56,7 +56,7 @@ class Invoice < ActiveRecord::Base
   after_create :duplicate_company_and_supplier_information, :set_year
   after_validation :set_default_currency, :if => Proc.new{ |i| i.new_record? }
   after_update :update_revenue_frozen
-  after_create :generate_invoice_lines_for_big_buyer, :generate_invoice_lines_for_subscriber
+  after_create :generate_invoice_lines_for_supplier, :generate_invoice_lines_for_subscriber
   before_update :generate_manual_transaction_for_big_buyer
   before_save :mark_all_invoice_lines_as_paid
   after_save :recalculate_invoice_items
@@ -121,15 +121,16 @@ class Invoice < ActiveRecord::Base
     File.open(File.join(::Rails.root.to_s, "app", "views", "shared", "invoices", "_invoice_preview.erb")){|file| file.read}
   end
 
-  def generate_invoice_lines_for_big_buyer
-    if user
-      User::Supplier.find(user_id).lead_purchases.select { |lp| lp.invoice_line.blank? and lp.lead.currency_id == currency_id }.each do |lead_purchase|
+  def generate_invoice_lines_for_supplier
+    if user and user.has_any_role?(:supplier, :lead_supplier)
+      supplier = user.with_role
+      supplier.lead_purchases.select { |lp| lp.invoice_line.blank? and lp.lead.currency_id == currency_id }.each do |lead_purchase|
         InvoiceLine.create(
             :invoice => self,
             :payable => lead_purchase,
             :name => lead_purchase.lead.header,
             :netto_price => lead_purchase.lead.price,
-            :vat_rate => user.country_vat_rate,
+            :vat_rate => supplier.country_vat_rate,
             :quantity => lead_purchase.quantity)
       end
     end
