@@ -23,6 +23,7 @@ module AdvancedUserImport
           object.password = object.send(:generate_token, 10)
           object.password_confirmation = object.password
           object.agreement_read = true
+          object.assign_free_subscription_plan = true
           if object.save
             new_users << object
             counter += 1

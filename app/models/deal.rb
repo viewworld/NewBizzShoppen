@@ -237,7 +237,7 @@ class Deal < AbstractLead
         lead_category.customers << User.find(supplier.id)
         lead_category.save
       end
-      lead_category.update_attribute(:auto_buy, true) if !lead_category.auto_buy? and supplier.big_buyer?
+      lead_category.update_attribute(:auto_buy, true) if !lead_category.auto_buy? and supplier and supplier.big_buyer?
       self.lead_category_id = lead_category.id
     end
   end

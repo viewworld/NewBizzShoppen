@@ -64,11 +64,11 @@ Then /^I fill deal creation form$/ do
   Then %{I should see "0 characters (140 max)"}
   Then %{I fill in "deal_description" with "batman"}
   Then %{I should see "6 characters (140 max)"}
-  Then %{I fill in "deal_hidden_description" with "cat woman"}
-  Then %{I fill in "deal_fine_print" with "gotham city"}
+  Then %{I fill in "deal_hidden_description_editor" ckeditor with "cat woman"}
+  Then %{I fill in "deal_fine_print_editor" ckeditor with "gotham city"}
   Then %{I fill in "deal_start_date" with "2011-06-06"}
   Then %{I fill in "deal_end_date" with "2016-12-12"}
-  Then %{I fill in "deal_company_description" with "bruce wayne inc."}
+  Then %{I fill in "deal_company_description_editor" ckeditor with "bruce wayne inc."}
 end
 
 Then /^I fill deal edit form and submit with translated button "([^"]*)"$/ do |translation|
