@@ -123,6 +123,7 @@ Feature: Deals from procurement manager perspective
   And I fill in "user_member_password_confirmation" with "secret"
   And I fill in "user_member_email" with "anakasparian@tyt.com"
   And I check "user_member_agreement_read"
+  And I choose "user_member_subscription_plan_id"
   And I press translated "supplier_accounts.new.view.button_create_account"
   And I should be signed in
   And last email sent should have been sent to recipient "anakasparian@tyt.com"
@@ -131,6 +132,7 @@ Feature: Deals from procurement manager perspective
   @m19 @requested @_done @_tested @tgn
   Scenario: When I am not logged in I should still see Get deal button and when click I should be prompted to log in or create new account and return to the get deal
     Given I visit domain http://fairdeals.dk
+    And subscription plan named "Free member subscription" exists with attributes "is_active:0"
     Given user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
     And user "buyer@nbs.com" has assigned role "deal_maker"
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:super|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper"
@@ -151,6 +153,7 @@ Feature: Deals from procurement manager perspective
     And I fill in "user_member_password" with "secret"
     And I fill in "user_member_password_confirmation" with "secret"
     And I fill in "user_member_email" with "anakasparian@tyt.com"
+    And I choose "user_member_subscription_plan_id"
     And I check "user_member_agreement_read"
     And I press translated "supplier_accounts.new.view.button_create_account"
     And I should see translated "deals.new.view.frame_header"

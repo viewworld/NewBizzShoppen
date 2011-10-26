@@ -1,3 +1,9 @@
+Given /^subscription plan named "([^"]*)" exists with attributes "([^"]*)"$/ do |name, options|
+  options_hash = Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys
+  @subscription_plan = SubscriptionPlan.where(:name => name).first
+  @subscription_plan.update_attributes(options_hash)
+end
+
 Given /^subscription plan exists with attributes "([^"]*)"$/ do |options|
   options_hash = Hash[*options.split(/[,:]/).map(&:strip)].symbolize_keys
   @subscription_plan = SubscriptionPlan.make!(options_hash)

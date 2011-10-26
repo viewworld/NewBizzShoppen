@@ -60,6 +60,7 @@ Feature: Freelance agent signup
       | user_supplier_address_attributes_address_line_3        | Wesley          |
     And I select "Denmark" from "user_supplier_address_attributes_country_id"
     And I check "user_supplier_agreement_read"
+    And I choose "user_supplier_subscription_plan_id"
     And I press translated "supplier_accounts.new.view.button_create_account"
     Then I should see translated "flash.supplier_accounts.create.notice"
     And a confirmation message should be sent to user@domain.dom

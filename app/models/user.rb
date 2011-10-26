@@ -200,7 +200,7 @@ class User < ActiveRecord::Base
   end
 
   def set_role
-    unless ([self.class.const_get("ROLES")] - self.roles.to_a).empty?
+    if !([self.class.const_get("ROLES")] - self.roles.to_a).empty? and new_record?
       self.roles = self.roles.to_a | [self.class.const_get("ROLES")]
     end
     true
@@ -793,7 +793,7 @@ class User < ActiveRecord::Base
   end
 
   def subscription_required?
-    has_any_role?(:supplier, :member) and parent.nil?
+    has_any_role?(:category_supplier, :supplier, :member) and parent.nil?
   end
 
   def has_active_subscription?

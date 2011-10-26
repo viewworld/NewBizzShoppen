@@ -27,6 +27,8 @@ class SignInController < ApplicationController
       @user.skip_email_verification = "1"
     end
 
+    @user.assign_free_subscription_plan = true
+
     respond_to do |format|
       if @user.save
         if session[:site] == "fairdeals" and @user.has_role?(:member) and @user.confirmed? and @user.rpx_identifier.blank?

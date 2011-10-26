@@ -39,6 +39,7 @@ Feature: Purchase Manager signup
       | user_member_address_attributes_address_line_3        | Quebec          |
     And I select "Denmark" from "user_member_address_attributes_country_id"
     And I check "user_member_agreement_read"
+    And I choose "user_member_subscription_plan_id"
     And I press translated "supplier_accounts.new.view.button_create_account"
     Then I should see translated "flash.member_accounts.create.notice"
     And a confirmation message should be sent to jon@lajoie.ca
