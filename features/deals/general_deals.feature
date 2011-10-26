@@ -206,5 +206,5 @@ Feature: General deals
     But I should see "100%"
     And I should not see "120"
 
-  @m21 @requested
+  @m21 @requested @is
   Scenario: I can use rich text editor for Fine Print and Company description when editing deal

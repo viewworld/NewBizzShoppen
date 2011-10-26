@@ -1,4 +1,4 @@
-@m21 @requested @subscriptions
+@m21 @requested @subscriptions @ao
 Feature: Subscription management for user
 
   Background:
