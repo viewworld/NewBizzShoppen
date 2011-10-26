@@ -804,11 +804,11 @@ class User < ActiveRecord::Base
   end
 
   def can_downgrade_subscription?
-    active_subscription.can_be_downgraded?
+    active_subscription.can_be_downgraded? and active_subscription.may_downgrade?
   end
 
   def can_upgrade_subscription?
-    active_subscription.can_be_upgraded?
+    active_subscription.can_be_upgraded? and active_subscription.may_upgrade?
   end
 
   def can_upgrade_or_downgrade_subscription?
