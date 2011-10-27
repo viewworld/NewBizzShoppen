@@ -283,6 +283,23 @@ When /^I visit certification url for lead "([^"]*)"$/ do |header|
   visit "/leads/#{lead.id}/edit?token=#{lead.current_lcr.token}"
 end
 
+When /^I visit certification url for lead "([^"]*)" on "([^"]*)"$/ do |header,date|
+  date = Date.strptime(date).to_datetime.utc
+  lead = Lead.where(:header => header).first
+  visit "/leads/#{lead.id}/edit?token=#{lead.current_lcr.token}"
+  lead.current_lcr.update_attribute(:last_visit_date, date)
+end
+
+Then /^last certification visit for lead "([^"]*)" should be on "([^"]*)"$/ do |header,date|
+  lead = Lead.where(:header => header).first
+  lead.current_lcr.last_visit_date.should == Date.strptime(date).to_datetime.utc
+end
+
+Then /^last certification visit for lead "([^"]*)" should be today$/ do |header|
+  lead = Lead.where(:header => header).first
+  lead.current_lcr.last_visit_date.to_date.should == Date.today
+end
+
 When /^lead "([^"]*)" is certified$/ do |header|
   lead = Lead.where(:header => header).first
   lead.lead_certification_requests.create
