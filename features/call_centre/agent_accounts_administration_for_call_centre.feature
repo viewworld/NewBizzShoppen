@@ -8,7 +8,7 @@ Background:  Sign in user and set locale
   Then I sign in as call_centre@person.com with password supersecret
   And I go to call centre agents
 
-@_tested
+@_tested @_done
 Scenario: I can create call centre agent account
   When I follow translated "call_centre.call_centre_agents.index.view.new_agent"
   And I fill in "user_call_centre_agent_first_name" with "Tymon"
@@ -26,7 +26,7 @@ Scenario: I can create call centre agent account
   And I press translated "call_centre.call_centre_agents.new.view.button_create"
   Then I should see translated "call_centre.call_centre_agents.create.flash.call_centre_agent_creation_successful"
 
-@_tested
+@_tested @_done
 Scenario: Account have to be activated by link in activation email sent to his email address
   When I follow translated "call_centre.call_centre_agents.index.view.new_agent"
   And I fill in "user_call_centre_agent_first_name" with "Tymon"
@@ -45,7 +45,7 @@ Scenario: Account have to be activated by link in activation email sent to his e
   Then I should see translated "call_centre.call_centre_agents.create.flash.call_centre_agent_creation_successful"
   And a confirmation message to callcentreagent93@nbs.com should include confirmation link
 
-@added @m5 @_tested
+@added @m5 @_tested @_done
 Scenario: Agents of given call centre inherit its certification level
   Given I have user with email call_centre777@nbs.com and role call_centre
   Given I have user with email call_centre_agent_111@nbs.com and role call_centre_agent

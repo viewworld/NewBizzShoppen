@@ -7,7 +7,7 @@ Feature: Agent campaign targets
     And I sign in as blazejek@gmail.com with password secret
     And I follow translated "layout.main_menu.call_centre.campaigns"
 
-  @_done @_tested @selenium @_tested @_done
+  @_tested @selenium @_tested @_done
   Scenario: When creating new campaign I can select a currency
     Given I follow translated "campaigns.header.new_campaign_button"
     And I fill in "campaign_name" with "Testing Template"

@@ -22,11 +22,11 @@ Background: Sign in user and set English locale
   Then I sign in as lead_user2@person.com with password secret
   And I go to lead user lead requests
 
-@tgn @_tested
+@tgn @_tested @_done
 Scenario: I should see certification level for each lead
   And I should see translated "models.lead.novelty.lvl0"
 
-@m4 @tgn @_tested @added
+@m4 @tgn @_tested @added @_done
 Scenario: I should see rating %
   Given I have user with email bob@person.com and role supplier
   And a lead Printers ultimate deal exists within category Computers and is bought by user bob@person.com with role supplier
@@ -35,25 +35,25 @@ Scenario: I should see rating %
   And I go to lead user lead requests
   Then I should see "100%"
 
-@tgn @_tested
+@tgn @_tested @_done
 Scenario: I should see lead header, lead price, purchase value and public description
   Then I should see "Printers ultimate deal"
   And I should see "989.78"
   And I should see "3,030.03"
   And I should see "Lorem ipsum public desc"
 
-@tgn @_tested
+@tgn @_tested @_done
 Scenario: I should see hottness, novelty, exposure, clicks
   And I should see translated "models.lead.hotness.lvl1"
   And I should see translated "models.lead.novelty.lvl0"
   And I should see "887"
   And I should see "17"
 
-@tgn @_tested @selenium
+@tgn @_tested @selenium @_done
 Scenario: I can toggle select leads
   Then I check "mark_all"
 
-@tgn @_tested @selenium @bulk
+@tgn @_tested @selenium @bulk @_done
 Scenario: I can bulk remove leads from my requested leads list
   And I check "mark_all"
   And I follow translated "lead_user.lead_requests.index.view.button_bulk_destroy_lead_request"
@@ -61,7 +61,7 @@ Scenario: I can bulk remove leads from my requested leads list
   And I should not see "Printers ultimate deal"
   And I should not see "Monitors LCD deal"
 
-@tgn @_tested
+@tgn @_tested @_done
 Scenario: I can remove a given leads from my requested leads list
   And I follow translated "lead_user.lead_requests.index.view.destroy_lead_request"
   Then I should see translated "flash.lead_users.destroy.notice"
@@ -73,7 +73,7 @@ Scenario: My requested list should be without pagination
   And I should see "Printers ultimate deal"
   And I should see "Faxes ultimate deal"
 
-@tgn @_tested
+@tgn @_tested @_done
 Scenario: I can narrow down the results by filters and search box
   Given I select "Denmark" from "search_with_country"
   And I press translated "lead_user.lead_requests.index.view.search.search_button"

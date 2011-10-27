@@ -86,7 +86,7 @@ Feature: Agent campaign - management
 
     #campaigns::edit
     # name, category, country, start_date, end_date, number_of_visible_contacts_per_agent
-    @is @__campaign_manage @_tested
+    @is @__campaign_manage @_tested @_done
     Scenario: I can specify general campaign information
       Then I follow translated "campaigns.index.edit"
       Then I fill in "campaign_name" with "Testing Changed"
@@ -122,7 +122,7 @@ Feature: Agent campaign - management
     @is @__campaign_manage @_done @_tested_elsewhere @selenium
     Scenario: I can assign selected contacts to selected agent
 
-    @is @__campaign_manage @_tested
+    @is @__campaign_manage @_tested @_done
     Scenario: I can remove contact from campaign
       Then I follow translated "campaigns.index.edit"
       Then I follow translated "campaigns.edit.remove_button"
@@ -132,7 +132,7 @@ Feature: Agent campaign - management
     @is @__campaign_manage @_done @_tested_elsewhere
     Scenario: I can deassign agents from selected contacts
 
-    @is @__campaign_manage @_tested @selenium
+    @is @__campaign_manage @_tested @selenium @_done
     Scenario: I can filter contacts by its fields
       When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
       Then I should see "Bon Jovi"
@@ -148,16 +148,16 @@ Feature: Agent campaign - management
     #
     #
     #campaigns::agents::new (popup?)
-    @is @__campaign_assign_agents @_tested
+    @is @__campaign_assign_agents @_tested @_done
     Scenario: I can browse available freelance agents and call centers
       Then I follow translated "campaigns.index.edit"
       Then I follow translated "campaigns.edit.agent_assignment_button"
       Then I should see "John Smith"
 
-    @is @__campaign_assign_agents @_tested_elsewhere
+    @is @__campaign_assign_agents @_tested_elsewhere @_done
     Scenario: I can assign selected agents to campaign
 
-    @is @__campaign_assign_agents @_tested @selenium @requested
+    @is @__campaign_assign_agents @_tested @selenium @requested @_done
     Scenario: I can deassign not selected agents to campaign
       When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
       Then I follow translated "campaigns.edit.agent_assignment_button"
@@ -188,7 +188,7 @@ Feature: Agent campaign - management
       And I press translated "contacts.new.import_button"
       Then imported contacts should be in campaign "Testing One"                
 
-   @is @__campaign_import_contacts @_tested
+   @is @__campaign_import_contacts @_tested @_done
     Scenario: I can create single contact
       Then I follow translated "campaigns.index.edit"
       Then I follow translated "campaigns.edit.button_create_contact"
@@ -204,7 +204,7 @@ Feature: Agent campaign - management
       Then I should see "United Kingdom"
 
     #campaigns::contacts::edit
-    @is @__campaign_import_contacts @_tested
+    @is @__campaign_import_contacts @_tested @_done
     Scenario: I can see contact details
       Then I follow translated "campaigns.index.edit"
       Then I follow translated "campaigns.edit.edit_button"
@@ -212,7 +212,7 @@ Feature: Agent campaign - management
       Then I should see translated "contacts.edit.title"
 
     #create => edit => destroy is tested here as well
-    @is @__campaign_import_contacts @_tested @selenium
+    @is @__campaign_import_contacts @_tested @selenium @_done
     Scenario: I can see contact results
       When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
       When I click hidden link by url regex "/callers\/campaigns\/\d+\/contacts\/\d+\/edit/"
@@ -242,7 +242,7 @@ Feature: Agent campaign - management
     @is @__campaign_manage_results @_done @_tested_elsewhere
     Scenario: I can remove result
 
-    @is @__campaign_import_contacts @_tested @selenium
+    @is @__campaign_import_contacts @_tested @selenium @_done
     Scenario: I can see current contact assignment
       When I click hidden link by url regex "/callers\/campaigns\/\d+\/edit/"
       Then agent for "Bon Jovi inc." is blank
@@ -504,7 +504,7 @@ Feature: Agent campaign - management
     #
     #
     #campaigns::show (statistics)
-    @is @__campaign_statistics @_tested @selenium
+    @is @__campaign_statistics @_tested @selenium @_done
     Scenario: I can see general statistics for campaign (all time)
       # number of agents, contacts, calls, results
       Then I add user "translator_call_centre@nbs.com" to campaign "Testing One"
@@ -516,7 +516,7 @@ Feature: Agent campaign - management
       Then I should see "Total number of calls: ??"
       #jak sie wysypie to bedzie wiadomo że trzeba dodać cyfre tam gdzie są teraz pytajniki :P
 
-    @is @__campaign_statistics @_tested @selenium
+    @is @__campaign_statistics @_tested @selenium @_done
     Scenario: I can see results statistics for given time range
       Then I execute js for display action block for "campaigns"
       Then I follow translated "campaigns.index.result"
@@ -528,7 +528,7 @@ Feature: Agent campaign - management
       Then I should see "02.01" within "#call_results"
       Then I should see "03.01" within "#call_results"
 
-    @is @__campaign_statistics @_tested @selenium
+    @is @__campaign_statistics @_tested @selenium @_done
     Scenario: I can select time range from predefined ones: whole campaign, today, this week, this month
       Then I execute js for display action block for "campaigns"
       Then I follow translated "campaigns.index.result"
@@ -546,7 +546,7 @@ Feature: Agent campaign - management
       Then I press translated "campaigns.show.search_button"
       Then I should see today date in results table
 
-    @is @__campaign_statistics @_tested @selenium
+    @is @__campaign_statistics @_tested @selenium @_done
     Scenario: I can see results list for given date and result type
       Then I create call result
       Then I execute js for display action block for "campaigns"
@@ -561,7 +561,7 @@ Feature: Agent campaign - management
       Then I follow translated "call_results.table.edit_link"
       Then I should see "Edit result"
 
-    @is @__campaign_statistics @_tested @selenium @requested
+    @is @__campaign_statistics @_tested @selenium @requested @_done
     Scenario: I can see results list for given agent list
       Then I create call result
       Then I add user "translator_call_centre@nbs.com" to campaign "Testing One"
@@ -577,7 +577,7 @@ Feature: Agent campaign - management
       Then I should see "1" within "#all_result_row"
       Then I wait 4 second
 
-    @is @__campaign_statistics @_tested @selenium @requested
+    @is @__campaign_statistics @_tested @selenium @requested @_done
     Scenario: I can see results list for completed contacts only
       Then I execute js for display action block for "campaigns"
       Then I follow translated "campaigns.index.result"

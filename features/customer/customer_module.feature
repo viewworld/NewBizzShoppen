@@ -7,7 +7,7 @@ Background:  Sign in user and set locale
   And I am signed up and confirmed as user with email bob@person.com and password supersecret and role supplier
   Then I sign in as bob@person.com with password supersecret
 
-@_tested
+@_tested @_done
 Scenario: I create account through signup
   Given I am not sign in
   And I am on the supplier home page
@@ -29,20 +29,20 @@ Scenario: I create account through signup
 
 Scenario: I can follow "What do you want to do today?" links and they take me to appropriate places
 
-@_tested_in_rspec
+@_tested_in_rspec @_done
 Scenario: After signup I am assigned roles of Customer, Lead Buyer and Lead user
 
-@tested
+@_tested @_done
 Scenario: I can see my unique RSS feed URL
   Then I should see translated "supplier.interests.edit.view.rss_feed_url"
 
-@_tested @_deprecated
+@_tested @_deprecated @_done
 Scenario: I can select if I want to be notified about new leads matching my interests criteria
 #  When I am on my profile
 #  And I follow translated "my_profile.edit.view.interests_settings"
 #  Then I check "user_notify_about_new_leads"
 
-@_tested @_deprecated
+@_tested @_deprecated @_done
 Scenario: I can select multiple lead categories that I am interested in
 #  When I am on my profile
 #  And I follow translated "my_profile.edit.view.interests_settings"
@@ -51,14 +51,14 @@ Scenario: I can select multiple lead categories that I am interested in
 #  And I press translated "supplier.interests.edit.view.button_update"
 #  Then I should see translated "supplier.interests.update.flash.interests_update_successful"
 
-@_tested @_deprecated
+@_tested @_deprecated @_done
 Scenario: I can select lead purchase value range that I am interested in
 #  Given I select "3000" from "user_deal_value_range_start"
 #  And I select "6000" from "user_deal_value_range_end"
 #  And I press translated "supplier.interests.edit.view.button_update"
 #  Then I should see translated "supplier.interests.update.flash.interests_update_successful"
 
-@_tested @noguess @_deprecated
+@_tested @noguess @_deprecated @_done
 Scenario: I can select multiple lead areas/countries that I am interested in
 #  When I am on my profile
 #  And I follow translated "my_profile.edit.view.interests_settings"
@@ -67,13 +67,13 @@ Scenario: I can select multiple lead areas/countries that I am interested in
 #  And I press translated "supplier.interests.edit.view.button_update"
 #  Then I should see translated "supplier.interests.update.flash.interests_update_successful"
 
-@m5 @tgn @_tested @_deprecated  @requested
+@m5 @tgn @_tested @_deprecated  @requested @_done
 Scenario: I can select "all" as a Deal value
 #  And I check "user_all_deal_values_enabled"
 #  And I press translated "supplier.interests.edit.view.button_update"
 #  Then I should see translated "supplier.interests.update.flash.interests_update_successful"
 
-@m5 @unique_categories @added @_tested @tgn  @requested
+@m5 @unique_categories @added @_tested @tgn @requested @_done
 Scenario: I should not see unique categories I'm not assigned to on my interests page
   Given Category Computers is created
   And category "Computers" is unique for user with email "bob@person.com" role "supplier"
@@ -83,7 +83,7 @@ Scenario: I should not see unique categories I'm not assigned to on my interests
   And I should see "Leisure"
   And I should see "Computers"
 
-@m5 @unique_categories @added @_tested @tgn  @requested
+@m5 @unique_categories @added @_tested @tgn @requested @_done
 Scenario: I should not see categories on my interests page when I'm assigned to unique category
   Given I have user with email other_buyer34525biz@nbs.com and role supplier
   And Category OthersBuyerCategory is created
@@ -97,7 +97,7 @@ Scenario: I should not see categories on my interests page when I'm assigned to 
   And I should see "Computers"
   And I should not see "OthersBuyerCategory"
 
-@m5 @unique_categories @added @_tested @tgn  @requested
+@m5 @unique_categories @added @_tested @tgn @requested @_done
 Scenario: I should have my interests fixed to the unique category I'm assigned to
   Given there are no categories
   Given Category Computers is created
@@ -139,10 +139,10 @@ Scenario: If customer is category buyer with assigned unique categories he can a
 
 # all countries are selected after sign up
 # https://redmine.selleo.com/issues/5423
-@added @tgn @_tested @requested @_deprecated
+@added @tgn @_tested @requested @_deprecated @_done
 Scenario: On the interests page the country should be selected based on current locale
 
-@m6 @tgn @_tested @selenium
+@m6 @tgn @_tested @selenium @_done
 Scenario: I can use "Advanced search" in Browse leads with following fields: Deal value, Agent (creator), Agent’s (creator) rating (all,bronze, silver, gold), Uniqueness, Hotness
   Given I have user with email agent01@nbs.com and role agent
   And user "agent01@nbs.com" with role "agent" has attributes "certification_level:1, company_name:Xerox1"
@@ -200,7 +200,7 @@ Scenario: I can use "Advanced search" in Browse leads with following fields: Dea
   And I should see "Super printers #2"
   And I should not see "Super printers #3"
 
-@requested @m8 @tgn @selenium @_tested
+@requested @m8 @tgn @selenium @_tested @_done
 Scenario: Advanced search in browse leads should be hidden by default
   Given Category Computers is created
   And I go to browse leads
@@ -208,7 +208,7 @@ Scenario: Advanced search in browse leads should be hidden by default
   And I follow translated "common.advanced_search"
   Then I should see translated "leads.index.search.deal_value_from_label"
 
-@requested @m8b @tgn @selenium @_tested
+@requested @m8b @tgn @selenium @_tested @_done
 Scenario: Advanced search in browse leads should contain regions and all fields should be included in the hidden advanced search except keyword
   Given country "Denmark" has regions "DK region #1, DK region #2"
   And I have user with email agent01@nbs.com and role agent
@@ -229,7 +229,7 @@ Scenario: Advanced search in browse leads should contain regions and all fields 
 
 # On the configure you interests page there should be a back button, when it is selected from my profile page
 # except for first login
-@m7 @requested @tgn @_tested @_deprecated
+@m7 @requested @tgn @_tested @_deprecated @_done
 Scenario: I can see a back button when on configure interests page
 #  Given I should not see "Back"
 #  When I go to my profile

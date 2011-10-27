@@ -17,11 +17,11 @@ Background:
   And I follow translated "layout.cart.show_cart"
   Then I press translated "supplier.cart.show.view.checkout_link"
 
-@_tested
+@_tested @_done
 Scenario: I am redirected to paypal from cart view on checkout
   Then I should be redirected to paypal page
 
-@_tested
+@_tested @_done
 Scenario: When I buy a lead it is automatically assigned to me
   Then paypal payment for user with email "buyer.jim.jones@nbs.com" and role "supplier"
   Then lead named "Super printers" is assigned to user "buyer.jim.jones@nbs.com" with role "supplier"
@@ -32,12 +32,12 @@ Scenario: I can see the leads I am paying for on paypal's summary page
 @_done @non_testable
 Scenario: Paypal payment information is stored in the system
 
-@_tested
+@_tested @_done
 Scenario: Paypal payment information is linked to appropriate invoice
   Then paypal payment for user with email "buyer.jim.jones@nbs.com" and role "supplier"
   And last payment notification is linked to invoice
 
-@_tested
+@_tested @_done
 Scenario: Paypal's IPN marks all related lead purchases as paid and accessible
   Then paypal payment for user with email "buyer.jim.jones@nbs.com" and role "supplier"
   And lead named "Super printers" is paid and accessible for user with email "buyer.jim.jones@nbs.com" and role "supplier"

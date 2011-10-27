@@ -18,7 +18,7 @@ Background:
   And I sign in as john@doe.com with password secret
   And I go to suppliers lead requests
 
-@_tested
+@_tested @_done
 Scenario: I should see rating % and certification level for each lead
   Given I have user with email bob@person.com and role supplier
   And a lead Super printers exists within category Computers and is bought by user bob@person.com with role supplier
@@ -31,29 +31,29 @@ Scenario: I should see rating % and certification level for each lead
 @_deprecated @_done
 Scenario: I should see created by
 
-@_tested
+@_tested @_done
 Scenario: I should see lead header, lead price, purchase value and public description
   Then I should see "Super printers"
   And I should see "Desc for super printers"
   And I should see "391.72"
   And I should see "193.27"
 
-@_tested
+@_tested @_done
 Scenario: I should see hottness, novelty, exposure, clicks
   Then I should see translated "models.lead.novelty.lvl0"
   And I should see translated "models.lead.hotness.lvl1"
   And I should see "34987"
   And I should see "8877"
 
-@_tested
+@_tested @_done
 Scenario: I should see requested by
   And I should see "Daniel Revrend"
 
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I can toggle select leads
   Then I check "mark_all"
 
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I can bulk remove leads from requested leads list
   Then I check "mark_all"
   And I follow translated "supplier.lead_requests.index.view.button_bulk_destroy_lead_request"
@@ -61,19 +61,19 @@ Scenario: I can bulk remove leads from requested leads list
   And I should not see "Super printers"
   And I should not see "Ultra printers"
 
-@_tested
+@_tested @_done
 Scenario: I can remove a given leads from requested leads list
   When I follow translated "supplier.lead_requests.index.view.reject_lead_request_link"
   Then I should see translated "supplier.lead_requests.index.flash.lead_request_rejected_successfully"
 
-@_tested
+@_tested @_done
 Scenario: Requested list should be without pagination
   Given pagination per page size in model LeadRequest is set to 1
   And I go to suppliers lead requests
   Then I should see "Super printers"
   And I should see "Ultra printers"
 
-@_tested
+@_tested @_done
 Scenario: I can narrow down the results by filters and search box
   Given I select "Denmark" from "search_with_country"
   And I press translated "lead_user.lead_requests.index.view.search.search_button"
@@ -92,7 +92,7 @@ Scenario: I can narrow down the results by filters and search box
   Then I should see "Super printers"
   And I should not see "Ultra printers"
 
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I can bulk add selected leads to my basket
   Then I check "mark_all"
   And I follow translated "supplier.lead_requests.index.view.button_bulk_create_lead_request"
@@ -100,7 +100,7 @@ Scenario: I can bulk add selected leads to my basket
   And I should see "Super printers"
   And I should see "Ultra printers"
 
-@_tested
+@_tested @_done
 Scenario: I can add a given lead to my basket
   When I follow translated "supplier.lead_requests.index.view.accept_lead_request_link"
   Then I should see translated "supplier.lead_requests.index.flash.lead_request_accepted_successfully"

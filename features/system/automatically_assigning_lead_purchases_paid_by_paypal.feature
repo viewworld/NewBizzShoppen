@@ -7,7 +7,7 @@ Background:
   Given Category named "Computers" already exists
   And Lead named "Super printers" exists within "Computers" category
 
-@_tested
+@_tested @_done
 Scenario: When I buy a lead it is automatically assigned to me
   Given I am signed up and confirmed as user with email buyer.jim.jones@nbs.com and password secret and role supplier
   And an user with role lead_supplier and email leadbuyer.jon@nbs.com exists as subaccount for customer buyer.jim.jones@nbs.com
@@ -20,7 +20,7 @@ Scenario: When I buy a lead it is automatically assigned to me
   And paypal payment for user with email "buyer.jim.jones@nbs.com" and role "supplier"
   And lead named "Super printers" is owned by user "buyer.jim.jones@nbs.com" with role "supplier"
 
-@_tested
+@_tested @_done
 Scenario: Lead purchases are owned by topmost owner (to customer, if exists, otherwise to self)
   Given someone is signed up and confirmed as user with email buyer.jim.jones@nbs.com and password secret and role supplier
   And an user with role lead_supplier and email leadbuyer.jon@nbs.com exists as subaccount for customer buyer.jim.jones@nbs.com
@@ -33,7 +33,7 @@ Scenario: Lead purchases are owned by topmost owner (to customer, if exists, oth
   And paypal payment for user with email "leadbuyer.jon@nbs.com" and role "lead_supplier"
   And lead named "Super printers" is owned by user "buyer.jim.jones@nbs.com" with role "supplier"
 
-@m8b @requested @tgn @_tested
+@m8b @requested @tgn @_tested @_done
 Scenario: When team buyer with buying permissions buys a leads, then it should be assigned to him/her, not the sales manager
   Given someone is signed up and confirmed as user with email buyer.jim.jones@nbs.com and password secret and role supplier
   And an user with role lead_supplier and email leadbuyer.jon@nbs.com exists as subaccount for customer buyer.jim.jones@nbs.com

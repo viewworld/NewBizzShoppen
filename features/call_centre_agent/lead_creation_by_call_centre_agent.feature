@@ -9,8 +9,7 @@ Background:  Sign in user and set locale
   And an user with role call_centre_agent and email call_centre_agent@person.com belongs to call centre call_centre@person.com
   Then I sign in as call_centre_agent@person.com with password supersecret
 
-
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I can create a new lead and close
   Given Category Test category 1 is created
   And I follow translated "layout.main_menu.call_centre_agent.leads"
@@ -34,7 +33,7 @@ Scenario: I can create a new lead and close
   And I press translated "call_centre_agent.leads.new.view.button_create"
   And I should see translated "flash.leads.create.notice"
 
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I can create a new lead and continue (create another one)
   Given Category Test category 1 is created
   And I follow translated "layout.main_menu.call_centre_agent.leads"
@@ -59,7 +58,7 @@ Scenario: I can create a new lead and continue (create another one)
   And I should see translated "flash.leads.create.notice"
   And I should see translated "call_centre_agent.leads.new.view.title"
   
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I can add an extra language while creating lead. This will include lead title, purchase desc, hidden desc
   Given Category Test category 1 is created
   And Country Denmark is created
@@ -91,7 +90,7 @@ Scenario: I can add an extra language while creating lead. This will include lea
   And I should see "DK description"
   And I should see "DK hidden description"
 
-@m5 @added @lead_templates @tgn @selenium @_tested
+@m5 @added @lead_templates @tgn @selenium @_tested @_done
 Scenario: I have to fill out the templates which are mandatory
   Given template named "Computers details" for category "Computers" is created by user "call_centre_agent@person.com" with role "call_centre_agent"
   And template named "Computers details" is mandatory
@@ -121,7 +120,7 @@ Scenario: I have to fill out the templates which are mandatory
   And the "lead_lead_template_values_attributes_0_value" field should contain "123"
   And the "lead_lead_template_values_attributes_1_value" field should contain "Ms Windows Vista"
 
-@m5 @added @lead_templates @tgn @selenium @_tested
+@m5 @added @lead_templates @tgn @selenium @_tested @_done
 Scenario: I can select additional templates that are optional
   Given template named "Computers details" for category "Computers" is created by user "call_centre_agent@person.com" with role "call_centre_agent"
   And template named "Computers details" is mandatory
@@ -159,7 +158,7 @@ Scenario: I can select additional templates that are optional
   And the "lead_lead_template_values_attributes_2_value" field should contain "FaxFree v3"
   And the "lead_lead_template_values_attributes_3_value" field should contain "21-01-2010"
 
-@m5 @added @lead_templates @selenium @tgn @_tested
+@m5 @added @lead_templates @selenium @tgn @_tested @_done
 Scenario: Lead templates for given category consist of my templates, my call centre's, admin's and global
   Given template named "Computers details" for category "Computers" is created by user "call_centre_agent@person.com" with role "call_centre_agent"
   And template named "Computers details" is mandatory
@@ -181,7 +180,7 @@ Scenario: Lead templates for given category consist of my templates, my call cen
   And I should see "Fax details"
   And I should not see "Modems details"
 
-@m5 @added @lead_templates @tgn @selenium @_tested
+@m5 @added @lead_templates @tgn @selenium @_tested @_done
 Scenario: I can use lead templates that were created by other agents that belongs to my call centre
   Given I have user with email other_call_centre@person.com and role call_centre
   Given template named "Computers details" for category "Computers" is created by user "other_call_centre_agent1@person.com" with role "call_centre_agent"
@@ -197,7 +196,7 @@ Scenario: I can use lead templates that were created by other agents that belong
   Then "optional_templates_picker" dropdown should have values "Computers details,Fax details,TV details"
   And "optional_templates_picker" dropdown should not have values "Modems details"
 
-@m5 @added @lead_templates @tgn @selenium @_tested
+@m5 @added @lead_templates @tgn @selenium @_tested @_done
 Scenario: I do not see lead templates created by my call centre that are marked as inactive
   Given template named "TV details" for category "Computers" is created by user "call_centre_agent@person.com" with role "call_centre_agent"
   And template named "TV details" is mandatory
@@ -210,7 +209,7 @@ Scenario: I do not see lead templates created by my call centre that are marked 
   And I should see "TV details"
   And I should not see "Fax details"
 
-@m5 @added @lead_templates @tgn @selenium @_tested
+@m5 @added @lead_templates @tgn @selenium @_tested @_done
 Scenario: When new translation to lead is added I can also write translation for the templates
   Given template named "Computers details" for category "Computers" is created by user "call_centre_agent@person.com" with role "call_centre_agent"
   And template named "Computers details" is mandatory
@@ -248,7 +247,7 @@ Scenario: When new translation to lead is added I can also write translation for
   And the "lead_lead_template_values_attributes_0_lead_template_value_translations_attributes_0_value" field should contain "123 translated"
   And the "lead_lead_template_values_attributes_1_lead_template_value_translations_attributes_0_value" field should contain "Ms Windows Vista translated"
 
-@m5 @added @lead_templates @tgn @selenium @_tested
+@m5 @added @lead_templates @tgn @selenium @_tested @_done
 Scenario: I have to fill out the fields that are mandatory in mandatory or optional template
   Given template named "Computers details" for category "Computers" is created by user "call_centre_agent@person.com" with role "call_centre_agent"
   And template named "Computers details" is mandatory
@@ -278,7 +277,7 @@ Scenario: I have to fill out the fields that are mandatory in mandatory or optio
   And the "lead_lead_template_values_attributes_0_value" field should contain "123"
   And the "lead_lead_template_values_attributes_1_value" field should contain "Ms Windows Vista"
 
-@m5 @added @lead_templates @tgn @selenium @_tested
+@m5 @added @lead_templates @tgn @selenium @_tested @_done
 Scenario: When there is only one template present for a lead and it is optional then it should be displayed by default
   Given template named "Computers details" for category "Computers" is created by user "call_centre_agent@person.com" with role "call_centre_agent"
   And template named "Computers details" has following fields "computers count:false:true, operating systems:false:true, purchase date:false:false"
@@ -308,7 +307,7 @@ Scenario: When there is only one template present for a lead and it is optional 
 @m5 @added @tgn @non_testable @_done
 Scenario: Lead data should be entered in given sequence
 
-@m5 @unique_categories @added @_tested
+@m5 @unique_categories @added @_tested @_done
 Scenario: I can't publish a lead in unique category if I'm not assigned to it
   Given there are no categories
   And Category Test category 1 is created
@@ -317,7 +316,7 @@ Scenario: I can't publish a lead in unique category if I'm not assigned to it
   And I follow translated "layout.main_menu.call_centre_agent.leads"
   Then "category_id" dropdown should have values "Test category 1,Agent Unique Category"
 
-@m5 @unique_categories @added @_tested
+@m5 @unique_categories @added @_tested @_done
 Scenario: I can publish leads only in unique categories if I'm assigned at least to one
   Given there are no categories
   And Category Test category 1 is created
@@ -330,7 +329,7 @@ Scenario: I can publish leads only in unique categories if I'm assigned at least
   Then "category_id" dropdown should have values "Test category 1,Agent Unique Category"
   And "category_id" dropdown should not have values "Other Agent Unique Category"
 
-@m6 @tgn @_tested @added @lead_templates @selenium
+@m6 @tgn @_tested @added @lead_templates @selenium @_done
 Scenario: When the template's field is of the note type then I should see textarea instead of textbox
   Given template named "Computers details" for category "Computers" is created by user "call_centre_agent@person.com" with role "call_centre_agent"
   And template named "Computers details" is mandatory
@@ -340,7 +339,7 @@ Scenario: When the template's field is of the note type then I should see textar
   And I follow translated "call_centre_agent.leads.index.view.new_lead"
   Then field "lead_lead_template_values_attributes_1_value" is of textarea type
 
-@m6 @tgn @selenium @_tested
+@m6 @tgn @selenium @_tested @_done
 Scenario: I should see hint for every field when creating a lead
   Given Category Test category 1 is created
   And article hint for model "Lead" and method "company_name" has attributes "published:true, content:Tooltip for company name"
@@ -349,7 +348,7 @@ Scenario: I should see hint for every field when creating a lead
   And I follow translated "agent.leads.index.view.new_lead"
   And I should see CSS path "p[class*='inline-hints']"
 
-@m6 @tgn @_tested @selenium
+@m6 @tgn @_tested @selenium @_done
 Scenario: I have already filled in international dialling codes for telephone numbers (+xx) (xxxxxxxxxxxxxxxxxxxxxx)
   Given Category Test category 1 is created
   And I follow translated "layout.main_menu.call_centre_agent.leads"
@@ -362,7 +361,7 @@ Scenario: I have already filled in international dialling codes for telephone nu
   Then the "lead_direct_phone_number" field should contain "\+45"
   And the "lead_phone_number" field should contain "\+45"
 
-@m6 @tgn @selenium @_tested
+@m6 @tgn @selenium @_tested @_done
 Scenario: I can choose region during creation of a lead
   Given country "Denmark" has regions "Region #1, Region #2, Region #3"
   And Category Test category 1 is created
@@ -372,7 +371,7 @@ Scenario: I can choose region during creation of a lead
   And I select "Denmark" from "lead_country_id"
   And I select "Region #2" from "lead_region_id"
 
-@tgn @requested @m10 @tgn @lead_templates @selenium @_tested
+@tgn @requested @m10 @tgn @lead_templates @selenium @_tested @_done
 Scenario: I can change the lead's category even if the templates are filled out (templates should be preserved but hidden)
   Given Category named "Cat template#1" already exists
   And Category named "Cat template#1.1" already exists within category named "Cat template#1"

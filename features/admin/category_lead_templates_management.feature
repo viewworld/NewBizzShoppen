@@ -9,7 +9,7 @@ Background: Set English locale and login
   Then I sign in as bob@person.com with password supersecret
   And I go to administration categories
 
-@added @selenium @_tested
+@added @selenium @_tested @_done
 Scenario: I can create a category and add new lead templates to it which I can mark as mandatory or optional
   When I follow translated "administration.categories.index.view.new_category"
   And I fill in "category_name" with "Test category"
@@ -31,7 +31,7 @@ Scenario: I can create a category and add new lead templates to it which I can m
   And I should see "Editing category: Test category"
   And I should see "Example of template"
 
-@added @selenium @_tested
+@added @selenium @_tested @_done
 Scenario: I can edit a category and add new lead templates to it which I can mark as mandatory or optional
   Given Category named "Vehicles" already exists
   Then I go to administration categories
@@ -50,7 +50,7 @@ Scenario: I can edit a category and add new lead templates to it which I can mar
   Then the "lead_template_lead_template_fields_attributes_0_name" field should contain "example attr 1"
   Then the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 2"
 
-@added @_tested
+@added @_tested @_done
 Scenario: I can mark templates as mandatory or optional for given category even if they were created by agents
   Given template named "Computer details" for category "Computers" is created by user "agent.jim@person.com" with role "agent"
   Then I go to administration categories
@@ -62,7 +62,7 @@ Scenario: I can mark templates as mandatory or optional for given category even 
   Then I follow translated "administration.categories.edit.view.edit_template"
   And the "lead_template_is_mandatory" checkbox should be checked
 
-@added @selenium @_tested
+@added @selenium @_tested @_done
 Scenario: I can edit lead templates that were created by me
   Given template named "Computer details" for category "Computers" is created by user "bob@person.com" with role "admin"
   Then I go to administration categories
@@ -79,7 +79,7 @@ Scenario: I can edit lead templates that were created by me
   Then the "lead_template_lead_template_fields_attributes_0_name" field should contain "example attr 1"
   Then the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 2"
 
-@added @_tested
+@added @_tested @_done
 Scenario: I can delete lead templates that were created by me and were not filled out by anyone
   Given template named "Computer details" for category "Computers" is created by user "bob@person.com" with role "admin"
   Then I go to administration categories
@@ -98,7 +98,7 @@ Scenario: During template creation/edition I can mark fields as hidden or public
 @added @_done @_tested_elsewhere
 Scenario: During template creation/editon I can mark fields as mandatory or optional
 
-@added @_tested
+@added @_tested @_done
 Scenario: I can promote any lead template to global template
   Given template named "Computer details" for category "Computers" is created by user "agent.jim@person.com" with role "agent"
   Then I go to administration categories
@@ -110,7 +110,7 @@ Scenario: I can promote any lead template to global template
 @m6 @tgn @non_testable @_done
 Scenario: When I edit translated fields, try displaying country flag after the field instead of displaying "dk" in front of that particular field
 
-@m6 @tgn @selenium @_tested
+@m6 @tgn @selenium @_tested @_done
 Scenario: Add new template field type : Note (multiline text) [The lead template type should allow for long text. Basicly a large input filed for 200 words- like the description type]
   Given Category named "Vehicles" already exists
   Then I go to administration categories
@@ -127,7 +127,7 @@ Scenario: Add new template field type : Note (multiline text) [The lead template
   And I select translated "models.lead_template_field.field_type.type3" from "lead_template_lead_template_fields_attributes_0_field_type"
   Then I press translated "administration.lead_templates.new.view.button_create"
 
-@m6 @tgn @_tested
+@m6 @tgn @_tested @_done
 Scenario: Make it possible to duplicate lead templates (from lead templates listings)
   Given template named "Computer details" for category "Computers" is created by user "bob@person.com" with role "admin"
   And template named "Computer details" is mandatory
@@ -156,7 +156,7 @@ Scenario: I can see a category name for which lead temlpate is being created
   And I follow translated "administration.categories.edit.view.new_template"
   Then I should see "New lead template in category Vehicles"
 
-@tgn @requested @m10 @tgn @selenium @_tested
+@tgn @requested @m10 @tgn @selenium @_tested @_done
 Scenario: I can edit any kind of template even created by other users
   Given template named "Computer details" for category "Computers" is created by user "call_centrebiz@person.com" with role "call_centre"
   Then I go to administration categories

@@ -11,7 +11,7 @@ Background:
   Then I sign in as bob@person.com with password supersecret
   And I go to supplier lead purchases
 
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I can rate a lead
   Given I show accordion details for row "#lead_single_purchase_1"
   And I select translated "activerecord.attributes.lead_purchase.rating_levels.rating_level1" from "rating_level"
@@ -19,7 +19,7 @@ Scenario: I can rate a lead
   And I show accordion details for row "#lead_single_purchase_1"
   Then "rating_level_1" should be selected for value translated "activerecord.attributes.lead_purchase.rating_levels.rating_level1"
 
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I can bulk rate a lead
   Given lead Monitors ultimate deal exists within category Computers
   And lead Monitors ultimate deal is bought by user bob@person.com with role supplier and is assigned to user lead_user2@person.com with role lead_user
@@ -28,7 +28,7 @@ Scenario: I can bulk rate a lead
   And I follow translated "lead_supplier.lead_purchases.index.view.bulk_update_button"
   Then I should see translated "supplier.bulk_lead_purchase_update.create.flash.lead_purchases_updated_successfully"
 
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I can select from 4 different rating levels: Very good, good, satisfactory, unsatisfactory
   Given I show accordion details for row "#lead_single_purchase_1"
   And I select translated "activerecord.attributes.lead_purchase.rating_levels.rating_level2" from "rating_level"
@@ -40,7 +40,7 @@ Scenario: I can select from 4 different rating levels: Very good, good, satisfac
 # "The information provided in the lead description dos not match the information that the contact person supplied when i contacted him. --- in what way did i differ?"
 # "The lead has already chosen another suppler"
 # "Other reason that the lead was unsatisfactory (enter text)"
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I can select a reason when I rate lead as 'unsatisfactory'
   Given I show accordion details for row "#lead_single_purchase_1"
   And I select translated "activerecord.attributes.lead_purchase.rating_levels.rating_level12" from "rating_level"
@@ -50,7 +50,7 @@ Scenario: I can select a reason when I rate lead as 'unsatisfactory'
   And I show accordion details for row "#lead_single_purchase_1"
   Then "rating_level_1" should be selected for value translated "activerecord.attributes.lead_purchase.rating_levels.rating_level12"
 
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I must enter additional explaination for selected reason
   Given I show accordion details for row "#lead_single_purchase_1"
   And I select translated "activerecord.attributes.lead_purchase.rating_levels.rating_level12" from "rating_level"
@@ -62,7 +62,7 @@ Scenario: I must enter additional explaination for selected reason
 
 # When a lead is rated as unsatisfactory, the agent should be alerted but he must not be able to reply.
 # Only the admin must be able to reply on the complaint.
-@_tested
+@_tested @_done
 Scenario: Agent is informed when his lead is rated as 'unsatisfactory'
   And I have user with email agent@person.com and role agent
   Given lead Ultimate mouses deal is created by user agent@person.com with role agent
@@ -72,7 +72,7 @@ Scenario: Agent is informed when his lead is rated as 'unsatisfactory'
   And last email sent should have content "has been rated as"
 
 # should this listing include all ratings or only unsatisfactory?
-@_tested
+@_tested @_done
 Scenario: As agent I can view 'unsatisfactory' ratings regarding my leads
   Given I am not sign in
   Given I am on the homepage
@@ -93,7 +93,7 @@ Scenario: As agent I can view 'unsatisfactory' ratings regarding my leads
 
 
 # should this listing include all ratings or only unsatisfactory?
-@_tested
+@_tested @_done
 Scenario: As admin I can view all 'unsatisfactory' ratings
   Given I am not sign in
   Given I am on the homepage

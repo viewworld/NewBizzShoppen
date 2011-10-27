@@ -28,7 +28,7 @@ Background:
   Then I sign in as customer@person.com with password supersecret
   Then I go to supplier lead purchases
 
-@tgn @_tested
+@tgn @_tested @_done
 Scenario: I can browse leads assigned to one of my lead users with pagination
   Given I should see "Printers ultimate deal"
   And I should see "Monitors LCD deal"
@@ -39,19 +39,19 @@ Scenario: I can browse leads assigned to one of my lead users with pagination
   Then I should not see "Monitors LCD deal"
   Then I should not see "Mouses deal"
 
-@tgn @_tested_elsewhere
+@tgn @_tested_elsewhere @_done
 Scenario: I can see lead header, purchase value, lead price, description, hottness, novelty, exposures, clicks
 
-@tgn @_tested_elsewhere
+@tgn @_tested_elsewhere @_done
 Scenario: I can see created by, rating, certification level
 
-@tgn @_tested
+@tgn @_tested @_done
 Scenario: I can see the status of that lead assigned by my lead user
   When I fill in "search_with_keyword" with "Mouses deal"
   And I press translated "lead_user.lead_purchases.index.view.search.search_button"
   Then "state" should be selected for value "Contacted"
 
-@tgn @_tested
+@tgn @_tested @_done
 Scenario: I can filter leads
   Given I select "Denmark" from "search_with_country"
   Given I select "Office" from "search_with_category"

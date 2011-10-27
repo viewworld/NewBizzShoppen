@@ -8,7 +8,8 @@ Feature: Customer signup
  Background: Set English locale on the home page
     Given I am on the homepage
     And I make sure current locale is "en"
-@_tested
+
+ @_tested @_done
   Scenario: User signs up with invalid data
     When I go to supplier sign up
     And I fill in the following:
@@ -19,7 +20,7 @@ Feature: Customer signup
     Then I should see translated "activerecord.errors.messages.invalid"
     And I should see translated "activerecord.errors.models.user.supplier.attributes.password.confirmation"
 
-@_tested
+ @_tested @_done
   Scenario: User signs up with valid data as a buyer
     Given setting for "email_verification_for_suppliers" is set to "1"
     When I go to supplier sign up
@@ -43,7 +44,7 @@ Feature: Customer signup
     Then I should see translated "flash.supplier_accounts.create.notice"
     And a confirmation message should be sent to user@domain.dom
 
-  @_tested
+  @_tested @_done
   Scenario: User confirms his email account
     Given setting for "email_verification_for_suppliers" is set to "1"
     Given I am signed up with email email@person.com and password secret and role supplier
@@ -52,7 +53,7 @@ Feature: Customer signup
     And I should see translated "layout.my_profile_link"
     And I should be signed in
 
-  @_tested
+  @_tested @_done
   Scenario: Signed in user clicks confirmation link again
     Given setting for "email_verification_for_suppliers" is set to "1"
     Given I am signed up and confirmed as user with email email@person.com and password secret and role supplier
@@ -61,7 +62,7 @@ Feature: Customer signup
     When I follow the confirmation link sent to email@person.com with role supplier
     Then I should see translated "activerecord.errors.messages.blank"
 
-  @_tested
+  @_tested @_done
   Scenario: Signed out user clicks confirmation link again
     Given setting for "email_verification_for_suppliers" is set to "1"
     Given I am signed up and confirmed as user with email email@person.com and password secret and role supplier
@@ -69,12 +70,12 @@ Feature: Customer signup
     And I follow the confirmation link sent to email@person.com with role supplier
     Then I should see translated "activerecord.errors.messages.blank"
 
-  @tgn @m1 @_tested @added
+  @tgn @m1 @_tested @added @_done
   Scenario: Newsletter checkbox should be selected by default
     When I go to supplier sign up
     Then the "user_supplier_newsletter_on" checkbox should be checked
 
-  @tgn @m1 @_tested
+  @tgn @m1 @_tested @_done
   Scenario: Screen name has to be unique
     Given I have user with email buyer2jimconnor@person.com and role supplier
     Then user buyer2jimconnor@person.com with role supplier exists with attributes "screen_name:Jim Connor"

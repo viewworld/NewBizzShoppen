@@ -1,7 +1,7 @@
 @agent
 Feature: Certification levels
 
-  @m6 @tgn @_tested
+  @m6 @tgn @_tested @_done
   Scenario: I should have bronze certification level when I sign up as agent
     When I go to agent sign up
     And I fill in the following:

@@ -17,7 +17,7 @@ Scenario: Invoice is automatically generated after user goes to checkout
 @_done @_deprecated
 Scenario: Invoice is not automatically generated for big buyers (do big buyers use paypal to pay??)
 
-@_tested
+@_tested @_done
 Scenario: Invoice lines are marked as paid after payment has been processed by paypal
   Given I have user with email gerard.jones@paerson22.com and role supplier
   And an user with role lead_user and email lead_user.jones@paerson22.com exists as subaccount for customer gerard.jones@paerson22.com
@@ -26,7 +26,7 @@ Scenario: Invoice lines are marked as paid after payment has been processed by p
   And user with email "gerard.jones@paerson22.com" and role "supplier" has invoice for lead "Monitors deal" and transaction created by paypal
   Then invoice lines for last invoice are paid for user with email "gerard.jones@paerson22.com" and role "supplier"
 
-@_done
+@_done @_tested
 Scenario: Invoice lines are marked as paid after invoice has been marked as paid by administrator (multiple types of  “payment” object)
   Given I have user with email gerard.jones@paerson22.com and role supplier
   And an user with role lead_user and email lead_user.jones@paerson22.com exists as subaccount for customer gerard.jones@paerson22.com

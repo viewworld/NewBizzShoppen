@@ -13,13 +13,13 @@ Background:
   And I sign in as john@doe.com with password secret
   And I go to browse leads
 
-@_tested
+@_tested @_done
 Scenario: I can click add lead and I will see a notification “You added lead to your list”
   Given I follow "Another sample category"
   When I follow translated "leads.index.buy_lead"
   Then I should see translated "supplier.cart_items.create.flash.cart_item_bought_successful"
 
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I can click bulk add leads and I will see a notification “You added leads to your list”
   Given I follow translated "common.more"
   Given I follow "Another sample category"

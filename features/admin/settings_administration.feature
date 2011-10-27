@@ -35,7 +35,7 @@ Scenario: I can click cancel and go back (browser history)
   Then I press translated "administration.settings.edit.view.button_cancel"
   And I should be on the homepage
 
-@m4 @tgn @added @agent_certification @_tested
+@m4 @tgn @added @agent_certification @_tested @_done
 Scenario: When I change the certification levels in settings then agents' levels should be refreshed too (unless their certifications are locked)
   Given I have user with email agent01@person.com and role agent
   And I have user with email agent02@person.com and role agent
@@ -52,7 +52,7 @@ Scenario: When I change the certification levels in settings then agents' levels
   Then user "agent01@person.com" with role "agent" has certification level 1
   And user "agent02@person.com" with role "agent" has certification level 11
 
-@requested @m8 @tgn @_tested
+@requested @m8 @tgn @_tested @_done
 Scenario: Admin should be able to define purchase limit for given big buyer (default in settings). All purchases should be recalculated to Euro and the limit should be set in Euro.
   Then I fill in "setting_0" with "123"
   And I press translated "administration.settings.edit.view.button_update_settings"

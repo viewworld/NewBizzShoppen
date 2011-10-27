@@ -113,7 +113,7 @@ Feature: Home pages
     When I visit URL "/best-leads"
     Then I should be on the home page
 
-  @m5 @unique_categories @tgn @_tested
+  @m5 @unique_categories @tgn @_tested @_done
   Scenario: I should not see links to Category home pages for categories which are customer unique
     Given I have user with email other_customer@nbs.com and role supplier
     And Category Other Customer Unique Category is created
@@ -121,7 +121,7 @@ Feature: Home pages
     When I go to the home page
     Then I should not see "Other Customer Unique Category"
 
-  @m5 @unique_categories @tgn @_tested
+  @m5 @unique_categories @tgn @_tested @_done
   Scenario: I should not see links to Category home pages for categories which are agent unique
     Given I have user with email other_agent@nbs.com and role agent
     And Category Other Agent Unique Category is created

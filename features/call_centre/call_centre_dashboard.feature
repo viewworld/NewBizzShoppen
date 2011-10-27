@@ -13,7 +13,7 @@ Scenario: I can browse the complete list of recently sold leads
 
 Scenario: I can see 5 message excerpts from buyers
 
-@m5 @added @tgn @_tested
+@m5 @added @tgn @_tested @_done
 Scenario: When I go to home page then I should be on agent's home page
   Given I am on the homepage
   And I am signed up and confirmed as user with email bob2@person.com and password supersecret and role call_centre

@@ -17,7 +17,7 @@ Scenario: I can create new invoice for user
   And I press translated "administration.invoices.index.view.create_invoice"
   Then I should see "was successfully created"
 
-@tgn @_tested
+@tgn @_tested @_done
 Scenario: I can see list of invoices pending creation
   Given I am not sign in
   Given I have user with email bigbuyer1@person.com and role supplier
@@ -57,7 +57,7 @@ Scenario: I can see list of invoices pending creation grouped by currency
   Then I should see "21.11"
   Then I should see "66.69"
 
-@m5 @added @tgn @sprint_5_corrections @_tested
+@m5 @added @tgn @sprint_5_corrections @_tested @_done
 Scenario: I can search for invoices by a combination of keywords: contact name, company name, lead name, invoice number
   Given I have user with email bigbuyer1@person.com and role supplier
   And User bigbuyer1@person.com with role supplier is big buyer
@@ -87,7 +87,7 @@ Scenario: I can search for invoices by a combination of keywords: contact name, 
   And I press translated "administration.invoices.index.view.search_button"
   Then I should see "1/201"
 
-@m5 @added @tgn @sprint_5_corrections @_tested
+@m5 @added @tgn @sprint_5_corrections @_tested @_done
 Scenario: I can search for invoices pending creation by a combination of keywords: contact name, company name, lead name and a specific time period (date from to date to)
   Given I have user with email bigbuyer1@person.com and role supplier
   And User bigbuyer1@person.com with role supplier is big buyer
@@ -121,13 +121,13 @@ Scenario: I can search for invoices pending creation by a combination of keyword
   Then I should not see "77.99"
   Then I should see "88.32"
 
-@m5 @added @tgn @sprint_5_corrections @_tested
+@m5 @added @tgn @sprint_5_corrections @_tested @_done
 Scenario: I should see on the upper right corner there should be a total of the upcoming invoices
   Given I go to administration upcoming invoices
   And I should see translated "administration.upcoming_invoices.index.view.total"
   And I should see "2"
 
-@m5 @added @tgn @sprint_5_corrections @_tested  @requested
+@m5 @added @tgn @sprint_5_corrections @_tested  @requested @_done
 Scenario: I should be able to write a custom text on the invoice
   Given invoice exists for user "kastomer@nbs.fake" with role "supplier" with attributes "charge_vat:0"
   And I go to administration invoices
@@ -136,7 +136,7 @@ Scenario: I should be able to write a custom text on the invoice
   And I press translated "administration.invoices.edit.view.save_button"
   Then I should see "Some details for invoice"
 
-@tgn @_tested
+@tgn @_tested @_done
 Scenario: I can create new invoice from suggestion on invoices pending creation listing
   Given I am not sign in
   Given I have user with email bigbuyer1@person.com and role supplier
@@ -369,7 +369,7 @@ Scenario: I can send invoice to given email address (as an attachment)
 @tgn @_done @non_testable
 Scenario: I can print out invoice (bypassing PDF)
 
-@tgn @m6 @added @_tested  @requested
+@tgn @m6 @added @_tested  @requested @_done
 Scenario: I can credit an invoice ...
   Given I have user with email big_buyer.biz@nbs.com and role supplier
   And User big_buyer.biz@nbs.com with role supplier is big buyer
@@ -383,7 +383,7 @@ Scenario: I can credit an invoice ...
   And I should see "0.00"
   And I should see "Paid"
 
-@tgn @added @_tested @selenium  @requested
+@tgn @added @_tested @selenium @requested @_done
 Scenario: I can bulk set selected invoices as paid
   Given invoice exists for user "kastomer@nbs.fake" with role "supplier"
   And invoice exists for user "kastomer@nbs.fake" with role "supplier"
@@ -393,14 +393,14 @@ Scenario: I can bulk set selected invoices as paid
   Then I should see translated "flash.bulk_invoice_update.update.notice"
   Then I should see "Paid"
 
-@tgn @added @_tested  @requested
+@tgn @added @_tested @requested @_done
 Scenario: I can create invoice for any customer from users tab
   Given I go to administration users
   And I click hidden translated link "administration.users.index.view.create_invoice"
   Then I press translated "administration.invoices.new.view.button_create"
   And I should see translated "administration.invoices.edit.view.form.general_information"
 
-@tgn @added @_tested  @requested
+@tgn @added @_tested @requested @_done
 Scenario: I can create invoice for any customer from users tab
   Given I go to administration users
   And I click hidden translated link "administration.users.index.view.create_invoice"
@@ -504,7 +504,7 @@ Scenario: Include users name, company and user email when filtering invoices
   Then I should see "88.32"
   And I should not see "77.99"
 
-@m5 @tgn @_tested  @requested
+@m5 @tgn @_tested @requested @_done
 Scenario: On Invoices listing there should be sums present in top right hand corner (total, total paid, total unpaid)
   Given I have user with email bigbuyer1@person.com and role supplier
   And User bigbuyer1@person.com with role supplier is big buyer

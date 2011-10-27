@@ -37,7 +37,7 @@ Scenario: I can see all leads that I have access for
   Given I should see "Monitors LCD deal"
   Given I should see "Keyboards deal"
 
-@tgn @_tested
+@tgn @_tested @_done
 Scenario: I can scope down leads listing with filter
   Given I select "Denmark" from "search_with_country"
   And I select "Computers" from "search_with_category"
@@ -51,7 +51,7 @@ Scenario: I can scope down leads listing with filter
   Then I should not see "Monitors LCD deal"
   But I should see "Printers ultimate deal"
 
-@tgn @_tested
+@tgn @_tested @_done
 Scenario: I can see lead header, description, contact info but not purchase value
   Given I should see "Printers ultimate deal"
   And I should not see "3,034.87"
@@ -59,11 +59,11 @@ Scenario: I can see lead header, description, contact info but not purchase valu
   And I should see "John Printer"
   And I should see "john.printer@fghprintesrs.noserver.com"
 
-@tgn @_tested
+@tgn @_tested @_done
 Scenario: I should see company name on leads listing
   Then I should see "FGH Printers"
 
-@tgn @bk @_tested
+@tgn @bk @_tested @_done
 Scenario: I can download lead as CSV
   Given I fill in "search_with_keyword" with "Printers ultimate deal"
   And I press translated "lead_user.lead_purchases.index.view.search.search_button"
@@ -71,42 +71,41 @@ Scenario: I can download lead as CSV
   And I should see "Printers ultimate deal"
   And I should see "Public desc for printers deal"
 
-@tgn @bk @_tested @selenium
+@tgn @bk @_tested @selenium @_done
 Scenario: I can bulk download leads as CSV
   Then I check "mark_all"
   And I follow translated "lead_user.lead_purchases.index.view.bulk_download_csv_link_short"
 
-
-@tgn @_tested
+@tgn @_tested @_done
 Scenario: I can see paginated list of leads
   Given pagination per page size in model LeadPurchase is set to 1
   And I go to lead user lead purchases
   Then I follow "2"
   Then I follow "1"
 
-@tgn @_tested
+@tgn @_tested @_done
 Scenario: I can see all leads bought by lead buyers that belong to my account
   Then I should see "Printers ultimate deal"
   Then I should see "Monitors LCD deal"
   Then I should see "Keyboards deal"
   Then I should not see "Mouses deal"
 
- @noguess
+@noguess
 Scenario: I can see all leads requested by lead users that belong to my account
 
-@tgn @_tested
+@tgn @_tested @_done
 Scenario: I should see created by and certification level for each lead
   Then I should see "Johan Printing"
   And I should see translated "models.lead.certification.lvl1"
 
-@m4 @tgn @_tested @added @_deprecated
+@m4 @tgn @_tested @added @_deprecated @_done
 Scenario: I should see rating % for each lead
 #  Given a lead "Printers ultimate deal" has good rating
 #  Given All leads have refreshed average ratings
 #  Given I go to lead user lead purchases
 #  Then I should see "100%"
 
-@_tgn @_tested
+@tgn @_tested @_done
 Scenario: I can see company contact on lead details page
   When I fill in "search_with_keyword" with "printers"
   And I press translated "lead_user.lead_purchases.index.view.search.search_button"
@@ -137,17 +136,17 @@ Scenario: I should see hottness, publish date, exposure, clicks
   Then I should see translated "models.lead.hotness.lvl2"
   And I should see "01-01-2011"
 
-@tgn @_tested
+@tgn @_tested @_done
 Scenario: I can see company contact
   Then I should see "London"
   And I should see "847-387"
   And I should see "Veilingstreet 46"
 
-@tgn @_tested @selenium
+@tgn @_tested @selenium @_done
 Scenario: I can toggle select leads
   Then I check "mark_all"
 
-@tgn @_tested @selenium
+@tgn @_tested @selenium @_done
 Scenario: I can set status of lead (not contacted, contacted, meeting, signed)
   Given I fill in "search_with_keyword" with "Printers ultimate deal"
   And I press translated "lead_user.lead_purchases.index.view.search.search_button"
@@ -157,14 +156,14 @@ Scenario: I can set status of lead (not contacted, contacted, meeting, signed)
   And I press translated "lead_user.lead_purchases.index.view.search.search_button"
   Then "state" should be selected for value "Signed"
 
-@tgn @_tested @selenium
+@tgn @_tested @selenium @_done
 Scenario: I can bulk set status of leads (not contacted, dontacted, meeting, signed)
   Given I check "mark_all"
   And I select "Signed" from "bulk_state"
   And I follow translated "lead_user.lead_purchases.index.view.bulk_update_button"
   Then I should see translated "lead_user.bulk_lead_purchase_update.create.flash.lead_purchases_updated_successfully"
 
-@tgn @bk @_tested
+@tgn @bk @_tested @_done
 Scenario: I can print out lead information
   Given I fill in "search_with_keyword" with "Printers ultimate deal"
   And I press translated "lead_user.lead_purchases.index.view.search.search_button"
@@ -173,7 +172,7 @@ Scenario: I can print out lead information
   And I should see "Public desc for printers deal"
   And I should see "john.printer@fghprintesrs.noserver.com"
 
-@tgn @bk @selenium @_tested
+@tgn @bk @selenium @_tested @_done
 Scenario: I can print out multiple leads information
   Given I check "mark_all"
   And I follow translated "lead_user.lead_purchases.index.view.bulk_print_link_short"
@@ -188,7 +187,7 @@ Scenario: I should see a yellow color for a lead with expiration date ending in 
   And I follow translated "layout.main_menu.lead_user.lead_purchases"
   Then list item should be highlighted
 
-@m5 @added @lead_templates @tgn @_tested
+@m5 @added @lead_templates @tgn @_tested @_done
 Scenario: I can see lead template fields with public values for each lead
   Given template named "Printers details" for category "Computers" is created by user "ccagent@person.com" with role "call_centre_agent"
   And template named "Printers details" has following fields "printers protocol:true:false, vendor name:false:false, versions:false:false"

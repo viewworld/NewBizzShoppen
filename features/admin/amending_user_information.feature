@@ -9,7 +9,7 @@ Background: Sign in user and set English locale
   And I have user with email aaaaaagent1@person.com and role agent
   And I go to administration users
 
-@_tested
+ @_tested @_done
  Scenario: I can edit user info (no password reset!)
    Given I follow translated "administration.users.index.view.email"
    And I follow "Edit"

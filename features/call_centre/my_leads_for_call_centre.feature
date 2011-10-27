@@ -16,13 +16,13 @@ Background:
   Then I sign in as call_centre@person.com with password supersecret
   And I go to call centre leads
 
-@_tested
+@_tested @_done
 Scenario: I can browse leads with pagination
   Given pagination per page size in model Lead is set to 2
   And I go to call centre leads
   Then I follow "2"
 
-@_tested
+@_tested @_done
 Scenario: I can search leads with filtering by: show active (default), show all, show outdated
   Given a lead Ultimate doors deal exists within category Computers and is bought by user jim.doe.buyer@person.com with role supplier
   Given lead Ultimate desks deal exists with attributes "purchase_decision_date:2009-09-01"
@@ -39,7 +39,7 @@ Scenario: I can search leads with filtering by: show active (default), show all,
   And I press translated "call_centre.leads.index.view.search_button"
   Then I should see "Ultimate doors deal"
 
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I can change lead status from lead list
   Given I fill in "search_with_keyword" with "ultimate mouses deal"
   And I press translated "call_centre.leads.index.view.search_button"
@@ -50,7 +50,7 @@ Scenario: I can change lead status from lead list
   And I press translated "call_centre.leads.index.view.search_button"
   And "lead_published" should be selected for value translated "call_centre.leads.index.view.option_not_published"
 
-@_tested
+@_tested @_done
 Scenario: I can delete lead if the lead is not sold yet
   Given I fill in "search_with_keyword" with "Ultimate mouses deal"
   And I press translated "call_centre.leads.index.view.search_button"
@@ -70,7 +70,7 @@ Scenario: I can see clicks, exposure, hottness, novelty, unikness, price per lea
 @_done @non_testable
 Scenario: clicking on the lead should take to edit page
 
-@m6 @_tested @tgn  @requested
+@m6 @_tested @tgn @requested @_done
 Scenario: I can change a creator of lead to any other user within my call centre
   Given there are no leads
   And I have user with email other_agent@nbs.com and role call_centre_agent

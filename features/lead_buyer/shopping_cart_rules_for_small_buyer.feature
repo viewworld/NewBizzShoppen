@@ -18,7 +18,7 @@ Background:
   And lead "Keyboards deal" was requested by user "lead_user2@person.com" with role "lead_user" and is owned by user "john@doe.com"
   And I sign in as john@doe.com with password secret
 
-@tgn @_tested
+@tgn @_tested @_done
 Scenario: I cannot buy a lead skipping checkout
   Given I go to browse leads
   And I follow category "Computers"
@@ -26,7 +26,7 @@ Scenario: I cannot buy a lead skipping checkout
   When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   Then I should see translated "common.nothing_to_display"
 
-@tgn @_tested
+@tgn @_tested @_done
 Scenario: I can buy lead through checkout
   And I go to browse leads
   And I follow category "Computers"
@@ -36,7 +36,7 @@ Scenario: I can buy lead through checkout
   And paypal payment for user with email "john@doe.com" and role "supplier"
   And lead named "Ultra new printers" is owned by user "john@doe.com" with role "supplier"
 
-@tgn @_tested
+@tgn @_tested @_done
 Scenario: Lead purchase is not marked with "has access" after creation
   Given I go to browse leads
   And I follow category "Computers"
@@ -45,7 +45,7 @@ Scenario: Lead purchase is not marked with "has access" after creation
   Then I should see translated "common.nothing_to_display"
 
 #after AO finishes invoicing subsystem
-@tgn @_tested
+@tgn @_tested @_done
 Scenario: Invoice is auto-created if a new paypal transaction (payment for cart content has been confirmed) is created in the system
   And I go to browse leads
   And I follow category "Computers"
@@ -56,7 +56,7 @@ Scenario: Invoice is auto-created if a new paypal transaction (payment for cart 
   Then invoice is created for user with email "john@doe.com" and role "supplier"
   And invoice line is created for lead "Ultra new printers" and user with email "john@doe.com" and role "supplier"
 
-@tgn @_tested @added
+@tgn @_tested @added @_done
 Scenario: Invoice is NOT created when payment notification is duplicated
   And I go to browse leads
   And I follow category "Computers"
@@ -70,21 +70,21 @@ Scenario: Invoice is NOT created when payment notification is duplicated
   Then last payment notification is marked as "Duplicated"
   And invoices count for user with email "john@doe.com" and role "supplier" is 1
 
-@tgn @_tested
+@tgn @_tested @_done
 Scenario: I can add to cart lead requested by lead user that belongs to my account
   When I go to suppliers lead requests
   Then I follow translated "supplier.lead_requests.index.view.accept_lead_request_link"
   When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   And I should see translated "common.nothing_to_display"
 
-@tgn @_tested @selenium
+@tgn @_tested @selenium @_done
 Scenario: I can bulk add to cart leads requested by lead user that belongs to my account
   When I go to suppliers lead requests
   Then I check "mark_all"
   And I follow translated "supplier.lead_requests.index.view.button_bulk_create_lead_request"
   And I should see translated "flash.bulk_lead_requests.update.notice"
 
-@tgn @m5 @added @_tested
+@tgn @m5 @added @_tested @_done
 Scenario: Item cannot be added to the cart if its currency does not match items' currencies already added to the cart
   Given Category named "Super Computers" already exists
   Given Category named "Awesome Computers" already exists

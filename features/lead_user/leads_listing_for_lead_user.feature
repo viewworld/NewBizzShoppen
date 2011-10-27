@@ -9,7 +9,7 @@ Background: Sign in user and set English locale
   And an user with role lead_user and email lead_user2@person.com exists as subaccount for customer customer@person.com
   Then I sign in as lead_user2@person.com with password secret
 
-@_tested @noguess
+@_tested @noguess @_done
 Scenario: Listings should not show leads that are already bought or requested within my ownership branch
   Given I go to browse leads
   And I follow category "Computers"
@@ -22,14 +22,14 @@ Scenario: Listings should not show leads that are already bought or requested wi
   And I go to lead user lead requests
   And I should see "Printers ultimate deal"
 
-@_tested @noguess
+@_tested @noguess @_done
 Scenario: I can click request lead and I will see a notification "You added lead to your requested leads list"
   Given I go to browse leads
   And I follow category "Computers"
   And I follow translated "leads.index.request_lead"
   Then I should see translated "flash.lead_users.create.notice"
 
-@_tested @selenium @noguess
+@_tested @selenium @noguess @_done
 Scenario: I can click bulk request leads and I will see a notification “You added leads to your requested leads list”
   And lead Another Printers ultimate deal exists within category Computers
   Given I go to browse leads

@@ -44,7 +44,7 @@ Scenario: I can filter leads based on zip code
   And I should not see "Monitors LCD deal"
   And I should see "1" rows in a table with headers within "table.leads_table"
 
-@tgn @_tested
+@tgn @_tested @_done
 Scenario: I can filter leads based on country
   When I select "Denmark" from "search_with_country"
   And I press translated "leads.index.search.search_button"

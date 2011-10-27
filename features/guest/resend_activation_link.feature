@@ -5,7 +5,7 @@ Background:  Sign up user and set English locale
   Given I am on the homepage
   And I make sure current locale is "en"
 
-@_tested
+@_tested @_done
 Scenario: I can resend activation email to my email address
   Given setting for "email_verification_for_suppliers" is set to "1"
   Given I am signed up with email email@person.com and password secret and role supplier
@@ -14,7 +14,7 @@ Scenario: I can resend activation email to my email address
   Then I press translated "devise.confirmations.resend_confirmation_link"
   And I should see translated "devise.confirmations.send_instructions"
 
-@_tested
+@_tested @_done
 Scenario: I can't resend activation email to my email address once the account was activated
   Given I am signed up and confirmed as user with email email@person.com and password secret and role supplier
   Then I go to resend confirmation instructions

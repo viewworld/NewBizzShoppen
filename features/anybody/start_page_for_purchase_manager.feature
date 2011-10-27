@@ -124,7 +124,7 @@ Scenario: In bestsellers and latest listings I should not see leads which I've a
   Then I should see "AwesomeLead"
   And I should not see "BoughtLead"
 
-@m5 @unique_categories @tgn @added @_tested @requested
+@m5 @unique_categories @tgn @added @_tested @requested @_done
 Scenario: When I am not logged in I should not see any leads from unique categories on Latest & Bestsellers lists
   Given lead CommonLead1 exists within category Common Category1
   And CommonLead1 is a best seller
@@ -165,7 +165,7 @@ Scenario: I should not see leads from agent unique categories I'm not assigned t
 #  And I should see "UniqueLead2" within "#latest_leads"
 
 # best sellers removed in m16
-@m5 @unique_categories @tgn @added @_tested  @requested @_deprecated
+@m5 @unique_categories @tgn @added @_tested  @requested @_deprecated @_done
 Scenario: I should not see leads from agent unique categories I'm not assigned to on Bestsellers listing
 #  Given lead CommonLead1 exists within category Common Category1
 #  And CommonLead1 is a best seller
@@ -212,7 +212,7 @@ Scenario: I should see leads from agent unique categories I'm assigned to on Lat
 #  And I should see "UniqueLead2" within "#latest_leads"
 
 # best sellers removed in m16
-@m5 @unique_categories @tgn @added @_tested  @requested @_deprecated
+@m5 @unique_categories @tgn @added @_tested  @requested @_deprecated @_done
 Scenario: I should see leads from agent unique categories I'm assigned to on Bestsellers listing
 #  Given I am signed up and confirmed as user with email agent34234234@nbs.com and password secret and role member
 #  Given lead CommonLead1 exists within category Common Category1

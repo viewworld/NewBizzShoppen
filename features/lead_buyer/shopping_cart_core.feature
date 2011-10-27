@@ -30,7 +30,7 @@ Scenario: I can add lead to basket
   Then I follow translated "leads.index.add_to_cart_link"
   And I should see translated "supplier.cart_items.create.flash.cart_item_creation_successful"
 
-@tgn @_tested @added @sprint_5_corrections
+@tgn @_tested @added @sprint_5_corrections @_done
 Scenario: I can view details of leads added to the basket
   Given I fill in "search_with_keyword" with "printers"
   And I press translated "leads.index.search.search_button"
@@ -83,7 +83,7 @@ Scenario: I can't buy (see) a lead when sale_limit is reached
 
 #When adding a lead to cart for the first time, there should be a small popup displayed, pointing on “Cart” button with some customizable text
 #(i.e. Your lead has been added to cart. Click here to checkout.) If You close it, it should no more appear for that particular user
-@requested @m8 @tgn @selenium @_tested
+@requested @m8 @tgn @selenium @_tested @_done
 Scenario: When adding a lead to cart for the first time, there should be a small popup displayed
   When I follow translated "leads.index.add_to_cart_link"
   Then I should see "Your lead has been added to cart."

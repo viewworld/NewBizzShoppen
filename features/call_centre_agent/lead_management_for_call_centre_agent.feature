@@ -13,13 +13,13 @@ Background:
   And an user with role call_centre_agent and email call_centre_agent@person.com belongs to call centre call_centre@person.com
   Then I sign in as call_centre_agent@person.com with password supersecret
 
-@_tested
+@_tested @_done
 Scenario: I can browse leads with pagination
   Given pagination page size for leads is set to 2
   And I follow translated "layout.main_menu.call_centre_agent.leads"
   And I follow "2"
 
-@_tested @_tested
+@_tested @_done
 Scenario: I can search leads with filtering by: show active (default), show all, show outdated
   Given lead Monitors ultimate deal exists with attributes "purchase_decision_date:2009-09-01"
   Given lead Wires ultimate deal exists with attributes "sale_limit:1"
@@ -36,7 +36,7 @@ Scenario: I can search leads with filtering by: show active (default), show all,
   And I press translated "call_centre.leads.index.view.search_button"
   Then I should see "Wires ultimate deal"
 
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I can change lead status from lead list
   When I follow translated "layout.main_menu.call_centre_agent.leads"
   And I fill in "search_with_keyword" with "routers ultimate deal"
@@ -48,7 +48,7 @@ Scenario: I can change lead status from lead list
   And I press translated "call_centre_agent.leads.index.view.search_button"
   And "lead_published" should be selected for value translated "call_centre_agent.leads.index.view.option_not_published"
 
-@_tested
+@_tested @_done
 Scenario: I can delete lead if the lead is not sold yet
   Given a lead Wires ultimate deal exists within category Computers and is bought by user jim.doe.buyer@person.com with role supplier
   And I follow translated "layout.main_menu.call_centre_agent.leads"
@@ -62,7 +62,7 @@ Scenario: I can delete lead if the lead is not sold yet
   And I follow translated "call_centre_agent.leads.index.view.destroy"
   Then I should see translated "call_centre_agent.leads.destroy.flash.lead_deletion_failure"
 
-@_tested
+@_tested @_done
 Scenario: I can see clicks, exposure, hottness, novelty, uniqueness, price per lead
   Given lead Routers ultimate deal exists with attributes "clicks_count:982,exposures_count:9821,sale_limit:8,price:74.98"
   And I follow translated "layout.main_menu.call_centre_agent.leads"

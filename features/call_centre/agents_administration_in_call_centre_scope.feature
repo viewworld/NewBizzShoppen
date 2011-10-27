@@ -8,7 +8,7 @@ Background:  Sign in user and set locale
   Then I sign in as call_centre@person.com with password supersecret
   And I go to call centre agents
 
-@_tested
+@_tested @_done
 Scenario: I can browse list of my agents without pagination
   Given an user with role call_centre_agent and email ccagent01@person.com belongs to call centre call_centre@person.com
   And an user with role call_centre_agent and email ccagent02@person.com belongs to call centre call_centre@person.com
@@ -17,7 +17,7 @@ Scenario: I can browse list of my agents without pagination
   And I go to call centre agents
   Then I should not see link with label "2"
 
-@_tested
+@_tested @_done
 Scenario: I can sort by Name, Last Name, created, volume sold, revenue, mobile number, num. of leads purchased last 30days, num. of leads purchased last 12months, good, bad, not rated, Rating %, certification lvl.
   Given user "call_centre@person.com" with role "call_centre" has attributes "certification_level:11"
   Given an user with role call_centre_agent and email ccagent01@person.com belongs to call centre call_centre@person.com
@@ -113,14 +113,14 @@ Scenario: Rename column accessible in LeadPurchase to accessible_from:datetime (
 @_done @non_testable @added
 Scenario: I can refresh the cashed values for sort by rake task
 
-@_tested
+@_tested @_done
 Scenario: I can block the user
   Given an user with role call_centre_agent and email ccagent@person.com belongs to call centre call_centre@person.com
   And I go to call centre agents
   Then I follow translated "call_centre.call_centre_agents.index.view.lock"
   Then I should see translated "call_centre.call_centre_agents.update.flash.call_centre_agent_update_successful"
 
-@_tested
+@_tested @_done
 Scenario: I can unblock user
   Given an user with role call_centre_agent and email ccagent@person.com belongs to call centre call_centre@person.com
   And User ccagent@person.com with role call_centre_agent is blocked
@@ -128,7 +128,7 @@ Scenario: I can unblock user
   Then I follow translated "call_centre.call_centre_agents.index.view.unlock"
   Then I should see translated "call_centre.call_centre_agents.update.flash.call_centre_agent_update_successful"
 
-@_tested
+@_tested @_done
 Scenario: I can edit user
   Given an user with role call_centre_agent and email ccagent@person.com belongs to call centre call_centre@person.com
   And I go to call centre agents
@@ -138,14 +138,14 @@ Scenario: I can edit user
   And I press translated "call_centre.call_centre_agents.edit.view.button_update"
   Then I should see translated "call_centre.call_centre_agents.update.flash.call_centre_agent_update_successful"
 
-@_tested
+@_tested @_done
 Scenario: I can delete user
   Given an user with role call_centre_agent and email ccagent@person.com belongs to call centre call_centre@person.com
   And I go to call centre agents
   And I follow translated "call_centre.call_centre_agents.index.view.delete"
   Then I should see translated "call_centre.call_centre_agents.destroy.flash.call_centre_agent_deletion_successful"
 
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I can bulk block users
   Given an user with role call_centre_agent and email ccagent01@person.com belongs to call centre call_centre@person.com
   Given an user with role call_centre_agent and email ccagent02@person.com belongs to call centre call_centre@person.com
@@ -154,7 +154,7 @@ Scenario: I can bulk block users
   And I follow "lock_selected"
   Then I should see translated "flash.bulk_call_centre_agents_update.update.notice"
 
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I can bulk unblock users
   Given an user with role call_centre_agent and email ccagent01@person.com belongs to call centre call_centre@person.com
   And User ccagent01@person.com with role call_centre_agent is blocked

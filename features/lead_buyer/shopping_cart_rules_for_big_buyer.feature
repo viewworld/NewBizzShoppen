@@ -113,11 +113,11 @@ Scenario: I can filter the list of my leads by "paid" column
   And I press translated "lead_supplier.lead_purchases.index.view.search.search_button"
   Then I should not see "Printers ultimate deal"
 
-@m5 @tgn @_tested
+@m5 @tgn @_tested @_done
 Scenario: I should not see the cart when I'm a big buyer
   Then I should not see translated "layout.cart.cart_header" with options "count:0"
 
-@m8 @added @tgn @_tested
+@m8 @added @tgn @_tested @_done
 Scenario: I can buy leads if total cost of my purchases don't exceed the global limit
   Given big buyer purchase limit is set to 1000
   When I go to leads
@@ -126,7 +126,7 @@ Scenario: I can buy leads if total cost of my purchases don't exceed the global 
   And I should see translated "supplier.cart_items.create.flash.cart_item_bought_successful"
   Then I should not see "Printers ultimate deal"
 
-@m8 @added @tgn @_tested
+@m8 @added @tgn @_tested @_done
 Scenario: I cannot buy leads if total cost of my purchases exceeds the global limit
   Given big buyer purchase limit is set to 160
   And currency "DKK" exists with attributes "exchange_rate: 2.5"
@@ -141,7 +141,7 @@ Scenario: I cannot buy leads if total cost of my purchases exceeds the global li
   And I should see translated "supplier.cart_items.create.flash.cart_item_big_supplier_purchase_limit_reached"
   Then I should see "Printers ultimate deal"
 
-@m8 @added @tgn @_tested
+@m8 @added @tgn @_tested @_done
 Scenario: I cannot buy leads if total cost of my purchases exceeds my personal limit but not the global one
   Given big buyer purchase limit is set to 260
   And big buyer purchase limit for user "customer@person.com" is set to 160

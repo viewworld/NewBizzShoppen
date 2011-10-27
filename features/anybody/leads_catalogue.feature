@@ -15,22 +15,22 @@ Background:
   And User jim.jones@person.com with role agent is blocked
   And I go to browse leads
 
-@_tested
+@_tested @_done
 Scenario: I should see an image and a description for each category
   Then I should see "Computers"
 
-@_tested
+@_tested @_done
 Scenario: I can click on a category name and see a list of leads in that category
   Then I follow category "Computers"
   And I should see "Printers ultimate deal"
 
-@_tested
+@_tested @_done
 Scenario: I should be able to see leads that belong to a user which is blocked
   Then I follow category "Computers"
   And I should see "Printers ultimate deal"
   And I should see "Cheap mouses ultimate deal"
 
-@_tested
+@_tested @_done
 Scenario: I can browse leads in a given category with pagination
   Given pagination page size for leads is set to 2
   Then I follow category "Computers"
@@ -39,7 +39,7 @@ Scenario: I can browse leads in a given category with pagination
 @_deprecated
 Scenario: I should see created by
 
-@m4 @tgn @_tested  @added
+@m4 @tgn @_tested  @added @_done
 Scenario: I should see rating % and certification level for each lead
   Given I have user with email bob@person.com and role supplier
   And a lead Printers ultimate deal exists within category Computers and is bought by user bob@person.com with role supplier
@@ -50,7 +50,7 @@ Scenario: I should see rating % and certification level for each lead
   Then I should see "100%"
   And I should see translated "models.lead.certification.lvl1"
 
-@_tested
+@_tested @_done
 Scenario: I should see lead header, lead price, purchase value and public description
   Then I follow category "Computers"
   And I should see "989.39"
@@ -58,7 +58,7 @@ Scenario: I should see lead header, lead price, purchase value and public descri
   And I should see "Printers ultimate deal"
   And I should see "Public desc about printers deal"
 
-@m4 @tgn @_tested
+@m4 @tgn @_tested @_done
 Scenario: I should see hottness, novelty, exposure, clicks
   When I follow category "Computers"
   Then I should see translated "models.lead.hotness.lvl1"
@@ -74,7 +74,7 @@ Scenario: I should see currency in which lead is being sold
   And I press translated "leads.index.search.search_button"
   And I should see "€989.39" within ".leads_table"
 
-@m5 @tgn @_tested
+@m5 @tgn @_tested @_done
 Scenario: When you click on a lead that you have not bought, and you are not signed up you should be given the opportunity to sign in or create a new account
   Given Category named "Sample category" already exists
   And Lead named "Lead sample" exists within "Sample category" category
@@ -84,7 +84,7 @@ Scenario: When you click on a lead that you have not bought, and you are not sig
   And I should see "Sign in"
   Then I follow translated "supplier_home.show.view.create_new_supplier_account"
 
-@m5 @tgn @_tested
+@m5 @tgn @_tested @_done
 Scenario: Add blurb or info text to leads listing "To view lead details click buy lead"
   Given Category named "Sample category" already exists
   And Lead named "Lead sample" exists within "Sample category" category

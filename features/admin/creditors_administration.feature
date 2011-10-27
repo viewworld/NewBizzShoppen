@@ -17,10 +17,10 @@ Background:
   And last invoice for user "big_buyer.biz@nbs.com" with role "supplier" is refunded for lines "Super computers #2"
   And I go to administration creditors
 
-@_tested
+@_tested @_done
 Scenario: I can list all credits
   Then I should see "Credit"
 
-@_tested
+@_tested @_done
 Scenario: I can list separately credits
   Then I should see "1/20"

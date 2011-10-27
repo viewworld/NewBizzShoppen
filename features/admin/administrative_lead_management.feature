@@ -81,7 +81,7 @@ Scenario: I can delete a language
   And I follow translated "administration.leads.index.view.edit"
   Then I should not see translated "agent.leads.new.view.remove_language"
 
-@m4 @tgn @added @agent_certification @_tested @selenium
+@m4 @tgn @added @agent_certification @_tested @selenium @_done
 Scenario: I can publish a lead that is not published
   Given I have user with email agent.notcertified@person.com and role agent
   And user "agent.notcertified@person.com" with role "agent" has certification level set to 0
@@ -98,7 +98,7 @@ Scenario: I can publish a lead that is not published
   And I press translated "administration.leads.index.view.search_button"
   And I should not see "Monitors ultimate deal"
 
-@m5 @tgn @_tested
+@m5 @tgn @_tested @_done
 Scenario: I can edit leads from any page where they are presented
   Given lead New lead exists within category Computers
   When I go to browse leads
@@ -124,7 +124,7 @@ Scenario: I can clear the filter when browsing leads
   Then I should see "Monitors"
   And I should see "Keyboards"
 
-@m6 @selenium @_tested @tgn
+@m6 @selenium @_tested @tgn @_done
 Scenario: When I change the category then I am not redirected back to the listing view
 #  Given there are no leads
 #  And a lead Super ultra lead #1 exists within category Computers and is bought by user tim@nbs.com with role supplier
@@ -133,7 +133,7 @@ Scenario: When I change the category then I am not redirected back to the listin
 #  Then I select "Electronics" from "lead_category_id"
 #  And I should see "Editing lead: Super ultra lead #1"
 
-@m6 @_tested @tgn
+@m6 @_tested @tgn @_done
 Scenario: I can change creator of lead to any other agent
   Given there are no leads
   And I have user with email agent_999@nbs.com and role agent

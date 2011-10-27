@@ -20,7 +20,7 @@ Background:
   Then I sign in as call_centre@person.com with password supersecret
   And I go to call centre leads
 
-@_tested
+@_tested @_done
 Scenario: I can browse leads created by one of my agents with pagination
   Given pagination per page size in model Lead is set to 2
   And I go to call centre leads
@@ -28,7 +28,7 @@ Scenario: I can browse leads created by one of my agents with pagination
   And I press translated "call_centre.leads.index.view.search_button"
   And I follow "2"
 
-@_tested
+@_tested @_done
 Scenario: I can see lead header, purchase value, lead price, hottness, novelty, exposures, clicks, created at
   Then I should see "Ultimate monitors deal"
   And I should see "1,029.96"
@@ -39,7 +39,7 @@ Scenario: I can see lead header, purchase value, lead price, hottness, novelty, 
   And I should see "85"
   And I should see "12-02-2011"
 
-@_tested
+@_tested @_done
 Scenario: I can see created by, rating, certification level
   Then I should see "Greg Foam"
   And I should see translated "models.lead.certification.lvl0"
@@ -48,7 +48,7 @@ Scenario: I can see created by, rating, certification level
 @m0 @noguess
 Scenario: I can see a link to comment for a lead if there is a conversation started
 
-@_tested
+@_tested @_done
 Scenario: I can filter leads by values ...
   When I fill in "search_with_keyword" with "ultimate monitors"
   And I press translated "call_centre.leads.index.view.search_button"
@@ -61,7 +61,7 @@ Scenario: I can filter leads by values ...
   And I should see "Ultimate doors deal"
   And I should not see "Ultimate mouses deal"
 
-@_tested
+@_tested @_done
 Scenario: I should be able to click link in agents listing and go straight to that agent's leads listing
   When I go to call centre call centre agents
   And I follow translated "call_centre.call_centre_agents.index.view.first_name_column"

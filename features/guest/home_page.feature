@@ -25,7 +25,7 @@ Feature: Home page
   @m8 @requested @tgn @_tested_elsewhere @_done
   Scenario: When a new user sigens in on fairleads, he should be redirected to his new role home page, not the site homepage
 
-  @m8b @requested @tgn @_tested
+  @m8b @requested @tgn @_tested @_done
   Scenario: Call centre/call centre admin should share the homepage with agent -- correct the cc/cc agent welcome message (move it from the site home to agent home)
     Given I am on the home page
     Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role call_centre
@@ -48,7 +48,7 @@ Feature: Home page
     Then I should see "Welcome agent"
     And I should see "Blurb agent home"
 
-  @m8 @requested @tgn @_tested
+  @m8 @requested @tgn @_tested @_done
   Scenario: Make year automatically change in footer
     Given I go to the homepage
     Then I should see "2011 Fairleads Ltd"

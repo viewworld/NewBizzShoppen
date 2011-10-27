@@ -20,7 +20,7 @@ Background:  Sign in user and set locale
   And comment for lead "Lead#4" was posted by user "lead_buyer.customer1@nbs.com" with attributes "last_thread_created_at:2011-02-04"
   Then I sign in as customer1@nbs.com with password supersecret
 
-@noguess @_tested @selenium
+@noguess @_tested @selenium @_done
 Scenario: I can create a comment for lead that I have access to
   When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   And I fill in "search_with_keyword" with "Lead#4"
@@ -32,7 +32,7 @@ Scenario: I can create a comment for lead that I have access to
   Then I should see "New thread title"
   And I should see "New thread body"
 
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I can reply to comment
   When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   And I fill in "search_with_keyword" with "Lead#4"
@@ -45,7 +45,7 @@ Scenario: I can reply to comment
   Then I should see "Reply to First Lead1 comment"
   And I should see "Body reply to First Lead1 comment"
 
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I can see all comments created by members of my ownership branch
   When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   And I fill in "search_with_keyword" with "Lead#3"
@@ -60,7 +60,6 @@ Scenario: I cannot see comments created by members of ownership branch that I do
 @m0
 Scenario: I can bulk create comments
 
-
 @_done @_deprecated
 Scenario: I can sort all comments
 
@@ -73,7 +72,7 @@ Scenario: I can see paginated list of comments
 @_done @tested_elsewhere
 Scenario: I can see tab with comments on my leads page besides show details
 
-@_tested
+@_tested @_done
 Scenario: I can't comment leads created by purchase manager
   Given I have user with email purchase_manager7@nbs.com and role member
   And lead Lead#7 is created by user purchase_manager7@nbs.com with role member

@@ -8,14 +8,14 @@ Background:
   And Category named "Another sample category" already exists within category named "Sample category"
   And I follow translated "layout.main_menu.shared.browse_leads"
 
-@_tested @bk
+@_tested @bk @_done
 Scenario: I should see an image and a description for each category
   Then I should see "Sample category"
 
-@_tested_elsewhere
+@_tested_elsewhere @_done
 Scenario: I can click on a category name and see a list of leads in that category
 
-@m2 @_tested @tgn
+@m2 @_tested @tgn @_done
 Scenario: I should see leads that belong to a user which is blocked
   Given Lead named "Lead 1" exists within "Sample category" category
   And I have user with email agent@person.com and role agent
@@ -27,7 +27,7 @@ Scenario: I should see leads that belong to a user which is blocked
   And I follow category "Sample category"
   Then I should see "Lead 1"
 
-@_tested @bk
+@_tested @bk @_done
 Scenario: I can browse leads in a given category with pagination
   Given pagination page size for leads is set to 3
   And Lead named "Lead 1" exists within "Sample category" category
@@ -37,7 +37,7 @@ Scenario: I can browse leads in a given category with pagination
   And I follow category "Sample category"
   Then I follow "2"
 
-@bk @_tested
+@bk @_tested @_done
 Scenario: I should see lead header, lead price, purchase value, created by and public description
   Given Category named "One more sample category" already exists
   And lead Nice exists within category One more sample category
@@ -45,7 +45,7 @@ Scenario: I should see lead header, lead price, purchase value, created by and p
   And I follow category "One more sample category"
   Then I should see "Nice"
 
-@m2 @tgn @_tested
+@m2 @tgn @_tested @_done
 Scenario: I should see certification level for each lead
   Given Lead named "Lead 1" exists within "Sample category" category
   And I follow category "Sample category"
@@ -70,7 +70,7 @@ Scenario: I should see rating % for each lead
   And I follow category "Sample category"
   Then I should see "58%"
 
-@m2 @tgn @_tested
+@m2 @tgn @_tested @_done
 Scenario: I should see hottness, novelty, exposure, clicks
   Given Lead named "Lead 1" exists within "Sample category" category
   And lead Lead 1 exists with attributes "clicks_count:17,exposures_count:887"
@@ -92,7 +92,7 @@ Scenario: I should be able to click "Add to cart button" that will redirect me t
   And I press translated "home.show.view.sign_in"
   Then I should see "Lead 392S2"
 
-@m5 @tgn @_tested
+@m5 @tgn @_tested @_done
 Scenario: If I successfully login after requesting a lead being added to a cart, that lead should be added to cart (or bought if I am big buyer)
   Given I am signed up and confirmed as user with email johnbuyer3434@person.com and password secret and role supplier
   Given Lead named "Lead sample" exists within "Sample category" category
@@ -111,13 +111,12 @@ Scenario: If I successfully login after requesting a lead being added to a cart,
   Then I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   And I should see "Lead sample"
 
-
-@m5 @added @tgn @sprint_5_corrections @_tested
+@m5 @added @tgn @sprint_5_corrections @_tested @_done
 Scenario: When I browse a lead category, the lead category should be displayed very clear beside the "Leads flag" on the upper left side of the screen
   When I follow category "Sample category"
   Then I should see "Leads for Sample category"
   
-@m5 @added @tgn @_tested
+@m5 @added @tgn @_tested @_done
 Scenario: I should be able to click "Add to cart button" that will redirect me to login page where I can create new account
   Given lead Great marketing deal exists within category VariousLeads
   And I go to browse leads
@@ -144,7 +143,7 @@ Scenario: I should be able to click "Add to cart button" that will redirect me t
   And I click hidden translated link "layout.cart.show_cart"
   Then I should see "Great marketing deal"
 
-@m5 @tgn @_tested
+@m5 @tgn @_tested @_done
 Scenario: If I successfully login after requesting a lead being added to a cart, that lead should be added to cart (or bought if I am big buyer)
   Given I am signed up and confirmed as user with email buyer21@person.com and password supersecret and role supplier
   Given lead Great marketing deal exists within category VariousLeads
@@ -155,7 +154,7 @@ Scenario: If I successfully login after requesting a lead being added to a cart,
   And I follow translated "layout.cart.show_cart"
   Then I should see "Great marketing deal"
 
-@m5 @added @lead_templates @tgn @_tested
+@m5 @added @lead_templates @tgn @_tested @_done
 Scenario: I can see lead template fields with public values for each lead
   Given lead Printers ultimate deal exists within category Computers
   And template named "Printers details" for category "Computers" is created by user "ccagent@person.com" with role "call_centre_agent"
@@ -175,7 +174,7 @@ Scenario: I can see lead template fields with public values for each lead
 @m5 @added @lead_templates @tgn @_done @_tested_elsewhere
 Scenario: I can see only lead template fields' names (not values) for hidden fields
 
-@m5 @unique_categories @added @_tested @tgn
+@m5 @unique_categories @added @_tested @tgn @_done
 Scenario: I should not see customer unique categories on 'Browse leads' categories listing
   Given I have user with email other_customer@nbs.com and role supplier
   And Category Other Customer Unique Category is created
@@ -183,7 +182,7 @@ Scenario: I should not see customer unique categories on 'Browse leads' categori
   When I go to browse leads
   Then I should not see "Other Customer Unique Category"
 
-@m5 @unique_categories @added @_tested @tgn
+@m5 @unique_categories @added @_tested @tgn @_done
 Scenario: I should not see agent unique categories on 'Browse leads' categories listing
   Given I have user with email other_agent@nbs.com and role agent
   And Category Other Agent Unique Category is created
@@ -197,7 +196,7 @@ Scenario: I should not see leads from customer unique categories
 @m5 @unique_categories @added @non_testable @_done @tgn
 Scenario: I should not see leads from agent unique categories
 
-@m5 @unique_categories @added @_tested @tgn
+@m5 @unique_categories @added @_tested @tgn @_done
 Scenario: I should not see customer unique categories in a search filter
   Given I have user with email other_customer@nbs.com and role supplier
   And Category Other Customer Unique Category is created
@@ -206,7 +205,7 @@ Scenario: I should not see customer unique categories in a search filter
   And I follow category "Electronics"
   Then "search_with_category" dropdown should not have values "Other Customer Unique Category"
 
-@m5 @unique_categories @added @_tested @tgn
+@m5 @unique_categories @added @_tested @tgn @_done
 Scenario: I should not see agent unique categories in a search filter
   Given I have user with email other_agent@nbs.com and role agent
   And Category Other Agent Unique Category is created

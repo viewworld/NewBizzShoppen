@@ -10,7 +10,7 @@ Background:
   Then I sign in as bob@person.com with password supersecret
   And I go to browse leads
 
-@_tested
+@_tested @_done
 Scenario: I can mark category as customer unique
   When I follow translated "administration.categories.index.view.edit_link"
   And I check "category_is_customer_unique"
@@ -18,7 +18,7 @@ Scenario: I can mark category as customer unique
   Then I press translated "administration.categories.edit.view.button_update"
   And I should see translated "flash.categories.update.notice"
 
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I can assign one or more sales managers to category marked as customer unique
   Given I have user with email buyer93928biz@nbs.com and role supplier
   And I have user with email lead_buyer3483434biz@nbs.com and role supplier
@@ -35,7 +35,7 @@ Scenario: I can assign one or more sales managers to category marked as customer
   And "selected_customers" should be selected for value "lead_buyer3483434biz@nbs.com"
   And "selected_customers" should be selected for value "buyer93928biz@nbs.com"
 
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I can search customers by first name, last name and email
   Given I have user with email buyer93928biz@nbs.com and role supplier
   And I have user with email lead_buyer3483434biz@nbs.com and role supplier

@@ -10,7 +10,7 @@ Background:
   And I sign in as leadbuyer.jon@nbs.com with password secret
   And I follow translated "layout.main_menu.lead_supplier.lead_purchases"
 
-@requested @tgn @_tested
+@requested @tgn @_tested @_done
 Scenario: I can view details of leads assigned to me
   Then I follow "Lead #1111"
   And I should see translated "supplier.lead_purchases.show.view.header"

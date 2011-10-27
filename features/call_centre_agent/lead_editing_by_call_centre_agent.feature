@@ -12,10 +12,9 @@ Background:  Sign in user and set locale
 
 Scenario: I can edit lead if the lead is not sold yet
 
-
 Scenario: I can’t edit lead if the lead was already sold
 
-@selenium @_tested
+@selenium @_tested @_done
 Scenario: I can add a language - title, purchase, hidden, language
   Given I follow translated "layout.main_menu.call_centre_agent.leads"
   Then I click hidden link by url regex "/call_centre_agents\/leads\/\d+\/edit/"
@@ -26,7 +25,7 @@ Scenario: I can add a language - title, purchase, hidden, language
   And I press translated "call_centre_agent.leads.edit.view.button_update"
   Then I should see translated "flash.leads.update.notice"
 
-@selenium @_tested
+@selenium @_tested@_done
 Scenario: I can delete a language
   Given I follow translated "layout.main_menu.call_centre_agent.leads"
   Then I click hidden link by url regex "/call_centre_agents\/leads\/\d+\/edit/"
@@ -45,7 +44,7 @@ Scenario: I can delete a language
 
 Scenario: After a lead that have been bought and I update it. When I click save I should get a popup asking if I want to notify the lead buyer about the changes.
 
-@_tested
+@_tested @_done
 Scenario: Datepicker - after selecting form the select box it should automatically fill in the date
   And I follow translated "layout.main_menu.call_centre_agent.leads"
   Then I follow translated "call_centre_agent.leads.index.view.edit"

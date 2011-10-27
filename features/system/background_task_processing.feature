@@ -1,7 +1,7 @@
 @$_system @background_tasks
 Feature: Background task processing
 
-@requested @m8b @tgn @_tested
+@requested @m8b @tgn @_tested @_done
 Scenario: As admin I can by hand refresh counters and stats (delayed_job?)
   Given I am on the homepage
   And I make sure current locale is "en"

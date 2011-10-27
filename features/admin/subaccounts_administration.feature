@@ -16,7 +16,7 @@ Given I am on the homepage
   And I press translated "administration.users.index.view.search_button"
   And I follow translated "administration.users.index.view.subaccounts"
 
-@m5 @tgn @_tested
+@m5 @tgn @_tested @_done
 Scenario: I can display a list of subaccounts of call centre account
   Given I am not sign in
   Given I have user with email call_centre@person.com and role call_centre
@@ -59,7 +59,7 @@ Scenario: I can sort by coulmns type, email (name, last name, age are deprecated
   Given I follow translated "administration.users.index.view.email"
   Then I should have value "ann.lead_user2@person.com" in the css path "tr:nth-child(1) td:nth-child(6)"
 
-@m6 @added @tgn @_tested
+@m6 @added @tgn @_tested @_done
 Scenario: I can sort by bought, created, volume sold, revenue, payout %
   Given customer "customer@person.com" has no subaccounts
   And an user with role lead_supplier and email ann.lead_buyer@person.com exists as subaccount for customer customer@person.com

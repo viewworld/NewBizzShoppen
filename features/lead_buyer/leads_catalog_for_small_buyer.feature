@@ -19,22 +19,22 @@ Background:
   And I sign in as john@doe.com with password secret
   And I go to browse leads
 
-@_tested
+@_tested @_done
 Scenario: I should see an image and a description for each category
   Then I should see "Computers"
 
-@_tested
+@_tested @_done
 Scenario: I can click on a category name and see a list of leads in that category
   Then I follow category "Computers"
   And I should see "Printers ultimate deal"
 
-@_tested
+@_tested @_done
 Scenario: I should see any leads that belong to a user which is blocked
   Then I follow category "Computers"
   And I should see "Printers ultimate deal"
   And I should see "Cheap mouses ultimate deal"
 
-@_tested
+@_tested @_done
 Scenario: I can browse leads in a given category with pagination
   Given pagination page size for leads is set to 2
   Then I follow category "Computers"
@@ -43,7 +43,7 @@ Scenario: I can browse leads in a given category with pagination
 @_deprecated
 Scenario: I should see created by
 
-@m4 @tgn @_tested @added
+@m4 @tgn @_tested @added @_done
 Scenario: I should see rating % and certification level for each lead
   Given I have user with email bob@person.com and role supplier
   And a lead Printers ultimate deal exists within category Computers and is bought by user bob@person.com with role supplier
@@ -54,7 +54,7 @@ Scenario: I should see rating % and certification level for each lead
   Then I should see "100%"
   And I should see translated "models.lead.certification.lvl0"
 
-@_tested
+@_tested @_done
 Scenario: I should see lead header, lead price, purchase value and public description
   Then I follow category "Computers"
   And I should see "989.39"
@@ -62,7 +62,7 @@ Scenario: I should see lead header, lead price, purchase value and public descri
   And I should see "Printers ultimate deal"
   And I should see "Public desc about printers deal"
 
-@m4 @_tested @tgn
+@m4 @_tested @tgn @_done
 Scenario: I should see hottness, novelty, exposure, clicks
   Then I follow category "Computers"
   And I should see translated "models.lead.hotness.lvl1"
@@ -70,19 +70,19 @@ Scenario: I should see hottness, novelty, exposure, clicks
   And I should see "887"
   And I should see "17"
 
-@_tested
+@_tested @_done
 Scenario: I can click add lead to my basket and I will get a notification “Lead was added to your basket”
   Then I follow category "Computers"
   And I follow translated "leads.index.add_to_cart_link" for lead "Printers ultimate deal"
   Then I should see translated "supplier.cart_items.create.flash.cart_item_creation_successful"
 
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I can toggle select leads on a displayed page
   Given I go to browse leads
   And I follow category "Computers"
   Then I check "mark_all"
 
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I can bulk add leads to my basket and I will get a notification “Leads were added to your basket”
   Given I go to browse leads
   And I follow category "Computers"

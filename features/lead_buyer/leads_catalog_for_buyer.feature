@@ -17,7 +17,7 @@ Background:
   And I sign in as john@doe.com with password secret
   And I follow translated "layout.main_menu.shared.browse_leads"
 
-@_tested @bk
+@_tested @bk @_done
 Scenario: I can click add lead to my basket and I will get a notification “Lead was added to your basket”
   Given I follow "Another sample category"
   And I fill in "search_with_keyword" with "Super printers"
@@ -28,14 +28,14 @@ Scenario: I can click add lead to my basket and I will get a notification “Lea
   And I press translated "leads.index.search.search_button"
   Then I should not see translated "leads.index.add_to_cart_link"
 
-@_tested  @selenium
+@_tested @selenium @_done
 Scenario: I can toggle select leads on a displayed page
   Given I go to browse leads
   And I follow translated "common.more"
   And I follow "Another sample category"
   Then I check "mark_all"
 
-@_tested @selenium @bulk
+@_tested @selenium @bulk @_done
 Scenario: I can bulk add leads to my basket and I will get a notification “Leads were added to your basket”
   Given I go to browse leads
   And I follow translated "common.more"
@@ -44,7 +44,7 @@ Scenario: I can bulk add leads to my basket and I will get a notification “Lea
   And I press translated "leads.index.button_bulk_create_cart_item"
   Then I should see translated "supplier.bulk_cart_items.create.flash.n_cart_items_added" with options "count:2"
 
-@m5 @added @lead_templates @tgn @_tested
+@m5 @added @lead_templates @tgn @_tested @_done
 Scenario: I can see lead template fields with public values for each lead
   Given lead Printers ultimate deal exists within category Computers
   And template named "Printers details" for category "Computers" is created by user "ccagent@person.com" with role "call_centre_agent"
@@ -64,14 +64,14 @@ Scenario: I can see lead template fields with public values for each lead
 @m5 @added @lead_templates @tgn @_done @_tested_elsewhere
 Scenario: I can see only lead template fields' names (not values) for hidden fields
 
-@m5 @added @unique_categories @tgn @_tested
+@m5 @added @unique_categories @tgn @_tested @_done
 Scenario: I can see unique categories assigned to me in Browse leads
   Given Category This Customer Unique Category is created
   And category "This Customer Unique Category" is unique for user with email "john@doe.com" role "supplier"
   When I go to browse leads
   Then I should see "This Customer Unique Category"
 
-@m5 @added @unique_categories @tgn @_tested
+@m5 @added @unique_categories @tgn @_tested @_done
 Scenario: I should be able to browse leads in unique category assigned to me
 Given Category This Customer Unique Category is created
   And category "This Customer Unique Category" is unique for user with email "john@doe.com" role "supplier"
@@ -80,7 +80,7 @@ Given Category This Customer Unique Category is created
   Then I follow category "This Customer Unique Category"
   And I should see "Lead Unique 1"
 
-@m5 @added @unique_categories @tgn @_tested
+@m5 @added @unique_categories @tgn @_tested @_done
 Scenario: I cannot see unique categories not assigned to me in Browse leads
   Given Category This Customer Unique Category is created
   And I have user with email other_john@doe.com and role supplier

@@ -10,7 +10,7 @@ Background:
 
 Scenario: I can change my password fro the account password change page
 
-@_tested
+@_tested @_done
 Scenario: User can change the password only with a valid password
    And I am on my profile
    Given I follow translated "password.edit.view.change_password"

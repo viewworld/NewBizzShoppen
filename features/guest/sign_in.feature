@@ -9,17 +9,19 @@ Feature: Sign in
     And I make sure current locale is "en"
 
 
-  @_tested
+  @_tested @_done
   Scenario: A user should be able to get to the login page
     Then I should see translated "activerecord.attributes.user.email"
     And I should see translated "activerecord.attributes.user.password"
-   @_tested
+
+  @_tested @_done
   Scenario: User is not signed up
     Given no user exists with an email of email@person.com and role admin
      When I sign in as email@person.com with password  password
      Then I should see translated "devise.failure.invalid"
      And I should be signed out
-  @_tested
+
+  @_tested @_done
   Scenario Outline: A registered user that types in the wrong password can not login
     Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role admin
     When I go to the login page
@@ -34,7 +36,7 @@ Feature: Sign in
     | bbo   | supersecret    |
     | bob   | wrong-password |
 
-  @_tested
+  @_tested @_done
   Scenario Outline: A registered user can login and be directed to their home page
     Given I am signed up and confirmed as user with email <login> and password <password> and role <role>
     And user with email "<login>" is a subaccount of user with email "<parent_email>" and role "<parent_role>"
@@ -56,14 +58,14 @@ Feature: Sign in
     | leadbuyer@nbs.com  | secret | lead_supplier        | supplier home            |  | |
     | leaduser@nbs.com  | secret | lead_user         | supplier home            |  | |
 
-  @_tested
+  @_tested @_done
   Scenario: A logged in user on the login page should just redirect to their home page
     Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role admin
     And I sign in as bob@person.com with password supersecret
     When I go to the login page
     Then I should be on the home page
 
-  @_tested
+  @_tested @_done
   Scenario Outline: A guest should be shown the login page for protected pages
     Given I am not sign in
     When I go to "<page>"
@@ -81,13 +83,13 @@ Feature: Sign in
     | suppliers subaccounts          |
     | my profile                     |
 
-  @_tested
+  @_tested @_done
   Scenario: A guest user should not see "My profile"
     Given I am not sign in
     When I go to "the homepage"
     Then I should not see translated "layout.my_profile_link"
 
-@tgn @m1 @_tested @_deprecated
+@tgn @m1 @_tested @_deprecated @_done
 Scenario: Add links present on sign in page to home login page as well (forgot password and confirmation instructions)
 #  Then I should see translated "home.show.view.forgotten_password_link"
 #  And I should see translated "home.show.view.resend_confirmation_instructions"
@@ -99,7 +101,7 @@ Scenario: We need a forgot password function, where the user is e-maild his pass
   And I sign in as unknown_user@nohost.com with password none
   Then I should see "Forgot password?"
 
-@m8b @added @tgn @_tested
+@m8b @added @tgn @_tested @_done
 Scenario: I can login to fairleads as any user without password by hash key that I can create in console (suggested by developers for future debuging of live fairleads.com)
   Given I am not sign in
   And I am signed up and confirmed as user with email bob7@person.com and password supersecret and role admin

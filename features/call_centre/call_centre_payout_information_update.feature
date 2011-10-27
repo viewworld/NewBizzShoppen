@@ -17,7 +17,7 @@ Scenario: Call center has its Paypal data stored
 @_done @non_testable
 Scenario: Call center has its international bank data stored if doesnt have Paypal account
 
-@_tested
+@_tested @_done
 Scenario: I can update my payout information if I am a Call Center
   Given I go to my profile
   Then I fill in "user_call_centre_paypal_email" with "agentjim.jones.paypal@nbs.com"
@@ -31,7 +31,7 @@ Scenario: I can update my payout information if I am a Call Center
   And the "user_call_centre_bank_swift_number" field should contain "ABNAPLPW"
   And the "user_call_centre_bank_iban_number" field should contain "AT123456789012345678"
 
-@m5 @tgn @added @_tested
+@m5 @tgn @added @_tested @_done
 Scenario: I can define payout for the whole call centre
   Given I am not sign in
   And I am signed up and confirmed as user with email bob2@person.com and password supersecret and role call_centre
@@ -41,7 +41,7 @@ Scenario: I can define payout for the whole call centre
   When I press translated "password.edit.view.button_update_user"
   Then I should see translated "my_profile.update.controller.successful_update_notice"
 
-@m5 @tgn @added @_tested
+@m5 @tgn @added @_tested @_done
 Scenario: I can enter bank name and address
   Given I am not sign in
   And I am signed up and confirmed as user with email bob2@person.com and password supersecret and role call_centre

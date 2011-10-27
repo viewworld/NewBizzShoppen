@@ -8,7 +8,7 @@ Background: Sign in user and set English locale
   Then I sign in as bob@person.com with password supersecret
   And I go to administration countries
 
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I can create new region for given country
   Given there are no countries
   And I go to administration countries
@@ -29,7 +29,7 @@ Scenario: I can create new region for given country
   And the "country_regions_attributes_0_name" field should contain "Region #1"
   And the "country_regions_attributes_1_name" field should contain "Region #2"
 
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I can edit new region for given country
   Given there are no countries
   And Country Poland is created
@@ -44,7 +44,7 @@ Scenario: I can edit new region for given country
   And the "country_regions_attributes_0_name" field should contain "Region #1"
   And the "country_regions_attributes_1_name" field should contain "Region #2"
 
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I can delete new region for given country
   Given there are no countries
   And Country Poland is created

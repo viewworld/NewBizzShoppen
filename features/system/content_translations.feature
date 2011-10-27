@@ -73,7 +73,7 @@ Scenario: Article translations
   Then I should see "[EN]FirstArticle"
   And I should see "[EN]Lorem"
 
-@m3 @tgn @_tested
+@m3 @tgn @_tested @_done
 Scenario: Email translations
   When email "confirmation_instructions" has translation for lang "da" with attributes "subject:Bekraeftelse instruktioner,body:Du kan bekraefte din konto via nedenstaende link"
   And confirmation email is sent for locale "da"

@@ -6,21 +6,21 @@ Feature: Categories administration
     And I make sure current locale is "en"
     Then I sign in as bob@person.com with password supersecret
 
-@_tested @bk
+@_tested @bk @_done
 Scenario: I can see categories tree
   Given Category named "Sample category" already exists
   And Category named "Another sample category" already exists within category named "Sample category"
   And I go to browse leads
   And I should see category named "Another sample category" within category named "Sample category"
 
-@_tested @bk
+@_tested @bk @_done
 Scenario: I can navigate through the categories
   Given Category named "Sample category" already exists
   And I go to browse leads
   And I follow translated "administration.categories.index.view.edit_link"
   Then I should see "Sample category"
 
-@_tested
+@_tested @_done
 Scenario: I can create a category
   Given I go to browse leads
   And I follow translated "administration.categories.index.view.new_category"
@@ -32,7 +32,7 @@ Scenario: I can create a category
   And I should be on browse leads
   And I should see translated "flash.categories.create.notice"
 
-@_tested @added @tgn
+@_tested @added @tgn @_done
 Scenario: I can create a category even when I am on DK locales (slug is not set then)
   Given I click hidden link by url regex "/locales\/da/"
   And I go to browse leads
@@ -45,7 +45,7 @@ Scenario: I can create a category even when I am on DK locales (slug is not set 
   And I should be on browse leads
   And I should see translated "flash.categories.create.notice"
 
-@_tested
+@_tested @_done
 Scenario: I can edit category - name and description
   Given Category named "New test category" already exists
   And I go to browse leads
@@ -59,14 +59,14 @@ Scenario: I can edit category - name and description
   And I should see translated "flash.categories.update.notice"
 
 
-@_tested @bk
+@_tested @bk @_done
 Scenario: I can delete a category if it is empty
   Given Category named "New test category" already exists
   And I go to browse leads
   And I follow translated "administration.categories.index.view.destroy_link" within "New test category" category
   Then I should see translated "flash.categories.destroy.notice"
 
-@_tested @bk
+@_tested @bk @_done
 Scenario: I cannot delete a category if it is not empty
   Given Category named "New test category" already exists
   And I go to browse leads
@@ -77,7 +77,7 @@ Scenario: I cannot delete a category if it is not empty
 @question
 Scenario: I can see statistics for a selected category
 
-@_tested @bk
+@_tested @bk @_done
 Scenario: I can reattach node
   Given Category named "Parent category 1" already exists
   And Category named "Parent category 2" already exists
@@ -90,7 +90,7 @@ Scenario: I can reattach node
   And I press translated "administration.categories.edit.view.button_update"
   Then I should see category named "Child category" within category named "Parent category 2"
 
-@_tested
+@_tested @_done
 Scenario: I can upload a category image
   Given Category named "New test category" already exists
   And I go to browse leads
@@ -101,11 +101,11 @@ Scenario: I can upload a category image
   And I should be on browse leads
   And I should see translated "flash.categories.update.notice"
 
-@m6 @tgn @_tested
+@m6 @tgn @_tested @_done
 Scenario: I can manage categories from Browse categories. Categories tab should be removed
   Then I should not see translated "layout.main_menu.admin.categories"
 
-@m6 @tgn @_tested  @requested
+@m6 @tgn @_tested @requested @_done
 Scenario: I can make any category country specific (Category can have one or more countries assigned to it)
   Given there are no categories
   And Category Computers is created
@@ -142,7 +142,7 @@ Scenario: When creating new category it is marked with buyout flag by default
 #  Then checkbox named "category_buyout_enabled" should be checked
 
 # Allow admin to flag a category with option “Do not show prices to team members” - this will basically make team-buyers (subeaccounts) not see lead price when browsing leads within that particular category.
-@requested @m7 @tgn @_tested
+@requested @m7 @tgn @_tested @_done
 Scenario: I can flag a category to not show prices to team members
   Given there are no categories
   And Category Computers is created

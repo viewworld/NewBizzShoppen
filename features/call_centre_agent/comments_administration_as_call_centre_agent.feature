@@ -20,7 +20,7 @@ Background:
   And user "customer2@nbs.com" with role "supplier" has attributes "screen_name: John Doe"
   And I sign in as cca1.call_centre1@nbs.com with password supersecret
 
-@_tested
+@_tested @_done
 Scenario: I can see the amount of comments per lead on listing of Leads created by me
   When I follow translated "layout.main_menu.call_centre_agent.leads"
   And I fill in "search_with_keyword" with "lead#1"
@@ -33,7 +33,7 @@ Scenario: I can click on comment list and get a popup with comments from differe
 @m0
 Scenario: I can click on details of a specific comment
 
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I can see the comment conversation details
   When I follow translated "layout.main_menu.call_centre_agent.leads"
   And I fill in "search_with_keyword" with "lead#3"
@@ -43,7 +43,7 @@ Scenario: I can see the comment conversation details
   Then I should see "Comment title #2"
   Then I should see "Comment title #3"
 
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I can respond to a comment and my comment is added to the conversation
   When I follow translated "layout.main_menu.call_centre_agent.leads"
   And I fill in "search_with_keyword" with "lead#1"
@@ -56,13 +56,13 @@ Scenario: I can respond to a comment and my comment is added to the conversation
   Then I should see "Reply to First Lead1 comment"
   And I should see "Body reply to First Lead1 comment"
 
-@_tested
+@_tested @_done
 Scenario: I can browse all comments with pagination
   Given pagination per page size in model Comment is set to 2
   And I follow translated "layout.main_menu.shared.comments"
   Then I follow "2"
 
-@_tested
+@_tested @_done
 Scenario: I can sort comments
   Given I follow translated "layout.main_menu.shared.comments"
   When I follow translated "comments.threads.index.view.lead_header"
@@ -75,7 +75,7 @@ Scenario: I can sort comments
   When I follow translated "comments.threads.index.view.last_thread_date"
   Then I should see "01-01-2011" before "02-01-2011"
 
-@_tested
+@_tested @_done
 Scenario: I can filter comments
   Given I follow translated "layout.main_menu.shared.comments"
   When I fill in "search_with_keyword" with "lead#1"
@@ -83,7 +83,7 @@ Scenario: I can filter comments
   Then I should see "Lead#1"
   And I should not see "Lead#2"
 
-@added @_tested @selenium
+@added @_tested @selenium @_done
 Scenario: I cannot start new thread
   When I follow translated "layout.main_menu.call_centre_agent.leads"
   And I fill in "search_with_keyword" with "lead#3"

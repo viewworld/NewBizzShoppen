@@ -14,7 +14,7 @@ Background: Sign in user and set English locale
 @_deprecated
 Scenario: I should see created by
 
-@m4 @tgn @_tested @added
+@m4 @tgn @_tested @added @_done
 Scenario: I should see rating % and certification level for each lead
   Given I have user with email bob@person.com and role supplier
   And a lead Printers ultimate deal exists within category Computers and is bought by user bob@person.com with role supplier
@@ -25,21 +25,21 @@ Scenario: I should see rating % and certification level for each lead
   Then I should see "100%"
   And I should see translated "models.lead.certification.lvl0"
 
-@_tested
+@_tested @_done
 Scenario: I should see lead header, lead price, purchase value and public description
   Then I should see "989.39"
   And I should see "7,843.99"
   And I should see "Printers ultimate deal"
   And I should see "Public desc about printers deal"
 
-@m4 @tgn @_tested
+@m4 @tgn @_tested @_done
 Scenario: I should see hottness, novelty, exposure, clicks
   Then I should see translated "models.lead.hotness.lvl1"
   And I should see translated "models.lead.novelty.lvl0"
   And I should see "887"
   And I should see "17"
 
-@m5 @added @lead_templates @tgn @_tested
+@m5 @added @lead_templates @tgn @_tested @_done
 Scenario: I can see lead template fields with public values for each lead
   Given lead Printers ultimate deal exists within category Computers
   And template named "Printers details" for category "Computers" is created by user "ccagent@person.com" with role "call_centre_agent"

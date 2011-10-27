@@ -8,7 +8,7 @@ Feature: User Account - Profile edit
     Then I sign in as bob@person.com with password supersecret
     And I go to my profile
 
- @_tested
+ @_tested @_done
   Scenario: I change my password
     Given I follow translated "password.edit.view.change_password"
     And I fill in "user_agent_current_password" with "supersecret"
@@ -20,38 +20,38 @@ Feature: User Account - Profile edit
     And  I sign in as bob@person.com with password secret
     And I should see translated "devise.sessions.signed_in"
 
-  @_tested_in_rspec
+  @_tested_in_rspec @_done
   Scenario: The screen name I enter have to be unique
 
   @_non_testable
   Scenario: I shouldn't be able to access other people profile
 
-  @_tested
+  @_tested @_done
   Scenario: A user must be logged on to see their account information
     Given I am not sign in
     When I go to my profile page
     Then  I should see translated "devise.failure.unauthenticated"
 
-  @_tested
+  @_tested @_done
   Scenario: A user should be able to update their profile
     And I fill in "user_agent_email" with "new-email@example.com"
     And I press translated "password.edit.view.button_update_user"
     Then I should see translated "my_profile.update.controller.successful_update_notice"
 
-  @_tested
+  @_tested @_done
   Scenario: A user shouldn't be able to update their profile with bad data
     And I fill in "user_agent_email" with "not-an-email"
     And I press translated "password.edit.view.button_update_user"
     Then I should see translated "activerecord.errors.messages.invalid"
 
-  @_tested
+  @_tested @_done
   Scenario: A logged in user shouldn't be able to create a new account
    When I go to agent sign up
    Then I am on agents root
    When I go to supplier sign up
    Then I am on agents root
 
-  @m5 @tgn @_tested @added
+  @m5 @tgn @_tested @added @_done
   Scenario: I can add to my profile company name, company registration number, ean number
     When I go to my profile page
     Then I fill in "user_agent_company_name" with "My Company"

@@ -4,7 +4,7 @@ Feature: Automatic transactions creation
 @_done @_tested_elsewhere
 Scenario: Transaction is automatically created for invoice when paypal payment has been processed
 
-@m8 @requested @_tested
+@m8 @requested @_tested @_done
 Scenario: Every lead purchase's price is converted to Euro according to current rate and saved in separate field
   Given Category Computers is created
   And Lead named "Monitors deal" exists within "Computers" category

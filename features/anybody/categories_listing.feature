@@ -5,14 +5,14 @@ Background: Set English locale
   Given I am on the homepage
   And I make sure current locale is "en"
 
-@_tested @bk
+@_tested @bk @_done
 Scenario: I can see all active categories
   Given Category named "Sample category" already exists
   And Category named "Another sample category" already exists within category named "Sample category"
   When I follow translated "layout.main_menu.shared.browse_leads"
   Then I should see category named "Another sample category" within category named "Sample category"
 
-@_tested @bk
+@_tested @bk @_done
 Scenario: I can click on a category and go to appropriate lead listing
   Given Category named "Sample category" already exists
   And Category named "Another sample category" already exists within category named "Sample category"

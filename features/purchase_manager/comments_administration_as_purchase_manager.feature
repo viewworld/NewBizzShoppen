@@ -7,7 +7,7 @@ Background:
   And I make sure current locale is "en"
   Then I sign in as purchase_manager@nbs.com with password secret
 
-@_tested
+@_tested @_done
 Scenario: I can't see comments when signed in as purchase manager
   Then I should not see translated "layout.main_menu.shared.comments"
   When I go to comments threads

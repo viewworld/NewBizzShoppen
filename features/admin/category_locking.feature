@@ -8,7 +8,7 @@ Background: Sign in user and set English locale
   And I am signed up and confirmed as user with email bob@person.com and password supersecret and role admin
   Then I sign in as bob@person.com with password supersecret
 
-@_tested
+@_tested @_done
 Scenario: I should be able to lock category
   Then I go to administration categories
   And I follow translated "administration.categories.index.view.edit_link"
@@ -17,7 +17,7 @@ Scenario: I should be able to lock category
   And I press translated "administration.categories.edit.view.button_update"
   Then I should see translated "flash.categories.update.notice"
 
-@_tested
+@_tested @_done
 Scenario: I should be able to unlock category
   Given category named "Electronics" is locked
   Then I go to administration categories
@@ -27,7 +27,7 @@ Scenario: I should be able to unlock category
   And I press translated "administration.categories.edit.view.button_update"
   Then I should see translated "flash.categories.update.notice"
 
-@_tested
+@_tested @_done
 Scenario: When I lock a parent category then all its children are locked as well
   Given Category named "Sample category" already exists
   Given Category named "Another sample category" already exists within category named "Sample category"
@@ -36,7 +36,7 @@ Scenario: When I lock a parent category then all its children are locked as well
   Then category named "Another sample category" should be locked
   Then category named "Also another sample category" should be locked
 
-@_tested
+@_tested @_done
 Scenario: No new leads could be added to locked category
   Given I am not sign in
   Given Category named "Sample category" already exists
@@ -45,7 +45,7 @@ Scenario: No new leads could be added to locked category
   Then I sign in as agent.jones@person.com with password secret
   Then "category_id" dropdown should not have values "Sample category"
 
-@_tested
+@_tested @_done
 Scenario: Locked category should not be visible if no active leads are present within it
   Given category named "Electronics" is locked
   Given category named "Business" is locked

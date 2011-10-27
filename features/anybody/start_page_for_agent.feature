@@ -21,7 +21,7 @@ Scenario: I can see 3 latest agent news excerpts
   And I should see "ThirdNews"
   And I should not see "FirstNews"
 
-@ao @_tested
+@ao @_tested @_done
 Scenario: I can see 10 top bestsellers
   Given lead AwesomeLead exists within category Test
   And AwesomeLead is a best seller
@@ -30,7 +30,7 @@ Scenario: I can see 10 top bestsellers
   Then I should see "3" items on a list within "#best_sellers"
   And I should see "AwesomeLead" first on a list within "#best_sellers"
 
-@ao @_tested
+@ao @_tested @_done
 Scenario: I can see 3 latest leads
   Given there are "4" existing leads
   And lead AwesomeLead exists within category Test
@@ -55,7 +55,7 @@ Scenario: I can go to details of agent news
   And I follow translated "agent_home.show.view.read_more_link" within "#news"
   Then I should be on FirstNews news page
 
-@ao @_tested
+@ao @_tested @_done
 Scenario: I can go to details of bestsellers
   Given lead AwesomeLead exists within category Test
   And AwesomeLead is a best seller
@@ -63,7 +63,7 @@ Scenario: I can go to details of bestsellers
   And I follow "AwesomeLead" within "#best_sellers"
   Then I should be on the AwesomeLead lead page
 
-@ao @_tested
+@ao @_tested @_done
 Scenario: I can go to details of latest leads
   Given lead AwesomeLead exists within category Test
   When I am on the agent home page
@@ -77,29 +77,27 @@ Scenario: I can go to agent news listing
   And I follow translated "agent_home.show.view.complete_list_link" within "#latest_leads"
   Then I should see "AwesomeLead" within ".leads_table"
 
-@ao @_tested
+@ao @_tested @_done
 Scenario: I can go to bestsellers listing
   When I am on the agent home page
   And I follow translated "agent_home.show.view.complete_list_link" within "#best_sellers"
   Then I should be on the leads page
   And I should see translated "leads.index.bestsellers_header"
 
-@ao @_tested
+@ao @_tested @_done
 Scenario: I can go to latest leads listing
   When I am on the agent home page
   And I follow translated "agent_home.show.view.complete_list_link" within "#latest_leads"
   Then I should be on the leads page
   And I should see translated "leads.index.latest_header"
 
-
-@ao  @_tested  @_deprecated
+@ao @_tested  @_deprecated
 Scenario: I can go to buyer page by clicking “CLICK HERE IF YOU ARE A BUYER”
 #  When I follow translated "home.show.view.agent"
 #  And I follow translated "agent_home.show.view.buyer_link"
 #  Then I should be on the supplier home page
 
-
-@ao  @_tested
+@ao @_tested @_done
 Scenario: I can go to creation of new agent account page
   When I am on the agent home page
   And I follow translated "agent_home.show.view.create_new_agent_account"
@@ -119,7 +117,7 @@ Scenario: In bestsellers and latest listings I should not see leads which I've a
   Then I should see "AwesomeLead"
   And I should not see "BoughtLead"
 
-@m5 @unique_categories @tgn @added @_tested
+@m5 @unique_categories @tgn @added @_tested @_done
 Scenario: When I am not logged in I should not see any leads from unique categories on Latest & Bestsellers lists
   Given lead CommonLead1 exists within category Common Category1
   And CommonLead1 is a best seller

@@ -10,7 +10,7 @@ Background:
   Then I sign in as bob@person.com with password supersecret
   And I go to browse leads
 
-@_tested
+@_tested @_done
 Scenario: I can mark category as agent unique
   When I follow translated "administration.categories.index.view.edit_link"
   And I check "category_is_agent_unique"
@@ -18,7 +18,7 @@ Scenario: I can mark category as agent unique
   Then I press translated "administration.categories.edit.view.button_update"
   And I should see translated "flash.categories.update.notice"
 
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I can assign one or more agents/call centers to category marked as agent unique
   Given I have user with email agent93928biz@nbs.com and role agent
   And I have user with email call_centre_agent3483434biz@nbs.com and role call_centre_agent
@@ -35,7 +35,7 @@ Scenario: I can assign one or more agents/call centers to category marked as age
   And "selected_agents" should be selected for value "call_centre_agent3483434biz@nbs.com"
   And "selected_agents" should be selected for value "agent93928biz@nbs.com"
 
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I can search agents by first name, last name and email
   Given I have user with email agent93928biz@nbs.com and role agent
   And I have user with email call_centre_agent3483434biz@nbs.com and role call_centre_agent
@@ -53,7 +53,7 @@ Scenario: I can search agents by first name, last name and email
   When I click hidden link by url regex "/administration\/categories\/\d+\/edit/"
   And "selected_agents" should be selected for value "nbsagent3483434biz@nbs.com"
   
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I can assign a unique category to the whole call centre
   Given I have user with email call_centre93928biz@nbs.com and role call_centre
   And user "call_centre93928biz@nbs.com" with role "call_centre" has attributes "last_name:Aronofsky Jr"

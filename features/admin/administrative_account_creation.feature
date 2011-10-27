@@ -8,7 +8,7 @@ Background: Sign in user and set English locale
   Then I sign in as bob@person.com with password supersecret
 
 
-@_tested
+@_tested @_done
 Scenario: I can create a user account by seleceting its type and filling in the required fields and I can set the payout rate if different than default from system settings
   When I go to administration users
   Given I select "Agent" from "role"
@@ -30,6 +30,6 @@ Scenario: I can create a user account by seleceting its type and filling in the 
   Then I press translated "administration.users.edit.view.button_update_user"
   And I should see translated "administration.users.create.flash.user_creation_successful"
 
-@m6 @tgn @_tested
+@m6 @tgn @_tested @_done
 Scenario: When I log in I should be redirected to home tab
   Then I should be on the homepage

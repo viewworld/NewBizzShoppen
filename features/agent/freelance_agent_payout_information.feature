@@ -17,7 +17,7 @@ Scenario: Freelance has its Paypal data stored
 @_done @non_testable
 Scenario: Freelance agent has its international bank data stored if doesnt have Paypal account
 
-@_tested
+@_tested @_done
 Scenario: As an administrator I can allow user freelance agent to change his/hers payout information
   Given I am not sign in
   And I am signed up and confirmed as user with email nbsadmin@person.com and password secret and role admin
@@ -33,7 +33,7 @@ Scenario: As an administrator I can allow user freelance agent to change his/her
 # "By default only call centers should be abel to register bank detalis,
 # but the admin should also be abel to let freelanceers enter banking
 # details."
-@_tested
+@_tested @_done
 Scenario: I can update my payout information if I am a Freelance Agent and Admin allows me to do so
   Given user agent@person.com with role agent exists with attributes "can_edit_payout_information:true"
   Given I am not sign in

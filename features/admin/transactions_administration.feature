@@ -18,7 +18,7 @@ Background:
   Then I sign in as bob@person.com with password supersecret
   And I go to administration transactions
 
-@_tested
+@_tested @_done
 Scenario: I can see a listing of all transactions registered in system
   Then I should see "321.23"
   And I should see "Paypal"
@@ -29,7 +29,7 @@ Scenario: I can filter listing of transactions by invoice number
   And I press translated "administration.payment_transactions.index.view.search_button"
   Then I should see "Manual"
 
-@_tested
+@_tested @_done
 Scenario: I can create transaction (manual) for given invoice (need to supply amount and date)
   When I go to administration invoices
   Then I follow translated "administration.invoices.index.view.add_transaction"
@@ -47,7 +47,7 @@ Scenario: I can edit transaction (manual) for given invoice
   Then I should see translated "flash.payment_transactions.update.notice"
   And I should see "121.99"
 
-@_tested
+@_tested @_done
 Scenario: I can create more than one transaction for given invoice
   When I go to administration invoices
   Then I follow translated "administration.invoices.index.view.add_transaction"
@@ -62,7 +62,7 @@ Scenario: I can create more than one transaction for given invoice
   And I press translated "administration.payment_transactions.new.view.button_create"
   Then I should see translated "flash.payment_transactions.create.notice"
 
-@m6 @tgn @_tested
+@m6 @tgn @_tested @_done
 Scenario: I can refund a transaction manually (what is the implication??)
   Given there are no invoices
   Given I have user with email big_buyer.biz@nbs.com and role supplier
@@ -77,7 +77,7 @@ Scenario: I can refund a transaction manually (what is the implication??)
   When I click hidden link by url regex "/administration\/invoicing\/invoices/"
   Then I should see "0.00"
 
-@m5 @added @tgn @sprint_5_corrections @_tested
+@m5 @added @tgn @sprint_5_corrections @_tested @_done
 Scenario: I can search for a transaction by a combination of keyword: contact name, company name, lead name, invoice number and a specific time period (date from to date to)
   Given I have user with email bigbuyer1@person.com and role supplier
   And User bigbuyer1@person.com with role supplier is big buyer
@@ -114,6 +114,6 @@ Scenario: I can search for a transaction by a combination of keyword: contact na
   Then I should see "77.99"
   Then I should not see "88.32"
 
-@requested @m8 @tgn @_tested
+@requested @m8 @tgn @_tested @_done
 Scenario: Show company name in listing
   Then I should see "Xanesra"

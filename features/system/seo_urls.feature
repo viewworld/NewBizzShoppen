@@ -8,7 +8,7 @@ Background:
 @m0 @ao
 Scenario: Article show
 
-@m3 @tgn @_tested
+@m3 @tgn @_tested @_done
 Scenario: Lead listing - category name
   Given Category named "Computers" already exists
   Given I go to browse leads

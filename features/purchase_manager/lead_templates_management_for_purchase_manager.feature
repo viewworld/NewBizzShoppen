@@ -9,7 +9,7 @@ Background:
   Then I sign in as purchase_manager@person.com with password supersecret
   And I go to members lead templates
 
-@added @_tested
+@added @_tested @_done
 Scenario: I can list all lead templates that were created by me
   Given template named "Computer details" for category "Computers" is created by user "other_purchase_manager@nbs.com" with role "member"
   Given template named "Printers details" for category "Computers" is created by user "purchase_manager@person.com" with role "member"
@@ -60,7 +60,7 @@ Scenario: I can edit lead template that was created by me
 #  Then the "lead_template_lead_template_fields_attributes_0_name" field should contain "example attr 1"
 #  Then the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 2"
 
-@added @_tested
+@added @_tested @_done
 Scenario: I can delete lead template that was created by me and was not filled out by anyone
 #  Given template named "Printers details" for category "Computers" is created by user "purchase_manager@person.com" with role "member"
 #  Then I go to members lead templates

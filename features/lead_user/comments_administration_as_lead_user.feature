@@ -15,7 +15,7 @@ Background:  Sign in user and set locale
   And comment for lead "Lead#3" was posted by user "customer1@nbs.com" with attributes "title: Customers comment for lead3, body: body for customers comment for lead3, created_at: 2010-01-01, last_thread_created_at:2011-01-30"
   Then I sign in as lead_user.customer1@nbs.com with password secret
 
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I can create a comment for a lead that is assigned to me
   When I follow translated "layout.main_menu.lead_user.lead_purchases"
   And I fill in "search_with_keyword" with "Lead#1"
@@ -27,7 +27,7 @@ Scenario: I can create a comment for a lead that is assigned to me
   Then I should see "New thread title"
   And I should see "New thread body"
 
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I can see comments created for leads
   When I follow translated "layout.main_menu.lead_user.lead_purchases"
   And I fill in "search_with_keyword" with "Lead#3"
@@ -38,7 +38,7 @@ Scenario: I can see comments created for leads
 @m0
 Scenario: I can see if I have already seen the comments for given lead
 
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I can see a comment (subject, date and comment author)
   When I follow translated "layout.main_menu.lead_user.lead_purchases"
   And I fill in "search_with_keyword" with "Lead#3"
@@ -52,7 +52,7 @@ Scenario: I can see a comment (subject, date and comment author)
 @m0
 Scenario: I can bulk create comments
 
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I can reply to comment
   When I follow translated "layout.main_menu.lead_user.lead_purchases"
   And I fill in "search_with_keyword" with "Lead#3"
@@ -77,7 +77,7 @@ Scenario: I can see paginated list of comments
 @_done @tested_elsewhere
 Scenario: I can see tab with comments on my assigned leads page besides show details
 
-@_tested
+@_tested @_done
 Scenario: I can't comment leads created by purchase manager
   Given I have user with email purchase_manager7@nbs.com and role member
   And lead Lead#7 is created by user purchase_manager7@nbs.com with role member

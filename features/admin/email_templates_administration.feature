@@ -81,5 +81,5 @@ Scenario: For each country I can specify email signature
   Then last email sent should have content "marvel vs dc comics"
   Then last email sent should have content "original.jpg"
 
-@m17 @requested @email_signature @is @_done @_tested_elsewhere
+@m17 @requested @email_signature @is @_done @tested_elsewhere
 Scenario: The email signature should include Fairleads logo

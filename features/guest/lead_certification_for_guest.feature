@@ -35,7 +35,7 @@ Scenario: I can confirm certification or cancel
   Then lead "WorstLead" certification status should be "4"
 
 #modal window with invitation
-@_tested @tgn
+@_tested @tgn @_done
 Scenario: When lead is certified by me I am given a choice to create a fairleads account
   When lead "BestLead" certification request is sent
   And I visit certification url for lead "BestLead"
@@ -71,7 +71,7 @@ Scenario: After signup I can login instantly and do not have to confirm it by em
   And I sign in as james@bond.co.uk with password secret
   Then I should be signed in
 
-@_tested @tgn
+@_tested @tgn @_done
 Scenario: I can specify in settings how often send reminder emails to leads
   Given I am not sign in
   And I am signed up and confirmed as user with email admin888@nbs.com and password secret and role admin
@@ -84,7 +84,7 @@ Scenario: I can specify in settings how often send reminder emails to leads
 @_done @tested_elsewhere
 Scenario: I can edit contents of emails that will be sent to lead
 
-@_tested @tgn
+@_tested @tgn @_done
 Scenario: When lead does not answer to any email then agent should see "Approval time out" information
   When lead WorstLead is created by user agent007@nbs.com with role agent
   And lead "WorstLead" certification request is sent

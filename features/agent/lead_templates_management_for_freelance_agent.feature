@@ -9,7 +9,7 @@ Background:
   Then I sign in as agent@person.com with password supersecret
   And I go to agents lead templates
 
-@added @_tested
+@added @_tested @_done
 Scenario: I can list all lead templates that were created by me
   Given template named "Computer details" for category "Computers" is created by user "other_agent@nbs.com" with role "agent"
   Given template named "Printers details" for category "Computers" is created by user "agent@person.com" with role "agent"
@@ -22,7 +22,7 @@ Scenario: I can list all lead templates that were created by me
   Then I should see "Modems details"
   Then I should not see "Computer details"
 
-@added @selenium @_tested
+@added @selenium @_tested @_done
 Scenario: I can create new lead template for given category
   Given I go to browse leads
   Then I follow translated "categories.index.view.view_lead_templates"
@@ -46,7 +46,7 @@ Scenario: During template creation/edition I can mark fields as hidden or public
 @added @_done @_tested_elsewhere
 Scenario: During template creation/editon I can mark fields as mandatory or optional
 
-@added @selenium @_tested
+@added @selenium @_tested @_done
 Scenario: I can edit lead template that was created by me
   Given template named "Printers details" for category "Computers" is created by user "agent@person.com" with role "agent"
   Then I go to agents lead templates
@@ -63,7 +63,7 @@ Scenario: I can edit lead template that was created by me
   Then the "lead_template_lead_template_fields_attributes_0_name" field should contain "example attr 1"
   Then the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 2"
 
-@added @_tested
+@added @_tested @_done
 Scenario: I can delete lead template that was created by me and was not filled out by anyone
   Given template named "Printers details" for category "Computers" is created by user "agent@person.com" with role "agent"
   Then I go to agents lead templates
@@ -75,7 +75,7 @@ Scenario: I can delete lead template that was created by me and was not filled o
   And I follow translated "agent.lead_templates.index.view.destroy"
   Then I should see translated "agent.lead_templates.destroy.flash.deletion_failure"
 
-@added @_tested @selenium
+@added @_tested @selenium @_done
 Scenario: I can add translation for the lead template name and its fields
   Given I click hidden link by url regex "/locales\/da/"
   Given I go to browse leads
@@ -92,7 +92,7 @@ Scenario: I can add translation for the lead template name and its fields
   Then the "lead_template_lead_template_fields_attributes_0_name" field should contain "example attr 1"
   And the "lead_template_lead_template_fields_attributes_1_name" field should contain "example attr 2"
 
-@m6 @tgn @_tested
+@m6 @tgn @_tested @_done
 Scenario: Make it possible to duplicate lead templates (from lead templates listings)
   Given template named "Computer details" for category "Computers" is created by user "agent@person.com" with role "agent"
   And template named "Computer details" is mandatory

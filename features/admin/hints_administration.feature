@@ -8,7 +8,7 @@ Background:
   Then I sign in as bob@person.com with password supersecret
   And I go to administration hints
 
-@_tested
+@_tested @_done
 Scenario: I can list all hints
   Given there are no hints
   And article hint for model "Lead" and method "region_id" exists
@@ -16,7 +16,7 @@ Scenario: I can list all hints
   And I go to administration hints
   Then I should see "Lead#region"
 
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I can edit hint
   Given there are no hints
   And article hint for model "Lead" and method "region_id" exists
@@ -28,7 +28,7 @@ Scenario: I can edit hint
   Then I should be on the homepage
 
 # Hints - allow admin to go to edit hint pages straight from interface (just as with blurbs etc.)
-@requested @m7 @tgn @_tested
+@requested @m7 @tgn @_tested @_done
 Scenario: I can edit a hint directly from the place where it is displayed
   Given there are no hints
   And article hint for model "Lead" and method "region_id" exists
@@ -40,7 +40,7 @@ Scenario: I can edit a hint directly from the place where it is displayed
 
 # This will require some extension to admin - we think that when editing and admin account, we can set “Become a <<role>>” option -
 #it will allow an admin to become a user with a specific role (only one at a time) - therefore he will be able to access all interfaces within fairleads and perform article/blurb/hint editing.
-@requested @m8 @_tested @translations
+@requested @m8 @_tested @translations @_done
 Scenario: I can login as any role and be able to edit content
   Given I am a translator for role "supplier" with email "translator_1@nbs.com" and password "secret"
   And I am not sign in
@@ -49,7 +49,7 @@ Scenario: I can login as any role and be able to edit content
   And I click hidden link by url regex "/administration\/articles\/\d+\/edit/"
   And I should see "Editing article"
 
-@m8 @translations @selenium @added @_tested
+@m8 @translations @selenium @added @_tested @_done
 Scenario: As translator I can edit blurb, change it, save it and then go back to previous page
   Given I am a translator for role "supplier" with email "translator_1@nbs.com" and password "secret"
   And I am not sign in
@@ -62,7 +62,7 @@ Scenario: As translator I can edit blurb, change it, save it and then go back to
   And I should be on the homepage
   And I should see "My test of article editing by translator"
 
-@m8 @translations @added @selenium @_tested
+@m8 @translations @added @selenium @_tested @_done
 Scenario: As translator I add/edit/remove edit hint, change it, save it and then go back to previous page
   Given I am a translator for role "agent" with email "translator_1@nbs.com" and password "secret"
   And Category Test category 1 is created

@@ -12,12 +12,12 @@ Background:  Sign in user and set locale
 @_done @not_testable
 Scenario: I do not and cannot belong to other customer
 
-@_tested
+@_tested @_done
 Scenario: I can see accounts managament tab
   When I go to suppliers lead requests
   Then I should see translated "layout.main_menu.supplier.subaccounts"
 
-@_tested  @noguess
+@_tested @noguess @_done
 Scenario: I can add new lead buyer that belongs to my account (checkbox selected - can buy leads -- req deprecated)
   Then I follow translated "supplier.subaccounts.index.view.new_lead_supplier"
   And I fill in "user_lead_supplier_first_name" with "Mark"
@@ -29,12 +29,12 @@ Scenario: I can add new lead buyer that belongs to my account (checkbox selected
   And I press translated "supplier.subaccounts.new.view.button_create"
   Then I should see translated "supplier.subaccounts.create.flash.subaccount_creation_successful"
 
-@_tested  @noguess
+@_tested @noguess @_done
 Scenario: Each lead buyer added has lead user role automatically assigned
   And an user with role lead_supplier and email lead_buyer11@person.com exists as subaccount for customer bob@person.com
   Then user "lead_buyer11@person.com" with role "lead_supplier" also has role "lead_user"
 
-@_tested
+@_tested @_done
 Scenario: I can add new lead user that belongs to my account
   Then I follow translated "supplier.subaccounts.index.view.new_lead_user"
   And I fill in "user_lead_user_first_name" with "Mark"
@@ -46,7 +46,7 @@ Scenario: I can add new lead user that belongs to my account
   And I press translated "supplier.subaccounts.new.view.button_create"
   Then I should see translated "supplier.subaccounts.create.flash.subaccount_creation_successful"
 
-@_tested  @noguess
+@_tested @noguess @_done
 Scenario: Lead buyer have to be activated through activation email
   When I follow translated "supplier.subaccounts.index.view.new_lead_supplier"
   And I fill in "user_lead_supplier_first_name" with "Mark"
@@ -58,7 +58,7 @@ Scenario: Lead buyer have to be activated through activation email
   And I press translated "supplier.subaccounts.new.view.button_create"
   Then a confirmation message should be sent to driscoll@person.noserver.com
 
-@_tested
+@_tested @_done
 Scenario: Lead user have to be activated through activation email
   When I follow translated "supplier.subaccounts.index.view.new_lead_user"
   And I fill in "user_lead_user_first_name" with "Mark"
@@ -70,7 +70,7 @@ Scenario: Lead user have to be activated through activation email
   And I press translated "supplier.subaccounts.new.view.button_create"
   Then a confirmation message should be sent to driscoll@person.noserver.com
 
-@_tested  @noguess
+@_tested @noguess @_done
 Scenario: I can remove lead buyer role from lead buyer (leaving him lead user role)
   Given an user with role lead_supplier and email lead_buyer@person.com exists as subaccount for customer bob@person.com
   And I go to suppliers subaccounts
@@ -79,21 +79,21 @@ Scenario: I can remove lead buyer role from lead buyer (leaving him lead user ro
   And I press translated "supplier.subaccounts.edit.view.button_update"
   Then user "lead_buyer@person.com" with role "lead_user" should not have role "lead_supplier"
 
-@_tested  @noguess
+@_tested @noguess @_done
 Scenario: I can remove lead buyer that belongs to my account
   Given an user with role lead_supplier and email lead_buyer@person.com exists as subaccount for customer bob@person.com
   And I go to suppliers subaccounts
   Then I follow translated "supplier.subaccounts.index.view.delete"
   And I should see translated "supplier.subaccounts.destroy.flash.subaccount_deletion_successful"
 
-@_tested
+@_tested @_done
 Scenario: I can remove lead user that belongs to my account (What happens here - exceptions?)
   Given an user with role lead_user and email lead_user@person.com exists as subaccount for customer bob@person.com
   And I go to suppliers subaccounts
   Then I follow translated "supplier.subaccounts.index.view.delete"
   And I should see translated "supplier.subaccounts.destroy.flash.subaccount_deletion_successful"
 
-@_tested  @noguess
+@_tested @noguess @_done
 Scenario: I can edit lead buyer that belongs to my account
   Given an user with role lead_supplier and email lead_buyer@person.com exists as subaccount for customer bob@person.com
   And go to suppliers subaccounts
@@ -103,7 +103,7 @@ Scenario: I can edit lead buyer that belongs to my account
   And I press translated "supplier.subaccounts.edit.view.button_update"
   Then I should see translated "supplier.subaccounts.update.flash.subaccount_update_successful"
 
-@_tested
+@_tested @_done
 Scenario: I can edit lead user that belongs to my account
   Given an user with role lead_user and email lead_user@person.com exists as subaccount for customer bob@person.com
   And go to suppliers subaccounts
@@ -113,7 +113,7 @@ Scenario: I can edit lead user that belongs to my account
   And I press translated "supplier.subaccounts.edit.view.button_update"
   Then I should see translated "supplier.subaccounts.update.flash.subaccount_update_successful"
 
-@_tested
+@_tested @_done
 Scenario: I can see all lead buyers/lead users that belong to my account
   Given an user with role lead_supplier and email lead_buyer@person.com exists as subaccount for customer bob@person.com
   And user lead_buyer@person.com with role lead_supplier exists with attributes "last_name:Clark"
@@ -123,14 +123,14 @@ Scenario: I can see all lead buyers/lead users that belong to my account
   Then I should see "Clark"
   And I should see "Rovecky"
 
-@_tested
+@_tested @_done
 Scenario: I can lock lead buyer/lead user account
   Given an user with role lead_supplier and email lead_buyer@person.com exists as subaccount for customer bob@person.com
   And I go to suppliers subaccounts
   Then I follow translated "supplier.subaccounts.index.view.lock"
   Then I should see translated "supplier.subaccounts.update.flash.subaccount_update_successful"
 
-@_tested
+@_tested @_done
 Scenario: I can unlock lead buyer/lead user account
   Given an user with role lead_supplier and email lead_buyer@person.com exists as subaccount for customer bob@person.com
   And I go to suppliers subaccounts
@@ -138,7 +138,7 @@ Scenario: I can unlock lead buyer/lead user account
   And I follow translated "supplier.subaccounts.index.view.unlock"
   Then I should see translated "supplier.subaccounts.update.flash.subaccount_update_successful"
 
-@_tested @selenium @bulk
+@_tested @selenium @bulk @_done
 Scenario: I can bulk lock/unlock lead buyer/lead user accounts
   Given an user with role lead_supplier and email lead_buyer@person.com exists as subaccount for customer bob@person.com
   And an user with role lead_user and email lead_user@person.com exists as subaccount for customer bob@person.com
@@ -150,7 +150,7 @@ Scenario: I can bulk lock/unlock lead buyer/lead user accounts
   And I follow "unlock_selected"
   And I should see translated "flash.bulk_subaccounts_update.update.notice"
 
-@_tested
+@_tested @_done
 Scenario: I can sort by name, last name, department
   Given an user with role lead_supplier and email lead_buyer1@person.com exists as subaccount for customer bob@person.com
   And user lead_buyer1@person.com with role lead_supplier exists with attributes "first_name:William,last_name:Craig,department:Public Relations"
@@ -169,7 +169,7 @@ Scenario: I can sort by name, last name, department
   And I follow translated "supplier.subaccounts.index.view.department_column"
   Then I should have value "QA" in the css path "tr:nth-child(1) td:nth-child(5)"
 
-@added @_tested
+@added @_tested @_done
 Scenario: I can sort by completed leads, new leads requested, num. of leads assigned last 30days, num. of leads assigned last 12months, num. of leads assigned last total
   Given an user with role lead_supplier and email lead_buyer1@person.com exists as subaccount for customer bob@person.com
   And an user with role lead_supplier and email lead_buyer2@person.com exists as subaccount for customer bob@person.com
@@ -216,7 +216,7 @@ Scenario: I can sort by completed leads, new leads requested, num. of leads assi
 @_done @non_testable @added
 Scenario: I can refresh the cashed values for sort by rake task
 
-@_tested
+@_tested @_done
 Scenario: I can select pagination level from following list: 10, 25, 50, None
   Given an user with role lead_supplier and email lead_buyer1@person.com exists as subaccount for customer bob@person.com
   Given an user with role lead_supplier and email lead_buyer2@person.com exists as subaccount for customer bob@person.com
@@ -233,7 +233,7 @@ Scenario: I can select pagination level from following list: 10, 25, 50, None
   And I follow "10"
   Then I follow "2"
 
-@_tested
+@_tested @_done
 Scenario: I can browse leads assigned to one of my lead users with pagination
   Given an user with role lead_supplier and email lead_buyer@person.com exists as subaccount for customer bob@person.com
   And lead Ultimate printers deal is bought by user bob@person.com with role supplier and is assigned to user lead_buyer@person.com with role lead_user

@@ -16,7 +16,7 @@ Background:
   And I am on the home page
   And I sign in as catbuyer@nbs.com with password secret
 
-@noguess @_tested @selenium
+@noguess @_tested @selenium @_done
 Scenario: I can create a comment for lead that I have access for
   When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   And I fill in "search_with_keyword" with "Lead#4"
@@ -31,7 +31,7 @@ Scenario: I can create a comment for lead that I have access for
 @m0
 Scenario: I can bulk create comments
 
-@_tested @selenium
+@_tested @selenium @_done
 Scenario: I can reply to comment
   When I follow translated "layout.main_menu.lead_supplier.lead_purchases"
   And I fill in "search_with_keyword" with "Lead#4"

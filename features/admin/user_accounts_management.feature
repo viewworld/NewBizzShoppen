@@ -13,7 +13,7 @@ Feature: User accounts management
   Then I sign in as bob@person.com with password supersecret
   And I go to administration users
 
- @_tested
+ @_tested @_done
  Scenario: I can browse users with pagination
    Given pagination per page size in model User is set to 3
    When I go to administration users
@@ -22,14 +22,14 @@ Feature: User accounts management
    Then I should see translated "administration.users.index.view.title"
    Then I follow "1"
 
-@_tested
+@_tested @_done
  Scenario: I can sort users
   Given I follow translated "administration.users.index.view.email"
   Then I should have value "aaaaaaaagent.tom.blank@paerson22.com" in the css path "tr:nth-child(1) td:nth-child(6)"
   Given I follow translated "administration.users.index.view.email"
   Then I should have value "zzzenon.tom.blank@paerson22.com" in the css path "tr:nth-child(1) td:nth-child(6)"
 
- @_tested
+ @_tested @_done
  Scenario: I can filter users [...]
    Given I should see "agent.jim.connor@paerson22.com"
    And I should see "agent.tom.blank@paerson22.com"
@@ -38,7 +38,7 @@ Feature: User accounts management
    Then I should see "agent.jim.connor@paerson22.com"
    And I should not see "agent.tom.blank@paerson22.com"
 
- @_tested
+ @_tested @_done
  Scenario: I can reset password for a user
    When I go to administration users
    And I follow translated "administration.users.index.view.edit"
@@ -46,7 +46,7 @@ Feature: User accounts management
    Then I should see translated "administration.password.destroy.flash.password_reset_successful"
    Then a password reset message should be sent to customer_agnes@domain.dom
 
-@_tested
+@_tested @_done
  Scenario: I can set the user to blocked and to unblocked
    When I go to administration users
    And I follow translated "administration.users.index.view.lock"
@@ -54,7 +54,7 @@ Feature: User accounts management
 
 # what should happen to all objects that he is connected too?
 # is there any case when we cant delete a user?
-@_tested
+@_tested @_done
  Scenario: I can delete user unless he\she doesn't have related objects (e.g. leads, purchases...)
    Given User aaaaaaaagent.tom.blank@paerson22.com with role agent has leads
    When I go to administration users
@@ -69,7 +69,7 @@ Feature: User accounts management
 #ommitted since blocked users cannot login anyway
  Scenario: Blocked or deleted user can not ask for password in forgot password
 
- @_tested
+ @_tested @_done
  Scenario: Deleted user shouldn't be able to login
    Given I am not sign in
    And no user exists with an email of deleted_person@domain.dom and role agent
@@ -77,7 +77,7 @@ Feature: User accounts management
    And I sign in as deleted_person@domain.dom with password secret
    Then I should see translated "devise.failure.invalid"
 
-@m5 @tgn @_tested
+@m5 @tgn @_tested @_done
 Scenario: I can invoice an account
   Given I have user with email bigbuyer1@person.com and role supplier
   And there is a seller with attributes "company_name:DannyTheSeller,first_name:Danny,last_name:DeVito,address:USA,vat_no:123" for country "Denmark"
@@ -88,18 +88,18 @@ Scenario: I can invoice an account
   Then I press translated "administration.invoices.new.view.button_create"
   And I should see translated "administration.invoices.edit.view.form.general_information"
 
-@m5 @tgn @selenium @_tested
+@m5 @tgn @selenium @_tested @_done
 Scenario: I can toggle select/deselect accounts on active page
   Then I check "mark_all"
   And I uncheck "mark_all"
 
-@m5 @tgn @selenium @_tested
+@m5 @tgn @selenium @_tested @_done
 Scenario: I can perform a bulk block action
   Then I check "mark_all"
   And I follow "lock_selected"
   And I should see translated "flash.bulk_users_update.update.notice"
 
-@m5 @noguess @tgn @_tested @selenium
+@m5 @noguess @tgn @_tested @selenium @_done
 Scenario: I can perform a bulk invoice action
   Given I have user with email bigbuyer1@person.com and role supplier
   And User bigbuyer1@person.com with role supplier is big buyer
@@ -114,7 +114,7 @@ Scenario: I can perform a bulk invoice action
   And I go to administration upcoming invoices
   And I should not see "John von Buyer"
 
-@m4 @added @agent_certification @tgn @_tested  @requested
+@m4 @added @agent_certification @tgn @_tested @requested @_done
 Scenario: I can override the certification level of any agent or call centre
   Then I fill in "search_with_keyword" with "agent@nbs.com"
   And I press translated "administration.users.index.view.search_button"
@@ -130,7 +130,7 @@ Scenario: I can override the certification level of any agent or call centre
   And I press translated "administration.users.edit.view.button_update_user"
   Then I should see translated "administration.users.update.flash.user_update_successful"
 
-@m6 @tgn @_tested
+@m6 @tgn @_tested @_done
 Scenario: In users listing I can see unpaid leads count
   Given I have user with email big_buyer.biz@nbs.com and role supplier
   And User big_buyer.biz@nbs.com with role supplier is big buyer
@@ -284,7 +284,7 @@ Scenario: I can't specify categories for category buyer's subaccounts
   And I am on administration edit user stiw@lajoie.ca
   Then I should not see CSS path "#all_categories"
 
-@m6 @tgn @selenium @_tested
+@m6 @tgn @selenium @_tested @_done
 Scenario: I can configure buyer category interests when editing it
   Given I have user with email buyer2222@nbs.com and role supplier
   And Category Computers is created
@@ -300,7 +300,7 @@ Scenario: I can configure buyer category interests when editing it
   And I follow translated "administration.users.edit.view.change_supplier_interests_link"
   And "user_supplier_category_ids_" dropdown should have values "Computers,Laptops"
 
-@m6 @tgn @selenium @_tested @requested
+@m6 @tgn @selenium @_tested @requested @_done
 Scenario: I can manage user's access to unique categories as well
   Given I have user with email buyer2222@nbs.com and role supplier
   And category "Computers" is unique for user with email "buyer29382.biz@nbs.com" role "supplier"
@@ -320,7 +320,7 @@ Scenario: I can manage user's access to unique categories as well
 # When editing a call centre as admin, display a list of agents that belong to that particular call centre below the form. Allow going to their edit screen.*
 # Same goes for buyer/big buyer - there should be a list of team-buyers displayed*
 # remove first name and last name fields in favour of company name*
-@requested @m7 @_tested @tgn
+@requested @m7 @_tested @tgn @_done
 Scenario: I can see a list of subaccounts and edit them when editing parent account
   Given I have user with email buyer2932biz@nbs.com and role supplier
   And an user with role lead_supplier and email lead_buyer29321biz@nbs.com exists as subaccount for customer buyer2932biz@nbs.com
@@ -353,7 +353,7 @@ Scenario: I can change buyer to category buyer only if he has interests categori
   Then I should be on administration users page
   And I should not see translated "activerecord.attributes.user.supplier.base.must_have_interests"
 
-@requested @m7 @_tested @tgn
+@requested @m7 @_tested @tgn @_done
 Scenario: I can filter users by Call center agents
   Given I have user with email call_centre_agent01@nbs.com and role call_centre_agent
   Given I have user with email call_centre_agent02@nbs.com and role call_centre_agent
@@ -551,7 +551,7 @@ Scenario: The header of users listing should include total number of users: 'Use
   And I am on administration users page
   Then I should see /Total:\s\d+/
 
-@added @m9 @tgn @_tested
+@added @m9 @tgn @_tested @_done
 Scenario: When I change the certification of call centre then its agents certification should be refreshed too
   Given an user with role call_centre_agent and email ccagent01@person.com belongs to call centre call_centre1@person.com
   Then I fill in "search_with_keyword" with "call_centre1@person.com"
@@ -578,7 +578,7 @@ Scenario: I can see password fields above unique categories
 @m10 @requested @tested_elsewhere @_done @_tested
 Scenario: I can see "Refresh statistics" button on users listing instead of settings page
 
-@m10 @requested @selenium @tgn @_tested
+@m10 @requested @selenium @tgn @_tested @_done
 Scenario: I can see "Set interests" button next to "Change password"
   Given I have user with email customer101@person.com and role supplier
   Then I fill in "search_with_keyword" with "customer101@person.com"
@@ -587,7 +587,7 @@ Scenario: I can see "Set interests" button next to "Change password"
   Then I should see translated "administration.users.edit.view.change_supplier_interests_link"
   And I follow translated "administration.users.edit.view.change_supplier_interests_link"
 
-@m10 @requested @tgn @_tested
+@m10 @requested @tgn @_tested @_done
 Scenario: I should be redirected to edit user page after saving interests
   Given I have user with email customer101@person.com and role supplier
   Then I fill in "search_with_keyword" with "customer101@person.com"

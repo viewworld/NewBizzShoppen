@@ -121,7 +121,7 @@ Scenario: In bestsellers and latest listings I should not see leads which I've a
   Then I should see "AwesomeLead" within "#latest_leads"
   And I should not see "BoughtLead" within "#latest_leads"
 
-@m5 @unique_categories @tgn @added @_tested
+@m5 @unique_categories @tgn @added @_tested @_done
 Scenario: When I am not logged in I should not see any leads from unique categories on Latest & Bestsellers lists
   Given lead CommonLead1 exists within category Common Category1
   And CommonLead1 is a best seller
@@ -141,7 +141,7 @@ Scenario: When I am not logged in I should not see any leads from unique categor
   And I should not see "UniqueLead1" within "#latest_leads"
   And I should not see "UniqueLead2" within "#latest_leads"
 
-@m5 @unique_categories @tgn @added @_tested
+@m5 @unique_categories @tgn @added @_tested @_done
 Scenario: I should not see leads from customer unique categories I'm not assigned to on Latest leads listing
   Given I am signed up and confirmed as user with email customer23424342@nbs.com and password secret and role supplier
   Given lead CommonLead1 exists within category Common Category1
@@ -161,7 +161,7 @@ Scenario: I should not see leads from customer unique categories I'm not assigne
   And I should see "UniqueLead1" within "#latest_leads"
   And I should not see "UniqueLead2" within "#latest_leads"
 
-@m5 @unique_categories @tgn @added @_tested
+@m5 @unique_categories @tgn @added @_tested @_done
 Scenario: I should see leads from customer unique categories I'm assigned to on Latest leads listing
   Given I am signed up and confirmed as user with email customer23424342@nbs.com and password secret and role supplier
   Given lead CommonLead1 exists within category Common Category1
