@@ -25,9 +25,8 @@ class SignInController < ApplicationController
     @user.set_fields_for_rpx(data) unless data.blank?
     if request.referer.to_s.include?("certification_accounts")
       @user.skip_email_verification = "1"
+      @user.assign_free_subscription_plan = true
     end
-
-    @user.assign_free_subscription_plan = true
 
     respond_to do |format|
       if @user.save
