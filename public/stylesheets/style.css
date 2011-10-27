@@ -1915,7 +1915,7 @@ li.disabled
 
 /* --- subscription plans ------------------------------------------------------------------------ */
 
-.subscription_plan {
+.subscription_plan_item {
     display: inline-block;
     display: inline !ie7;
     zoom: 1 !ie7;
