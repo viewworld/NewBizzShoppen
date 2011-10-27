@@ -165,6 +165,20 @@ describe Subscription do
         @prev_subscription.reload
         @prev_subscription.should be_normal
       end
+
+      it "should recalculate subscription price if the billing cycle was not complete" do
+        setup_customer(@payable_subscription1)
+        set_date_today_to(Date.today+43.days)
+        @customer.active_subscription.update_attribute(:billing_date, Date.today)
+        @customer.upgrade_subscription!(@payable_subscription2)
+        @prev_subscription.reload
+        @prev_subscription.should be_upgraded
+        @prev_subscription.end_date.should == Date.today-1
+        @prev_subscription.billing_date.should == Date.today
+        @prev_subscription.subscription_plan_lines.sum(:price).should == 12.5
+        @prev_subscription.billing_price.should == 12.5
+      end
+
     end
 
     context "downgrade" do
@@ -301,6 +315,16 @@ describe Subscription do
 
         @customer1.active_subscription.start_date.should == Date.today
         @customer2.active_subscription.start_date.should == Date.today
+      end
+
+      it "should bill total price when subscription is prolonged" do
+        setup_customer(@payable_subscription1)
+        set_date_today_to(@customer.active_subscription.end_date+1)
+        @customer.active_subscription
+        @prev_subscription.reload
+        @prev_subscription.should be_prolonged
+        @prev_subscription.subscription_plan_lines.sum(:price).should == 25.0
+        @prev_subscription.billing_price.should == 25.0
       end
     end
   end
