@@ -129,13 +129,13 @@ Scenario: I check perdiodically for confirmations that have not been approved or
   And lead certification request for lead "WorstLead4" has its state updated
   And lead "WorstLead4" certification status should be "1"
 
-@_tested
+@_tested @_done
 Scenario: Last visit date is recorded when link is accessed but lead is not confirmed
   When lead "BestLead" certification request is sent
   And I visit certification url for lead "BestLead" on "2000-01-01"
-  Then last certification visit should be on "2000-01-01"
+  Then last certification visit for lead "BestLead" should be on "2000-01-01"
   When I visit certification url for lead "BestLead"
-  Then last certification visit should be today
+  Then last certification visit for lead "BestLead" should be today
 
 @_done @_tested
 Scenario: Once I have confirmed the lead then the link expires and I cannot get access to that lead again
