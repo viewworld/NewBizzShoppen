@@ -3982,3 +3982,8 @@ en:
       upgrade: "Upgrade"
       downgrade: "Downgrade"
       cancel: "Cancel subscription"
+      features:
+        big_buyer: "Big supplier"
+        team_buyers: "Team suppliers"
+        deal_maker: "Deal maker"
+      weeks: "weeks"
