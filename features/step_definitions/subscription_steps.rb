@@ -37,3 +37,7 @@ Then /^user with email "([^"]*)" should have subscription named "([^"]*)" cancel
   user = User.where(:email => email).first.with_role
   assert !user.subscriptions.where(:name => name).order("position").last.cancelled_at.nil?
 end
+
+Then /^user subscriptions are reviewed by rake task$/ do
+  Subscription.auto_prolong
+end

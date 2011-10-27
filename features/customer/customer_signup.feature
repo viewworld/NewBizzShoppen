@@ -104,7 +104,7 @@ Feature: Customer signup
     Then I follow translated "layout.main_menu.lead_supplier.my_deals"
     And I should not see translated "deals.common.listing.view.new_deal"
     When subscription plan exists with attributes "name:Premium supplier,deal_maker:1,big_buyer:1,assigned_roles:supplier"
-    And user with email "buyer@nbs.com" has subscription named "Premium supplier"
+    And user with email "buyer@nbs.com" upgrades to subscription named "Premium supplier"
     Then I follow translated "layout.main_menu.lead_supplier.my_deals"
     And I follow translated "deals.common.listing.view.new_deal"
     And I fill in "deal_header" with "Templates deal test"

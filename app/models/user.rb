@@ -79,6 +79,7 @@ class User < ActiveRecord::Base
   scope :with_call_centre_agents, lambda { |call_centre| where("(roles_mask & #{2**User.valid_roles.index(:call_centre_agent)} > 0) and parent_id = ?", call_centre.id) }
   scope :with_call_centres, where("roles_mask & #{2**User.valid_roles.index(:call_centre)} > 0")
   scope :with_role, lambda { |role| where("roles_mask & #{2**User.valid_roles.index(role.to_sym)} > 0 ") }
+  scope :with_roles_except, lambda { |roles| where( roles.map { |r| "NOT(roles_mask & #{2**User.valid_roles.index(r.to_sym)} > 0)" }.join(" AND ") ) }
   scope :with_keyword, lambda { |q| where("lower(first_name) like :keyword OR lower(last_name) like :keyword OR lower(email) like :keyword or lower(company_name) like :keyword", {:keyword => "%#{q.downcase}%"}) }
   scope :with_subaccounts, lambda { |parent_id| where("parent_id = ?", parent_id) }
   scope :without_locked, where("locked_at IS NULL")
@@ -180,7 +181,7 @@ class User < ActiveRecord::Base
     casted_obj = self.send(:casted_class).find(id)
     [:leads, :lead_purchases, :lead_requests, :leads_in_cart].detect do |method|
       casted_obj.respond_to?(method) and !casted_obj.send(method).empty?
-    end.nil? and (!active_subscription or (active_subscription.payable? and active_subscription.invoiced?))
+    end.nil? and (!active_subscription or (!active_subscription.payable? and subscriptions.detect { |s| s.payable? and !s.invoiced?}.nil?))
   end
 
   def handle_locking
@@ -329,7 +330,7 @@ class User < ActiveRecord::Base
 
   # TODO find out which roles are invoiceable
   def self.invoiceable
-    self.all_subscribers
+    self.with_roles_except([:admin]).reject { |u| !defined? u.with_role.address }
   end
 
   def role

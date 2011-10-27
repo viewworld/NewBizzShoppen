@@ -46,8 +46,19 @@ Feature: Debtors
   @m21 @requested @subscriptions @_done @tgn @tested_elsewhere
   Scenario: When lead is bought the user is added ad-hoc flag
 
-  @m21 @requested @subscriptions @_done @tgn @tested_elsewhere
-  Scenario: At subscription billing date user is added a subscriber flag
+  @m21 @requested @subscriptions @_done @_tested @tgn
+  Scenario: At subscription billing date user is added a subscriber flag (rake task)
+    Given subscription plan exists with attributes "name:Premium supplier, billing_cycle:2, billing_period:0"
+    And subscription plan has currency named "DKK"
+    And subscription plan has following lines
+      | name                 | price |
+      | subscr premium line1 |    99 |
+      | subscr premium line2 |     3 |
+    Given user with email "kastomer2@nbs.fake" upgrades to subscription named "Premium supplier"
+    And user "kastomer2@nbs.fake" with role "supplier" should have attributes "subscriber_type:'ad-hoc'"
+    And the date is "14" days from now
+    And user subscriptions are reviewed by rake task
+    And user "kastomer2@nbs.fake" with role "supplier" should have attributes "subscriber_type:'subscriber'"
 
   @m21 @requested @subscriptions @selenium @tgn @_done @_tested
   Scenario: If user has ad-hoc flag then at subscription date items are added to subscription invoice and flag is changed to subscriber
