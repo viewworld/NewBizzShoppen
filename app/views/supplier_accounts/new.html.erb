@@ -23,9 +23,10 @@
   <%= semantic_form_for @user, :url => supplier_accounts_path do |form| %>
       <frm title="#{t('shared.accounts.new_account_form.form_title')}" c="no_marg">
         <param:content>
-          <div>
+          <div class="pdd_10">
             <%= render :partial => "shared/subscriptions/new_account", :locals => { :role => "supplier", :subscriptions_form => form} %>
           </div>
+          <hl/>
           <div class="column_left">
             <div class="pdd_10 no_pdd_t">
               <fieldset class="inputs labels_ta_r labels_200">
