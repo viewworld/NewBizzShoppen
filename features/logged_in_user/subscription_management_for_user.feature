@@ -60,7 +60,25 @@ Feature: Subscription management for user
     And I should see translated "subscriptions.can_be_canceled_at" with options "cancel_date:{Date.today+4.weeks+1.day}"
     And I should see translated "subscriptions.cant_be_upgraded_nor_downgraded"
 
+  @selenium @_done @_tested
   Scenario: When I upgrade my subscription to more expensive in the middle of billing cycle then I will pay only for the used part of cycle
+    And there is subscription plan named "Basic for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0" and price "100"
+    And I follow translated "layout.my_profile_link"
+    And I confirm a js popup on the next step
+    And I follow translated "subscriptions.listing.upgrade"
+    And I follow translated "layout.my_profile_link"
+    And billing date for active subscription is today for user "supp@nbs.com"
+    When there is subscription plan named "Medium for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0" and price "200"
+    And the date is "14" days from now
+    And I follow translated "layout.my_profile_link"
+    And I confirm a js popup on the next step
+    And I follow translated "subscriptions.listing.upgrade"
+    And I follow translated "layout.my_profile_link"
+    When I sign out
+    And the date is "15" days from now
+    And I sign in as admin@nbs.com with password secret
+    And I am on administration upcoming invoices
+    Then I should see "46.43" within "tbody#invoices_list tr:nth-of-type(1)"
 
   @selenium @_done @_tested
   Scenario: I can't downgrade my subscription when it entered into the lockup period

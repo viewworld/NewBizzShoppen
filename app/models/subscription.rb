@@ -92,6 +92,11 @@ class Subscription < ActiveRecord::Base
     self.euro_billing_price = currency.to_euro(billing_price)
   end
 
+  def cache_prices!
+    cache_prices
+    save!
+  end
+
   def self.clone_from_subscription_plan!(subscription_plan, user, start_date=nil)
     subscription = Subscription.new(:user => user)
     subscription_plan.attributes.keys.except(["id", "roles_mask", "created_at", "updated_at", "billing_price", "is_active"]).each do |method|
@@ -107,7 +112,20 @@ class Subscription < ActiveRecord::Base
     subscription
   end
 
+  def recalculate_subscription_plan_lines(new_end_date, is_free_period)
+    unless is_free?
+      total_days = billing_cycle*7
+      paid_days = (new_end_date - start_date).to_i
+      paid_days -= free_period*7 if is_free_period
+
+      subscription_plan_lines.each do |spl|
+        spl.recalculate(total_days, paid_days)
+      end
+    end
+  end
+
   def perform_cancel
+    self.recalculate_subscription_plan_lines(Date.today-1, is_free_period_applied?)
     self.end_date = Date.today-1
     self.cancelled_at = Time.now
     self.class.clone_from_subscription_plan!(SubscriptionPlan.active.free.for_role(user.role).first, user)
@@ -119,6 +137,7 @@ class Subscription < ActiveRecord::Base
   end
 
   def perform_upgrade
+    self.recalculate_subscription_plan_lines(Date.today-1, is_free_period_applied?)
     self.end_date = Date.today-1
     self.class.clone_from_subscription_plan!(next_subscription_plan, user)
   end
@@ -136,6 +155,7 @@ class Subscription < ActiveRecord::Base
   end
 
   def perform_upgrade_from_penalty
+    self.recalculate_subscription_plan_lines(Date.today-1, is_free_period_applied?)
     self.end_date = Date.today-1
     self.class.clone_from_subscription_plan!(next_subscription_plan, user)
   end
