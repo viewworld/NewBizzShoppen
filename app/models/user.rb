@@ -861,9 +861,9 @@ class User < ActiveRecord::Base
   def handle_privileges
     if subaccounts.any?
       if team_buyers?
-        subaccounts.each { |u| u.update_attribute(:locked, "unlock") }
+        subaccounts.each { |u| u.update_attribute(:locked, "unlock") if u.locked_at }
       else
-        subaccounts.each { |u| u.update_attribute(:locked, "lock") }
+        subaccounts.each { |u| u.update_attribute(:locked, "lock") if u.locked_at.nil? }
       end
     end
   end
