@@ -199,6 +199,11 @@ class Subscription < ActiveRecord::Base
   end
 
   def self.auto_prolong
-    User.all_subscribers.each(&:active_subscription)
+    User.all_subscribers.each do |user|
+      user.active_subscription
+      if user.ad_hoc? and user.subscriptions.order("position").detect { |s| !s.billing_date.nil? and s.billing_date <= Date.today }
+        user.update_attribute(:subscriber_type, User::SUBSCRIBER_TYPE_SUBSCRIBER)
+      end
+    end
   end
 end
