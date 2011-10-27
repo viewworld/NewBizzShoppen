@@ -1912,3 +1912,22 @@ li.disabled
     position: absolute !important;
     left: 350px;
 }
+
+/* --- subscription plans ------------------------------------------------------------------------ */
+
+.subscription_plan {
+    display: inline-block;
+    display: inline !ie7;
+    zoom: 1 !ie7;
+    margin: 3px;
+
+    vertical-align: top;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    min-width: 150px;
+    text-align: center;
+    background: #fff;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}

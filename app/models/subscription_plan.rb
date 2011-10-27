@@ -68,6 +68,11 @@ class SubscriptionPlan < ActiveRecord::Base
 
   public
 
+  def cache_prices!
+    cache_total_billing
+    save!
+  end
+
   def roles_as_text
     roles.to_a.map { |r| r.to_s.humanize }.join(', ')
   end
