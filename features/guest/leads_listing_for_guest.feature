@@ -39,8 +39,8 @@ Scenario: I can browse leads in a given category with pagination
 
 @bk @_tested
 Scenario: I should see lead header, lead price, purchase value, created by and public description
-  Given a category "cat1" exists with name: "One more sample category"
-  And a lead exists with header: "Nice", category: category "cat1", company_name: "Google", phone_number: "0123456789"
+  Given Category named "One more sample category" already exists
+  And lead Nice exists within category One more sample category
   And I follow translated "layout.main_menu.shared.browse_leads"
   And I follow category "One more sample category"
   Then I should see "Nice"
