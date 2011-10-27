@@ -7,6 +7,7 @@ class Subscription < ActiveRecord::Base
   belongs_to :subscription_plan
   belongs_to :currency
   belongs_to :seller
+  after_create :handle_user_privileges
 
   acts_as_list :scope => :user_id
   scope :active, lambda { where("is_active = ? and ((end_date IS NULL and billing_cycle = 0) or end_date >= ?)", true, Date.today) }
@@ -201,9 +202,16 @@ class Subscription < ActiveRecord::Base
   def self.auto_prolong
     User.all_subscribers.each do |user|
       user.active_subscription
+      user.handle_privileges
       if user.ad_hoc? and user.subscriptions.order("position").detect { |s| !s.billing_date.nil? and s.billing_date <= Date.today }
         user.update_attribute(:subscriber_type, User::SUBSCRIBER_TYPE_SUBSCRIBER)
       end
     end
+  end
+
+  private
+
+  def handle_user_privileges
+    user.handle_privileges
   end
 end

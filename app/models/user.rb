@@ -187,7 +187,7 @@ class User < ActiveRecord::Base
   def handle_locking
     if locked
       self.locked_at = locked == "unlock" ? nil : Time.now
-      self.cancel_subscription = true if locked_at and active_subscription
+      self.cancel_subscription = true if locked_at and active_subscription and active_subscription.payable?
     end
   end
 
@@ -856,5 +856,15 @@ class User < ActiveRecord::Base
 
   def deal_maker?
     active_subscription ? active_subscription.deal_maker? : admin? ? true : has_role?(:deal_maker)
+  end
+
+  def handle_privileges
+    if subaccounts.any?
+      if team_buyers?
+        subaccounts.each { |u| u.update_attribute(:locked, "unlock") }
+      else
+        subaccounts.each { |u| u.update_attribute(:locked, "lock") }
+      end
+    end
   end
 end
