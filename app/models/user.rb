@@ -180,7 +180,7 @@ class User < ActiveRecord::Base
     casted_obj = self.send(:casted_class).find(id)
     [:leads, :lead_purchases, :lead_requests, :leads_in_cart].detect do |method|
       casted_obj.respond_to?(method) and !casted_obj.send(method).empty?
-    end.nil? and (!active_subscription or (active_subscription.payable? and active_subscription.invoiced?))
+    end.nil? and (!active_subscription or (!active_subscription.payable? and subscriptions.detect { |s| s.payable? and !s.invoiced?}.nil?))
   end
 
   def handle_locking
