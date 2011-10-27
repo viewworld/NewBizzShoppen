@@ -7,6 +7,7 @@ class CertificationAccountsController < SignInController
   end
 
   def create
+    params[:user_member][:assign_free_subscription_plan] = "1" if params[:user_member]
     super(User::Member, :user_member, I18n.t("flash.member_accounts.create.notice"))
   end
 

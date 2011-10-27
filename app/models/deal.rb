@@ -152,7 +152,7 @@ class Deal < AbstractLead
   end
 
   def general_discount?
-    (deal_price.to_f == 0 and discounted_price.to_f > 0) or (deal_price.to_f > 0 and discounted_price.to_f == 0)
+    deal_price.to_f == 0 or discounted_price.to_f == 0
   end
   
   def assign_lead_category_to_supplier!
@@ -180,20 +180,16 @@ class Deal < AbstractLead
   end
   
   def next_group_deal
-    if Deal.group_deals.order("end_date ASC").where("end_date >= ? and id <> ?", self.end_date, self.id).any?
-      Deal.group_deals.order("end_date ASC").where("end_date >= ? and id <> ?", self.end_date, self.id).first
-    elsif Deal.group_deals.order("end_date ASC").where("id <> ?", self.id).any?
-      Deal.group_deals.order("end_date ASC").where("id <> ?", self.id).first
+    if deal = Deal.order("end_date ASC").where("((end_date >= ? and id <> ?) or id <> ?) and end_date >= current_date", self.end_date, self.id, self.id).first
+      deal
     else
       self
     end
   end
 
   def previous_group_deal
-    if Deal.group_deals.order("end_date DESC").where("end_date <= ? and id <> ?", self.end_date, self.id).any?
-      Deal.group_deals.order("end_date DESC").where("end_date <= ? and id <> ?", self.end_date, self.id).first
-    elsif Deal.group_deals.order("end_date DESC").where("id <> ?", self.id).any?
-      Deal.group_deals.order("end_date DESC").where("id <> ?", self.id).first
+    if deal = Deal.order("end_date DESC").where("((end_date <= ? and id <> ?) or id <> ?) and end_date >= current_date", self.end_date, self.id, self.id).first
+      deal
     else
       self
     end
