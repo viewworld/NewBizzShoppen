@@ -1,7 +1,7 @@
 class GroupDealsController < ApplicationController
 
   def show
-    @current_deal = Deal.group_deals.find(params[:id])
+    @current_deal = Deal.find(params[:id])
     @deal = if params[:previous]
       @current_deal.previous_group_deal
     elsif params[:next]
