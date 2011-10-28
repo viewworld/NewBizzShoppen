@@ -2177,6 +2177,7 @@ en:
         view:
           edit: "Edit"
           destroy: "Destroy"
+          you_need_to_upgrade_subscription_warning: "You need to upgrade your subscription to be able to create deals"
       new:
         view:
           title: "New Deal"
