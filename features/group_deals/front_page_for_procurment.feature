@@ -184,7 +184,7 @@ Feature: Front page for procurment
 
   Scenario: I should be able to browse deals by the arrows on the left and right side of the big featured group deal
 
-  @is @_tested @_done
+  @is @_tested @_done @wip
   Scenario: As admin I can select primary featured deal to be displayed on procurement page
     Given I am on the homepage
     And I make sure current locale is "en"
@@ -203,6 +203,18 @@ Feature: Front page for procurment
     And I select "GroupDealB (01.01.2011-01.01.2013)" from "featured_deals_1"
     And I select "GroupDealC (01.01.2011-01.01.2013)" from "featured_deals_2"
     And I select "GroupDealD (01.01.2011-01.01.2013)" from "featured_deals_3"
+    And I select "GroupDealA (01.01.2011-01.01.2013)" from "featured_deals_4"
+    And I select "GroupDealB (01.01.2011-01.01.2013)" from "featured_deals_5"
+    And I select "GroupDealC (01.01.2011-01.01.2013)" from "featured_deals_6"
+    And I select "GroupDealD (01.01.2011-01.01.2013)" from "featured_deals_7"
+    And I select "GroupDealA (01.01.2011-01.01.2013)" from "featured_deals_8"
+    And I select "GroupDealB (01.01.2011-01.01.2013)" from "featured_deals_9"
+    And I select "GroupDealC (01.01.2011-01.01.2013)" from "featured_deals_10"
+    And I select "GroupDealD (01.01.2011-01.01.2013)" from "featured_deals_11"
+    And I select "GroupDealA (01.01.2011-01.01.2013)" from "featured_deals_12"
+    And I select "GroupDealB (01.01.2011-01.01.2013)" from "featured_deals_13"
+    And I select "GroupDealC (01.01.2011-01.01.2013)" from "featured_deals_14"
+    And I select "GroupDealD (01.01.2011-01.01.2013)" from "featured_deals_15"
     And I press "Set featured deals"
 
   @is @tested_elsewhere @_done
@@ -216,7 +228,6 @@ Feature: Front page for procurment
     And I should see "+44 0000000"
     And I should see "admin@fairleads.com"
     And I should see "fairleads_contact"
-
 
   #7449
   @m19 @requested @selenium @_done @_tested @tgn @hanging_js
@@ -272,8 +283,8 @@ Feature: Front page for procurment
   @m20 @requested @non_testable @_done
   Scenario: Boxes with secondary featured deals should ber clickable
 
-  @m21 @requested @is
-  Scenario: I can select 9 backup featured deals
+  @m21 @requested @is @tested_elsewhere @_done
+  Scenario: I can select 6 backup featured deals
 
-  @m21 @requested @is
+  @m21 @requested @is @tested_elsewhere @_done
   Scenario: When featured deal is unpublished then available backup deal should appear on the front page
