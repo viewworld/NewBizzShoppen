@@ -7,7 +7,7 @@
         <% if next_subscription = current_user.next_subscription %>
             <p><%= t("subscriptions.next_subscription_plan", :next_plan_name => next_subscription.subscription_plan.name, :next_plan_active_from => next_subscription.start_date) %></p>
         <% elsif current_user.active_subscription.will_prolong? %>
-          <p><%= t("subscriptions.will_prolong_on", :prolong_date => current_user.active_subscription.end_date + 1.day) %></p>
+          <p><%= t("subscriptions.will_prolong_on", :prolong_date => current_user.active_subscription.end_date + 1.day) %> <%= t("subscriptions.as_free_subscription") if current_user.active_subscription.cancelled? %></p>
         <% end %>
     <% else %>
         <p><%= t("subscriptions.listing.free") %></p>
@@ -16,8 +16,10 @@
     <% unless current_user.has_free_subscription? %>
         <% if !current_user.can_cancel_subscription? and cancel_date = current_user.can_cancel_subscription_at %>
           <h3><%= t("subscriptions.can_be_canceled_at", :cancel_date => cancel_date) %></h3>
-        <% elsif !current_user.can_cancel_subscription? %>
+        <% elsif !current_user.can_cancel_subscription? and !current_user.active_subscription.cancelled? %>
           <h3><%= t("subscriptions.cant_be_canceled") %></h3>
+        <% elsif current_user.active_subscription.cancelled? %>
+          <h3><%= t("subscriptions.active_subscription_is_canceled") %></h3>
         <% else %>
           <%= bt_link_to nil, t("subscriptions.listing.cancel"), cancel_my_profile_subscription_plans_path, :class => "fltl", :confirm => t("subscriptions.confirmation.cancel") %>
         <% end %>

@@ -4,6 +4,9 @@
   <%= semantic_form_for @user, :url => administration_user_path, :method => :put do |form| %>
       <frm title="">
         <param:header>
+          <% if @user.active_subscription.present? and @user.active_subscription.payable? and !@user.active_subscription.cancelled? %>
+            <%= bt_link_to nil, t("administration.users.stop_subscription"), administration_user_path(@user, { "user_#{@user.role.to_s}".to_sym  => { :cancel_subscription => true }}), {:method => :put, :confirm => t("administration.users.index.view.delete_confirmation_message"), :class => "fltr" } %>
+          <% end %>
           <% if @user.has_role?(:supplier) and !@user.has_role?(:category_supplier) %>
             <%= bt_link_to nil, t("administration.users.edit.view.change_supplier_interests_link"), edit_administration_supplier_interest_path(@user), :class => "fltr" %>
           <% end %>

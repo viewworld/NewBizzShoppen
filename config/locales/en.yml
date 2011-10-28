@@ -880,6 +880,7 @@ en:
           selected_interests_categories: "Selected category interests"
           subaccounts_list: "Subaccounts"
           change_supplier_interests_link: "Set interests"
+          active_subscription: "Active subscription:"
       create:
         flash:
           user_creation_successful: User has been created successfuly
@@ -2177,6 +2178,7 @@ en:
         view:
           edit: "Edit"
           destroy: "Destroy"
+          you_need_to_upgrade_subscription_warning: "You need to upgrade your subscription to be able to create deals"
       new:
         view:
           title: "New Deal"
@@ -3987,3 +3989,5 @@ en:
         team_buyers: "Team suppliers"
         deal_maker: "Deal maker"
       weeks: "weeks"
+    as_free_subscription: "as free subscription"
+    active_subscription_is_canceled: "Your current subscription plan is canceled"

@@ -784,3 +784,18 @@ Scenario: User with unpaid subscription cannot be deleted
   And I follow translated "administration.users.index.view.delete"
   Then I should see translated "administration.users.destroy.flash.user_deletion_failure"
 
+@m22 @requested @_done @_tested @tgn
+Scenario: I can see user's active subscription on user's edit page
+  Given I have user with email xena@xena.pl and role supplier
+  When subscription plan exists with attributes "name:Premium supplier,assigned_roles:supplier,billing_cycle:10"
+  And user with email "xena@xena.pl" upgrades to subscription named "Premium supplier"
+  When I go to administration users
+  Then I fill in "search_with_keyword" with "xena@xena.pl"
+  And I press translated "administration.users.index.view.search_button"
+  And I follow translated "administration.users.index.view.edit"
+  Then I should see "Premium supplier"
+  When I follow translated "administration.users.stop_subscription"
+  Then I fill in "search_with_keyword" with "xena@xena.pl"
+  And I press translated "administration.users.index.view.search_button"
+  And I follow translated "administration.users.index.view.edit"
+  Then I should not see translated "administration.users.stop_subscription"
