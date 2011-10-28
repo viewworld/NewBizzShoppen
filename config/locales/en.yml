@@ -3987,3 +3987,5 @@ en:
         team_buyers: "Team suppliers"
         deal_maker: "Deal maker"
       weeks: "weeks"
+    as_free_subscription: "as free subscription"
+    active_subscription_is_canceled: "Your current subscription plan is canceled"

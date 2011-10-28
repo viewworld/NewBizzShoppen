@@ -42,7 +42,7 @@ class Subscription < ActiveRecord::Base
   end
 
   aasm_event :cancel do
-    transitions :from => :normal, :to => :cancelled, :guard => :can_be_cancelled?
+    transitions :from => :normal, :to => :cancelled
   end
 
   aasm_event :cancel_during_lockup, :after => :perform_cancelled_during_lockup do
@@ -50,7 +50,7 @@ class Subscription < ActiveRecord::Base
   end
 
   aasm_event :prolong do
-    transitions :from => [:normal, :lockup, :penalty, :non_cancelable], :to => :prolonged, :guard => :can_be_prolonged?
+    transitions :from => [:normal, :lockup, :penalty, :cancelled, :non_cancelable], :to => :prolonged, :guard => :can_be_prolonged?
   end
 
   aasm_event :upgrade_from_penalty, :after => :perform_upgrade_from_penalty do
@@ -126,10 +126,8 @@ class Subscription < ActiveRecord::Base
   end
 
   def perform_cancel
-    self.recalculate_subscription_plan_lines(Date.today-1, is_free_period_applied?)
-    self.end_date = Date.today-1
+    self.prolongs_as_free = true
     self.cancelled_at = Time.now
-    self.class.clone_from_subscription_plan!(SubscriptionPlan.active.free.for_role(user.role).first, user)
   end
 
   def perform_cancelled_during_lockup
@@ -179,10 +177,6 @@ class Subscription < ActiveRecord::Base
 
   def can_be_prolonged?
     payable? and end_date < Date.today
-  end
-
-  def can_be_cancelled?
-    payable? and start_date != Date.today
   end
 
   def can_cancel_at

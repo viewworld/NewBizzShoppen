@@ -32,9 +32,9 @@ Scenario: I can follow "What do you want to do today?" links and they take me to
 @_tested_in_rspec @_done
 Scenario: After signup I am assigned roles of Customer, Lead Buyer and Lead user
 
-@_tested @_done
+@_tested @_done @_deprecated
 Scenario: I can see my unique RSS feed URL
-  Then I should see translated "supplier.interests.edit.view.rss_feed_url"
+#  Then I should see translated "supplier.interests.edit.view.rss_feed_url"
 
 @_tested @_deprecated @_done
 Scenario: I can select if I want to be notified about new leads matching my interests criteria
