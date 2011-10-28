@@ -197,10 +197,10 @@ Feature: Subscription management for user
     And I follow translated "layout.my_profile_link"
     Then I should not see translated "subscriptions.free_period_notification" with options "free_period_date:{Date.today+7.days}"
 
-  @m22 @_done @_tested_elsewhere @tgn
+  @m22 @_done @_tested_elsewhere @requested @tgn
   Scenario: When I cancel before lockup the subscription should be active until the end of billing cycle and prolong as free
 
-  @m22 @_done @_tested @tgn
+  @m22 @_done @_tested @tgn @requested
   Scenario: When I have free subscription and go to My deals then I should see warning 'You need to upgrade your subscription to be able to create deals'
     When I follow translated "layout.main_menu.lead_supplier.my_deals"
     Then I should see translated "supplier.deals.index.view.you_need_to_upgrade_subscription_warning"

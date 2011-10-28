@@ -880,6 +880,7 @@ en:
           selected_interests_categories: "Selected category interests"
           subaccounts_list: "Subaccounts"
           change_supplier_interests_link: "Set interests"
+          active_subscription: "Active subscription:"
       create:
         flash:
           user_creation_successful: User has been created successfuly
