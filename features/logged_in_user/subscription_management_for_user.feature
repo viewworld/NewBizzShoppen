@@ -24,16 +24,16 @@ Feature: Subscription management for user
     And I should see translated "subscriptions.available_subscriptions"
     And I should see translated "subscriptions.will_prolong_on" with options "prolong_date:{Date.today+4.weeks+1.day}"
 
-  @selenium @_done @_tested
+  @selenium @_done @_tested @_deprecated
   Scenario: I can cancel my subscription any time after the change of subscription plan
-    When there is subscription plan named "Basic for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0" and price "100"
-    And I follow translated "layout.my_profile_link"
-    And I confirm a js popup on the next step
-    And I follow translated "subscriptions.listing.upgrade"
-    And I follow translated "layout.my_profile_link"
-    And I confirm a js popup on the next step
-    And I follow translated "subscriptions.listing.cancel"
-    And I should see "Basic for supplier" within "#current_subscription"
+#    When there is subscription plan named "Basic for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0" and price "100"
+#    And I follow translated "layout.my_profile_link"
+#    And I confirm a js popup on the next step
+#    And I follow translated "subscriptions.listing.upgrade"
+#    And I follow translated "layout.my_profile_link"
+#    And I confirm a js popup on the next step
+#    And I follow translated "subscriptions.listing.cancel"
+#    And I should see "Basic for supplier" within "#current_subscription"
 
   @selenium @_done @_tested
   Scenario: When I change my subscription to more expensive one the change will be immediate
@@ -204,3 +204,11 @@ Feature: Subscription management for user
   Scenario: When I have free subscription and go to My deals then I should see warning 'You need to upgrade your subscription to be able to create deals'
     When I follow translated "layout.main_menu.lead_supplier.my_deals"
     Then I should see translated "supplier.deals.index.view.you_need_to_upgrade_subscription_warning"
+
+  #8346
+  @m22 @requested @credit_line
+  Scenario: When I upgrade my subscription a credit line is created for the remaining value of my previous subscription
+
+  #8346
+  @m22 @requested @credit_line
+  Scenario: When I upgrade my subscription and invoice is issued the creadit line value for my previous subscription should be subsctracted

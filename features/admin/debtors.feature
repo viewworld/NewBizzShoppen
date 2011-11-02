@@ -134,7 +134,12 @@ Feature: Debtors
     And I should see "Fox"
 
  @m21 @requested @selenium @_done @tested_elsewhere @tgn
-  Scenario: When multiple debtors are selected for invoicing then if there is no seller than default one is applied
+ Scenario: When multiple debtors are selected for invoicing then if there is no seller than default one is applied
     
-  @m21 @requested @subscriptions @tgn @_done @tested_elsewhere
-  Scenario: Not invoiced items should be added to the subscription invoice at billing time
+ @m21 @requested @subscriptions @tgn @_done @tested_elsewhere
+ Scenario: Not invoiced items should be added to the subscription invoice at billing time
+
+ #8337
+ @m22 @requested
+ Scenario: When I issue an invoice for subscriber then I should not see the screen to select user/seller
+

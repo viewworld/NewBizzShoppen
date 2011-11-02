@@ -221,3 +221,11 @@ Feature: General deals
     Then I should see CSS path "span#cke_deal_hidden_description_editor"
     And I should see CSS path "span#cke_deal_fine_print_editor"
     And I should see CSS path "span#cke_deal_company_description_editor"
+
+  #8328
+  @m22 @requested
+  Scenario: I can enter "Featured description" for each deal (rich text + images)
+
+  #8329
+  @m22 @requested
+  Scenario: I can upload images in every rich text editor

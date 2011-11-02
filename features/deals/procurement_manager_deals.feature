@@ -158,6 +158,13 @@ Feature: Deals from procurement manager perspective
     And I press translated "supplier_accounts.new.view.button_create_account"
     And I should see translated "deals.new.view.frame_header"
 
+  #8340
+  @m22 @requested
+  Scenario: When I have free subscription and I click get deal then I should see questions if I want to upgrade
+
+  #8340
+  @m22 @requested
+  Scenario: When I try to get deal on free subscription and I decide to upgrade then I should be redirected to my profile page
 
   #7531
   @m19 @requested @_done @_tested @tgn

@@ -664,3 +664,6 @@ Scenario: I can see warning in a popup when trying to send invoice which has bee
   And I click hidden link by url regex "/administration\/invoicing\/invoices\/\d+/"
   Then I confirm a js popup on the next step
   And I follow translated "administration.invoices.show.view.send"
+
+@m22 @requested
+Scenario: I should see a warning that invoice has been already sent or paid (accurate message)

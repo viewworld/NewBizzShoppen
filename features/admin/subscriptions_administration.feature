@@ -126,3 +126,15 @@ Scenario: When I choose member than additional features like big buyer and other
 
 @_done @tested_elsewhere @tgn
 Scenario: I can set seller for the subscription plan
+
+#8338
+@m22 @requested
+Scenario: I can enter a "Subscription text" as rich text
+
+#8338
+@m22 @requested
+Scenario: I can upload images for "Subscription text"
+
+#8333
+@m22 @requested
+Scenario: Billing date for subscription should be the day it started

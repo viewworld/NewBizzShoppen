@@ -288,3 +288,6 @@ Feature: Front page for procurment
 
   @m21 @requested @is @tested_elsewhere @_done
   Scenario: When featured deal is unpublished then available backup deal should appear on the front page
+
+  @m22 @requested
+  Scenario: I should not see time countdown when deal is not a group deal

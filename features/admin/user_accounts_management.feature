@@ -799,3 +799,7 @@ Scenario: I can see user's active subscription on user's edit page
   And I press translated "administration.users.index.view.search_button"
   And I follow translated "administration.users.index.view.edit"
   Then I should not see translated "administration.users.stop_subscription"
+
+#8331
+@m22 @requested
+Scenario: When editing a user I can click a button and go to invoices page filtered for this user

@@ -767,3 +767,18 @@ Feature: Agent campaign - management
         @m14 @requested @my_results @$_admin @tgn @_done @tested_elsewhere
         Scenario: I should see "My results" renamed to "Production" and displayed the same way as campaign's "Results"
 
+        #8315
+        @m22 @requested
+        Scenario: I can click to duplicate a campaign (data, briefing)
+
+        #8315
+        @m22 @requested
+        Scenario: When I duplicate a campaign, agents and their assigments should be copied
+
+        #8315
+        @m22 @requested
+        Scenario: When I duplicate a campaign, materials repository should be copied
+
+        #8315
+        @m22 @requested
+        Scenario: When I duplicate a campaign, customization emails and other data should be copied
