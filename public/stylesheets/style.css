@@ -679,7 +679,7 @@ h4
     margin: 10px 0;
 }
 
-.header_ribbon h1
+.header_ribbon > h1
 {
     background: url(/images/bg_header_ribbon_green.png) no-repeat 0 0 transparent;
     position: absolute;
@@ -691,7 +691,7 @@ h4
     text-shadow: -1px -1px 0 #62951c;
 }
 
-.header_ribbon h1 span
+.header_ribbon > h1 > span
 {
     height: 43px;
     line-height: 38px;
@@ -700,13 +700,20 @@ h4
     background: url(/images/bg_header_ribbon_green.png) no-repeat right -43px;
 }
 
-.header_ribbon h1 span a
+.header_ribbon > h1 > span a
 {
     color: #fff;
     font-weight: normal;
     text-decoration: none;
     border-bottom: 1px dotted #fff;
     font-size: 16px
+}
+
+.header_ribbon > h1 > span .ajaxful-rating-wrapper
+{
+    position: absolute;
+    right: -125px;
+    top: 5px;
 }
 
 .header_actions
@@ -1930,4 +1937,35 @@ li.disabled
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
     border-radius: 10px;
+}
+
+
+/* --- deal show ----
+------------------------------------------------------------------------------------ */
+
+.deal_show_wrapper .frm_tiny
+{
+    margin-bottom: 15px;
+}
+
+.deal_show_wrapper .company_info
+{
+    padding: 10px;
+    text-align: center;
+}
+
+.deal_show_wrapper .time_left_counter
+{
+    padding-top: 25px;
+    text-align: center;
+}
+
+.deal_show_wrapper .time_left_counter h3
+{
+    padding-bottom: 8px;
+}
+
+.deal_show_wrapper .element_description p
+{
+    margin-bottom: 10px;
 }
