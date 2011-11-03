@@ -291,3 +291,6 @@ Feature: Front page for procurment
 
   @m22 @requested
   Scenario: I should not see time countdown when deal is not a group deal
+
+  @m22 @requested
+  Scenario: I should see "Featured description" for the main featured deal
