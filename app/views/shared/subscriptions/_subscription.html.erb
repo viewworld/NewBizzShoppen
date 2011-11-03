@@ -7,6 +7,8 @@
       <p><%= t("subscriptions.listing.free") %></p>
   <% end %>
 
+  <p><%= raw subscription_plan.subscription_text  %></p>
+
   <% [:big_buyer, :team_buyers, :deal_maker].each do |method| %>
       <% if subscription_plan.send("#{method}?".to_sym) %>
           <p><%= t("subscriptions.listing.features.#{method}") %></p>

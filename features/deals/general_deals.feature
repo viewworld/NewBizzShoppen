@@ -253,5 +253,5 @@ Feature: General deals
     Then I should see CSS path "textarea#deal_short_featured_description"
 
   #8329
-  @m22 @requested
+  @m22 @requested @selenium @non_testable @_done @ao
   Scenario: I can upload images in every rich text editor
