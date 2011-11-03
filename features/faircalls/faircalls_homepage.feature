@@ -14,3 +14,6 @@ Scenario: My locale should be based on the domain from which I entered
   Then locale should be set to "da"
   When I visit domain http://faircalls.eu
   Then locale should be set to "en"
+
+@m22 @requested
+Scenario: I should not see browse deals and browse leads tabs when on agent home page
