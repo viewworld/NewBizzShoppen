@@ -60,7 +60,6 @@
                 <%= link_to t("administration.deals.index.view.edit"), edit_administration_deal_path(deal), :class => "default_action" %>
             <% end %>
           </h4>
-          (Activation date: <%= format_date deal.start_date %> - <%= format_date deal.end_date %>)
 
           <% if deal.deal_price.to_i > 0 %>
             <p><b><%= t("deals.listing.price") %>:</b> <%= as_currency(deal.deal_price, deal.currency) %></p>

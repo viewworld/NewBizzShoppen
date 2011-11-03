@@ -31,7 +31,5 @@ Feature: My requests listing
     And I should see "adr2"
     And I should see "adr3"
 
-  #8339
-  @m22 @requested
-  Scenario: I should not see activation dates on the listing and only deals with valid dates should be displayed
+
 

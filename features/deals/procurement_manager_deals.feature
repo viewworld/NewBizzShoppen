@@ -297,3 +297,11 @@ Feature: Deals from procurement manager perspective
     And I follow translated "deals.index.view.view_deal"
     And I follow translated "deals.index.view.contact_me"
     Then the "lead_linkedin_url" field should contain "www.linkedin.com/profile/123"
+
+  #8339
+  @m22 @requested @ao @_done @_tested
+  Scenario: I should not see activation dates on the listing and only deals with valid dates should be displayed
+    Given a deal named "Some deal #1" exists within category "Electronics deals"
+    Then I follow translated "layout.main_menu.shared.browse_deals"
+    And I follow category "Electronics deals"
+    Then I should not see "Activation"
