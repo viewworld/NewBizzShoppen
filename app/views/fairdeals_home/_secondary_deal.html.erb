@@ -3,7 +3,7 @@
       <frm c="no_marg" title="#{link_to featured.header, deal_path(featured.slug)}">
         <param:content>
           <div class="pdd_10">
-            <p class="deal_desc"><%= featured.description.to_s.truncate_letters(55) %></p>
+            <p class="deal_desc"><%= featured.short_featured_description.to_s.truncate_letters(55) %></p>
 
             <p class="deal_thumb">
               <%= image_tag featured.logo.url(:preview), :class => "thumb" if featured.logo %>

@@ -872,6 +872,8 @@ en:
           change_to_category_supplier: "Change to category supplier"
           change_to_regular_supplier: "Change to regular supplier"
           view_created_leads: "View created leads"
+          view_user_debts: "View user debts"
+          view_user_invoices: "View user invoices"
           not_charge_vat: "Do not charge VAT"
           available_categories: "Available public categories"
           selected_categories: "Selected categories"
@@ -2737,6 +2739,8 @@ en:
       form:
         name_label: "Name"
         short_description_label: "Short description"
+        featured_description_label: "Featured description"
+        short_featured_description_label: "Short featured description"
         detailed_description_label: "Detailed description"
         company_description_label: "Company description"
         deal_category_label: "Deal category"

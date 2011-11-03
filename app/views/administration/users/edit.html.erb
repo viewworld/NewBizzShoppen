@@ -4,6 +4,8 @@
   <%= semantic_form_for @user, :url => administration_user_path, :method => :put do |form| %>
       <frm title="">
         <param:header>
+          <%= bt_link_to nil, t("administration.users.edit.view.view_user_debts"), administration_invoicing_upcoming_invoices_path(:search => {:with_keyword => @user.email}), :class => "fltr" %>
+          <%= bt_link_to nil, t("administration.users.edit.view.view_user_invoices"), administration_invoicing_invoices_path(:search => {:with_keyword => @user.email}), :class => "fltr" %>
           <% if @user.active_subscription.present? and @user.active_subscription.payable? and !@user.active_subscription.cancelled? %>
             <%= bt_link_to nil, t("administration.users.stop_subscription"), administration_user_path(@user, { "user_#{@user.role.to_s}".to_sym  => { :cancel_subscription => true }}), {:method => :put, :confirm => t("administration.users.index.view.delete_confirmation_message"), :class => "fltr" } %>
           <% end %>

@@ -801,5 +801,25 @@ Scenario: I can see user's active subscription on user's edit page
   Then I should not see translated "administration.users.stop_subscription"
 
 #8331
-@m22 @requested
+# VAT rate 25%: 240 => 300
+@m22 @requested @_done @_tested @ao
 Scenario: When editing a user I can click a button and go to invoices page filtered for this user
+  When someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Janko,last_name:Muzykant,company_name:Cello Ltd"
+  And User kastomer@nbs.fake with role supplier is from country Denmark
+  And User kastomer@nbs.fake with role supplier is big buyer
+  And lead TestLead1 exists with attributes "price:120"
+  And lead TestLead2 exists with attributes "price:120"
+  And currency "DKK" exists with attributes "exchange_rate:1"
+  And lead TestLead1 exists with currency "DKK"
+  And lead TestLead2 exists with currency "DKK"
+  And a lead TestLead1 exists within category Computers and is bought by user kastomer@nbs.fake with role supplier
+  And a lead TestLead2 exists within category Computers and is bought by user kastomer@nbs.fake with role supplier
+  And I go to administration edit user for kastomer@nbs.fake
+  And I follow translated "administration.users.edit.view.view_user_debts"
+  Then I should see "240.00" within "#invoices_list"
+  And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
+  And I press translated "administration.invoices.new.view.button_create"
+  And I go to administration edit user for kastomer@nbs.fake
+  And I follow translated "administration.users.edit.view.view_user_invoices"
+  And I should see "300.00" within "#invoices_list"
+
