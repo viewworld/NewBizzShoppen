@@ -226,6 +226,10 @@ Feature: General deals
   @m22 @requested
   Scenario: I can enter "Featured description" for each deal (rich text + images)
 
+  #8328
+  @m22 @requested
+  Scenario: I can enter "Short featured description" for each deal (plain text)
+
   #8329
   @m22 @requested
   Scenario: I can upload images in every rich text editor
