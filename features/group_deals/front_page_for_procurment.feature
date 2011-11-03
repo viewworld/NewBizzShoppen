@@ -258,6 +258,7 @@ Feature: Front page for procurment
     And deal named "PrimaryGroupDeal" is a primary featured deal
     Given I visit domain http://fairdeals.dk
     And I should see "1" occurrences of css class "splash_red" for tag "div"
+    And I should see translated "deals.index.view.group_deal_splash_label" within ".splash span"
 
   #7630
   @m19 @requested @group_deals @_tested @_done @tgn
@@ -289,8 +290,13 @@ Feature: Front page for procurment
   @m21 @requested @is @tested_elsewhere @_done
   Scenario: When featured deal is unpublished then available backup deal should appear on the front page
 
-  @m22 @requested
+  @m22 @requested @_done @_tested
   Scenario: I should not see time countdown when deal is not a group deal
+    Given a deal named "PrimaryDeal" exists within category "Electronics deals"
+    And a deal named "PrimaryDeal" exists with attributes "published:1,group_deal:0,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
+    And deal named "PrimaryDeal" is a primary featured deal
+    And I visit domain http://fairdeals.dk
+    Then I should not see CSS path "#countdown"
 
   @m22 @requested
   Scenario: I should see "Featured description" for the main featured deal
@@ -298,5 +304,11 @@ Feature: Front page for procurment
   @m22 @requested
   Scenario: I should see "Short featured description" for the secondary featured deals
 
-  @m22 @requested
+  @m22 @requested @_done @_tested
   Scenario: Non-group deal should be marked by a splash saying "Fair deal" on the main page in the featured deal box
+    Given a deal named "PrimaryDeal" exists within category "Electronics deals"
+    And a deal named "PrimaryDeal" exists with attributes "published:1,group_deal:0,price:99,deal_price:100,discounted_price:25,social_media_description:quo vadis,start_date:01-01-2011,end_date:01-01-2013"
+    And deal named "PrimaryDeal" is a primary featured deal
+    Given I visit domain http://fairdeals.dk
+    And I should see "1" occurrences of css class "splash_red" for tag "div"
+    And I should see translated "deals.index.view.fair_deal_splash_label" within ".splash span"

@@ -1537,7 +1537,7 @@ span.cke_skin_kama
     position: absolute;
     top: -15px;
     right: -15px;
-    
+
     text-align:center;
     text-shadow: 0 1px 0 #e77b6d;
     font-size: 16px;
@@ -1547,6 +1547,12 @@ span.cke_skin_kama
     color: #782300;
 }
 
+.splash span
+{
+    width: 60px;
+    display: block;
+    margin-left: 11px;
+}
 
 /* --- other styles ----
 ------------------------------------------------------------------------------------ */

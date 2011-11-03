@@ -3798,6 +3798,7 @@ en:
         save: "Save"
         view_deal: "View deal"
         group_deal_splash_label: "Group deal"
+        fair_deal_splash_label: "Fair deal"
       search:
         keyword_label: "Keyword"
         search_button: "Search"
