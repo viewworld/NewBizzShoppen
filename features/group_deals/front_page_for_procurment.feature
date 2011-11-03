@@ -297,3 +297,6 @@ Feature: Front page for procurment
 
   @m22 @requested
   Scenario: I should see "Short featured description" for the secondary featured deals
+
+  @m22 @requested
+  Scenario: Non-group deal should be marked by a splash saying "Fair deal" on the main page in the featured deal box
