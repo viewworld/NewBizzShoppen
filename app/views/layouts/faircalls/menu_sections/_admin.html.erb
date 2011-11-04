@@ -1,0 +1,44 @@
+<%= main_menu_link_to t("layout.main_menu.admin.users"), administration_users_path, :tab => "users" %>
+<%= main_menu_link_to t("layout.main_menu.admin.leads"), administration_leads_path, :tab => "leads" %>
+<%= main_menu_link_to t("layout.main_menu.admin.deals"), administration_deals_path, :tab => "deals" %>
+
+<%= main_menu_link_with_subtabs_to :title => t("layout.main_menu.admin.financial"), :tab => "financial" do  %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.upcoming_invoices")), administration_invoicing_upcoming_invoices_path, :subtab => "upcoming_invoices" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.creditors")), administration_invoicing_creditors_path, :subtab => "creditors" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.refunds")), administration_invoicing_refunds_path, :subtab => "refunds" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.invoices")), administration_invoicing_invoices_path, :subtab => "invoices" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.payment_transactions")), administration_invoicing_payment_transactions_path, :subtab => "payment_transactions" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.sellers")), administration_sellers_path, :subtab => "sellers" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.reports")), callers_campaign_reports_path, :subtab => "campaigns_reports" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.subscription_plans")), administration_subscription_plans_path, :additional_class => "last", :subtab => "subscription_plans" %>
+<% end %>
+
+<%= main_menu_link_with_subtabs_to :title => t("layout.main_menu.admin.content"), :tab => "content" do  %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.articles")), administration_articles_path, :subtab => "articles" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.news")), administration_news_index_path, :subtab => "news" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.hints")), administration_hints_path, :subtab => "hints" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.translations")), administration_translation_path, :subtab => "translations", :additional_class => "last" %>
+<% end %>
+
+<%= main_menu_link_with_subtabs_to :title => t("layout.main_menu.admin.settings"), :tab => "settings" do  %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.global")), edit_administration_setting_path, :subtab => "global" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.email_templates")), administration_email_templates_path, :subtab => "email_templates" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.currencies")), administration_currencies_path, :subtab => "currencies" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.countries")), administration_countries_path, :subtab => "countries" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.languages")), administration_languages_path, :subtab => "languages" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.admin.featured_deals")), administration_featured_deals_path, :subtab => "featured_deals", :additional_class => "last" %>
+<% end %>
+
+<%= main_menu_link_with_subtabs_to :title => t("layout.main_menu.admin.alerts"), :tab => "alerts" do  %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.shared.comments")), comments_threads_path, :tab => "comments" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.shared.bounce")), administration_email_bounces_path, :tab => "bounce" %>
+<% end %>
+
+<%= main_menu_link_to t("layout.main_menu.admin.campaigns"), callers_campaigns_path, :tab =>"campaigns" %>
+
+<%= main_menu_link_with_subtabs_to :title => t("layout.main_menu.shared.import"), :tab => "import" do  %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.shared.import_contacts")), contacts_advanced_import_path, :tab => "import_contacts" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.shared.import_leads")), leads_advanced_import_path, :tab => "import_leads" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.shared.import_suppliers")), suppliers_advanced_import_path, :tab => "import_suppliers" %>
+    <%= sub_menu_link_to content_tag(:span, t("layout.main_menu.shared.import_members")), members_advanced_import_path, :tab => "import_members" %>
+<% end %>

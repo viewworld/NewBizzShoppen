@@ -10,7 +10,7 @@ module Rack
         env['rack.session'][:layout] = "layouts/fairdeals/application"
       elsif env["HTTP_HOST"][/faircalls\.\w{2,4}/].present?
         env['rack.session'][:site] = "faircalls"
-        env['rack.session'][:layout] = "layouts/fairleads/application"
+        env['rack.session'][:layout] = "layouts/faircalls/application"
       else
         env['rack.session'][:site] = "fairleads"
         env['rack.session'][:layout] = "layouts/fairleads/application"

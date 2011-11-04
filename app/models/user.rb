@@ -539,6 +539,18 @@ class User < ActiveRecord::Base
     has_role?(:category_supplier)
   end
 
+  def site
+    if agent?
+      'faircalls'
+    elsif member?
+      'fairdeals'
+    elsif admin?
+      'fairleads'
+    elsif supplier?
+      'fairleads'
+    end
+  end
+
   def purchase_limit_reached?(lead, buyout=false)
     return false unless big_buyer?
     not_invoiced_cost = LeadPurchase.with_not_invoiced.where("owner_id = ?", id).map { |lp| lp.not_invoiced_euro_sum.to_f }.sum
