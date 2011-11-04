@@ -328,25 +328,18 @@ describe Subscription do
     end
 
     context "billing dates" do
-      it "should set billing date to end date when billing period is 0" do
+      it "should set billing date to start date when billing period is 0" do
         @payable_subscription10 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12, :billing_period => 0)
         @payable_subscription10.subscription_plan_lines.make!(:price => 200)
         setup_customer(@payable_subscription10)
-        @customer.active_subscription.billing_date.should == Date.today + 12*7
+        @customer.active_subscription.billing_date.should == Date.today
       end
 
-      it "should set billing date to end date + 1 week when billing period is 1" do
+      it "should set billing date to start date + 1 week when billing period is 1" do
         @payable_subscription10 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12, :billing_period => 1)
         @payable_subscription10.subscription_plan_lines.make!(:price => 200)
         setup_customer(@payable_subscription10)
-        @customer.active_subscription.billing_date.should == Date.today + 13*7
-      end
-
-      it "should set billing date to end date - 1 week when billing period is -1" do
-        @payable_subscription10 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12, :billing_period => -1)
-        @payable_subscription10.subscription_plan_lines.make!(:price => 200)
-        setup_customer(@payable_subscription10)
-        @customer.active_subscription.billing_date.should == Date.today + 11*7
+        @customer.active_subscription.billing_date.should == Date.today + 7
       end
     end
 
