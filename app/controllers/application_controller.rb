@@ -25,15 +25,11 @@ class ApplicationController < ActionController::Base
     @search ||= Deal.scoped_search
   end
 
-  def current_user_is_on_correct_site?
-    current_user.site == session[:site]
-  end
-
   def redirect_to_fairleads
-    if user_signed_in? and current_user and !current_user_is_on_correct_site?
+    if user_signed_in? and current_user and !current_user.has_role? :member and session[:site] == "fairdeals"
       key = current_user.generate_login_key!
       sign_out(current_user)
-      redirect_to "http://#{Rails.env == 'staging' ? "beta.#{current_user.site}.dk" : "#{current_user.site}.dk"}/login_keys/?key=#{key}"
+      redirect_to "http://#{Rails.env == 'staging' ? 'beta.fairleads.com' : 'fairleads.com'}/login_keys/?key=#{key}"
     end
   end
 
