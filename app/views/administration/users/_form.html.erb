@@ -14,7 +14,7 @@
             <%= form.fields_for :address do |address_form| %>
                 <%= address_form.input :address_line_1 %>
                 <%= address_form.input :address_line_2 %>
-                <%= address_form.input :address_line_3, :required => (@user.is_a?(User::Member) or @user.is_a?(User::Agent) or @user.is_a?(User::CallCentreAgent))  %>
+                <%= address_form.input :address_line_3 %>
                 <%= address_form.input :zip_code %>
                 <%= address_form.input :country_id, :required => (@user.is_a?(User::Member) or @user.is_a?(User::Agent) or @user.is_a?(User::CallCentreAgent)), :as => :select, :collection => Country.all, :input_html => { :onchange => "refresh_regions_list('user_#{params[:role].present? ? params[:role] : form.object.role}_address_attributes');" } %>
                 <%= address_form.input :region_id, :as => :select, :collection => regions_collection_for(form.object.address.country) %>

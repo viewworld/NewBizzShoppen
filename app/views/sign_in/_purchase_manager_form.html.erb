@@ -14,7 +14,7 @@
                 <%= form.fields_for :address do |address_form| %>
                     <%= address_form.input :address_line_1, :hint => hint_for(user, :address_address_line_1) %>
                     <%= address_form.input :address_line_2, :hint => hint_for(user, :address_address_line_2) %>
-                    <%= address_form.input :address_line_3, :hint => hint_for(user, :address_address_line_3), :required => true %>
+                    <%= address_form.input :address_line_3, :hint => hint_for(user, :address_address_line_3) %>
                     <%= address_form.input :zip_code, :hint => hint_for(user, :address_zip_code) %>
                     <%= address_form.input :country_id, :as => :select, :hint => hint_for(user, :address_country_id), :collection => Country.all, :required => true, :input_html => {:onchange => "refresh_regions_list('user_member_address_attributes');"} %>
                     <%= address_form.input :region_id, :as => :select, :hint => hint_for(user, :address_region_id), :collection => regions_collection_for(user.address.country) %>
