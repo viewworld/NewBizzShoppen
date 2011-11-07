@@ -55,19 +55,10 @@ class Credit < CreditNote
 end
 
 class Refund < CreditNote
-  before_create :set_refund_euro_price
 
   def type_as_text
     I18n.t("models.credit_note.type.refund")
   end
-
-  private
-
-  def set_refund_euro_price
-    self.refund_euro_price = currency.to_euro(refund_price)
-  end
-
-  public
 
   def total
     refund_price
