@@ -64,7 +64,6 @@ Feature: Subscription management for user
     And I confirm a js popup on the next step
     And I follow translated "subscriptions.listing.upgrade"
     And I follow translated "layout.my_profile_link"
-    And billing date for active subscription is today for user "supp@nbs.com"
     When there is subscription plan named "Medium for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0" and price "200"
     And the date is "14" days from now
     And I follow translated "layout.my_profile_link"
@@ -212,3 +211,16 @@ Feature: Subscription management for user
   #8346
   @m22 @requested @credit_line
   Scenario: When I upgrade my subscription and invoice is issued the creadit line value for my previous subscription should be subsctracted
+
+  #8333
+  @m22 @requested @selenium @_done @_tested
+  Scenario: Billing date for subscription should be the day it started
+    When there is subscription plan named "Basic for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0" and price "100"
+    And I follow translated "layout.my_profile_link"
+    And I confirm a js popup on the next step
+    And I follow translated "subscriptions.listing.upgrade"
+    And I follow translated "layout.my_profile_link"
+    When I sign out
+    And I sign in as admin@nbs.com with password secret
+    And I am on administration upcoming invoices
+    Then I should see "100.00" within "tbody#invoices_list tr:nth-of-type(1)"

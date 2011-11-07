@@ -159,7 +159,3 @@ Scenario: I can enter a "Subscription text" as rich text
 #8338
 @m22 @requested @_done @non_testable
 Scenario: I can upload images for "Subscription text"
-
-#8333
-@m22 @requested
-Scenario: Billing date for subscription should be the day it started
