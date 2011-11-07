@@ -223,6 +223,10 @@ class Subscription < ActiveRecord::Base
     end
   end
 
+  def days_left
+    (end_date - Date.today).to_i
+  end
+
   private
 
   def handle_user_privileges
