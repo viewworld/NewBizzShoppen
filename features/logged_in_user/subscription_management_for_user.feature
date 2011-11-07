@@ -205,11 +205,11 @@ Feature: Subscription management for user
     Then I should see translated "supplier.deals.index.view.you_need_to_upgrade_subscription_warning"
 
   #8346
-  @m22 @requested @credit_line
+  @m22 @requested @credit_line @tgn @_done @_tested_elsewhere
   Scenario: When I upgrade my subscription a credit line is created for the remaining value of my previous subscription
 
   #8346
-  @m22 @requested @credit_line
+  @m22 @requested @credit_line @tgn @_done @_tested_elsewhere
   Scenario: When I upgrade my subscription and invoice is issued the creadit line value for my previous subscription should be subsctracted
 
   #8333

@@ -2850,6 +2850,8 @@ en:
       type:
         credit: "credit"
         refund: "refund"
+      descriptions:
+        subscription_refund: "Refund for unused %{days} days in subscription %{name}"
     subscription_plan_incorrect_roles_set: "Role member cannot be selected with other roles."
   activerecord:
     models:

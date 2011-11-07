@@ -47,6 +47,10 @@ class Currency < ActiveRecord::Base
     end
   end
 
+  def from_euro(amount)
+    (amount * exchange_rate).round(2)
+  end
+
   def to_s
     name
   end

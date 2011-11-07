@@ -56,7 +56,7 @@ class Invoice < ActiveRecord::Base
   after_create :duplicate_company_and_supplier_information, :set_year
   after_validation :set_default_currency, :if => Proc.new{ |i| i.new_record? }
   after_update :update_revenue_frozen
-  after_create :generate_invoice_lines_for_supplier, :generate_invoice_lines_for_subscriber
+  after_create :generate_invoice_lines_for_supplier, :generate_invoice_lines_for_subscriber, :generate_invoice_lines_for_refund
   before_update :generate_manual_transaction_for_big_buyer
   before_save :mark_all_invoice_lines_as_paid
   after_save :recalculate_invoice_items
@@ -152,6 +152,24 @@ class Invoice < ActiveRecord::Base
             :quantity => 1)
         end
       end
+    end
+  end
+
+  def generate_invoice_lines_for_refund
+    Refund.where(:user_id => user_id, :paid_at => nil).each do |refund|
+      if refund.currency == currency
+        amount = refund.refund_price
+      else
+        amount = currency.from_euro(refund.currency.to_euro(refund.refund_price))
+      end
+      InvoiceLine.create(
+            :invoice => self,
+            :payable => refund,
+            :name => refund.description,
+            :netto_price => amount*-1,
+            :vat_rate => 0,
+            :quantity => 1)
+      refund.update_attribute(:paid_at, Time.now)
     end
   end
 

@@ -119,8 +119,12 @@ class Subscription < ActiveRecord::Base
       paid_days = (new_end_date - start_date).to_i
       paid_days -= free_period*7 if is_free_period
 
+      previous_total = total_billing
       subscription_plan_lines.each do |spl|
         spl.recalculate(total_days, paid_days)
+      end
+      if invoiced?
+        Refund.create(:user => user, :refund_price => (previous_total - total_billing), :currency => currency, :description => I18n.t("models.credit_note.descriptions.subscription_refund", :days => paid_days > 0 ? total_days-paid_days : total_days, :name => name))
       end
     end
   end
