@@ -26,7 +26,6 @@ end
 When /^user with email "([^"]*)" upgrades to subscription named "([^"]*)"$/ do |email, name|
   user = User.where(:email => email).first.with_role
   user.upgrade_subscription!(SubscriptionPlan.where(:name => name).first)
-  puts user.active_subscription.inspect
 end
 
 When /^user with email "([^"]*)" has billing date today for active subscription$/ do |email|
