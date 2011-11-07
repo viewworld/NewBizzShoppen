@@ -150,7 +150,6 @@ Scenario: I can create new invoice from suggestion on invoices pending creation 
   Then I sign in as jon@lajoie.ca with password secret
   And I go to administration upcoming invoices
   And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
-  Then I press translated "administration.invoices.new.view.button_create"
   Then I should see translated "administration.invoices.show.view.header"
   And I go to administration invoices
   And I follow translated "administration.invoices.index.view.show_invoice"
@@ -472,7 +471,6 @@ Scenario: When creating new invoice a default seller should be selected
   And a lead LeadOne exists within category Computers and is bought by user customer_one@nbs.fake with role supplier
   And I follow translated "layout.main_menu.admin.upcoming_invoices"
   And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
-  And I press translated "administration.invoices.new.view.button_create"
   Then the "invoice_seller_name" field should contain "DefaultSeller"
 
 @m5 @tgn @_tested @_done
@@ -625,7 +623,6 @@ Scenario: I can see invoices generated from debtors tab
   Then I should not see "Janko Muzykant"
   When I follow translated "layout.main_menu.admin.upcoming_invoices"
   Then I follow translated "administration.upcoming_invoices.index.view.create_invoice"
-  And I press translated "administration.invoices.new.view.button_create"
   When I click hidden link by url regex "/administration\/invoicing\/invoices$/"
   Then I should see "Janko Muzykant"
 

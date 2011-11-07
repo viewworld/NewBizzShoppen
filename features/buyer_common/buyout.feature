@@ -248,7 +248,6 @@ Feature: Buy out
     And I sign in as admin@lajoie.ca with password secret
     And I follow translated "layout.main_menu.admin.upcoming_invoices"
     And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
-    And I press translated "administration.invoices.new.view.button_create"
     And I follow translated "administration.invoices.edit.view.show_invoice"
     Then I should see "10" within ".invoice_data tr:nth-child(1) td:nth-child(3)"
     And I should see "1,230.00" within "td:nth-child(7)"
