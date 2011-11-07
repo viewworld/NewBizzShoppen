@@ -665,5 +665,5 @@ Scenario: I can see warning in a popup when trying to send invoice which has bee
   Then I confirm a js popup on the next step
   And I follow translated "administration.invoices.show.view.send"
 
-@m22 @requested
+@m22 @requested @tgn @_done @_non_testable
 Scenario: I should see a warning that invoice has been already sent or paid (accurate message)

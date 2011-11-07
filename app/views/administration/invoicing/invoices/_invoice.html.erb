@@ -14,7 +14,7 @@
       <li><%= link_to t("administration.invoices.index.view.show_invoice"), administration_invoicing_invoice_path(invoice) %></li>
       <li><%= link_to t("administration.invoices.index.view.edit_invoice"), edit_administration_invoicing_invoice_path(invoice), :class => "default_action" %></li>
       <li><%= link_to t("administration.invoices.index.view.remove_invoice"), administration_invoicing_invoice_path(invoice), :method => :delete, :confirm => t("administration.invoices.destroy.view.confirmation") %></li>
-      <li><%= link_to invoice.sent? ? t("administration.invoices.index.view.resend_invoice") : t("administration.invoices.index.view.send_invoice"), new_administration_invoicing_invoice_mailing_path(invoice), :confirm => ((invoice.sent? or invoice.paid?) ? t("administration.invoices.mailing.new.view.invoice_already_sent_or_paid") : false) %></li>
+      <li><%= link_to invoice.sent? ? t("administration.invoices.index.view.resend_invoice") : t("administration.invoices.index.view.send_invoice"), new_administration_invoicing_invoice_mailing_path(invoice), :confirm => send_invoice_warning(invoice) %></li>
       <% unless invoice.paid? %>
           <% if invoice.credit_note.nil? %>
             <li><%= link_to t("administration.invoices.index.view.credit_invoice"), administration_invoicing_credit_notes_path(:credit_note =>  {:invoice_id => invoice.id}), {:method => :post} %></li>

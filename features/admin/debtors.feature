@@ -139,8 +139,19 @@ Feature: Debtors
  Scenario: Not invoiced items should be added to the subscription invoice at billing time
 
  #8337
- @m22 @requested
+ @m22 @requested @tgn @_done @_tested
  Scenario: When I issue an invoice for subscriber then I should not see the screen to select user/seller
+   Given there is a seller with attributes "name:TestSeller88, first_name:John, last_name:Koval, company_name:Trust"
+   And subscription plan exists with attributes "name:TestSubPlan, billing_cycle:4"
+   And subscription plan has seller "TestSeller88"
+   And subscription plan has following lines
+   | name                 | price |
+   | subscr premium line1 |    99 |
+   | subscr premium line2 |     3 |
+   Given user with email "kastomer@nbs.fake" upgrades to subscription named "TestSubPlan"
+   When I follow translated "layout.main_menu.admin.upcoming_invoices"
+   Then I follow translated "administration.upcoming_invoices.index.view.create_invoice"
+   And "invoice_seller_id" should be selected for value "TestSeller88"
 
  #8332
  @m22 @requested @_done @_tested

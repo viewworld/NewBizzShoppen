@@ -883,6 +883,7 @@ en:
           subaccounts_list: "Subaccounts"
           change_supplier_interests_link: "Set interests"
           active_subscription: "Active subscription:"
+          active_subscription_days_left: "%{number} days left"
       create:
         flash:
           user_creation_successful: User has been created successfuly
@@ -1324,6 +1325,7 @@ en:
             type_paypal: "PayPal"
             type_manual: "Manual"
             amount: "Amount"
+          resend: "Resend"
       edit:
         view:
           header: "Editing invoice for %{name}"
@@ -1400,8 +1402,10 @@ en:
             subject: "Subject"
             body: "Body"
             title: "Send invoice"
-            invoice_already_sent_or_paid: "Warning: invoice has been already sent or paid."
+            invoice_already_sent_or_paid: "Warning: invoice has been already %{status}."
             button_cancel: "Cancel"
+            paid: "paid"
+            sent: "sent"
       bulk_mailings:
         new:
           view:
