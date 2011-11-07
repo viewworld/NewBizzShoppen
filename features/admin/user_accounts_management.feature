@@ -819,7 +819,6 @@ Scenario: When editing a user I can click a button and go to invoices page filte
   And I follow translated "administration.users.edit.view.view_user_debts"
   Then I should see "240.00" within "#invoices_list"
   And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
-  And I press translated "administration.invoices.new.view.button_create"
   And I go to administration edit user for kastomer@nbs.fake
   And I follow translated "administration.users.edit.view.view_user_invoices"
   And I should see "300.00" within "#invoices_list"

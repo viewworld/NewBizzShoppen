@@ -36,13 +36,6 @@ module User::CommonAgent
       self.payout = 0 if payout.blank?
     end
 
-    def check_address
-      if address and address.address_line_3.blank?
-        return address.errors.add(:address_line_3, :blank)
-      end
-      true
-    end
-
     public
 
     def name

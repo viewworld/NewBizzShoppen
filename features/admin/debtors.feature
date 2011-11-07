@@ -56,7 +56,6 @@ Feature: Debtors
       | subscr premium line2 |     3 |
     Given user with email "kastomer2@nbs.fake" upgrades to subscription named "Premium supplier"
     And user "kastomer2@nbs.fake" with role "supplier" should have attributes "subscriber_type:'ad-hoc'"
-    And the date is "14" days from now
     And user subscriptions are reviewed by rake task
     And user "kastomer2@nbs.fake" with role "supplier" should have attributes "subscriber_type:'subscriber'"
 
@@ -153,4 +152,11 @@ Feature: Debtors
    When I follow translated "layout.main_menu.admin.upcoming_invoices"
    Then I follow translated "administration.upcoming_invoices.index.view.create_invoice"
    And "invoice_seller_id" should be selected for value "TestSeller88"
+
+ #8332
+ @m22 @requested @_done @_tested
+ Scenario: I should see total value
+   When I follow translated "layout.main_menu.admin.upcoming_invoices"
+   Then I should see translated "administration.upcoming_invoices.index.view.total_in_euro"
+
 
