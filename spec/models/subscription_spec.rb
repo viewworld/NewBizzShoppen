@@ -179,6 +179,25 @@ describe Subscription do
         @prev_subscription.billing_price.should == 12.5
       end
 
+      it "should create credit note for unused amount of subscription" do
+        setup_customer(@payable_subscription1)
+        @customer.active_subscription.update_attribute(:billing_date, Date.today)
+        @invoice = Invoice.create(:user => @customer)
+
+        expect{
+          @customer.upgrade_subscription!(@payable_subscription2)
+        }.to change{ Refund.count }.by(1)
+
+        @customer.active_subscription.update_attribute(:billing_date, Date.today)
+
+        Currency.all.each { |c| c.update_attribute(:exchange_rate, 1.0)}
+
+        @invoice = Invoice.create(:user => @customer)
+        invoice_line_for_refund = @invoice.invoice_lines.detect { |l| l.payable.is_a?(Refund) }
+        invoice_line_for_refund.should_not be_nil
+        invoice_line_for_refund.netto_price.should < 0
+      end
+
     end
 
     context "downgrade" do
