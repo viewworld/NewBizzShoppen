@@ -127,4 +127,10 @@ class IntegrationTasks < Thor
       end
     end
   end
+
+  desc "m22", ""
+  def m22
+    puts "Updating translations"
+    Translation.where(:key => "administration.invoices.mailing.new.view.invoice_already_sent_or_paid", :locale => "en").first.update_attribute(:value, "Warning: invoice has been already %{status}.")
+  end
 end
