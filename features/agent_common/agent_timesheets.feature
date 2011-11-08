@@ -14,11 +14,12 @@ Scenario: If I click Cancel on message box then I will be not log out
   Scenario: After I log in to the system new Regular Log is created with start time and end time set to Time now and Time now plus 5 min
     Given I am on the homepage
     Then Count for model UserSessionLog is equal 0
+    And I visit domain http://faircalls.eu
     Then I sign in as agent@nbs.com with password secret
     Then Count for model UserSessionLog is equal 1
     Then Last regular UserSessionLog is valid after create
     Then I wait 5 second
-    Then I follow translated "layout.main_menu.shared.browse_leads"
+    Then I follow translated "layout.main_menu.shared.home"
     Then Last regular UserSessionLog is valid after invoke some controller action
     Then I go to the logout page
     Then Last regular UserSessionLog is valid after close
