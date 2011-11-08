@@ -254,7 +254,7 @@ Scenario: I should see "Latest leads" when I'm not a procurement manager
 
 #1/ Lead created by given Procurement manager, and
 #2/ Lead created by other agents where given Procurement manager is specified as Contact
-@m12 @$_purchase_manager @requested @_done @_tested @wip @_deprecated
+@m12 @$_purchase_manager @requested @_done @_tested @_deprecated
 Scenario: In "My contact requests" I should see leads created by me and leads created by other agents where I am specified as a contact
 #  When there are no leads
 #  And I am signed up and confirmed as user with email pm@nbs.com and password secret and role member
