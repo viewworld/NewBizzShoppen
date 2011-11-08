@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
   end
 
   def is_current_user_on_correct_domain?
-    session[:site] == current_user.site.to_s
+    (session[:site] == current_user.site.to_s) or current_user.admin?
   end
 
   def redirect_to_correct_site
