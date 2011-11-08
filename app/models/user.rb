@@ -211,14 +211,6 @@ class User < ActiveRecord::Base
     "User::#{role.to_s.camelize}".constantize
   end
 
-  def domain
-    Domain.where(:site => with_role.site, :locale => I18n.locale).first || Domain.where(:site => with_role.site).with_default.first
-  end
-
-  def domain_name
-    domain ? domain.name : 'fairleads.com'
-  end
-
   def deliver_email_template(uniq_id)
     TemplateMailer.delay.new(email, uniq_id.to_sym, country, {:user => self.with_role})
   end
@@ -289,6 +281,14 @@ class User < ActiveRecord::Base
   end
 
   public
+
+  def domain
+    Domain.where(:site => with_role.site, :locale => I18n.locale).first || Domain.where(:site => with_role.site).with_default.first
+  end
+
+  def domain_name
+    domain ? domain.name : 'fairleads.com'
+  end
 
   def all_requested_lead_requests
     LeadRequest.where(:requested_by => (parent ? parent.subaccounts : subaccounts).with_role(:lead_user).map(&:id))
