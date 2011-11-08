@@ -20,3 +20,13 @@
 
 <%#= link_to_main_page_article("subscriptions_for_#{role}", {:popup => true}, {:id => 'subscriptions_modal_box'}) %>
 
+
+<script type="text/javascript">
+  $(function() {
+      $(".subscription_plan_item").bind("click", function(){
+          $(".subscription_plan_item.active").removeClass("active");
+          $(this).addClass("active");
+          $(this).find(':radio').attr("checked", "checked");
+      });
+  });
+</script>
