@@ -6,6 +6,7 @@ Background:  Sign in user and set locale
   And I make sure current locale is "en"
   And I have user with email other_call_centre@nbs.com and role call_centre
   And I am signed up and confirmed as user with email call_centre@person.com and password supersecret and role call_centre
+  And I visit domain http://faircalls.eu
   Then I sign in as call_centre@person.com with password supersecret
   And I go to call centre lead templates
 
