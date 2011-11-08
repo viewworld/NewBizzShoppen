@@ -15,6 +15,7 @@ Feature: Campaign report
     And I should see "TestCampaignReport1" within "#reports_table"
     And I should see "TestCampaignReport2" within "#reports_table"
     When I am not sign in
+    And I visit domain http://faircalls.eu
     Then I am on the homepage
     And I sign in as testreportscca01@nbs.com with password secret
     And I follow translated "layout.main_menu.call_centre_agent.reports"
