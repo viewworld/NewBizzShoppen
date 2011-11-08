@@ -1951,7 +1951,7 @@ li.disabled
     box-shadow: 0 0 4px rgba(0,0,0,.2);
 }
 
-.subscription_plan_item:hover
+.subscription_plan_item.active
 {
     border: 3px solid #2da9ff;
 
