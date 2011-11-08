@@ -21,7 +21,12 @@ class SubscriptionPlansController < SecuredController
     else
       flash[:alert] = @user.errors.full_messages
     end
-    redirect_to my_profile_path
+    if current_user.member? and deal = Deal.find_by_id(session[:deal_id])
+      session[:deal_id] = nil
+      redirect_to deal_path(:id => deal.slug)
+    else
+      redirect_to my_profile_path
+    end
   end
 
   def downgrade

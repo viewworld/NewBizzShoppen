@@ -3877,6 +3877,7 @@ en:
         time_left_label: "Time left"
         created_leads_label: "Created leads"
         deal_code_label: "Deal code"
+        get_deal_confirmation_for_free_subscription_msg: "Do you want to upgrade your subscription to get deal?"
     common:
       assets:
         view:

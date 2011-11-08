@@ -4,6 +4,9 @@ Feature: Deals from procurement manager perspective
   Background:
     Given I am signed up and confirmed as user with email procurment@nbs.com and password secret and role member
     When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
+    And subscription plan has following lines
+      | name                 | price |
+      | subscr premium line1 |    99 |
     And user with email "procurment@nbs.com" upgrades to subscription named "Premium member"
     And I am on the homepage
     And I make sure current locale is "en"
@@ -159,11 +162,28 @@ Feature: Deals from procurement manager perspective
     And I should see translated "deals.new.view.frame_header"
 
   #8340
-  @m22 @requested
+  @m22 @requested @tgn @_done @_tested
   Scenario: When I have free subscription and I click get deal then I should see questions if I want to upgrade
+    Given I am not sign in
+    Given I visit domain http://fairdeals.dk
+    And I am signed up and confirmed as user with email procurmentfree@nbs.com and password secret and role member
+    And I sign in as procurmentfree@nbs.com with password secret
+    Given user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
+    And user "buyer@nbs.com" has assigned role "deal_maker"
+    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:ultimate some funky deal|description:super|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper"
+    Then I follow translated "layout.fairdeals.main_menu.deals"
+    And I follow category "Business deals"
+    And I follow translated "deals.index.view.view_deal"
+    Then I should see translated "deals.index.view.contact_me"
+    And I follow translated "deals.index.view.contact_me"
+    And I should be on my profile
+    Then I follow translated "subscriptions.listing.upgrade"
+    And I should see "ultimate some funky deal"
+    And I follow translated "deals.index.view.contact_me"
+    And I fill in "lead_phone_number" with "+49 23432423423234"
 
   #8340
-  @m22 @requested
+  @m22 @requested @tgn @_done @_tested_elsewhere
   Scenario: When I try to get deal on free subscription and I decide to upgrade then I should be redirected to my profile page
 
   #7531
