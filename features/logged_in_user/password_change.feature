@@ -2,7 +2,7 @@
 Feature: Password change
 
 Background:
-    Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role agent
+    Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role supplier
     And I am on the homepage
     And I make sure current locale is "en"
     Then I sign in as bob@person.com with password supersecret
@@ -14,6 +14,6 @@ Scenario: I can change my password fro the account password change page
 Scenario: User can change the password only with a valid password
    And I am on my profile
    Given I follow translated "password.edit.view.change_password"
-   And I fill in "user_agent_current_password" with "newpassword"
+   And I fill in "user_supplier_current_password" with "newpassword"
    Then I press translated "password.edit.view.button_update_user"
    And I should see translated "activerecord.errors.messages.invalid"
