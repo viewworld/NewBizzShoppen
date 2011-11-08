@@ -34,13 +34,13 @@ Feature: User Account - Profile edit
 
   @_tested @_done
   Scenario: A user should be able to update their profile
-    And I fill in "user_agent_email" with "new-email@example.com"
+    And I fill in "user_supplier_email" with "new-email@example.com"
     And I press translated "password.edit.view.button_update_user"
     Then I should see translated "my_profile.update.controller.successful_update_notice"
 
   @_tested @_done
   Scenario: A user shouldn't be able to update their profile with bad data
-    And I fill in "user_agent_email" with "not-an-email"
+    And I fill in "user_supplier_email" with "not-an-email"
     And I press translated "password.edit.view.button_update_user"
     Then I should see translated "activerecord.errors.messages.invalid"
 
@@ -54,9 +54,9 @@ Feature: User Account - Profile edit
   @m5 @tgn @_tested @added @_done
   Scenario: I can add to my profile company name, company registration number, ean number
     When I go to my profile page
-    Then I fill in "user_agent_company_name" with "My Company"
-    And I fill in "user_agent_vat_number" with "32543453482354"
-    And I fill in "user_agent_company_ean_number" with "Y7894D"
+    Then I fill in "user_supplier_company_name" with "My Company"
+    And I fill in "user_supplier_vat_number" with "32543453482354"
+    And I fill in "user_supplier_company_ean_number" with "Y7894D"
     When I press translated "password.edit.view.button_update_user"
     Then I should see translated "my_profile.update.controller.successful_update_notice"
 

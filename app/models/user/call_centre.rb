@@ -51,6 +51,10 @@ class ::User::CallCentre < ::User
     Contact.with_agents(subaccounts.map(&:id)).with_results
   end
 
+  def site
+    :faircalls
+  end
+
   private
 
   def validate_first_and_last_name?
