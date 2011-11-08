@@ -2,6 +2,7 @@ class MyProfileController < SecuredController
   inherit_resources
   actions :all, :except => [:update]
   before_filter :redirect_if_my_profile_hidden
+  before_filter :cache_referer_deal_id
 
   def resource
     @user = current_user
@@ -62,5 +63,9 @@ class MyProfileController < SecuredController
     if current_user and current_user.hide_profile_page?
       redirect_to root_path
     end
+  end
+
+  def cache_referer_deal_id
+    session[:deal_id] = params[:deal_id] if params[:deal_id]
   end
 end
