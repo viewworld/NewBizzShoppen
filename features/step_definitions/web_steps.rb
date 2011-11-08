@@ -426,6 +426,10 @@ Given /^I visit domain (.+)$/ do |domain|
     visit("/fairdeals")
   elsif domain.include?("faircalls")
     visit("/faircalls")
+  elsif domain.include?("fairleads")
+    visit("/fairleads")
+  elsif domain.include?("localhost")
+    visit("/")
   else
     visit(Capybara.app_host)
   end

@@ -497,10 +497,12 @@ Scenario: It should be possible for me to login using new password
 Scenario: It should be possible for other users to login after password change
   Given someone is signed up and confirmed as user with email ejdzent@nbs.com and password secret and role agent
   And I sign out
+  And I visit domain http://faircalls.eu
   And I am on the home page
   And I sign in as ejdzent@nbs.com with password secret
   Then I should see translated "devise.sessions.signed_in"
   When I sign out
+  And I visit domain http://localhost
   And I am on the home page
   And I sign in as bob@person.com with password supersecret
   And I am on administration edit user for ejdzent@nbs.com
@@ -510,6 +512,7 @@ Scenario: It should be possible for other users to login after password change
   And I press translated "password.edit.view.button_update_user"
   Then I should see translated "password.flashes.successfully_changed"
   When I sign out
+  And I visit domain http://faircalls.eu
   And I am on the home page
   And I sign in as ejdzent@nbs.com with password newpass
   Then I should see translated "devise.sessions.signed_in"
