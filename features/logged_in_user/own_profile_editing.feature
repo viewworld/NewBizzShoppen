@@ -11,9 +11,9 @@ Feature: User Account - Profile edit
  @_tested @_done
   Scenario: I change my password
     Given I follow translated "password.edit.view.change_password"
-    And I fill in "user_agent_current_password" with "supersecret"
-    And I fill in "user_agent_password" with "secret"
-    And I fill in "user_agent_password_confirmation" with "secret"
+    And I fill in "user_supplier_current_password" with "supersecret"
+    And I fill in "user_supplier_password" with "secret"
+    And I fill in "user_supplier_password_confirmation" with "secret"
     Then I press translated "password.edit.view.button_update_user"
     And I should see translated "password.update.controller.successful_update_notice"
     Given I am not sign in
@@ -46,10 +46,10 @@ Feature: User Account - Profile edit
 
   @_tested @_done
   Scenario: A logged in user shouldn't be able to create a new account
-   When I go to agent sign up
-   Then I am on agents root
    When I go to supplier sign up
-   Then I am on agents root
+   Then I am on suppliers root
+   When I go to agent sign up
+   Then I am on suppliers root
 
   @m5 @tgn @_tested @added @_done
   Scenario: I can add to my profile company name, company registration number, ean number

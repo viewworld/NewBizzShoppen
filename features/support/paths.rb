@@ -22,6 +22,8 @@ module NavigationHelpers
       '/administration'
     when /agents root/
       '/agents'
+    when /suppliers root/
+      '/suppliers'
     when /administration users/
         '/administration/users'
     when /administration edit user for (.*)/
