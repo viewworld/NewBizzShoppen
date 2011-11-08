@@ -211,23 +211,12 @@ class User < ActiveRecord::Base
     "User::#{role.to_s.camelize}".constantize
   end
 
-  def mailer_host
-    if has_role?(:member)
-      mailer_fairdeals_host
-    else
-      Nbs::Application.config.action_mailer.default_url_options[:host]
-    end
+  def domain
+    Domain.where(:site => with_role.site, :locale => I18n.locale).first || Domain.where(:site => with_role.site).with_default.first
   end
 
-  def mailer_fairdeals_host
-    dom_lang = with_role.address.present? ? with_role.address.country.locale == "en" ? "eu" : "dk" : "dk"
-    if Rails.env.production?
-      "fairdeals.#{dom_lang}"
-    elsif Rails.env.staging?
-      "beta.fairdeals.#{dom_lang}"
-    else
-      "fairdeals.#{dom_lang}:3000"
-    end
+  def domain_name
+    domain ? domain.name : 'fairleads.com'
   end
 
   def deliver_email_template(uniq_id)
@@ -352,11 +341,11 @@ class User < ActiveRecord::Base
   end
 
   def confirmation_instructions_url
-    "https://#{mailer_host}/users/confirmation?confirmation_token=#{confirmation_token}"
+    "https://#{domain_name}/users/confirmation?confirmation_token=#{confirmation_token}"
   end
 
   def reset_password_instructions_url
-    "https://#{mailer_host}/users/password/edit?reset_password_token=#{reset_password_token}"
+    "https://#{domain_name}/users/password/edit?reset_password_token=#{reset_password_token}"
   end
 
   def roles_as_text
@@ -540,15 +529,7 @@ class User < ActiveRecord::Base
   end
 
   def site
-    if agent?
-      'faircalls'
-    elsif member?
-      'fairdeals'
-    elsif admin?
-      'fairleads'
-    elsif supplier?
-      'fairleads'
-    end
+    :fairleads
   end
 
   def purchase_limit_reached?(lead, buyout=false)
@@ -644,7 +625,7 @@ class User < ActiveRecord::Base
 
   def category_supplier_category_home_url
     if has_role?(:category_supplier)
-      "https://#{mailer_host}/#{with_role.buying_categories.first.cached_slug}"
+      "https://#{domain_name}/#{with_role.buying_categories.first.cached_slug}"
     end
   end
 
@@ -652,11 +633,11 @@ class User < ActiveRecord::Base
     if has_role?(:category_supplier)
       category_supplier_category_home_url
     elsif has_role?(:supplier)
-      "https://#{mailer_host}/supplier_home"
+      "https://#{domain_name}/supplier_home"
     elsif has_role?(:member)
-      "https://#{mailer_host}"
+      "https://#{domain_name}"
     else
-      "https://#{mailer_host}/"
+      "https://#{domain_name}/"
     end
   end
 

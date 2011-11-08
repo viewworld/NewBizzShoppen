@@ -449,6 +449,25 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
 
     ActiveRecord::Migration.execute "UPDATE campaigns SET currency_id = #{Currency.default_currency.present? ? Currency.default_currency.id : Currency.active.first.id} WHERE currency_id IS NULL"
 
+    # -----------------------------------------------------------------------------------------------------------------
+    #                                                 DOMAINS
+    # -----------------------------------------------------------------------------------------------------------------
+    puts "Creating domains"
+    [
+      {:name => 'fairleads.com', :site => 'fairleads', :locale => 'en', :default => true},
+      {:name => 'fairleads.dk', :site => 'fairleads', :locale => 'da', :default => false},
+      {:name => 'fairdeals.dk', :site => 'fairdeals', :locale => 'da', :default => false},
+      {:name => 'thefairdeals.com', :site => 'fairdeals', :locale => 'en', :default => false},
+      {:name => 'fairdeals.eu', :site => 'fairdeals', :locale => 'en', :default => true},
+      {:name => 'faircalls.dk', :site => 'faircalls', :locale => 'da', :default => false},
+      {:name => 'faircalls.eu', :site => 'faircalls', :locale => 'en', :default => true}
+    ].each do |domain_attrs|
+      unless Domain.where(domain_attrs).first
+        domain_attrs[:name] = "beta.#{domain_attrs[:name]}" if Rails.env.staging?
+        Domain.create!(domain_attrs)
+      end
+    end
+
     unless Rails.env.production?
 
       ['LeadCategory', 'DealCategory'].map(&:constantize).each do |model_name|

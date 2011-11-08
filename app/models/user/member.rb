@@ -35,6 +35,10 @@ class User::Member < ::User
     Comment.with_leads_created_by(self)
   end
 
+  def site
+    :fairdeals
+  end
+
 ########################################################################################################################
 #
 #   IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT    IMPORT
