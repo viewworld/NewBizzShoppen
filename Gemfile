@@ -55,6 +55,7 @@ group :development do
   gem 'tolk', :path => "vendor/gems/tolk"
   gem "nifty-generators"
   gem "bullet"
+  gem "parallel"
 end
 
 group :test do

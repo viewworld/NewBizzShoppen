@@ -190,6 +190,7 @@ GEM
     paperclip (2.3.6)
       activerecord
       activesupport
+    parallel (0.5.9)
     pg (0.11.0)
     pickle (0.4.7)
       cucumber (>= 0.8)
@@ -319,6 +320,7 @@ DEPENDENCIES
   nested_set (= 1.5.4)
   nifty-generators
   paperclip (= 2.3.6)
+  parallel
   pg
   pickle
   postmark-rails
