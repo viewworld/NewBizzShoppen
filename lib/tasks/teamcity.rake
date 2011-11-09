@@ -29,6 +29,7 @@ namespace :teamcity do
 
   desc "run cucumber javascript tests"
   task :cucumber_parallel do |t,args|
+    system "cp /home/teamcity/nbs.parallel.database.yml config/database.yml"
     $LOAD_PATH << "vendor/plugins/parallel_tests/lib"
     require "parallel_tests"
     executable = File.join(Rails.root, 'vendor', 'plugins', 'parallel_tests', 'bin', 'parallel_test')
