@@ -84,7 +84,6 @@ Scenario: When you click on a lead that you have not bought, and you are not sig
   And I follow category "Sample category"
   Then I click hidden translated link "leads.index.add_to_cart_link"
   And I should see "Sign in"
-  And I open page in browser
   Then I follow translated "supplier_home.show.view.create_new_supplier_account"
 
 @m5 @tgn @_tested @_done
