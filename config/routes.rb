@@ -168,6 +168,7 @@ Nbs::Application.routes.draw do
         get 'result_details'
         get 'result_details_to_csv'
         get 'contacts_for_search'
+        post 'duplicate'
       end
       resources :results, :except => :show do
         collection do

@@ -768,17 +768,23 @@ Feature: Agent campaign - management
         Scenario: I should see "My results" renamed to "Production" and displayed the same way as campaign's "Results"
 
         #8315
-        @m22 @requested @is
+        @m22 @requested @is @_done @_tested
         Scenario: I can click to duplicate a campaign (data, briefing)
+          Given I am not sign in
+          And I sign in as blazejek@gmail.com with password secret
+          And I follow translated "layout.main_menu.admin.campaigns"
+          And I follow translated "campaigns.index.duplicate"
+          And I should see translated "flash.campaigns.duplicate.notice"
+          And I should see "Copy of Testing"
 
         #8315
-        @m22 @requested @is
+        @m22 @requested @is @_done @_tested_elsewhere
         Scenario: When I duplicate a campaign, agents and their assigments should be copied
 
         #8315
-        @m22 @requested @is
+        @m22 @requested @is @_done @_tested_elsewhere
         Scenario: When I duplicate a campaign, materials repository should be copied
 
         #8315
-        @m22 @requested @is
+        @m22 @requested @is @_done @_tested_elsewhere
         Scenario: When I duplicate a campaign, customization emails and other data should be copied
