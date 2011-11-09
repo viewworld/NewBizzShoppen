@@ -195,9 +195,11 @@ module ActiveRecord
       end
 
       def set_has_one_or_belongs_to_association(original_object, association, options)
-        sub_kopy = (options[:associations] || {}).keys.include?(original_object.send(association)) ? options[:associations][original_object.send(association)] : original_object.send(association).send(:process, options)
-        self.send(:set_clone_relations, sub_kopy.send(:get_clone_relations)) unless options[:replace_object_associations_only]
-        sub_kopy
+        unless original_object.send(association).nil?
+          sub_kopy = (options[:associations] || {}).keys.include?(original_object.send(association)) ? options[:associations][original_object.send(association)] : original_object.send(association).send(:process, options)
+          self.send(:set_clone_relations, sub_kopy.send(:get_clone_relations)) unless options[:replace_object_associations_only]
+          sub_kopy
+        end
       end
 
       def set_has_many_association(original_object, association, options)

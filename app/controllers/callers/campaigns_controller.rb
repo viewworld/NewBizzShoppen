@@ -37,6 +37,17 @@ class Callers::CampaignsController < Callers::CallerController
     end
   end
 
+  def duplicate
+    @campaign = Campaign.find(params[:id])
+    if current_user.admin?
+      @campaign.delay.duplicate!
+      flash[:notice] = I18n.t("flash.campaigns.duplicate.notice")
+    else
+      raise CanCan::AccessDenied
+    end
+    redirect_to :back
+  end
+
   def result_details
     @call_results = CallResult.find_all_by_id(params[:call_result_ids].split(","))
   end

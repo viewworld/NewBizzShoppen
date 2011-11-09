@@ -405,6 +405,8 @@ en:
       destroy_confirmation: Are you sure?
       my_results: "Production"
       not_allowed_to_edit: "You are not allowed to edit this settings"
+      duplicate: "Duplicate"
+      duplication_confirmation: "Are you sure you want to duplicate the campaign?"
     call_result_details_table:
       date: Date
       contact: Contact
@@ -3092,6 +3094,9 @@ en:
     bulk_invoice_users:
       update:
         notice: "Selected users have been successfully invoiced."
+    campaigns:
+      duplicate:
+        notice: "Campaign duplication task has been successfully added to queue. It will be finished in few seconds."
   formtastic:
     date:
       formats:
