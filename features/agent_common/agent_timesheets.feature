@@ -47,7 +47,7 @@ Scenario: If I execute any campaign controller first time then new Campaign Log 
   And I click hidden link by url regex "/callers\/campaigns\/\d+\/agent_work_screen/"
   Then Last campaign UserSessionLog is valid after invoke some controller action
   Then Last regular UserSessionLog is valid after invoke some controller action
-  Then I follow translated "layout.main_menu.shared.browse_leads"
+  Then I follow translated "layout.main_menu.shared.home"
   Then Last campaign UserSessionLog is valid after close
   Then I follow translated "layout.main_menu.call_centre_agent.campaigns"
   And I click hidden link by url regex "/callers\/campaigns\/\d+\/agent_work_screen/"
