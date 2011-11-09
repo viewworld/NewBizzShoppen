@@ -29,7 +29,7 @@ Scenario: I can comment a deal
   Then I should see "New thread title"
   And I should see "New thread body"
 
-@_tested @_done
+@_tested @_done @wip
 Scenario: All comments regarding deals should be public
   Given I am not sign in
   And I follow translated "layout.main_menu.shared.browse_deals"
