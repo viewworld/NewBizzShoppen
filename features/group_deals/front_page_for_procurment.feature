@@ -167,9 +167,10 @@ Feature: Front page for procurment
     And a deal named "GroupDealA" exists with attributes "published:1,group_deal:1,price:99,deal_price:100,discounted_price:25,social_media_description:super ultra deal social medias,start_date:01-01-2011,end_date:01-01-2013"
     Given I am signed up and confirmed as user with email purchase_manager@nbs.com and password secret and role member
     And I am on the homepage
+    And I visit domain http://fairdeals.dk
     And I make sure current locale is "en"
     Then I sign in as purchase_manager@nbs.com with password secret
-    And I follow translated "layout.main_menu.shared.browse_deals"
+    And I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Electronics deals"
     And I click hidden link by url regex "/\/deals\/\d+/"
     And I follow translated "deals.show.view.share_by_email"
