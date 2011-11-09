@@ -215,6 +215,7 @@ Feature: Deals from procurement manager perspective
   @m19 @requested @_done @_tested @tgn
   Scenario: Email with deal information for procurment manager should be customizable per deal (with default template)
     Given I am not sign in
+    And I visit domain http://fairleads.eu
     And I make sure current locale is "da"
     Given user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
     And user "buyer@nbs.com" has deal maker role enabled

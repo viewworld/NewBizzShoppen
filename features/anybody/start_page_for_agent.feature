@@ -105,7 +105,7 @@ Scenario: I can go to creation of new agent account page
   Then I should be on agent sign up page
 
 # bestsellers removed
-@ao @m3 @_done @wip @_deprecated
+@ao @m3 @_done @_deprecated
 Scenario: In bestsellers and latest listings I should not see leads which I've already bought
 #  When I visit domain http://fairleads.eu
 #  When I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier
