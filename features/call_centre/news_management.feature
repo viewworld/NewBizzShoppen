@@ -4,6 +4,7 @@ Feature: News management for call centre
 @_done @_tested @selenium
 Scenario: A call centre manager should be able to post call centre news to all his agents.
   Given I am on the homepage
+  And I visit domain http://faircalls.eu
   Then I sign in as translator_call_centre@nbs.com with password secret
   Then I follow translated "layout.main_menu.call_centre_agent.news"
   Then I follow translated "administration.news.index.view.new_news"

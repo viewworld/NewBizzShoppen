@@ -6,6 +6,7 @@ Feature: Agent information
     And I make sure current locale is "en"
     And there are no campaigns
     And campaign report data is generated
+    And I visit domain http://faircalls.eu
     And I sign in as testreportscca01@nbs.com with password secret
     And I follow translated "layout.main_menu.call_centre_agent.campaigns"
 
