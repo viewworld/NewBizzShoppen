@@ -2,8 +2,8 @@
 Feature: Lead editing by agent
 
 Background:
-    Given I visit domain http://faircalls.eu
-    And I am on the homepage
+    Given I am on the homepage
+    And I visit domain http://faircalls.eu
     And I make sure current locale is "en"
     Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role agent
     And lead New lead is created by user bob@person.com with role agent
