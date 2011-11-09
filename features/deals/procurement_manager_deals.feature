@@ -10,6 +10,7 @@ Feature: Deals from procurement manager perspective
     And user with email "procurment@nbs.com" upgrades to subscription named "Premium member"
     And I am on the homepage
     And I make sure current locale is "en"
+    And I visit domain http://fairdeals.eu
     Then I sign in as procurment@nbs.com with password secret
 
   @_tested @_done @tgn
@@ -19,7 +20,7 @@ Feature: Deals from procurement manager perspective
 
   @_tested @_done @tgn
   Scenario: I can "Browse deals" instead of "Browse leads"
-    Then I should see translated "layout.main_menu.shared.browse_deals"
+    Then I should see translated "layout.fairdeals.main_menu.deals"
     And I should not see "Browse leads"
 
   @m18 @selenium @_done @_tested @tgn
@@ -29,7 +30,7 @@ Feature: Deals from procurement manager perspective
     And a deal named "Some deal #2" exists within category "Electronics deals"
     And a deal named "Some deal #3" exists within category "Electronics deals"
     And a deal named "Some deal #4" exists within category "Electronics deals"
-    Then I follow translated "layout.main_menu.shared.browse_deals"
+    Then I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Electronics deals"
     And I follow translated "common.show_all"
     And I should see "Some deal #1"
@@ -51,7 +52,7 @@ Feature: Deals from procurement manager perspective
     Then a deal named "Various podcasts" exists within category "Podcasts"
     Then a deal named "Skeptical Guide To Universe" exists within category "Scientific"
     Then a deal named "Funny pod" exists within category "Comedy"
-    Then I follow translated "layout.main_menu.shared.browse_deals"
+    Then I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Sound files"
     And "category_selector" dropdown should have values "Podcasts,Music"
     And I select "Podcasts" from "category_selector"
@@ -62,13 +63,13 @@ Feature: Deals from procurement manager perspective
 
   @_tested @_done @tgn
   Scenario: I can see list of deals categories and subcategories
-    Then I follow translated "layout.main_menu.shared.browse_deals"
+    Then I follow translated "layout.fairdeals.main_menu.deals"
     And I should see "Electronics deals"
 
   @_tested @_done @tgn
   Scenario: I can browse deals in seelcted category
     Given a deal named "Some deal #1" exists within category "Electronics deals"
-    Then I follow translated "layout.main_menu.shared.browse_deals"
+    Then I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Electronics deals"
     Then I should see "Some deal #1"
 
@@ -88,19 +89,19 @@ Feature: Deals from procurement manager perspective
 
   @_done @_tested @tgn @_deprecated
   Scenario: I can see contact information for deals when I am logged in
-    Given a deal named "Some deal #1" exists within category "Electronics deals"
-    #Given a deal named "Some deal #1" exists with attributes "contact_name:SE Cupps"
-    Given a deal named "Some deal #1" exists with attributes "company_name:SE Cupps"
-    Then I follow translated "layout.main_menu.shared.browse_deals"
-    And I follow category "Electronics deals"
-    #Then I should see translated "deals.listing.contact_label"
-    #And I should see translated "deals.listing.contact_name_label"
-    And I should see "SE Cupps"
+#    Given a deal named "Some deal #1" exists within category "Electronics deals"
+#    #Given a deal named "Some deal #1" exists with attributes "contact_name:SE Cupps"
+#    Given a deal named "Some deal #1" exists with attributes "company_name:SE Cupps"
+#    Then I follow translated "layout.main_menu.shared.browse_deals"
+#    And I follow category "Electronics deals"
+#    #Then I should see translated "deals.listing.contact_label"
+#    #And I should see translated "deals.listing.contact_name_label"
+#    And I should see "SE Cupps"
 
   @_done @_tested @tgn
   Scenario: I can click "Contact me"
     Given a deal named "Some deal #1" exists within category "Electronics deals"
-    Then I follow translated "layout.main_menu.shared.browse_deals"
+    Then I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Electronics deals"
     Then I should see translated "deals.index.view.view_deal"
 
@@ -322,6 +323,6 @@ Feature: Deals from procurement manager perspective
   @m22 @requested @ao @_done @_tested
   Scenario: I should not see activation dates on the listing and only deals with valid dates should be displayed
     Given a deal named "Some deal #1" exists within category "Electronics deals"
-    Then I follow translated "layout.main_menu.shared.browse_deals"
+    Then I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Electronics deals"
     Then I should not see "Activation"
