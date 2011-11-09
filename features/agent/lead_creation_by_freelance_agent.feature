@@ -7,6 +7,7 @@ I can use my agent panel
 
 Background:
     Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role agent
+    And I visit domain http://faircalls.eu
     And I am on the homepage
     And I make sure current locale is "en"
     Then I sign in as bob@person.com with password supersecret

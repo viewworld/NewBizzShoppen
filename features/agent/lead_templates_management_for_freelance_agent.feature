@@ -2,7 +2,8 @@
 Feature: Lead templates management for freelance agent
 
 Background:
-  Given I am on the homepage
+  Given I visit domain http://faircalls.eu
+  And I am on the homepage
   And I make sure current locale is "en"
   And I have user with email other_call_centre@nbs.com and role call_centre
   And I am signed up and confirmed as user with email agent@person.com and password supersecret and role agent

@@ -28,8 +28,8 @@ Feature: Notifications
 
   @_done @_tested @m11 @$_customer
   Scenario: I can subscribe by rss to category
-    Given I am on the homepage
-    Then I sign in as agent@nbs.com with password secret
+    And I am on the homepage
+    Then I sign in as buyer@nbs.com with password secret
     Then I follow translated "layout.main_menu.shared.browse_leads"
     Then I follow category "Business"
     Then I should see translated "leads.index.subscribe_to_rss"

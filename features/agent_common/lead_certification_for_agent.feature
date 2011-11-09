@@ -1,6 +1,9 @@
 @lead_certification @agent @requested @m10
 Feature: Lead certification for agent
 
+Background:
+  Given I visit domain http://faircalls.eu
+
 @_done @_tested
 Scenario: I can mark a lead as certified
   When there are no leads

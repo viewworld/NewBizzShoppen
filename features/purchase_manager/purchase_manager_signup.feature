@@ -6,7 +6,8 @@ Feature: Purchase Manager signup
   Should be able to create a Purchase Manager account
 
   Background: Set English locale on the home page
-    Given I am on the homepage
+    Given I visit domain http://fairdeals.eu
+    And I am on the homepage
     And I make sure current locale is "en"
 
   @added @_done

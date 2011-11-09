@@ -54,6 +54,10 @@ module User::CommonAgent
       Contact.with_agents(id).with_results
     end
 
+    def site
+      :faircalls
+    end
+
     alias_method :to_s, :name
   end
 end

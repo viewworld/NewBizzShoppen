@@ -7,8 +7,9 @@ Background:
   And a deal named "Electrical deal" exists with attributes "published:1"
   And I am on the homepage
   And I make sure current locale is "en"
+  And I visit domain http://fairdeals.eu
   Then I sign in as purchase_manager88@nbs.com with password secret
-  And I follow translated "layout.main_menu.shared.browse_deals"
+  And I follow translated "layout.fairdeals.main_menu.deals"
 
 @selenium @_tested @_done
 Scenario: I can rate a a deal as a procurement manager
@@ -32,7 +33,7 @@ Scenario: I can comment a deal
 @_tested @_done
 Scenario: All comments regarding deals should be public
   Given I am not sign in
-  And I follow translated "layout.main_menu.shared.browse_deals"
+  And I follow translated "layout.fairdeals.main_menu.deals"
   When I follow category "Electronics deals"
   And I should see translated "deals.listing.no_comments"
 
@@ -41,11 +42,12 @@ Scenario: All comments regarding deals should be public
 Scenario: I can see rating when I am not logged in or my role is not purchase manager
   When I sign out
   And I am on the home page
-  And I follow translated "layout.main_menu.shared.browse_deals"
+  And I follow translated "layout.fairdeals.main_menu.deals"
   And I follow category "Electronics deals"
   Then I should see translated "deals.listing.rating_label"
   When I follow "Electrical deal"
   Then I should see CSS path "div.ajaxful-rating-wrapper"
+  And I visit domain http://localhost
   When I am on the home page
   And I sign in as blazejek@gmail.com with password secret
   And I follow translated "layout.main_menu.shared.browse_deals"

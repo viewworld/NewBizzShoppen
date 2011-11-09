@@ -2,6 +2,7 @@
 Feature: Agent dealmaker
   Background:
     Then user "agent@nbs.com" has deal maker role enabled
+    And I visit domain http://faircalls.eu
     And I am on the homepage
     And I sign in as agent@nbs.com with password secret
     And I follow translated "layout.main_menu.shared.deal_maker_users"

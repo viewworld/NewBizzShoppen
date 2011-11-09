@@ -1922,21 +1922,79 @@ li.disabled
 
 /* --- subscription plans ------------------------------------------------------------------------ */
 
-.subscription_plan_item {
+.subscription_plans
+{
+    text-align: center;
+}
+
+.subscription_plan_item
+{
     display: inline-block;
     display: inline !ie7;
     zoom: 1 !ie7;
-    margin: 3px;
-
     vertical-align: top;
-    padding: 8px 10px;
-    border: 1px solid #ccc;
+    cursor: pointer;
+
+    margin: 4px;
+    min-height: 200px;
+    width: 200px;
+    border: 1px solid #d0d0d0;
     min-width: 150px;
     text-align: center;
     background: #fff;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
-    border-radius: 10px;
+    border-radius: 10px;    
+
+    -moz-box-shadow: 0 0 4px rgba(0,0,0,.2);
+    -webkit-box-shadow: 0 0 4px rgba(0,0,0,.2);
+    box-shadow: 0 0 4px rgba(0,0,0,.2);
+}
+
+.subscription_plan_item.active
+{
+    border: 3px solid #2da9ff;
+
+    -moz-box-shadow: 0 0 6px rgba(0,0,0,.3);
+    -webkit-box-shadow: 0 0 6px rgba(0,0,0,.3);
+    box-shadow: 0 0 6px rgba(0,0,0,.3);
+    margin: 2px
+}
+
+.subscription_plan_item h3
+{
+    font-size: 16px;
+    padding: 9px 5px;
+    font-weight: bold;    
+}
+
+.subscription_plan_item .subscription_plan_price
+{
+    background: #fafafa;
+    border-top: 1px solid #d0d0d0;
+    border-bottom: 1px solid #d0d0d0;
+    padding: 8px;
+    margin-bottom: 7px;
+}
+
+.subscription_plan_item .billing
+{
+    color: #0096ff;
+    font-size: 26px;
+    font-weight: bold;
+    padding-bottom: 3px;
+}
+
+.subscription_plan_item ul li
+{
+    text-align: left;
+    padding: 3px 8px 3px 30px;
+    background: url(/images/icons/tick.png) no-repeat 9px 50%;
+}
+
+.subscription_plan_footer
+{
+    padding-top: 5px;
 }
 
 

@@ -393,10 +393,6 @@ Given /^I reset page/ do
   page.driver.reset!
 end
 
-When /^I visit domain "([^\"]*)"$/ do |domain_name|
-  Capybara.default_host = domain_name
-end
-
 When /^I set referer to "([^\"]*)"$/ do |referer|
   page.driver.header "HTTP_REFERER", referer
 end
@@ -430,6 +426,10 @@ Given /^I visit domain (.+)$/ do |domain|
     visit("/fairdeals")
   elsif domain.include?("faircalls")
     visit("/faircalls")
+  elsif domain.include?("fairleads")
+    visit("/fairleads")
+  elsif domain.include?("localhost")
+    visit("/")
   else
     visit(Capybara.app_host)
   end

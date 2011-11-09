@@ -3,12 +3,14 @@
     <p>
         <%= blurb(:blurb_subscription_select) %>
     </p>
-    <br/>
+    <hl pdd="10"/>
     <% @subscriptions = SubscriptionPlan.active.exclude_free(false).for_role(role).ascend_by_billing_price %>
     <% if @subscriptions.any? %>
+      <div class="subscription_plans">
         <% @subscriptions.each do |subscription_plan| %>
             <%= render :partial => 'shared/subscriptions/subscription', :locals => {:subscription_plan => subscription_plan, :role => role, :subscriptions_form => subscriptions_form} %>
         <% end %>
+      </div>
     <% else %>
         <%= t("subscriptions.listing.no_available_subscriptions") %>
     <% end %>
@@ -18,3 +20,13 @@
 
 <%#= link_to_main_page_article("subscriptions_for_#{role}", {:popup => true}, {:id => 'subscriptions_modal_box'}) %>
 
+
+<script type="text/javascript">
+  $(function() {
+      $(".subscription_plan_item").bind("click", function(){
+          $(".subscription_plan_item.active").removeClass("active");
+          $(this).addClass("active");
+          $(this).find(':radio').attr("checked", "checked");
+      });
+  });
+</script>

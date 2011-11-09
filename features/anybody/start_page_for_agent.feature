@@ -3,7 +3,8 @@
 Feature: Start page for agent
 
 Background: I am a guest and I am on the home page
-  Given I am on the agent home page
+  Given I visit domain http://faircalls.eu
+  Given I am on the home page
 
 @ao @m3 @_done
 Scenario: I can see welcome text fetch from the database

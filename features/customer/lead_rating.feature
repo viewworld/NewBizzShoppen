@@ -75,7 +75,8 @@ Scenario: Agent is informed when his lead is rated as 'unsatisfactory'
 @_tested @_done
 Scenario: As agent I can view 'unsatisfactory' ratings regarding my leads
   Given I am not sign in
-  Given I am on the homepage
+  And I visit domain http://faircalls.eu
+  And I am on the homepage
   And I am signed up and confirmed as user with email agent@person.com and password supersecret and role agent
   Given lead Ultimate monitors deal is created by user agent@person.com with role agent
   And a lead Ultimate monitors deal exists within category Computers and is bought by user bob@person.com with role supplier

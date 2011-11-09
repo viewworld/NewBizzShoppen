@@ -1,4 +1,0 @@
-<%= main_menu_link_to t("layout.main_menu.lead_user.lead_purchases"), lead_users_lead_purchases_path, :tab => "my_assigned_leads" %>
-<% unless current_user.has_role?(:lead_supplier) %>
-    <%= main_menu_link_to t("layout.main_menu.lead_user.lead_requests"), lead_users_lead_requests_path, :tab => "my_requested_leads" %>
-<% end %>

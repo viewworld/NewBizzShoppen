@@ -19,6 +19,7 @@ Background:
   And comment thread for lead "Lead#3" was posted by users "customer1@nbs.com, call_centre1@nbs.com, customer1@nbs.com"
   And user "customer1@nbs.com" with role "supplier" has attributes "screen_name: Mark Driscoll"
   And user "customer2@nbs.com" with role "supplier" has attributes "screen_name: John Doe"
+  And I visit domain http://faircalls.eu
   And I sign in as call_centre1@nbs.com with password supersecret
 
 @_tested @_done

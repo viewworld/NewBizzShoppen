@@ -10,6 +10,7 @@ Feature: Categories rules
     Given Category Computers is created
     And Category named "Laptops" already exists within category named "Computers"
     Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role agent
+    And I visit domain http://faircalls.eu
     Then I sign in as bob@person.com with password supersecret
     And I go to agents leads
     Then select "category_id" should have option "Computers" disabled
