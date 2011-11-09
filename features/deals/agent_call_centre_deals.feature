@@ -6,8 +6,8 @@ Feature: Deals from Call Centre/Agent perspective
     Then user "translator_agent@nbs.com" has deal maker role enabled
     Then user "translator_call_centre@nbs.com" has deal maker role enabled
     Then user "translator_call_centre_agent@nbs.com" has deal maker role enabled
-    And I visit domain http://faircalls.eu
     Given I am on the homepage
+    And I visit domain http://faircalls.eu
 
   @_done @_tested
   Scenario: I can see "My Deals" to the right of "My Leads" tab

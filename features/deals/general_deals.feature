@@ -55,11 +55,12 @@ Feature: General deals
     And user "buyer@nbs.com" has deal maker role enabled
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "max_auto_buy:0|header:super|description:super|hidden_description:super|start_date:2011-01-01|company_name:Asd|published:1|deal_admin_email:agent@nbs.com"
     Then I am not sign in
+    And I visit domain http://fairdeals.dk
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
     When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
     And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
     Then I sign in as purchase_manager101@nbs.com with password supersecret
-    And I follow translated "layout.main_menu.shared.browse_deals"
+    And I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     Then I confirm a js popup on the next step
@@ -76,11 +77,12 @@ Feature: General deals
     And user "buyer@nbs.com" has deal maker role enabled
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "max_auto_buy:1|header:super|description:super|hidden_description:super|start_date:2011-01-01|company_name:Asd|published:1|deal_admin_email:agent@nbs.com"
     Then I am not sign in
+    And I visit domain http://fairdeals.dk
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
     When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
     And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
     Then I sign in as purchase_manager101@nbs.com with password supersecret
-    And I follow translated "layout.main_menu.shared.browse_deals"
+    And I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     Then I confirm a js popup on the next step
@@ -97,11 +99,12 @@ Feature: General deals
     And user "buyer@nbs.com" has deal maker role enabled
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "max_auto_buy:1|header:super|description:super|hidden_description:super|start_date:2011-01-01|company_name:Asd|published:1|deal_admin_email:agent@nbs.com"
     Then I am not sign in
+    And I visit domain http://fairdeals.dk
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
     When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
     And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
     Then I sign in as purchase_manager101@nbs.com with password supersecret
-    And I follow translated "layout.main_menu.shared.browse_deals"
+    And I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     Then I confirm a js popup on the next step
@@ -115,7 +118,7 @@ Feature: General deals
     When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
     And user with email "purchase_manager202@nbs.com" upgrades to subscription named "Premium member"
     Then I sign in as purchase_manager202@nbs.com with password supersecret
-    And I follow translated "layout.main_menu.shared.browse_deals"
+    And I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     Then I confirm a js popup on the next step
@@ -174,11 +177,12 @@ Feature: General deals
     And user "buyer@nbs.com" has deal maker role enabled
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "max_auto_buy:1|header:super|description:super|hidden_description:super|start_date:2011-01-01|company_name:Asd|published:1|deal_admin_email:agent@nbs.com"
     Then I am not sign in
+    And I visit domain http://fairdeals.dk
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
     When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
     And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
     Then I sign in as purchase_manager101@nbs.com with password supersecret
-    And I follow translated "layout.main_menu.shared.browse_deals"
+    And I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     Then I confirm a js popup on the next step
@@ -188,6 +192,7 @@ Feature: General deals
     And I press translated "member.leads.show.view.ok_confirmation"
     Then I am not sign in
     And I am on the homepage
+    And I visit domain http://localhost
     And I sign in as buyer@nbs.com with password secret
     Then I follow translated "layout.main_menu.lead_supplier.my_deals"
     And I click hidden link by url regex "/suppliers\/deals\/\d+\/edit/"
