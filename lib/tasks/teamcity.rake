@@ -27,4 +27,15 @@ namespace :teamcity do
     system "rake db:drop RAILS_ENV=test"
   end
 
+  desc "run cucumber javascript tests"
+  task :cucumber_parallel do
+    $LOAD_PATH << "vendor/plugins/parallel_tests/lib"
+    require "parallel_tests"
+    executable = File.join(Rails.root, 'vendor', 'plugins', 'parallel_tests', 'bin', 'parallel_test')
+    count, pattern, options = ParallelTests.parse_rake_args(args)
+    system "#{executable} --exec 'rake nbs:refresh_test_db RAILS_ENV=test' -n #{count}"
+    command = "#{executable} --type features -n #{count} -p '#{pattern}' -r '#{Rails.root}' -o '#{options}'"
+    abort unless system(command) # allow to chain tasks e.g. rake parallel:spec parallel:features
+  end
+
 end
