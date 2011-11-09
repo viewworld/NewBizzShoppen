@@ -104,19 +104,21 @@ Scenario: I can go to creation of new agent account page
   And I follow translated "agent_home.show.view.create_new_agent_account"
   Then I should be on agent sign up page
 
-@ao @m3 @_done
+# bestsellers removed
+@ao @m3 @_done @wip @_deprecated
 Scenario: In bestsellers and latest listings I should not see leads which I've already bought
-  When I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier
-  And a lead BoughtLead exists within category Test and is bought by user jon@lajoie.ca with role supplier
-  And lead AwesomeLead exists within category Test
-  When I am on the agent home page
-  Then I should see "AwesomeLead"
-  And I should see "BoughtLead"
-  When I am on the home page
-  And I sign in as jon@lajoie.ca with password secret
-  When I am on the agent home page
-  Then I should see "AwesomeLead"
-  And I should not see "BoughtLead"
+#  When I visit domain http://fairleads.eu
+#  When I am signed up and confirmed as user with email jon@lajoie.ca and password secret and role supplier
+#  And a lead BoughtLead exists within category Test and is bought by user jon@lajoie.ca with role supplier
+#  And lead AwesomeLead exists within category Test
+#  When I am on the home page
+#  Then I should see "AwesomeLead"
+#  And I should see "BoughtLead"
+#  When I am on the home page
+#  And I sign in as jon@lajoie.ca with password secret
+#  When I am on the home page
+#  Then I should see "AwesomeLead"
+#  And I should not see "BoughtLead"
 
 @m5 @unique_categories @tgn @added @_tested @_done
 Scenario: When I am not logged in I should not see any leads from unique categories on Latest & Bestsellers lists
