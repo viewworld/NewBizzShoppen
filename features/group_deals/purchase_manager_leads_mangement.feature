@@ -5,10 +5,11 @@ Feature: Purchase manager leads management
 
   @selenium @_done @_tested
   Scenario: I should be able to create new lead as purchase manager
+    Given I visit domain http://fairdeals.dk
     Given I am signed up and confirmed as user with email procurment@nbs.com and password secret and role member
     Then I sign in as procurment@nbs.com with password secret
     Then category "Business" has attributes "default_price:44.44"
-    Then I follow translated "layout.main_menu.member.tenders"
+    Then I follow translated "layout.fairdeals.main_menu.tenders"
     Then I follow translated "member.tenders.index.view.new_tender"
     Then I should see translated "shared.leads.form.member.lead_information"
     Then I should see translated "shared.leads.form.member.header_label"
