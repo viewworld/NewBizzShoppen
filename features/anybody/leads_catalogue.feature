@@ -78,11 +78,13 @@ Scenario: I should see currency in which lead is being sold
 @m5 @tgn @_tested @_done
 Scenario: When you click on a lead that you have not bought, and you are not signed up you should be given the opportunity to sign in or create a new account
   Given Category named "Sample category" already exists
+  And I visit domain http://fairleads.eu
   And Lead named "Lead sample" exists within "Sample category" category
   And I go to browse leads
   And I follow category "Sample category"
   Then I click hidden translated link "leads.index.add_to_cart_link"
   And I should see "Sign in"
+  And I open page in browser
   Then I follow translated "supplier_home.show.view.create_new_supplier_account"
 
 @m5 @tgn @_tested @_done
