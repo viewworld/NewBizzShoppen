@@ -81,11 +81,12 @@ Feature: Deals from procurement manager perspective
     When I follow translated "layout.main_menu.member.my_requests"
     And I should not see "New lead"
 
-  @_done @_tested @tgn
+  # removed from fairdeals home page
+  @_done @_tested @tgn @_deprecated
   Scenario: I should see "Latest Deals" instead of "Best Sellers"
-    When I follow translated "layout.main_menu.shared.home"
-    Then I should see translated "supplier_home.show.view.header_latest_deals"
-    And I should not see "Best sellers"
+#    When I follow translated "layout.main_menu.shared.home"
+#    Then I should see translated "supplier_home.show.view.header_latest_deals"
+#    And I should not see "Best sellers"
 
   @_done @_tested @tgn @_deprecated
   Scenario: I can see contact information for deals when I am logged in
