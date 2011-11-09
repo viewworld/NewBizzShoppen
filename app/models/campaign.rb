@@ -255,4 +255,33 @@ class Campaign < ActiveRecord::Base
   def active?
     start_date <= Date.today and end_date >= Date.today
   end
+
+  def duplicate!
+    campaign = self.deep_clone!(:with_callbacks => false, :include => [:campaigns_results, :user_session_logs,
+    {:contacts => [ {:call_results => [:call_log, :result_values]}, :contact_past_user_assignments, {:lead_template_values => :lead_template_value_translations}, :translations ]},
+    {:send_material_email_template => :translations},
+    {:upgrade_contact_to_buyer_email_template => :translations},
+    {:upgrade_contact_to_category_buyer_email_template => :translations},
+    {:upgrade_contact_to_member_email_template => :translations}])
+
+    campaign.users = users
+    campaign.name = "Copy of #{name} #{Time.now.strftime("%d-%m-%Y %H:%M")}"
+    campaign.save
+
+    results = ResultValue.where("field_type::INT = ? and leads.campaign_id = ?", ResultField::MATERIAL, campaign.id).
+                          joins("INNER JOIN call_results on call_results.id=result_values.call_result_id INNER JOIN leads ON call_results.contact_id=leads.id").
+                          readonly(false)
+
+    materials.each do |material|
+      _material = material.clone
+      _material.save
+      _material.asset = material.asset
+      _material.save
+      campaign.materials << _material
+      if selected = results.select { |rv| rv.value.to_i ==  material.id} and !selected.empty?
+        selected.each { |rv| rv.update_attribute(:value, _material.id.to_s)}
+      end
+    end
+    campaign
+  end
 end
