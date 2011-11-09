@@ -5,6 +5,7 @@ Background:
   Given I am on the homepage
   And I make sure current locale is "en"
   And I am not sign in
+  And I visit domain http://faircalls.eu
   And lead Printers ultimate deal exists within category Computers
   And lead Printers ultimate deal exists with attributes "creator_name:Jacek Smietana,price:989.39,purchase_value:7843.99,description:Public desc about printers deal,exposures_count:887,clicks_count:17"
   And lead Faxes ultimate deal exists within category Computers
