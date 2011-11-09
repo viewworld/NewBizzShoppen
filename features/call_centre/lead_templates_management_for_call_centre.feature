@@ -2,8 +2,8 @@
 Feature: Lead templates management for call centre
 
 Background:  Sign in user and set locale
-  Given I visit domain http://faircalls.eu
-  And I am on the homepage
+  Given I am on the homepage
+  And I visit domain http://faircalls.eu
   And I make sure current locale is "en"
   And I have user with email other_call_centre@nbs.com and role call_centre
   And I am signed up and confirmed as user with email call_centre@person.com and password supersecret and role call_centre
