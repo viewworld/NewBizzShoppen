@@ -67,6 +67,7 @@ Scenario: After signup I can login instantly and do not have to confirm it by em
   And I fill in "user_member_password_confirmation" with "secret"
   And I check "user_member_agreement_read"
   And I press translated "supplier_accounts.new.view.button_create_account"
+  And I visit domain http://fairdeals.eu
   And I am on the home page
   And I sign in as james@bond.co.uk with password secret
   Then I should be signed in
@@ -89,6 +90,7 @@ Scenario: When lead does not answer to any email then agent should see "Approval
   When lead WorstLead is created by user agent007@nbs.com with role agent
   And lead "WorstLead" certification request is sent
   And lead certification request for lead "WorstLead" has expired
+  And I visit domain http://fairdeals.eu
   And I go to the homepage
   And I sign in as agent007@nbs.com with password secret
   And I follow translated "layout.main_menu.agent.leads"
