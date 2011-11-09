@@ -1,6 +1,10 @@
 @agent_campaign @requested @m11 @is
 Feature: Agent time sheets
 
+Background:
+  Given I visit domain http://faircalls.eu
+  And I am on the homepage
+
 @_done @_not_testable @timesheets
 Scenario: I am automatically log out after 5 minutes
 
@@ -12,9 +16,7 @@ Scenario: If I click Cancel on message box then I will be not log out
 
 @_done @_tested @timesheets
   Scenario: After I log in to the system new Regular Log is created with start time and end time set to Time now and Time now plus 5 min
-    Given I am on the homepage
     Then Count for model UserSessionLog is equal 0
-    And I visit domain http://faircalls.eu
     Then I sign in as agent@nbs.com with password secret
     Then Count for model UserSessionLog is equal 1
     Then Last regular UserSessionLog is valid after create
@@ -33,7 +35,6 @@ Scenario: Before I execute any controller action then end time of current Regula
 
 @_done @_tested @timesheets
 Scenario: If I execute any campaign controller first time then new Campaign Log is created with start time and end time set to Time now and Time now plus 5 min
-  Given I am on the homepage
   Then Count for model UserSessionLog is equal 0
   Then I sign in as translator_call_centre_agent@nbs.com with password secret
   Then Count for model UserSessionLog is equal 1
