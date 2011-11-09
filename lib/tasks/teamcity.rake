@@ -28,7 +28,7 @@ namespace :teamcity do
   end
 
   desc "run cucumber javascript tests"
-  task :cucumber_parallel do
+  task :cucumber_parallel do |t,args|
     $LOAD_PATH << "vendor/plugins/parallel_tests/lib"
     require "parallel_tests"
     executable = File.join(Rails.root, 'vendor', 'plugins', 'parallel_tests', 'bin', 'parallel_test')
