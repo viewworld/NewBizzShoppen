@@ -6,9 +6,9 @@ Feature: Freelance agent signup
   Should be able to create an account on this site
 
  Background: Set English locale on the home page
-    Given I visit domain http://faircalls.eu
-    And I am on the homepage
-    And I make sure current locale is "en"
+   Given I am on the homepage
+   Given I visit domain http://faircalls.eu
+   And I make sure current locale is "en"
 
   @_tested @_done
   Scenario: User signs up with invalid data

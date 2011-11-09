@@ -13,6 +13,8 @@ Feature: Sign up feature
   # 5779
   @m12 @$_guest @requested @tgn @_done @_tested @selenium
   Scenario: When I am on sign up page, the coutry should be selected to my browser locale/country
+    Given I am on the homepage
+    And I visit domain http://faircalls.eu
     Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role agent
     And User bob@person.com with role agent is from country Denmark
     And I make sure current locale is "da"
