@@ -2,6 +2,8 @@
 Feature: Lead certification for guest
 
 Background:
+  Given I am on the homepage
+  And I visit domain http://faircalls.eu
   Given there are no leads
   And I am signed up and confirmed as user with email agent007@nbs.com and password secret and role agent
   And lead BestLead is created by user agent007@nbs.com with role agent
