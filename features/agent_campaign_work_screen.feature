@@ -411,7 +411,7 @@ Feature: Agent campaign - calling session
     @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_done @not_testable
     Scenario: Agent can customize email when upgrading contact to category buyer
 
-    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
+    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5  @wip
     Scenario: Contact can sign up by clicking on link in email and entering password or using Facebook/Google/Linkedin
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Upgrade to category supplier" from "selected_result_id"
@@ -426,6 +426,7 @@ Feature: Agent campaign - calling session
       Then I should see translated "call_results.create.flash.successfully_added"
       Given I am not sign in
       And I am on the homepage
+      And I visit domain http://localhost
       And I sign in as newcategory_buyer888@nbs.com with password testin
       Then I should see translated "my_profile.edit.view.header"
 
@@ -445,6 +446,7 @@ Feature: Agent campaign - calling session
       Then I should see translated "call_results.create.flash.successfully_added"
       Given I am not sign in
       And I am on the homepage
+      And I visit domain http://localhost
       And I sign in as newcategory_buyer888@nbs.com with password testin
       Then I should see translated "my_profile.edit.view.header_contact_confirmation"
       And the "user_category_supplier_company_name" field should contain "Bon Jovi inc."
@@ -469,6 +471,7 @@ Feature: Agent campaign - calling session
       Then I should see translated "call_results.create.flash.successfully_added"
       Given I am not sign in
       And I am on the homepage
+      And I visit domain http://localhost
       And I sign in as newcategory_buyer888@nbs.com with password testin
       Then I should see translated "my_profile.edit.view.header_contact_confirmation"
       And I press translated "password.edit.view.button_update_user"
@@ -490,6 +493,7 @@ Feature: Agent campaign - calling session
       Then I should see translated "call_results.create.flash.successfully_added"
       Given I am not sign in
       And I am on the homepage
+      And I visit domain http://localhost
       And I sign in as newcategory_buyer888@nbs.com with password testin
       Then I should see translated "my_profile.edit.view.header_contact_confirmation"
       And I press translated "password.edit.view.button_update_user"
@@ -592,6 +596,7 @@ Feature: Agent campaign - calling session
       And last email sent should have content "Fairleads username: new_buyer888@nbs.com"
       Then I am not sign in
       And I am on the homepage
+      And I visit domain http://localhost
       And I sign in as new_buyer888@nbs.com with password testin
       Then I should see translated "my_profile.edit.view.header_contact_confirmation"
       And I press translated "password.edit.view.button_update_user"
@@ -624,6 +629,7 @@ Feature: Agent campaign - calling session
       And last email sent should have content "Fairdeals username: new_member888@nbs.com"
       Then I am not sign in
       And I am on the homepage
+      And I visit domain http://fairdeals.eu
       And I sign in as new_member888@nbs.com with password testin
       Then I should see translated "my_profile.edit.view.header_contact_confirmation"
       And I press translated "password.edit.view.button_update_user"

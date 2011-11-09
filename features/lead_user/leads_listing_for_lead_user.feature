@@ -2,6 +2,7 @@
 Feature: Leads listing for lead user
 
 Background: Sign in user and set English locale
+  And I am not sign in
   Given lead Printers ultimate deal exists within category Computers
   And a lead Monitors LCD deal exists within category Computers and is bought by user customer@person.com with role supplier
   And I am on the homepage
