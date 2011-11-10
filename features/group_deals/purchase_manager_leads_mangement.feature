@@ -89,7 +89,7 @@ Feature: Purchase manager leads management
     Given I am signed up and confirmed as user with email procurment@nbs.com and password secret and role member
     Then I sign in as procurment@nbs.com with password secret
     Then category "Business" has attributes "default_price:44.44"
-    Then I follow translated "layout.main_menu.member.tenders"
+    Then I follow translated "layout.fairdeals.main_menu.tenders"
     Then I follow translated "member.tenders.index.view.new_tender"
     Then I select "Business" from "lead_category_id"
     Then I fill in "lead_header" with "Tender for project outsourcing"

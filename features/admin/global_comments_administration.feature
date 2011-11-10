@@ -174,6 +174,7 @@ Scenario: I can block particular agent from further dialog with given buyer
   And I follow translated "comments.shared.show_comments"
   When I follow translated "comments.threads.show.view.block_user"
   Then I am not sign in
+  And I visit domain http://faircalls.eu
   Given I sign in as agent99@nbs.com with password secret
   Then I follow translated "layout.main_menu.agent.leads"
   And I follow translated "comments.shared.show_comments"
