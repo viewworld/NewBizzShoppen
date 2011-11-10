@@ -28,15 +28,12 @@ namespace :teamcity do
   end
 
   desc "run cucumber javascript tests"
-  task :cucumber_parallel do |t,args|
+  task :cucumber_parallel do
     system "cp /home/teamcity/nbs.parallel.database.yml config/database.yml"
-    $LOAD_PATH << "vendor/plugins/parallel_tests/lib"
-    require "parallel_tests"
+    system "rake parallel:create"
     executable = File.join(Rails.root, 'vendor', 'plugins', 'parallel_tests', 'bin', 'parallel_test')
-    count, pattern, options = ParallelTests.parse_rake_args(args)
-    system "#{executable} --exec 'rake nbs:refresh_test_db RAILS_ENV=test' -n #{count}"
-    command = "#{executable} --type features -n #{count} -p '#{pattern}' -r '#{Rails.root}' -o '#{options}'"
-    abort unless system(command) # allow to chain tasks e.g. rake parallel:spec parallel:features
+    #system "#{executable} --exec 'rake nbs:refresh_test_db RAILS_ENV=test' -n #{count}"
+    system "rake parallel:features[,,'-p teamcity --format junit --out tmp/cucumber-junit']"
   end
 
 end
