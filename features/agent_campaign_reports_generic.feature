@@ -19,13 +19,13 @@ Feature: Reports
     Then I should see translated "campaigns.show.search.date_from"
     Then I should see translated "campaigns.show.search.date_to"
 
-  @_done @testes_elsewhere
+  @_done @tested_elsewhere
   Scenario: I can generate campaign results report for a given week
 
-  @_done @testes_elsewhere
+  @_done @tested_elsewhere
   Scenario: I can generate campaign results report for given month
 
-  @_done @testes_elsewhere
+  @_done @tested_elsewhere
   Scenario: I can generate campaign results report for custom period of time
 
   @m18 @admin_reports @selenium @_done @_tested @tgn
