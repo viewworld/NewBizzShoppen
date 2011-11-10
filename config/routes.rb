@@ -197,6 +197,9 @@ Nbs::Application.routes.draw do
           resources :call_results, :only => [:new, :create, :edit, :update, :destroy]
         end
         resource :agent_information, :only => [:show]
+        resource :call_sheet, :only => [:show]
+        resource :pending_call, :only => [:show]
+        resource :complete_contact, :only => [:show]
       end
       resources :email_templates, :only => [:edit, :update]
     end

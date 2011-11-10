@@ -7,7 +7,7 @@ function mark_all_cbs_with_selector(t) {
     var tr = $(t).parents('table').find("tr:not(.main_actions)");
 
     $(t).is(":checked") ? $("input=[type=checkbox]:not(:checked)", tr).attr("checked", "checked")
-            : $("input=[type=checkbox]:checked", tr).attr("checked", "");
+        : $("input=[type=checkbox]:checked", tr).attr("checked", "");
 }
 
 submitBulkForm = function(url, target) {
@@ -32,14 +32,14 @@ function loadScripts() {
 
     $(".hide_subcategory").bind("click", function() {
         $(this).hide()
-                .prev().show()
-                .parent().prev(".category_children_tree").slideUp();
+            .prev().show()
+            .parent().prev(".category_children_tree").slideUp();
     });
 
     $(".show_subcategory").bind("click", function() {
         $(this).hide()
-                .next().show()
-                .parent().prev(".category_children_tree").slideDown();
+            .next().show()
+            .parent().prev(".category_children_tree").slideDown();
     });
 
 
@@ -82,47 +82,44 @@ function loadScripts() {
         //      old method
         //      $('td:not(.cl, .cr, .tda)', 'table tbody tr:not(.pagination, .main_actions)').filter(":not(:has(:checkbox, select, a))")
         $('tr:has(.default_action) td, p.element').filter(":not(:has(:checkbox, select)):not(.tda):not(:has(div.ajaxful-rating-wrapper))")
-                .addClass("pointer")
-                .click(function()
-                {
-                    var link = $(this).parent().find('a.default_action');
-                    var link_confirm_msg = $(this).parent().find('input.default_action_confirmation_msg');
-                    if (link.attr("data-method") || link.attr("data-remote"))
-                    {
-                        if (link_confirm_msg.val() == undefined)
-                        {
+            .addClass("pointer")
+            .click(
+            function() {
+                var link = $(this).parent().find('a.default_action');
+                var link_confirm_msg = $(this).parent().find('input.default_action_confirmation_msg');
+                if (link.attr("data-method") || link.attr("data-remote")) {
+                    if (link_confirm_msg.val() == undefined) {
+                        link.trigger("click");
+                    }
+                    else {
+                        if (confirm(link_confirm_msg.val())) {
                             link.trigger("click");
                         }
-                        else
-                        {
-                            if (confirm(link_confirm_msg.val()))
-                            {
-                                link.trigger("click");
-                            }
-                        }
                     }
-                    else
-                    {
-                        window.location = link.attr("href");
-                    }
-                }).find("a").bind("click", function(e) { e.stopPropagation();});
+                }
+                else {
+                    window.location = link.attr("href");
+                }
+            }).find("a").bind("click", function(e) {
+                e.stopPropagation();
+            });
     }
 
     /*--- clickable featured deals --- */
 
     if ($("div[id*='secondary_featured_deal_']").has("a.default_action").length != 0) {
         $("div[id*='secondary_featured_deal_']")
-                .addClass("pointer")
-                .click(function() {
-            var link = $(this).find('a.default_action');
-            if (link.attr("data-method") || link.attr("data-remote")) {
-               link.trigger("click");
-            }
-            else {
-                window.location = link.attr("href");
-            }
+            .addClass("pointer")
+            .click(function() {
+                var link = $(this).find('a.default_action');
+                if (link.attr("data-method") || link.attr("data-remote")) {
+                    link.trigger("click");
+                }
+                else {
+                    window.location = link.attr("href");
+                }
 
-        });
+            });
     }
 
 
@@ -203,7 +200,9 @@ function set_contacts_id_hf(field_name) {
 function clear_filter() {
     $.each($(".search_box form input"), function(idx, input) {
         switch (input.type) {
-            case 'text': input.value = ''; break;
+            case 'text':
+                input.value = '';
+                break;
         }
     });
     $.each($(".search_box form option:selected"), function(idx, option) {
@@ -256,13 +255,19 @@ function display_alert(message, withTimeout) {
         clearTimeout(window.time_out_for_display_notice);
 }
 
-function displayWorkScreenTab(tab_id) {
+function displayWorkScreenTab(tab_id, header_translations) {
     var tab_ids = ["#results_sheet", "#call_sheet", "#pending_calls", "#completed_contacts"];
     tab_ids = $.grep(tab_ids, function(value) {
         return value != tab_id;
     });
     $(tab_ids.join(",")).hide();
     $(tab_id).show();
+    $('#tab_change_links a').removeClass('bt_active');
+    $(tab_id+'_switch_link').addClass('bt_active');
+    if (tab_id == '#results_sheet') { $('#tab_change_header').html(header_translations[0])}
+    if (tab_id == '#call_sheet') { $('#tab_change_header').html(header_translations[1])}
+    if (tab_id == '#pending_calls') { $('#tab_change_header').html(header_translations[2])}
+    if (tab_id == '#completed_contacts') { $('#tab_change_header').html(header_translations[3])}
 }
 
 function uncheck_category_checkboxes() {
@@ -296,9 +301,9 @@ function select_file_from_repository(field_id, material_id, material_file_name) 
     }
 
     $('#material_' + field_id + '_name').html($.map(window.materials_repository_files,
-            function (e) {
-                return "<input type=\"checkbox\"" + [' ' ,' checked=checked '][e[2]] + "value=\"1\" name=\"material_selected_" + material_id.toString() + "\" id=\"material_selected_" + material_id.toString() + "\" onclick=\"select_checkbox_for_file_from_repository(\'" + field_id + "\'," + e[0] + ")\">" + e[1]
-            }).join('<br />'));
+        function (e) {
+            return "<input type=\"checkbox\"" + [' ' ,' checked=checked '][e[2]] + "value=\"1\" name=\"material_selected_" + material_id.toString() + "\" id=\"material_selected_" + material_id.toString() + "\" onclick=\"select_checkbox_for_file_from_repository(\'" + field_id + "\'," + e[0] + ")\">" + e[1]
+        }).join('<br />'));
     insert_material_ids_to_value(field_id);
 }
 
@@ -307,9 +312,9 @@ function insert_material_ids_to_value(field_id) {
         return (n[2] == 1);
     });
     $('#material_' + field_id).attr('value', $.map(active_materials,
-            function (e) {
-                return e[0]
-            }).join(','));
+        function (e) {
+            return e[0]
+        }).join(','));
 }
 
 function select_file_from_repository_dialog(field_id, material_id, material_file_name) {
@@ -319,9 +324,9 @@ function select_file_from_repository_dialog(field_id, material_id, material_file
 
 function serialize_material_repository_array() {
     return "[" + $.map(window.materials_repository_files,
-            function (e) {
-                return "[" + e[0] + ", \"" + e[1] + "\"," + e[2] + "]"
-            }).join(",") + "]"
+        function (e) {
+            return "[" + e[0] + ", \"" + e[1] + "\"," + e[2] + "]"
+        }).join(",") + "]"
 }
 
 function deserialize_material_repository_array(serialized_array) {
@@ -374,6 +379,31 @@ function submit_category_filter_form(form_id) {
     $(form_id).submit();
 }
 
-function redirect_to_subcategory(){
+function redirect_to_subcategory() {
     document.location = "/categories/deals/" + $('#category_selector').val()
+}
+
+function add_default_action_for_contact_row(id) {
+    $('#' + id + ' td, p.element').filter(":not(:has(:checkbox, select)):not(.tda):not(:has(div.ajaxful-rating-wrapper))")
+        .addClass("pointer")
+        .click(
+        function() {
+            var link = $(this).parent().find('a.default_action');
+            link.trigger("click");
+        }).find("a").bind("click", function(e) {
+            e.stopPropagation();
+        });
+}
+
+function reset_class_cycle_for_contact_tables() {
+    reset_class_cycle_for_table('call_sheet');
+    reset_class_cycle_for_table('pending_calls');
+}
+
+function reset_class_cycle_for_table(name) {
+    css_class = 'odd';
+    $('#' + name + ' table tbody tr').each(function(i, row) {
+        $(row).attr('class', css_class);
+        css_class = css_class == 'odd' ? 'even' : 'odd';
+    })
 }

@@ -1,6 +1,6 @@
 class Callers::AgentWorkScreen::ContactsController < Callers::AgentWorkScreenController
 
-  before_filter :set_contact  
+  before_filter :set_contact
 
   def destroy
     params[:deassign] ? @contact.assign_agent(nil) : @contact.destroy
@@ -27,12 +27,17 @@ class Callers::AgentWorkScreen::ContactsController < Callers::AgentWorkScreenCon
   end
 
   def show
+    @fast = params[:fast] == "true"
     set_locals
+    unless @fast
+      add_completed_to_locals
+      add_pending_to_locals
+    end
   end
 
   private
   def set_contact
     @lead = @contact = @campaign.contacts.find_by_id(params[:id]) || @contacts.first
-  end  
+  end
 
 end

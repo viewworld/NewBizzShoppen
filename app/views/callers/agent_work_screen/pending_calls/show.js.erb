@@ -1,0 +1,4 @@
+$("#pending_calls").html("<%= escape_javascript(render(:partial => "callers/agent_work_screen/pending_calls", :locals => @locals)) %>");
+$('#pending_calls tr[id^="contact_row_id_"]').each(function(i, row) {
+    add_default_action_for_contact_row($(row).attr('id'));
+});

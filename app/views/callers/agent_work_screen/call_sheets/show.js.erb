@@ -1,0 +1,4 @@
+$("#call_sheet").html("<%= escape_javascript(render(:partial => "callers/agent_work_screen/call_sheet", :locals => @locals)) %>");
+$('#call_sheet tr[id^="contact_row_id_"]').each(function(i, row) {
+    add_default_action_for_contact_row($(row).attr('id'));
+});

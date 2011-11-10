@@ -569,6 +569,7 @@ Feature: Agent campaign - management
       Then I add user "translator_call_centre@nbs.com" to campaign "Testing One"
       Then I execute js for display action block for "campaigns"
       Then I follow translated "campaigns.index.result"
+      Then I wait 4 second
       Then I select "John Smith" from "agent_ids"
       Then I execute js for select agent_ids "1" to set selected as "false"
       Then I press translated "campaigns.show.search_button"

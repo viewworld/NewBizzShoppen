@@ -1,5 +1,3 @@
 display_notice("<%= escape_javascript(t("call_results.update.flash.successfully_updated")) %>", true);
 $.get("<%= url_for(:controller => "callers/agent_work_screen/contacts", :action => :show, :campaign_id => @campaign, :id => @contact) %>");
 show_agent_work_screen_dashboard();
-
-
