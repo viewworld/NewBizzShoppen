@@ -224,3 +224,30 @@ Feature: Subscription management for user
     And I sign in as admin@nbs.com with password secret
     And I am on administration upcoming invoices
     Then I should see "100.00" within "tbody#invoices_list tr:nth-of-type(1)"
+
+  @m23 @requested
+  Scenario: When I upgrade to payable subscription I need to pay for it by paypal if it is requested by that subscription
+
+  @m23 @requested
+  Scenario: I have to enter the billing information at the start of payable subscription
+
+  @m23 @requested
+  Scenario: I have to enter the billing information at the end of the free period of payable subscription
+
+  @m23 @requested
+  Scenario: When I don't provide my billing information I cannot get access to other feature of my account until I do that
+
+  @m23 @requested
+  Scenario: When I don't provide my billing information and payable subscription period ends then it is prolonged to free one
+
+  @m23 @requested
+  Scenario: When my payment failed then I am downgraded to free subscription
+
+  @m23 @requested
+  Scenario: When my payment failed it is retried according to the subscription properties
+
+  @m23 @requested
+  Scenario: When my payment is successful then invoice is generated and sent to the customer
+
+  @m23 @requested
+  Scenario: When I choose the subscription with "Must enter billing information (paypal) at start" at signup then I have to enter it as part of signup form
