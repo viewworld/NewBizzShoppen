@@ -16,6 +16,7 @@ Feature: Leads specific advanced import
 
   @added @selenium @_done @_tested
   Scenario: Call center can import leads from spreadsheet (ods, xls, xlsx) with advanced import
+    Given I visit domain http://faircalls.eu
     And I sign in as translator_call_centre@nbs.com with password secret
     Then I use advanced import for leads as "user"
     And lead "yessss" should be created by user "translator_call_centre@nbs.com"
@@ -23,6 +24,7 @@ Feature: Leads specific advanced import
 
   @added @selenium @_done @_tested
   Scenario: Call center agent can import leads from spreadsheet (ods, xls, xlsx) with advanced import
+    Given I visit domain http://faircalls.eu
     And I sign in as translator_call_centre_agent@nbs.com with password secret
     Then I use advanced import for leads as "user"
     And lead "yessss" should be created by user "translator_call_centre_agent@nbs.com"
@@ -30,6 +32,7 @@ Feature: Leads specific advanced import
 
   @added @selenium @_done @_tested
   Scenario: Agent can import leads from spreadsheet (ods, xls, xlsx) with advanced import
+    Given I visit domain http://faircalls.eu
     And I sign in as agent@nbs.com with password secret
     Then I use advanced import for leads as "user"
     And lead "yessss" should be created by user "agent@nbs.com"
