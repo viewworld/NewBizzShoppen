@@ -184,7 +184,7 @@ Feature: Front page for procurment
 
   Scenario: I should be able to browse deals by the arrows on the left and right side of the big featured group deal
 
-  @is @_tested @_done @wip
+  @is @_tested @_done
   Scenario: As admin I can select primary featured deal to be displayed on procurement page
     Given I am on the homepage
     And I make sure current locale is "en"

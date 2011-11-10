@@ -1,5 +1,17 @@
 display_notice("<%= escape_javascript(t("call_results.create.flash.successfully_added")) %>", true);
-$.get("<%= url_for(:controller => "callers/agent_work_screen/contacts", :action => :show, :campaign_id => @campaign, :id => 0) %>");
+$.get("<%= url_for(:controller => "callers/agent_work_screen/contacts", :action => :show, :campaign_id => @campaign, :id => 0, :fast => "true") %>");
 show_agent_work_screen_dashboard();
 
+$('#contact_row_id_<%= @contact.id %>').remove();
+<% @locals = {:contact => @contact, :campaign => @campaign, :namespace => "callers"} %>
+
+<% if @call_result.result.final %>
+$('#completed_contacts #contacts tbody').append("<%= escape_javascript(render(:partial => "callers/contacts/contact", :locals => @locals)) %>");
+<% elsif @contact.pending? %>
+$('#pending_calls #contacts tbody').append("<%= escape_javascript(render(:partial => "callers/contacts/contact", :locals => @locals)) %>");
+<% else %>
+$('#call_sheet #contacts tbody').append("<%= escape_javascript(render(:partial => "callers/contacts/contact", :locals => @locals)) %>");
+<% end %>
+reset_class_cycle_for_contact_tables();
+add_default_action_for_contact_row('contact_row_id_<%= @contact.id %>');
 

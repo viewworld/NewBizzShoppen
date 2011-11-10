@@ -1,8 +1,11 @@
 display_notice("<%= escape_javascript(t("contacts.update.flash.successfully_updated")) %>", true);
-$("#switch_campaign_form").html("<%= escape_javascript(render(:partial => "callers/agent_work_screen/switch_campaign_form", :locals => @locals)) %>");
-$("#call_sheet").html("<%= escape_javascript(render(:partial => "callers/agent_work_screen/call_sheet", :locals => @locals)) %>");
-$("#pending_calls").html("<%= escape_javascript(render(:partial => "callers/agent_work_screen/pending_calls", :locals => @locals)) %>");
-$("#completed_contacts").html("<%= escape_javascript(render(:partial => "callers/agent_work_screen/completed_contacts", :locals => @locals)) %>");        
+old_row = $('#contact_row_id_<%= @contact.id %>');
+new_row = $("<%= escape_javascript(render(:partial => "callers/contacts/contact", :locals => @locals)) %>");
+new_row.insertAfter(old_row);
+new_row.attr('class', old_row.attr('class'));
+old_row.remove();
+add_default_action_for_contact_row('contact_row_id_<%= @contact.id %>');
+
 $("#contact_info").html("<%= escape_javascript(@locals[:contact] ? render(:partial => "callers/agent_work_screen/contact_form", :locals => @locals) : "") %>");
 $("#call_result_form").html("<%= escape_javascript(@locals[:contact] ? render(:partial => "callers/agent_work_screen/call_result_form", :locals => @locals) : "") %>");
-loadScripts();
+//loadScripts();
