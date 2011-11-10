@@ -32,7 +32,7 @@ namespace :teamcity do
     system "cp /home/teamcity/nbs.parallel.database.yml config/database.yml"
     system "rake parallel:create"
     executable = File.join(Rails.root, 'vendor', 'plugins', 'parallel_tests', 'bin', 'parallel_test')
-    system "#{executable} --exec 'rake nbs:refresh_test_db RAILS_ENV=test' -n #{count}"
+    system "#{executable} --exec 'rake nbs:refresh_test_db RAILS_ENV=test'"
     system "rake parallel:features[,,'-p teamcity --format junit --out tmp/cucumber-junit']"
   end
 
