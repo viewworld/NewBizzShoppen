@@ -273,6 +273,9 @@ Feature: Agent campaign - calling session
       And I follow translated "call_results.edit.button_new_result"
       And I should see translated "call_results.new.customize_email_template"
 
+    @m23 @requested @system
+    Scenario: Any customized email in the agent work screen should be saved
+
     # 5168
     @m11 @requested @ao @tested_elsewhere @_done
     Scenario: I can see a message when there are no more contacts in my campaign

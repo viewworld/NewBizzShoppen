@@ -17,3 +17,58 @@ Scenario: My locale should be based on the domain from which I entered
 
 @m22 @requested
 Scenario: I should not see browse deals and browse leads tabs when on agent home page
+
+#8388
+@m23 @requested
+Scenario: When I am logged in I should see value created bar over the blurb (bar fro agent work screen)
+
+#8388
+# Use abbreviations if the value including the current values can't stay on one line.
+@m23 @requested
+Scenario: I should see additional information in the bar Time: Today (HH/MM)
+
+#8388
+# Use abbreviations if the value including the current values can't stay on one line.
+@m23 @requested
+Scenario: I should see additional information in the bar Time: This Week (HH/MM)
+
+#8388
+# Use abbreviations if the value including the current values can't stay on one line.
+@m23 @requested
+Scenario: I should see additional information in the bar Time: Last 4 Weeks (HH/MM)
+
+#8387
+@m23 @requested
+Scenario: I should see my active "Campaigns" in the left box
+
+#8387
+@m23 @requested
+Scenario: I should see Campaign name, Pending Contacts, Call Backs, Completion for each campaign in the "Campaigns" box
+
+#8387
+@m23 @requested
+Scenario: When I click a campaign in "Campaigns" box then I should be redirected to agent work screen for that campaign
+
+#8387
+@m23 @requested
+Scenario: I should see my latest call log "History" in the middle box
+
+#8387
+@m23 @requested
+Scenario: I should see Company name, result, date for each log in "History" box
+
+#8387
+@m23 @requested
+Scenario: When I click a call log in the "History" box then I should be redirected to agent work screen with that item selected
+
+#8387
+@m23 @requested
+Scenario: I should see my latest mails and comments in the "Communication" box
+
+#8387
+@m23 @requested
+Scenario: I should see email address, date, status (bounce/delivered) in "Communication" box
+
+#8387
+@m23 @requested
+Scenario: When I click on an email then I should be redirected to the agent work screen wth that item selected
