@@ -159,3 +159,30 @@ Scenario: I can enter a "Subscription text" as rich text
 #8338
 @m22 @requested @_done @non_testable
 Scenario: I can upload images for "Subscription text"
+
+@m23 @requested
+Scenario: I should be able to define subscription period
+
+@m23 @requested
+Scenario: I should be able to define billing period (which indicates the smaller periods of the parts of whole payment)
+
+@m23 @requested
+Scenario: I can check "Use PayPal to handle subscription"
+
+@m23 @requested
+Scenario: I can check "Must enter billing information (paypal) at start"
+
+@m23 @requested
+Scenario: I can check "Must enter billing information (paypal) at end of free period"
+
+@m23 @requested
+Scenario: I can check "Automatic downgrading"
+
+@m23 @requested
+Scenario: I can enter number of Billing retries before subscription will be downgraded
+
+@m23 @requested
+Scenario: I can check "Auto generate and send invoice for successful Paypal billing"
+
+@m23 @requested
+Scenario: I can set "Number of free deals in free period" for suppliers
