@@ -27,8 +27,9 @@ Feature: Home page
 
   @m8b @requested @tgn @_tested @_done
   Scenario: Call centre/call centre admin should share the homepage with agent -- correct the cc/cc agent welcome message (move it from the site home to agent home)
-    Given I am on the home page
-    Given I am signed up and confirmed as user with email bob@person.com and password supersecret and role call_centre
+    Given I visit domain http://faircalls.eu
+    And I am on the home page
+    And I am signed up and confirmed as user with email bob@person.com and password supersecret and role call_centre
     And user "bob@person.com" with role "call_centre" has attributes "company_name: Xerox"
     And I sign in as bob@person.com with password supersecret
     Then I should see "Welcome Xerox"
