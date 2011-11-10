@@ -69,6 +69,7 @@ Scenario: As translator I add/edit/remove edit hint, change it, save it and then
   And there are no hints
   And article hint for model "Lead" and method "company_name" has attributes "published:0"
   And I am not sign in
+  And I visit domain http://faircalls.eu
   Then I sign in as translator_1@nbs.com with password secret
   And I go to agents leads
   And I select "Test category 1" from "category_id"

@@ -411,7 +411,7 @@ Feature: Agent campaign - calling session
     @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_done @not_testable
     Scenario: Agent can customize email when upgrading contact to category buyer
 
-    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5  @wip
+    @m13 @requested @upgrade_to_category_buyer @tgn @$_call_centre_agent @_tested @_done @ff5
     Scenario: Contact can sign up by clicking on link in email and entering password or using Facebook/Google/Linkedin
       When I follow translated action "campaigns.table.work_screen" within row containing "Testing One"
       And I select "Upgrade to category supplier" from "selected_result_id"
