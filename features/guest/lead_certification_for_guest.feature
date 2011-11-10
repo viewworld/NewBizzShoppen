@@ -92,7 +92,6 @@ Scenario: When lead does not answer to any email then agent should see "Approval
   When lead WorstLead is created by user agent007@nbs.com with role agent
   And lead "WorstLead" certification request is sent
   And lead certification request for lead "WorstLead" has expired
-  And I visit domain http://fairdeals.eu
   And I go to the homepage
   And I sign in as agent007@nbs.com with password secret
   And I follow translated "layout.main_menu.agent.leads"
