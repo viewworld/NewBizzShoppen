@@ -2,12 +2,14 @@
     <%= call_results_table contact.call_results, :agent_work_screen => true do |blocks| %>
         <% blocks.tools do |call_result| %>
             <ul-actions>
-                <li>
-                  <%= link_to t("call_results.table.edit_link"), edit_callers_campaign_agent_work_screen_contact_call_result_path(campaign, contact, call_result), :class => "default_action", :remote => true %>
-                </li>
-                <li>
-                  <%= link_to t("call_results.table.remove_link"), callers_campaign_agent_work_screen_contact_call_result_path(campaign, contact, call_result), :confirm => t("call_results.table.remove_confirm"), :method => :delete, :remote => true %>
-                </li>
+              <li>
+                <%= link_to t("call_results.table.edit_link"), edit_callers_campaign_agent_work_screen_contact_call_result_path(campaign, contact, call_result), :class => "default_action", :remote => true %>
+              </li>
+              <% unless contact.completed? %>
+                  <li>
+                    <%= link_to t("call_results.table.remove_link"), callers_campaign_agent_work_screen_contact_call_result_path(campaign, contact, call_result), :confirm => t("call_results.table.remove_confirm"), :method => :delete, :remote => true %>
+                  </li>
+              <% end %>
             </ul-actions>
         <% end %>
     <% end %>

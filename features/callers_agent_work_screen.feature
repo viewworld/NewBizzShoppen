@@ -321,7 +321,7 @@ Feature: Callers agent work screen
   Scenario: Change result from final to regular
 
   @_done @selenium @_tested
-  Scenario: Remove result pending
+  Scenario: Remove pending result
     Then I add result "Call back" for current contact
     Then I follow translated "agent_work_screen.index.show_pending_calls"
     Then I should see "Bon Jovi inc." within "#pending_calls"
@@ -345,10 +345,119 @@ Feature: Callers agent work screen
     Then contact row for "Stefanek corp" has not class "highlight_row"
     Then contact row for "PHU Sciemkata" has not class "highlight_row"
 
-  @selenium
-  Scenario: Remove result regular
+  @_done @selenium @_tested
+  Scenario: Remove regular result
     Then I add result "Not in" for current contact
+    Then I follow translated "agent_work_screen.index.show_current_call_sheet"
+    Then I should see "Bon Jovi inc." within "#call_sheet"
+    Then I should see "Not in (Johnny Mnemonic)" within "#call_sheet"
+    Then I follow contact action "campaigns.edit.show_button" within tr "Bon Jovi inc."
+    Then I remove result for current contact
+    Then I follow translated "agent_work_screen.index.show_current_call_sheet"
+    Then I should see "Bon Jovi inc." within "#call_sheet"
+    Then I should not see "Not in (Johnny Mnemonic)" within "#call_sheet"
+    Then I should see "Mleko company" before "Stefanek corp"
+    Then I should see "Stefanek corp" before "Bon Jovi inc."
+
+  @_done @selenium @_tested
+  Scenario: Remove final result is impossible
+    Then I add result "Not interested" for current contact
     Then I follow translated "agent_work_screen.index.show_completed_contacts"
     Then I should see "Bon Jovi inc." within "#completed_contacts"
+    Then I should see "Not interested (Johnny Mnemonic)" within "#completed_contacts"
+    Then I follow translated "agent_work_screen.index.show_call_log_for_current_contact"
+    Then display all hidden actions
+    Then I should not see "call_results.table.remove_link" within "#results_sheet"
 
-  Scenario: Remove final result is impossible
+  @_done @selenium @_tested
+  Scenario: Remove pending result and previous is pending
+    Then I add result "Call back" for current contact
+    Then I follow translated "agent_work_screen.index.show_pending_calls"
+    Then I follow contact action "campaigns.edit.show_button" within tr "Bon Jovi inc."
+    Then I add result "Call back" for current contact
+    Then I follow contact action "campaigns.edit.show_button" within tr "Bon Jovi inc."
+    Then I remove result for current contact
+    Then I follow translated "agent_work_screen.index.show_pending_calls"
+    Then I should see "Bon Jovi inc." within "#pending_calls"
+    #TODO Then contact row for "Bon Jovi inc." has class "odd"
+    Then contact row for "Bon Jovi inc." has class "highlight_row"
+
+  @_done @selenium @_tested
+  Scenario: Remove pending result and previous is regular
+    Then I add result "Not in" for current contact
+    Then I follow translated "agent_work_screen.index.show_current_call_sheet"
+    Then I should see "Bon Jovi inc." within "#call_sheet"
+    Then I should see "Not in (Johnny Mnemonic)" within "#call_sheet"
+    Then I follow contact action "campaigns.edit.show_button" within tr "Bon Jovi inc."
+    Then I add result "Call back" for current contact
+    Then I follow translated "agent_work_screen.index.show_current_call_sheet"
+    Then contact row for "Mleko company" has class "highlight_row"
+    Then I should not see "Bon Jovi inc." within "#call_sheet"
+    Then I follow translated "agent_work_screen.index.show_pending_calls"
+    Then I should see "Bon Jovi inc." within "#pending_calls"
+    Then contact row for "Bon Jovi inc." has class "odd"
+    Then contact row for "Bon Jovi inc." has not class "highlight_row"
+    Then I follow contact action "campaigns.edit.show_button" within tr "Bon Jovi inc."
+    Then I remove result for current contact
+    Then I follow translated "agent_work_screen.index.show_pending_calls"
+    Then I should not see "Bon Jovi inc." within "#pending_calls"
+    Then I follow translated "agent_work_screen.index.show_current_call_sheet"
+    Then I should see "Bon Jovi inc." within "#call_sheet"
+    Then I should see "Mleko company" before "Bon Jovi inc."
+    Then I should see "Bon Jovi inc." before "Stefanek corp"
+    #TODO dlaczego cycle jest na odwrót? czy ja zrobiłem źle we wcześniejszych testach?
+    Then contact row for "Mleko company" has class "even"
+    Then contact row for "Bon Jovi inc." has class "odd"
+    Then contact row for "Stefanek corp" has class "even"
+    Then contact row for "PHU Sciemkata" has class "odd"
+    Then contact row for "Mleko company" has not class "highlight_row"
+    Then contact row for "Bon Jovi inc." has class "highlight_row"
+    Then contact row for "Stefanek corp" has not class "highlight_row"
+    Then contact row for "PHU Sciemkata" has not class "highlight_row"
+
+  @_done @selenium @_tested
+  Scenario: Remove regular result and previous is regular
+    Then I add result "Not in" for current contact
+    Then I follow translated "agent_work_screen.index.show_current_call_sheet"
+    Then I follow contact action "campaigns.edit.show_button" within tr "Bon Jovi inc."
+    Then I add result "Not in" for current contact
+    Then I follow translated "agent_work_screen.index.show_current_call_sheet"
+    Then I follow contact action "campaigns.edit.show_button" within tr "Bon Jovi inc."
+    Then I remove result for current contact
+    Then I follow translated "agent_work_screen.index.show_current_call_sheet"
+    #TODO dlaczego cycle jest na odwrót? czy ja zrobiłem źle we wcześniejszych testach?
+    Then contact row for "Mleko company" has class "even"
+    Then contact row for "Stefanek corp" has class "odd"
+    Then contact row for "Bon Jovi inc." has class "even"
+    Then contact row for "Mleko company" has not class "highlight_row"
+    Then contact row for "Stefanek corp" has not class "highlight_row"
+    Then contact row for "Bon Jovi inc." has class "highlight_row"
+    Then I should see "Mleko company" before "Stefanek corp"
+    Then I should see "Stefanek corp" before "Bon Jovi inc."
+    Then I should see "Not in (Johnny Mnemonic)" within "#call_sheet"
+
+  @_done @selenium @_tested
+  Scenario: Remove regular result and previous is pending
+    Then I add result "Call back" for current contact
+    Then I follow translated "agent_work_screen.index.show_pending_calls"
+    Then I should see "Bon Jovi inc." within "#pending_calls"
+    Then I follow contact action "campaigns.edit.show_button" within tr "Bon Jovi inc."
+    Then I add result "Not in" for current contact
+    Then I follow translated "agent_work_screen.index.show_current_call_sheet"
+    Then I should see "Bon Jovi inc." within "#call_sheet"
+    Then I follow contact action "campaigns.edit.show_button" within tr "Bon Jovi inc."
+    Then I remove result for current contact
+    Then I follow translated "agent_work_screen.index.show_pending_calls"
+    Then I should see "Bon Jovi inc." within "#pending_calls"
+    Then I should see "Call back (Johnny Mnemonic)" within "#pending_calls"
+    Then contact row for "Bon Jovi inc." has class "highlight_row"
+
+  @_done @selenium @_tested
+  Scenario: I can not add now result for completed contact
+    Then I add result "Not interested" for current contact
+    Then I follow translated "agent_work_screen.index.show_completed_contacts"
+    Then I should see "Bon Jovi inc." within "#completed_contacts"
+    Then I should see "Not interested (Johnny Mnemonic)" within "#completed_contacts"
+    Then I should see translated "call_results.edit.button_new_result"
+    Then I follow contact action "campaigns.edit.show_button" within tr "Bon Jovi inc."
+    Then I should not see translated "call_results.edit.button_new_result"
