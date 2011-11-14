@@ -241,13 +241,10 @@ Feature: Subscription management for user
   Scenario: When I don't provide my billing information and payable subscription period ends then it is prolonged to free one
 
   @m23 @requested
-  Scenario: When my payment failed then I am downgraded to free subscription
+  Scenario: When my payment failed then I am downgraded to the subscription that is defined by administrator
 
   @m23 @requested
   Scenario: When my payment failed it is retried according to the subscription properties
 
   @m23 @requested
   Scenario: When my payment is successful then invoice is generated and sent to the customer
-
-  @m23 @requested
-  Scenario: When I choose the subscription with "Must enter billing information (paypal) at start" at signup then I have to enter it as part of signup form

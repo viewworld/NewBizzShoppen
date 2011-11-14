@@ -104,3 +104,6 @@ Feature: Sign up feature
     When I follow translated "fairdeals_home.show.view.get_free_account"
     And I should not see "Premium supplier"
     And I should see "Ultra member"
+
+  @m23 @requested @subscriptions
+  Scenario: When I choose the subscription with "Must enter billing information (paypal) at start" at signup then I have to enter it as part of signup form

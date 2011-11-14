@@ -176,7 +176,7 @@ Scenario: I can check "Must enter billing information (paypal) at start"
 Scenario: I can check "Must enter billing information (paypal) at end of free period"
 
 @m23 @requested
-Scenario: I can check "Automatic downgrading"
+Scenario: I can check "Automatic downgrading" and select subscription name from dropdown to which it should be downgraded by default (list should include payable subscriptions without paypal)
 
 @m23 @requested
 Scenario: I can enter number of Billing retries before subscription will be downgraded
