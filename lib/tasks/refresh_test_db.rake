@@ -8,6 +8,6 @@ namespace :nbs do
     `thor nbs:seed`
     `thor nbs:t`
     excluded_tables = ["schema_migrations"].collect { |t| "-T #{t}" }.join(" ")
-    `pg_dump -i -a -x #{excluded_tables} -O nbs_test -f db/snapshots/cucumber.sql`
+    `pg_dump -i -a -x #{excluded_tables} -O #{ActiveRecord::Base.configurations[ENV["RAILS_ENV"]]["database"]} -f db/snapshots/cucumber.sql`
   end
 end
