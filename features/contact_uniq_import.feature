@@ -1,5 +1,5 @@
 #8059
-@uniq_import @23 @is @$_call_centre @requested
+@uniq_import @m23 @is @$_call_centre @requested
 Feature: Lead Advanced Import
 
   Scenario: I can check 'only uniqe' checkbox in contact advanced import form
