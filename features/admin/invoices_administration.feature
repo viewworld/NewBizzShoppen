@@ -466,11 +466,15 @@ Scenario: When creating new invoice a default seller should be selected
   When there is a seller with attributes "company_name:SellerOne" for country "Denmark"
   And there is a seller with attributes "company_name:DefaultSeller,default:1" for country "Denmark"
   And there is a seller with attributes "company_name:SellerThree" for country "Denmark"
-  And someone is signed up and confirmed as user with email customer_one@nbs.fake and password secret and role supplier with attributes "first_name:John 1,last_name:Smith,country:2"
-  And User customer_one@nbs.fake with role supplier is big buyer
-  And a lead LeadOne exists within category Computers and is bought by user customer_one@nbs.fake with role supplier
-  And I follow translated "layout.main_menu.admin.upcoming_invoices"
-  And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
+#  And someone is signed up and confirmed as user with email customer_one@nbs.fake and password secret and role supplier with attributes "first_name:John 1,last_name:Smith,country:2"
+  #And User customer_one@nbs.fake with role supplier is big buyer
+  #And a lead LeadOne exists within category Computers and is bought by user customer_one@nbs.fake with role supplier
+#  And I follow translated "layout.main_menu.admin.upcoming_invoices"
+#  And I follow translated "administration.upcoming_invoices.index.view.create_invoice"
+#  Then the "invoice_seller_name" field should contain "DefaultSeller"
+  Then I go to administration invoices page
+  And I select ", agent@nbs.com" from "invoice_user_id"
+  And I press "Create invoice"
   Then the "invoice_seller_name" field should contain "DefaultSeller"
 
 @m5 @tgn @_tested @_done
