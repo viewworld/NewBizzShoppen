@@ -1,4 +1,4 @@
-@is @notifications
+@is @notifications @nontestable @$_remove
 Feature: Notifications
 
   #5941

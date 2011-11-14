@@ -1,4 +1,4 @@
-@m15 @campaign_targets @$_administrator @requested @tgn
+@m15 @campaign_targets @$_administrator @requested @tgn @nontestable @$_remove
 Feature: Agent campaign targets
 
   Background:

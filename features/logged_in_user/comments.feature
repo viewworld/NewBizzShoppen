@@ -1,4 +1,4 @@
-@comments @m10 @requested @tgn
+@comments @m10 @requested @tgn @nontestable @$_remove
 Feature: Comments
 
 Background:
