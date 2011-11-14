@@ -1,4 +1,4 @@
-@m5 @sellers @ao
+@m5 @sellers @ao @nontestable
 Feature: Sellers
 
   Background:
