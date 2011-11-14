@@ -1,4 +1,4 @@
-@lead_manager @$_customer @m2 @nontestable
+@lead_manager @$_customer @m2
 Feature: Owned leads management for customer
 
 Background:
