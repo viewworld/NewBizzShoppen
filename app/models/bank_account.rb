@@ -9,6 +9,7 @@ class BankAccount < ActiveRecord::Base
   before_save :assure_global_default
   after_save :change_default_country_bank, :change_default_global_bank
   after_initialize :build_address_object
+  after_create :puts_info
 
   scope :global_default_bank_account, where(:global_default => true)
   scope :country_default_bank_account, lambda{|country_id| includes(:address).where(:addresses => {:country_id => country_id}, :country_default => true)}
@@ -16,6 +17,10 @@ class BankAccount < ActiveRecord::Base
   scoped_order :id, :country_id
 
   private
+
+  def puts_info
+    puts "BankAccountCount: #{BankAccount.count}"
+  end
 
   def build_address_object
     if new_record? and !address
