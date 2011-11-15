@@ -176,7 +176,13 @@ Scenario: I can check "Must enter billing information (paypal) at start"
 Scenario: I can check "Must enter billing information (paypal) at end of free period"
 
 @m23 @requested
-Scenario: I can check "Automatic downgrading" and select subscription name from dropdown to which it should be downgraded by default (list should include payable subscriptions without paypal)
+Scenario: I can check "Automatic downgrading"
+
+@m23 @requested
+Scenario: I can select subscription name from dropdown to which it should be downgraded by default (list should include payable subscriptions without paypal) if payment fails
+
+@m23 @requested
+Scenario: I should not be able to check "Automatic downgrading" if subscription is not handled by Paypal
 
 @m23 @requested
 Scenario: I can enter number of Billing retries before subscription will be downgraded
@@ -186,3 +192,6 @@ Scenario: I can check "Auto generate and send invoice for successful Paypal bill
 
 @m23 @requested
 Scenario: I can set "Number of free deals in free period" for suppliers
+
+@m23 @requested
+Scenario: I should not be able to set "Number of free deals in free period" for other role than suppliers
