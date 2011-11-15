@@ -8,7 +8,7 @@ require 'rubygems'
 require 'spork'
 
 def load_db
-#DatabaseCleaner.clean
+DatabaseCleaner.clean
 
 backup = Rails.root.join("db", "snapshots", "cucumber.sql")
 dbname = ActiveRecord::Base.configurations[ENV["RAILS_ENV"]]["database"]
@@ -50,7 +50,6 @@ Spork.prefork do
   Capybara::Selenium::Driver::DEFAULT_OPTIONS[:resynchronize] = false
 
   `rake db:test:prepare`
-  DatabaseCleaner.clean
   load_db
 
   Around('@selenium') do |scenario, block|
