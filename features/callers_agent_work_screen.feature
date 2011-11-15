@@ -1,4 +1,4 @@
-@is @agent_work_screen_speed_up @nontestable @$_remove
+@is @agent_work_screen_speed_up
 Feature: Callers agent work screen
 
 # in this file we only check js; models are tested somewhere else. Here you can find the key for abbreviations:

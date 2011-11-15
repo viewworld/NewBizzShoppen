@@ -1,4 +1,4 @@
-@m21 @requested @subscriptions @ao @nontestable @$_remove
+@m21 @requested @subscriptions @ao
 Feature: Subscription management for user
 
   Background:

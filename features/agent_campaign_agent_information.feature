@@ -1,5 +1,5 @@
 # The values should be calculated on all activities (all campaigns)
-@m15 @$_call_centre_agent @agent_information @requested @ao @nontestable @$_remove
+@m15 @$_call_centre_agent @agent_information @requested @ao
 Feature: Agent information
   Background:
     Given I am on the homepage
