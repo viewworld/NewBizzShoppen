@@ -20,7 +20,7 @@ namespace :teamcity do
 
   desc "run cucumber javascript tests"
   task :cucumber_js do
-    system "rake teamcity:random_db RAILS_ENV=test"
+    system "cp /home/teamcity/nbs.main.database.yml config/database.yml"
     system "rake db:create RAILS_ENV=test"
     system "rake nbs:refresh_test_db RAILS_ENV=test"
     system "cucumber -p javascript --format junit --out tmp/cucumber-junit"
