@@ -212,7 +212,11 @@ class User < ActiveRecord::Base
   end
 
   def deliver_email_template(uniq_id)
-    TemplateMailer.delay.new(email, uniq_id.to_sym, country, {:user => self.with_role})
+    TemplateMailer.delay.new(email, uniq_id.to_sym, country, {:user => self.with_role, :sender_id => User.get_current_user})
+  end
+
+  def self.get_current_user_id
+    Thread.current[:current_user_id]
   end
 
   def check_billing_rate

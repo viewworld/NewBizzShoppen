@@ -12,6 +12,12 @@ class ApplicationMailer < ActionMailer::Base
     bcc_recipients = options.delete(:bcc_recipients) || email_template.bcc
     cc_recipients = options.delete(:cc_recipients) || email_template.cc
     reply_to = options.delete(:reply_to)
+    sender_id = options.delete(:sender_id)
+
+    if sender_id
+      ArchivedEmail.create(:subject => subject, :body => body, :to_recipients => to, :bcc_recipients => bcc_recipients, :cc_recipients => cc_recipients,
+                           :reply_to => reply_to, :email_template_uniq_id => email_template.uniq_id, :sender_id => sender_id)
+    end
 
     if Rails.env.development?
       attachment_paths.each do |ap|
