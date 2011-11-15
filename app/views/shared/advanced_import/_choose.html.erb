@@ -85,6 +85,9 @@
       <% if ["contact", "supplier", "lead"].include?(model_name) %>
           <%= hidden_field_tag :object_id, @object_id %>
       <% end %>
+      <% if model_name == "contact" %>
+          <%= hidden_field_tag :unique_only, @unique_only %>
+      <% end %>
       <%= hidden_field_tag :creator_id, @creator_id %>
   <% end %>
 

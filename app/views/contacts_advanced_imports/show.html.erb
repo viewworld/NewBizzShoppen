@@ -11,6 +11,7 @@
               <ol class="align_inputs">
                 <%= file_field_tag 'attachment', :accept => 'spreadsheet/ods,spreadsheet/doc,spreadsheet/xdoc', :class => "fltl" %>
                 <%= select_tag :object_id, options_for_select(objects) %>
+                <%= check_box_tag :unique_only %><%= t("contacts_advanced_import.show.view.unique_only") %>
               </ol>
             </fieldset>
           </div>

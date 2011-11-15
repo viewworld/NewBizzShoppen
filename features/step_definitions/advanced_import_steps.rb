@@ -1,43 +1,78 @@
-Then /^I use advanced import for contacts$/ do
-  And %{I click hidden link by url regex "/contacts_advanced_import/"}
+Then /^I use advanced import for contacts (unique|not unique)$/ do |unique|
+  steps %Q{
+  And I click hidden link by url regex "/contacts_advanced_import/"}
   #wrong imports
-  And %{I press translated "advanced_import.show.view.button" within "#advanced_import_form"}
-  And %{I should see translated "advanced_import.choose.flash.error_wrong_file"}
-  And %{attach the file "contact1badheader_adv_import" to "attachment" within "#advanced_import_form"}
-  And %{I press translated "advanced_import.show.view.button" within "#advanced_import_form"}
-  And %{I should see translated "advanced_import.choose.flash.error_wrong_title"}
-  And %{attach the file "sample image" to "attachment" within "#advanced_import_form"}
-  And %{I press translated "advanced_import.show.view.button" within "#advanced_import_form"}
-  And %{I should see translated "advanced_import.choose.flash.error_wrong_file"}
+  steps %Q{
+#{'And I check "unique_only"' if unique == "unique"}
+    And I press translated "advanced_import.show.view.button" within "#advanced_import_form"
+    And I should see translated "advanced_import.choose.flash.error_wrong_file"
+    And attach the file "contact1badheader_adv_import" to "attachment" within "#advanced_import_form"
+#{'And I check "unique_only"' if unique == "unique"}
+    And I press translated "advanced_import.show.view.button" within "#advanced_import_form"
+    And I should see translated "advanced_import.choose.flash.error_wrong_title"
+    And attach the file "sample image" to "attachment" within "#advanced_import_form"
+#{'And I check "unique_only"' if unique == "unique"}
+    And I press translated "advanced_import.show.view.button" within "#advanced_import_form"
+    And I should see translated "advanced_import.choose.flash.error_wrong_file"}
   #first correct import
-  And %{attach the file "contact3allgood_adv_import" to "attachment" within "#advanced_import_form"}
-  And %{I press translated "advanced_import.show.view.button" within "#advanced_import_form"}
-  And %{I should see translated "contacts_advanced_import.choose.view.header"}
-  And %{I follow translated "advanced_import.choose.view.cancel_button"}
-  And %{I wait 2 second}
-  And %{attach the file "contact2badobject_adv_import" to "attachment" within "#advanced_import_form"}
-  And %{I select "Testing Two" from "object_id"}
-  And %{I press translated "advanced_import.show.view.button" within "#advanced_import_form"}
-  And %{I press translated "advanced_import.choose.view.next_button"}
-  And %{I press translated "advanced_import.preview.view.import_button"}
-  And %{I should see translated "contacts_advanced_import.create.flash.success" with options "counter:0 / 4"}
-  And %{campaign "Testing Two" should have "0" contacts}
-  And %{attach the file "contact3allgood_adv_import" to "attachment" within "#advanced_import_form"}
-  And %{I select "Testing Two" from "object_id"}
-  And %{I press translated "advanced_import.show.view.button" within "#advanced_import_form"}
-  And %{I should see "Company name *"}
-  And %{I press translated "advanced_import.choose.view.next_button"}
-  And %{I should see "1/2"}
-  And %{I follow translated "advanced_import.preview.view.cancel_button"}
-  And %{I press translated "advanced_import.choose.view.next_button"}
-  And %{I follow translated "advanced_import.preview.view.next_object_button"}
-  And %{I should see "2/2"}
-  And %{I follow translated "advanced_import.preview.view.first_object_button"}
-  And %{I should see "1/2"}
-  And %{I press translated "advanced_import.preview.view.import_button"}
-  And %{I should see translated "contacts_advanced_import.create.flash.success" with options "counter:2 / 2"}
-  And %{campaign "Testing Two" should have "2" contacts}
+  steps %Q{
+    And attach the file "contact3allgood_adv_import" to "attachment" within "#advanced_import_form"
+#{'And I check "unique_only"' if unique == "unique"}
+    And I press translated "advanced_import.show.view.button" within "#advanced_import_form"
+    And I should see translated "contacts_advanced_import.choose.view.header"
+    And I follow translated "advanced_import.choose.view.cancel_button"
+    And I wait 2 second
+    And attach the file "contact2badobject_adv_import" to "attachment" within "#advanced_import_form"
+    And I select "Testing Two" from "object_id"
+#{'And I check "unique_only"' if unique == "unique"}
+    And I press translated "advanced_import.show.view.button" within "#advanced_import_form"
+    And I press translated "advanced_import.choose.view.next_button"
+    And I press translated "advanced_import.preview.view.import_button"
+    And I should see translated "contacts_advanced_import.create.flash.success" with options "counter:0 / 4"
+    And campaign "Testing Two" should have "0" contacts
+    And attach the file "contact3allgood_adv_import" to "attachment" within "#advanced_import_form"
+    And I select "Testing Two" from "object_id"
+#{'And I check "unique_only"' if unique == "unique"}
+    And I press translated "advanced_import.show.view.button" within "#advanced_import_form"
+    And I should see "Company name *"
+    And I press translated "advanced_import.choose.view.next_button"
+    And I should see "1/2"
+    And I follow translated "advanced_import.preview.view.cancel_button"
+    And I press translated "advanced_import.choose.view.next_button"
+    And I follow translated "advanced_import.preview.view.next_object_button"
+    And I should see "2/2"
+    And I follow translated "advanced_import.preview.view.first_object_button"
+    And I should see "1/2"
+    And I press translated "advanced_import.preview.view.import_button"
+    And I should see translated "contacts_advanced_import.create.flash.success" with options "counter:2 / 2"
+    And campaign "Testing Two" should have "2" contacts}
+  if unique == "unique"
+#second correct import - but unique is on and there is only unique contacts
+    steps %Q{
+And attach the file "contact3allgood_adv_import" to "attachment" within "#advanced_import_form"
+And I select "Testing Two" from "object_id"
+And I check "unique_only"
+And I press translated "advanced_import.show.view.button" within "#advanced_import_form"
+And I press translated "advanced_import.choose.view.next_button"
+And I follow translated "advanced_import.preview.view.cancel_button"
+And I press translated "advanced_import.choose.view.next_button"
+And I press translated "advanced_import.preview.view.import_button"
+And I should see translated "contacts_advanced_import.create.flash.success" with options "counter:0 / 2"
+And I should see translated "contacts_advanced_import.create.flash.success_with_not_unique" with options "counter:2"
+And campaign "Testing Two" should have "2" contacts
+}
+#third correct import
+    steps %Q{
+And attach the file "contact3allgood_adv_import" to "attachment" within "#advanced_import_form"
+And I select "Testing Two" from "object_id"
+And I press translated "advanced_import.show.view.button" within "#advanced_import_form"
+And I press translated "advanced_import.choose.view.next_button"
+And I press translated "advanced_import.preview.view.import_button"
+And I should see translated "contacts_advanced_import.create.flash.success" with options "counter:2 / 2"
+And campaign "Testing Two" should have "4" contacts}
+  end
 end
+
 
 Then /^I use advanced import for users "(suppliers|members)"$/ do |name|
   number = name == 'suppliers' ? 3 : 1
