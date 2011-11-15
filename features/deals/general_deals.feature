@@ -1,4 +1,4 @@
-@m18 @general_deals
+@m18 @general_deals @nontestable @$_remove
 Feature: General deals
 
   @_done
