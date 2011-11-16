@@ -23,11 +23,11 @@
 
                 <h3><%= t("deals.show.view.detailed_description_label") %></h3>
 
-                <p class="i expandable"><%= @deal.hidden_description %></p>
+                <p class="i expandable"><%= @deal.hidden_description.to_s.html_safe %></p>
 
                 <h3><%= t("deals.show.view.fine_print_label") %></h3>
 
-                <p class="i expandable"><%= @deal.fine_print %></p>
+                <p class="i expandable"><%= @deal.fine_print.to_s.html_safe %></p>
 
                 <% if @deal.logo %>
                     <h3><%= t("deals.show.view.company_logo_label") %></h3>
@@ -41,7 +41,7 @@
 
                 <h3><%= t("deals.show.view.company_description_label") %></h3>
 
-                <p class="i expandable"><%= @deal.company_description %></p>
+                <p class="i expandable"><%= @deal.company_description.to_s.html_safe %></p>
               </div>
             </div>
           </div>
