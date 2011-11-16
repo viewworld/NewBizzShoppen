@@ -12,7 +12,7 @@ class Administration::Invoicing::BulkMailingsController < Administration::Admini
       invoice_filename = invoice.store_pdf(current_user).basename
       invoice_path = Pathname.new(File.join(::Rails.root.to_s,'public/html2pdf/invoice_cache', invoice_filename))
       TemplateMailer.delay.new(invoice.user.email, @email_template, invoice.user.country,
-                                       {:invoice => invoice}, Array(invoice_path))
+                                       {:invoice => invoice, :sender_id => User.get_current_user_id}, Array(invoice_path))
       invoice.update_attribute(:emailed_at, Time.now)
     end
     flash[:notice] = I18n.t("flash.bulk_mailings.invoices_sent")

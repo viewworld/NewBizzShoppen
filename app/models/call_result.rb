@@ -238,7 +238,8 @@ class CallResult < ActiveRecord::Base
 
     TemplateMailer.delay.new(contact_email_address, :blank_template, Country.get_country_from_locale,
                                        {:subject_content => template.subject, :body_content => template.body,
-                                        :bcc_recipients => template.bcc, :cc_recipients => template.cc},
+                                        :bcc_recipients => template.bcc, :cc_recipients => template.cc,
+                                        :sender_id => User.get_current_user_id},
                                         assets_to_path_names(send_material_result_value.materials))
   end
 
@@ -249,7 +250,8 @@ class CallResult < ActiveRecord::Base
 
     TemplateMailer.delay.new(contact_email_address, :blank_template, Country.get_country_from_locale,
                                        {:subject_content => template.subject, :body_content => template.render({:user => user, :password => password}),
-                                        :bcc_recipients => template.bcc, :cc_recipients => template.cc},
+                                        :bcc_recipients => template.bcc, :cc_recipients => template.cc,
+                                        :sender_id => User.get_current_user_id},
                                         assets_to_path_names(send_material_result_value.materials))
   end
   
