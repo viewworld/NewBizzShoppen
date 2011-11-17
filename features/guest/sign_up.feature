@@ -115,10 +115,10 @@ Feature: Sign up feature
   Scenario: When I choose the subscription that is handled by Paypal and requires entering billing information and I confirm my billing then I return to signup and can still sign up via third party service
 
   @m23 @requested @subscriptions
-  Scenario After I successfully create my account then my Paypal profile is created
+  Scenario: After I successfully create my account then my Paypal profile is created
 
   @m23 @requested @subscriptions
-  Scenario When I fail to create my account then my Paypal profile is not created
+  Scenario: When I fail to create my account then my Paypal profile is not created
 
   @m23 @requested @subscriptions
   Scenario: When I choose the subscription that is handled by Paypal and requires entering billing information and I fail to confirm my billing then I return to signup and have to choose other subscription
