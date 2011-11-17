@@ -12,13 +12,12 @@ class Administration::EmailBouncesController < Administration::AdministrationCon
   set_subtab "bounce"
 
   def create
-    EmailBounce.create!(
-      :subject => params["Subject"],
+    ArchivedEmail.where(:message_id => params["MessageID"]).each do |email|
+      email.bounce_details = {
       :name => params["Name"],
       :inactive => params["Inactive"],
       :content => params["Content"],
       :tag => params["Tag"],
-      :message_id => params["MessageID"],
       :details => params["Details"],
       :postmark_id => params["ID"],
       :can_activate => params["CanActivate"],
@@ -26,8 +25,12 @@ class Administration::EmailBouncesController < Administration::AdministrationCon
       :description => params["Description"],
       :email => params["Email"],
       :type_code => params["TypeCode"],
-      :dump_available => params["DumpAvailable"]
-    )
+      :dump_available => params["DumpAvailable"]}
+      email.bounced_at = params["BouncedAt"]
+      email.status = ArchivedEmail::BOUNCED
+      email.save
+    end
+
     respond_to do |format|
       format.json { render :nothing => true }
     end
@@ -42,8 +45,13 @@ class Administration::EmailBouncesController < Administration::AdministrationCon
   end
 
   def collection
-    @search = EmailBounce.scoped_search(params[:search])
+    @search = ArchivedEmail.scoped_search(params[:search])
+    @search.bounced = true
     @email_bounces = @search.order("bounced_at DESC").paginate(:page => params[:page], :per_page => 10)
+  end
+
+  def resource
+    @email_bounce = ArchivedEmail.find(params[:id])
   end
 
 end

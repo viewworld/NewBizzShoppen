@@ -168,7 +168,7 @@ class Deal < AbstractLead
     TemplateMailer.delay.new(supplier.email, :blank_template, Country.get_country_from_locale,
                                        {:subject_content => template.subject, :body_content => template.render({:user => supplier, :password => password}),
                                         :bcc_recipients => template.bcc, :cc_recipients => template.cc,
-                                        :sender_id => User.get_current_user_id})
+                                        :sender_id => User.get_current_user_id, :email_template_uniq_id => template.uniq_id})
   end
 
   def slug

@@ -1081,6 +1081,8 @@ en:
           bounced_at: "Bounced at"
           actions: "Actions"
           details: "Details"
+          sender: "Sender"
+          anonymous: "Anonymous"
       show:
         view:
           header: "Bounce details"
@@ -1099,6 +1101,7 @@ en:
           type_code: "Type code"
           dump_available: "Dump available"
 
+          body: "Body"
     articles:
       show:
         view:
