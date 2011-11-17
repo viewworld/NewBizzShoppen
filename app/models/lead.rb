@@ -333,7 +333,7 @@ class Lead < AbstractLead
   end
 
   def show_lead_details_url
-    "https://#{mailer_host}/leads/#{self.id}"
+    "http://#{mailer_host}/leads/#{self.id}"
   end
 
   def category_name

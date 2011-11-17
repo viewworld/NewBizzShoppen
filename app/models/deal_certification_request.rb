@@ -49,7 +49,7 @@ class DealCertificationRequest < ActiveRecord::Base
   end
 
   def login_url
-    "https://#{Nbs::Application.config.action_mailer.default_url_options[:host]}/deals/#{deal_id}/edit?token=#{token}"
+    "http://#{Nbs::Application.config.action_mailer.default_url_options[:host]}/deals/#{deal_id}/edit?token=#{token}"
   end
 
   def change_state(message)
