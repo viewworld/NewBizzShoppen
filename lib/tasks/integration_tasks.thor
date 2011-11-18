@@ -133,4 +133,15 @@ class IntegrationTasks < Thor
     puts "Updating translations"
     Translation.where(:key => "administration.invoices.mailing.new.view.invoice_already_sent_or_paid", :locale => "en").first.update_attribute(:value, "Warning: invoice has been already %{status}.")
   end
+
+  desc "m23", ""
+  def m23
+    puts "Bounces integrations"
+
+    EmailBounce.all.each do |eb|
+      ArchivedEmail.create(:status => ArchivedEmail::BOUNCED, :to => eb.email, :bounced_at => eb.bounced_at, :subject => eb.subject)
+    end
+
+    #serialize other attr poorzez .attributes
+  end
 end
