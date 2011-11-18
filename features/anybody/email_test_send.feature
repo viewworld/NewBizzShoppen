@@ -1,4 +1,4 @@
-@m23 @requested
+@m23 @requested @emails
 Feature: Email test send
 
   Scenario: I can click "Test send email" and enter email address
