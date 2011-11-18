@@ -34,7 +34,7 @@
       <% end %>
   <% end %>
 
-  <%= call_results_table @call_results do |blocks| %>
+  <%= call_results_table @call_results, :agent_work_screen => false, :crm => false do |blocks| %>
       <% blocks.tools do |call_result| %>
           <ul-actions>
             <li>

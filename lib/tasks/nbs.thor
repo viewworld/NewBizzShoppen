@@ -658,11 +658,11 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
     campaign.results = Result.generic_results
     campaign.users = call_centre.subaccounts
 
-    [{:company_name => "Bon Jovi inc.", :company_phone_number => "888 112 113"},
-     {:company_name => "Mleko company", :company_phone_number => "510 333 333"},
-     {:company_name => "Stefanek corp", :company_phone_number => "888 422 633"},
-     {:company_name => "PHU Sciemkata", :company_phone_number => "602 222 333"}].each do |attrs|
-      Contact.find_or_create_by_company_name attrs.merge(:country => country, :campaign => campaign, :creator => call_centre, :category => category, :contact_name => "", :phone_number => "", :email_address => "", :creator_name => call_centre.full_name)
+    [{:company_name => "Bon Jovi inc.", :company_phone_number => "888 112 113", :email_address => "bj@bj.com", :company_vat_no => "0000099999"},
+     {:company_name => "Mleko company", :company_phone_number => "510 333 333", :email_address => ""},
+     {:company_name => "Stefanek corp", :company_phone_number => "888 422 633", :email_address => ""},
+     {:company_name => "PHU Sciemkata", :company_phone_number => "602 222 333", :email_address => ""}].each do |attrs|
+      Contact.find_or_create_by_company_name attrs.merge(:country => country, :campaign => campaign, :creator => call_centre, :category => category, :contact_name => "", :phone_number => "", :creator_name => call_centre.full_name)
     end
 
     Contact.where("last_call_result_at IS NULL").each do |contact|
