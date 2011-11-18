@@ -181,18 +181,18 @@ class Deal < AbstractLead
   end
   
   def next_group_deal
-    if deal = Deal.order("end_date ASC").where("((end_date >= ? and id <> ?) or id <> ?) and end_date >= current_date", self.end_date, self.id, self.id).first
+    if deal = Deal.without_inactive.order("id ASC").where("id > ?", self.id).first
       deal
     else
-      self
+      Deal.without_inactive.order("id ASC").first
     end
   end
 
   def previous_group_deal
-    if deal = Deal.order("end_date DESC").where("((end_date <= ? and id <> ?) or id <> ?) and end_date >= current_date", self.end_date, self.id, self.id).first
+    if deal = Deal.without_inactive.order("id DESC").where("id < ?", self.id).first
       deal
     else
-      self
+      Deal.without_inactive.order("id DESC").first
     end
   end
 

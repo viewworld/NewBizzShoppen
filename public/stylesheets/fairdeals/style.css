@@ -1414,6 +1414,11 @@ span.cke_skin_kama
     padding-bottom: 20px;
 }
 
+.deal_featured_desc div[style],p[style]
+{
+    background-color: #F8F8F8 !important;
+}
+
 .primary_deal .frm_foot p
 {
     text-align: right;

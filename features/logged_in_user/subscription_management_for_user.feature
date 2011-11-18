@@ -225,71 +225,71 @@ Feature: Subscription management for user
     And I am on administration upcoming invoices
     Then I should see "100.00" within "tbody#invoices_list tr:nth-of-type(1)"
 
-  @m23 @requested
+  @backlog @requested
   Scenario: When I upgrade to subscription that is handled by Paypal and requires entering billing information then I am redirected to paypal
 
-  @m23 @requested
+  @backlog @requested
   Scenario: When I upgrade to subscription that is handled by Paypal and requires entering billing information and I confirm my billing then I return to my profile
 
-  @m23 @requested
+  @backlog @requested
   Scenario: When I upgrade to subscription that is handled by Paypal and requires entering billing information and I fail to confirm my billing then I return to my profile without subscription change
 
-  @m23 @requested
+  @backlog @requested
   Scenario: When I upgrade from one payable subscription to other payable then my paypal profile is changed
 
-  @m23 @requested
+  @backlog @requested
   Scenario: When I downgrade to subscription that is handled by Paypal and requires entering billing information then I am redirected to paypal
 
-  @m23 @requested
+  @backlog @requested
   Scenario: When I downgrade to subscription that is handled by Paypal and requires entering billing information and I confirm my billing then I return to my profile
 
-  @m23 @requested
+  @backlog @requested
   Scenario: When I downgrade to subscription that is handled by Paypal and requires entering billing information and I fail to confirm my billing then I return to my profile without subscription change
 
-  @m23 @requested
+  @backlog @requested
   Scenario: When I downgrade from one payable subscription to other payable then my paypal profile is changed
 
-  @m23 @requested
+  @backlog @requested
   Scenario: When I downgrade then my new paypal recurring profile for downgraded subscription will start at the new billing cycle
 
-  @m23 @requested
+  @backlog @requested
   Scenario: When my subscription is auto prolonging then it is created in paypal without end date
 
-  @m23 @requested
+  @backlog @requested
   Scenario: When my subscription is NOT auto prolonging then it is created in paypal with end date
 
-  @m23 @requested
+  @backlog @requested
   Scenario: When my subscription is NOT auto prolonging and has lockup then (TODO: either paypal profile is generated without end date or penalty creates debt)
 
-  @m23 @requested
+  @backlog @requested
   Scenario: When I cancel payable subscription that is both auto prolonging and handled by paypal then my paypal profile is cancelled at the end of that subscription
 
-  @m23 @requested
+  @backlog @requested
   Scenario: When my subscription has free period then it is included into my paypal profile to delay payment
 
-  @m23 @requested
+  @backlog @requested
   Scenario: I have to enter the billing information at the start of payable subscription
 
-  @m23 @requested
+  @backlog @requested
   Scenario: I have to enter the billing information at the end of the free period of payable subscription
 
-  @m23 @requested
+  @backlog @requested
   Scenario: When I don't provide my billing information I cannot get access to other feature of my account until I do that
 
-  @m23 @requested
+  @backlog @requested
   Scenario: When I don't provide my billing information and payable subscription period ends then it is prolonged to the subscription that is defined by administrator
 
-  @m23 @requested
+  @backlog @requested
   Scenario: When my payment failed then I am downgraded to the subscription that is defined by administrator
 
-  @m23 @requested
+  @backlog @requested
   Scenario: When my payment failed it is retried according to the subscription properties
 
-  @m23 @requested
+  @backlog @requested
   Scenario: When my payment failed and I am downgraded then the payment is generated in the form of a debt
 
-  @m23 @requested
+  @backlog @requested
   Scenario: As supplier I can create as many deals as my subscription defines and only during my free period
 
-  @m23 @requested
+  @backlog @requested
   Scenario: As supplier I cannot create new deals if I used my free deals limit or my free period expired

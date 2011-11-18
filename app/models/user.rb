@@ -345,11 +345,11 @@ class User < ActiveRecord::Base
   end
 
   def confirmation_instructions_url
-    "https://#{domain_name}/users/confirmation?confirmation_token=#{confirmation_token}"
+    "http://#{domain_name}/users/confirmation?confirmation_token=#{confirmation_token}"
   end
 
   def reset_password_instructions_url
-    "https://#{domain_name}/users/password/edit?reset_password_token=#{reset_password_token}"
+    "http://#{domain_name}/users/password/edit?reset_password_token=#{reset_password_token}"
   end
 
   def roles_as_text
@@ -629,7 +629,7 @@ class User < ActiveRecord::Base
 
   def category_supplier_category_home_url
     if has_role?(:category_supplier)
-      "https://#{domain_name}/#{with_role.buying_categories.first.cached_slug}"
+      "http://#{domain_name}/#{with_role.buying_categories.first.cached_slug}"
     end
   end
 
@@ -637,11 +637,11 @@ class User < ActiveRecord::Base
     if has_role?(:category_supplier)
       category_supplier_category_home_url
     elsif has_role?(:supplier)
-      "https://#{domain_name}/supplier_home"
+      "http://#{domain_name}/supplier_home"
     elsif has_role?(:member)
-      "https://#{domain_name}"
+      "http://#{domain_name}"
     else
-      "https://#{domain_name}/"
+      "http://#{domain_name}/"
     end
   end
 
