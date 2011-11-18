@@ -1416,7 +1416,7 @@ span.cke_skin_kama
 
 .deal_desc div[style],p[style]
 {
-    color: #F8F8F8 !important;
+    background-color: #F8F8F8 !important;
 }
 
 .primary_deal .frm_foot p
