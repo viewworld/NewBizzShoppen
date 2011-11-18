@@ -31,6 +31,7 @@ en:
       confrimation_message: "Are you sure? All subsequent replies will be deleted as well."
       field_cant_be_blank: "can't be blank"
       field_incorrect_format: "incorrect value"
+      enter_email_address: "Enter email address"
     no_categories_for_category_supplier: "Your Category Supplier account has no associated categories. You can't sign in."
     edit_hint: "Edit hint"
     agree_to: "Agree to"
@@ -981,6 +982,7 @@ en:
           title_stats: "Statistics recalculation"
           button_update_stats: "Update stats"
           contacts_settings_title: "Fairdeals contact settings"
+          test_send_email: "Test send email"
       update:
         controller:
           successful_update_notice: "Settings were successfully updated."
@@ -999,6 +1001,7 @@ en:
           edit: "Edit"
           button_update: "Save"
 
+          test_send_email: "Test send email"
     category_email_templates:
       update:
         controller:
@@ -2858,6 +2861,8 @@ en:
       descriptions:
         subscription_refund: "Refund for unused %{days} days in subscription %{name}"
     subscription_plan_incorrect_roles_set: "Role member cannot be selected with other roles."
+    email_template:
+      test_send_disclaimer: "This is preview only. Information inside the brackets will be replaced by data when email will be sent to actual recipient through system."
   activerecord:
     models:
       article:
@@ -3974,6 +3979,7 @@ en:
       view:
         title: "Editing email template %{name}"
         button_cancel: "Cancel"
+        test_send_email: "Test send email"
   deal_requests:
     create:
       flash:
