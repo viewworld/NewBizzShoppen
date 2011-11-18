@@ -164,9 +164,9 @@ Scenario: As admin, it should be possible to edit all kind of articles by displa
   And I should see translated "administration.articles.edit.view.header" with options "name:Blurb supplier home"
 
 #8603
-@m23 @requested
+@m23 @requested @_done @tested_elsewhere @rspec
 Scenario: I can save a blurb with empty body
 
 #8603
-@m23 @requested
+@m23 @requested @_done @non_testable
 Scenario: When blurb has empty body it is not displayed (takes no space on the page)
