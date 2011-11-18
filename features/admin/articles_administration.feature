@@ -162,3 +162,11 @@ Scenario: As admin, it should be possible to edit all kind of articles by displa
   Then I click hidden link by url regex "/administration\/articles\/\d+\/edit/"
   And I open page in browser
   And I should see translated "administration.articles.edit.view.header" with options "name:Blurb supplier home"
+
+#8603
+@m23 @requested
+Scenario: I can save a blurb with empty body
+
+#8603
+@m23 @requested
+Scenario: When blurb has empty body it is not displayed (takes no space on the page)

@@ -250,3 +250,7 @@ Feature: Deals from Call Centre/Agent perspective
     And I follow translated "deals.common.listing.view.new_deal"
     And I follow translated "call_centre.deals.new.view.certify"
     And the "deal_use_company_name_as_category" checkbox should be checked
+
+  #8606
+  @m23 @requested
+  Scenario: I can see a blurb text when I confirm a deal

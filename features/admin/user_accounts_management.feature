@@ -826,3 +826,28 @@ Scenario: When editing a user I can click a button and go to invoices page filte
   And I follow translated "administration.users.edit.view.view_user_invoices"
   And I should see "300.00" within "#invoices_list"
 
+#8605
+@m23 @subscriptions @requested
+Scenario: I can select user's new subscription plan
+
+#8605
+@m23 @subscriptions @requested
+Scenario: I can change user's subscription plan no matter what constraints it has (skip no upgrade/downgrade rules)
+
+#8605
+@m23 @subscriptions @requested
+Scenario: I can change user's subscription plan when he entered lockup period
+
+#8605
+@m23 @subscriptions @requested
+Scenario: I can change user's subscription plan when he is in free period
+
+#8605
+@m23 @subscriptions @requested
+Scenario: I can select start date when I change user's subscription plan
+
+#8605
+@m23 @subscriptions @requested
+Scenario: When I select user's new subscription plan then the current plan end date should change
+
+
