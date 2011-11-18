@@ -7,4 +7,12 @@ class ::Article::Cms::InterfaceContentText < ::Article::Cms
 
   validates_presence_of :key
 
+  private
+
+  def validates_presence_of_content?
+    false
+  end
+
+  public
+
 end
