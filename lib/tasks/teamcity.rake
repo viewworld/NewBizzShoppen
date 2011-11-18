@@ -28,7 +28,7 @@ namespace :teamcity do
   task :rspec do
     system "cp /home/teamcity/nbs.main.database.yml config/database.yml"
     system "rake db:create RAILS_ENV=test"
-    system "rake db:migrate RAILS_ENV=test"
+    system "rake nbs:refresh_test_db RAILS_ENV=test"
     system "rspec spec"
     system "rake db:drop RAILS_ENV=test"
   end
