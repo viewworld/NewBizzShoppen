@@ -163,7 +163,7 @@ class LeadPurchase < LeadPurchaseBase
   end
 
   def url
-    "https://#{Nbs::Application.config.action_mailer.default_url_options[:host]}/suppliers/lead_purchases/#{id}"
+    "http://#{Nbs::Application.config.action_mailer.default_url_options[:host]}/suppliers/lead_purchases/#{id}"
   end
 
 end
