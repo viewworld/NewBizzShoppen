@@ -198,16 +198,29 @@ Given /^campaign report data is generated$/ do
 
   @contact2_1 = Contact.make!(:campaign => @campaign2)
 
-  CallResult.make!(:contact => @contact1_1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_day+Time.now.beginning_of_day.utc_offset)
-  CallResult.make!(:contact => @contact1_3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_day+Time.now.beginning_of_day.utc_offset)
-  CallResult.make!(:contact => @contact1_4, :result => @result4, :creator => @call_centre_agent2, :created_at => Time.now.beginning_of_day+Time.now.beginning_of_day.utc_offset)
-  CallResult.make!(:contact => @contact1_2, :result => @result2, :creator => @call_centre_agent2, :created_at => Time.now.beginning_of_day+Time.now.beginning_of_day.utc_offset)
-  CallResult.make!(:contact => @contact1_2, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset-1.day)
-  CallResult.make!(:contact => @contact1_1, :result => @result_final_reported, :creator => @call_centre_agent1)
-  CallResult.make!(:contact => @contact1_1, :result => @result_final, :creator => @call_centre_agent1)
-  CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
-  LeadPurchase.make!(:lead => @contact1_3.lead)
-  LeadPurchase.make!(:lead => @contact1_4.lead, :quantity => 5)
+    CallResult.make!(:contact => @contact1_1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_day+Time.now.beginning_of_day.utc_offset)
+    CallResult.make!(:contact => @contact1_3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_day+Time.now.beginning_of_day.utc_offset)
+    CallResult.make!(:contact => @contact1_4, :result => @result4, :creator => @call_centre_agent2, :created_at => Time.now.beginning_of_day+Time.now.beginning_of_day.utc_offset)
+    CallResult.make!(:contact => @contact1_2, :result => @result2, :creator => @call_centre_agent2, :created_at => Time.now.beginning_of_day+Time.now.beginning_of_day.utc_offset)
+    CallResult.make!(:contact => @contact1_2, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset-1.day)
+    CallResult.make!(:contact => @contact1_1, :result => @result_final_reported, :creator => @call_centre_agent1)
+    CallResult.make!(:contact => @contact1_1, :result => @result_final, :creator => @call_centre_agent1)
+    CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
+    LeadPurchase.make!(:lead => @contact1_3.lead)
+    LeadPurchase.make!(:lead => @contact1_4.lead, :quantity => 5)
+end
+
+
+Given /^additional campaign report data is generated$/ do
+  @contact2_1.update_attribute(:company_name, "Aaaaa company name")
+  @contact1_5 = Contact.make!(:campaign => @campaign1, :pending => true, :agent_id => @call_centre_agent1)
+  @contact1_6 = Contact.make!(:campaign => @campaign1, :agent_id => @call_centre_agent1)
+  @@result_call_back = Result.generic_results.where(:name => "Call back").first
+  call_result = CallResult.make(:contact => @contact1_6, :result => @@result_call_back, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_day+Time.now.beginning_of_day.utc_offset)
+  call_result.result_values << ResultValue.create(:value => "2012-01-01 00:01", :result_field => ResultField.create(:field_type => ResultField::DATETIME))
+  call_result.save!
+  ArchivedEmail.create(:to => "some.recipient@somewhere.com", :status => 1, :related => call_result, :sender_id => @call_centre_agent1.id,
+                       :subject => "Additional materials sent", :body => "<p>Test body for additional materials</p>")
 end
 
 Then /^I can enable crm while create are edit campaign$/ do

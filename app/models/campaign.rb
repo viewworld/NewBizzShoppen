@@ -297,4 +297,12 @@ class Campaign < ActiveRecord::Base
     end
     campaign
   end
+
+  def pending_contacts_for(user)
+    contacts.where(:agent_id => user.id).with_pending_status(true)
+  end
+
+  def call_back_call_results_for(user)
+    CallResult.where("leads.campaign_id = ? and call_results.creator_id = ? and call_results.result_id = ?", id, user.id, Result.where(:generic => true, :name => "Call back").first.id).joins(:contact)
+  end
 end

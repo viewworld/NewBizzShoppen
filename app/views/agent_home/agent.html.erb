@@ -63,6 +63,61 @@
 
   <hl pdd="15"></hl>
 
+  <% if user_signed_in? %>
+  <div id="leads_summary">
+    <div class="column_1to3 fltl" id="campaigns">
+      <frm title="#{t('agent_home.show.view.header_campaigns')}" c="no_marg">
+        <param:header>
+          <%= bt_link_to nil, t("agent_home.show.view.complete_list_link"), callers_campaigns_path, :class => "fltr" %>
+        </param:header>
+        <param:content>
+          <ul class="solid_list">
+            <% if @campaigns.any? %>
+                <%= render :partial => 'campaigns', :collection => @campaigns, :as => :campaign %>
+            <% else %>
+                <%= render :partial => 'shared/blank_data_li' %>
+            <% end %>
+          </ul>
+        </param:content>
+      </frm>
+    </div>
+    <div class="column_1to3 fltl" style="padding: 0 15px" id="history">
+      <frm title="#{t('agent_home.show.view.header_history')}" c="no_marg">
+        <param:header>
+
+        </param:header>
+        <param:content>
+          <ul class="solid_list">
+            <% if @call_results.any? %>
+                <%= render :partial => 'call_results', :collection => @call_results, :as => :call_result %>
+            <% else %>
+                <%= render :partial => 'shared/blank_data_li' %>
+            <% end %>
+          </ul>
+        </param:content>
+      </frm>
+    </div>
+    <div class="column_1to3 fltl" id="communication">
+      <frm title="#{t('agent_home.show.view.header_communication')}" c="no_marg">
+        <param:header>
+
+        </param:header>
+        <param:content>
+          <ul class="solid_list">
+            <% if @communications.any? %>
+                <%= render :partial => 'communication', :collection => @communications, :as => :communication %>
+            <% else %>
+                <%= render :partial => 'shared/blank_data_li' %>
+            <% end %>
+          </ul>
+        </param:content>
+      </frm>
+    </div>
+    <clb/>
+   </div>
+
+  <% else %>
+
   <div id="leads_summary">
     <div class="column_1to3 fltl" id="news">
       <frm title="#{t('agent_home.show.view.header_news')}" c="no_marg">
@@ -116,6 +171,7 @@
     </div>
     <clb/>
   </div>
+  <% end %>
 
 </column-mc:>
 

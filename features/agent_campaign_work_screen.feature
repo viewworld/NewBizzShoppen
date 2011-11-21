@@ -273,7 +273,7 @@ Feature: Agent campaign - calling session
       And I follow translated "call_results.edit.button_new_result"
       And I should see translated "call_results.new.customize_email_template"
 
-    @m23 @requested @system
+    @m23 @requested @system @tgn @_done @_non_testable
     Scenario: Any customized email in the agent work screen should be saved
 
     # 5168

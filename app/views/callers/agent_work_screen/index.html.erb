@@ -187,6 +187,11 @@
               custom_clear_form("#new_contact_form", window.fields_array)
           }
       }
+<% if @selected_call_result %>
+$(document).ready(function() {
+  $.get('<%= edit_callers_campaign_agent_work_screen_contact_call_result_path(@campaign, @selected_call_result.contact, @selected_call_result) -%>')
+});
+<% end %>
   </script>
 </js:>
 

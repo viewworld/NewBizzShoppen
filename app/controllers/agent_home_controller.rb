@@ -3,9 +3,9 @@ class AgentHomeController < ApplicationController
   set_tab "home"
 
   def agent
-    @new_leads = current_user.leads.without_outdated.without_inactive.order("created_at DESC").limit(3)
-    @new_comments = current_user.comment_threads.order("last_thread_created_at DESC").limit(3)
-    @sold_leads = current_user.leads.joins_on_lead_purchases.purchased.order("lead_purchases.created_at DESC").limit(3)
+    @campaigns = Campaign.available_for_user(current_user).with_state("active").last(3)
+    @call_results = CallResult.order("created_at DESC").where(:creator_id => current_user.call_centre? ? current_user.subaccount_ids+[current_user.id] : current_user.id).first(3)
+    @communications = Communication.for_user(current_user.call_centre? ? current_user.subaccount_ids+[current_user.id] : current_user.id).descending_by_created_at.first(3)
     render :agent
   end
 
