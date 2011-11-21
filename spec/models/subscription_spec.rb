@@ -367,7 +367,7 @@ describe Subscription do
         @payable_subscription2.update_attribute(:can_be_downgraded, false)
         setup_customer(@payable_subscription2)
         @customer.admin_change_subscription!(@payable_subscription1)
-        throw @customer.active_subscription.subscription_plan
+        @customer.active_subscription.subscription_plan
         @customer.active_subscription.subscription_plan.should == @payable_subscription2
         @customer.subscriptions.last.subscription_plan.should == @payable_subscription1
         @customer.subscriptions.last.start_date.should == @prev_subscription.end_date + 1
