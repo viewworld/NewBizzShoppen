@@ -26,6 +26,7 @@
   </div>
 
   <%= t("agent_work_screen.index.contact_search_label") %> <%= text_field_tag "autocompleter", nil %>
+  <%= bt_link_to_function nil, t("agent_work_screen.index.new_contact"), "javascript:$('#modal_new_contact_form_div').dialog('open');" %>
 
   <a data-remote="true" data-method="get" id="autocomplter_result_form" href="" class="display:none"></a>
 

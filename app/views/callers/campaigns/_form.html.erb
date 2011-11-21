@@ -6,16 +6,16 @@
     <fieldset class="inputs labels_ta_r labels_200">
       <ol>
         <% if current_user.has_role?(:admin) and campaign.creator %>
-          <li class="string">
-            <label><%= t("campaigns.edit.owner") %></label>
+            <li class="string">
+              <label><%= t("campaigns.edit.owner") %></label>
 
-            <div class="txt">
-              <strong>
-                <%= campaign.creator.full_name %>
-              </strong>
-            </div>
-          </li>
-        <% end %>   
+              <div class="txt">
+                <strong>
+                  <%= campaign.creator.full_name %>
+                </strong>
+              </div>
+            </li>
+        <% end %>
         <%= form.input :name %>
         <%= form.input :category_id, :as => :select, :collection => LeadCategory.all, :include_blank => false %>
         <%= form.input :country_id, :as => :select, :collection => Country.all, :include_blank => false %>
@@ -23,14 +23,15 @@
       </ol>
     </fieldset>
 
-    <fieldset class="inputs labels_ta_r labels_200">      
+    <fieldset class="inputs labels_ta_r labels_200">
       <ol class="align_inputs">
         <li class="header">
           <h3><%= t("campaigns.edit.campaign_targets") %></h3>
         </li>
         <%= form.input :finished_contacts_per_hour, :input_html => {:style => "width:95px"} %>
-        <%= form.input :production_value_per_hour, :input_html => {:style => "width:95px"} %><p style="padding: 5px;">&euro;</p>
-        <%= form.input :success_rate, :input_html => {:style => "width:95px"} %>        
+        <%= form.input :production_value_per_hour, :input_html => {:style => "width:95px"} %>
+        <p style="padding: 5px;">&euro;</p>
+        <%= form.input :success_rate, :input_html => {:style => "width:95px"} %>
       </ol>
     </fieldset>
   </div>
@@ -43,15 +44,18 @@
         <%= form.input :start_date, :as => :string,
                        :wrapper_html => {:class => "date"},
                        :input_html => {:class => "datepicker", :value => campaign.start_date},
-                       :hint => t('models.result_field.date_format')%>
+                       :hint => t('models.result_field.date_format') %>
         <%= form.input :end_date, :as => :string,
                        :wrapper_html => {:class => "date"},
                        :input_html => {:class => "datepicker", :value => campaign.end_date},
-                       :hint => t('models.result_field.date_format')%>
+                       :hint => t('models.result_field.date_format') %>
         <%= form.input :max_contact_number, :input_html => {:style => "width:95px"} %>
-        <%= form.input :fixed_cost_value, :input_html => {:style => "width:95px"} %><p style="padding: 5px;">&euro;</p>
+        <%= form.input :fixed_cost_value, :input_html => {:style => "width:95px"} %>
+        <p style="padding: 5px;">&euro;</p>
         <%= form.input :cost_type, :as => :radio, :collection => Campaign::COST_TYPES.map { |lnt| [t("campaigns.cost_types.cost_type#{lnt}"), lnt] }, :wrapper_html => {:class => "collection"} %>
-        
+        <%= form.input :crm_option, :as => :radio, :collection => Campaign::CRM_OPTIONS.map { |lnt| [t("campaigns.crm_options.crm_option#{lnt}"), lnt] }, :wrapper_html => {:class => "collection"}, :label => t("campaigns.form.crm_options") %>
+        <%= t("campaigns.form.crm_campaigns") %><br/>
+        <%= select_tag "campaign[crm_campaigns]", options_from_collection_for_select(Campaign.available_for_user(current_user), "id", "name", campaign.crm_campaigns.blank? ? nil : campaign.crm_campaigns.split(",")), :multiple => true, :style => "width:200px;height:100px" %>
       </ol>
     </fieldset>
   </div>

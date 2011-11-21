@@ -317,6 +317,12 @@ en:
       cost_type1: "Agent's billing rate"
       cost_type2: "Fixed hourly rate"
       cost_type3: "Don't calculate cost"
+    crm_options:
+      crm_option0: "Disabled"
+      crm_option1: "Select by Company Name"
+      crm_option2: "Select by CVR"
+      crm_option3: "Select by Email Address"
+      crm_option4: "All must match"
     filter:
       header: Search
       keyword_label: Keyword
@@ -421,10 +427,11 @@ en:
         view:
           title: "Editing template: %{name}"
           button_update: "Save"
-
     form:
       description: "Description"
       briefing: "Briefing"
+      crm_options: "CRM options"
+      crm_campaigns: "CRM campaigns"
   agent_work_screen:
     index:
       title: Agent work screen
@@ -528,6 +535,8 @@ en:
       date: Date
       agent: Agent
       result_type: Result type
+      contact_name: Contact name
+      campaign_name: Campaign
       actions: Actions
       edit_link: Edit
       remove_link: Remove

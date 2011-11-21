@@ -5,9 +5,10 @@ class Callers::CampaignsController < Callers::CallerController
   include ::CampaignActions
 
   before_filter :set_campaign, :except => [:index, :new, :create]
-  before_filter lambda {authorize_role(:call_centre, :admin)}, :except => [:index, :contacts_for_search, :result_details]
-  before_filter lambda {authorize_manage_rights(@campaign)}, :only => [:edit,:update,:destroy,:show]
-  before_filter lambda {authorize_role(:agent, :call_centre_agent, :call_centre, :admin)}, :only => [:result_details]
+  before_filter lambda { authorize_role(:call_centre, :admin) }, :except => [:index, :contacts_for_search, :result_details]
+  before_filter lambda { authorize_manage_rights(@campaign) }, :only => [:edit, :update, :destroy, :show]
+  before_filter lambda { authorize_role(:agent, :call_centre_agent, :call_centre, :admin) }, :only => [:result_details]
+  before_filter :set_crm_campaigns, :only => [:update, :create]
 
   def new
     @campaign = Campaign.new(:start_date => Date.today, :end_date => Date.today+1.week, :max_contact_number => 0,
@@ -30,7 +31,7 @@ class Callers::CampaignsController < Callers::CallerController
   end
 
   def update
-    @campaign.attributes = params[:campaign]    
+    @campaign.attributes = params[:campaign]
     update! do |success, failure|
       success.html { redirect_to edit_callers_campaign_path(@campaign) }
       failure.html { set_contacts; render 'edit' }
@@ -64,6 +65,10 @@ class Callers::CampaignsController < Callers::CallerController
   end
 
   protected
+
+  def set_crm_campaigns
+    params[:campaign][:crm_campaigns] = params[:campaign][:crm_campaigns].blank? ? "" : params[:campaign][:crm_campaigns]*","
+  end
 
   def collection
     params[:search]||={}

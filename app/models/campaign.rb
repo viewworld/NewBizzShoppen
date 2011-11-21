@@ -54,6 +54,13 @@ class Campaign < ActiveRecord::Base
       :upgrade_contact_to_buyer_email_template => 'upgrade_contact_to_buyer', :upgrade_contact_to_member_email_template => 'upgrade_contact_to_member'
   }
 
+  CRM_OPTION_OFF = 0.freeze
+  CRM_OPTION_COMPANY_NAME = 1.freeze
+  CRM_OPTION_CVR = 2.freeze
+  CRM_OPTION_CONTACT_EMAIL = 3.freeze
+  CRM_OPTION_ALL = 4.freeze
+  CRM_OPTIONS = [CRM_OPTION_OFF, CRM_OPTION_COMPANY_NAME, CRM_OPTION_CVR, CRM_OPTION_CONTACT_EMAIL, CRM_OPTION_ALL]
+
   private
 
   def fixed_cost_value_is_valid
@@ -209,7 +216,7 @@ class Campaign < ActiveRecord::Base
           import_fields.each { |field| contact = assign_field(contact, field, spreadsheet.cell(line, merged_fields[field]), spreadsheet.celltype(line, merged_fields[field])) }
           contact = assign_current_user(contact, current_user, campaign)
           #contact.last_import = true
-          if only_unique and !Contact.where("id IS NOT NULL AND campaign_id = #{contact.campaign_id} AND company_name = '#{contact.company_name}' AND company_ean_number = '#{contact.company_ean_number}' AND email_address = '#{contact.email_address}'").blank?
+          if only_unique and !Contact.where("id IS NOT NULL AND campaign_id = #{contact.campaign_id} AND company_name = '#{contact.company_name}' AND company_vat_no = '#{contact.company_vat_no}' AND email_address = '#{contact.email_address}'").blank?
             not_unique_counter += 1
           elsif contact.save
             counter += 1
