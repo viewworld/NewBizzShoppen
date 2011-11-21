@@ -184,6 +184,8 @@ describe AgentInformation do
 
   context "Time spent" do
     it "should return correct time spent today" do
+      t = Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+1.day
+      Time.stubs(:now).returns(t)
       UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign,
                            :start_time => Time.now.beginning_of_day+Time.now.beginning_of_day.utc_offset,
                            :end_time => Time.now.beginning_of_day+Time.now.beginning_of_day.utc_offset+1.hour)
@@ -192,6 +194,8 @@ describe AgentInformation do
     end
 
     it "should return correct time spent this week" do
+      t = Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+1.day
+      Time.stubs(:now).returns(t)
       UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign,
                            :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset,
                            :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+2.hours)
@@ -205,6 +209,8 @@ describe AgentInformation do
     end
 
     it "should return correct time spent last 4 weeks week" do
+      t = Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+1.day
+      Time.stubs(:now).returns(t)
       UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign,
                            :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset,
                            :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+2.hours)
@@ -223,6 +229,8 @@ describe AgentInformation do
     end
 
     it "should not show time spent by other agents" do
+      t = Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+1.day
+      Time.stubs(:now).returns(t)
       UserSessionLog.make!(:user => @call_centre_agent1, :campaign => @campaign,
                            :start_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset,
                            :end_time => Time.now.beginning_of_week+Time.now.beginning_of_week.utc_offset+2.hours)
