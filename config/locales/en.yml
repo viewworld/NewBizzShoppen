@@ -452,6 +452,14 @@ en:
       new_contact_title: "Create new contact"
       create: "Create"
       cancel: "Cancel"
+      agent_information:
+        value_created: "Value created"
+        today: "Today"
+        this_year: "This year"
+        this_quarter: "This quarter"
+        this_week: "This week"
+        time: "Time"
+        last_four_weeks: "Last 4 weeks"
   contacts:
     filter:
       title: Search

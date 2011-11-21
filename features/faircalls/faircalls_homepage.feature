@@ -19,23 +19,38 @@ Scenario: My locale should be based on the domain from which I entered
 Scenario: I should not see browse deals and browse leads tabs when on agent home page
 
 #8388
-@m23 @requested
+@m23 @requested @_done @_tested
 Scenario: When I am logged in I should see value created bar over the blurb (bar fro agent work screen)
+  When I visit domain http://faircalls.dk
+  Then I should not see translated "agent_work_screen.index.agent_information.value_created"
+  And I should not see translated "agent_work_screen.index.agent_information.time"
+  When I sign in as translator_call_centre_agent@nbs.com with password secret
+  Then I should see translated "agent_work_screen.index.agent_information.value_created"
+  And I should see translated "agent_work_screen.index.agent_information.time"
 
 #8388
 # Use abbreviations if the value including the current values can't stay on one line.
-@m23 @requested
+@m23 @requested @_done @_tested
 Scenario: I should see additional information in the bar Time: Today (HH/MM)
+  When I visit domain http://faircalls.dk
+  And I sign in as translator_call_centre_agent@nbs.com with password secret
+  Then I should see "Time: Today"
 
 #8388
 # Use abbreviations if the value including the current values can't stay on one line.
-@m23 @requested
+@m23 @requested @_done @_tested
 Scenario: I should see additional information in the bar Time: This Week (HH/MM)
+  When I visit domain http://faircalls.dk
+  And I sign in as translator_call_centre_agent@nbs.com with password secret
+  Then I should see "This week"
 
 #8388
 # Use abbreviations if the value including the current values can't stay on one line.
-@m23 @requested
+@m23 @requested @_done @_tested
 Scenario: I should see additional information in the bar Time: Last 4 Weeks (HH/MM)
+  When I visit domain http://faircalls.dk
+  And I sign in as translator_call_centre_agent@nbs.com with password secret
+  Then I should see "Last 4 weeks"
 
 #8387
 @m23 @requested @tgn @_done @_tested
