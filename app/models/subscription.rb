@@ -28,6 +28,7 @@ class Subscription < ActiveRecord::Base
   aasm_state :non_cancelable
   aasm_state :prolonged, :enter => :perform_prolong
   aasm_state :upgraded_from_penalty
+  aasm_state :admin_changed, :enter => :perform_admin_change
 
   aasm_event :enter_lockup do
     transitions :from => [:normal, :penalty, :non_cancelable], :to => :lockup, :guard => :lockup_period_started?
@@ -55,6 +56,10 @@ class Subscription < ActiveRecord::Base
 
   aasm_event :upgrade_from_penalty, :after => :perform_upgrade_from_penalty do
     transitions :from => [:penalty, :non_cancelable], :to =>  :upgraded_from_penalty
+  end
+
+  aasm_event :admin_change do
+    transitions :from => Subscription.aasm_states.map(&:name), :to => :admin_changed
   end
 
   def initial_state
@@ -158,6 +163,12 @@ class Subscription < ActiveRecord::Base
   end
 
   def perform_upgrade_from_penalty
+    self.recalculate_subscription_plan_lines(Date.today-1, is_free_period_applied?)
+    self.end_date = Date.today-1
+    self.class.clone_from_subscription_plan!(next_subscription_plan, user)
+  end
+
+  def perform_admin_change
     self.recalculate_subscription_plan_lines(Date.today-1, is_free_period_applied?)
     self.end_date = Date.today-1
     self.class.clone_from_subscription_plan!(next_subscription_plan, user)

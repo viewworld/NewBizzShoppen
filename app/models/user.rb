@@ -777,6 +777,17 @@ class User < ActiveRecord::Base
     end
   end
 
+  def admin_change_subscription!(subscription_plan)
+    if subscription_plan_is_valid?(subscription_plan)
+      as = active_subscription
+      as.next_subscription_plan = subscription_plan
+      as.admin_change!
+    else
+      self.errors.add(:base, I18n.t("subscriptions.new_subscription_plan_is_invalid"))
+      false
+    end
+  end
+
   def cancel_subscription!
     if active_subscription.may_cancel?
       active_subscription.cancel!
