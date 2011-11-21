@@ -15,7 +15,7 @@
           <td></td>
           <td><%= as_currency(campaign_report.value_created, Currency.euro, 0) %></td>
           <td><%= as_currency(campaign_report.leads_sold_total_value, Currency.euro, 0) %> (<%= campaign_report.leads_sold_count %>)</td>
-          <td><%= campaign_report.hours_used.as_hours %></td>
+          <td><%= campaign_report.hours_used.as_hours_and_minutes %></td>
           <td><%= campaign_report.campaign.no_cost? ? "-" : as_currency(campaign_report.production_cost, Currency.euro, 0) %></td>
           <td><%= campaign_report.campaign.no_cost? ? "-" : as_currency(campaign_report.target_result, Currency.euro, 0) %></td>
           <td><%= campaign_report.campaign.no_cost? ? "-" : as_currency(campaign_report.realised_result, Currency.euro, 0) %></td>

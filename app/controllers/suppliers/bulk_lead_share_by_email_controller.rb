@@ -9,7 +9,8 @@ class Suppliers::BulkLeadShareByEmailController < Suppliers::BasicSupplierContro
     params[:email_template_preview].tap do |email_params|
       TemplateMailer.delay.new(email_params[:recipients], :blank_template, Country.get_country_from_locale,
                                        {:subject_content => email_params[:subject], :body_content => email_params[:body],
-                                        :bcc_recipients => @email_template_preview.bcc, :cc_recipients => @email_template_preview.cc})
+                                        :bcc_recipients => @email_template_preview.bcc, :cc_recipients => @email_template_preview.cc,
+                                        :sender_id => User.get_current_user_id, :email_template_uniq_id => "share_leads_by_email_message"})
     end
     flash[:notice] = I18n.t("flash.bulk_lead_share_by_email.create.notice")
     redirect_to suppliers_lead_purchases_path

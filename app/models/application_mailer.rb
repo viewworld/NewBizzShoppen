@@ -12,6 +12,10 @@ class ApplicationMailer < ActionMailer::Base
     bcc_recipients = options.delete(:bcc_recipients) || email_template.bcc
     cc_recipients = options.delete(:cc_recipients) || email_template.cc
     reply_to = options.delete(:reply_to)
+    sender_id = options.delete(:sender_id)
+    email_template_uniq_id = options.delete(:email_template_uniq_id)
+    related_id = options.delete(:related_id)
+    related_type = options.delete(:related_type)
 
     if Rails.env.development?
       attachment_paths.each do |ap|
@@ -24,6 +28,10 @@ class ApplicationMailer < ActionMailer::Base
          :cc => cc_recipients,
          :bcc => bcc_recipients,
          :reply_to => reply_to,
+         :email_template_uniq_id => email_template_uniq_id ? email_template_uniq_id : email_template.uniq_id,
+         :sender_id => sender_id.to_s,
+         :related_id => related_id.to_s,
+         :related_type => related_type,
          :postmark_attachments => attachment_paths.map{|ap| File.open(ap)}) do |format|
       format.html { render :text => body }
     end

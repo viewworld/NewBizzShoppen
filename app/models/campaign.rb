@@ -264,11 +264,11 @@ class Campaign < ActiveRecord::Base
 
   def duplicate!
     campaign = self.deep_clone!(:with_callbacks => false, :include => [:campaigns_results, :user_session_logs,
-                                                                       {:contacts => [{:call_results => [:call_log, :result_values]}, :contact_past_user_assignments, {:lead_template_values => :lead_template_value_translations}, :translations]},
-                                                                       {:send_material_email_template => :translations},
-                                                                       {:upgrade_contact_to_buyer_email_template => :translations},
-                                                                       {:upgrade_contact_to_category_buyer_email_template => :translations},
-                                                                       {:upgrade_contact_to_member_email_template => :translations}])
+    {:contacts => [ {:call_results => [:call_log, :result_values, :archived_email]}, :contact_past_user_assignments, {:lead_template_values => :lead_template_value_translations}, :translations ]},
+    {:send_material_email_template => :translations},
+    {:upgrade_contact_to_buyer_email_template => :translations},
+    {:upgrade_contact_to_category_buyer_email_template => :translations},
+    {:upgrade_contact_to_member_email_template => :translations}])
 
     campaign.users = users
     campaign.name = "Copy of #{name} #{Time.now.strftime("%d-%m-%Y %H:%M")}"

@@ -80,6 +80,10 @@ When /^I confirm a js popup on the next step$/ do
   page.evaluate_script("window.confirm = function(msg) { return true; }")
 end
 
+When /^I confirm a js prompt with "([^\"]*)" on the next step$/ do |value|
+  page.evaluate_script("window.prompt = function(msg) { return '#{value}'; }")
+end
+
 Then /^I should see today date in results table$/ do
   Then %{I should see "#{Date.today.strftime(DateCalculator::FORMAT)}" within "#call_results"}
 end
