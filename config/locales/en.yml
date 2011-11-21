@@ -556,6 +556,7 @@ en:
       result: Result
       button_new_result: New result
       my_results: "Production"
+      email_sent_to: "sent to"
     create:
       flash:
         successfully_added: Call result has been successfully added. Next contact has been selected.
@@ -2494,6 +2495,17 @@ en:
 
         new_lead: "New lead"
         new_deal: "New deal"
+        header_campaigns: "Campaigns"
+        campaigns:
+          pending_contacts: "Pending contacts"
+          call_backs: "Call backs"
+          completion: "Completion"
+        header_history: "History"
+        header_communication: "Communication"
+        communication:
+          email: "E-mail"
+          date: "Date"
+          status: "Status"
   member_home:
     show:
       view:
@@ -2772,6 +2784,11 @@ en:
         additional_language: "Additional language"
         new_translation: "New translation"
   models:
+    archived_emails:
+      status:
+        status0: "Not sent"
+        status1: "Sent"
+        status2: "Bounced"
     call_result:
       not_unique_email_address: "User with this e-mail already exists!"
     user:
