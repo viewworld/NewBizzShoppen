@@ -191,7 +191,7 @@ class Campaign < ActiveRecord::Base
 
   class << self
 
-    def advanced_import_contacts_from_xls(spreadsheet, contact_fields, spreadsheet_fields, current_user, object_id)
+    def advanced_import_contacts_from_xls(spreadsheet, contact_fields, spreadsheet_fields, current_user, object_id, only_unique)
       return false unless advanced_import_field_blank_validation(contact_fields, spreadsheet_fields)
       contact_fields, spreadsheet_fields = contact_fields.split(","), spreadsheet_fields.split(",")
       return false unless advanced_import_field_size_validation(contact_fields, spreadsheet_fields)
@@ -201,7 +201,7 @@ class Campaign < ActiveRecord::Base
       #contacts_from_last_import_ids = campaign.contacts.from_last_import.map(&:id)
       headers, spreadsheet = advanced_import_headers(spreadsheet)
       merged_fields = advanced_import_merged_fields(headers, contact_fields, spreadsheet_fields)
-      counter, errors = 0, []
+      counter, errors, not_unique_counter = 0, [], 0
 
       ActiveRecord::Base.transaction do
         2.upto(spreadsheet.last_row) do |line|
@@ -209,7 +209,9 @@ class Campaign < ActiveRecord::Base
           import_fields.each { |field| contact = assign_field(contact, field, spreadsheet.cell(line, merged_fields[field]), spreadsheet.celltype(line, merged_fields[field])) }
           contact = assign_current_user(contact, current_user, campaign)
           #contact.last_import = true
-          if contact.save
+          if only_unique and !Contact.where("id IS NOT NULL AND campaign_id = #{contact.campaign_id} AND company_name = '#{contact.company_name}' AND company_ean_number = '#{contact.company_ean_number}' AND email_address = '#{contact.email_address}'").blank?
+            not_unique_counter += 1
+          elsif contact.save
             counter += 1
           else
             errors << "[line: #{line}] #{contact.errors.map { |k, v| "#{k} #{v}" }.*(", ")}"
@@ -217,6 +219,10 @@ class Campaign < ActiveRecord::Base
             raise ActiveRecord::Rollback
           end
         end
+      end
+
+      if errors.blank? and not_unique_counter > 0
+        errors << I18n.t("contacts_advanced_import.create.flash.success_with_not_unique", :counter => not_unique_counter)
       end
 
       #contacts_from_last_import = Contact.find_all_by_id(contacts_from_last_import_ids)
@@ -258,19 +264,19 @@ class Campaign < ActiveRecord::Base
 
   def duplicate!
     campaign = self.deep_clone!(:with_callbacks => false, :include => [:campaigns_results, :user_session_logs,
-    {:contacts => [ {:call_results => [:call_log, :result_values]}, :contact_past_user_assignments, {:lead_template_values => :lead_template_value_translations}, :translations ]},
-    {:send_material_email_template => :translations},
-    {:upgrade_contact_to_buyer_email_template => :translations},
-    {:upgrade_contact_to_category_buyer_email_template => :translations},
-    {:upgrade_contact_to_member_email_template => :translations}])
+                                                                       {:contacts => [{:call_results => [:call_log, :result_values]}, :contact_past_user_assignments, {:lead_template_values => :lead_template_value_translations}, :translations]},
+                                                                       {:send_material_email_template => :translations},
+                                                                       {:upgrade_contact_to_buyer_email_template => :translations},
+                                                                       {:upgrade_contact_to_category_buyer_email_template => :translations},
+                                                                       {:upgrade_contact_to_member_email_template => :translations}])
 
     campaign.users = users
     campaign.name = "Copy of #{name} #{Time.now.strftime("%d-%m-%Y %H:%M")}"
     campaign.save
 
     results = ResultValue.where("field_type::INT = ? and leads.campaign_id = ?", ResultField::MATERIAL, campaign.id).
-                          joins("INNER JOIN call_results on call_results.id=result_values.call_result_id INNER JOIN leads ON call_results.contact_id=leads.id").
-                          readonly(false)
+        joins("INNER JOIN call_results on call_results.id=result_values.call_result_id INNER JOIN leads ON call_results.contact_id=leads.id").
+        readonly(false)
 
     materials.each do |material|
       _material = material.clone
@@ -278,8 +284,8 @@ class Campaign < ActiveRecord::Base
       _material.asset = material.asset
       _material.save
       campaign.materials << _material
-      if selected = results.select { |rv| rv.value.to_i ==  material.id} and !selected.empty?
-        selected.each { |rv| rv.update_attribute(:value, _material.id.to_s)}
+      if selected = results.select { |rv| rv.value.to_i == material.id } and !selected.empty?
+        selected.each { |rv| rv.update_attribute(:value, _material.id.to_s) }
       end
     end
     campaign

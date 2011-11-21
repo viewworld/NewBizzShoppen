@@ -3741,6 +3741,7 @@ en:
       view:
         header: "Contacts import"
         title: "Advanced import - create new contacts from spreadsheet."
+        unique_only: "Unique only"
     choose:
       view:
         header: "Contacts import - fields selection"
@@ -3751,6 +3752,7 @@ en:
     create:
       flash:
         success: "Import completed. %{counter} contacts have been successfully imported"
+        success_with_not_unique: "%{counter} contacts were not unique and were not imported"
 
   suppliers_advanced_import:
     show:
