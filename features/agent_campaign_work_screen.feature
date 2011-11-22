@@ -4,6 +4,7 @@ Feature: Agent campaign - calling session
    Background:
     Given I am on the homepage
     And I visit domain http://faircalls.eu
+    And I am not sign in
     And I make sure current locale is "en"
     And I sign in as translator_call_centre_agent@nbs.com with password secret
     And I follow translated "layout.main_menu.call_centre.campaigns"
