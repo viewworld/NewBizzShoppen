@@ -476,3 +476,15 @@ SubscriptionPlanLine.blueprint do
   name { Faker::Lorem.words(3).to_s }
   price { rand(40).to_f+1 }
 end
+
+ArchivedEmail.blueprint do
+  subject { Faker::Lorem.words(4).to_s }
+  body { Faker::Lorem.words(10).to_s }
+  to { Faker::Internet.email }
+  status { 1 }
+end
+
+ArchivedEmail.blueprint(:bounced) do
+  bounced_at { Time.now }
+  status { 2 }
+end
