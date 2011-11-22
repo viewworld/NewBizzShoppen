@@ -61,15 +61,23 @@
           <% end %>
 
           <% if next_subscription = @user.next_subscription %>
-            <p><%= t("administration.users.edit.view.cant_downgrade", :next_plan_name => next_subscription.subscription_plan.name, :next_plan_active_from => next_subscription.start_date) %></p>
+            <p><%= t("administration.users.edit.view.next_subscription_plan", :next_plan_name => next_subscription.subscription_plan.name, :next_plan_active_from => next_subscription.start_date) %></p>
           <% elsif @user.active_subscription.will_prolong? %>
             <p><%= t("administration.users.edit.view.users_active_subscription_will_prolong", :prolong_date => @user.active_subscription.end_date + 1.day) %> <%= t("administration.users.edit.view.as_free_subscription") if @user.active_subscription.cancelled? %></p>
           <% end %>
 
           <br/><h3><%= t("administration.users.edit.view.change_users_subscription") %></h3>
-          <%= form_for :subscription_plan, :url => administration_user_change_subscription_plan_path(@user) do |f| %>
-            <%= f.select :subscription_plan_id, SubscriptionPlan.active.exclude_current_plan(@user.active_subscription_plan).for_role(@user.with_role.role).ascend_by_billing_price.map{|s| [s.name,s.id]} %>
-            <%= f.submit t("administration.users.edit.view.change") %>
+          <% if @user.subscriptions.future.count > 0 %>
+            <%= t("administration.users.edit.view.remove_scheduled_subscriptions") %>
+              <%= semantic_form_for :subscription, :url => administration_user_change_subscription_plan_path(@user), :html => {:method => :delete} do |f| %>
+                <%= f.commit_button t("administration.users.edit.view.remove_scheduled") %>
+              <% end %>
+          <% else %>
+              <%= semantic_form_for Subscription.new, :url => administration_user_change_subscription_plan_path(@user) do |f| %>
+                <%= f.input :subscription_plan_id, :collection => SubscriptionPlan.active.exclude_current_plan(@user.active_subscription_plan).for_role(@user.with_role.role).ascend_by_billing_price.map{|s| [s.name,s.id]}, :include_blank => false %>
+                <%= f.input :start_date, :as => :datepicker, :input_html => {:value => (@user.active_subscription.end_date||Date.today)+1 } %>
+                <%= f.commit_button t("administration.users.edit.view.change") %>
+              <% end %>
           <% end %>
         </param:content>
       </frm>

@@ -917,6 +917,8 @@ en:
           as_free_subscription: "as free subscription"
           change_users_subscription: "Change user's subscription"
           change: "Change"
+          remove_scheduled_subscriptions: "Remove any scheduled subscriptions to change the active one"
+          remove_scheduled: "Remove scheduled subscriptions"
       create:
         flash:
           user_creation_successful: User has been created successfuly
@@ -3037,6 +3039,11 @@ en:
         invalid: "is invalid"
 
   flash:
+    change_subscription:
+      create:
+        successful: "User's subscription plan has been changed"
+      destroy:
+        successful: "User's scheduled subscriptions have been removed"
     accounts:
       create:
         no_verification: "Your account has been successfully created! You can now sign in."
