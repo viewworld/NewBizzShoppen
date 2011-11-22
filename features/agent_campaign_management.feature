@@ -1,4 +1,4 @@
-@m5b @agent_campaign @$_administrator @$_call_centre @tbr @nontestable
+@m5b @agent_campaign @$_administrator @$_call_centre @tbr
 Feature: Agent campaign - management
 
    Background:
