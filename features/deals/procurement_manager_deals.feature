@@ -328,3 +328,22 @@ Feature: Deals from procurement manager perspective
     Then I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Electronics deals"
     Then I should not see "Activation"
+
+  #8606
+  @m23 @requested @tgn @_done @_tested
+  Scenario: I can see a blurb text when I confirm a deal
+    Given I visit domain http://fairdeals.dk
+    And I am not sign in
+    And user buyer@nbs.com with role supplier exists with attributes "company_name:Xeper"
+    And user "buyer@nbs.com" has deal maker role enabled
+    Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper|deal_code:CODE4D3AL"
+    And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
+    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
+    And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
+    Then I sign in as purchase_manager101@nbs.com with password supersecret
+    Then I follow translated "layout.fairdeals.main_menu.deals"
+    And I follow category "Business deals"
+    And I follow translated "deals.index.view.view_deal"
+    And I follow translated "deals.index.view.contact_me"
+    And I press translated "member.leads.new.view.button_create"
+    And I should see "Blurb deal confirmation page"
