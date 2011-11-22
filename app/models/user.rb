@@ -69,6 +69,7 @@ class User < ActiveRecord::Base
   has_many :deal_comment_threads, :class_name => "Comment", :foreign_key => "user_id"
   has_many :email_bounces, :foreign_key => :email, :primary_key => :email
   has_many :subscriptions
+  has_many :subscription_plans, :through => :subscriptions
 
   alias_method :parent, :user
 
@@ -777,10 +778,11 @@ class User < ActiveRecord::Base
     end
   end
 
-  def admin_change_subscription!(subscription_plan)
+  def admin_change_subscription!(subscription_plan, start_date = Date.today)
     if subscription_plan_is_valid?(subscription_plan)
       as = active_subscription
       as.next_subscription_plan = subscription_plan
+      as.next_subscription_plan_start_date = start_date
       as.admin_change!
     else
       self.errors.add(:base, I18n.t("subscriptions.new_subscription_plan_is_invalid"))

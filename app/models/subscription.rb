@@ -13,7 +13,7 @@ class Subscription < ActiveRecord::Base
   scope :active, lambda { where("is_active = ? and ((end_date IS NULL and billing_cycle = 0) or end_date >= ?)", true, Date.today) }
   scope :billable, where("billing_cycle > 0 AND billing_date IS NOT NULL AND billing_date <= current_date AND invoiced_at IS NULL")
 
-  attr_accessor :next_subscription_plan
+  attr_accessor :next_subscription_plan, :next_subscription_plan_start_date
   include AASM
 
   aasm_initial_state Proc.new { |subscription| subscription.initial_state }
@@ -169,9 +169,9 @@ class Subscription < ActiveRecord::Base
   end
 
   def perform_admin_change
-    self.recalculate_subscription_plan_lines(Date.today-1, is_free_period_applied?)
-    self.end_date = Date.today-1
-    self.class.clone_from_subscription_plan!(next_subscription_plan, user)
+    self.recalculate_subscription_plan_lines(next_subscription_plan_start_date-1, is_free_period_applied?)
+    self.end_date = next_subscription_plan_start_date-1
+    self.class.clone_from_subscription_plan!(next_subscription_plan, user, next_subscription_plan_start_date)
   end
 
   def invoiced?
