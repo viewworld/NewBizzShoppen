@@ -1,4 +1,4 @@
-@m15 @cost_calculation @requested @_tgn
+@m15 @cost_calculation @requested @_tgn @nontestable
 Feature: Cost calculation
 
   Background:

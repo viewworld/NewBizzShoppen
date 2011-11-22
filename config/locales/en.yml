@@ -905,7 +905,18 @@ en:
           subaccounts_list: "Subaccounts"
           change_supplier_interests_link: "Set interests"
           active_subscription: "Active subscription:"
+          active_subscription_period: "Active subscription period"
           active_subscription_days_left: "%{number} days left"
+          subscription_management: "User subscription management"
+          cant_upgrade_nor_downgrade: "User can't neither upgrade not downgrade his current subscription"
+          cant_upgrade: "User can't upgrade his current subscription"
+          cant_downgrade: "User can't downgrade his current subscription"
+          in_free_period: "Active subscription is in free period until %{free_period_date}"
+          next_subscription_plan: "User's next subscription plan is '%{next_plan_name}' active from %{next_plan_active_from}"
+          users_active_subscription_will_prolong: "User's active subscription will prolong on %{prolong_date}"
+          as_free_subscription: "as free subscription"
+          change_users_subscription: "Change user's subscription"
+          change: "Change"
       create:
         flash:
           user_creation_successful: User has been created successfuly
@@ -4035,6 +4046,8 @@ en:
     next_subscription_plan: "Next subscription plan is '%{next_plan_name}' and it will be active from %{next_plan_active_from}"
     lockup_period_notification: "You have entered a lockup period for your subscription. The subscription plan cannot be downgraded."
     new_subscription_plan_is_invalid: "The new subscription plan is invalid"
+    start_date_is_invalid: "The start date for new subscription is invalid"
+    there_are_future_subscriptions: "You can not change the subscription because there is already other subscription scheduled to start after the current one"
     confirmation:
       cancel: "Are you sure you want to cancel your current subscription plan?"
       downgrade: "Are you sure you want to downgrade your current subscription plan?"

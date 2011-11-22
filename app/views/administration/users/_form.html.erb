@@ -84,12 +84,6 @@
             <%= form.input :billing_rate %>
             <%= form.input :currency_id, :collection => currencies_for_select, :include_blank => true %>
         <% end %>
-        <% if @user.subscription_required? and !@user.new_record? %>
-            <%= t("administration.users.edit.view.active_subscription") %> <%= @user.active_subscription.name %>
-            <% if @user.active_subscription.payable? %>
-                <%= "(#{@user.active_subscription.start_date.to_s} - #{@user.active_subscription.end_date.to_s}, #{t("administration.users.edit.view.active_subscription_days_left", :number => @user.active_subscription.days_left)})" %>
-            <% end %>
-        <% end %>
       </ol>
     </fieldset>
   </div>

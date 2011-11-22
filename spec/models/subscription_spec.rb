@@ -449,6 +449,29 @@ describe Subscription do
         @customer.active_subscription.free_period_used?.should be_true
       end
 
+      it "should not be possible to set the start date in the past for admin change" do
+        setup_customer(@payable_subscription2)
+        @customer.admin_change_subscription!(@payable_subscription1, Date.today-1.day).should be_false
+      end
+
+      it "should not be possible to set the start date more than 1 day in the future of the end date of non-free active subscription" do
+        setup_customer(@payable_subscription2)
+        @customer.admin_change_subscription!(@payable_subscription1, @customer.active_subscription.end_date + 2.days).should be_false
+      end
+
+      it "should be possible to set the start date any day in the future when user has free active subscription" do
+        @free_subscription = SubscriptionPlan.active.free.for_role("supplier").first
+        setup_customer(@free_subscription)
+        @customer.admin_change_subscription!(@payable_subscription1, Date.today + 1.year).should be_true
+      end
+
+      it "should not be possible for admin to change the subscription when there are scheduled subscriptions in the future" do
+        setup_customer(@payable_subscription2)
+        @customer.downgrade_subscription!(@payable_subscription1).should be_true
+        @customer.subscriptions.future.count.should eql(1)
+        @customer.admin_change_subscription!(@payable_subscription1).should be_false
+      end
+
     end
 
   end
