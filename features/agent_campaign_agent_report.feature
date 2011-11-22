@@ -8,7 +8,7 @@ Feature: Agent report
     And campaign report data is generated
     And I follow translated "layout.main_menu.admin.reports"
 
-  @_done @_tested
+  @_done @_tested @faircalls
   Scenario: I can see all values per agent per campaign
     Then I should see translated "campaign_reports.index.empty_report_msg"
     And I check "per_user"

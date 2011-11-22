@@ -5,7 +5,7 @@ Feature: Categories rules
     And I am on the homepage
     And I make sure current locale is "en"
 
-  @_done @_tested @tgn
+  @_done @_tested @tgn @faircalls
   Scenario: I can't publish leads in category that have subcategories
     Given Category Computers is created
     And Category named "Laptops" already exists within category named "Computers"

@@ -1,5 +1,5 @@
 #This is almost the same as in Buyer scope
-@start_pages @m2
+@start_pages @m2 @faircalls
 Feature: Start page for agent
 
 Background: I am a guest and I am on the home page

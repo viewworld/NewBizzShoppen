@@ -1,4 +1,4 @@
-@lead_manager @$_call_centre @m5 @tgn
+@lead_manager @$_call_centre @m5 @tgn @faircalls
 Feature: My leads for call centre
 
 Background:

@@ -1,4 +1,4 @@
-@m16 @_added @_deals @is @_accessing_deals
+@m16 @_added @_deals @is @_accessing_deals @faircalls
 Feature: Accessing deals
 
   Background:

@@ -1,4 +1,4 @@
-@lead_manager @$_freelance_agent @m1
+@lead_manager @$_freelance_agent @m1 @faircalls
 Feature: Lead editing by agent
 
 Background:

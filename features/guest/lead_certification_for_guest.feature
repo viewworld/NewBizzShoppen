@@ -1,4 +1,4 @@
-@lead_certification @requested @m10
+@lead_certification @requested @m10 @faircalls
 Feature: Lead certification for guest
 
 Background:

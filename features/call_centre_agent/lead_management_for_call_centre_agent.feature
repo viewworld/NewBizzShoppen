@@ -1,4 +1,4 @@
-@m5 @tgn
+@m5 @tgn @faircalls
 Feature: Leads managements for call centre agent
 
 Background:

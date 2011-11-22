@@ -68,7 +68,7 @@ Feature: Home pages
     When I am on member home page
     Then I should see translated "category_home.show.view.forgotten_password_link"
 
-  @_done
+  @_done @faircalls
   Scenario: On role home page it should be possible to logout
     Given I am signed up and confirmed as user with email agent_tomek@nbs.com and password secret and role agent
     And I visit domain http://faircalls.eu

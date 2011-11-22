@@ -1,4 +1,4 @@
-@lead_templates @m5 @$_call_centre_agent @tgn  @requested
+@lead_templates @m5 @$_call_centre_agent @tgn  @requested @faircalls
 Feature: Lead templates managements for call centre agent
 
 Background:

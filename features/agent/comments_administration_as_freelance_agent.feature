@@ -1,4 +1,4 @@
-@comments @$_freelance_agent @noguess @ao @m9
+@comments @$_freelance_agent @noguess @ao @m9 @faircalls
 Feature: Comments administration as freelance agent
 
 Background:

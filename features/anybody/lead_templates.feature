@@ -1,4 +1,4 @@
-@$_anybody @requested @m11 @is @lead_templates
+@$_anybody @requested @m11 @is @lead_templates @faircalls
 Feature: Lead templates for agents
 
 Background:

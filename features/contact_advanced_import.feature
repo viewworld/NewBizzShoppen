@@ -1,4 +1,4 @@
-@advanced_import @m17 @is @$_call_centre
+@advanced_import @m17 @is @$_call_centre @faircalls
 Feature: Lead Advanced Import
 
   Background:
