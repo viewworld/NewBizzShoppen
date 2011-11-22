@@ -5,7 +5,7 @@ class Article < ActiveRecord::Base
 
   translates :title, :content
 
-  validates_presence_of :title
+  validates_presence_of :title, :on => :update
   validates_presence_of :content, :on => :update, :if => :validates_presence_of_content?
 
   include ScopedSearch::Model

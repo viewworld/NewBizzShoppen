@@ -67,7 +67,7 @@ class User < ActiveRecord::Base
   has_many :read_comments, :through => :comment_readers, :source => :comment
   belongs_to :contact
   has_many :deal_comment_threads, :class_name => "Comment", :foreign_key => "user_id"
-  has_many :email_bounces, :foreign_key => :email, :primary_key => :email
+  has_many :email_bounces, :class_name => "ArchivedEmail", :foreign_key => :to, :primary_key => :email, :conditions => "status = #{ArchivedEmail::BOUNCED}"
   has_many :subscriptions
   has_many :subscription_plans, :through => :subscriptions
 
@@ -672,7 +672,7 @@ class User < ActiveRecord::Base
     template = EmailTemplate.find_by_uniq_id("#{has_role?(:member) ? 'member' : 'supplier'}_invitation")
     template = customize_email_template(template)
     TemplateMailer.delay.new(email, template, with_role.address.present? ? with_role.address.country : Country.get_country_from_locale,
-                             {:user => self.with_role, :new_password => new_password}, assets_to_path_names(email_materials), :sender_id => User.get_current_user_id)
+                             {:user => self.with_role, :new_password => new_password, :sender_id => User.get_current_user_id}, assets_to_path_names(email_materials))
   end
 
   def country
