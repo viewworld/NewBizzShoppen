@@ -871,6 +871,11 @@ h4
     padding: 12px;
 }
 
+.frm .flash
+{
+    margin-bottom: 0;
+}
+
 .flash.flash_notice
 {
     background: #6ed8ff;
@@ -1982,14 +1987,12 @@ li.disabled
     color: #0096ff;
     font-size: 26px;
     font-weight: bold;
-    padding-bottom: 3px;
+    padding: 0 5px 3px;
 }
 
-.subscription_plan_item ul li
+.subscription_plan_item > p
 {
-    text-align: left;
-    padding: 3px 8px 3px 30px;
-    background: url(/images/icons/tick.png) no-repeat 9px 50%;
+    padding: 0 5px;
 }
 
 .subscription_plan_footer
