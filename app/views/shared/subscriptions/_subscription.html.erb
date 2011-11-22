@@ -13,15 +13,7 @@
 
   <% if subscription_plan.subscription_text.present? %>
       <p><%= raw subscription_plan.subscription_text %></p>
-  <% end %>
-
-  <ul>
-    <% [:big_buyer, :team_buyers, :deal_maker].each do |method| %>
-        <% if subscription_plan.send("#{method}?".to_sym) %>
-            <li><%= t("subscriptions.listing.features.#{method}") %></li>
-        <% end %>
-    <% end %>
-  </ul>
+  <% end %>  
 
   <p class="subscription_plan_footer">    
     <% if defined? subscriptions_form and subscriptions_form %>

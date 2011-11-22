@@ -5,26 +5,23 @@
     <%= blurb('blurb_sign_up') %>
   </div>
 
-  <hl pdd="15"/>
+  <hl pdd="15"/>  
 
-  <div class="frm_tiny" style="margin-bottom:10px;">
-    <div class="pdd_10">
-      <p>
-        <%= t("member_accounts.new.view.janrain_sign_up_label") %>
-        <% unless Rails.env.test? %>
-            <%= link_to_rpx image_tag("icons/social_login.png"), supplier_accounts_url %>
-            <%= javascript_include_rpx supplier_accounts_url %>
-        <% end %>
-      </p>
-      <%= render(:partial => "shared/accounts/rpx_message", :locals => {:user => @user}) unless @user.rpx_identifier.blank? %>
-    </div>
-  </div>
+  <% unless @user.rpx_identifier.blank? %>
+
+
+      <div class="frm_tiny" style="margin-bottom:10px;">
+        <div class="pdd_10">
+          <%= render(:partial => "shared/accounts/rpx_message", :locals => {:user => @user}) %>
+        </div>
+      </div>
+  <% end %>
 
   <%= semantic_form_for @user, :url => supplier_accounts_path do |form| %>
       <frm title="#{t('shared.accounts.new_account_form.form_title')}" c="no_marg">
         <param:content>
           <div class="pdd_10">
-            <%= render :partial => "shared/subscriptions/new_account", :locals => { :role => "supplier", :subscriptions_form => form} %>
+            <%= render :partial => "shared/subscriptions/new_account", :locals => {:role => "supplier", :subscriptions_form => form} %>
           </div>
           <hl/>
           <div class="column_left">
@@ -71,6 +68,13 @@
 
         </param:content>
         <param:actions>
+          <div style="position: absolute;left: 142px;">
+            <%= t("member_accounts.new.view.janrain_sign_up_label") %>
+            <% unless Rails.env.test? %>
+                <%= link_to_rpx image_tag("icons/social_login.png"), supplier_accounts_url %>
+                <%= javascript_include_rpx supplier_accounts_url %>
+            <% end %>
+          </div>
           <ibt c="fltri" icon="plus">
             <%= form.submit t("supplier_accounts.new.view.button_create_account") %>
           </ibt>
