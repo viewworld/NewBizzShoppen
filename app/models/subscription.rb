@@ -12,6 +12,7 @@ class Subscription < ActiveRecord::Base
   acts_as_list :scope => :user_id
   scope :active, lambda { where("is_active = ? and ((end_date IS NULL and billing_cycle = 0) or end_date >= ?)", true, Date.today) }
   scope :billable, where("billing_cycle > 0 AND billing_date IS NOT NULL AND billing_date <= current_date AND invoiced_at IS NULL")
+  scope :future, lambda { where("start_date > ?", Date.today) }
 
   attr_accessor :next_subscription_plan, :next_subscription_plan_start_date
   include AASM

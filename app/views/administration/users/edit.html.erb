@@ -40,6 +40,41 @@
       </frm>
   <% end %>
 
+  <% if @user.active_subscription and !@user.new_record? %>
+      <frm title="#{t('administration.users.edit.view.subscription_management')}">
+        <param:content>
+          <p><%= t("administration.users.edit.view.active_subscription") %> <%= @user.active_subscription.name %></p>
+          <% if @user.active_subscription.payable? %>
+            <p><%= t("administration.users.edit.view.active_subscription_period") %>: <%= "#{@user.active_subscription.start_date.to_s} - #{@user.active_subscription.end_date.to_s}, #{t("administration.users.edit.view.active_subscription_days_left", :number => @user.active_subscription.days_left)}" %></p>
+          <% end %>
+
+          <% if !@user.can_upgrade_or_downgrade_subscription? %>
+            <p><%= t("administration.users.edit.view.cant_upgrade_nor_downgrade")%></p>
+          <% elsif !@user.can_upgrade_subscription? %>
+            <p><%= t("administration.users.edit.view.cant_upgrade")%></p>
+          <% elsif !@user.can_upgrade_subscription? %>
+            <p><%= t("administration.users.edit.view.cant_downgrade")%></p>
+          <% end %>
+
+          <% if @user.active_subscription.is_today_in_free_period? %>
+              <h3><%= t("administration.users.edit.view.in_free_period", :free_period_date => @user.active_subscription.free_subscription_end_date) %></h3>
+          <% end %>
+
+          <% if next_subscription = @user.next_subscription %>
+            <p><%= t("administration.users.edit.view.cant_downgrade", :next_plan_name => next_subscription.subscription_plan.name, :next_plan_active_from => next_subscription.start_date) %></p>
+          <% elsif @user.active_subscription.will_prolong? %>
+            <p><%= t("administration.users.edit.view.users_active_subscription_will_prolong", :prolong_date => @user.active_subscription.end_date + 1.day) %> <%= t("administration.users.edit.view.as_free_subscription") if @user.active_subscription.cancelled? %></p>
+          <% end %>
+
+          <br/><h3><%= t("administration.users.edit.view.change_users_subscription") %></h3>
+          <%= form_for :subscription_plan, :url => administration_user_change_subscription_plan_path(@user) do |f| %>
+            <%= f.select :subscription_plan_id, SubscriptionPlan.active.exclude_current_plan(@user.active_subscription_plan).for_role(@user.with_role.role).ascend_by_billing_price.map{|s| [s.name,s.id]} %>
+            <%= f.submit t("administration.users.edit.view.change") %>
+          <% end %>
+        </param:content>
+      </frm>
+  <% end %>
+
   <% if @user.subaccounts.present? %>
       <br />
       <header><%= t("administration.users.edit.view.subaccounts_list") %></header>

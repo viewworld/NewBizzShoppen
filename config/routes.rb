@@ -21,6 +21,7 @@ Nbs::Application.routes.draw do
       member do
         get :sign_in_as
       end
+      resource :change_subscription_plan
     end
     resource :bulk_users_update, :controller => "bulk_users_update", :only => [:update]
     resources :categories

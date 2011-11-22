@@ -738,6 +738,10 @@ class User < ActiveRecord::Base
     subscription_plan and subscription_plan.is_active and subscription_plan.has_role?(self.role.to_sym)
   end
 
+  def start_date_for_admin_change_is_valid?(start_date)
+    (start_date >= Date.today) and (active_subscription.is_free? or (start_date <= active_subscription.end_date + 1.day))
+  end
+
   def subscription_can_be_applied?(subscription_plan)
      !active_subscription and subscription_can_be_changed_to?(subscription_plan) and subscription_plan_is_valid?(subscription_plan)
   end
@@ -779,14 +783,20 @@ class User < ActiveRecord::Base
   end
 
   def admin_change_subscription!(subscription_plan, start_date = Date.today)
-    if subscription_plan_is_valid?(subscription_plan)
+    if !subscription_plan_is_valid?(subscription_plan)
+      self.errors.add(:base, I18n.t("subscriptions.new_subscription_plan_is_invalid"))
+      return false
+    elsif !start_date_for_admin_change_is_valid?(start_date)
+      self.errors.add(:base, I18n.t("subscriptions.start_date_is_invalid"))
+      return false
+    elsif subscriptions.future.count > 0
+      self.errors.add(:base, I18n.t("subscriptions.there_are_future_subscriptions"))
+      return false
+    else
       as = active_subscription
       as.next_subscription_plan = subscription_plan
       as.next_subscription_plan_start_date = start_date
       as.admin_change!
-    else
-      self.errors.add(:base, I18n.t("subscriptions.new_subscription_plan_is_invalid"))
-      false
     end
   end
 
