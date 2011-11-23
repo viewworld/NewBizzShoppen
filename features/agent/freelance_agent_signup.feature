@@ -1,4 +1,4 @@
-@user_accounts @m1
+@user_accounts @m1 @faircalls
 Feature: Freelance agent signup
 
   In order to get access to protected sections of the site

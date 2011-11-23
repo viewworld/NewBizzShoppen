@@ -1,4 +1,4 @@
-@lead_manager @$_freelance_agent @m1
+@lead_manager @$_freelance_agent @m1 @faircalls
 Feature: Lead Management - My Leads Manage for Freelance Agent
 
 Background:

@@ -62,7 +62,7 @@ Scenario: As translator I can edit blurb, change it, save it and then go back to
   And I should be on the homepage
   And I should see "My test of article editing by translator"
 
-@m8 @translations @added @selenium @_tested @_done
+@m8 @translations @added @selenium @_tested @_done @faircalls
 Scenario: As translator I add/edit/remove edit hint, change it, save it and then go back to previous page
   Given I am a translator for role "agent" with email "translator_1@nbs.com" and password "secret"
   And Category Test category 1 is created

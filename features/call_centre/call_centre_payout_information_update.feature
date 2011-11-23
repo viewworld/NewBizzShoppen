@@ -1,4 +1,4 @@
-@user_accounts @$_call_centre  @m5 @tgn
+@user_accounts @$_call_centre  @m5 @tgn @faircalls
 Feature: Call centre payout information update
 
 Background:

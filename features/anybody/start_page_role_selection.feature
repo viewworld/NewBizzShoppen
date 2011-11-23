@@ -32,7 +32,7 @@ Scenario: I can set remember me option by selecting a checkbox and logging in
 #  Then I should see translated "devise.sessions.signed_in"
 
 #7455
-@m19 @requested @_done @_tested
+@m19 @requested @_done @_tested @faircalls
 Scenario: For each role homepage there should be two separate blurbs: for logged in and logged out user
   #buyer
   Given I am not sign in
@@ -64,7 +64,7 @@ Scenario: For each role homepage there should be two separate blurbs: for logged
 #  And I should see "Blurb member home logged in"
 
 #7452
-@m19 @requested @_done @_tested
+@m19 @requested @_done @_tested @faircalls
 Scenario: When user logs out then he lands on his specific role home page
   #buyer
   Given I am not sign in

@@ -1,4 +1,4 @@
-@m16 @requested @agent_deals @_deals @$_call_centre @$_agent @nontestable @$_remove
+@m16 @requested @agent_deals @_deals @$_call_centre @$_agent @nontestable @$_remove @faircalls
 Feature: Deals from Call Centre/Agent perspective
 
   Background:

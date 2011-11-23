@@ -8,7 +8,7 @@ Feature: Campaign report
     And campaign report data is generated
     And I follow translated "layout.main_menu.admin.reports"
 
-  @_done @_tested
+  @_done @_tested @faircalls
   Scenario: I can see all values per campaign
     Then I should see translated "campaign_reports.index.empty_report_msg"
     And I press translated "campaign_reports.index.search_button"

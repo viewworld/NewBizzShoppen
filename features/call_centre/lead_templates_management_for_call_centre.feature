@@ -1,4 +1,4 @@
-@lead_templates @$_call_centre @m5 @tgn  @requested
+@lead_templates @$_call_centre @m5 @tgn  @requested @faircalls
 Feature: Lead templates management for call centre
 
 Background:  Sign in user and set locale

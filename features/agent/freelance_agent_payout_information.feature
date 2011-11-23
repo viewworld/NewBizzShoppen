@@ -1,4 +1,4 @@
-@user_accounts @$_call_centre  @m4 @tgn
+@user_accounts @$_call_centre @m4 @tgn @faircalls
 Feature: Freelance agent payout information
 
 Background:

@@ -11,14 +11,14 @@ Feature: Contacts Advanced Import Unique
     And I sign in as admin@nbs.com with password secret
     Then I use advanced import for contacts unique
 
-  @added @selenium @_done @_tested
+  @added @selenium @_done @_tested @faircalls
   Scenario: Call center can import contacts from spreadsheet (ods, xls, xlsx) with advanced import
     Given I visit domain http://faircalls.eu
     And I sign in as translator_call_centre@nbs.com with password secret
     Then I use advanced import for contacts unique
     And user "translator_call_centre@nbs.com" has not contacts assigned in campaign "Testing Two"
 
-  @added @selenium @_done @_tested
+  @added @selenium @_done @_tested @faircalls
   Scenario: Call center agent can contacts buyers from spreadsheet (ods, xls, xlsx) with advanced import
     Given I visit domain http://faircalls.eu
     And I sign in as translator_call_centre_agent@nbs.com with password secret
@@ -27,7 +27,7 @@ Feature: Contacts Advanced Import Unique
     Then I use advanced import for contacts unique
     And user "translator_call_centre_agent@nbs.com" has contacts assigned in campaign "Testing Two"
 
-  @added @selenium @_done @_tested
+  @added @selenium @_done @_tested @faircalls
   Scenario: Agent can import contacts from spreadsheet (ods, xls, xlsx) with advanced import
     Given I visit domain http://faircalls.eu
     And I sign in as agent@nbs.com with password secret

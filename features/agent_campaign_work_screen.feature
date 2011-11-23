@@ -1,4 +1,4 @@
-@m5b @agent_campaign @$_call_centre_agent @tbr @__campaign_calling_session @selenium
+@m5b @agent_campaign @$_call_centre_agent @tbr @__campaign_calling_session @selenium @faircalls
 Feature: Agent campaign - calling session
 
    Background:
