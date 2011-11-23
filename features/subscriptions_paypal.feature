@@ -33,6 +33,9 @@ Scenario: When subscription ends prematurly (upgrade or change by admin) then th
 @debtors
 Scenario: User subscription debts should be based on subperiods
 
+@debtors
+Scenario: Subperiods for user are generated with each new subscription
+
 @invoices
 Scenario: Invoice for subscription should be generated from subperiod lines
 

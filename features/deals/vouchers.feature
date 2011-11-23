@@ -1,4 +1,4 @@
-@m24 @vouchers
+@m24 @vouchers @is
 Feature: Vouchers
 
   Scenario: When voucher is enabled for deal then 'get deal' request redirect to deal information request page, after click on "ok" user is redirected to paypal for payment

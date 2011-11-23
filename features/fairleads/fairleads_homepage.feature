@@ -1,5 +1,5 @@
 #8644
-@m24 @requested
+@m24 @requested @fairleads_homepage
 Feature: Faileads homepage
 
   Scenario: I should not see browse deals on Fairleads homepage as guest
