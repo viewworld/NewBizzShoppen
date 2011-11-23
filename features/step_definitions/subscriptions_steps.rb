@@ -15,5 +15,18 @@ When /^billing date for active subscription is today for user "([^"]*)"$/ do |em
   as.update_attribute(:billing_date, Date.today)
 end
 
+When /^user "([^"]*)" upgraded subscription to "([^"]*)"$/ do |email, plan_name|
+  user = User.where(:email => email).first.with_role
+  plan = SubscriptionPlan.active.for_role(user.role).where(:name => plan_name).first
+  user.upgrade_subscription!(plan)
+end
+
+When /^user "([^"]*)" downgraded subscription to "([^"]*)"$/ do |email, plan_name|
+  user = User.where(:email => email).first.with_role
+  plan = SubscriptionPlan.active.for_role(user.role).where(:name => plan_name).first
+  user.downgrade_subscription!(plan)
+end
+
+
 
 
