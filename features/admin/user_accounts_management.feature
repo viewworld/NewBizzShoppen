@@ -827,8 +827,11 @@ Scenario: When editing a user I can click a button and go to invoices page filte
   And I should see "300.00" within "#invoices_list"
 
 #8605
-@m23 @subscriptions @requested
+@m23 @subscriptions @requested @wip
 Scenario: I can select user's new subscription plan
+  When someone is signed up and confirmed as user with email kastomer@nbs.fake and password secret and role supplier with attributes "first_name:Janko,last_name:Muzykant,company_name:Cello Ltd"
+  And I go to administration edit user for kastomer@nbs.fake
+  And I open page in browser
 
 #8605
 @m23 @subscriptions @requested

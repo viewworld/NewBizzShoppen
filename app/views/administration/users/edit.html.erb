@@ -67,14 +67,17 @@
           <% end %>
 
           <br/><h3><%= t("administration.users.edit.view.change_users_subscription") %></h3>
+          <% @available_subscriptions = SubscriptionPlan.active.exclude_current_plan(@user.active_subscription_plan).for_role(@user.with_role.role).ascend_by_billing_price %>
           <% if @user.subscriptions.future.count > 0 %>
             <%= t("administration.users.edit.view.remove_scheduled_subscriptions") %>
               <%= semantic_form_for :subscription, :url => administration_user_change_subscription_plan_path(@user), :html => {:method => :delete} do |f| %>
                 <%= f.commit_button t("administration.users.edit.view.remove_scheduled") %>
               <% end %>
+          <% elsif @available_subscriptions.count.eql?(0) %>
+            <%= t("administration.users.edit.view.no_other_subscription_plans_for_user") %>
           <% else %>
               <%= semantic_form_for Subscription.new, :url => administration_user_change_subscription_plan_path(@user) do |f| %>
-                <%= f.input :subscription_plan_id, :collection => SubscriptionPlan.active.exclude_current_plan(@user.active_subscription_plan).for_role(@user.with_role.role).ascend_by_billing_price.map{|s| [s.name,s.id]}, :include_blank => false %>
+                <%= f.input :subscription_plan_id, :collection => @available_subscriptions.map{|s| [s.name,s.id]}, :include_blank => false %>
                 <%= f.input :start_date, :as => :datepicker, :input_html => {:value => (@user.active_subscription.end_date||Date.today)+1 } %>
                 <%= f.commit_button t("administration.users.edit.view.change") %>
               <% end %>
