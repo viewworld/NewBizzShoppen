@@ -1,28 +1,28 @@
-@m24
+@subscriptions @m24
 Feature: Subscriptions Paypal
 
-Scenario: Billing cycle should be renamed to "Subscription period" 1
+Scenario: Billing cycle should be renamed to "Subscription period"
 
 @subscriptions
-Scenario: I can enter "Billing cycle" in weeks to make payments in smaller parts than subscrition period 1
+Scenario: I can enter "Billing cycle" in weeks to make payments in smaller parts than subscrition period
 
 @subscriptions @system
-Scenario: Payable subscription is represented additionally by subperiods 2
+Scenario: Payable subscription is represented additionally by subperiods
 
 @subscriptions @system
-Scenario: Each subperiod has subscription lines with prices proportionally calculated 2
+Scenario: Each subperiod has subscription lines with prices proportionally calculated
 
 @subscriptions @system
-Scenario: Each subperiod should have stored the total amount of it's subscription lines 1
+Scenario: Each subperiod should have stored the total amount of it's subscription lines
 
 @subscriptions @system
-Scenario: Each subperiod should have it's billing date 1
+Scenario: Each subperiod should have it's billing date
 
 @subscriptions @system
-Scenario: Each subperiod is attached to an invoice 2
+Scenario: Each subperiod is attached to an invoice
 
 @subscriptions @system
-Scenario: Each subperiod can be marked as paid 1
+Scenario: Each subperiod can be marked as paid
 
 @subscriptions @system
 Scenario: When subscription ends prematurly (upgrade or change by admin) then upcoming subperiods should be deleted
@@ -31,22 +31,22 @@ Scenario: When subscription ends prematurly (upgrade or change by admin) then up
 Scenario: When subscription ends prematurly (upgrade or change by admin) then the current subperiod should be recalculated
 
 @debtors
-Scenario: User subscription debts should be based on subperiods 6
+Scenario: User subscription debts should be based on subperiods
 
 @invoices
-Scenario: Invoice for subscription should be generated from subperiod lines 4
+Scenario: Invoice for subscription should be generated from subperiod lines
 
 @refunds
 Scenario: When subperiod is recalculated then the unused amount should be refunded
 
 @subscriptions
-Scenario: "Billing period" should be renamed to "Billing date" (+/- weeks) 1
+Scenario: "Billing period" should be renamed to "Billing date" (+/- weeks)
 
 @subscriptions @system
-Scenario: "Billing period" shuld be less than "Billing cycle" 1
+Scenario: "Billing period" shuld be less than "Billing cycle"
 
 @subscriptions @system
-Scenario: "Billing date" (- weeks) cannot be applied to the first subperiod 1
+Scenario: "Billing date" (- weeks) cannot be applied to the first subperiod
 
 Scenario: I can enable subscription to be handled by Paypal
 
