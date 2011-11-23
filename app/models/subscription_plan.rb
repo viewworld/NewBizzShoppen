@@ -8,10 +8,11 @@ class SubscriptionPlan < ActiveRecord::Base
 
   roles ROLES
 
-  validates_presence_of :name, :billing_cycle, :billing_period, :assigned_roles, :currency_id, :currency, :seller, :seller_id
+  validates_presence_of :name, :subscription_period, :billing_cycle, :billing_period, :assigned_roles, :currency_id, :currency, :seller, :seller_id
   validates_numericality_of :billing_cycle
   validates_numericality_of :billing_period, :greater_than_or_equal_to => 0
   validates_numericality_of :lockup_period, :free_period, :allow_nil => true
+  validates_numericality_of :billing_cycle, :greater_than_or_equal_to => 1, :less_than_or_equal_to => Proc{|sp| }
   validate :check_roles
 
   has_many :subscription_plan_lines, :as => :resource, :dependent => :destroy

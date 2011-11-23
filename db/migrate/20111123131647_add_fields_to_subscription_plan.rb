@@ -12,12 +12,11 @@ class AddFieldsToSubscriptionPlan < ActiveRecord::Migration
     add_column :subscription_plans, :use_paypal, :boolean, :default => false
     add_column :subscriptions, :use_paypal, :boolean, :default => false
 
-    add_column :subscriptions, :paypal_retries, :integer, :default => false
-    add_column :subscription_plans, :paypal_retries, :integer, :default => true
-
-    add_column :subscription_plans, :paypal_billing_at_start, :boolean, :default => true
+    add_column :subscriptions, :paypal_retries, :integer
+    add_column :subscription_plans, :paypal_retries, :integer
 
     add_column :subscriptions, :paypal_billing_at_start, :boolean, :default => true
+    add_column :subscription_plans, :paypal_billing_at_start, :boolean, :default => true
 
     add_column :subscription_plans, :paypal_billing_at_end_of_free_period, :boolean, :default => false
     add_column :subscriptions, :paypal_billing_at_end_of_free_period, :boolean, :default => false

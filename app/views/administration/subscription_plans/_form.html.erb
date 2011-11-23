@@ -5,6 +5,7 @@
       <ol class="align_inputs">
         <%= form.input :name %>
         <%= form.input :subscription_text, :as => :ckeditor, :input_html => {:width => '320px', :height => '150px', :toolbar => "Lite"}, :wrapper_html => {:class => "text"} %>
+        <%= form.input :subscription_period %>
         <%= form.input :billing_cycle %>
         <%= form.input :lockup_period %>
         <%= form.input :billing_period %>
