@@ -86,7 +86,6 @@ Scenario: I should see my latest call log "History" in the middle box
   And additional campaign report data is generated
   And I sign in as testreportscca01@nbs.com with password secret
   And I should see "TEST Result"
-  And I open page in browser
   When I follow "Aaaaa company name"
   And I wait 10 second
   Then "call_result_result_id" should be selected for value "TEST Result 01"
