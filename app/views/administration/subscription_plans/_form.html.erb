@@ -9,7 +9,7 @@
         <%= form.input :billing_cycle %>
         <%= form.input :lockup_period %>
         <%= form.input :billing_period %>
-        <%= form.input :free_period %>
+        <%= form.input :free_period, :input_html => { :onkeydown => "enable_free_deals_in_free_period()"} %>
         <%= form.input :currency_id, :collection => currencies_for_select %>
         <%= form.input :seller_id, :collection => Seller.all, :include_blank => false %>
         <%= form.input :assigned_roles, :collection => SubscriptionPlan::ROLES.map { |r| [r.to_s.humanize, r] }, :include_blank => false, :input_html => { :onchange => "switch_roles();load_subscription_plans();", :style => "height:100px", :size => 5, :multiple => true } %>
@@ -129,7 +129,18 @@
         });
     }
 
+    function enable_free_deals_in_free_period(){
+        if(jQuery.trim($('#subscription_plan_free_period').val()) == ""){
+            $('#subscription_plan_free_deals_in_free_period').attr("disabled", "true");
+        }
+        else {
+            $('#subscription_plan_free_deals_in_free_period').attr("disabled", "");
+        }
+    }
+
+
     switch_roles();
     switch_use_paypal_features();
     switch_automatic_downgrading();
+    enable_free_deals_in_free_period()
 </script>
