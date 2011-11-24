@@ -8,9 +8,11 @@ class CreateSubscriptionSubPeriods < ActiveRecord::Migration
       t.decimal :billing_price, :precision => 10, :scale => 2
       t.decimal :euro_billing_price, :precision => 10, :scale => 2
       t.integer :paypal_retries, :default => 0
-      t.boolean :paypal_paid, :default => false
+      t.boolean :paypal_paid_auto, :default => false
+      t.boolean :paypal_paid_manual, :default => false
       t.text :paypal_payment_id
       t.integer :invoice_id
+      t.integer :currency_id
       t.timestamps
     end
   end

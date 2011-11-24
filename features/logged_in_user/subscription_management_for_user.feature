@@ -15,7 +15,7 @@ Feature: Subscription management for user
 
   @selenium @_done @_tested
   Scenario: I can change my subscription type
-    When there is subscription plan named "Basic for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0" and price "100"
+    When there is subscription plan named "Basic for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0" and price "100"
     And I follow translated "layout.my_profile_link"
     And I confirm a js popup on the next step
     And I follow translated "subscriptions.listing.upgrade"
@@ -26,7 +26,7 @@ Feature: Subscription management for user
 
   @selenium @_done @_tested @_deprecated
   Scenario: I can cancel my subscription any time after the change of subscription plan
-#    When there is subscription plan named "Basic for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0" and price "100"
+#    When there is subscription plan named "Basic for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0" and price "100"
 #    And I follow translated "layout.my_profile_link"
 #    And I confirm a js popup on the next step
 #    And I follow translated "subscriptions.listing.upgrade"
@@ -37,7 +37,7 @@ Feature: Subscription management for user
 
   @selenium @_done @_tested
   Scenario: When I change my subscription to more expensive one the change will be immediate
-    When there is subscription plan named "Basic for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0" and price "100"
+    When there is subscription plan named "Basic for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0" and price "100"
     And I follow translated "layout.my_profile_link"
     And I confirm a js popup on the next step
     And I follow translated "subscriptions.listing.upgrade"
@@ -45,11 +45,11 @@ Feature: Subscription management for user
 
   @selenium @_done @_tested
   Scenario: When I change my subscription to less expensive then the change will apply on next billing cycle
-    When there is subscription plan named "Medium for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0" and price "200"
+    When there is subscription plan named "Medium for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0" and price "200"
     And I follow translated "layout.my_profile_link"
     And I confirm a js popup on the next step
     And I follow translated "subscriptions.listing.upgrade"
-    And there is subscription plan named "Basic for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0" and price "100"
+    And there is subscription plan named "Basic for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0" and price "100"
     And I follow translated "layout.my_profile_link"
     And I confirm a js popup on the next step
     And I follow translated "subscriptions.listing.downgrade"
@@ -59,12 +59,12 @@ Feature: Subscription management for user
 
   @selenium @_done @_tested
   Scenario: When I upgrade my subscription to more expensive in the middle of billing cycle then I will pay only for the used part of cycle
-    And there is subscription plan named "Basic for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0" and price "100"
+    And there is subscription plan named "Basic for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0" and price "100"
     And I follow translated "layout.my_profile_link"
     And I confirm a js popup on the next step
     And I follow translated "subscriptions.listing.upgrade"
     And I follow translated "layout.my_profile_link"
-    When there is subscription plan named "Medium for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0" and price "200"
+    When there is subscription plan named "Medium for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0" and price "200"
     And the date is "14" days from now
     And I follow translated "layout.my_profile_link"
     And I confirm a js popup on the next step
@@ -78,11 +78,11 @@ Feature: Subscription management for user
 
   @selenium @_done @_tested
   Scenario: I can't downgrade my subscription when it entered into the lockup period
-    When there is subscription plan named "Medium for supplier" for role "supplier" with attributes "billing_cycle:2,lockup_period:1,billing_period:0,free_period:0" and price "200"
+    When there is subscription plan named "Medium for supplier" for role "supplier" with attributes "subscription_period:2,lockup_period:1,billing_period:0,free_period:0" and price "200"
     And I follow translated "layout.my_profile_link"
     And I confirm a js popup on the next step
     And I follow translated "subscriptions.listing.upgrade"
-    And there is subscription plan named "Basic for supplier" for role "supplier" with attributes "billing_cycle:2,lockup_period:1,billing_period:0,free_period:0" and price "100"
+    And there is subscription plan named "Basic for supplier" for role "supplier" with attributes "subscription_period:2,lockup_period:1,billing_period:0,free_period:0" and price "100"
     When the date is "8" days from now
     And active subscription for user "supp@nbs.com" is in lockup period
     And I follow translated "layout.my_profile_link"
@@ -90,7 +90,7 @@ Feature: Subscription management for user
 
   @selenium @_done @_tested
   Scenario: I cannot manage team buyers if my subscription has team buyers disabled
-    When there is subscription plan named "Medium for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0,team_buyers:1" and price "200"
+    When there is subscription plan named "Medium for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0,team_buyers:1" and price "200"
     Then I should not see translated "layout.main_menu.supplier.subaccounts" within "#user_menu"
     When I follow translated "layout.my_profile_link"
     And I confirm a js popup on the next step
@@ -101,7 +101,7 @@ Feature: Subscription management for user
 
   @selenium @_done @_tested
   Scenario: I become small buyer if my subscription has big buyer disabled
-    When there is subscription plan named "Medium for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0,big_buyer:1" and price "200"
+    When there is subscription plan named "Medium for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0,big_buyer:1" and price "200"
     When I follow translated "layout.my_profile_link"
     And I confirm a js popup on the next step
     And I follow translated "subscriptions.listing.upgrade"
@@ -116,7 +116,7 @@ Feature: Subscription management for user
 
   @selenium @_done @_tested
   Scenario: I loose deal maker role if my subscription has deal maker disabled
-    When there is subscription plan named "Medium for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0,deal_maker:1" and price "200"
+    When there is subscription plan named "Medium for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0,deal_maker:1" and price "200"
     When I follow translated "layout.my_profile_link"
     And I confirm a js popup on the next step
     And I follow translated "subscriptions.listing.upgrade"
@@ -132,12 +132,12 @@ Feature: Subscription management for user
 
   @selenium @_done @_tested
   Scenario: I can manage team buyers if my subscription has team buyers enabled
-    When there is subscription plan named "Medium for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0,team_buyers:1" and price "200"
+    When there is subscription plan named "Medium for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0,team_buyers:1" and price "200"
     Then I should not see translated "layout.main_menu.supplier.subaccounts" within "#user_menu"
 
   @selenium @_done @_tested
   Scenario: I become big buyer if my subscription has big buyer enabled
-    When there is subscription plan named "Medium for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0,big_buyer:1" and price "200"
+    When there is subscription plan named "Medium for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0,big_buyer:1" and price "200"
     When I follow translated "layout.my_profile_link"
     And I confirm a js popup on the next step
     And I follow translated "subscriptions.listing.upgrade"
@@ -146,7 +146,7 @@ Feature: Subscription management for user
 
   @selenium @_done @_tested
   Scenario: I become deal maker if my subscription has deal maker enabled
-    When there is subscription plan named "Medium for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0,deal_maker:1" and price "200"
+    When there is subscription plan named "Medium for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0,deal_maker:1" and price "200"
     When I follow translated "layout.my_profile_link"
     And I confirm a js popup on the next step
     And I follow translated "subscriptions.listing.upgrade"
@@ -155,7 +155,7 @@ Feature: Subscription management for user
 
   @selenium @_done @_tested
   Scenario: When I login and my subscription is expired it will automatically prolong
-    When there is subscription plan named "Basic for supplier" for role "supplier" with attributes "billing_cycle:2,lockup_period:1,billing_period:0,free_period:0" and price "100"
+    When there is subscription plan named "Basic for supplier" for role "supplier" with attributes "subscription_period:2,lockup_period:1,billing_period:0,free_period:0" and price "100"
     And I follow translated "layout.my_profile_link"
     And I confirm a js popup on the next step
     And I follow translated "subscriptions.listing.upgrade"
@@ -168,7 +168,7 @@ Feature: Subscription management for user
 
   @added @selenium @_done @_tested
   Scenario: When I cancel my subscription during lockup period then the current subscirption should prolong one more time and then become free
-    When there is subscription plan named "Basic for supplier" for role "supplier" with attributes "billing_cycle:2,lockup_period:1,billing_period:0,free_period:0" and price "100"
+    When there is subscription plan named "Basic for supplier" for role "supplier" with attributes "subscription_period:2,lockup_period:1,billing_period:0,free_period:0" and price "100"
     And I follow translated "layout.my_profile_link"
     And I confirm a js popup on the next step
     And I follow translated "subscriptions.listing.upgrade"
@@ -183,13 +183,13 @@ Feature: Subscription management for user
 
   @selenium @_done @_tested
   Scenario: I can use free period only once, when registered with other email but the same CVR number then I should not be able to use free period with warning: 'Sorry you company has already used its free subscription period'
-    When there is subscription plan named "Basic for supplier" for role "supplier" with attributes "billing_cycle:2,lockup_period:1,billing_period:0,free_period:1" and price "100"
+    When there is subscription plan named "Basic for supplier" for role "supplier" with attributes "subscription_period:2,lockup_period:1,billing_period:0,free_period:1" and price "100"
     And I follow translated "layout.my_profile_link"
     And I confirm a js popup on the next step
     And I follow translated "subscriptions.listing.upgrade"
     And I follow translated "layout.my_profile_link"
     Then I should see translated "subscriptions.free_period_notification" with options "free_period_date:{Date.today+7.days}"
-    When there is subscription plan named "Medium for supplier" for role "supplier" with attributes "billing_cycle:2,lockup_period:1,billing_period:0,free_period:1" and price "200"
+    When there is subscription plan named "Medium for supplier" for role "supplier" with attributes "subscription_period:2,lockup_period:1,billing_period:0,free_period:1" and price "200"
     And I follow translated "layout.my_profile_link"
     And I confirm a js popup on the next step
     And I follow translated "subscriptions.listing.upgrade"
@@ -215,7 +215,7 @@ Feature: Subscription management for user
   #8333
   @m22 @requested @selenium @_done @_tested
   Scenario: Billing date for subscription should be the day it started
-    When there is subscription plan named "Basic for supplier" for role "supplier" with attributes "billing_cycle:4,lockup_period:1,billing_period:0,free_period:0" and price "100"
+    When there is subscription plan named "Basic for supplier" for role "supplier" with attributes "subscription_period:4,lockup_period:1,billing_period:0,free_period:0" and price "100"
     And I follow translated "layout.my_profile_link"
     And I confirm a js popup on the next step
     And I follow translated "subscriptions.listing.upgrade"

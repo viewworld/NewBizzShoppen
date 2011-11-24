@@ -3,7 +3,7 @@ Feature: Deals from procurement manager perspective
 
   Background:
     Given I am signed up and confirmed as user with email procurment@nbs.com and password secret and role member
-    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
+    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10"
     And subscription plan has following lines
       | name                 | price |
       | subscr premium line1 |    99 |
@@ -196,7 +196,7 @@ Feature: Deals from procurement manager perspective
     And user "buyer@nbs.com" has deal maker role enabled
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper"
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
-    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
+    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10"
     And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
     Then I sign in as purchase_manager101@nbs.com with password supersecret
     Then I follow translated "layout.fairdeals.main_menu.deals"
@@ -230,7 +230,7 @@ Feature: Deals from procurement manager perspective
     And I press translated "campaigns.email_templates.edit.view.button_update"
     Given I visit domain http://fairdeals.dk
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
-    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
+    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10"
     And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
     Then I sign in as purchase_manager101@nbs.com with password supersecret
     And User purchase_manager101@nbs.com with role member is from country Denmark
@@ -252,7 +252,7 @@ Feature: Deals from procurement manager perspective
     And user "buyer@nbs.com" has deal maker role enabled
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper|deal_code:CODE4D3AL"
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
-    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
+    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10"
     And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
     Then I sign in as purchase_manager101@nbs.com with password supersecret
     Then I follow translated "layout.fairdeals.main_menu.deals"
@@ -276,7 +276,7 @@ Feature: Deals from procurement manager perspective
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper|deal_code:CODE4D3AL"
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
     And user "purchase_manager101@nbs.com" with role "member" has attributes "direct_phone_number:48601101101"
-    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
+    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10"
     And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
     Then I sign in as purchase_manager101@nbs.com with password supersecret
     Then I follow translated "layout.fairdeals.main_menu.deals"
@@ -293,7 +293,7 @@ Feature: Deals from procurement manager perspective
     And user "buyer@nbs.com" has deal maker role enabled
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper|deal_code:CODE4D3AL"
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
-    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
+    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10"
     And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
     And user "purchase_manager101@nbs.com" with role "member" has attributes "rpx_identifier:www.facebook.com/profile/123"
     Then I sign in as purchase_manager101@nbs.com with password supersecret
@@ -311,7 +311,7 @@ Feature: Deals from procurement manager perspective
     And user "buyer@nbs.com" has deal maker role enabled
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper|deal_code:CODE4D3AL"
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
-    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
+    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10"
     And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
     And user "purchase_manager101@nbs.com" with role "member" has attributes "rpx_identifier:www.linkedin.com/profile/123"
     Then I sign in as purchase_manager101@nbs.com with password supersecret
@@ -338,7 +338,7 @@ Feature: Deals from procurement manager perspective
     And user "buyer@nbs.com" has deal maker role enabled
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "published:1|header:software components|description:short desc about software|hidden_description:super|start_date:2011-01-01|end_date:2016-12-12|company_name:Xeper|deal_code:CODE4D3AL"
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
-    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
+    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10"
     And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
     Then I sign in as purchase_manager101@nbs.com with password supersecret
     Then I follow translated "layout.fairdeals.main_menu.deals"

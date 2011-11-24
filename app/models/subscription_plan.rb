@@ -9,12 +9,15 @@ class SubscriptionPlan < ActiveRecord::Base
   roles ROLES
 
   validates_presence_of :name, :subscription_period, :billing_cycle, :billing_period, :assigned_roles, :currency_id, :currency, :seller, :seller_id
-  validates_numericality_of :billing_cycle
+  validates_numericality_of :subscription_period, :greater_than_or_equal_to => 0
   validates_numericality_of :billing_period, :greater_than_or_equal_to => 0
   validates_numericality_of :lockup_period, :free_period, :allow_nil => true
-  validates_numericality_of :billing_cycle, :greater_than_or_equal_to => 1, :less_than_or_equal_to => Proc.new {|sp| sp.subscription_period.to_i }
+  validates_numericality_of :billing_cycle, :greater_than_or_equal_to => 0, :less_than_or_equal_to => :subscription_period
   validates_presence_of :automatic_downgrade_subscription_plan_id, :if => Proc.new { |sp| sp.use_paypal and sp.automatic_downgrading }
   validate :check_roles
+  validate do |sp|
+    sp.errors.add(:subscription_period, :must_divide_by, :number => sp.billing_cycle) if (sp.subscription_period % sp.billing_cycle) > 0
+  end
 
   has_many :subscription_plan_lines, :as => :resource, :dependent => :destroy
   has_many :subscriptions
@@ -24,6 +27,7 @@ class SubscriptionPlan < ActiveRecord::Base
 
   after_save :check_email_templates
   before_save :clear_additional_features_for_member, :cache_total_billing
+  before_validation :set_billing_cycle
 
   accepts_nested_attributes_for :subscription_plan_lines, :allow_destroy => true
 
@@ -31,12 +35,16 @@ class SubscriptionPlan < ActiveRecord::Base
   scope :active, where(:is_active => true)
   scope :exclude_free, lambda{ |exclude| exclude ? where("billing_price > 0.0") : where("") }
   scope :exclude_current_plan, lambda{ |plan| where("billing_price <> ? and id <> ?", plan.billing_price, plan.id)}
-  scope :free, where(:billing_cycle => 0)
+  scope :free, where(:subscription_period => 0)
   scope :for_role, lambda { |role| where("roles_mask & #{2**SubscriptionPlan.valid_roles.index(role.to_sym)} > 0 ") }
   scope :for_roles, lambda { |roles| where( roles.map { |r| "roles_mask & #{2**SubscriptionPlan.valid_roles.index(r.to_sym)} > 0" }.join(" AND ") ) unless roles.empty? }
   scope :ascend_by_billing_price, order("billing_price")
   scope :without_paypal, where(:use_paypal => false)
   private
+
+  def set_billing_cycle
+    self.billing_cycle = subscription_period if billing_cycle.to_i.eql?(0)
+  end
 
   def check_email_templates
     unless invoice_email_template
@@ -89,7 +97,4 @@ class SubscriptionPlan < ActiveRecord::Base
     self.roles = _roles
   end
 
-  def is_free?
-    !payable?
-  end
 end

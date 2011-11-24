@@ -6,7 +6,7 @@ Feature: My requests listing
     And user "buyer@nbs.com" has deal maker role enabled
     Then a deal is created by "buyer@nbs.com" for user "buyer@nbs.com" and category "Business deals" with attributes "max_auto_buy:1|header:super|description:super|hidden_description:super|start_date:2011-01-01|published:1|deal_admin_email:agent@nbs.com|company_name:Xeper|address_line_1:adr1|address_line_2:adr2|address_line_3:adr3"
     And I am signed up and confirmed as user with email purchase_manager101@nbs.com and password supersecret and role member
-    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
+    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10"
     And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
     And I visit domain http://fairdeals.eu
     And I am on the homepage

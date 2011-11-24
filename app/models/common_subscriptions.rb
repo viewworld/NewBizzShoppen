@@ -11,11 +11,11 @@ module CommonSubscriptions
     public
 
     def payable?
-      billing_cycle > 0
+      subscription_period > 0
     end
 
     def total_billing
-      subscription_plan_lines.inject(0.0){ |result, line| line.price.to_f + result}
+      subscription_plan_lines.sum(:price)
     end
 
     def is_free?

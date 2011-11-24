@@ -407,7 +407,7 @@ Contact: {{lead.contact_name}}, e-mail: {{lead.email_address}}, phone: {{lead.ph
     ["category_supplier", "supplier", "member"].each do |role|
       subscription_name = "Free #{role.humanize.downcase} subscription"
       unless SubscriptionPlan.where(:name => subscription_name).first.present?
-        sub = SubscriptionPlan.make!(:name => subscription_name, :subscription_period => 0, :billing_cycle => 0, :billing_period => 0, :assigned_roles => [role.to_sym], :seller => Seller.default, :currency => Currency.default_currency)
+        sub = SubscriptionPlan.make!(:name => subscription_name, :subscription_period => 0, :billing_period => 0, :assigned_roles => [role.to_sym], :seller => Seller.default, :currency => Currency.default_currency)
         "User::#{role.camelize}".constantize.all.each do |user|
           user.apply_subscription!(sub)
         end
