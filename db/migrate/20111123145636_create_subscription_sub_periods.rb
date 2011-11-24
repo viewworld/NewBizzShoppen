@@ -10,6 +10,7 @@ class CreateSubscriptionSubPeriods < ActiveRecord::Migration
       t.integer :paypal_retries, :default => 0
       t.boolean :paypal_paid, :default => false
       t.text :paypal_payment_id
+      t.integer :invoice_id
       t.timestamps
     end
   end
