@@ -473,44 +473,5 @@ describe Subscription do
       end
     end
 
-    context "subperiods" do
-      before(:each) do
-        @free_subscription = SubscriptionPlan.active.free.for_role("supplier").first
-        @payable_subscription1 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 12, :billing_cycle => 12)
-        @payable_subscription1.subscription_plan_lines.make!(:price => 25)
-        @payable_subscription2 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 12, :billing_cycle => 3)
-        @payable_subscription2.subscription_plan_lines.make!(:price => 100)
-        @payable_subscription3 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 12)
-        @payable_subscription3.subscription_plan_lines.make!(:price => 200)
-      end
-
-      it "should generate correct number of sub periods" do
-        setup_customer(@free_subscription)
-        @customer.active_subscription.subscription_sub_periods.count.should eql(1)
-        @customer.upgrade_subscription!(@payable_subscription1)
-        @customer.active_subscription.subscription_sub_periods.count.should eql(1)
-        @customer.upgrade_subscription!(@payable_subscription2)
-        @customer.active_subscription.subscription_sub_periods.count.should eql(4)
-        @customer.upgrade_subscription!(@payable_subscription3)
-        @customer.active_subscription.subscription_sub_periods.count.should eql(1)
-      end
-
-      it "should generate subperiods with correct start and end dates" do
-        setup_customer(@free_subscription)
-        @customer.active_subscription.subscription_sub_periods.first.start_date.should eql(@customer.active_subscription.start_date)
-        @customer.active_subscription.subscription_sub_periods.first.end_date.should be_nil
-        @customer.upgrade_subscription!(@payable_subscription2)
-        @customer.active_subscription.subscription_sub_periods[0].start_date.should eql(@customer.active_subscription.start_date)
-        @customer.active_subscription.subscription_sub_periods[0].end_date.should eql(@customer.active_subscription.start_date + 3.weeks - 1.day)
-        @customer.active_subscription.subscription_sub_periods[1].start_date.should eql(@customer.active_subscription.start_date + 3.weeks)
-        @customer.active_subscription.subscription_sub_periods[1].end_date.should eql(@customer.active_subscription.start_date + 6.weeks - 1.day)
-        @customer.active_subscription.subscription_sub_periods[2].start_date.should eql(@customer.active_subscription.start_date + 6.weeks)
-        @customer.active_subscription.subscription_sub_periods[2].end_date.should eql(@customer.active_subscription.start_date + 9.weeks - 1.day)
-        @customer.active_subscription.subscription_sub_periods[3].start_date.should eql(@customer.active_subscription.start_date + 9.weeks)
-        @customer.active_subscription.subscription_sub_periods[3].end_date.should eql(@customer.active_subscription.end_date)
-      end
-
-    end
-
   end
 end
