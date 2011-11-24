@@ -42,6 +42,7 @@ class SubscriptionPlan < ActiveRecord::Base
   scope :for_roles, lambda { |roles| where( roles.map { |r| "roles_mask & #{2**SubscriptionPlan.valid_roles.index(r.to_sym)} > 0" }.join(" AND ") ) unless roles.empty? }
   scope :ascend_by_billing_price, order("billing_price")
   scope :without_paypal, where(:use_paypal => false)
+
   private
 
   def set_billing_cycle
@@ -97,6 +98,10 @@ class SubscriptionPlan < ActiveRecord::Base
 
   def assigned_roles=(_roles)
     self.roles = _roles
+  end
+
+  def number_of_periods
+    payable? ? subscription_period / billing_cycle : 1
   end
 
 end

@@ -15,7 +15,7 @@ class SubscriptionSubPeriod < ActiveRecord::Base
 
   def create_subscription_plan_lines
     subscription.subscription_plan_lines.each do |spl|
-      subscription_plan_lines.create!( :name => spl.name,
+      subscription_plan_lines.create!(:name => spl.name,
                                       :price => spl.price).recalculate(subscription.total_days, total_days)
     end
   end
@@ -33,7 +33,7 @@ class SubscriptionSubPeriod < ActiveRecord::Base
   end
 
   def total_days
-    (end_date - start_date).to_i
+    (end_date + 1.day - start_date).to_i
   end
 
 

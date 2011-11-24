@@ -77,7 +77,9 @@ describe SubscriptionSubPeriod do
     end
 
     it "should contain cached price equal to total subscription price" do
-      setup_customer(@payable_subscription2)
+      @payable_subscription = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 9, :billing_cycle => 3)
+      @payable_subscription.subscription_plan_lines.make!(:price => 9.99)
+      setup_customer(@payable_subscription)
       @customer.active_subscription.subscription_sub_periods.sum(:billing_price).should eql(@customer.active_subscription.billing_price)
     end
 
