@@ -19,6 +19,14 @@ class Administration::SubscriptionPlansController < Administration::Administrati
     end
   end
 
+  def fetch_subscription_plans
+    @subscription_plans = params[:assigned_roles].to_s == "null" ? [] :
+                          SubscriptionPlan.without_paypal.for_roles(params[:assigned_roles].to_s.split(",")).where("id NOT in (?)", params[:id].to_i)
+    respond_to do |format|
+      format.js {  }
+    end
+  end
+
   protected
 
   def collection

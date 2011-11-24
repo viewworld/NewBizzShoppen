@@ -72,7 +72,11 @@ Nbs::Application.routes.draw do
     resources :youtube_introductions
     resources :email_bounces
     resources :languages
-    resources :subscription_plans
+    resources :subscription_plans do
+      collection do
+        get 'fetch_subscription_plans'
+      end
+    end
   end
 
   namespace :suppliers do

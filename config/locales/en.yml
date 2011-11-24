@@ -3601,6 +3601,10 @@ en:
         deal_maker: "Deal maker role enabled?"
         seller_id: "Seller"
         assigned_roles: "Roles"
+        use_paypal: "Use PayPal"
+        automatic_downgrading: "Automatic downgrading"
+        automatic_downgrade_subscription_plan_id: "Automatic downgrading to"
+        paypal_retries: "PayPal payment retries"
   users:
     passwords:
       edit:

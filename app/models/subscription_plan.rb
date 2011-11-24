@@ -14,6 +14,7 @@ class SubscriptionPlan < ActiveRecord::Base
   validates_numericality_of :lockup_period, :free_period, :allow_nil => true
   validates_numericality_of :billing_cycle, :greater_than => 0, :less_than_or_equal_to => :subscription_period, :if => Proc.new{|sp| sp.subscription_period.to_i > 0}
   validates_numericality_of :billing_cycle, :equal_to => 0, :if => Proc.new{|sp| sp.subscription_period.to_i == 0}
+  validates_presence_of :automatic_downgrade_subscription_plan_id, :if => Proc.new { |sp| sp.use_paypal and sp.automatic_downgrading }
   validate :check_roles
   validate do |sp|
      sp.errors.add(:subscription_period, :must_divide_by, :number => sp.billing_cycle) if sp.subscription_period.to_i > 0 and (sp.subscription_period % sp.billing_cycle) > 0
@@ -37,8 +38,9 @@ class SubscriptionPlan < ActiveRecord::Base
   scope :exclude_current_plan, lambda{ |plan| where("billing_price <> ? and id <> ?", plan.billing_price, plan.id)}
   scope :free, where(:subscription_period => 0)
   scope :for_role, lambda { |role| where("roles_mask & #{2**SubscriptionPlan.valid_roles.index(role.to_sym)} > 0 ") }
+  scope :for_roles, lambda { |roles| where( roles.map { |r| "roles_mask & #{2**SubscriptionPlan.valid_roles.index(r.to_sym)} > 0" }.join(" AND ") ) unless roles.empty? }
   scope :ascend_by_billing_price, order("billing_price")
-
+  scope :without_paypal, where(:use_paypal => false)
   private
 
   def set_billing_cycle
