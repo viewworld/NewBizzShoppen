@@ -144,4 +144,9 @@ class IntegrationTasks < Thor
 
     #serialize other attr poorzez .attributes
   end
+
+  desc "m24", ""
+  def m24
+    Translation.where(:key => "formtastic.labels.subscription_plan.billing_period", :locale => "en").first.update_attribute(:value, "Billing date (+/- weeks)")
+  end
 end

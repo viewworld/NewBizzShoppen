@@ -5,11 +5,18 @@ Feature: Subscription plan setup
     And I make sure current locale is "en"
     And I sign in as blazejek@gmail.com with password secret
     And I click hidden link by url regex "/administration\/subscription_plans$/"
+    And I open page in browser
+    When I follow translated "administration.subscription_plans.index.view.new_subscription_plan"
 
+  @_done @non_testable
   Scenario: "Billing period" should be renamed to "Billing date" (+/- weeks)
 
-  @system
-  Scenario: "Billing period" shuld be less than "Billing cycle"
+  @system @selenium @tgn @_done @_tested
+  Scenario: "Billing period" should be less than "Billing cycle"
+    When I fill in "subscription_plan_billing_cycle" with "4"
+    And I fill in "subscription_plan_billing_period" with "5"
+  And I press translated "administration.subscription_plans.new.view.button_create"
+  Then I should see "must be less than 4"
 
   @system
   Scenario: "Billing date" (- weeks) cannot be applied to the first subperiod
