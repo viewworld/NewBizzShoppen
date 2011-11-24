@@ -26,6 +26,8 @@ class AddFieldsToSubscriptionPlan < ActiveRecord::Migration
 
     add_column :subscription_plans, :automatic_downgrade_subscription_plan_id, :boolean, :default => false
     add_column :subscriptions, :automatic_downgrade_subscription_plan_id, :boolean, :default => false
+
+    execute "UPDATE subscription_plans SET use_paypal = 'f' WHERE use_paypal IS NULL"
   end
 
   def self.down

@@ -12,7 +12,8 @@ class SubscriptionPlan < ActiveRecord::Base
   validates_numericality_of :billing_cycle
   validates_numericality_of :billing_period, :greater_than_or_equal_to => 0
   validates_numericality_of :lockup_period, :free_period, :allow_nil => true
-  validates_numericality_of :billing_cycle, :greater_than_or_equal_to => 1, :less_than_or_equal_to => Proc{|sp| }
+  validates_numericality_of :billing_cycle, :greater_than_or_equal_to => 1, :less_than_or_equal_to => Proc.new {|sp| sp.subscription_period.to_i }
+  validates_presence_of :automatic_downgrade_subscription_plan_id, :if => Proc.new { |sp| sp.use_paypal and sp.automatic_downgrading }
   validate :check_roles
 
   has_many :subscription_plan_lines, :as => :resource, :dependent => :destroy
@@ -32,8 +33,9 @@ class SubscriptionPlan < ActiveRecord::Base
   scope :exclude_current_plan, lambda{ |plan| where("billing_price <> ? and id <> ?", plan.billing_price, plan.id)}
   scope :free, where(:billing_cycle => 0)
   scope :for_role, lambda { |role| where("roles_mask & #{2**SubscriptionPlan.valid_roles.index(role.to_sym)} > 0 ") }
+  scope :for_roles, lambda { |roles| where( roles.map { |r| "roles_mask & #{2**SubscriptionPlan.valid_roles.index(r.to_sym)} > 0" }.join(" AND ") ) unless roles.empty? }
   scope :ascend_by_billing_price, order("billing_price")
-
+  scope :without_paypal, where(:use_paypal => false)
   private
 
   def check_email_templates
