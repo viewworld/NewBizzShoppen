@@ -36,7 +36,7 @@ describe Subscription do
       it "should assign correct dates without free period" do
         setup_customer(@payable_subscription1)
         @customer.active_subscription.start_date.should == Date.today
-        @customer.active_subscription.end_date.should == Date.today + 12.weeks
+        @customer.active_subscription.end_date.should == Date.today + 12.weeks - 1.day
       end
 
       it "should assign correct dates with free period only once per VAT number" do
@@ -44,10 +44,10 @@ describe Subscription do
         @payable_subscription2.update_attribute(:free_period, 3)
         setup_customer(@payable_subscription1, { :vat_number => "VAT39438928282" })
         @customer.active_subscription.start_date.should == Date.today
-        @customer.active_subscription.end_date.should == Date.today + 14.weeks
+        @customer.active_subscription.end_date.should == Date.today + 14.weeks - 1.day
         @customer.has_free_period_available?.should be_false
         @customer.upgrade_subscription!(@payable_subscription2)
-        @customer.active_subscription.end_date.should == Date.today + 12.weeks
+        @customer.active_subscription.end_date.should == Date.today + 12.weeks - 1.day
       end
     end
   end
@@ -109,7 +109,7 @@ describe Subscription do
         @prev_subscription.should be_upgraded
         @prev_subscription.end_date.should == Date.today-1
         @customer.active_subscription.start_date.should == Date.today
-        @customer.active_subscription.end_date.should == Date.today + 12.weeks
+        @customer.active_subscription.end_date.should == Date.today + 12.weeks - 1.day
         @customer.active_subscription.subscription_plan.should == @payable_subscription2
       end
 
@@ -207,11 +207,11 @@ describe Subscription do
         @customer.downgrade_subscription!(@payable_subscription1)
         @prev_subscription.reload
         @prev_subscription.should be_downgraded
-        @prev_subscription.end_date.should == Date.today + 12.weeks
+        @prev_subscription.end_date.should == Date.today + 12.weeks - 1.day
         @customer.active_subscription.subscription_plan.should == @payable_subscription2
         @customer.subscriptions.last.subscription_plan.should == @payable_subscription1
         @customer.subscriptions.last.start_date.should == @prev_subscription.end_date + 1
-        @customer.subscriptions.last.end_date.should == (@prev_subscription.end_date + 1) + 12.weeks
+        @customer.subscriptions.last.end_date.should == (@prev_subscription.end_date + 1) + 12.weeks - 1.day
       end
 
       it "should NOT be downgraded if new one is for different role" do
@@ -284,7 +284,7 @@ describe Subscription do
         @customer.active_subscription.should be_cancelled_during_lockup
         @penalty_subscription = @customer.subscriptions.order("position").last
         @penalty_subscription.start_date.should == @customer.active_subscription.end_date + 1
-        @penalty_subscription.end_date.should == @penalty_subscription.start_date + 12.weeks
+        @penalty_subscription.end_date.should == @penalty_subscription.start_date + 12.weeks - 1.day
         @penalty_subscription.should be_penalty
         @penalty_subscription.prolongs_as_free.should be_true
       end
@@ -327,7 +327,7 @@ describe Subscription do
         @customer1 = User::Supplier.make!(:subscription_plan_id => @payable_subscription1.id)
         @customer2 = User::Supplier.make!(:subscription_plan_id => @payable_subscription1.id)
 
-        set_date_today_to(Date.today+12.weeks+1)
+        set_date_today_to(Date.today+12.weeks)
 
         Subscription.auto_prolong
 
@@ -372,7 +372,7 @@ describe Subscription do
         @prev_subscription.subscription_plan.should == @payable_subscription2
         @prev_subscription.end_date.should == Date.today - 1.day
         @customer.active_subscription.subscription_plan.should == @payable_subscription1
-        @customer.active_subscription.end_date.should == Date.today + 12.weeks
+        @customer.active_subscription.end_date.should == Date.today + 12.weeks - 1.day
       end
 
       it "should change to more expensive even if the subscription plan does not allow upgrading" do
@@ -384,7 +384,7 @@ describe Subscription do
         @prev_subscription.subscription_plan.should == @payable_subscription1
         @prev_subscription.end_date.should == Date.today - 1.day
         @customer.active_subscription.subscription_plan.should == @payable_subscription2
-        @customer.active_subscription.end_date.should == Date.today + 12.weeks
+        @customer.active_subscription.end_date.should == Date.today + 12.weeks - 1.day
       end
 
       it "should change to other subscription plan from date specified by admin" do
@@ -395,7 +395,7 @@ describe Subscription do
         @customer.active_subscription.end_date.should == Date.today + 4.days
         @customer.subscriptions.last.subscription_plan.should == @payable_subscription2
         @customer.subscriptions.last.start_date.should == Date.today + 5.days
-        @customer.subscriptions.last.end_date.should == Date.today + 5.days + 12.weeks
+        @customer.subscriptions.last.end_date.should == Date.today + 5.days + 12.weeks - 1.day
       end
 
       it "should change to other subscription plan when in lockup period" do
@@ -410,7 +410,7 @@ describe Subscription do
         @prev_subscription.subscription_plan.should == @payable_subscription2
         @prev_subscription.end_date.should == Date.today - 1.day
         @customer.active_subscription.subscription_plan.should == @payable_subscription1
-        @customer.active_subscription.end_date.should == Date.today + 12.weeks
+        @customer.active_subscription.end_date.should == Date.today + 12.weeks - 1.day
       end
 
       it "should not apply penalty when changed by admin in lockup period" do
@@ -435,7 +435,7 @@ describe Subscription do
         @prev_subscription.subscription_plan.should == @payable_subscription2
         @prev_subscription.end_date.should == Date.today - 1.day
         @customer.active_subscription.subscription_plan.should == @payable_subscription1
-        @customer.active_subscription.end_date.should == Date.today + 12.weeks
+        @customer.active_subscription.end_date.should == Date.today + 12.weeks - 1.day
       end
 
       it "should cancel the free period when admin changes the subscription" do
@@ -494,6 +494,22 @@ describe Subscription do
         @customer.upgrade_subscription!(@payable_subscription3)
         @customer.active_subscription.subscription_sub_periods.count.should eql(1)
       end
+
+      it "should generate subperiods with correct start and end dates" do
+        setup_customer(@free_subscription)
+        @customer.active_subscription.subscription_sub_periods.first.start_date.should eql(@customer.active_subscription.start_date)
+        @customer.active_subscription.subscription_sub_periods.first.end_date.should be_nil
+        @customer.upgrade_subscription!(@payable_subscription2)
+        @customer.active_subscription.subscription_sub_periods[0].start_date.should eql(@customer.active_subscription.start_date)
+        @customer.active_subscription.subscription_sub_periods[0].end_date.should eql(@customer.active_subscription.start_date + 3.weeks - 1.day)
+        @customer.active_subscription.subscription_sub_periods[1].start_date.should eql(@customer.active_subscription.start_date + 3.weeks)
+        @customer.active_subscription.subscription_sub_periods[1].end_date.should eql(@customer.active_subscription.start_date + 6.weeks - 1.day)
+        @customer.active_subscription.subscription_sub_periods[2].start_date.should eql(@customer.active_subscription.start_date + 6.weeks)
+        @customer.active_subscription.subscription_sub_periods[2].end_date.should eql(@customer.active_subscription.start_date + 9.weeks - 1.day)
+        @customer.active_subscription.subscription_sub_periods[3].start_date.should eql(@customer.active_subscription.start_date + 9.weeks)
+        @customer.active_subscription.subscription_sub_periods[3].end_date.should eql(@customer.active_subscription.end_date)
+      end
+
     end
 
   end
