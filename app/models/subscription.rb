@@ -3,7 +3,7 @@ class Subscription < ActiveRecord::Base
   include CommonSubscriptions
 
   has_many :subscription_plan_lines, :as => :resource, :dependent => :destroy
-  has_many :subscription_sub_periods
+  has_many :subscription_sub_periods, :order => "start_date ASC"
   belongs_to :user
   belongs_to :subscription_plan
   belongs_to :currency
@@ -87,7 +87,7 @@ class Subscription < ActiveRecord::Base
   def apply_time_constraints(_start_date)
     self.start_date = _start_date
     if subscription_period > 0
-      self.end_date = start_date + subscription_period.weeks
+      self.end_date = start_date + subscription_period.weeks - 1.day
       if free_period_can_be_applied?
         self.end_date =  end_date + free_period.weeks
         CompanyVat.create(:vat_number => user.vat_number.strip)
@@ -212,11 +212,11 @@ class Subscription < ActiveRecord::Base
   end
 
   def is_free_period_applied?
-    free_period.to_i > 0 and end_date and ((end_date - start_date)/7).to_i == (subscription_period.to_i + free_period.to_i)
+    free_period.to_i > 0 and end_date and (end_date - start_date).to_i == (subscription_period.to_i + free_period.to_i) * 7 - 1
   end
 
   def is_today_in_free_period?
-    is_free_period_applied? and Date.today <= (start_date + free_period.weeks) and Date.today >= start_date
+    is_free_period_applied? and Date.today <= (start_date + free_period.weeks - 1.day) and Date.today >= start_date
   end
 
   def free_subscription_end_date
@@ -255,7 +255,7 @@ class Subscription < ActiveRecord::Base
     number_of_periods = billing_cycle.eql?(0) ? 1 : (subscription_period/billing_cycle)
     number_of_periods.times do |n|
       period_start_date = start_date + (n * billing_cycle).weeks
-      period_end_date   = period_start_date + billing_cycle.weeks
+      period_end_date   = period_start_date + billing_cycle.weeks - 1.day
       subscription_sub_periods.create!(:start_date => period_start_date,
                                       :end_date => is_free? ? nil : period_end_date,
                                       :billing_date => is_free? ? nil : period_end_date + billing_period.to_i.weeks,
