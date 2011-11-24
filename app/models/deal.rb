@@ -13,7 +13,7 @@ class Deal < AbstractLead
   belongs_to :lead_category, :class_name => "Category", :foreign_key => "lead_category_id"
   belongs_to :deal_admin, :class_name => "User", :foreign_key => "deal_admin_email", :primary_key => "email"
 
-  scope :without_inactive, where("leads.end_date >= ? and leads.start_date <= ?", Date.today, Date.today)
+  scope :without_inactive, lambda { where("leads.end_date >= ? and leads.start_date <= ? and enabled_from <= ?", Date.today, Date.today, Date.today) }
   scope :without_requested_by, lambda { |u| select("DISTINCT leads.*").joins("LEFT JOIN leads lr ON lr.deal_id = leads.id").where(["(lr.requested_by <> ? OR lr.requested_by IS NULL)", u.id]) if u }
   scope :active_is, lambda { |q| where("#{q == "1" ? "end_date >= ? and start_date <= ?" : "end_date < ? or start_date > ?"}", Date.today, Date.today) }
   scope :for_user, lambda { |q| where("creator_id = ?", q.id) }
@@ -34,7 +34,7 @@ class Deal < AbstractLead
 
   before_create :create_uniq_deal_category, :set_default_max_auto_buy
   after_create :certify_for_unknown_email, :assign_deal_admin
-  before_save :set_dates, :check_deal_request_details_email_template
+  before_save :set_dates, :check_deal_request_details_email_template, :set_enabled_from, :handle_max_auto_buy
 
   attr_accessor :creation_step, :use_company_name_as_category
 
@@ -45,8 +45,43 @@ class Deal < AbstractLead
   ajaxful_rateable :stars => 5, :allow_update => false, :cache_column => :deal_average_rating
   acts_as_commentable
 
+  def max_auto_buy_reached?
+    leads.where("created_at >= ?", current_four_week_period_start_date).count >= max_auto_buy.to_i
+  end
+
+  def handle_max_auto_buy
+    if max_auto_buy_changed? and published?
+      check_max_auto_buy
+    end
+  end
+
+  def check_max_auto_buy
+    if max_auto_buy_reached? and enabled?
+      disable
+    elsif !max_auto_buy_reached? and !enabled?
+      enable
+    end
+  end
+
+  def check_max_auto_buy!
+    check_max_auto_buy
+    self.save
+  end
+
+  def enabled?
+    enabled_from <= Date.today
+  end
+
+  def enable
+    self.enabled_from =  Date.today
+  end
+
+  def disable
+    self.enabled_from = current_four_week_period_end_date+1
+  end
+
   def active?
-    published? and start_date <= Date.today and end_date >= Date.today
+    published? and start_date <= Date.today and end_date >= Date.today and enabled?
   end
 
   def deal_admin_presence
@@ -177,7 +212,11 @@ class Deal < AbstractLead
 
   def current_four_week_period_start_date
     time_diff = ((Time.now.to_i) - (created_at.to_i)) / (24 * 60 * 60)
-    (created_at + ((time_diff / 28).to_i * 28).days).to_date
+    (published_at + ((time_diff / 28).to_i * 28).days).to_date
+  end
+
+  def current_four_week_period_end_date
+    current_four_week_period_start_date + 28.days
   end
   
   def next_group_deal
@@ -201,6 +240,10 @@ class Deal < AbstractLead
   end
 
   private
+
+  def set_enabled_from
+    self.enabled_from = Date.today unless enabled_from
+  end
 
   def check_deal_request_details_email_template
     unless deal_request_details_email_template
