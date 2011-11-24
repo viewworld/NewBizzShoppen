@@ -16,7 +16,7 @@ class SubscriptionPlan < ActiveRecord::Base
   validates_presence_of :automatic_downgrade_subscription_plan_id, :if => Proc.new { |sp| sp.use_paypal and sp.automatic_downgrading }
   validate :check_roles
   validate do |sp|
-    sp.errors.add(:subscription_period, :must_divide_by, :number => sp.billing_cycle) if (sp.subscription_period % sp.billing_cycle) > 0
+    sp.errors.add(:subscription_period, :must_divide_by, :number => sp.billing_cycle) if sp.billing_cycle > 0 and (sp.subscription_period % sp.billing_cycle) > 0
   end
 
   has_many :subscription_plan_lines, :as => :resource, :dependent => :destroy
