@@ -485,7 +485,6 @@ describe Subscription do
       end
 
       it "should generate correct number of sub periods" do
-        throw SubscriptionPlan.active.free
         setup_customer(@free_subscription)
         @customer.active_subscription.subscription_sub_periods.count.should eql(1)
         @customer.upgrade_subscription!(@payable_subscription1)
