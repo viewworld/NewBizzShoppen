@@ -12,11 +12,12 @@ class SubscriptionPlan < ActiveRecord::Base
   validates_numericality_of :subscription_period, :greater_than_or_equal_to => 0
   validates_numericality_of :billing_period, :greater_than_or_equal_to => 0
   validates_numericality_of :lockup_period, :free_period, :allow_nil => true
-  validates_numericality_of :billing_cycle, :greater_than_or_equal_to => 0, :less_than_or_equal_to => :subscription_period
+  validates_numericality_of :billing_cycle, :greater_than => 0, :less_than_or_equal_to => :subscription_period, :if => Proc.new{|sp| sp.subscription_period.to_i > 0}
+  validates_numericality_of :billing_cycle, :equal_to => 0, :if => Proc.new{|sp| sp.subscription_period.to_i == 0}
   validates_presence_of :automatic_downgrade_subscription_plan_id, :if => Proc.new { |sp| sp.use_paypal and sp.automatic_downgrading }
   validate :check_roles
   validate do |sp|
-    sp.errors.add(:subscription_period, :must_divide_by, :number => sp.billing_cycle) if sp.billing_cycle > 0 and (sp.subscription_period % sp.billing_cycle) > 0
+     sp.errors.add(:subscription_period, :must_divide_by, :number => sp.billing_cycle) if sp.subscription_period.to_i > 0 and (sp.subscription_period % sp.billing_cycle) > 0
   end
 
   has_many :subscription_plan_lines, :as => :resource, :dependent => :destroy
