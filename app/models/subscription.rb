@@ -9,10 +9,11 @@ class Subscription < ActiveRecord::Base
   belongs_to :currency
   belongs_to :seller
   after_create :handle_user_privileges
+  after_create :create_subscription_sub_periods
 
   acts_as_list :scope => :user_id
-  scope :active, lambda { where("is_active = ? and ((end_date IS NULL and billing_cycle = 0) or end_date >= ?)", true, Date.today) }
-  scope :billable, where("billing_cycle > 0 AND billing_date IS NOT NULL AND billing_date <= current_date AND invoiced_at IS NULL")
+  scope :active, lambda { where("is_active = ? and ((end_date IS NULL and subscription_period = 0) or end_date >= ?)", true, Date.today) }
+  scope :billable, where("subscription_period > 0 AND billing_date IS NOT NULL AND billing_date <= current_date AND invoiced_at IS NULL")
   scope :future, lambda { where("start_date > ?", Date.today) }
 
   attr_accessor :next_subscription_plan, :next_subscription_plan_start_date
@@ -85,8 +86,8 @@ class Subscription < ActiveRecord::Base
 
   def apply_time_constraints(_start_date)
     self.start_date = _start_date
-    if billing_cycle > 0
-      self.end_date = start_date + billing_cycle.weeks
+    if subscription_period > 0
+      self.end_date = start_date + subscription_period.weeks
       if free_period_can_be_applied?
         self.end_date =  end_date + free_period.weeks
         CompanyVat.create(:vat_number => user.vat_number.strip)
@@ -122,7 +123,7 @@ class Subscription < ActiveRecord::Base
 
   def recalculate_subscription_plan_lines(new_end_date, is_free_period)
     unless is_free?
-      total_days = billing_cycle*7
+      total_days = subscription_period*7
       paid_days = (new_end_date - start_date).to_i
       paid_days -= free_period*7 if is_free_period
 
@@ -188,10 +189,6 @@ class Subscription < ActiveRecord::Base
     can_be_upgraded? and subscription_plan.total_billing >= total_billing and (may_upgrade? or may_upgrade_from_penalty?)
   end
 
-  def is_free?
-    !payable?
-  end
-
   def can_be_prolonged?
     payable? and end_date < Date.today
   end
@@ -215,7 +212,7 @@ class Subscription < ActiveRecord::Base
   end
 
   def is_free_period_applied?
-    free_period.to_i > 0 and end_date and ((end_date - start_date)/7).to_i == (billing_cycle.to_i + free_period.to_i)
+    free_period.to_i > 0 and end_date and ((end_date - start_date)/7).to_i == (subscription_period.to_i + free_period.to_i)
   end
 
   def is_today_in_free_period?
@@ -244,9 +241,25 @@ class Subscription < ActiveRecord::Base
     (end_date - Date.today).to_i
   end
 
+  def total_days
+    (end_date - start_date).to_i
+  end
+
   private
 
   def handle_user_privileges
     user.handle_privileges
+  end
+
+  def create_subscription_sub_periods
+    number_of_periods = billing_cycle.eql?(0) ? 1 : (subscription_period/billing_cycle)
+    number_of_periods.times do |n|
+      period_start_date = start_date + (n * billing_cycle).weeks
+      period_end_date   = period_start_date + billing_cycle.weeks
+      subscription_sub_periods.create!(:start_date => period_start_date,
+                                      :end_date => is_free? ? nil : period_end_date,
+                                      :billing_date => is_free? ? nil : period_end_date + billing_period.to_i.weeks,
+                                      :currency_id => currency_id)
+    end
   end
 end

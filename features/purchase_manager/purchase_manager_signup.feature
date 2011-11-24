@@ -76,7 +76,7 @@ Feature: Purchase Manager signup
     And I follow category "Business deals"
     And I follow translated "deals.index.view.view_deal"
     And I should see translated "deals.index.view.contact_me"
-    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,billing_cycle:10"
+    When subscription plan exists with attributes "name:Premium member,assigned_roles:member,subscription_period:10"
     And user with email "purchase_manager101@nbs.com" upgrades to subscription named "Premium member"
     Then I follow translated "layout.fairdeals.main_menu.deals"
     And I follow category "Business deals"

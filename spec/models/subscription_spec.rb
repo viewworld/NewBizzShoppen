@@ -16,7 +16,7 @@ describe Subscription do
 
   context "calculations" do
     it "should yield correct billing price" do
-      @payable_subscription1 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12, :can_be_upgraded => false)
+      @payable_subscription1 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 12, :can_be_upgraded => false)
       @payable_subscription1.subscription_plan_lines.make!(:price => 25)
       @payable_subscription1.subscription_plan_lines.make!(:price => 5)
 
@@ -27,9 +27,9 @@ describe Subscription do
 
     context "dates" do
       before(:each) do
-        @payable_subscription1 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12)
+        @payable_subscription1 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 12)
         @payable_subscription1.subscription_plan_lines.make!(:price => 25)
-        @payable_subscription2 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12)
+        @payable_subscription2 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 12)
         @payable_subscription2.subscription_plan_lines.make!(:price => 100)
       end
 
@@ -55,8 +55,8 @@ describe Subscription do
 
   context "user signup and subscription selection" do
     before(:each) do
-      @subscription_plan = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12)
-      @subscription_plan_2 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 10)
+      @subscription_plan = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 12)
+      @subscription_plan_2 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 10)
       @free_subscription = SubscriptionPlan.active.free.for_role("supplier").first
     end
 
@@ -71,7 +71,7 @@ describe Subscription do
     end
 
     it "should be applied accordingly to user's role" do
-      @member_subscription = SubscriptionPlan.make!(:assigned_roles => [:member], :billing_cycle => 12)
+      @member_subscription = SubscriptionPlan.make!(:assigned_roles => [:member], :subscription_period => 12)
       @customer = User::Supplier.make(:subscription_plan_id => @member_subscription.id, :assign_free_subscription_plan => false)
       @customer.save
       @customer.should_not be_valid
@@ -94,9 +94,9 @@ describe Subscription do
   context "subscription transitions" do
 
     before(:each) do
-      @payable_subscription1 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12)
+      @payable_subscription1 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 12)
       @payable_subscription1.subscription_plan_lines.make!(:price => 25)
-      @payable_subscription2 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12)
+      @payable_subscription2 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 12)
       @payable_subscription2.subscription_plan_lines.make!(:price => 100)
     end
 
@@ -126,9 +126,9 @@ describe Subscription do
       end
 
       it "should be upgraded when in penalty to noncancelable and from that to another noncancelable" do
-        @payable_subscription3 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12)
+        @payable_subscription3 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 12)
         @payable_subscription3.subscription_plan_lines.make!(:price => 200)
-        @payable_subscription4 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12)
+        @payable_subscription4 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 12)
         @payable_subscription4.subscription_plan_lines.make!(:price => 300)
         @payable_subscription1.update_attribute(:lockup_period, 2)
         setup_customer(@payable_subscription1)
@@ -348,14 +348,14 @@ describe Subscription do
 
     context "billing dates" do
       it "should set billing date to start date when billing period is 0" do
-        @payable_subscription10 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12, :billing_period => 0)
+        @payable_subscription10 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 12, :billing_period => 0)
         @payable_subscription10.subscription_plan_lines.make!(:price => 200)
         setup_customer(@payable_subscription10)
         @customer.active_subscription.billing_date.should == Date.today
       end
 
       it "should set billing date to start date + 1 week when billing period is 1" do
-        @payable_subscription10 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :billing_cycle => 12, :billing_period => 1)
+        @payable_subscription10 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 12, :billing_period => 1)
         @payable_subscription10.subscription_plan_lines.make!(:price => 200)
         setup_customer(@payable_subscription10)
         @customer.active_subscription.billing_date.should == Date.today + 7
@@ -471,7 +471,22 @@ describe Subscription do
         @customer.subscriptions.future.count.should eql(1)
         @customer.admin_change_subscription!(@payable_subscription1).should be_false
       end
+    end
 
+    context "subperiods" do
+      before(:each) do
+        @payable_subscription1 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 12)
+        @payable_subscription1.subscription_plan_lines.make!(:price => 25)
+        @payable_subscription2 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 12, :billing_cycle => 3)
+        @payable_subscription2.subscription_plan_lines.make!(:price => 100)
+      end
+
+      it "should generate correct number of sub periods" do
+        setup_customer(@payable_subscription1)
+        @customer.active_subscription.subscription_sub_periods.count.should eql(1)
+        @customer.upgrade_subscription!(@payable_subscription2)
+        @customer.active_subscription.subscription_sub_periods.count.should eql(4)
+      end
     end
 
   end
