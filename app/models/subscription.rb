@@ -101,11 +101,6 @@ class Subscription < ActiveRecord::Base
     self.euro_billing_price = currency.to_euro(billing_price)
   end
 
-  def cache_prices!
-    cache_prices
-    save!
-  end
-
   def self.clone_from_subscription_plan!(subscription_plan, user, start_date=nil)
     subscription = Subscription.new(:user => user)
     subscription_plan.attributes.keys.except(["id", "roles_mask", "created_at", "updated_at", "billing_price", "is_active"]).each do |method|

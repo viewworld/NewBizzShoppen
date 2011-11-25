@@ -28,7 +28,7 @@ class SubscriptionPlan < ActiveRecord::Base
   belongs_to :seller
 
   after_save :check_email_templates
-  before_save :clear_additional_features_for_member, :cache_total_billing
+  before_save :clear_additional_features_for_member
   before_validation :set_billing_cycle
 
   accepts_nested_attributes_for :subscription_plan_lines, :allow_destroy => true
@@ -77,16 +77,11 @@ class SubscriptionPlan < ActiveRecord::Base
     true
   end
 
-  def cache_total_billing
+  def cache_prices
     self.billing_price = total_billing
   end
 
   public
-
-  def cache_prices!
-    cache_total_billing
-    save!
-  end
 
   def roles_as_text
     roles.to_a.map { |r| r.to_s.humanize }.join(', ')

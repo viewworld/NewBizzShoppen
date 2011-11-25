@@ -460,7 +460,7 @@ SubscriptionPlan.blueprint do
   assigned_roles { "supplier" }
   subscription_period { 8 }
   lockup_period { 2 }
-  billing_period { 1 }
+  billing_period { 0 }
   free_period { 0 }
   currency_id { Currency.make! }
   is_active { true }

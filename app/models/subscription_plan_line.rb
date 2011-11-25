@@ -3,15 +3,17 @@ class SubscriptionPlanLine < ActiveRecord::Base
 
   validates_presence_of :name, :price
   validates_numericality_of :price
-  #validate do |spl|
-  #  if spl.resource.is_a?(SubscriptionPlan) and spl.resource.payable? and ((spl.price * 100) % spl.resource.number_of_periods) > 0
-  #    errors.add(:price, :must_divide_by, :number => spl.resource.number_of_periods)
-  #  end
-  #end
+  validate :price_in_context_of_billing_cycle
 
   after_save :cache_prices
 
   private
+
+  def price_in_context_of_billing_cycle
+    if resource.is_a?(SubscriptionPlan) and resource.payable? and (((price * 100) % resource.number_of_periods) > 0)
+      errors.add(:price, :must_divide_by, :number => resource.number_of_periods)
+    end
+  end
 
   def cache_prices
     resource.cache_prices! if price_changed?

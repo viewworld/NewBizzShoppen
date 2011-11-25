@@ -19,7 +19,6 @@ describe Subscription do
       @payable_subscription1 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 12, :can_be_upgraded => false)
       @payable_subscription1.subscription_plan_lines.make!(:price => 25)
       @payable_subscription1.subscription_plan_lines.make!(:price => 5)
-
       @payable_subscription1.total_billing.should.eql?(30)
       @customer = User::Supplier.make!(:subscription_plan_id => @payable_subscription1.id)
       @customer.active_subscription.total_billing.should.eql?(30)

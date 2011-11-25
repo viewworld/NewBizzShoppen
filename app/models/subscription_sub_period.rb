@@ -20,17 +20,12 @@ class SubscriptionSubPeriod < ActiveRecord::Base
     end
   end
 
-  def cache_total_billing
+  def cache_prices
     self.billing_price = total_billing
     self.euro_billing_price = currency.to_euro(billing_price)
   end
 
   public
-
-  def cache_prices!
-    cache_total_billing
-    save!
-  end
 
   def total_days
     (end_date + 1.day - start_date).to_i
