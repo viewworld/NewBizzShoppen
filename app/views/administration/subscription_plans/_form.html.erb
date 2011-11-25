@@ -36,7 +36,7 @@
             <%= form.input :paypal_retries %>
             <%= form.input :automatic_downgrading, :as => :boolean, :onclick => "switch_automatic_downgrading()" %>
             <span id="automatic_downgrading_subscription_selection">
-                <%= form.input :automatic_downgrade_subscription_plan_id, :as => :select, :collection => SubscriptionPlan.without_paypal.for_roles(@subscription_plan.assigned_roles).where("id NOT in (?)", @subscription_plan.new_record? ? 0 : @subscription_plan.id), :required => true %>
+                <%= form.input :automatic_downgrade_subscription_plan_id, :as => :select, :collection => SubscriptionPlan.without_paypal.for_roles(@subscription_plan.assigned_roles).where("id NOT in (?)", @subscription_plan.new_record? ? 0 : @subscription_plan.id), :required => true, :include_blank => false %>
             </span>
         </span>
         <span id="additional_features">
