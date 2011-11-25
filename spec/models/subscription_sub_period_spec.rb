@@ -18,9 +18,9 @@ describe SubscriptionSubPeriod do
     before(:each) do
       @free_subscription = SubscriptionPlan.active.free.for_role("supplier").first
       @payable_subscription1 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 12, :billing_cycle => 12)
-      @payable_subscription1.subscription_plan_lines.make!(:price => 25)
+      @payable_subscription1.subscription_plan_lines.make!(:price => 15)
       @payable_subscription2 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 12, :billing_cycle => 3)
-      @payable_subscription2.subscription_plan_lines.make!(:price => 99)
+      @payable_subscription2.subscription_plan_lines.make!(:price => 21.36)
       @payable_subscription3 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 12)
       @payable_subscription3.subscription_plan_lines.make!(:price => 200)
     end
@@ -77,8 +77,8 @@ describe SubscriptionSubPeriod do
     end
 
     it "should contain cached price equal to total subscription price" do
-      @payable_subscription = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 9, :billing_cycle => 3)
-      @payable_subscription.subscription_plan_lines.make!(:price => 9.99)
+      @payable_subscription = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 105, :billing_cycle => 5)
+      @payable_subscription.subscription_plan_lines.make!(:price => 25.83)
       setup_customer(@payable_subscription)
       @customer.active_subscription.subscription_sub_periods.sum(:billing_price).should eql(@customer.active_subscription.billing_price)
     end

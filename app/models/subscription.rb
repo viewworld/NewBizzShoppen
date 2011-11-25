@@ -111,8 +111,9 @@ class Subscription < ActiveRecord::Base
       subscription.subscription_plan_lines << line.clone
     end
     subscription.apply_time_constraints(start_date ? start_date : Date.today)
-    subscription.cache_prices
     subscription.save
+    subscription.reload
+    subscription.cache_prices!
     subscription
   end
 

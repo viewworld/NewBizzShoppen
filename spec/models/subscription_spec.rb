@@ -24,6 +24,16 @@ describe Subscription do
       @customer.active_subscription.total_billing.should.eql?(30)
     end
 
+    it "should cache price of subscription plan lines" do
+      @payable_subscription1 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 12, :can_be_upgraded => false)
+      @payable_subscription1.subscription_plan_lines.make!(:price => 25)
+      @payable_subscription1.subscription_plan_lines.make!(:price => 5)
+      @payable_subscription1.reload
+      @payable_subscription1.billing_price.should eql(30)
+      @customer = User::Supplier.make!(:subscription_plan_id => @payable_subscription1.id)
+      @customer.active_subscription.billing_price.should eql(@payable_subscription1.billing_price)
+    end
+
     context "dates" do
       before(:each) do
         @payable_subscription1 = SubscriptionPlan.make!(:assigned_roles => [:supplier], :subscription_period => 12)
