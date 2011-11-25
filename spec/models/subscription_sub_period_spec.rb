@@ -107,6 +107,28 @@ describe SubscriptionSubPeriod do
       @prev_subscription.subscription_sub_periods.count.should eql(1)
     end
 
+    it "should generate invoice based on the values in sub periods of all the billable subscriptions when no paypal" do
+      @payable_subscription1.update_attribute(:use_paypal, false)
+      setup_customer(@payable_subscription1)
+
+      @invoice = Invoice.create(:user_id => @customer.id)
+      @invoice.invoice_lines.size.should == @customer.active_subscription.subscription_sub_periods[0].subscription_plan_lines.size
+      @invoice.invoice_lines.first.netto_price.should == @customer.active_subscription.subscription_sub_periods[0].subscription_plan_lines.first.price
+      @invoice.invoice_lines.first.name.should == @customer.active_subscription.subscription_sub_periods[0].subscription_plan_lines.first.name
+    end
+
+    it "should generate invoice based on the values in sub period of the subscription handled by paypal" do
+      @payable_subscription2.update_attribute(:use_paypal, true)
+      setup_customer(@payable_subscription2)
+      puts @customer.active_subscription.inspect
+      puts @customer.active_subscription.subscription_sub_periods.first.billing_date.to_s
+      puts @customer.active_subscription.subscription_sub_periods.map &:inspect
+
+      @invoice = Invoice.create(:user_id => @customer.id, :subscription_sub_period_id => @customer.active_subscription.subscription_sub_periods.first)
+      @invoice.invoice_lines.size.should == @customer.active_subscription.subscription_sub_periods[0].subscription_plan_lines.size
+      @invoice.invoice_lines.first.netto_price.should == @customer.active_subscription.subscription_sub_periods[0].subscription_plan_lines.first.price
+      @invoice.invoice_lines.first.name.should == @customer.active_subscription.subscription_sub_periods[0].subscription_plan_lines.first.name
+    end    
   end
 
 end

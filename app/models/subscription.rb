@@ -13,7 +13,7 @@ class Subscription < ActiveRecord::Base
 
   acts_as_list :scope => :user_id
   scope :active, lambda { where("is_active = ? and ((end_date IS NULL and subscription_period = 0) or end_date >= ?)", true, Date.today) }
-  scope :billable, where("subscription_period > 0 AND billing_date IS NOT NULL AND billing_date <= current_date AND invoiced_at IS NULL")
+  scope :billable, lambda { where("subscription_period > 0 AND billing_date IS NOT NULL AND billing_date <= ? AND invoiced_at IS NULL", Date.today) }
   scope :future, lambda { where("start_date > ?", Date.today) }
 
   attr_accessor :next_subscription_plan, :next_subscription_plan_start_date
@@ -266,7 +266,7 @@ class Subscription < ActiveRecord::Base
       period_end_date   = period_start_date + billing_cycle.weeks - 1.day
       subscription_sub_periods.create!(:start_date => period_start_date,
                                       :end_date => is_free? ? nil : period_end_date,
-                                      :billing_date => is_free? ? nil : period_end_date + billing_period.to_i.weeks)
+                                      :billing_date => is_free? ? nil : period_start_date + billing_period.to_i.weeks)
     end
   end
 end

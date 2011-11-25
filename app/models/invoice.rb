@@ -56,11 +56,13 @@ class Invoice < ActiveRecord::Base
   after_create :duplicate_company_and_supplier_information, :set_year
   after_validation :set_default_currency, :if => Proc.new{ |i| i.new_record? }
   after_update :update_revenue_frozen
-  after_create :generate_invoice_lines_for_supplier, :generate_invoice_lines_for_subscriber, :generate_invoice_lines_for_refund
+  after_create :generate_invoice_lines_for_supplier, :generate_invoice_lines_for_subscriber, :generate_invoice_lines_for_paypal_subscriber, :generate_invoice_lines_for_refund
   before_update :generate_manual_transaction_for_big_buyer
   before_save :mark_all_invoice_lines_as_paid
   after_save :recalculate_invoice_items
   after_initialize :set_seller
+
+  attr_accessor :subscription_sub_period_id
 
   #Uncomment reject_if, if not validating invoice lines
   accepts_nested_attributes_for :invoice_lines, :allow_destroy => true #,:reject_if => lambda { |a| a[:name].blank? }
@@ -136,22 +138,38 @@ class Invoice < ActiveRecord::Base
     end
   end
 
+  def invoice_lines_based_on_subscription_sub_period(subscription_sub_period)
+    subscription_sub_period.subscription_plan_lines.each do |subscription_plan_line|
+      InvoiceLine.create(
+        :invoice => self,
+        :payable => subscription_plan_line,
+        :name => subscription_plan_line.name,
+        :netto_price => subscription_plan_line.price,
+        :vat_rate => user.country_vat_rate,
+        :quantity => 1)
+    end
+    subscription_sub_period.update_attribute(:invoice, self)
+  end
+
   def generate_invoice_lines_for_subscriber
-    if user and user.subscriptions.billable.any?
+    if user and !subscription_sub_period_id and user.subscriptions.without_paypal.billable.any?
       user = self.user.with_role
       user.update_attribute(:subscriber_type, User::SUBSCRIBER_TYPE_SUBSCRIBER) if user.ad_hoc?
-      user.with_role.subscriptions.billable.each do |subscription|
+      user.with_role.subscriptions.without_paypal.billable.each do |subscription|
         subscription.update_attribute(:invoiced_at, Time.now)
-        subscription.subscription_plan_lines.each do |subscription_plan_line|
-          InvoiceLine.create(
-            :invoice => self,
-            :payable => subscription_plan_line,
-            :name => subscription_plan_line.name,
-            :netto_price => subscription_plan_line.price,
-            :vat_rate => user.country_vat_rate,
-            :quantity => 1)
+        subscription.subscription_sub_periods.each do |subscription_sub_period|
+          invoice_lines_based_on_subscription_sub_period(subscription_sub_period)
         end
       end
+    end
+  end
+
+  def generate_invoice_lines_for_paypal_subscriber
+    if user and subscription_sub_period = SubscriptionSubPeriod.find_by_id(subscription_sub_period_id) and subscription_sub_period.billable?
+      user = self.user.with_role
+      user.update_attribute(:subscriber_type, User::SUBSCRIBER_TYPE_SUBSCRIBER) if user.ad_hoc?
+      invoice_lines_based_on_subscription_sub_period(subscription_sub_period)
+      update_attribute(:paid_at, Time.now) if subscription_sub_period.paypal_paid_auto? or subscription_sub_period.paypal_paid_manual?
     end
   end
 
