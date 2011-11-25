@@ -46,7 +46,6 @@ class SubscriptionPlan < ActiveRecord::Base
   scope :for_role, lambda { |role| where("roles_mask & #{2**SubscriptionPlan.valid_roles.index(role.to_sym)} > 0 ") }
   scope :for_roles, lambda { |roles| where( roles.map { |r| "roles_mask & #{2**SubscriptionPlan.valid_roles.index(r.to_sym)} > 0" }.join(" AND ") ) unless roles.empty? }
   scope :ascend_by_billing_price, order("billing_price")
-  scope :without_paypal, where(:use_paypal => false)
 
   private
 
