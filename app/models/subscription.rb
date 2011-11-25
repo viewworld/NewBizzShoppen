@@ -123,9 +123,9 @@ class Subscription < ActiveRecord::Base
 
   def recalculate_subscription_plan_lines(new_end_date, is_free_period)
     unless is_free?
-      total_days = subscription_period*7
+      total_days = subscription_period * 7 + 1
       paid_days = (new_end_date - start_date).to_i
-      paid_days -= free_period*7 if is_free_period
+      paid_days -= free_period * 7 if is_free_period
 
       previous_total = total_billing
       subscription_plan_lines.each do |spl|
@@ -144,7 +144,7 @@ class Subscription < ActiveRecord::Base
 
   def perform_cancelled_during_lockup
     self.cancelled_at = Time.now
-    self.class.clone_from_subscription_plan!(self.subscription_plan, user, end_date+1)
+    self.class.clone_from_subscription_plan!(self.subscription_plan, user, end_date + 1.day)
   end
 
   def perform_upgrade
@@ -242,7 +242,7 @@ class Subscription < ActiveRecord::Base
   end
 
   def total_days
-    (end_date - start_date).to_i
+    (end_date - start_date + 1).to_i
   end
 
   private
