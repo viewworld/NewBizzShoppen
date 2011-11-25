@@ -887,4 +887,10 @@ class User < ActiveRecord::Base
       end
     end
   end
+
+  def can_create_deals?
+    has_one_of_roles?(:agent, :admin, :call_centre_agent, :call_centre) or
+        (supplier? and active_subscription.payable? and (!active_subscription.is_today_in_free_period? or
+            (active_subscription.is_today_in_free_period? and active_subscription.free_deals_in_free_period.to_i > 0)) )
+  end
 end

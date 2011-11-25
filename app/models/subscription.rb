@@ -241,6 +241,13 @@ class Subscription < ActiveRecord::Base
     (end_date - start_date + 1).to_i
   end
 
+  def decrement_free_deals_in_free_period!
+    if free_deals_in_free_period.to_i > 0
+      self.free_deals_in_free_period = free_deals_in_free_period-1
+      save
+    end
+  end
+
   private
 
   def handle_user_privileges
@@ -254,8 +261,7 @@ class Subscription < ActiveRecord::Base
       period_end_date   = period_start_date + billing_cycle.weeks - 1.day
       subscription_sub_periods.create!(:start_date => period_start_date,
                                       :end_date => is_free? ? nil : period_end_date,
-                                      :billing_date => is_free? ? nil : period_end_date + billing_period.to_i.weeks,
-                                      :currency_id => currency_id)
+                                      :billing_date => is_free? ? nil : period_end_date + billing_period.to_i.weeks)
     end
   end
 end
