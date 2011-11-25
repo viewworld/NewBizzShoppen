@@ -22,7 +22,7 @@ class SubscriptionSubPeriod < ActiveRecord::Base
 
   def cache_prices
     self.billing_price = total_billing
-    self.euro_billing_price = currency.to_euro(billing_price)
+    self.euro_billing_price = subscription.currency.to_euro(billing_price)
   end
 
   public

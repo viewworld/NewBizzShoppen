@@ -52,19 +52,19 @@ Feature: Subscription plan setup
     And "subscription_plan_automatic_downgrade_subscription_plan_id" dropdown should not have values "XPayable with paypal,Member NOT Payable with paypal"
     And I fill in "subscription_plan_paypal_retries" with "2"
 
-  @_tested_elsewhere @_done @tgn
+  @_done @_tested_elsewhere @tgn
   Scenario: I can select a downgrade subscription when automatic downgrading is enabled
 
-  @_tested_elsewhere @_done @tgn
+  @_done @_tested_elsewhere @tgn
   Scenario: I can select only subscription which are not handled by paypal for automatic downgrading
 
-  @_tested_elsewhere @_done @tgn
+   @_done @_tested_elsewhere @tgn
   Scenario: I can select only subscription with corresponding role for automatic downgrading
 
-  @_tested_elsewhere @_done @tgn
+  @_done @_tested_elsewhere @tgn
   Scenario: I can enter the number of retries before automatic downgrading
 
-  @_tested @_done @selenium @tgn
+  @_done @_tested @selenium @tgn
   Scenario: The must enter billing and end of free period can only be enabled when there is free period for subscription plan
     When I check "subscription_plan_use_paypal"
     And I fill in "subscription_plan_free_period" with "2"

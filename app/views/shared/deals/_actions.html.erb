@@ -2,7 +2,7 @@
   <param:content>
     <%= t("deals.common.listing.view.header") %>
   </param:content>
-  <% if current_user.has_one_of_roles?(:agent, :admin, :call_centre_agent, :call_centre) or (current_user.supplier? and current_user.active_subscription.payable?) %>
+  <% if current_user.can_create_deals? %>
       <param:actions>
         <%= form_tag path, :method => :get, :id => "form_new_deal" do %>
             <ul class="header_actions">
