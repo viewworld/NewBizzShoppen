@@ -8,6 +8,7 @@ class Administration::SubscriptionPlansController < Administration::Administrati
   end
 
   def create
+
     create! do |success, failure|
       success.html { redirect_to administration_subscription_plans_path }
     end

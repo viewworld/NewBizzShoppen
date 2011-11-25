@@ -1,13 +1,18 @@
+@subscriptions @subscriptions_paypal
 Feature: Subscription plan setup
 
   Background:
     Given I am on the homepage
     And I make sure current locale is "en"
-    Given subscription plan exists with attributes "name:Payable with paypal,use_paypal:1"
+    Given subscription plan exists with attributes "name:XPayable with paypal,use_paypal:1"
     And subscription plan has following lines
       | name                 | price |
       | subscr premium line1 |    99 |
     Given subscription plan exists with attributes "name:NOT Payable with paypal,use_paypal:0"
+    And subscription plan has following lines
+      | name                 | price |
+      | subscr premium line1 |    22 |
+    Given subscription plan exists with attributes "name:Member NOT Payable with paypal,use_paypal:0,assigned_roles:member"
     And subscription plan has following lines
       | name                 | price |
       | subscr premium line1 |    22 |
@@ -28,31 +33,39 @@ Feature: Subscription plan setup
   @system
   Scenario: "Billing date" (- weeks) cannot be applied to the first subperiod
 
-  @_done @_tested
+  @_done @_tested @tgn
   Scenario: I can enable subscription to be handled by Paypal
     When I check "subscription_plan_use_paypal"
 
-  @_done @_tested
+  @_done @_tested @tgn
   Scenario: I can enter number of free deals in free period
     When I fill in "subscription_plan_free_period" with "2"
     Then I fill in "subscription_plan_free_deals_in_free_period" with "10"
 
-  @_done @_tested @selenium @wip
+  @_done @_tested @selenium @tgn
   Scenario: I can enable automatic downgrading
     Given I select "Supplier" from "subscription_plan_assigned_roles"
     When I check "subscription_plan_use_paypal"
     Then I check "subscription_plan_automatic_downgrading"
     And I select "NOT Payable with paypal" from "subscription_plan_automatic_downgrade_subscription_plan_id"
     And I press translated "administration.subscription_plans.new.view.button_create"
-    And I open page in browser
+    And "subscription_plan_automatic_downgrade_subscription_plan_id" dropdown should not have values "XPayable with paypal,Member NOT Payable with paypal"
+    And I fill in "subscription_plan_paypal_retries" with "2"
 
-  @_tested_elsewhere @_done
+  @_tested_elsewhere @_done @tgn
   Scenario: I can select a downgrade subscription when automatic downgrading is enabled
 
+  @_tested_elsewhere @_done @tgn
   Scenario: I can select only subscription which are not handled by paypal for automatic downgrading
 
+  @_tested_elsewhere @_done @tgn
   Scenario: I can select only subscription with corresponding role for automatic downgrading
 
+  @_tested_elsewhere @_done @tgn
   Scenario: I can enter the number of retries before automatic downgrading
 
+  @_tested @_done @selenium @tgn
   Scenario: The must enter billing and end of free period can only be enabled when there is free period for subscription plan
+    When I check "subscription_plan_use_paypal"
+    And I fill in "subscription_plan_free_period" with "2"
+    And I choose "subscription_plan_paypal_billing_at_start_false"
