@@ -76,7 +76,7 @@ Feature: Subscriptions Paypal
 
   Scenario: When user cancels recurring billing in Paypal and has unpaid invoices he should not be able to use the application until he pays
 
-  Scenario: As supplier I cannot create new deals if I used my free deals limit
+
 
   # -------------------------------------------------------------------------------------------------------------------
   # Signing up
@@ -92,8 +92,6 @@ Feature: Subscriptions Paypal
   # -------------------------------------------------------------------------------------------------------------------
   # IPN
   # -------------------------------------------------------------------------------------------------------------------
-  @system
-  Scenario: Number of available free deals should decrement each time a deal is created in free period
 
   @system
   Scenario: The number of retries should be saved in subperiod

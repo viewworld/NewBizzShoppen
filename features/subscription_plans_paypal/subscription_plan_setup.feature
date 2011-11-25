@@ -70,5 +70,5 @@ Feature: Subscription plan setup
     And I fill in "subscription_plan_free_period" with "2"
     And I choose "subscription_plan_paypal_billing_at_start_false"
 
-  @tgn
+  @_done @non_testable @tgn
   Scenario: I should not be able to set "Number of free deals in free period" for other role than suppliers
