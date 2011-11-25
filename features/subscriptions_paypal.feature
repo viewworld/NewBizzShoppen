@@ -76,8 +76,6 @@ Feature: Subscriptions Paypal
 
   Scenario: When user cancels recurring billing in Paypal and has unpaid invoices he should not be able to use the application until he pays
 
-  Scenario: I should not be able to set "Number of free deals in free period" for other role than suppliers
-
   Scenario: As supplier I cannot create new deals if I used my free deals limit
 
   # -------------------------------------------------------------------------------------------------------------------
