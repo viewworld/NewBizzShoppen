@@ -83,6 +83,30 @@ describe SubscriptionSubPeriod do
       @customer.active_subscription.subscription_sub_periods.sum(:billing_price).should eql(@customer.active_subscription.billing_price)
     end
 
+    it "should recalculate subperiod when upgrading" do
+      sp = SubscriptionPlan.make!(:subscription_period => 12, :billing_cycle => 3)
+      sp.subscription_plan_lines.make!(:price => 9)
+      sp.subscription_plan_lines.make!(:price => 21.36)
+      sp.reload
+      setup_customer(sp)
+      set_date_today_to(Date.today + 2.weeks)
+      @customer.upgrade_subscription!(@payable_subscription3)
+      @prev_subscription.reload
+      @prev_subscription.subscription_sub_periods.first.billing_price.should eql(5.06)
+    end
+
+    it "should delete all unused subperiods" do
+      sp = SubscriptionPlan.make!(:subscription_period => 12, :billing_cycle => 3)
+      sp.subscription_plan_lines.make!(:price => 9)
+      sp.subscription_plan_lines.make!(:price => 21.36)
+      sp.reload
+      setup_customer(sp)
+      set_date_today_to(Date.today + 2.weeks)
+      @customer.upgrade_subscription!(@payable_subscription3)
+      @prev_subscription.reload
+      @prev_subscription.subscription_sub_periods.count.should eql(1)
+    end
+
   end
 
 end

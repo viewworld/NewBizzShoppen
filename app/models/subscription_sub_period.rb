@@ -11,6 +11,9 @@ class SubscriptionSubPeriod < ActiveRecord::Base
 
   after_create :create_subscription_plan_lines
 
+  scope :with_date, lambda{|date| where("start_date <= :date AND end_date >= :date", {:date => date})}
+  scope :without_invoice, where(:invoice_id => nil)
+
   private
 
   def create_subscription_plan_lines
@@ -26,6 +29,11 @@ class SubscriptionSubPeriod < ActiveRecord::Base
   end
 
   public
+
+  def recalculate
+    billing_cycle_days = subscription.billing_cycle * 7
+    subscription_plan_lines.each{|spl| spl.recalculate(billing_cycle_days, total_days) }
+  end
 
   def total_days
     (end_date + 1.day - start_date).to_i

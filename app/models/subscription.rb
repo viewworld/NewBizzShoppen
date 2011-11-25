@@ -127,6 +127,11 @@ class Subscription < ActiveRecord::Base
       subscription_plan_lines.each do |spl|
         spl.recalculate(total_days, paid_days)
       end
+
+      subscription_sub_periods.where("start_date > ?", new_end_date).without_invoice.destroy_all
+      subscription_sub_periods.with_date(new_end_date).first.update_attribute(:end_date, new_end_date)
+      subscription_sub_periods.each{|sp| sp.recalculate}
+
       if invoiced?
         Refund.create(:user => user, :refund_price => (previous_total - total_billing), :currency => currency, :description => I18n.t("models.credit_note.descriptions.subscription_refund", :days => paid_days > 0 ? total_days-paid_days : total_days, :name => name))
       end
