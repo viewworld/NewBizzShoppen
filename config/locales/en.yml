@@ -2910,6 +2910,10 @@ en:
       descriptions:
         subscription_refund: "Refund for unused %{days} days in subscription %{name}"
     subscription_plan_incorrect_roles_set: "Role member cannot be selected with other roles."
+    subscription_plan:
+      billing_types:
+        at_start: "Billing at start"
+        at_end: "Billing at the end of free period"
     email_template:
       test_send_disclaimer: "This is preview only. Information inside the brackets will be replaced by data when email will be sent to actual recipient through system."
   activerecord:
@@ -3605,6 +3609,8 @@ en:
         automatic_downgrading: "Automatic downgrading"
         automatic_downgrade_subscription_plan_id: "Automatic downgrading to"
         paypal_retries: "PayPal payment retries"
+        paypal_billing_at_start: "Billing type"
+        free_deals_in_free_period: "Number of free deals in free period"
   users:
     passwords:
       edit:

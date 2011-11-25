@@ -18,14 +18,11 @@ class AddFieldsToSubscriptionPlan < ActiveRecord::Migration
     add_column :subscriptions, :paypal_billing_at_start, :boolean, :default => true
     add_column :subscription_plans, :paypal_billing_at_start, :boolean, :default => true
 
-    add_column :subscription_plans, :paypal_billing_at_end_of_free_period, :boolean, :default => false
-    add_column :subscriptions, :paypal_billing_at_end_of_free_period, :boolean, :default => false
-
     add_column :subscription_plans, :automatic_downgrading, :boolean, :default => false
     add_column :subscriptions, :automatic_downgrading, :boolean, :default => false
 
-    add_column :subscription_plans, :automatic_downgrade_subscription_plan_id, :boolean, :default => false
-    add_column :subscriptions, :automatic_downgrade_subscription_plan_id, :boolean, :default => false
+    add_column :subscription_plans, :automatic_downgrade_subscription_plan_id, :integer, :default => nil
+    add_column :subscriptions, :automatic_downgrade_subscription_plan_id, :integer, :default => nil
 
     execute "UPDATE subscription_plans SET use_paypal = 'f' WHERE use_paypal IS NULL"
   end

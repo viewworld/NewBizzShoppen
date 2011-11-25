@@ -8,6 +8,11 @@ class SubscriptionPlan < ActiveRecord::Base
 
   roles ROLES
 
+  PAYPAL_BILLING_TYPE = [
+    [:at_start, true],
+    [:at_end, false]
+  ]
+
   validates_presence_of :name, :subscription_period, :billing_cycle, :billing_period, :assigned_roles, :currency_id, :currency, :seller, :seller_id
   validates_numericality_of :subscription_period, :greater_than_or_equal_to => 0
   validates_numericality_of :billing_period, :greater_than_or_equal_to => 0
@@ -26,6 +31,7 @@ class SubscriptionPlan < ActiveRecord::Base
   has_one :invoice_email_template, :as => :resource, :class_name => "EmailTemplate", :conditions => "uniq_id = 'invoice'", :dependent => :destroy
   belongs_to :currency
   belongs_to :seller
+  has_one :automatic_downgrade_subscription_plan, :class_name => "SubscriptionPlan", :foreign_key => "automatic_downgrade_subscription_plan_id"
 
   after_save :check_email_templates
   before_save :clear_additional_features_for_member
@@ -47,6 +53,7 @@ class SubscriptionPlan < ActiveRecord::Base
 
   def set_billing_cycle
     self.billing_cycle = subscription_period if billing_cycle.to_i.eql?(0)
+    true
   end
 
   def check_email_templates

@@ -9,7 +9,7 @@
         <%= form.input :billing_cycle %>
         <%= form.input :lockup_period %>
         <%= form.input :billing_period %>
-        <%= form.input :free_period, :input_html => { :onkeydown => "enable_free_deals_in_free_period()"} %>
+        <%= form.input :free_period, :input_html => { :onkeyup => "enable_free_deals_in_free_period()"} %>
         <%= form.input :currency_id, :collection => currencies_for_select %>
         <%= form.input :seller_id, :collection => Seller.all, :include_blank => false %>
         <%= form.input :assigned_roles, :collection => SubscriptionPlan::ROLES.map { |r| [r.to_s.humanize, r] }, :include_blank => false, :input_html => { :onchange => "switch_roles();load_subscription_plans();", :style => "height:100px", :size => 5, :multiple => true } %>
@@ -31,19 +31,24 @@
         <%= form.input :is_active, :as => :boolean %>
         <%= form.input :can_be_upgraded, :as => :boolean %>
         <%= form.input :can_be_downgraded, :as => :boolean %>
-        <%= form.input :use_paypal, :as => :boolean, :onclick => "switch_use_paypal_features()" %>
-        <span id="use_paypal_features">
-            <%= form.input :paypal_retries %>
-            <%= form.input :automatic_downgrading, :as => :boolean, :onclick => "switch_automatic_downgrading()" %>
-            <span id="automatic_downgrading_subscription_selection">
-                <%= form.input :automatic_downgrade_subscription_plan_id, :as => :select, :collection => SubscriptionPlan.without_paypal.for_roles(@subscription_plan.assigned_roles).where("id NOT in (?)", @subscription_plan.new_record? ? 0 : @subscription_plan.id), :required => true %>
-            </span>
-        </span>
         <span id="additional_features">
         <%= form.input :team_buyers, :as => :boolean %>
         <%= form.input :big_buyer, :as => :boolean %>
         <%= form.input :deal_maker, :as => :boolean %>
         <%= form.input :free_deals_in_free_period %>
+        </span>
+        <%= form.input :use_paypal, :as => :boolean, :onclick => "switch_use_paypal_features()" %>
+        <span id="use_paypal_features">
+            <%= form.input :paypal_retries %>
+            <%= form.input :automatic_downgrading, :as => :boolean, :onclick => "switch_automatic_downgrading()" %>
+            <span id="automatic_downgrading_subscription_selection">
+                <%= form.input :automatic_downgrade_subscription_plan_id, :as => :select,
+                               :collection => SubscriptionPlan.without_paypal.for_roles(@subscription_plan.assigned_roles).where("id NOT in (?)", @subscription_plan.new_record? ? 0 : @subscription_plan.id),
+                               :required => true, :include_blank => false %>
+            </span>
+          <span id="paypal_billing_at_start_selection">
+            <%= form.input :paypal_billing_at_start, :as => :radio, :collection => SubscriptionPlan::PAYPAL_BILLING_TYPE.map { |bt| [t("models.subscription_plan.billing_types.#{bt.first}"), bt.last] } %>
+          </span>
         </span>
       </ol>
     </fieldset>
@@ -132,9 +137,14 @@
     function enable_free_deals_in_free_period(){
         if(jQuery.trim($('#subscription_plan_free_period').val()) == ""){
             $('#subscription_plan_free_deals_in_free_period').attr("disabled", "true");
+            //$('#subscription_plan_paypal_billing_at_start_true').attr("disabled", "true");
+            $('#subscription_plan_paypal_billing_at_start_false').attr("disabled", "true");
+                        $('#subscription_plan_paypal_billing_at_start_true').attr("checked", "true");
         }
         else {
             $('#subscription_plan_free_deals_in_free_period').attr("disabled", "");
+            //$('#subscription_plan_paypal_billing_at_start_true').attr("disabled", "");
+            $('#subscription_plan_paypal_billing_at_start_false').attr("disabled", "");
         }
     }
 
