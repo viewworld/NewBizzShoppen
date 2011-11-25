@@ -10,7 +10,7 @@ class SubscriptionPlanLine < ActiveRecord::Base
   private
 
   def price_in_context_of_billing_cycle
-    if resource.is_a?(SubscriptionPlan) and resource.payable? and (((price * 100) % resource.number_of_periods) > 0)
+    if resource.is_a?(SubscriptionPlan) and resource.payable? and !price_divides_by?(resource.number_of_periods)
       errors.add(:price, :must_divide_by, :number => resource.number_of_periods)
     end
   end
@@ -20,6 +20,10 @@ class SubscriptionPlanLine < ActiveRecord::Base
   end
 
   public
+
+  def price_divides_by?(num)
+    ((price * 100) % num) == 0
+  end
 
   def recalculate(total_days, paid_days)
     paid_days = 0 if paid_days < 0

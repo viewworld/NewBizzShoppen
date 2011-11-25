@@ -118,7 +118,7 @@ class Subscription < ActiveRecord::Base
 
   def recalculate_subscription_plan_lines(new_end_date, is_free_period)
     unless is_free?
-      total_days = subscription_period * 7 + 1
+      total_days = subscription_period * 7
       paid_days = (new_end_date - start_date).to_i
       paid_days -= free_period * 7 if is_free_period
 

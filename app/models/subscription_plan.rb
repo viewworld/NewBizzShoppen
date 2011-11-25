@@ -22,9 +22,8 @@ class SubscriptionPlan < ActiveRecord::Base
   validates_numericality_of :billing_cycle, :equal_to => 0, :if => Proc.new{|sp| sp.subscription_period.to_i == 0}
   validates_presence_of :automatic_downgrade_subscription_plan_id, :if => Proc.new { |sp| sp.use_paypal and sp.automatic_downgrading }
   validate :check_roles
-  validate do |sp|
-     sp.errors.add(:subscription_period, :must_divide_by, :number => sp.billing_cycle) if sp.subscription_period.to_i > 0 and (sp.subscription_period % sp.billing_cycle) > 0
-  end
+  validate :subscription_period_in_context_of_billing_cycle
+  validate :subscription_plan_lines_in_context_of_number_of_billing_periods
 
   has_many :subscription_plan_lines, :as => :resource, :dependent => :destroy
   has_many :subscriptions
@@ -50,6 +49,16 @@ class SubscriptionPlan < ActiveRecord::Base
   scope :without_paypal, where(:use_paypal => false)
 
   private
+
+  def subscription_period_in_context_of_billing_cycle
+    errors.add(:subscription_period, :must_divide_by, :number => billing_cycle) if subscription_period.to_i > 0 and (subscription_period % billing_cycle) > 0
+  end
+
+  def subscription_plan_lines_in_context_of_number_of_billing_periods
+    if payable? and subscription_plan_lines.any? and subscription_plan_lines.detect{|spl| !spl.price_divides_by?(number_of_periods) }
+      errors.add(:base, :invalid)
+    end
+  end
 
   def set_billing_cycle
     self.billing_cycle = subscription_period if billing_cycle.to_i.eql?(0)
