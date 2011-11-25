@@ -113,3 +113,9 @@ Feature: Customer signup
 
   @m21 @requested @subscriptions @tested_elsewhere @_done @tgn
   Scenario: When supplier is not big buyer and tries to creates the deal then the created company category will not be autobuy
+
+  @subscriptions @m24 @tgn
+  Scenario: As supplier I cannot create new deals if I used my free deals limit
+
+  @subscriptions @system @m24 @tgn
+  Scenario: Number of available free deals should decrement each time a deal is created in free period
