@@ -72,5 +72,5 @@ Feature: Subscriptions Paypal
 
   Scenario: When the number of retries exceeds the subscription plan limit then the recurring payment should be disabled in Paypal
 
-  Scenario: When user gets automatically downgraded then the last unpaid subperiod should be handled by Debtors
+  Scenario: When user gets automatically downgraded then the last unpaid subperiod should be handled by Paypal manual payments
 
