@@ -3,7 +3,6 @@ class SubscriptionSubPeriod < ActiveRecord::Base
   include CommonSubscriptions
 
   belongs_to :subscription
-  belongs_to :currency
   belongs_to :invoice
   has_many :subscription_plan_lines, :as => :resource, :dependent => :destroy
 
@@ -11,6 +10,8 @@ class SubscriptionSubPeriod < ActiveRecord::Base
   validates_uniqueness_of :start_date, :end_date, :scope => :subscription_id
 
   after_create :create_subscription_plan_lines
+
+  delegate :currency, :to => :subscription
 
   scope :with_date, lambda{|date| where("start_date <= :date AND end_date >= :date", {:date => date})}
   scope :without_invoice, where(:invoice_id => nil)

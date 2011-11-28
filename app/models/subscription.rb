@@ -128,8 +128,8 @@ class Subscription < ActiveRecord::Base
         spl.recalculate(total_days, paid_days)
       end
 
-      subscription_sub_periods.where("start_date > ?", new_end_date).without_invoice.destroy_all
-      subscription_sub_periods.with_date(new_end_date).first.update_attribute(:end_date, new_end_date)
+      subscription_sub_periods.where("start_date > ?", new_end_date + 1.day).without_invoice.destroy_all
+      subscription_sub_periods.with_date(new_end_date + 1.day).first.update_attribute(:end_date, new_end_date)
       subscription_sub_periods.each{|sp| sp.recalculate}
 
       if invoiced?
