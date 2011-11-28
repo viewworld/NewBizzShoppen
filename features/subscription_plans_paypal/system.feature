@@ -29,3 +29,9 @@ Feature: Payments Paypal system
   @_done @tested_elsewhere @rspec
   Scenario: When subscription ends prematurly (upgrade or change by admin) then the current subperiod should be recalculated
 
+  @_done @tested_elsewhere @rspec
+  Scenario: Subperiods for user are generated with each new subscription
+
+  @_done @tested_elsewhere @rspec
+  Scenario: User subscription debts should be based on subperiods
+

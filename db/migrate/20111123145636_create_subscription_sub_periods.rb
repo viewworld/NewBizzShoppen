@@ -12,7 +12,7 @@ class CreateSubscriptionSubPeriods < ActiveRecord::Migration
       t.boolean :paypal_paid_manual, :default => false
       t.text :paypal_payment_id
       t.integer :invoice_id
-      t.integer :currency_id
+      t.datetime :invoiced_at
       t.timestamps
     end
   end

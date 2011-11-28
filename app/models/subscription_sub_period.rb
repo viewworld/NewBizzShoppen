@@ -7,7 +7,6 @@ class SubscriptionSubPeriod < ActiveRecord::Base
   has_many :subscription_plan_lines, :as => :resource, :dependent => :destroy
 
   validates_presence_of :start_date, :subscription
-  validates_uniqueness_of :start_date, :end_date, :scope => :subscription_id
 
   after_create :create_subscription_plan_lines
 

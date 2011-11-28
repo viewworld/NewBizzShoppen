@@ -8,12 +8,6 @@ Feature: Subscriptions Paypal
 
   Scenario: I can enter "Billing cycle" in weeks to make payments in smaller parts than subscrition period
 
-  @debtors
-  Scenario: User subscription debts should be based on subperiods
-
-  @debtors
-  Scenario: Subperiods for user are generated with each new subscription
-
   @invoices @_done @_tested_elsewhere @rspec
   Scenario: Invoice for subscription should be generated from subperiod lines
 
@@ -80,4 +74,3 @@ Feature: Subscriptions Paypal
 
   Scenario: When user gets automatically downgraded then the last unpaid subperiod should be handled by Debtors
 
-  Scenario: Payments for subperiods should not be displayed on Debtors page
