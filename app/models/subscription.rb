@@ -266,7 +266,8 @@ class Subscription < ActiveRecord::Base
       period_end_date   = period_start_date + billing_cycle.weeks - 1.day
       subscription_sub_periods.create!(:start_date => period_start_date,
                                       :end_date => is_free? ? nil : period_end_date,
-                                      :billing_date => is_free? ? nil : (n == 0 and billing_period.to_i < 0) ? period_start_date : period_start_date + billing_period.to_i.weeks)
+                                      :billing_date => is_free? ? nil : (n == 0 and billing_period.to_i < 0) ? period_start_date : period_start_date + billing_period.to_i.weeks,
+                                      :currency => currency)
     end
   end
 end
