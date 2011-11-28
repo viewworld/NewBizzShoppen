@@ -95,6 +95,29 @@ describe SubscriptionSubPeriod do
       @prev_subscription.subscription_sub_periods.first.billing_price.should eql(5.06)
     end
 
+    it "should recalculate subperiod when upgrading" do
+      sp = SubscriptionPlan.make!(:subscription_period => 12, :billing_cycle => 3, :use_paypal => true)
+      sp.subscription_plan_lines.make!(:price => 9)
+      sp.subscription_plan_lines.make!(:price => 21.36)
+      sp.reload
+      setup_customer(sp)
+
+      #paypal payment
+      @customer.active_subscription.subscription_sub_periods.first.update_attribute(:paypal_paid_auto, true)
+      Invoice.create(:user_id => @customer.id, :subscription_sub_period_id => @customer.active_subscription.subscription_sub_periods.first)
+
+      set_date_today_to(Date.today + 2.weeks)
+
+      expect {
+        @customer.upgrade_subscription!(@payable_subscription3)
+      }.to change { Refund.count }.by(1)
+
+      @prev_subscription.reload
+      @prev_subscription.subscription_sub_periods.first.refund.refund_price.should == 2.53
+      @prev_subscription.subscription_sub_periods.first.refund.description.should match /Refund for unused 14 days/
+      @prev_subscription.subscription_sub_periods.first.billing_price.should eql(5.06)
+    end
+
     it "should delete all unused subperiods" do
       sp = SubscriptionPlan.make!(:subscription_period => 12, :billing_cycle => 3)
       sp.subscription_plan_lines.make!(:price => 9)

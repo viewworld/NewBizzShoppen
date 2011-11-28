@@ -27,9 +27,11 @@ class SubscriptionPlanLine < ActiveRecord::Base
 
   def recalculate(total_days, paid_days)
     paid_days = 0 if paid_days < 0
+    _old_price = price
     _new_price = (BigDecimal.new(price.to_s) / BigDecimal.new(total_days.to_s) * BigDecimal.new(paid_days.to_s)).round(2)
     self.price = _new_price
     self.save!
+    { :old_price => _old_price, :new_price => _new_price, :unused_days => total_days-paid_days }
   end
 
 end

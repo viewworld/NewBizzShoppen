@@ -5,6 +5,7 @@ class SubscriptionSubPeriod < ActiveRecord::Base
   belongs_to :subscription
   belongs_to :currency
   belongs_to :invoice
+  belongs_to :refund
   has_many :subscription_plan_lines, :as => :resource, :dependent => :destroy
 
   validates_presence_of :start_date, :subscription
@@ -34,7 +35,14 @@ class SubscriptionSubPeriod < ActiveRecord::Base
 
   def recalculate
     billing_cycle_days = subscription.billing_cycle * 7
-    subscription_plan_lines.each{|spl| spl.recalculate(billing_cycle_days, total_days) }
+    prices_hash = subscription_plan_lines.map{|spl| spl.recalculate(billing_cycle_days, total_days) }
+    price_to_refund = prices_hash.sum { |ph| ph[:old_price] - ph[:new_price] }
+    if invoice and end_date >= Date.today-1 and !refund and price_to_refund > 0
+      self.refund = Refund.create(:user => subscription.user, :refund_price => price_to_refund, :currency => currency,
+                    :description => I18n.t("models.credit_note.descriptions.subscription_refund",
+                    :days => prices_hash.sum { |ph| ph[:unused_days] }, :name => subscription.name))
+      self.save
+    end
   end
 
   def total_days
