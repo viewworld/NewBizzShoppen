@@ -38,7 +38,7 @@ Feature: Subscriptions Paypal
   @debtors
   Scenario: Subperiods for user are generated with each new subscription
 
-  @invoices
+  @invoices @_done @_tested_elsewhere @rspec
   Scenario: Invoice for subscription should be generated from subperiod lines
 
   @refunds
@@ -51,6 +51,7 @@ Feature: Subscriptions Paypal
   # -------------------------------------------------------------------------------------------------------------------
   # Invoicing
   # -------------------------------------------------------------------------------------------------------------------
+  @_done @_tested_elsewhere @rspec
   Scenario: Paid invoice is generated for successful Paypal payments for subperiod
 
   Scenario: Unpaid invoice is generated when number of Paypal retries is exceeded

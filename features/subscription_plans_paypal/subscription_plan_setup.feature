@@ -30,7 +30,7 @@ Feature: Subscription plan setup
     And I press translated "administration.subscription_plans.new.view.button_create"
     Then I should see "must be less than 4"
 
-  @system
+  @system @_done @_tested_elsewhere @rspec
   Scenario: "Billing date" (- weeks) cannot be applied to the first subperiod
 
   @_done @_tested @tgn

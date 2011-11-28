@@ -115,20 +115,51 @@ describe SubscriptionSubPeriod do
       @invoice.invoice_lines.size.should == @customer.active_subscription.subscription_sub_periods[0].subscription_plan_lines.size
       @invoice.invoice_lines.first.netto_price.should == @customer.active_subscription.subscription_sub_periods[0].subscription_plan_lines.first.price
       @invoice.invoice_lines.first.name.should == @customer.active_subscription.subscription_sub_periods[0].subscription_plan_lines.first.name
+      @invoice.should_not be_paid
     end
 
     it "should generate invoice based on the values in sub period of the subscription handled by paypal" do
       @payable_subscription2.update_attribute(:use_paypal, true)
       setup_customer(@payable_subscription2)
-      puts @customer.active_subscription.inspect
-      puts @customer.active_subscription.subscription_sub_periods.first.billing_date.to_s
-      puts @customer.active_subscription.subscription_sub_periods.map &:inspect
+
+      #subperiod is payed by paypal
+      @customer.active_subscription.subscription_sub_periods.first.update_attribute(:paypal_paid_auto, true)
 
       @invoice = Invoice.create(:user_id => @customer.id, :subscription_sub_period_id => @customer.active_subscription.subscription_sub_periods.first)
       @invoice.invoice_lines.size.should == @customer.active_subscription.subscription_sub_periods[0].subscription_plan_lines.size
       @invoice.invoice_lines.first.netto_price.should == @customer.active_subscription.subscription_sub_periods[0].subscription_plan_lines.first.price
       @invoice.invoice_lines.first.name.should == @customer.active_subscription.subscription_sub_periods[0].subscription_plan_lines.first.name
-    end    
+      @invoice.should be_paid
+    end
+
+    it "should generate the subperiod with correct billing dates when NO billing date +/- is present in subscription" do
+      @payable_subscription2.update_attribute(:billing_period, 0)
+      setup_customer(@payable_subscription2)
+
+      @customer.active_subscription.subscription_sub_periods.each do |subscription_sub_periods|
+        subscription_sub_periods.billing_date.should == subscription_sub_periods.start_date
+      end
+    end
+
+    it "should generate the subperiod with correct billing dates when billing date +1 week is present in subscription" do
+      @payable_subscription2.update_attribute(:billing_period, 1)
+      setup_customer(@payable_subscription2)
+
+      @customer.active_subscription.subscription_sub_periods.each do |subscription_sub_periods|
+        subscription_sub_periods.billing_date.should == subscription_sub_periods.start_date + 1.week
+      end
+    end
+
+    it "should generate the subperiod with correct billing dates when billing date -1 week is present in subscription" do
+      @payable_subscription2.update_attribute(:billing_period,  -1)
+      setup_customer(@payable_subscription2)
+
+      @customer.active_subscription.subscription_sub_periods[0].billing_date.should == @customer.active_subscription.subscription_sub_periods[0].start_date
+
+      @customer.active_subscription.subscription_sub_periods[1..@customer.active_subscription.subscription_sub_periods.size].each do |subscription_sub_periods|
+        subscription_sub_periods.billing_date.should == subscription_sub_periods.start_date - 1.week
+      end
+    end
   end
 
 end

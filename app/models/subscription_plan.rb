@@ -15,7 +15,6 @@ class SubscriptionPlan < ActiveRecord::Base
 
   validates_presence_of :name, :subscription_period, :billing_cycle, :billing_period, :assigned_roles, :currency_id, :currency, :seller, :seller_id
   validates_numericality_of :subscription_period, :greater_than_or_equal_to => 0
-  validates_numericality_of :billing_period, :greater_than_or_equal_to => 0
   validates_numericality_of :billing_period, :less_than => :billing_cycle, :if => Proc.new { |sp| sp.billing_cycle.to_i > 0 }
   validates_numericality_of :lockup_period, :free_period, :allow_nil => true
   validates_numericality_of :billing_cycle, :greater_than => 0, :less_than_or_equal_to => :subscription_period, :if => Proc.new{|sp| sp.subscription_period.to_i > 0}
