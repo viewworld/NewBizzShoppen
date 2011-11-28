@@ -11,7 +11,7 @@ Feature: Subscriptions Paypal
   @invoices @_done @_tested_elsewhere @rspec
   Scenario: Invoice for subscription should be generated from subperiod lines
 
-  @refunds
+  @refunds @_done @_tested_elsewhere @rspec
   Scenario: When subperiod is recalculated then the unused amount should be refunded
 
   # -------------------------------------------------------------------------------------------------------------------
