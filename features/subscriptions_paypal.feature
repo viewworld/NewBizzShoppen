@@ -8,30 +8,6 @@ Feature: Subscriptions Paypal
 
   Scenario: I can enter "Billing cycle" in weeks to make payments in smaller parts than subscrition period
 
-  @system
-  Scenario: Payable subscription is represented additionally by subperiods
-
-  @system
-  Scenario: Each subperiod has subscription lines with prices proportionally calculated
-
-  @system
-  Scenario: Each subperiod should have stored the total amount of it's subscription lines
-
-  @system
-  Scenario: Each subperiod should have it's billing date
-
-  @system
-  Scenario: Each subperiod is attached to an invoice
-
-  @system
-  Scenario: Each subperiod can be marked as paid
-
-  @system
-  Scenario: When subscription ends prematurly (upgrade or change by admin) then upcoming subperiods should be deleted
-
-  @system
-  Scenario: When subscription ends prematurly (upgrade or change by admin) then the current subperiod should be recalculated
-
   @debtors
   Scenario: User subscription debts should be based on subperiods
 
@@ -76,8 +52,6 @@ Feature: Subscriptions Paypal
   Scenario: When user cancels recurring billing in Paypal and has unpaid invoices issued he should be asked to pay for them every time he logs in
 
   Scenario: When user cancels recurring billing in Paypal and has unpaid invoices he should not be able to use the application until he pays
-
-
 
   # -------------------------------------------------------------------------------------------------------------------
   # Signing up
