@@ -10,6 +10,7 @@ class SubscriptionSubPeriod < ActiveRecord::Base
   validates_presence_of :start_date, :subscription
 
   after_create :create_subscription_plan_lines
+  after_save :create_invoice_when_marked_as_paid_or_retries_exceeded
 
   delegate :currency, :to => :subscription
 
@@ -29,6 +30,12 @@ class SubscriptionSubPeriod < ActiveRecord::Base
   def cache_prices
     self.billing_price = total_billing
     self.euro_billing_price = subscription.currency.to_euro(billing_price)
+  end
+
+  def create_invoice_when_marked_as_paid_or_retries_exceeded
+    if !invoice and ((paypal_retries_changed? and paypal_retries == 0) or (paypal_paid_auto_changed? and paypal_paid_auto?))
+      Invoice.create(:user => subscription.user, :subscription_sub_period_id => self.id)
+    end
   end
 
   public
