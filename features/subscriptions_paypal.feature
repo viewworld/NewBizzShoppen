@@ -8,12 +8,6 @@ Feature: Subscriptions Paypal
 
   Scenario: I can enter "Billing cycle" in weeks to make payments in smaller parts than subscrition period
 
-  @invoices @_done @_tested_elsewhere @rspec
-  Scenario: Invoice for subscription should be generated from subperiod lines
-
-  @refunds @_done @_tested_elsewhere @rspec
-  Scenario: When subperiod is recalculated then the unused amount should be refunded
-
   # -------------------------------------------------------------------------------------------------------------------
   # Subscription Plan set up (moved)
   # -------------------------------------------------------------------------------------------------------------------
