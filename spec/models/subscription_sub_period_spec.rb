@@ -183,6 +183,28 @@ describe SubscriptionSubPeriod do
         subscription_sub_periods.billing_date.should == subscription_sub_periods.start_date - 1.week
       end
     end
+
+    it "should generate unpaid invoice when number of retries is exceeded" do
+      @payable_subscription2.update_attributes(:use_paypal => true, :paypal_retries => 2)
+      setup_customer(@payable_subscription2)
+
+      expect {
+        @customer.active_subscription.subscription_sub_periods[0].update_attribute(:paypal_retries, 0)
+      }.to change { Invoice.count }.by(1)
+
+      @customer.active_subscription.subscription_sub_periods[0].invoice.should_not be_paid
+    end
+
+    it "should generate paid invoice when marked as paid by paypal IPN" do
+      @payable_subscription2.update_attributes(:use_paypal => true)
+      setup_customer(@payable_subscription2)
+
+      expect {
+        @customer.active_subscription.subscription_sub_periods[0].update_attribute(:paypal_paid_auto, true)
+      }.to change { Invoice.count }.by(1)
+
+      @customer.active_subscription.subscription_sub_periods[0].invoice.should be_paid
+    end
   end
 
 end
