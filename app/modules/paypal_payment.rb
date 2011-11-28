@@ -41,6 +41,19 @@ module PaypalPayment
     values
   end
 
+  def encrypt_subscription
+    encrypt_for_paypal({
+        :currency_code => currency.to_s,
+        :business      => APP_CONFIG[:paypal_email],
+        :cmd           => '_xclick-subscriptions',
+        :no_shipping   => 1,
+        :a3            => billing_price,
+        :p3            => billing_cycle,
+        :t3            => 'W',
+        :a3            => billing_price
+    })
+  end
+
   def paypal_encrypted(return_url, notify_url)
     encrypt_for_paypal(hash_for_paypal(return_url, notify_url))
   end

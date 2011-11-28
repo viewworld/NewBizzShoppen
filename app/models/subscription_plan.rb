@@ -3,6 +3,7 @@ class SubscriptionPlan < ActiveRecord::Base
   include ScopedSearch::Model
   include RoleModel
   include CommonSubscriptions
+  include PaypalPayment
 
   ROLES = [:supplier, :category_supplier, :member]
 
