@@ -58,7 +58,7 @@ describe SubscriptionSubPeriod do
       end
     end
 
-    it "should generate items with same prices and names as in subscription plan for each subperiod'" do
+    it "should generate items with same prices and names as in subscription plan for each subperiod" do
       setup_customer(@payable_subscription1)
       subscription_spls = @customer.active_subscription.subscription_plan_lines
       @customer.active_subscription.subscription_sub_periods.each do |sp|
