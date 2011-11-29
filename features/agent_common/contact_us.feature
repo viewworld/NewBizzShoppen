@@ -1,4 +1,4 @@
-@agent @ao  @requested
+@agent @ao  @requested @faircalls
 Feature: Common agent
 
   @m6 @_done @_tested

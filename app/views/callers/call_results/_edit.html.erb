@@ -17,6 +17,14 @@
     </frm>
 <% end %>
 
+<% if @call_result and @archived_email = @call_result.archived_email %>
+<frm title="#{@archived_email.subject} #{t('call_results.edit.email_sent_to')} #{@archived_email.to}">
+  <param:content>
+    <%= @archived_email.body.html_safe %>
+  </param:content>
+</frm>
+<% end %>
+
 <script type="text/javascript">
  <% if agent_work_screen %>
     $("#commit_create_result").click(function(){$(this).parents("form").callRemote();});

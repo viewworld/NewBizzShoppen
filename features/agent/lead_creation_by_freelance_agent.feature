@@ -1,4 +1,4 @@
-@lead_manager @$_freelance_agent  @m1 @ao
+@lead_manager @$_freelance_agent  @m1 @ao @faircalls
 Feature: Lead creation by freelance agent
 
 In order to create and manage leads I sell

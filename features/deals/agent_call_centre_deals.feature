@@ -1,4 +1,4 @@
-@m16 @requested @agent_deals @_deals @$_call_centre @$_agent @nontestable @$_remove
+@m16 @requested @agent_deals @_deals @$_call_centre @$_agent @nontestable @$_remove @faircalls
 Feature: Deals from Call Centre/Agent perspective
 
   Background:
@@ -94,6 +94,7 @@ Feature: Deals from Call Centre/Agent perspective
   @selenium @_done @_tested
   Scenario: I can create new deal and certify (enter future sales manager's email)
     # call centre
+    Given I am on the homepage
     Given I visit domain http://faircalls.eu
     And I sign in as translator_call_centre@nbs.com with password secret
     Then I follow translated "layout.main_menu.call_centre.deals"
@@ -116,6 +117,7 @@ Feature: Deals from Call Centre/Agent perspective
     Then I certify deal with translation "agent.deals.new.view.create_button"
     Then I follow translated logout link for agent@nbs.com
     # admin
+    Given I am on the homepage
     Given I visit domain http://localhost
     And I sign in as admin@nbs.com with password secret
     Then I follow translated "layout.main_menu.admin.deals"

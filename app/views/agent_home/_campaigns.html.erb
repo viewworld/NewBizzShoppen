@@ -1,0 +1,11 @@
+<li>
+  <div class="news_content">
+    <h4><%= link_to campaign.name, callers_campaign_agent_work_screen_index_path(campaign) %></h4>
+    <div class="news_text">
+      <%= t("agent_home.show.view.campaigns.pending_contacts") %>: <%= campaign.pending_contacts_for(current_user).count %><br />
+      <%= t("agent_home.show.view.campaigns.call_backs") %>: <%= campaign.call_back_call_results_for(current_user).count %><br />
+      <%= t("agent_home.show.view.campaigns.completion") %>: <%= campaign.completion %>%
+    </div>
+    <%= link_to t("supplier_home.show.view.read_more_link"), callers_campaign_agent_work_screen_index_path(campaign), :class => "read_more" %>
+  </div>
+</li>

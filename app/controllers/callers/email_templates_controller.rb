@@ -6,6 +6,8 @@ class Callers::EmailTemplatesController < Callers::CallerController
   before_filter :fetch_objects
   before_filter :authorize_for_controller!
 
+  include EmailTemplatesActions
+
   private
 
   def fetch_objects

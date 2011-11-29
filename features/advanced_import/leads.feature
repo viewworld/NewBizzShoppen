@@ -14,7 +14,7 @@ Feature: Leads specific advanced import
     And lead "yessss" should be created by user "translator_call_centre_agent@nbs.com"
     And lead "nooooo" should be created by user "translator_call_centre_agent@nbs.com"
 
-  @added @selenium @_done @_tested
+  @added @selenium @_done @_tested @faircalls
   Scenario: Call center can import leads from spreadsheet (ods, xls, xlsx) with advanced import
     Given I visit domain http://faircalls.eu
     And I sign in as translator_call_centre@nbs.com with password secret
@@ -22,7 +22,7 @@ Feature: Leads specific advanced import
     And lead "yessss" should be created by user "translator_call_centre@nbs.com"
     And lead "nooooo" should be created by user "translator_call_centre@nbs.com"
 
-  @added @selenium @_done @_tested
+  @added @selenium @_done @_tested @faircalls
   Scenario: Call center agent can import leads from spreadsheet (ods, xls, xlsx) with advanced import
     Given I visit domain http://faircalls.eu
     And I sign in as translator_call_centre_agent@nbs.com with password secret
@@ -30,7 +30,7 @@ Feature: Leads specific advanced import
     And lead "yessss" should be created by user "translator_call_centre_agent@nbs.com"
     And lead "nooooo" should be created by user "translator_call_centre_agent@nbs.com"
 
-  @added @selenium @_done @_tested
+  @added @selenium @_done @_tested @faircalls
   Scenario: Agent can import leads from spreadsheet (ods, xls, xlsx) with advanced import
     Given I visit domain http://faircalls.eu
     And I sign in as agent@nbs.com with password secret

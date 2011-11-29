@@ -17,7 +17,7 @@ class ContactUsController < ApplicationController
           TemplateMailer.delay.new(Settings.contact_us_email, :blank_template, Country.get_country_from_locale,
                                        {:subject_content => email_params[:subject], :body_content => email_params[:body],
                                         :bcc_recipients => @email_template_preview.bcc, :cc_recipients => @email_template_preview.cc,
-                                        :reply_to => email_params[:email_from]})
+                                        :reply_to => email_params[:email_from], :sender_id => User.get_current_user_id, :email_template_uniq_id => "contact_us"})
         end
         redirect_to root_path
       else

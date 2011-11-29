@@ -1,4 +1,4 @@
-@lead_certification @agent @requested @m10
+@lead_certification @agent @requested @m10 @faircalls
 Feature: Lead certification for agent
 
 Background:

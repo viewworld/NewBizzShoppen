@@ -128,7 +128,7 @@ Scenario: When I choose member than additional features like big buyer and other
 Scenario: I can set seller for the subscription plan
 
 #8338
-@m22 @requested @selenium @_done @_tested
+@m22 @requested @selenium @_done @_tested @tgn
 Scenario: I can enter a "Subscription text" as rich text
   Given there is a seller with attributes "company_name:ADannyTheSeller,first_name:Danny,last_name:DeVito,vat_no:123,default:1" for country "United Kingdom"
   Given there is a seller with attributes "company_name:BDannyTheSeller,first_name:Danny,last_name:DeVito,vat_no:123,default:1" for country "Denmark"
@@ -157,32 +157,41 @@ Scenario: I can enter a "Subscription text" as rich text
   Then I should see "Sample Subscription Text"
 
 #8338
-@m22 @requested @_done @non_testable
+@m22 @requested @_done @non_testable @tgn
 Scenario: I can upload images for "Subscription text"
 
-@m23 @requested
+@backlog @requested
 Scenario: I should be able to define subscription period
 
-@m23 @requested
+@backlog @requested
 Scenario: I should be able to define billing period (which indicates the smaller periods of the parts of whole payment)
 
-@m23 @requested
+@backlog @requested
 Scenario: I can check "Use PayPal to handle subscription"
 
-@m23 @requested
+@backlog @requested
 Scenario: I can check "Must enter billing information (paypal) at start"
 
-@m23 @requested
+@backlog @requested
 Scenario: I can check "Must enter billing information (paypal) at end of free period"
 
-@m23 @requested
-Scenario: I can check "Automatic downgrading" and select subscription name from dropdown to which it should be downgraded by default (list should include payable subscriptions without paypal)
+@backlog @requested
+Scenario: I can check "Automatic downgrading"
 
-@m23 @requested
+@backlog @requested
+Scenario: I can select subscription name from dropdown to which it should be downgraded by default (list should include payable subscriptions without paypal) if payment fails
+
+@backlog @requested
+Scenario: I should not be able to check "Automatic downgrading" if subscription is not handled by Paypal
+
+@backlog @requested
 Scenario: I can enter number of Billing retries before subscription will be downgraded
 
-@m23 @requested
+@backlog @requested
 Scenario: I can check "Auto generate and send invoice for successful Paypal billing"
 
-@m23 @requested
+@backlog @requested
 Scenario: I can set "Number of free deals in free period" for suppliers
+
+@backlog @requested
+Scenario: I should not be able to set "Number of free deals in free period" for other role than suppliers

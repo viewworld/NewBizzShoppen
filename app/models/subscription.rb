@@ -12,8 +12,9 @@ class Subscription < ActiveRecord::Base
   acts_as_list :scope => :user_id
   scope :active, lambda { where("is_active = ? and ((end_date IS NULL and billing_cycle = 0) or end_date >= ?)", true, Date.today) }
   scope :billable, where("billing_cycle > 0 AND billing_date IS NOT NULL AND billing_date <= current_date AND invoiced_at IS NULL")
+  scope :future, lambda { where("start_date > ?", Date.today) }
 
-  attr_accessor :next_subscription_plan
+  attr_accessor :next_subscription_plan, :next_subscription_plan_start_date
   include AASM
 
   aasm_initial_state Proc.new { |subscription| subscription.initial_state }
@@ -28,6 +29,7 @@ class Subscription < ActiveRecord::Base
   aasm_state :non_cancelable
   aasm_state :prolonged, :enter => :perform_prolong
   aasm_state :upgraded_from_penalty
+  aasm_state :admin_changed, :enter => :perform_admin_change
 
   aasm_event :enter_lockup do
     transitions :from => [:normal, :penalty, :non_cancelable], :to => :lockup, :guard => :lockup_period_started?
@@ -55,6 +57,10 @@ class Subscription < ActiveRecord::Base
 
   aasm_event :upgrade_from_penalty, :after => :perform_upgrade_from_penalty do
     transitions :from => [:penalty, :non_cancelable], :to =>  :upgraded_from_penalty
+  end
+
+  aasm_event :admin_change do
+    transitions :from => Subscription.aasm_states.map(&:name), :to => :admin_changed
   end
 
   def initial_state
@@ -161,6 +167,12 @@ class Subscription < ActiveRecord::Base
     self.recalculate_subscription_plan_lines(Date.today-1, is_free_period_applied?)
     self.end_date = Date.today-1
     self.class.clone_from_subscription_plan!(next_subscription_plan, user)
+  end
+
+  def perform_admin_change
+    self.recalculate_subscription_plan_lines(next_subscription_plan_start_date-1, is_free_period_applied?)
+    self.end_date = next_subscription_plan_start_date-1
+    self.class.clone_from_subscription_plan!(next_subscription_plan, user, next_subscription_plan_start_date)
   end
 
   def invoiced?

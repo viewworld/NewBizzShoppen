@@ -1,4 +1,4 @@
-@agent_campaign @requested @m11 @is
+@agent_campaign @requested @m11 @is @faircalls
 Feature: Agent time sheets
 
 Background:

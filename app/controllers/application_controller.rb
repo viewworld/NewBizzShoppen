@@ -32,7 +32,11 @@ class ApplicationController < ActionController::Base
     if user_signed_in? and current_user and !is_current_user_on_correct_domain? and current_user.domain.present?
       key = current_user.generate_login_key!
       sign_out(current_user)
-      redirect_to "http://#{current_user.domain.name}/login_keys/?key=#{key}"
+      if Rails.env.staging?
+        redirect_to "http://#{current_user.domain.name}/login_keys/?key=#{key}"
+      else
+        redirect_to "http://www.#{current_user.domain.name}/login_keys/?key=#{key}"
+      end
     end
   end
 
@@ -136,6 +140,7 @@ class ApplicationController < ActionController::Base
     session[:locale_code] = locale_code || session[:locale_code] || I18n.locale.to_s
     I18n.locale = @locales.map(&:code).include?(session[:locale_code]) ? session[:locale_code] : @locales.first.code
     Thread.current[:globalize_detailed_locale] = ((user_signed_in? and current_user) and current_user.with_role.address.present?) ? current_user.with_role.address.country.detailed_locale : browser_locale
+    Thread.current[:current_user_id] = current_user.id if user_signed_in?
   end
 
   def locale

@@ -271,11 +271,11 @@ class Campaign < ActiveRecord::Base
 
   def duplicate!
     campaign = self.deep_clone!(:with_callbacks => false, :include => [:campaigns_results, :user_session_logs,
-                                                                       {:contacts => [{:call_results => [:call_log, :result_values]}, :contact_past_user_assignments, {:lead_template_values => :lead_template_value_translations}, :translations]},
-                                                                       {:send_material_email_template => :translations},
-                                                                       {:upgrade_contact_to_buyer_email_template => :translations},
-                                                                       {:upgrade_contact_to_category_buyer_email_template => :translations},
-                                                                       {:upgrade_contact_to_member_email_template => :translations}])
+    {:contacts => [ {:call_results => [:call_log, :result_values, :archived_email]}, :contact_past_user_assignments, {:lead_template_values => :lead_template_value_translations}, :translations ]},
+    {:send_material_email_template => :translations},
+    {:upgrade_contact_to_buyer_email_template => :translations},
+    {:upgrade_contact_to_category_buyer_email_template => :translations},
+    {:upgrade_contact_to_member_email_template => :translations}])
 
     campaign.users = users
     campaign.name = "Copy of #{name} #{Time.now.strftime("%d-%m-%Y %H:%M")}"
@@ -296,5 +296,13 @@ class Campaign < ActiveRecord::Base
       end
     end
     campaign
+  end
+
+  def pending_contacts_for(user)
+    contacts.where(:agent_id => user.id).with_pending_status(true)
+  end
+
+  def call_back_call_results_for(user)
+    CallResult.where("leads.campaign_id = ? and call_results.creator_id = ? and call_results.result_id = ?", id, user.id, Result.where(:generic => true, :name => "Call back").first.id).joins(:contact)
   end
 end

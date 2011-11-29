@@ -1,5 +1,5 @@
 #8060
-@m23 @campaign_crm @$_administrator @$_call_centre @$_call_centre_agent @$_agent @requested
+@m23 @campaign_crm @$_administrator @$_call_centre @$_call_centre_agent @$_agent @requested @is
 Feature: Agent campaign crm
 
   Background:
@@ -11,7 +11,7 @@ Feature: Agent campaign crm
     Then I follow translated "layout.main_menu.admin.campaigns"
     Then I can enable crm while create are edit campaign
 
-  @added @selenium @_done @_tested
+  @added @selenium @_done @_tested @faircalls
   Scenario: Call center can enable crm while create are edit campaign
     Given I visit domain http://faircalls.eu
     And I sign in as translator_call_centre@nbs.com with password secret
@@ -36,19 +36,19 @@ Feature: Agent campaign crm
   @_done @_tested_elsewhere
   Scenario: I can assign campaigns that I have access to for CRM scope
 
-  @added @selenium @_done @_tested
+  @added @selenium @_done @_tested @faircalls
   Scenario: Call center can see crm on work screen
     Given I visit domain http://faircalls.eu
     And I sign in as translator_call_centre@nbs.com with password secret
     And I can see call results from other campaign
 
-  @added @selenium @_done @_tested
+  @added @selenium @_done @_tested @faircalls
   Scenario: Call center agent can see crm on work screen
     Given I visit domain http://faircalls.eu
     And I sign in as translator_call_centre_agent@nbs.com with password secret
     And I can see call results from other campaign
 
-  @added @selenium @_done @_tested
+  @added @selenium @_done @_tested @faircalls
   Scenario: Agent can see crm on work screen
     Given I visit domain http://faircalls.eu
     And I sign in as agent@nbs.com with password secret

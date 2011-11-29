@@ -72,7 +72,7 @@ Scenario: Agent is informed when his lead is rated as 'unsatisfactory'
   And last email sent should have content "has been rated as"
 
 # should this listing include all ratings or only unsatisfactory?
-@_tested @_done
+@_tested @_done @faircalls
 Scenario: As agent I can view 'unsatisfactory' ratings regarding my leads
   Given I am not sign in
   And I visit domain http://faircalls.eu

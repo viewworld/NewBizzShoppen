@@ -182,8 +182,9 @@ class Deal < AbstractLead
   def send_supplier_welcome_email(password)
     template = EmailTemplate.find_by_uniq_id("deal_certification_buyer_welcome")
     TemplateMailer.delay.new(supplier.email, :blank_template, Country.get_country_from_locale,
-                             {:subject_content => template.subject, :body_content => template.render({:user => supplier, :password => password}),
-                              :bcc_recipients => template.bcc, :cc_recipients => template.cc})
+                                       {:subject_content => template.subject, :body_content => template.render({:user => supplier, :password => password}),
+                                        :bcc_recipients => template.bcc, :cc_recipients => template.cc,
+                                        :sender_id => User.get_current_user_id, :email_template_uniq_id => template.uniq_id})
   end
 
   def slug
@@ -196,18 +197,18 @@ class Deal < AbstractLead
   end
 
   def next_group_deal
-    if deal = Deal.order("end_date ASC").where("((end_date >= ? and id <> ?) or id <> ?) and end_date >= current_date", self.end_date, self.id, self.id).first
+    if deal = Deal.without_inactive.order("id ASC").where("id > ?", self.id).first
       deal
     else
-      self
+      Deal.without_inactive.order("id ASC").first
     end
   end
 
   def previous_group_deal
-    if deal = Deal.order("end_date DESC").where("((end_date <= ? and id <> ?) or id <> ?) and end_date >= current_date", self.end_date, self.id, self.id).first
+    if deal = Deal.without_inactive.order("id DESC").where("id < ?", self.id).first
       deal
     else
-      self
+      Deal.without_inactive.order("id DESC").first
     end
   end
 

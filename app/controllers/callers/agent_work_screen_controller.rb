@@ -10,6 +10,7 @@ class Callers::AgentWorkScreenController < Callers::CallerController
   def index
     authorize_manage_rights(@contact) if @contact
     set_locals
+    @selected_call_result = params[:selected_call_result_id].blank? ? nil : CallResult.where(:creator_id => current_user.call_centre? ? current_user.subaccount_ids : current_user.id).find_by_id(params[:selected_call_result_id])
     redirect_to callers_campaign_agent_work_screen_index_path(Campaign.find(params[:change_campaign_id])) if params[:change_campaign_id]
   end
 

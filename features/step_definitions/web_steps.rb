@@ -52,6 +52,12 @@ When /^(?:|I )fill in "([^"]*)" with "([^"]*)"(?: within "([^"]*)")?$/ do |field
   end
 end
 
+When /^(?:|I )fill in "([^"]*)" with today's date(?: within "([^"]*)")?$/ do |field, selector|
+  with_scope(selector) do
+    fill_in(field, :with => Date.today)
+  end
+end
+
 When /^(?:|I )fill in translated "([^"]*)" with "([^"]*)"(?: within "([^"]*)")?$/ do |field, value, selector|
   with_scope(selector) do
     fill_in(I18n.t(field), :with => value)

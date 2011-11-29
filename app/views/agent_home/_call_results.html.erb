@@ -1,0 +1,9 @@
+<li>
+  <div class="news_content">
+    <h4><%= link_to call_result.contact.company_name, callers_campaign_agent_work_screen_index_path(call_result.contact.campaign, :selected_call_result_id => call_result.id) %></h4>
+    <div class="news_text">
+      <%= call_result.result.name %>, <%= format_date call_result.created_at, true %>
+    </div>
+    <%= link_to t("supplier_home.show.view.read_more_link"), callers_campaign_agent_work_screen_index_path(call_result.contact.campaign, :selected_call_result_id => call_result.id), :class => "read_more" %>
+  </div>
+</li>

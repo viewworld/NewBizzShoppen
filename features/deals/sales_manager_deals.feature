@@ -211,6 +211,3 @@ Feature: Deals from Sales Manager perspective
     Then I should see translated "supplier.deals.edit.view.new_template"
     And I follow translated "supplier.deals.edit.view.new_template"
     And I should see translated "supplier.lead_templates.new.view.header"
-
- @m23 @requested
- Scenario: I can create deals in free subscription when it has number of free deals present

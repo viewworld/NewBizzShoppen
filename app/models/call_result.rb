@@ -9,6 +9,7 @@ class CallResult < ActiveRecord::Base
   has_one :call_log
   has_many :result_values
   has_one :send_material_result_value, :class_name => "ResultValue", :conditions => "result_values.field_type = '#{ResultField::MATERIAL}'"
+  has_one :archived_email, :as => :related
   accepts_nested_attributes_for :result_values, :allow_destroy => true
   accepts_nested_attributes_for :contact
 
@@ -238,7 +239,8 @@ class CallResult < ActiveRecord::Base
 
     TemplateMailer.delay.new(contact_email_address, :blank_template, Country.get_country_from_locale,
                                        {:subject_content => template.subject, :body_content => template.body,
-                                        :bcc_recipients => template.bcc, :cc_recipients => template.cc},
+                                        :bcc_recipients => template.bcc, :cc_recipients => template.cc,
+                                        :sender_id => User.get_current_user_id, :email_template_uniq_id => template.uniq_id, :related_id => self.id, :related_type => self.class.to_s},
                                         assets_to_path_names(send_material_result_value.materials))
   end
 
@@ -249,7 +251,8 @@ class CallResult < ActiveRecord::Base
 
     TemplateMailer.delay.new(contact_email_address, :blank_template, Country.get_country_from_locale,
                                        {:subject_content => template.subject, :body_content => template.render({:user => user, :password => password}),
-                                        :bcc_recipients => template.bcc, :cc_recipients => template.cc},
+                                        :bcc_recipients => template.bcc, :cc_recipients => template.cc,
+                                        :sender_id => User.get_current_user_id, :email_template_uniq_id => template.uniq_id, :related_id => self.id, :related_type => self.class.to_s},
                                         assets_to_path_names(send_material_result_value.materials))
   end
   

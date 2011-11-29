@@ -24,7 +24,8 @@ class MoreLeadsRequestsController < ApplicationController
         flash[:notice] = I18n.t("more_leads_requests.create.flash.request_sent")
         TemplateMailer.delay.new(Settings.contact_us_email, :blank_template, Country.get_country_from_locale,
                                        {:subject_content => @email_template_preview.subject, :body_content => @email_template_preview.body,
-                                        :bcc_recipients => @email_template_preview.bcc, :cc_recipients => @email_template_preview.cc, :reply_to => @email_template_preview.contact_email})
+                                        :bcc_recipients => @email_template_preview.bcc, :cc_recipients => @email_template_preview.cc, :reply_to => @email_template_preview.contact_email,
+                                        :sender_id => User.get_current_user_id, :email_template_uniq_id => "more_leads_request"})
 
         if current_user
           redirect_to current_user.has_any_role?(:agent, :call_centre_agent, :member) ? agent_home_path : supplier_home_path

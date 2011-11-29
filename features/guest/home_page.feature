@@ -25,7 +25,7 @@ Feature: Home page
   @m8 @requested @tgn @_tested_elsewhere @_done
   Scenario: When a new user sigens in on fairleads, he should be redirected to his new role home page, not the site homepage
 
-  @m8b @requested @tgn @_tested @_done
+  @m8b @requested @tgn @_tested @_done @faircalls
   Scenario: Call centre/call centre admin should share the homepage with agent -- correct the cc/cc agent welcome message (move it from the site home to agent home)
     Given I visit domain http://faircalls.eu
     And I am on the home page

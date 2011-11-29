@@ -1,4 +1,4 @@
-@comments @noguess @ao @m9
+@comments @noguess @ao @m9 @faircalls
 Feature: Comments administration as call centre admin
 
 Background:
