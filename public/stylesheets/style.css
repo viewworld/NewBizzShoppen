@@ -1102,6 +1102,12 @@ input:focus, textarea:focus, select:focus
     overflow: hidden;
 }
 
+.solid_list.row_4 .lead_content,
+.solid_list.row_4 .news_content
+{
+    height: 82px;
+}
+
 .solid_list li
 {
     border-bottom: 1px solid #ccc;
