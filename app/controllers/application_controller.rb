@@ -3,7 +3,6 @@ class ApplicationController < ActionController::Base
 
   before_filter :redirect_to_correct_site
   before_filter :authorize_with_http_basic_for_staging, :check_category_supplier, :update_log_entries, :set_user_time_zone
-  after_filter :do_something
   before_filter :prepare_search, :if => proc{session[:site]=="fairdeals"}
 
   layout proc { session[:layout] }
@@ -207,12 +206,6 @@ class ApplicationController < ActionController::Base
       end
     end
     session[:logout_user_role] = user.role if user
-  end
-
-  def do_something
-#    require 'nokogiri'
-#    doc = Nokogiri::HTML(response_body)
-#    throw doc
   end
 
 end

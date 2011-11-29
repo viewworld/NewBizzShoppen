@@ -30,10 +30,10 @@
             %>
 
             <%= form.input :lead_category_id, :disabled => lead_categories.select { |c| !c.can_publish_leads? }.map(&:id), :collection => nested_set_options(lead_categories), :include_blank => false %>
-                <% if deal.new_record? %>
-                    <%= form.input :use_company_name_as_category, :as => :boolean %>
-                <% end %>
+            <% if deal.new_record? %>
+                <%= form.input :use_company_name_as_category, :as => :boolean %>
             <% end %>
+        <% end %>
         <%= form.input :header, :label => t("shared.deals.form.name_label") %>
         <%= form.input :description, :input_html => {:style => "height: 50px;width:280px;"}, :label => t("shared.deals.form.short_description_label") %>
         <%= form.input :hidden_description, :label => t("shared.deals.form.detailed_description_label"), :as => :ckeditor, :input_html => {:width => '320px', :height => '150px', :toolbar => "Lite"}, :wrapper_html => {:class => "text"} %>
@@ -59,23 +59,25 @@
         <%= form.input :deal_code %>
         <% if user_signed_in? and current_user.admin? %>
             <div id="group_deal_additional_fields">
-            <%= form.input :min_created_leads, :label => t("shared.deals.form.min_created_leads") %>
+              <%= form.input :min_created_leads, :label => t("shared.deals.form.min_created_leads") %>
             </div>
         <% end %>
         <% unless user_signed_in? and current_user.supplier? %>
             <div>
-                <%= form.input :group_deal, :wrapper_html => {:style => "margin-left:200px"}, :onclick => "enable_group_deal();" %>
+              <%= form.input :group_deal, :wrapper_html => {:style => "margin-left:200px"}, :onclick => "enable_group_deal();" %>
             </div>
             <div id="group_deal_fields">
-              <%= form.input :deal_price, :required => @deal.group_deal == true %>
-              <%= form.input :discounted_price, :required => @deal.group_deal == true, :label => t("shared.deals.form.discounted_price_label") %>
+              <%= form.input :deal_price, :required => (@deal.group_deal == true or @deal.voucher_enabled == true) %>
+              <%= form.input :discounted_price, :required => (@deal.group_deal == true or @deal.voucher_enabled == true), :label => t("shared.deals.form.discounted_price_label") %>
               <div class="form_comment"><%= "#{t("shared.deals.form.saving_percent_label")} #{as_currency(@deal.saving_in_money)} (#{@deal.saving})" if @deal.discounted_price.to_i > 0 %></div>
               <%= form.input :social_media_description, :input_html => {:style => "height: 150px;width:280px;"}, :required => @deal.group_deal == true %>
             </div>
 
             <% unless @deal.new_record? %>
                 <li class="string"><%= form.label :url, :label => t("shared.deals.form.url_label") %>
-                  <%= link_to deal_url(:protocol => "http://", :host => "www.fairdeals.dk", :id => @deal.slug), deal_url(:protocol => "http://", :host => "www.fairdeals.dk", :id => @deal.slug) %>
+                  <span style="margin-top:8px;display:inherit;">
+                     <%= link_to deal_url(:protocol => "http://", :host => "www.fairdeals.dk", :id => @deal.slug), deal_url(:protocol => "http://", :host => "www.fairdeals.dk", :id => @deal.slug) %>
+                  </span>
                 </li>
             <% end %>
         <% end %>
@@ -113,7 +115,57 @@
                 <%= form.input :deal_admin_email %>
             </span>
         <% end %>
+        <% if user_signed_in? and (current_user.admin? or current_user.deal_maker?) and !form.object.new_record? %>
+            <%= form.input(:voucher_enabled, :onclick => "enable_voucher();") if @deal.voucher_can_be_disabled %>
+            <div id="voucher_additional_fields" style="display:<%= @deal.voucher_enabled? ? "block" : "none" %>">
+              <li class="string optional">
+                <%= form.label :deal_unique_id, :label => t("shared.deals.form.deal_unique_id_label") %>
+                <span style="margin-top:9px;display:inherit;"><%= @deal.deal_unique_id %></span>
+              </li>
 
+              <% if @deal.voucher_heading_picture and @deal.voucher_heading_picture.id %>
+                  <fieldset class="inputs labels_ta_r labels_200">
+                    <ol>
+                      <li class="string">
+                        <label><%= t("deals.common.assets.view.voucher_heading_picture_label") %></label>
+
+                        <div class="txt assets_elements">
+                          <ul>
+                            <li>
+                              <%= image_tag @deal.voucher_heading_picture.url(:thumb) %> <%= link_to t("deals.common.assets.view.show_image"), @deal.voucher_heading_picture.url, :rel => "colorbox_voucher" %>
+                              <%#= link_to t("deals.common.assets.view.remove_logo"), self.send(remove_path, @deal, @deal.voucher_heading_picture), :method => :delete, :confirm => t("common.confirmation") %>
+                            </li>
+                          </ul>
+                        </div>
+                      </li>
+                    </ol>
+                  </fieldset>
+              <% else %>
+                  <%= form.semantic_fields_for :voucher_heading_picture, @deal.build_voucher_heading_picture do |voucher_heading_picture_form| %>
+                      <fieldset class="inputs labels_ta_r labels_200">
+                        <ol>
+                          <%= voucher_heading_picture_form.input :asset, :as => :file, :label => "Upload voucher heading image" %>
+                        </ol>
+                      </fieldset>
+                  <% end %>
+              <% end %>
+
+
+              <%= form.input :voucher_how_to_redeem, :label => t("shared.deals.form.how_to_redeem_label"), :as => :ckeditor, :input_html => {:width => '350px', :height => '150px', :toolbar => "Lite"}, :wrapper_html => {:class => "text"} %>
+              <clb/>
+              <div style='height:84px'>
+                <%= form.input :voucher_until_type, :as => :radio, :collection => Deal.until_type_for_radio %>
+              </div>
+              <%= form.input :voucher_end_date, :as => :string, :wrapper_html => {:class => "date"},
+                             :input_html => {:class => "datepicker", :value => deal.voucher_end_date ? deal.voucher_end_date.to_date : deal.end_date.to_date},
+                             :hint => t('models.result_field.date_format') %>
+              <%= form.input :voucher_number_of_weeks %>
+              <%= form.input :voucher_max_number %>
+              <li class="string optional">
+                <label></label><%= link_to(t("shared.deals.form.edit_voucher_number_link"), edit_voucher_number_path(@deal)) if @deal.voucher_numbers.size > 0 %>
+              </li>
+            </div>
+        <% end %>
       </ol>
     </fieldset>
   </div>
@@ -197,41 +249,64 @@
       <%= "language_names['#{locale.code}'] = '#{t('models.locale.' + locale.code)}';" -%>
       <% end %>
 
-      function mark_as_required(field_id, is_enabled){
-          if(is_enabled){
+      function mark_as_required(field_id, is_enabled) {
+          if (is_enabled) {
               $('<abbr title=\"required\">*</abbr>').appendTo(field_id + ' label');
           }
-          else
-          {
+          else {
               $(field_id + ' label abbr').remove();
           }
       }
 
-      function enable_group_deal_additional_fields(is_enabled){
-          if(is_enabled){
+      function enable_group_deal_additional_fields(is_enabled) {
+          if (is_enabled) {
               $('#group_deal_additional_fields').show();
           }
-          else
-          {
+          else {
               $('#group_deal_additional_fields').hide();
           }
       }
 
-      function enable_group_deal(){
-          if($('#deal_group_deal').is(':checked')){
+      function enable_voucher() {
+          if ($('#deal_voucher_enabled').is(':checked')) {
+              mark_as_required('#deal_deal_price_input', false);
+              mark_as_required('#deal_discounted_price_input', false);
+              mark_as_required('#deal_deal_price_input', true);
+              mark_as_required('#deal_discounted_price_input', true);
+              $('#voucher_additional_fields').show();
+
+          }
+          else {
+              if (!($('#deal_group_deal').is(':checked'))) {
+                  mark_as_required('#deal_deal_price_input', false);
+                  mark_as_required('#deal_discounted_price_input', false);
+              }
+              $('#voucher_additional_fields').hide();
+          }
+      }
+
+      function enable_group_deal() {
+          if ($('#deal_group_deal').is(':checked')) {
+              mark_as_required('#deal_deal_price_input', false);
+              mark_as_required('#deal_discounted_price_input', false);
               mark_as_required('#deal_deal_price_input', true);
               mark_as_required('#deal_discounted_price_input', true);
               mark_as_required('#deal_social_media_description_input', true);
               enable_group_deal_additional_fields(true)
           }
-          else
-          {
-              mark_as_required('#deal_deal_price_input', false);
-              mark_as_required('#deal_discounted_price_input', false);
+          else {
+              if (!($('#deal_voucher_enabled').is(':checked'))) {
+                  mark_as_required('#deal_deal_price_input', false);
+                  mark_as_required('#deal_discounted_price_input', false);
+              }
               mark_as_required('#deal_social_media_description_input', false);
               enable_group_deal_additional_fields(false)
           }
       }
+
+      jQuery(document).ready(function() {
+          $('a[rel=colorbox_voucher]').colorbox();
+      });
 
       <%= "enable_group_deal_additional_fields(#{@deal.group_deal? ? 'true' : 'false'})" if user_signed_in? and current_user.admin? -%>
 

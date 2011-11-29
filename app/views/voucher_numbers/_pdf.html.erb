@@ -1,0 +1,20 @@
+<img src="../../images/invoices/logo.jpg" alt="logo" width="150"/>
+
+<% if deal.logo %>
+    <img src="<%= "#{'../..' unless Rails.env == "production"}" + deal.logo.url.gsub(/\?\d*\z/, "") %>" alt="logo" width="150"/>
+<% end %>
+
+<%= I18n.t("voucher_numbers.pdf.deal_name") %> <%= deal.header %><br/>
+
+<% if deal.voucher_heading_picture %>
+    <img src="<%= "#{'../..' unless Rails.env == "production"}" + deal.voucher_heading_picture.url.gsub(/\?\d*\z/, "") %>" alt="logo" width="150"/>
+<% end %>
+
+<%= I18n.t("voucher_numbers.pdf.voucher_value") %> <%= deal.deal_price %><br/>
+<%= I18n.t("voucher_numbers.pdf.price_paid") %> <%= deal.discounted_price %><br/>
+<%= I18n.t("voucher_numbers.pdf.valid_until") %> <%= voucher_number.expired_date.strftime("%d-%m-%Y") %><br/>
+<%= I18n.t("voucher_numbers.pdf.detailed_description") %> <%= deal.hidden_description %><br/>
+<%= I18n.t("voucher_numbers.pdf.fine_print") %> <%= deal.fine_print %><br/>
+<%= I18n.t("voucher_numbers.pdf.how_to_redeem") %> <%= deal.voucher_how_to_redeem %><br/>
+<%= I18n.t("voucher_numbers.pdf.deal_id") %> <%= voucher_number.deal_unique_id %><br/>
+<%= I18n.t("voucher_numbers.pdf.voucher_number") %> <%= voucher_number.number %><br/>

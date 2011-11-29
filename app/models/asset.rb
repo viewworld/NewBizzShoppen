@@ -35,23 +35,23 @@ class Asset < ActiveRecord::Base
   end
 
   def self.s3_storage?
-    ['production','staging'].include?(Rails.env)
+    ['production', 'staging'].include?(Rails.env)
   end
 
   def self.attachment_options
     if self.s3_storage?
       {
-        :storage        => :s3,
-        :s3_protocol    => 'https',
-        :s3_credentials => "#{Rails.root}/config/s3.yml",
-        :s3_permissions => :public_read,
-        :bucket         => "fairleads/#{Rails.env}",
-        :path           => "assets/:id/:style/:basename.:extension"
+          :storage => :s3,
+          :s3_protocol => 'https',
+          :s3_credentials => "#{Rails.root}/config/s3.yml",
+          :s3_permissions => :public_read,
+          :bucket => "fairleads/#{Rails.env}",
+          :path => "assets/:id/:style/:basename.:extension"
       }
     else
       {
-        :url  => "/assets/:id_:style.:extension",
-        :path => ":rails_root/public/assets/:id_:style.:extension"
+          :url => "/assets/:id_:style.:extension",
+          :path => ":rails_root/public/assets/:id_:style.:extension"
       }
     end
   end
@@ -68,7 +68,7 @@ class Asset::CategoryImage < Asset
   # TODO there must be a better way..
   def url(style=nil)
     if self.class.s3_storage?
-      super.gsub('//s3','//fairleads.s3').gsub('/fairleads/','/')
+      super.gsub('//s3', '//fairleads.s3').gsub('/fairleads/', '/')
     else
       super
     end
@@ -86,7 +86,7 @@ class Asset::YoutubeImage < Asset
   # TODO there must be a better way..
   def url(style=nil)
     if self.class.s3_storage?
-      super.gsub('//s3','//fairleads.s3').gsub('/fairleads/','/')
+      super.gsub('//s3', '//fairleads.s3').gsub('/fairleads/', '/')
     else
       super
     end
@@ -104,12 +104,29 @@ class Asset::DealLogo < Asset
   # TODO there must be a better way..
   def url(style=nil)
     if self.class.s3_storage?
-      super.gsub('//s3','//fairleads.s3').gsub('/fairleads/','/')
+      super.gsub('//s3', '//fairleads.s3').gsub('/fairleads/', '/')
     else
       super
     end
   end
 
+end
+
+class Asset::VoucherPicture < Asset
+  belongs_to :deal, :foreign_key => "resource_id"
+  has_attached_file :asset, attachment_options.merge(:styles => {:original => "150x100>", :medium => "80x120", :preview => "60x70", :thumb => "32>x32"})
+  validates_attachment_presence :asset
+  validates_attachment_size :asset, :less_than => 1.megabyte
+  validates_attachment_content_type :asset, :content_type => Asset::IMAGE_FILE_TYPES, :message => " - #{I18n.t(:validation_asset_images_type)}"
+
+  # TODO there must be a better way..
+  def url(style=nil)
+    if self.class.s3_storage?
+      super.gsub('//s3', '//fairleads.s3').gsub('/fairleads/', '/')
+    else
+      super
+    end
+  end
 end
 
 class Asset::DealImage < Asset
@@ -122,7 +139,7 @@ class Asset::DealImage < Asset
   # TODO there must be a better way..
   def url(style=nil, use_timestamp=false)
     if self.class.s3_storage?
-      super.gsub('//s3','//fairleads.s3').gsub('/fairleads/','/')
+      super.gsub('//s3', '//fairleads.s3').gsub('/fairleads/', '/')
     else
       super
     end
@@ -140,7 +157,7 @@ class Asset::DealMaterial < Asset
   # TODO there must be a better way..
   def url(style=nil, use_timestamp=false)
     if self.class.s3_storage?
-      super.gsub('//s3','//fairleads.s3').gsub('/fairleads/','/')
+      super.gsub('//s3', '//fairleads.s3').gsub('/fairleads/', '/')
     else
       super
     end
@@ -158,7 +175,7 @@ class Asset::CountryLogo < Asset
   # TODO there must be a better way..
   def url(style=nil)
     if self.class.s3_storage?
-      super.gsub('//s3','//fairleads.s3').gsub('/fairleads/','/')
+      super.gsub('//s3', '//fairleads.s3').gsub('/fairleads/', '/')
     else
       super
     end

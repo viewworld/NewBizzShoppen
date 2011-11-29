@@ -262,6 +262,10 @@ Nbs::Application.routes.draw do
   match 'categories/:slag' => "leads#index"
   match 'categories/deals/:slag' => "deals#index", :as => :deals_index
 
+  resources :voucher_numbers, :only => [:edit, :update]
+  resource :validate_voucher, :controller =>"validate_voucher", :only => [:show, :create]
+  resource :activate_voucher, :controller =>"activate_voucher", :only => [:show, :create]
+
   resource :contacts_advanced_import, :only => [:create, :destroy, :show] do
     collection do
       post 'choose'
