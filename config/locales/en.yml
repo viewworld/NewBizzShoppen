@@ -3159,6 +3159,10 @@ en:
     campaigns:
       duplicate:
         notice: "Campaign duplication task has been successfully added to queue. It will be finished in few seconds."
+    subscription_plans:
+      destroy:
+        notice: "Subscription plan has been destroyed successfully."
+        failure: "Subscription plan could not be destroyed because this is the only free subscription for role %{roles}"
   formtastic:
     date:
       formats:

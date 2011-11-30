@@ -19,6 +19,17 @@ class Administration::SubscriptionPlansController < Administration::Administrati
     end
   end
 
+  def destroy
+    @subscription_plan = SubscriptionPlan.find(params[:id])
+    if @subscription_plan.destroy
+      flash[:notice] = I18n.t("flash.subscription_plans.destroy.notice")
+    else
+      flash[:notice] = I18n.t("flash.subscription_plans.destroy.failure", :roles => @subscription_plan.assigned_roles.join)
+    end
+
+    redirect_to :back
+  end
+
   protected
 
   def collection

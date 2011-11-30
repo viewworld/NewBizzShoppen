@@ -22,6 +22,7 @@ class SubscriptionPlan < ActiveRecord::Base
 
   after_save :check_email_templates
   before_save :clear_additional_features_for_member, :cache_total_billing
+  before_destroy :check_free_for_role
 
   accepts_nested_attributes_for :subscription_plan_lines, :allow_destroy => true
 
@@ -34,6 +35,12 @@ class SubscriptionPlan < ActiveRecord::Base
   scope :ascend_by_billing_price, order("billing_price")
 
   private
+
+  def check_free_for_role
+    assigned_roles.each do |role|
+      return false if SubscriptionPlan.free.for_role(role).count.eql?(1)
+    end
+  end
 
   def check_email_templates
     unless invoice_email_template
