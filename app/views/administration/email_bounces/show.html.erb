@@ -16,6 +16,12 @@
 
       <p><%= @email_bounce.message_id %></p>
 
+      <h3><%= t("administration.email_bounces.show.view.bounced_at") %></h3>
+
+      <p><%= @email_bounce.bounced_at %></p>
+
+      <% if @email_bounce.bounce_details %>
+
       <h3><%= t("administration.email_bounces.show.view.inactive") %></h3>
 
       <p><%= @email_bounce.bounce_details[:inactive] %></p>
@@ -36,10 +42,6 @@
 
       <p><%= @email_bounce.bounce_details[:can_activate] %></p>
 
-      <h3><%= t("administration.email_bounces.show.view.bounced_at") %></h3>
-
-      <p><%= @email_bounce.bounced_at %></p>
-
       <h3><%= t("administration.email_bounces.show.view.description") %></h3>
 
       <p><%= @email_bounce.bounce_details[:description] %></p>
@@ -59,6 +61,8 @@
       <h3><%= t("administration.email_bounces.show.view.body") %></h3>
 
       <p><%= @email_bounce.body.to_s.html_safe %></p>
+
+      <% end %>
     </div>
 
   </div>
