@@ -252,7 +252,8 @@ class User < ActiveRecord::Base
     if subscription_plan_id and subscription_plan = SubscriptionPlan.find_by_id(subscription_plan_id) and subscription_can_be_applied?(subscription_plan)
       chosen_subscription = subscription_plan
     elsif ActiveRecord::ConnectionAdapters::Column.value_to_boolean(assign_free_subscription_plan)
-      chosen_subscription = SubscriptionPlan.active.free.for_role(role).first
+      chosen_subscription = SubscriptionPlan.free.for_role(role).first
+      chosen_subscription.is_active = true
     end
 
     chosen_subscription
