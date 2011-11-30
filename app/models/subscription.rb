@@ -101,7 +101,7 @@ class Subscription < ActiveRecord::Base
     self.euro_billing_price = currency.to_euro(billing_price)
   end
 
-  def self.clone_from_subscription_plan!(subscription_plan, user, start_date=nil)
+  def self.clone_from_subscription_plan!(subscription_plan, user, start_date=nil, paypal_invoice_id=nil)
     subscription = Subscription.new(:user => user)
     subscription_plan.attributes.keys.except(["id", "roles_mask", "created_at", "updated_at", "billing_price", "is_active"]).each do |method|
       subscription.send("#{method}=".to_sym, subscription_plan.send(method.to_sym))
@@ -111,6 +111,7 @@ class Subscription < ActiveRecord::Base
       subscription.subscription_plan_lines << line.clone
     end
     subscription.apply_time_constraints(start_date ? start_date : Date.today)
+    subscription.paypal_invoice_id = paypal_invoice_id
     subscription.save
     subscription.reload
     subscription.cache_prices!
@@ -158,7 +159,7 @@ class Subscription < ActiveRecord::Base
   end
 
   def perform_prolong
-    self.class.clone_from_subscription_plan!(prolongs_as_free ? SubscriptionPlan.active.free.for_role(user.role).first : self.subscription_plan, user, end_date+1)
+    self.class.clone_from_subscription_plan!(prolongs_as_free ? SubscriptionPlan.active.free.for_role(user.role).first : self.subscription_plan, user, end_date+1, paypal_invoice_id)
   end
 
   def perform_upgrade_from_penalty

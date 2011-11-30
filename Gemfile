@@ -41,7 +41,7 @@ gem 'jammit-s3', :path => "vendor/gems/jammit-s3"
 gem "ajaxful_rating", :path => 'vendor/gems/ajaxful-rating'
 gem 'postmark-rails'
 #gem 'sanitize'
-gem 'paypal-recurring'
+gem 'paypal-recurring', :path => 'vendor/gems/paypal-recurring'
 gem 'paypal_nvp'
 
 group :production do

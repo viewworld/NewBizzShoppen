@@ -114,4 +114,8 @@ class SubscriptionPlan < ActiveRecord::Base
     payable? ? subscription_period / billing_cycle : 1
   end
 
+  def total_billing_for_subperiod
+    total_billing / number_of_periods
+  end
+
 end
