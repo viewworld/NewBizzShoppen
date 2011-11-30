@@ -26,4 +26,3 @@ Feature: Lead Advanced Import
     And I should see "Bon Jovi inc."
     And I should see "Mleko company"
     And I should not see "888 422 633"
-

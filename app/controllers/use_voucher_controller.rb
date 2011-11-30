@@ -1,4 +1,4 @@
-class ActivateVoucherController < ApplicationController
+class UseVoucherController < ApplicationController
 
   before_filter :set_variables
 
@@ -6,7 +6,7 @@ class ActivateVoucherController < ApplicationController
   end
 
   def create
-    result = VoucherNumber.activate_voucher(@deal_unique_id, @voucher_number)
+    result = VoucherNumber.use_voucher(@deal_unique_id, @voucher_number)
     flash[:notice] = result[1]
     redirect_to validate_voucher_path
   end

@@ -273,7 +273,7 @@ Nbs::Application.routes.draw do
 
   resources :voucher_numbers, :only => [:edit, :update]
   resource :validate_voucher, :controller =>"validate_voucher", :only => [:show, :create]
-  resource :activate_voucher, :controller =>"activate_voucher", :only => [:show, :create]
+  resource :use_voucher, :controller =>"use_voucher", :only => [:show, :create]
 
   resource :contacts_advanced_import, :only => [:create, :destroy, :show] do
     collection do

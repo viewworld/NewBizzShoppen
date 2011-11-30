@@ -42,6 +42,6 @@
       </param:actions>
   <% end %>
 
-  <%= link_to t("voucher_numbers.edit.back_link"), @role == "admin" ? edit_administration_deal_path(@deal) : self.send("edit_#{@role}_deal_path", @deal) %>
+  <%= link_to t("voucher_numbers.edit.back_link"), @role == "admin" ? edit_administration_deal_path(@deal) : self.send("edit_#{@role.pluralize}_deal_path", @deal) %>
 
 </column-mc:>

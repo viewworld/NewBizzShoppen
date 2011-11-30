@@ -1,0 +1,16 @@
+<fieldset class="inputs labels_ta_r labels_200">
+  <ol>
+    <li class="string">
+      <label><%= t("deals.common.assets.view.voucher_heading_picture_label") %></label>
+
+      <div class="txt assets_elements">
+        <ul>
+          <li>
+            <%= image_tag deal.voucher_heading_picture.url(:thumb) %> <%= link_to t("deals.common.assets.view.show_image"), deal.voucher_heading_picture.url, :rel => "colorbox_voucher" %>
+            <%#= link_to t("deals.common.assets.view.remove_logo"), self.send(remove_path, @deal, @deal.voucher_heading_picture), :method => :delete, :confirm => t("common.confirmation") %>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ol>
+</fieldset>

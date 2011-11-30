@@ -15,11 +15,19 @@ class VoucherNumbersController < SecuredController
   end
 
   def update
-    if @deal.update_attributes(params[:deal])
-      flash[:notice] = I18n.t("voucher_numbers.update.flash.success")
-      redirect_to edit_voucher_number_path(@deal)
+    result = []
+    params[:deal][:voucher_numbers_attributes].each_value{|v| result << v["number"]}
+    result.compact!
+    if result.size == result.uniq.size
+      if @deal.update_attributes(params[:deal])
+        flash[:notice] = I18n.t("voucher_numbers.update.flash.success")
+        redirect_to edit_voucher_number_path(@deal)
+      else
+        render :edit
+      end
     else
-      render :edit
+      flash[:notice] = I18n.t("voucher_numbers.update.flash.the_same_number")
+      redirect_to edit_voucher_number_path(@deal)
     end
   end
 
@@ -46,7 +54,7 @@ class VoucherNumbersController < SecuredController
   end
 
   def check_permission_for_deal
-     raise CanCan::AccessDenied if @deal.blank? or !@deal.can_be_editable_by(current_user)
+    raise CanCan::AccessDenied if @deal.blank? or !@deal.can_be_editable_by(current_user)
   end
 
 end

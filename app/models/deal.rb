@@ -15,6 +15,9 @@ class Deal < AbstractLead
   belongs_to :lead_category, :class_name => "Category", :foreign_key => "lead_category_id"
   belongs_to :deal_admin, :class_name => "User", :foreign_key => "deal_admin_email", :primary_key => "email"
 
+  VOUCHER_UNTIL_TYPE_DATE = 0.freeze
+  VOUCHER_UNTIL_TYPE_WEEKS = 1.freeze
+
   scope :without_inactive, where("leads.end_date >= ? and leads.start_date <= ?", Date.today, Date.today)
   scope :without_requested_by, lambda { |u| select("DISTINCT leads.*").joins("LEFT JOIN leads lr ON lr.deal_id = leads.id").where(["(lr.requested_by <> ? OR lr.requested_by IS NULL)", u.id]) if u }
   scope :active_is, lambda { |q| where("#{q == "1" ? "end_date >= ? and start_date <= ?" : "end_date < ? or start_date > ?"}", Date.today, Date.today) }
@@ -41,8 +44,8 @@ class Deal < AbstractLead
 
   validate :deal_admin_presence, :unless => Proc.new { |d| d.new_record? }
 
-  before_create :create_uniq_deal_category, :set_default_max_auto_buy, :set_deal_unique_id
-  after_create :certify_for_unknown_email, :assign_deal_admin
+  before_create :create_uniq_deal_category, :set_default_max_auto_buy
+  after_create :certify_for_unknown_email, :assign_deal_admin, :set_deal_unique_id
   before_save :set_dates, :check_deal_request_details_email_template
   after_save :set_voucher_numbers
 
@@ -94,7 +97,7 @@ class Deal < AbstractLead
   end
 
   def self.until_type_for_radio
-    [[I18n.t("models.deal.until_type_for_radio.end_date"), 0], [I18n.t("models.deal.until_type_for_radio.number_of_weeks"), 1]]
+    [[I18n.t("models.deal.until_type_for_radio.end_date"), VOUCHER_UNTIL_TYPE_DATE], [I18n.t("models.deal.until_type_for_radio.number_of_weeks"), VOUCHER_UNTIL_TYPE_WEEKS]]
   end
 
   def build_supplier(params={})

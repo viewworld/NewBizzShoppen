@@ -115,7 +115,7 @@
                 <%= form.input :deal_admin_email %>
             </span>
         <% end %>
-        <% if user_signed_in? and (current_user.admin? or current_user.deal_maker?) and !form.object.new_record? %>
+        <% if user_signed_in? and (current_user.admin? or current_user.deal_maker?) and !form.object.new_record? and !current_user.supplier? %>
             <%= form.input(:voucher_enabled, :onclick => "enable_voucher();") if @deal.voucher_can_be_disabled %>
             <div id="voucher_additional_fields" style="display:<%= @deal.voucher_enabled? ? "block" : "none" %>">
               <li class="string optional">
@@ -124,22 +124,7 @@
               </li>
 
               <% if @deal.voucher_heading_picture and @deal.voucher_heading_picture.id %>
-                  <fieldset class="inputs labels_ta_r labels_200">
-                    <ol>
-                      <li class="string">
-                        <label><%= t("deals.common.assets.view.voucher_heading_picture_label") %></label>
-
-                        <div class="txt assets_elements">
-                          <ul>
-                            <li>
-                              <%= image_tag @deal.voucher_heading_picture.url(:thumb) %> <%= link_to t("deals.common.assets.view.show_image"), @deal.voucher_heading_picture.url, :rel => "colorbox_voucher" %>
-                              <%#= link_to t("deals.common.assets.view.remove_logo"), self.send(remove_path, @deal, @deal.voucher_heading_picture), :method => :delete, :confirm => t("common.confirmation") %>
-                            </li>
-                          </ul>
-                        </div>
-                      </li>
-                    </ol>
-                  </fieldset>
+                  <%= render :partial => "shared/deals/voucher_heading_picture", :locals => {:deal => @deal} %>
               <% else %>
                   <%= form.semantic_fields_for :voucher_heading_picture, @deal.build_voucher_heading_picture do |voucher_heading_picture_form| %>
                       <fieldset class="inputs labels_ta_r labels_200">
@@ -149,7 +134,6 @@
                       </fieldset>
                   <% end %>
               <% end %>
-
 
               <%= form.input :voucher_how_to_redeem, :label => t("shared.deals.form.how_to_redeem_label"), :as => :ckeditor, :input_html => {:width => '350px', :height => '150px', :toolbar => "Lite"}, :wrapper_html => {:class => "text"} %>
               <clb/>
@@ -165,6 +149,43 @@
                 <label></label><%= link_to(t("shared.deals.form.edit_voucher_number_link"), edit_voucher_number_path(@deal)) if @deal.voucher_numbers.size > 0 %>
               </li>
             </div>
+        <% elsif user_signed_in? and !form.object.new_record? and current_user.supplier? %>
+            <li class="string optional">
+              <%= form.label :voucher_enabled %>
+              <span style="margin-top:9px;display:inherit;"><%= @deal.voucher_enabled ? t("common.yes_label") : t("common.no_label") %></span>
+            </li>
+            <% if @deal.voucher_enabled? %>
+                <li class="string optional">
+                  <%= form.label :deal_unique_id, :label => t("shared.deals.form.deal_unique_id_label") %>
+                  <span style="margin-top:9px;display:inherit;"><%= @deal.deal_unique_id %></span>
+                </li>
+                <% if @deal.voucher_heading_picture and @deal.voucher_heading_picture.id %>
+                    <%= render :partial => "shared/deals/voucher_heading_picture", :locals => {:deal => @deal} %>
+                <% end %>
+                <li class="string optional">
+                  <%= form.label :voucher_how_to_redeem, :label => t("shared.deals.form.how_to_redeem_label") %>
+                  <span style="margin-top:9px;display:inherit;"><%= @deal.voucher_how_to_redeem %></span>
+                </li>
+                <li class="string optional">
+                  <% if @deal.voucher_until_type == Deal::VOUCHER_UNTIL_TYPE_DATE %>
+                      <%= form.label :voucher_end_date %>
+                      <span style="margin-top:9px;display:inherit;"><%= @deal.voucher_end_date.strftime("%d-%m-%Y") %></span>
+                  <% else %>
+                      <%= form.label :voucher_number_of_weeks %>
+                      <span style="margin-top:9px;display:inherit;"><%= @deal.voucher_number_of_weeks %></span>
+                  <% end %>
+                </li>
+                <li class="string optional">
+                  <%= form.label :voucher_max_number %>
+                  <span style="margin-top:9px;display:inherit;"><%= @deal.voucher_max_number %> <%= link_to_function "display voucher numbers", "$('#voucher_numbers_container').toggle();" %></span>
+
+                  <div id="voucher_numbers_container" style="display: none;margin: 10px 0 0 160px">
+                  <% @deal.voucher_numbers.each do |voucher_number| %>
+                      <%= voucher_number.number %> (<%= voucher_number.translated_state %>)<br/>
+                  <% end %>
+                  </div>
+                </li>
+            <% end %>
         <% end %>
       </ol>
     </fieldset>
@@ -295,7 +316,7 @@
               enable_group_deal_additional_fields(true)
           }
           else {
-              if (!($('#deal_voucher_enabled').is(':checked'))) {
+              if (!($('#voucher_additional_fields').is(':visible'))) {
                   mark_as_required('#deal_deal_price_input', false);
                   mark_as_required('#deal_discounted_price_input', false);
               }

@@ -17,6 +17,8 @@ class VoucherNumber < ActiveRecord::Base
   scope :find_active, lambda { |deal_unique_id, voucher_number| where("deal_unique_id = ? and number = ? and state = '#{STATE_ACTIVE}'", deal_unique_id, voucher_number) }
   scope :find_used, lambda { |deal_unique_id, voucher_number| where("deal_unique_id = ? and number = ? and state = '#{STATE_USED}'", deal_unique_id, voucher_number) }
 
+  default_scope order("id")
+
   before_validation :on => :create do
     charset = (0..9).to_a + ("A".."Z").to_a
     self.number = (0...9).map { charset[rand(charset.size)] }.join
@@ -66,11 +68,12 @@ class VoucherNumber < ActiveRecord::Base
       end
     end
 
-    def activate_voucher(deal_id, voucher_number)
+    def use_voucher(deal_id, voucher_number)
       if validate_voucher(deal_id, voucher_number)[0]
-        [true, I18n.t("models.voucher_number.activate_voucher_result.activated")]
+        find_active(deal_id, voucher_number).first.update_attribute(:state, STATE_USED)
+        [true, I18n.t("models.voucher_number.use_voucher_result.used")]
       else
-        [false, I18n.t("models.voucher_number.activate_voucher_result.error")]
+        [false, I18n.t("models.voucher_number.use_voucher_result.error")]
       end
     end
 
