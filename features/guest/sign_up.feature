@@ -11,7 +11,7 @@ Feature: Sign up feature
     Then "user_supplier_address_attributes_country_id" should be selected for value "Denmark"
 
   # 5779
-  @m12 @$_guest @requested @tgn @_done @_tested @selenium
+  @m12 @$_guest @requested @tgn @_done @_tested @selenium @faircalls
   Scenario: When I am on sign up page, the coutry should be selected to my browser locale/country
     Given I am on the homepage
     And I visit domain http://faircalls.eu

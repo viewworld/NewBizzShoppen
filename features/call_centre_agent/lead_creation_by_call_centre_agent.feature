@@ -1,4 +1,4 @@
-@lead_manager @$_call_centre_agent @m5 @tgn
+@lead_manager @$_call_centre_agent @m5 @tgn @faircalls
 Feature: Lead creation by call centre agent
 
 Background:  Sign in user and set locale

@@ -149,3 +149,17 @@
       CKEDITOR.instances[instance_name].insertHtml( "{{" + variable + "}}" );
       $('#modal_for_email_template_vars').dialog('close');
   }
+
+  function test_send_email_prompt(url, subject_field_id, ckeditor_body_instance_id){
+      if(subject_field_id == null){ subject_field_id = 'email_template_subject' }
+      if(ckeditor_body_instance_id == null){ ckeditor_body_instance_id = 'email_template_body_editor' }
+
+      var email = prompt(I18n.t("common.js.enter_email_address"));
+      if(email != null){
+        $.ajax({
+          type: 'POST',
+          url: url,
+          data: {email: email, subject: $('#' + subject_field_id).val(), body: eval('CKEDITOR.instances.' + ckeditor_body_instance_id +'.getData()')}
+        });
+      }
+  }

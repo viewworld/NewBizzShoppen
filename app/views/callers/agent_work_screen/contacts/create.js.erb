@@ -7,6 +7,7 @@ $('#call_sheet #contacts tbody').append("<%= escape_javascript(render(:partial =
 reset_class_cycle_for_contact_tables();
 add_default_action_for_contact_row('contact_row_id_<%= @contact.id %>');
 $('#contact_row_id_<%= @contact.id %>').addClass('highlight_row');
+<% @lead = @contact %>
 <% else %>
 display_notice("<%= escape_javascript(t("contacts.create.flash.contact_not_be_created")) %>", true);
 <% end %>

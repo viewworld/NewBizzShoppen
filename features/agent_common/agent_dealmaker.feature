@@ -1,4 +1,4 @@
-@m18 @create_buttons
+@m18 @create_buttons @faircalls
 Feature: Agent dealmaker
   Background:
     Then user "agent@nbs.com" has deal maker role enabled

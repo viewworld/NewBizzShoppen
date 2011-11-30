@@ -55,7 +55,7 @@ Spork.prefork do
   Around('@selenium') do |scenario, block|
   block.call
   load_db
-  if Capybara.app_host.to_s.include?("fairdeals") or Capybara.app_host.to_s.include?("faircalls")
+  if !Capybara.app_host.to_s.include?("localhost")
     Capybara.app_host = "localhost:#{Capybara.app_host.split(":").last.to_s.split("/").first}"
   end
   end
@@ -63,6 +63,10 @@ Spork.prefork do
   Around('@_done') do |scenario, block|
   block.call
   Capybara.default_host = 'http://localhost' #for Rack::Test
+  end
+
+  After('@selenium') do
+    And %{I am on the homepage}
   end
 
 # If you set this to false, any error raised from within your app will bubble

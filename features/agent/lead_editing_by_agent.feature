@@ -1,4 +1,4 @@
-@lead_manager @$_freelance_agent @m1
+@lead_manager @$_freelance_agent @m1 @faircalls
 Feature: Lead editing by agent
 
 Background:
@@ -125,9 +125,10 @@ Scenario: I can edit my leads from any page where it's presented
   And I follow category "Computers"
   Then I follow translated "leads.listing.edit_label"
   And I should see translated "agent.leads.edit.view.title" with options "name:New lead"
-  When I go to agent home
-  Then I follow translated "leads.listing.edit_label"
-  And I should see translated "agent.leads.edit.view.title" with options "name:New lead"
+  #Deprecated since there are no leads box when agent is signed in
+  #When I go to agent home
+  #Then I follow translated "leads.listing.edit_label"
+  #And I should see translated "agent.leads.edit.view.title" with options "name:New lead"
 
 @m5 @added @tgn @non_testable @_done
 Scenario: Lead data should be entered in given sequence

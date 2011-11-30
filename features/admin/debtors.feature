@@ -154,7 +154,7 @@ Feature: Debtors
    And "invoice_seller_id" should be selected for value "TestSeller88"
 
  #8332
- @m22 @requested @_done @_tested
+ @m22 @requested @_done @_tested @ao
  Scenario: I should see total value
    When I follow translated "layout.main_menu.admin.upcoming_invoices"
    Then I should see translated "administration.upcoming_invoices.index.view.total_in_euro"

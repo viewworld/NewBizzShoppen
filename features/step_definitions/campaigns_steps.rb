@@ -125,7 +125,7 @@ Given /^contact for company "([^"]*)" has assigned result "([^"]*)" created by "
   contact = Contact.find_by_company_name(company_name)
   result = Result.find_by_name(result_name)
   params = {"note"=>"note text here", "result_id"=>result, "result_values_attributes"=>{"0"=>{"result_field_id"=>result.result_fields.first.id,
-            "value"=>"2011-06-22 00:00"}}}
+                                                                                              "value"=>"2011-06-22 00:00"}}}
   call_result = CallResult.new(params)
   call_result.creator = user
   call_result.contact = contact
@@ -138,7 +138,7 @@ Given /^contact for company "([^"]*)" and campaign "([^"]*)" is assigned to user
   contact = Contact.find_by_company_name(company_name)
   if contact.nil?
     contact = Contact.make!(:campaign => campaign, :company_name => company_name, :agent_id => user.id, :creator => campaign.creator,
-                       :country_id => campaign.country_id, :category_id => campaign.category_id, :company_phone_number => "+48 493756349734")
+                            :country_id => campaign.country_id, :category_id => campaign.category_id, :company_phone_number => "+48 493756349734")
     contact.update_attribute(:creator, campaign.creator)
   else
     contact.update_attribute(:agent_id, user.id)
@@ -155,48 +155,48 @@ Given /^there are no campaigns/ do
 end
 
 Given /^campaign report data is generated$/ do
-    @call_centre = User::CallCentre.make!(:screen_name => 'test report user CC', :email => "testreportscc@nbs.com", :password => "secret", :password_confirmation => "secret")
-    @call_centre_agent1 = User::CallCentreAgent.make!(:screen_name => 'test report user CCA1', :email => "testreportscca01@nbs.com", :password => "secret", :password_confirmation => "secret", :parent_id => @call_centre.id)
-    @call_centre_agent2 = User::CallCentreAgent.make!(:screen_name => 'test report user CCA2', :email => "testreportscca02@nbs.com", :password => "secret", :password_confirmation => "secret", :parent_id => @call_centre.id)
-    [@call_centre_agent1, @call_centre_agent1].each(&:confirm!)
-    @call_centre.save
-    @call_centre.confirm!
+  @call_centre = User::CallCentre.make!(:screen_name => 'test report user CC', :email => "testreportscc@nbs.com", :password => "secret", :password_confirmation => "secret")
+  @call_centre_agent1 = User::CallCentreAgent.make!(:screen_name => 'test report user CCA1', :email => "testreportscca01@nbs.com", :password => "secret", :password_confirmation => "secret", :parent_id => @call_centre.id)
+  @call_centre_agent2 = User::CallCentreAgent.make!(:screen_name => 'test report user CCA2', :email => "testreportscca02@nbs.com", :password => "secret", :password_confirmation => "secret", :parent_id => @call_centre.id)
+  [@call_centre_agent1, @call_centre_agent1].each(&:confirm!)
+  @call_centre.save
+  @call_centre.confirm!
 
-    # create campaign
-    @currency = Currency.first
-    @campaign1 = Campaign.make!(:creator => @call_centre, :currency => @currency, :success_rate => 94, :name => "TestCampaignReport1")
-    @campaign2 = Campaign.make!(:creator => @call_centre, :currency => @currency, :success_rate => 94, :name => "TestCampaignReport2")
+  # create campaign
+  @currency = Currency.first
+  @campaign1 = Campaign.make!(:creator => @call_centre, :currency => @currency, :success_rate => 94, :name => "TestCampaignReport1")
+  @campaign2 = Campaign.make!(:creator => @call_centre, :currency => @currency, :success_rate => 94, :name => "TestCampaignReport2")
 
-    # assign users to campaign
-    @campaign1.users = [@call_centre,@call_centre_agent1,@call_centre_agent2]
-    @campaign2.users = [@call_centre,@call_centre_agent1,@call_centre_agent2]
+  # assign users to campaign
+  @campaign1.users = [@call_centre, @call_centre_agent1, @call_centre_agent2]
+  @campaign2.users = [@call_centre, @call_centre_agent1, @call_centre_agent2]
 
-    # create results
-    @result1 = Result.make!(:final_reported_success, :name => "TEST Result 01")
-    @result2 = Result.make!(:final_reported_success, :name => "TEST Result 02")
-    @result3 = Result.make!(:upgrades_to_lead)
-    @result4 = Result.make!(:upgrades_to_lead)
-    @result_final_reported = Result.make!(:final_reported, :name => "TEST Result 03")
-    @result_final = Result.make!(:final)
-    @result_not_final = Result.make!
+  # create results
+  @result1 = Result.make!(:final_reported_success, :name => "TEST Result 01")
+  @result2 = Result.make!(:final_reported_success, :name => "TEST Result 02")
+  @result3 = Result.make!(:upgrades_to_lead)
+  @result4 = Result.make!(:upgrades_to_lead)
+  @result_final_reported = Result.make!(:final_reported, :name => "TEST Result 03")
+  @result_final = Result.make!(:final)
+  @result_not_final = Result.make!
 
-    # assign results to campaign
-    @campaign1.results = [@result1,@result2,@result3,@result4,@result_final_reported,@result_final]
-    @campaign2.results = [@result1,@result2,@result3,@result4,@result_final_reported,@result_final]
-    @result1.campaigns_results.first.update_attributes(:value => 100, :expected_completed_per_hour => 5)
-    @result2.campaigns_results.first.update_attributes(:value => 10, :expected_completed_per_hour => 10)
-    @result1.campaigns_results.last.update_attributes(:value => 100, :expected_completed_per_hour => 5)
-    @result2.campaigns_results.last.update_attributes(:value => 10, :expected_completed_per_hour => 10)
-    @result_final_reported.campaigns_results.first.update_attributes(:value => 23, :expected_completed_per_hour => 5)
-    @result_final_reported.campaigns_results.last.update_attributes(:value => 23, :expected_completed_per_hour => 10)
+  # assign results to campaign
+  @campaign1.results = [@result1, @result2, @result3, @result4, @result_final_reported, @result_final]
+  @campaign2.results = [@result1, @result2, @result3, @result4, @result_final_reported, @result_final]
+  @result1.campaigns_results.first.update_attributes(:value => 100, :expected_completed_per_hour => 5)
+  @result2.campaigns_results.first.update_attributes(:value => 10, :expected_completed_per_hour => 10)
+  @result1.campaigns_results.last.update_attributes(:value => 100, :expected_completed_per_hour => 5)
+  @result2.campaigns_results.last.update_attributes(:value => 10, :expected_completed_per_hour => 10)
+  @result_final_reported.campaigns_results.first.update_attributes(:value => 23, :expected_completed_per_hour => 5)
+  @result_final_reported.campaigns_results.last.update_attributes(:value => 23, :expected_completed_per_hour => 10)
 
-    # create contacts
-    @contact1_1 = Contact.make!(:campaign => @campaign1)
-    @contact1_2 = Contact.make!(:campaign => @campaign1)
-    @contact1_3 = Contact.make!(:campaign => @campaign1, :price => 130)
-    @contact1_4 = Contact.make!(:campaign => @campaign1, :price => 13)
+  # create contacts
+  @contact1_1 = Contact.make!(:campaign => @campaign1)
+  @contact1_2 = Contact.make!(:campaign => @campaign1)
+  @contact1_3 = Contact.make!(:campaign => @campaign1, :price => 130)
+  @contact1_4 = Contact.make!(:campaign => @campaign1, :price => 13)
 
-    @contact2_1 = Contact.make!(:campaign => @campaign2)
+  @contact2_1 = Contact.make!(:campaign => @campaign2)
 
     CallResult.make!(:contact => @contact1_1, :result => @result1, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_day+Time.now.beginning_of_day.utc_offset)
     CallResult.make!(:contact => @contact1_3, :result => @result3, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_day+Time.now.beginning_of_day.utc_offset)
@@ -208,4 +208,114 @@ Given /^campaign report data is generated$/ do
     CallResult.make!(:contact => @contact2_1, :result => @result1, :creator => @call_centre_agent1)
     LeadPurchase.make!(:lead => @contact1_3.lead)
     LeadPurchase.make!(:lead => @contact1_4.lead, :quantity => 5)
+end
+
+
+Given /^additional campaign report data is generated$/ do
+  @contact2_1.update_attribute(:company_name, "Aaaaa company name")
+  @contact1_5 = Contact.make!(:campaign => @campaign1, :pending => true, :agent_id => @call_centre_agent1)
+  @contact1_6 = Contact.make!(:campaign => @campaign1, :agent_id => @call_centre_agent1)
+  @@result_call_back = Result.generic_results.where(:name => "Call back").first
+  call_result = CallResult.make(:contact => @contact1_6, :result => @@result_call_back, :creator => @call_centre_agent1, :created_at => Time.now.beginning_of_day+Time.now.beginning_of_day.utc_offset)
+  call_result.result_values << ResultValue.create(:value => "2012-01-01 00:01", :result_field => ResultField.create(:field_type => ResultField::DATETIME))
+  call_result.save!
+  ArchivedEmail.create(:to => "some.recipient@somewhere.com", :status => 1, :related => call_result, :sender_id => @call_centre_agent1.id,
+                       :subject => "Additional materials sent", :body => "<p>Test body for additional materials</p>")
+end
+
+Then /^I can enable crm while create are edit campaign$/ do
+  steps %Q{
+  Then I click xpath "//ul[@class='header_actions']//a"
+  Then I should see translated "campaigns.form.crm_campaigns"
+  Then I should see translated "campaigns.form.crm_options"
+  Then I fill in "campaign_name" with "Modern Warfare"
+  Then I choose "campaign_cost_type_3"
+  Then I choose "campaign_crm_option_2"
+  Then I select "Testing One" from "campaign_crm_campaigns"
+  Then I select "Testing Two" from "campaign_crm_campaigns"
+  Then I press "campaign_submit"
+  Then I should see translated "campaigns.edit.title"
+  Then I choose "campaign_crm_option_4"
+  Then I select "Testing One" from "campaign_crm_campaigns"
+  Then I select "Testing Two" from "campaign_crm_campaigns"
+  Then I select "Modern Warfare" from "campaign_crm_campaigns"
+  Then I press "campaign_submit"}
+end
+
+Then /^I prepare date for crm work screen call results test$/ do
+  campaign = Campaign.where(:name => "Testing Two").first
+  result = Result.where(:name => "Not in").first
+  campaign.results = [result]
+  category = campaign.category
+  country = Country.where(:name => "Denmark").first
+  call_centre = User.where(:email => "translator_call_centre@nbs.com").first
+    [{:company_name => "bon jovi inc.", :company_phone_number => "888 112 113", :email_address => "bj@bj.com", :company_vat_no => "0000099999"},
+     {:company_name => "Email OK", :company_phone_number => "510 333 333", :email_address => "BJ@bj.com"},
+     {:company_name => "VAT OK", :company_phone_number => "888 422 633", :email_address => "", :company_vat_no => "0000099999"},
+     {:company_name => "Bon Jovi INC.", :company_phone_number => "602 222 333", :email_address => "", :company_vat_no => "0000099999"}].each do |attrs|
+      contact = Contact.create attrs.merge(:country => country, :campaign => campaign, :creator => call_centre, :category => category, :contact_name => "", :phone_number => "", :creator_name => call_centre.full_name)
+      CallResult.make!(:contact => contact, :result => result, :creator => call_centre, :created_at => Time.now.beginning_of_day+Time.now.beginning_of_day.utc_offset)
+    end
+end
+
+Then /^I prepare date for crm work screen call results test for agent$/ do
+  user = User.where(:email => "agent@nbs.com").first
+  campaign = Campaign.where(:name => "Testing One").first
+  campaign.users << user
+  campaign.save
+
+end
+
+Then /I can see call results from other campaign/ do
+    Then %{I prepare date for crm work screen call results test}
+    #campaign has crm option set to 0 (off)   and  crm campaigns Testing One and Testing Two
+    steps %Q{
+    Then campaign named "Testing One" exists with attributes "crm_campaigns:2,crm_option:0"
+    And I go to campaign testing one page
+    Then I wait 3 second
+    Then I should not see translated "call_results.table.contact_name" within "#call_results"
+    Then I should not see "bon jovi inc." within "#call_results"
+    Then I should not see "Email OK" within "#call_results"
+    Then I should not see "VAT OK" within "#call_results"
+    Then I should not see "Bon Jovi INC." within "#call_results"}
+    #campaign has crm option set to 1 (name)  and  crm campaigns Testing One and Testing Two
+    steps %Q{
+    Then campaign named "Testing One" exists with attributes "crm_campaigns:2,crm_option:1"
+    And I go to campaign testing one page
+    Then I wait 3 second
+    Then I should see translated "call_results.table.contact_name" within "#call_results"
+    Then I should see "bon jovi inc." within "#call_results"
+    Then I should not see "Email OK" within "#call_results"
+    Then I should not see "VAT OK" within "#call_results"
+    Then I should see "Bon Jovi INC." within "#call_results"}
+    #campaign has crm option set to 2 (vat)   and  crm campaigns Testing One and Testing Two
+    steps %Q{
+    Then campaign named "Testing One" exists with attributes "crm_campaigns:2,crm_option:2"
+    And I go to campaign testing one page
+    Then I wait 3 second
+    Then I should see translated "call_results.table.contact_name" within "#call_results"
+    Then I should see "bon jovi inc." within "#call_results"
+    Then I should not see "Email OK" within "#call_results"
+    Then I should see "VAT OK" within "#call_results"
+    Then I should see "Bon Jovi INC." within "#call_results"}
+    #campaign has crm option set to 3 (email) and  crm campaigns Testing One and Testing Two
+    steps %Q{
+    Then campaign named "Testing One" exists with attributes "crm_campaigns:2,crm_option:3"
+    And I go to campaign testing one page
+    Then I wait 3 second
+    Then I should see translated "call_results.table.contact_name" within "#call_results"
+    Then I should see "bon jovi inc." within "#call_results"
+    Then I should see "Email OK" within "#call_results"
+    Then I should not see "VAT OK" within "#call_results"
+    Then I should not see "Bon Jovi INC." within "#call_results"}
+    #campaign has crm option set to 4 (all)   and  crm campaigns Testing One and Testing Two
+    steps %Q{
+    Then campaign named "Testing One" exists with attributes "crm_campaigns:2,crm_option:4"
+    And I go to campaign testing one page
+    Then I wait 3 second
+    Then I should see translated "call_results.table.contact_name" within "#call_results"
+    Then I should see "bon jovi inc." within "#call_results"
+    Then I should not see "Email OK" within "#call_results"
+    Then I should not see "VAT OK" within "#call_results"
+    Then I should not see "Bon Jovi INC." within "#call_results"}
 end

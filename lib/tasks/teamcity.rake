@@ -1,4 +1,3 @@
-include ActiveSupport::SecureRandom
 namespace :teamcity do
 
   desc "run cucumber tests"
@@ -24,6 +23,17 @@ namespace :teamcity do
     system "cucumber -p javascript --format junit --out tmp/cucumber-junit"
     system "rake db:drop RAILS_ENV=test"
   end
+
+  desc "run rspec tests"
+  task :rspec do
+    system "cp /home/teamcity/nbs.main.database.yml config/database.yml"
+    system "rake db:create RAILS_ENV=test"
+    system "rake nbs:refresh_test_db RAILS_ENV=test"
+    system "rspec spec"
+    system "rake db:drop RAILS_ENV=test"
+  end
+
+  # -------------------------------------------------------------------------------------------------------------------
 
   desc "run cucumber javascript tests"
   task :cucumber_parallel do

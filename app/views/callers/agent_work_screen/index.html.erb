@@ -26,6 +26,7 @@
   </div>
 
   <%= t("agent_work_screen.index.contact_search_label") %> <%= text_field_tag "autocompleter", nil %>
+  <%= bt_link_to_function nil, t("agent_work_screen.index.new_contact"), "javascript:$('#modal_new_contact_form_div').dialog('open');" %>
 
   <a data-remote="true" data-method="get" id="autocomplter_result_form" href="" class="display:none"></a>
 
@@ -186,6 +187,11 @@
               custom_clear_form("#new_contact_form", window.fields_array)
           }
       }
+<% if @selected_call_result %>
+$(document).ready(function() {
+  $.get('<%= edit_callers_campaign_agent_work_screen_contact_call_result_path(@campaign, @selected_call_result.contact, @selected_call_result) -%>')
+});
+<% end %>
   </script>
 </js:>
 

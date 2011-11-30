@@ -13,7 +13,7 @@ Scenario: I can browse the complete list of recently sold leads
 
 Scenario: I can see 5 message excerpts from buyers
 
-@m5 @added @tgn @_tested @_done
+@m5 @added @tgn @_tested @_done @faircalls
 Scenario: When I go to home page then I should be on agent's home page
   Given I visit domain http://faircalls.eu
   And I am on the homepage

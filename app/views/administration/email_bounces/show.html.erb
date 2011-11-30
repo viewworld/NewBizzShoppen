@@ -6,60 +6,64 @@
 
       <h3><%= t("administration.email_bounces.show.view.email") %></h3>
 
-      <p><%= @email_bounce.email %></p>
+      <p><%= @email_bounce.to %></p>
 
       <h3><%= t("administration.email_bounces.show.view.subject") %></h3>
 
       <p><%= @email_bounce.subject %></p>
 
-      <h3><%= t("administration.email_bounces.show.view.name") %></h3>
-
-      <p><%= @email_bounce.name %></p>
-
-      <h3><%= t("administration.email_bounces.show.view.inactive") %></h3>
-
-      <p><%= @email_bounce.inactive %></p>
-
-      <h3><%= t("administration.email_bounces.show.view.tag") %></h3>
-
-      <p><%= @email_bounce.tag %></p>
-
       <h3><%= t("administration.email_bounces.show.view.message_id") %></h3>
 
       <p><%= @email_bounce.message_id %></p>
-
-      <h3><%= t("administration.email_bounces.show.view.details") %></h3>
-
-      <p><%= @email_bounce.details %></p>
-
-      <h3><%= t("administration.email_bounces.show.view.postmark_id") %></h3>
-
-      <p><%= @email_bounce.postmark_id %></p>
-
-      <h3><%= t("administration.email_bounces.show.view.can_activate") %></h3>
-
-      <p><%= @email_bounce.can_activate %></p>
 
       <h3><%= t("administration.email_bounces.show.view.bounced_at") %></h3>
 
       <p><%= @email_bounce.bounced_at %></p>
 
+      <% if @email_bounce.bounce_details %>
+
+      <h3><%= t("administration.email_bounces.show.view.inactive") %></h3>
+
+      <p><%= @email_bounce.bounce_details[:inactive] %></p>
+
+      <h3><%= t("administration.email_bounces.show.view.tag") %></h3>
+
+      <p><%= @email_bounce.bounce_details[:tag] %></p>
+
+      <h3><%= t("administration.email_bounces.show.view.details") %></h3>
+
+      <p><%= @email_bounce.bounce_details[:details] %></p>
+
+      <h3><%= t("administration.email_bounces.show.view.postmark_id") %></h3>
+
+      <p><%= @email_bounce.bounce_details[:postmark_id] %></p>
+
+      <h3><%= t("administration.email_bounces.show.view.can_activate") %></h3>
+
+      <p><%= @email_bounce.bounce_details[:can_activate] %></p>
+
       <h3><%= t("administration.email_bounces.show.view.description") %></h3>
 
-      <p><%= @email_bounce.description %></p>
+      <p><%= @email_bounce.bounce_details[:description] %></p>
 
       <h3><%= t("administration.email_bounces.show.view.type_code") %></h3>
 
-      <p><%= @email_bounce.type_code %></p>
+      <p><%= @email_bounce.bounce_details[:type_code] %></p>
 
       <h3><%= t("administration.email_bounces.show.view.dump_available") %></h3>
 
-      <p><%= @email_bounce.dump_available %></p>
+      <p><%= @email_bounce.bounce_details[:dump_available] %></p>
 
       <h3><%= t("administration.email_bounces.show.view.content") %></h3>
 
-      <p><%= @email_bounce.content %></p>
+      <p><%= @email_bounce.bounce_details[:content] %></p>
 
+      <h3><%= t("administration.email_bounces.show.view.body") %></h3>
+
+      <p><%= @email_bounce.body.to_s.html_safe %></p>
+
+      <% end %>
     </div>
+
   </div>
 </column-mc:>

@@ -23,7 +23,7 @@ module AdvancedImportActions
     end
     if Sheet.validate_attachment(params["attachment"], params["attachment"].class != String)
       @attachment_file = params["attachment"].class == String ? params["attachment"] : Sheet.new_temp_file(params["attachment"])
-      @creator_id, @object_id = params[:creator_id], params[:object_id]
+      @creator_id, @object_id, @unique_only = params[:creator_id], params[:object_id], params[:unique_only]
       @spreadsheet_headers = @model.advanced_import_from_xls_headers(Sheet.new(@attachment_file, true).roo_instance)
       something_went_wrong(t("advanced_import.choose.flash.error_wrong_title")) if @spreadsheet_headers == false
     else
@@ -32,7 +32,7 @@ module AdvancedImportActions
   end
 
   def preview
-    @attachment_file, @object_field, @spreadsheet_field, @creator_id, @object_id = params["attachment"], params[:object_field], params[:spreadsheet_field], params[:creator_id], params[:object_id]
+    @attachment_file, @object_field, @spreadsheet_field, @creator_id, @object_id, @unique_only = params["attachment"], params[:object_field], params[:spreadsheet_field], params[:creator_id], params[:object_id], params[:unique_only]
     if Sheet.validate_attachment(@attachment_file)
       @objects_to_preview = @model.advanced_import_from_xls_preview(Sheet.new(@attachment_file, true).roo_instance, params[:object_field], params[:spreadsheet_field])
       something_went_wrong(t("advanced_import.preview.flash.error_wrong_fields")) if @objects_to_preview == false

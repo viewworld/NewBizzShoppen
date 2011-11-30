@@ -21,13 +21,18 @@ Nbs::Application.routes.draw do
       member do
         get :sign_in_as
       end
+      resource :change_subscription_plan
     end
     resource :bulk_users_update, :controller => "bulk_users_update", :only => [:update]
     resources :categories
     resources :category_email_templates, :only => [:edit, :update]
     resource :setting, :only => [:edit, :update]
     resources :featured_deals, :only => [:index, :create]
-    resources :email_templates
+    resources :email_templates do
+      member do
+        post 'test_send_email'
+      end
+    end
     resources :leads
     resources :deals do
       resources :assets, :controller => "deal_assets", :only => [:create, :destroy]
@@ -201,7 +206,11 @@ Nbs::Application.routes.draw do
         resource :pending_call, :only => [:show]
         resource :complete_contact, :only => [:show]
       end
-      resources :email_templates, :only => [:edit, :update]
+      resources :email_templates, :only => [:edit, :update] do
+        member do
+          post 'test_send_email'
+        end
+      end
     end
 
     resource :production, :controller => "production", :only => [:show]
@@ -346,7 +355,11 @@ Nbs::Application.routes.draw do
 
   resources :deal_maker_materials
 
-  resources :email_templates, :only => [:edit, :update]
+  resources :email_templates, :only => [:edit, :update] do
+    member do
+      post 'test_send_email'
+    end
+  end
 
   constraints(Fairdeals) do
     match '/(:id)' => "fairdeals_home#show"

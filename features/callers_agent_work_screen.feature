@@ -1,4 +1,4 @@
-@is @agent_work_screen_speed_up
+@is @agent_work_screen_speed_up @faircalls
 Feature: Callers agent work screen
 
 # in this file we only check js; models are tested somewhere else. Here you can find the key for abbreviations:
@@ -404,6 +404,7 @@ Feature: Callers agent work screen
     Then I should not see "Bon Jovi inc." within "#pending_calls"
     Then I follow translated "agent_work_screen.index.show_current_call_sheet"
     Then I should see "Bon Jovi inc." within "#call_sheet"
+    And I wait 5 second
     Then I should see "Mleko company" before "Bon Jovi inc."
     Then I should see "Bon Jovi inc." before "Stefanek corp"
     #TODO dlaczego cycle jest na odwrót? czy ja zrobiłem źle we wcześniejszych testach?

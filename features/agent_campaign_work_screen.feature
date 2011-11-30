@@ -1,9 +1,10 @@
-@m5b @agent_campaign @$_call_centre_agent @tbr @__campaign_calling_session @selenium
+@m5b @agent_campaign @$_call_centre_agent @tbr @__campaign_calling_session @selenium @faircalls
 Feature: Agent campaign - calling session
 
    Background:
     Given I am on the homepage
     And I visit domain http://faircalls.eu
+    And I am not sign in
     And I make sure current locale is "en"
     And I sign in as translator_call_centre_agent@nbs.com with password secret
     And I follow translated "layout.main_menu.call_centre.campaigns"
@@ -273,7 +274,7 @@ Feature: Agent campaign - calling session
       And I follow translated "call_results.edit.button_new_result"
       And I should see translated "call_results.new.customize_email_template"
 
-    @m23 @requested @system
+    @m23 @requested @system @tgn @_done @_non_testable
     Scenario: Any customized email in the agent work screen should be saved
 
     # 5168

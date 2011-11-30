@@ -10,6 +10,8 @@ class UserSessionLog < ActiveRecord::Base
 
   scope :regular, where(:log_type => TYPE_REGULAR).order("id ASC")
   scope :campaign, where(:log_type => TYPE_CAMPAIGN).order("id ASC")
+  scope :for_user, lambda{|u| where(:user_id => u.to_i)}
+  scope :started_between, lambda{|start_date, end_date| where("start_time BETWEEN ? and ?", start_date.to_datetime, end_date.to_datetime) }
 
   def self.update_end_time(id, time = nil)
     UserSessionLog.find(id).update_attribute(:end_time, time ? (Time.now + time.minutes) : Time.now) if UserSessionLog.find_by_id(id)

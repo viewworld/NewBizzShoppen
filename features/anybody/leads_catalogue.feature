@@ -1,4 +1,4 @@
-@lead_catalog @$_guest @m1
+@lead_catalog @$_guest @m1 @faircalls
 Feature: Leads catalogue
 
 Background:

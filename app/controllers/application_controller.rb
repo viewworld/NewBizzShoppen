@@ -141,6 +141,7 @@ class ApplicationController < ActionController::Base
     session[:locale_code] = locale_code || session[:locale_code] || I18n.locale.to_s
     I18n.locale = @locales.map(&:code).include?(session[:locale_code]) ? session[:locale_code] : @locales.first.code
     Thread.current[:globalize_detailed_locale] = ((user_signed_in? and current_user) and current_user.with_role.address.present?) ? current_user.with_role.address.country.detailed_locale : browser_locale
+    Thread.current[:current_user_id] = current_user.id if user_signed_in?
   end
 
   def locale

@@ -128,7 +128,7 @@ Scenario: When I choose member than additional features like big buyer and other
 Scenario: I can set seller for the subscription plan
 
 #8338
-@m22 @requested @selenium @_done @_tested
+@m22 @requested @selenium @_done @_tested @tgn
 Scenario: I can enter a "Subscription text" as rich text
   Given there is a seller with attributes "company_name:ADannyTheSeller,first_name:Danny,last_name:DeVito,vat_no:123,default:1" for country "United Kingdom"
   Given there is a seller with attributes "company_name:BDannyTheSeller,first_name:Danny,last_name:DeVito,vat_no:123,default:1" for country "Denmark"
@@ -157,7 +157,7 @@ Scenario: I can enter a "Subscription text" as rich text
   Then I should see "Sample Subscription Text"
 
 #8338
-@m22 @requested @_done @non_testable
+@m22 @requested @_done @non_testable @tgn
 Scenario: I can upload images for "Subscription text"
 
 @backlog @requested

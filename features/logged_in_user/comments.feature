@@ -1,4 +1,4 @@
-@comments @m10 @requested @tgn
+@comments @m10 @requested @tgn @faircalls
 Feature: Comments
 
 Background:

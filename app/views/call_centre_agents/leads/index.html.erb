@@ -96,4 +96,12 @@
       <% end %>
   <% end %>
 
+  <% if params[:unfold_comment_id] %>
+  <script type="text/javascript">
+    $(document).ready(function() {
+        $('tr[id=lead_<%= params[:unfold_comment_id] %>] a[class~=show_comments]').click();
+    })
+  </script>
+  <% end %>
+
 </column-mc:>

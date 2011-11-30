@@ -5,7 +5,8 @@ class Article < ActiveRecord::Base
 
   translates :title, :content
 
-  validates_presence_of :title, :content, :on => :update
+  validates_presence_of :title, :on => :update
+  validates_presence_of :content, :on => :update, :if => :validates_presence_of_content?
 
   include ScopedSearch::Model
 
@@ -27,6 +28,10 @@ class Article < ActiveRecord::Base
   scope :for_call_centre_agent, lambda {|user| where("type = 'Article::News::Agent' or (type = 'Article::News::CallCentre' and resource_type = 'User::CallCentre' and resource_id = :id)", {:id => user.parent_id})}
 
   private
+
+  def validates_presence_of_content?
+    true
+  end
 
   def set_published_date
     if published_changed? and published?

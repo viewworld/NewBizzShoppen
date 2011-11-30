@@ -1,4 +1,3 @@
-<%= bt_link_to_function nil, t("agent_work_screen.index.new_contact"), "javascript:$('#modal_new_contact_form_div').dialog('open');", :class => "modal_new_contact_form_bt" %>
 <% if @contact and @campaign.active? and !@contact.completed? %>
     <%= select_tag :selected_result_id, options_for_select(@campaign.results_for_select) %>
     <%= bt_link_to nil, t("call_results.edit.button_new_result"), "javascript:void(0)", :onclick => "$('#result_id').val($('#selected_result_id').val());$('#new_result_form').submit()" %>

@@ -1,4 +1,4 @@
-@m5b @agent_campaign @$_administrator @$_call_centre @tbr
+@m5b @agent_campaign @$_administrator @$_call_centre @tbr @faircalls
 Feature: Agent campaign - management
 
    Background:

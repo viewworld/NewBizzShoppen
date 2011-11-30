@@ -27,14 +27,6 @@ class String
   end
 end
 
-class Float
-  def as_hours
-    hours = self.to_i
-    minutes = ((self - hours) * 60).round
-    "#{hours}:#{minutes<10 ? '0'+minutes.to_s : minutes.to_s}"
-  end
-end
-
 class NilClass
   def to_postgresql_date
     self

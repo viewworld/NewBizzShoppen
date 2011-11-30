@@ -75,7 +75,7 @@ class LeadPurchase < LeadPurchaseBase
       if lead.category.email_template.blank?
         deliver_email_template("bought_lead_notification", owner.email)
       else
-        TemplateMailer.delay.new(owner.email, lead.category.email_template, Country.get_country_from_locale, {:lead_purchase => self})
+        TemplateMailer.delay.new(owner.email, lead.category.email_template, Country.get_country_from_locale, {:lead_purchase => self, :sender_id => User.get_current_user_id})
       end
     end
   end
@@ -117,7 +117,7 @@ class LeadPurchase < LeadPurchaseBase
   end
 
   def deliver_email_template(uniq_id, to=nil)
-    TemplateMailer.delay.new(to.blank? ? owner.email : to, uniq_id.to_sym, Country.get_country_from_locale, {:lead_purchase => self})
+    TemplateMailer.delay.new(to.blank? ? owner.email : to, uniq_id.to_sym, Country.get_country_from_locale, {:lead_purchase => self, :sender_id => User.get_current_user_id})
   end
 
   def about_to_expire!
