@@ -336,6 +336,8 @@ Nbs::Application.routes.draw do
         get 'upgrade'
         get 'downgrade'
         get 'paypal_subscription'
+        get 'paypal_confirmed'
+        get 'paypal_canceled'
       end
     end
   end
