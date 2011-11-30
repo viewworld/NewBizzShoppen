@@ -21,7 +21,8 @@ class SubscriptionPlansController < SecuredController
   public
 
   def paypal_subscription
-
+    session[:subscription_token] = SubscriptionPaymentNotification.create(:token => Digest::SHA1.hexdigest("#{request.session_options[:id]}")+"_#{@subscription_plan.id}_#{Time.now.strftime("%y%m%d%S")}",
+                                                                          :buyer_id => current_user ? current_user.id : nil).token
   end
 
   def upgrade

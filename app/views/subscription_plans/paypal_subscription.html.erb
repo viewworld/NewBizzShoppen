@@ -1,8 +1,7 @@
 <column-mc:>
-  <%= throw Digest::SHA1.hexdigest("#{request.session_options[:id]}")+"_#{@subscription_plan.id}_#{Time.now.strftime("%y%m%d%S")}" %>
   <%= form_tag APP_CONFIG[:paypal_url] do %>
       <%= hidden_field_tag :cmd, "_s-xclick" %>
-      <%= hidden_field_tag :encrypted, @subscription_plan.encrypt_subscription(current_user) %>
+      <%= hidden_field_tag :encrypted, @subscription_plan.encrypt_subscription(session[:subscription_token]) %>
       <ibt c="fltri">
         <%= submit_tag t("supplier.cart.show.view.checkout_link") %>
       </ibt>

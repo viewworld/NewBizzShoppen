@@ -41,22 +41,21 @@ module PaypalPayment
     values
   end
 
-  def encrypt_subscription(current_user)
+  def encrypt_subscription(token)
     encrypt_for_paypal({
-        :currency_code => currency.to_s,
+        :currency_code => 'EUR',
         :business      => APP_CONFIG[:paypal_email],
         :cmd           => '_xclick-subscriptions',
         :no_shipping   => 1,
         :no_note       => 1,
         :item_name     => name,
-        :a3            => billing_price,
+        :a3            => 6000,
         :p3            => billing_cycle,
         :t3            => 'W',
-        :a3            => billing_price,
         :sra           => paypal_retries?,
         :return        => 'http://fairdeals.dk',
         :srt           => 10, # Recurring times
-        :invoice       => "123ABC+-$(^%#{Time.now.strftime('%y%m%d%S')}#{current_user.id}",
+        :invoice       => token,
         :src           => 1
     })
   end
