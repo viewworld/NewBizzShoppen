@@ -71,7 +71,7 @@
           <%= bt_link_to nil, t("agent_home.show.view.complete_list_link"), callers_campaigns_path, :class => "fltr" %>
         </param:header>
         <param:content>
-          <ul class="solid_list">
+          <ul class="solid_list row_4">
             <% if @campaigns.any? %>
                 <%= render :partial => 'campaigns', :collection => @campaigns, :as => :campaign %>
             <% else %>
@@ -87,7 +87,7 @@
 
         </param:header>
         <param:content>
-          <ul class="solid_list">
+          <ul class="solid_list row_4">
             <% if @call_results.any? %>
                 <%= render :partial => 'call_results', :collection => @call_results, :as => :call_result %>
             <% else %>
@@ -103,7 +103,7 @@
 
         </param:header>
         <param:content>
-          <ul class="solid_list">
+          <ul class="solid_list row_4">
             <% if @communications.any? %>
                 <%= render :partial => 'communication', :collection => @communications, :as => :communication %>
             <% else %>
