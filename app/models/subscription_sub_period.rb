@@ -12,7 +12,7 @@ class SubscriptionSubPeriod < ActiveRecord::Base
   after_create :create_subscription_plan_lines
   after_save :create_invoice_when_marked_as_paid_or_retries_exceeded
 
-  delegate :currency, :to => :subscription
+  delegate :currency, :user, :to => :subscription
 
   scope :with_date, lambda{|date| where("start_date <= :date AND end_date >= :date", {:date => date})}
   scope :without_invoice, where(:invoice_id => nil)
@@ -34,7 +34,8 @@ class SubscriptionSubPeriod < ActiveRecord::Base
 
   def create_invoice_when_marked_as_paid_or_retries_exceeded
     if !invoice and ((paypal_retries_changed? and paypal_retries == 0) or (paypal_paid_auto_changed? and paypal_paid_auto?))
-      Invoice.create(:user => subscription.user, :subscription_sub_period_id => self.id)
+      _invoice = Invoice.create(:user => subscription.user, :subscription_sub_period_id => self.id)
+      _invoice.send_by_email(user)
     end
   end
 
