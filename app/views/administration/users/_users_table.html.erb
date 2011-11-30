@@ -32,7 +32,7 @@
         <td class="no_pdd_lr"><%= check_box_tag("user_ids[]", user.id) unless user.id == current_user.id %></td>
         <td class="ta_c"><%= user.id %></td>
         <td><%= user.roles_as_text %></td>
-        <td><%= user.company_name.blank? ? user.full_name : user.company_name %><%= link_to image_tag('icons/red_flag.png'), administration_email_bounces_path(:search => {:with_email => user.email}) if user.email_bounces.any? %></td>
+        <td><%= user.company_name.blank? ? user.full_name : user.company_name %> <%= link_to image_tag('icons/red_flag.png'), administration_email_bounces_path(:search => {:with_email => user.email}) if user.email_bounces.any? %></td>
         <td><%= user.email %></td>
         <td class="ta_r"><%= user.leads_purchased_counter %></td>
         <td class="ta_r"><%= user.unpaid_leads_counter %></td>
