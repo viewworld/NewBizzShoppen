@@ -18,6 +18,7 @@ Feature: Subscriptions Paypal
   @_done @_tested_elsewhere @rspec
   Scenario: Paid invoice is generated for successful Paypal payments for subperiod
 
+  @_done @_tested_elsewhere @rspec
   Scenario: Unpaid invoice is generated when number of Paypal retries is exceeded
 
   Scenario: Invoice generated automatically for Paypal payment should by sent to user by email

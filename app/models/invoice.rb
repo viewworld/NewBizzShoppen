@@ -305,4 +305,8 @@ class Invoice < ActiveRecord::Base
     end
   end
 
+  def send_by_email(user)
+    invoice_path = Pathname.new(File.join(::Rails.root.to_s,'public/html2pdf/invoice_cache', store_pdf(user).basename))
+    TemplateMailer.delay.new(user.email, :invoice, Country.get_country_from_locale, {}, Array(invoice_path))
+  end
 end

@@ -195,7 +195,7 @@ describe SubscriptionSubPeriod do
       @customer.active_subscription.subscription_sub_periods[0].invoice.should_not be_paid
     end
 
-    it "should generate paid invoice when marked as paid by paypal IPN" do
+    it "should generate paid invoice when marked as paid by paypal IPN and send email to user" do
       @payable_subscription2.update_attributes(:use_paypal => true)
       setup_customer(@payable_subscription2)
 
@@ -204,6 +204,8 @@ describe SubscriptionSubPeriod do
       }.to change { Invoice.count }.by(1)
 
       @customer.active_subscription.subscription_sub_periods[0].invoice.should be_paid
+
+      ActionMailer::Base.deliveries.last.to.should include(@customer.email)
     end
   end
 
