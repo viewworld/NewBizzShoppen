@@ -1,5 +1,5 @@
 class Cart
-  include PaypalPayment
+  include CartPaypalPayment
 
   attr_accessor :supplier
 

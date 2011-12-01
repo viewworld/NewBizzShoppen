@@ -9,7 +9,17 @@
     <h2><%= t("member.leads.show.view.confirmation_message") %></h2>
     <div class="pdd_10 grid_50 grid_c">
         <ibt>
+          <% if @lead.deal.voucher_enabled %>
+          <%= form_tag APP_CONFIG[:paypal_url] do %>
+            <%= hidden_field_tag :cmd, "_s-xclick" %>
+            <%= hidden_field_tag :encrypted, @lead.deal.voucher_numbers.first.paypal_encrypted(suppliers_lead_purchases_url, payment_notifications_url(:secret => APP_CONFIG[:paypal_secret])) %>
+            <ibt c="fltri">
+              <%= submit_tag t("supplier.cart.show.view.checkout_link") %>
+            </ibt>
+        <% end %>
+          <% else %>
           <%= button_to t("member.leads.show.view.ok_confirmation"), root_path, :method => :get %>
+          <% end %>
         </ibt>
     </div>
     <clb/>

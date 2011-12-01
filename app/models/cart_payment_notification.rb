@@ -1,0 +1,3 @@
+class CartPaymentNotification < PaymentNotification
+
+end

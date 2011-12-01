@@ -1,4 +1,6 @@
 class VoucherNumber < ActiveRecord::Base
+  include VoucherPaypalPayment
+
   belongs_to :deal
   belongs_to :user
 

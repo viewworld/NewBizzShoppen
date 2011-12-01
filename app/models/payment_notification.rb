@@ -13,7 +13,7 @@ class PaymentNotification < ActiveRecord::Base
 
   def check_if_duplicated
     if status == "Completed"
-      unless PaymentNotification.first(:conditions => { :transaction_id => transaction_id, :buyer_id => buyer_id, :status => "Completed" }).nil?
+      unless PaymentNotification.first(:conditions => {:transaction_id => transaction_id, :buyer_id => buyer_id, :status => "Completed"}).nil?
         self.status = "Duplicated"
       end
     end
@@ -21,7 +21,7 @@ class PaymentNotification < ActiveRecord::Base
 
   def generate_invoice
     if status == "Completed" and params[:receiver_email] == APP_CONFIG[:paypal_email] and params[:secret] == APP_CONFIG[:paypal_secret] and
-       BigDecimal(params[:mc_gross].to_s) == BigDecimal(supplier.cart.total.to_s)
+        BigDecimal(params[:mc_gross].to_s) == BigDecimal(supplier.cart.total.to_s)
       invoice = Invoice.create(:user_id => supplier.parent.present? ? supplier.parent_id : supplier.id, :paid_at => self.created_at, :seller => Seller.default, :currency => supplier.cart.currency)
       PaypalTransaction.create(:invoice => invoice, :payment_notification => self, :amount => supplier.cart.total, :paid_at => self.created_at)
     end
