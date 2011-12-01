@@ -1,4 +1,4 @@
-class SubscriptionPlansController < SecuredCon  troller
+class SubscriptionPlansController < SecuredController
 
   before_filter :fetch_user
   before_filter :fetch_subscription_plan, :except => [:cancel]
