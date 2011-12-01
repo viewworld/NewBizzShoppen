@@ -48,7 +48,11 @@ class SubscriptionPlansController < SecuredController
 
 
     if response.approved? and response.completed?
-      @user.upgrade_subscription!(@subscription_plan)
+      if @user.active_subscription.total_billing < @subscription_plan.total_billing
+        @user.upgrade_subscription!(@subscription_plan)
+      else
+        @user.downgrade_subscription!(@subscription_plan)
+      end
 
       ppr = PayPal::Recurring.new({
         :amount      => @subscription_plan.total_billing_for_subperiod,
@@ -57,7 +61,7 @@ class SubscriptionPlansController < SecuredController
         :ipn_url     => payment_notification_url,
         :frequency   => @subscription_plan.billing_cycle,
         :token       => params[:token],
-        :period      => :weekly,
+        :period      => :daily,
         :reference   => @user.active_subscription.id.to_s,
         :payer_id    => params[:PayerID],
         :start_at    => Time.now.utc,
@@ -67,7 +71,7 @@ class SubscriptionPlansController < SecuredController
 
       response = ppr.create_recurring_profile
 
-      @user.active_subscription.update_attribute(:paypal_profile_id => response.profile_id, :paypal_invoice_id => @user.active_subscription.id)
+      @user.active_subscription.update_attributes(:paypal_profile_id => response.profile_id, :paypal_invoice_id => @user.active_subscription.id)
     end
 
     redirect_to my_profile_path

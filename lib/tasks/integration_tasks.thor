@@ -141,12 +141,12 @@ class IntegrationTasks < Thor
     EmailBounce.all.each do |eb|
       ArchivedEmail.create(:status => ArchivedEmail::BOUNCED, :to => eb.email, :bounced_at => eb.bounced_at, :subject => eb.subject)
     end
-
-    #serialize other attr poorzez .attributes
   end
 
   desc "m24", ""
   def m24
     Translation.where(:key => "formtastic.labels.subscription_plan.billing_period", :locale => "en").first.update_attribute(:value, "Billing date (+/- weeks)")
+
+    ActiveRecord::Migration.execute "UPDATE payment_notifications SET type = 'CartPaymentNotification' WHERE type IS NULL"
   end
 end

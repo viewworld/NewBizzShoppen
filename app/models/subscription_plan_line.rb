@@ -16,6 +16,7 @@ class SubscriptionPlanLine < ActiveRecord::Base
   end
 
   def cache_prices
+    reload
     resource.cache_prices! if price_changed?
   end
 
