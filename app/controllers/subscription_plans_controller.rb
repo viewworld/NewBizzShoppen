@@ -1,4 +1,4 @@
-class SubscriptionPlansController < SecuredController
+class SubscriptionPlansController < SecuredCon  troller
 
   before_filter :fetch_user
   before_filter :fetch_subscription_plan, :except => [:cancel]
@@ -42,7 +42,8 @@ class SubscriptionPlansController < SecuredController
       :payer_id    => params[:PayerID],
       :amount      => @subscription_plan.total_billing_for_subperiod,
       :currency     => @subscription_plan.currency.to_s,
-      :description => @subscription_plan.name
+      :description => @subscription_plan.name,
+      :ipn_url      => payment_notification_url
     })
     response = ppr.request_payment
 
@@ -66,7 +67,8 @@ class SubscriptionPlansController < SecuredController
         :payer_id    => params[:PayerID],
         :start_at    => Time.now.utc,
         :failed      => 1,
-        :outstanding => :next_billing
+        :outstanding => :next_billing,
+        :ipn_url      => payment_notification_url
       })
 
       response = ppr.create_recurring_profile
