@@ -43,7 +43,8 @@ class SubscriptionPlansController < SecuredCon  troller
       :amount      => @subscription_plan.total_billing_for_subperiod,
       :currency     => @subscription_plan.currency.to_s,
       :description => @subscription_plan.name,
-      :ipn_url      => payment_notification_url
+      :ipn_url      => payment_notification_url,
+      :failed => 1
     })
     response = ppr.request_payment
 
@@ -68,7 +69,8 @@ class SubscriptionPlansController < SecuredCon  troller
         :start_at    => Time.now.utc,
         :failed      => 1,
         :outstanding => :next_billing,
-        :ipn_url      => payment_notification_url
+        :ipn_url      => payment_notification_url,
+        :failed => 1
       })
 
       response = ppr.create_recurring_profile
